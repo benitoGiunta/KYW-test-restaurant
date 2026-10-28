@@ -32,13 +32,13 @@ try {
   infos.hauteurPage = hauteur;
   for (let i = 1; i <= frames; i++) {
     const y = Math.round((hauteur - 900) * (i / (frames + 1)));
-    await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), y);
+    await page.evaluate((y) => { document.scrollingElement.scrollTop = y; }, y); // scrollTop plutôt que window.scrollTo, que certains sites (jQuery scrollTo) écrasent
     await page.mouse.wheel(0, 1); await page.waitForTimeout(900);
     await page.screenshot({ path: join(out, `desktop-frame-${i}.png`) });
   }
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)); await page.waitForTimeout(900);
+  await page.evaluate(() => { document.scrollingElement.scrollTop = document.scrollingElement.scrollHeight; }); await page.waitForTimeout(900);
   await page.screenshot({ path: join(out, 'desktop-bas.png') });
-  await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForTimeout(600);
+  await page.evaluate(() => { document.scrollingElement.scrollTop = 0; }); await page.waitForTimeout(600);
   await page.screenshot({ path: join(out, 'desktop-pleine-page.png'), fullPage: true }).catch(() => {});
   infos.liens = await page.$$eval('a[href]', (as) => [...new Set(as.map((a) => a.getAttribute('href')))].slice(0, 80));
   infos.texte = (await page.evaluate(() => document.body.innerText)).replace(/\s+\n/g, '\n').slice(0, 20000);
