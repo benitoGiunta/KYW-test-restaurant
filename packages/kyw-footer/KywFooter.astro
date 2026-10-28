@@ -1,0 +1,18 @@
+---
+/**
+ * Pied de page KYW (Know Your Website), filiale web de KYN.
+ * Usage : <KywFooter base={import.meta.env.BASE_URL} />
+ * Le logo est copié dans public/kyw/ du site par scripts/build-site.mjs ; `base` sert à le référencer.
+ */
+import './kyw-footer.css';
+interface Props { base?: string; note?: string }
+const { base = '/', note = 'Maquette KYW, certaines données sont illustratives.' } = Astro.props;
+const src = `${base.replace(/\/?$/, '/')}kyw/kyw-signature-720.webp`;
+---
+<footer class="kyw-footer" aria-label="Réalisation">
+  <p class="kyw-footer__note">{note}</p>
+  <a class="kyw-footer__link" href="https://kyngroup.be" rel="noopener" aria-label="Site réalisé par KYW, Know Your Website">
+    <span>Réalisé par</span>
+    <img class="kyw-footer__logo" src={src} width="720" height="144" alt="KYW, Know Your Website" loading="lazy" decoding="async" />
+  </a>
+</footer>
