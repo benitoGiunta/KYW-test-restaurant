@@ -21,7 +21,9 @@ try {
   infos.finalUrl = page.url();
   infos.titre = await page.title();
   infos.description = await page.$eval('meta[name="description"]', (e) => e.content).catch(() => '');
-  const html = await page.content();
+  let html = await page.content();
+  // Masque les jetons d'API embarqués dans les pages tierces (Mapbox, Google, Stripe…) avant écriture sur disque.
+  html = html.replace(/\b(sk|pk)\.[A-Za-z0-9_-]{20,}\b/g, '[jeton-masque]').replace(/\bAIza[0-9A-Za-z_-]{30,}\b/g, '[jeton-masque]').replace(/\b(sk|pk)_(live|test)_[A-Za-z0-9]{10,}\b/g, '[jeton-masque]').replace(/\bgh[pousr]_[A-Za-z0-9]{30,}\b/g, '[jeton-masque]');
   writeFileSync(join(out, 'page.html'), html);
   for (const t of ['gsap', 'lenis', 'three', 'ogl', 'locomotive', 'framer', 'webflow', 'wix', 'squarespace', 'wordpress', 'elementor', 'shopify', 'next', 'nuxt', 'astro', 'react', 'vue', 'swiper', 'barba', 'spline', 'lottie', 'jquery', 'bootstrap', 'tailwind'])
     if (new RegExp(t, 'i').test(html)) infos.technos.push(t);
