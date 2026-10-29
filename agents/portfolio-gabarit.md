@@ -27,8 +27,10 @@ seul fichier, sections indépendantes, tokens).
    `motion.md`, `patterns.md`, `content.md`, `quality.md` (et `webgl.md` seulement si le cahier l'exige). Écris
    `gabarits/<id>/DESIGN.md` : Concept Card, système (palette, typo avec sources, grille, radius, motion language),
    wireframes ASCII par section, test de généricité, et la checklist des règles dures de la skill cochée avec preuve.
-3. Scaffold **sans CLI interactive** : crée les fichiers à la main sur le modèle ci-dessous (le workspace pnpm a déjà
-   astro, gsap, lenis, ogl, @astrojs/sitemap, sharp, playwright) :
+3. Scaffold **sans CLI interactive** : pars du socle testé `gabarits/_socle/` (`cp -r gabarits/_socle gabarits/<id>`, puis
+   renomme `name` dans package.json, `pnpm install` à la racine ; lis `gabarits/_socle/README.md`). Le socle contient déjà le
+   moteur de la skill, le layout avec en-tête complet, le pied de page KYW, `site.ts` typé avec les données des Potes au
+   Feu et des pages neutres. Tu remplaces le design, la structure des pages et le motion, pas la plomberie. Arborescence :
    ```
    gabarits/<id>/package.json        { "name": "gabarit-<id>", "private": true, "type": "module", "dependencies": { "@kyw/footer": "workspace:*" } }
    gabarits/<id>/astro.config.mjs    site: process.env.KYW_SITE, base: process.env.KYW_BASE || '/', trailingSlash 'ignore', build.format 'directory'

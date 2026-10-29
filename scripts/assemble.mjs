@@ -11,7 +11,7 @@ for (const g of groupes) {
   const d = join(racine, g);
   if (!existsSync(d)) continue;
   for (const nom of readdirSync(d).sort()) {
-    if (!existsSync(join(d, nom, 'astro.config.mjs'))) continue;
+    if (nom.startsWith('_') || !existsSync(join(d, nom, 'astro.config.mjs'))) continue; // _socle et autres modèles ne se publient pas
     try { execSync(`node scripts/build-site.mjs ${g}/${nom}`, { stdio: 'inherit', cwd: racine }); }
     catch { echecs.push(`${g}/${nom}`); }
   }
