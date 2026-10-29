@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Capture un site : HTML rendu, captures desktop (haut, 4 frames de défilement, pleine page) et mobile, liste des ressources.
-// Usage : node scripts/capture-site.mjs <url> <dossier-sortie> [--frames 4] [--timeout 45000]
+// Usage : node scripts/capture-site.mjs <url> <dossier-sortie> [--frames 4] [--timeout 45000] [--clic "Skip Intro"]... [--remplir "input.year=1980"]...
 import { chromium } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -8,6 +8,29 @@ const [url, out] = process.argv.slice(2);
 if (!url || !out) { console.error('Usage : capture-site.mjs <url> <dossier>'); process.exit(1); }
 const frames = Number(process.argv[process.argv.indexOf('--frames') + 1]) || 4;
 const timeout = Number(process.argv[process.argv.indexOf('--timeout') + 1]) || 45000;
+// --clic "<sélecteur CSS ou texte>" (répétable) : éléments à cliquer avant les captures (Skip intro, Accepter les cookies, age gate…).
+// --remplir "<sélecteur>=<valeur>" (répétable) : champs à remplir avant les clics (ex. année de naissance d'un age gate).
+const clics = process.argv.flatMap((a, i) => (a === '--clic' ? [process.argv[i + 1]] : []));
+const remplissages = process.argv.flatMap((a, i) => (a === '--remplir' ? [process.argv[i + 1]] : []));
+// --supprimer "<sélecteur>" (répétable) : éléments retirés du DOM avant les captures (modale promo, bandeau cookies récalcitrant).
+const suppressions = process.argv.flatMap((a, i) => (a === '--supprimer' ? [process.argv[i + 1]] : []));
+async function passerOverlays(page) {
+  for (const r of remplissages) { const [sel, val] = r.split('='); await page.locator(sel).first().fill(val, { timeout: 4000 }).catch(() => {}); }
+  for (const c of clics) {
+    const loc = /^[.#\[]|^[a-z]+(\.|#|\[|$)/.test(c) ? page.locator(c) : page.getByText(c, { exact: false });
+    await loc.first().click({ timeout: 4000, force: true }).catch(() => {});
+    await page.waitForTimeout(1200);
+  }
+  for (const sel of suppressions) await page.evaluate((sel) => { document.querySelectorAll(sel).forEach((e) => e.remove()); document.body.style.overflow = ''; document.documentElement.style.overflow = ''; document.body.classList.remove('modal-open'); }, sel).catch(() => {});
+  if (clics.length || remplissages.length || suppressions.length) await page.waitForTimeout(2500);
+}
+// Défilement robuste : scrollTop natif, puis molette si la page a détourné le scroll (Locomotive, Lenis en mode transform…).
+async function defiler(page, y) {
+  await page.evaluate((y) => { document.scrollingElement.scrollTop = y; }, y);
+  await page.waitForTimeout(300);
+  const reel = await page.evaluate(() => window.scrollY);
+  if (y > 50 && reel < y * 0.5) { for (let k = 0; k < 8; k++) { await page.mouse.wheel(0, Math.round(y / 8)); await page.waitForTimeout(150); } }
+}
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--no-sandbox'] });
 const infos = { url, date: new Date().toISOString(), erreurs: [], requetes: 0, titre: '', description: '', technos: [], finalUrl: '' };
@@ -18,6 +41,7 @@ try {
   page.on('request', () => infos.requetes++);
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout });
   await page.waitForTimeout(3500);
+  await passerOverlays(page);
   infos.finalUrl = page.url();
   infos.titre = await page.title();
   infos.description = await page.$eval('meta[name="description"]', (e) => e.content).catch(() => '');
@@ -32,20 +56,19 @@ try {
   infos.hauteurPage = hauteur;
   for (let i = 1; i <= frames; i++) {
     const y = Math.round((hauteur - 900) * (i / (frames + 1)));
-    await page.evaluate((y) => { document.scrollingElement.scrollTop = y; }, y); // scrollTop plutôt que window.scrollTo, que certains sites (jQuery scrollTo) écrasent
-    await page.mouse.wheel(0, 1); await page.waitForTimeout(900);
+    await defiler(page, y); await page.mouse.wheel(0, 1); await page.waitForTimeout(900);
     await page.screenshot({ path: join(out, `desktop-frame-${i}.png`) });
   }
-  await page.evaluate(() => { document.scrollingElement.scrollTop = document.scrollingElement.scrollHeight; }); await page.waitForTimeout(900);
+  await defiler(page, hauteur); await page.waitForTimeout(900);
   await page.screenshot({ path: join(out, 'desktop-bas.png') });
-  await page.evaluate(() => { document.scrollingElement.scrollTop = 0; }); await page.waitForTimeout(600);
+  await page.evaluate(() => { document.scrollingElement.scrollTop = 0; }); await page.mouse.wheel(0, -hauteur * 2); await page.waitForTimeout(600);
   await page.screenshot({ path: join(out, 'desktop-pleine-page.png'), fullPage: true }).catch(() => {});
   infos.liens = await page.$$eval('a[href]', (as) => [...new Set(as.map((a) => a.getAttribute('href')))].slice(0, 80));
   infos.texte = (await page.evaluate(() => document.body.innerText)).replace(/\s+\n/g, '\n').slice(0, 20000);
   await ctx.close();
   const mob = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'fr-BE' });
   const pm = await mob.newPage();
-  await pm.goto(url, { waitUntil: 'domcontentloaded', timeout }); await pm.waitForTimeout(3000);
+  await pm.goto(url, { waitUntil: 'domcontentloaded', timeout }); await pm.waitForTimeout(3000); await passerOverlays(pm);
   await pm.screenshot({ path: join(out, 'mobile-haut.png') });
   await pm.screenshot({ path: join(out, 'mobile-pleine-page.png'), fullPage: true }).catch(() => {});
   await mob.close();
