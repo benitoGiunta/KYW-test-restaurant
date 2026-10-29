@@ -1,0 +1,1175 @@
+[
+ {
+  "url": "https://www.quiquedacosta.es/",
+  "nom": "Quique Dacosta Restaurante (Dénia)",
+  "slug": "quiquedacosta",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 9,
+   "originalite": 9,
+   "motion": 8,
+   "usabilite": 6,
+   "contenu": 8,
+   "transposabilite": 5,
+   "total": 7.85
+  },
+  "preuves": {
+   "design": "desktop-haut : assiette laquée rouge géante avec une gamba posée au centre sur fond papier texturé, calligraphies rouges manuscrites flottantes, nav fine en serif ; composition de type affiche.",
+   "originalite": "La page d'accueil est un tableau (assiette + signatures du chef + points blancs déplaçables), impossible à transposer sans la même identité graphique.",
+   "motion": "page.html : 12 occurrences draggable (les points blancs du hero se déplacent), 7 Lottie (calligraphies qui s'écrivent), 7 clip-path, 4 <video> mp4 natifs (clip d'intro silencieux), htmx pour charger les sections.",
+   "usabilite": "desktop-frame-2 : modale cookies + encart promo « Últimas semanas » superposés au contenu ; nav claire et boutons Reserva/Regala fixes dans le header et la barre basse ; capture mobile absente (navigation htmx a détruit le contexte).",
+   "contenu": "desktop-frame-4 : menu OCTAVO 315 €, accords 165/215 €, TVA incluse ; équipe nommée (Juanfra Valiente, Francesca Baccon, José Antonio Navarrete), adresse et téléphone en bas.",
+   "transposabilite": "Les calligraphies Lottie et la vidéo d'ouverture demandent un illustrateur et un tournage ; la grille et les sections draggable sont faisables en GSAP Draggable."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Hero affiche « assiette + calligraphies »",
+    "description": "Une assiette rouge photographiée en plongée occupe le centre, entourée de mots manuscrits rouges (Lottie) et de petits cercles blancs qu'on peut traîner à la souris. Au chargement les traits s'écrivent, puis une barre basse fixe (logo, réseaux, Legal/Newsletter) reste visible.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Barre basse persistante",
+    "description": "Bande blanche fixée en bas de l'écran avec logo partenaire, icônes sociales et liens pilule (Legal, Únete al equipo, Newsletter). Elle ne bouge jamais, le contenu défile derrière.",
+    "capture": "desktop-frame-2.png"
+   },
+   {
+    "nom": "Bloc menu prix en colonne gauche + assiette tenue à la main",
+    "description": "Texte du menu (nom, prix par personne, accords, TVA) aligné à gauche en serif, photo d'une assiette tenue par un bras tatoué qui déborde à droite, trait calligraphié gris en bas. Déclenché au scroll (htmx charge la section).",
+    "capture": "desktop-frame-4.png"
+   },
+   {
+    "nom": "Slider équipe à flèches fines",
+    "description": "Photo du chef avec flèches ‹ › très fines de part et d'autre, texte long à droite avec noms en gras. Navigation au clic uniquement.",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#f2f0ec",
+    "#c1121f",
+    "#1a1a1a",
+    "#8a8a8a"
+   ],
+   "typo": "Serif de titrage (type Cormorant/Garamond) pour nav et titres capitales ; calligraphie manuscrite en Lottie ; corps serif gris",
+   "grille": "Hero centré pleine hauteur, puis sections 50/50 texte gauche / image débordante droite, marges 84 px",
+   "imagerie": "Photo studio en plongée sur fond papier, vidéo mp4 d'intro, calligraphies animées",
+   "copy": "Manifeste poétique à la première personne du pluriel, espagnol, prix annoncés sans détour",
+   "ambiance": "artistique, rouge, méditerranéen"
+  },
+  "structure": [
+   "hero assiette",
+   "présentation Quique Dacosta Restaurante (3 étoiles) + CTA",
+   "menu et prix",
+   "équipe (slider)",
+   "contact",
+   "barre basse fixe"
+  ],
+  "mecaniques_techniques": [
+   "htmx (chargement des sections)",
+   "Lottie",
+   "GSAP Draggable",
+   "clip-path",
+   "video mp4 natif",
+   "anime.js",
+   "canvas"
+  ],
+  "points_faibles": [
+   "Deux overlays (cookies + promo) au chargement",
+   "Pas de rendu mobile capturé : navigation htmx fragile",
+   "Calligraphies illisibles comme texte (accessibilité)"
+  ],
+  "famille_da": "affiche artistique rouge",
+  "captures": "data/portfolio/captures/quiquedacosta",
+  "note_capture": "mobile-haut.png absent : la capture a planté sur une navigation htmx"
+ },
+ {
+  "url": "https://restaurantcastor.be/",
+  "nom": "Restaurant Castor (Beveren-Leie)",
+  "slug": "restaurantcastor",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 7,
+   "motion": 8,
+   "usabilite": 6,
+   "contenu": 8,
+   "transposabilite": 9,
+   "total": 7.6
+  },
+  "preuves": {
+   "design": "desktop-haut : logo CASTOR vertical fixé en bas à gauche, grande photo d'assiette à gauche, petite photo à droite avec deux traits diagonaux orangés, énormément de blanc.",
+   "originalite": "desktop-bas : titres en capitales ultra-light gris sur deux lignes centrées (« WEG VAN CULINAIRE TENDENSEN… »), photos décalées en quinconce : une mise en page de magazine néerlandais assez reconnaissable.",
+   "motion": "page.html : Lenis (2), gsap (3) + ScrollTrigger, Rellax (8 occurrences de parallaxe), AOS (3), Slick, iframe Vimeo lazy ; desktop-frame-2 → frame-4 montre le titre qui remonte plus lentement que l'image (parallaxe).",
+   "usabilite": "desktop-haut : la page est voilée (overlay du bandeau cookies) tant qu'on n'accepte pas ; mobile-haut : le logo CASTOR déborde de l'écran et masque la nav, barre Reserveer/Cadeaubon flottante en bas.",
+   "contenu": "infos.json texte : fermeture dim-lun-mar, terrasse, parking, adresse, BCE, pas de vegan, chiens interdits, crédits photo et agence MOQO.",
+   "transposabilite": "Lenis + GSAP ScrollTrigger + parallaxe + sections 50/50 : exactement la pile Astro+GSAP+Lenis de KYW, aucune vidéo indispensable (Vimeo décoratif)."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Logo vertical fixé",
+    "description": "Le mot CASTOR tourné à 90°, gris, reste collé en bas à gauche pendant tout le scroll, le burger en haut à gauche. Aucun autre élément de nav visible.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Section 50/50 photo gauche + titre capitales light droite",
+    "description": "Grande photo d'assiette collée au bord gauche, à droite un titre en capitales Helvetica ultra-light gris sur trois lignes, centré verticalement ; au scroll le titre monte moins vite que l'image (Rellax).",
+    "capture": "desktop-frame-2.png"
+   },
+   {
+    "nom": "Traits diagonaux orangés d'angle",
+    "description": "Deux petits segments orange à 45° posés aux coins opposés d'une photo, comme des guillemets graphiques. Statiques, ils reviennent sur chaque image secondaire.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Photos en quinconce sous un titre centré",
+    "description": "Titre deux lignes centré, puis deux photos de tailles différentes décalées verticalement l'une par rapport à l'autre, qui apparaissent en fondu (AOS) quand elles entrent dans le viewport.",
+    "capture": "desktop-bas.png"
+   },
+   {
+    "nom": "Barre d'actions mobile flottante",
+    "description": "Sur mobile, une barre sombre fixée en bas regroupe icône, Reserveer et Cadeaubon ; elle reste visible au scroll.",
+    "capture": "mobile-haut.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#ffffff",
+    "#9b9b9b",
+    "#e8a35a",
+    "#1a1a1a"
+   ],
+   "typo": "Grotesque ultra-light capitales (titres), même grotesque regular pour le corps, lettrage CASTOR géométrique",
+   "grille": "Deux colonnes asymétriques, marges 110 px, beaucoup de blanc, images collées aux bords",
+   "imagerie": "Photos culinaires sur fond blanc (Heikki), intérieur à stores, vidéo Vimeo lazy",
+   "copy": "Néerlandais chaleureux, phrases courtes, « no-nonsense »",
+   "ambiance": "épuré, lumineux, scandinave"
+  },
+  "structure": [
+   "hero 2 photos",
+   "Over Castor (titre + texte)",
+   "Menu (titre + texte + CTA)",
+   "Reserveren",
+   "Impressies (quinconce)",
+   "citation « Het beste in het leven »",
+   "footer infos pratiques"
+  ],
+  "mecaniques_techniques": [
+   "Lenis",
+   "GSAP ScrollTrigger",
+   "Rellax (parallaxe)",
+   "AOS",
+   "Slick",
+   "Vimeo lazy",
+   "overlay cookies"
+  ],
+  "points_faibles": [
+   "Overlay cookies qui voile tout le site",
+   "Logo mobile mal dimensionné (déborde)",
+   "Serveur fragile : HTTP/2 refusé, 429 après deux essais"
+  ],
+  "famille_da": "éditorial blanc minimal",
+  "captures": "data/portfolio/captures/restaurantcastor",
+  "note_capture": "Capturé avec --disable-http2 (voir lecons.md) ; voile gris = overlay cookies"
+ },
+ {
+  "url": "https://www.theinnatlittlewashington.com/",
+  "nom": "The Inn at Little Washington (Virginie)",
+  "slug": "theinnatlittlewashington",
+  "type": "hotel-restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 6,
+   "motion": 7,
+   "usabilite": 8,
+   "contenu": 9,
+   "transposabilite": 9,
+   "total": 7.6
+  },
+  "preuves": {
+   "design": "desktop-haut : portrait noir et blanc du chef sur fond noir, titre italique serif display blanc, rangée d'icônes Michelin rouges/vertes, bouton vert sapin ; palette noir/or/vert cohérente jusqu'au footer.",
+   "originalite": "desktop-frame-4 : section à motif damassé vert sombre, cartes d'offres, théâtralité « Worth a Pilgrimage » ; reste un gabarit hôtel-restaurant Webflow classique.",
+   "motion": "desktop-frame-1 : la citation « The Inn is a place… » est révélée mot à mot (mots gris puis blancs) via GSAP SplitText + ScrollTrigger ; 28 data-w-id d'interactions Webflow, hero vidéo en fond.",
+   "usabilite": "desktop-haut : nav complète lisible (Dine, Stay, Plan Your Event…), téléphone et BOOK NOW visibles ; mobile-haut : burger + carte promo sticky mais fermable.",
+   "contenu": "desktop-bas : adresse, téléphone, e-mails réservation et événements, offres datées, expériences nommées, distinctions ; desktop-frame-2 : histoire depuis 1978.",
+   "transposabilite": "Tout est photo + CSS + GSAP SplitText ; aucun 3D ni vidéo nécessaire (la vidéo hero est remplaçable par une photo)."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Citation révélée mot à mot",
+    "description": "Un paragraphe en italique serif géant centré, dont les mots passent du gris clair au blanc/noir au fur et à mesure du scroll (scrub). Déclenché par ScrollTrigger sur SplitText, continu, réversible.",
+    "capture": "desktop-frame-1.png"
+   },
+   {
+    "nom": "Bandeau de distinctions",
+    "description": "Ligne d'icônes dorées (Relais & Châteaux, étoiles Michelin, clés, Forbes, AAA, Grandes Tables) sous une phrase italique, centrée sur fond blanc, apparaissant en fondu.",
+    "capture": "desktop-frame-1.png"
+   },
+   {
+    "nom": "Hero portrait noir et blanc + étoiles",
+    "description": "Fond noir, photo N&B du chef en pied à droite, titre italique et sous-titre entre guillemets à gauche, icônes Michelin colorées au-dessus du titre. Le média de fond est une vidéo en boucle.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Section damassée vert sapin",
+    "description": "Fond vert sombre avec motif damassé en très léger contraste, titre italique blanc, grande photo pleine largeur et photo portrait en décalé à droite.",
+    "capture": "desktop-frame-4.png"
+   },
+   {
+    "nom": "Hero à onglets soulignés (Weddings / Meetings / Celebrations)",
+    "description": "Trois libellés capitales espacées sur une photo de nuit, chacun avec une barre de progression dorée qui se remplit pour indiquer l'onglet actif, changeant la photo de fond.",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#0b0b0b",
+    "#b89b5e",
+    "#0f5a44",
+    "#f7f5f0",
+    "#1f3a2a"
+   ],
+   "typo": "ivypresto-display italique (titres), ivyora-text (corps), futura-pt capitales espacées (boutons, surtitres)",
+   "grille": "Conteneur 1280 px, sections alternées blanc / sombre / vert, cartes 3 colonnes",
+   "imagerie": "Photo portrait N&B, photos intérieures chaudes, vidéo hero",
+   "copy": "Anglais théâtral et romantique (« whispers of romance and whimsy »)",
+   "ambiance": "théâtral, doré, classique"
+  },
+  "structure": [
+   "hero portrait chef",
+   "bandeau distinctions",
+   "citation révélée",
+   "Just One More Night (bande photo)",
+   "A Magnificent Obsession (histoire)",
+   "Exclusive Offers (3 cartes)",
+   "Historic Buildings & Rooms",
+   "Experiences (3 cartes)",
+   "Celebrations (hero onglets)",
+   "footer contacts + newsletter"
+  ],
+  "mecaniques_techniques": [
+   "Webflow interactions",
+   "GSAP SplitText",
+   "ScrollTrigger",
+   "video hero",
+   "clip-path",
+   "Tock (réservation)"
+  ],
+  "points_faibles": [
+   "Carte promo sticky sur mobile qui recouvre le hero",
+   "Gabarit hôtel assez générique",
+   "Beaucoup de sections : page longue (7 780 px)"
+  ],
+  "famille_da": "théâtral noir et or",
+  "captures": "data/portfolio/captures/theinnatlittlewashington"
+ },
+ {
+  "url": "https://saisonsf.com/",
+  "nom": "Saison (San Francisco)",
+  "slug": "saisonsf",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 7,
+   "motion": 7,
+   "usabilite": 8,
+   "contenu": 7,
+   "transposabilite": 8,
+   "total": 7.5
+  },
+  "preuves": {
+   "design": "desktop-haut : nature morte feu de bois sur table en noyer, titre capitales très espacées en bas à gauche, logo bas de casse ; desktop-frame-1 : bande bleu nuit avec pictogramme flamme et texte en lettres espacées.",
+   "originalite": "desktop-frame-3 : trois photos verticales (viande, braises rouges, assiette) et fond dégradé orange/noir évoquant la braise : l'identité « feu vivant » est portée par la palette, pas seulement par les textes.",
+   "motion": "page.html : gsap (4), lenis, Swiper (hero slider à flèches), IntersectionObserver, Lottie (2) ; desktop-frame-1 → frame-2 le texte en lettres espacées se resserre à l'entrée (reveal).",
+   "usabilite": "desktop-haut : RESERVATIONS et burger visibles à droite, logo à gauche, étoiles Michelin centrées ; mobile-haut : même hero lisible, titre 4 lignes.",
+   "contenu": "desktop-bas : adresse 178 Townsend, téléphone, e-mail, liens FAQ/Events/Wine List/Gift Card/Team/Gallery ; pas d'horaires ni de prix sur l'accueil.",
+   "transposabilite": "Slider photo, bande colorée, grille 3 photos, dégradé CSS : reproductible en Astro+GSAP ; seule la typo très espacée demande un soin SplitText."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Hero slider plein écran à titre espacé",
+    "description": "Photo culinaire plein écran, flèches ‹ › fines au milieu des bords, titre en capitales avec interlettrage ~0,4 em sur 3 lignes en bas à gauche. Changement de slide au clic ou en auto, chaque slide a son titre.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Bande manifeste bleu nuit",
+    "description": "Section pleine largeur bleu marine, petite icône flamme blanche centrée puis une phrase longue en lettres très espacées sur 4 lignes ; le texte se resserre/révèle à l'entrée dans le viewport.",
+    "capture": "desktop-frame-1.png"
+   },
+   {
+    "nom": "Triptyque de photos verticales",
+    "description": "Trois photos portrait de même hauteur, légèrement espacées, sur fond bleu nuit puis fond dégradé braise ; apparition en fondu décalé.",
+    "capture": "desktop-frame-3.png"
+   },
+   {
+    "nom": "Fond dégradé « braise »",
+    "description": "Section dont l'arrière-plan est un dégradé radial orange chaud vers noir, avec surtitre « SAISON | SAN FRANCISCO — » et paragraphe à droite ; deux photos en dessous.",
+    "capture": "desktop-frame-4.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#1e2a44",
+    "#0c0c0c",
+    "#c9733a",
+    "#f3efe9"
+   ],
+   "typo": "Work Sans capitales espacées (titres), Roboto (corps), logo bas de casse serif-ish",
+   "grille": "Pleine largeur, blocs 3 colonnes, marges 110 px, alternance photo plein écran / bande colorée",
+   "imagerie": "Photo culinaire chaude, braises, cuivre, chef en action",
+   "copy": "Anglais sobre, vocabulaire terroir/feu",
+   "ambiance": "braise, nocturne, boisé"
+  },
+  "structure": [
+   "hero slider",
+   "manifeste bleu nuit",
+   "triptyque photos",
+   "section braise (citation chef)",
+   "photos cuisine",
+   "photo salle floue",
+   "footer contacts"
+  ],
+  "mecaniques_techniques": [
+   "Swiper",
+   "GSAP",
+   "Lenis",
+   "IntersectionObserver",
+   "Lottie",
+   "OpenTable",
+   "WordPress Uncode"
+  ],
+  "points_faibles": [
+   "Lettres trop espacées pour la lisibilité des paragraphes",
+   "Pas d'horaires sur l'accueil",
+   "Thème WordPress lourd (Slider Revolution)"
+  ],
+  "famille_da": "braise nocturne cuivrée",
+  "captures": "data/portfolio/captures/saisonsf"
+ },
+ {
+  "url": "https://www.hangar-7.com/de/",
+  "nom": "Restaurant Ikarus — Red Bull Hangar-7 (Salzbourg)",
+  "slug": "hangar-7",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 7,
+   "motion": 8,
+   "usabilite": 7,
+   "contenu": 8,
+   "transposabilite": 6,
+   "total": 7.45
+  },
+  "preuves": {
+   "design": "desktop-haut : hero sombre, photo du bookazine IKARUS, titre « Red Bull Hangar-7 » en grotesque géante, boutons pilule gris translucides, badge « Museum heute geöffnet 09:00 – 22:00 ».",
+   "originalite": "desktop-frame-3 : illustration au trait du hangar avec points noirs cliquables (hotspots), compteur « 01 | 10 » de carrousel ; le mélange musée/restaurant/aviation est unique.",
+   "motion": "page.html : 233 occurrences splide (carrousels), 56 cursor (curseur contextuel « cursor-slide », « cursor-enlarge »), hero sticky à fondu (splide__track--fade !sticky top-0), 4 <video>, bouton pause.",
+   "usabilite": "desktop-haut : nav par icônes + Reservieren + horaires, chips pour changer de thème ; modale cookies centrale sur chaque frame ; mobile-haut : modale cookies plein écran.",
+   "contenu": "infos.json : horaires du jour, avis de fermeture datés, chef invité du mois (Guillaume Galliot, Benito Gómez), exposition en cours, shop, adresse, téléphone, newsletter.",
+   "transposabilite": "Les 4 vidéos et l'illustration au trait demandent une production ; le hero sticky à chips, les carrousels à compteur et le badge horaires sont reproductibles."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Hero sticky à chips thématiques",
+    "description": "Hero plein écran collé (sticky) dont le média change selon la chip cliquée (Bookazine / Kunst / Kulinarik / Fliegerei), avec bouton pause et fondu entre slides ; le texte suivant glisse par-dessus.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Badge « ouvert aujourd'hui » en direct",
+    "description": "Point rouge + « Museum heute geöffnet 09:00 – 22:00 Uhr » en bas à gauche du hero, calculé selon le jour. Statique mais très lisible.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Bandeau d'avis défilant",
+    "description": "Bande claire sous le hero avec icône info, un libellé (Montags) et un message de fermeture ; les messages se répètent (ticker) dans le texte capturé.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Carrousel d'actualités à compteur",
+    "description": "Titre « Aktuell im Red Bull Hangar-7 », flèches rondes ‹ ›, cartes larges avec étiquette pilule (Aktuelle Ausstellung, Aktueller Gastkoch), date et titre ; compteur « 01 | 10 » en grand chiffre.",
+    "capture": "desktop-frame-2.png"
+   },
+   {
+    "nom": "Illustration au trait avec hotspots",
+    "description": "Dessin au trait du bâtiment, points noirs posés sur les lieux (restaurant, bar, lounge) ; au survol, le curseur change et une info s'ouvre.",
+    "capture": "desktop-frame-3.png"
+   },
+   {
+    "nom": "Galerie à vignettes + grande image",
+    "description": "Rangée de vignettes rectangulaires puis grande image centrée avec flèches rondes et bouton « i » d'info, images voisines floutées derrière.",
+    "capture": "desktop-frame-5.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#0a0a0a",
+    "#f4f4f6",
+    "#c8bfb4",
+    "#e63946"
+   ],
+   "typo": "Grotesque géométrique unique (titres énormes, corps), chiffres de compteur en display",
+   "grille": "Pleine largeur, conteneur 1344 px, coins arrondis sur cartes et sections, chips pilule",
+   "imagerie": "Vidéos et photos d'architecture, dessin au trait, bookazine",
+   "copy": "Allemand corporate chaleureux, tutoiement dans les cookies",
+   "ambiance": "spectaculaire, corporate, premium"
+  },
+  "structure": [
+   "hero sticky chips",
+   "bandeau avis",
+   "texte de présentation + CTA",
+   "actualités (carrousel)",
+   "bookazine (2 colonnes)",
+   "Hangar-7 im Überblick (illustration hotspots)",
+   "galerie",
+   "footer newsletter + carte"
+  ],
+  "mecaniques_techniques": [
+   "Splide (fade sticky + slide)",
+   "curseur personnalisé",
+   "video autoplay",
+   "position: sticky",
+   "glightbox",
+   "Nuxt/Vue"
+  ],
+  "points_faibles": [
+   "Modale cookies bloquante",
+   "Site corporate : le restaurant Ikarus n'est qu'un item",
+   "Dépendance vidéo lourde (164 requêtes)"
+  ],
+  "famille_da": "spectaculaire corporate sombre",
+  "captures": "data/portfolio/captures/hangar-7"
+ },
+ {
+  "url": "https://bocuse.fr/fr/",
+  "nom": "Restaurant Paul Bocuse (Collonges-au-Mont-d'Or)",
+  "slug": "bocuse",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 7,
+   "originalite": 6,
+   "motion": 7,
+   "usabilite": 7,
+   "contenu": 9,
+   "transposabilite": 8,
+   "total": 7.1
+  },
+  "preuves": {
+   "design": "desktop-haut : salle historique assombrie, signature Paul Bocuse blanche centrée, bouton play rond, header blanc avec burger + MENU, CARTE & MENUS et RÉSERVER & OFFRIR séparés par des barres fines.",
+   "originalite": "desktop-frame-2 : bandes beige ivoire, texte gris-bleu en lettres espacées, liens précédés d'une barre verticale dorée : vocabulaire API & You reconnaissable mais pas propre à Bocuse.",
+   "motion": "page.html : lenis (5), gsap (4) + ScrollTrigger, 14 occurrences split (titres découpés en lignes), body.hasIntro parallax smoothScroll, vidéo mp4 540p/1080p ; desktop-frame-3 : slider à 3 tirets.",
+   "usabilite": "desktop-haut : réservation à un clic dans le header fixe ; bandeau cookies bas ; mobile-haut : burger et signature, cookies plein écran bas, titre lisible.",
+   "contenu": "desktop-bas : horaires mer-dim 12h-13h15 / 20h-21h15, tenue correcte, deux adresses avec téléphones et e-mails, newsletter, 18 liens de plan du site, crédits agence.",
+   "transposabilite": "Split text + Lenis + bandes de couleur + slider : faisable tel quel ; la vidéo plein écran est optionnelle (photo de secours déjà présente)."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Header 3 zones à barres fines",
+    "description": "Burger + MENU à gauche, signature au centre, deux liens capitales à droite précédés d'une barre verticale fine ; le header passe de transparent sur le hero à blanc opaque au scroll.",
+    "capture": "desktop-frame-1.png"
+   },
+   {
+    "nom": "Panneau horaires + CTA dans le footer",
+    "description": "Colonne droite ivoire avec signature, texte des horaires, note sur la tenue, puis trois liens à barre dorée (Réserver une table, Offrir un coffret, Organiser un événement) ; le reste du footer est une photo de nappe assombrie.",
+    "capture": "desktop-bas.png"
+   },
+   {
+    "nom": "Liens à barre verticale dorée",
+    "description": "Chaque lien (Lire la suite, Gastronomie & Vins, Réserver une table) est précédé d'un trait vertical doré ; au survol le trait s'allonge. Répété sur tout le site.",
+    "capture": "desktop-frame-2.png"
+   },
+   {
+    "nom": "Slider plein écran à tirets",
+    "description": "Photo d'assiette pleine largeur, trois petits tirets en bas à droite servant de pagination, transition en fondu/clip.",
+    "capture": "desktop-frame-3.png"
+   },
+   {
+    "nom": "Titres découpés en lignes qui remontent",
+    "description": "Titres capitales serif (« RÉSERVEZ VOTRE TABLE À L'AUBERGE… ») en gris-bleu, chaque ligne entre par translation depuis le bas avec masque (split lines).",
+    "capture": "mobile-haut.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#ffffff",
+    "#f1efe8",
+    "#5a6b7a",
+    "#b89a5a",
+    "#1c1c1c"
+   ],
+   "typo": "Serif capitales à lettrage espacé (titres), Montserrat light espacée (corps), signature manuscrite comme logo",
+   "grille": "Conteneur 1190 px, sections 50/50 texte/photo, bandes ivoire pleine largeur",
+   "imagerie": "Photos de salle, de cuisine, d'assiettes signature, vidéo d'ambiance",
+   "copy": "Français institutionnel et narratif (« la tradition en mouvement »)",
+   "ambiance": "institutionnel, ivoire, lyonnais"
+  },
+  "structure": [
+   "hero vidéo + signature",
+   "bienvenue + titre réservation",
+   "tradition en mouvement (texte + photo)",
+   "l'art de la célébration (slider)",
+   "maison de famille",
+   "geste cuisine / salle (galerie)",
+   "footer horaires + adresses + plan du site"
+  ],
+  "mecaniques_techniques": [
+   "Lenis",
+   "GSAP ScrollTrigger",
+   "split lines",
+   "video mp4 natif",
+   "GuestOnline (réservation)",
+   "slider à tirets"
+  ],
+  "points_faibles": [
+   "Beaucoup de sections vides à l'écran avant déclenchement des reveals (frames 2, 4)",
+   "Corps de texte en lettres espacées peu lisible",
+   "Bandeau cookies permanent"
+  ],
+  "famille_da": "institutionnel ivoire",
+  "captures": "data/portfolio/captures/bocuse"
+ },
+ {
+  "url": "https://bijjef.nl/",
+  "nom": "Bij Jef (Texel)",
+  "slug": "bijjef",
+  "type": "hotel-restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 8,
+   "motion": 8,
+   "usabilite": 5,
+   "contenu": 5,
+   "transposabilite": 6,
+   "total": 7.05
+  },
+  "preuves": {
+   "design": "desktop-haut : vidéo de dune herbeuse plein écran, bande grise verticale à gauche, logo BIJ JEF en contour, titre « Local meets Cosmopolitan » en grotesque fine, trois libellés verticaux à droite séparés par des filets.",
+   "originalite": "desktop-frame-3 : la navigation principale est faite de trois colonnes verticales (RESTAURANT / HOTEL / OVER ONS) posées sur la vidéo, chacune changeant le média du hero (bij_jef_tuin.mp4 → bij_jef_restaurant.mp4).",
+   "motion": "page.html : 47 occurrences cursor (curseur personnalisé), 263 swiper, 14 horizontal, lenis, 5 preloader, 4 <video> autoplay muted ; mobile-haut : preloader bleu nuit avec logo après 3 s.",
+   "usabilite": "desktop-haut : popup « December op Texel » recouvre le hero ; hauteur de page 900 px (tout est dans le hero, pas d'indice de scroll) ; mobile-haut : encore sur le preloader à 3 s.",
+   "contenu": "infos.json texte : seulement le popup, la baseline et trois libellés ; aucune adresse, horaire ni menu sur l'accueil.",
+   "transposabilite": "Les vidéos de hero sont au cœur de l'effet ; la nav verticale, le curseur et le preloader sont reproductibles, le hero vidéo-switch demande un tournage."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Nav verticale sur hero plein écran",
+    "description": "Trois libellés capitales tournés à 90° (RESTAURANT, HOTEL, OVER ONS) alignés en bas à droite, séparés par des filets verticaux qui traversent tout l'écran ; au survol/clic, la vidéo de fond change (jardin → restaurant).",
+    "capture": "desktop-frame-3.png"
+   },
+   {
+    "nom": "Bande latérale grise + badge Relais & Châteaux",
+    "description": "Colonne gris clair de 184 px à gauche de l'écran, burger en haut, badge Relais & Châteaux en bas ; la vidéo occupe le reste. Fixe au scroll.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Titre contour fin « Cosmopolitan »",
+    "description": "Baseline en grotesque très fine blanche à ~110 px, mot « Cosmopolitan » seul sur sa ligne, bouton ONTDEK en contour dessous ; entre par fondu après le preloader.",
+    "capture": "desktop-frame-3.png"
+   },
+   {
+    "nom": "Preloader logo sur fond bleu nuit",
+    "description": "Écran bleu marine uni avec le logo BIJ JEF blanc centré, maintenu jusqu'au chargement de la vidéo ; sur mobile il reste 3 s et plus.",
+    "capture": "mobile-haut.png"
+   },
+   {
+    "nom": "Popup saisonnier photo + texte",
+    "description": "Fenêtre centrée 960 px : photo à gauche, titre, texte, bouton contour à droite, croix fine ; apparaît dès le chargement.",
+    "capture": "desktop-haut.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#1e2d4a",
+    "#d9d9d9",
+    "#ffffff",
+    "#4f7a3a"
+   ],
+   "typo": "deuterium-variable / acumin-pro (grotesque fine pour titres et nav), Roboto (corps)",
+   "grille": "Plein écran, colonne latérale fixe 184 px, filets verticaux à 940/1105/1270 px",
+   "imagerie": "Vidéos de nature insulaire (dune, jardin) et de salle",
+   "copy": "Néerlandais court, baseline anglaise « Local meets Cosmopolitan »",
+   "ambiance": "insulaire, aérien, nordique"
+  },
+  "structure": [
+   "preloader",
+   "hero vidéo + nav verticale",
+   "popup saisonnier",
+   "(sections restaurant / hôtel / à propos en pages séparées)"
+  ],
+  "mecaniques_techniques": [
+   "Nuxt/Vue",
+   "Swiper",
+   "Lenis",
+   "curseur personnalisé",
+   "video autoplay",
+   "preloader",
+   "position: sticky"
+  ],
+  "points_faibles": [
+   "Popup au chargement",
+   "Aucun contenu textuel sur l'accueil",
+   "Preloader long sur mobile"
+  ],
+  "famille_da": "insulaire vidéo plein écran",
+  "captures": "data/portfolio/captures/bijjef"
+ },
+ {
+  "url": "https://www.enricobartolini.net/",
+  "nom": "Enrico Bartolini (groupe, Milan)",
+  "slug": "enricobartolini",
+  "type": "chef",
+  "inaccessible": false,
+  "scores": {
+   "design": 7,
+   "originalite": 8,
+   "motion": 7,
+   "usabilite": 5,
+   "contenu": 5,
+   "transposabilite": 8,
+   "total": 6.8
+  },
+  "preuves": {
+   "design": "desktop-frame-4 : logo trèfle or + nom centrés en haut, bouton contour doré « Regala un'esperienza », liste des restaurants centrée en gris, deux colonnes de photos de part et d'autre ; footer or sable.",
+   "originalite": "desktop-haut → frame-1 : le preloader dessine une assiette au trait (cercles concentriques gris) autour du logo, puis fond en transparence vers la page : un geste propre à un chef.",
+   "motion": "page.html : preloader (5), gsap (3) + ScrollTrigger, Lottie (burger), 18 fs-cmsfilter (filtres Finsweet), 3 @keyframes ; desktop-frame-3 montre le fondu entre preloader et page ; frames 4-6 : les photos latérales changent (crossfade).",
+   "usabilite": "desktop-frame-3 : aucun menu visible hors la liste centrale et un seul bouton ; mobile-haut : encore sur le preloader après 3 s ; les 14 restaurants sont de simples liens texte.",
+   "contenu": "infos.json texte : liste des 14 adresses (Italie + monde), citation, réseaux, reconnaissance Michelin 2023, partenaires ; pas d'adresse ni d'horaires.",
+   "transposabilite": "Preloader SVG (stroke-dashoffset), grille 3 colonnes avec crossfade d'images, filtres CMS : entièrement faisable en Astro+GSAP."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Preloader « assiette dessinée »",
+    "description": "Sur fond blanc cassé, des cercles concentriques tracés au crayon s'animent autour du logo centré (trèfle gris/or + nom), puis l'ensemble s'estompe pour laisser apparaître la page avec le logo qui remonte en haut.",
+    "capture": "desktop-frame-1.png"
+   },
+   {
+    "nom": "Index central flanqué de deux colonnes photo",
+    "description": "Colonne centrale : titre « I Ristoranti », surtitres dorés (IN ITALIA / NEL MONDO) et liste de noms en gris ; colonnes gauche et droite : photos portrait qui changent en fondu (desktop-frame-4 → frame-6), probablement selon le restaurant survolé.",
+    "capture": "desktop-frame-5.png"
+   },
+   {
+    "nom": "Bouton contour doré unique",
+    "description": "Un seul CTA « Regala un'esperienza » en haut à droite, bordure 1 px or, texte doré, fond transparent.",
+    "capture": "desktop-frame-4.png"
+   },
+   {
+    "nom": "Footer or sable à logos blancs",
+    "description": "Section pleine largeur beige doré avec réseaux en haut, trois colonnes de logos blancs (Riconoscimenti / Associazioni / Partner) séparées par des filets, liens Policies et crédit agence centrés.",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#fafafa",
+    "#c9b27c",
+    "#8a8a8a",
+    "#c6b48a"
+   ],
+   "typo": "Serif condensé pour le logo et « I Ristoranti », Sofia Sans (Google) pour liste et corps",
+   "grille": "Trois colonnes 450 / 390 / 450 px centrées, marges 76 px, page très longue (15 055 px) par empilement des photos",
+   "imagerie": "Photos de salle et d'assiettes très soignées, dessin au trait du preloader",
+   "copy": "Italien aphoristique (« L'amore per la vita è anche voglia di mangiarla »)",
+   "ambiance": "chef-marque, doré, galerie"
+  },
+  "structure": [
+   "preloader assiette",
+   "hero citation (slider fondu)",
+   "I Ristoranti (index + colonnes photos)",
+   "citation philosophie",
+   "footer or (réseaux, logos, policies)"
+  ],
+  "mecaniques_techniques": [
+   "preloader SVG/keyframes",
+   "GSAP ScrollTrigger",
+   "Lottie (burger)",
+   "Finsweet CMS filter",
+   "Webflow"
+  ],
+  "points_faibles": [
+   "Pas de navigation classique",
+   "Page d'accueil sans information pratique",
+   "Preloader bloquant sur mobile"
+  ],
+  "famille_da": "galerie dorée chef-marque",
+  "captures": "data/portfolio/captures/enricobartolini"
+ },
+ {
+  "url": "https://laduree.com/",
+  "nom": "Maison Ladurée",
+  "slug": "laduree",
+  "type": "patisserie",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 6,
+   "motion": 6,
+   "usabilite": 4,
+   "contenu": 7,
+   "transposabilite": 7,
+   "total": 6.4
+  },
+  "preuves": {
+   "design": "desktop-frame-2 : titre italique serif géant « Composez votre coffret » avec un macaron rose ; frames 3-4 : bandes photo pleine largeur de macarons ; serif Garamond partout, beaucoup d'ivoire.",
+   "originalite": "desktop-frame-1 : grille produits + sections éditoriales : élégant mais c'est un gabarit Shopify éditorial, la singularité vient des macarons.",
+   "motion": "page.html : lenis (7), 43 cursor, 6 clip-path, 2 <video>, Alpine x-data (74) ; captures entre frames : images qui glissent (parallaxe) sous le titre, pas d'effet fort visible.",
+   "usabilite": "desktop-haut + frame-2 : modale pays/langue puis modale newsletter se superposent sur toute la page ; mobile-haut : bandeau promo + modale pays occupent tout l'écran.",
+   "contenu": "infos.json texte : promos datées, produits avec prix (29 €, 69 €), histoire des macarons, boutiques, Club, livraison offerte dès 75 €.",
+   "transposabilite": "Grille produits, titres italiques géants, bandes photo : reproductibles ; le e-commerce nécessite Shopify."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Titre italique géant + visuel détouré",
+    "description": "« Composez votre coffret » en serif italique ~140 px sur fond gris taupe, macaron rose détouré en dessous qui remonte en parallaxe au scroll.",
+    "capture": "desktop-frame-2.png"
+   },
+   {
+    "nom": "Grille produits éditoriale",
+    "description": "Quatre colonnes de photos sur fond pastel uni, nom en serif et prix en dessous, étiquette « Édition limitée » ; aucune ombre, bordure fine.",
+    "capture": "desktop-frame-1.png"
+   },
+   {
+    "nom": "Modale newsletter photo + fond vert amande",
+    "description": "Fenêtre 750 px : photo de salon de thé à gauche, panneau vert amande à droite avec titre capitales, champ e-mail souligné et case RGPD.",
+    "capture": "desktop-frame-3.png"
+   },
+   {
+    "nom": "Bande photo pleine largeur assombrie",
+    "description": "Photo de macarons ou de boutique sur toute la largeur, assombrie, avec titre centré ; sert de transition entre sections ivoire.",
+    "capture": "desktop-frame-5.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#f6f4ef",
+    "#d9e3c6",
+    "#2b2b2b",
+    "#e9c6c9",
+    "#c9a66b"
+   ],
+   "typo": "Adobe Garamond Pro (titres et corps), ShelleyAndante (script « Paris » du logo)",
+   "grille": "Conteneur 1390 px, 4 colonnes produits, sections 50/50, marges 26 px",
+   "imagerie": "Packshots pastel, photos lifestyle, vidéo courte",
+   "copy": "Français commercial raffiné, promos avec émojis",
+   "ambiance": "pastel, parisien, gourmand"
+  },
+  "structure": [
+   "bandeau promo",
+   "hero calendrier de l'avent",
+   "nouveautés (grille)",
+   "trouvez le cadeau parfait",
+   "composez votre coffret",
+   "Eugénie (2 colonnes)",
+   "idées cadeaux",
+   "les macarons (histoire)",
+   "boutiques",
+   "footer liens + newsletter"
+  ],
+  "mecaniques_techniques": [
+   "Lenis",
+   "Alpine.js",
+   "curseur personnalisé",
+   "clip-path",
+   "video",
+   "Shopify"
+  ],
+  "points_faibles": [
+   "Deux modales superposées au chargement",
+   "Le bandeau promo mange le haut de l'écran",
+   "Site e-commerce : peu transposable à un restaurant"
+  ],
+  "famille_da": "pastel parisien gourmand",
+  "captures": "data/portfolio/captures/laduree"
+ },
+ {
+  "url": "https://www.lepavillonnyc.com/",
+  "nom": "Le Pavillon (Daniel Boulud, New York)",
+  "slug": "lepavillonnyc",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 6,
+   "originalite": 5,
+   "motion": 7,
+   "usabilite": 5,
+   "contenu": 7,
+   "transposabilite": 7,
+   "total": 6.05
+  },
+  "preuves": {
+   "design": "desktop-pleine-page : fond gris-taupe uni, logo Futura capitales, collage de trois photos (équipe, salle végétale, coquillages) qui se chevauchent sous le titre ABOUT ; la vidéo du hero n'a pas chargé (ERR_TUNNEL).",
+   "originalite": "desktop-frame-2 : photos empilées en collage décalé avec parallaxe, c'est le seul geste distinctif ; le reste est un enchaînement de titres capitales.",
+   "motion": "page.html : Locomotive Scroll (data-scroll-container, 22 data-scroll-section, 9 data-scroll-speed), 15 cursor, 5 @keyframes, transitions de page Nuxt ; frames 3-6 vides car les sections ne se révèlent qu'au scroll Locomotive.",
+   "usabilite": "desktop-haut : burger à gauche, RESERVATIONS / PRIVATE DINING à droite, rien d'autre ; frames 3-6 écrans entièrement vides sans défilement amorti ; mobile-haut : même écran vide avec bouton son.",
+   "contenu": "infos.json texte : horaires lunch/dinner/bar détaillés, adresse One Vanderbilt, téléphone, e-mail, widget Resy « 2 people », cartes cadeaux, carrières.",
+   "transposabilite": "Collage parallaxe, sections capitales, widget de réservation : reproductibles avec Lenis à la place de Locomotive ; le hero vidéo est facultatif."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Collage de photos à parallaxe",
+    "description": "Sous un titre capitales centré (ABOUT), trois photos de tailles différentes se chevauchent (petite en haut à gauche, grande au centre, carrée à droite) et bougent à des vitesses différentes au scroll (data-scroll-speed).",
+    "capture": "desktop-pleine-page.png"
+   },
+   {
+    "nom": "Header minimal 3 éléments",
+    "description": "Burger à gauche, logo centré, deux liens capitales espacées empilés à droite (RESERVATIONS, PRIVATE DINING) ; fond transparent sur fond uni taupe.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Bouton son + étoile Michelin flottants",
+    "description": "Icône haut-parleur barré en bas à gauche pour activer le son de la vidéo, étoile Michelin rouge fixée en bas à droite.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Widget réservation inline « Check reservations for 2 people on … »",
+    "description": "Phrase à trous avec sélecteurs (nombre, date) suivie d'un bouton « Search for a table », branchée sur Resy (texte infos.json).",
+    "capture": "desktop-pleine-page.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#8f8780",
+    "#ffffff",
+    "#c8102e",
+    "#2a2a2a"
+   ],
+   "typo": "FuturaBT W05 capitales espacées partout (logo, nav, titres, corps)",
+   "grille": "Sections pleine hauteur empilées (data-scroll-section), collage centré 70 % de largeur",
+   "imagerie": "Photos de salle végétalisée, équipe, fruits de mer ; vidéo hero",
+   "copy": "Anglais corporate capitales (« EVOKING A PAVILLON… »)",
+   "ambiance": "taupe, corporate, végétal"
+  },
+  "structure": [
+   "hero vidéo",
+   "About (collage)",
+   "Our Menu",
+   "Experiences",
+   "Private Dining",
+   "Book a table (Resy)",
+   "footer horaires + contact"
+  ],
+  "mecaniques_techniques": [
+   "Locomotive Scroll",
+   "parallaxe data-scroll-speed",
+   "curseur personnalisé",
+   "transitions Nuxt",
+   "Resy",
+   "video"
+  ],
+  "points_faibles": [
+   "Contenu invisible sans le scroll amorti (écrans vides)",
+   "Tout en capitales espacées",
+   "Vidéo hero bloquée (tunnel) : pas de fallback image"
+  ],
+  "famille_da": "corporate taupe capitales",
+  "captures": "data/portfolio/captures/lepavillonnyc"
+ },
+ {
+  "url": "https://lepetitchef.com/",
+  "nom": "Le Petit Chef (dîner-spectacle en projection 3D)",
+  "slug": "lepetitchef",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 6,
+   "originalite": 5,
+   "motion": 5,
+   "usabilite": 5,
+   "contenu": 8,
+   "transposabilite": 9,
+   "total": 5.95
+  },
+  "preuves": {
+   "design": "desktop-haut : vidéo assombrie d'une table projetée, logo script, titre Playfair blanc, deux boutons pilule contour ; desktop-frame-1 : cartes grises arrondies par pays avec drapeau et bouton rouge brique.",
+   "originalite": "desktop-frame-1 → frame-5 : l'accueil est surtout un annuaire de 149 lieux par pays ; le concept (chef projeté sur l'assiette) n'est montré que par la vidéo hero.",
+   "motion": "page.html : 3 marquee (lpc-review-marquee, avis qui défilent), 5 lpc-stat (compteurs 149 / 57 / 4.7 / 29 000+), 1 <video> hero preload none, 1 @keyframes ; pas de GSAP ni Lenis.",
+   "usabilite": "desktop-haut : modale cookies centrale ; page de 41 829 px (annuaire complet) ; nav claire (All Locations, Blog, Gift Card, langue) ; mobile-haut : modale cookies pleine hauteur.",
+   "contenu": "infos.json texte : 149 lieux, 57 pays, note Google 4,7, 29 000 avis, 500 000 convives/an, quatre avis cités avec ville, contact WhatsApp et 3 téléphones.",
+   "transposabilite": "Tailwind + vidéo optionnelle, marquee CSS, compteurs, cartes : reproductible tel quel en Astro."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Bande chiffres-clés",
+    "description": "Cinq statistiques (149 LOCATIONS WORLDWIDE, 57 COUNTRIES, 4.7 GOOGLE RATING…) en grands chiffres avec libellé capitales, séparées par des bordures gauche (md:border-l).",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Marquee d'avis clients",
+    "description": "Bande « Our Happy Guests » où les avis Google (texte, prénom, ville) défilent horizontalement en continu (lpc-review-marquee, overflow hidden).",
+    "capture": "desktop-frame-1.png"
+   },
+   {
+    "nom": "Annuaire de lieux par pays",
+    "description": "Titre pays en serif avec drapeau et compteur « (3 locations) » suivi d'un filet, puis cartes grises arrondies : ville, nom d'hôtel, logo partenaire, étiquette colorée du spectacle, bouton rouge brique « Go to location → ».",
+    "capture": "desktop-frame-3.png"
+   },
+   {
+    "nom": "Footer contact multi-pays",
+    "description": "Colonne CONTACT avec bouton WhatsApp vert, e-mail, trois téléphones avec drapeaux ; liens Imprint/Privacy en bas.",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#1b1b1b",
+    "#b5412b",
+    "#e8e6e2",
+    "#c9a24d",
+    "#ffffff"
+   ],
+   "typo": "Playfair Display (titres serif), DM Sans/grotesque (corps, boutons)",
+   "grille": "Conteneur 1104 px, cartes 3 colonnes, coins arrondis 16 px, boutons pilule",
+   "imagerie": "Vidéo de projection sur table, logos d'hôtels partenaires, photos blog",
+   "copy": "Anglais marketing (« The world's smallest chef »), avis clients cités",
+   "ambiance": "ludique, sombre, franchise"
+  },
+  "structure": [
+   "hero vidéo",
+   "chiffres-clés",
+   "What is Le Petit Chef",
+   "avis (marquee)",
+   "annuaire par pays (très long)",
+   "blog (3 cartes)",
+   "footer contact"
+  ],
+  "mecaniques_techniques": [
+   "marquee CSS",
+   "compteurs",
+   "video hero",
+   "Tailwind",
+   "React/Vite"
+  ],
+  "points_faibles": [
+   "Page d'accueil interminable (annuaire)",
+   "Modale cookies bloquante",
+   "Peu d'animation malgré le concept animé"
+  ],
+  "famille_da": "annuaire sombre ludique",
+  "captures": "data/portfolio/captures/lepetitchef"
+ },
+ {
+  "url": "https://fleurdeloire.com/fr/",
+  "nom": "Fleur de Loire (Christophe Hay, Blois)",
+  "slug": "fleurdeloire",
+  "type": "hotel-restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 6,
+   "originalite": 5,
+   "motion": 6,
+   "usabilite": 4,
+   "contenu": 8,
+   "transposabilite": 7,
+   "total": 5.8
+  },
+  "preuves": {
+   "design": "desktop-haut : preloader logo doré sur blanc ; desktop-frame-2 : trois photos en colonnes avec libellé « LES RESTAURANTS », titre serif « Les couleurs d'une gastronomie durable », filets dorés ; charte or/blanc/bleu nuit cohérente.",
+   "originalite": "desktop-frame-2 : même vocabulaire que Bocuse (API & You) : filets, serif, bandes ; le logo fleur dorée est le seul signe distinctif.",
+   "motion": "page.html : lenis, 13 split (titres découpés), 6 @keyframes, preloader ; les frames 2-4 montrent les photos en fondu mais pas de parallaxe visible.",
+   "usabilite": "desktop-frame-2 : popup « Calendrier de l'avent » + panneau « Réserver & offrir » ouvert à droite + (frame-4) bandeau cookies : trois couches simultanées ; mobile-haut : bloqué sur le preloader.",
+   "contenu": "infos.json texte : deux restaurants, 44 chambres, spa, histoire du bâtiment, menu « Réserver & offrir » exhaustif (séjour, soin, cours de cuisine), boutique ; codes GDS en footer.",
+   "transposabilite": "Preloader logo, split titles, colonnes photo, panneau latéral : reproductibles ; le moteur D-EDGE hôtelier ne concerne pas KYW."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Panneau latéral « Réserver & offrir »",
+    "description": "Volet blanc 350 px fixé à droite, titre FERMER, liste d'items avec pictos (Un séjour, Restaurant Christophe Hay, Un soin…), chacun soulignés d'un filet ; s'ouvre depuis le header.",
+    "capture": "desktop-frame-2.png"
+   },
+   {
+    "nom": "Preloader logo doré",
+    "description": "Écran blanc avec logo fleur, nom en capitales serif dorées, 5 étoiles et « BLOIS ~ FRANCE », maintenu 2-3 s avant le fondu.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Header 3 CTA à pictogrammes",
+    "description": "Burger + MENU à gauche, logo fleur centré, trois liens à droite (Réserver & offrir, Boutique en ligne, Offrir un coffret) précédés d'icônes au trait et séparés par des barres.",
+    "capture": "desktop-frame-2.png"
+   },
+   {
+    "nom": "Triptyque de photos à libellé",
+    "description": "Trois photos plein écran côte à côte (assiette, chambre, paysage) avec libellé capitales serif en bas à gauche de chacune ; survol = zoom léger.",
+    "capture": "desktop-frame-2.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#ffffff",
+    "#b9975b",
+    "#1d2b4f",
+    "#6b6b6b"
+   ],
+   "typo": "Serif capitales espacées (titres, Playfair-like), Montserrat (corps), logo serif doré",
+   "grille": "Pleine largeur, triptyque égal, texte sur 2 colonnes décalées, marges 100 px",
+   "imagerie": "Photos hôtel/spa/assiettes, packshot calendrier",
+   "copy": "Français lyrique (« L'écrin ligérien… »)",
+   "ambiance": "doré, hôtelier, ligérien"
+  },
+  "structure": [
+   "preloader",
+   "hero triptyque",
+   "intro Fleur de Loire",
+   "gastronomie (2 restaurants)",
+   "hôtel 44 chambres",
+   "bien-être",
+   "expériences",
+   "footer partenaires + GDS"
+  ],
+  "mecaniques_techniques": [
+   "Lenis",
+   "split lines",
+   "preloader",
+   "panneau latéral",
+   "D-EDGE (réservation hôtel)",
+   "GuestOnline"
+  ],
+  "points_faibles": [
+   "Trois overlays simultanés (popup, panneau, cookies)",
+   "Preloader bloquant sur mobile",
+   "Gabarit API & You identique à Bocuse"
+  ],
+  "famille_da": "hôtelier doré ligérien",
+  "captures": "data/portfolio/captures/fleurdeloire"
+ },
+ {
+  "url": "https://airdutemps.be/",
+  "nom": "L'Air du Temps (Sang-Hoon Degeimbre, Liernu)",
+  "slug": "airdutemps",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 6,
+   "originalite": 5,
+   "motion": 5,
+   "usabilite": 6,
+   "contenu": 5,
+   "transposabilite": 7,
+   "total": 5.6
+  },
+  "preuves": {
+   "design": "desktop-haut : photo pleine page de la ferme et de la serre au coucher de soleil violet, logo capitales à graisse variable (Presicav), nav fine blanche et bouton Réserver contour ; mobile-haut : même photo recadrée.",
+   "originalite": "desktop-haut et frame-3 identiques : le site capturé se résume à un hero plein écran (900 px), rien ne distingue la mise en page d'un thème Salient.",
+   "motion": "page.html : anime (2), waypoint (2), swiper (9), 4 clip-path, 4 cursor, 1 @keyframes ; aucune animation visible entre les frames (page 900 px, probablement slider plein écran).",
+   "usabilite": "desktop-haut : nav complète (Restaurant, Séjours, Chef, Lieu, L'Équipe, Bons Cadeaux, Contact), Réserver visible, FR/NL/EN ; infos.json : erreur Resengo « navigateur non supporté ».",
+   "contenu": "infos.json texte : uniquement les libellés de nav et réseaux ; aucune adresse ni horaire sur l'accueil.",
+   "transposabilite": "Hero photo plein écran + nav : trivial ; pas de mécanique à reprendre."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Hero photo plein écran crépusculaire",
+    "description": "Photo du domaine (bâtiments blancs, serre, potager) au coucher de soleil violet-rose, nav superposée, sans titre ni texte ; probablement un slider Swiper plein écran.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Logo à graisse variable",
+    "description": "« San Degeimbre » en light au-dessus de « AIR DU TEMPS » en capitales extra-light étendues (Presicav), blanc sur photo.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Bouton Réserver contour + sélecteur langue",
+    "description": "Bouton blanc contour 1 px « Réserver » suivi d'un sélecteur FR avec chevron et icônes Facebook/Instagram, tout en haut à droite.",
+    "capture": "desktop-haut.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#3b2a7a",
+    "#e04f8a",
+    "#ffffff",
+    "#1c1c1c"
+   ],
+   "typo": "Presicav (capitales étendues, 5 graisses) pour logo et nav, police manuscrite déclarée",
+   "grille": "Plein écran, nav sur une ligne, marges 28 px",
+   "imagerie": "Photo de paysage au crépuscule",
+   "copy": "Néant sur l'accueil (nav seulement)",
+   "ambiance": "crépusculaire, rural, violet"
+  },
+  "structure": [
+   "hero plein écran (slider)",
+   "(autres sections non rendues dans la capture)"
+  ],
+  "mecaniques_techniques": [
+   "Swiper",
+   "anime.js",
+   "Waypoints",
+   "clip-path",
+   "Resengo (réservation)",
+   "WordPress Salient"
+  ],
+  "points_faibles": [
+   "Accueil réduit à une photo",
+   "Resengo refuse le navigateur headless",
+   "Nav en police étendue peu lisible (« Restauran » tronqué)"
+  ],
+  "famille_da": "crépusculaire rural",
+  "captures": "data/portfolio/captures/airdutemps",
+  "note_capture": "hauteurPage 900 : seul le hero a été rendu"
+ },
+ {
+  "url": "https://www.narisawa-yoshihiro.com/",
+  "nom": "NARISAWA (Tokyo)",
+  "slug": "narisawa-yoshihiro",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 4,
+   "originalite": 2,
+   "motion": 2,
+   "usabilite": 6,
+   "contenu": 3,
+   "transposabilite": 10,
+   "total": 4.0
+  },
+  "preuves": {
+   "design": "desktop-haut : logo abeille + NARISAWA en serif, nav Cardo centrée, une photo de cuisine sombre avec bloc « ご予約 » et bouton OMAKASE gris, deux icônes sociales rondes ; page de 1 111 px.",
+   "originalite": "desktop-frame-3 identique au haut : gabarit Strikingly (classes s-navbar, strikinglycdn) sans rien de propre à Narisawa hormis le logo.",
+   "motion": "page.html : slick (11) pour un seul slide, Barba (2) non exploité, pas de GSAP/Lenis/vidéo ; aucun changement entre frames.",
+   "usabilite": "desktop-haut : nav claire (Home, Philosophy, Reservation, Contact, Press, Recruit, BEES BAR), bouton EN, bouton OMAKASE vers la réservation ; mobile-haut : lisible et centré.",
+   "contenu": "infos.json texte : « réservations via le site ci-dessous, pas par téléphone », bouton OMAKASE, cookies : rien d'autre.",
+   "transposabilite": "Une image, un titre, un bouton : reproductible en HTML pur."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Bloc réservation sur photo",
+    "description": "Photo de cuisine sombre pleine largeur, titre japonais « ご予約 », deux lignes d'explication et un bouton rectangle gris « OMAKASE » renvoyant à la plateforme de réservation.",
+    "capture": "desktop-haut.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#ffffff",
+    "#111111",
+    "#8c8c8c"
+   ],
+   "typo": "Cardo (serif) pour tout, logo abeille",
+   "grille": "Centré, conteneur Strikingly, hero 440 px",
+   "imagerie": "Une photo de cuisine",
+   "copy": "Japonais fonctionnel",
+   "ambiance": "fonctionnel, sobre, provisoire"
+  },
+  "structure": [
+   "header logo + nav",
+   "bloc réservation",
+   "icônes sociales",
+   "cookies"
+  ],
+  "mecaniques_techniques": [
+   "Strikingly",
+   "Slick (1 slide)",
+   "Barba (inactif)",
+   "OMAKASE / Pocket Concierge"
+  ],
+  "points_faibles": [
+   "Les signatures annoncées par la recherche (scroll horizontal, 30 vidéos Vimeo) n'existent pas sur cette URL : page vitrine Strikingly de réservation",
+   "Aucune histoire ni menu",
+   "Twitter/Instagram seulement"
+  ],
+  "famille_da": "vitrine Strikingly minimale",
+  "captures": "data/portfolio/captures/narisawa-yoshihiro",
+  "note_capture": "Le site riche décrit par la recherche n'est pas (plus) servi à cette URL"
+ }
+]
