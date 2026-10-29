@@ -1,0 +1,3901 @@
+{
+ "version": "2026-10-29",
+ "auteur": "agent portfolio-da",
+ "contraintes": {
+  "stack": "Astro + GSAP (ScrollTrigger, SplitText, Draggable, Flip si besoin) + Lenis ; moteur de la skill awwwards.",
+  "canvas_ogl": "Autorisé pour 3 directions au plus ; utilisé par 2 : nocturne (halo lampe, canvas 2D) et maree (houle, path SVG recalculé au ticker, pas de WebGL). Les 13 autres sont CSS / SVG / GSAP uniquement.",
+  "interdits": "Aucune vidéo tournée, aucun modèle 3D sur mesure : toute « déconstruction » d'un plat se fait en photos détourées en couches (PNG/WebP) ou en SVG.",
+  "obligations_kyw": "KywFooter sur chaque page, noindex, mention « Maquette KYW, certaines données sont illustratives », placeholder: true sur toute donnée fictive, jamais de récompense ni de chiffre inventé."
+ },
+ "restaurants_vers_directions": {
+  "les-potes-au-feu": [
+   "quatre-mains",
+   "braise",
+   "verger"
+  ],
+  "atelier-de-bossime": [
+   "verger",
+   "cahier",
+   "comptoir"
+  ],
+  "partage": [
+   "guinguette",
+   "verger",
+   "cahier"
+  ],
+  "brasserie-du-quai": [
+   "maree",
+   "journee",
+   "ardoise"
+  ],
+  "chez-guillaume": [
+   "collage",
+   "journee",
+   "nocturne"
+  ],
+  "dolce-vita-wepion": [
+   "forno",
+   "guinguette"
+  ],
+  "le-royal": [
+   "journee",
+   "ardoise",
+   "collage"
+  ],
+  "incorrect": [
+   "affiche",
+   "forno",
+   "nocturne"
+  ],
+  "l-essentiel": [
+   "velours",
+   "comptoir"
+  ],
+  "ferme-blanche-d-asie": [
+   "encre",
+   "journee",
+   "affiche"
+  ],
+  "le-felicien": [
+   "ardoise",
+   "journee",
+   "guinguette"
+  ],
+  "grill-des-amis": [
+   "braise",
+   "guinguette",
+   "ardoise"
+  ],
+  "le-54": [
+   "velours",
+   "comptoir",
+   "verger"
+  ],
+  "le-ponti-2": [
+   "forno",
+   "guinguette",
+   "affiche"
+  ],
+  "le-servais": [
+   "nocturne",
+   "journee",
+   "collage"
+  ],
+  "li-micougni": [
+   "verger",
+   "cahier",
+   "comptoir"
+  ],
+  "makimono": [
+   "encre",
+   "comptoir"
+  ],
+  "pepite": [
+   "nocturne",
+   "cahier",
+   "quatre-mains"
+  ],
+  "sanga": [
+   "encre",
+   "braise",
+   "affiche"
+  ],
+  "huile-sur-le-feu": [
+   "forno",
+   "braise",
+   "maree"
+  ]
+ },
+ "directions": [
+  {
+   "id": "braise",
+   "nom": "Braise",
+   "pitch": "Le site est une soirée au feu : il part du noir incandescent du passe et refroidit chapitre après chapitre jusqu'à l'ivoire de la table, une seule variable de température pilotant couleur, lumière et texte.",
+   "cible": [
+    "grillades et viandes maturées",
+    "bistronomie au feu",
+    "ramen et bouillons",
+    "cuisine au four à bois"
+   ],
+   "ambiance": [
+    "incandescent",
+    "lent",
+    "charbon"
+   ],
+   "references": [
+    {
+     "url": "https://shorodo.nagoya/",
+     "slug": "shorodo",
+     "score": 8.85,
+     "ce_qu_on_en_retient": "Le thermomètre fixe (valeur + réglette) interpolé par ScrollTrigger scrub, le texte qui s'allume ligne par ligne du gris au blanc, l'inversion globale noir → ivoire au dernier chapitre, l'objet coupé dont les deux moitiés s'écartent au scrub.",
+     "capture": "data/portfolio/captures/shorodo/p2-frame-06.png"
+    },
+    {
+     "url": "https://saisonsf.com/",
+     "slug": "saisonsf",
+     "score": 7.5,
+     "ce_qu_on_en_retient": "Le dégradé radial braise (orange chaud → noir) comme fond de section, et le triptyque de photos portrait sur fond bleu nuit.",
+     "capture": "data/portfolio/captures/saisonsf/desktop-frame-4.png"
+    },
+    {
+     "url": "https://akaneyajapan.com/en/",
+     "slug": "akaneyajapan",
+     "score": 7.2,
+     "ce_qu_on_en_retient": "Le hero de braises plein cadre avec un signe vertical centré et une phrase de deux lignes dessous ; le « chapeau » de section (petit mot ocre au-dessus du titre) ; le diptyque révélé par clip-path.",
+     "capture": "data/portfolio/captures/akaneyajapan/desktop-haut.png"
+    }
+   ],
+   "concept": {
+    "idee": "Une variable --temp (de 900 °C à 20 °C) descend au fil du scroll ; elle règle le fond (noir fumée → brun braise → ivoire), la teinte des titres, l'intensité d'un halo radial et le chiffre du thermomètre fixé en bas à gauche.",
+    "metaphore": "Le service du soir : la cuisson, le dressage, la table, la fin de soirée.",
+    "signature": "Chapitre « cuisson » épinglé : une photo de plat ou de pièce de viande est découpée en 4 couches détourées (fond, pièce, garniture, sauce) ; au scrub les couches se déposent une à une sur le fond, pendant que le thermomètre descend et que la liste 01-04 à gauche s'allume. Recette : ScrollTrigger pin + scrub 1 sur une timeline ; chaque couche est un <img> avec clip-path inset et translateY ; --temp est un CSS custom property tweené par gsap.to(document.documentElement) sur chaque chapitre ; Lenis pour la douceur.",
+    "emotion": "La chaleur d'une cuisine ouverte la nuit.",
+    "motion_verb": "couve puis s'embrase",
+    "screenshot": "Le chapitre cuisson à mi-scroll : fond brun braise, pièce de viande posée, sauce encore en l'air, « 420 °C » en bas à gauche."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "ground_depart",
+      "hex": "#141110"
+     },
+     {
+      "role": "ground_arrivee",
+      "hex": "#F2E8D8"
+     },
+     {
+      "role": "ink",
+      "hex": "#F4EDE2"
+     },
+     {
+      "role": "accent_braise",
+      "hex": "#E8632C"
+     },
+     {
+      "role": "muted_cuivre",
+      "hex": "#B5703F"
+     },
+     {
+      "role": "line_cendre",
+      "hex": "#5E5650"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display (titres, chiffres de température)",
+      "famille": "Melodrama",
+      "source": "Fontshare",
+      "graisses": "400, 700",
+      "tracking": "-0.02em, line-height 0.9"
+     },
+     {
+      "role": "texte et UI",
+      "famille": "Literata",
+      "source": "Google",
+      "graisses": "400, 400i, 600",
+      "tracking": "0, corps 17 px"
+     }
+    ],
+    "grille": "12 colonnes, marge = gouttière (clamp 20-56 px) ; les textes s'accrochent aux colonnes 1, 5 et 9 ; chapitres de 100 vh minimum.",
+    "rythme": "Chapitres pleins écran épinglés alternés avec des sections « respiration » (28u) ; aucun bloc inférieur à 60 vh avant la section pratique.",
+    "radius": "0 partout ; seule la pastille d'état est arrondie (999px).",
+    "imagerie": "Photos plein cadre assombries par un voile brun à 30 % qui s'éclaircit avec --temp ; pour le chapitre cuisson, 1 plat détouré en 4 couches PNG (fait à la main avec sharp/GIMP, jamais un rendu 3D) ; portraits des chefs en bichromie braise sur noir.",
+    "textures": "Un seul artefact : grain fin (feTurbulence) à 0.06 sur les fonds sombres, désactivé sur l'ivoire final."
+   },
+   "structure": [
+    {
+     "section": "Hero",
+     "layout": "full-bleed media",
+     "composants": [
+      "photo cuisine plein cadre",
+      "nom en Melodrama 14vw",
+      "thermomètre fixe",
+      "pastille ouvert/fermé"
+     ],
+     "animation_entree": "le fond part du noir pur et s'embrase (halo radial scale 0.3 → 1), titre en reveal par lignes masquées",
+     "idle": "halo qui respire ±4 % toutes les 6 s"
+    },
+    {
+     "section": "Manifeste",
+     "layout": "statement",
+     "composants": [
+      "paragraphe t-l sur 8 colonnes",
+      "mot-clé en accent braise"
+     ],
+     "animation_entree": "mots passent de cendre à ivoire au scrub (SplitText words)",
+     "idle": "aucun"
+    },
+    {
+     "section": "Cuisson (signature)",
+     "layout": "sticky stage",
+     "composants": [
+      "liste 01-04 à gauche",
+      "scène de couches à droite",
+      "barre de progression braise"
+     ],
+     "animation_entree": "pin + scrub des couches",
+     "idle": "la sauce frémit (translateY ±2 px) tant que la section est active"
+    },
+    {
+     "section": "Carte",
+     "layout": "liste index",
+     "composants": [
+      "lignes plat / prix tabulaires",
+      "filtre midi / soir",
+      "aperçu photo au survol"
+     ],
+     "animation_entree": "lignes qui s'allument une à une",
+     "idle": "aucun"
+    },
+    {
+     "section": "Les mains",
+     "layout": "asymmetric pair",
+     "composants": [
+      "portrait chef 7 colonnes",
+      "texte 4 colonnes décalé"
+     ],
+     "animation_entree": "clip-path du portrait du bas vers le haut",
+     "idle": "aucun"
+    },
+    {
+     "section": "Salle",
+     "layout": "gallery wall",
+     "composants": [
+      "5 photos de tailles différentes",
+      "légendes en Literata italique"
+     ],
+     "animation_entree": "parallaxe différenciée",
+     "idle": "aucun"
+    },
+    {
+     "section": "Avis",
+     "layout": "bande",
+     "composants": [
+      "3 citations en marquee lent"
+     ],
+     "animation_entree": "marquee à vitesse scroll",
+     "idle": "défilement lent"
+    },
+    {
+     "section": "Pratique",
+     "layout": "split",
+     "composants": [
+      "horaires par jour",
+      "adresse + plan statique",
+      "boutons réserver / bon cadeau"
+     ],
+     "animation_entree": "le fond atteint l'ivoire, les textes passent en noir",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "footer as finale",
+     "composants": [
+      "nom géant en Melodrama ivoire sur brun",
+      "liens",
+      "KywFooter"
+     ],
+     "animation_entree": "nom qui monte derrière la section précédente (sticky)",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "privatisation (le feu éteint : page claire)"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Thermomètre de scroll",
+     "comportement": "Valeur numérique + réglette verticale fixées en bas à gauche ; interpolées sur le scroll global, libellé du chapitre (cuisson, dressage, table, nuit).",
+     "hover_focus_actif": "au survol la réglette affiche les 4 repères cliquables (ancres) ; focus-visible : anneau braise",
+     "mobile": "réduit à la valeur seule, 12 px, en bas à gauche, masqué pendant le clavier"
+    },
+    {
+     "nom": "Scène de couches",
+     "comportement": "4 images détourées empilées, déposées au scrub avec un léger overshoot.",
+     "hover_focus_actif": "aucun hover ; l'ordre est lisible au clavier via la liste 01-04 (boutons qui scrollent au bon état)",
+     "mobile": "scène réduite à 70 vw, liste sous la scène, pin conservé"
+    },
+    {
+     "nom": "Ligne de carte",
+     "comportement": "Nom, description courte, prix tabulaire ; survol : la ligne s'embrase (fond brun, texte ivoire) et une vignette suit le pointeur.",
+     "hover_focus_actif": "fond brun au hover et focus ; actif : prix souligné",
+     "mobile": "vignette inline à gauche de la ligne"
+    },
+    {
+     "nom": "Bouton réserver",
+     "comportement": "Pilule à contour braise ; le remplissage part du point d'entrée du pointeur.",
+     "hover_focus_actif": "flood braise + texte noir ; :active scale 0.97",
+     "mobile": "barre basse fixe réserver / appeler"
+    }
+   ],
+   "mobile_390": "Le thermomètre reste (valeur seule) et la scène de couches survit en pin vertical (70 vw) ; les chapitres passent à 100 svh ; le hero garde le nom à 20 vw sur deux lignes.",
+   "reduced_motion": "Pas de pin ni de scrub : les couches sont affichées déposées, --temp change par section (transition de couleur 0 s), le thermomètre affiche la valeur de la section visible, le halo est statique.",
+   "donnees_fictives_necessaires": [
+    "1 plat détouré en 4 couches (photo à produire ou photo client découpée)",
+    "6 plats par catégorie (midi, soir, desserts)",
+    "3 citations d'avis marquées illustratives",
+    "8 photos de salle et cuisine",
+    "températures de cuisson plausibles par chapitre"
+   ],
+   "risques": [
+    "Le site « sombre à accent orange » est un cliché : il est évité parce que la palette change réellement (le site finit clair) et que l'orange n'est jamais un aplat de bouton isolé.",
+    "Grain + dégradé partout = slop : un seul artefact, un seul halo.",
+    "Pin trop long : limiter la section cuisson à 250 % de hauteur."
+   ],
+   "genericite_test": "Un modèle générique produirait un hero sombre avec une photo de braise et un bouton orange. Ici la température est une donnée qui traverse le site (fond, texte, thermomètre, footer clair) et la scène de couches est construite à partir des vrais plats : impossible sans le concept.",
+   "diversite": {
+    "palette": "sombre → ivoire, accent braise",
+    "typo": "serif de texte + display condensée haute contraste",
+    "structure": "one-page à chapitres épinglés",
+    "motion_verb": "couve puis s'embrase",
+    "cible": "grillades, feu"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "les-potes-au-feu",
+    "grill-des-amis",
+    "sanga",
+    "huile-sur-le-feu"
+   ]
+  },
+  {
+   "id": "quatre-mains",
+   "nom": "Quatre mains",
+   "pitch": "Deux colonnes, deux voix : l'écran est coupé en deux couleurs qui défilent à des vitesses différentes et ne se rejoignent qu'aux moments où les deux chefs cuisinent ensemble.",
+   "cible": [
+    "duo de chefs ou d'associés",
+    "bistronomie",
+    "lieux à deux activités (restaurant + bar, cave + table, restaurant + scène)"
+   ],
+   "ambiance": [
+    "bicolore",
+    "franc",
+    "complice"
+   ],
+   "references": [
+    {
+     "url": "https://www.mugaritz.com/",
+     "slug": "mugaritz",
+     "score": 8.0,
+     "ce_qu_on_en_retient": "Le split-screen vertical bicolore dont les deux moitiés défilent indépendamment, le logo posé sur la frontière avec mix-blend-mode, le nom géant pleine largeur coupé en deux couleurs par la frontière, la liste numérotée 01-05 à filets.",
+     "capture": "data/portfolio/captures/mugaritz/desktop-frame-1.png"
+    },
+    {
+     "url": "https://restaurantgem.com",
+     "slug": "restaurantgem",
+     "score": 7.9,
+     "ce_qu_on_en_retient": "Le hero split photo / texte avec parallaxe, et la liste de plats dont le survol bascule la grande photo voisine.",
+     "capture": "data/portfolio/captures/restaurantgem/desktop-frame-3.png"
+    },
+    {
+     "url": "https://centralrestaurante.com.pe/",
+     "slug": "centralrestaurante",
+     "score": 7.3,
+     "ce_qu_on_en_retient": "Le diptyque plein écran de deux images en vis-à-vis (une colorée, une noir et blanc) et la composition en escalier autour d'un axe.",
+     "capture": "data/portfolio/captures/centralrestaurante/desktop-haut.png"
+    }
+   ],
+   "concept": {
+    "idee": "La page est un diptyque : colonne gauche vert bouteille (le premier chef, le salé, le soir), colonne droite moutarde (le second, le sucré, le midi). Les deux colonnes défilent à des vitesses différentes (ScrollTrigger scrub, translateY de la colonne droite à 0.85 × du scroll) et se resynchronisent sur les sections communes (carte, réservation) où la frontière disparaît.",
+    "metaphore": "Deux parcours qui se croisent : la rencontre, puis la cuisine à quatre mains.",
+    "signature": "Le nom du restaurant en Switzer 700 sur toute la largeur, les lettres coupées par la frontière (vert sur moutarde / moutarde sur vert, via deux copies du texte dans deux conteneurs clip-path inset). Au scroll la frontière glisse de 50 % à 0 % puis à 100 % selon le chapitre (gsap.to sur --split), ce qui « donne la parole » à l'un ou l'autre. Lenis + un seul ScrollTrigger global qui expose le progrès.",
+    "emotion": "La complicité : on sent qu'il y a deux personnes.",
+    "motion_verb": "se rejoint",
+    "screenshot": "Le hero : nom géant coupé net au milieu, portrait de chaque chef dans sa colonne, la frontière verticale à 50 %."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "ground_gauche",
+      "hex": "#1E4A3E"
+     },
+     {
+      "role": "ground_droite",
+      "hex": "#E6B13A"
+     },
+     {
+      "role": "ink",
+      "hex": "#111311"
+     },
+     {
+      "role": "paper (sections communes)",
+      "hex": "#F7F5EE"
+     },
+     {
+      "role": "line",
+      "hex": "#2C2C2A"
+     }
+    ],
+    "typo": [
+     {
+      "role": "tout (display, texte, nav)",
+      "famille": "Switzer",
+      "source": "Fontshare",
+      "graisses": "300, 700",
+      "tracking": "-0.04em en display, 0 en texte"
+     },
+     {
+      "role": "meta et numéros",
+      "famille": "Fragment Mono",
+      "source": "Google",
+      "graisses": "400",
+      "tracking": "+0.02em, 12 px"
+     }
+    ],
+    "grille": "Deux colonnes de 50 vw ; dans chaque colonne une grille de 6 ; les sections communes repassent sur 12 colonnes pleine largeur.",
+    "rythme": "Alternance strict : 2 sections en diptyque, 1 section commune pleine largeur ; sections communes plus courtes (16u).",
+    "radius": "0 ; photos à bords vifs.",
+    "imagerie": "Portraits plein pied détourés sur l'aplat de leur colonne ; photos de plats en noir et blanc dans la colonne gauche, en couleur dans la droite ; les photos communes (salle) en couleur plein cadre.",
+    "textures": "Aucune."
+   },
+   "structure": [
+    {
+     "section": "Hero diptyque",
+     "layout": "split frame",
+     "composants": [
+      "nom géant coupé",
+      "deux portraits",
+      "deux lignes « chef / parcours »",
+      "frontière"
+     ],
+     "animation_entree": "les deux colonnes entrent par les côtés (xPercent ±100 → 0) et le nom se révèle ligne par ligne",
+     "idle": "la frontière oscille de ±6 px avec le pointeur (quickTo)"
+    },
+    {
+     "section": "Parcours (deux chronologies)",
+     "layout": "sticky narrative à deux colonnes",
+     "composants": [
+      "frise d'années à gauche",
+      "frise d'années à droite",
+      "photos en escalier"
+     ],
+     "animation_entree": "colonne droite défile à 0.85 ×, les années se dessinent",
+     "idle": "aucun"
+    },
+    {
+     "section": "La rencontre",
+     "layout": "statement commun",
+     "composants": [
+      "paragraphe t-l centré sur papier",
+      "frontière qui disparaît"
+     ],
+     "animation_entree": "--split passe à 0 puis les deux couleurs fondent vers papier",
+     "idle": "aucun"
+    },
+    {
+     "section": "Carte à quatre mains",
+     "layout": "index list + stage",
+     "composants": [
+      "liste de plats numérotée 01-08",
+      "photo qui change au survol",
+      "tag chef A / chef B"
+     ],
+     "animation_entree": "lignes qui glissent depuis leur colonne d'origine",
+     "idle": "aucun"
+    },
+    {
+     "section": "Salle et bar",
+     "layout": "full-bleed",
+     "composants": [
+      "photo plein cadre",
+      "badge horaires du soir"
+     ],
+     "animation_entree": "clip-path depuis le centre",
+     "idle": "aucun"
+    },
+    {
+     "section": "Avis",
+     "layout": "diptyque",
+     "composants": [
+      "citation à gauche",
+      "citation à droite",
+      "source en mono"
+     ],
+     "animation_entree": "mots en stagger",
+     "idle": "aucun"
+    },
+    {
+     "section": "Réserver",
+     "layout": "bande commune",
+     "composants": [
+      "bouton large",
+      "téléphone",
+      "horaires"
+     ],
+     "animation_entree": "fond papier, bouton flood",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "footer as finale",
+     "composants": [
+      "nom coupé à nouveau",
+      "liens",
+      "KywFooter"
+     ],
+     "animation_entree": "frontière revient à 50 %",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "les-deux-chefs (deux colonnes complètes)"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Frontière",
+     "comportement": "Ligne verticale de 2 px entre les colonnes dont la position (--split) est pilotée par chapitre.",
+     "hover_focus_actif": "aucun hover ; invisible pour le clavier",
+     "mobile": "devient horizontale : colonnes empilées, chaque section du diptyque devient deux bandes couleur"
+    },
+    {
+     "nom": "Nom coupé",
+     "comportement": "Deux copies du nom superposées, chacune clipée par --split ; couleur inversée.",
+     "hover_focus_actif": "aucun",
+     "mobile": "nom sur 2 lignes, ligne 1 sur vert, ligne 2 sur moutarde"
+    },
+    {
+     "nom": "Liste à stage",
+     "comportement": "Survol d'une ligne : la photo du stage se remplace (crossfade 0.4 s), le tag du chef s'allume.",
+     "hover_focus_actif": "ligne soulignée, photo change aussi au focus",
+     "mobile": "vignette inline, pas de stage"
+    },
+    {
+     "nom": "Bouton réserver",
+     "comportement": "Rectangle noir ; au survol le label roule (letter roll).",
+     "hover_focus_actif": "roll + fond inversé au focus",
+     "mobile": "barre basse fixe"
+    }
+   ],
+   "mobile_390": "Le diptyque devient un empilement de bandes de couleur alternées (vert / moutarde) ; le nom coupé survit sur deux lignes bicolores ; le défilement différencié est remplacé par un léger parallaxe des photos.",
+   "reduced_motion": "Colonnes synchrones, frontière fixe à 50 %, nom coupé statique, crossfade de la liste à 0 s (changement immédiat).",
+   "donnees_fictives_necessaires": [
+    "2 portraits plein pied détourés (chefs ou associés)",
+    "2 chronologies de 5 étapes chacune",
+    "8 plats taggés A / B",
+    "2 citations d'avis",
+    "6 photos de salle"
+   ],
+   "risques": [
+    "Les textes coupés par la frontière deviennent illisibles (défaut de Mugaritz) : seul le nom est coupé, jamais un paragraphe.",
+    "Le bicolore peut virer « drapeau » : garder un papier neutre pour les sections communes et des photos sobres.",
+    "Scroll différencié = mal de mer : écart de vitesse limité à 15 %."
+   ],
+   "genericite_test": "Un modèle générique ferait un hero avec deux photos côte à côte. Ici la structure entière (deux colonnes qui ne se rejoignent qu'aux sections communes) découle du duo et le nom coupé n'a de sens que pour un lieu à deux têtes.",
+   "diversite": {
+    "palette": "bicolore clair (vert / moutarde)",
+    "typo": "grotesque unique monumentale + mono",
+    "structure": "split-screen deux colonnes",
+    "motion_verb": "se rejoint",
+    "cible": "duo, deux activités"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "les-potes-au-feu",
+    "pepite"
+   ]
+  },
+  {
+   "id": "affiche",
+   "nom": "Affiche",
+   "pitch": "Chaque écran est une affiche de rue : aplats francs, grotesque extra-large, horaires monumentaux et un plat qui s'empile couche par couche comme une liste numérotée.",
+   "cible": [
+    "pizzeria créative",
+    "street food et friterie",
+    "brasserie populaire",
+    "burger"
+   ],
+   "ambiance": [
+    "criard",
+    "joyeux",
+    "direct"
+   ],
+   "references": [
+    {
+     "url": "https://bar-topas.ch/",
+     "slug": "bar-topas",
+     "score": 8.1,
+     "ce_qu_on_en_retient": "Les bandes de couleur en rideau, les horaires en cartes typographiques énormes avec « ¡HOY! » sur le jour courant, la liste 01-05 d'un pincho qui s'assemble au scroll (ici en couches PNG, pas en 3D), les bords dentelés entre sections, la pastille « ouvert jusqu'à ».",
+     "capture": "data/portfolio/captures/bar-topas/desktop-frame-6.png"
+    },
+    {
+     "url": "https://www.gourouindianfood.fr/",
+     "slug": "gourouindianfood",
+     "score": 7.65,
+     "ce_qu_on_en_retient": "Le titre pleine largeur dont une lettre est remplacée par un badge circulaire à texte rotatif, la grille bento de plats sur aplats de couleur, les boutons rectangulaires à bord 1 px, le fond à rayons.",
+     "capture": "data/portfolio/captures/gourouindianfood/desktop-frame-5.png"
+    },
+    {
+     "url": "https://madie.es",
+     "slug": "madie",
+     "score": 8.4,
+     "ce_qu_on_en_retient": "Le titre sur deux registres (contour puis plein) et le séparateur ondulé entre deux aplats.",
+     "capture": "data/portfolio/captures/madie/desktop-haut.png"
+    }
+   ],
+   "concept": {
+    "idee": "Le site est une pile d'affiches collées les unes sur les autres : chaque section a sa couleur, son titre énorme, son bord dentelé ; passer à la suivante, c'est coller une affiche par-dessus (clip-path qui descend).",
+    "metaphore": "Le mur d'affiches d'une rue commerçante.",
+    "signature": "Section épinglée « ça s'empile » : la pizza (ou le burger, le sandwich) photographiée en 5 couches détourées (pâte, sauce, garniture 1, garniture 2, finition) s'empile au scrub pendant que la liste 01-05 s'allume ; au dernier état, le prix claque en 200 px. Recette : ScrollTrigger pin + scrub, 5 <img> en translateY/rotate, SplitText pour le prix, Lenis.",
+    "emotion": "L'envie immédiate, comme devant une vitrine.",
+    "motion_verb": "claque comme un volet",
+    "screenshot": "La section horaires : fond jaune, « HORAIRES » en Archivo expanded 900, cartes rouges des jours avec heures énormes, aujourd'hui marqué."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "rouge coquelicot",
+      "hex": "#E3352B"
+     },
+     {
+      "role": "jaune",
+      "hex": "#F6C33A"
+     },
+     {
+      "role": "vert gazon",
+      "hex": "#1F8A4C"
+     },
+     {
+      "role": "crème",
+      "hex": "#F4EEDF"
+     },
+     {
+      "role": "ink",
+      "hex": "#15110F"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display (titres, horaires, prix)",
+      "famille": "Archivo",
+      "source": "Google (variable wdth 62-125)",
+      "graisses": "900 en largeur 125",
+      "tracking": "-0.03em, line-height 0.88, capitales"
+     },
+     {
+      "role": "texte et UI",
+      "famille": "Archivo",
+      "source": "Google",
+      "graisses": "400, 600 en largeur 100",
+      "tracking": "0"
+     }
+    ],
+    "grille": "Une colonne pleine largeur, marges 24 px (jamais plus), titres alignés à gauche, bento 3 colonnes pour les plats.",
+    "rythme": "Sections pleines écran (100 vh) de couleur alternée rouge / crème / jaune / vert, jamais deux fois la même d'affilée.",
+    "radius": "0 pour les blocs ; 999px uniquement pour les pastilles d'état et les badges rotatifs.",
+    "imagerie": "Plats détourés posés sur aplat, ombre portée dure (0 flou, décalage 8 px) ; photos reportage encadrées d'un filet noir 2 px ; 5 couches PNG pour la signature.",
+    "textures": "Aucune ; les bords dentelés (SVG) sont la seule matière."
+   },
+   "structure": [
+    {
+     "section": "Hero affiche",
+     "layout": "poster",
+     "composants": [
+      "nom en Archivo 125 sur 2 lignes (contour puis plein)",
+      "pastille ouvert jusqu'à",
+      "plat détouré géant",
+      "marquee de la carte"
+     ],
+     "animation_entree": "rideau de 4 bandes de couleur qui se lève (clip-path), titre en stagger de lettres",
+     "idle": "plat détouré en lévitation ±6 px"
+    },
+    {
+     "section": "Définition",
+     "layout": "statement",
+     "composants": [
+      "« nom [prononciation] nom commun » puis définition humoristique"
+     ],
+     "animation_entree": "lignes par masque",
+     "idle": "aucun"
+    },
+    {
+     "section": "Ça s'empile (signature)",
+     "layout": "sticky stage",
+     "composants": [
+      "liste 01-05",
+      "5 couches",
+      "prix géant"
+     ],
+     "animation_entree": "pin + scrub",
+     "idle": "aucun"
+    },
+    {
+     "section": "Carte bento",
+     "layout": "grille",
+     "composants": [
+      "cartes de plats sur aplats",
+      "nom + prix + description capitales",
+      "badges végé / épicé"
+     ],
+     "animation_entree": "cartes qui claquent (scale 1.05 → 1, 0.3 s) en stagger",
+     "idle": "aucun"
+    },
+    {
+     "section": "Horaires",
+     "layout": "bande",
+     "composants": [
+      "titre géant",
+      "7 cartes de jours",
+      "étiquette aujourd'hui tournée"
+     ],
+     "animation_entree": "cartes qui tombent en stagger",
+     "idle": "aucun"
+    },
+    {
+     "section": "Comment ça marche",
+     "layout": "liste 3 étapes",
+     "composants": [
+      "1-2-3 cerclés",
+      "sur place / à emporter"
+     ],
+     "animation_entree": "numéros qui se remplissent",
+     "idle": "aucun"
+    },
+    {
+     "section": "Galerie inclinée",
+     "layout": "filmstrip",
+     "composants": [
+      "cartes photo numérotées 01-08 tournées ±4°",
+      "disque CTA final"
+     ],
+     "animation_entree": "défilement horizontal au scroll vertical (desktop)",
+     "idle": "aucun"
+    },
+    {
+     "section": "Visite",
+     "layout": "split",
+     "composants": [
+      "adresse",
+      "plan statique recoloré",
+      "téléphone",
+      "réseaux"
+     ],
+     "animation_entree": "bord dentelé",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "footer as finale",
+     "composants": [
+      "mot d'adieu géant",
+      "KywFooter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "a-emporter (commande / click & collect)"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Rideau d'entrée",
+     "comportement": "4 bandes verticales aux couleurs de la palette couvrent l'écran avec le nom centré et une barre de progression réelle ; se lèvent en 0.9 s.",
+     "hover_focus_actif": "aucun",
+     "mobile": "identique, bandes horizontales"
+    },
+    {
+     "nom": "Cartes horaires",
+     "comportement": "7 cartes rouges avec le jour en petites capitales et l'horaire en display ; le jour courant porte une étiquette jaune tournée de -8°.",
+     "hover_focus_actif": "carte qui se soulève (translateY -4 px) au hover ; focus-visible contour jaune",
+     "mobile": "liste verticale, aujourd'hui en premier"
+    },
+    {
+     "nom": "Badge rotatif",
+     "comportement": "Texte circulaire (SVG textPath) qui tourne en continu ; remplace une lettre d'un titre ou sert de CTA « ¡Ven! ».",
+     "hover_focus_actif": "vitesse ×3 au hover",
+     "mobile": "taille 72 px"
+    },
+    {
+     "nom": "Bouton rectangulaire",
+     "comportement": "Bord 1 px noir, capitales ; au survol le fond se remplit depuis le bas.",
+     "hover_focus_actif": "flood + texte inversé ; actif : décalage 2 px",
+     "mobile": "pleine largeur"
+    }
+   ],
+   "mobile_390": "Les affiches restent pleines écran (100 svh) ; le hero empile nom + plat détouré ; la galerie inclinée devient scroll-snap horizontal natif ; la signature survit en pin vertical avec la liste sous la pile.",
+   "reduced_motion": "Rideau remplacé par un fondu de 0.2 s, pile affichée complète, cartes et badges statiques (le badge rotatif ne tourne pas).",
+   "donnees_fictives_necessaires": [
+    "1 plat en 5 couches détourées",
+    "12 plats avec prix pour le bento",
+    "8 photos de plats pour la galerie",
+    "une définition humoristique du nom",
+    "3 étapes à emporter"
+   ],
+   "risques": [
+    "Le pop multicolore vire au « site de fast-food générique » si les photos sont des banques d'images : exiger de vraies photos reportage, encadrées.",
+    "Trop de mouvement : un seul objet en lévitation à la fois.",
+    "Les capitales partout fatiguent : paragraphes en bas de casse 17 px."
+   ],
+   "genericite_test": "Un modèle ferait un hero rouge avec une photo de pizza et trois cartes. Ici le rythme d'affiches collées, les horaires traités comme le titre principal et la pile de couches tirée du vrai plat signature sont des décisions que seul ce concept produit.",
+   "diversite": {
+    "palette": "aplats primaires (rouge, jaune, vert, crème)",
+    "typo": "grotesque extended black",
+    "structure": "pile d'affiches pleine largeur",
+    "motion_verb": "claque comme un volet",
+    "cible": "pizza créative, street food"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "incorrect",
+    "ferme-blanche-d-asie",
+    "le-ponti-2",
+    "sanga"
+   ]
+  },
+  {
+   "id": "cahier",
+   "nom": "Cahier",
+   "pitch": "Le site est le cahier de la maison : papier, stylo bille, sommaire pointillé, timbres et annotations manuscrites, où le menu du jour s'écrit sous vos yeux.",
+   "cible": [
+    "ferme-table et produits locaux",
+    "néo-bistrot",
+    "traiteur",
+    "boulangerie-restaurant"
+   ],
+   "ambiance": [
+    "manuscrit",
+    "honnête",
+    "quotidien"
+   ],
+   "references": [
+    {
+     "url": "https://tabkitchenbakery.com/",
+     "slug": "tabkitchenbakery",
+     "score": 7.15,
+     "ce_qu_on_en_retient": "Le menu en sommaire de livre (plat, pointillés, numéro 01-06, ligne active sur fond), les cartes d'équipe inclinées avec prénom en fat italic, flèche manuscrite « (Team Kitchen) » et photo arrondie, le cadre ovale à double filet.",
+     "capture": "data/portfolio/captures/tabkitchenbakery/desktop-frame-4.png"
+    },
+    {
+     "url": "https://www.pizza-amici.nl/",
+     "slug": "pizza-amici",
+     "score": 7.9,
+     "ce_qu_on_en_retient": "Les cartes polaroid à bord dentelé en slider, les timbres photo qui s'empilent, la carte postale signée du chef, les annotations en écriture bleue posées en biais.",
+     "capture": "data/portfolio/captures/pizza-amici/desktop-frame-2.png"
+    },
+    {
+     "url": "https://www.thefatduck.co.uk/",
+     "slug": "thefatduck",
+     "score": 7.5,
+     "ce_qu_on_en_retient": "Le header en cellules (adresse | nom | boutons), la liste d'expériences à filets « Learn more → », les croquis au trait en marge qui bougent en parallaxe.",
+     "capture": "data/portfolio/captures/thefatduck/desktop-frame-1.png"
+    }
+   ],
+   "concept": {
+    "idee": "Un cahier d'écolier quadrillé (fond CSS répété à 24 px) sur lequel tout est posé : textes en mono comme tapés à la machine, titres en slab, corrections et flèches en bleu bille, photos collées comme des timbres. Les pages du site sont les pages du cahier.",
+    "metaphore": "Le cahier de recettes et de fournisseurs que tient la cuisine.",
+    "signature": "Le menu du jour s'écrit : trois lignes (entrée, plat, dessert) en écriture bille bleue tracées par stroke-dashoffset (SVG généré depuis Caveat via la police → paths pré-exportés) quand la section entre à l'écran, puis la date est tamponnée (scale 1.4 → 1, rotation -6°, 0.25 s). Recette : ScrollTrigger once, gsap.fromTo strokeDashoffset, tampon en back.out ; Lenis.",
+    "emotion": "La confiance : on lit les notes de quelqu'un qui sait d'où vient ce qu'il cuisine.",
+    "motion_verb": "se pose comme du papier",
+    "screenshot": "La page carte : sommaire pointillé 01-12 sur fond kraft, une annotation « ↑ de chez Mathieu, Wépion » en bleu, un timbre photo incliné."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "papier",
+      "hex": "#F5F0E4"
+     },
+     {
+      "role": "quadrillage",
+      "hex": "#E3DCCB"
+     },
+     {
+      "role": "encre bille",
+      "hex": "#2448A6"
+     },
+     {
+      "role": "rouge correcteur",
+      "hex": "#D43D2E"
+     },
+     {
+      "role": "mine",
+      "hex": "#5E5B55"
+     },
+     {
+      "role": "kraft",
+      "hex": "#D8C39B"
+     }
+    ],
+    "typo": [
+     {
+      "role": "texte, nav, prix, sommaire",
+      "famille": "Sometype Mono",
+      "source": "Google",
+      "graisses": "400, 700",
+      "tracking": "0, corps 15-16 px, tabular"
+     },
+     {
+      "role": "display (titres de pages, chiffres)",
+      "famille": "Bespoke Slab",
+      "source": "Fontshare",
+      "graisses": "700 (chiffres en mono, Bespoke Slab n'a pas de lining)",
+      "tracking": "-0.01em"
+     },
+     {
+      "role": "annotations manuscrites (information réelle uniquement)",
+      "famille": "Caveat",
+      "source": "Google",
+      "graisses": "500",
+      "tracking": "0, 20-28 px, couleur bille"
+     }
+    ],
+    "grille": "Colonne de lecture 64ch centrée à gauche (colonnes 2-8), marge droite libre pour les annotations et timbres (colonnes 9-12).",
+    "rythme": "Blocs courts (8u) séparés par des filets pointillés ; une « page » = une section avec numéro de page en bas.",
+    "radius": "2 px sur les photos (coin de papier), 0 ailleurs.",
+    "imagerie": "Photos en timbres dentelés (mask-image radial répété) ou en polaroid à cadre blanc, toujours légèrement tournées (-3° à +3°) ; portraits ronds pour l'équipe ; aucune photo plein cadre sauf le hero.",
+    "textures": "Une seule : le quadrillage du papier (CSS, pas d'image) ; pas de grain."
+   },
+   "structure": [
+    {
+     "section": "Couverture",
+     "layout": "poster",
+     "composants": [
+      "étiquette de cahier (nom, « cahier n° 6, saison automne »)",
+      "photo collée",
+      "header en cellules"
+     ],
+     "animation_entree": "l'étiquette se colle (scale 1.05 → 1), la photo se pose avec rotation -2°",
+     "idle": "aucun (page calme)"
+    },
+    {
+     "section": "Menu du jour (signature)",
+     "layout": "bande",
+     "composants": [
+      "3 lignes manuscrites tracées",
+      "tampon de date",
+      "prix en mono"
+     ],
+     "animation_entree": "tracé SVG + tampon",
+     "idle": "aucun"
+    },
+    {
+     "section": "Le sommaire de la carte",
+     "layout": "liste index",
+     "composants": [
+      "lignes plat ...... prix",
+      "catégories en slab",
+      "annotations d'origine"
+     ],
+     "animation_entree": "lignes en fondu-montée 6 px, stagger 0.05",
+     "idle": "aucun"
+    },
+    {
+     "section": "Fournisseurs",
+     "layout": "gallery wall",
+     "composants": [
+      "timbres photo des producteurs",
+      "nom + village en mono",
+      "flèches manuscrites"
+     ],
+     "animation_entree": "timbres qui s'empilent (sticky + translate)",
+     "idle": "aucun"
+    },
+    {
+     "section": "Carte postale du chef",
+     "layout": "split",
+     "composants": [
+      "cadre à coins ornés",
+      "texte à la première personne",
+      "signature"
+     ],
+     "animation_entree": "carte qui se retourne (rotateY 180 → 0)",
+     "idle": "aucun"
+    },
+    {
+     "section": "L'équipe",
+     "layout": "grille",
+     "composants": [
+      "cartes inclinées prénom + photo ronde + phrase"
+     ],
+     "animation_entree": "cartes posées en stagger avec rotation",
+     "idle": "aucun"
+    },
+    {
+     "section": "Avis en marge",
+     "layout": "marginalia",
+     "composants": [
+      "citations courtes en Caveat bille, source en mono"
+     ],
+     "animation_entree": "fondu",
+     "idle": "aucun"
+    },
+    {
+     "section": "Pratique",
+     "layout": "split",
+     "composants": [
+      "horaires en tableau mono",
+      "plan au trait",
+      "boutons réserver / appeler"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    },
+    {
+     "section": "Dos du cahier",
+     "layout": "footer as finale",
+     "composants": [
+      "nom en slab",
+      "numéro de page",
+      "KywFooter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "producteurs",
+    "traiteur-evenements (page « commande »)"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Ligne de sommaire",
+     "comportement": "Plat, pointillés (border-bottom dotted étirée par flex), prix tabulaire ; survol : la ligne se surligne au marqueur jaune pâle et l'annotation d'origine apparaît.",
+     "hover_focus_actif": "surlignage au hover et focus ; actif : numéro cerclé",
+     "mobile": "prix sur la même ligne, annotation sous la ligne"
+    },
+    {
+     "nom": "Timbre photo",
+     "comportement": "Image masquée par un bord dentelé, tournée ; au survol elle se redresse à 0°.",
+     "hover_focus_actif": "redressement + ombre ; focus : contour bille",
+     "mobile": "rotation conservée, taille 42 vw"
+    },
+    {
+     "nom": "Header en cellules",
+     "comportement": "Barre bordée divisée : adresse | nom | réserver | commander ; fixe.",
+     "hover_focus_actif": "cellule qui s'inverse (bille sur papier)",
+     "mobile": "nom + bouton menu, cellules empilées dans l'overlay"
+    },
+    {
+     "nom": "Tampon",
+     "comportement": "Date ou mention (« complet », « nouveau ») en capitales mono cerclées, posée avec un claquement.",
+     "hover_focus_actif": "aucun",
+     "mobile": "identique"
+    }
+   ],
+   "mobile_390": "Le quadrillage et les timbres restent ; la marge d'annotations passe sous chaque bloc ; le menu du jour tracé survit (SVG responsive) ; le header en cellules devient 2 cellules.",
+   "reduced_motion": "Menu du jour affiché tracé, tampon posé, timbres droits ; aucune rotation animée.",
+   "donnees_fictives_necessaires": [
+    "un menu du jour daté",
+    "6 producteurs avec village et photo (marqués illustratifs si inconnus)",
+    "12 lignes de carte avec origine",
+    "4 membres d'équipe avec une phrase",
+    "3 avis courts"
+   ],
+   "risques": [
+    "La manuscrite partout = slop : Caveat réservée aux annotations qui portent une information (origine, date, correction).",
+    "Le « vintage » kitsch (tache de café, scotch) : interdit ; seuls quadrillage, timbres et tampons.",
+    "Mono en corps long : limiter à 64ch et 16 px minimum."
+   ],
+   "genericite_test": "Un modèle produirait un site crème avec une police manuscrite dans les titres. Ici le cahier est une structure (sommaire, pages numérotées, marges d'annotation) et le menu du jour qui s'écrit n'existe que parce que la maison change sa carte chaque jour.",
+   "diversite": {
+    "palette": "papier + bille bleue + rouge",
+    "typo": "mono + slab + manuscrit",
+    "structure": "multi-pages carnet (document)",
+    "motion_verb": "se pose comme du papier",
+    "cible": "ferme-table, traiteur"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "atelier-de-bossime",
+    "partage",
+    "li-micougni",
+    "pepite"
+   ]
+  },
+  {
+   "id": "maree",
+   "nom": "Marée",
+   "pitch": "Un site d'eau et d'air pour une table au bord de la Meuse : nom bord à bord sur l'horizon, ligne de houle qui ondule au scroll et plan du quai dessiné au trait.",
+   "cible": [
+    "brasserie de fruits de mer",
+    "terrasse au bord de l'eau",
+    "table méditerranéenne lumineuse"
+   ],
+   "ambiance": [
+    "lumineux",
+    "salin",
+    "ample"
+   ],
+   "references": [
+    {
+     "url": "https://www.mirazur.fr/",
+     "slug": "mirazur",
+     "score": 7.5,
+     "ce_qu_on_en_retient": "Le wordmark serif bord à bord posé sur la photo d'horizon avec trois univers sous lui, la pile de CTA bordés en haut à droite, la citation en mono espacée, la carte dessinée au trait avec adresses numérotées 1-5.",
+     "capture": "data/portfolio/captures/mirazur/desktop-haut.png"
+    },
+    {
+     "url": "https://haven-annecy.fr/",
+     "slug": "haven-annecy",
+     "score": 7.95,
+     "ce_qu_on_en_retient": "Le line-art SVG qui se dessine au scroll (stroke-dashoffset) : contour de pays, devanture ; les lettres-photo (background-clip: text) ; la nav avec horaires sous chaque entrée.",
+     "capture": "data/portfolio/captures/haven-annecy/desktop-frame-6.png"
+    },
+    {
+     "url": "https://slurpramen.dk/",
+     "slug": "slurpramen",
+     "score": 8.1,
+     "ce_qu_on_en_retient": "Le wordmark à lettres étirées d'un bord à l'autre fixé en bas du hero, les cartes de lieu à étiquette de coin (jour, places, horaires) et les badges de règles maison (« pas de réservation, chiens bienvenus »).",
+     "capture": "data/portfolio/captures/slurpramen/desktop-frame-2.png"
+    }
+   ],
+   "concept": {
+    "idee": "Tout est posé sur une ligne d'horizon : une ligne de houle SVG (path sinusoïdal) traverse le site, ondule avec la vitesse de scroll et sépare ciel (texte) et eau (photos). Le nom s'étire d'un bord à l'autre comme un quai.",
+    "metaphore": "La Meuse vue de la terrasse : horizon, reflets, marée des services.",
+    "signature": "La houle : un path SVG de 2 ondes fixé entre les sections, dont l'amplitude est pilotée par la vélocité Lenis (gsap.quickTo sur une variable d'amplitude, path recalculé au ticker) ; au repos elle respire lentement ; sous le hero elle « monte » et découpe la photo (clip-path: path()). Recette : Lenis onScroll velocity → amplitude ; gsap.ticker pour le path ; clip-path path() sur l'image du hero.",
+    "emotion": "L'appétit d'air frais, un dimanche midi au bord de l'eau.",
+    "motion_verb": "ondule",
+    "screenshot": "Le hero : photo d'eau et de ciel, nom en Gambetta crème d'un bord à l'autre, la houle qui découpe le bas de l'image, trois mots sous le nom (terrasse · écailler · brasserie)."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "ground",
+      "hex": "#FBFBF8"
+     },
+     {
+      "role": "ink (bleu Meuse)",
+      "hex": "#17395B"
+     },
+     {
+      "role": "écume",
+      "hex": "#D8E3EA"
+     },
+     {
+      "role": "sable",
+      "hex": "#D5C4A1"
+     },
+     {
+      "role": "accent bouée",
+      "hex": "#D73C2C"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display (nom, titres)",
+      "famille": "Gambetta",
+      "source": "Fontshare",
+      "graisses": "500, 700",
+      "tracking": "-0.02em, line-height 0.95"
+     },
+     {
+      "role": "texte et UI",
+      "famille": "General Sans",
+      "source": "Fontshare",
+      "graisses": "400, 500",
+      "tracking": "0"
+     },
+     {
+      "role": "meta (horaires, marées, numéros de carte)",
+      "famille": "Martian Mono",
+      "source": "Google",
+      "graisses": "400",
+      "tracking": "+0.04em, 12 px, capitales"
+     }
+    ],
+    "grille": "12 colonnes, marge 40 px desktop ; les photos vont au bord, le texte reste sur les colonnes 2-7.",
+    "rythme": "Longues respirations (28u) ; une houle entre chaque paire de sections ; aucune section sombre.",
+    "radius": "0 ; les photos sont découpées par la houle, jamais arrondies.",
+    "imagerie": "Photos lumineuses, horizon toujours au même tiers ; plats vus du dessus sur nappe blanche ; une photo peut être « sous l'eau » : teintée bleu Meuse à 20 % via mix-blend-mode multiply.",
+    "textures": "Aucune ; la houle est la seule matière."
+   },
+   "structure": [
+    {
+     "section": "Hero horizon",
+     "layout": "full-bleed + name as image",
+     "composants": [
+      "photo",
+      "nom bord à bord",
+      "3 mots-univers",
+      "pile de CTA bordés"
+     ],
+     "animation_entree": "la houle monte depuis le bas et révèle la photo, le nom s'étire (letter-spacing 0.3em → 0)",
+     "idle": "houle qui respire"
+    },
+    {
+     "section": "Marée des services",
+     "layout": "bande",
+     "composants": [
+      "horaires en mono sur une ligne de temps horizontale",
+      "badge ouvert / prochain service"
+     ],
+     "animation_entree": "la ligne se dessine",
+     "idle": "aucun"
+    },
+    {
+     "section": "L'écailler",
+     "layout": "asymmetric pair",
+     "composants": [
+      "photo de plateau au bord",
+      "titre Gambetta",
+      "liste huîtres / crustacés avec origine en mono"
+     ],
+     "animation_entree": "photo révélée par houle clip-path",
+     "idle": "aucun"
+    },
+    {
+     "section": "La carte",
+     "layout": "liste index",
+     "composants": [
+      "catégories",
+      "lignes plat / prix",
+      "badge « arrivage »"
+     ],
+     "animation_entree": "lignes par masque",
+     "idle": "aucun"
+    },
+    {
+     "section": "La terrasse",
+     "layout": "full-bleed",
+     "composants": [
+      "photo plein cadre teintée",
+      "citation en mono espacée"
+     ],
+     "animation_entree": "citation lettre à lettre",
+     "idle": "aucun"
+    },
+    {
+     "section": "Règles maison",
+     "layout": "bande",
+     "composants": [
+      "badges bordés (terrasse sans réservation, chiens bienvenus, menu enfant)"
+     ],
+     "animation_entree": "stagger",
+     "idle": "aucun"
+    },
+    {
+     "section": "Le plan",
+     "layout": "map / diagram",
+     "composants": [
+      "plan au trait du quai (SVG draw)",
+      "pastilles 1-4 (restaurant, parking, ponton, arrêt de bus)",
+      "légende"
+     ],
+     "animation_entree": "tracé stroke-dashoffset",
+     "idle": "aucun"
+    },
+    {
+     "section": "Réserver",
+     "layout": "split",
+     "composants": [
+      "bouton large bleu",
+      "téléphone",
+      "privatisation"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "footer as finale",
+     "composants": [
+      "nom bord à bord sur écume",
+      "KywFooter"
+     ],
+     "animation_entree": "houle finale",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "terrasse",
+    "ecailler (arrivages)"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Houle",
+     "comportement": "Path SVG inline recalculé au ticker ; amplitude 6 px au repos, 28 px à vitesse max ; sert de séparateur et de clip-path.",
+     "hover_focus_actif": "aucun",
+     "mobile": "amplitude réduite de moitié, recalcul à 30 fps"
+    },
+    {
+     "nom": "Ligne de temps des services",
+     "comportement": "Barre horizontale 08h-23h en mono avec segments bleus pour les services et un curseur « maintenant ».",
+     "hover_focus_actif": "segment qui s'épaissit au hover avec tooltip",
+     "mobile": "ligne défilable horizontalement, curseur centré"
+    },
+    {
+     "nom": "Plan au trait",
+     "comportement": "SVG dessiné au scroll ; pastilles cliquables qui ouvrent une légende.",
+     "hover_focus_actif": "pastille qui grossit, légende au focus",
+     "mobile": "plan pleine largeur, légende en liste dessous"
+    },
+    {
+     "nom": "Pile de CTA",
+     "comportement": "3 boutons bordés empilés en haut à droite (réserver, terrasse, bon cadeau) ; au survol le fond passe bleu Meuse.",
+     "hover_focus_actif": "fond bleu + texte crème ; focus contour bouée",
+     "mobile": "barre basse fixe de 2 boutons"
+    }
+   ],
+   "mobile_390": "Nom bord à bord sur deux lignes ; houle conservée (amplitude réduite) ; plan au trait pleine largeur ; ligne de temps défilable.",
+   "reduced_motion": "Houle statique (amplitude 6 px fixe, pas de recalcul), plan affiché tracé, nom sans étirement.",
+   "donnees_fictives_necessaires": [
+    "liste d'arrivages (6 huîtres / crustacés avec origine)",
+    "4 points du plan",
+    "règles maison",
+    "8 photos lumineuses dont 2 d'eau",
+    "horaires par service"
+   ],
+   "risques": [
+    "Bleu + blanc + serif = site d'hôtel : évité par la houle vivante, la mono des marées et le rouge bouée rare.",
+    "Le plan dessiné doit être vrai (rues réelles) : le tracer à partir d'OpenStreetMap, pas inventer.",
+    "Houle au ticker sur mobile : limiter à 30 fps et pause hors écran."
+   ],
+   "genericite_test": "Un modèle ferait un hero photo de terrasse avec un titre centré. Ici l'horizon dicte la place de chaque chose, la houle réagit au visiteur et la carte-plan du quai est une information locale réelle.",
+   "diversite": {
+    "palette": "blanc + bleu Meuse + écume",
+    "typo": "serif display large + sans + mono",
+    "structure": "photographique à horizon + plan",
+    "motion_verb": "ondule",
+    "cible": "fruits de mer, bord de l'eau"
+   },
+   "canvas": true,
+   "restaurants_cibles_indicatifs": [
+    "brasserie-du-quai",
+    "huile-sur-le-feu"
+   ]
+  },
+  {
+   "id": "journee",
+   "nom": "Journée",
+   "pitch": "Du café du matin au dernier cocktail : le site est une frise de la journée dont la lumière et la palette tournent avec l'heure, et qui s'ouvre à l'heure réelle du visiteur.",
+   "cible": [
+    "brasserie ouverte 7 jours",
+    "brunch et petit-déjeuner",
+    "lieu qui vit matin, midi et soir (bar, café, salle)"
+   ],
+   "ambiance": [
+    "solaire",
+    "continu",
+    "ponctuel"
+   ],
+   "references": [
+    {
+     "url": "https://florporto.com/",
+     "slug": "florporto",
+     "score": 7.65,
+     "ce_qu_on_en_retient": "La frise du jour sticky à droite (morning / afternoon / evening avec un soleil qui descend), l'heure locale en direct en haut du hero et le thème jour / nuit qui suit l'heure réelle, les sections « coffee from 10:00 ».",
+     "capture": "data/portfolio/captures/florporto/desktop-frame-2.png"
+    },
+    {
+     "url": "https://delice.ca/",
+     "slug": "delice",
+     "score": 8.3,
+     "ce_qu_on_en_retient": "La barre supérieure de promotions récurrentes qui alterne les messages, le bloc horaires par jour avec flèches et lignes salle / bar / happy hour, les médaillons ronds de plats à titre courbé.",
+     "capture": "data/portfolio/captures/delice/desktop-bas.png"
+    },
+    {
+     "url": "https://www.hangar-7.com/de/",
+     "slug": "hangar-7",
+     "score": 7.45,
+     "ce_qu_on_en_retient": "Le badge « ouvert aujourd'hui 09:00 - 22:00 » à point coloré calculé selon le jour, et le hero épinglé à chips qui changent le média.",
+     "capture": "data/portfolio/captures/hangar-7/desktop-haut.png"
+    }
+   ],
+   "concept": {
+    "idee": "La page est un cadran : six moments (7h café, 9h brunch, 12h déjeuner, 17h apéro, 19h dîner, 23h dernier verre) se suivent au scroll ; une variable --heure pilote la couleur du ciel (aube, blanc, ocre, corail, nuit), la position d'un soleil / lune sur la frise sticky et la chip active. Au chargement, le site scrolle doucement jusqu'au moment correspondant à l'heure réelle (après le hero) et le badge annonce « ouvert jusqu'à 23h ».",
+    "metaphore": "Une journée de service vue depuis la terrasse.",
+    "signature": "Le ciel qui tourne : fond en dégradé linéaire à deux arrêts, tweené par ScrollTrigger sur chaque moment (gsap.to sur --ciel-haut / --ciel-bas), pendant que sur la frise sticky un disque passe de soleil (ocre) à lune (ivoire) en 6 crans et que les chiffres de l'heure défilent (tabular, SplitText chars). Recette : 6 ScrollTrigger onToggle + une timeline de couleurs, Lenis scrollTo pour l'arrivée à l'heure réelle.",
+    "emotion": "La disponibilité : « à n'importe quelle heure, il y a quelque chose pour vous ».",
+    "motion_verb": "tourne comme une horloge",
+    "screenshot": "Le moment 17h : fond corail, titre « L'apéro, dès 17h » en Bricolage, trois verres détourés, la frise à droite avec le soleil bas."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "aube",
+      "hex": "#FBF6EC"
+     },
+     {
+      "role": "midi",
+      "hex": "#FFFFFF"
+     },
+     {
+      "role": "soleil (accent)",
+      "hex": "#E79A2E"
+     },
+     {
+      "role": "crépuscule",
+      "hex": "#D9614E"
+     },
+     {
+      "role": "nuit",
+      "hex": "#13203A"
+     },
+     {
+      "role": "ink",
+      "hex": "#1B1B1B"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display (titres, heures géantes)",
+      "famille": "Bricolage Grotesque",
+      "source": "Google (opsz)",
+      "graisses": "800 en opsz 96",
+      "tracking": "-0.03em"
+     },
+     {
+      "role": "texte et UI",
+      "famille": "Rethink Sans",
+      "source": "Google",
+      "graisses": "400, 600",
+      "tracking": "0 ; chiffres tabular-nums"
+     }
+    ],
+    "grille": "12 colonnes, frise sticky sur la colonne 12, contenu sur 1-10.",
+    "rythme": "6 moments de 90-100 vh, séparés par un changement de ciel animé (jamais de coupure dure).",
+    "radius": "999px sur chips et boutons ; 24 px sur les cartes de moment ; photos à 16 px.",
+    "imagerie": "Une photo par moment, cadrée large, lumière cohérente avec l'heure (matin clair, soir chaud) ; objets détourés (tasse, verre, assiette) en petit pour les chips.",
+    "textures": "Aucune."
+   },
+   "structure": [
+    {
+     "section": "Hero cadran",
+     "layout": "poster",
+     "composants": [
+      "heure locale en direct",
+      "badge ouvert jusqu'à",
+      "nom",
+      "6 chips de moments"
+     ],
+     "animation_entree": "les chiffres de l'heure défilent jusqu'à l'heure réelle, le ciel se règle",
+     "idle": "la seconde de l'heure tourne"
+    },
+    {
+     "section": "7h Café",
+     "layout": "split",
+     "composants": [
+      "titre + heure",
+      "photo",
+      "3 lignes de carte"
+     ],
+     "animation_entree": "ciel aube, soleil qui se lève sur la frise",
+     "idle": "aucun"
+    },
+    {
+     "section": "9h Brunch",
+     "layout": "médaillons",
+     "composants": [
+      "cercles d'assiettes vues du dessus",
+      "titre courbé (textPath)",
+      "formule + prix"
+     ],
+     "animation_entree": "médaillons qui roulent en place (rotate -20 → 0)",
+     "idle": "aucun"
+    },
+    {
+     "section": "12h Déjeuner",
+     "layout": "liste index",
+     "composants": [
+      "plat du jour par jour de la semaine (7 lignes)",
+      "prix tabulaires"
+     ],
+     "animation_entree": "lignes par masque",
+     "idle": "aucun"
+    },
+    {
+     "section": "17h Apéro",
+     "layout": "bande",
+     "composants": [
+      "cocktails et bières en cartes",
+      "happy hour en badge"
+     ],
+     "animation_entree": "ciel corail",
+     "idle": "aucun"
+    },
+    {
+     "section": "19h Dîner",
+     "layout": "asymmetric pair",
+     "composants": [
+      "photo",
+      "carte du soir",
+      "réserver"
+     ],
+     "animation_entree": "ciel nuit, texte inversé",
+     "idle": "aucun"
+    },
+    {
+     "section": "23h Dernier verre",
+     "layout": "statement",
+     "composants": [
+      "phrase courte",
+      "horaires complets de la semaine avec flèches de jour"
+     ],
+     "animation_entree": "lune sur la frise",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "footer as finale",
+     "composants": [
+      "nom",
+      "adresse",
+      "KywFooter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "brunch",
+    "evenements (si agenda)"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Frise sticky du jour",
+     "comportement": "Ligne verticale à droite graduée 7h-23h ; disque soleil / lune positionné par --heure ; libellé du moment courant.",
+     "hover_focus_actif": "graduations cliquables (ancres) avec tooltip ; focus visible",
+     "mobile": "barre horizontale fixée en haut sous le header, 6 points"
+    },
+    {
+     "nom": "Badge ouvert",
+     "comportement": "Point vert / rouge + « ouvert jusqu'à 23h » ou « ouvre à 9h », calculé en JS depuis les horaires du jour (données réelles).",
+     "hover_focus_actif": "au survol : horaires du jour complets",
+     "mobile": "dans le header"
+    },
+    {
+     "nom": "Chips de moments",
+     "comportement": "6 pilules avec objet détouré miniature ; la chip active suit le scroll ; clic = scrollTo Lenis.",
+     "hover_focus_actif": "fond soleil au hover ; aria-current sur l'active",
+     "mobile": "rangée défilable"
+    },
+    {
+     "nom": "Horaires à flèches",
+     "comportement": "Un jour affiché à la fois avec flèches ‹ › et lignes salle / bar / cuisine.",
+     "hover_focus_actif": "flèches qui se déplacent de 4 px",
+     "mobile": "identique"
+    }
+   ],
+   "mobile_390": "La frise devient une barre horizontale de 6 points fixée sous le header ; le ciel change toujours ; les médaillons passent en scroll-snap ; l'arrivée à l'heure réelle est conservée.",
+   "reduced_motion": "Pas de scrollTo automatique ; le ciel change par section sans tween ; l'heure s'affiche sans défilement de chiffres.",
+   "donnees_fictives_necessaires": [
+    "carte par moment (3-6 lignes × 6 moments)",
+    "7 plats du jour (lundi-dimanche)",
+    "happy hour",
+    "6 photos à la bonne lumière",
+    "6 objets détourés"
+   ],
+   "risques": [
+    "Six sections de même gabarit = monotonie : varier les layouts (split, médaillons, liste, bande, statement).",
+    "Le dégradé de ciel peut tourner au « glow IA » : deux arrêts seulement, pas de flou, pas de violet.",
+    "L'arrivée automatique à l'heure réelle peut dérouter : limitée au premier chargement, jamais sous reduced-motion."
+   ],
+   "genericite_test": "Un modèle ferait une page avec trois blocs petit-déjeuner / déjeuner / dîner. Ici l'heure réelle entre dans la page (badge, position d'arrivée, ciel), ce qui n'a de sens que pour un lieu ouvert toute la journée.",
+   "diversite": {
+    "palette": "ciel qui tourne (aube → nuit)",
+    "typo": "sans humaniste + display opsz",
+    "structure": "frise chronologique sticky",
+    "motion_verb": "tourne comme une horloge",
+    "cible": "brasserie 7j/7, brunch"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "brasserie-du-quai",
+    "chez-guillaume",
+    "le-royal",
+    "ferme-blanche-d-asie",
+    "le-felicien",
+    "le-servais"
+   ]
+  },
+  {
+   "id": "comptoir",
+   "nom": "Comptoir",
+   "pitch": "Blanc, silence et précision : l'assiette est le seul sujet, dressée sous vos yeux composant par composant, dans un site où rien ne bouge sans raison.",
+   "cible": [
+    "gastronomique",
+    "sushi et omakase",
+    "table d'auteur à menu unique"
+   ],
+   "ambiance": [
+    "blanc",
+    "précis",
+    "silencieux"
+   ],
+   "references": [
+    {
+     "url": "https://restaurantcastor.be/",
+     "slug": "restaurantcastor",
+     "score": 7.6,
+     "ce_qu_on_en_retient": "La page blanche aux photos collées au bord gauche, le titre en capitales ultra-light à droite, le logo tourné à 90° fixé en bas à gauche, les deux traits diagonaux colorés aux coins d'une photo.",
+     "capture": "data/portfolio/captures/restaurantcastor/desktop-frame-2.png"
+    },
+    {
+     "url": "https://bolenius-rembrandtpark.nl/",
+     "slug": "bolenius-rembrandtpark",
+     "score": 7.45,
+     "ce_qu_on_en_retient": "Le hero à objet tenu en main au centre encadré de deux slogans, le lien italique posé sur un filet qui se dessine sur toute la colonne, la pastille Reserve + cadeau flottante.",
+     "capture": "data/portfolio/captures/bolenius-rembrandtpark/desktop-frame-5.png"
+    },
+    {
+     "url": "https://www.abacrestaurant.com/",
+     "slug": "abacrestaurant",
+     "score": 7.1,
+     "ce_qu_on_en_retient": "La cadence de blocs 50/50 photo / aplat avec petite capitale, titre fin et lien souligné ; le formulaire à champs soulignés sur une seule ligne de base.",
+     "capture": "data/portfolio/captures/abacrestaurant/desktop-bas.png"
+    }
+   ],
+   "concept": {
+    "idee": "Le site est un passe : une surface blanche sur laquelle les assiettes arrivent une à une. Rien n'est décoré ; la hiérarchie vient de la graisse (200 contre 400) et de l'espace. Un seul geste animé : le dressage.",
+    "metaphore": "Le passe d'une cuisine ouverte, à midi, en silence.",
+    "signature": "Le dressage : une assiette vue du dessus, vide, au centre ; au scrub, 4 à 5 composants détourés (photo du plat découpée en couches) se posent à la pince, chacun avec son nom en italique Sentient qui apparaît à côté (ligne fine qui relie le composant au mot). Recette : ScrollTrigger pin 220 % + scrub 0.8 ; chaque composant en scale 1.15 → 1 + autoAlpha ; lignes SVG stroke-dashoffset ; Lenis.",
+    "emotion": "Le respect du produit.",
+    "motion_verb": "respire",
+    "screenshot": "Le dressage à mi-course : assiette blanche, trois composants posés, deux légendes italiques reliées par un trait fin, le reste de l'écran blanc."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "ground",
+      "hex": "#FFFFFF"
+     },
+     {
+      "role": "ink",
+      "hex": "#161616"
+     },
+     {
+      "role": "muted",
+      "hex": "#8C8780"
+     },
+     {
+      "role": "line",
+      "hex": "#E6E3DD"
+     },
+     {
+      "role": "accent céladon (rare)",
+      "hex": "#9FB8A8"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display et texte",
+      "famille": "Hanken Grotesk",
+      "source": "Google",
+      "graisses": "200 (titres), 400 (texte)",
+      "tracking": "+0.08em en capitales 200 ; 0 en texte"
+     },
+     {
+      "role": "accent (légendes de composants, citations)",
+      "famille": "Sentient",
+      "source": "Fontshare",
+      "graisses": "400 italique",
+      "tracking": "0"
+     }
+    ],
+    "grille": "12 colonnes, marge 110 px desktop ; images collées au bord, textes sur 4 colonnes centrés verticalement.",
+    "rythme": "Très aéré (28u et plus) ; au plus une image par écran ; jamais deux textes côte à côte.",
+    "radius": "0.",
+    "imagerie": "Plats sur fond blanc (photographiés sur nappe ou détourés), vues zénithales ; portraits en noir et blanc ; aucune photo d'ambiance sombre.",
+    "textures": "Aucune."
+   },
+   "structure": [
+    {
+     "section": "Hero",
+     "layout": "asymmetric pair",
+     "composants": [
+      "assiette collée au bord gauche",
+      "titre capitales 200 à droite",
+      "logo vertical fixe"
+     ],
+     "animation_entree": "fondu lent 1.4 s de l'image, titre par lignes",
+     "idle": "aucun (décision écrite : site calme)"
+    },
+    {
+     "section": "Phrase",
+     "layout": "statement",
+     "composants": [
+      "une phrase t-l en 200",
+      "mot en Sentient italique"
+     ],
+     "animation_entree": "masque de lignes",
+     "idle": "aucun"
+    },
+    {
+     "section": "Dressage (signature)",
+     "layout": "sticky stage",
+     "composants": [
+      "assiette",
+      "composants",
+      "légendes reliées"
+     ],
+     "animation_entree": "pin + scrub",
+     "idle": "aucun"
+    },
+    {
+     "section": "Le menu",
+     "layout": "liste",
+     "composants": [
+      "menu unique en services numérotés",
+      "prix",
+      "note allergènes"
+     ],
+     "animation_entree": "lignes en fondu 4 px",
+     "idle": "aucun"
+    },
+    {
+     "section": "Le chef",
+     "layout": "split 50/50",
+     "composants": [
+      "portrait N&B",
+      "aplat gris très clair avec petite capitale + texte + lien sur filet"
+     ],
+     "animation_entree": "filet qui se dessine",
+     "idle": "aucun"
+    },
+    {
+     "section": "La salle",
+     "layout": "quinconce",
+     "composants": [
+      "deux photos de tailles différentes décalées",
+      "traits diagonaux d'angle"
+     ],
+     "animation_entree": "fondu décalé",
+     "idle": "aucun"
+    },
+    {
+     "section": "Distinctions",
+     "layout": "bande",
+     "composants": [
+      "mentions réelles uniquement, en 200"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    },
+    {
+     "section": "Réserver",
+     "layout": "formulaire",
+     "composants": [
+      "champs soulignés",
+      "téléphone",
+      "note groupes"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "footer as finale",
+     "composants": [
+      "nom en 200 très grand",
+      "KywFooter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "menu (page longue du menu unique)"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Dressage",
+     "comportement": "Scène épinglée ; composants posés au scrub avec légendes reliées.",
+     "hover_focus_actif": "liste des composants accessible en texte sous la scène ; focus sur la liste met en avant le composant",
+     "mobile": "assiette 80 vw, légendes empilées sous l'assiette"
+    },
+    {
+     "nom": "Logo vertical",
+     "comportement": "Nom tourné à 90° en 200, fixé en bas à gauche.",
+     "hover_focus_actif": "lien retour accueil, soulignement au focus",
+     "mobile": "revient horizontal dans le header"
+    },
+    {
+     "nom": "Lien sur filet",
+     "comportement": "Lien italique posé sur un trait qui court sur toute la colonne ; le trait se dessine à l'entrée.",
+     "hover_focus_actif": "le trait s'épaissit à 2 px et la flèche avance de 4 px",
+     "mobile": "identique"
+    },
+    {
+     "nom": "Pastille réserver",
+     "comportement": "Pilule noire fixe en bas à droite avec icône cadeau accolée.",
+     "hover_focus_actif": "inversion blanc / noir ; focus contour céladon",
+     "mobile": "barre basse"
+    }
+   ],
+   "mobile_390": "Les images ne sont plus collées au bord (marge 16 px) ; le dressage survit en pin vertical 80 vw ; titres en 200 à 28 px minimum pour rester lisibles.",
+   "reduced_motion": "Dressage affiché complet avec légendes, fondus à 0 s, filets dessinés.",
+   "donnees_fictives_necessaires": [
+    "1 plat en 4-5 composants détourés avec noms",
+    "menu unique de 6-8 services",
+    "3 photos de plats sur fond blanc",
+    "portrait N&B du chef",
+    "distinctions réelles ou aucune"
+   ],
+   "risques": [
+    "Le « minimal crème interchangeable » (défaut d'ABaC) : contré par le dressage (contenu du restaurant) et le logo vertical.",
+    "Les titres en 200 illisibles sur mobile : taille mini 28 px, contraste AA vérifié.",
+    "Blanc + rien = page vide à la capture : les reveals doivent être courts (≤ 0.8 s) et déclenchés tôt."
+   ],
+   "genericite_test": "Un modèle ferait un site blanc avec de grandes photos et un serif. Ici il n'y a pas de serif de titre, la seule animation est le dressage du vrai plat et la mise en page vient du passe (image au bord, texte en face).",
+   "diversite": {
+    "palette": "blanc pur, céladon rare",
+    "typo": "grotesque 200 + italique serif accent",
+    "structure": "éditorial asymétrique multi-pages",
+    "motion_verb": "respire",
+    "cible": "gastronomique, omakase"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "atelier-de-bossime",
+    "l-essentiel",
+    "le-54",
+    "li-micougni",
+    "makimono"
+   ]
+  },
+  {
+   "id": "nocturne",
+   "nom": "Nocturne",
+   "pitch": "Un bar après minuit : noir, mosaïque de photos bord à bord, lettres en tube ambré et un halo qui suit la main du visiteur comme une lampe de comptoir.",
+   "cible": [
+    "bar à cocktails",
+    "cave à manger et bar à vins le soir",
+    "restaurant-club, soirées"
+   ],
+   "ambiance": [
+    "sombre",
+    "ambré",
+    "tendu"
+   ],
+   "references": [
+    {
+     "url": "https://www.drinkkong.com/",
+     "slug": "drinkkong",
+     "score": 7.3,
+     "ce_qu_on_en_retient": "La mosaïque bord à bord sans marge (2/3 + 1/3 inversée toutes les deux rangées, gouttière noire), le titre en contour seul (text-stroke), les boutons fixés aux coins bas (distinction à gauche, BOOK NOW à droite), le footer « règles de la maison ».",
+     "capture": "data/portfolio/captures/drinkkong/desktop-frame-3.png"
+    },
+    {
+     "url": "https://11elevenbar.com/",
+     "slug": "11elevenbar",
+     "score": 6.85,
+     "ce_qu_on_en_retient": "Le hero à volets photo qui s'ouvrent autour du logo, l'« origin story » épinglée (phrases qui se succèdent), la carte de cocktails en liste nue serif.",
+     "capture": "data/portfolio/captures/11elevenbar/desktop-frame-1.png"
+    },
+    {
+     "url": "https://danslenoir.com/",
+     "slug": "danslenoir",
+     "score": 6.45,
+     "ce_qu_on_en_retient": "Le halo de lumière qui suit la souris (glow-wrapper) sur fond noir, le masque-logo de révélation et la barre CTA collante réservation + carte cadeau.",
+     "capture": "data/portfolio/captures/danslenoir/desktop-haut.png"
+    }
+   ],
+   "concept": {
+    "idee": "Le site est éclairé à la lampe : tout est noir, et une tache de lumière ambrée (canvas 2D, dégradé radial lissé par quickTo) suit le pointeur et révèle les photos à sa portée (mix-blend-mode screen sur un calque). Les titres sont des tubes : contour ambré qui s'allume (plein) au survol.",
+    "metaphore": "Le comptoir à 1h du matin, une lampe, des verres.",
+    "signature": "La lampe : un canvas fixe plein écran dessine un halo radial (rayon 260 px, ambre à 55 %) qui suit le pointeur avec inertie ; au-dessus de la mosaïque, les photos sont posées à 35 % de luminosité et passent à 100 % dans le halo (calque de l'image dupliqué, masqué par mask-image: radial-gradient positionné via variables). Recette : canvas 2D + gsap.quickTo sur x/y ; --lx/--ly sur :root pour les masques CSS ; sur tactile, le halo suit la vélocité de scroll et se centre. Compte comme 1 canvas (sur 3 autorisés).",
+    "emotion": "Le secret, l'envie d'entrer.",
+    "motion_verb": "vibre",
+    "screenshot": "La mosaïque : six photos de cocktails sombres, l'une d'elles révélée en pleine lumière par le halo, le titre « DERNIER VERRE » en contour ambré en haut."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "ground",
+      "hex": "#0A0A0C"
+     },
+     {
+      "role": "accent ambre (tube)",
+      "hex": "#F0A63B"
+     },
+     {
+      "role": "rouge profond",
+      "hex": "#9E1B28"
+     },
+     {
+      "role": "ink",
+      "hex": "#EDE8DF"
+     },
+     {
+      "role": "line fumée",
+      "hex": "#3A383B"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display (titres en capitales, contour)",
+      "famille": "Panchang",
+      "source": "Fontshare",
+      "graisses": "700",
+      "tracking": "+0.02em, line-height 0.95, -webkit-text-stroke 1.5 px"
+     },
+     {
+      "role": "texte, carte, UI",
+      "famille": "Supreme",
+      "source": "Fontshare",
+      "graisses": "400, 500",
+      "tracking": "0 ; petites capitales +0.08em pour les meta"
+     }
+    ],
+    "grille": "Sans marge extérieure : mosaïque 3 colonnes à gouttière de 20 px ; textes sur une colonne de 640 px.",
+    "rythme": "Mosaïque longue mais ponctuée tous les 3 rangs par une bande de texte (défaut de Drink Kong corrigé).",
+    "radius": "0.",
+    "imagerie": "Photos sombres à reflets (verres, zinc, néons) exposées pour le noir ; aucune photo de jour ; 1 photo d'équipe en noir et blanc contrasté.",
+    "textures": "Une seule : grain léger (0.05) sur le halo uniquement."
+   },
+   "structure": [
+    {
+     "section": "Hero volets",
+     "layout": "full-bleed",
+     "composants": [
+      "logo centré",
+      "deux volets photo qui s'ouvrent",
+      "titre contour",
+      "badge ouvert jusqu'à 2h"
+     ],
+     "animation_entree": "volets qui s'écartent (xPercent) et révèlent le titre ; la lampe s'allume (halo 0 → 1)",
+     "idle": "halo qui suit le pointeur"
+    },
+    {
+     "section": "Règles de la maison",
+     "layout": "liste",
+     "composants": [
+      "5 règles courtes (pas de réservation après minuit, 6 personnes max…)"
+     ],
+     "animation_entree": "lignes qui s'allument",
+     "idle": "aucun"
+    },
+    {
+     "section": "Mosaïque",
+     "layout": "gallery wall bord à bord",
+     "composants": [
+      "12 photos 2/3 + 1/3",
+      "bandes de texte intercalées"
+     ],
+     "animation_entree": "photos sombres qui se révèlent dans le halo",
+     "idle": "halo"
+    },
+    {
+     "section": "La carte des cocktails",
+     "layout": "liste index nue",
+     "composants": [
+      "nom en Panchang contour",
+      "ingrédients en Supreme",
+      "prix",
+      "famille (sour, highball…) en couleur de bande"
+     ],
+     "animation_entree": "contour → plein au survol",
+     "idle": "aucun"
+    },
+    {
+     "section": "Origin story",
+     "layout": "sticky stage",
+     "composants": [
+      "4 phrases qui se succèdent",
+      "photo N&B"
+     ],
+     "animation_entree": "phrases en crossfade au scrub",
+     "idle": "aucun"
+    },
+    {
+     "section": "Soirées",
+     "layout": "liste",
+     "composants": [
+      "dates à venir",
+      "DJ / événement",
+      "lien"
+     ],
+     "animation_entree": "stagger",
+     "idle": "aucun"
+    },
+    {
+     "section": "Venir",
+     "layout": "split",
+     "composants": [
+      "adresse",
+      "horaires de nuit",
+      "boutons fixes aux coins"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "footer as finale",
+     "composants": [
+      "logo incliné",
+      "colonnes contact / hours / info",
+      "KywFooter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "cocktails",
+    "soirees-privatisation"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Lampe (halo)",
+     "comportement": "Canvas fixe, halo qui suit le pointeur avec inertie 0.12 ; révèle les images par masque.",
+     "hover_focus_actif": "aucun ; le contenu reste lisible sans halo (texte toujours à 100 %)",
+     "mobile": "halo centré qui descend avec le scroll (vélocité)"
+    },
+    {
+     "nom": "Titre tube",
+     "comportement": "Capitales Panchang en contour ambré ; au survol le remplissage s'allume avec un léger scintillement (opacity 0.9 → 1 en 3 crans, 0.25 s).",
+     "hover_focus_actif": "plein au hover et focus",
+     "mobile": "contour 1 px, plein par défaut pour la lisibilité"
+    },
+    {
+     "nom": "Boutons de coin",
+     "comportement": "Réserver (ambre, bas droite) et distinction ou Instagram (bas gauche), fixes sur toutes les pages.",
+     "hover_focus_actif": "inversion + flèche qui avance",
+     "mobile": "barre basse"
+    },
+    {
+     "nom": "Ligne de cocktail",
+     "comportement": "Nom, ingrédients, prix ; une barre de couleur de famille à gauche.",
+     "hover_focus_actif": "barre qui s'élargit, nom en plein",
+     "mobile": "identique"
+    }
+   ],
+   "mobile_390": "La mosaïque passe à 2 colonnes bord à bord ; le halo suit le scroll ; les titres sont pleins (pas de contour) ; les volets du hero s'ouvrent verticalement.",
+   "reduced_motion": "Pas de halo (images à 100 %), volets ouverts, titres pleins, phrases d'origin story empilées.",
+   "donnees_fictives_necessaires": [
+    "12 photos sombres de bar",
+    "10 cocktails avec ingrédients et prix",
+    "5 règles maison",
+    "4 phrases d'histoire",
+    "3 dates de soirées"
+   ],
+   "risques": [
+    "« Noir + néon » générique : la couleur néon est un ambre chaud, pas un rose ou un vert acide, et le halo est le concept, pas un effet.",
+    "Canvas lourd : un seul canvas, rayon fixe, pause hors écran.",
+    "Lisibilité : le texte n'est jamais dépendant du halo."
+   ],
+   "genericite_test": "Un modèle ferait un site noir avec un titre rose néon. Ici la lampe est une mécanique de lecture (elle révèle ce qui est sous la main), les règles de la maison et la carte nue viennent du vrai fonctionnement d'un bar.",
+   "diversite": {
+    "palette": "noir + ambre tube",
+    "typo": "wide grotesk capitales contour",
+    "structure": "mosaïque bord à bord + canvas",
+    "motion_verb": "vibre",
+    "cible": "bar à cocktails"
+   },
+   "canvas": true,
+   "restaurants_cibles_indicatifs": [
+    "chez-guillaume",
+    "incorrect",
+    "le-servais",
+    "pepite"
+   ]
+  },
+  {
+   "id": "verger",
+   "nom": "Verger",
+   "pitch": "Un site qui pousse : axe central, vignettes carrées d'ingrédients, roue des saisons qui tourne au scroll et producteurs nommés comme des étiquettes d'origine.",
+   "cible": [
+    "gastronomie durable et ferme-table",
+    "cuisine de saison et produits locaux",
+    "table végétale"
+   ],
+   "ambiance": [
+    "botanique",
+    "lent",
+    "documenté"
+   ],
+   "references": [
+    {
+     "url": "https://centralrestaurante.com.pe/",
+     "slug": "centralrestaurante",
+     "score": 7.3,
+     "ce_qu_on_en_retient": "L'axe central strict avec vignettes carrées de 280 px, le titre en capitales condensées légères empilées un mot par ligne, la composition en escalier texte / vignette, les liens soulignés en petites capitales placés aux extrémités.",
+     "capture": "data/portfolio/captures/centralrestaurante/desktop-frame-1.png"
+    },
+    {
+     "url": "https://studenterkilden.dk/en",
+     "slug": "studenterkilden",
+     "score": 7.25,
+     "ce_qu_on_en_retient": "Le preloader-logo saisonnier (la branche change d'hiver à automne), la FAQ accordéon révélée ligne par ligne, les cartes à bouton flèche carré dans le coin.",
+     "capture": "data/portfolio/captures/studenterkilden/desktop-frame-6.png"
+    },
+    {
+     "url": "https://www.graza.co/",
+     "slug": "graza",
+     "score": 8.2,
+     "ce_qu_on_en_retient": "L'étiquette d'origine posée sur la photo (« Now serving olives from Alentejo — Harvesting season »), la typo machine à écrire pour les meta, le bouton pleine largeur.",
+     "capture": "data/portfolio/captures/graza/desktop-haut.png"
+    }
+   ],
+   "concept": {
+    "idee": "La page est un calendrier agricole : une roue des 12 mois (SVG) tourne au scroll et met en avant les produits du moment ; chaque plat est relié à son producteur par une étiquette d'origine (nom, village, distance en km). Axe central strict, vignettes carrées, mots empilés.",
+    "metaphore": "Le verger derrière la cuisine : ce qui est mûr, ce qui vient.",
+    "signature": "La roue des saisons : un SVG circulaire de 12 secteurs avec le nom des mois et 24 vignettes carrées d'ingrédients accrochées au cercle ; au scrub elle tourne de 360° sur la section (ScrollTrigger pin 300 %), le mois courant (réel, date du jour) reste en haut et son secteur se colore ; les 4 plats liés apparaissent en escalier autour. Recette : rotation GSAP sur le groupe SVG, contre-rotation des vignettes pour rester droites, pin + scrub 1, Lenis.",
+    "emotion": "La patience ; l'impression de savoir d'où ça vient.",
+    "motion_verb": "pousse",
+    "screenshot": "La roue à mi-rotation : octobre en haut en vert, vignettes de courge et de champignon sur le cercle, à gauche « Courge butternut, ferme de X, 14 km » en étiquette."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "ground",
+      "hex": "#F8F6F0"
+     },
+     {
+      "role": "ink vert feuille",
+      "hex": "#2E5B3A"
+     },
+     {
+      "role": "texte",
+      "hex": "#262420"
+     },
+     {
+      "role": "accent rose radis",
+      "hex": "#DD7A8E"
+     },
+     {
+      "role": "terre",
+      "hex": "#5A4634"
+     },
+     {
+      "role": "line pierre",
+      "hex": "#CFCAC0"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display et texte éditorial",
+      "famille": "Newsreader",
+      "source": "Google (opsz)",
+      "graisses": "400, 400i, 500 en opsz 72 pour les titres",
+      "tracking": "-0.01em"
+     },
+     {
+      "role": "mots empilés, étiquettes, meta",
+      "famille": "Sofia Sans Condensed",
+      "source": "Google",
+      "graisses": "300, 600",
+      "tracking": "+0.04em en capitales"
+     }
+    ],
+    "grille": "Axe central : colonne de 560 px pour les textes, vignettes de 280 px centrées, décalages en escalier à gauche / droite sur 2 colonnes.",
+    "rythme": "Silence : 300 px entre les blocs ; la roue est la seule section pleine hauteur.",
+    "radius": "0 pour les vignettes ; 2 px pour les étiquettes.",
+    "imagerie": "Macros d'ingrédients et photos de ferme en vignettes carrées ; une photo de plat par saison ; portraits de producteurs en carré.",
+    "textures": "Aucune."
+   },
+   "structure": [
+    {
+     "section": "Hero",
+     "layout": "poster centré",
+     "composants": [
+      "mots empilés (« UNE / TABLE / DE / SAISON »)",
+      "vignette carrée",
+      "mois courant en étiquette"
+     ],
+     "animation_entree": "preloader-branche puis mots qui poussent depuis la ligne de base",
+     "idle": "aucun"
+    },
+    {
+     "section": "Citation",
+     "layout": "statement",
+     "composants": [
+      "italique Newsreader",
+      "paragraphe en escalier"
+     ],
+     "animation_entree": "lignes",
+     "idle": "aucun"
+    },
+    {
+     "section": "Roue des saisons (signature)",
+     "layout": "sticky stage",
+     "composants": [
+      "roue SVG",
+      "4 plats du mois",
+      "étiquettes d'origine"
+     ],
+     "animation_entree": "pin + rotation",
+     "idle": "la roue dérive de 0.2°/s tant qu'elle est visible"
+    },
+    {
+     "section": "Les producteurs",
+     "layout": "liste index",
+     "composants": [
+      "nom, village, km, produit",
+      "portrait carré au survol"
+     ],
+     "animation_entree": "lignes",
+     "idle": "aucun"
+    },
+    {
+     "section": "La carte du mois",
+     "layout": "liste",
+     "composants": [
+      "menu de saison",
+      "prix",
+      "pastille mois"
+     ],
+     "animation_entree": "fondu",
+     "idle": "aucun"
+    },
+    {
+     "section": "Le potager / la salle",
+     "layout": "asymmetric pair",
+     "composants": [
+      "photo",
+      "texte"
+     ],
+     "animation_entree": "clip-path depuis le bas (pousse)",
+     "idle": "aucun"
+    },
+    {
+     "section": "Questions",
+     "layout": "FAQ accordéon",
+     "composants": [
+      "allergies, végétarien, groupes, enfants"
+     ],
+     "animation_entree": "lignes révélées une à une",
+     "idle": "aucun"
+    },
+    {
+     "section": "Réserver",
+     "layout": "bande",
+     "composants": [
+      "bouton pleine largeur vert",
+      "horaires"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "footer as finale",
+     "composants": [
+      "branche du mois",
+      "colonnes",
+      "KywFooter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "producteurs",
+    "saisons (archive des 4 cartes)"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Roue des saisons",
+     "comportement": "SVG 12 secteurs, 24 vignettes, rotation au scroll, mois courant calculé à la date du jour.",
+     "hover_focus_actif": "secteur survolé : couleur verte + nom des produits ; boutons mois accessibles au clavier sous la roue",
+     "mobile": "roue à 90 vw, pin conservé à 200 %, étiquettes sous la roue"
+    },
+    {
+     "nom": "Étiquette d'origine",
+     "comportement": "Rectangle crème bordé posé sur une photo : produit, producteur, village, distance en Sofia Condensed.",
+     "hover_focus_actif": "se soulève de 2 px, lien vers la fiche producteur",
+     "mobile": "sous la photo"
+    },
+    {
+     "nom": "Mots empilés",
+     "comportement": "Titre un mot par ligne, capitales condensées 300, centré.",
+     "hover_focus_actif": "aucun",
+     "mobile": "taille 12 vw"
+    },
+    {
+     "nom": "FAQ",
+     "comportement": "Accordéon à chevrons, une réponse ouverte à la fois.",
+     "hover_focus_actif": "ligne soulignée au hover, aria-expanded",
+     "mobile": "identique"
+    }
+   ],
+   "mobile_390": "Axe central conservé (tout centré) ; roue à 90 vw épinglée ; étiquettes empilées ; mots empilés à 12 vw.",
+   "reduced_motion": "Roue fixe sur le mois courant, mots affichés, clip-paths ouverts, accordéon sans transition.",
+   "donnees_fictives_necessaires": [
+    "24 ingrédients avec mois (vignettes)",
+    "6 producteurs (nom, village, km, produit) marqués illustratifs si inconnus",
+    "4 cartes de saison de 6 plats",
+    "6 questions / réponses",
+    "photos macro d'ingrédients"
+   ],
+   "risques": [
+    "Le « vert + crème + feuilles » de site bio : pas d'illustration de feuille, pas de kraft ; le vert est l'encre, pas un décor.",
+    "Roue SVG lourde : 24 vignettes en WebP 280 px, rotation sur un seul groupe.",
+    "Producteurs inventés = mensonge : les marquer illustratifs et les remplacer par les vrais à l'adaptation."
+   ],
+   "genericite_test": "Un modèle ferait un site crème avec une photo de légumes et le mot « local ». Ici la saison est une donnée (date réelle, roue, carte du mois) et chaque plat porte une origine mesurée en kilomètres.",
+   "diversite": {
+    "palette": "blanc cassé + vert feuille + rose radis",
+    "typo": "serif éditorial opsz + condensée light",
+    "structure": "axe central strict + roue",
+    "motion_verb": "pousse",
+    "cible": "durable, saison"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "les-potes-au-feu",
+    "atelier-de-bossime",
+    "partage",
+    "le-54",
+    "li-micougni"
+   ]
+  },
+  {
+   "id": "forno",
+   "nom": "Forno",
+   "pitch": "Farine, pâte et four : un site brut de fournil où la photo du four grossit jusqu'à remplir l'écran, où les noms des pâtes défilent en capitales géantes et où un compte à rebours annonce la prochaine fournée.",
+   "cible": [
+    "pizzeria napolitaine",
+    "trattoria",
+    "pâtes fraîches et four à bois",
+    "boulangerie-restaurant"
+   ],
+   "ambiance": [
+    "brut",
+    "chaud",
+    "farineux"
+   ],
+   "references": [
+    {
+     "url": "https://www.impastofornoantico.com/",
+     "slug": "impastofornoantico",
+     "score": 7.8,
+     "ce_qu_on_en_retient": "La vignette centrée qui s'élargit jusqu'à la pleine largeur au scrub pendant que le titre se réduit, le marquee géant à deux lignes en sens inverse (CIABATTA FOCACCIA…), la grille de photos asymétrique à parallaxe différenciée, le loader-logo tracé, le footer en couches.",
+     "capture": "data/portfolio/captures/impastofornoantico/desktop-frame-1.png"
+    },
+    {
+     "url": "https://www.bigmammagroup.com/",
+     "slug": "bigmammagroup",
+     "score": 7.55,
+     "ce_qu_on_en_retient": "La carte rouge à compte à rebours (jours, heures, minutes, secondes en serif), le carrousel de cartes qui déborde à droite, le titre dont un groupe de mots est souligné d'un trait épais et sert de lien.",
+     "capture": "data/portfolio/captures/bigmammagroup/desktop-frame-3.png"
+    },
+    {
+     "url": "https://madie.es",
+     "slug": "madie",
+     "score": 8.4,
+     "ce_qu_on_en_retient": "Le catalogue de produits détourés (vignette, nom gras, mention best-seller, description italique) avec en-tête de catégorie à compteur, et le titre contour puis plein.",
+     "capture": "data/portfolio/captures/madie/desktop-frame-3.png"
+    }
+   ],
+   "concept": {
+    "idee": "Le site est une fournée : il commence dans le noir du four (brun), la pâte lève (les blocs grossissent), le marquee crie les noms, puis la farine (crème) prend tout l'écran pour la carte. Le compte à rebours de la prochaine fournée (ou du prochain service) bat en permanence dans le header.",
+    "metaphore": "Le fournil, de la pâte au four.",
+    "signature": "La levée : une photo du four (ou de la pizza) en vignette de 320 px centrée sur fond brun grossit au scrub jusqu'à couvrir l'écran (scale + width via ScrollTrigger pin 250 %), tandis que le titre « AU FOUR » en Big Shoulders 20 vw rétrécit à 4 vw et se cale en coin ; à la fin, le marquee de pâtes à deux lignes en sens inverse traverse l'image. Recette : pin + scrub sur deux tweens inversés, marquee gsap avec timeScale lié à la vélocité Lenis.",
+    "emotion": "La faim : l'odeur de pain qui sort.",
+    "motion_verb": "lève comme une pâte",
+    "screenshot": "La levée aux deux tiers : photo du four presque pleine largeur, le titre en train de rétrécir en haut à gauche, le marquee qui pointe en bas."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "ground four",
+      "hex": "#2B1E19"
+     },
+     {
+      "role": "farine",
+      "hex": "#F3EDE2"
+     },
+     {
+      "role": "accent tomate",
+      "hex": "#C6362A"
+     },
+     {
+      "role": "croûte",
+      "hex": "#B98558"
+     },
+     {
+      "role": "cendre",
+      "hex": "#8E8A84"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display (titres, marquee, compte à rebours)",
+      "famille": "Big Shoulders Display",
+      "source": "Google",
+      "graisses": "800 capitales",
+      "tracking": "0, line-height 0.85"
+     },
+     {
+      "role": "texte, carte",
+      "famille": "Erode",
+      "source": "Fontshare",
+      "graisses": "400, 500, 400i",
+      "tracking": "0, corps 17 px"
+     }
+    ],
+    "grille": "12 colonnes ; blocs photo flottants posés en asymétrie (colonnes 1-5 puis 7-12) avec grands vides ; carte sur 8 colonnes.",
+    "rythme": "Brun pour les 3 premières sections (four), farine pour la suite ; transition par la levée.",
+    "radius": "0 ; une seule exception : la carte du compte à rebours à 12 px.",
+    "imagerie": "Photos de pâte, mains, farine en vol, four ; catalogue de pizzas détourées sur farine ; pas de drapeau italien, pas de nappe à carreaux.",
+    "textures": "Une seule : poudre de farine (grain clair 0.06) sur le brun."
+   },
+   "structure": [
+    {
+     "section": "Loader + hero",
+     "layout": "poster",
+     "composants": [
+      "logo tracé (SVG stroke)",
+      "nom en Big Shoulders",
+      "compte à rebours de la prochaine fournée",
+      "photo collée en bas"
+     ],
+     "animation_entree": "logo tracé 1.2 s puis le hero monte (Flip-like translateY)",
+     "idle": "les secondes du compte à rebours"
+    },
+    {
+     "section": "Manifeste",
+     "layout": "statement",
+     "composants": [
+      "phrase en Erode t-l",
+      "deux mots soulignés épais (liens)"
+     ],
+     "animation_entree": "lignes",
+     "idle": "aucun"
+    },
+    {
+     "section": "La levée (signature)",
+     "layout": "sticky stage",
+     "composants": [
+      "vignette qui grossit",
+      "titre qui rétrécit",
+      "marquee"
+     ],
+     "animation_entree": "pin + scrub",
+     "idle": "marquee lent"
+    },
+    {
+     "section": "Les pâtes / les pizzas",
+     "layout": "catalogue",
+     "composants": [
+      "produits détourés",
+      "nom gras",
+      "description italique",
+      "prix",
+      "en-tête de catégorie à compteur"
+     ],
+     "animation_entree": "stagger de scale 0.96 → 1",
+     "idle": "aucun"
+    },
+    {
+     "section": "Le fournil",
+     "layout": "gallery wall asymétrique",
+     "composants": [
+      "5 photos de tailles variées",
+      "parallaxe différenciée"
+     ],
+     "animation_entree": "parallaxe",
+     "idle": "aucun"
+    },
+    {
+     "section": "Les gens",
+     "layout": "carrousel débordant",
+     "composants": [
+      "cartes photo + prénom + rôle",
+      "flèches rondes"
+     ],
+     "animation_entree": "cartes qui glissent",
+     "idle": "aucun"
+    },
+    {
+     "section": "Emporter",
+     "layout": "bande",
+     "composants": [
+      "horaires des fournées",
+      "bouton commander",
+      "téléphone"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "footer en couches",
+     "composants": [
+      "nom géant farine sur brun",
+      "photo qui glisse par-dessous",
+      "KywFooter"
+     ],
+     "animation_entree": "couches qui se superposent au scroll",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "a-emporter",
+    "pates-fraiches (ou pizzas : catalogue complet)"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Compte à rebours",
+     "comportement": "Carte tomate : jours / heures / minutes / secondes en Big Shoulders jusqu'au prochain service calculé depuis les horaires réels ; devient « c'est ouvert » pendant le service.",
+     "hover_focus_actif": "au survol : prochain créneau de réservation",
+     "mobile": "ligne compacte dans le header"
+    },
+    {
+     "nom": "Levée",
+     "comportement": "Image qui grossit au scrub de 320 px à 100 vw.",
+     "hover_focus_actif": "aucun",
+     "mobile": "de 70 vw à 100 vw, pin 180 %"
+    },
+    {
+     "nom": "Marquee de pâtes",
+     "comportement": "Deux lignes en sens inverse, vitesse liée au scroll.",
+     "hover_focus_actif": "pause au survol",
+     "mobile": "une ligne"
+    },
+    {
+     "nom": "Fiche catalogue",
+     "comportement": "Produit détouré sur farine, nom, description, prix ; au survol le produit tourne de 6°.",
+     "hover_focus_actif": "rotation + ombre ; focus contour tomate",
+     "mobile": "2 colonnes"
+    }
+   ],
+   "mobile_390": "La levée survit (70 → 100 vw) ; le marquee passe à une ligne ; le catalogue en 2 colonnes ; le compte à rebours reste dans le header.",
+   "reduced_motion": "Levée affichée pleine largeur, marquee statique sur une ligne, loader remplacé par le logo fixe, compte à rebours sans animation de chiffres.",
+   "donnees_fictives_necessaires": [
+    "12 produits détourés (pizzas, pâtes ou pains) avec prix",
+    "horaires de fournées / services",
+    "6 photos de fournil",
+    "4 personnes",
+    "2 mots-liens dans le manifeste"
+   ],
+   "risques": [
+    "Le cliché italien (vert-blanc-rouge, nappe, Vespa) : interdit ; la seule couleur chaude est la tomate.",
+    "Pin de levée trop long ou saccadé sur mobile : will-change et image en WebP 1600 px max.",
+    "Marquee partout : un seul par page."
+   ],
+   "genericite_test": "Un modèle ferait un site crème avec une photo de pizza et une carte en trois colonnes. Ici la structure suit la fournée (brun → farine), le four grossit sous les yeux et le compte à rebours part des vrais horaires.",
+   "diversite": {
+    "palette": "brun four → farine + tomate",
+    "typo": "condensée capitales + serif",
+    "structure": "blocs flottants + marquee + levée",
+    "motion_verb": "lève comme une pâte",
+    "cible": "pizzeria, pâtes, four"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "dolce-vita-wepion",
+    "incorrect",
+    "le-ponti-2",
+    "huile-sur-le-feu"
+   ]
+  },
+  {
+   "id": "encre",
+   "nom": "Encre",
+   "pitch": "Ivoire, encre et un sceau vermillon : la carte se déroule comme un rouleau peint, le texte se lit à la verticale et chaque section s'ouvre par un signe.",
+   "cible": [
+    "sushi et omakase",
+    "ramen et izakaya",
+    "table asiatique contemporaine"
+   ],
+   "ambiance": [
+    "calme",
+    "tracé",
+    "vertical"
+   ],
+   "references": [
+    {
+     "url": "https://akaneyajapan.com/en/",
+     "slug": "akaneyajapan",
+     "score": 7.2,
+     "ce_qu_on_en_retient": "Le « chapeau » de section (petit signe ocre au-dessus du titre centré), la colonne de texte de 420 px centrée, le diptyque de photos révélé par clip-path, le header en mix-blend-mode difference, le footer en diptyque décalé.",
+     "capture": "data/portfolio/captures/akaneyajapan/desktop-frame-2.png"
+    },
+    {
+     "url": "https://shorodo.nagoya/",
+     "slug": "shorodo",
+     "score": 8.85,
+     "ce_qu_on_en_retient": "Le texte vertical (writing-mode) en colonnes qui s'allume caractère par caractère, le sceau rond en pied, le plan d'accès dessiné avec temps de marche depuis les gares.",
+     "capture": "data/portfolio/captures/shorodo/p2-frame-12.png"
+    },
+    {
+     "url": "https://masanyc.com/",
+     "slug": "masanyc",
+     "score": 6.65,
+     "ce_qu_on_en_retient": "La galerie en quinconce sur fond crème, le numéro de section en serif suivi d'un libellé, l'horloge locale dans la nav.",
+     "capture": "data/portfolio/captures/masanyc/desktop-frame-2.png"
+    }
+   ],
+   "concept": {
+    "idee": "Le site est un rouleau (emaki) : fond ivoire, encre noire, un seul rouge (le sceau). Les titres se lisent de haut en bas, les sections s'ouvrent par un signe (numéro ou caractère), et la carte se déroule horizontalement dans une section épinglée, comme on déroule un rouleau sur une table.",
+    "metaphore": "Le rouleau peint que l'on déroule lentement ; « makimono » veut dire rouleau.",
+    "signature": "Le déroulé : section épinglée où la carte (8 à 12 plats) est peinte sur une bande horizontale de 400 vw qui glisse de droite à gauche au scrub ; chaque plat apparaît sous un trait de pinceau SVG (mask-image animé par stroke-dashoffset) et le sceau vermillon se pose à la fin. Recette : ScrollTrigger pin + scrub sur translateX de la bande, masques SVG par plat, Lenis ; sur mobile, scroll-snap horizontal natif.",
+    "emotion": "La concentration, le geste juste.",
+    "motion_verb": "glisse comme un rouleau",
+    "screenshot": "Le rouleau à mi-course : trois plats révélés par des traits de pinceau, un titre vertical à gauche, le sceau rouge qui attend à droite."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "ground ivoire",
+      "hex": "#F6F1E6"
+     },
+     {
+      "role": "ink",
+      "hex": "#19171A"
+     },
+     {
+      "role": "accent sceau vermillon",
+      "hex": "#C6341F"
+     },
+     {
+      "role": "muted pierre",
+      "hex": "#8A847A"
+     },
+     {
+      "role": "lavis",
+      "hex": "#DCD6CB"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display (titres, texte vertical, chapeaux)",
+      "famille": "Shippori Mincho B1",
+      "source": "Google",
+      "graisses": "500, 700",
+      "tracking": "+0.06em en vertical, line-height 1.6"
+     },
+     {
+      "role": "texte, carte",
+      "famille": "Spectral",
+      "source": "Google",
+      "graisses": "300, 400, 400i",
+      "tracking": "0, corps 17 px, interligne 1.7"
+     }
+    ],
+    "grille": "Colonne centrale de 420 px pour le texte, diptyques de 2 × 400 px, titres verticaux en colonne de 1 sur les marges ; 120 à 200 px entre sections.",
+    "rythme": "Lent et régulier ; une seule section horizontale (le rouleau).",
+    "radius": "0 ; le sceau est le seul cercle.",
+    "imagerie": "Photos sombres et chaudes (bois, céramique, vapeur) en diptyques 4:5 ; plats vus de trois quarts sur céramique ; une photo peut être traitée en lavis (opacity 0.9 + mix-blend multiply sur ivoire).",
+    "textures": "Une seule : fibre de papier (feTurbulence basse fréquence 0.02) à 0.1 sur l'ivoire."
+   },
+   "structure": [
+    {
+     "section": "Hero",
+     "layout": "full-bleed",
+     "composants": [
+      "photo sombre",
+      "signe vertical centré (nom en vertical)",
+      "phrase de deux lignes",
+      "header mix-blend"
+     ],
+     "animation_entree": "le signe se trace (mask stroke), la phrase monte",
+     "idle": "vapeur : légère dérive d'opacité du voile (±3 %)"
+    },
+    {
+     "section": "Concept",
+     "layout": "colonne centrée",
+     "composants": [
+      "chapeau (01)",
+      "titre",
+      "paragraphe 420 px"
+     ],
+     "animation_entree": "chapeau puis titre puis texte, 0.1 s d'écart",
+     "idle": "aucun"
+    },
+    {
+     "section": "Le rouleau (signature)",
+     "layout": "filmstrip épinglé",
+     "composants": [
+      "bande 400 vw",
+      "plats sous traits de pinceau",
+      "titre vertical",
+      "sceau final"
+     ],
+     "animation_entree": "pin + scrub",
+     "idle": "aucun"
+    },
+    {
+     "section": "Histoire",
+     "layout": "diptyque + texte",
+     "composants": [
+      "2 photos 4:5",
+      "texte vertical en marge",
+      "paragraphe"
+     ],
+     "animation_entree": "clip-path des photos",
+     "idle": "aucun"
+    },
+    {
+     "section": "Le chef / l'équipe",
+     "layout": "portrait centré",
+     "composants": [
+      "photo 4:5",
+      "chapeau",
+      "bio"
+     ],
+     "animation_entree": "fondu",
+     "idle": "aucun"
+    },
+    {
+     "section": "Galerie",
+     "layout": "quinconce",
+     "composants": [
+      "4 photos décalées",
+      "légendes"
+     ],
+     "animation_entree": "parallaxe légère",
+     "idle": "aucun"
+    },
+    {
+     "section": "Venir",
+     "layout": "plan",
+     "composants": [
+      "plan d'accès dessiné au trait",
+      "temps de marche depuis la gare",
+      "horaires",
+      "réserver"
+     ],
+     "animation_entree": "tracé",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "diptyque décalé",
+     "composants": [
+      "2 photos de hauteurs différentes",
+      "liens",
+      "sceau",
+      "KywFooter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "carte (rouleau complet, défilement horizontal sur desktop)",
+    "emporter"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Rouleau",
+     "comportement": "Bande horizontale épinglée ; plats révélés par masque pinceau ; barre de progression fine en bas.",
+     "hover_focus_actif": "flèches clavier ← → déplacent le rouleau ; plat survolé : prix en vermillon",
+     "mobile": "scroll-snap horizontal natif, 80 vw par plat"
+    },
+    {
+     "nom": "Chapeau de section",
+     "comportement": "Numéro ou caractère en Shippori vermillon 14 px, centré, 120 px d'air au-dessus.",
+     "hover_focus_actif": "aucun",
+     "mobile": "identique"
+    },
+    {
+     "nom": "Titre vertical",
+     "comportement": "writing-mode: vertical-rl dans la marge ; ses caractères s'allument au scroll (gris → encre).",
+     "hover_focus_actif": "aucun",
+     "mobile": "repasse horizontal au-dessus du bloc"
+    },
+    {
+     "nom": "Sceau",
+     "comportement": "Cercle vermillon avec initiales ; se pose avec un petit claquement (scale 1.3 → 1) à la fin du rouleau et dans le footer.",
+     "hover_focus_actif": "lien vers réservation, rotation de 8° au survol",
+     "mobile": "identique"
+    }
+   ],
+   "mobile_390": "Le rouleau devient un scroll horizontal natif avec snap ; les titres verticaux repassent horizontaux ; la colonne de texte prend 100 % moins 32 px ; le sceau et les chapeaux restent.",
+   "reduced_motion": "Rouleau en scroll horizontal natif sans pin, masques ouverts, signe tracé affiché, titres sans allumage.",
+   "donnees_fictives_necessaires": [
+    "12 plats pour le rouleau (nom, 3 mots, prix)",
+    "8 photos sombres 4:5",
+    "plan d'accès (gare, parking) avec temps de marche",
+    "bio du chef",
+    "initiales pour le sceau"
+   ],
+   "risques": [
+    "Japonisme de pacotille (kanji décoratifs, cerisiers) : aucun caractère japonais sans sens ; les chapeaux sont des numéros ou des initiales.",
+    "Texte vertical illisible en français : réservé aux titres de 1 à 4 mots.",
+    "Rouleau trop long : 12 plats maximum, page carte dédiée pour le reste."
+   ],
+   "genericite_test": "Un modèle ferait un site noir avec une photo de sushi et un titre en serif. Ici le rouleau est la structure de la carte, la lecture verticale et le sceau sont un système, et le plan d'accès au trait est une information locale.",
+   "diversite": {
+    "palette": "ivoire + encre + vermillon",
+    "typo": "mincho vertical + serif",
+    "structure": "rouleau horizontal épinglé",
+    "motion_verb": "glisse comme un rouleau",
+    "cible": "sushi, ramen, asiatique"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "ferme-blanche-d-asie",
+    "makimono",
+    "sanga"
+   ]
+  },
+  {
+   "id": "velours",
+   "nom": "Velours",
+   "pitch": "Vert sapin, cuivre et chiffres monumentaux : un site feutré pour une table étoilée, où chaque rideau se lève sur un nombre qui dit tout (5 tables, 7 services, 2 chefs).",
+   "cible": [
+    "gastronomique étoilé ou Gault&Millau",
+    "fine dining à menu unique",
+    "salle intime à peu de couverts"
+   ],
+   "ambiance": [
+    "feutré",
+    "précieux",
+    "contenu"
+   ],
+   "references": [
+    {
+     "url": "https://www.restaurantzimmerl.at/",
+     "slug": "restaurantzimmerl",
+     "score": 7.35,
+     "ce_qu_on_en_retient": "Le chiffre serif cuivre de 250 px posé à cheval sur le coin d'une photo suivi du nom en petites capitales (« 23 GÄNGE »), le filet vertical pointillé de lecture, les logos de guides en cuivre monochrome, la galerie noir et blanc, le curseur à double cercle.",
+     "capture": "data/portfolio/captures/restaurantzimmerl/desktop-frame-2.png"
+    },
+    {
+     "url": "https://www.theinnatlittlewashington.com/",
+     "slug": "theinnatlittlewashington",
+     "score": 7.6,
+     "ce_qu_on_en_retient": "La citation en italique géante dont les mots s'allument au scrub, les onglets à barre de progression qui changent la photo de fond.",
+     "capture": "data/portfolio/captures/theinnatlittlewashington/desktop-frame-1.png"
+    },
+    {
+     "url": "https://khufus.com",
+     "slug": "khufus",
+     "score": 7.2,
+     "ce_qu_on_en_retient": "Les chapitres numérotés en filigrane pâle derrière le surtitre, le triptyque de photos verticales décalées, le script réservé à un sous-titre.",
+     "capture": "data/portfolio/captures/khufus/desktop-bas.png"
+    }
+   ],
+   "concept": {
+    "idee": "La maison se raconte par ses nombres vrais : le nombre de tables, de services du menu, de chefs, d'années. Chaque chapitre s'ouvre comme un rideau de velours (clip-path depuis le haut) sur un chiffre monumental en cuivre posé sur la photo, puis le texte suit. Pas de nombre inventé : le gabarit n'affiche que ce que le dossier contient.",
+    "metaphore": "Le lever de rideau d'une petite salle de théâtre.",
+    "signature": "Le rideau : chaque section est masquée par un pan vert sapin (clip-path: inset(0 0 100% 0) → inset(0)) qui se lève en 1.1 s expo.inOut quand la section arrive au tiers de l'écran, révélant la photo ; le chiffre cuivre compte de 0 à sa valeur (tabular, 0.9 s) et se décale de 40 px en parallaxe scrubbée sur la photo. Recette : ScrollTrigger once pour le rideau, scrub pour le parallaxe, gsap.to sur un compteur, Lenis.",
+    "emotion": "L'attente heureuse, la rareté.",
+    "motion_verb": "se dévoile comme un rideau",
+    "screenshot": "Le chapitre « 5 » : photo de salle sombre à nappes blanches, un « 5 » cuivre de 260 px à cheval sur le coin, « TABLES » en petites capitales, texte à droite."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "ground vert sapin",
+      "hex": "#1B3730"
+     },
+     {
+      "role": "ground profond",
+      "hex": "#0E1512"
+     },
+     {
+      "role": "accent cuivre",
+      "hex": "#C48F60"
+     },
+     {
+      "role": "cuivre clair (texte secondaire)",
+      "hex": "#E2BE94"
+     },
+     {
+      "role": "ink ivoire",
+      "hex": "#EEE6D8"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display (nom, chiffres, titres en capitales)",
+      "famille": "Boska",
+      "source": "Fontshare",
+      "graisses": "400, 700",
+      "tracking": "+0.08em en capitales, chiffres tabular, line-height 0.9"
+     },
+     {
+      "role": "texte",
+      "famille": "Source Serif 4",
+      "source": "Google",
+      "graisses": "300, 400, 400i",
+      "tracking": "0, corps 17 px"
+     }
+    ],
+    "grille": "Conteneur 1140 px ; photos qui débordent jusqu'au bord gauche ou droit ; textes en colonne de 500 px ; 200 px entre chapitres.",
+    "rythme": "Chapitres égaux (un chiffre, une photo, un texte) séparés par le rideau ; une respiration noire au milieu (citation).",
+    "radius": "0 ; le logo dans un cercle est la seule rondeur.",
+    "imagerie": "Photos de salle et de plats sombres, chaudes, contrastées ; portraits du chef en noir et blanc ; galerie N&B en bande ; jamais de photo claire.",
+    "textures": "Aucune (le velours est une couleur, pas une image)."
+   },
+   "structure": [
+    {
+     "section": "Hero",
+     "layout": "full-bleed",
+     "composants": [
+      "photo de salle",
+      "nom en Boska capitales cuivre",
+      "logo cerclé",
+      "bouton réserver"
+     ],
+     "animation_entree": "rideau qui se lève, lettres en stagger",
+     "idle": "aucun (site calme)"
+    },
+    {
+     "section": "Logos de guides",
+     "layout": "bande",
+     "composants": [
+      "distinctions réelles en cuivre monochrome"
+     ],
+     "animation_entree": "fondu",
+     "idle": "aucun"
+    },
+    {
+     "section": "Chapitre 1 : les services",
+     "layout": "chiffre + photo + texte",
+     "composants": [
+      "chiffre monumental",
+      "libellé petites capitales",
+      "photo débordante",
+      "texte 500 px",
+      "bouton menu"
+     ],
+     "animation_entree": "rideau + compteur + parallaxe",
+     "idle": "aucun"
+    },
+    {
+     "section": "Chapitre 2 : les tables",
+     "layout": "idem inversé",
+     "composants": [
+      "chiffre",
+      "photo",
+      "texte",
+      "filet pointillé vertical"
+     ],
+     "animation_entree": "rideau",
+     "idle": "aucun"
+    },
+    {
+     "section": "Citation",
+     "layout": "statement sur noir",
+     "composants": [
+      "phrase du chef en Boska italique (ou Source Serif italique) 48 px",
+      "mots qui s'allument"
+     ],
+     "animation_entree": "scrub par mots",
+     "idle": "aucun"
+    },
+    {
+     "section": "Chapitre 3 : les mains",
+     "layout": "chiffre + portrait",
+     "composants": [
+      "chiffre",
+      "portrait N&B",
+      "bio"
+     ],
+     "animation_entree": "rideau",
+     "idle": "aucun"
+    },
+    {
+     "section": "Chef's table / privatisation",
+     "layout": "onglets à barre",
+     "composants": [
+      "3 onglets soulignés d'une barre cuivre qui se remplit",
+      "photo de fond qui change"
+     ],
+     "animation_entree": "barre qui se remplit",
+     "idle": "rotation automatique toutes les 6 s, pause au survol"
+    },
+    {
+     "section": "Galerie N&B",
+     "layout": "bande horizontale",
+     "composants": [
+      "5 photos de hauteurs variées"
+     ],
+     "animation_entree": "glissement",
+     "idle": "aucun"
+    },
+    {
+     "section": "Carte de clôture",
+     "layout": "bloc centré",
+     "composants": [
+      "bienvenue",
+      "adresse",
+      "3 horaires",
+      "réserver"
+     ],
+     "animation_entree": "rideau",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "minimal",
+     "composants": [
+      "logo",
+      "liens",
+      "KywFooter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "menu (services détaillés)",
+    "chefs-table-privatisation"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Chiffre monumental",
+     "comportement": "Boska 260 px cuivre à cheval sur la photo, compteur 0 → valeur, parallaxe 40 px.",
+     "hover_focus_actif": "aucun",
+     "mobile": "160 px, posé au-dessus de la photo"
+    },
+    {
+     "nom": "Rideau",
+     "comportement": "Pan vert sapin qui se lève une fois par section.",
+     "hover_focus_actif": "aucun",
+     "mobile": "identique, 0.8 s"
+    },
+    {
+     "nom": "Curseur double cercle",
+     "comportement": "Point cuivre + cercle retardé ; grossit sur les liens ; natif conservé dessous.",
+     "hover_focus_actif": "cercle qui grossit",
+     "mobile": "désactivé"
+    },
+    {
+     "nom": "Onglets à barre",
+     "comportement": "3 libellés en petites capitales ; barre cuivre qui se remplit en 6 s ; clic change la photo.",
+     "hover_focus_actif": "libellé en cuivre, aria-selected",
+     "mobile": "onglets empilés avec photo dessous"
+    }
+   ],
+   "mobile_390": "Chiffres à 160 px au-dessus des photos, photos pleine largeur, rideaux conservés, galerie en scroll horizontal natif, curseur désactivé.",
+   "reduced_motion": "Rideaux levés, chiffres affichés à leur valeur, citation entièrement allumée, onglets sans rotation automatique.",
+   "donnees_fictives_necessaires": [
+    "3 à 4 nombres vrais (tables, services, chefs, années) : sinon le chapitre est retiré",
+    "menu de 5-8 services",
+    "6 photos sombres",
+    "5 photos N&B",
+    "citation du chef",
+    "distinctions réelles ou bande supprimée"
+   ],
+   "risques": [
+    "Le « noir et or » hôtelier : le cuivre n'est jamais un dégradé métallisé, toujours un aplat ; le vert sapin évite le noir pur.",
+    "Chiffres inventés pour faire joli : interdit, chapitre supprimé si la donnée manque.",
+    "Trop de rideaux : un par section, jamais sur les blocs internes."
+   ],
+   "genericite_test": "Un modèle ferait un site noir et doré avec un serif et des étoiles. Ici les chapitres sont des nombres réels de la maison, le vert sapin et le rideau construisent un théâtre, et le site est plus court qu'un hôtel générique.",
+   "diversite": {
+    "palette": "vert sapin + cuivre",
+    "typo": "serif capitales fines haute contraste",
+    "structure": "chapitres à chiffres monumentaux",
+    "motion_verb": "se dévoile comme un rideau",
+    "cible": "étoilé, fine dining"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "l-essentiel",
+    "le-54"
+   ]
+  },
+  {
+   "id": "collage",
+   "nom": "Collage",
+   "pitch": "Un lieu à plusieurs vies (table, scène, brunch) collé comme un fanzine : aplats de couleur par activité, logo-étiquette qui absorbe le nom de la section, agenda en cahier ligné.",
+   "cible": [
+    "restaurant + scène ou comedy club",
+    "lieu multi-activités (bar, brunch, événements)",
+    "brasserie à agenda"
+   ],
+   "ambiance": [
+    "collé",
+    "militant",
+    "drôle"
+   ],
+   "references": [
+    {
+     "url": "https://www.degroeneafslag.nl/",
+     "slug": "degroeneafslag",
+     "score": 7.75,
+     "ce_qu_on_en_retient": "Le logo en trois cases fixé en haut à gauche qui absorbe un quatrième bloc avec le nom de la section courante, les sections en aplats de couleur avec titre posé sur une étiquette blanche ou noire et un mot en italique, l'agenda sur lignes de cahier avec post-it, les objets détourés en bord.",
+     "capture": "data/portfolio/captures/degroeneafslag/desktop-frame-2.png"
+    },
+    {
+     "url": "https://www.cravburgers.shop/",
+     "slug": "cravburgers",
+     "score": 7.1,
+     "ce_qu_on_en_retient": "Les vagues SVG organiques de transition entre deux fonds, les stickers qui se soulèvent au survol (image flap), le titre à contour épais.",
+     "capture": "data/portfolio/captures/cravburgers/desktop-frame-1.png"
+    },
+    {
+     "url": "https://www.lepainquotidien.com/be/en",
+     "slug": "lepainquotidien",
+     "score": 7.2,
+     "ce_qu_on_en_retient": "La nav en cellules bordées d'un filet 1 px, le damier 50/50 texte / photo cerné d'un filet continu, la carte d'article posée sur une photo.",
+     "capture": "data/portfolio/captures/lepainquotidien/desktop-frame-2.png"
+    }
+   ],
+   "concept": {
+    "idee": "Chaque activité du lieu a sa couleur et son aplat ; le site est un collage de ces aplats, bordés d'un filet noir 2 px, avec des étiquettes, des stickers et un agenda ligné. Le logo en cases reste collé en haut à gauche et affiche où l'on est.",
+    "metaphore": "Le mur de flyers et de stickers à l'entrée d'une salle.",
+    "signature": "Le logo-étiquette : trois cases bordées (nom coupé en syllabes), fixées ; à chaque section, une quatrième case de la couleur de la section se colle au logo avec le nom de l'activité (« Scène », « Brunch », « Bar ») par un petit mouvement de sticker (scale 1.15 → 1, rotate -4° → 0, 0.3 s back.out). Recette : ScrollTrigger onToggle par section → gsap timeline sur la case ; Lenis.",
+    "emotion": "L'envie de sortir ce soir.",
+    "motion_verb": "se colle",
+    "screenshot": "La section Scène : aplat rose bonbon, titre Caslon sur étiquette noire « Les vendredis, on rit », agenda ligné avec trois dates et un post-it jaune, le logo en haut à gauche avec la case « Scène » collée."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "rose bonbon (scène)",
+      "hex": "#F6A1C8"
+     },
+     {
+      "role": "vert pelouse (table)",
+      "hex": "#1E8C4E"
+     },
+     {
+      "role": "bleu ciel (brunch)",
+      "hex": "#8ED0EA"
+     },
+     {
+      "role": "écru (commun)",
+      "hex": "#F2EEE6"
+     },
+     {
+      "role": "ink",
+      "hex": "#0B0B0B"
+     },
+     {
+      "role": "post-it",
+      "hex": "#F7E25A"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display et titres",
+      "famille": "Libre Caslon Display",
+      "source": "Google",
+      "graisses": "400 + Libre Caslon Text 400i pour le mot en italique",
+      "tracking": "-0.01em"
+     },
+     {
+      "role": "texte, agenda, bulles",
+      "famille": "Space Mono",
+      "source": "Google",
+      "graisses": "400, 700",
+      "tracking": "0, corps 15 px"
+     }
+    ],
+    "grille": "Pleine largeur par section ; grille 12 à l'intérieur ; filets noirs 2 px qui cernent les blocs comme un damier.",
+    "rythme": "Une couleur par activité, jamais deux sections de même couleur à la suite ; l'écru pour les sections communes (histoire, contact).",
+    "radius": "0 pour les blocs ; 4 px pour les stickers ; post-it à 0.",
+    "imagerie": "Photos reportage saturées, bordées de 2 px noir ; objets détourés (micro, assiette, tasse) accrochés aux bords ; affiches d'événements en vignettes.",
+    "textures": "Aucune ; les post-its et stickers sont des aplats."
+   },
+   "structure": [
+    {
+     "section": "Hero",
+     "layout": "full-bleed + logo géant",
+     "composants": [
+      "photo de façade ou de salle",
+      "logo en cases géant",
+      "nav en cellules",
+      "bouton réserver"
+     ],
+     "animation_entree": "les cases du logo se collent une à une",
+     "idle": "aucun"
+    },
+    {
+     "section": "Manifeste",
+     "layout": "statement sur écru",
+     "composants": [
+      "phrase Caslon avec un mot italique",
+      "bulle mono « on en parle »"
+     ],
+     "animation_entree": "lignes",
+     "idle": "aucun"
+    },
+    {
+     "section": "Table (vert)",
+     "layout": "damier bordé",
+     "composants": [
+      "titre sur étiquette",
+      "carte résumée",
+      "photo",
+      "sticker « fait maison »"
+     ],
+     "animation_entree": "la case « Table » se colle au logo",
+     "idle": "sticker qui se soulève au survol"
+    },
+    {
+     "section": "Scène (rose)",
+     "layout": "agenda ligné",
+     "composants": [
+      "dates en grand",
+      "cartes d'événements",
+      "post-it horaires",
+      "billetterie"
+     ],
+     "animation_entree": "case « Scène » + dates en stagger",
+     "idle": "aucun"
+    },
+    {
+     "section": "Brunch (bleu)",
+     "layout": "split",
+     "composants": [
+      "titre",
+      "formule + prix",
+      "photo",
+      "objet détouré en bord"
+     ],
+     "animation_entree": "case « Brunch »",
+     "idle": "objet qui dérive de 4 px"
+    },
+    {
+     "section": "Privatiser",
+     "layout": "carte sur photo",
+     "composants": [
+      "cartouche bordé posé sur la photo",
+      "formulaire court"
+     ],
+     "animation_entree": "cartouche qui se colle",
+     "idle": "aucun"
+    },
+    {
+     "section": "Avis",
+     "layout": "stickers",
+     "composants": [
+      "3 citations en stickers inclinés"
+     ],
+     "animation_entree": "stickers collés en stagger",
+     "idle": "aucun"
+    },
+    {
+     "section": "Infos",
+     "layout": "grille de 4 cartes colorées",
+     "composants": [
+      "horaires",
+      "adresse",
+      "contact",
+      "le bâtiment"
+     ],
+     "animation_entree": "stagger",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "footer as finale",
+     "composants": [
+      "logo en cases",
+      "liens",
+      "KywFooter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "agenda (tous les événements)",
+    "privatisation"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Logo-étiquette",
+     "comportement": "3 cases fixes + case de section qui se colle / se décolle à chaque changement de section.",
+     "hover_focus_actif": "lien accueil ; la case de section est un lien d'ancre",
+     "mobile": "2 cases + case de section réduite"
+    },
+    {
+     "nom": "Agenda ligné",
+     "comportement": "Fond de lignes (repeating-linear-gradient 32 px), date en Caslon 96 px à gauche, carte colorée avec photo, titre, heure, bouton billets.",
+     "hover_focus_actif": "carte qui se soulève de 3 px ; focus contour noir",
+     "mobile": "date au-dessus de la carte"
+    },
+    {
+     "nom": "Sticker",
+     "comportement": "Pastille bordée inclinée (texte court) ; au survol elle se soulève par un coin (rotate + translate, image flap simulée par ombre).",
+     "hover_focus_actif": "soulèvement ; actif : collé",
+     "mobile": "statique"
+    },
+    {
+     "nom": "Nav en cellules",
+     "comportement": "Barre bordée divisée en cellules égales ; cellule courante inversée.",
+     "hover_focus_actif": "cellule inversée au hover et focus",
+     "mobile": "logo + 2 cellules, overlay plein écran"
+    }
+   ],
+   "mobile_390": "Les aplats restent pleine largeur ; le logo-étiquette passe à 2 cases + section ; l'agenda empile date et carte ; les objets en bord sont retirés.",
+   "reduced_motion": "Cases du logo affichées sans animation (la case de section change de texte instantanément), stickers statiques, stagger supprimé.",
+   "donnees_fictives_necessaires": [
+    "3 activités avec couleur",
+    "6 événements datés avec affiche",
+    "formule brunch",
+    "4 photos reportage",
+    "3 avis courts",
+    "3 stickers (mentions réelles : fait maison, terrasse, chiens ok)"
+   ],
+   "risques": [
+    "Le collage peut devenir illisible : filets 2 px et grille stricte, une seule police de titre.",
+    "Couleurs bonbon = site enfantin : Caslon et le noir des filets tiennent le sérieux.",
+    "Objets détourés gratuits : seulement ceux qui désignent une activité réelle."
+   ],
+   "genericite_test": "Un modèle ferait un site avec trois cartes « Restaurant / Événements / Brunch ». Ici chaque activité est une couleur-section, le logo dit où l'on est, et l'agenda est un vrai calendrier ligné : seul un lieu à plusieurs vies peut porter ça.",
+   "diversite": {
+    "palette": "aplats rose / vert / bleu + écru",
+    "typo": "Caslon + mono",
+    "structure": "sections-couleur + logo-étiquette + agenda",
+    "motion_verb": "se colle",
+    "cible": "multi-activités, scène"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "chez-guillaume",
+    "le-royal",
+    "le-servais"
+   ]
+  },
+  {
+   "id": "ardoise",
+   "nom": "Ardoise",
+   "pitch": "La carte d'abord : un site d'ardoise anthracite où la liste des plats est la page d'accueil, avec prix tabulaires, aperçu au survol et suggestion du jour qui s'efface et se réécrit.",
+   "cible": [
+    "brasserie classique à carte longue",
+    "bistrot de quartier",
+    "restaurant de place, ouvert midi et soir"
+   ],
+   "ambiance": [
+    "net",
+    "quotidien",
+    "lisible"
+   ],
+   "references": [
+    {
+     "url": "https://rumbekeplatse.be",
+     "slug": "rumbekeplatse",
+     "score": 8.15,
+     "ce_qu_on_en_retient": "Le menu de 60 lignes lisible d'un coup : ligne nom / pointillés / prix cerclé, badges « vegie », catégories à pictogramme ; le marquee d'état d'ouverture dépendant de l'heure.",
+     "capture": "data/portfolio/captures/rumbekeplatse/desktop-frame-2.png"
+    },
+    {
+     "url": "https://restaurantgem.com",
+     "slug": "restaurantgem",
+     "score": 7.9,
+     "ce_qu_on_en_retient": "La liste de plats à filets dont le survol bascule la grande photo voisine (featured-menu-item).",
+     "capture": "data/portfolio/captures/restaurantgem/desktop-frame-3.png"
+    },
+    {
+     "url": "https://esperitroca.com/",
+     "slug": "esperitroca",
+     "score": 7.45,
+     "ce_qu_on_en_retient": "La barre de réservation fixe en bas de l'écran à libellés en capitales espacées, et les mots-titres géants empilés alignés alternativement.",
+     "capture": "data/portfolio/captures/esperitroca/desktop-frame-2.png"
+    }
+   ],
+   "concept": {
+    "idee": "La page d'accueil est l'ardoise : pas de hero photo, mais la carte complète en liste typographique sur fond anthracite, craie blanche, prix tabulaires, catégories en onglets midi / soir. Les photos n'arrivent qu'au survol (aperçu flottant) et sur la page salle. La suggestion du jour est réécrite chaque matin.",
+    "metaphore": "L'ardoise à l'entrée d'une brasserie, lue en passant.",
+    "signature": "La suggestion du jour : en haut de l'ardoise, la ligne « Aujourd'hui : … » s'efface (clip-path inset de gauche à droite, 0.5 s) puis se réécrit mot à mot (SplitText words, stagger 0.08) quand on change de jour avec les flèches ; le reste de l'ardoise ne bouge pas. Recette : gsap timeline effacement / réécriture, données des 7 jours, Lenis. L'index list a un aperçu photo qui suit le pointeur (recette motion.md).",
+    "emotion": "La simplicité : on sait tout de suite ce qu'on mange et combien ça coûte.",
+    "motion_verb": "s'efface et se réécrit",
+    "screenshot": "L'ardoise : fond anthracite, « MIDI | SOIR » en onglets, 20 lignes de plats en Cabinet Grotesk avec prix alignés à droite, un aperçu photo flottant sur la ligne survolée."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "ground ardoise",
+      "hex": "#2A2E2D"
+     },
+     {
+      "role": "ink craie",
+      "hex": "#F3F1EA"
+     },
+     {
+      "role": "accent craie jaune",
+      "hex": "#E9D064"
+     },
+     {
+      "role": "muted",
+      "hex": "#9A9D9B"
+     },
+     {
+      "role": "ground clair (pages salle, contact)",
+      "hex": "#EDEBE4"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display (catégories, mots géants, prix du jour)",
+      "famille": "Cabinet Grotesk",
+      "source": "Fontshare",
+      "graisses": "800",
+      "tracking": "-0.03em, capitales"
+     },
+     {
+      "role": "texte, lignes de carte, UI",
+      "famille": "Schibsted Grotesk",
+      "source": "Google",
+      "graisses": "400, 700",
+      "tracking": "0 ; font-variant-numeric: tabular-nums"
+     }
+    ],
+    "grille": "Colonne de carte sur 8 colonnes (colonnes 3-10) ; aperçu flottant hors grille ; pages secondaires en 12 colonnes.",
+    "rythme": "Dense et régulier : lignes de 56 px, filets 1 px craie à 15 %, catégories séparées par 48 px ; une seule section pleine hauteur (l'ardoise).",
+    "radius": "0 ; prix cerclés à 999px sur la version claire uniquement.",
+    "imagerie": "Photos uniquement en aperçu flottant (4:5) et sur la page salle ; cadrage serré d'assiettes de brasserie ; aucune photo dans l'ardoise.",
+    "textures": "Aucune (pas de texture craie : la craie est une couleur)."
+   },
+   "structure": [
+    {
+     "section": "Barre d'état",
+     "layout": "marquee",
+     "composants": [
+      "« ouvert jusqu'à 22h30 » / « fermé, ouvre demain 12h »",
+      "défilement lent"
+     ],
+     "animation_entree": "aucune",
+     "idle": "défilement"
+    },
+    {
+     "section": "Ardoise (accueil)",
+     "layout": "index list",
+     "composants": [
+      "nom en Cabinet sur 2 lignes",
+      "suggestion du jour avec flèches",
+      "onglets midi / soir",
+      "lignes plat / prix",
+      "badges végé, maison"
+     ],
+     "animation_entree": "les lignes s'écrivent de haut en bas (clip-path), 0.04 s de stagger",
+     "idle": "aucun"
+    },
+    {
+     "section": "Formules",
+     "layout": "3 colonnes",
+     "composants": [
+      "menu du jour",
+      "formule midi",
+      "menu enfant",
+      "prix géant"
+     ],
+     "animation_entree": "prix qui s'écrivent",
+     "idle": "aucun"
+    },
+    {
+     "section": "La salle",
+     "layout": "full-bleed clair",
+     "composants": [
+      "photo",
+      "phrase courte",
+      "mots géants empilés (TERRASSE / BAR / SALLE)"
+     ],
+     "animation_entree": "mots qui glissent à vitesses différentes",
+     "idle": "aucun"
+    },
+    {
+     "section": "La maison",
+     "layout": "asymmetric pair",
+     "composants": [
+      "photo d'équipe",
+      "histoire courte"
+     ],
+     "animation_entree": "fondu",
+     "idle": "aucun"
+    },
+    {
+     "section": "Horaires et accès",
+     "layout": "tableau",
+     "composants": [
+      "7 lignes jour / midi / soir",
+      "adresse",
+      "parking",
+      "plan"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    },
+    {
+     "section": "Barre de réservation fixe",
+     "layout": "bande basse",
+     "composants": [
+      "réserver",
+      "appeler",
+      "emporter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "minimal",
+     "composants": [
+      "nom",
+      "liens",
+      "KywFooter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "salle-terrasse",
+    "formules-groupes"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Ligne d'ardoise",
+     "comportement": "Nom à gauche, description en muted, prix tabulaire à droite ; survol : aperçu photo flottant qui suit le pointeur et s'incline selon la vitesse.",
+     "hover_focus_actif": "ligne en craie jaune au hover et focus (aperçu aussi au focus) ; actif : badge",
+     "mobile": "vignette inline à gauche, 56 px"
+    },
+    {
+     "nom": "Suggestion du jour",
+     "comportement": "Ligne en haut avec flèches ‹ › ; effacement puis réécriture ; ouvre sur le jour réel.",
+     "hover_focus_actif": "flèches qui se déplacent de 4 px ; aria-live polite",
+     "mobile": "identique"
+    },
+    {
+     "nom": "Onglets midi / soir",
+     "comportement": "Deux libellés Cabinet ; soulignement craie jaune qui glisse de l'un à l'autre.",
+     "hover_focus_actif": "soulignement ; aria-selected",
+     "mobile": "identique, sticky sous le header"
+    },
+    {
+     "nom": "Barre de réservation fixe",
+     "comportement": "Bande craie de 64 px en bas avec 3 actions en capitales espacées, séparée par un filet.",
+     "hover_focus_actif": "action inversée",
+     "mobile": "identique, 56 px"
+    }
+   ],
+   "mobile_390": "L'ardoise reste la première chose vue (nom, suggestion, onglets sticky, lignes avec vignettes inline) ; les mots géants passent à 14 vw ; la barre basse reste.",
+   "reduced_motion": "Lignes affichées d'un coup, suggestion changée sans effacement, aperçu statique à droite de la ligne au focus, marquee statique.",
+   "donnees_fictives_necessaires": [
+    "carte complète midi et soir (30-60 lignes avec prix)",
+    "7 suggestions du jour",
+    "3 formules",
+    "8 photos d'assiettes 4:5 pour les aperçus",
+    "horaires détaillés"
+   ],
+   "risques": [
+    "La « police craie » et la texture tableau noir : interdites ; l'ardoise est une couleur et une liste.",
+    "Page d'accueil sans photo = austère : l'aperçu au survol, la craie jaune et la barre d'état donnent la vie.",
+    "Liste trop longue sur mobile : onglets sticky et catégories repliables."
+   ],
+   "genericite_test": "Un modèle ferait un hero photo avec « Bienvenue » et un bouton « Voir la carte ». Ici la carte EST l'accueil, les prix sont alignés comme sur une ardoise et la suggestion du jour se réécrit : seul un restaurant à carte longue et quotidienne justifie cette structure.",
+   "diversite": {
+    "palette": "anthracite + craie",
+    "typo": "grotesque journal black",
+    "structure": "index-first : la carte est l'accueil",
+    "motion_verb": "s'efface et se réécrit",
+    "cible": "brasserie classique, carte longue"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "brasserie-du-quai",
+    "le-royal",
+    "le-felicien",
+    "grill-des-amis"
+   ]
+  },
+  {
+   "id": "guinguette",
+   "nom": "Guinguette",
+   "pitch": "Lin, corail et bleu canard : un one-page de fête familiale où l'on attrape les objets au trait, où les avis arrivent en cartes inclinées et où les photos s'étalent comme sur une table de terrasse.",
+   "cible": [
+    "brasserie familiale et terrasse",
+    "friterie et grill convivial",
+    "pizzeria de quartier"
+   ],
+   "ambiance": [
+    "joyeux",
+    "dessiné",
+    "attrapable"
+   ],
+   "references": [
+    {
+     "url": "https://rumbekeplatse.be",
+     "slug": "rumbekeplatse",
+     "score": 8.15,
+     "ce_qu_on_en_retient": "Le hero à illustrations au trait saisissables (GSAP Draggable), le slogan en italique décalé sous le titre serif, le mot « Reviews » géant qui passe du flou au net pendant que des cartes d'avis inclinées glissent par-dessus, les ornements de coins, le mot géant coupé par le bas du footer.",
+     "capture": "data/portfolio/captures/rumbekeplatse/desktop-haut.png"
+    },
+    {
+     "url": "https://sunbeambagels.com/",
+     "slug": "sunbeambagels",
+     "score": 7.1,
+     "ce_qu_on_en_retient": "Le mur de polaroids draggables autour d'un titre avec badge rotatif « Drag me », la nav en pilule flottante fixée en bas, le rail de photos arrondies horizontal.",
+     "capture": "data/portfolio/captures/sunbeambagels/desktop-frame-6.png"
+    },
+    {
+     "url": "https://haven-annecy.fr/",
+     "slug": "haven-annecy",
+     "score": 7.95,
+     "ce_qu_on_en_retient": "Le mot géant pâle en filigrane chevauché par un mot manuscrit qui s'écrit, et la galerie de photos qui défile toute seule.",
+     "capture": "data/portfolio/captures/haven-annecy/desktop-frame-2.png"
+    }
+   ],
+   "concept": {
+    "idee": "Le site est une table de terrasse un dimanche : on y pose et déplace des choses. Les illustrations au trait (frite, fourchette, verre, parasol : SVG dessinés pour le gabarit) sont saisissables, les photos s'empilent comme des tirages, les avis se posent en cartes.",
+    "metaphore": "La nappe de la guinguette sur laquelle tout le monde pose quelque chose.",
+    "signature": "La table : le mur de photos et d'objets draggables (GSAP Draggable + InertiaPlugin absent → inertie maison par quickTo), 12 tirages à cadre blanc et 6 objets au trait, posés avec rotations aléatoires autour du titre « Dimanche à la terrasse » ; un badge rotatif « attrapez-moi » ; sur mobile, les tirages se déplacent au toucher et se remettent en rail. Recette : Draggable type x,y, bounds sur la section, zIndex au drag ; rail scroll-snap sur mobile ; Lenis.",
+    "emotion": "Le dimanche en famille, les coudes sur la table.",
+    "motion_verb": "rebondit",
+    "screenshot": "La table : une dizaine de tirages et trois objets au trait en désordre autour d'un titre Zodiak corail, l'un des tirages en cours de déplacement."
+   },
+   "art_direction": {
+    "palette": [
+     {
+      "role": "ground lin",
+      "hex": "#EFE8DA"
+     },
+     {
+      "role": "accent corail",
+      "hex": "#EF5E47"
+     },
+     {
+      "role": "bleu canard",
+      "hex": "#1F6D74"
+     },
+     {
+      "role": "paille",
+      "hex": "#F1CF6B"
+     },
+     {
+      "role": "ink",
+      "hex": "#1F1A17"
+     }
+    ],
+    "typo": [
+     {
+      "role": "display (titres, mots géants, avis)",
+      "famille": "Zodiak",
+      "source": "Fontshare",
+      "graisses": "400, 400i, 700",
+      "tracking": "-0.02em ; italique pour le slogan décalé"
+     },
+     {
+      "role": "texte, menu, nav",
+      "famille": "Satoshi",
+      "source": "Fontshare",
+      "graisses": "500, 700 capitales pour la carte",
+      "tracking": "+0.02em en capitales"
+     }
+    ],
+    "grille": "One-page centré, marges 72 px desktop, blocs alternés lin / bleu canard / corail ; cartes à 24 px de radius.",
+    "rythme": "Sections pleines de contenu, pas de vide ; une section « table » pleine hauteur ; le reste en 16u.",
+    "radius": "24 px sur les cartes et photos, 999px sur les boutons ovales.",
+    "imagerie": "Photos lifestyle au flash (clients, plats tenus en main) en tirages à cadre blanc ; illustrations au trait en SVG dessinées une fois pour le gabarit (objets de table), jamais de clipart.",
+    "textures": "Aucune."
+   },
+   "structure": [
+    {
+     "section": "Marquee d'état",
+     "layout": "marquee",
+     "composants": [
+      "« OUVERT · terrasse ouverte · » selon l'heure"
+     ],
+     "animation_entree": "aucune",
+     "idle": "défilement"
+    },
+    {
+     "section": "Hero",
+     "layout": "poster",
+     "composants": [
+      "titre Zodiak 2 lignes",
+      "slogan italique corail décalé",
+      "6 objets au trait draggables",
+      "adresse",
+      "2 boutons ovales"
+     ],
+     "animation_entree": "objets qui tombent et rebondissent (bounce.out) puis deviennent saisissables",
+     "idle": "objets qui flottent de 3 px"
+    },
+    {
+     "section": "La maison",
+     "layout": "split",
+     "composants": [
+      "photo du patron / de l'équipe",
+      "texte tutoiement vouvoyé (FR : vouvoiement)",
+      "ornements de coins"
+     ],
+     "animation_entree": "fondu",
+     "idle": "aucun"
+    },
+    {
+     "section": "La table (signature)",
+     "layout": "drag canvas",
+     "composants": [
+      "12 tirages",
+      "objets",
+      "badge rotatif"
+     ],
+     "animation_entree": "tirages posés en stagger avec rotation",
+     "idle": "aucun"
+    },
+    {
+     "section": "Le menu",
+     "layout": "carte blanche",
+     "composants": [
+      "catégories à pictogramme au trait",
+      "lignes nom / pointillés / prix cerclé corail",
+      "badge végé"
+     ],
+     "animation_entree": "carte qui se pose",
+     "idle": "aucun"
+    },
+    {
+     "section": "Avis",
+     "layout": "mot géant + cartes",
+     "composants": [
+      "« Avis » géant flou → net",
+      "cartes inclinées qui glissent par-dessus"
+     ],
+     "animation_entree": "blur + rotation",
+     "idle": "aucun"
+    },
+    {
+     "section": "Manifeste corail",
+     "layout": "bande",
+     "composants": [
+      "titre avec un mot italique",
+      "ornements",
+      "2 boutons ovales à contour"
+     ],
+     "animation_entree": "lignes",
+     "idle": "objets au trait qui flottent"
+    },
+    {
+     "section": "Horaires",
+     "layout": "carte",
+     "composants": [
+      "jours / heures en pointillés",
+      "FERMÉ en corail",
+      "terrasse : oui / non"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    },
+    {
+     "section": "Footer",
+     "layout": "footer as finale",
+     "composants": [
+      "mot géant coupé par le bas (« À table ! »)",
+      "colonnes",
+      "KywFooter"
+     ],
+     "animation_entree": "aucune",
+     "idle": "aucun"
+    }
+   ],
+   "pages": [
+    "accueil",
+    "carte",
+    "histoire-equipe",
+    "reservation-contact",
+    "404",
+    "terrasse-evenements",
+    "a-emporter"
+   ],
+   "composants_cles": [
+    {
+     "nom": "Objet draggable",
+     "comportement": "SVG au trait saisissable, zIndex au drag, retombe avec un léger rebond ; jamais posé sur du texte (bounds exclut la zone du titre).",
+     "hover_focus_actif": "curseur grab, ombre ; focus : contour corail et déplacement aux flèches",
+     "mobile": "draggable au toucher, réduit à 3 objets"
+    },
+    {
+     "nom": "Tirage",
+     "comportement": "Photo à cadre blanc 24 px, rotation aléatoire ±6°, draggable sur la table.",
+     "hover_focus_actif": "se redresse au hover",
+     "mobile": "rail scroll-snap"
+    },
+    {
+     "nom": "Carte d'avis",
+     "comportement": "Carte blanche translucide, 5 étoiles, citation en Zodiak, nom ; arrive en rotation.",
+     "hover_focus_actif": "se redresse",
+     "mobile": "empilées"
+    },
+    {
+     "nom": "Bouton ovale",
+     "comportement": "Pilule à contour 2 px ; au survol le fond se remplit en rebondissant (scale 1 → 1.04 → 1).",
+     "hover_focus_actif": "flood corail ; focus contour canard",
+     "mobile": "pleine largeur"
+    }
+   ],
+   "mobile_390": "Les objets draggables passent à 3 et restent saisissables ; la table devient un rail de tirages scroll-snap avec rotation conservée ; le menu reste une carte blanche à lignes pointillées.",
+   "reduced_motion": "Objets posés sans rebond (toujours saisissables), tirages droits en grille, avis sans flou, marquee statique.",
+   "donnees_fictives_necessaires": [
+    "12 photos lifestyle",
+    "6 illustrations au trait (à dessiner en SVG pour le gabarit)",
+    "carte de 30-60 lignes avec prix",
+    "4 avis courts marqués illustratifs",
+    "slogan italique"
+   ],
+   "risques": [
+    "Les draggables sur le texte (défaut de Rumbeke) : zone d'exclusion autour des titres.",
+    "Clipart et emoji : interdits ; les objets sont dessinés une fois dans le style du gabarit.",
+    "Trop de rebond : bounce réservé à l'entrée du hero et aux boutons."
+   ],
+   "genericite_test": "Un modèle ferait un site chaleureux avec des photos arrondies et un bouton corail. Ici on peut attraper les choses, les avis et les tirages sont posés comme sur une table, et les objets dessinés sont ceux de la maison (frite, parasol, verre).",
+   "diversite": {
+    "palette": "lin + corail + canard + paille",
+    "typo": "serif display italique + sans",
+    "structure": "one-page ludique draggable",
+    "motion_verb": "rebondit",
+    "cible": "familial, terrasse"
+   },
+   "canvas": false,
+   "restaurants_cibles_indicatifs": [
+    "partage",
+    "dolce-vita-wepion",
+    "le-felicien",
+    "grill-des-amis",
+    "le-ponti-2"
+   ]
+  }
+ ]
+}
