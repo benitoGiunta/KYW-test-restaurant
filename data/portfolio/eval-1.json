@@ -1,0 +1,1515 @@
+[
+ {
+  "url": "https://bar-topas.ch/",
+  "nom": "TÒPAS – Bar Le Topaze",
+  "slug": "bar-topas",
+  "type": "bar",
+  "inaccessible": false,
+  "scores": {
+   "design": 9,
+   "originalite": 9,
+   "motion": 9,
+   "usabilite": 7,
+   "contenu": 7,
+   "transposabilite": 5,
+   "total": 8.1
+  },
+  "preuves": {
+   "design": "Palette à cinq bandes (bordeaux, rouge, orange, jaune, turquoise) sur crème, titres condensés monumentaux et bords en vagues entre sections : chaque frame est une affiche (desktop-frame-1, -5, -6).",
+   "originalite": "Le pincho jurassien (pain, raclette, cornichon, oignon, pic) construit en 3D sur sa planche au fil du scroll, et une « définition de dictionnaire » du mot Tòpas : impossible à déplacer vers un autre bar (desktop-frame-1/-2).",
+   "motion": "Preloader rideau à bandes « On allume la plancha… », assemblage 3D (three/ogl) piloté par GSAP ScrollTrigger + Lenis, marquee de mots, galerie en cartes inclinées qui défile horizontalement, verre et bière 3D flottants dans la section horaires.",
+   "usabilite": "Barre fixe avec statut « ¡Abierto! jusqu'à 22h30 » et lien vers le site mère, mais pas de nav par sections, pas de carte (volontaire) et un preloader qui occupe encore l'écran mobile après 3 s.",
+   "contenu": "Horaires, adresse, téléphone, plan OSM, photos réelles des pinchos nommés (Le Chalutier, La Pêcheuse), mais pas de carte ni de prix (« la carte t'attend au bar »).",
+   "transposabilite": "Le preloader, les vagues, le marquee, la galerie inclinée et les horaires en cartes sont faisables en Astro + GSAP + Lenis ; le pincho 3D exige des modèles sur mesure (ogl/three)."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Preloader rideau à bandes de couleur",
+    "description": "Cinq bandes verticales de la palette couvrent l'écran avec le logo centré, un pictogramme plancha, une pastille « On allume la plancha… » et une barre de progression ; une fois chargé, le rideau se lève (clip-path) pour révéler le hero. Déclenché au chargement.",
+    "capture": "desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Assemblage 3D du pincho au scroll (section épinglée)",
+    "description": "Section turquoise épinglée : une planche noire 3D vide, puis au fil du scroll le pain, la raclette qui fond, le cornichon, l'oignon et le pic apparaissent un à un pendant que la liste numérotée 01-05 à gauche s'allume étape par étape avec une barre de progression jaune en bas. Piloté par ScrollTrigger scrub + ogl.",
+    "capture": "desktop-frame-1.png, desktop-frame-2.png"
+   },
+   {
+    "nom": "Galerie de cartes inclinées sur titre géant",
+    "description": "Section crème avec « MUCHO DÉLICIEUSE. » répété en filigrane bordeaux derrière des cartes photo numérotées 01-08, légèrement tournées, qui défilent horizontalement au scroll vertical et se terminent par un disque bordeaux CTA « ¡Ven a probar! ». Certaines cartes portent le nom du plat en lettrage manuscrit.",
+    "capture": "desktop-frame-3.png, desktop-frame-4.png"
+   },
+   {
+    "nom": "Bords en vagues entre sections",
+    "description": "Chaque changement de couleur de fond est découpé par une ligne ondulée (classe edge-wave, SVG/clip-path) qui donne un rythme d'affiche. Statique, mais la couleur de fond change au scroll.",
+    "capture": "desktop-frame-1.png, desktop-frame-6.png"
+   },
+   {
+    "nom": "Pastille d'état « ¡Abierto! jusqu'à 22h30 »",
+    "description": "Dans la barre fixe, une pastille bordeaux à point vert calcule en direct si le bar est ouvert et jusqu'à quelle heure ; reprise dans le hero et la section adresse avec « ¡HOY! » sur le jour courant.",
+    "capture": "desktop-frame-1.png, desktop-frame-6.png"
+   },
+   {
+    "nom": "Horaires en cartes typographiques + objets 3D flottants",
+    "description": "Section jaune : titre HORAIRES géant, jours en cartes bordeaux avec heures en condensé énorme et flèche, étiquette « ¡HOY! » tournée ; à droite, verre à bière et verre à vin en 3D flottent devant un disque bordeaux.",
+    "capture": "desktop-frame-6.png"
+   },
+   {
+    "nom": "Définition de dictionnaire comme section « à propos »",
+    "description": "« TÒPAS [tò-pas] nom masculin • presque espagnol » puis définition humoristique et synonymes : remplace le texte « notre histoire » par un format éditorial drôle. Apparition par lignes au scroll.",
+    "capture": "infos.json (texte)"
+   },
+   {
+    "nom": "Illustration line-art plein cadre + photo en bande",
+    "description": "Section « amigos » : grande illustration bordeaux sur crème de copains attablés, précédée d'une photo réelle visible en bande à gauche (slider avant/après dessin/réalité avec curseur jaune).",
+    "capture": "desktop-frame-5.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#A8123A bordeaux",
+    "#F04A12 rouge",
+    "#FF8A1E orange",
+    "#FFBE12 jaune",
+    "#2C9FA1 turquoise",
+    "#F0EBDD crème"
+   ],
+   "typo": "Archivo (variable, extended bold) pour les titres monumentaux et étiquettes ; une condensée display (type Anton/Bebas) pour les listes et les heures ; Source Sans 3 pour le texte courant ; lettrage manuscrit sur les photos.",
+   "grille": "Une seule colonne pleine largeur, sections plein écran à fond de couleur alterné, marges de 56 px, gros titres alignés à gauche, rythme affiche/vague/affiche.",
+   "imagerie": "3D stylisée (pincho, verres), photos réelles de pinchos, illustration line-art, pictos dessinés.",
+   "ton": "Franglais-espagnol de bistrot, tutoiement, blagues (« piège délicieux »), très court.",
+   "ambiance": "pop, chaleureux, ludique"
+  },
+  "structure": [
+   "topbar fixe (logo, statut ouvert, lien Bar Le Topaze)",
+   "hero (preloader rideau puis titre)",
+   "marquee Pinchos · Cazuelas · Cerveza",
+   "définition de dictionnaire",
+   "build : pincho 3D au scroll",
+   "galerie cartes inclinées 01-08 + CTA",
+   "names : seize noms de plats (pas de carte)",
+   "amigos : illustration + 3 étapes (coches, beeper, partage)",
+   "horaires",
+   "visite : adresse, tel, instagram, plan OSM",
+   "footer ¡Vaaaamos! + crédits"
+  ],
+  "mecaniques_techniques": [
+   "gsap",
+   "ScrollTrigger scrub",
+   "lenis",
+   "three/ogl (WebGL)",
+   "canvas",
+   "clip-path (vagues, rideau)",
+   "marquee",
+   "pin de section",
+   "horizontal au scroll",
+   "statut ouvert calculé en JS",
+   "WordPress sur mesure"
+  ],
+  "points_faibles": [
+   "Preloader long qui masque le hero plus de 3 s (le robot et les visiteurs pressés voient un rideau)",
+   "Aucune navigation par ancres : il faut scroller 17 700 px pour atteindre l'adresse",
+   "Pas de carte ni de prix en ligne, assumé mais frustrant",
+   "Hors ligne ou sans WebGL, la section pincho est une planche vide"
+  ],
+  "famille_da": "pop affiche hispano",
+  "captures": "data/portfolio/captures/bar-topas"
+ },
+ {
+  "url": "https://www.cravburgers.shop/",
+  "nom": "CRAV Burgers",
+  "slug": "cravburgers",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 7,
+   "motion": 8,
+   "usabilite": 6,
+   "contenu": 4,
+   "transposabilite": 8,
+   "total": 7.1
+  },
+  "preuves": {
+   "design": "Palette beige/rouge/jaune moutarde, typo condensée à contour blanc façon sticker, photos de burgers inclinées comme des polaroïds et vagues entre sections : cohérent du hero au footer (desktop-frame-1, -6, -7).",
+   "originalite": "Burger-mascotte avec yeux et gants blancs façon cartoon années 30, itinéraire en pointillés avec avion vers Berlin/New York/Tokyo : fort mais c'est un univers « smash burger » transposable à n'importe quelle chaîne (desktop-frame-2, -5).",
+   "motion": "Preloader burger illustré sur rouge, titres animés mot par mot (split), stickers à « flap » au survol, ingrédients (tomate, fromage, steak, salade) qui flottent et se « jonglent » dans le footer (--juggle-scale), scroll lissé Lenis.",
+   "usabilite": "Nav fixe « BURGERS / MENU » claire et bouton Order now répété, mais le hero reste vide 3,5 s après chargement, la bannière cookies masque le bas de chaque écran et le site est en anglais pour un restaurant de Navarre.",
+   "contenu": "Copy marketing sans adresse ni horaires sur la home (Locations renvoie à un ancre), photos de banque (Pexels-like), villes fictives « Berlin, London, New York, Sydney, Tokyo » : contenu de démo plus que de vrai restaurant.",
+   "transposabilite": "Stickers, vagues SVG, polaroïds inclinés, ingrédients flottants en PNG détourés et split-text : tout se refait en Astro + GSAP + Lenis sans tournage."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Preloader mascotte sur aplat rouge",
+    "description": "Écran rouge plein avec un burger illustré centré qui pulse, puis une vague orange en bas monte pour révéler la page (« Preparing artisan kitchen »). Déclenché au chargement, dure plus de 3 s.",
+    "capture": "mobile-haut.png"
+   },
+   {
+    "nom": "Titre sticker à contour blanc",
+    "description": "Titres condensés rouges avec un contour blanc épais (text-stroke / drop-shadow) et petit label incliné « FEEL IT » en bulle rouge ; les mots apparaissent ligne par ligne en montant au scroll.",
+    "capture": "desktop-frame-6.png"
+   },
+   {
+    "nom": "Burger-mascotte aux gants blancs",
+    "description": "Photo de burger détourée à laquelle sont ajoutés des yeux cartoon et deux gants blancs en SVG, encadrée des listes de bénéfices (450 kcal, high protein…) sur fond rouge ; les yeux et les gants bougent avec le scroll.",
+    "capture": "desktop-frame-2.png"
+   },
+   {
+    "nom": "Polaroïds inclinés avec sticker flap",
+    "description": "Trois photos aux coins arrondis, chacune tournée de quelques degrés, sous un bouton pill « ORDER NOW » ; des stickers illustrés (burger qui fait un selfie, frites) se soulèvent au survol grâce à une image « flap » superposée.",
+    "capture": "desktop-frame-1.png"
+   },
+   {
+    "nom": "Itinéraire pointillé avec avion",
+    "description": "Section jaune « Take away » : une ligne pointillée serpentant sur toute la hauteur relie des photos de clients étiquetées de noms de villes ; un avion illustré suit la ligne au scroll.",
+    "capture": "desktop-frame-5.png"
+   },
+   {
+    "nom": "Footer logo géant + ingrédients jonglés",
+    "description": "Le mot CRAV en lettrage bubble rouge occupe toute la largeur du footer ; tomate, fromage, steak et salade détourés tombent et rebondissent autour (variable --juggle-scale), avec un marquee « CRAVING… ».",
+    "capture": "desktop-bas.png"
+   },
+   {
+    "nom": "Vagues de transition entre fonds",
+    "description": "Chaque section se termine par une courbe SVG organique (rouge sur beige, jaune sur beige) qui donne un rythme de pâte étalée ; les vagues ont des formes différentes à chaque transition.",
+    "capture": "desktop-frame-1.png, desktop-frame-4.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#F5E1CB beige",
+    "#F7291C rouge",
+    "#FFD84D jaune",
+    "#FFF9F0 crème",
+    "#3D0C0C bordeaux foncé"
+   ],
+   "typo": "Une condensée display (type Bebas/Anton) à contour blanc pour les titres, une bubble arrondie pour le logo et les stickers, condensée régulière pour le texte.",
+   "grille": "Pleine largeur centrée, sections hautes, marges en vw (2,5 vw), composition très verticale avec objets flottants en bordure.",
+   "imagerie": "Photos de burgers (banque), illustrations gravure rouge (mascotte, avion), ingrédients PNG détourés.",
+   "ton": "Slogans anglais courts et vendeurs (« Zero guilt », « Feel the change »).",
+   "ambiance": "cartoon, appétissant, énergique"
+  },
+  "structure": [
+   "nav fixe (logo, Burgers, Menu burger)",
+   "hero : THE BURGER / SMASHED FRESH / BOLD FLAVOR",
+   "about : Top classic + polaroïds + Order now",
+   "experience : burger-mascotte + bénéfices",
+   "ingredients : Pure quality, photo plein écran, ingrédients flottants",
+   "take away : itinéraire pointillé + villes",
+   "cta : Feel the change + photo",
+   "footer logo géant + ingrédients"
+  ],
+  "mecaniques_techniques": [
+   "Next.js/React",
+   "lenis",
+   "split-text par mot",
+   "stickers flap au survol",
+   "ingrédients flottants (CSS vars --juggle-scale)",
+   "vagues SVG",
+   "preloader",
+   "data-nav-dark (nav qui change de couleur par section)"
+  ],
+  "points_faibles": [
+   "Hero vide après 3,5 s : le loader pénalise le premier écran",
+   "Bannière cookies persistante au centre bas",
+   "Aucune information pratique (adresse, horaires, prix) sur la home ; contenu générique",
+   "Photos de banque reconnaissables"
+  ],
+  "famille_da": "cartoon sticker burger",
+  "captures": "data/portfolio/captures/cravburgers"
+ },
+ {
+  "url": "https://www.caffegilli.com/en",
+  "nom": "Caffè Gilli (1733)",
+  "slug": "caffegilli",
+  "type": "patisserie",
+  "inaccessible": false,
+  "scores": {
+   "design": 7,
+   "originalite": 4,
+   "motion": 4,
+   "usabilite": 5,
+   "contenu": 7,
+   "transposabilite": 9,
+   "total": 5.7
+  },
+  "preuves": {
+   "design": "Bleu nuit, crème et or, serif display à grandes capitales espacées (« AN ODE TO SWEETNESS ») et photos de pâtisseries sur fond uni : élégant mais convenu (desktop-frame-1, -3).",
+   "originalite": "Structure « maison historique » (pâtisserie, chocolat, bistrot, cocktail bar, institution) que n'importe quel café-pâtissier pourrait reprendre ; seul le hero vidéo de la Piazza della Repubblica avec le carrousel est propre au lieu (desktop-haut).",
+   "motion": "Hero vidéo cadré dans une marge, mots du titre empilés qui apparaissent un à un (chaque mot est un bloc), carrousels Splide et fades ; aucune librairie de scroll (ni gsap ni lenis dans le HTML).",
+   "usabilite": "Header clair (menu, Shop, langue, compte, panier) mais une bannière cookies qui couvre un quart de l'écran et assombrit tout tant qu'on ne clique pas, et aucun bouton réserver visible sur la home.",
+   "contenu": "Adresse, mail, téléphone, cinq univers détaillés, boutique en ligne avec produits réels (Saint-Honoré, éclair), photos propres à la maison ; pas d'horaires sur la home.",
+   "transposabilite": "Hero vidéo encadré, titres mot par mot, blocs image/texte alternés, grille produits : reproductible en Astro + GSAP sans difficulté (la vidéo est remplaçable par une photo)."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Hero vidéo encadré sous header blanc",
+    "description": "La vidéo de la piazza (carrousel, fiacres) est inscrite dans un cadre avec marges de 32 px sous un header crème, plutôt qu'en plein écran ; le texte « IN THE HEART OF THE CITY… SINCE 1733 » arrive ensuite mot par mot, chaque mot sur sa ligne.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Bloc univers : titre serif + photo portrait + légende décalée",
+    "description": "Pour chaque univers (pâtisserie, chocolat), titre en capitales serif à gauche, photo portrait centrale, et une seconde phrase décalée en bas à droite : une composition en trois temps qui se répète comme une signature.",
+    "capture": "desktop-frame-1.png, desktop-frame-2.png"
+   },
+   {
+    "nom": "Grille boutique en escalier",
+    "description": "Trois produits (Saint-Honoré, éclair, boîte de biscuits) sur fonds unis, disposés en escalier descendant (chaque carte plus basse que la précédente) sous « From Florence, with love » et un bouton « Purchase now ».",
+    "capture": "desktop-frame-3.png"
+   },
+   {
+    "nom": "Lien souligné avec flèche « Discover more »",
+    "description": "CTA texte en capitales serif, soulignement fin et flèche longue ; au survol la flèche glisse. Utilisé à l'identique dans chaque section.",
+    "capture": "desktop-frame-4.png, desktop-frame-5.png"
+   },
+   {
+    "nom": "Section patrimoine en photo noir et blanc plein cadre",
+    "description": "La façade historique en N&B occupe tout l'écran puis une photo d'archive en demi-largeur accompagne « A Florentine institution » : la couleur est réservée aux produits, l'histoire est en monochrome.",
+    "capture": "desktop-frame-6.png, desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#1C2641 bleu nuit",
+    "#F4F0E6 crème",
+    "#C9B96A or pâle",
+    "#FFFFFF blanc"
+   ],
+   "typo": "Serif display à capitales espacées (type Ogg/Canela) pour les titres ; Greycliff CF (Typekit) géométrique pour le texte et les boutons.",
+   "grille": "Conteneur avec marges de 32 px, blocs image/texte alternés, beaucoup de blanc, sections de hauteur écran.",
+   "imagerie": "Vidéo du lieu, photos de produits sur fond uni, photos N&B d'archives.",
+   "ton": "Luxe patrimonial en anglais (« ode to sweetness », « timeless »).",
+   "ambiance": "patrimonial, raffiné, calme"
+  },
+  "structure": [
+   "header (menu, Shop, logo, EN, login, panier)",
+   "hero vidéo + titre mot par mot",
+   "pâtisserie",
+   "chocolatier",
+   "boutique (3 produits)",
+   "bistrot",
+   "cocktail bar",
+   "institution florentine (N&B)",
+   "footer adresse + légal + réseaux"
+  ],
+  "mecaniques_techniques": [
+   "splide (carrousels)",
+   "vidéo hero",
+   "apparition mot par mot",
+   "clip-path",
+   "Tailwind",
+   "CMS sur mesure (Laravel ?) + boutique"
+  ],
+  "points_faibles": [
+   "Bannière cookies énorme qui assombrit toute la page",
+   "Pas de réservation ni d'horaires sur la home",
+   "Texte marketing long et générique",
+   "Aucun scroll lissé ni effet signature : le site ressemble à un thème e-commerce élégant"
+  ],
+  "famille_da": "maison patrimoniale bleu nuit",
+  "captures": "data/portfolio/captures/caffegilli"
+ },
+ {
+  "url": "https://restaurantonyx.com",
+  "nom": "ONYX Paris",
+  "slug": "restaurantonyx",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 7,
+   "originalite": 5,
+   "motion": 5,
+   "usabilite": 8,
+   "contenu": 9,
+   "transposabilite": 9,
+   "total": 6.75
+  },
+  "preuves": {
+   "design": "Marbre blanc veiné d'or en fond, bleu nuit et corail, serif display à chasse fine (HV Clio) en très grand corps : hero « ONYX Paris » et footer « Venez » sont des compositions typographiques nettes (desktop-haut, desktop-bas).",
+   "originalite": "Le marbre et le logo cerclé donnent une identité, mais la structure (hero, vidéo, carte en onglets, citation, adresse) est celle d'un bistronomique parisien standard ; rien d'impossible à transposer.",
+   "motion": "Scroll lissé Lenis avec data-scroll (locomotive-like), vidéo de la rue en parallaxe (déformation visible sur desktop-frame-1), onglets Midi/Soir qui changent l'image de droite (data-update-images), épinglage de la photo pendant que la carte défile ; pas de signature forte.",
+   "usabilite": "Barre collante Bon cadeau / Réservation sur tous les écrans, badges de preuve (Google 4.9, prix moyen 45 €) dès le hero, horaires et adresse en footer, mobile propre : un site qui vend bien (mobile-haut).",
+   "contenu": "Carte complète midi/soir avec prix et descriptions, formules 35/42 €, voiturier, horaires journaliers, téléphone, dix langues : contenu réel et exhaustif (desktop-frame-3/-4).",
+   "transposabilite": "Fond marbre en image, typo display, onglets de carte avec image épinglée, barre CTA collante : tout se fait en Astro + GSAP + Lenis sans tournage (la vidéo est un plus)."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Hero typographique sur marbre avec colonne de preuves",
+    "description": "Logo-mot ONYX en serif fine géante sur une photo de marbre blanc veiné, « Paris » inscrit dans le O, sous-titre « Restaurant bistronomique » ; à droite une colonne verticale de badges : « Meilleure table 2025 », note TheFork 5, Google 4.9, prix moyen 45 €, « restaurant climatisé ». Apparition en fondu au chargement.",
+    "capture": "desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Barre CTA collante double « Bon cadeau | Réservation »",
+    "description": "Un bandeau corail centré en bas d'écran, divisé en deux moitiés, reste fixé pendant tout le scroll et devient pleine largeur sur mobile ; la moitié survolée s'assombrit.",
+    "capture": "desktop-frame-2.png, mobile-haut.png"
+   },
+   {
+    "nom": "Carte en onglets Midi/Soir avec photo épinglée",
+    "description": "Colonne gauche : titre « La carte », deux onglets (plein bleu nuit = actif, contour = inactif) puis la liste plats/prix en serif ; colonne droite : grande photo qui reste collée (sticky) et change selon l'onglet grâce à data-update-images.",
+    "capture": "desktop-frame-2.png, desktop-frame-3.png, desktop-frame-4.png"
+   },
+   {
+    "nom": "Citation manifeste centrée en très grand serif",
+    "description": "Un paragraphe de six lignes en serif display 60 px centré sur fond blanc, qui apparaît ligne par ligne en remontant au scroll, avant une section bleu nuit.",
+    "capture": "desktop-frame-5.png"
+   },
+   {
+    "nom": "Section inversée bleu nuit « ONYX PARIS » + photo décalée",
+    "description": "Fond bleu nuit, titre en deux lignes blanches de 300 px qui déborde derrière une photo de la salle positionnée à droite et en léger parallaxe.",
+    "capture": "desktop-frame-6.png"
+   },
+   {
+    "nom": "Footer « Venez » avec réseaux empilés",
+    "description": "Le mot « Venez » en 330 px à gauche, un rectangle de marbre à droite portant Instagram / Facebook / TikTok empilés, puis adresse, horaires, voiturier, téléphone et mail en ligne avec tirets.",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#0F1F33 bleu nuit",
+    "#E8807A corail",
+    "#FFFFFF blanc",
+    "#C9A26B or (veines du marbre)"
+   ],
+   "typo": "HV Clio (serif display fine, chasse étroite) pour les titres et prix ; Futura PT pour le texte, les menus et les boutons.",
+   "grille": "Conteneur 1320 px, deux colonnes 50/50 pour la carte, titres débordant du conteneur, beaucoup de blanc, photos à bords droits.",
+   "imagerie": "Photo de marbre, vidéo de la rue de Provence, photos pro des plats et de la salle (bar en onyx rétroéclairé).",
+   "ton": "Vouvoiement, registre « luxe accessible » (« déjeuner d'affaires », « dîner romantique »).",
+   "ambiance": "chic, lumineux, parisien"
+  },
+  "structure": [
+   "header (logo, FR, Menu burger)",
+   "hero marbre + badges",
+   "vidéo rue + texte + Réserver une table + photo plat",
+   "citation Bienvenue",
+   "La carte : onglets midi/soir + liste + photo épinglée",
+   "citation manifeste",
+   "section bleu nuit ONYX PARIS + photo salle",
+   "footer Venez + coordonnées",
+   "barre CTA collante"
+  ],
+  "mecaniques_techniques": [
+   "lenis",
+   "data-scroll (parallaxe)",
+   "sticky (photo de carte)",
+   "onglets JS data-update-images",
+   "vidéo",
+   "clip-path",
+   "@font-face HV Clio/Futura PT",
+   "widget WhatsApp heep.ai",
+   "réservation OpenTable + SecretBox (bons cadeaux)",
+   "Astro ou Next (traces des deux dans le HTML)"
+  ],
+  "points_faibles": [
+   "Bouton WhatsApp vert en bas à droite qui jure avec la palette",
+   "Vidéo déformée en parallaxe (étirement visible)",
+   "Grand vide blanc avant « La carte »",
+   "Badges « restaurant climatisé » et « meilleure table 2025 » auto-décernés"
+  ],
+  "famille_da": "éditorial marbre et bleu nuit",
+  "captures": "data/portfolio/captures/restaurantonyx"
+ },
+ {
+  "url": "https://haven-annecy.fr/",
+  "nom": "Haven Coffee + Kitchen",
+  "slug": "haven-annecy",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 7,
+   "motion": 7,
+   "usabilite": 9,
+   "contenu": 8,
+   "transposabilite": 10,
+   "total": 7.95
+  },
+  "preuves": {
+   "design": "Crème, terracotta et brun, titres condensés italiques, mots-images « HAVEN » en photos de brunch découpées et grands mots en filigrane « BRUNCH », « COFFEE » : une page claire et chaleureuse (desktop-haut, desktop-frame-2).",
+   "originalite": "La carte de l'Australie en line-art qui serpente en fond, la devanture dessinée au trait avec le paillasson « No worries it's sunny in Australia » et les mots manuscrits (« Take », « 9h - 14h », « All day », « See ») tissent un univers propre à ce coffee shop australien d'Annecy (desktop-frame-5, -6).",
+   "motion": "43 chemins SVG « draw-path » : les contours (Australie, devanture) et les mots manuscrits (15 handwriting-word) se dessinent au scroll comme à la main ; galerie photo en autoscroll ; apparitions slide-in de listes. Vanilla JS, sans GSAP.",
+   "usabilite": "Nav avec horaires sous chaque entrée (Café dès 8h30, Brunch 9h-14h), boutons Réserver/Offrir fixes en haut à droite, footer trois colonnes adresse/horaires/boutons, mobile impeccable : tout se trouve en 3 s (mobile-haut).",
+   "contenu": "Actualités du mois (Octobre rose, café invité Boo), horaires détaillés, adresse, téléphone, photos réelles des plats ; carte du brunch renvoyée en page dédiée.",
+   "transposabilite": "Line-art SVG animé par stroke-dashoffset, mots manuscrits en SVG, titres-images en background-clip: text, autoscroll CSS : 100 % reproductible en Astro sans bibliothèque lourde."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Titre-image « HAVEN » en lettres photo",
+    "description": "Le mot HAVEN en capitales extra-bold occupe toute la largeur et chaque lettre est remplie d'une photo de plat différente (background-clip: text), posée sur un contour de l'Australie dessiné en fond. Statique, les photos sont choisies pour leurs couleurs vives.",
+    "capture": "desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Line-art qui se dessine au scroll (draw-path)",
+    "description": "La carte de l'Australie en fond du hero, puis la devanture du café avec ses tables, étagères et paillasson, sont des SVG au trait beige qui se tracent progressivement (stroke-dashoffset) quand on arrive dessus. Déclenché à l'entrée dans le viewport.",
+    "capture": "desktop-frame-1.png, desktop-frame-6.png"
+   },
+   {
+    "nom": "Mots manuscrits animés sur mots-filigrane",
+    "description": "Des mots en écriture cursive terracotta (« Take », « 9h - 14h », « All day », « See ») s'écrivent lettre par lettre (handwriting-word) en chevauchant un énorme mot en capitales beige clair (« BRUNCH », « COFFEE ») : la combinaison capitales pâles + manuscrit coloré sert de titre de section.",
+    "capture": "desktop-frame-2.png, desktop-frame-3.png, desktop-frame-5.png"
+   },
+   {
+    "nom": "Galerie photo en autoscroll",
+    "description": "Bande de photos à bords arrondis qui défile toute seule horizontalement, en continu, sans contrôle : donne vie à la section brunch sans vidéo.",
+    "capture": "desktop-frame-3.png, desktop-frame-4.png"
+   },
+   {
+    "nom": "Carte d'actualité terracotta à deux colonnes",
+    "description": "Un grand bloc terracotta arrondi avec étiquette « Octobre rose chez Haven ! », deux colonnes séparées par un filet (actu brunch / café invité), chacune terminée par un lien avec flèche (« Brunch time », « Coffee time »).",
+    "capture": "desktop-frame-1.png, desktop-frame-2.png"
+   },
+   {
+    "nom": "Nav avec horaires intégrés + boutons empilés Réserver/Offrir",
+    "description": "Chaque entrée du menu porte son horaire en petit dessous (Café dès 8h30, Brunch 9h-14h) ; à droite deux boutons en pilule collés au bord de l'écran, Réserver (plein) au-dessus d'Offrir (blanc), qui restent fixes au scroll.",
+    "capture": "desktop-haut.png, desktop-frame-3.png"
+   },
+   {
+    "nom": "Footer trois colonnes à filets verticaux",
+    "description": "Adresse + réseaux / horaires café / horaires brunch + boutons, séparés par des traits verticaux terracotta, avec un mot manuscrit « See » en filigrane qui chevauche le filet supérieur.",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#FDF7F2 crème",
+    "#C0603A terracotta",
+    "#F1DCCB beige clair",
+    "#2B1A12 brun",
+    "#FFFFFF blanc"
+   ],
+   "typo": "Une sans condensée bold italique (type Barlow Condensed) pour les titres, une cursive manuscrite pour les mots animés, Barlow/Roboto Condensed pour le texte (Typekit).",
+   "grille": "Conteneur à marges de 54 px, blocs arrondis pleine largeur, textes en deux colonnes titre/paragraphe, titres filigrane débordants.",
+   "imagerie": "Photos colorées de brunch, line-art SVG beige (Australie, devanture), aucune 3D ni vidéo.",
+   "ton": "Chaleureux, inclusif, franglais australien (« Hey mate! », « Aussie vibes »).",
+   "ambiance": "solaire, artisanal, convivial"
+  },
+  "structure": [
+   "header (logo manuscrit, nav avec horaires, Réserver/Offrir)",
+   "hero HAVEN lettres-photo + Australie line-art + intro",
+   "carte actualités terracotta (Octobre rose / café invité)",
+   "BRUNCH 9h-14h : texte + galerie autoscroll",
+   "COFFEE All day : texte",
+   "devanture line-art + bloc histoire terracotta",
+   "footer adresse / horaires / boutons",
+   "barre légale"
+  ],
+  "mecaniques_techniques": [
+   "SVG draw-path (stroke-dashoffset)",
+   "handwriting-word",
+   "autoscroll galerie",
+   "animate--slide-in (IntersectionObserver)",
+   "background-clip: text",
+   "Drupal (paragraphs)",
+   "widget Addock (réservation)",
+   "Typekit"
+  ],
+  "points_faibles": [
+   "Badge Awwwards « Nominee » collé à gauche sur toutes les pages",
+   "Le mot manuscrit chevauche parfois le texte (« All day » sur le titre)",
+   "Pas de carte des plats sur la home",
+   "Bloc actualités long sur mobile"
+  ],
+  "famille_da": "line-art solaire australien",
+  "captures": "data/portfolio/captures/haven-annecy"
+ },
+ {
+  "url": "https://skylinebarvenice.it/",
+  "nom": "Skyline Rooftop Bar Venice (Hilton)",
+  "slug": "skylinebarvenice",
+  "type": "bar",
+  "inaccessible": false,
+  "scores": {
+   "design": 7,
+   "originalite": 5,
+   "motion": 6,
+   "usabilite": 6,
+   "contenu": 4,
+   "transposabilite": 9,
+   "total": 6.15
+  },
+  "preuves": {
+   "design": "Palette années 70 (olive, moutarde, sauge, brique, crème) et serif display à empattements marqués en très grand corps sur des aplats pleine page : fort et cohérent, mais sans images après le hero (desktop-frame-2 à -6).",
+   "originalite": "Le titre SKYLINE en lettres crème qui chevauche la photo de la terrasse et la bande olive est une bonne idée ; la pile de panneaux colorés « titre + Scopri » est un portail vers les sous-pages que tout bar pourrait reprendre.",
+   "motion": "Panneaux plein écran qui s'empilent en sticky (chaque fond reste visible en bandeau au-dessus du suivant), apparitions GSAP, scroll Lenis, Swiper pour les galeries ; le loader à icônes custom n'a pas été vu (capture à 3,5 s).",
+   "usabilite": "Nav en liste verticale à droite + bouton Prenota, mais la home ne dit rien : aucun texte, il faut cliquer « Scopri » quatre fois ; bannière cookies persistante ; mobile avec header lisible (mobile-haut).",
+   "contenu": "Home sans contenu (quatre titres) ; adresse Giudecca 810, téléphone, horaires 16h-00h, fermetures spéciales et SevenRooms en footer seulement.",
+   "transposabilite": "Panneaux sticky empilés, titre géant chevauchant photo et aplat, footer : trivial en Astro + GSAP ; la photo du rooftop est l'unique média."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Titre géant chevauchant photo et bandeau coloré",
+    "description": "Le mot SKYLINE en capitales crème de 250 px est posé à cheval sur le bas de la photo du rooftop et le haut de la section olive, avec un « S » stylisé en italique : la frontière photo/aplat passe au milieu des lettres. Les lettres apparaissent en fondu au chargement.",
+    "capture": "desktop-haut.png, desktop-frame-1.png"
+   },
+   {
+    "nom": "Pile de panneaux-portail sticky",
+    "description": "Quatre panneaux plein écran (olive « Team & Concept », moutarde « Signature List », sauge « Food & Drink Menu », brique « Events ») avec titre serif centré et lien « SCOPRI » ; chacun est position: sticky et reste visible en bandeau de 80 px quand le suivant glisse par-dessus.",
+    "capture": "desktop-frame-2.png, desktop-frame-4.png, desktop-frame-6.png"
+   },
+   {
+    "nom": "Nav en colonne alignée à droite",
+    "description": "Les sept entrées du menu sont empilées en petites capitales blanches, alignées à droite au-dessus du bouton pilule crème « PRENOTA », sans burger sur desktop.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Footer crème à quatre colonnes",
+    "description": "Sur fond crème, « Prenota il tuo tavolo » (bouton brique), Info utili (adresse, tel soulignés), Orari avec lien « Chiusure speciali », et trois pastilles réseaux (Facebook, Instagram, TripAdvisor).",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#6B6B3A olive",
+    "#D9A441 moutarde",
+    "#B3CDBB sauge",
+    "#8E3A1E brique",
+    "#F6EFC2 crème"
+   ],
+   "typo": "Caslon Light / serif display à empattements marqués pour les titres géants ; FuturaBT Medium pour la nav, les liens et le footer.",
+   "grille": "Sections plein écran empilées, titres centrés, aucune colonne de texte sur la home.",
+   "imagerie": "Une seule photo (rooftop au crépuscule), tout le reste en aplats.",
+   "ton": "Italien minimal, impératif (« Scopri », « Prenota »).",
+   "ambiance": "rétro, solaire, graphique"
+  },
+  "structure": [
+   "header (nav à droite, Prenota)",
+   "hero photo rooftop + SKYLINE",
+   "panneau Team & Concept",
+   "panneau Signature List",
+   "panneau Food & Drink Menu",
+   "panneau Events",
+   "footer réservation / infos / horaires / réseaux"
+  ],
+  "mecaniques_techniques": [
+   "gsap",
+   "lenis",
+   "position: sticky (panneaux empilés)",
+   "swiper",
+   "WordPress + Salient (nectar)",
+   "SevenRooms",
+   "CookieYes",
+   "@font-face Caslon/Futura"
+  ],
+  "points_faibles": [
+   "Home vide de contenu : simple sommaire vers quatre pages",
+   "Bannière cookies CookieYes intrusive",
+   "Police custom en erreur MIME (fallback possible)",
+   "Aucun texte d'ambiance ni photo de cocktail sur la home"
+  ],
+  "famille_da": "aplats rétro seventies",
+  "captures": "data/portfolio/captures/skylinebarvenice"
+ },
+ {
+  "url": "https://www.11elevenbar.com/",
+  "nom": "11 Bar (Jul's Restaurant)",
+  "slug": "11elevenbar",
+  "type": "bar",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 8,
+   "motion": 8,
+   "usabilite": 5,
+   "contenu": 5,
+   "transposabilite": 4,
+   "total": 6.85
+  },
+  "preuves": {
+   "design": "Noir, ambre et terracotta, serif fine (type Cormorant) en petites capitales espacées, logo « 11 » monogramme centré en permanence : chaque écran est un plan de film (desktop-haut, desktop-frame-3).",
+   "originalite": "Une « origin story » scrollée : la vidéo d'une soirée défile sous des phrases courtes (« Guests stayed. », « The room changed shape. », « It wasn't dinner anymore. ») avec bouton « Skip origin story » : narration propre à ce bar né d'un dîner qui dure (desktop-frame-1 à -5).",
+   "motion": "Hero vidéo avec galerie de photos qui s'ouvre de part et d'autre du logo, section épinglée (pin-spacer) où la vidéo change de plan et les phrases se fondent au scroll, barre de progression verticale à droite, bouton son, galerie mosaïque en parallaxe ; Lenis.",
+   "usabilite": "Rien d'autre que « Reserve a table » et « Skip origin story » pendant 10 000 px : pas de nav, pas d'adresse ni d'horaires sur la page ; le menu est lisible mais tout en bas ; mobile fidèle (mobile-haut).",
+   "contenu": "Onze cocktails avec prix et ingrédients, téléphone et mail, mais pas d'adresse, pas d'horaires, « Events coming soon! », aucune histoire écrite.",
+   "transposabilite": "La section épinglée avec phrases en fondu et le hero à volets photo se refont en GSAP, mais l'effet repose sur un tournage de qualité cinéma (deux vidéos) ; sans vidéo, l'idée perd l'essentiel."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Hero à volets photo autour du logo",
+    "description": "Sur une vidéo du bar, six photos portrait s'écartent horizontalement depuis le centre pour encadrer le logo « 11 » ; en dessous, « Reserve a table » en bouton contour et un bouton son en bas à gauche. Animation à l'arrivée, les photos glissent légèrement au scroll.",
+    "capture": "desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Origin story épinglée (vidéo + phrases)",
+    "description": "Section pin de plusieurs écrans : la vidéo plein cadre enchaîne les plans (robe, mains, talons) tandis que des phrases d'une ligne apparaissent et disparaissent au centre, une barre de progression verticale fine à droite indique l'avancement et « SKIP ORIGIN STORY » reste en bas pour sauter à l'ancre #after-origin-story.",
+    "capture": "desktop-frame-1.png, desktop-frame-2.png, desktop-frame-4.png"
+   },
+   {
+    "nom": "Logo fixe centré en haut",
+    "description": "Le monogramme « 11 / ELEVEN » reste fixé en haut au centre sur tout le site, sur vidéo comme sur aplats, seul repère de navigation.",
+    "capture": "desktop-frame-3.png, desktop-bas.png"
+   },
+   {
+    "nom": "Galerie mosaïque éparse sur noir",
+    "description": "Après l'histoire, des photos de tailles différentes (salle, convives, cocktails) sont dispersées sur fond noir à des hauteurs décalées et montent à des vitesses différentes au scroll (parallaxe).",
+    "capture": "desktop-frame-6.png"
+   },
+   {
+    "nom": "Carte de cocktails en liste nue",
+    "description": "Onze cocktails en serif : nom, prix en chiffre seul, ingrédients en une ligne, sans photo ni filet ; un seul bloc centré.",
+    "capture": "infos.json (texte)"
+   },
+   {
+    "nom": "Écran final terracotta « Contact us »",
+    "description": "Dernier écran plein en aplat terracotta avec téléphone et mail soulignés au centre, Instagram / Facebook en bas : contraste franc avec le noir qui précède.",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#0A0A0A noir",
+    "#C25A4A terracotta",
+    "#D9A05B ambre",
+    "#FFFFFF blanc"
+   ],
+   "typo": "Serif fine (type Cormorant Garamond) pour les phrases et le menu ; petites capitales espacées pour les labels (ELEVEN, SKIP ORIGIN STORY).",
+   "grille": "Tout centré, un élément par écran, pas de colonnes ; galerie en positionnement libre.",
+   "imagerie": "Deux vidéos cinéma (bar, soirée), photos de mode éditoriale des convives.",
+   "ton": "Fragments narratifs en anglais, mystère de speakeasy.",
+   "ambiance": "nocturne, cinématographique, sensuel"
+  },
+  "structure": [
+   "hero vidéo + volets photo + Reserve a table",
+   "origin story épinglée (vidéo, phrases, progression)",
+   "ancre after-origin-story : galerie mosaïque",
+   "Events coming soon",
+   "Cocktail menu (11 cocktails)",
+   "Contact us (terracotta)"
+  ],
+  "mecaniques_techniques": [
+   "Next.js + styled-components",
+   "lenis",
+   "pin-spacer (ScrollTrigger-like)",
+   "deux vidéos mp4 autoplay",
+   "bouton son",
+   "view-transition-name",
+   "parallaxe galerie",
+   "SevenRooms"
+  ],
+  "points_faibles": [
+   "Aucune adresse ni horaires",
+   "Pas de navigation : 21 000 px à scroller",
+   "Dépend totalement de la vidéo (poids, autoplay mobile)",
+   "Textes narratifs cryptiques pour un visiteur pressé"
+  ],
+  "famille_da": "speakeasy cinématographique",
+  "captures": "data/portfolio/captures/11elevenbar"
+ },
+ {
+  "url": "https://diverxo.com/es",
+  "nom": "DiverXO — Dabiz Muñoz",
+  "slug": "diverxo",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 9,
+   "motion": 7,
+   "usabilite": 7,
+   "contenu": 7,
+   "transposabilite": 5,
+   "total": 7.45
+  },
+  "preuves": {
+   "design": "Univers onirique (cochon ailé, champignons, bulles, papillons) sur ciel rose puis page blanche très aérée, logo custom à glyphes inversés, texte en monospace capitales : une identité d'auteur visible dans chaque détail (desktop-haut, desktop-frame-1).",
+   "originalite": "Le cochon volant (« lo conseguirás cuando los cerdos vuelen ») est l'histoire du chef mise en image ; les menus « Cerdos voladores », « Metamorfosis » et « Maridaje » sont illustrés par un cochon, un papillon et des bulles : personne d'autre ne peut le reprendre.",
+   "motion": "Landing vidéo plein écran avec « Saltar video » et son activable, puis GSAP (21 occurrences, ScrollTrigger) qui fait apparaître les blocs, bordures de page décorées d'éléments 3D (cochons, champignons) qui flottent ; sept vidéos sur la home.",
+   "usabilite": "Nav claire (Menú, Restaurante, Dabiz Muñoz, Reservar, Regalar), Reservar répété trois fois, prix affichés dès la première carte, mobile vertical soigné ; la landing vidéo retarde l'accès au contenu.",
+   "contenu": "Trois menus avec prix (450 €, dès 250 €, dès 300 €), biographie du chef, citation signée, adresse NH Eurobuilding, mails et téléphone ; pas d'horaires visibles.",
+   "transposabilite": "Les cartes de menus illustrées, la typographie monospace et les éléments flottants en bord d'écran se refont en Astro + GSAP ; la landing vidéo onirique et les rendus 3D demandent une production image lourde."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Landing vidéo avec saut et son",
+    "description": "Écran fixe (#landing) avec vidéo plein cadre d'un cochon ailé dans un paysage rose, titre « Bienvenido al mundo onírico de Dabiz Muñoz », deux boutons « Descubre los menús / Reservar », et en coins « Reproducir » et « Activar sonido » ; on peut sauter la vidéo. Au scroll ou au clic, le landing se fond et laisse la page blanche.",
+    "capture": "desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Cartes de menus à mascotte détourée",
+    "description": "Trois cartes gris clair côte à côte : titre du menu, prix en surlignage gris (« 450€ P.P »), un animal ou objet détouré centré (cochon volant, papillon, bulles sur tiges) et « Más info + » ; sous la rangée, un bouton Reservar centré.",
+    "capture": "desktop-frame-1.png"
+   },
+   {
+    "nom": "Décor flottant en bord d'écran",
+    "description": "Des éléments détourés (champignons, mousse, cochons ailés miniatures, papillons, fleurs) sont accrochés aux coins et bords de la page blanche et dérivent lentement au scroll, comme un cadre vivant autour du texte.",
+    "capture": "desktop-frame-1.png, desktop-frame-2.png"
+   },
+   {
+    "nom": "Bloc chef en monospace + citation + signature",
+    "description": "Surtitre « EL CHEF », nom en display, deux paragraphes en monospace capitales centrés, un papillon gris, une citation en display bold, puis la signature manuscrite « Dabiz » en SVG et Reservar.",
+    "capture": "desktop-frame-2.png"
+   },
+   {
+    "nom": "Footer à logo-jardin",
+    "description": "Footer blanc : liens légaux à gauche en monospace, à droite adresse et contacts alignés à droite, au centre le logo XO reconstitué en boule de mousse fleurie avec papillons.",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#FFFFFF blanc",
+    "#F4F4F4 gris carte",
+    "#6B6B6B gris texte",
+    "#F3A5B8 rose ciel",
+    "#111111 noir"
+   ],
+   "typo": "Police maison « DiverXO » (display condensée à glyphes inversés A/N) pour titres et nav ; une monospace (type Space Mono) en capitales pour les paragraphes.",
+   "grille": "Grille 12 colonnes, tout centré, sections courtes, marges larges, décor en overflow sur les bords.",
+   "imagerie": "Vidéos 3D oniriques, animaux et objets détourés, signature manuscrite.",
+   "ton": "Manifeste créatif en espagnol (« Vanguardia o morir », « hedonista »).",
+   "ambiance": "onirique, excentrique, luxueux"
+  },
+  "structure": [
+   "landing vidéo fixe (titre, CTA, son, saltar)",
+   "header fixe (logo, nav, langue)",
+   "Morfología de nuestros menús : 3 cartes + Reservar",
+   "Sobre DiverXO (texte + CTA Menús/Reservar/Regalar)",
+   "El chef Dabiz Muñoz + citation + signature + Reservar",
+   "footer légal / logo-jardin / adresse"
+  ],
+  "mecaniques_techniques": [
+   "gsap + ScrollTrigger",
+   "7 vidéos mp4/webm",
+   "landing fixe avec skip",
+   "bouton son",
+   "éléments flottants en bord",
+   "Astro + Vue (traces)",
+   "police custom woff2"
+  ],
+  "points_faibles": [
+   "Landing vidéo lourde avant tout contenu",
+   "Pas d'horaires",
+   "Texte monospace en capitales peu lisible sur de longs paragraphes",
+   "Page courte : la home renvoie beaucoup vers les sous-pages"
+  ],
+  "famille_da": "onirique surréaliste",
+  "captures": "data/portfolio/captures/diverxo"
+ },
+ {
+  "url": "https://sketch.london/",
+  "nom": "sketch London",
+  "slug": "sketch",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 7,
+   "originalite": 9,
+   "motion": 7,
+   "usabilite": 4,
+   "contenu": 4,
+   "transposabilite": 3,
+   "total": 6.25
+  },
+  "preuves": {
+   "design": "Scène three.js plein écran sur fond brun pointillé : cubes et polyèdres peints (motifs Camille Walala, visages jaunes) flottent en 3D autour d'une fenêtre « Static Arcade » ; logo manuscrit « sketch » et bouton contour « Reservations & menus » (desktop-haut).",
+   "originalite": "La home n'est pas une page mais une scène 3D-jouet : chaque salle (Gallery, Glade, Parlour, Lecture Room) est un objet à manipuler avec Play / Info / Book ; le site est une arcade, unique à sketch.",
+   "motion": "Canvas three.js r140 qui fait tourner lentement les solides (positions différentes entre desktop-haut, frame-3 et bas), modales info/book en Vue, mini-jeux « play » ; aucune animation de scroll puisque la page ne scrolle pas (900 px).",
+   "usabilite": "Modale cookies Cookiebot qui bloque tout, puis une fenêtre d'exposition qui bloque la scène ; aucune hiérarchie visible, tout passe par le menu burger et des modales ; le lien SevenRooms est le seul chemin clair.",
+   "contenu": "Adresse et téléphone en pied, exposition en cours (Static Arcade avec Camille Walala, 10/09-10/11/2026), six liens de réservation par salle et service ; pas de menu, horaires ni photos sur la home.",
+   "transposabilite": "Scène three.js avec modèles texturés et mini-jeux : hors de portée sans 3D sur mesure ; seules l'idée « une salle = une carte Play/Info/Book » et le fond pointillé sont réutilisables."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Scène 3D de solides peints (three.js)",
+    "description": "Sur un fond brun à pois, des cubes et polyèdres texturés avec des motifs d'artistes (visages jaunes, facettes multicolores) dérivent et tournent lentement ; chacun représente une salle de sketch et réagit au clic pour ouvrir ses actions.",
+    "capture": "desktop-haut.png, desktop-frame-3.png, desktop-bas.png"
+   },
+   {
+    "nom": "Fenêtre d'annonce centrale (Static Arcade)",
+    "description": "Une boîte sombre à bord fin centrée sur la scène montre une image de l'exposition, un titre, des dates, un paragraphe et « Click for more info… » souligné : un panneau d'affichage posé dans la scène 3D.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Modale Play / Info / Book par salle",
+    "description": "Chaque salle ouvre une modale (info-modal) avec titre, description, compteur et trois actions : Play (mini-jeu : dessiner un tapis, enseigne néon, bande-son), Info, Book (liens SevenRooms par service : breakfast, lunch, dinner, afternoon tea).",
+    "capture": "page.html (info-modal, book-modal)"
+   },
+   {
+    "nom": "Pied fixe adresse + téléphone + crédit",
+    "description": "Ligne en bas d'écran avec icône épingle + adresse, icône téléphone + numéro, et un lien « Credit », en sans-serif fine blanche sur la scène.",
+    "capture": "desktop-bas.png, mobile-haut.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#3A2E2B brun",
+    "#F5C400 jaune Walala",
+    "#E63E8C rose",
+    "#2B9ED8 bleu",
+    "#FFFFFF blanc"
+   ],
+   "typo": "Logo « sketch » en script italique ; sans-serif grotesque fine (type Neue Haas) en capitales pour nav et boutons.",
+   "grille": "Aucune : viewport fixe 100vh, canvas plein écran, header et footer en overlay.",
+   "imagerie": "3D temps réel texturée par des œuvres d'artistes, image de l'exposition.",
+   "ton": "Ludique et artistique, très peu de texte.",
+   "ambiance": "arcade, artistique, excentrique"
+  },
+  "structure": [
+   "header overlay (burger, logo, Reservations & menus)",
+   "canvas three.js plein écran (salles en solides 3D)",
+   "fenêtre d'annonce exposition",
+   "modales info / play / book",
+   "footer overlay adresse / téléphone / crédit"
+  ],
+  "mecaniques_techniques": [
+   "three.js r140 (canvas)",
+   "Vue (data-v)",
+   "modales",
+   "mini-jeux",
+   "SevenRooms",
+   "Cookiebot",
+   "page sans scroll"
+  ],
+  "points_faibles": [
+   "Deux modales bloquantes au chargement (cookies + exposition)",
+   "Aucune information lisible sans cliquer : menu, horaires, photos absents",
+   "Dépend d'un canvas WebGL lourd (53 requêtes, textures)",
+   "Non transposable sans équipe 3D"
+  ],
+  "famille_da": "arcade 3D artistique",
+  "captures": "data/portfolio/captures/sketch"
+ },
+ {
+  "url": "https://centralrestaurante.com.pe/",
+  "nom": "Central — Virgilio Martínez",
+  "slug": "centralrestaurante",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 9,
+   "originalite": 8,
+   "motion": 5,
+   "usabilite": 7,
+   "contenu": 6,
+   "transposabilite": 8,
+   "total": 7.3
+  },
+  "preuves": {
+   "design": "Hero en diptyque vidéo (macro rouge d'un fruit avec fourmi / fleur blanche sur noir), puis page gris clair avec titre en capitales étroites empilées, italiques serif en grand corps et vignettes vidéo carrées centrées : une mise en page de revue botanique (desktop-haut, desktop-frame-3).",
+   "originalite": "« Un recorrido vertical por el territorio peruano » : la page est littéralement verticale, les vidéos macro d'ingrédients s'enchaînent comme des altitudes ; logo en lettres filiformes dessinées comme des strates ; propre à Central et à Mater.",
+   "motion": "Six vidéos macro en boucle (diptyque hero + vignettes), curseur personnalisé (cursor: none), apparitions Framer ; pas de scroll-driven ni de scroll lissé.",
+   "usabilite": "Nav minimale (Historia, Reservas, Contacto, langue), adresse et Instagram en overlay du hero, liens soulignés Experiencias / Reservas / Ir a Mater, horaires précis en footer ; mobile en empilement propre (mobile-haut).",
+   "contenu": "Manifeste du concept, présentation de Mater, adresse, téléphone, mail, horaires (déjeuner 12h45-13h30, dîner 19h-20h30), Libro de Reclamaciones ; aucun menu ni prix, aucune photo de plat.",
+   "transposabilite": "Diptyque vidéo remplaçable par deux photos macro, titre empilé, italiques serif, vignettes carrées centrées en colonne et textes en décalé : reproductible en Astro avec peu d'effort (curseur custom en option)."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Hero diptyque vidéo plein écran",
+    "description": "Deux vidéos macro côte à côte (moitié gauche rouge, moitié droite noir et blanc) sans texte au centre ; logo en haut à gauche, nav à droite, adresse en bas à gauche et handle Instagram en bas à droite en petites capitales espacées. Sur mobile, les deux vidéos s'empilent.",
+    "capture": "desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Titre en capitales étroites empilées",
+    "description": "« UN RECORRIDO / VERTICAL / POR EL / TERRITORIO / PERUANO » : un mot ou deux par ligne, centré, en grotesque condensée légère, suivi d'une vignette vidéo carrée de 280 px centrée : la colonne centrale devient un fil vertical.",
+    "capture": "desktop-frame-1.png, desktop-frame-2.png"
+   },
+   {
+    "nom": "Composition en escalier texte/vidéo",
+    "description": "Une citation italique serif en haut à gauche, un paragraphe justifié étroit décalé, une vignette vidéo carrée au centre, un paragraphe à droite plus bas, puis un bloc « CENTRAL » à gauche : les éléments descendent en zigzag autour de l'axe central.",
+    "capture": "desktop-frame-3.png, desktop-frame-4.png"
+   },
+   {
+    "nom": "Liens soulignés en petites capitales espacées",
+    "description": "« EXPERIENCIAS », « RESERVAS », « IR A MATER » : texte 11 px, interlettrage large, filet fin dessous, placés aux extrémités de la grille (gauche/droite) plutôt que sous le texte.",
+    "capture": "desktop-frame-5.png, desktop-frame-6.png"
+   },
+   {
+    "nom": "Footer trois colonnes en serif condensée",
+    "description": "Fond gris plus foncé : légal + badge Libro de Reclamaciones à gauche, Instagram/adresse/téléphone/mail centrés, horaires alignés à droite ; serif étroite 13 px.",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#F2F2F2 gris clair",
+    "#E6E6E6 gris footer",
+    "#111111 noir",
+    "#B3141C rouge (vidéo)",
+    "#FFFFFF blanc"
+   ],
+   "typo": "Logo custom filiforme ; grotesque condensée légère (type Founders Grotesk Condensed) pour les titres ; serif étroite (type Times Condensed / Nimbus) en italique et en texte justifié ; Space Mono déclarée.",
+   "grille": "Axe central strict (vignettes 280 px), textes en colonnes étroites placées en décalé gauche/droite, marges de 72 px, beaucoup de vide.",
+   "imagerie": "Vidéos macro d'ingrédients et de textures (fruit rouge, fleur, racines, cactus, orchidée), pas de photo de salle ni de plat.",
+   "ton": "Manifeste scientifique et poétique en espagnol, phrases longues.",
+   "ambiance": "botanique, éditorial, silencieux"
+  },
+  "structure": [
+   "header overlay (logo, Historia, Reservas, Contacto, langue)",
+   "hero diptyque vidéo + adresse + Instagram",
+   "titre empilé + vignette vidéo",
+   "citation italique + paragraphes en décalé + vignettes",
+   "bloc CENTRAL + liens Experiencias/Reservas",
+   "Investigación : Mater + Ir a Mater",
+   "footer légal / contact / horaires"
+  ],
+  "mecaniques_techniques": [
+   "Framer (export)",
+   "6 vidéos mp4 en boucle",
+   "cursor: none + curseur custom",
+   "@font-face (72 déclarations)",
+   "clip-path",
+   "réservation Mesa247"
+  ],
+  "points_faibles": [
+   "Aucune image de plat ni de salle : abstrait pour un visiteur",
+   "Pas de menu ni de prix",
+   "Vidéos macro floues par endroits (frame-6 : aplat bleu flou)",
+   "Texte justifié étroit avec rivières"
+  ],
+  "famille_da": "éditorial botanique",
+  "captures": "data/portfolio/captures/centralrestaurante"
+ },
+ {
+  "url": "https://www.danslenoir.com/fr_FR/",
+  "nom": "Dans le Noir ?",
+  "slug": "danslenoir",
+  "type": "concept",
+  "inaccessible": false,
+  "scores": {
+   "design": 6,
+   "originalite": 6,
+   "motion": 5,
+   "usabilite": 7,
+   "contenu": 8,
+   "transposabilite": 9,
+   "total": 6.45
+  },
+  "preuves": {
+   "design": "Noir profond, or pâle pour les titres et boutons, Manrope pour tout le texte, photos N&B à faible clé : cohérent avec le concept d'obscurité mais la page devient un long corporate sombre (desktop-frame-2, -5).",
+   "motion": "Hero vidéo de fumée révélée par un masque en forme de « ? » (clip-path) qui glisse sur l'écran, cartes Swiper des 15 villes, halo lumineux (glow-wrapper) qui suit la souris, apparitions douces ; 15 vidéos.",
+   "originalite": "Le point d'interrogation du logo comme fenêtre de révélation sur la vidéo (mobile-haut) est une vraie idée de marque ; le reste (villes, expériences, actualités, presse) est un site de réseau.",
+   "usabilite": "Barre collante en bas avec « Réserver une table » et « Offrir une carte cadeau » côte à côte + « Besoin d'aide ? », nav claire, mais bannière cookies Axeptio à gauche qui reste sur chaque écran et masque les titres.",
+   "contenu": "15 villes, 7 types d'expériences, mission sociétale (personnes déficientes visuelles), actualités datées, presse, footer complet ; pas d'horaires ni de prix sur la home (par ville).",
+   "transposabilite": "Masque clip-path en forme de logo, cartes photo N&B avec légende, barre CTA double, grille actualités : entièrement faisable en Astro + GSAP (la fumée vidéo est remplaçable)."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Masque-logo de révélation vidéo",
+    "description": "Le hero noir laisse apparaître une vidéo de fumée uniquement à travers une forme : sur desktop un grand arc courbe qui balaie l'écran, sur mobile le « ? » du logo en plein centre (clip-path/mask). Le masque se déplace lentement au chargement et au scroll.",
+    "capture": "desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Barre CTA collante réservation + carte cadeau",
+    "description": "Bandeau fixe en bas sur fond noir translucide : deux boutons or côte à côte avec icône (calendrier « Réserver une table », cadeau « Offrir une carte cadeau ») et un lien « Besoin d'aide ? Contactez-nous » à droite ; présent sur toute la page.",
+    "capture": "desktop-frame-1.png, desktop-bas.png"
+   },
+   {
+    "nom": "Cartes expériences N&B à légende basse",
+    "description": "Grille de cartes verticales en photo noir et blanc (verre de vin, pain, bouteille, cloche « ? ») avec le nom de l'expérience en bas à gauche en blanc, et une liste de villes en petites capitales ; survol = léger zoom.",
+    "capture": "desktop-frame-2.png, desktop-frame-3.png"
+   },
+   {
+    "nom": "Carrousel de villes avec compteur",
+    "description": "Cartes « RESTAURANT / Paris » etc. qui défilent en Swiper avec un compteur « 1 SUR 13 » et un lien « Voir tout », chaque carte renvoyant vers un sous-domaine de ville.",
+    "capture": "infos.json (texte)"
+   },
+   {
+    "nom": "Liste accordéon de la mission",
+    "description": "Sous le texte « mission éthique », quatre lignes (Histoire, Savoir-faire, Engagements, Talents) séparées par des filets fins, en gris, qui s'ouvrent au clic.",
+    "capture": "desktop-frame-4.png"
+   },
+   {
+    "nom": "Actualités : une à la une + liste à vignettes",
+    "description": "Grand article avec photo paysage à gauche, et à droite une liste d'articles datés (« RÉDIGÉ LE … ») avec vignette carrée, titre et chapô ; bouton pleine largeur « Découvrir toutes nos actualités ».",
+    "capture": "desktop-frame-5.png, desktop-frame-6.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#0B0B0B noir",
+    "#E6C96B or pâle",
+    "#FFFFFF blanc",
+    "#9A9A9A gris"
+   ],
+   "typo": "Manrope (sans géométrique) pour tout ; logo « DANS LE NOIR ? » en capitales espacées avec NOIR en gras.",
+   "grille": "Conteneur 1300 px, deux colonnes texte/visuel, grilles de cartes 2 x 2, footer 4 colonnes.",
+   "imagerie": "Vidéos de fumée et d'ambiance, photos N&B des convives, photos couleur des actualités.",
+   "ton": "Institutionnel et inclusif, vouvoiement, phrases longues.",
+   "ambiance": "obscur, sensoriel, corporate"
+  },
+  "structure": [
+   "header (nav 5 entrées, logo)",
+   "hero vidéo masquée + titre + CTA",
+   "Nos restaurants (carrousel 15 villes)",
+   "Des expériences insolites (texte + photo)",
+   "Nos expériences (grille cartes N&B)",
+   "Mission éthique (accordéon)",
+   "Les médias (presse)",
+   "Actualités",
+   "bandeau logos presse",
+   "footer 4 colonnes",
+   "barre CTA collante"
+  ],
+  "mecaniques_techniques": [
+   "swiper (116)",
+   "15 vidéos mp4",
+   "clip-path / mask (révélation)",
+   "glow-wrapper (halo souris)",
+   "mix-blend-mode",
+   "Vue + Astro (traces)",
+   "Axeptio"
+  ],
+  "points_faibles": [
+   "Bannière cookies Axeptio persistante à gauche",
+   "Home très longue (12 000 px) et verbeuse",
+   "Pas d'horaires ni de prix sur la home",
+   "Hero desktop illisible à 3,5 s (masque sans texte)"
+  ],
+  "famille_da": "noir et or sensoriel",
+  "captures": "data/portfolio/captures/danslenoir"
+ },
+ {
+  "url": "https://ikoyilondon.com/",
+  "nom": "Ikoyi (180 Strand)",
+  "slug": "ikoyilondon",
+  "type": "restaurant",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 7,
+   "motion": 4,
+   "usabilite": 8,
+   "contenu": 8,
+   "transposabilite": 9,
+   "total": 7.1
+  },
+  "preuves": {
+   "design": "Motif géométrique brun-or (hachures, chevrons, diagonales) dessiné sur canvas en fond de toute la page, logo monoligne « IKOYI » crème centré, serif (Roboto Serif/Baskerville) pour le texte et petites capitales espacées pour les labels : identité ouest-africaine chaleureuse et sobre (desktop-haut, desktop-frame-2).",
+   "originalite": "Le motif tissé en fond vivant (deux canvas : fond + lignes) et le texte qui explique le calendrier d'ouverture des réservations (« le 1er du mois à 12h ») sont propres à Ikoyi ; la structure one-page reste classique.",
+   "motion": "Deux canvas (backgroundCanvas + lineCanvas) qui dessinent le motif et le font légèrement évoluer, photos plein écran insérées entre sections, apparitions en fondu ; pas de gsap/lenis, keyframes Toastify uniquement.",
+   "usabilite": "Header fixe avec deux étoiles Michelin, « Newsletter » et « Book a table » toujours visibles, sections courtes centrées, boutons contour cohérents, mobile identique : lisible et direct (mobile-haut).",
+   "contenu": "Prix des menus (395 £ / 180 £), jours de service, règles de réservation précises, private dining (6), exclusive hire + brochure PDF, boutique (livre, sac, t-shirts, sérigraphie) avec prix, adresse, contacts presse et carrières, newsletter.",
+   "transposabilite": "Motif en SVG/canvas répété, sections texte centrées, images plein écran, grille boutique 2 colonnes, boutons contour : trivial en Astro ; le canvas animé est un bonus facile."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Motif tissé en fond sur canvas",
+    "description": "Toute la page repose sur un fond noir où un motif de carreaux hachurés (verticales, horizontales, chevrons, diagonales) en brun ocre est dessiné sur deux canvas superposés et respire lentement ; les sections de texte et les photos viennent dessus.",
+    "capture": "desktop-haut.png, desktop-frame-2.png, mobile-haut.png"
+   },
+   {
+    "nom": "Hero logo seul sur motif",
+    "description": "Aucun texte dans le premier écran : seulement le logo monoligne crème centré sur le motif, le burger à gauche, les deux étoiles Michelin et les deux boutons contour à droite.",
+    "capture": "desktop-haut.png"
+   },
+   {
+    "nom": "Section texte centrée « label + paragraphe + boutons »",
+    "description": "Chaque section (About, Menu, Reservations, Private dining, Exclusive hire, Contact) suit le même gabarit : petit titre en capitales espacées, paragraphe serif centré de 600 px, puis un ou deux boutons contour blancs (Drink list, Book a table / Gift vouchers, Download brochure / Enquire now).",
+    "capture": "desktop-frame-2.png, desktop-frame-3.png"
+   },
+   {
+    "nom": "Photos plein écran intercalées",
+    "description": "Entre deux sections texte, une photo de la salle (plafond cuivré, table ronde à banquette) occupe tout l'écran, bord à bord, sans texte ; le motif réapparaît ensuite comme un rideau.",
+    "capture": "desktop-frame-1.png, desktop-frame-4.png"
+   },
+   {
+    "nom": "Grille boutique 2 colonnes sur motif",
+    "description": "Produits photographiés sur béton (livre orange, sac jaune, t-shirts) en grandes cartes de 660 px, nom en capitales espacées, prix, bouton « View more » contour, posées sur le motif.",
+    "capture": "desktop-frame-5.png, desktop-frame-6.png"
+   },
+   {
+    "nom": "Footer centré + champ newsletter",
+    "description": "Adresse, mail, réseaux, téléphones, presse et carrières empilés et centrés en serif, puis un champ « Your email here » avec bouton flèche, crédit design et Privacy aux coins.",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#0A0806 noir",
+    "#5C3D12 brun ocre (motif)",
+    "#F2EBDD crème",
+    "#FFFFFF blanc",
+    "#F5A623 jaune (boutique)"
+   ],
+   "typo": "Logo géométrique monoligne ; serif de texte (type Roboto Serif/Baskerville) pour les paragraphes ; grotesque en petites capitales espacées pour labels et boutons.",
+   "grille": "Une colonne centrée de 600 px pour le texte, images et boutique pleine largeur avec marge de 36 px, sections hautes.",
+   "imagerie": "Photos d'architecture intérieure (cuivre, lumière chaude), photos produits, pas de plats.",
+   "ton": "Précis, factuel, en anglais (prix, règles, horaires).",
+   "ambiance": "chaleureux, graphique, exclusif"
+  },
+  "structure": [
+   "header fixe (burger, étoiles, Newsletter, Book a table)",
+   "landing : logo sur motif",
+   "About",
+   "photo plein écran",
+   "Menu (prix)",
+   "Reservations (règles) + boutons",
+   "Private dining",
+   "photo plein écran",
+   "Exclusive hire + brochure",
+   "Shop (6 produits)",
+   "Contact / presse / carrières",
+   "footer newsletter"
+  ],
+  "mecaniques_techniques": [
+   "Next.js + React",
+   "deux canvas (motif de fond)",
+   "Sanity (PDF)",
+   "Shopify (boutique)",
+   "SevenRooms",
+   "Toastify",
+   "Roboto"
+  ],
+  "points_faibles": [
+   "Hero sans accroche ni photo : le logo seul ne dit rien à un visiteur qui ne connaît pas Ikoyi",
+   "Aucune photo de plat",
+   "Motif très présent qui fatigue sur 10 000 px",
+   "Pas d'horaires d'ouverture explicites (seulement les jours de service)"
+  ],
+  "famille_da": "motif tissé ocre et noir",
+  "captures": "data/portfolio/captures/ikoyilondon"
+ },
+ {
+  "url": "https://www.domperignon.com/",
+  "nom": "Dom Pérignon",
+  "slug": "domperignon",
+  "type": "marque-boisson",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 5,
+   "motion": 6,
+   "usabilite": 5,
+   "contenu": 6,
+   "transposabilite": 8,
+   "total": 6.35
+  },
+  "preuves": {
+   "design": "Sas d'entrée noir et blanc (bouteilles en cave floutées, quatre cases « YYYY » géantes, selects pays/langue) puis intérieur gris clair avec grotesque GT America en capitales, photos de bouteilles en grille éditoriale décalée : luxe retenu (captures/domperignon/desktop-haut, interieur/desktop-frame-1, -5).",
+   "originalite": "Le age gate traité comme une scène (fond photo, saisie année en chiffres de 180 px) est la seule idée propre ; l'intérieur (collab artiste, gamme, manifeste, legacy, locator) est un gabarit de maison de luxe LVMH.",
+   "motion": "Hero vidéo bleu (collab Damien Hirst) avec bouton pause, scroll Lenis, transitions Barba, three.js et Rive détectés ; grille de photos à décalages et parallaxe doux ; aucun effet remarqué sur les captures hormis les fondus.",
+   "usabilite": "Age gate puis bannière cookies puis pop-up newsletter « Keep informed » qui recouvre la moitié de l'écran sur toutes les frames : trois obstacles avant le contenu ; nav réduite à « Menu » et « Stores » ; mobile hero propre (interieur/mobile-haut).",
+   "contenu": "Gamme (Vintage, Rosé, Plénitude 2), manifeste, abbaye d'Hautvillers, collaborations, « Where to taste » (locator), newsletter, footer complet ; pas de prix ni d'achat direct (e-retailers).",
+   "transposabilite": "Age gate en scène, hero vidéo avec bouton pause, grille photo décalée, blocs titre + lien souligné, locator : reproductible en Astro + GSAP + Lenis (vidéo remplaçable par photo)."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Age gate en scène d'entrée",
+    "description": "Écran fixe noir et blanc : logo centré, « VINTAGE ONLY », quatre cases carrées à bord fin où l'on tape l'année chiffre par chiffre en 180 px, deux selects « Country / Language » à fond gris, lien « Enter the site », mentions légales en bas ; photo de bouteilles floutée derrière. Le bouton n'est actif qu'après l'année.",
+    "capture": "captures/domperignon/desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Hero vidéo plein écran titre bas-gauche + lien bas-droit",
+    "description": "Vidéo bleue abstraite plein cadre (collab Damien Hirst) avec un bouton pause carré en haut à droite ; le titre en capitales grotesques est posé en bas à gauche et le lien souligné « DISCOVER » en bas à droite, sur la même ligne de base. Même gabarit réutilisé pour « Creation is an eternal journey » et « Dom Pérignon x Mathias Kiss ».",
+    "capture": "interieur/desktop-haut.png, interieur/desktop-frame-2.png, interieur/mobile-haut.png"
+   },
+   {
+    "nom": "Grille produits en escalier avec « Find nearby »",
+    "description": "Deux bouteilles en édition limitée côte à côte sur fonds bleu et rose, puis trois bouteilles (Vintage, Rosé, P2) sur fonds blanc/violet/noir disposées en escalier avec étiquette « Harmony revealed / Radical exploration / Elevated with time » et lien « Find nearby ».",
+    "capture": "interieur/desktop-frame-1.png"
+   },
+   {
+    "nom": "Mosaïque photo décalée (legacy)",
+    "description": "Photos en colonnes de largeurs différentes (feuille de vigne, vignes vues du ciel, abbaye N&B, cloître) positionnées à des hauteurs décalées sur fond gris clair, avec titre « Hautvillers, the birthplace of champagne » et lien « Explore ».",
+    "capture": "interieur/desktop-frame-3.png, interieur/desktop-frame-5.png"
+   },
+   {
+    "nom": "Bloc « Where to taste » + locator",
+    "description": "Titre centré, phrase, bouton noir « SEARCH » au-dessus d'une photo panoramique de vignes : le store locator est traité comme une section éditoriale.",
+    "capture": "interieur/desktop-bas.png"
+   },
+   {
+    "nom": "Pop-up newsletter image + formulaire",
+    "description": "Modale à deux colonnes : photo de bouteille sur rochers à gauche, « KEEP INFORMED », champ email, case de consentement et bouton noir « SUBMIT » à droite, croix en haut à droite. (À ne pas copier dans son déclenchement automatique.)",
+    "capture": "interieur/desktop-frame-2.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#000000 noir",
+    "#F4F4F4 gris clair",
+    "#0B1B4D bleu nuit (vidéo)",
+    "#FFFFFF blanc"
+   ],
+   "typo": "Logo script Dom Pérignon ; GT America (grotesque) en capitales pour titres, labels et boutons, en regular pour le texte.",
+   "grille": "Conteneur à marge de 40 px, sections plein écran, grilles d'images asymétriques à décalages verticaux.",
+   "imagerie": "Vidéo artistique, packshots de bouteilles sur fonds colorés, photos N&B du patrimoine, vignes aériennes.",
+   "ton": "Manifeste de luxe en anglais (« perpetual quest for harmony »).",
+   "ambiance": "luxe, minimal, muséal"
+  },
+  "structure": [
+   "age gate (année, pays, langue)",
+   "header (Menu, logo, Stores)",
+   "hero vidéo Damien Hirst",
+   "éditions limitées + gamme (Find nearby)",
+   "Creation is an eternal journey (chef de cave)",
+   "Manifesto Vintage only",
+   "Vintage library",
+   "Legacy Hautvillers (mosaïque)",
+   "Dom Pérignon x Mathias Kiss",
+   "Instagram",
+   "Where to taste (locator)",
+   "footer newsletter / vintages / about / help"
+  ],
+  "mecaniques_techniques": [
+   "Next.js",
+   "lenis",
+   "barba (transitions)",
+   "three.js",
+   "rive",
+   "vidéo avec pause",
+   "age gate",
+   "OneTrust",
+   "grille asymétrique"
+  ],
+  "points_faibles": [
+   "Trois couches bloquantes : age gate, cookies, pop-up newsletter",
+   "Pop-up newsletter qui recouvre le contenu sur chaque écran",
+   "Nav réduite à un mot « Menu »",
+   "Age gate infranchissable pour les robots : page.html de la capture standard ne contient que le sas"
+  ],
+  "famille_da": "luxe muséal noir et blanc",
+  "captures": "data/portfolio/captures/domperignon"
+ },
+ {
+  "url": "https://lacabra.com/",
+  "nom": "La Cabra",
+  "slug": "lacabra",
+  "type": "cafe",
+  "inaccessible": false,
+  "scores": {
+   "design": 7,
+   "originalite": 3,
+   "motion": 2,
+   "usabilite": 8,
+   "contenu": 7,
+   "transposabilite": 10,
+   "total": 5.65
+  },
+  "preuves": {
+   "design": "Crème rosé, brun-olive et serif élégante (type Canela) pour les titres, packshots de sachets de café sur fond beige et photos chaudes de la boutique : propre, mais c'est un thème Shopify (desktop-haut, desktop-frame-2).",
+   "originalite": "lacabra.com redirige vers us.lacabra.com, boutique Shopify standard (hero, Latest releases, collections, produit vedette, Chelsea, newsletter) ; le site WebGL/Splitting cité par la recherche n'existe plus. Seul le mot vertical « Open now » en bord droit sort du lot.",
+   "motion": "Aucune animation : carrousels Shopify à flèches, bandeau d'annonce défilant ; 36 occurrences de « rive » viennent du vocabulaire (« arrive ») et non d'un runtime ; pas de gsap, lenis ni canvas.",
+   "usabilite": "Nav claire (Coffee, Subscription, Shop, Learn, Locations), recherche, compte, panier, prix visibles, bouton « Visit us », footer exhaustif à 5 colonnes, mobile standard et lisible (mobile-haut).",
+   "contenu": "Catalogue réel avec origines, poids et prix, fiche de la nouvelle adresse Chelsea avec « Open now », collaborations K.H. Würtz, calendrier de l'avent, newsletter ; pas d'horaires ni d'adresse sur la home.",
+   "transposabilite": "Cartes produit, bandeau annonce, bloc image/texte, grille collections à titre en bas à gauche : reproductible tel quel en Astro, sans aucune dépendance."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Grille de collections à titre en bas à gauche",
+    "description": "Quatre photos carrées (Favourites, K.H. Würtz, Coffee, Single Serve) dans un carrousel ; le nom en serif blanche et un « Shop now » souligné sont posés en bas à gauche de chaque image, sans dégradé. Flèches fines centrées sous la rangée.",
+    "capture": "desktop-frame-2.png"
+   },
+   {
+    "nom": "Carte produit à étiquette haute",
+    "description": "Fond beige, petite étiquette en capitales espacées en haut (« HIGHLIGHT », « SEASONAL », « PROFILE », « RARE »), packshot centré, puis nom, origine | poids, « From » et prix : une carte e-commerce sobre et répétable.",
+    "capture": "desktop-frame-1.png"
+   },
+   {
+    "nom": "Bloc adresse avec mot vertical « Open now »",
+    "description": "Texte à gauche (titre serif « Chelsea », description, bouton « VISIT US » gris), grande photo de la salle à droite et, collé au bord droit de l'écran, « Open now » écrit verticalement en serif.",
+    "capture": "desktop-frame-4.png"
+   },
+   {
+    "nom": "Bandeau d'annonce défilant",
+    "description": "Barre olive foncé en haut avec « Wholesale login », un message central à flèches gauche/droite (« Subscribers enjoy 15% off extra items → ») et le sélecteur de pays.",
+    "capture": "desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Hero produit à titre serif sur photo sombre",
+    "description": "Photo d'ambiance sombre pleine largeur (boîte illustrée et tasse en grès au soleil), titre serif blanc à gauche, phrase courte et bouton beige « LEARN MORE ».",
+    "capture": "desktop-haut.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#FBF4EE crème rosé",
+    "#EFE6DF beige carte",
+    "#2E2E24 brun-olive",
+    "#111111 noir",
+    "#C8744A terre cuite"
+   ],
+   "typo": "Serif display à contrastes doux (type Canela/Ogg) pour les titres ; Gotham / Assistant pour le texte et les étiquettes en capitales espacées.",
+   "grille": "Conteneur à marge de 50 px, carrousels de 4 cartes, blocs 50/50 image/texte, footer 5 colonnes.",
+   "imagerie": "Packshots de sachets et de tasses, photos lifestyle de café et de la salle Chelsea.",
+   "ton": "Commercial doux, anglais, phrases courtes.",
+   "ambiance": "artisanal, scandinave, commercial"
+  },
+  "structure": [
+   "bandeau annonce",
+   "header (logo, nav, recherche, compte, panier)",
+   "hero Lantern House Cup",
+   "Latest releases (8 cafés)",
+   "collections (4 cartes)",
+   "Christmas Calendar (image + add to cart)",
+   "Chelsea (adresse + Open now)",
+   "K.H. Würtz (6 produits)",
+   "Single Serve Coffee (4 produits)",
+   "newsletter",
+   "footer 5 colonnes + paiements"
+  ],
+  "mecaniques_techniques": [
+   "Shopify (Dawn-like)",
+   "carrousels natifs",
+   "redirection géographique vers us.lacabra.com",
+   "chat Gorgias",
+   "870 requêtes"
+  ],
+  "points_faibles": [
+   "Plus rien du site primé : c'est une boutique en ligne",
+   "870 requêtes au chargement",
+   "Bulle de chat qui flotte en bas à droite",
+   "Aucun horaire ni adresse sur la home"
+  ],
+  "famille_da": "e-commerce café scandinave",
+  "captures": "data/portfolio/captures/lacabra"
+ },
+ {
+  "url": "https://www.campari.com/",
+  "nom": "Campari",
+  "slug": "campari",
+  "type": "marque-boisson",
+  "inaccessible": false,
+  "scores": {
+   "design": 6,
+   "originalite": 4,
+   "motion": 3,
+   "usabilite": 3,
+   "contenu": 5,
+   "transposabilite": 9,
+   "total": 4.75
+  },
+  "preuves": {
+   "design": "Monochrome rouge Campari et blanc, logo historique, titres en Roboto Condensed capitales espacées, packshot bouteille + deux spritz devant un bar en bois : cohérent mais corporate (interieur/desktop-haut, interieur/mobile-haut).",
+   "originalite": "Le age gate posé sur une photo de rangées de bouteilles rouges rétroéclairées est un bel écran de marque, mais le site est un WordPress Gutenberg (blocs wdf) en teasers « titre + Discover more » que n'importe quelle marque de spiritueux a.",
+   "motion": "Aucune animation vue sur les captures ; Swiper pour les carrousels, Spline référencé dans le HTML (4 occurrences) sans scène visible dans les écrans capturés ; pas de gsap ni lenis.",
+   "usabilite": "Age gate (mois/jour/année + pays), puis bannière Cookiebot pleine largeur, puis pop-up newsletter à six champs qui recouvre toute la page : la home n'est jamais accessible sans trois actions ; redirection vers /en-us/ en anglais pour un visiteur belge francophone.",
+   "contenu": "Histoire du Negroni (1919), gamme, cocktails avec recettes, Camparino in Galleria et Galleria Campari (visite), mentions responsables ; pas d'adresse ni d'horaires sur la home.",
+   "transposabilite": "Hero split image/texte sur aplat rouge, teasers en grille, age gate : trivial en Astro, mais rien ne mérite d'être copié hormis la rigueur monochrome."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Age gate sur photo de bouteilles rétroéclairées",
+    "description": "Fenêtre rouge centrée (logo, « Are you of legal drinking age? » en capitales espacées, select pays, trois cases MM / DD / YYYY à bord blanc, case « Remember my choice », bouton Submit) posée sur une photo plein écran de rangées de bouteilles Campari rétroéclairées. Sur mobile, le panneau rouge devient plein écran.",
+    "capture": "desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Hero split packshot / texte sur aplat rouge",
+    "description": "Moitié gauche : photo bouteille + deux spritz devant un bar en bois dont le rouge fond vers l'aplat ; moitié droite : titre capitales espacées en deux lignes (dont une en beige), paragraphe blanc, bouton blanc « DISCOVER CAMPARI SPRITZ » ; filet vertical fin entre les deux.",
+    "capture": "interieur/desktop-haut.png"
+   },
+   {
+    "nom": "Header double niveau : bandeau + nav blanche",
+    "description": "Bandeau rouge « Join our community! » fermable, puis logo + « BUY NOW » + globe, puis une barre blanche de nav en capitales espacées avec chevrons pour les sous-menus ; le tout collant (is-position-sticky).",
+    "capture": "interieur/desktop-haut.png"
+   },
+   {
+    "nom": "Pop-up newsletter image + formulaire rouge",
+    "description": "Modale 2 colonnes : photo des bouteilles à gauche, titre « The red heart of every Negroni, in your inbox », six champs blancs et case d'opt-in à droite. Déclenchée après quelques secondes. (Contre-exemple : à ne pas reproduire.)",
+    "capture": "interieur/desktop-frame-2.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#D7142A rouge Campari",
+    "#FFFFFF blanc",
+    "#F5E6C8 beige (titres)",
+    "#2B2B2B gris foncé"
+   ],
+   "typo": "Logo Campari historique ; Roboto Condensed en capitales espacées pour titres et nav ; Roboto pour le texte.",
+   "grille": "Conteneur WordPress large, sections 50/50 image/texte, teasers en grille de 2, header sticky à deux niveaux.",
+   "imagerie": "Packshots de bouteilles et cocktails, photo de bar.",
+   "ton": "Marketing de marque en anglais (« Red Passion », « iconicity »).",
+   "ambiance": "rouge, corporate, italien"
+  },
+  "structure": [
+   "age gate",
+   "bandeau Join our community",
+   "header (logo, Buy now, langue) + nav",
+   "hero Campari Spritz",
+   "Campari (bitter) + Discover more",
+   "Negroni : a Campari story",
+   "Campari cocktails (Negroni, Spritz)",
+   "Camparino in Galleria / Galleria Campari",
+   "footer légal + réseaux"
+  ],
+  "mecaniques_techniques": [
+   "WordPress Gutenberg (blocs wdf)",
+   "Alpine.js (age gate)",
+   "swiper",
+   "spline (référencé)",
+   "Cookiebot",
+   "pop-up newsletter",
+   "redirection géographique /en-us/"
+  ],
+  "points_faibles": [
+   "Trois obstacles bloquants : age gate, cookies, pop-up newsletter",
+   "Redirection en anglais US pour un visiteur belge",
+   "Aucune animation ni scène 3D visible malgré Spline dans le code",
+   "Home de teasers sans contenu propre"
+  ],
+  "famille_da": "monochrome rouge de marque",
+  "captures": "data/portfolio/captures/campari"
+ },
+ {
+  "url": "https://cedric-grolet.com/",
+  "nom": "Cédric Grolet",
+  "slug": "cedric-grolet",
+  "type": "boulangerie",
+  "inaccessible": false,
+  "scores": {
+   "design": 8,
+   "originalite": 7,
+   "motion": 5,
+   "usabilite": 5,
+   "contenu": 2,
+   "transposabilite": 8,
+   "total": 6.15
+  },
+  "preuves": {
+   "design": "Écran noir pur, logo en police géométrique maison (E sans barre, i à point rond, C ouvert) et six lignes de villes en capitales de 90 px alignées à gauche : une affiche typographique sans rien d'autre (desktop-haut, mobile-haut).",
+   "originalite": "La pré-home est une liste de destinations (La chocolaterie, Paris, Saint-Tropez, Monaco, London, Singapore) dont chaque ligne révèle au survol une vidéo de pâtisserie : le nom du chef suffit, zéro discours. Transposable dans l'idée, pas dans le statut du chef.",
+   "motion": "14 balises vidéo cachées (display: none) déclinées mobile/desktop, montrées au survol d'un titre (js-prehomeshop-title / js-prehomeshop-media), titres en slide-in au chargement ; jQuery, aucune bibliothèque de scroll puisque la page ne scrolle pas (900 px).",
+   "usabilite": "Six liens, FR/EN, pas de bannière : immédiat ; mais aucune indication qu'il faut survoler, pas d'adresse, d'horaires ni de boutique sur cet écran, et sur mobile (pas de survol) la liste reste un menu nu.",
+   "contenu": "Rien d'autre que les noms de villes et le copyright ; tout le contenu est sur les sous-sites (Opéra, Café, Meurice, La chocolaterie sur un autre domaine).",
+   "transposabilite": "Liste typographique noire avec vidéo (ou photo) révélée au survol : une page Astro + un peu de JS ; la valeur réside dans la police maison et dans des vidéos de plats à fournir."
+  },
+  "composants_remarquables": [
+   {
+    "nom": "Pré-home liste de destinations à révélation vidéo",
+    "description": "Sur fond noir, les entrées (lieux) sont empilées en capitales géantes alignées à gauche ; au survol d'une ligne, une vidéo en boucle du lieu ou d'une pâtisserie apparaît (bloc prehomeShops__item__medias avec déclinaison --desktop / --mobile) derrière ou à côté du texte. Les titres glissent en entrée (animate--slide-in).",
+    "capture": "desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Header minimal logo + retour",
+    "description": "Seul le logo typographique en haut à gauche (classe js-back : il sert de bouton retour dans les sous-pages), aucun menu ; sur mobile le logo est centré au-dessus d'un filet.",
+    "capture": "desktop-haut.png, mobile-haut.png"
+   },
+   {
+    "nom": "Pied FR | EN + copyright",
+    "description": "Deux lettres de langue séparées par un filet vertical en bas à gauche (centrées sur mobile) et le copyright en bas à droite : le seul chrome de la page.",
+    "capture": "desktop-bas.png"
+   }
+  ],
+  "da": {
+   "palette": [
+    "#000000 noir",
+    "#FFFFFF blanc"
+   ],
+   "typo": "Police géométrique maison en capitales (lettres ouvertes, E à trois barres sans fût) pour logo et liste ; sans-serif neutre 12 px pour FR/EN et copyright.",
+   "grille": "Un seul bloc aligné à gauche avec marge de 150 px, hauteur écran fixe, pas de scroll.",
+   "imagerie": "Vidéos de pâtisseries et de lieux révélées au survol (invisibles sans interaction).",
+   "ton": "Aucun texte : noms propres seulement.",
+   "ambiance": "noir, typographique, radical"
+  },
+  "structure": [
+   "header (logo)",
+   "pré-home : liste des six destinations avec vidéos au survol",
+   "footer FR/EN + copyright"
+  ],
+  "mecaniques_techniques": [
+   "jQuery",
+   "14 vidéos mp4 (desktop/mobile) montrées au survol",
+   "lazyload",
+   "animate--slide-in",
+   "page sans scroll",
+   "multi-sites (sous-domaines par adresse)"
+  ],
+  "points_faibles": [
+   "Aucune information pratique sur la home",
+   "Sur mobile, sans survol, la vidéo n'est pas découvrable",
+   "Dépend de vidéos produit de haute qualité",
+   "Capture figée : les vidéos ne sont visibles que par interaction"
+  ],
+  "famille_da": "typographique noir radical",
+  "captures": "data/portfolio/captures/cedric-grolet"
+ }
+]
