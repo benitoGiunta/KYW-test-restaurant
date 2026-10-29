@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const equipePhoto = photoDe('/photos/equipe-trio.webp');
+const coulisses = ['/photos/cuisine-chefs-dressage.webp', '/photos/cuisine-mains-pate.webp', '/photos/salle-clients-bar.webp'].map(photoDe);
+---
+<Base title="Notre histoire" description={`L'histoire de ${site.nom} : deux chefs amis, Damien Gorjanec et François Schepens, une cuisine bistronomique à quatre mains à ${site.adresse.commune}.`}>
+  <section class="hero wrap">
+    <h1 class="hero__title" data-split="lines" data-intro>Notre histoire</h1>
+    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">{site.baseline}</p>
+  </section>
+
+  <section class="section">
+    <div class="wrap stack">
+      <h2 class="section__title" data-split="words">Deux potes, un feu</h2>
+      {site.histoire.map((p) => <p data-reveal="up">{p}</p>)}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section__title" data-split="words">L'équipe</h2>
+      <div class="grid">
+        {site.equipe.map((m) => {
+          const p = m.photo ? photoDe(m.photo) : null;
+          return (
+            <article class="card" data-reveal="up">
+              {p && <figure><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>}
+              <h3>{m.nom}</h3>
+              <p class="muted">{m.role}{m.placeholder ? ' (rôle à confirmer)' : ''}</p>
+            </article>
+          );
+        })}
+      </div>
+      <figure class="card" style="margin-top: calc(var(--u) * 4); max-width: 36rem" data-reveal="scale">
+        <img src={asset(equipePhoto.src)} alt={equipePhoto.alt} width={equipePhoto.largeur} height={equipePhoto.hauteur} loading="lazy" decoding="async" />
+        <figcaption class="muted">{equipePhoto.alt}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section__title" data-split="words">Dans les coulisses</h2>
+      <div class="grid">
+        {coulisses.map((p, i) => (
+          <figure class="card" data-reveal="clip" data-delay={String(i * 0.1)}>
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            <figcaption class="muted">{p.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions">
+        <a class="btn" href={u('/carte/')}>Découvrir la carte</a>
+        <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+      </div>
+    </div>
+  </section>
+</Base>
