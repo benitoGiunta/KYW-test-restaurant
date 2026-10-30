@@ -5,8 +5,8 @@
 - **Idée** : la page d'accueil est un cadran. Six moments (7h café, 9h brunch, 12h déjeuner, 17h apéro, 19h dîner,
   23h dernier verre) se suivent au scroll ; le ciel (dégradé à deux arrêts, aube → blanc → ocre → corail → nuit) tourne
   avec eux, un disque soleil/lune descend sur une frise sticky, et le site s'ouvre à l'heure réelle du visiteur
-  (loader qui compte jusqu'à l'heure, badge « ouvert jusqu'à… » calculé sur les horaires réels, arrivée douce au moment
-  en cours).
+  (loader qui compte jusqu'à l'heure, badge « ouvert jusqu'à… » calculé sur les horaires réels, invitation cliquable « aller au
+  moment présent » dans le hero ; jamais de défilement automatique, révision 1).
 - **Métaphore** : une journée de service vue depuis la terrasse.
 - **Émotion** : la disponibilité, « à n'importe quelle heure, il y a quelque chose pour vous ».
 - **Verbe de motion** : tourne comme une horloge.
@@ -63,7 +63,7 @@ FOOTER finale          [nom géant, adresse, réseaux] + KywFooter
 
 Un modèle ferait trois blocs petit-déjeuner / déjeuner / dîner avec une photo chacun. Ici l'heure réelle entre dans
 la page : le loader compte jusqu'à l'heure, le badge dit ce qui est ouvert maintenant à partir des horaires réels, le
-ciel et la frise sont à l'heure, l'arrivée se fait au moment courant. Cela n'a de sens que pour un lieu qui vit toute la
+ciel et la frise sont à l'heure, le hero invite à rejoindre le moment courant (au clic). Cela n'a de sens que pour un lieu qui vit toute la
 journée, ce que le gabarit assume (les moments non prouvés pour Les Potes au Feu sont marqués illustratifs).
 
 ## Checklist des règles dures (preuves dans RAPPORT.md après QA)
@@ -73,8 +73,27 @@ journée, ce que le gabarit assume (les moments non prouvés pour Les Potes au F
 - [x] Loader < 2,6 s (plancher 1,1 s + sortie 0,8 s).
 - [x] Reduced motion : pas de scrollTo automatique, ciel par section sans tween, heure affichée sans défilement.
 - [x] Hover par rôle : chips (fond soleil), flèches (4 px), liens (soulignement), boutons (inversion), cartes apéro (lever).
-- [x] Idle : la seconde tourne sur l'anneau de l'horloge du hero (idleMotion).
+- [x] Idle : la seconde tourne sur l'anneau de l'horloge du hero, le point de l'invitation « moment présent » respire (2,4 s) ; le hero reste à l'écran au chargement, donc le mouvement au repos est visible.
 - [x] `noindex`, `lang="fr"`, KywFooter sur chaque page, une seule mention « Maquette KYW ».
 - [x] Tout lien/asset via `u()`/`asset()`.
 - [x] 0 FAIL shoot/audit, 0 erreur console, pas de débordement, axe sans violation sérieuse : passe 1 sur 6 pages (`.shots-journee/`, `audit-journee.txt` : 0 FAIL, 3 WARN normaux sous base) ; 1 violation `scrollable-region-focusable` corrigée (tabindex) ; mesures dans RAPPORT.md.
 - [x] LCP : h1 du hero peint sous le loader (292 ms desktop, 1,6 s mobile throttlé) ; photos de hero des pages intérieures sans reveal.
+
+## Décisions de la révision 1 (30/10/2026, REVUE-1 → REVISION-1.md)
+
+- **Plus d'arrivée automatique** : l'ancien `arrivee()` faisait défiler vers le moment courant 0,9 s après le loader, le
+  hero (nom, accroche, horloge, chips) n'était jamais vu et la nuit on tombait en bas de page. Remplacé par
+  `invitation()` : un lien « Il est 17h30 : aller au moment présent, l'apéro (illustratif) » sous les chips, suivi au
+  clic seulement ; caché avant 7h et dès 23h. Un moment non prouvé est annoncé « (illustratif) » dans l'invitation même.
+- **Texte doux** : `--encre-doux` à 0,72 sur les ciels clairs (≥ 6,0:1 sur aube-basse et ocre pâle) et encre pleine sur
+  le corail (4,73:1 sur `#d9614e`, 7,4:1 sur `#e79a2e`) ; nuit inchangée (≥ 5,4:1). Calcul sur les deux arrêts de chaque
+  dégradé, pas sur la moyenne. Sur le corail, la hiérarchie passe par la taille et la graisse, plus par la couleur.
+- **Brunch** : le restaurant est fermé le week-end. La page reste comme démonstration du moment « 9h » mais est
+  entièrement marquée exemple (bandeau plein en tête, peint sans JS, tags sur accroche, assiettes, formule), sans heures,
+  sans CTA de réservation (« Voir les horaires réels » et « Le dîner, du lundi au vendredi »), titre « Brunch, page
+  d'exemple ». Pour un client qui sert un brunch, retirer le bandeau et les tags.
+- **E-mail** : une adresse `placeholder` n'est jamais un `mailto:` (bouton retiré de Réservation, texte simple + tag dans
+  le pied de page).
+- **En-tête mobile** : fond opaque (`--ciel-haut` plein, 96 % en desktop, toujours sans flou), rangées resserrées,
+  frise 2,7 rem avec ses heures dans la boîte (elles débordaient sous l’en-tête) ; les 3 rangées restent (la frise
+  mobile est la signature du concept), ≈ 120 px sur 844. Photo de hero du brunch en 960 px (LCP mobile 1,95 s).

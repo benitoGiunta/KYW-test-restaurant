@@ -169,6 +169,7 @@ export const site: Restaurant = {
     photo('/photos/service-francois-table.webp', 'François verse une sauce à table devant une cliente', 1140, 642),
     photo('/photos/portrait-damien-profil.webp', 'Damien de profil en clair-obscur, mains jointes', 1140, 642),
     photo('/photos/salle-banquette.webp', 'La salle de jour : banquette, coussins moutarde, lambris vert-gris', 1600, 1600),
+    photo('/photos/salle-banquette-960.webp', 'La salle de jour : banquette, coussins moutarde, lambris vert-gris', 960, 960),
     photo('/photos/cuisine-mains-pate.webp', 'Des mains travaillent une pâte sur une balance', 1600, 1600),
     photo('/photos/plat-boeuf-confit.webp', 'Boeuf confit, carottes et cromesquis sur assiette rouge', 1600, 1600),
   ],
@@ -298,7 +299,7 @@ export const platsDuJour: { jour: Jour; plat: string; prix: string; placeholder:
 ];
 
 /** Happy hour (illustratif). */
-export const happyHour = { texte: 'Happy hour de 17h à 19h, cocktails à 8 €', placeholder: true };
+export const happyHour = { texte: 'Happy hour de 17h à 19h : cocktail de la maison à 8 € au lieu de 12 €', placeholder: true };
 
 /** Horaires du bar (illustratifs) ; les horaires de cuisine sont `site.horaires` (réels). */
 export const horairesBar: { jour: Jour; texte: string; placeholder: boolean }[] = [

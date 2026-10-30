@@ -11,7 +11,7 @@ const m = Object.fromEntries(moments.map((x) => [x.id, x]));
 const cafe = m['m-7h'], brunch = m['m-9h'], dej = m['m-12h'], apero = m['m-17h'], diner = m['m-19h'], nuit = m['m-23h'];
 const photoCafe = photoDe(cafe.photo!), photoApero = photoDe(apero.photo!), photoDiner = photoDe(diner.photo!);
 const medaillons = [
-  { photo: photoDe('/photos/dessert-tarte-pomme.webp'), titre: 'Rosace de pommes', texte: 'Dessert du menu (photo réelle)', placeholder: false },
+  { photo: photoDe('/photos/dessert-tarte-pomme.webp'), titre: 'Rosace de pommes', texte: 'Photo du dossier, assiette non attribuée', placeholder: true },
   { photo: photoDe('/photos/plat-tartare.webp'), titre: 'Tartare de boeuf', texte: 'Au brunch, en petite assiette', placeholder: true },
   { photo: photoDe('/photos/plat-saint-jacques.webp'), titre: 'Saint-Jacques', texte: 'Au brunch, en petite assiette', placeholder: true },
 ];
@@ -40,6 +40,9 @@ const aujourdhui = jours[(new Date().getDay() + 6) % 7];
             <li><a class="chip" href={`#${x.id}`} data-chip={x.id}><Icone nom={icones[i]} /><span class="chip__h">{x.heureTexte}</span><span class="chip__t">{x.titre}</span></a></li>
           ))}
         </ul>
+        <p class="maintenant" data-maintenant hidden>
+          <a class="maintenant__lien" href="#accueil" data-maintenant-lien><span class="maintenant__point" aria-hidden="true"></span><span data-maintenant-texte>Aller au moment présent</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" /></svg></a>
+        </p>
       </div>
     </section>
 
@@ -80,7 +83,7 @@ const aujourdhui = jours[(new Date().getDay() + 6) % 7];
                   <div class="medaillon__photo"><img src={asset(md.photo.src)} alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
                   <svg class="medaillon__anneau" viewBox="0 0 200 200" aria-hidden="true">
                     <defs><path id={`arc-${i}`} d="M100,100 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
-                    <text><textPath href={`#arc-${i}`} startOffset="0">{md.titre} · le brunch · samedi et dimanche · {md.titre} ·</textPath></text>
+                    <text><textPath href={`#arc-${i}`} startOffset="0">{md.titre} · exemple de brunch · {md.titre} · exemple ·</textPath></text>
                   </svg>
                 </div>
                 <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}{md.placeholder ? <span class="tag">illustratif</span> : null}</p>

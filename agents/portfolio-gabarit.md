@@ -119,3 +119,9 @@ seul fichier, sections indépendantes, tokens).
   transform et opacité. Un calcul de taille bord à bord mesure le premier ancêtre qui n'est pas `display: contents`, et
   la taille CSS de départ égale celle du calcul (sinon CLS). Une ligne de temps ou un tableau horaire tient dans 390 px
   sans défilement : rien d'un côté de la piste ne doit être hors champ.
+- **Le hero est vu** (révision Journée) : aucun défilement automatique au chargement ; une navigation vers la section
+  pertinente se propose par un lien cliquable du hero, cachée quand elle mènerait en bas de page ou vers un service
+  fictif. Une adresse `placeholder` n'est jamais un `mailto:` ni un `href`. Une page entière consacrée à un service que le
+  client ne rend pas porte un bandeau d'exemple peint sans JS en tête et aucun CTA de réservation. Le contraste du texte
+  doux se calcule sur les deux arrêts de chaque dégradé de fond, ≥ 4,5:1. Les photos de hero sont servies en 960 px
+  (≤ 80 Ko) ; les libellés d'un instrument dans l'en-tête mobile restent dans la boîte de l'en-tête opaque.

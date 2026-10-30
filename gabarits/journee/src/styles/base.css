@@ -46,7 +46,7 @@ address { font-style: normal; }
 .section__head .t-xl { max-width: 16ch; }
 
 /* En-tête : collant, fond = ciel haut voilé, frise en 3e rangée sur mobile. */
-.header { position: sticky; top: 0; z-index: var(--z-header); background: color-mix(in srgb, var(--ciel-haut) 88%, transparent); border-bottom: 1px solid var(--ligne); }
+.header { position: sticky; top: 0; z-index: var(--z-header); background: color-mix(in srgb, var(--ciel-haut) 96%, transparent); border-bottom: 1px solid var(--ligne); }
 .header__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--u) calc(var(--u) * 2); padding-block: calc(var(--u) * 1.4); width: min(100% - 2 * var(--gutter), 92rem); margin-inline: auto; padding-right: var(--frise); }
 .header__brand { display: inline-flex; align-items: center; gap: 0.55em; font-family: var(--f-display); font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1; min-height: 28px; transition: opacity 0.3s; }
 .header__brand:hover { opacity: 0.7; }
@@ -58,7 +58,8 @@ address { font-style: normal; }
 .nav__lien:hover::after, .nav__lien:focus-visible::after { transform: scaleX(1); }
 .nav__lien[aria-current='page']::after { transform: scaleX(1); background: var(--encre); }
 @media (max-width: 767px) {
-  .header__inner { padding-block: var(--u); }
+  .header { background: var(--ciel-haut); } /* opaque : le texte qui défile ne se lit plus dessous (révision 1) */
+  .header__inner { padding-block: calc(var(--u) * 0.8); row-gap: calc(var(--u) * 0.4); }
   .header__brand { font-size: 1.05rem; }
   .nav { width: 100%; gap: calc(var(--u) * 1.8); overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
   .nav__lien { white-space: nowrap; }
@@ -74,7 +75,7 @@ address { font-style: normal; }
 .badge__bulle b { text-transform: capitalize; font-weight: 600; }
 .badge:hover .badge__bulle, .badge:focus-within .badge__bulle { clip-path: inset(0 0 0 0 round 16px); }
 .badge--compact { font-size: var(--t-xs); min-height: 28px; }
-@media (max-width: 767px) { .badge--compact .badge__bulle { left: auto; right: 0; } .badge--compact .badge__texte { max-width: 11rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }
+@media (max-width: 767px) { .badge--compact .badge__bulle { left: auto; right: 0; } .badge--compact .badge__texte { max-width: 9.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }
 
 /* Frise du jour : desktop fixée à droite dans la voie --frise ; mobile en rangée dans l'en-tête. */
 .frise { position: fixed; right: calc(var(--gutter) * 0.9); top: 50%; z-index: var(--z-frise); height: min(56vh, 34rem); width: 2.5rem; transform: translateY(-50%); }
@@ -98,15 +99,16 @@ address { font-style: normal; }
   .frise__h { right: auto; top: 100%; left: 50%; transform: translateX(-50%); font-size: 0.65rem; }
   .frise__bulle { display: none; }
   .frise__disque { left: calc((var(--heure) - 7) / 16 * 100%); top: 50%; }
-  .frise { height: 2.4rem; }
-  .frise__liste { left: 1rem; right: 1rem; }
-  .frise::before { left: 1rem; right: 1rem; }
-  .frise__disque { left: calc(1rem + (var(--heure) - 7) / 16 * (100% - 2rem)); }
+  /* Révision 1 : les heures (sous les points) restent DANS l'en-tête opaque, plus de texte qui déborde sur la page. */
+  .frise { height: 2.7rem; padding-bottom: 0; }
+  .frise__liste { left: 1rem; right: 1rem; top: 0; bottom: 1.1rem; }
+  .frise::before { left: 1rem; right: 1rem; top: calc((100% - 1.1rem) / 2); }
+  .frise__disque { left: calc(1rem + (var(--heure) - 7) / 16 * (100% - 2rem)); top: calc((100% - 1.1rem) / 2); }
 }
 
 /* Boutons et liens : pilules, inversion au survol ; flèches qui avancent de 4 px. */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.6em; min-height: 44px; padding: 0.75em 1.5em; border: 1.5px solid var(--encre); border-radius: var(--radius); font-weight: 600; font-size: var(--t-s); color: var(--encre); transition: background 0.35s, color 0.35s, transform 0.3s; }
-.btn:hover, .btn:focus-visible { background: var(--encre); color: var(--ciel-haut); }
+.btn:hover, .btn:focus-visible { background: var(--encre); color: var(--ciel-haut); transform: translateY(-2px); }
 .btn--solid { background: var(--encre); color: var(--ciel-haut); }
 .btn--solid:hover, .btn--solid:focus-visible { background: var(--soleil); color: var(--ink); border-color: var(--soleil); }
 .btn--soleil { background: var(--soleil); color: var(--ink); border-color: var(--soleil); }
@@ -134,7 +136,7 @@ address { font-style: normal; }
 .chip { display: inline-flex; align-items: center; gap: 0.5em; min-height: 44px; padding: 0.55em 1.1em 0.55em 0.9em; border: 1.5px solid var(--ligne); border-radius: var(--radius); font-size: var(--t-s); font-weight: 600; transition: background 0.35s, color 0.35s, border-color 0.35s, transform 0.3s; }
 .chip__h { font-variant-numeric: tabular-nums; }
 .chip__t { font-weight: 400; color: var(--encre-doux); transition: color 0.35s; }
-.chip:hover, .chip:focus-visible { background: var(--soleil); color: var(--ink); border-color: var(--soleil); }
+.chip:hover, .chip:focus-visible { background: var(--soleil); color: var(--ink); border-color: var(--soleil); transform: translateY(-2px); }
 .chip:hover .chip__t, .chip:focus-visible .chip__t, .chip[aria-current] .chip__t { color: inherit; }
 .chip[aria-current] { background: var(--encre); color: var(--ciel-haut); border-color: var(--encre); }
 .chip[aria-current]:hover { background: var(--soleil); color: var(--ink); border-color: var(--soleil); }
@@ -190,8 +192,8 @@ figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux)
 .carte-apero:hover { transform: translateY(-6px); background: var(--ciel-haut); }
 .carte-apero__nom { font-family: var(--f-display); font-weight: 800; font-size: var(--t-m); letter-spacing: -0.02em; line-height: 1.1; }
 .carte-apero__prix { font-size: var(--t-l); font-family: var(--f-display); font-weight: 800; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
-.carte-apero--photo { padding: 0; overflow: clip; min-height: 15rem; }
-.carte-apero--photo img { width: 100%; height: 100%; object-fit: cover; }
+.carte-apero--photo { position: relative; display: block; padding: 0; overflow: clip; min-height: 15rem; }
+.carte-apero--photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; } /* remplit toute la carte, même étirée par la rangée (révision 1) */
 .happy { display: inline-flex; align-items: center; gap: 0.6em; padding: 0.5em 1em; border-radius: var(--radius); background: var(--encre); color: var(--ciel-haut); font-size: var(--t-s); font-weight: 600; }
 
 /* 19h : paire asymétrique, photo haute | menu. */
@@ -266,3 +268,16 @@ figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux)
 
 /* 404. */
 .quatre { min-height: 70svh; display: grid; align-content: center; }
+
+/* Invitation « aller au moment présent » (révision 1) : remplace l'arrivée automatique ; point qui respire = mouvement
+   au repos visible dans le hero (avec l'anneau de l'horloge). */
+.maintenant { margin-top: calc(var(--u) * 2.5); }
+.maintenant[hidden] { display: none; }
+.maintenant__lien { display: inline-flex; align-items: center; gap: 0.7em; min-height: 44px; padding: 0.4em 0; font-weight: 600; font-size: var(--t-s); border-bottom: 1.5px solid var(--encre); transition: gap 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s; }
+.maintenant__lien:hover, .maintenant__lien:focus-visible { gap: 1em; }
+.maintenant__lien svg { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+.maintenant__lien:hover svg { transform: translateY(3px); }
+.maintenant__point { position: relative; width: 0.7em; height: 0.7em; border-radius: 50%; background: var(--disque); box-shadow: 0 0 0 2px var(--encre); flex: none; }
+.maintenant__point::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--disque); animation: frise-pulse 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .maintenant__point::after { animation: none; opacity: 0; } }
+.bandeau--fort { border-style: solid; border-color: var(--encre); background: var(--voile); font-size: var(--t-body); }

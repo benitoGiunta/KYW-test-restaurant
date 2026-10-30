@@ -1,11 +1,12 @@
 // Driver « Journée » : six moments ([data-ciel]) pilotent le ciel (deux arrêts), l'encre et la position du disque
 // sur la frise (--heure), par ScrollTrigger onToggle + tween de variables CSS sur <html>. Le site s'ouvre à l'heure
 // réelle : ciel du hero réglé au boot, horloge qui tourne (idle), badge « ouvert jusqu'à » calculé sur les horaires
-// réels, arrivée douce au moment courant (premier chargement, jamais sous reduced-motion). Les modules de page
+// réels, invitation cliquable « aller au moment présent » dans le hero (aucun défilement automatique : le hero est
+// toujours vu, révision 1). Le texte doux tient 4,5:1 sur les deux arrêts de chaque ciel. Les modules de page
 // (chips, médaillons, horaires à flèches) vivent ici, chacun derrière onPage() avec test de présence.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { onPage, scrollToTarget, prefersReducedMotion, ease } from '../engine';
+import { onPage, prefersReducedMotion, ease } from '../engine';
 import { moments, jours, type Jour } from '../data/site';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,10 +15,10 @@ export type Theme = 'aube' | 'midi' | 'ocre' | 'corail' | 'nuit' | 'nuitProfonde
 type Ciel = { haut: string; bas: string; encre: string; doux: string; ligne: string; voile: string; disque: string; heure: number };
 // Mêmes valeurs que tokens.css (data-theme) ; ici en hex / rgba pour que GSAP les interpole.
 const CIELS: Record<Theme, Ciel> = {
-  aube: { haut: '#fbf6ec', bas: '#f4e3c8', encre: '#1b1b1b', doux: 'rgba(27,27,27,0.62)', ligne: 'rgba(27,27,27,0.16)', voile: 'rgba(255,255,255,0.55)', disque: '#e79a2e', heure: 7 },
-  midi: { haut: '#ffffff', bas: '#fbf6ec', encre: '#1b1b1b', doux: 'rgba(27,27,27,0.62)', ligne: 'rgba(27,27,27,0.16)', voile: 'rgba(255,255,255,0.55)', disque: '#e79a2e', heure: 9 },
-  ocre: { haut: '#ffffff', bas: '#f6e2b7', encre: '#1b1b1b', doux: 'rgba(27,27,27,0.62)', ligne: 'rgba(27,27,27,0.16)', voile: 'rgba(255,255,255,0.55)', disque: '#e79a2e', heure: 12 },
-  corail: { haut: '#e79a2e', bas: '#d9614e', encre: '#1b1b1b', doux: 'rgba(27,27,27,0.84)', ligne: 'rgba(27,27,27,0.26)', voile: 'rgba(255,255,255,0.3)', disque: '#fbf6ec', heure: 17 },
+  aube: { haut: '#fbf6ec', bas: '#f4e3c8', encre: '#1b1b1b', doux: 'rgba(27,27,27,0.72)', ligne: 'rgba(27,27,27,0.16)', voile: 'rgba(255,255,255,0.55)', disque: '#e79a2e', heure: 7 },
+  midi: { haut: '#ffffff', bas: '#fbf6ec', encre: '#1b1b1b', doux: 'rgba(27,27,27,0.72)', ligne: 'rgba(27,27,27,0.16)', voile: 'rgba(255,255,255,0.55)', disque: '#e79a2e', heure: 9 },
+  ocre: { haut: '#ffffff', bas: '#f6e2b7', encre: '#1b1b1b', doux: 'rgba(27,27,27,0.72)', ligne: 'rgba(27,27,27,0.16)', voile: 'rgba(255,255,255,0.55)', disque: '#e79a2e', heure: 12 },
+  corail: { haut: '#e79a2e', bas: '#d9614e', encre: '#1b1b1b', doux: 'rgba(27,27,27,1)', ligne: 'rgba(27,27,27,0.26)', voile: 'rgba(255,255,255,0.3)', disque: '#fbf6ec', heure: 17 },
   nuit: { haut: '#13203a', bas: '#223659', encre: '#fbf6ec', doux: 'rgba(251,246,236,0.66)', ligne: 'rgba(251,246,236,0.2)', voile: 'rgba(11,19,36,0.45)', disque: '#fbf6ec', heure: 19 },
   nuitProfonde: { haut: '#0b1324', bas: '#13203a', encre: '#fbf6ec', doux: 'rgba(251,246,236,0.66)', ligne: 'rgba(251,246,236,0.2)', voile: 'rgba(11,19,36,0.45)', disque: '#fbf6ec', heure: 23 },
 };
@@ -77,7 +78,7 @@ export function initJournee() {
   onPage(badges);
   onPage(medaillons);
   onPage(horairesFleches);
-  onPage(arrivee);
+  onPage(invitation);
 }
 
 /** Horloge du hero : HH:MM en display, secondes en petit, anneau qui avance d'un cran par seconde (idle). */
@@ -171,20 +172,24 @@ function horairesFleches() {
   return () => offs.forEach((f) => f());
 }
 
-/** Arrivée douce au moment courant : premier chargement de l'accueil seulement, jamais sous reduced-motion ni avec une ancre. */
-function arrivee() {
-  if (!document.querySelector('[data-accueil]') || prefersReducedMotion() || location.hash) return;
-  let deja = false;
-  try { deja = sessionStorage.getItem('journee-arrivee') === '1'; } catch {}
-  if (deja) return;
-  const cible = document.getElementById(momentCourant().id);
-  if (!cible) return;
-  const t = gsap.delayedCall(0.2, function attendre(this: gsap.core.Tween) {
-    if (!html().classList.contains('is-loaded')) { this.restart(true); return; }
-    gsap.delayedCall(0.9, () => {
-      try { sessionStorage.setItem('journee-arrivee', '1'); } catch {}
-      scrollToTarget(cible);
-    });
-  });
-  return () => t.kill();
+/** Invitation « aller au moment présent » (remplace l'arrivée automatique, révision 1) : un lien du hero vers la
+ *  section de l'heure réelle, suivi seulement au clic. Entre 23h et 7h (hors de la frise) il reste caché : jamais
+ *  d'envoi vers le bas de page la nuit. Un moment illustratif est annoncé comme tel. */
+function invitation() {
+  const bloc = document.querySelector<HTMLElement>('[data-maintenant]');
+  if (!bloc) return;
+  const lien = bloc.querySelector<HTMLAnchorElement>('[data-maintenant-lien]');
+  const texte = bloc.querySelector<HTMLElement>('[data-maintenant-texte]');
+  const maj = () => {
+    const d = new Date();
+    const h = d.getHours() + d.getMinutes() / 60;
+    if (h < moments[0].heure || h >= moments[moments.length - 1].heure || !lien || !texte) { bloc.hidden = true; return; }
+    const m = momentCourant(h);
+    lien.href = `#${m.id}`;
+    texte.textContent = `Il est ${pad(d.getHours())}h${pad(d.getMinutes())} : aller au moment présent, ${m.titre.toLowerCase()}${m.placeholder ? ' (illustratif)' : ''}`;
+    bloc.hidden = false;
+  };
+  maj();
+  const id = setInterval(maj, 60000);
+  return () => clearInterval(id);
 }
