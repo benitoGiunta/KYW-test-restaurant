@@ -9,7 +9,8 @@ try { const d = JSON.parse(readFileSync(join(racine, 'data/portfolio/directions.
 const parId = Object.fromEntries(directions.map((d) => [d.id, d]));
 const dg = join(racine, 'dist/gabarits');
 mkdirSync(dg, { recursive: true });
-const publies = existsSync(dg) ? readdirSync(dg).filter((g) => existsSync(join(dg, g, 'index.html'))).sort() : [];
+// publié = construit ET livré (RAPPORT.md présent)
+const publies = existsSync(dg) ? readdirSync(dg).filter((g) => existsSync(join(dg, g, 'index.html')) && existsSync(join(racine, 'gabarits', g, 'RAPPORT.md'))).sort() : [];
 const cartes = publies.map((id) => {
   const d = parId[id] || {};
   const ap = join(racine, 'gabarits', id, 'apercu.png');

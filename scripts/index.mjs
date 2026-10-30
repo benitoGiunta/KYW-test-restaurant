@@ -7,7 +7,7 @@ const racine = resolve(new URL('..', import.meta.url).pathname);
 const restos = (existsSync(join(racine, 'data/restaurants.json')) ? JSON.parse(readFileSync(join(racine, 'data/restaurants.json'), 'utf8')) : []).filter((r) => r.selection !== 'reserve');
 const variantes = [['portfolio', 'Portfolio'], ['awwwards', 'Awwwards'], ['legacy', 'Inspi legacy']];
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const gabarits = existsSync(join(racine, 'dist/gabarits')) ? readdirSync(join(racine, 'dist/gabarits')).filter((g) => existsSync(join(racine, 'dist/gabarits', g, 'index.html'))).sort() : [];
+const gabarits = existsSync(join(racine, 'dist/gabarits')) ? readdirSync(join(racine, 'dist/gabarits')).filter((g) => existsSync(join(racine, 'dist/gabarits', g, 'index.html')) && existsSync(join(racine, 'gabarits', g, 'RAPPORT.md'))).sort() : [];
 const lignes = restos.map((r, i) => {
   const liens = variantes.map(([v, label]) => existsSync(join(racine, 'dist', r.slug, v, 'index.html'))
     ? `<a class="v v-${v}" href="/${r.slug}/${v}/">${label}</a>`
