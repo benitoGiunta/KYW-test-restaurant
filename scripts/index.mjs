@@ -58,10 +58,10 @@ ${lignes || '<tr><td colspan="4">Sélection en cours.</td></tr>'}
 <h2><a href="/gabarits/">Collection de gabarits du portfolio</a> (${gabarits.length} publiés sur 15)</h2>
 <ul class="gab">${gabarits.map((g) => `<li><a href="/gabarits/${g}/">${esc(g)}</a></li>`).join('') || '<li>En construction.</li>'}</ul>
 </main>
-<footer>KYW, filiale web de KYN · Namur · pages de démonstration non indexées.</footer>
+<footer>KYW, filiale web de KYN · Namur · pages de démonstration non indexées · <a href="/suivi/">suivi du projet</a></footer>
 </body></html>`;
 mkdirSync(join(racine, 'dist/kyw'), { recursive: true });
 cpSync(join(racine, 'packages/kyw-footer/kyw-signature-720.webp'), join(racine, 'dist/kyw/kyw-signature-720.webp'));
 writeFileSync(join(racine, 'dist/index.html'), html);
-import('node:child_process').then(({ execSync }) => execSync('node scripts/galerie.mjs', { stdio: 'inherit', cwd: racine }));
+import('node:child_process').then(({ execSync }) => { execSync('node scripts/galerie.mjs', { stdio: 'inherit', cwd: racine }); execSync('node scripts/suivi.mjs', { stdio: 'inherit', cwd: racine }); });
 console.log(`✓ dist/index.html : ${restos.length} restaurants, ${faits} complets, ${gabarits.length} gabarits`);
