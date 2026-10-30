@@ -84,3 +84,10 @@ collection (Affiche = gras serré, Marée = bord à bord).
 - [x] Hover par rôle : liens (soulignement qui pousse), boutons (fond encre → terre), vignettes (étiquette se soulève 2 px), mois (secteur vert).
 - [x] Aucun `visibility: hidden` sur le hero ; `clip-path` seulement pour les libellés décoratifs.
 - [x] `lang="fr"`, noindex, JSON-LD, canonical, OG, KywFooter, mention maquette unique.
+
+## Révision 1, vérification (30/10/2026, second réviseur)
+- Aucune décision de design nouvelle : toutes les corrections décrites plus haut (menu actuel sans mois, h1 de /saisons/,
+  `liaisonPlaceholder`, calendrier unique trié, e-mail inerte marqué, hero `.hero--duo`) sont vérifiées sur le build 21:34
+  et par `page.clock` ; détail et preuves dans `REVISION-1.md`.
+- La légende de la roue suit le mois placé en haut pendant le scrub ou au clic (« ce qui vient ») ; le secteur vert, le
+  centre « nous sommes en … » et la branche du pied de page restent sur le mois réel.

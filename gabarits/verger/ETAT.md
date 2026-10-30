@@ -9,4 +9,6 @@
 - [x] build OK (dist/gabarits/verger/, 7 pages)
 - [x] QA 2 passes (port 4409, `.shots-verger/`, audit 0 FAIL, console 0, débordement 0, reduced OK), corrections mécaniques
 - [x] FICHE.md, RAPPORT.md, apercu.png, leçons dans agents/lecons.md
-- [ ] critique `jury` et revue (agent suivant) ; pas de commit (orchestrateur)
+- [x] revue 1 (REVUE-1.md, A_CORRIGER)
+- [x] révision 1 (REVISION-1.md) : 14 corrigés, 1 refusé en partie (F3-2 schéma eyebrow), 0 impossible ; rebuild 21:34, captures `.shots-verger-rev/` (index, saisons, histoire, reservation, carte : axe 0, console 0, débordement 0), `page.clock` mars/juillet/octobre OK, apercu.png renouvelé
+- [ ] commit (orchestrateur) ; revue 2 facultative
