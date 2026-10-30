@@ -23,5 +23,8 @@ changer). Ne pose aucune question : décide, note tes hypothèses, livre.
    `https://kyw-test-restaurant.vercel.app/` liste le restaurant avec ses liens, et que `git status` est propre et
    poussé. Si une variante n'est pas publiée, dis pourquoi (verdict de revue) et, si c'est un F0 réparable en moins
    d'une heure de travail agent, lance un cycle révision → revue → publication supplémentaire pour elle.
-4. Termine par un compte rendu : URLs publiées, verdicts de revue par variante, placeholders, leçons ajoutées.
+4. Garde-fou (règle H de `agents/README.md`) : avant de lancer le workflow et avant toute relance, lis l'utilisation des
+   fenêtres de limite (`list_events` sur ta session, `kinds: ["rate_limit_event"]`) ; semaine ≥ 80 % → ne lance rien,
+   commite l'état et rends compte ; fenêtre de 5 h ≥ 85 % → attends sa réinitialisation (`send_later`).
+5. Termine par un compte rendu : URLs publiées, verdicts de revue par variante, placeholders, leçons ajoutées.
    Ne crée pas de pull request.
