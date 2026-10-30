@@ -1,0 +1,10 @@
+---
+// Ligne manuscrite tracée : SVG inline généré au build (lib/manuscrit.ts), aria-label porte le texte.
+import { manuscrit } from '../lib/manuscrit';
+interface Props { texte: string; taille?: number; class?: string }
+const { texte, taille = 40, class: cls } = Astro.props;
+const m = manuscrit(texte, taille);
+---
+<svg class:list={['manuscrit', cls]} viewBox={`0 0 ${m.largeur} ${m.hauteur}`} width={m.largeur} height={m.hauteur} role="img" aria-label={texte} data-manuscrit>
+  {m.paths.map((p) => <path d={p.d} transform={p.transform} />)}
+</svg>

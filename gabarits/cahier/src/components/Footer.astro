@@ -1,0 +1,37 @@
+---
+// Dos du cahier : kraft, nom en slab, fin du cahier, contact ; puis le pied de page KYW obligatoire (une seule mention).
+import KywFooter from '@kyw/footer';
+import { site, cahier, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { u } from '../lib/url';
+---
+<footer class="dos page-cahier" aria-labelledby="dos-titre">
+  <div class="wrap">
+    <p class="dos__fin">Fin du cahier n° {cahier.numero}, {cahier.saison}</p>
+    <p class="dos__nom" id="dos-titre">{site.nom}</p>
+    <div class="dos__cols">
+      <div class="stack">
+        <p class="dos__label">Adresse</p>
+        <address>{adresseLigne()}</address>
+        <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+        <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
+      </div>
+      <div>
+        <p class="dos__label">Horaires</p>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+      </div>
+      <div class="stack">
+        <p class="dos__label">Pages</p>
+        <p><a class="link" href={u('/carte/')}>La carte</a></p>
+        <p><a class="link" href={u('/producteurs/')}>Les producteurs</a></p>
+        <p><a class="link" href={u('/histoire/')}>Les potes</a></p>
+        <p><a class="link" href={u('/commander/')}>Commander</a></p>
+        <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+        {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
+      </div>
+    </div>
+    <p class="folio"></p>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

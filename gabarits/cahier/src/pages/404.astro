@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier } from '../data/site';
+import { u } from '../lib/url';
+import Tampon from '../components/Tampon.astro';
+---
+<Base title="Page introuvable" description={`Cette page n'existe pas ou plus sur le site de ${site.nom}. Retrouvez la carte, les producteurs, l'histoire et la réservation depuis l'accueil.`}>
+  <section class="page-cahier" aria-labelledby="h1">
+    <div class="wrap feuille">
+      <div>
+        <div class="titre titre--grand">
+          <p class="titre__sur">Cahier n° {cahier.numero}, page arrachée</p>
+          <h1 id="h1" data-split="words" data-intro>Page arrachée</h1>
+        </div>
+        <p class="lead">Cette page n'est plus dans le cahier. L'adresse a peut-être changé, ou elle contient une coquille. Tout le reste est à sa place : la carte, les producteurs, l'histoire des deux potes et la réservation.</p>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/')}>Retour à la couverture</a>
+          <a class="btn" href={u('/carte/')}>Lire la carte</a>
+          <a class="btn" href={u('/reservation/')}>Réserver</a>
+        </div>
+      </div>
+      <div class="feuille__marge stack">
+        <Tampon texte="introuvable" />
+        <p class="annot annot--fleche">vérifier l'adresse, ou repartir de la couverture</p>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>

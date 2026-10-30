@@ -1,0 +1,167 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier, photoDe, horaireTexte, telHref } from '../data/site';
+import { u } from '../lib/url';
+import Polaroid from '../components/Polaroid.astro';
+import Timbre from '../components/Timbre.astro';
+import MenuDuJour from '../components/MenuDuJour.astro';
+import Sommaire from '../components/Sommaire.astro';
+import Plan from '../components/Plan.astro';
+const cover = photoDe('/photos/cuisine-chefs-passe.webp');
+const salle = photoDe('/photos/salle-banquette.webp');
+const rots = [-3, 2, -2, 3, -1.5, 2.5];
+const rotsFiche = [-2, 1.5, -1, 2];
+const equipePhotos = [photoDe('/photos/chef-damien.webp'), photoDe('/photos/chef-francois.webp')];
+---
+<Base>
+  <section class="couverture" data-couverture aria-labelledby="h1">
+    <div class="wrap couverture__inner">
+      <div>
+        <div class="etiquette" data-colle>
+          <p class="etiquette__ligne">Cahier n° {cahier.numero}, saison {cahier.saison}</p>
+          <h1 class="etiquette__nom" id="h1">{site.nom}</h1>
+          <p class="etiquette__ligne">Bistronomie, {site.adresse.commune}. Menu unique, produits du coin.</p>
+        </div>
+        <p class="couverture__accroche lead">{site.baseline} Un menu unique en quatre services, servi et expliqué à table par les deux chefs, avec les légumes et les bêtes de ceux qu'ils connaissent par leur prénom.</p>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+          <a class="btn" href={u('/carte/')}>Lire la carte</a>
+        </div>
+      </div>
+      <Polaroid photo={cover} rot={-2} legende="les deux potes, au passe" class="couverture__photo" critical />
+    </div>
+  </section>
+
+  <section class="page-cahier" aria-label="Menu du jour">
+    <div class="wrap feuille">
+      <MenuDuJour />
+      <div class="feuille__marge">
+        <p class="annot annot--fleche">écrit chaque matin, après le marché</p>
+        <p class="muted" style="margin-top: var(--u); font-size: var(--t-s)">Le menu du jour change tous les jours de service. Il est affiché ici et sur l'ardoise, jamais plus de douze heures à l'avance.</p>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-sommaire">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">Sommaire</p>
+        <h2 id="h-sommaire" data-split="words">Ce qu'on sert ce mois-ci</h2>
+      </div>
+      <div class="feuille">
+        <div>
+          <Sommaire cat={cahier.sommaire[0]} depart={1} />
+          <p class="actions"><a class="btn" href={u('/carte/')}>La carte complète, 18 lignes</a></p>
+        </div>
+        <div class="feuille__marge">
+          <Timbre photo={photoDe('/photos/plat-saint-jacques.webp')} rot={3} legende="Saint-Jacques, butternut" detail="le deuxième service" />
+          <p class="annot annot--fleche" style="margin-top: var(--u)">assiette bleue, la seule</p>
+        </div>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-prod">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">Fournisseurs</p>
+        <h2 id="h-prod" data-split="words">De chez qui ça vient</h2>
+      </div>
+      <div class="mur" data-mur>
+        {cahier.producteurs.map((p, i) => (
+          <div>
+            <Timbre photo={photoDe(p.photo)} rot={rots[i]} legende={`${p.prenom}, ${p.village}`} detail={p.produit} />
+            <p class="annot annot--fleche">{p.note}</p>
+          </div>
+        ))}
+      </div>
+      <p class="actions"><a class="btn" href={u('/producteurs/')}>Tous les producteurs</a></p>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-postale">
+    <div class="wrap postale">
+      <Polaroid photo={photoDe('/photos/equipe-trio.webp')} rot={2} legende="la banquette, un soir de service" />
+      <article class="postale__carte" data-postale aria-labelledby="h-postale">
+        <span class="postale__coin postale__coin--tl" aria-hidden="true"></span><span class="postale__coin postale__coin--tr" aria-hidden="true"></span>
+        <span class="postale__coin postale__coin--bl" aria-hidden="true"></span><span class="postale__coin postale__coin--br" aria-hidden="true"></span>
+        <p class="postale__lieu">Carte postale, {site.adresse.commune}</p>
+        <h2 id="h-postale" style="font-size: var(--t-m); margin-bottom: var(--u)">Un mot des chefs</h2>
+        <div class="postale__texte">
+          {cahier.postale.lignes.map((l) => <p>{l}</p>)}
+        </div>
+        <p class="postale__signature main">{cahier.postale.signataire}</p>
+      </article>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-equipe">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">L'équipe</p>
+        <h2 id="h-equipe" data-split="words">Quatre personnes, une salle</h2>
+      </div>
+      <div class="equipe" data-equipe>
+        {site.equipe.map((m, i) => (
+          <article class="fiche" style={`--rot:${rotsFiche[i]}deg`} data-fiche>
+            {m.photo ? <img class="fiche__photo" src={u(m.photo)} alt={`Portrait de ${m.nom}`} width="112" height="112" loading="lazy" decoding="async" /> : <span class="fiche__initiale" aria-hidden="true">{m.nom[0]}</span>}
+            <h3 class="fiche__prenom">{m.nom.split(' ')[0]}</h3>
+            <p class="fiche__role">{m.role}{m.placeholder ? ' (fiche illustrative)' : ''}</p>
+            <p class="fiche__phrase">{cahier.equipePhrases[i]}</p>
+          </article>
+        ))}
+      </div>
+      <p class="actions"><a class="btn" href={u('/histoire/')}>L'histoire des deux potes</a></p>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-avis">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">En marge</p>
+        <h2 id="h-avis" data-split="words">Ce qu'on nous a écrit</h2>
+      </div>
+      <div class="marginalia">
+        {site.avis.map((a) => (
+          <blockquote class="avis" data-reveal="fade">
+            <p>{a.texte}</p>
+            <cite>{a.auteur}, {a.source}{a.placeholder ? ' (avis illustratif)' : ''}</cite>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-pratique">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">Pratique</p>
+        <h2 id="h-pratique" data-split="words">Venir, réserver, appeler</h2>
+      </div>
+      <div class="pratique">
+        <div>
+          <dl class="horaires horaires--grand">
+            {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+          </dl>
+          <p class="annot annot--fleche" style="margin-top: var(--u)">le samedi, la salle se privatise</p>
+          <div class="actions">
+            <a class="btn btn--plein" href={u('/reservation/')}>Réserver</a>
+            <a class="btn" href={telHref()}>Appeler</a>
+            <a class="btn btn--marqueur" href={u('/commander/')}>Commander</a>
+          </div>
+        </div>
+        <div>
+          <Plan />
+          <Polaroid photo={salle} rot={-2} legende="la salle, de jour" class="diptyque__photo" />
+        </div>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>

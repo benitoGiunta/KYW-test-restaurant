@@ -1,0 +1,36 @@
+---
+// En-tête en cellules : adresse | nom | navigation | réserver | commander. Fixe. Mobile : nom + bouton Menu, cellules empilées.
+import { site, telHref } from '../data/site';
+import { u } from '../lib/url';
+const liens = [
+  { href: u('/carte/'), label: 'La carte' },
+  { href: u('/producteurs/'), label: 'Producteurs' },
+  { href: u('/histoire/'), label: 'Les potes' },
+];
+const ici = Astro.url.pathname.replace(/\/+$/, '');
+const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+const resa = u('/reservation/');
+const commande = u('/commander/');
+---
+<header class="header" data-header>
+  <div class="cells">
+    <a class="cell cell--adresse" href={telHref()}>
+      <span>{site.adresse.rue} {site.adresse.numero}, {site.adresse.commune}</span>
+      <span>{site.telephone}</span>
+    </a>
+    <a class="cell cell--nom" href={u('/')} aria-current={courant(u('/'))} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
+    <nav class="cell cell--nav" aria-label="Navigation principale">
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+    </nav>
+    <a class="cell cell--cta" href={resa} aria-current={courant(resa)}>Réserver</a>
+    <a class="cell cell--cta cell--commander" href={commande} aria-current={courant(commande)}>Commander</a>
+    <button class="cell cell--burger" type="button" aria-expanded="false" aria-controls="menu" data-burger>Menu</button>
+  </div>
+</header>
+<nav class="menu" id="menu" aria-label="Navigation mobile" data-menu>
+  <a class="cell" href={u('/')} aria-current={courant(u('/'))}>Accueil</a>
+  {liens.map((l) => <a class="cell" href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+  <a class="cell cell--cta" href={resa} aria-current={courant(resa)}>Réserver</a>
+  <a class="cell cell--cta" href={commande} aria-current={courant(commande)}>Commander</a>
+  <a class="cell cell--adresse" href={telHref()}><span>{site.adresse.rue} {site.adresse.numero}, {site.adresse.commune}</span><span>{site.telephone}</span></a>
+</nav>

@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier, photoDe } from '../data/site';
+import { u } from '../lib/url';
+import Sommaire from '../components/Sommaire.astro';
+import MenuDuJour from '../components/MenuDuJour.astro';
+import Timbre from '../components/Timbre.astro';
+import Tampon from '../components/Tampon.astro';
+let depart = 1;
+const cats = cahier.sommaire.map((c) => { const d = depart; depart += c.lignes.length; return { c, d }; });
+const timbres = [
+  { photo: photoDe('/photos/plat-boeuf-confit.webp'), rot: -3, legende: 'Boeuf confit', detail: 'assiette rouge, troisième service' },
+  { photo: photoDe('/photos/dessert-tarte-pomme.webp'), rot: 2.5, legende: 'Rosace de pommes', detail: 'le midi' },
+  { photo: photoDe('/photos/bar-cocktails.webp'), rot: -2, legende: 'Le bar', detail: 'avant le service' },
+];
+---
+<Base title="La carte" description={`La carte des Potes au Feu à ${site.adresse.commune} : menu unique 4 services à 67 €, formule du midi, cave et bar, avec l'origine de chaque produit.`}>
+  <section class="page-cahier" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="titre titre--grand">
+        <p class="titre__sur">Cahier n° {cahier.numero}, sommaire</p>
+        <h1 id="h1" data-split="words" data-intro>La carte</h1>
+        <p class="lead" style="margin-top: var(--u)">Un menu unique le soir, une formule le midi, et pour chaque ligne la note de la cuisine sur l'origine du produit. Les prix sont indiqués en toutes lettres : ce qui est inclus l'est.</p>
+      </div>
+      <div class="feuille">
+        <div>
+          {cats.map(({ c, d }) => <Sommaire cat={c} depart={d} niveau={2} />)}
+        </div>
+        <div class="feuille__marge stack">
+          <Tampon texte="menu unique" couleur="bille" />
+          <p class="annot annot--fleche">végétarien sur demande, allergies à signaler à la réservation</p>
+          {timbres.map((t) => <Timbre {...t} />)}
+        </div>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-label="Menu du jour">
+    <div class="wrap feuille">
+      <MenuDuJour />
+      <div class="feuille__marge">
+        <p class="annot annot--fleche">le midi seulement</p>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-formules">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">Formules</p>
+        <h2 id="h-formules" data-split="words">Ce que ça coûte</h2>
+      </div>
+      <div class="formules">
+        {site.menus.map((m) => (
+          <article class="formule" data-reveal="up">
+            <h3>{m.nom}</h3>
+            <p class="formule__prix">{m.prix}</p>
+            <p class="muted" style="font-size: var(--t-s)">{m.description}</p>
+          </article>
+        ))}
+      </div>
+      <div class="actions">
+        <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={u('/producteurs/')}>Les producteurs</a>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>

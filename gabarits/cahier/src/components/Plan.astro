@@ -1,0 +1,23 @@
+---
+// Plan au trait (schématique) : la Meuse, l'avenue de la Plante, le restaurant. Pas une carte réelle.
+import { site } from '../data/site';
+const osm = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`;
+---
+<figure class="plan">
+  <svg viewBox="0 0 320 220" role="img" aria-label="Plan schématique : l'avenue de la Plante longe la Meuse, au pied de la citadelle de Namur">
+    <path class="plan__eau" d="M250 0 C 230 60, 290 110, 250 170 S 200 240, 230 260" />
+    <path class="plan__eau plan__eau--fin" d="M268 0 C 248 60, 308 110, 268 170 S 218 240, 248 260" />
+    <path class="plan__rue" d="M205 0 C 190 60, 245 110, 205 170 S 160 240, 190 260" />
+    <path class="plan__rue plan__rue--fine" d="M0 60 L 205 92" />
+    <path class="plan__rue plan__rue--fine" d="M40 220 C 80 150, 140 140, 205 140" />
+    <g class="plan__hachures" aria-hidden="true">
+      <path d="M30 100 l 30 -30 M40 120 l 50 -50 M50 140 l 60 -60 M70 150 l 50 -50 M95 150 l 30 -30" />
+    </g>
+    <text class="plan__texte" x="52" y="170">Citadelle</text>
+    <text class="plan__texte" x="270" y="120" transform="rotate(80 270 120)">La Meuse</text>
+    <text class="plan__texte" x="20" y="52">vers le centre</text>
+    <circle class="plan__ici" cx="212" cy="118" r="7" />
+    <text class="plan__main" x="150" y="112">ici, au n° 4</text>
+  </svg>
+  <figcaption><a class="link" href={osm} rel="noopener">Ouvrir dans OpenStreetMap</a></figcaption>
+</figure>

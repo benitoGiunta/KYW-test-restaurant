@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier, photoDe } from '../data/site';
+import { u } from '../lib/url';
+import Timbre from '../components/Timbre.astro';
+import Polaroid from '../components/Polaroid.astro';
+const rots = [-3, 2, -2, 3, -1.5, 2.5];
+---
+<Base title="Les producteurs" description={`Les producteurs des Potes au Feu, autour de ${site.adresse.commune} : légumes de Wépion, boeuf de Gesves, fromages, fruits, poissons et bières. Page de fournisseurs d'un cahier de cuisine.`}>
+  <section class="page-cahier" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="titre titre--grand">
+        <p class="titre__sur">Cahier n° {cahier.numero}, fournisseurs</p>
+        <h1 id="h1" data-split="words" data-intro>De chez qui</h1>
+        <p class="lead" style="margin-top: var(--u)">La cuisine tient la liste de ceux qui livrent, avec le jour de passage et ce qu'on leur prend. Les noms ci-dessous sont ceux du cahier : des prénoms et des villages, pas des marques.</p>
+      </div>
+      <div class="mur" data-mur>
+        {cahier.producteurs.map((p, i) => (
+          <div>
+            <Timbre photo={photoDe(p.photo)} rot={rots[i]} legende={`${p.prenom}, ${p.village}`} detail={p.produit} />
+            <p class="annot annot--fleche">{p.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-regle">
+    <div class="wrap feuille">
+      <div class="recit">
+        <h2 id="h-regle" data-split="words">La règle du cahier</h2>
+        <p>Chaque produit qui entre en cuisine a une ligne : qui l'a produit, où, quel jour il arrive. Quand un fournisseur manque, la ligne est barrée et le plat change, plutôt que d'aller chercher ailleurs.</p>
+        <p>Les légumes viennent de plein champ, à moins de trente kilomètres. La viande est une bête entière, découpée ici. Le poisson arrive de la criée le jeudi, ce qui explique que les Saint-Jacques soient au menu du jeudi au samedi et pas le lundi.</p>
+        <p class="muted" style="font-size: var(--t-s)">Les producteurs de cette page sont illustratifs : le restaurant travaille avec des producteurs locaux (voir son site), dont la liste exacte est à fournir.</p>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/carte/')}>La carte, avec les origines</a>
+        </div>
+      </div>
+      <div class="feuille__marge">
+        <Polaroid photo={photoDe('/photos/cuisine-salage-viande.webp')} rot={2} legende="une bête entière, découpée ici" />
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>

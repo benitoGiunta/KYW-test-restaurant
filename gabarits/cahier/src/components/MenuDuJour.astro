@@ -1,0 +1,28 @@
+---
+// Bande signature : trois lignes manuscrites tracées, tampon de date, prix en mono.
+import { cahier } from '../data/site';
+import Manuscrit from './Manuscrit.astro';
+import Tampon from './Tampon.astro';
+const m = cahier.menuDuJour;
+---
+<div class="jour" data-jour>
+  <div class="jour__tete">
+    <div>
+      <p class="titre__sur">Menu du jour</p>
+      <h2 style="font-size: var(--t-l)">Ce que la cuisine a écrit ce matin</h2>
+    </div>
+    <Tampon texte={`${m.jour} ${m.date}`} />
+  </div>
+  <ul class="jour__lignes">
+    {m.lignes.map((l) => (
+      <li class="jour__ligne">
+        <span class="jour__service">{l.service}</span>
+        <Manuscrit texte={l.texte} taille={40} />
+      </li>
+    ))}
+  </ul>
+  <p class="jour__prix">
+    {m.prix.map((p) => <span>{p.libelle} <strong>{p.prix}</strong></span>)}
+    <span class="muted">servi le midi, mercredi et vendredi</span>
+  </p>
+</div>

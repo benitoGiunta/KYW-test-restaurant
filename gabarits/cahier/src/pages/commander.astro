@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier, telHref, photoDe } from '../data/site';
+import { u } from '../lib/url';
+import Polaroid from '../components/Polaroid.astro';
+import Tampon from '../components/Tampon.astro';
+---
+<Base title="Commander" description={`Traiteur et événements chez ${site.nom}, ${site.adresse.commune} : menu du jour à emporter, salle privatisée le samedi, les chefs chez vous. Commande par téléphone ou e-mail.`}>
+  <section class="page-cahier" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="titre titre--grand">
+        <p class="titre__sur">Cahier n° {cahier.numero}, commandes</p>
+        <h1 id="h1" data-split="words" data-intro>Commander</h1>
+        <p class="lead" style="margin-top: var(--u)">Trois façons de manger les Potes au Feu hors de la salle ou en dehors des heures. On prend les commandes par téléphone et par e-mail, jamais à la dernière minute.</p>
+      </div>
+      <div class="formules">
+        {cahier.traiteur.map((f, i) => (
+          <article class="formule" data-reveal="up" data-delay={String(i * 0.1)}>
+            <h2 style="font-size: var(--t-m)">{f.nom}</h2>
+            <p class="formule__prix">{f.prix}</p>
+            <p style="font-size: var(--t-s)">{f.description}</p>
+            <p class="formule__min">{f.minimum}</p>
+          </article>
+        ))}
+      </div>
+      <p class="muted" style="margin-top: calc(var(--u) * 2); font-size: var(--t-s)">Formules illustratives, à valider avec le restaurant.</p>
+      <div class="actions">
+        <a class="btn btn--plein" href={telHref()}>Appeler le {site.telephone}</a>
+        <a class="btn" href={`mailto:${site.email.valeur}?subject=Commande`}>Écrire pour commander</a>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-comment">
+    <div class="wrap feuille">
+      <div class="recit">
+        <h2 id="h-comment" data-split="words">Comment ça se passe</h2>
+        <p>Vous appelez ou vous écrivez avec la date, le nombre de personnes et ce que vous aimez ou n'aimez pas. On répond dans la journée avec une proposition et un prix. Rien n'est cuisiné avant votre accord.</p>
+        <p>Le menu à emporter se retire au restaurant, dans des contenants consignés. Pour les tables privatisées et les repas chez vous, les chefs viennent avec leurs couteaux, leurs produits et le pain.</p>
+        <p><Tampon texte="sur commande" couleur="bille" /></p>
+        <div class="actions"><a class="btn" href={u('/carte/')}>Voir la carte du moment</a></div>
+      </div>
+      <div class="feuille__marge">
+        <Polaroid photo={photoDe('/photos/service-planche.webp')} rot={-2.5} legende="la planche, en route vers la salle" />
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>

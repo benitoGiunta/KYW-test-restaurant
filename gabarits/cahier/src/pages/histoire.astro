@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier, photoDe } from '../data/site';
+import { u } from '../lib/url';
+import Polaroid from '../components/Polaroid.astro';
+import Tampon from '../components/Tampon.astro';
+const rotsFiche = [-2, 1.5, -1, 2];
+---
+<Base title="Les potes" description={`L'histoire des Potes au Feu à ${site.adresse.commune} : François Schepens et Damien Gorjanec, deux chefs amis depuis la Plage d'Amée, et l'équipe de salle.`}>
+  <section class="page-cahier" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="titre titre--grand">
+        <p class="titre__sur">Cahier n° {cahier.numero}, première page</p>
+        <h1 id="h1" data-split="words" data-intro>Deux potes</h1>
+      </div>
+      <div class="feuille">
+        <div class="recit">
+          {site.histoire.map((p) => <p>{p}</p>)}
+          <p><Tampon texte="depuis 2020" /></p>
+        </div>
+        <div class="feuille__marge stack">
+          <Polaroid photo={photoDe('/photos/chef-damien.webp')} rot={-3} legende="Damien" class="polaroid--portrait" />
+          <Polaroid photo={photoDe('/photos/chef-francois.webp')} rot={2.5} legende="François" class="polaroid--portrait" />
+          <p class="annot annot--fleche">quatorze ans après la Plage d'Amée</p>
+        </div>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-equipe">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">L'équipe</p>
+        <h2 id="h-equipe" data-split="words">Qui est en salle</h2>
+      </div>
+      <div class="equipe" data-equipe>
+        {site.equipe.map((m, i) => (
+          <article class="fiche" style={`--rot:${rotsFiche[i]}deg`} data-fiche>
+            {m.photo ? <img class="fiche__photo" src={u(m.photo)} alt={`Portrait de ${m.nom}`} width="112" height="112" loading="lazy" decoding="async" /> : <span class="fiche__initiale" aria-hidden="true">{m.nom[0]}</span>}
+            <h3 class="fiche__prenom">{m.nom.split(' ')[0]}</h3>
+            <p class="fiche__role">{m.role}{m.placeholder ? ' (fiche illustrative)' : ''}</p>
+            <p class="fiche__phrase">{cahier.equipePhrases[i]}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-valeurs">
+    <div class="wrap feuille">
+      <div>
+        <h2 id="h-valeurs" data-split="words">Ce qu'on tient</h2>
+        <ol class="sommaire" style="margin-top: calc(var(--u) * 2)">
+          {site.valeurs.map((v, i) => (
+            <li class="ligne"><span class="ligne__lien"><span class="ligne__num">{String(i + 1).padStart(2, '0')}</span><span class="ligne__nom">{v}</span></span></li>
+          ))}
+        </ol>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+          <a class="btn" href={u('/producteurs/')}>Les producteurs</a>
+        </div>
+      </div>
+      <div class="feuille__marge">
+        <Polaroid photo={photoDe('/photos/service-francois-table.webp')} rot={-2} legende="la sauce, versée à table" />
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>

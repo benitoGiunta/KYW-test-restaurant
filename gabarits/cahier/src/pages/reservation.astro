@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import Plan from '../components/Plan.astro';
+import Polaroid from '../components/Polaroid.astro';
+---
+<Base title="Réserver" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone} ou par e-mail. Horaires et plan.`}>
+  <section class="page-cahier" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="titre titre--grand">
+        <p class="titre__sur">Cahier n° {cahier.numero}, réservations</p>
+        <h1 id="h1" data-split="words" data-intro>Réserver</h1>
+        <p class="lead" style="margin-top: var(--u)">La réservation se fait en ligne via {site.reservation.outil}. Pour une table de plus de six personnes, une demande de dernière minute ou une privatisation du samedi, appelez-nous.</p>
+      </div>
+      <div class="actions" style="margin-top: 0">
+        <a class="btn btn--plein" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
+        <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+        <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire un e-mail</a>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-demande">
+    <div class="wrap feuille">
+      <div>
+        <h2 id="h-demande" data-split="words">Votre demande</h2>
+        <p class="muted" style="margin: var(--u) 0 calc(var(--u) * 2); font-size: var(--t-s)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+        <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
+          <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+          <label>Date <input type="date" name="date" required /></label>
+          <label>Heure <input type="time" name="heure" required /></label>
+          <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
+          <label>Message <textarea name="message" rows="3"></textarea></label>
+          <div class="actions" style="margin-top: 0">
+            <button class="btn btn--plein" type="submit">Continuer sur {site.reservation.outil}</button>
+          </div>
+        </form>
+      </div>
+      <div class="feuille__marge">
+        <p class="annot annot--fleche">plus de six, on appelle</p>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-venir">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">Pratique</p>
+        <h2 id="h-venir" data-split="words">Venir</h2>
+      </div>
+      <div class="pratique">
+        <div class="stack">
+          <dl class="horaires horaires--grand">
+            {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+          </dl>
+          <p><strong>Adresse</strong><br />{adresseLigne()}</p>
+          <Plan />
+        </div>
+        <Polaroid photo={photoDe('/photos/salle-clients-bar.webp')} rot={2} legende="le bar, un soir" />
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>
+
+<script>
+  import { onPage } from '../engine';
+  // Formulaire sans backend : à la validation, on ouvre l'outil de réservation réel (les champs ne sont pas transmis).
+  onPage(() => {
+    const form = document.querySelector<HTMLFormElement>('[data-reservation]');
+    if (!form) return;
+    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    form.addEventListener('submit', go);
+    return () => form.removeEventListener('submit', go);
+  });
+</script>

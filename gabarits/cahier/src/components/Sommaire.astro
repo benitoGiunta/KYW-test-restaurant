@@ -1,0 +1,25 @@
+---
+// Sommaire de la carte : plat ...... prix, annotation d'origine en marge (bille au survol / focus).
+import type { CategorieSommaire } from '../data/site';
+interface Props { cat: CategorieSommaire; depart?: number; niveau?: 2 | 3 }
+const { cat, depart = 1, niveau = 3 } = Astro.props;
+const Titre = niveau === 2 ? 'h2' : 'h3';
+const num = (i: number) => String(depart + i).padStart(2, '0');
+---
+<section class="categorie" data-reveal="fade">
+  <Titre class="categorie__titre">{cat.categorie}</Titre>
+  {cat.note && <p class="categorie__note">{cat.note}</p>}
+  <ol class="sommaire" start={depart} data-sommaire>
+    {cat.lignes.map((l, i) => (
+      <li class="ligne" data-ligne>
+        <a class="ligne__lien" href={`#plat-${depart + i}`} id={`plat-${depart + i}`}>
+          <span class="ligne__num">{num(i)}</span>
+          <span class="ligne__nom">{l.nom}</span>
+          <span class="ligne__points" aria-hidden="true"></span>
+          <span class:list={['ligne__prix', { 'ligne__prix--inclus': !l.prix }]}>{l.prix ?? 'inclus'}</span>
+        </a>
+        {l.origine && <span class="annot ligne__annot">{l.origine}</span>}
+      </li>
+    ))}
+  </ol>
+</section>
