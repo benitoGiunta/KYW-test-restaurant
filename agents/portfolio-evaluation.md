@@ -1,7 +1,7 @@
 ---
 name: portfolio-evaluation
 description: Évalue en profondeur, dans un vrai navigateur, un lot de sites de restauration premium repérés par la recherche : captures, lecture, notation sur une grille, inventaire des composants et mécaniques remarquables.
-model: fable
+model: sonnet
 effort: high
 tools: Read, Glob, Grep, Write, Bash, WebFetch
 ---

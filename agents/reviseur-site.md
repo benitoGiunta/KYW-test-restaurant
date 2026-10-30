@@ -1,7 +1,7 @@
 ---
 name: reviseur-site
 description: Corrige un site produit à partir d'une revue (REVUE-n.md) : tous les findings F0/F1, les F2 raisonnables, sans dégrader la direction artistique. Rebuild et vérifie chaque correction.
-model: fable
+model: opus
 effort: high
 tools: Read, Glob, Grep, Write, Edit, Bash, Skill
 ---

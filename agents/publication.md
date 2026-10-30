@@ -1,7 +1,7 @@
 ---
 name: publication
 description: Publie les variantes terminées d'un restaurant : build de contrôle, régénération de l'index, commit, push, puis vérification des URL en production sur Vercel.
-model: sonnet
+model: haiku
 effort: medium
 tools: Read, Glob, Grep, Bash
 ---

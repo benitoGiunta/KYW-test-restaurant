@@ -1,7 +1,7 @@
 ---
 name: variante-portfolio
 description: Variante 1 « Portfolio » : choisit le gabarit de la collection KYW (gabarits/) le plus adapté au restaurant et l'adapte en profondeur (contenu, sections, composants, photos) pour viser le taux d'adéquation le plus élevé.
-model: fable
+model: opus
 effort: high
 tools: Read, Glob, Grep, Write, Edit, Bash, Skill
 ---

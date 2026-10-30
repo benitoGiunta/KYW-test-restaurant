@@ -1,7 +1,7 @@
 ---
 name: relecteur-site
 description: Relit un site produit (une variante d'un restaurant) : pertinence et exactitude du texte, puis fonctionnel dans un vrai navigateur (bugs, responsive, accessibilité, performance). Ne corrige rien, rapporte.
-model: fable
+model: sonnet
 effort: high
 tools: Read, Glob, Grep, Write, Bash
 ---

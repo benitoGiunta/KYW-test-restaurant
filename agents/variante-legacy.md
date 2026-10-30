@@ -1,7 +1,7 @@
 ---
 name: variante-legacy
 description: Variante 3 « inspi legacy » d'un restaurant namurois. Part du site existant du restaurant, l'audite avec Hallmark (sloplint + captures), garde son approche (one-page, multi-pages, immersif, animé au scroll, statique) et le refond entièrement en sur-utilisant la skill hallmark à chaque étape (audit, deal de thème, comp, build Floor/Reflex/Finish, sweep, finish review, log). Produit un site Astro statique dans sites/<slug>-legacy/ avec DESIGN.md, RAPPORT.md et un pied de page KYW.
-model: fable
+model: opus
 effort: high
 tools: Read, Glob, Grep, Write, Edit, Bash, Skill, WebFetch
 ---

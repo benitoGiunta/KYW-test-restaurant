@@ -1,7 +1,7 @@
 ---
 name: recherche-client
 description: Constitue le dossier complet d'un restaurant (site actuel, réseaux, avis, presse, photos) avant la refonte. Recherche factuelle, sans invention.
-model: fable
+model: sonnet
 effort: high
 tools: Read, Glob, Grep, Write, Edit, Bash, WebFetch, WebSearch
 ---
