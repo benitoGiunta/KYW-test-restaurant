@@ -8,4 +8,6 @@
 - [x] corrections mécaniques (h1, ARIA, contraste, survols, nav mobile, badges, en-tête sur hero sombre, CLS du nom)
 - [x] FICHE.md, RAPPORT.md (chiffres finaux), apercu.png
 - [x] leçons reportées dans agents/lecons.md
-- [ ] revue extérieure (skill jury) et corrections : agents suivants ; pas de commit (orchestrateur)
+- [x] revue 1 (REVUE-1.md, BLOQUANT) traitée : REVISION-1.md (F0 + 7 F1 corrigés, F2/F3 raisonnables), build OK,
+      captures `.shots-maree-rev/`, vérif Playwright `scripts/verif-maree-rev.mjs` (port 4426)
+- [ ] relecture de contrôle (passe 2) ; pas de commit (orchestrateur)

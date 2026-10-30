@@ -56,21 +56,23 @@ h2, h3 { text-wrap: balance; }
 
 /* Hero horizon */
 .hero { position: relative; min-height: 100svh; display: grid; grid-template-rows: 1fr auto; overflow: clip; background: var(--c-ecume); }
-html.motion [data-hero] { visibility: hidden; }
+/* Révision 1 : le hero n'est plus caché avant le JS (LCP) ; l'intro desktop part de l'état peint, sous le loader. */
 .hero__media { position: absolute; inset: 0; }
 .hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
 .hero__media::after { content: ''; position: absolute; inset: auto 0 0 0; height: 55%; background: linear-gradient(to top, rgb(23 57 91 / 0.55), rgb(23 57 91 / 0)); }
 .hero__ctas { position: absolute; top: calc(var(--u) * 9); right: var(--gutter); display: grid; gap: 0.5rem; z-index: 3; }
 .hero__ctas .btn { background: rgb(251 251 248 / 0.72); border-color: var(--c-fg); color: var(--c-fg); backdrop-filter: blur(6px); justify-content: center; }
+.btn__illu { font-family: var(--f-mono); font-size: 0.6rem; letter-spacing: 0.04em; text-transform: uppercase; border: 1px dashed currentColor; padding: 0.15em 0.4em; }
 .hero__ctas .btn:hover { background: var(--c-fg); border-color: var(--c-fg); color: var(--c-bg); }
 .hero__bas { grid-row: 2; position: relative; z-index: 2; padding-bottom: calc(var(--u) * 7); color: var(--c-bg); }
 .nom { display: grid; width: 100%; font-family: var(--f-display); font-weight: 700; line-height: 0.9; letter-spacing: -0.02em; }
-.nom > span { display: block; white-space: nowrap; font-size: 11.5vw; }
+.nom > span { display: block; white-space: nowrap; font-size: 13.6vw; } /* révision 1 : taille CSS ≈ taille du fit (CLS) */
 .nom .nom__w { display: inline; }
-@media (max-width: 767px) { .nom > .nom__l1 { display: contents; } .nom .nom__w { display: block; white-space: nowrap; font-size: 20vw; } }
+@media (max-width: 767px) { .nom > .nom__l1 { display: contents; } .nom .nom__w { display: block; white-space: nowrap; font-size: 24vw; } .nom .nom__w + .nom__w { font-size: 30vw; } }
 .hero__univers { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: calc(var(--u) * 2); }
 .hero__univers li { display: flex; align-items: center; gap: 1.5rem; }
 .hero__univers li + li::before { content: '·'; }
+@media (max-width: 767px) { .hero { min-height: calc(100svh - 4.5rem); } .hero__univers { gap: 0.25rem 1rem; } .hero__univers li + li::before { content: none; } }
 .hero__sep { position: absolute; left: 0; right: 0; bottom: 0; height: clamp(2.5rem, 5vw, 5rem); width: 100%; z-index: 2; transform: scaleY(1); }
 .hero__sep path { fill: var(--c-bg); }
 .hero__accroche { position: relative; z-index: 2; }
@@ -119,6 +121,8 @@ html.motion [data-hero] { visibility: hidden; }
 .maree__ligne.is-aujourdhui .maree__cursor { display: block; position: absolute; top: -4px; bottom: -4px; left: var(--maintenant); width: 2px; background: var(--c-accent); }
 .maree__ligne.is-aujourdhui .maree__cursor::after { content: 'maintenant'; position: absolute; top: -1.4em; left: 0.4em; font-family: var(--f-mono); font-size: 0.6rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--c-accent); }
 .maree__note { margin-top: calc(var(--u) * 2); }
+/* Révision 1 (F1-6) : en mobile la piste 08h-23h tient dans l'écran, midis et soirs visibles sans défilement. */
+@media (max-width: 767px) { .maree__grille { min-width: 0; grid-template-columns: 5.2rem 1fr; } .maree__jour { font-size: 0.68rem; } .maree__heures { font-size: 0.62rem; } }
 
 /* Photos : au bord, découpées par la houle, jamais arrondies */
 .media { position: relative; overflow: clip; background: var(--c-ecume); }
@@ -244,6 +248,7 @@ html.motion [data-hero] { visibility: hidden; }
 .loader__crete { position: absolute; left: 0; width: 100%; top: 100%; height: 5rem; margin-top: -1px; transform: scaleY(-1); }
 .loader__crete path { fill: var(--c-ecume); }
 .loader__bar { background: var(--c-fg); }
+@media (max-width: 767px) { #loader { display: none; } } /* révision 1 : pas de loader à compteur en mobile */
 
 /* Rideau : écume avec une crête en haut et en bas */
 .curtain__panel { background: transparent; top: -5rem; bottom: -5rem; }

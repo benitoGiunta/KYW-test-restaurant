@@ -1,0 +1,33 @@
+# Révision 1 · gabarit Marée · Les Potes au Feu
+
+Traite `REVUE-1.md` (verdict BLOQUANT). Vérité client : `data/restaurants/les-potes-au-feu/dossier.md` et `donnees.json`.
+Build : `node scripts/build-site.mjs gabarits/maree` OK. Captures : `.shots-maree-rev/<page>/` (serveur `serve.mjs dist
+--port 4426`), planches sans déformation (script du scratchpad, desktop 480 px, mobile 300 px, ratio conservé). Vérif
+Playwright : `scripts/verif-maree-rev.mjs` (h1 mobile, marée mobile, loader, LCP, CLS desktop).
+
+Bilan : 1 F0 et 7 F1 corrigés ; F2 : 5 corrigés (dont 1 en partie), 1 non traité ; F3 : 2 corrigés, 2 refusés.
+
+| Finding | Décision | Ce qui a été changé (fichier) | Preuve de vérification |
+| --- | --- | --- | --- |
+| F0-1 nom invisible en mobile | corrigé | `src/motion/setup.ts` `fitNom()` : remonte au premier ancêtre qui n'est pas `display: contents`, ignore une boîte de 0, plafonne un mot à 30 vw en mobile (20 vw desktop) ; `base.css` : tailles CSS de départ égales au fit (13,6 vw desktop, 24 / 30 vw mobile) | `verif-maree-rev.mjs` : h1 190 px à 390 px (« Les Potes » 93,7 px, « au Feu » 117 px), 175 px à 360 px, visibles, opacité 1, pas de débordement (scrollWidth = viewport) ; `.shots-maree-rev/index/m-01-hero.png` : nom sur deux lignes bord à bord |
+| F1-1 « offert » | corrigé | `src/pages/index.astro` : colonne prix vide pour les plats du menu (le prix 67 € est dans le titre) | grep `offert` dans `dist/gabarits/maree` : 0 |
+| F1-2 badge « arrivage » / « arrivage du jour » | corrigé | `index.astro` (badge sur Saint-Jacques retiré), `carte.astro` (badge « arrivage du jour » retiré) ; les badges « arrivage » restent seulement sur la page écailler, marquée « section illustrative » et « donnée illustrative » par ligne | grep `arrivage du jour` dans `dist` : 0 ; `carte/d-03` |
+| F1-3 nav écailler / terrasse, CTA | corrigé | `src/components/Header.astro` : sous-libellés « section illustrative » (écailler, terrasse) ; `index.astro` : CTA « La terrasse » + étiquette « illustratif » (`.btn__illu`, `base.css`) ; `ecailler.astro`, `terrasse.astro` : `<title>` « …, section illustrative » et descriptions qui disent que le restaurant n'en a pas | `index/d-01-hero` (CTA marqué), en-tête de toutes les pages capturées |
+| F1-4 « face à l'eau » | corrigé (en partie refusé sur « bord de Meuse ») | `index.astro`, `reservation.astro` : h2/h1 « Une table au bord de la Meuse » ; `Maree.astro` : « le dimanche, la cuisine se repose » ; `terrasse.astro` description réécrite. « Au bord de la Meuse » est gardé : `dossier.md` l. 128 « Bord de Meuse, côté Citadelle, entre le Casino et le Royal Snail (carte Michelin) » et l. 201. « Face à l'eau » ne subsiste que dans la citation et le h1 de la page terrasse, marqués « phrase illustrative » / « section illustrative » | grep `face à l` dans `dist` : terrasse (illustrative) et citation marquée de l'accueil seulement |
+| F1-5 privatisation | corrigé | `index.astro`, `reservation.astro` : « Le samedi, le restaurant se privatise : mariage, événement, ou chef à domicile. Appelez-nous pour en parler. » (dossier l. 123) ; « Pour plus de six couverts » retiré (`Maree.astro`, `reservation.astro`) ; « grandes tablées et dernière minute » retiré | grep `Écrivez\|six couverts\|Composez` dans `dist` : 0 |
+| F1-6 marée mobile | corrigé | `base.css` : en ≤ 767 px la grille n'a plus de `min-width` (colonne jour 5,2 rem), la piste 08h-23h tient dans l'écran ; aria-label sans « défilable » | `verif-maree-rev.mjs` : 7/7 segments entièrement visibles à 390 et 360 px ; `index/m-02-scroll` : midis et soirs des 5 jours visibles |
+| F1-7 loader et LCP | corrigé | `src/engine/loader.ts` (repris de braise) : plancher 0,6 s, plafond 1,3 s, pas de loader en mobile (`#loader { display: none }` ≤ 767 px) ; `setup.ts` : sortie 0,9 s ; hero plus caché en CSS (`html.motion [data-hero]` supprimé), photo peinte sous le rideau et posée par dézoom (plus de `clip-path` 100 %), pas d'intro en mobile ; `<link rel="preload" as="image" fetchpriority="high">` de la photo du hero | shoot index : desktop loaderMs 2 126, LCP 196 ms (`span.nom__l1`) ; mobile (throttlé) LCP 1 204 ms (`span.nom__w`, contre 5 400), loader masqué (le `loaderMs` mobile 3 070 mesure le boot JS, cf. leçon du 30/10) ; verif : loader desktop 2,1 s, CLS desktop 0,012 |
+| F2-1 « depuis 2020 », « ouvrent » | corrigé | `Header.astro` : « Damien et François » ; `histoire.astro` : « Ils en ont les clés, Avenue de la Plante. » | `histoire/d-03` |
+| F2-2 « Quatre dates » | corrigé | `histoire.astro` : « Quatre étapes », « Il y a 14 ans » → « Les débuts » (le texte client garde son récit) | `histoire/d-03` |
+| F2-3 « des Les Potes » | corrigé | méta de `carte`, `ecailler`, `histoire`, `terrasse`, `404` | grep `des Les` dans `dist` : 0 |
+| F2-4 photos hors sujet | corrigé en partie | légende de la page écailler corrigée (« photo du restaurant ») après relecture de la planche ; accueil : hero eau turquoise (`libre-124`) au lieu du ciel gris ; encart écailler de l'accueil et page écailler : Saint-Jacques du restaurant ; carte : bœuf confit du restaurant au lieu de la nappe (deux photos du client) ; `libre-130` et `libre-292` retirées des crédits (`site.ts`, `Footer.astro` « Photos d'eau »). Hero de la terrasse (orange) gardé : seule autre photo libre d'eau (`libre-302`) trop claire pour l'en-tête crème du thème sombre | `index/d-01-hero`, `carte/d-06` |
+| F2-5 puces orphelines, barre fixe | corrigé | `base.css` mobile : pas de séparateur `·`, hero à `100svh - 4,5 rem` | `index/m-01-hero` : « TERRASSE * ÉCAILLER * BISTRONOMIE » sur une ligne, au-dessus de la barre |
+| F2-6 FPS mobile 52 à 56 | non traité | houle déjà à 30 fps et amplitude /2 en mobile (`houle.ts`) ; à remesurer en série (leçon : les shoots parallèles gonflent les mesures) | index mobile 60 fps, pire image 33 ms |
+| F3-1 « au menu » × 6, prix des bons | corrigé (« au menu ») | `carte.astro`, `index.astro` : colonne vide pour les plats du menu | `carte/d-04` |
+| F3-2 survol tél / e-mail | refusé | changement de couleur + soulignement existant, F3 ; faux négatif connu sur l'en-tête absolu | — |
+| F3-3 eyebrows, 404 | refusé | les eyebrows mono font partie du système typo de `DESIGN.md` (méta en Martian Mono) | — |
+| F3-4 « Boeuf » | corrigé | `site.ts` : « Bœuf » / « bœuf » dans les noms et alt, chemins `plat-boeuf-confit.webp` intacts (regex hors `-`/`/`) | build OK, images chargées sur `carte` |
+
+## Publiable ?
+Oui pour une relecture de contrôle (passe 2) : plus aucun bloquant, plus d'affirmation hors dossier non marquée dans les
+pages capturées. Reste à surveiller : FPS mobile (F2-6), hero de la terrasse.

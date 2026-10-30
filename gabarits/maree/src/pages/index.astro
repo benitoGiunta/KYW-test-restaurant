@@ -5,20 +5,21 @@ import Maree from '../components/Maree.astro';
 import Plan from '../components/Plan.astro';
 import { site, photoDe, photoAny, arrivages, regles, univers, citationTerrasse, telHref } from '../data/site';
 import { u, asset } from '../lib/url';
-const hero = photoAny('/photos/libre-130.webp');
-const plateau = photoAny('/photos/libre-292.webp');
+const hero = photoAny('/photos/libre-124.webp'); // révision 1 (F2-4) : eau bleue au lieu du ciel gris
+const plateau = photoDe('/photos/plat-saint-jacques.webp');
 const terrasse = photoAny('/photos/libre-213.webp');
 const menu = site.carte[0];
 const nomL2 = site.nom.split(' au ');
 ---
 <Base theme="photo">
+  <link slot="head" rel="preload" as="image" href={asset(hero.src)} fetchpriority="high" />
   <section class="hero" data-hero aria-labelledby="titre-hero">
     <div class="hero__media" data-hero-media>
       <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical />
     </div>
     <div class="hero__ctas">
       <a class="btn" href={u('/reservation/')} data-magnetic="0.2">Réserver</a>
-      <a class="btn" href={u('/terrasse/')}>La terrasse</a>
+      <a class="btn" href={u('/terrasse/')}>La terrasse <span class="btn__illu">illustratif</span></a>
       <a class="btn" href={u('/carte/')}>Bon cadeau</a>
     </div>
     <div class="hero__bas">
@@ -55,7 +56,7 @@ const nomL2 = site.nom.split(' au ');
     <div class="wrap paire">
       <figure class="media media--bord" data-reveal="clip" data-cursor="Voir">
         <img src={asset(plateau.src)} alt={plateau.alt} width={plateau.largeur} height={plateau.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
-        <figcaption class="mono">photo libre, illustrative</figcaption>
+        <figcaption class="mono">Saint-Jacques, butternut, passion · photo du restaurant</figcaption>
       </figure>
       <div>
         <span class="eyebrow mono" data-reveal="fade">L'écailler <span class="badge badge--illustratif">illustratif</span></span>
@@ -86,8 +87,8 @@ const nomL2 = site.nom.split(' au ');
           {menu.plats.filter((p) => !p.prix).map((p, i) => (
             <li>
               <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
-              <span class="index__nom">{p.nom}{i === 2 ? <span class="badge badge--bouee">arrivage</span> : null}</span>
-              <span class="index__prix"><span class="mono">{i === 0 || i === 5 ? 'offert' : 'au menu'}</span></span>
+              <span class="index__nom">{p.nom}</span>
+              <span class="index__prix"></span>
             </li>
           ))}
         </ol>
@@ -135,15 +136,15 @@ const nomL2 = site.nom.split(' au ');
     <div class="wrap resa">
       <div>
         <span class="eyebrow mono">Réserver</span>
-        <h2 id="t-resa" style="font-size: var(--t-xl)" data-split="words">Une table face à l'eau</h2>
-        <p class="muted" style="margin-top: calc(var(--u) * 2); max-width: 44ch">En ligne via {site.reservation.outil}, ou par téléphone pour les grandes tablées et les demandes de dernière minute.</p>
+        <h2 id="t-resa" style="font-size: var(--t-xl)" data-split="words">Une table au bord de la Meuse</h2>
+        <p class="muted" style="margin-top: calc(var(--u) * 2); max-width: 44ch">En ligne via {site.reservation.outil}, ou par téléphone.</p>
         <div class="actions"><a class="btn btn--plein btn--large" href={site.reservation.url} rel="noopener" data-magnetic="0.15">Réserver sur {site.reservation.outil}</a></div>
       </div>
       <div class="stack" style="padding-top: calc(var(--u) * 4)">
         <p class="mono muted">Téléphone</p>
         <p class="resa__tel"><a href={telHref()}>{site.telephone}</a></p>
         <p class="mono muted" style="margin-top: calc(var(--u) * 3)">Privatisation</p>
-        <p>Le samedi, la salle est à vous : anniversaires, équipes, familles. Écrivez-nous ou appelez pour composer la soirée.</p>
+        <p>Le samedi, le restaurant se privatise : mariage, événement, ou chef à domicile. Appelez-nous pour en parler.</p>
         <p><a class="link flèche" href={u('/reservation/')}>Toutes les façons de réserver</a></p>
       </div>
     </div>

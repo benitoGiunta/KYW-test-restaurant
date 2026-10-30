@@ -11,8 +11,10 @@ let exit: ((root: HTMLElement) => gsap.core.Timeline) | null = null;
 /** Replace the exit choreography (the loader → hero handoff). Return a timeline. */
 export const setLoaderExit = (fn: (root: HTMLElement) => gsap.core.Timeline) => { exit = fn; };
 
-const MIN = 1.1; // seconds: long enough to read as a designed moment
-const MAX = 2.6; // seconds: a longer loader is a usability problem
+// Révision marée 1 (F1-7) : plancher 0,6 s, plafond 1,3 s ; sortie ≈ 0,9 s, le loader tient sous 2,6 s. Mobile : pas de loader.
+const small = () => typeof matchMedia !== 'undefined' && matchMedia('(max-width: 767px)').matches;
+let MIN = 0.6; // seconds: long enough to read as a designed moment
+let MAX = 1.3; // seconds: a longer loader is a usability problem
 
 function criticalAssets(): Promise<unknown>[] {
   const imgs = [...document.querySelectorAll<HTMLImageElement>('img[data-critical], [data-intro] img, [data-gl-instant] img')];
@@ -22,6 +24,9 @@ function criticalAssets(): Promise<unknown>[] {
 export async function runLoader(): Promise<void> {
   const root = document.getElementById('loader');
   if (!root) return;
+  // Mobile : pas de compteur (le JS arrive tard sur réseau lent) ; le loader est masqué en CSS et l'on n'attend
+  // que les polices, 0,3 s au plus.
+  if (small()) { await Promise.race([document.fonts.ready, wait(0.3)]); return finish(root); }
   if (prefersReducedMotion()) {
     await Promise.race([Promise.all(criticalAssets()), wait(MAX)]);
     await gsap.to(root, { autoAlpha: 0, duration: 0.3 });
@@ -35,13 +40,17 @@ export async function runLoader(): Promise<void> {
   const target = { v: 0 };
   tasks.forEach((t) => t.then(() => { done++; target.v = (done / tasks.length) * 100; }));
   const start = performance.now();
+  let prev = start;
 
   await new Promise<void>((resolve) => {
     const tick = () => {
-      const elapsed = (performance.now() - start) / 1000;
+      const now = performance.now();
+      const dt = Math.min(0.1, (now - prev) / 1000);
+      prev = now;
+      const elapsed = (now - start) / 1000;
       const timeCap = Math.min(100, (elapsed / MIN) * 100); // never faster than MIN
       const goal = elapsed > MAX ? 100 : Math.min(target.v, timeCap);
-      shown.v += (goal - shown.v) * 0.12;
+      shown.v += (goal - shown.v) * (1 - Math.exp(-dt * 14)); // indépendant du nombre d'images par seconde
       if (goal === 100 && shown.v > 99.5) shown.v = 100;
       if (count) count.textContent = format(shown.v);
       if (bar) bar.style.transform = `scaleX(${shown.v / 100})`;

@@ -27,9 +27,11 @@
   ground (texte, « ciel ») / écume (photos, « eau »).
 - **Radius** : 0. Les photos sont découpées par la houle, jamais arrondies. Pas de texture.
 - **Motion language** : `ease.out` (expo) pour les entrées, 1,2 s ; la houle respire en sinus lent (période 6 s) ;
-  loader « marée montante » 0,00 m → 2,40 m, panneau écume qui remonte avec une crête de houle ; transition : rideau
-  écume à deux crêtes qui monte puis s'enlève ; hero : la houle monte depuis le bas et révèle la photo (clip), le nom se
-  pose (letter-spacing 0.3em → 0, opacité) ; mots-univers et CTA en fondu décalé.
+  loader « marée montante » 0,00 m → 2,40 m (desktop seulement, plancher 0,6 s, plafond 1,3 s, sortie 0,9 s : < 2,6 s ;
+  aucun loader en mobile), panneau écume qui remonte avec une crête de houle ; transition : rideau
+  écume à deux crêtes qui monte puis s'enlève ; hero (desktop) : la photo, peinte dès le premier rendu
+  sous le loader (LCP), se pose par un léger dézoom 1,08 → 1 ; le nom se pose par transform + opacité ; mots-univers en
+  fondu décalé. Mobile : aucune intro, photo, nom et mots-univers peints sans attendre le JS.
 - **Hover par rôle** : nav = soulignement qui se dessine ; CTA bordé = fond ink + texte crème ; segment de la ligne de
   temps = épaississement + tooltip ; pastille du plan = grossit + légende ; photo = curseur « Voir » + léger zoom.
 
@@ -46,7 +48,7 @@ MARÉE   LUN  |----|   |====|          badge « ouvert / prochain service »
 ÉCAILLER [photo plateau, bord gauche]   L'écailler (Gambetta)
                                         Huître Zélande 00 · origine (mono) …
 ~houle~
-CARTE   Menu dégustation 67 €   plat ............. prix   [arrivage]
+CARTE   Menu dégustation 67 €   plat ............. (prix seulement s'il existe)
 ~houle~
 TERRASSE ===== photo plein cadre teintée bleu (multiply) =====
          « citation en mono espacée, lettre à lettre »
@@ -77,3 +79,13 @@ information locale réelle (Meuse, Avenue de la Plante, pont de Jambes).
 - [x] Idle motion : houle qui respire (décision : oui, sinus lent, pausé hors écran).
 - [x] Pas de récompense ni chiffre inventé ; données fictives `placeholder: true` + mention visible « illustratif ».
 - [x] LCP = accroche texte du hero (pas de data-reveal/data-intro dessus) ; image hero `data-critical`.
+
+## Révision 1 (30/10/2026, REVISION-1.md)
+- Nom bord à bord : `fitNom` mesure le premier ancêtre qui n'est pas `display: contents` et plafonne un mot à 30 vw en
+  mobile (20 vw en desktop) ; vérifié à 390 et 360 px (h1 de 190 et 175 px).
+- Hero de l'accueil : photo d'eau turquoise (libre-124) au lieu du ciel gris ; le CTA « La terrasse » porte « illustratif ».
+- Marée des services en mobile : la piste 08h-23h tient dans l'écran (plus de défilement), midis et soirs visibles.
+- Nav : sous-libellés « section illustrative » pour l'écailler et la terrasse, « Damien et François » pour Les potes.
+- Aucune affirmation hors dossier dans les pages : plus de « offert », de badge « arrivage » sur la carte, de « face à
+  l'eau » hors de la page terrasse illustrative, de promesse de privatisation au-delà du dossier (« mariage, événement,
+  chef à domicile »). Photos de la carte et de l'encart écailler : plats du restaurant (Saint-Jacques, bœuf confit).

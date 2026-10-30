@@ -8,8 +8,8 @@ export function setupMotion() {
   setLoaderFormat((p) => ((p / 100) * 2.4).toFixed(2).replace('.', ',') + ' m');
   setLoaderExit((root) =>
     gsap.timeline()
-      .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -110, duration: 0.45, ease: ease.inOut, stagger: 0.05 })
-      .to(root, { yPercent: -112, duration: isMobile() ? 0.7 : 0.9, ease: ease.inOut }, '-=0.2'),
+      .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -110, duration: 0.35, ease: ease.inOut, stagger: 0.05 })
+      .to(root, { yPercent: -112, duration: 0.7, ease: ease.inOut }, '-=0.15'), // révision 1 : sortie ≈ 0,9 s
   );
   setTransition({
     leave: (c) => gsap.timeline()
@@ -40,12 +40,17 @@ function fitNom() {
   const fit = () => {
     for (const el of els) {
       if (!el.offsetParent || getComputedStyle(el).display === 'inline') continue; // ligne masquée ou mot en ligne (mobile / desktop)
-      const box = el.parentElement!.clientWidth;
+      // Révision 1 (F0-1) : un parent `display: contents` (mobile) a une clientWidth de 0 ; on mesure le premier ancêtre réel.
+      let parent = el.parentElement;
+      while (parent && getComputedStyle(parent).display === 'contents') parent = parent.parentElement;
+      const box = parent?.clientWidth || 0;
+      if (!box) { el.style.fontSize = ''; continue; } // pas de boîte mesurable : on garde la taille CSS
       el.style.fontSize = '100px';
       el.style.width = 'max-content';
       const w = el.getBoundingClientRect().width || 1;
       el.style.width = '';
-      el.style.fontSize = `${Math.floor((100 * box * 0.985) / w * 100) / 100}px`;
+      const plafond = innerWidth * (isMobile() ? 0.3 : 0.2); // un mot court ne dépasse pas 30 vw en mobile
+      el.style.fontSize = `${Math.min(plafond, Math.floor((100 * box * 0.985) / w * 100) / 100)}px`;
     }
   };
   document.fonts.ready.then(fit);
@@ -57,14 +62,15 @@ function fitNom() {
 /** Intro du hero : la houle monte et révèle la photo, le nom se pose, mots-univers et CTA en fondu décalé. */
 function heroIntro(intro: gsap.core.Timeline) {
   const hero = document.querySelector<HTMLElement>('[data-hero]');
-  if (!hero || prefersReducedMotion()) return () => {};
+  // Révision 1 (F1-7) : en mobile, pas d'intro : photo, nom et mots-univers sont peints au premier rendu, sans JS.
+  if (!hero || prefersReducedMotion() || isMobile()) return () => {};
   const media = hero.querySelector('[data-hero-media]');
   const nom = hero.querySelectorAll('[data-fit]');
   const apres = hero.querySelectorAll('[data-hero-apres]');
   const titre = hero.querySelectorAll('.hero__bas .wrap > *');
-  gsap.set(hero, { visibility: 'visible' });
   const tl = gsap.timeline({ paused: true });
-  if (media) tl.fromTo(media, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: ease.out }, 0);
+  // La photo reste peinte sous le rideau (élément LCP) : elle se pose par un léger dézoom au lieu d'une découpe.
+  if (media) tl.fromTo(media, { scale: 1.08 }, { scale: 1, duration: 1.6, ease: ease.out }, 0);
   if (nom.length) tl.fromTo(nom, { y: '0.18em', autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.5, ease: ease.out, stagger: 0.08 }, 0.35); // transform seulement : letter-spacing décalait la mise en page (CLS 0,11)
   else if (titre.length) tl.fromTo(titre, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.1, ease: ease.out, stagger: 0.12 }, 0.5);
   if (apres.length) tl.fromTo(apres, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: ease.out, stagger: 0.1 }, 0.9);

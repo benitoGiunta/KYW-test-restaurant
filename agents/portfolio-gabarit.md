@@ -113,3 +113,9 @@ seul fichier, sections indépendantes, tokens).
   (astérisque, « exemple », « illustratif »), pas seulement une mention en bas de page. Une animation de révélation
   n'efface jamais `visibility` en fin de mouvement si le CSS cache l'élément au départ : contrôler
   `getComputedStyle().visibility` après défilement complet, en desktop et en mobile.
+- **Hero peint au premier rendu** (révision Marée) : jamais de `visibility: hidden` en CSS sur le hero ni de `clip-path`
+  fermé pour révéler la photo après le loader (le LCP passe derrière le loader). Photo et nom sont peints sous le rideau
+  dès le premier rendu, préchargés (`<link rel="preload" as="image" fetchpriority="high">`), l'entrée s'anime par
+  transform et opacité. Un calcul de taille bord à bord mesure le premier ancêtre qui n'est pas `display: contents`, et
+  la taille CSS de départ égale celle du calcul (sinon CLS). Une ligne de temps ou un tableau horaire tient dans 390 px
+  sans défilement : rien d'un côté de la piste ne doit être hors champ.
