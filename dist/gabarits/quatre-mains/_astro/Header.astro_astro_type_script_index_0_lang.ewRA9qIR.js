@@ -1,0 +1,1 @@
+import{o}from"./index.CvlAKAFX.js";o(()=>{const t=document.querySelector("[data-header]"),e=t?.querySelector("[data-burger]");if(!t||!e)return;const r=()=>{const n=t.classList.toggle("is-open");e.setAttribute("aria-expanded",String(n)),e.textContent=n?"Fermer":"Menu"};return e.addEventListener("click",r),()=>e.removeEventListener("click",r)});

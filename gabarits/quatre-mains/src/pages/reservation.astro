@@ -1,61 +1,63 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import { site, adresseLigne, horaireCourt, telHref, photoDe } from '../data/site';
 import { asset } from '../lib/url';
-const salle = photoDe('/photos/salle-banquette.webp');
+const bar = photoDe('/photos/bar-cocktails.webp');
 ---
-<Base title="Réservation" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone} ou par e-mail.`}>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>Réserver</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">
-      La réservation se fait en ligne via {site.reservation.outil}. Pour une table de plus de six personnes ou une demande de dernière minute, appelez-nous.
-    </p>
-    <div class="actions" data-reveal="up" data-intro data-delay="0.5">
-      <a class="btn btn--primary" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
-      <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
-      <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire un e-mail</a>
+<Base title="Réservation" description={`Réserver une table aux Potes au Feu à Namur : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone} ou par e-mail. Samedi : privatisation.`}>
+  <section class="commune hero hero--commune" data-voix="commune" aria-labelledby="resa-h1">
+    <div class="wrap reserver">
+      <div class="reserver__cta">
+        <span class="mono muted" data-reveal="fade" data-intro>En ligne, par téléphone, par e-mail</span>
+        <h1 class="display t-xl" id="resa-h1" data-split="lines" data-intro>Réserver</h1>
+        <a class="btn btn--large" href={site.reservation.url} rel="noopener" data-reveal="up" data-intro data-delay="0.3"><span class="roll"><span>Réserver sur {site.reservation.outil}</span><span aria-hidden="true">Réserver sur {site.reservation.outil}</span></span></a>
+        <p class="muted mesure" data-reveal="fade" data-intro data-delay="0.45">{site.reservation.note} <a class="link" href={telHref()}>{site.telephone}</a></p>
+      </div>
+      <div class="reserver__infos" data-reveal="up" data-intro data-delay="0.4">
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireCourt(h)}</dd></>)}
+        </dl>
+        <p>{adresseLigne()}<br /><span class="muted">{site.adresse.repere}</span></p>
+      </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Votre demande</h2>
-      <p class="muted" style="margin-bottom: calc(var(--u) * 2)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+  <section class="dip section" data-voix="deux" aria-labelledby="demande-titre">
+    <div class="dip__g">
+      <h2 class="titre" id="demande-titre" data-split="lines">Votre demande</h2>
+      <p class="muted" style="margin-block: var(--u) calc(var(--u) * 3)" data-reveal="fade">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
       <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
         <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+        <label>Téléphone <input type="tel" name="tel" autocomplete="tel" /></label>
         <label>Date <input type="date" name="date" required /></label>
         <label>Heure <input type="time" name="heure" required /></label>
         <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
-        <label>Message <textarea name="message" rows="3"></textarea></label>
-        <div class="actions" style="margin-top: 0">
-          <button class="btn btn--primary" type="submit">Continuer sur {site.reservation.outil}</button>
+        <label>Moment <select name="moment"><option>Le soir</option><option>Le midi</option></select></label>
+        <label class="pleine">Message <textarea name="message" rows="3"></textarea></label>
+        <div class="actions pleine" style="margin-top: 0">
+          <button class="btn btn--papier" type="submit"><span class="roll"><span>Continuer sur {site.reservation.outil}</span><span aria-hidden="true">Continuer sur {site.reservation.outil}</span></span></button>
         </div>
       </form>
     </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap grid">
-      <div class="stack" data-reveal="up">
-        <h2 class="section__title">Horaires</h2>
-        <dl class="horaires">
-          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-        </dl>
-        <p><strong>Adresse</strong><br />{adresseLigne()}</p>
-      </div>
-      <figure class="card" data-reveal="scale">
-        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
+    <div class="dip__d">
+      <figure class="photo photo--4x5" data-reveal="clip">
+        <img src={asset(bar.src)} alt={bar.alt} width={bar.largeur} height={bar.hauteur} loading="lazy" decoding="async" />
       </figure>
+      <div class="stack" style="margin-top: calc(var(--u) * 3)">
+        <h2 class="t-m" style="font-weight: 700">Privatiser, offrir</h2>
+        <p class="muted">{site.privatisation}</p>
+        <p class="muted">{site.menus[3].nom} : {site.menus[3].prix}. {site.menus[3].description}</p>
+        <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
+      </div>
     </div>
   </section>
 </Base>
 
 <script>
   import { onPage } from '../engine';
-  // Formulaire sans backend : à la validation, on ouvre l'outil de réservation réel (les champs ne sont pas transmis).
   onPage(() => {
     const form = document.querySelector<HTMLFormElement>('[data-reservation]');
-    if (!form) return; // tourne sur chaque page : vérifier la présence
+    if (!form) return;
     const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
     form.addEventListener('submit', go);
     return () => form.removeEventListener('submit', go);

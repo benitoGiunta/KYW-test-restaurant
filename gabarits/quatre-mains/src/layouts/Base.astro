@@ -23,7 +23,7 @@ const ogImage = new URL(asset(image), siteUrl).href;
 
 // Polices : un <link rel="preload"> par woff2 utilisé au-dessus de la ligne de flottaison (fichiers dans public/fonts/).
 // Le socle n'embarque aucune police (styles neutres) ; un gabarit remplit cette liste et les @font-face de tokens.css.
-const polices: string[] = [];
+const polices: string[] = ['/fonts/switzer-700-normal.woff2', '/fonts/switzer-300-normal.woff2', '/fonts/fragment-mono-400-normal.woff2'];
 
 const jours: Record<string, string> = { lundi: 'Monday', mardi: 'Tuesday', mercredi: 'Wednesday', jeudi: 'Thursday', vendredi: 'Friday', samedi: 'Saturday', dimanche: 'Sunday' };
 const jsonLd = {
@@ -59,7 +59,7 @@ const jsonLd = {
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#101010" />
+    <meta name="theme-color" content="#1E4A3E" />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
     <link rel="sitemap" href={asset('/sitemap-index.xml')} />
     <meta property="og:type" content="website" />
@@ -86,7 +86,8 @@ const jsonLd = {
   <body>
     <a class="skip-link" href="#main">Aller au contenu</a>
     <div id="gl" transition:persist="gl" aria-hidden="true"></div>
-    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
+    <div id="fond" transition:persist="fond" aria-hidden="true"><div class="fond__g"></div><div class="fond__d"></div><div class="fond__ligne"></div></div>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div><div class="curtain__panel curtain__panel--d"></div></div>
     <div id="cursor" transition:persist="cursor" aria-hidden="true"><span data-cursor-label></span></div>
     <Loader />
     <Header />
