@@ -1,0 +1,37 @@
+---
+// Le plat signature dessiné en 5 couches (aplats de la palette, filet ink, ombre dure). Chaque couche porte
+// data-couche="01..05" : le driver « empile » (src/motion/drivers.ts) ne lit que cet attribut, de sorte qu'un client
+// qui fournit 5 PNG détourés remplace les <g> par des <img data-couche> sans toucher au code.
+interface Props { class?: string; id?: string; title: string }
+const { class: cls = '', id, title } = Astro.props;
+---
+<svg class:list={['plat', cls]} id={id} viewBox="0 0 520 420" role="img" aria-label={title}>
+  <title>{title}</title>
+  <g data-couche="01">
+    <ellipse cx="268" cy="286" rx="232" ry="92" fill="var(--ink)" />
+    <ellipse cx="260" cy="278" rx="232" ry="92" fill="var(--rouge)" stroke="var(--ink)" stroke-width="4" />
+    <ellipse cx="260" cy="278" rx="168" ry="64" fill="none" stroke="var(--creme)" stroke-width="4" />
+  </g>
+  <g data-couche="02">
+    <path d="M150 268 l120 -46 a12 12 0 0 1 14 18 l-118 50 a12 12 0 0 1 -16 -22z" fill="var(--jaune)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round" />
+    <path d="M250 300 l118 -40 a12 12 0 0 1 12 20 l-116 44 a12 12 0 0 1 -14 -24z" fill="var(--jaune)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round" />
+    <path d="M276 220 l6 -24 M382 258 l24 -12" stroke="var(--vert)" stroke-width="6" stroke-linecap="round" />
+  </g>
+  <g data-couche="03">
+    <path d="M180 248 c0 -40 30 -70 76 -74 c46 -4 92 16 104 54 c8 26 -4 58 -40 66 c-50 10 -142 2 -140 -46z" fill="var(--ink)" stroke="var(--ink)" stroke-width="4" />
+    <path d="M214 204 c16 -16 44 -22 70 -18" fill="none" stroke="var(--creme)" stroke-width="6" stroke-linecap="round" />
+    <path d="M198 262 c40 12 90 12 136 -2" fill="none" stroke="var(--rouge)" stroke-width="5" stroke-linecap="round" />
+  </g>
+  <g data-couche="04">
+    <circle cx="176" cy="206" r="26" fill="var(--creme)" stroke="var(--ink)" stroke-width="4" />
+    <circle cx="364" cy="214" r="24" fill="var(--creme)" stroke="var(--ink)" stroke-width="4" />
+    <circle cx="326" cy="166" r="20" fill="var(--creme)" stroke="var(--ink)" stroke-width="4" />
+    <path d="M166 198 l8 8 M356 206 l8 8 M320 160 l6 6" stroke="var(--jaune)" stroke-width="5" stroke-linecap="round" />
+  </g>
+  <g data-couche="05">
+    <path d="M232 150 c18 -34 52 -36 70 -4 c-24 -8 -46 -6 -70 4z" fill="var(--vert)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round" />
+    <path d="M284 128 c26 -20 52 -8 56 20 c-22 -14 -40 -14 -56 -20z" fill="var(--vert)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round" />
+    <path d="M150 160 c30 -8 54 6 60 30" fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" />
+    <path d="M130 120 c20 14 44 10 58 34 M396 132 c-16 12 -22 30 -22 50" fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" />
+  </g>
+</svg>

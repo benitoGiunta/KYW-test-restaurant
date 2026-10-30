@@ -2,19 +2,29 @@
 import { site } from '../data/site';
 import { u } from '../lib/url';
 const liens = [
-  { href: u('/'), label: 'Accueil' },
   { href: u('/carte/'), label: 'La carte' },
-  { href: u('/histoire/'), label: 'Notre histoire' },
-  { href: u('/reservation/'), label: 'Réserver' },
+  { href: u('/histoire/'), label: 'Deux potes' },
+  { href: u('/a-emporter/'), label: 'À emporter' },
 ];
 const ici = Astro.url.pathname.replace(/\/+$/, '');
 const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+// Repli sans JavaScript de la pastille ; le driver « ouvert » (drivers.ts) calcule l'état réel.
+const horairesJson = JSON.stringify(site.horaires.map((h) => h.creneaux));
 ---
-<header class="header">
-  <div class="wrap header__inner">
-    <a class="header__brand" href={u('/')}>{site.nom}</a>
+<header class="header" data-header>
+  <div class="header__inner">
+    <a class="header__brand" href={u('/')} aria-current={courant(u('/'))}>{site.nom}</a>
+    <p class="pastille" data-ouvert data-horaires={horairesJson}>Soir, lun. à ven. · midi mer. et ven.</p>
     <nav class="nav" aria-label="Navigation principale">
       {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+      <a class="nav__cta" href={u('/reservation/')} aria-current={courant(u('/reservation/'))}>Réserver</a>
     </nav>
+    <button class="header__burger" type="button" aria-expanded="false" aria-controls="menu" data-burger>Menu</button>
   </div>
 </header>
+<nav class="menu" id="menu" aria-label="Navigation mobile" data-menu>
+  <a href={u('/')} aria-current={courant(u('/'))}>Accueil</a>
+  {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+  <a href={u('/reservation/')} aria-current={courant(u('/reservation/'))}>Réserver</a>
+  <p class="pastille pastille--menu" data-ouvert data-horaires={horairesJson}>Soir, lun. à ven. · midi mer. et ven.</p>
+</nav>

@@ -61,8 +61,7 @@ export const site: Restaurant = {
   nom: 'Les Potes au Feu',
   nomLignes: ['Les potes', 'au feu'],
   baseline: 'Bistronomie à quatre mains, menu unique, servi par les chefs. Avenue de la Plante, Namur.',
-  description:
-    'Les Potes au Feu, restaurant bistronomique à Namur : cuisine à quatre mains, menu unique de saison en 4 services, produits locaux, servi et expliqué à table par les chefs.',
+  description: 'Les Potes au Feu, restaurant bistronomique à Namur : menu unique de saison en 4 services, cuisiné à quatre mains et servi à table par les chefs.',
   url: 'https://www.lespotesaufeu.be',
   typeCuisine: 'Cuisine française moderne, bistronomie',
   adresse: { rue: 'Avenue de la Plante', numero: '4', cp: '5000', commune: 'Namur', pays: 'BE', repere: 'au bord de la Meuse, côté Citadelle' },

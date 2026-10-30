@@ -13,8 +13,9 @@ interface Props {
   description?: string;
   image?: string; // image OG (1200x630) dans public/, chemin sans base : '/og.jpg'
   theme?: string; // crochet de thème par page, ex. data-theme="dark"
+  fin?: 'rouge' | 'jaune' | 'vert' | 'creme'; // ton de la dernière affiche : couleur des dents du pied de page
 }
-const { title, description = site.description, image = '/og.jpg', theme } = Astro.props;
+const { title, description = site.description, image = '/og.jpg', theme, fin = 'vert' } = Astro.props;
 const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Restaurant bistronomique à ${site.adresse.commune}`;
 const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
 // Astro.url.pathname contient déjà `base` au build.
@@ -23,7 +24,8 @@ const ogImage = new URL(asset(image), siteUrl).href;
 
 // Polices : un <link rel="preload"> par woff2 utilisé au-dessus de la ligne de flottaison (fichiers dans public/fonts/).
 // Le socle n'embarque aucune police (styles neutres) ; un gabarit remplit cette liste et les @font-face de tokens.css.
-const polices: string[] = [];
+const polices: string[] = ['/fonts/archivo-400_900-normal.woff2'];
+const fontFace = `@font-face{font-family:'Archivo';src:url('${asset(polices[0])}') format('woff2');font-weight:400 900;font-style:normal;font-stretch:62% 125%;font-display:swap}`;
 
 const jours: Record<string, string> = { lundi: 'Monday', mardi: 'Tuesday', mercredi: 'Wednesday', jeudi: 'Thursday', vendredi: 'Friday', samedi: 'Saturday', dimanche: 'Sunday' };
 const jsonLd = {
@@ -59,7 +61,7 @@ const jsonLd = {
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#101010" />
+    <meta name="theme-color" content="#e3352b" />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
     <link rel="sitemap" href={asset('/sitemap-index.xml')} />
     <meta property="og:type" content="website" />
@@ -75,6 +77,7 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     {polices.map((p) => <link rel="preload" as="font" type="font/woff2" href={asset(p)} crossorigin />)}
+    <style is:inline set:html={fontFace} />
     <slot name="head" />
     <!-- Avant le premier rendu : marque JS + motion pour que les états « caché avant reveal » ne clignotent jamais. -->
     <script is:inline>
@@ -93,7 +96,7 @@ const jsonLd = {
     <main id="main" tabindex="-1">
       <slot />
     </main>
-    <Footer />
+    <Footer prev={fin} />
     <script>
       import { start } from '../engine/astro';
       import { setupMotion } from '../motion/setup';

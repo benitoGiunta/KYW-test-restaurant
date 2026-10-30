@@ -1,0 +1,48 @@
+---
+// Page entièrement illustrative : le restaurant ne propose pas de vente à emporter à ce jour (site.etapes.aEmporterPlaceholder).
+import Base from '../layouts/Base.astro';
+import Affiche from '../components/Affiche.astro';
+import Bento from '../components/Bento.astro';
+import { site, telHref } from '../data/site';
+---
+<Base title="À emporter" description={`Les boîtes à emporter des ${site.nom} à ${site.adresse.commune} : commande le matin, retrait le midi avenue de la Plante (page illustrative).`} fin="vert">
+  <Affiche tone="jaune" plein label="titre">
+    <div class="wrap">
+      <h1 id="titre" class="display display--mega affiche__titre" data-split="chars" data-intro>À emporter</h1>
+      <p class="lead" data-reveal="up" data-intro data-delay="0.35">Le menu des chefs, en boîte consignée, à réchauffer chez vous en huit minutes.</p>
+      <p class="exemple" data-reveal="fade" data-intro data-delay="0.5" style="margin-top: var(--gutter)">Page illustrative : service à emporter non proposé à ce jour</p>
+    </div>
+  </Affiche>
+
+  <Affiche tone="rouge" prev="jaune" label="etapes-titre">
+    <div class="wrap">
+      <h2 id="etapes-titre" class="display display--xl affiche__titre" data-split="words">En trois gestes</h2>
+      <div class="etapes">
+        <ol data-cercles style="grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr)">
+          {site.etapes.aEmporter.map((e) => <li><span class="cercle" aria-hidden="true"></span><div><strong>{e.titre}</strong><p>{e.texte}</p></div></li>)}
+        </ol>
+      </div>
+    </div>
+  </Affiche>
+
+  <Affiche tone="creme" prev="rouge" label="boites-titre">
+    <div class="wrap">
+      <h2 id="boites-titre" class="display display--mega affiche__titre" data-split="chars">Les boîtes</h2>
+      <Bento plats={site.emporter} />
+    </div>
+  </Affiche>
+
+  <Affiche tone="vert" prev="creme" label="commande-titre">
+    <div class="wrap">
+      <h2 id="commande-titre" class="display display--mega affiche__titre" data-split="chars">Commander</h2>
+      <p class="lead" style="margin-bottom: var(--gutter)">Avant 11 h pour le midi même, par téléphone.</p>
+      <div class="actions">
+        <a class="btn btn--primary" href={telHref()}>{site.telephone}</a>
+      </div>
+    </div>
+  </Affiche>
+</Base>
+
+<style>
+  @media (max-width: 767px) { .etapes ol { grid-template-columns: 1fr !important; } }
+</style>

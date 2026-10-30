@@ -1,0 +1,14 @@
+---
+// Badge rotatif : texte circulaire (SVG textPath) qui tourne (driver « disque »), ×3 au survol, immobile en reduced.
+interface Props { href: string; texte: string; coeur: string; label: string }
+const { href, texte, coeur, label } = Astro.props;
+const id = `cercle-${Math.random().toString(36).slice(2, 8)}`;
+---
+<a class="disque" href={href} data-disque>
+  <span class="sr-only">{label}</span>
+  <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false" data-disque-texte>
+    <defs><path id={id} d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" /></defs>
+    <text><textPath href={`#${id}`}>{texte}</textPath></text>
+  </svg>
+  <span class="disque__coeur" aria-hidden="true">{coeur}</span>
+</a>

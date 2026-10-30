@@ -1,60 +1,80 @@
 ---
 import Base from '../layouts/Base.astro';
+import Affiche from '../components/Affiche.astro';
 import { site, photoDe } from '../data/site';
 import { u, asset } from '../lib/url';
-const equipePhoto = photoDe('/photos/equipe-trio.webp');
-const coulisses = ['/photos/cuisine-chefs-dressage.webp', '/photos/cuisine-mains-pate.webp', '/photos/salle-clients-bar.webp'].map(photoDe);
+const coulisses = ['/photos/cuisine-chefs-passe.webp', '/photos/cuisine-mains-pate.webp', '/photos/service-sauce-table.webp'].map(photoDe);
+const trio = photoDe('/photos/equipe-trio.webp');
 ---
-<Base title="Notre histoire" description={`L'histoire de ${site.nom} : deux chefs amis, Damien Gorjanec et François Schepens, une cuisine bistronomique à quatre mains à ${site.adresse.commune}.`}>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>Notre histoire</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">{site.baseline}</p>
-  </section>
-
-  <section class="section">
-    <div class="wrap stack">
-      <h2 class="section__title" data-split="words">Deux potes, un feu</h2>
-      {site.histoire.map((p) => <p data-reveal="up">{p}</p>)}
-    </div>
-  </section>
-
-  <section class="section">
+<Base title="Deux potes" description={`L'histoire des ${site.nom} : Damien Gorjanec et François Schepens, deux chefs rencontrés à la Plage d'Amée, une table ouverte avenue de la Plante à ${site.adresse.commune} en 2020.`} fin="creme">
+  <Affiche tone="vert" plein label="titre">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">L'équipe</h2>
-      <div class="grid">
-        {site.equipe.map((m) => {
-          const p = m.photo ? photoDe(m.photo) : null;
-          return (
-            <article class="card" data-reveal="up">
-              {p && <figure><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>}
-              <h3>{m.nom}</h3>
-              <p class="muted">{m.role}{m.placeholder ? ' (rôle à confirmer)' : ''}</p>
-            </article>
-          );
-        })}
+      <h1 id="titre" class="display display--mega affiche__titre" data-split="chars" data-intro>Deux potes</h1>
+      <p class="lead" data-reveal="up" data-intro data-delay="0.35">Damien et François. Quatorze ans de cuisine, trois continents, un restaurant.</p>
+    </div>
+  </Affiche>
+
+  <Affiche tone="creme" prev="vert" label="recit-titre">
+    <div class="wrap chapitres">
+      <div class="texte">
+        <h2 id="recit-titre" class="ui affiche__chapeau">L'histoire</h2>
+        {site.histoire.map((p) => <p data-split="lines">{p}</p>)}
       </div>
-      <figure class="card" style="margin-top: calc(var(--u) * 4); max-width: 36rem" data-reveal="scale">
-        <img src={asset(equipePhoto.src)} alt={equipePhoto.alt} width={equipePhoto.largeur} height={equipePhoto.hauteur} loading="lazy" decoding="async" />
-        <figcaption class="muted">{equipePhoto.alt}</figcaption>
-      </figure>
+      <div class="stack" style="--u: var(--gutter)">
+        <figure class="cadre" data-reveal="scale" style="transform: rotate(2deg)">
+          <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="lazy" decoding="async" />
+        </figure>
+        <ul class="valeurs" data-reveal="up">
+          {site.valeurs.map((v) => <li>{v}</li>)}
+        </ul>
+      </div>
     </div>
-  </section>
+  </Affiche>
 
-  <section class="section">
+  <Affiche tone="jaune" prev="creme" label="equipe-titre">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">Dans les coulisses</h2>
-      <div class="grid">
-        {coulisses.map((p, i) => (
-          <figure class="card" data-reveal="clip" data-delay={String(i * 0.1)}>
-            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
-            <figcaption class="muted">{p.alt}</figcaption>
+      <h2 id="equipe-titre" class="display display--mega affiche__titre" data-split="chars">L'équipe</h2>
+      <div class="equipe" data-claque>
+        {site.equipe.map((m) => (
+          <figure>
+            {m.photo
+              ? <img src={asset(m.photo)} alt={`${m.nom}, ${m.role.toLowerCase()}`} width="600" height="800" loading="lazy" decoding="async" />
+              : <div class="silhouette" aria-hidden="true">{m.nom[0]}</div>}
+            <figcaption><strong>{m.nom}</strong><span>{m.role}{m.placeholder && ' (exemple)'}</span></figcaption>
           </figure>
         ))}
       </div>
-      <div class="actions">
-        <a class="btn" href={u('/carte/')}>Découvrir la carte</a>
+    </div>
+  </Affiche>
+
+  <Affiche tone="rouge" prev="jaune" label="avis-titre">
+    <div class="wrap">
+      <h2 id="avis-titre" class="display display--xl affiche__titre" data-split="words">On en parle</h2>
+      <div class="avis" data-claque>
+        {site.avis.map((a) => (
+          <blockquote>
+            <p>« {a.texte} »</p>
+            <cite>{a.auteur}<span>{a.source}{a.placeholder && ' (exemple)'}</span></cite>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </Affiche>
+
+  <Affiche tone="creme" prev="rouge" label="coulisses-titre">
+    <div class="wrap">
+      <h2 id="coulisses-titre" class="display display--xl affiche__titre" data-split="words">Coulisses</h2>
+      <div class="coulisses">
+        {coulisses.map((p, i) => (
+          <figure class="cadre" style={`--r: ${[-3, 2, -2][i]}deg`} data-reveal="scale" data-delay={String(i * 0.1)}>
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+      <div class="section__pied">
+        <p class="lead">Les chefs servent et expliquent leurs plats à table.</p>
         <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
       </div>
     </div>
-  </section>
+  </Affiche>
 </Base>

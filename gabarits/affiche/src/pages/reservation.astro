@@ -1,53 +1,69 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import Affiche from '../components/Affiche.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, adresseLigne, telHref, photoDe } from '../data/site';
 import { asset } from '../lib/url';
 const salle = photoDe('/photos/salle-banquette.webp');
 ---
-<Base title="Réservation" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone} ou par e-mail.`}>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>Réserver</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">
-      La réservation se fait en ligne via {site.reservation.outil}. Pour une table de plus de six personnes ou une demande de dernière minute, appelez-nous.
-    </p>
-    <div class="actions" data-reveal="up" data-intro data-delay="0.5">
-      <a class="btn btn--primary" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
-      <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
-      <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire un e-mail</a>
-    </div>
-  </section>
-
-  <section class="section">
+<Base title="Réserver" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone} ou par e-mail.`} fin="vert">
+  <Affiche tone="rouge" plein label="titre">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">Votre demande</h2>
-      <p class="muted" style="margin-bottom: calc(var(--u) * 2)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
-      <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
-        <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
-        <label>Date <input type="date" name="date" required /></label>
-        <label>Heure <input type="time" name="heure" required /></label>
-        <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
-        <label>Message <textarea name="message" rows="3"></textarea></label>
-        <div class="actions" style="margin-top: 0">
-          <button class="btn btn--primary" type="submit">Continuer sur {site.reservation.outil}</button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap grid">
-      <div class="stack" data-reveal="up">
-        <h2 class="section__title">Horaires</h2>
-        <dl class="horaires">
-          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-        </dl>
-        <p><strong>Adresse</strong><br />{adresseLigne()}</p>
+      <h1 id="titre" class="display display--mega affiche__titre" data-split="chars" data-intro>Réserver</h1>
+      <p class="hero__baseline" data-reveal="up" data-intro data-delay="0.35">En ligne via {site.reservation.outil}. Plus de six personnes ou dernière minute : appelez-nous.</p>
+      <div class="actions hero__actions" data-reveal="up" data-intro data-delay="0.5">
+        <a class="btn btn--primary" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
+        <a class="btn" href={telHref()}>{site.telephone}</a>
+        <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire</a>
       </div>
-      <figure class="card" data-reveal="scale">
+    </div>
+  </Affiche>
+
+  <Affiche tone="creme" prev="rouge" label="demande-titre">
+    <div class="wrap colonnes">
+      <div>
+        <h2 id="demande-titre" class="display display--xl affiche__titre" data-split="words">Votre demande</h2>
+        <p class="muted" style="margin-bottom: var(--gutter)">Formulaire de démonstration sans envoi : la validation ouvre {site.reservation.outil}.</p>
+        <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
+          <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+          <div class="form__deux">
+            <label>Date <input type="date" name="date" required /></label>
+            <label>Heure <input type="time" name="heure" required /></label>
+          </div>
+          <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
+          <label>Message <textarea name="message" rows="3"></textarea></label>
+          <button class="btn btn--primary" type="submit">Continuer sur {site.reservation.outil}</button>
+        </form>
+      </div>
+      <figure class="cadre" data-reveal="scale" style="transform: rotate(-2deg)">
         <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
       </figure>
     </div>
-  </section>
+  </Affiche>
+
+  <Affiche tone="jaune" prev="creme" label="horaires-titre">
+    <div class="wrap">
+      <h2 id="horaires-titre" class="display display--mega affiche__titre" data-split="chars">Horaires</h2>
+      <Horaires />
+    </div>
+  </Affiche>
+
+  <Affiche tone="vert" prev="jaune" label="visite-titre">
+    <div class="wrap visite">
+      <div>
+        <h2 id="visite-titre" class="ui affiche__chapeau">Venir</h2>
+        <address class="visite__adresse" data-split="lines">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <ul class="visite__liste" data-reveal="up">
+          <li>{site.adresse.repere}</li>
+          <li><a class="link" href={telHref()}>{site.telephone}</a></li>
+          <li><a class="link" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(adresseLigne())}`} rel="noopener">Itinéraire</a></li>
+        </ul>
+      </div>
+      <div class="cadre" data-reveal="scale" style="aspect-ratio: 4 / 3; display: grid; place-items: center; background: var(--jaune)">
+        <p class="display display--xl" style="text-align: center; padding: var(--gutter); color: var(--ink)">Au bord<br />de la Meuse</p>
+      </div>
+    </div>
+  </Affiche>
 </Base>
 
 <script>
@@ -55,7 +71,7 @@ const salle = photoDe('/photos/salle-banquette.webp');
   // Formulaire sans backend : à la validation, on ouvre l'outil de réservation réel (les champs ne sont pas transmis).
   onPage(() => {
     const form = document.querySelector<HTMLFormElement>('[data-reservation]');
-    if (!form) return; // tourne sur chaque page : vérifier la présence
+    if (!form) return;
     const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
     form.addEventListener('submit', go);
     return () => form.removeEventListener('submit', go);

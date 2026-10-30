@@ -1,12 +1,18 @@
 ---
-// Moment de premier chargement. À restyler par gabarit ; garder les crochets data-* que lit le moteur :
-//   [data-loader-count] texte 000→100, [data-loader-bar] scaleX 0→1, [data-loader-out] sort en premier.
+// Rideau d'entrée : 4 bandes verticales (R J V C) avec le nom centré et une barre réelle ; se lèvent en stagger
+// (sortie dans src/motion/setup.ts). Crochets du moteur conservés : data-loader-out, data-loader-count, data-loader-bar.
 import { site } from '../data/site';
 ---
 <div id="loader" role="status" aria-label="Chargement">
+  <div class="loader__bandes" aria-hidden="true">
+    <div class="loader__bande" style="--b: var(--rouge)" data-loader-bande></div>
+    <div class="loader__bande" style="--b: var(--jaune)" data-loader-bande></div>
+    <div class="loader__bande" style="--b: var(--vert)" data-loader-bande></div>
+    <div class="loader__bande" style="--b: var(--creme)" data-loader-bande></div>
+  </div>
   <div class="loader__inner">
     <span class="loader__name" data-loader-out>{site.nom}</span>
-    <span class="loader__count" data-loader-out data-loader-count>000</span>
   </div>
+  <span class="loader__count" data-loader-out data-loader-count>000</span>
   <div class="loader__bar" data-loader-bar></div>
 </div>

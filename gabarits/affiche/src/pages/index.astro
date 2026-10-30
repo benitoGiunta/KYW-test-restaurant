@@ -1,86 +1,167 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, photoDe, horaireTexte } from '../data/site';
+import Affiche from '../components/Affiche.astro';
+import Plat from '../components/Plat.astro';
+import Bento from '../components/Bento.astro';
+import Horaires from '../components/Horaires.astro';
+import Disque from '../components/Disque.astro';
+import { site, adresseLigne, telHref, photoDe, bentoAccueil } from '../data/site';
 import { u, asset } from '../lib/url';
-const hero = photoDe('/photos/cuisine-chefs-passe.webp');
-const galerie = ['/photos/plat-boeuf-confit.webp', '/photos/salle-banquette.webp', '/photos/service-francois-table.webp'].map(photoDe);
+const marquee = [...site.menus.map((m) => `${m.nom} ${m.prix}`), ...site.carte.flatMap((c) => c.plats.filter((p) => !p.placeholder).map((p) => p.nom))];
+const galerie = site.galerie.map((src, i) => ({ ...photoDe(src), num: String(i + 1).padStart(2, '0'), r: [-4, 3, -2, 4, -3, 2, -4, 3][i % 8] }));
 ---
-<Base>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>{site.nom}</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">{site.baseline}</p>
-    <div class="actions" data-reveal="up" data-intro data-delay="0.5">
-      <a class="btn btn--primary" href={u('/reservation/')} data-magnetic="0.25">Réserver une table</a>
-      <a class="btn" href={u('/carte/')}>Voir la carte</a>
-    </div>
-    <figure class="hero__media" data-reveal="clip" data-intro data-delay="0.2">
-      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical data-parallax="0.1" />
-    </figure>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Ce qui nous anime</h2>
-      <ul class="liste stack" data-reveal="up">
-        {site.valeurs.map((v) => <li>{v}</li>)}
-      </ul>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Nos formules</h2>
-      <div class="grid">
-        {site.menus.map((m, i) => (
-          <article class="menu stack" data-reveal="up" data-delay={String(i * 0.1)}>
-            <h3>{m.nom}</h3>
-            <p><strong>{m.prix}</strong></p>
-            <p class="muted">{m.description}</p>
-          </article>
-        ))}
+<Base fin="vert">
+  <!-- 1. HERO AFFICHE (rouge) -->
+  <Affiche tone="rouge" class="hero" label="titre">
+    <div class="hero__grille">
+      <div>
+        <h1 id="titre" class="display hero__nom" data-split="chars" data-intro>
+          <span class="display--contour">{site.nomLignes[0]}</span>
+          <span>{site.nomLignes[1]}</span>
+        </h1>
+        <p class="hero__baseline" data-reveal="up" data-intro data-delay="0.35">{site.baseline}</p>
+        <div class="actions hero__actions" data-reveal="up" data-intro data-delay="0.5">
+          <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+          <a class="btn" href={u('/carte/')}>La carte</a>
+        </div>
       </div>
-      <p class="actions"><a class="link" href={u('/carte/')}>La carte complète</a></p>
+      <div class="hero__plat" data-reveal="up" data-intro data-delay="0.2" data-levite>
+        <Plat title={`${site.signature.nom}, le plat signature dessiné en cinq couches`} />
+      </div>
     </div>
-  </section>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__piste" data-marquee>
+        {marquee.map((m) => <span>{m}</span>)}
+        {marquee.map((m) => <span>{m}</span>)}
+      </div>
+    </div>
+  </Affiche>
 
-  <section class="section">
+  <!-- 2. DÉFINITION (crème) -->
+  <Affiche tone="creme" prev="rouge" label="definition-titre">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">En images</h2>
-      <div class="grid">
-        {galerie.map((p, i) => (
-          <figure class="card" data-reveal="scale" data-delay={String(i * 0.1)} data-cursor="Voir">
-            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
-            <figcaption class="muted">{p.alt}</figcaption>
+      <h2 id="definition-titre" class="sr-only">Définition</h2>
+      <p class="definition" data-split="lines">
+        <span class="definition__mot">{site.definition.mot}</span> <span class="definition__pro">{site.definition.prononciation}</span> <span class="definition__nature">{site.definition.nature}</span>
+      </p>
+      <ol class="definition" data-reveal="up">
+        {site.definition.sens.map((s) => <li>{s}</li>)}
+      </ol>
+      {site.definition.placeholder && <p class="exemple" style="margin-top: var(--gutter)">Définition illustrative, à écrire avec le restaurant</p>}
+    </div>
+  </Affiche>
+
+  <!-- 3. ÇA S'EMPILE (vert, scène épinglée) -->
+  <Affiche tone="vert" prev="creme" class="empile" id="signature" label="empile-titre">
+    <div class="empile__scene" data-empile>
+      <div>
+        <h2 id="empile-titre" class="display display--l affiche__chapeau">Ça s'empile</h2>
+        <ol class="empile__liste">
+          {site.signature.couches.map((c) => (
+            <li data-empile-item><span class="num">{c.numero}</span><span>{c.nom}</span><small>{c.detail}</small></li>
+          ))}
+        </ol>
+      </div>
+      <div class="empile__pile">
+        <Plat title={`${site.signature.nom}, assemblé couche par couche`} />
+        <p class="empile__prix">
+          <strong data-empile-prix>{site.signature.prix}</strong>
+          <span>{site.signature.prixLabel}</span>
+        </p>
+      </div>
+    </div>
+  </Affiche>
+
+  <!-- 4. CARTE BENTO (crème) -->
+  <Affiche tone="creme" prev="vert" label="carte-titre">
+    <div class="wrap">
+      <h2 id="carte-titre" class="display display--mega affiche__titre" data-split="chars">La carte</h2>
+      <Bento plats={bentoAccueil()} />
+      <div class="section__pied">
+        <p class="lead">Menu unique en quatre services, servi par les chefs. Les prix à la carte sont illustratifs.</p>
+        <a class="btn btn--primary" href={u('/carte/')}>Toute la carte</a>
+      </div>
+    </div>
+  </Affiche>
+
+  <!-- 5. HORAIRES (jaune) -->
+  <Affiche tone="jaune" prev="creme" label="horaires-titre">
+    <div class="wrap">
+      <h2 id="horaires-titre" class="display display--mega affiche__titre" data-split="chars">Horaires</h2>
+      <Horaires />
+      <div class="section__pied">
+        <p class="lead">Soir du lundi au vendredi, midi les mercredis et vendredis. Samedi sur privatisation.</p>
+        <a class="btn" href={u('/reservation/')}>Réserver une table</a>
+      </div>
+    </div>
+  </Affiche>
+
+  <!-- 6. COMMENT ÇA MARCHE (rouge) -->
+  <Affiche tone="rouge" prev="jaune" label="marche-titre">
+    <div class="wrap">
+      <h2 id="marche-titre" class="display display--xl affiche__titre" data-split="words">Comment ça marche</h2>
+      <div class="etapes">
+        <div>
+          <h3 class="display display--l">Sur place</h3>
+          <ol data-cercles>
+            {site.etapes.surPlace.map((e) => <li><span class="cercle" aria-hidden="true"></span><div><strong>{e.titre}</strong><p>{e.texte}</p></div></li>)}
+          </ol>
+        </div>
+        <div>
+          <h3 class="display display--l">À emporter <span class="exemple">(illustratif)</span></h3>
+          <ol data-cercles>
+            {site.etapes.aEmporter.map((e) => <li><span class="cercle" aria-hidden="true"></span><div><strong>{e.titre}</strong><p>{e.texte}</p></div></li>)}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </Affiche>
+
+  <!-- 7. GALERIE INCLINÉE (crème, bande épinglée) -->
+  <Affiche tone="creme" prev="rouge" class="galerie" label="galerie-titre">
+    <div class="wrap"><h2 id="galerie-titre" class="display display--xl" data-split="words">En salle, en cuisine</h2></div>
+    <div data-galerie>
+      <div class="galerie__piste" data-galerie-piste>
+        {galerie.map((g) => (
+          <figure class="galerie__carte" style={`--r: ${g.r}deg`}>
+            <img src={asset(g.src)} alt={g.alt} width={g.largeur} height={g.hauteur} loading="lazy" decoding="async" />
+            <figcaption><span class="galerie__num">{g.num}</span><span>{g.alt}</span></figcaption>
           </figure>
         ))}
+        <div class="galerie__fin">
+          <Disque href={u('/reservation/')} texte="Réserver une table · Réserver une table · " coeur="→" label="Réserver une table" />
+        </div>
       </div>
     </div>
-  </section>
+  </Affiche>
 
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Ils en parlent</h2>
-      <div class="grid">
-        {site.avis.map((a) => (
-          <blockquote class="avis" data-reveal="fade">
-            <p>{a.texte}</p>
-            <cite>{a.auteur}, {a.source}{a.placeholder ? ' (avis illustratif)' : ''}</cite>
-          </blockquote>
-        ))}
+  <!-- 8. VISITE (vert) -->
+  <Affiche tone="vert" prev="creme" label="visite-titre">
+    <div class="wrap visite">
+      <div>
+        <h2 id="visite-titre" class="ui affiche__chapeau">Venir</h2>
+        <address class="visite__adresse" data-split="lines">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <ul class="visite__liste" data-reveal="up">
+          <li><a class="link" href={telHref()}>{site.telephone}</a></li>
+          <li>{site.adresse.repere}</li>
+          {site.reseaux.map((r) => <li><a class="link" href={r.url} rel="noopener">{r.nom}</a></li>)}
+        </ul>
       </div>
+      <svg class="plan" viewBox="0 0 600 420" role="img" aria-label={`Plan schématique : ${adresseLigne()}, au bord de la Meuse, face à la Citadelle`} data-reveal="scale">
+        <rect width="600" height="420" fill="var(--creme)" />
+        <path d="M-10 300 C 120 250, 220 360, 340 290 S 540 230, 610 280 L 610 420 L -10 420 Z" fill="var(--vert)" />
+        <path d="M-10 300 C 120 250, 220 360, 340 290 S 540 230, 610 280" fill="none" stroke="var(--ink)" stroke-width="4" />
+        <path d="M-10 120 L 610 60" stroke="var(--ink)" stroke-width="3" stroke-dasharray="14 10" />
+        <path d="M80 40 l40 -30 l40 30 l-80 0z M160 70 l60 -40 l60 40 l-120 0z" fill="var(--jaune)" stroke="var(--ink)" stroke-width="3" />
+        <path d="M60 160 L 560 200" stroke="var(--ink)" stroke-width="6" />
+        <circle cx="320" cy="182" r="20" fill="var(--rouge)" stroke="var(--ink)" stroke-width="4" />
+        <g font-family="Archivo, Arial, sans-serif" font-weight="900" font-size="22" fill="var(--ink)" text-transform="uppercase">
+          <text x="24" y="150">AVENUE DE LA PLANTE</text>
+          <text x="350" y="176">ICI</text>
+          <text x="330" y="380" fill="var(--creme)">LA MEUSE</text>
+          <text x="330" y="60">CITADELLE</text>
+        </g>
+      </svg>
     </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Horaires et accès</h2>
-      <dl class="horaires" data-reveal="up">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-      </dl>
-      <div class="actions">
-        <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
-        <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
-      </div>
-    </div>
-  </section>
+  </Affiche>
 </Base>
