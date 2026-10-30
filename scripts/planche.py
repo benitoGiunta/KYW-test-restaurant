@@ -10,7 +10,7 @@ sortie, images = args[0], args[1:]
 vign=[]
 for p in images:
     try:
-        im=Image.open(p).convert('RGB'); r=larg/im.width; im=im.resize((larg, min(int(im.height*r), 1200))); vign.append((p.split('/')[-1], im))
+        im=Image.open(p).convert('RGB'); r=larg/im.width; h=int(im.height*r); im=im.resize((larg, h)); im=im.crop((0,0,larg,min(h,1200))); vign.append((p.split('/')[-1], im))  # redimension homothétique puis rognage, sans déformation
     except Exception as e: print('ignoré', p, e)
 if not vign: sys.exit('aucune image')
 h=max(im.height for _,im in vign)+18
