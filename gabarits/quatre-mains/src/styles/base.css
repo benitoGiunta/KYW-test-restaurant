@@ -66,6 +66,11 @@ html:not(.motion) [data-rejoint] { clip-path: none; }
 .header__echo > *, .header__echo .nav > * { color: transparent; background: var(--c-ink); -webkit-background-clip: text; background-clip: text; }
 .header__echo .btn { background: var(--c-ink); color: var(--c-papier); -webkit-background-clip: border-box; background-clip: border-box; }
 .header a, .header button { pointer-events: auto; }
+/* Sur une section commune (papier), une seule voix : la copie lisible passe en ink sur toute la largeur. */
+.header__face { transition: color 0.3s; }
+html.is-sur-papier .header__face { clip-path: none; color: var(--c-ink); }
+html.is-sur-papier .header__echo { visibility: hidden; }
+html.is-sur-papier .header__face .btn { background: var(--c-ink); color: var(--c-papier); }
 .header__brand { font-weight: 700; letter-spacing: -0.02em; font-size: 1.0625rem; padding-block: 0.3em; }
 .nav { display: flex; gap: calc(var(--u) * 2.5); align-items: center; }
 .nav a { padding-block: 0.3em; font-size: 0.9375rem; }
@@ -125,7 +130,7 @@ html:not(.motion) [data-rejoint] { clip-path: none; }
 .actions { display: flex; flex-wrap: wrap; gap: var(--u) calc(var(--u) * 1.5); align-items: center; margin-top: calc(var(--u) * 3); }
 
 /* ---------- Photos ---------- */
-.photo { position: relative; overflow: clip; background: rgb(17 19 17 / 0.12); }
+.photo { position: relative; margin: 0; overflow: clip; background: rgb(17 19 17 / 0.12); }
 .photo img { width: 100%; height: 100%; object-fit: cover; }
 .photo--4x5 { aspect-ratio: 4 / 5; }
 .photo--3x2 { aspect-ratio: 3 / 2; }

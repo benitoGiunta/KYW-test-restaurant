@@ -11,7 +11,18 @@ l'agent Sonnet distinct, puis les corrections par l'agent Opus.
 
 ## QA mécanique (shoot.mjs + audit.mjs, production build, port 4402)
 
-Voir la section « Preuves » en fin de fichier (remplie après la seconde passe).
+- Deux passes `shoot.mjs` (home + carte, puis home, les-deux-chefs, histoire, reservation, 404 un par un) et une
+  troisième sur histoire après corrections : 0 erreur console, 0 lien cassé, 0 débordement, reduced motion sans
+  texte caché ni mouvement, focus visible partout, axe 0 violation sérieuse (après corrections), CLS 0.
+- LCP mobile bridé : accueil 1,2 s, histoire 1,1 s, 404 1,1 s ; carte / chefs / réservation 6 à 8 s sur la première
+  passe (texte révélé après le loader, en 4G lente à 4x CPU) ; les paragraphes des heros ne sont plus révélés par JS
+  depuis, à remesurer par l'agent de revue.
+- `audit.mjs` : 0 FAIL, 11 WARN (horaires répétés dans le pied de page et les sections, robots/sitemap cherchés à la
+  racine de l'origine, 404 de l'origine sans h1 : normaux sous `base`).
+- Idle : la frontière respire (`idleMotion: true` sur 4 pages sur 5 ; la page chefs a été mesurée false une fois).
+- Points ouverts pour la revue : l'en-tête fixe sans fond passe sur le contenu en cours de défilement (choix du
+  diptyque : il est coupé par la frontière) ; les portraits du hero sont des photos en cuisine, pas des plein-pied
+  détourés ; la citation MICHELIN et les horaires apparaissent deux fois sur l'accueil.
 
 ## Placeholders (toutes marquées `placeholder: true` dans `src/data/site.ts`, affichées « illustratif »)
 

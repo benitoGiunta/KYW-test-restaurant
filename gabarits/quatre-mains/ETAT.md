@@ -1,18 +1,16 @@
-# ETAT « quatre-mains » (mis à jour par l'agent portfolio-gabarit, 30/10/2026)
+# ETAT « quatre-mains » (agent portfolio-gabarit, 30/10/2026)
 
-## Fait
-- DESIGN.md, socle copié, polices (public/fonts), photos WebP (public/photos), favicon, og.jpg, robots.txt
-- src/data/site.ts complet (placeholders marqués)
-- src/styles/tokens.css et base.css complets (design, mobile, loader, rideau)
+## Fait (gabarit terminé)
+- DESIGN.md, socle, polices, photos, favicon, og.jpg, robots.txt ; site.ts complet (placeholders marqués)
+- tokens.css, base.css ; composants Header (coupé + écho, burger, mode « sur papier »), Footer (finale), Loader, NomCoupe
+- Base.astro (#fond persistant, rideau 2 panneaux, préchargement des 3 polices) ; motion/setup.ts + motion/diptyque.ts
+- 6 pages : index, carte, les-deux-chefs, histoire, reservation, 404 ; `node scripts/build-site.mjs gabarits/quatre-mains` passe
+- QA : shoot 1 (home, carte) + shoot 2 (home, les-deux-chefs, histoire, reservation, 404, dossiers .shots/qm-*) + audit
+  (.shots/audit-quatre-mains.txt : 0 FAIL, 11 WARN) + re-shoot histoire après corrections (0 erreur, 0 axe, 0 débordement)
+- Corrections mécaniques faites : contraste muted sur moutarde, échos en background-clip (axe), citations en lignes,
+  figure sans marge (débordement chefs), en-tête ink sur sections papier, LCP des heros intérieurs, cibles >= 24 px
+- apercu.png, FICHE.md, RAPPORT.md
 
-- composants (Header, Footer, Loader, NomCoupe), Base.astro (#fond + rideau 2 panneaux), motion/setup.ts + diptyque.ts
-- 6 pages (index, carte, les-deux-chefs, histoire, reservation, 404) ; build OK
-
-- shoot 1 (home, carte) lu en planche-contact ; corrections : citations en lignes (words collait les mots), --c-ink-muted .72 (AA sur moutarde), échos (nom, header) en background-clip text (axe), .lien 2 px, hero__scroll 24 px, heros intérieurs 72svh, p.mesure des heros visible (LCP)
-- FICHE.md
-
-## En cours
-- shoot 2 (home, les-deux-chefs, histoire, reservation, 404) dans .shots/qm-* + audit .shots/audit-quatre-mains.txt
-
-## Reste
-- lire les planches du shoot 2, corriger, apercu.png, finir RAPPORT.md (scores du critique = agent distinct)
+## Reste (agents suivants)
+- Critique `jury` (agent Sonnet) puis corrections (agent Opus) ; reporter les leçons de RAPPORT.md dans agents/lecons.md
+- Pas commité (l'orchestrateur le fait)

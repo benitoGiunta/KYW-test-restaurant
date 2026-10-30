@@ -49,6 +49,11 @@ export function initDiptyque() {
       ScrollTrigger.create({ trigger: s, start: 'top 55%', end: 'bottom 55%', onToggle: (st) => { if (st.isActive) viser(cible); } });
     });
 
+    // En-tête sur papier : quand une section commune passe sous l'en-tête, une seule copie, en ink
+    document.querySelectorAll<HTMLElement>('.commune').forEach((el) => {
+      ScrollTrigger.create({ trigger: el, start: 'top 56px', end: 'bottom 56px', toggleClass: { targets: html(), className: 'is-sur-papier' } });
+    });
+
     // Scroll différencié (colonne droite plus lente)
     if (!reduit && !isMobile()) {
       document.querySelectorAll<HTMLElement>('[data-decale] > .dip__d').forEach((col) => {
