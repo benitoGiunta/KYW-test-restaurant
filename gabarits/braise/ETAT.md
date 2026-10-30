@@ -1,9 +1,12 @@
-# ETAT braise (agent portfolio-gabarit, 30/10/2026)
+# ETAT braise (30/10/2026, après révision 1)
 
 ## Fait
-- DESIGN.md, FICHE.md, RAPPORT.md, apercu.png ; gabarit complet (6 pages), buildé dans dist/gabarits/braise/.
-- QA mécanique : shoot accueil (.shots/braise/, --nav, hovers) + pages internes (.shots/braise-<page>/) + audit (.shots/audit-braise.txt) : 0 erreur console, 0 FAIL, 0 débordement.
-- Corrections mécaniques appliquées après les captures (contrastes axe, liste cuisson, marquee, aria-label, thermomètre sur pied de page) et rebuild ; non recapturées.
+- Gabarit complet (6 pages), buildé dans dist/gabarits/braise/ ; DESIGN.md (section « Révision 1 »), FICHE.md, RAPPORT.md.
+- REVUE-1 traitée : REVISION-1.md (tous les F1 corrigés, F2 corrigés sauf F2-9 refusé et F2-6 en partie, F3-2 impossible).
+- Captures après correction : .shots-braise-rev/ (accueil, accueil2 = build final, carte, reservation, histoire, privatisation) ; axe 0 sur les 5 pages.
+- apercu.png régénéré.
 
-## Reste (agent de revue / corrections)
-- Jury + revue ; LCP (loader) ; recapture après les corrections de contraste ; « retire un accessoire ».
+## Reste
+- Non commité (consigne de l'orchestrateur).
+- Mobile : titre du hero caché jusqu'au boot JS (loaderMs 3,8-5,5 s mesuré, LCP 1,3-1,4 s) ; FPS mobile accueil 14 en GPU logiciel.
+- 404 non recapturée ; audit.mjs non lancé.

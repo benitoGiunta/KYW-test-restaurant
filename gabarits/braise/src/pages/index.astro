@@ -28,7 +28,7 @@ const [mot1, ...reste] = site.nom.split(' ');
       <p class="chapeau" data-reveal="fade" data-intro data-delay="0.9">Bistronomie à quatre mains, Namur</p>
       <h1 class="hero__title" id="titre" data-split="lines" data-intro data-delay="0.2"><span class="ligne">{mot1} {reste[0]}</span><span class="ligne">{reste.slice(1).join(' ')}</span></h1>
       <div class="hero__foot">
-        <p class="hero__lead" data-reveal="up" data-intro data-delay="0.7">Un menu unique qui change avec les saisons, cuisiné devant vous et servi par les chefs. Une soirée qui commence au passe et finit à table.</p>
+        <p class="hero__lead">Un menu unique qui change avec les saisons, cuisiné devant vous et servi par les chefs. Une soirée qui commence au passe et finit à table.</p>
         <div class="stack" data-reveal="fade" data-intro data-delay="1">
           <p class="pastille" data-pastille data-horaires={horairesJson}>Service du soir dès 19 h</p>
           <div class="actions" style="margin-top: var(--u)">
@@ -91,7 +91,7 @@ const [mot1, ...reste] = site.nom.split(' ');
           <li class={`plat${p.photo ? ' plat--photo' : ''}`} data-photo={p.photo ? asset(p.photo) : undefined} data-reveal="fade" data-delay={String(i * 0.06)}>
             <span class="plat__num">0{i + 1}</span>
             {p.photo && <img class="plat__vignette" src={asset(p.photo)} alt="" width="200" height="200" loading="lazy" decoding="async" />}
-            <span><span class="plat__nom">{p.nom}</span><span class="plat__desc muted">{p.description}</span></span>
+            <span><span class="plat__nom">{p.nom}</span>{p.description && <span class="plat__desc muted">{p.description}</span>}</span>
             <span class="plat__prix">{i === 0 ? '67 €' : ''}</span>
           </li>
         ))}
@@ -103,7 +103,7 @@ const [mot1, ...reste] = site.nom.split(' ');
   <section class="section mains" data-temp="150" aria-labelledby="t-mains">
     <div class="wrap mains__grid">
       <figure class="duo mains__portrait" data-reveal="clip">
-        <img src={asset(damien.src)} alt={damien.alt} width={damien.largeur} height={damien.hauteur} loading="lazy" decoding="async" />
+        <img src={asset(damien.src)} alt={damien.alt} width={damien.largeur} height={damien.hauteur} loading="eager" fetchpriority="low" decoding="async" />
         <figcaption>Damien</figcaption>
       </figure>
       <div class="mains__txt">
@@ -115,7 +115,7 @@ const [mot1, ...reste] = site.nom.split(' ');
         <p class="section__link"><a class="link link--arrow" href={u('/histoire/')}>Leur histoire</a></p>
       </div>
       <figure class="duo mains__portrait--b" data-reveal="clip" data-delay="0.15">
-        <img src={asset(francois.src)} alt={francois.alt} width={francois.largeur} height={francois.hauteur} loading="lazy" decoding="async" />
+        <img src={asset(francois.src)} alt={francois.alt} width={francois.largeur} height={francois.hauteur} loading="eager" fetchpriority="low" decoding="async" />
         <figcaption>François</figcaption>
       </figure>
     </div>

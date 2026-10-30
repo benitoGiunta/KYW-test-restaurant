@@ -2,13 +2,13 @@
 import Base from '../layouts/Base.astro';
 import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
 ---
-<Base title="Réserver" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone} ou par e-mail.`} start={90}>
+<Base title="Réserver" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, ou par téléphone au ${site.telephone}.`} start={90} footerCompact>
   <section class="hero hero--page" data-temp="90">
     <div class="wrap">
       <p class="chapeau" data-reveal="fade" data-intro>Nuit</p>
       <h1 class="hero__title" data-split="lines" data-intro data-delay="0.1">Réserver une table</h1>
       <div class="hero__foot">
-        <p class="hero__lead" data-reveal="up" data-intro data-delay="0.5">En ligne via {site.reservation.outil}, ou par téléphone pour une table de plus de six personnes et les demandes de dernière minute.</p>
+        <p class="hero__lead">En ligne via {site.reservation.outil}, ou par téléphone pour une table de plus de six personnes et les demandes de dernière minute.</p>
         <div class="actions" data-reveal="fade" data-intro data-delay="0.7" style="margin-top: 0">
           <a class="btn btn--solid" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
           <a class="btn" href={telHref()}>{site.telephone}</a>
@@ -24,7 +24,7 @@ import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
         <dl class="horaires">
           {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
         </dl>
-        <address style="margin-top: calc(var(--u) * 3)">{adresseLigne()}<br /><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></address>
+        <address style="margin-top: calc(var(--u) * 3)">{adresseLigne()}</address>
         <p class="note">Bons cadeaux de {site.bonCadeau.montants} : <a class="link" href={site.bonCadeau.url} rel="noopener">commander en ligne</a>.</p>
       </div>
       <div class="pratique__b" data-reveal="up" data-delay="0.1">

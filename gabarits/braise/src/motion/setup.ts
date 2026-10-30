@@ -8,8 +8,8 @@ export function setupMotion() {
   setLoaderFormat((p) => String(Math.round(20 + p * 8.8)));
   setLoaderExit((root) =>
     gsap.timeline()
-      .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -110, duration: 0.6, ease: ease.inOut, stagger: 0.06 })
-      .to(root, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.1, ease: ease.inOut }, '-=0.3'),
+      .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -110, duration: 0.4, ease: ease.inOut, stagger: 0.04 })
+      .to(root, { clipPath: 'inset(0% 0% 100% 0%)', duration: matchMedia('(max-width: 767px)').matches ? 0.45 : 0.6, ease: ease.inOut }, '-=0.2'),
   );
   setTransition({
     leave: (c) => gsap.timeline()

@@ -22,7 +22,7 @@ function splitTween(el: HTMLElement, isIntro: boolean) {
   const delay = parseFloat(el.dataset.delay || '0');
   const s = { tween: undefined as gsap.core.Tween | undefined, done: false, requested: false };
   SplitText.create(el, {
-    type: type === 'lines' ? 'lines' : `lines,${type}`,
+    type: type === 'lines' ? 'lines' : type === 'chars' ? 'lines,words,chars' : 'lines,words',
     mask: 'lines',
     autoSplit: true,
     linesClass: 'split-line',

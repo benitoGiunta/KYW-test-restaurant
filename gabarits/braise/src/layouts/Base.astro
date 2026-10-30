@@ -15,9 +15,10 @@ interface Props {
   description?: string;
   image?: string; // image OG (1200x630) dans public/, chemin sans base : '/og.jpg'
   start?: number; // température de départ de la page (900 = le passe) : état initial sans JS
+  footerCompact?: boolean;
   reperes?: { id: string; label: string }[]; // repères du thermomètre (ancres de la page)
 }
-const { title, description = site.description, image = '/og.jpg', start = 900, reperes = [] } = Astro.props;
+const { title, description = site.description, image = '/og.jpg', start = 900, reperes = [], footerCompact = false } = Astro.props;
 const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Restaurant bistronomique à ${site.adresse.commune}`;
 const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
 // Astro.url.pathname contient déjà `base` au build.
@@ -102,7 +103,7 @@ const jsonLd = {
     <main id="main" tabindex="-1">
       <slot />
     </main>
-    <Footer />
+    <Footer compact={footerCompact} />
     <Thermo start={start} reperes={reperes} />
     <Barre />
     <script>

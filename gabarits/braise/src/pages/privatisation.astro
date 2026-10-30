@@ -4,12 +4,12 @@ import { site, photoDe, telHref } from '../data/site';
 import { u, asset } from '../lib/url';
 const salle = photoDe('/photos/salle-banquette.webp');
 ---
-<Base title="Privatiser" description={`Privatiser ${site.nom} à ${site.adresse.commune} : la salle le samedi, chef à domicile, bons cadeaux. ${site.privatisation.couverts.valeur} couverts, menu unique écrit avec vous.`} start={20}>
+<Base title="Privatiser" description={`Privatiser ${site.nom} à ${site.adresse.commune} : la salle le samedi, chef à domicile, bons cadeaux. Menu unique écrit avec vous.`} start={20}>
   <section class="hero hero--page" data-temp="20">
     <div class="wrap">
       <p class="chapeau" data-reveal="fade" data-intro>Le feu éteint</p>
       <h1 class="hero__title" data-split="lines" data-intro data-delay="0.1">La salle est à vous</h1>
-      <p class="hero__lead" data-reveal="up" data-intro data-delay="0.5" style="margin-top: calc(var(--u) * 3)">Le samedi, le restaurant ferme au public : {site.privatisation.couverts.valeur} couverts, la cuisine ouverte, un menu unique écrit avec vous. <span class="tag">couverts illustratifs</span></p>
+      <p class="hero__lead" style="margin-top: calc(var(--u) * 3)">Le samedi, le restaurant ferme au public : {site.privatisation.couverts.valeur} couverts, la cuisine ouverte, un menu unique écrit avec vous. <span class="tag">couverts illustratifs</span></p>
     </div>
   </section>
 
@@ -28,8 +28,7 @@ const salle = photoDe('/photos/salle-banquette.webp');
         <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
       </figure>
       <div class="actions">
-        <a class="btn btn--solid" href={`mailto:${site.email.valeur}?subject=Privatisation`}>Écrire aux chefs</a>
-        <a class="btn" href={telHref()}>{site.telephone}</a>
+        <a class="btn btn--solid" href={telHref()}>Appeler les chefs, {site.telephone}</a>
         <a class="btn btn--quiet" href={u('/')}>Retour au feu</a>
       </div>
     </div>

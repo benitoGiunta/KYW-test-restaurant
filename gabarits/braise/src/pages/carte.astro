@@ -6,13 +6,13 @@ const plat = photoDe('/photos/plat-saint-jacques.webp');
 const dessert = photoDe('/photos/dessert-tarte-pomme.webp');
 const temps = [520, 380, 240, 150];
 ---
-<Base title="La carte" description={`La carte des ${site.nom} à ${site.adresse.commune} : menu dégustation du soir en quatre services, formule et lunch du midi, desserts et accords.`} start={900} reperes={[{ id: 'soir', label: 'Soir' }, { id: 'midi', label: 'Midi' }, { id: 'desserts', label: 'Desserts' }]}>
+<Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : menu dégustation du soir en quatre services, formule et lunch du midi, desserts et accords.`} start={900} reperes={[{ id: 'soir', label: 'Soir' }, { id: 'midi', label: 'Midi' }, { id: 'desserts', label: 'Desserts' }]}>
   <section class="hero hero--page" data-temp="900">
     <div class="wrap">
       <p class="chapeau" data-reveal="fade" data-intro>Dressage</p>
       <h1 class="hero__title" data-split="lines" data-intro data-delay="0.1">La carte, du passe à la table</h1>
       <div class="hero__foot">
-        <p class="hero__lead" data-reveal="up" data-intro data-delay="0.5">Le soir, un menu unique en quatre services. Le midi, une formule et un lunch, selon le marché. Tout est fait maison, des pains aux mignardises.</p>
+        <p class="hero__lead">Le soir, un menu unique en quatre services. Le midi, une formule et un lunch, selon les produits du moment. Tout est fait maison.</p>
         <div class="carte__filtres" role="group" aria-label="Filtrer la carte" data-reveal="fade" data-intro data-delay="0.7">
           <button type="button" data-filtre="tout" aria-pressed="true">Tout</button>
           <button type="button" data-filtre="midi" aria-pressed="false">Midi</button>
@@ -38,14 +38,14 @@ const temps = [520, 380, 240, 150];
               <li class={`plat${p.photo ? ' plat--photo' : ''}`} data-photo={p.photo ? asset(p.photo) : undefined} data-reveal="fade" data-delay={String(i * 0.05)}>
                 <span class="plat__num">0{i + 1}</span>
                 {p.photo && <img class="plat__vignette" src={asset(p.photo)} alt="" width="200" height="200" loading="lazy" decoding="async" />}
-                <span><span class="plat__nom">{p.nom}{p.placeholder && <span class="sr-only"> (exemple illustratif)</span>}</span><span class="plat__desc muted">{p.description}</span></span>
+                <span><span class="plat__nom">{p.nom}{p.placeholder && <span class="tag tag--plat">exemple illustratif</span>}</span>{p.description && <span class="plat__desc muted">{p.description}</span>}</span>
                 <span class="plat__prix">{p.prix ?? ''}</span>
               </li>
             ))}
           </ol>
         </div>
       ))}
-      <p class="note" style="margin-top: calc(var(--u) * 3)">Les plats marqués d'un exemple sont illustratifs : la carte réelle change chaque semaine. Maquette KYW, certaines données sont illustratives.</p>
+      <p class="note" style="margin-top: calc(var(--u) * 3)">Les plats marqués d'un exemple sont illustratifs : la carte réelle change avec les saisons.</p>
     </div>
   </section>
 

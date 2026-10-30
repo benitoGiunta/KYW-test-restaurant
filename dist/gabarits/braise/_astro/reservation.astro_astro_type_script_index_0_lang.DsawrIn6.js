@@ -1,1 +1,0 @@
-import{f as o}from"./index.BZFRCG3p.js";o(()=>{const e=document.querySelector("[data-reservation]");if(!e)return;const n=t=>{t.preventDefault(),window.open(e.action,"_blank","noopener")};return e.addEventListener("submit",n),()=>e.removeEventListener("submit",n)});

@@ -83,12 +83,12 @@ export const site: Restaurant = {
       service: 'soir',
       note: 'Du lundi au vendredi soir, 67 € par personne. Un menu végétarien est possible sur demande ; signalez vos allergies à la réservation.',
       plats: [
-        { nom: 'Mises en bouche', description: 'Trois bouchées pour ouvrir la soirée', prix: null, placeholder: false },
-        { nom: 'Légumes racines, champignons, noix', description: 'Premier service, les légumes des producteurs du coin', prix: null, placeholder: false },
-        { nom: 'Saint-Jacques, butternut, passion', description: 'Saint-Jacques snackées, mousseline et tuile noire', prix: null, placeholder: false, photo: '/photos/plat-saint-jacques.webp' },
-        { nom: 'Boeuf confit, carottes, cromesquis', description: 'La pièce confite, purée de carotte, chou et jus corsé', prix: null, placeholder: false, photo: '/photos/plat-boeuf-confit.webp' },
-        { nom: 'Soufflé au caramel, chaï, poire', description: 'Servi dès la sortie du four', prix: null, placeholder: false },
-        { nom: 'Mignardise', description: 'Pour finir, avec le café', prix: null, placeholder: false },
+        { nom: 'Mises en bouche', description: '', prix: null, placeholder: false },
+        { nom: 'Légumes racines, champignons, noix', description: '', prix: null, placeholder: false },
+        { nom: 'Saint-Jacques, butternut, passion', description: 'Snackées, mousseline et tuile noire', prix: null, placeholder: false, photo: '/photos/plat-saint-jacques.webp' },
+        { nom: 'Boeuf confit, carottes, cromesquis', description: 'Cromesquis de pommes de terre', prix: null, placeholder: false, photo: '/photos/plat-boeuf-confit.webp' },
+        { nom: 'Soufflé au caramel, chaï, poire', description: '', prix: null, placeholder: false },
+        { nom: 'Mignardise', description: '', prix: null, placeholder: false },
       ],
     },
     {
@@ -109,11 +109,11 @@ export const site: Restaurant = {
       service: 'desserts',
       note: 'Le dessert du menu change avec la saison. Fromage à la place du dessert +7 €, avant le dessert +15 €.',
       plats: [
-        { nom: 'Soufflé au caramel, chaï, poire', description: 'Le dessert du menu de cet hiver', prix: null, placeholder: false },
+        { nom: 'Soufflé au caramel, chaï, poire', description: 'Le dessert du menu du soir', prix: null, placeholder: false },
         { nom: 'Cerises noires et griottes, crumble de cacao', description: 'Glace vanille au lait cru, le dessert cité par le Guide MICHELIN', prix: null, placeholder: false },
-        { nom: 'Rosace de pommes, glace, éclats de tuile', description: 'Pommes du verger voisin, caramel', prix: null, placeholder: false, photo: '/photos/dessert-tarte-pomme.webp' },
+        { nom: 'Rosace de pommes, glace, éclats de tuile', description: '', prix: null, placeholder: false, photo: '/photos/dessert-tarte-pomme.webp' },
         { nom: 'Chocolat, sarrasin, fleur de sel', description: 'Crémeux, tuile de sarrasin soufflé', prix: null, placeholder: true },
-        { nom: 'Fromages affinés de la région', description: 'Trois fromages, pain au levain', prix: '+7 € ou +15 €', placeholder: false },
+        { nom: 'Fromage', description: 'À la place du dessert ou avant le dessert', prix: '+7 € ou +15 €', placeholder: false },
         { nom: 'Mignardise et café', description: 'Avec le café ou l’infusion', prix: null, placeholder: true },
       ],
     },
@@ -144,7 +144,7 @@ export const site: Restaurant = {
   equipe: [
     { nom: 'Damien Gorjanec', role: 'Chef et co-propriétaire', photo: '/photos/chef-damien.webp', placeholder: false, phrase: 'De Namur à Shanghai, puis retour au bord de la Meuse.' },
     { nom: 'François Schepens', role: 'Chef et co-propriétaire', photo: '/photos/chef-francois.webp', placeholder: false, phrase: 'Formé aux États-Unis et à Montréal, revenu pour cuisiner avec son pote.' },
-    { nom: 'Sara', role: 'Salle et bar', photo: '/photos/bar-cocktails.webp', placeholder: true, phrase: 'La pétillante de l’équipe, au bar et en salle.' },
+    { nom: 'Sara', role: 'Salle et bar', placeholder: true, phrase: 'La pétillante de l’équipe, au bar et en salle.' },
     { nom: 'Jordan', role: 'Salle', placeholder: true, phrase: 'Le service, du passe à votre table.' },
   ],
   avis: [
@@ -196,24 +196,24 @@ export const site: Restaurant = {
   ],
   valeurs: ['Fait maison', 'Produits des saisons', 'Rencontre et convivialité', 'Producteurs du coin', 'Les chefs servent et expliquent leurs plats à table'],
   manifeste: {
-    avant: 'Deux potes, un feu, un menu unique qui change avec les saisons. Des légumes cultivés à côté, une cuisine ouverte sur la salle, les chefs qui viennent poser l’assiette devant vous et raconter ce qu’il y a dedans. Un mot d’ordre :',
+    avant: 'Deux potes, un feu, un menu unique qui change avec les saisons. Des légumes cultivés localement, une cuisine ouverte sur la salle, les chefs qui viennent poser l’assiette devant vous et raconter ce qu’il y a dedans. Un mot d’ordre :',
     motCle: 'le plaisir.',
     apres: '',
   },
   cuisson: {
     plat: 'Boeuf confit, carottes, cromesquis',
-    intro: 'Le plat signature, du four à votre table. Les températures sont indicatives.',
+    intro: 'Le plat signature, couche par couche. Étapes et températures illustratives.',
     couches: [
       { id: 'fond', nom: 'L’assiette', detail: 'Chaude, prête à recevoir', temp: 520, src: '/couches/fond.webp', placeholder: true },
-      { id: 'piece', nom: 'Le boeuf confit', detail: 'Douze heures à basse température', temp: 420, src: '/couches/piece.webp', placeholder: true },
-      { id: 'garniture', nom: 'Carottes, chou, cromesquis', detail: 'Purée de carotte, chou vert, cromesquis de pommes de terre', temp: 300, src: '/couches/garniture.webp', placeholder: true },
+      { id: 'piece', nom: 'Le boeuf confit', detail: 'La pièce confite', temp: 420, src: '/couches/piece.webp', placeholder: true },
+      { id: 'garniture', nom: 'Carottes, cromesquis', detail: 'Cromesquis de pommes de terre', temp: 300, src: '/couches/garniture.webp', placeholder: true },
       { id: 'sauce', nom: 'Le jus', detail: 'Réduit, versé au dernier moment', temp: 180, src: '/couches/sauce.webp', placeholder: true },
     ],
   },
   privatisation: {
     couverts: { valeur: 28, placeholder: true },
     formules: [
-      { nom: 'Le samedi, la salle est à vous', texte: 'Le restaurant ferme ses portes au public le samedi et peut être privatisé pour un mariage, un anniversaire ou un repas d’équipe, en menu unique écrit avec vous.', placeholder: false },
+      { nom: 'Le samedi, en privé', texte: 'Le restaurant ferme ses portes au public le samedi et peut être privatisé pour un mariage, un anniversaire ou un repas d’équipe, en menu unique écrit avec vous.', placeholder: false },
       { nom: 'Chef à domicile', texte: 'Damien ou François vient cuisiner chez vous, avec son matériel et ses producteurs, pour une table de 8 à 20 convives.', placeholder: true },
       { nom: 'Bon cadeau', texte: 'Une soirée aux Potes au Feu à offrir : bons de 50, 75, 100 ou 150 €, demandés en ligne et retirés au restaurant.', placeholder: false },
     ],
@@ -221,7 +221,6 @@ export const site: Restaurant = {
   colophon: [
     'Photos : Les Potes au Feu (site du restaurant) ; trois photos reprises de la fiche Guide MICHELIN, droits à confirmer.',
     'Caractères : Melodrama (Fontshare) et Literata (Google Fonts).',
-    'Maquette KYW, certaines données sont illustratives.',
   ],
 };
 
@@ -235,9 +234,11 @@ export function photoDe(src: string): Photo {
 /** Adresse sur une ligne. */
 export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adresse.numero}, ${r.adresse.cp} ${r.adresse.commune}`;
 
-/** Horaires lisibles : '12:00 à 14:00, 19:00 à 21:00' ou la note. */
+/** '19:00' → '19 h', '19:30' → '19 h 30'. */
+export const heure = (s: string) => s.replace(/^0/, '').replace(/:00$/, ' h').replace(':', ' h ');
+/** Horaires lisibles : '12 h à 14 h, 19 h à 21 h' ou la note. */
 export const horaireTexte = (h: Horaire) =>
-  h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé';
+  h.creneaux.length ? h.creneaux.map((c) => `${heure(c.ouverture)} à ${heure(c.fermeture)}`).join(', ') : h.note || 'fermé';
 
 /** Téléphone pour href="tel:" (sans espaces). */
 export const telHref = (r: Restaurant = site) => `tel:${r.telephone.replace(/\s+/g, '')}`;

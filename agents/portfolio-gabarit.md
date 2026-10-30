@@ -100,3 +100,8 @@ seul fichier, sections indépendantes, tokens).
   ne donne que le nom d'un plat, la description reste vide. Un ressort de concept (répartir les plats entre deux chefs, donner
   un registre à une colonne) doit reposer sur un fait du dossier, sinon il est affiché « illustratif » partout où il apparaît.
   Avant de livrer, chercher dans `dist/` chaque description et chaque bio et vérifier qu'elle se retrouve dans le dossier.
+- **Éléments fixes et libellés cachés** (révision Braise) : un instrument fixe (thermomètre, compteur, repère) ne flotte
+  jamais au-dessus du texte : réserver une voie dans `.wrap` (`--lane`) en desktop et le replier dans la barre basse ou
+  l'en-tête en mobile ; un libellé décoratif caché jusqu'au survol se masque par `clip-path`, jamais par `opacity: 0`
+  (compté comme texte caché en reduced-motion). En mobile, pas de loader à compteur : l'accroche est peinte au premier
+  rendu et le titre du hero ne dépend pas du démarrage du JS pour être lisible.

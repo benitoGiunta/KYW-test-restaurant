@@ -144,3 +144,21 @@ section n'est posé que sur trois sections (manifeste, cuisson, pratique).
 - [x] Un h1, titres ordonnés, landmarks, lang=fr, alt descriptifs, AA, focus visible (anneau braise), skip link,
       titre et description uniques, OG, canonical, sitemap, robots, JSON-LD Restaurant, 404.
 - [x] Copie en français, vouvoiement, sans tiret cadratin, sans filler, aucune phrase répétée.
+
+## Révision 1 (30/10/2026, après REVUE-1)
+
+- **Thermomètre** : il ne flotte plus sur le texte. En desktop, `.wrap` réserve une voie `--lane` (2,25 rem) de chaque
+  côté et le thermomètre devient une colonne étroite dans la voie gauche (réglette en haut, valeur 1 rem, chapitre en
+  vertical) ; les libellés des repères se déplient au survol ou au focus. En mobile (≤ 767 px), il disparaît de l'écran
+  et sa valeur passe dans la barre basse, qui n'apparaît qu'une fois le hero dépassé (elle doublait le CTA du hero).
+  Il s'efface quand le pied de page KYW entre à l'écran.
+- **Accent** : la braise #E8632C ne passait pas AA en texte sur les bruns moyens. L'accent suit maintenant la
+  température : #EE7A45 (900) → #F0875A (520) → #FFC6A6 (150, braise pâle) puis, côté ivoire, #5E230A → #7A300F →
+  #8F3A14 (20). Une nouvelle variable `--c-on-accent` (encre #1A1410 sur les fonds sombres, ivoire #F7EFE4 sur l'ivoire)
+  colore le texte des boutons remplis. Contraste ≥ 4,5:1 vérifié par script à tout degré hors de la bascule 125 → 115 °C.
+- **Portraits « duo »** : la bichromie passe d'un `multiply` sur fond braise (aplat orange tant que l'image n'est pas
+  peinte) à un filtre sépia chaud sur fond brun : même rendu cuivré, plus d'aplat orange.
+- **Loader** : plancher 0,7 s, plafond 1,6 s (0,3 / 0,9 s en mobile), progression en temps réel (indépendante des
+  FPS), sortie ≈ 0,8 s ; l'accroche du hero n'a plus de `data-reveal` ni `data-intro`.
+- **Driver** : les six couleurs sur `<html>` ne sont réécrites que si la température bouge de 0,5 °C ; respiration et
+  pointeur du halo écrits sur `#halo` seulement.

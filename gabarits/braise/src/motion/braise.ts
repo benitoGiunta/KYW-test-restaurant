@@ -9,16 +9,18 @@ import { onPage, onScroll, scrollState, scrollToTarget, prefersReducedMotion, is
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-type Stop = { t: number; bg: string; fg: string; muted: string; line: string; accent: string; halo: number; grain: number; voile: number };
+type Stop = { t: number; bg: string; fg: string; muted: string; line: string; accent: string; on: string; halo: number; grain: number; voile: number };
 // Arrêts de température (voir DESIGN.md) ; l'encre bascule entre 125 et 115 °C pour que le contraste reste AA ailleurs.
 const STOPS: Stop[] = [
-  { t: 900, bg: '#141110', fg: '#f4ede2', muted: '#b9aea2', line: '#5e5650', accent: '#e8632c', halo: 1, grain: 0.06, voile: 0.3 },
-  { t: 520, bg: '#2a1510', fg: '#f4ede2', muted: '#c9b5a4', line: '#6a5146', accent: '#e8632c', halo: 0.7, grain: 0.06, voile: 0.25 },
-  { t: 150, bg: '#7a4e36', fg: '#f4ede2', muted: '#ebd9c8', line: '#9c7a62', accent: '#e8632c', halo: 0.25, grain: 0.04, voile: 0.15 },
-  { t: 125, bg: '#8e5f44', fg: '#f4ede2', muted: '#ebd9c8', line: '#a8866c', accent: '#ffb48a', halo: 0.18, grain: 0.03, voile: 0.12 },
-  { t: 115, bg: '#c9ad95', fg: '#1a1410', muted: '#5e4a3c', line: '#a88a72', accent: '#a3431a', halo: 0.12, grain: 0.01, voile: 0.1 },
-  { t: 90, bg: '#e6d5bf', fg: '#1a1410', muted: '#6b5646', line: '#b9a48f', accent: '#a3431a', halo: 0.08, grain: 0, voile: 0.08 },
-  { t: 20, bg: '#f2e8d8', fg: '#1a1410', muted: '#6b5646', line: '#c9b8a4', accent: '#a3431a', halo: 0, grain: 0, voile: 0.05 },
+  // Révision 1 : accent éclairci sur les bruns moyens et assombri sur l'ivoire, pour que l'accent reste ≥ 4,5:1 en
+  // texte (chapeaux) à toute température hors de la bascule 125 → 115 °C ; `on` = encre posée sur l'accent (boutons).
+  { t: 900, bg: '#141110', fg: '#f4ede2', muted: '#b9aea2', line: '#5e5650', accent: '#ee7a45', on: '#1a1410', halo: 1, grain: 0.06, voile: 0.3 },
+  { t: 520, bg: '#2a1510', fg: '#f4ede2', muted: '#c9b5a4', line: '#6a5146', accent: '#f0875a', on: '#1a1410', halo: 0.7, grain: 0.06, voile: 0.25 },
+  { t: 150, bg: '#7a4e36', fg: '#f4ede2', muted: '#f0e2d4', line: '#9c7a62', accent: '#ffc6a6', on: '#1a1410', halo: 0.25, grain: 0.04, voile: 0.15 },
+  { t: 125, bg: '#7c4f36', fg: '#f4ede2', muted: '#f4e8dc', line: '#a8866c', accent: '#ffcfb4', on: '#1a1410', halo: 0.18, grain: 0.03, voile: 0.12 },
+  { t: 115, bg: '#c9ad95', fg: '#1a1410', muted: '#3e3028', line: '#a88a72', accent: '#5e230a', on: '#f7efe4', halo: 0.12, grain: 0.01, voile: 0.1 },
+  { t: 90, bg: '#e6d5bf', fg: '#1a1410', muted: '#54422f', line: '#b9a48f', accent: '#7a300f', on: '#f7efe4', halo: 0.08, grain: 0, voile: 0.08 },
+  { t: 20, bg: '#f2e8d8', fg: '#1a1410', muted: '#5e4a3c', line: '#c9b8a4', accent: '#8f3a14', on: '#f7efe4', halo: 0, grain: 0, voile: 0.05 },
 ];
 
 const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
@@ -34,7 +36,7 @@ function stateAt(t: number) {
   const k = (a.t - t) / (a.t - b.t);
   const n = (x: number, y: number) => x + (y - x) * k;
   return {
-    bg: mix(a.bg, b.bg, k), fg: mix(a.fg, b.fg, k), muted: mix(a.muted, b.muted, k), line: mix(a.line, b.line, k), accent: mix(a.accent, b.accent, k),
+    bg: mix(a.bg, b.bg, k), fg: mix(a.fg, b.fg, k), muted: mix(a.muted, b.muted, k), line: mix(a.line, b.line, k), accent: mix(a.accent, b.accent, k), on: k < 0.5 ? a.on : b.on,
     halo: n(a.halo, b.halo), grain: n(a.grain, b.grain), voile: n(a.voile, b.voile),
   };
 }
@@ -45,6 +47,8 @@ let shown = 900;
 let target = 900;
 let pointer = { x: 0.6, y: 0.4 };
 let keys: { y: number; t: number }[] = [];
+/** Révision 1 : une seule horloge ; les modules de page (marquee) s'y inscrivent au lieu d'ajouter leur ticker. */
+const taches = new Set<(t: number, dt: number) => void>();
 
 /** Clés (position de défilement → température) relevées sur les sections [data-temp] (+ data-temp-end). */
 function buildKeys() {
@@ -69,33 +73,54 @@ function tempAt(y: number) {
   return keys[keys.length - 1].t;
 }
 
+// Révision 1 (FPS) : les variables de couleur sur <html> invalident le style de tout le document ; elles ne sont
+// réécrites que si la température a bougé d'au moins 0,5 °C. La respiration du halo et le pointeur ne touchent que
+// le style de #halo (une couche fixe composée), jamais <html>. Nœuds du thermomètre mis en cache par page.
+let applied = NaN;
+let valNodes: HTMLElement[] = [];
+let chapNodes: HTMLElement[] = [];
+let haloEl: HTMLElement | null = null;
+function cacheNodes() {
+  valNodes = [...document.querySelectorAll<HTMLElement>('[data-thermo-val]')];
+  chapNodes = [...document.querySelectorAll<HTMLElement>('[data-thermo-chap]')];
+  haloEl = document.getElementById('halo');
+  applied = NaN;
+}
 function apply(t: number, drift = 0) {
+  if (haloEl) haloEl.style.transform = `scale(${(1 + drift).toFixed(4)})`;
+  if (Math.abs(t - applied) < 0.5) return;
+  applied = t;
   const s = stateAt(t);
   const r = root().style;
-  r.setProperty('--c-bg', s.bg); r.setProperty('--c-fg', s.fg); r.setProperty('--c-muted', s.muted); r.setProperty('--c-line', s.line); r.setProperty('--c-accent', s.accent);
-  r.setProperty('--halo', String(s.halo)); r.setProperty('--grain', String(s.grain)); r.setProperty('--voile', String(s.voile));
-  r.setProperty('--halo-s', String(1 + drift)); r.setProperty('--halo-x', `${(pointer.x * 100).toFixed(1)}%`); r.setProperty('--halo-y', `${(pointer.y * 100).toFixed(1)}%`);
-  r.setProperty('--thermo', String((t - 20) / 880));
-  const v = Math.round(t);
-  document.querySelectorAll<HTMLElement>('[data-thermo-val]').forEach((el) => { if (el.textContent !== String(v)) el.textContent = String(v); });
+  r.setProperty('--c-bg', s.bg); r.setProperty('--c-fg', s.fg); r.setProperty('--c-muted', s.muted); r.setProperty('--c-line', s.line); r.setProperty('--c-accent', s.accent); r.setProperty('--c-on-accent', s.on);
+  r.setProperty('--halo', String(s.halo.toFixed(3))); r.setProperty('--grain', String(s.grain.toFixed(3))); r.setProperty('--voile', String(s.voile.toFixed(3)));
+  r.setProperty('--thermo', String(((t - 20) / 880).toFixed(4)));
+  const v = String(Math.round(t));
+  valNodes.forEach((el) => { if (el.textContent !== v) el.textContent = v; });
   const c = chapitre(t);
-  document.querySelectorAll<HTMLElement>('[data-thermo-chap]').forEach((el) => { if (el.textContent !== c) el.textContent = c; });
+  chapNodes.forEach((el) => { if (el.textContent !== c) el.textContent = c; });
   const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
   if (meta && meta.content !== s.bg) meta.content = s.bg;
+}
+function applyPointer() {
+  if (!haloEl) return;
+  haloEl.style.setProperty('--halo-x', `${(pointer.x * 100).toFixed(1)}%`);
+  haloEl.style.setProperty('--halo-y', `${(pointer.y * 100).toFixed(1)}%`);
 }
 
 /** À enregistrer une fois dans setupMotion(). */
 export function initBraise() {
   const reduced = prefersReducedMotion();
   if (!reduced && !isTouch()) {
-    addEventListener('pointermove', (e) => { pointer = { x: 0.6 + (e.clientX / innerWidth - 0.5) * 0.12, y: 0.4 + (e.clientY / innerHeight - 0.5) * 0.12 }; }, { passive: true });
+    addEventListener('pointermove', (e) => { pointer = { x: 0.6 + (e.clientX / innerWidth - 0.5) * 0.12, y: 0.4 + (e.clientY / innerHeight - 0.5) * 0.12 }; applyPointer(); }, { passive: true });
   }
   onScroll((s) => { target = tempAt(s.y); if (reduced) { shown = target; apply(shown); } });
   if (!reduced) {
     let visible = true;
     document.addEventListener('visibilitychange', () => { visible = !document.hidden; });
-    gsap.ticker.add((time) => {
+    gsap.ticker.add((time, dt) => {
       if (!visible) return;
+      taches.forEach((f) => f(time, dt));
       shown += (target - shown) * 0.08;
       if (Math.abs(target - shown) < 0.05) shown = target;
       apply(shown, Math.sin(time * (Math.PI * 2) / 6) * 0.04); // le halo respire ±4 % sur 6 s
@@ -105,6 +130,7 @@ export function initBraise() {
 
   // Chaque page : clés, état initial, en-tête, modules.
   onPage(() => {
+    cacheNodes();
     buildKeys();
     const start = parseFloat(root().dataset.start || '900');
     shown = target = reduced ? tempAt(scrollY) : start;
@@ -121,9 +147,16 @@ function initHeader() {
   if (!h) return;
   const thermo = document.querySelector<HTMLElement>('.thermo');
   const footer = document.querySelector<HTMLElement>('.footer');
+  const kyw = document.querySelector<HTMLElement>('.kyw-footer');
+  const barre = document.querySelector<HTMLElement>('.barre');
+  const hero = document.querySelector<HTMLElement>('.hero');
   let last = 0;
+  const barreOn = (y: number) => barre?.classList.toggle('is-on', !hero || y > hero.offsetHeight * 0.6);
+  barreOn(scrollY);
   return onScroll((s) => {
     if (thermo && footer) thermo.classList.toggle('is-footer', footer.getBoundingClientRect().top < innerHeight - 40);
+    if (thermo && kyw) thermo.classList.toggle('is-out', kyw.getBoundingClientRect().top < innerHeight);
+    barreOn(s.y);
     const down = s.y > last + 2 && s.y > 120;
     const up = s.y < last - 2;
     if (down) h.classList.add('is-hidden'); else if (up) h.classList.remove('is-hidden');
@@ -244,8 +277,8 @@ function initMarquee(reduced: boolean) {
     if (half > 0 && -x >= half) x += half;
     m.style.transform = `translate3d(${x}px,0,0)`;
   };
-  gsap.ticker.add(tick);
-  return () => gsap.ticker.remove(tick);
+  taches.add(tick);
+  return () => { taches.delete(tick); };
 }
 
 /** Repères du thermomètre : ancres vers les chapitres (défilement doux). */

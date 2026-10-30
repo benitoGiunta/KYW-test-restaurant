@@ -3,6 +3,8 @@
 import KywFooter from '@kyw/footer';
 import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
 import { u } from '../lib/url';
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
 ---
 <footer class="footer" data-temp="80">
   <div class="wrap">
@@ -13,14 +15,13 @@ import { u } from '../lib/url';
         <p class="t-xs muted">Adresse</p>
         <address>{adresseLigne()}</address>
         <p><a class="link" href={telHref()}>{site.telephone}</a></p>
-        <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
       </div>
-      <div>
+      {!compact && <div>
         <p class="t-xs muted" style="margin-bottom: var(--u)">Horaires</p>
         <dl class="horaires">
           {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
         </dl>
-      </div>
+      </div>}
       <div class="stack">
         <p class="t-xs muted">Suivre</p>
         {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
