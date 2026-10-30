@@ -40,8 +40,11 @@ h2, h3 { text-wrap: balance; }
 /* En-tête : transparent sur le hero (crème), ink ailleurs. */
 .header { position: absolute; top: 0; left: 0; right: 0; z-index: var(--z-header); }
 .header__inner { display: flex; align-items: flex-start; justify-content: space-between; gap: calc(var(--u) * 3); padding-block: calc(var(--u) * 2); }
-.header__brand { font-family: var(--f-display); font-weight: 500; font-size: var(--t-m); letter-spacing: -0.01em; line-height: 1; padding-block: 0.3em; transition: opacity 0.3s; }
-.header__brand:hover { opacity: 0.7; }
+.header__brand { position: relative; font-family: var(--f-display); font-weight: 500; font-size: var(--t-m); letter-spacing: -0.01em; line-height: 1; padding-block: 0.3em; }
+.header__brand::after { content: ''; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.header__brand:hover::after { transform: scaleX(1); }
+[data-theme='sombre'] .header { color: var(--c-bg); }
+[data-theme='sombre'] .nav__sous { color: rgb(251 251 248 / 0.78); }
 .nav { display: flex; gap: calc(var(--u) * 3); }
 .nav a { display: grid; gap: 0.15em; padding-block: 0.3em; line-height: 1.1; font-weight: 500; position: relative; }
 .nav__sous { color: var(--c-muted); }
@@ -49,7 +52,7 @@ h2, h3 { text-wrap: balance; }
 .nav a:hover::after, .nav a[aria-current='page']::after { transform: scaleX(1); }
 /* L'en-tête reste ink même sur photo : les ciels sont pâles. */
 @media (max-width: 1023px) { .nav { gap: calc(var(--u) * 2); } .nav a[data-mobile-hide] { display: none; } }
-@media (max-width: 599px) { .nav__sous { display: none; } .header__brand { font-size: 1.1rem; } .nav a { font-size: var(--t-s); } }
+@media (max-width: 599px) { .nav__sous { display: none; } .header__brand { font-size: 1.1rem; } .nav a { font-size: var(--t-s); padding-block: 0.5em; min-height: 28px; align-content: center; } }
 
 /* Hero horizon */
 .hero { position: relative; min-height: 100svh; display: grid; grid-template-rows: 1fr auto; overflow: clip; background: var(--c-ecume); }
@@ -63,8 +66,8 @@ html.motion [data-hero] { visibility: hidden; }
 .hero__bas { grid-row: 2; position: relative; z-index: 2; padding-bottom: calc(var(--u) * 7); color: var(--c-bg); }
 .nom { display: grid; width: 100%; font-family: var(--f-display); font-weight: 700; line-height: 0.9; letter-spacing: -0.02em; }
 .nom > span { display: block; white-space: nowrap; font-size: 11.5vw; }
-.nom > .nom__l2 { display: none; }
-@media (max-width: 767px) { .nom > .nom__l1 { display: none; } .nom > .nom__l2 { display: block; font-size: 20vw; } }
+.nom .nom__w { display: inline; }
+@media (max-width: 767px) { .nom > .nom__l1 { display: contents; } .nom .nom__w { display: block; white-space: nowrap; font-size: 20vw; } }
 .hero__univers { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: calc(var(--u) * 2); }
 .hero__univers li { display: flex; align-items: center; gap: 1.5rem; }
 .hero__univers li + li::before { content: '·'; }
@@ -83,8 +86,8 @@ html.motion [data-hero] { visibility: hidden; }
 .btn--plein:hover { background: #0f2a45; border-color: #0f2a45; }
 .btn--large { width: 100%; justify-content: center; padding-block: 1.1em; font-size: var(--t-m); font-family: var(--f-display); font-weight: 500; letter-spacing: -0.01em; }
 .actions { display: flex; flex-wrap: wrap; gap: var(--u); margin-top: calc(var(--u) * 3); }
-.link { display: inline-block; padding-block: 0.25em; text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: var(--c-sable); transition: text-decoration-color 0.3s; }
-.link:hover { text-decoration-color: currentColor; }
+.link { display: inline-block; padding-block: 0.25em; text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: var(--c-sable); transition: text-decoration-color 0.3s, text-underline-offset 0.3s; }
+.link:hover { text-decoration-color: currentColor; text-underline-offset: 0.4em; }
 .flèche::after { content: ' →'; }
 
 /* Badges (règles maison, arrivage) */
@@ -93,7 +96,7 @@ html.motion [data-hero] { visibility: hidden; }
 .badge--sable { border-color: var(--c-sable); color: var(--c-muted); }
 .badge--illustratif { border-style: dashed; color: var(--c-muted); }
 .badges { display: flex; flex-wrap: wrap; gap: 0.6rem; list-style: none; padding: 0; }
-.badges .badge { min-height: 44px; padding-inline: 1.2em; font-size: 0.8rem; }
+.badges .badge { min-height: 44px; padding-inline: 1.2em; font-size: 0.8rem; white-space: normal; text-align: left; }
 .badges .badge.is-ok { background: var(--c-bg); }
 .etat-badge { display: inline-flex; align-items: center; gap: 0.6em; min-height: 32px; padding: 0.3em 0.9em; border: 1px solid var(--c-fg); }
 .etat-badge::before { content: ''; width: 0.55em; height: 0.55em; border-radius: 50%; background: var(--c-sable); }
@@ -194,6 +197,8 @@ html.motion [data-hero] { visibility: hidden; }
 .resa { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 6); align-items: start; }
 @media (max-width: 1023px) { .resa { grid-template-columns: 1fr; } }
 .resa__tel { font-family: var(--f-display); font-size: var(--t-l); font-weight: 500; letter-spacing: -0.01em; }
+.resa__tel a { display: inline-block; text-decoration: underline; text-decoration-color: var(--c-sable); text-underline-offset: 0.12em; transition: text-underline-offset 0.3s, text-decoration-color 0.3s; }
+.resa__tel a:hover { text-decoration-color: var(--c-accent); text-underline-offset: 0.25em; }
 .form { display: grid; gap: calc(var(--u) * 2); }
 .form label { display: grid; gap: 0.3em; }
 .form input, .form select, .form textarea { padding: 0.7em 0.9em; border: 1px solid var(--c-fg); border-radius: 0; background: #fff; font: inherit; color: inherit; min-height: 44px; }
@@ -253,5 +258,5 @@ html.motion [data-hero] { visibility: hidden; }
 
 /* Reduced motion : tout visible, houle statique. */
 @media (prefers-reduced-motion: reduce) {
-  .media img, .nav a::after, .plan__pastille span { transition: none; }
+  .media img, .nav a::after, .header__brand::after, .plan__pastille span { transition: none; }
 }

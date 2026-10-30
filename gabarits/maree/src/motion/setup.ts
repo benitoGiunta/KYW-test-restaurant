@@ -39,7 +39,7 @@ function fitNom() {
   if (!els.length) return () => {};
   const fit = () => {
     for (const el of els) {
-      if (!el.offsetParent) continue; // ligne masquée (mobile / desktop)
+      if (!el.offsetParent || getComputedStyle(el).display === 'inline') continue; // ligne masquée ou mot en ligne (mobile / desktop)
       const box = el.parentElement!.clientWidth;
       el.style.fontSize = '100px';
       el.style.width = 'max-content';
@@ -65,7 +65,7 @@ function heroIntro(intro: gsap.core.Timeline) {
   gsap.set(hero, { visibility: 'visible' });
   const tl = gsap.timeline({ paused: true });
   if (media) tl.fromTo(media, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: ease.out }, 0);
-  if (nom.length) tl.fromTo(nom, { letterSpacing: '0.3em', autoAlpha: 0 }, { letterSpacing: '-0.02em', autoAlpha: 1, duration: 1.5, ease: ease.out, stagger: 0.08 }, 0.35);
+  if (nom.length) tl.fromTo(nom, { y: '0.18em', autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.5, ease: ease.out, stagger: 0.08 }, 0.35); // transform seulement : letter-spacing décalait la mise en page (CLS 0,11)
   else if (titre.length) tl.fromTo(titre, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.1, ease: ease.out, stagger: 0.12 }, 0.5);
   if (apres.length) tl.fromTo(apres, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: ease.out, stagger: 0.1 }, 0.9);
   intro.add(() => tl.play(), 0);
