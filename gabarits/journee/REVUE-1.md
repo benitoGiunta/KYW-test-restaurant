@@ -1,0 +1,42 @@
+# Revue gabarit « Journée » · Les Potes au Feu · passe 1
+Verdict : A_CORRIGER
+Lecture en une ligne de l'idée du site (sans DESIGN.md) : un cadran de la journée, où le ciel, un disque soleil/lune et une frise 7h à 23h suivent l'heure du visiteur et les six moments du restaurant (café, brunch, déjeuner, apéro, dîner, dernier verre).
+
+Scores /10 (auto-score, pas de critique aveugle disponible dans une session d'agent) :
+- Design 7,5 : ciel interpolé, grosse typo Bricolage, planche accueil (d-01 apéro corail, d-05 dîner nuit, d-07 nom géant) très cohérente ; retranché pour l'en-tête mobile qui laisse passer le texte (m-03, 404 m-04) et la carte-photo à moitié vide de l'apéro mobile.
+- Usabilité 6,5 : badge juste, mais le hero (nom, accroche, horloge, chips) n'est presque jamais vu au premier chargement (d-01-hero = apéro), en-tête mobile de 3 rangées, LCP mobile 4,0 s (brunch2) et 9,0 s (histoire).
+- Créativité 8 : l'idée est impossible à déplacer vers une autre marque ; le ciel pilote layout, couleur et badge ; les médaillons à titre courbé sont originaux.
+- Contenu 6,5 : faits réels exacts (adresse, tél, Zenchef, 67/52/40 €, horaires, histoire, Michelin), mais deux données non prouvées sans drapeau visible (voir F1) et une page brunch qui promet un service inexistant.
+- Technique 7 : 0 erreur console, 0 lien en échec, 0 débordement, axe 0 violation sur l'accueil re-capturé ; idleMotion false, FPS accueil 45 desktop / 38 mobile, contraste « doux » sous 4,5.
+
+Mesures : accueil re-capturé (.shots-journee-revue/accueil) : LCP desktop 180 ms, mobile 1 220 ms, CLS 0,001 / 0,004, loader 2,9 s, hiddenText reduced 0. Brunch : la re-capture n'a pas fini (shoot interrompu par l'arrêt du serveur) ; captures du constructeur brunch2 utilisées, mobile LCP 4 016 ms. Badge testé avec `page.clock` (script scratchpad badge-revue-journee.mjs) : lun 08:00 « ouvre à 19:00 », lun 19:30 « ouvert jusqu'à 21:00 », lun 21:00 « fermé, ouvre demain à 19:00 », mer 12:30 « ouvert jusqu'à 14:00 », mer 14:00 et 15:00 « ouvre à 19:00 », mer 20:59 « ouvert jusqu'à 21:00 », ven 13:59 « ouvert jusqu'à 14:00 », ven 21:30 et sam 13:00 « fermé, ouvre lundi à 19:00 », dim 19:30 « fermé, ouvre demain à 19:00 ». Tous conformes à donnees.json. Le badge suit la cuisine uniquement (le bar illustratif n'entre pas dans le calcul : bon choix).
+
+## Findings
+
+### F1 majeurs
+- **J1 · Arrivée automatique : le hero n'est plus vu** (`src/motion/journee.ts` arrivee(), l. 175-190). Après le loader, 0,9 s plus tard Lenis défile vers le moment courant : d-01-hero montre déjà « 17h L'apéro », jamais le nom, l'accroche, l'horloge ni les 6 chips. Test `page.clock` : à 12:30 scrollY 3169, à 21:30 scrollY 5061 (dîner), à 08:00 scrollY 837, tout cela dès 3,5 s ; l'heure 23h ou une heure avant 7h amène en bas de page. Le visiteur n'a donc vu ni la promesse ni la signature « cadran » (le hero ne se lit que sous reduced-motion, r-01-hero). Correction : garder le hero 2 à 3 s puis n'arriver qu'avec un geste (premier scroll ou chip « maintenant » cliquable), ou limiter l'arrivée à un défilement de moins d'un écran ; ne jamais arriver sur une section d'un moment fictif quand le restaurant est fermé.
+- **J2 · Donnée sans drapeau, e-mail inventé** (`src/pages/reservation.astro` l. 21) : le bouton « Écrire un e-mail » ouvre `mailto:bonjour@lespotesaufeu.be`, adresse absente du dossier (`email: null`, flaggée seulement dans le pied de page « (adresse illustrative) »). « Une donnée, un drapeau » : ajouter le tag ou retirer le bouton, et ne pas laisser un mailto vers une adresse qui n'existe pas.
+- **J3 · Brunch : service promis, heures inventées** (`src/pages/brunch.astro`) : « Samedi et dimanche, 9h à 14h » (chapeau l. 21, sans drapeau), CTA « Réserver pour le brunch », « Table réservée pour deux heures ; enfants bienvenus, chaise haute sur demande » (sans drapeau), alors que le restaurant est fermé samedi et dimanche. Le bandeau « illustratif » est sous le titre, mais heures, CTA et note sont de la promesse. Correction : drapeau « exemple » sur chaque donnée, CTA remplacé par « Voir les horaires réels », note retirée ou flaggée.
+- **J4 · Contraste du texte doux** : calcul sur CIELS de `journee.ts` : `doux` à 0,62 sur aube `#f4e3c8` = 4,42:1 et sur ocre `#f6e2b7` = 4,42:1 (< 4,5) ; sur corail bas `#d9614e` avec 0,84 = 3,90:1 (< 4,5), alors que les cartes (voile) tiennent 5,4:1. Axe ne le voit pas (contrastNeedsReview 40, fonds en dégradé). Correction : doux 0,72 sur aube/ocre, 0,92 ou encre pleine sur corail ; le cas corail pointé par la fiche n'est donc pas confirmé « bon ».
+
+### F2 mineurs
+- **J5 · En-tête mobile** : 3 rangées (marque + badge, nav, frise de points) ≈ 130 px sur 844 px, et le texte défilant reste lisible dessous (m-03 accueil « formule 3 services… », reservation m-02/m-04, 404 m-04, histoire m-04). Fond d'en-tête à 88 % de `--ciel-haut` : le passer à 96 % + `backdrop-filter: blur`, ou replier la frise au scroll.
+- **J6 · LCP mobile des pages à photo de hero** : histoire 9 048 ms (img, 68 Ko, `fetchpriority=high`), brunch2 4 016 ms, contre 1,2 s sur carte et réservation ; seuil 2,5 s dépassé. À remesurer en série (leçon sur les shoots parallèles) ; si confirmé, la photo est probablement couverte jusqu'à `is-loaded` (data-critical lié au loader) : la peindre au premier rendu.
+- **J7 · idleMotion toujours false** (accueil re-capturé, `idleAt: null`) : l'horloge est dans un hero que l'arrivée quitte ; la pulsation du disque annoncée par RAPPORT.md l. 45 n'est pas détectée par le script. La décision écrite est honnête mais le critère jury « le concept respire quand on s'arrête » n'est pas démontré : faire respirer un élément visible hors hero (disque de frise mesuré par shoot) ou régler J1.
+- **J8 · Médaillons du brunch (brunch.astro l. 36-47)** : titres « Pâte du matin / viennoiseries maison » sur une photo de mains sur une balance, « Saint-Jacques au brunch » : légende fausse sur l'usage mais flaggée « illustratif ». « Rosace de pommes : photo réelle du dessert du menu » (accueil et brunch) est une affirmation fausse : le dessert du menu est le soufflé caramel/chaï/poire, la rosace n'est qu'une photo du dossier. Reformuler « Rosace de pommes, photo du dossier » et ne pas écrire « photo réelle » sur la page client.
+- **J9 · Carte-photo du bar mobile** (accueil m-01, m-04) : la première carte de la bande affiche la photo puis un grand bloc corail vide sous elle ; la bande `.bande` est une région défilable sans nom accessible sur la capture du constructeur (axe `scrollable-region-focusable`, absent de la re-capture : corrigé ?). Remplir ou rogner la carte.
+- **J10 · 404** : survol des trois boutons = changement de couleur seul (h-01, h-02 react `color`), badge « ouvre à 19:00 » sur une page « Il est tard » qui peut s'afficher à midi (ton incohérent avec l'heure réelle), CLS 0,004 : acceptable.
+
+### F3 finitions
+- Happy hour « cocktails à 8 € » (index) contre « Cocktail de la maison 12 € » dans la carte de 17h : deux prix pour le même objet, même illustratifs.
+- Chip/crans de frise `7h Le café` : survol = couleur seule sur l'accueil (h-02).
+- Accueil, pas de `h1` dans le HTML serveur sans JS ? (audit constructeur : OK sur 5 pages crawlées) ; robots.txt et sitemap absents : normal sous `base`.
+- Vouvoiement respecté, aucun tiret cadratin dans les textes, ponctuation française correcte, « Boeuf » sans ligature dans les noms de plats (conforme à donnees.json).
+
+## Faits vérifiés contre donnees.json
+Adresse, téléphone, Zenchef rid=379477, horaires (lun-ven soir, mer et ven midi, sam-dim fermés), menu 67 € et ses lignes, suppléments +7 / +15 €, formule 52 €, lunch 40 €, bons cadeaux, histoire (14 ans, Plage d'Amée, 2019, États-Unis, Montréal, Shanghai), avis Michelin 2026 : exacts. Illustratifs flaggés : café, brunch, apéro, dernier verre, plat de la semaine lun/mar/jeu, bar, Sara et Jordan, avis Google (Claire D., Thomas V.), accord mets et vins, cocktail.
+
+## Ce qui est bien (à ne pas casser)
+1. Badge « ouvert jusqu'à » : logique exacte sur 13 instants testés, y compris les jours fermés et la pause 14h-19h.
+2. Le ciel qui tourne avec le disque sur la frise : une idée qui gouverne couleur, ordre des sections et badge ; d-05 (dîner nuit) et d-07 (nom géant orange) sont des cadres forts.
+3. Honnêteté du gabarit : tag « illustratif / exemple » partout, bandeau brunch, pied de page KYW et mention présents, 404 designée (« Cette page a fermé »), reduced-motion complet (hiddenText 0).
