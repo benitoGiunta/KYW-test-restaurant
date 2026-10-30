@@ -1,0 +1,20 @@
+---
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const liens = [
+  { href: u('/'), label: 'Accueil' },
+  { href: u('/carte/'), label: 'La carte' },
+  { href: u('/histoire/'), label: 'Notre histoire' },
+  { href: u('/reservation/'), label: 'Réserver' },
+];
+const ici = Astro.url.pathname.replace(/\/+$/, '');
+const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+---
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="header__brand" href={u('/')}>{site.nom}</a>
+    <nav class="nav" aria-label="Navigation principale">
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+    </nav>
+  </div>
+</header>

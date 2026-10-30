@@ -1,0 +1,82 @@
+/* JETONS « Quatre mains » : les NOMS sont le contrat du moteur, les VALEURS viennent du cahier de direction. */
+
+/* Switzer (Fontshare, FFL) : display, texte, nav. Les chemins /fonts/ sont réécrits sous `base` par Vite. */
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/switzer-300-normal.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/switzer-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+/* Fragment Mono (Google, OFL) : meta, numéros, années, prix. */
+@font-face {
+  font-family: 'Fragment Mono';
+  src: url('/fonts/fragment-mono-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Les deux voix et le papier commun */
+  --c-vert: #1e4a3e;
+  --c-moutarde: #e6b13a;
+  --c-ink: #111311;
+  --c-papier: #f7f5ee;
+  --c-trait: #2c2c2a;
+  --c-papier-muted: rgb(247 245 238 / 0.72);
+  --c-ink-muted: rgb(17 19 17 / 0.62);
+
+  /* Contrat du moteur (fond par défaut = papier, encre = ink) */
+  --c-bg: var(--c-papier);
+  --c-fg: var(--c-ink);
+  --c-muted: var(--c-ink-muted);
+  --c-line: rgb(17 19 17 / 0.16);
+  --c-accent: var(--c-ink);
+  --c-curtain: var(--c-vert);
+
+  /* La frontière : position en % (0 = tout moutarde, 100 = tout vert) et dérive en px (idle). Pilotées par le driver. */
+  --split: 50;
+  --split-dx: 0px;
+  --frontiere: calc(var(--split) * 1% + var(--split-dx));
+
+  /* Familles */
+  --f-display: 'Switzer', 'Helvetica Neue', Arial, sans-serif;
+  --f-body: 'Switzer', 'Helvetica Neue', Arial, sans-serif;
+  --f-mono: 'Fragment Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* Échelle fluide */
+  --t-mega: clamp(3.5rem, 1rem + 11vw, 15rem);
+  --t-xl: clamp(2.25rem, 1.2rem + 4.4vw, 5.5rem);
+  --t-l: clamp(1.625rem, 1.2rem + 1.8vw, 2.75rem);
+  --t-m: clamp(1.25rem, 1.1rem + 0.55vw, 1.5rem);
+  --t-body: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.75rem;
+  --t-mono: 0.78rem;
+
+  /* Espace */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.8vw, 2.75rem);
+  --cols: 12;
+  --wrap: 88rem;
+
+  /* Forme : aucun arrondi, photos à bords vifs. */
+  --radius: 0px;
+
+  /* Couches */
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}

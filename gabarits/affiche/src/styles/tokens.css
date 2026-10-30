@@ -1,0 +1,74 @@
+/* JETONS DU GABARIT « AFFICHE » : les noms sont le contrat du moteur, les valeurs viennent de DESIGN.md. */
+
+/* Archivo variable (Google, OFL) : un seul fichier, axes wdth 62-125 et wght 400-900. Chemin préfixé par base
+   dans Base.astro (preload) ; ici l'URL est relative au CSS bundlé, donc absolue sous la base via var(--base). */
+@font-face {
+  font-family: 'Archivo';
+  src: url('../../public/fonts/archivo-400_900-normal.woff2') format('woff2');
+  font-weight: 400 900;
+  font-style: normal;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Les cinq aplats */
+  --rouge: #e3352b;
+  --jaune: #f6c33a;
+  --vert: #1f8a4c;
+  --creme: #f4eedf;
+  --ink: #15110f;
+
+  /* Rôles (contrat du moteur). Chaque affiche les redéfinit via [data-tone]. */
+  --c-bg: var(--creme);
+  --c-fg: var(--ink);
+  --c-muted: #5b544d; /* 6,9:1 sur crème */
+  --c-line: var(--ink);
+  --c-accent: var(--rouge);
+  --c-focus: var(--ink);
+  --c-curtain: var(--rouge);
+
+  /* Familles */
+  --f-display: 'Archivo', 'Arial Black', Impact, sans-serif;
+  --f-body: 'Archivo', Arial, Helvetica, sans-serif;
+
+  /* Échelle fluide : grands sauts entre display et texte */
+  --t-mega: clamp(3.4rem, 1rem + 13vw, 14rem);
+  --t-prix: clamp(5rem, 2rem + 18vw, 13rem);
+  --t-xl: clamp(2.2rem, 1.2rem + 4.6vw, 5.6rem);
+  --t-l: clamp(1.5rem, 1.15rem + 1.6vw, 2.5rem);
+  --t-m: clamp(1.2rem, 1.05rem + 0.7vw, 1.6rem);
+  --t-body: 1.0625rem; /* 17 px */
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem; /* 13 px, UI en capitales 700 */
+
+  /* Espace : marge fixe de 24 px, jamais plus */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: 24px;
+  --cols: 12;
+
+  /* Forme */
+  --radius: 0px;
+  --filet: 2px;
+  --ombre: 8px;
+
+  /* Dents (bord dentelé) */
+  --dent: 18px;
+
+  /* Couches */
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-menu: 60;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}
+
+/* Tons d'affiche : encre et focus suivent le fond, en un seul endroit. */
+[data-tone='rouge'] { --c-bg: var(--rouge); --c-fg: var(--ink); --c-focus: var(--jaune); --c-muted: var(--ink); }
+[data-tone='jaune'] { --c-bg: var(--jaune); --c-fg: var(--ink); --c-focus: var(--ink); --c-muted: #4a3b0c; }
+[data-tone='vert'] { --c-bg: var(--vert); --c-fg: var(--creme); --c-focus: var(--jaune); --c-muted: var(--creme); }
+[data-tone='creme'] { --c-bg: var(--creme); --c-fg: var(--ink); --c-focus: var(--ink); --c-muted: #5b544d; }
+[data-tone='ink'] { --c-bg: var(--ink); --c-fg: var(--creme); --c-focus: var(--jaune); --c-muted: #c9c2b3; }

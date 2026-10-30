@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe, horaireTexte } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/cuisine-chefs-passe.webp');
+const galerie = ['/photos/plat-boeuf-confit.webp', '/photos/salle-banquette.webp', '/photos/service-francois-table.webp'].map(photoDe);
+---
+<Base>
+  <section class="hero wrap">
+    <h1 class="hero__title" data-split="lines" data-intro>{site.nom}</h1>
+    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">{site.baseline}</p>
+    <div class="actions" data-reveal="up" data-intro data-delay="0.5">
+      <a class="btn btn--primary" href={u('/reservation/')} data-magnetic="0.25">Réserver une table</a>
+      <a class="btn" href={u('/carte/')}>Voir la carte</a>
+    </div>
+    <figure class="hero__media" data-reveal="clip" data-intro data-delay="0.2">
+      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical data-parallax="0.1" />
+    </figure>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section__title" data-split="words">Ce qui nous anime</h2>
+      <ul class="liste stack" data-reveal="up">
+        {site.valeurs.map((v) => <li>{v}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section__title" data-split="words">Nos formules</h2>
+      <div class="grid">
+        {site.menus.map((m, i) => (
+          <article class="menu stack" data-reveal="up" data-delay={String(i * 0.1)}>
+            <h3>{m.nom}</h3>
+            <p><strong>{m.prix}</strong></p>
+            <p class="muted">{m.description}</p>
+          </article>
+        ))}
+      </div>
+      <p class="actions"><a class="link" href={u('/carte/')}>La carte complète</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section__title" data-split="words">En images</h2>
+      <div class="grid">
+        {galerie.map((p, i) => (
+          <figure class="card" data-reveal="scale" data-delay={String(i * 0.1)} data-cursor="Voir">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            <figcaption class="muted">{p.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section__title" data-split="words">Ils en parlent</h2>
+      <div class="grid">
+        {site.avis.map((a) => (
+          <blockquote class="avis" data-reveal="fade">
+            <p>{a.texte}</p>
+            <cite>{a.auteur}, {a.source}{a.placeholder ? ' (avis illustratif)' : ''}</cite>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section__title" data-split="words">Horaires et accès</h2>
+      <dl class="horaires" data-reveal="up">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+      <div class="actions">
+        <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+        <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
+      </div>
+    </div>
+  </section>
+</Base>

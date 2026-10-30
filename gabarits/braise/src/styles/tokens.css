@@ -1,0 +1,65 @@
+/* JETONS DE DESIGN « Braise ». Les NOMS sont le contrat du moteur ; les VALEURS viennent du cahier.
+   Les six couleurs sont tweenées sur <html> par le driver de température (src/motion/braise.ts) ; les valeurs
+   ci-dessous sont l'état 900 °C (le passe), premier cadre du site. html[data-start] fixe l'état initial des
+   pages qui démarrent plus froid (réservation, privatisation, 404) pour que le premier rendu soit juste sans JS.
+   Les @font-face sont écrits dans Base.astro (chemins préfixés par la base du site). */
+
+
+:root {
+  /* Couleurs par rôle, état 900 °C. */
+  --c-bg: #141110;
+  --c-fg: #f4ede2;
+  --c-muted: #b9aea2;
+  --c-line: #5e5650;
+  --c-accent: #e8632c;
+  --c-cuivre: #b5703f;
+  --c-curtain: #141110;
+  --c-noir: #141110;
+  --c-ivoire: #f2e8d8;
+  --c-braise: #e8632c;
+  --c-brun: #2a1510;
+  --temp: 900;
+  --halo: 1;      /* opacité du halo, 1 → 0 */
+  --grain: 0.06;  /* opacité du grain, 0.06 → 0 */
+  --voile: 0.3;   /* voile brun sur les photos, 0.3 → 0.05 */
+
+  /* Familles */
+  --f-display: 'Melodrama', 'Iowan Old Style', Georgia, serif;
+  --f-body: 'Literata', Georgia, serif;
+
+  /* Échelle fluide */
+  --t-mega: clamp(3.5rem, 14vw, 15rem);
+  --t-xl: clamp(2.6rem, 1.2rem + 5.2vw, 6.5rem);
+  --t-l: clamp(1.5rem, 1.1rem + 1.6vw, 2.6rem);
+  --t-m: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
+  --t-body: 1.0625rem;
+  --t-s: 0.875rem;
+  --t-xs: 0.75rem;
+
+  /* Espace : une unité fluide, multipliée. */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1.25rem, 0.6rem + 2.5vw, 3.5rem);
+  --cols: 12;
+
+  /* Forme : 0 partout ; seules la pastille d'état et les pilules sont rondes. */
+  --radius: 0px;
+  --pill: 999px;
+
+  /* Couches */
+  --z-gl: 0;
+  --z-content: 1;
+  --z-halo: 2;
+  --z-grain: 3;
+  --z-header: 50;
+  --z-thermo: 55;
+  --z-menu: 60;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}
+
+/* États initiaux des pages qui ne démarrent pas au passe (sans JS et avant le premier tick du driver). */
+html[data-start='420'] { --c-bg: #2a1510; --c-muted: #c9b5a4; --c-line: #6a5146; --temp: 420; --halo: 0.65; }
+html[data-start='240'] { --c-bg: #4a2a1c; --c-muted: #d9c3b0; --c-line: #7a6050; --temp: 240; --halo: 0.4; --voile: 0.2; }
+html[data-start='90'] { --c-bg: #e6d5bf; --c-fg: #1a1410; --c-muted: #6b5646; --c-line: #b9a48f; --c-accent: #a3431a; --temp: 90; --halo: 0.08; --grain: 0; --voile: 0.08; }
+html[data-start='20'] { --c-bg: #f2e8d8; --c-fg: #1a1410; --c-muted: #6b5646; --c-line: #c9b8a4; --c-accent: #a3431a; --temp: 20; --halo: 0; --grain: 0; --voile: 0.05; }
