@@ -10,13 +10,13 @@ import { onPage, onScroll, scrollState, scrollToTarget, prefersReducedMotion, is
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 type Stop = { t: number; bg: string; fg: string; muted: string; line: string; accent: string; halo: number; grain: number; voile: number };
-// Arrêts de température (voir DESIGN.md) ; l'encre bascule entre 130 et 110 °C pour que le contraste reste AA ailleurs.
+// Arrêts de température (voir DESIGN.md) ; l'encre bascule entre 125 et 115 °C pour que le contraste reste AA ailleurs.
 const STOPS: Stop[] = [
   { t: 900, bg: '#141110', fg: '#f4ede2', muted: '#b9aea2', line: '#5e5650', accent: '#e8632c', halo: 1, grain: 0.06, voile: 0.3 },
   { t: 520, bg: '#2a1510', fg: '#f4ede2', muted: '#c9b5a4', line: '#6a5146', accent: '#e8632c', halo: 0.7, grain: 0.06, voile: 0.25 },
   { t: 150, bg: '#7a4e36', fg: '#f4ede2', muted: '#ebd9c8', line: '#9c7a62', accent: '#e8632c', halo: 0.25, grain: 0.04, voile: 0.15 },
-  { t: 130, bg: '#8e5f44', fg: '#f4ede2', muted: '#ebd9c8', line: '#a8866c', accent: '#ffb48a', halo: 0.18, grain: 0.03, voile: 0.12 },
-  { t: 110, bg: '#c9ad95', fg: '#1a1410', muted: '#5e4a3c', line: '#a88a72', accent: '#a3431a', halo: 0.12, grain: 0.01, voile: 0.1 },
+  { t: 125, bg: '#8e5f44', fg: '#f4ede2', muted: '#ebd9c8', line: '#a8866c', accent: '#ffb48a', halo: 0.18, grain: 0.03, voile: 0.12 },
+  { t: 115, bg: '#c9ad95', fg: '#1a1410', muted: '#5e4a3c', line: '#a88a72', accent: '#a3431a', halo: 0.12, grain: 0.01, voile: 0.1 },
   { t: 90, bg: '#e6d5bf', fg: '#1a1410', muted: '#6b5646', line: '#b9a48f', accent: '#a3431a', halo: 0.08, grain: 0, voile: 0.08 },
   { t: 20, bg: '#f2e8d8', fg: '#1a1410', muted: '#6b5646', line: '#c9b8a4', accent: '#a3431a', halo: 0, grain: 0, voile: 0.05 },
 ];
@@ -119,8 +119,11 @@ export function initBraise() {
 function initHeader() {
   const h = document.querySelector<HTMLElement>('.header');
   if (!h) return;
+  const thermo = document.querySelector<HTMLElement>('.thermo');
+  const footer = document.querySelector<HTMLElement>('.footer');
   let last = 0;
   return onScroll((s) => {
+    if (thermo && footer) thermo.classList.toggle('is-footer', footer.getBoundingClientRect().top < innerHeight - 40);
     const down = s.y > last + 2 && s.y > 120;
     const up = s.y < last - 2;
     if (down) h.classList.add('is-hidden'); else if (up) h.classList.remove('is-hidden');

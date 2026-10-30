@@ -25,7 +25,7 @@ html.motion body { transition: none; }
 .muted { color: var(--c-muted); }
 .accent { color: var(--c-accent); }
 em { font-style: italic; }
-.chapeau { display: block; font-family: var(--f-body); font-size: var(--t-s); color: var(--c-cuivre); letter-spacing: 0.04em; margin-bottom: calc(var(--u) * 2); }
+.chapeau { display: block; font-family: var(--f-body); font-size: var(--t-s); color: var(--c-accent); letter-spacing: 0.04em; margin-bottom: calc(var(--u) * 2); }
 .chapeau::before { content: ''; display: inline-block; width: 2.5em; height: 1px; background: currentColor; vertical-align: middle; margin-right: 0.8em; }
 .stack > * + * { margin-top: var(--u); }
 .prose > * + * { margin-top: calc(var(--u) * 1.5); }
@@ -100,6 +100,8 @@ em { font-style: italic; }
 .thermo { position: fixed; left: var(--gutter); bottom: var(--gutter); z-index: var(--z-thermo); display: flex; align-items: flex-end; gap: calc(var(--u) * 1.5); pointer-events: none; }
 .thermo__val { font-family: var(--f-body); font-weight: 600; font-size: var(--t-l); line-height: 0.9; letter-spacing: -0.02em; min-width: 4.2ch; }
 .thermo__val small { font-size: 0.5em; vertical-align: top; margin-left: 0.15em; }
+.thermo.is-footer { color: #f4ede2; }
+.thermo.is-footer .thermo__chap { color: #c9b5a4; }
 .thermo__chap { font-size: var(--t-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); margin-top: 0.4em; }
 .thermo__regle { position: relative; width: 1px; height: 7rem; background: var(--c-line); pointer-events: auto; }
 .thermo__fill { position: absolute; left: -1px; bottom: 0; width: 3px; height: 100%; background: var(--c-accent); transform-origin: bottom; transform: scaleY(var(--thermo, 1)); }
@@ -268,7 +270,9 @@ address { font-style: normal; }
 
 /* Pied de page : la braise qui s'éteint (brun, nom géant). */
 .footer { position: relative; overflow: clip; background: #2a1510; color: #f4ede2; padding-block: calc(var(--u) * 10) calc(var(--u) * 4); border-top: 1px solid rgb(244 237 226 / 0.12); }
-.footer .muted { color: #c9b5a4; }
+.footer .muted, .footer .horaires dt { color: #c9b5a4; }
+.footer .horaires, .footer .formule { border-color: rgb(244 237 226 / 0.15); }
+.footer .t-xs { color: #c9b5a4; }
 .footer .link { text-decoration-color: rgb(244 237 226 / 0.3); }
 .footer .link:hover { color: #e8632c; }
 .footer__name { font-family: var(--f-display); font-size: clamp(3rem, 15vw, 16rem); line-height: 0.85; letter-spacing: -0.03em; margin-left: -0.04em; white-space: nowrap; }
@@ -314,7 +318,7 @@ address { font-style: normal; }
 .curtain__panel { border-top: 3px solid #e8632c; box-shadow: 0 -40px 80px rgb(232 99 44 / 0.35); }
 
 /* Marque « maquette » */
-.tag { display: inline-block; font-size: var(--t-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-cuivre); }
+.tag { display: inline-block; font-size: var(--t-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-accent); }
 
 /* 404 */
 .p404 { min-height: 80svh; display: grid; align-content: center; }

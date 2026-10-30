@@ -1,15 +1,9 @@
-# ETAT braise (mis à jour par l'agent portfolio-gabarit)
+# ETAT braise (agent portfolio-gabarit, 30/10/2026)
 
 ## Fait
-- DESIGN.md complet ; scaffold copié du socle ; package.json renommé.
-- public/ : fonts (Melodrama, Literata), photos WebP, couches/ (fond, piece, garniture, sauce via scripts/couches.mjs), og.jpg, favicon, robots.
-- src/data/site.ts partiellement enrichi ; tokens.css commencé.
+- DESIGN.md, FICHE.md, RAPPORT.md, apercu.png ; gabarit complet (6 pages), buildé dans dist/gabarits/braise/.
+- QA mécanique : shoot accueil (.shots/braise/, --nav, hovers) + pages internes (.shots/braise-<page>/) + audit (.shots/audit-braise.txt) : 0 erreur console, 0 FAIL, 0 débordement.
+- Corrections mécaniques appliquées après les captures (contrastes axe, liste cuisson, marquee, aria-label, thermomètre sur pied de page) et rebuild ; non recapturées.
 
-## Reste
-- Design : tokens.css, base.css, motion/setup.ts + motion/braise.ts (driver --temp), composants, pages, QA, apercu, FICHE, RAPPORT.
-
-## 30/10 (suite) : écrits base.css, motion/braise.ts (driver), setup.ts, Header, Loader, Thermo, Barre, Footer, Base.astro (fonts, halo, grain, vignette). Reste : pages, build, QA.
-- Build passe (6 pages). QA en cours port 4401.
-- shoot en cours : sortie dans .shots/braise (le dossier .shots est partagé avec les agents frères : toujours --out .shots/<id>).
-- Bug corrigé : tempAt avant buildKeys (Lenis émet scroll avant onPage) bloquait le loader. Console 0 erreur sur 6 pages. Shoot accueil relancé (.shots/braise).
-- Corrections : liste cuisson (bouton dans la colonne 2.5rem), marquee nowrap, aria-label des boutons, thermo mobile visible, chiffres en Literata (zéro barré de Melodrama). Reste : shoot des pages internes, audit 2, apercu, RAPPORT.
+## Reste (agent de revue / corrections)
+- Jury + revue ; LCP (loader) ; recapture après les corrections de contraste ; « retire un accessoire ».

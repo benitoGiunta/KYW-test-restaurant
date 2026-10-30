@@ -15,7 +15,23 @@ signature se dresse en quatre couches au scrub.
 
 ## Mesures (shoot accueil, passe 2 après corrections)
 
-MESURES_A_COMPLETER
+| Mesure | Desktop | Mobile (throttlé, CPU partagé) |
+|---|---|---|
+| Erreurs console / liens cassés | 0 / 0 | 0 / 0 |
+| Débordement horizontal | non | non |
+| LCP | 4484 ms (p.hero__lead) | 8660 ms |
+| CLS | 0.016 | 0.01 |
+| Loader | 3663 ms | 7967 ms |
+| FPS au défilement | 21 | 17 |
+| idleMotion | True | |
+| axe sérieux (accueil, passe 1) | 1 (label-content-name-mismatch, corrigé) | |
+| Reduced motion : mouvement | False | |
+
+Pages internes (passe 1, `.shots/braise-<page>/`) : 0 erreur, 0 débordement sur carte, histoire, réservation,
+privatisation, 404 ; violations de contraste axe (chapeau cuivre, pied de page sur page claire, thermomètre sur le
+pied de page, étiquette `.tag`) corrigées ensuite (chapeau et tag en accent, couleurs fixes du pied de page, classe
+`is-footer` du thermomètre, bascule d'encre resserrée à 125-115 °C) : à revérifier par la revue.
+`audit.mjs` final : 0 FAIL, 20 WARN (phrases répétées du marquee et des horaires, robots/sitemap sous base, 404 de l'origine).
 
 ## Placeholders (`placeholder: true` dans `src/data/site.ts`)
 
