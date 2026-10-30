@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, moments, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const brunch = moments.find((m) => m.id === 'm-9h')!;
+const plats = [
+  { photo: photoDe('/photos/dessert-tarte-pomme.webp'), titre: 'Rosace de pommes', texte: 'Photo réelle du dessert du menu', placeholder: false },
+  { photo: photoDe('/photos/plat-tartare.webp'), titre: 'Tartare de boeuf', texte: 'Petite assiette au brunch', placeholder: true },
+  { photo: photoDe('/photos/plat-saint-jacques.webp'), titre: 'Saint-Jacques', texte: 'Petite assiette au brunch', placeholder: true },
+  { photo: photoDe('/photos/cuisine-mains-pate.webp'), titre: 'Pâte du matin', texte: 'Viennoiseries maison', placeholder: true },
+];
+const salle = photoDe('/photos/salle-banquette.webp');
+const sara = photoDe('/photos/service-planche.webp');
+---
+<Base title="Le brunch" theme="midi" description={`Le brunch du week-end chez ${site.nom} à ${site.adresse.commune} : formule complète, assiettes du matin, table qui traîne jusqu'à midi.`}>
+  <section class="section" data-ciel="midi">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>Samedi et dimanche, 9h à 14h</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Le brunch</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">{brunch.accroche}</p>
+        <div class="bandeau" style="margin-top: calc(var(--u) * 3)" data-reveal="fade" data-intro data-delay="0.3">
+          <span class="tag" style="margin: 0">illustratif</span>
+          <span>Les Potes au Feu ne servent pas de brunch aujourd'hui : cette page montre le moment « 9h » du gabarit avec des données d'exemple.</span>
+        </div>
+        <div class="actions" data-reveal="up" data-intro data-delay="0.4">
+          <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Réserver pour le brunch</a>
+        </div>
+      </div>
+      <figure class="c8-12 photo photo--4x5">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="ocre">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Les assiettes</p>
+        <h2 class="t-xl" data-split="words">Rondes, vues du dessus</h2>
+      </div>
+      <ul class="medaillons" data-medaillons tabindex="0" aria-label="Assiettes du brunch" style="grid-template-columns: repeat(4, minmax(0, 1fr))">
+        {plats.map((md, i) => (
+          <li>
+            <div class="medaillon">
+              <div class="medaillon__photo"><img src={asset(md.photo.src)} alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
+              <svg class="medaillon__anneau" viewBox="0 0 200 200" aria-hidden="true">
+                <defs><path id={`barc-${i}`} d="M100,100 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
+                <text><textPath href={`#barc-${i}`}>{md.titre} · le brunch · {md.titre} · le brunch ·</textPath></text>
+              </svg>
+            </div>
+            <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}{md.placeholder ? <span class="tag">illustratif</span> : null}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau">La formule<span class="tag">illustratif</span></p>
+        <h2 class="t-l" data-split="words">Brunch des Potes, 28 €</h2>
+        <ul class="lignes" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
+          {brunch.lignes.map((l) => (
+            <li class="ligne"><span class="ligne__nom">{l.nom}{l.placeholder ? <span class="tag">exemple</span> : null}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
+          ))}
+          <li class="ligne"><span class="ligne__nom">Jus pressé du matin<span class="tag">exemple</span></span><span class="ligne__prix">5 €</span><span class="ligne__detail">orange, pomme ou carotte-gingembre</span></li>
+          <li class="ligne"><span class="ligne__nom">Café filtre à volonté<span class="tag">exemple</span></span><span class="ligne__prix">4 €</span></li>
+        </ul>
+        <p class="note" style="margin-top: calc(var(--u) * 2)">Table réservée pour deux heures ; enfants bienvenus, chaise haute sur demande.</p>
+      </div>
+      <figure class="c8-12 photo photo--4x3" data-reveal="scale">
+        <img src={asset(sara.src)} alt={sara.alt} width={sara.largeur} height={sara.hauteur} loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </section>
+</Base>

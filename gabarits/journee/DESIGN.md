@@ -76,4 +76,5 @@ journée, ce que le gabarit assume (les moments non prouvés pour Les Potes au F
 - [x] Idle : la seconde tourne sur l'anneau de l'horloge du hero (idleMotion).
 - [x] `noindex`, `lang="fr"`, KywFooter sur chaque page, une seule mention « Maquette KYW ».
 - [x] Tout lien/asset via `u()`/`asset()`.
-- [ ] 0 FAIL shoot/audit, 0 erreur console, pas de débordement, axe sans violation sérieuse (à prouver).
+- [x] 0 FAIL shoot/audit, 0 erreur console, pas de débordement, axe sans violation sérieuse : passe 1 sur 6 pages (`.shots-journee/`, `audit-journee.txt` : 0 FAIL, 3 WARN normaux sous base) ; 1 violation `scrollable-region-focusable` corrigée (tabindex) ; mesures dans RAPPORT.md.
+- [x] LCP : h1 du hero peint sous le loader (292 ms desktop, 1,6 s mobile throttlé) ; photos de hero des pages intérieures sans reveal.

@@ -3,57 +3,77 @@ import Base from '../layouts/Base.astro';
 import { site, photoDe } from '../data/site';
 import { u, asset } from '../lib/url';
 const equipePhoto = photoDe('/photos/equipe-trio.webp');
-const coulisses = ['/photos/cuisine-chefs-dressage.webp', '/photos/cuisine-mains-pate.webp', '/photos/salle-clients-bar.webp'].map(photoDe);
+const hero = photoDe('/photos/cuisine-francois-poele.webp');
+const coulisses = ['/photos/cuisine-chefs-dressage.webp', '/photos/service-francois-table.webp', '/photos/salle-clients-bar.webp', '/photos/salle-ampoules.webp'].map(photoDe);
+const initiales = (nom: string) => nom.split(' ').map((x) => x[0]).join('');
 ---
-<Base title="Notre histoire" description={`L'histoire de ${site.nom} : deux chefs amis, Damien Gorjanec et François Schepens, une cuisine bistronomique à quatre mains à ${site.adresse.commune}.`}>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>Notre histoire</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">{site.baseline}</p>
-  </section>
-
-  <section class="section">
-    <div class="wrap stack">
-      <h2 class="section__title" data-split="words">Deux potes, un feu</h2>
-      {site.histoire.map((p) => <p data-reveal="up">{p}</p>)}
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">L'équipe</h2>
-      <div class="grid">
-        {site.equipe.map((m) => {
-          const p = m.photo ? photoDe(m.photo) : null;
-          return (
-            <article class="card" data-reveal="up">
-              {p && <figure><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>}
-              <h3>{m.nom}</h3>
-              <p class="muted">{m.role}{m.placeholder ? ' (rôle à confirmer)' : ''}</p>
-            </article>
-          );
-        })}
+<Base title="Notre histoire" theme="ocre" description={`L'histoire de ${site.nom} : deux chefs amis, Damien Gorjanec et François Schepens, une cuisine bistronomique à quatre mains à ${site.adresse.commune}.`}>
+  <section class="section" data-ciel="ocre">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>Depuis 2020, avenue de la Plante</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Deux potes, un feu</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">{site.baseline}</p>
       </div>
-      <figure class="card" style="margin-top: calc(var(--u) * 4); max-width: 36rem" data-reveal="scale">
-        <img src={asset(equipePhoto.src)} alt={equipePhoto.alt} width={equipePhoto.largeur} height={equipePhoto.hauteur} loading="lazy" decoding="async" />
-        <figcaption class="muted">{equipePhoto.alt}</figcaption>
+      <figure class="c8-12 photo photo--4x3">
+        <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
       </figure>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" data-ciel="aube">
+    <div class="wrap cols">
+      <div class="c2-11 prose">
+        {site.histoire.map((p, i) => <p class={i === 0 ? 't-m' : ''} data-reveal="up">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="corail">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">Dans les coulisses</h2>
+      <div class="section__head">
+        <p class="chapeau">L'équipe</p>
+        <h2 class="t-xl" data-split="words">Ceux qui servent</h2>
+      </div>
       <div class="grid">
-        {coulisses.map((p, i) => (
-          <figure class="card" data-reveal="clip" data-delay={String(i * 0.1)}>
-            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
-            <figcaption class="muted">{p.alt}</figcaption>
-          </figure>
+        {site.equipe.map((m, i) => {
+          const p = m.photo ? photoDe(m.photo) : null;
+          return (
+            <article class="membre" data-reveal="up" data-delay={String(i * 0.08)}>
+              {p ? <figure class="photo"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure> : <p class="membre__initiales" aria-hidden="true">{initiales(m.nom)}</p>}
+              <h3 class="t-m" style="font-weight: 600">{m.nom}</h3>
+              <p class="t-s muted">{m.role}{m.placeholder ? <span class="tag">rôle à confirmer</span> : null}</p>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="nuit">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Le soir, en coulisses</p>
+        <h2 class="t-xl" data-split="words">Du passe à la table</h2>
+      </div>
+      <div class="cols">
+        <figure class="c1-7 photo photo--4x3" data-reveal="clip"><img src={asset(equipePhoto.src)} alt={equipePhoto.alt} width={equipePhoto.largeur} height={equipePhoto.hauteur} loading="lazy" decoding="async" /><figcaption>{equipePhoto.alt}</figcaption></figure>
+        <div class="c8-12 stack">
+          {coulisses.slice(0, 2).map((p) => <figure class="photo photo--3x2" data-reveal="scale"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>)}
+        </div>
+        {coulisses.slice(2).map((p) => <figure class="c1-6 photo photo--3x2" data-reveal="scale"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /><figcaption>{p.alt}</figcaption></figure>)}
+      </div>
+      <div class="grid" style="margin-top: calc(var(--u) * 6)">
+        {site.avis.map((a) => (
+          <blockquote class="avis" data-reveal="fade">
+            <p>{a.texte}</p>
+            <cite>{a.auteur}, {a.source}{a.placeholder ? ' (avis illustratif)' : ''}</cite>
+          </blockquote>
         ))}
       </div>
       <div class="actions">
         <a class="btn" href={u('/carte/')}>Découvrir la carte</a>
-        <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+        <a class="btn btn--soleil" href={u('/reservation/')} data-magnetic="0.2">Réserver</a>
       </div>
     </div>
   </section>
