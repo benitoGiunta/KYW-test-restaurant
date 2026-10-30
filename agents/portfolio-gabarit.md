@@ -131,3 +131,7 @@ seul fichier, sections indépendantes, tokens).
   des lignes qui comprennent des extras. Un avis d'exemple n'a ni nom de personne ni source réelle : une étiquette
   « Exemple d'avis » avant la citation. La première photo d'une page intérieure ne porte pas `data-reveal` et se sert en
   800 px au plus sur mobile.
+- **Hero de page qui se replie** (révision Nocturne) : un hero où titre et chapô sont côte à côte se replie en flex (titre
+  `flex: 0 0 min-content`, chapô `1 1 18rem` borné à 34ch) : un titre d'un seul mot ne se coupe pas, et `overflow: clip`
+  masque un chapô coupé sans que les outils le voient. Mesurer à 1440, 1280, 1024 et 820 px qu'aucun enfant du hero ne
+  dépasse son bord droit.

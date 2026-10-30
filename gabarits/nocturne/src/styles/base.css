@@ -97,12 +97,14 @@ html.lampe-on #lampe { display: block; }
 .statut { display: inline-flex; align-items: center; gap: 0.6em; min-height: 28px; padding: 0.3em 0.9em; border: 1px solid var(--c-line); font-size: var(--t-xs); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-fg); }
 .statut::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--c-line); flex: none; }
 .statut.is-ouvert::before { background: var(--c-accent); box-shadow: 0 0 10px 2px rgb(var(--c-accent-rgb) / 0.6); }
-.hero--page { min-height: 0; display: grid; grid-template-columns: auto minmax(18rem, 1fr); align-items: end; column-gap: calc(var(--u) * 6); padding: calc(var(--u) * 11) 0 calc(var(--u) * 2); }
-.hero--page > * { grid-column: auto; }
+/* Titre et chapô côte à côte quand ils tiennent ; sinon le chapô passe dessous (un titre d'un seul mot ne se replie pas). */
+.hero--page { min-height: 0; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; column-gap: calc(var(--u) * 6); row-gap: calc(var(--u) * 2); padding: calc(var(--u) * 11) 0 calc(var(--u) * 2); }
+.hero--page > * { flex: 1 1 18rem; max-width: 34ch; min-width: min(18rem, 100%); }
+.hero--page > .hero__titre { flex: 0 0 min-content; max-width: none; min-width: 0; }
 .hero--page + .section, .hero--page + .section--serre { padding-top: calc(var(--u) * 3); }
 .hero--page .hero__titre { font-size: var(--t-xl); text-align: left; }
-.hero--page .lead { margin-top: 0; justify-self: end; }
-.hero--page .actions { grid-column: 1 / -1; }
+.hero--page .lead { margin-top: 0; }
+.hero--page > .actions { flex-basis: 100%; }
 
 /* ---------- règles de la maison ---------- */
 .regles { list-style: none; padding: 0; counter-reset: regle; display: grid; gap: 0; border-top: 1px solid var(--c-line); }
@@ -181,7 +183,7 @@ html:not(.motion) .origin__phrases { align-content: start; }
 .soiree p { color: var(--c-muted); }
 
 /* ---------- équipe, avis ---------- */
-.equipe { list-style: none; padding: 0; display: grid; gap: var(--gap-mos); grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+.equipe { list-style: none; padding: 0; display: grid; gap: var(--gap-mos); grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); }
 .membre figure { margin: 0 0 var(--u); aspect-ratio: 3 / 4; overflow: clip; background: var(--c-line); }
 .membre figure.membre__initiale { display: grid; place-items: center; background: transparent; border: 1px solid var(--c-line); }
 .membre__initiale .tube { font-size: clamp(4rem, 3rem + 4vw, 7rem); line-height: 1; }
@@ -251,7 +253,6 @@ input[type='date'], input[type='time'] { color-scheme: dark; }
 }
 
 .note-heure { font-size: var(--t-s); min-height: 1.4em; margin-top: calc(var(--u) * -1); }
-.hero--page .note-illu { grid-column: 2; justify-self: end; max-width: 34ch; }
 @media (max-width: 767px) {
   .hero--page .hero__titre { font-size: clamp(2.1rem, 10vw, 2.6rem); }
 }

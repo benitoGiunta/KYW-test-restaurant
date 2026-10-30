@@ -19,4 +19,5 @@
 - [x] Révision 1 (30/10, reviseur-site) : 3 F1 + F2-1 à F2-8 + F3-1/3/4/6/8 corrigés (voir REVISION-1.md) ; build OK ;
       badge testé sur 12 instants (`page.clock`), formulaire sur 7 cas, 0 erreur console, scrollWidth 390/1440 ;
       captures `.shots-nocturne-rev/` (index, carte, histoire, reservation, soirees, cocktails).
+- [x] Reprise révision 1 (second réviseur) : corrections vérifiées dans src/ et dist/, badge et formulaire re-testés ; 2 régressions corrigées (chapô coupé sur Cocktails/Réserver desktop, équipe 3+1) ; rebuild ; captures `.shots-nocturne-rev2/`.
 - [ ] reste : relecture passe 2 ; photo HD du volet gauche du hero (F3-5) et contraste du pied KYW (F3-7, composant commun)

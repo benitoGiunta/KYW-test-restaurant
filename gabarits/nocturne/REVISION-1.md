@@ -6,7 +6,7 @@ Build : `node scripts/build-site.mjs gabarits/nocturne` OK. Contrôles : mini-sc
 formulaire à 7 cas, 7 pages × 390/1440 (hero, h1, `scrollWidth`, éléments révélés encore cachés après défilement,
 console) ; captures `.shots-nocturne-rev/<page>/` lues en planche (`.shots-nocturne-rev/planche-*.png`).
 
-Bilan : 17 corrigés, 3 refusés, 0 impossible.
+Bilan : 17 corrigés, 3 refusés, 0 impossible (+ 2 régressions de la révision trouvées et corrigées en reprise, voir fin).
 
 | Finding | Décision | Changement (fichier) | Preuve |
 | --- | --- | --- | --- |
@@ -33,3 +33,21 @@ Bilan : 17 corrigés, 3 refusés, 0 impossible.
 
 Non-régression : 0 erreur console (390 et 1440), `scrollWidth` 390/1440 sur les 7 pages, 0 élément `[data-reveal]`,
 `.membre`, `.avis` resté caché après défilement complet.
+
+## Reprise (30/10, second réviseur, après coupure du premier)
+
+Contrôle du code : toutes les corrections du tableau sont bien dans `src/` et dans `dist/` (grep : 0 « Avis Google »,
+« Claire », « quatorze », « entre amis », « on adapte », « Boissons », « Accord mets », `mailto` ; `email.valeur` vide ;
+plus de `min`/`max` sur l'heure). Re-test Playwright (`test-nocturne.mjs`) sur le build final : badge à 12 instants
+identique au tableau (lun 18:45 fermé, 19:00 et 21:00 ouvert, 21:01 fermé ; mer 12:30 « Ouvert ce midi, dernières
+arrivées à 14h » ; sam 12:00 « Fermé aujourd'hui… ») ; formulaire : mer 12:30 et ven 13:45 valides, lun 12:30, mar 22:00
+et sam refusés ; 0 erreur console ; `scrollWidth` 390/1440 sur 7 pages ; 0 élément révélé resté caché.
+
+| Constat | Décision | Changement (fichier) | Preuve |
+| --- | --- | --- | --- |
+| R-1 (régression de F2-6) chapô coupé à droite sur Cocktails et Réserver en desktop : la grille `auto minmax(18rem, 1fr)` ne peut pas replier un titre d'un seul mot (« COCKTAILS » 627 px) et le chapô sortait de `.col-l` (`overflow: clip`) jusqu'à 1281 px pour un bord à 1160 (1440, 1280 et 820 px) | corrigé | `base.css` : `.hero--page` en flex qui se replie (titre `flex: 0 0 min-content`, chapô `1 1 18rem` borné à 34ch) : côte à côte quand ça tient, chapô sous le titre sinon ; `cocktails.astro` : chapô et note « Carte illustrative » groupés dans `.hero__texte` | mesure à 1440/1280/1024/820 sur 5 sous-pages : aucun enfant au-delà du bord du hero ; carte, histoire, soirées côte à côte ; cocktails et réserver empilés à 1440 ; captures `.shots-nocturne-rev2/` |
+| R-2 (F2-5) équipe en desktop : 3 colonnes pour 4 personnes, « J » seul sur une deuxième ligne | corrigé | `base.css` : `.equipe` `minmax(10rem, 1fr)` | 4 vignettes de 205 px sur une ligne à 1440 et 1024, 179 px à 820 ; 2 × 2 à 390 |
+
+Rebuild `node scripts/build-site.mjs gabarits/nocturne` OK. `apercu.png` inchangé (le hero de l'accueil n'a pas bougé ;
+la révision touche la scène origin plus bas) ; recopié dans `dist/gabarits/nocturne/` car le build vide ce dossier
+(`galerie.mjs` le recopie aussi).
