@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Rouleau from '../components/Rouleau.astro';
 import Plan from '../components/Plan.astro';
 import TitreV from '../components/TitreV.astro';
-import { site, photoDe, horaireTexte, adresseLigne } from '../data/site';
+import { site, photoDe, horairesGroupes, adresseLigne } from '../data/site';
 import { u, asset } from '../lib/url';
 
 const hero = photoDe('/photos/salle-clients-bar.webp');
@@ -12,7 +12,6 @@ const diptyque = ['/photos/salle-banquette.webp', '/photos/cuisine-mains-pate.we
 const chefs = site.equipe.filter((m) => m.photo).map((m) => ({ ...m, img: photoDe(m.photo!) }));
 const galerie = ['/photos/plat-saint-jacques.webp', '/photos/dessert-tarte-pomme.webp', '/photos/plat-tartare.webp', '/photos/service-planche.webp'].map(photoDe);
 const michelin = site.avis.find((a) => !a.placeholder);
-const ouverts = site.horaires.filter((h) => h.creneaux.length);
 ---
 <Base preloads={[{ href: heroMobile, media: '(max-width: 767px)' }, { href: hero.src, media: '(min-width: 768px)' }]}>
   <section class="hero" data-hero aria-label="Accueil">
@@ -25,7 +24,7 @@ const ouverts = site.horaires.filter((h) => h.creneaux.length);
       <svg class="hero__trace" viewBox="0 0 12 200" preserveAspectRatio="none" aria-hidden="true"><path data-trace-hero d="M6 2 C 1 50, 11 120, 6 198" /></svg>
       <h1 class="hero__nom">{site.nom}</h1>
       <p class="hero__phrase">{site.phraseHero}</p>
-      <a class="hero__lien" href="#rouleau" data-hero-lien>Dérouler la carte</a>
+      <a class="hero__lien" href="#rouleau" data-hero-lien>Dérouler un exemple de carte</a>
     </div>
   </section>
 
@@ -44,6 +43,7 @@ const ouverts = site.horaires.filter((h) => h.creneaux.length);
   </section>
 
   <Rouleau epingle={true} id="rouleau" numero="02" />
+  <p class="rouleau__vraie"><a class="link" href={u('/carte/')}>Voir la vraie carte : menu unique, {site.servicesMenu} services, {site.menus[0].prix}</a></p>
 
   <section class="section section--v" aria-labelledby="histoire-titre">
     <div class="wrap">
@@ -123,9 +123,7 @@ const ouverts = site.horaires.filter((h) => h.creneaux.length);
             <div>
               <h3>Horaires</h3>
               <dl class="horaires">
-                {ouverts.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-                <dt>samedi</dt><dd>{horaireTexte(site.horaires[5])}</dd>
-                <dt>dimanche</dt><dd>{horaireTexte(site.horaires[6])}</dd>
+                {horairesGroupes().map((h) => <><dt>{h.jours}</dt><dd>{h.texte}</dd></>)}
               </dl>
             </div>
             <div class="actions" style="margin-top: 0">

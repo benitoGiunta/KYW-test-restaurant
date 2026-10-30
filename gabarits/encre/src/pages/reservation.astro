@@ -3,7 +3,8 @@ import Base from '../layouts/Base.astro';
 import HeroPage from '../components/HeroPage.astro';
 import Plan from '../components/Plan.astro';
 import TitreV from '../components/TitreV.astro';
-import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { site, adresseLigne, horairesGroupes, plageHoraire, telHref } from '../data/site';
+const plage = plageHoraire();
 const cadeau = site.menus.find((m) => m.nom === 'Bon cadeau');
 ---
 <Base title="Réserver" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}. Privatisation le samedi, bons cadeaux.`} preloads={[{ href: '/photos/bar-cocktails-960.webp', media: '(max-width: 767px)' }, { href: '/photos/bar-cocktails.webp', media: '(min-width: 768px)' }]}>
@@ -17,7 +18,7 @@ const cadeau = site.menus.find((m) => m.nom === 'Bon cadeau');
         <a class="btn btn--plein" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
         <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
       </div>
-      <p class="muted" style="margin-top: 1.5rem; font-size: var(--t-s)" data-reveal="fade">{site.email.valeur}<span class="illu">adresse d’exemple, le restaurant répond par son formulaire</span></p>
+      <p class="muted" style="margin-top: 1.5rem; font-size: var(--t-s)" data-reveal="fade">Une question : par téléphone ou via {site.reservation.outil}.</p>
     </div>
   </section>
 
@@ -32,7 +33,7 @@ const cadeau = site.menus.find((m) => m.nom === 'Bon cadeau');
         <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
         <div class="form__deux">
           <label>Date <input type="date" name="date" required data-min-aujourdhui /></label>
-          <label>Heure <input type="time" name="heure" required /></label>
+          <label>Heure <input type="time" name="heure" min={plage.min} max={plage.max} step="900" required /></label>
           <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
         </div>
         <label>Message <textarea name="message" rows="3"></textarea></label>
@@ -87,7 +88,7 @@ const cadeau = site.menus.find((m) => m.nom === 'Bon cadeau');
             <div>
               <h3>Horaires</h3>
               <dl class="horaires">
-                {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+                {horairesGroupes().map((h) => <><dt>{h.jours}</dt><dd>{h.texte}</dd></>)}
               </dl>
             </div>
           </div>

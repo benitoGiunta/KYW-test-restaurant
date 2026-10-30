@@ -57,3 +57,20 @@ décoratif : les signes sont des numéros et des initiales.
 - [ ] Hover par rôle (nav : trait qui glisse ; plat : prix vermillon ; sceau : rotation 8° ; bouton : remplissage encre)
 - [ ] Idle : vapeur du hero (idleMotion)
 - [ ] LCP mobile < 2,5 s, CLS < 0,05, axe sans violation sérieuse
+
+## Révision 1 (30/10/2026, REVUE-1)
+- **Emporter** sort de la navigation principale (service inconnu au dossier) : la page reste dans le gabarit, atteinte
+  par un lien « À emporter · page d'exemple » du pied de page. Son bandeau « Page d'exemple » vit dans le hero, sous
+  l'en-tête (ivoire, filet vermillon, colonne de la phrase en desktop), plus jamais en tête de page : l'en-tête est
+  absolu et le percutait. Les lignes n'ont plus de prix : « Prix à définir ».
+- **Rouleau** : chaque nom de plat porte la pastille « EXEMPLE » (vermillon, cerclée, ≥ 12 px) ; le lien du hero devient
+  « Dérouler un exemple de carte » ; la fin du rouleau et la ligne qui le suit renvoient à la vraie carte (constante
+  `servicesMenu`, prix du menu 1).
+- **Marques `.illu`** : `max(12px, var(--t-xs))`, graisse 400 ; astérisque ≥ 12 px.
+- **Mobile** : h1 de l'accueil à 46 px (2,25 rem pour les pages intérieures), le titre « Le rouleau » reste vertical à
+  gauche de la note (signe du rouleau conservé), plats alignés en haut de la bande (plus de vide sous l'en-tête).
+- **Loader** : plancher 0,9 s, convergence du compteur 0,2/frame, sortie 0,3 + 0,6 s (mesuré 2,0 à 2,3 s, goto compris).
+- **CTA du hero** : au survol le trait se raccourcit (scaleX 0,3) et la flèche descend de 0,3 em (vérifié par
+  mini-script, le détecteur de shoot.mjs ne lit pas les pseudo-éléments) ; le sceau tourne de 8° (vérifié).
+- **E-mail** inconnu au dossier : plus affiché nulle part (donnée gardée en `placeholder` dans `site.ts`).
+- **Horaires** : jours consécutifs identiques regroupés (`horairesGroupes()`), champ heure borné par `plageHoraire()`.

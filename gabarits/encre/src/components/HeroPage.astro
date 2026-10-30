@@ -3,8 +3,8 @@
 // titre vertical en desktop, phrase d'une ou deux lignes. Pas de data-reveal sur la photo ni sur le titre.
 import { photoDe } from '../data/site';
 import { asset } from '../lib/url';
-interface Props { photo: string; photoMobile: string; titre: string; phrase?: string }
-const { photo, photoMobile, titre, phrase } = Astro.props;
+interface Props { photo: string; photoMobile: string; titre: string; phrase?: string; bandeau?: string }
+const { photo, photoMobile, titre, phrase, bandeau } = Astro.props;
 const p = photoDe(photo);
 ---
 <section class="hero hero--page" data-hero>
@@ -16,5 +16,6 @@ const p = photoDe(photo);
   <div class="hero__contenu wrap">
     <h1 class="hero__nom hero__nom--page">{titre}</h1>
     {phrase && <p class="hero__phrase">{phrase}</p>}
+    {bandeau && <p class="bandeau"><strong>Page d’exemple.</strong> {bandeau}</p>}
   </div>
 </section>

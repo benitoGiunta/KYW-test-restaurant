@@ -11,7 +11,7 @@ let exit: ((root: HTMLElement) => gsap.core.Timeline) | null = null;
 /** Replace the exit choreography (the loader → hero handoff). Return a timeline. */
 export const setLoaderExit = (fn: (root: HTMLElement) => gsap.core.Timeline) => { exit = fn; };
 
-const MIN = 1.1; // seconds: long enough to read as a designed moment
+const MIN = 0.9; // seconds: long enough to read as a designed moment
 const MAX = 2.6; // seconds: a longer loader is a usability problem
 
 function criticalAssets(): Promise<unknown>[] {
@@ -41,7 +41,7 @@ export async function runLoader(): Promise<void> {
       const elapsed = (performance.now() - start) / 1000;
       const timeCap = Math.min(100, (elapsed / MIN) * 100); // never faster than MIN
       const goal = elapsed > MAX ? 100 : Math.min(target.v, timeCap);
-      shown.v += (goal - shown.v) * 0.12;
+      shown.v += (goal - shown.v) * 0.2;
       if (goal === 100 && shown.v > 99.5) shown.v = 100;
       if (count) count.textContent = format(shown.v);
       if (bar) bar.style.transform = `scaleX(${shown.v / 100})`;

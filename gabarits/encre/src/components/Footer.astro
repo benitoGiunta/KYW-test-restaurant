@@ -2,7 +2,7 @@
 // Pied de page « Encre » : diptyque décalé (deux photos de hauteurs différentes), coordonnées, horaires, liens,
 // le sceau (lien vers la réservation), puis le pied de page KYW obligatoire (un seul logo, kyw-signature).
 import KywFooter from '@kyw/footer';
-import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import { site, adresseLigne, horairesGroupes, telHref, photoDe } from '../data/site';
 import { u, asset } from '../lib/url';
 import Sceau from './Sceau.astro';
 const haute = photoDe('/photos/cuisine-francois-poele.webp');
@@ -23,12 +23,11 @@ const basse = photoDe('/photos/service-sauce-table.webp');
         <p class="footer__nom">{site.nom}</p>
         <address>{adresseLigne()}</address>
         <p><a class="link" href={telHref()}>{site.telephone}</a></p>
-        <p class="muted">{site.email.valeur} <span class="illu">adresse d’exemple</span></p>
       </div>
       <div>
         <p class="footer__titre">Horaires</p>
         <dl class="horaires">
-          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+          {horairesGroupes().map((h) => <><dt>{h.jours}</dt><dd>{h.texte}</dd></>)}
         </dl>
       </div>
       <div class="stack">
@@ -36,6 +35,7 @@ const basse = photoDe('/photos/service-sauce-table.webp');
         {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
         <p><a class="link" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a></p>
         <p><a class="link" href={u('/reservation/')}>Bons cadeaux et privatisation</a></p>
+        <p><a class="link" href={u('/emporter/')}>À emporter</a><span class="illu">page d’exemple</span></p>
       </div>
       <div class="footer__sceau">
         <Sceau />

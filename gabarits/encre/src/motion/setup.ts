@@ -14,9 +14,9 @@ export function setupMotion() {
   setLoaderFormat((p) => String(Math.round(p)).padStart(3, '0'));
   setLoaderExit((root) =>
     gsap.timeline()
-      .to(root.querySelector('[data-loader-bar]'), { scaleX: 0, transformOrigin: 'right', duration: 0.45, ease: ease.inOut })
-      .to(root.querySelectorAll('[data-loader-out]'), { autoAlpha: 0, y: -10, duration: 0.45, ease: ease.inOut, stagger: 0.05 }, '<')
-      .to(root, { clipPath: 'inset(0% 0% 0% 100%)', duration: 0.9, ease: ease.inOut }, '-=0.15'),
+      .to(root.querySelector('[data-loader-bar]'), { scaleX: 0, transformOrigin: 'right', duration: 0.3, ease: ease.inOut })
+      .to(root.querySelectorAll('[data-loader-out]'), { autoAlpha: 0, y: -10, duration: 0.3, ease: ease.inOut, stagger: 0.04 }, '<')
+      .to(root, { clipPath: 'inset(0% 0% 0% 100%)', duration: 0.6, ease: ease.inOut }, '-=0.1'),
   );
   // Rideau : un panneau ivoire qui glisse à l'horizontale (le rouleau se referme, puis s'ouvre).
   setTransition({

@@ -29,3 +29,7 @@ mécaniques appliquées et rebuild, serveur :4411 arrêté par PID, `apercu.png`
 Gabarit TERMINÉ pour cet agent. Suite : revue par l'agent critique (jury) puis corrections par l'agent réviseur.
 Captures dans `.shots-encre/` (planche-<page>.png, report.json par page, audit-encre.txt) ; le dernier build
 (photos du rouleau à 46 svh) est postérieur aux captures : recapturer avant de citer un défaut.
+
+## Révision 1 (réviseur, 30/10/2026) : REVUE-1 traitée, voir REVISION-1.md. Corrigés : 3 F1, 5 F2, 2 F3 (F3-1 horaires,
+F3-4 champ heure) ; refusés : F3-2 (404), F3-3 (contraste vérifié 5,5:1). Rebuild OK, mesures Playwright 390/1440 sur
+6 pages, captures `.shots-encre-rev/<page>` (index, emporter, carte, réservation). Suite : relecture passe 2 possible.

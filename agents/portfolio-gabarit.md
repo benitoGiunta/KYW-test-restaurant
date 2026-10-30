@@ -135,3 +135,8 @@ seul fichier, sections indépendantes, tokens).
   `flex: 0 0 min-content`, chapô `1 1 18rem` borné à 34ch) : un titre d'un seul mot ne se coupe pas, et `overflow: clip`
   masque un chapô coupé sans que les outils le voient. Mesurer à 1440, 1280, 1024 et 820 px qu'aucun enfant du hero ne
   dépasse son bord droit.
+- **Pages et données d'exemple** (révision Encre) : une page de service inconnu au dossier (emporter, livraison,
+  boutique) ne figure jamais dans la navigation principale ; elle est atteinte par un lien « page d'exemple » du pied de
+  page, sans prix chiffré. Son bandeau « Page d'exemple » se pose dans le hero, sous l'en-tête, jamais en flux en tête de
+  page. Dans un rouleau ou un carrousel de plats d'exemple, chaque titre de plat porte sa pastille « exemple » (≥ 12 px)
+  et la fin de la bande renvoie à la vraie carte. Une donnée de contact inconnue (e-mail) n'est pas affichée, même marquée.

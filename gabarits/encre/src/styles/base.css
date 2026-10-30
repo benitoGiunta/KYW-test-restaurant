@@ -25,10 +25,15 @@ em { font-style: italic; }
 .lien-suite { margin-top: calc(var(--u) * 3); }
 
 /* Marques « illustratif » : visibles là où la donnée s'affiche. */
-.illu { font-family: var(--f-body); font-style: italic; font-weight: 300; font-size: var(--t-xs); color: var(--c-muted); margin-left: 0.45em; letter-spacing: 0; text-transform: none; }
-.illu--ast { color: var(--c-accent); font-style: normal; font-size: 0.85em; margin-left: 0.15em; }
-.bandeau { background: var(--c-fg); color: var(--c-bg); text-align: center; font-size: var(--t-s); padding: 0.8rem var(--gutter); letter-spacing: 0.02em; position: relative; z-index: calc(var(--z-header) + 1); }
-.bandeau strong { font-weight: 400; color: var(--c-bg); }
+.illu { font-family: var(--f-body); font-style: italic; font-weight: 400; font-size: max(12px, var(--t-xs)); color: var(--c-muted); margin-left: 0.45em; letter-spacing: 0; text-transform: none; }
+.illu--ast { color: var(--c-accent); font-style: normal; font-size: max(12px, 0.85em); margin-left: 0.15em; }
+.illu--pastille { display: inline-block; vertical-align: 0.25em; font-style: normal; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-accent); border: 1px solid currentColor; border-radius: 999px; padding: 0.05em 0.6em; line-height: 1.4; }
+/* Bandeau « page d'exemple » : dans le hero, sous l'en-tête (jamais en tête de page, il percutait l'en-tête absolu). */
+.bandeau { background: var(--c-bg); color: var(--c-fg); font-size: var(--t-s); padding: 0.8rem 1rem; letter-spacing: 0.02em; max-width: 46ch; margin-top: 1.5rem; text-align: left; border-left: 3px solid var(--c-accent); }
+.ligne__prix--vide { font-style: italic; color: var(--c-muted); font-size: var(--t-s); white-space: nowrap; }
+.rouleau__vraie { text-align: center; margin: 0 auto; padding: 1rem var(--gutter) 0; font-size: var(--t-s); letter-spacing: 0.04em; }
+.plat__fin-lien { font-size: var(--t-s); }
+.bandeau strong { font-weight: 600; color: var(--c-fg); }
 
 /* Chapeau de section et titres */
 .chapeau { font-family: var(--f-display); font-weight: 500; font-size: var(--t-s); letter-spacing: 0.24em; color: var(--c-accent); text-align: center; margin-bottom: calc(var(--u) * 2.5); }
@@ -80,7 +85,8 @@ em { font-style: italic; }
   .hero__nom { grid-area: nom; }
   .hero__phrase { grid-area: phrase; align-self: end; }
   .hero__lien { grid-area: lien; align-self: start; margin-top: 0; }
-  .hero__lien::before { display: inline; margin: 0 0.5em 0 0; }
+  .hero__lien::before { display: inline-block; margin: 0 0.5em 0 0; }
+  .hero__contenu .bandeau { grid-column: 3; margin-top: 0; }
 }
 .hero__trace { width: 10px; height: clamp(5rem, 14vh, 9rem); color: var(--c-bg); opacity: 0.9; }
 .hero__trace path { stroke: currentColor; stroke-width: 2.2; fill: none; stroke-linecap: round; }
@@ -88,14 +94,17 @@ em { font-style: italic; }
 .hero__phrase { font-family: var(--f-body); font-style: italic; font-weight: 300; font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem); line-height: 1.5; max-width: 30ch; text-wrap: balance; }
 .hero__lien { font-size: var(--t-s); letter-spacing: 0.16em; text-transform: uppercase; padding: 0.6em 0; position: relative; margin-top: 1rem; }
 .hero__lien::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.2em; height: 1px; background: currentColor; transform: scaleX(1); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-.hero__lien:hover::after { transform: scaleX(0.3); }
-.hero__lien::before { content: '↓'; display: block; margin-bottom: 0.5em; font-size: 1.1em; }
+.hero__lien:hover::after, .hero__lien:focus-visible::after { transform: scaleX(0.3); }
+.hero__lien:hover::before, .hero__lien:focus-visible::before { transform: translateY(0.3em); }
+.hero__lien::before { content: '↓'; display: block; margin-bottom: 0.5em; font-size: 1.1em; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 @media (min-width: 768px) {
   .hero__nom { writing-mode: vertical-rl; text-orientation: mixed; line-height: 1; white-space: nowrap; letter-spacing: 0.1em; font-size: clamp(2.25rem, 1.2rem + 2.6vw, 3.5rem); }
   .hero--page .hero__nom { font-size: clamp(2rem, 1.2rem + 2.2vw, 3.25rem); }
 }
 .hero--page { min-height: min(72svh, 46rem); padding-block: 7rem 4rem; }
 @media (max-width: 767px) {
+  .hero__nom { font-size: 2.875rem; }
+  .hero--page .hero__nom { font-size: 2.25rem; }
   .hero { min-height: 100svh; padding-block: 7rem 3rem; }
   .hero--page { min-height: 0; padding-block: 8rem 3rem; }
   .hero__trace { height: 4rem; }
@@ -142,6 +151,12 @@ em { font-style: italic; }
   .rouleau__tete { grid-template-columns: 1fr; }
 }
 @media (max-width: 767px) {
+  .rouleau__scene { padding-top: calc(var(--silence) * 0.45); gap: 1.25rem; }
+  .rouleau__tete { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: 'titre chapeau' 'titre note'; column-gap: 1.25rem; align-items: start; }
+  .rouleau__tete .titre-v { grid-area: titre; writing-mode: vertical-rl; text-orientation: mixed; white-space: nowrap; line-height: 1; margin: 0; }
+  .rouleau__tete .chapeau { grid-area: chapeau; }
+  .rouleau__tete .rouleau__note { grid-area: note; }
+  .rouleau__bande { align-items: start; }
   .plat, .plat--photo { width: 80vw; }
   .plat--fin { width: 80vw; }
   .plat__photo { max-height: 60svh; }

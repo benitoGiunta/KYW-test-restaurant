@@ -3,9 +3,10 @@
 //   epingle (accueil, desktop) : section épinglée, la bande glisse au scrub, les traits de pinceau se tracent
 //     à l'entrée de chaque plat, le sceau se pose à la fin (setup.ts, [data-rouleau="epingle"]).
 //   libre (page carte, mobile, reduced motion) : défilement horizontal natif avec snap, 80 vw par plat en mobile.
-// Chaque plat est illustratif (placeholder) : la note le dit sur le rouleau, chaque prix porte l'astérisque.
+// Chaque plat est illustratif (placeholder) : la note le dit sur le rouleau, chaque nom porte la pastille « exemple »,
+// chaque prix l'astérisque, et la fin du rouleau renvoie à la vraie carte (menu unique).
 import { site, photoDe } from '../data/site';
-import { asset } from '../lib/url';
+import { asset, u } from '../lib/url';
 import Sceau from './Sceau.astro';
 import TitreV from './TitreV.astro';
 interface Props { epingle?: boolean; id?: string; numero?: string }
@@ -37,7 +38,7 @@ const { rouleau } = site;
               <svg class="plat__trait" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true">
                 <path data-pinceau d="M2 7 C 50 1, 120 12, 198 5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
               </svg>
-              <h3 class="plat__nom">{p.nom}</h3>
+              <h3 class="plat__nom">{p.nom}{p.placeholder && <span class="illu illu--pastille">exemple</span>}</h3>
               <p class="plat__mots">{p.mots}</p>
               <p class="plat__prix">{p.prix}<span class="illu illu--ast" aria-label="prix d’exemple">*</span></p>
             </li>
@@ -45,6 +46,7 @@ const { rouleau } = site;
         })}
         <li class="plat plat--fin">
           <p class="plat__fin-texte">La carte réelle est écrite au fil des saisons.</p>
+          <a class="link plat__fin-lien" href={u('/carte/')}>Voir la vraie carte ({site.servicesMenu} services, {site.menus[0].prix})</a>
           <Sceau taille="l" />
         </li>
       </ol>

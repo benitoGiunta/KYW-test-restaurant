@@ -21,7 +21,7 @@ export interface Acces {
   gare: { nom: string; marche: string; placeholder: boolean }; // temps de marche estimé : illustratif
   parking: { texte: string; placeholder: boolean };
 }
-export interface Emporter { placeholder: boolean; titre: string; texte: string; lignes: { nom: string; prix: string }[] }
+export interface Emporter { placeholder: boolean; titre: string; texte: string; lignes: { nom: string }[] }
 
 export interface Restaurant {
   slug: string;
@@ -222,10 +222,10 @@ export const site: Restaurant = {
     titre: 'À emporter',
     texte: 'Exemple de page pour un service de plats à emporter : boîtes, bentos, commande par téléphone. Ce restaurant ne propose pas ce service.',
     lignes: [
-      { nom: 'Bento du midi', prix: '16 €' },
-      { nom: 'Boîte de nigiri, 12 pièces', prix: '26 €' },
-      { nom: 'Ramen à finir chez soi', prix: '15 €' },
-      { nom: 'Gyoza, 8 pièces', prix: '10 €' },
+      { nom: 'Bento du midi' },
+      { nom: 'Boîte de nigiri, 12 pièces' },
+      { nom: 'Ramen à finir chez soi' },
+      { nom: 'Gyoza, 8 pièces' },
     ],
   },
 };
@@ -243,6 +243,26 @@ export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adre
 /** Horaires lisibles : '12:00 à 14:00, 19:00 à 21:00' ou la note. */
 export const horaireTexte = (h: Horaire) =>
   h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé';
+
+/** Jours consécutifs aux mêmes horaires regroupés (« lundi au mercredi ») : un créneau écrit une fois par groupe. */
+export const horairesGroupes = (r: Restaurant = site) => {
+  const g: { jours: string; texte: string }[] = [];
+  let debut = '', fin = '', texte = '', n = 0;
+  const pousser = () => { if (debut) g.push({ jours: n === 1 ? debut : `${debut} ${n === 2 ? 'et' : 'au'} ${fin}`, texte }); };
+  for (const h of r.horaires) {
+    const t = horaireTexte(h);
+    if (debut && t === texte) { fin = h.jour; n++; continue; }
+    pousser(); debut = fin = h.jour; texte = t; n = 1;
+  }
+  pousser();
+  return g;
+};
+
+/** Plages d'ouverture extrêmes (pour min/max d'un champ heure), calculées depuis les créneaux. */
+export const plageHoraire = (r: Restaurant = site) => {
+  const c = r.horaires.flatMap((h) => h.creneaux);
+  return { min: c.map((x) => x.ouverture).sort()[0], max: c.map((x) => x.fermeture).sort().at(-1) };
+};
 
 /** Téléphone pour href="tel:" (sans espaces). */
 export const telHref = (r: Restaurant = site) => `tel:${r.telephone.replace(/\s+/g, '')}`;
