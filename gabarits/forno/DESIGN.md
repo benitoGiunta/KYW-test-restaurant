@@ -72,4 +72,4 @@ capitales géantes, et le compte à rebours part des vrais horaires : rien n'est
 - [x] Liens et assets via `u()`/`asset()` ; noindex ; KywFooter ; `lang="fr"`.
 - [x] Une donnée, un drapeau : `site.ts` (rolePlaceholder, pates.placeholder, emporter.placeholder, avis, email).
 - [x] Rien de daté : le compte à rebours et le statut se calculent depuis `site.horaires` ; aucune date en dur.
-- [ ] 0 FAIL audit, 0 erreur console, 0 débordement, axe sans violation sérieuse (à prouver par `.shots-forno/`).
+- [x] 0 FAIL audit, 0 erreur console, 0 débordement, axe sans violation sérieuse (`.shots-forno/`, RAPPORT.md).

@@ -46,7 +46,7 @@ const m = site.manifeste;
       </figure>
       <p class="levee__titre display" aria-hidden="true">{site.nomLignes[1]}</p>
       <p class="levee__legende">{leveePhoto.alt}. Faites défiler : la pâte lève.</p>
-      <div class="marquee" data-marquee aria-label={`Les services du menu : ${site.levee.marquee.join(', ')}`}>
+      <div class="marquee" role="group" data-marquee aria-label={`Les services du menu : ${site.levee.marquee.join(', ')}`}>
         <div class="marquee__track marquee__track--1" data-marquee-track="1">
           {[0, 1].map(() => site.levee.marquee.map((t) => <p aria-hidden="true">{t}</p>))}
         </div>
@@ -149,8 +149,9 @@ const m = site.manifeste;
     <div class="wrap g12">
       {site.avis.map((a, i) => (
         <blockquote class="avis" data-reveal="fade" data-delay={String(i * 0.1)} style={`grid-column: ${i === 0 ? '1 / 8' : i === 1 ? '6 / 13' : '2 / 9'}`}>
+          {a.placeholder && <p class="eyebrow avis__etiquette">Exemple d'avis<span class="illu">illustratif</span></p>}
           <p>{a.texte}</p>
-          <cite>{a.auteur}, {a.source}{a.placeholder && <span class="illu">avis illustratif</span>}</cite>
+          <cite>{a.auteur}, {a.source}</cite>
         </blockquote>
       ))}
     </div>

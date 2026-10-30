@@ -48,13 +48,14 @@ em, .it { font-style: italic; }
 .compte__lib { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
 .compte__nums { display: grid; grid-auto-flow: column; gap: 0.5rem; font-family: var(--f-display); font-weight: 800; font-size: 1.5rem; line-height: 1; font-variant-numeric: tabular-nums; }
 .compte__nums span { display: inline-block; min-width: 2ch; text-align: center; }
-.compte__nums small { font-family: var(--f-body); font-size: 0.6rem; font-weight: 500; display: block; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.9; }
+.compte__nums small { font-family: var(--f-body); font-size: 0.6rem; font-weight: 500; display: block; text-transform: uppercase; letter-spacing: 0.06em; }
 .compte__hover { position: absolute; inset: 0; display: grid; place-items: center; background: var(--four); color: var(--farine); font-size: var(--t-s); clip-path: inset(100% 0 0 0); transition: clip-path 0.4s cubic-bezier(0.22, 1, 0.36, 1); padding-inline: 0.8rem; text-align: center; }
 .compte:hover .compte__hover, .compte:focus-visible .compte__hover { clip-path: inset(0 0 0 0); }
 .compte:not(.is-ready) .compte__nums { display: none; }
 .compte.is-ouvert .compte__nums { font-size: 1.1rem; }
 .compte.is-ouvert [data-c="j"], .compte.is-ouvert [data-c="m"], .compte.is-ouvert [data-c="s"] { display: none; }
 .compte.is-ouvert .compte__nums span::after { content: none; }
+@media (prefers-reduced-motion: reduce) { .compte [data-c="s"] { display: none; } }
 @media (max-width: 767px) {
   .compte { min-height: 36px; padding: 0.25rem 0.7rem; gap: 0.5rem; }
   .compte__lib { display: none; }
@@ -67,6 +68,7 @@ em, .it { font-style: italic; }
 .hero { min-height: 100svh; display: grid; grid-template-rows: 1fr auto; padding-top: var(--hdr); }
 .hero__haut { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: calc(var(--u) * 3); padding-block: calc(var(--u) * 4) calc(var(--u) * 3); }
 .hero__nom { font-size: var(--t-mega); line-height: 0.82; }
+.hero__nom span { white-space: nowrap; }
 .hero__nom span { display: block; }
 .hero__nom span + span { padding-left: 0.6em; }
 .hero__cote { max-width: 24rem; justify-self: end; }
@@ -119,6 +121,7 @@ em, .it { font-style: italic; }
 .marquee__track p { flex: 0 0 auto; white-space: nowrap; font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(3rem, 8vw, 9rem); line-height: 0.95; padding-inline: 0.3em; margin: 0; }
 .marquee__track p::after { content: '·'; color: var(--tomate); margin-left: 0.6em; }
 html:not(.motion) .marquee__track--2 { display: none; }
+html:not(.motion) .levee__legende { display: none; }
 @media (max-width: 767px) {
   .levee { height: 280svh; }
   .levee__media { clip-path: inset(calc((50% - 22vw) * (1 - var(--p))) calc(15vw * (1 - var(--p)))); }
@@ -229,6 +232,7 @@ ul.liste { padding-left: 1.2em; }
 /* Citation */
 .avis { padding: calc(var(--u) * 2.5); border-left: 3px solid var(--tomate); font-size: var(--t-m); }
 .avis p { font-style: italic; }
+.avis .avis__etiquette { font-style: normal; margin-bottom: 0.6em; }
 .avis cite { display: block; margin-top: var(--u); font-style: normal; color: var(--c-muted); font-size: var(--t-s); }
 
 /* Portraits en escalier (histoire) */
