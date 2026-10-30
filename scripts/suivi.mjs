@@ -71,6 +71,8 @@ body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--font);pad
 h1{font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.01em;margin:0 0 .25rem;text-wrap:balance}
 .sub{color:var(--muted);margin:0 0 1.5rem}
 .sub a{color:var(--accent)}
+.liens{margin:0 0 1.5rem;padding-left:1.1rem;color:var(--muted)}.liens a{color:var(--accent);word-break:break-all}
+.url{display:block;margin-top:.35rem;word-break:break-all;font-family:var(--mono);font-size:.72rem}.url a{color:var(--accent)}
 .synthese{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin-bottom:2rem}
 .tuile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.9rem 1rem;min-width:0}
 .tuile b{display:block;font-size:1.7rem;font-variant-numeric:tabular-nums;line-height:1.1}
@@ -107,7 +109,8 @@ footer{color:var(--muted);font-size:.8rem;margin-top:2rem}
 </style>
 <div class="wrap">
 <h1>Suivi du projet KYW Restaurants</h1>
-<p class="sub">Refonte de ${restos.length} restaurants namurois en 3 variantes. Mis à jour le ${esc(date)} depuis l'état du dépôt. Liens : <a href="${URL_PROD}/">index des restaurants</a> · <a href="${URL_PROD}/gabarits/">galerie des gabarits</a> · <a href="https://claude.ai/artifact/39eBZZyjPAnwQfhAAx2Bxq">consommation de jetons</a>.</p>
+<p class="sub">Refonte de ${restos.length} restaurants namurois en 3 variantes. Mis à jour le ${esc(date)} depuis l'état du dépôt. </p>
+<ul class="liens"><li>Index des restaurants : <a href="${URL_PROD}/">${URL_PROD}/</a></li><li>Galerie des gabarits : <a href="${URL_PROD}/gabarits/">${URL_PROD}/gabarits/</a></li><li>Cette page sur Vercel : <a href="${URL_PROD}/suivi/">${URL_PROD}/suivi/</a></li><li>Consommation de jetons : <a href="https://claude.ai/artifact/39eBZZyjPAnwQfhAAx2Bxq">https://claude.ai/artifact/39eBZZyjPAnwQfhAAx2Bxq</a></li></ul>
 <div class="synthese">
 <div class="tuile"><b>${total} %</b><span>avancement global (moyenne des 9 étapes)</span></div>
 <div class="tuile"><b>${gLigne} / 15</b><span>gabarits en ligne (${gFaits} revus et corrigés)</span></div>
@@ -118,11 +121,11 @@ footer{color:var(--muted);font-size:.8rem;margin-top:2rem}
 <div class="etapes">${phases.map((p) => `<div class="etape"><span class="n">${String(p.n).padStart(2, '0')}</span><div class="t">${esc(p.titre)}<small>${esc(p.detail)}</small></div><div><div class="barre${p.pct === 100 ? ' ok' : ''}"><i style="--p:${p.pct}%"></i></div><div class="pct">${p.pct} %</div></div></div>`).join('')}</div>
 <h2>Gabarits du portfolio (${gLigne} en ligne sur 15)</h2>
 <p class="legende"><i style="background:var(--todo)"></i>à faire <i style="background:var(--wip)"></i>en construction ou construit <i style="background:var(--accent)"></i>en ligne, en revue <i style="background:var(--ok)"></i>revu et corrigé</p>
-<div class="grille">${gabarits.map((g) => `<div class="gab n${g.niveau}"><b>${esc(g.nom)}</b><small>${esc(g.pitch)}</small><span class="etat">${g.niveau ? ETAPES_G[g.niveau - 1] : 'à faire'}</span>${g.url ? ` <small><a href="${g.url}">voir</a></small>` : ''}</div>`).join('')}</div>
+<div class="grille">${gabarits.map((g) => `<div class="gab n${g.niveau}"><b>${esc(g.nom)}</b><small>${esc(g.pitch)}</small><span class="etat">${g.niveau ? ETAPES_G[g.niveau - 1] : 'à faire'}</span>${g.url ? `<small class="url"><a href="${g.url}">${g.url}</a></small>` : ''}</div>`).join('')}</div>
 <h2>Restaurants (${rComplets} complets sur ${restos.length})</h2>
 <p class="legende">Pour chaque variante : à faire, en cours, construit, revu, corrigé, publié.</p>
 <div class="tableau"><table><thead><tr><th>#</th><th>Restaurant</th><th>Dossier</th><th>Portfolio</th><th>Awwwards</th><th>Inspi legacy</th></tr></thead><tbody>
-${restaurants.map((r, i) => `<tr><td class="num">${i + 1}</td><td><b>${esc(r.nom)}</b><br><small style="color:var(--muted)">${esc(r.type_cuisine || '')}</small></td><td><span class="pastille d${r.dossier}">${['à faire', 'en cours', 'complet'][r.dossier]}</span></td>${r.variantes.map((x) => `<td><span class="pastille n${x.n}">${x.url ? `<a href="${x.url}">publié</a>` : ETAPES_R[x.n]}</span></td>`).join('')}</tr>`).join('\n')}
+${restaurants.map((r, i) => `<tr><td class="num">${i + 1}</td><td><b>${esc(r.nom)}</b><br><small style="color:var(--muted)">${esc(r.type_cuisine || '')}</small></td><td><span class="pastille d${r.dossier}">${['à faire', 'en cours', 'complet'][r.dossier]}</span></td>${r.variantes.map((x) => `<td><span class="pastille n${x.n}">${ETAPES_R[x.n]}</span>${x.url ? `<br><small class="url"><a href="${x.url}">${x.url}</a></small>` : ''}</td>`).join('')}</tr>`).join('\n')}
 </tbody></table></div>
 <footer>KYW, filiale web de KYN. Page régénérée par <code>scripts/suivi.mjs</code> à chaque publication.</footer>
 </div>`;
