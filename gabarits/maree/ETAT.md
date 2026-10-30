@@ -1,0 +1,14 @@
+# ETAT — gabarit maree
+- [x] Socle copié, package.json renommé
+- [x] pnpm install
+- [x] DESIGN.md
+- [x] tokens.css, base.css, polices (5 woff2)
+- [x] site.ts (arrivages, plan, règles, services, photos libres créditées)
+- [x] composants (Loader, Header, Footer, Houle, Maree, Plan)
+- [x] pages (7) écrites, à builder
+- [x] motion/setup.ts + houle.ts
+- [x] build OK (7 pages)
+- [~] shoot + audit lancés en fond (maree-shoot.sh, log maree-shoot.log dans le scratchpad), serveur PID 3325
+- [x] FICHE.md
+- [x] RAPPORT.md (à compléter avec les chiffres finaux)
+- [ ] apercu.png (après shoot)

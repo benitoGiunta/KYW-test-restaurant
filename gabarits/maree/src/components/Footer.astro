@@ -1,0 +1,33 @@
+---
+// Footer en finale : nom bord à bord sur écume sous une houle, puis adresse, horaires, réseaux, crédits photo,
+// puis le pied de page KYW obligatoire (seule mention « Maquette KYW »).
+import KywFooter from '@kyw/footer';
+import { site, adresseLigne, horaireTexte, telHref, photosLibres } from '../data/site';
+import { u } from '../lib/url';
+import Houle from './Houle.astro';
+---
+<footer class="footer sec sec--eau">
+  <Houle fill="eau" />
+  <div class="footer__nom" aria-hidden="true"><span data-fit>{site.nom}</span></div>
+  <div class="wrap footer__cols">
+    <div class="stack">
+      <p class="mono">Adresse</p>
+      <address><strong>{site.nom}</strong><br />{adresseLigne()}</address>
+      <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+      <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a>{site.email.placeholder ? <span class="mono muted"> (adresse illustrative)</span> : null}</p>
+    </div>
+    <div>
+      <p class="mono">Horaires</p>
+      <dl class="horaires">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+    </div>
+    <div class="stack">
+      <p class="mono">Suivre</p>
+      {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
+      <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+      <p class="footer__credits muted">Photos d'eau et de nappe : {photosLibres.map((p, i) => <><a class="link" href={p.source} rel="noopener">{p.credit}</a>{i < photosLibres.length - 1 ? ', ' : ''}</>)} (images libres, à remplacer par celles du restaurant).</p>
+    </div>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

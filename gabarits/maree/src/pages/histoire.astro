@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const trio = photoDe('/photos/equipe-trio.webp');
+const salle = photoDe('/photos/salle-banquette.webp');
+const mains = photoDe('/photos/cuisine-mains-pate.webp');
+const passe = photoDe('/photos/cuisine-chefs-passe.webp');
+const etapes = [
+  { quand: 'Il y a 14 ans', quoi: "François et Damien aiguisent leurs premiers couteaux à la Plage d'Amée, à Namur." },
+  { quand: 'Ensuite', quoi: 'François part aux États-Unis et à Montréal ; Damien se fait une place en Belgique et passe par Shanghai.' },
+  { quand: 'Hiver 2019', quoi: "Installés par hasard à une table de ce lieu, ils ne savent pas encore qu'ils y ouvriront leur restaurant." },
+  { quand: 'Trois mois plus tard', quoi: 'Ils en ont les clés. Les Potes au Feu ouvrent, Avenue de la Plante.' },
+];
+---
+<Base title="Les potes, notre histoire" description={`L'histoire des ${site.nom} : Damien Gorjanec et François Schepens, deux potes, une cuisine à quatre mains à Namur.`}>
+  <section class="hero hero--texte" aria-labelledby="t-histoire">
+    <div class="wrap hero__bas">
+      <span class="eyebrow mono" data-reveal="fade" data-intro>Les potes</span>
+      <h1 id="t-histoire" style="font-size: var(--t-xl)" data-split="words" data-intro>L'histoire d'une rencontre, celle de deux potes passionnés</h1>
+      <p class="lead" style="margin-top: calc(var(--u) * 3)">{site.histoire[3]}</p>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-label="Le trio">
+    <Houle fill="eau" />
+    <div class="wrap paire">
+      <figure class="media media--bord" data-reveal="clip" data-cursor="Voir">
+        <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+      </figure>
+      <div class="prose">
+        <span class="eyebrow mono">Deux chefs, une salle</span>
+        <p>{site.histoire[0]}</p>
+        <p>{site.histoire[1]}</p>
+        <p>{site.histoire[2]}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel" aria-labelledby="t-chrono">
+    <Houle fill="ciel" />
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <span class="eyebrow mono">Au fil de l'eau</span>
+        <h2 id="t-chrono" style="font-size: var(--t-l); font-weight: 500" data-split="words">Quatre dates</h2>
+      </div>
+      <ol class="chrono col-large" data-reveal="up">
+        {etapes.map((e) => <li><span class="mono muted">{e.quand}</span><span>{e.quoi}</span></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-labelledby="t-equipe">
+    <Houle fill="eau" />
+    <div class="wrap">
+      <span class="eyebrow mono">L'équipe</span>
+      <h2 id="t-equipe" style="font-size: var(--t-l); font-weight: 500; margin-bottom: calc(var(--u) * 4)" data-split="words">Ceux qui servent et expliquent</h2>
+      <ul class="equipe" style="list-style: none; padding: 0">
+        {site.equipe.map((m, i) => {
+          const p = m.photo ? site.photos.find((x) => x.src === m.photo) : null;
+          return (
+            <li data-reveal="up" data-delay={String(i * 0.08)}>
+              {p ? (
+                <figure class="media"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>
+              ) : (
+                <div class="media media--vide" aria-hidden="true">{m.nom[0]}</div>
+              )}
+              <h3>{m.nom}</h3>
+              <p class="muted">{m.role}{m.placeholder ? ' (rôle illustratif, prénom cité par le site du client)' : ''}</p>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel" aria-labelledby="t-valeurs">
+    <Houle fill="ciel" />
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <span class="eyebrow mono">Ce qui nous anime</span>
+        <h2 id="t-valeurs" style="font-size: var(--t-l); font-weight: 500" data-split="words">Fait maison, saisons, rencontre</h2>
+        <ul class="badges" style="margin-top: calc(var(--u) * 3)">{site.valeurs.map((v) => <li class="badge is-ok">{v}</li>)}</ul>
+      </div>
+      <div class="col-droite">
+        {site.avis.map((a) => (
+          <blockquote class="avis" style="margin-bottom: calc(var(--u) * 3)" data-reveal="fade">
+            <p>{a.texte}</p>
+            <cite>{a.auteur}, {a.source}{a.placeholder ? ' (avis illustratif)' : ''}</cite>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--eau sec--fin" aria-label="En images">
+    <Houle fill="eau" />
+    <div class="wrap">
+      <div class="galerie">
+        {[salle, mains, passe].map((p) => (
+          <figure class="media" data-reveal="clip" data-cursor="Voir">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>

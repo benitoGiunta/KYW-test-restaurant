@@ -1,0 +1,153 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import Maree from '../components/Maree.astro';
+import Plan from '../components/Plan.astro';
+import { site, photoDe, photoAny, arrivages, regles, univers, citationTerrasse, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoAny('/photos/libre-130.webp');
+const plateau = photoAny('/photos/libre-292.webp');
+const terrasse = photoAny('/photos/libre-213.webp');
+const menu = site.carte[0];
+const nomL2 = site.nom.split(' au ');
+---
+<Base theme="photo">
+  <section class="hero" data-hero aria-labelledby="titre-hero">
+    <div class="hero__media" data-hero-media>
+      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical />
+    </div>
+    <div class="hero__ctas">
+      <a class="btn" href={u('/reservation/')} data-magnetic="0.2">Réserver</a>
+      <a class="btn" href={u('/terrasse/')}>La terrasse</a>
+      <a class="btn" href={u('/carte/')}>Bon cadeau</a>
+    </div>
+    <div class="hero__bas">
+      <h1 class="nom" id="titre-hero">
+        <span class="nom__l1" data-fit>{site.nom}</span>
+        <span class="nom__l2" data-fit>{nomL2[0]}</span>
+        <span class="nom__l2" data-fit>au {nomL2[1]}</span>
+      </h1>
+      <div class="wrap">
+        <ul class="hero__univers mono" data-hero-apres>
+          {univers.map((m) => <li>{m.mot}{m.placeholder ? ' *' : ''}</li>)}
+        </ul>
+      </div>
+    </div>
+    <svg class="hero__sep" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path data-houle d="M0,40 L1440,40 L1440,80 L0,80 Z" /></svg>
+  </section>
+
+  <section class="sec sec--ciel hero__accroche" aria-label="Accroche">
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <p class="lead">{site.baseline}</p>
+        <p class="muted" style="margin-top: calc(var(--u) * 2); max-width: 48ch">Une cuisine à quatre mains, un menu unique qui suit les saisons, et les chefs qui viennent eux-mêmes raconter l'assiette à table. * Terrasse et écailler : univers illustratifs du gabarit.</p>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+          <a class="btn" href={u('/carte/')}>Voir la carte</a>
+        </div>
+      </div>
+      <div class="col-droite">
+        <Maree />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-labelledby="t-ecailler">
+    <Houle fill="eau" />
+    <div class="wrap paire">
+      <figure class="media media--bord" data-reveal="clip" data-cursor="Voir">
+        <img src={asset(plateau.src)} alt={plateau.alt} width={plateau.largeur} height={plateau.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        <figcaption class="mono">photo libre, illustrative</figcaption>
+      </figure>
+      <div>
+        <span class="eyebrow mono" data-reveal="fade">L'écailler <span class="badge badge--illustratif">illustratif</span></span>
+        <h2 id="t-ecailler" style="font-size: var(--t-xl)" data-split="words">Ce que la marée a laissé ce matin</h2>
+        <ol class="index" style="margin-top: calc(var(--u) * 3)" data-reveal="up">
+          {arrivages.slice(0, 4).map((a, i) => (
+            <li>
+              <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
+              <span class="index__nom">{a.nom}<span class="index__desc">{a.origine}, {a.calibre}</span></span>
+              <span class="index__prix"><span class="mono">{a.prix}</span></span>
+            </li>
+          ))}
+        </ol>
+        <p class="actions"><a class="link flèche" href={u('/ecailler/')}>Tous les arrivages</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel" aria-labelledby="t-carte">
+    <Houle fill="ciel" />
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <span class="eyebrow mono" data-reveal="fade">La carte</span>
+        <h2 id="t-carte" style="font-size: var(--t-xl)" data-split="words">Un menu unique, quatre services, 67 €</h2>
+      </div>
+      <div class="col-large">
+        <ol class="index" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
+          {menu.plats.filter((p) => !p.prix).map((p, i) => (
+            <li>
+              <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
+              <span class="index__nom">{p.nom}{i === 2 ? <span class="badge badge--bouee">arrivage</span> : null}</span>
+              <span class="index__prix"><span class="mono">{i === 0 || i === 5 ? 'offert' : 'au menu'}</span></span>
+            </li>
+          ))}
+        </ol>
+        <div class="actions">
+          <a class="btn" href={u('/carte/')}>La carte complète et les formules</a>
+          <span class="badge badge--sable" style="align-self: center">du lundi au vendredi soir</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--eau terrasse" aria-label="La terrasse">
+    <Houle fill="eau" />
+    <figure class="media media--fond media--sous-eau" aria-hidden="true">
+      <img src={asset(terrasse.src)} alt="" width={terrasse.largeur} height={terrasse.hauteur} loading="lazy" decoding="async" data-parallax="0.12" />
+    </figure>
+    <div class="wrap">
+      <p class="citation" data-split="chars">{citationTerrasse.texte}</p>
+      <p class="mono">Phrase illustrative du gabarit · <a class="link" href={u('/terrasse/')} style="color: inherit">la terrasse</a></p>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel" aria-labelledby="t-regles">
+    <Houle fill="ciel" />
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <span class="eyebrow mono">Règles maison</span>
+        <h2 id="t-regles" style="font-size: var(--t-l); font-weight: 500" data-split="words">Ce qu'il faut savoir avant de s'asseoir</h2>
+      </div>
+      <ul class="badges col-large" style="margin-top: var(--u)">
+        {regles.map((r, i) => (
+          <li class={`badge ${r.placeholder ? 'badge--illustratif' : 'is-ok'}`} data-reveal="up" data-delay={String(i * 0.06)}>{r.texte}{r.placeholder ? ' (illustratif)' : ''}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-label="Le plan">
+    <Houle fill="eau" />
+    <div class="wrap"><Plan /></div>
+  </section>
+
+  <section class="sec sec--ciel sec--fin" aria-labelledby="t-resa">
+    <Houle fill="ciel" />
+    <div class="wrap resa">
+      <div>
+        <span class="eyebrow mono">Réserver</span>
+        <h2 id="t-resa" style="font-size: var(--t-xl)" data-split="words">Une table face à l'eau</h2>
+        <p class="muted" style="margin-top: calc(var(--u) * 2); max-width: 44ch">En ligne via {site.reservation.outil}, ou par téléphone pour les grandes tablées et les demandes de dernière minute.</p>
+        <div class="actions"><a class="btn btn--plein btn--large" href={site.reservation.url} rel="noopener" data-magnetic="0.15">Réserver sur {site.reservation.outil}</a></div>
+      </div>
+      <div class="stack" style="padding-top: calc(var(--u) * 4)">
+        <p class="mono muted">Téléphone</p>
+        <p class="resa__tel"><a href={telHref()}>{site.telephone}</a></p>
+        <p class="mono muted" style="margin-top: calc(var(--u) * 3)">Privatisation</p>
+        <p>Le samedi, la salle est à vous : anniversaires, équipes, familles. Écrivez-nous ou appelez pour composer la soirée.</p>
+        <p><a class="link flèche" href={u('/reservation/')}>Toutes les façons de réserver</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

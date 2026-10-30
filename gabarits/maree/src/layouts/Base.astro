@@ -1,0 +1,117 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { site, telHref } from '../data/site';
+import { asset, u } from '../lib/url';
+import Loader from '../components/Loader.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string; // image OG (1200x630) dans public/, chemin sans base : '/og.jpg'
+  theme?: string; // crochet de thème par page, ex. data-theme="dark"
+}
+const { title, description = site.description, image = '/og.jpg', theme } = Astro.props;
+const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Bistronomie au bord de la Meuse, ${site.adresse.commune}`;
+const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
+// Astro.url.pathname contient déjà `base` au build.
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = new URL(asset(image), siteUrl).href;
+
+// Polices : un <link rel="preload"> par woff2 utilisé au-dessus de la ligne de flottaison (fichiers dans public/fonts/).
+// Le socle n'embarque aucune police (styles neutres) ; un gabarit remplit cette liste et les @font-face de tokens.css.
+const polices: string[] = ['/fonts/gambetta-700-normal.woff2', '/fonts/general-sans-400-normal.woff2'];
+const familles: Record<string, string> = { gambetta: 'Gambetta', 'general-sans': 'General Sans', 'martian-mono': 'Martian Mono' };
+const font = (f: string, w: number) => `@font-face{font-family:'${familles[f]}';font-style:normal;font-weight:${w};font-display:swap;src:url(${asset(`/fonts/${f}-${w}-normal.woff2`)}) format('woff2')}`;
+const fontCss = [font('gambetta', 500), font('gambetta', 700), font('general-sans', 400), font('general-sans', 500), font('martian-mono', 400)].join('');
+
+const jours: Record<string, string> = { lundi: 'Monday', mardi: 'Tuesday', mercredi: 'Wednesday', jeudi: 'Thursday', vendredi: 'Friday', samedi: 'Saturday', dimanche: 'Sunday' };
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: site.nom,
+  description: site.description,
+  url: site.url,
+  telephone: site.telephone,
+  servesCuisine: site.typeCuisine,
+  image: ogImage,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: `${site.adresse.rue} ${site.adresse.numero}`,
+    postalCode: site.adresse.cp,
+    addressLocality: site.adresse.commune,
+    addressCountry: site.adresse.pays,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon },
+  openingHoursSpecification: site.horaires.flatMap((h) =>
+    h.creneaux.map((c) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: jours[h.jour], opens: c.ouverture, closes: c.fermeture })),
+  ),
+  acceptsReservations: site.reservation.url,
+  sameAs: site.reseaux.map((r) => r.url),
+};
+---
+<!doctype html>
+<html lang="fr" transition:animate="none" data-theme={theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#d8e3ea" />
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" href={asset('/sitemap-index.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.nom} />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <style set:html={fontCss} />
+    {polices.map((p) => <link rel="preload" as="font" type="font/woff2" href={asset(p)} crossorigin />)}
+    <slot name="head" />
+    <!-- Avant le premier rendu : marque JS + motion pour que les états « caché avant reveal » ne clignotent jamais. -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+    </script>
+    <ClientRouter fallback="swap" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <div id="gl" transition:persist="gl" aria-hidden="true"></div>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true">
+      <div class="curtain__panel">
+        <svg class="curtain__crete curtain__crete--haut" viewBox="0 0 1440 80" preserveAspectRatio="none" focusable="false"><path data-crete d="M0,40 L1440,40 L1440,80 L0,80 Z" /></svg>
+        <div class="curtain__fill"></div>
+        <svg class="curtain__crete curtain__crete--bas" viewBox="0 0 1440 80" preserveAspectRatio="none" focusable="false"><path data-crete d="M0,40 L1440,40 L1440,80 L0,80 Z" /></svg>
+      </div>
+    </div>
+    <div id="cursor" transition:persist="cursor" aria-hidden="true"><span data-cursor-label></span></div>
+    <Loader />
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <div class="barre-mobile" aria-label="Actions rapides">
+      <a class="btn btn--plein" href={u('/reservation/')}>Réserver</a>
+      <a class="btn" href={telHref()}>Appeler</a>
+    </div>
+    <script>
+      import { start } from '../engine/astro';
+      import { setupMotion } from '../motion/setup';
+      start(setupMotion);
+    </script>
+  </body>
+</html>

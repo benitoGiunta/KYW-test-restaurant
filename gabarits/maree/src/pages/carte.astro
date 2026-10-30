@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import { site, photoDe, photoAny } from '../data/site';
+import { u, asset } from '../lib/url';
+const plat = photoDe('/photos/plat-saint-jacques.webp');
+const nappe = photoAny('/photos/libre-292.webp');
+---
+<Base title="La carte" description={`La carte des ${site.nom} à Namur : menu dégustation unique de 4 services à 67 €, formule 3 services le midi, lunch, bon cadeau.`}>
+  <section class="hero hero--texte" aria-labelledby="t-carte">
+    <div class="wrap hero__bas">
+      <span class="eyebrow mono" data-reveal="fade" data-intro>La carte</span>
+      <h1 id="t-carte" style="font-size: var(--t-xl)" data-split="words" data-intro>Un menu unique, qui change avec la saison</h1>
+      <p class="lead" style="margin-top: calc(var(--u) * 3)">Quatre services, du lundi au vendredi soir, et les chefs qui viennent expliquer chaque assiette à table.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-label="Formules">
+    <Houle fill="eau" />
+    <div class="wrap">
+      <div class="menus">
+        {site.menus.map((m, i) => (
+          <article class="menu" data-reveal="up" data-delay={String(i * 0.08)}>
+            <p class="mono muted">{m.placeholder ? 'formule illustrative' : 'formule'}</p>
+            <h2 style="font-size: var(--t-m); font-weight: 500">{m.nom}</h2>
+            <p class="menu__prix">{m.prix}</p>
+            <p class="muted">{m.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel sec--fin" aria-label="Carte détaillée">
+    <Houle fill="ciel" />
+    <div class="wrap grid12">
+      <div class="col-large">
+        {site.carte.map((cat, ci) => (
+          <div class="carte-cat">
+            <div class="carte-cat__tete">
+              <h2 data-split="words">{cat.categorie}</h2>
+              {ci === 0 ? <span class="badge badge--bouee">arrivage du jour</span> : null}
+            </div>
+            <ol class="index" data-reveal="up">
+              {cat.plats.map((p, i) => (
+                <li>
+                  <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="index__nom">{p.nom}{p.description ? <span class="index__desc">{p.description}{p.placeholder ? ' (illustratif)' : ''}</span> : null}</span>
+                  <span class="index__prix">{p.prix ?? <span class="mono">{ci === 0 ? 'au menu' : 'sur demande'}</span>}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))}
+        <div class="paire" style="margin-top: calc(var(--u) * 8)">
+          <figure class="media" data-reveal="clip" data-cursor="Voir">
+            <img src={asset(nappe.src)} alt={nappe.alt} width={nappe.largeur} height={nappe.hauteur} loading="lazy" decoding="async" />
+            <figcaption class="mono">photo libre, illustrative</figcaption>
+          </figure>
+          <figure class="media media--portrait" data-reveal="clip" data-cursor="Voir">
+            <img src={asset(plat.src)} alt={plat.alt} width={plat.largeur} height={plat.hauteur} loading="lazy" decoding="async" />
+          </figure>
+        </div>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+          <a class="btn" href={u('/ecailler/')}>Les arrivages de l'écailler</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

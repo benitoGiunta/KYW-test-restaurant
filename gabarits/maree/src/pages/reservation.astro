@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import Maree from '../components/Maree.astro';
+import Plan from '../components/Plan.astro';
+import { site, adresseLigne, telHref } from '../data/site';
+---
+<Base title="Réserver" description={`Réserver une table chez ${site.nom} à Namur : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone}, privatisation le samedi.`}>
+  <section class="hero hero--texte" aria-labelledby="t-resa">
+    <div class="wrap hero__bas">
+      <span class="eyebrow mono" data-reveal="fade" data-intro>Réserver</span>
+      <h1 id="t-resa" style="font-size: var(--t-xl)" data-split="words" data-intro>Une table face à l'eau</h1>
+      <p class="lead" style="margin-top: calc(var(--u) * 3)">En ligne via {site.reservation.outil}. Pour plus de six couverts ou une demande de dernière minute, appelez-nous.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-label="Réserver">
+    <Houle fill="eau" />
+    <div class="wrap resa">
+      <div class="stack">
+        <a class="btn btn--plein btn--large" href={site.reservation.url} rel="noopener" data-magnetic="0.15">Réserver sur {site.reservation.outil}</a>
+        <p class="mono muted" style="margin-top: calc(var(--u) * 3)">Téléphone</p>
+        <p class="resa__tel"><a href={telHref()}>{site.telephone}</a></p>
+        <p class="mono muted" style="margin-top: calc(var(--u) * 3)">E-mail</p>
+        <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a>{site.email.placeholder ? <span class="muted"> (adresse illustrative)</span> : null}</p>
+        <p class="mono muted" style="margin-top: calc(var(--u) * 3)">Adresse</p>
+        <address style="font-style: normal">{adresseLigne()}</address>
+        <p class="mono muted" style="margin-top: calc(var(--u) * 3)">Privatisation</p>
+        <p>Le samedi, la salle est à vous. Composez la soirée avec les chefs : menu, horaires, nombre de couverts.</p>
+      </div>
+      <form class="form" data-reservation action={site.reservation.url} method="get" aria-label="Demande de réservation">
+        <p class="muted">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+        <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+        <div class="deux">
+          <label>Date <input type="date" name="date" required /></label>
+          <label>Heure <input type="time" name="heure" required /></label>
+        </div>
+        <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
+        <label>Message <textarea name="message" rows="3"></textarea></label>
+        <div class="actions" style="margin-top: 0"><button class="btn btn--plein" type="submit">Continuer sur {site.reservation.outil}</button></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel" aria-label="Horaires">
+    <Houle fill="ciel" />
+    <div class="wrap"><Maree /></div>
+  </section>
+
+  <section class="sec sec--eau sec--fin" aria-label="Le plan">
+    <Houle fill="eau" />
+    <div class="wrap"><Plan /></div>
+  </section>
+</Base>
+
+<script>
+  import { onPage } from '../engine';
+  onPage(() => {
+    const form = document.querySelector<HTMLFormElement>('[data-reservation]');
+    if (!form) return;
+    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    form.addEventListener('submit', go);
+    return () => form.removeEventListener('submit', go);
+  });
+</script>

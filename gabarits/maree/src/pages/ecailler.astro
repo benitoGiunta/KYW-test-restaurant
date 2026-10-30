@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import { site, arrivages, photoAny } from '../data/site';
+import { u, asset } from '../lib/url';
+const eau = photoAny('/photos/libre-124.webp');
+const plateau = photoAny('/photos/libre-292.webp');
+---
+<Base title="L'écailler, arrivages du jour" description={`L'écailler des ${site.nom} : huîtres et crustacés avec leur origine, arrivages du matin (section illustrative du gabarit).`} theme="photo">
+  <section class="hero hero--page" data-hero aria-labelledby="t-ecailler">
+    <div class="hero__media" data-hero-media>
+      <img src={asset(eau.src)} alt={eau.alt} width={eau.largeur} height={eau.hauteur} fetchpriority="high" decoding="async" data-critical />
+    </div>
+    <div class="hero__bas">
+      <div class="wrap">
+        <span class="eyebrow mono" style="color: inherit">L'écailler <span class="badge badge--illustratif" style="color: inherit; border-color: currentColor">section illustrative</span></span>
+        <h1 id="t-ecailler" style="font-size: var(--t-xl); max-width: 14ch" data-fit-off>Ce que la marée a laissé ce matin</h1>
+      </div>
+    </div>
+    <svg class="hero__sep" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path data-houle d="M0,40 L1440,40 L1440,80 L0,80 Z" /></svg>
+  </section>
+
+  <section class="sec sec--ciel" aria-label="Arrivages">
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <p class="lead">Les Potes au Feu n'ont pas d'écailler : cette page montre comment le gabarit présente des arrivages, avec l'origine et le calibre en mono.</p>
+      </div>
+      <div class="col-large">
+        <ol class="index" data-reveal="up">
+          {arrivages.map((a, i) => (
+            <li>
+              <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
+              <span class="index__nom">{a.nom}{i < 2 ? <span class="badge badge--bouee">arrivage</span> : null}<span class="index__desc">{a.origine}, {a.calibre}, donnée illustrative</span></span>
+              <span class="index__prix">{a.prix}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--eau sec--fin" aria-label="Le plateau">
+    <Houle fill="eau" />
+    <div class="wrap paire paire--inv">
+      <figure class="media" data-reveal="clip" data-cursor="Voir">
+        <img src={asset(plateau.src)} alt={plateau.alt} width={plateau.largeur} height={plateau.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        <figcaption class="mono">photo libre, illustrative</figcaption>
+      </figure>
+      <div>
+        <span class="eyebrow mono">Le plateau</span>
+        <h2 style="font-size: var(--t-l); font-weight: 500" data-split="words">Un plateau se commande la veille</h2>
+        <p class="muted" style="margin-top: calc(var(--u) * 2)">Composition selon la marée, servie sur glace avec pain de seigle et beurre salé (texte illustratif du gabarit).</p>
+        <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver</a><a class="btn" href={u('/carte/')}>La carte</a></div>
+      </div>
+    </div>
+  </section>
+</Base>

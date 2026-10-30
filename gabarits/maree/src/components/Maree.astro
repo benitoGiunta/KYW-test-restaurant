@@ -1,0 +1,35 @@
+---
+// Ligne de temps des services 08h-23h : segments bleus par jour, curseur « maintenant » et badge d'état (JS, setup.ts).
+import { services } from '../data/site';
+const jours = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
+const pct = (h: string) => (((parseInt(h.slice(0, 2)) * 60 + parseInt(h.slice(3))) - 8 * 60) / (15 * 60)) * 100;
+const heures = ['08h', '11h', '14h', '17h', '20h', '23h'];
+---
+<div class="maree" data-maree={JSON.stringify(services)}>
+  <div class="maree__tete">
+    <div>
+      <span class="eyebrow mono">Marée des services</span>
+      <h2 class="display" style="font-size: var(--t-l); font-weight: 500">Midi et soir, au rythme de la Meuse</h2>
+    </div>
+    <p class="etat-badge mono" data-maree-badge aria-live="polite">Horaires d'ouverture</p>
+  </div>
+  <div class="maree__scroll" tabindex="0" aria-label="Ligne de temps des services, défilable">
+    <div class="maree__grille">
+      <div class="maree__heures mono">{heures.map((h) => <span>{h}</span>)}</div>
+      {jours.map((j) => (
+        <>
+          <span class="maree__jour mono">{j}</span>
+          <div class="maree__ligne" data-jour={j}>
+            {services.filter((s) => s.jour === j).map((s) => (
+              <span class="maree__seg" role="img" style={`left:${pct(s.debut).toFixed(2)}%;width:${(pct(s.fin) - pct(s.debut)).toFixed(2)}%`} tabindex="0" aria-label={`${j}, service du ${s.nom} de ${s.debut} à ${s.fin}`}>
+                <span class="tip mono" aria-hidden="true">{s.nom} {s.debut.replace(':', 'h')} à {s.fin.replace(':', 'h')}</span>
+              </span>
+            ))}
+            <span class="maree__cursor" aria-hidden="true"></span>
+          </div>
+        </>
+      ))}
+    </div>
+  </div>
+  <p class="maree__note muted">Le samedi, la salle se privatise ; le dimanche, la Meuse se repose. Pour plus de six couverts, appelez-nous.</p>
+</div>

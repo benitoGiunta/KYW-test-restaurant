@@ -1,0 +1,26 @@
+---
+// En-tête : marque à gauche, navigation avec une ligne mono sous chaque entrée (le fait utile du moment).
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const liens = [
+  { href: u('/carte/'), label: 'La carte', sous: 'menu 67 €' },
+  { href: u('/ecailler/'), label: "L'écailler", sous: 'arrivages', mobileHide: true },
+  { href: u('/terrasse/'), label: 'La terrasse', sous: 'sans réservation', mobileHide: true },
+  { href: u('/histoire/'), label: 'Les potes', sous: 'depuis 2020' },
+  { href: u('/reservation/'), label: 'Réserver', sous: '081 64 04 44' },
+];
+const ici = Astro.url.pathname.replace(/\/+$/, '');
+const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+---
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="header__brand" href={u('/')} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
+    <nav class="nav" aria-label="Navigation principale">
+      {liens.map((l) => (
+        <a href={l.href} aria-current={courant(l.href)} data-mobile-hide={l.mobileHide ? '' : undefined}>
+          <span class="nav__label">{l.label}</span><span class="nav__sous mono">{l.sous}</span>
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>

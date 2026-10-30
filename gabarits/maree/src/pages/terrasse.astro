@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import { site, regles, photoAny, citationTerrasse, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const eau = photoAny('/photos/libre-213.webp');
+const rive = photoAny('/photos/libre-302.webp');
+---
+<Base title="La terrasse" description={`La terrasse des ${site.nom}, face à la Meuse à Namur : sans réservation, aux heures des services (section illustrative du gabarit).`} theme="photo">
+  <section class="hero hero--page" data-hero aria-labelledby="t-terrasse">
+    <div class="hero__media" data-hero-media>
+      <img src={asset(eau.src)} alt={eau.alt} width={eau.largeur} height={eau.hauteur} fetchpriority="high" decoding="async" data-critical />
+    </div>
+    <div class="hero__bas">
+      <div class="wrap">
+        <span class="eyebrow mono" style="color: inherit">La terrasse <span class="badge badge--illustratif" style="color: inherit; border-color: currentColor">section illustrative</span></span>
+        <h1 id="t-terrasse" style="font-size: var(--t-xl); max-width: 14ch">Face à l'eau, sans réservation</h1>
+      </div>
+    </div>
+    <svg class="hero__sep" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path data-houle d="M0,40 L1440,40 L1440,80 L0,80 Z" /></svg>
+  </section>
+
+  <section class="sec sec--ciel" aria-label="La terrasse">
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <p class="lead">{citationTerrasse.texte}</p>
+        <p class="muted" style="margin-top: calc(var(--u) * 2)">Les Potes au Feu n'ont pas de terrasse : cette page montre comment le gabarit traite une terrasse au bord de l'eau, avec ses règles et ses horaires. Texte illustratif.</p>
+      </div>
+      <div class="col-droite">
+        <span class="eyebrow mono">Règles de la terrasse</span>
+        <ul class="badges">
+          {regles.map((r) => <li class={`badge ${r.placeholder ? 'badge--illustratif' : 'is-ok'}`}>{r.texte}{r.placeholder ? ' (illustratif)' : ''}</li>)}
+        </ul>
+        <p style="margin-top: calc(var(--u) * 3)">Pour plus de six couverts, appelez le <a class="link" href={telHref()}>{site.telephone}</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--eau sec--fin" aria-label="La rive">
+    <Houle fill="eau" />
+    <div class="wrap">
+      <figure class="media media--sous-eau" style="aspect-ratio: 21 / 9" data-reveal="clip" data-cursor="Voir">
+        <img src={asset(rive.src)} alt={rive.alt} width={rive.largeur} height={rive.hauteur} loading="lazy" decoding="async" data-parallax="0.1" />
+        <figcaption class="mono">photo libre, teintée bleu Meuse</figcaption>
+      </figure>
+      <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver en salle</a><a class="btn" href={u('/')}>Retour à l'accueil</a></div>
+    </div>
+  </section>
+</Base>

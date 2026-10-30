@@ -1,0 +1,51 @@
+---
+// Plan au trait du quai : Meuse, Avenue de la Plante et pont de Jambes sont réels (tracé simplifié d'après
+// OpenStreetMap) ; les pastilles 2 à 4 sont illustratives. Dessiné au scroll (setup.ts), pastilles qui ouvrent la légende.
+import { plan } from '../data/site';
+---
+<div class="plan" data-plan>
+  <div class="plan__boite">
+    <svg class="plan__svg" viewBox="0 0 1000 620" role="img" aria-labelledby="plan-titre">
+      <title id="plan-titre">Plan simplifié du quartier de la Plante à Namur, la Meuse et le pont de Jambes</title>
+      <!-- La Meuse : deux rives, du sud (bas) vers le nord (haut), la ville à gauche, Jambes à droite -->
+      <path data-trait d="M610,620 C600,500 590,380 620,260 C650,140 640,60 600,0" />
+      <path data-trait d="M820,620 C790,500 760,380 800,250 C830,140 820,60 790,0" />
+      <path data-trait class="plan__eau" d="M715,620 C700,500 690,380 710,260 C735,140 730,60 695,0" />
+      <!-- Avenue de la Plante, le long de la rive gauche -->
+      <path data-trait d="M520,620 C515,500 505,380 540,260 C570,150 560,60 530,0" />
+      <!-- Rue des Brasseurs / boulevard vers la ville -->
+      <path data-trait d="M0,120 C150,110 320,100 520,80" />
+      <path data-trait d="M0,330 C120,330 260,320 430,300" />
+      <!-- Pont de Jambes, au nord -->
+      <path data-trait d="M560,118 L820,100" />
+      <path data-trait d="M560,140 L820,122" />
+      <!-- Citadelle, en surplomb -->
+      <path data-trait d="M60,420 C120,360 200,350 260,400 C300,440 360,440 420,410" />
+      <text class="plan__texte plan__texte--eau" x="690" y="470" transform="rotate(-78 690 470)">la Meuse</text>
+      <text class="plan__texte" x="880" y="330">Jambes</text>
+      <text class="plan__texte" x="630" y="96">Pont de Jambes</text>
+      <text class="plan__texte" x="60" y="470">Citadelle</text>
+      <text class="plan__texte" x="430" y="470" transform="rotate(-80 430 470)">Avenue de la Plante</text>
+      <text class="plan__texte" x="20" y="600">Tracé simplifié d'après OpenStreetMap</text>
+    </svg>
+    <div class="plan__pastilles">
+      {plan.map((p) => (
+        <button class="plan__pastille" type="button" data-pastille={String(p.numero)} aria-expanded="false" aria-controls={`legende-${p.numero}`} style={`left:${p.x}%;top:${p.y}%`} aria-label={`${p.numero}, ${p.nom}`}>
+          <span aria-hidden="true">{p.numero}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+  <div>
+    <span class="eyebrow mono">Le plan</span>
+    <h2 class="display" style="font-size: var(--t-l); font-weight: 500; margin-bottom: calc(var(--u) * 3)">Au bord de la Meuse, sur l'Avenue de la Plante</h2>
+    <ol class="plan__legende">
+      {plan.map((p) => (
+        <li id={`legende-${p.numero}`} data-legende={String(p.numero)}>
+          <span class="plan__legende-num mono">{String(p.numero).padStart(2, '0')}</span>
+          <div><strong>{p.nom}</strong><small>{p.detail}{p.placeholder ? ' (point illustratif)' : ''}</small></div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</div>

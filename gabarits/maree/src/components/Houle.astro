@@ -1,0 +1,10 @@
+---
+// Séparateur de sections : une houle remplie de la couleur de la section qui suit (fill), posée sur la précédente.
+// `d` est recalculé par src/motion/houle.ts ; la valeur initiale est la houle au repos.
+interface Props { fill?: 'ciel' | 'eau' | 'sable'; position?: 'haut' | 'bas'; classe?: string }
+const { fill = 'ciel', position = 'haut', classe = '' } = Astro.props;
+const repos = (() => { let d = ''; for (let i = 0; i <= 72; i++) { const x = (i / 72) * 1440; const y = 40 + Math.sin((i / 72) * Math.PI * 4) * 6; d += (i ? ' L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1); } return d + ' L1440,80 L0,80 Z'; })();
+---
+<svg class={`houle houle--${position} houle--${fill} ${classe}`} viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <path data-houle d={repos} />
+</svg>
