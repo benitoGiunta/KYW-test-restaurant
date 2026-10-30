@@ -1,0 +1,27 @@
+---
+// Fiche catalogue : vignette détourée (photo ronde) ou disque typographique, nom gras, description italique, prix.
+// `placeholder` marque la fiche entière ; `descPlaceholder` ne marque que la description.
+import { asset } from '../lib/url';
+interface Props {
+  nom: string;
+  description?: string;
+  prix?: string | null;
+  photo?: { src: string; alt: string };
+  disque?: string; // texte du disque quand il n'y a pas de photo (numéro, initiale)
+  tag?: string;
+  placeholder?: boolean;
+  descPlaceholder?: boolean;
+  delai?: number;
+}
+const { nom, description = '', prix = null, photo, disque = '', tag, placeholder = false, descPlaceholder = false, delai = 0 } = Astro.props;
+---
+<article class="fiche" data-fiche data-delay={String(delai)}>
+  <div class={`fiche__vig${photo ? '' : ' fiche__vig--disque'}`} aria-hidden={photo ? undefined : 'true'}>
+    {photo ? <img src={asset(photo.src)} alt={photo.alt} width="520" height="520" loading="lazy" decoding="async" /> : <span>{disque}</span>}
+  </div>
+  <div>
+    <h3 class="fiche__nom">{nom}{tag && <span class="fiche__tag">{tag}</span>}{placeholder && <span class="illu">illustratif</span>}</h3>
+    {description && <p class="fiche__desc">{description}{descPlaceholder && !placeholder && <span class="illu">illustratif</span>}</p>}
+    {prix && <p class="fiche__prix">{prix}</p>}
+  </div>
+</article>

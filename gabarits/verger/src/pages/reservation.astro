@@ -12,7 +12,7 @@ import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
   <section class="section">
     <div class="col bande">
       <a class="btn btn--plein" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil} <span class="btn__fleche" aria-hidden="true">→</span></a>
-      <div class="actions" style="margin-top: 0"><a class="btn btn--ligne" href={telHref()}>Appeler le {site.telephone}</a><a class="btn btn--ligne" href={`mailto:${site.email.valeur}`}>Écrire un e-mail</a></div>
+      <div class="actions" style="margin-top: 0"><a class="btn btn--ligne" href={telHref()}>Appeler le {site.telephone}</a>{site.email.placeholder ? <span class="btn btn--ligne btn--inerte">E-mail à communiquer<span class="exemple">illustratif</span></span> : <a class="btn btn--ligne" href={`mailto:${site.email.valeur}`}>Écrire un e-mail</a>}</div>
       <p class="centre muted">Samedi : privatisation possible (mariage, chef à domicile).</p>
     </div>
   </section>
@@ -21,7 +21,7 @@ import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
     <div class="col">
       <p class="meta centre">Votre demande</p>
       <h2 class="statement" data-split="lines">Dites-nous quand</h2>
-      <p class="centre muted" style="margin-block: var(--u) calc(var(--u) * 3)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+      <p class="centre muted" style="margin-block: var(--u) calc(var(--u) * 3)">Formulaire de démonstration sans envoi : la validation ouvre {site.reservation.outil}, où la date, l'heure et le nombre de couverts sont à saisir de nouveau.</p>
       <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
         <label><span>Nom</span><input type="text" name="nom" autocomplete="name" required /></label>
         <div class="form__deux">

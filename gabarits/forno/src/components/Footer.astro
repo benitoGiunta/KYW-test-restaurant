@@ -1,0 +1,36 @@
+---
+// Footer en couches : nom géant farine sur brun, photo qui glisse par-dessous au défilement, colonnes, puis KywFooter.
+import KywFooter from '@kyw/footer';
+import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const photo = photoDe('/photos/salle-banquette-960.webp');
+---
+<footer class="fin s-four" data-theme-zone="four">
+  <div class="wrap">
+    <p class="fin__nom display" aria-hidden="true">{site.nomLignes[0]}<br />{site.nomLignes[1]}</p>
+    <figure class="fin__photo" data-fin-photo>
+      <img src={asset(photo.src)} alt={photo.alt} width={photo.largeur} height={photo.hauteur} loading="lazy" decoding="async" data-parallax="0.18" />
+    </figure>
+    <div class="fin__cols">
+      <div class="stack">
+        <p><strong>{site.nom}</strong></p>
+        <address>{adresseLigne()}</address>
+        <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+        <p>{site.email.valeur}<span class="illu">adresse illustrative</span></p>
+      </div>
+      <div>
+        <p><strong>Horaires</strong></p>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+      </div>
+      <div class="stack">
+        <p><strong>Suivre</strong></p>
+        {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
+        <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+        <p><a class="link" href={u('/carte/')}>La carte</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

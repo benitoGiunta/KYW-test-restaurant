@@ -1,7 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, adresseLigne, horaireTexte, telHref, serviceSoir } from '../data/site';
+import { site, adresseLigne, horaireTexte, telHref, serviceSoir, heure } from '../data/site';
 const s = serviceSoir(site);
+const midi = site.horaires.filter((h) => h.creneaux.some((c) => c.ouverture < '17:00'));
+const midiTexte = midi.length ? `Le midi, ${midi.map((h) => h.jour).join(' et ')}, de ${heure(midi[0].creneaux[0].ouverture)} à ${heure(midi[0].creneaux[0].fermeture)}. ` : '';
+const creneaux = JSON.stringify(site.horaires.map((h) => ({ jour: h.jour, creneaux: h.creneaux })));
 ---
 <Base title="Réservation" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}. Service du soir ${s.texte}.`}>
   <section class="hero hero--page col-l">
@@ -16,16 +19,17 @@ const s = serviceSoir(site);
   <section class="section section--serre col-l" aria-labelledby="demande">
     <div class="section__tete">
       <h2 id="demande" class="tube tube--xl" data-tube data-reveal="fade">Votre table</h2>
-      <p class="muted">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+      <p class="muted">{midiTexte}Le soir, {s.texte}, de {heure(s.ouverture)} à {heure(s.fermeture)} (heures d'arrivée). Formulaire de démonstration : rien n'est envoyé, le bouton ouvre {site.reservation.outil} où vous choisissez votre table.</p>
     </div>
-    <form class="form" data-reservation action={site.reservation.url} method="get">
+    <form class="form" data-reservation data-creneaux={creneaux} action={site.reservation.url} method="get">
       <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
       <label>Date <input type="date" name="date" required /></label>
-      <label>Heure <input type="time" name="heure" min={s.ouverture} max={s.fermeture} required /></label>
+      <label>Heure <input type="time" name="heure" step="900" required aria-describedby="heure-aide" /></label>
+      <p id="heure-aide" class="note-heure muted" aria-live="polite"></p>
       <label>Couverts <input type="number" name="couverts" min="1" max="6" value="2" required /></label>
       <label>Message <textarea name="message" rows="3"></textarea></label>
       <div class="actions" style="margin-top: 0">
-        <button class="btn btn--ambre" type="submit">Continuer sur {site.reservation.outil}</button>
+        <button class="btn btn--ambre" type="submit">Ouvrir {site.reservation.outil}</button>
       </div>
     </form>
   </section>
@@ -50,11 +54,33 @@ const s = serviceSoir(site);
 
 <script>
   import { onPage } from '../engine';
+  // Contrôle doux de l'heure : accepte chaque créneau réel du jour choisi (midi et soir), heures d'arrivée bornes incluses.
   onPage(() => {
     const form = document.querySelector<HTMLFormElement>('[data-reservation]');
     if (!form) return;
+    const jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+    const horaires = JSON.parse(form.dataset.creneaux || '[]') as { jour: string; creneaux: { ouverture: string; fermeture: string }[] }[];
+    const date = form.querySelector<HTMLInputElement>('input[name="date"]')!;
+    const heure = form.querySelector<HTMLInputElement>('input[name="heure"]')!;
+    const aide = form.querySelector<HTMLElement>('#heure-aide')!;
+    const h = (s: string) => s.replace(':00', 'h').replace(':', 'h');
+    const verifier = () => {
+      heure.setCustomValidity('');
+      aide.textContent = '';
+      if (!date.value) return;
+      const [a, mo, j] = date.value.split('-').map(Number);
+      const jour = jours[new Date(Date.UTC(a, mo - 1, j)).getUTCDay()];
+      const cr = horaires.find((x) => x.jour === jour)?.creneaux ?? [];
+      if (!cr.length) { const msg = `Le restaurant est fermé le ${jour}.`; aide.textContent = msg; date.setCustomValidity(msg); return; }
+      date.setCustomValidity('');
+      aide.textContent = `Le ${jour} : ${cr.map((c) => `${h(c.ouverture)} à ${h(c.fermeture)}`).join(' ou ')}.`;
+      if (heure.value && !cr.some((c) => heure.value >= c.ouverture && heure.value <= c.fermeture)) {
+        heure.setCustomValidity(`Choisissez une heure d'arrivée ${cr.map((c) => `entre ${h(c.ouverture)} et ${h(c.fermeture)}`).join(' ou ')}.`);
+      }
+    };
     const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    date.addEventListener('input', verifier); heure.addEventListener('input', verifier);
     form.addEventListener('submit', go);
-    return () => form.removeEventListener('submit', go);
+    return () => { form.removeEventListener('submit', go); date.removeEventListener('input', verifier); heure.removeEventListener('input', verifier); };
   });
 </script>

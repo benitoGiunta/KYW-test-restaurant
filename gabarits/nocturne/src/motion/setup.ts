@@ -58,39 +58,46 @@ function heroIntro(intro: gsap.core.Timeline) {
   return () => { tl.kill(); };
 }
 
-/** Badge « ouvert ce soir jusqu'à … » calculé à l'heure de Bruxelles depuis site.horaires (data-statut = JSON). */
+/** Badge d'ouverture calculé à l'heure de Bruxelles depuis site.horaires (data-statut = JSON).
+ *  « Ouvert » seulement entre l'ouverture et la dernière arrivée (incluse) d'un créneau réel ; sinon le prochain service
+ *  exact : plus tard aujourd'hui (midi ou soir), demain, ou le jour nommé. La logique pure est `statutTexte` (testable). */
+export function statutTexte(horaires: { jour: string; creneaux: { ouverture: string; fermeture: string }[] }[], jourIdx: number, m: number) {
+  const jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+  const h = (s: string) => s.replace(':00', 'h').replace(':', 'h');
+  const mn = (s: string) => parseInt(s.slice(0, 2)) * 60 + parseInt(s.slice(3));
+  const moment = (c: { ouverture: string }) => (mn(c.ouverture) >= 17 * 60 ? 'ce soir' : 'ce midi');
+  const auj = horaires.find((x) => x.jour === jours[jourIdx])?.creneaux ?? [];
+  const encours = auj.find((c) => m >= mn(c.ouverture) && m <= mn(c.fermeture));
+  if (encours) return { ouvert: true, texte: `Ouvert ${moment(encours)}, dernières arrivées à ${h(encours.fermeture)}` };
+  const plusTard = auj.find((c) => m < mn(c.ouverture));
+  if (plusTard) return { ouvert: false, texte: `Fermé pour l'instant, ouverture ${moment(plusTard)} à ${h(plusTard.ouverture)}` };
+  const debut = auj.length ? 'Fermé, ' : "Fermé aujourd'hui, ";
+  for (let i = 1; i <= 7; i++) {
+    const j = jours[(jourIdx + i) % 7];
+    const c = horaires.find((x) => x.jour === j)?.creneaux[0];
+    if (c) {
+      const quand = i === 1 ? `demain ${mn(c.ouverture) >= 17 * 60 ? 'soir' : 'midi'}` : `${j} ${mn(c.ouverture) >= 17 * 60 ? 'soir' : 'midi'}`;
+      return { ouvert: false, texte: `${debut}prochain service ${quand} à ${h(c.ouverture)}` };
+    }
+  }
+  return { ouvert: false, texte: 'Fermé' };
+}
+
 function statut() {
   const el = document.querySelector<HTMLElement>('[data-statut]');
   if (!el) return () => {};
-  const jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
-  const horaires = JSON.parse(el.dataset.statut || '[]') as { jour: string; creneaux: { ouverture: string; fermeture: string }[] }[];
-  const h = (s: string) => s.replace(':00', 'h').replace(':', 'h');
-  const mn = (s: string) => parseInt(s.slice(0, 2)) * 60 + parseInt(s.slice(3));
+  const horaires = JSON.parse(el.dataset.statut || '[]');
   const texte = el.querySelector<HTMLElement>('[data-statut-texte]') || el;
   const update = () => {
-    const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Brussels' }));
-    const jour = jours[now.getDay()];
-    const m = now.getHours() * 60 + now.getMinutes();
-    const auj = horaires.find((x) => x.jour === jour);
-    const encours = auj?.creneaux.find((c) => m >= mn(c.ouverture) - 30 && m < mn(c.fermeture));
-    let t = '';
-    if (encours) t = `Ouvert, dernier service à ${h(encours.fermeture)}`;
-    else {
-      const soir = auj?.creneaux.find((c) => mn(c.ouverture) >= 17 * 60 && m < mn(c.ouverture) - 30);
-      if (soir) t = `Ouvert ce soir dès ${h(soir.ouverture)}`;
-      else {
-        for (let i = 1; i <= 7 && !t; i++) {
-          const j = jours[(now.getDay() + i) % 7];
-          const c = horaires.find((x) => x.jour === j)?.creneaux[0];
-          if (c) t = `Fermé ce soir, prochain service ${i === 1 ? 'demain' : j} à ${h(c.ouverture)}`;
-        }
-      }
-    }
-    texte.textContent = t || 'Fermé';
-    el.classList.toggle('is-ouvert', !!encours);
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+      .formatToParts(new Date()).map((p) => [p.type, p.value]));
+    const jourIdx = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(parts.weekday);
+    const r = statutTexte(horaires, jourIdx, parseInt(parts.hour) * 60 + parseInt(parts.minute));
+    texte.textContent = r.texte;
+    el.classList.toggle('is-ouvert', r.ouvert);
   };
   update();
-  const id = setInterval(update, 60000);
+  const id = setInterval(update, 30000);
   return () => clearInterval(id);
 }
 

@@ -16,3 +16,7 @@
 - [x] rebuild final, contrôle ciblé (console, clavier réservation, hero 2 lignes), apercu.png, RAPPORT.md, FICHE.md
 - [ ] reste : seconde passe shoot complète par le relecteur ; jury par agent distinct
 - [x] README du socle retiré ; livraison
+- [x] Révision 1 (30/10, reviseur-site) : 3 F1 + F2-1 à F2-8 + F3-1/3/4/6/8 corrigés (voir REVISION-1.md) ; build OK ;
+      badge testé sur 12 instants (`page.clock`), formulaire sur 7 cas, 0 erreur console, scrollWidth 390/1440 ;
+      captures `.shots-nocturne-rev/` (index, carte, histoire, reservation, soirees, cocktails).
+- [ ] reste : relecture passe 2 ; photo HD du volet gauche du hero (F3-5) et contraste du pied KYW (F3-7, composant commun)

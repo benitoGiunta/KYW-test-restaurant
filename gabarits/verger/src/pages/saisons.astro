@@ -3,13 +3,13 @@
 import Base from '../layouts/Base.astro';
 import { site, saisons, ingredients, mois } from '../data/site';
 import { u } from '../lib/url';
-const ingDe = (s: (typeof saisons)[number]) => ingredients.filter((i) => s.mois.includes(i.mois[0]));
+const ingDe = (s: (typeof saisons)[number]) => ingredients.filter((i) => i.mois.some((m) => s.mois.includes(m)));
 ---
-<Base title="Les saisons" description={`Comment la carte des Potes au Feu à ${site.adresse.commune} tourne avec les saisons : ingrédients et exemples de cartes de printemps, d'été, d'automne et d'hiver.`}>
+<Base title="Les saisons" description={`Les Potes au Feu à ${site.adresse.commune} servent un menu unique de saison : calendrier indicatif des produits et exemples illustratifs de ce que chaque saison peut apporter.`}>
   <section class="hero wrap" data-hero>
-    <p class="meta hero__sur">Archive</p>
-    <h1 class="mots" data-mots><span>Quatre</span><span>cartes</span><span>par</span><span>an</span></h1>
-    <p class="hero__accroche" data-hero-apres>Le menu change avec le verger. Voici ce que chaque saison apporte, et un exemple de ce qu'elle peut devenir à table.</p>
+    <p class="meta hero__sur">Calendrier indicatif</p>
+    <h1 class="mots" data-mots><span>Au</span><span>fil</span><span>des</span><span>saisons</span></h1>
+    <p class="hero__accroche" data-hero-apres>Un menu unique, de saison, inspiré des produits du moment. Voici ce que chaque saison peut apporter, et des exemples de ce qu'elle pourrait devenir à table<span class="exemple">*</span>.</p>
   </section>
 
   <section class="section section--fin">
@@ -25,7 +25,7 @@ const ingDe = (s: (typeof saisons)[number]) => ingredients.filter((i) => s.mois.
       ))}
     </div>
     <div class="col centre" style="margin-top: calc(var(--u) * 6)">
-      <p class="muted"><span class="exemple">*</span> Calendrier et cartes de saison illustratifs. <a class="link" href={u('/carte/')}>La carte en cours</a> est la seule carte réelle.</p>
+      <p class="muted"><span class="exemple">*</span> Calendrier des produits et exemples de plats illustratifs : le rythme de la carte n'est pas connu. <a class="link" href={u('/carte/')}>Le menu actuel</a> est le seul menu réel.</p>
     </div>
   </section>
 </Base>

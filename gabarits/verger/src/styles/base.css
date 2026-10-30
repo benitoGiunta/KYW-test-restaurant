@@ -252,7 +252,7 @@ html[data-mois='9'] [data-secteur-mois='9'], html[data-mois='10'] [data-secteur-
   .paire__texte, .paire--inverse .paire__media { padding-top: 0; margin-top: 0; }
   .paire--inverse .paire__media { order: 0; }
   .roue__scene { grid-template-columns: 1fr; }
-  .roue__plats { display: none; } /* les 4 services sont listés dans « La carte du mois » juste après */
+  .roue__plats { display: none; } /* les 4 services sont listés dans « Le menu actuel » juste après */
   .roue__disque { width: min(90vw, 60svh); }
   .vig { width: 34px; height: 34px; margin: -17px 0 0 -17px; font-size: 0; }
   .vig::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
@@ -269,3 +269,17 @@ html[data-mois='9'] [data-secteur-mois='9'], html[data-mois='10'] [data-secteur-
 }
 .roue__coeur-html { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 0.2em; text-align: center; pointer-events: none; }
 .roue__coeur-mois { font-family: var(--f-display); font-style: italic; font-size: var(--t-m); color: var(--c-ink); }
+
+/* Révision 1 · hero de l'accueil en deux colonnes sur grand écran : titre large à gauche, photo entière dans la fenêtre. */
+@media (min-width: 1024px) {
+  .hero--duo { width: min(100% - 2 * var(--gutter), 1240px); grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: center; justify-items: stretch; text-align: left; column-gap: calc(var(--u) * 6); padding-block: calc(var(--u) * 4) 0; }
+  .hero--duo .hero__titre { display: grid; justify-items: start; gap: calc(var(--u) * 3); }
+  .hero--duo .mots { display: flex; flex-wrap: wrap; column-gap: 0.22em; justify-content: flex-start; font-size: clamp(5.5rem, 9.6vw, 10rem); }
+  .hero--duo .hero__accroche { margin-top: 0; }
+  .hero--duo .hero__media { width: min(100%, 62svh); max-width: none; justify-self: center; }
+  .hero--duo .hero__media .vignette { width: 100%; }
+}
+.hero__titre { display: grid; justify-items: center; gap: calc(var(--u) * 3); }
+/* Bouton sans destination (donnée illustrative) : même gabarit, pas d'action. */
+.btn--inerte { background: transparent; color: var(--c-fg); border-style: dashed; cursor: default; gap: 0.5em; }
+.btn--inerte .exemple { vertical-align: 0; }

@@ -1,0 +1,35 @@
+---
+// En-tête fixe et opaque ; sa couleur suit la zone (html[data-theme="four"|"farine"], basculé au défilement).
+// Le compte à rebours du prochain service est calculé côté client depuis site.horaires (jamais de date en dur).
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const liens = [
+  { href: u('/carte/'), label: 'La carte' },
+  { href: u('/pates/'), label: 'Pâtes fraîches' },
+  { href: u('/histoire/'), label: 'Histoire' },
+  { href: u('/a-emporter/'), label: 'À emporter' },
+  { href: u('/reservation/'), label: 'Réserver' },
+];
+const ici = Astro.url.pathname.replace(/\/+$/, '');
+const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+const horaires = JSON.stringify(site.horaires.map((h) => h.creneaux));
+---
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="header__brand" href={u('/')} aria-current={courant(u('/'))}>{site.nom}</a>
+    <nav class="nav" aria-label="Navigation principale">
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+    </nav>
+    <a class="compte" href={u('/reservation/')} data-compte data-horaires={horaires} aria-live="off">
+      <span class="compte__lib" data-compte-lib>Prochain service</span>
+      <span class="compte__nums" aria-hidden="true">
+        <span data-u="j" data-c="j">00<small>jours</small></span>
+        <span data-u="h" data-c="h">00<small>heures</small></span>
+        <span data-u="min" data-c="m">00<small>minutes</small></span>
+        <span data-u="s" data-c="s">00<small>secondes</small></span>
+      </span>
+      <span class="sr-only" data-compte-texte>Horaires et réservation</span>
+      <span class="compte__hover" data-compte-hover aria-hidden="true">Réserver une table</span>
+    </a>
+  </div>
+</header>

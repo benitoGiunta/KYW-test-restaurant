@@ -77,3 +77,20 @@ illustrative à la ligne, parce que le restaurant n'en publie pas.
 - [x] Texte jamais dépendant du halo (contraste mesuré sur le fond noir, sans lumière).
 - [x] Hover par rôle (ci-dessus), idle motion (halo qui respire).
 - [x] Copy en français, vouvoiement, sans tiret cadratin ; données fictives marquées à l'endroit où elles s'affichent.
+
+## Révision 1 (30/10/2026, après REVUE-1)
+- **Badge d'ouverture** : « Ouvert » seulement entre l'ouverture réelle et la dernière arrivée incluse d'un créneau de
+  `site.horaires` (plus d'anticipation de 30 min). Hors service, le badge nomme le prochain service exact (« ouverture ce
+  midi à 12h », « ce soir à 19h », « demain midi », « lundi soir ») et dit « Fermé aujourd'hui » les jours sans service.
+  Logique pure dans `statutTexte()` (`src/motion/setup.ts`), heure de Bruxelles via `Intl.DateTimeFormat`.
+- **Réservation** : plus de `min`/`max` sur l'heure ; un contrôle client accepte chaque créneau du jour choisi (midi
+  mercredi et vendredi, soir du lundi au vendredi), refuse samedi et dimanche, et affiche les créneaux du jour sous le champ.
+- **Avis** : seul l'extrait réel du Guide MICHELIN est cité (section « Le guide en dit ») ; plus d'avis d'exemple.
+- **E-mail** : aucun (le restaurant n'en publie pas) ; le champ `email.valeur` vide masque le lien du pied de page et le
+  bouton « Écrire ». Contact : téléphone et Zenchef.
+- **Sous-pages** : hero de page compact (titre et chapô côte à côte en desktop, `min-height: 0` aussi en mobile, la règle
+  mobile de `.hero` imposait 100svh) ; la première section suit à 3 unités. Titre de page mobile 39 px.
+- **Équipe sans photo** : initiale en tube dans un cadre filet (plus de bloc gris) ; vignettes carrées en 2 colonnes mobile.
+- **Origin story de l'accueil** : photo des deux chefs au dressage (luminance 96 contre 35 pour le profil de Damien),
+  filtre N&B adouci (`contrast 1.15, brightness 1.05`).
+- **Carte** : catégorie « Boissons » illustrative retirée (le bar a sa page et ses exemples) ; formules en 2 × 2.

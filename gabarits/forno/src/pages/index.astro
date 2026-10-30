@@ -1,0 +1,162 @@
+---
+import Base from '../layouts/Base.astro';
+import Fiche from '../components/Fiche.astro';
+import { site, photoDe, servicesTexte, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const heroPhoto = photoDe('/photos/plat-boeuf-confit-960.webp');
+const leveePhoto = photoDe(site.levee.photo);
+const menu = site.carte[0];
+const mur = site.fournil.map(photoDe);
+const services = servicesTexte();
+const parallaxes = ['0.06', '0.16', '0.1', '0.2', '0.08'];
+const m = site.manifeste;
+---
+<Base theme="four" preload={heroPhoto.src}>
+  <!-- HERO : poster brun, tout est peint au premier rendu (l'entrée s'anime par transform/opacité en desktop). -->
+  <section class="hero s-four" data-theme-zone="four" data-hero>
+    <div class="wrap hero__haut">
+      <h1 class="hero__nom display" data-hero-nom><span>{site.nomLignes[0]}</span><span>{site.nomLignes[1]}</span></h1>
+      <div class="hero__cote stack" data-hero-cote>
+        <p class="lead">{site.baseline}</p>
+        <div class="actions" style="margin-top: var(--u)">
+          <a class="btn btn--primary" href={u('/reservation/')} data-magnetic="0.25">Réserver</a>
+          <a class="btn" href={u('/carte/')}>La carte</a>
+        </div>
+        <p><a class="fleche" href="#levee">Descendre vers la pâte <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v11M2 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></p>
+      </div>
+    </div>
+    <p class="hero__coin eyebrow">{site.adresse.commune} · {site.typeCuisine.split(',')[1]?.trim() ?? site.typeCuisine}</p>
+    <figure class="hero__photo" data-hero-photo>
+      <img src={asset(heroPhoto.src)} alt={heroPhoto.alt} width={heroPhoto.largeur} height={heroPhoto.hauteur} fetchpriority="high" decoding="async" data-critical data-parallax="0.12" />
+    </figure>
+  </section>
+
+  <!-- MANIFESTE : phrase du site actuel, deux mots-liens soulignés épais. -->
+  <section class="manifeste s-four" data-theme-zone="four">
+    <div class="wrap">
+      <p data-split="lines">{m.avant}<a class="souligne" href={u(m.lien1.href)}>{m.lien1.mot}</a>{m.milieu}<a class="souligne" href={u(m.lien2.href)}>{m.lien2.mot}</a>{m.apres}</p>
+    </div>
+  </section>
+
+  <!-- LEVÉE (signature) : la photo grossit de la vignette au plein écran, le titre rétrécit en coin, le marquee traverse. -->
+  <section class="levee s-four" id="levee" data-theme-zone="four" data-levee aria-label="La pâte lève">
+    <div class="levee__stage">
+      <figure class="levee__media">
+        <img src={asset(leveePhoto.src)} alt={leveePhoto.alt} width={leveePhoto.largeur} height={leveePhoto.hauteur} loading="lazy" decoding="async" />
+      </figure>
+      <p class="levee__titre display" aria-hidden="true">{site.nomLignes[1]}</p>
+      <p class="levee__legende">{leveePhoto.alt}. Faites défiler : la pâte lève.</p>
+      <div class="marquee" data-marquee aria-label={`Les services du menu : ${site.levee.marquee.join(', ')}`}>
+        <div class="marquee__track marquee__track--1" data-marquee-track="1">
+          {[0, 1].map(() => site.levee.marquee.map((t) => <p aria-hidden="true">{t}</p>))}
+        </div>
+        <div class="marquee__track marquee__track--2" data-marquee-track="2" aria-hidden="true">
+          {[0, 1].map(() => [...site.levee.marquee].reverse().map((t) => <p>{t}</p>))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE MENU : catalogue des services réels (vignette ronde quand une photo du plat existe, disque chiffré sinon). -->
+  <section class="section" data-theme-zone="farine" data-farine-start>
+    <div class="wrap">
+      <div class="cat">
+        <div class="cat__head">
+          <h2 data-split="words">Le menu du soir</h2>
+          <span class="cat__num">{String(menu.plats.length).padStart(2, '0')}</span>
+        </div>
+        <p class="muted" style="margin-bottom: calc(var(--u) * 3)">{site.menus[0].nom}, {site.menus[0].prix}, du lundi au vendredi soir.</p>
+        <div class="cat__grid">
+          {menu.plats.map((p, i) => (
+            <Fiche nom={p.nom} description={p.description} prix={p.prix} photo={p.photo ? photoDe(p.photo) : undefined} disque={String(i + 1).padStart(2, '0')} placeholder={p.placeholder} delai={(i % 2) * 0.08} />
+          ))}
+        </div>
+        <div class="actions">
+          <a class="btn" href={u('/carte/')}>La carte complète</a>
+          <a class="link" href={u('/pates/')}>Catalogue des pâtes fraîches<span class="illu">exemple</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE FOURNIL : mur asymétrique, parallaxe différenciée. -->
+  <section class="section" data-theme-zone="farine">
+    <div class="wrap">
+      <div class="cat__head" style="margin-bottom: calc(var(--u) * 4)">
+        <h2 data-split="words">En cuisine</h2>
+        <span class="cat__num">{String(mur.length).padStart(2, '0')}</span>
+      </div>
+      <div class="g12 mur">
+        {mur.map((p, i) => (
+          <figure data-reveal="clip" data-delay={String((i % 2) * 0.1)}>
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" data-parallax={parallaxes[i]} />
+            <figcaption>{p.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LES GENS : carrousel qui déborde à droite. -->
+  <section class="section gens" data-theme-zone="farine" data-gens>
+    <div class="wrap">
+      <div class="gens__head">
+        <h2 data-split="words">Les gens</h2>
+        <div class="gens__fleches">
+          <button class="rond" type="button" data-gens-prev aria-label="Personnes précédentes"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2 4 8l6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <button class="rond" type="button" data-gens-next aria-label="Personnes suivantes"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 2 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+        </div>
+      </div>
+      <ul class="gens__piste" data-gens-piste role="list">
+        {site.equipe.map((p, i) => {
+          const ph = p.photo ? photoDe(p.photo) : null;
+          return (
+            <li>
+              <figure class="gens__carte" data-reveal="up" data-delay={String(i * 0.08)}>
+                <div class={`gens__photo${ph ? '' : ' gens__photo--vide'}`}>
+                  {ph ? <img src={asset(ph.src)} alt={ph.alt} width={ph.largeur} height={ph.hauteur} loading="lazy" decoding="async" /> : <span>Photo à fournir</span>}
+                </div>
+                <figcaption>
+                  <p class="gens__nom">{p.nom}</p>
+                  <p class="gens__role">{p.role}{p.rolePlaceholder && <span class="illu">rôle à confirmer</span>}</p>
+                </figcaption>
+              </figure>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <!-- LE SERVICE : bande tomate, horaires réels regroupés, réservation, téléphone. -->
+  <section class="bande" data-theme-zone="farine">
+    <div class="wrap bande__cols">
+      {services.map((s) => (
+        <div class="service" data-reveal="up">
+          <span class="eyebrow">{s.libelle} · {s.jours}</span>
+          <strong>{s.heures}</strong>
+        </div>
+      ))}
+      <div class="actions" style="margin-top: 0" data-reveal="up" data-delay="0.1">
+        <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+        <a class="link" href={telHref()}>{site.telephone}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ILS EN PARLENT -->
+  <section class="section" data-theme-zone="farine">
+    <div class="wrap g12">
+      {site.avis.map((a, i) => (
+        <blockquote class="avis" data-reveal="fade" data-delay={String(i * 0.1)} style={`grid-column: ${i === 0 ? '1 / 8' : i === 1 ? '6 / 13' : '2 / 9'}`}>
+          <p>{a.texte}</p>
+          <cite>{a.auteur}, {a.source}{a.placeholder && <span class="illu">avis illustratif</span>}</cite>
+        </blockquote>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  @media (max-width: 767px) { .avis { grid-column: 1 / 13 !important; } }
+</style>

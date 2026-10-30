@@ -4,7 +4,6 @@ import { site, photoDe } from '../data/site';
 import { asset, u } from '../lib/url';
 const nb = photoDe('/photos/cuisine-chefs-passe.webp');
 const trio = photoDe('/photos/equipe-trio.webp');
-const avisIllu = site.avis.some((a) => a.placeholder);
 const roleIllu = site.equipe.some((m) => m.rolePlaceholder);
 ---
 <Base title="Histoire et équipe" description={`L'histoire de ${site.nom} : deux potes, Damien Gorjanec et François Schepens, de la Plage d'Amée à l'avenue de la Plante, et l'équipe qui les épaule.`}>
@@ -45,7 +44,7 @@ const roleIllu = site.equipe.some((m) => m.rolePlaceholder);
             {p ? (
               <figure><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>
             ) : (
-              <figure aria-hidden="true"></figure>
+              <figure class="membre__initiale" aria-hidden="true"><span class="tube">{m.nom.charAt(0)}</span></figure>
             )}
             <p class="membre__nom">{m.nom}{m.placeholder && <span class="illu">illustratif</span>}</p>
             <p class="membre__role">{m.role}{m.rolePlaceholder && <span class="illu">illustratif</span>}</p>
@@ -64,14 +63,13 @@ const roleIllu = site.equipe.some((m) => m.rolePlaceholder);
 
   <section class="section col-l" aria-labelledby="avis">
     <div class="section__tete">
-      <h2 id="avis" class="tube tube--xl" data-tube data-reveal="fade">On en dit</h2>
-      {avisIllu && <p class="note-illu"><b>* illustratif</b> : avis d'exemple, le restaurant n'a pas encore fourni ses extraits.</p>}
+      <h2 id="avis" class="tube tube--xl" data-tube data-reveal="fade">Le guide en dit</h2>
     </div>
     <ul class="avis-liste">
       {site.avis.map((a, i) => (
         <li class="avis" data-reveal="up" data-delay={String(i * 0.1)}>
           <p>« {a.texte} »</p>
-          <cite>{a.auteur}, {a.source}{a.placeholder && <span class="illu">illustratif</span>}</cite>
+          <cite>{a.auteur}, {a.source}</cite>
         </li>
       ))}
     </ul>

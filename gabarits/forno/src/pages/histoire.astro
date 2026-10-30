@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const damien = photoDe('/photos/chef-damien.webp');
+const francois = photoDe('/photos/chef-francois.webp');
+const galerie = ['/photos/salle-banquette.webp', '/photos/cuisine-mains-pate.webp', '/photos/equipe-trio.webp'].map(photoDe);
+---
+<Base title="Notre histoire" description={`L'histoire des Potes au Feu à ${site.adresse.commune} : François Schepens et Damien Gorjanec, deux amis, une cuisine bistronomique à quatre mains.`}>
+  <section class="wrap page-hero">
+    <p class="eyebrow">Notre histoire</p>
+    <h1 data-split="words" data-intro>Deux potes, un feu</h1>
+    <p class="lead" data-reveal="fade" data-intro data-delay="0.3">{site.baseline}</p>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap g12">
+      <div class="prose" style="grid-column: 1 / 8" data-reveal="up">
+        {site.histoire.map((par) => <p>{par}</p>)}
+      </div>
+      <div class="g12 portraits" style="grid-column: 1 / 13; margin-top: calc(var(--u) * 6)">
+        <figure data-reveal="clip">
+          <img src={asset(damien.src)} alt={damien.alt} width={damien.largeur} height={damien.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+          <figcaption>{site.equipe[0].nom}, {site.equipe[0].role.toLowerCase()}</figcaption>
+        </figure>
+        <figure data-reveal="clip" data-delay="0.15">
+          <img src={asset(francois.src)} alt={francois.alt} width={francois.largeur} height={francois.hauteur} loading="lazy" decoding="async" data-parallax="0.16" />
+          <figcaption>{site.equipe[1].nom}, {site.equipe[1].role.toLowerCase()}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section gens" data-gens>
+    <div class="wrap">
+      <div class="gens__head">
+        <h2 data-split="words">L'équipe</h2>
+        <div class="gens__fleches">
+          <button class="rond" type="button" data-gens-prev aria-label="Personnes précédentes"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2 4 8l6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <button class="rond" type="button" data-gens-next aria-label="Personnes suivantes"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 2 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+        </div>
+      </div>
+      <ul class="gens__piste" data-gens-piste role="list">
+        {site.equipe.map((p, i) => {
+          const ph = p.photo ? photoDe(p.photo) : null;
+          return (
+            <li>
+              <figure class="gens__carte" data-reveal="up" data-delay={String(i * 0.08)}>
+                <div class={`gens__photo${ph ? '' : ' gens__photo--vide'}`}>
+                  {ph ? <img src={asset(ph.src)} alt={ph.alt} width={ph.largeur} height={ph.hauteur} loading="lazy" decoding="async" /> : <span>Photo à fournir</span>}
+                </div>
+                <figcaption>
+                  <p class="gens__nom">{p.nom}</p>
+                  <p class="gens__role">{p.role}{p.rolePlaceholder && <span class="illu">rôle à confirmer</span>}</p>
+                </figcaption>
+              </figure>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section s-four" data-theme-zone="four">
+    <div class="wrap">
+      <div class="cat__head" style="margin-bottom: calc(var(--u) * 4); border-color: var(--farine)">
+        <h2 data-split="words">Ce qui nous anime</h2>
+        <span class="cat__num">{String(site.valeurs.length).padStart(2, '0')}</span>
+      </div>
+      <div class="g12">
+        <ul class="liste stack" style="grid-column: 1 / 6" data-reveal="up">
+          {site.valeurs.map((v) => <li>{v}</li>)}
+        </ul>
+        <div class="g12" style="grid-column: 6 / 13; row-gap: var(--gutter)">
+          {galerie.map((g, i) => (
+            <figure data-reveal="clip" data-delay={String(i * 0.1)} style={`grid-column: ${i === 0 ? '1 / 8' : i === 1 ? '8 / 13' : '3 / 11'}; margin: 0`}>
+              <img src={asset(g.src)} alt={g.alt} width={g.largeur} height={g.hauteur} loading="lazy" decoding="async" style="width: 100%; height: auto; display: block" data-parallax={String(0.06 + i * 0.05)} />
+            </figure>
+          ))}
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn btn--primary" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={u('/carte/')}>La carte</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  @media (max-width: 767px) { .prose, .liste, .g12 .g12 { grid-column: 1 / 13 !important; } }
+</style>

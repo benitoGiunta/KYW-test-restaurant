@@ -1,0 +1,15 @@
+---
+// Loader « four tracé » : la bouche du four (arche) se dessine avec la progression (stroke-dashoffset), une braise tomate
+// en dessous ; le compteur du moteur reste en sr-only. Masqué en mobile (CSS) : l'accroche est peinte au premier rendu.
+import { site } from '../data/site';
+---
+<div id="loader" role="status" aria-label="Chargement">
+  <div class="loader__inner">
+    <svg class="loader__four" viewBox="0 0 120 120" aria-hidden="true" data-loader-out>
+      <path data-trace pathLength="1" d="M10 110 H110 M20 110 V62 A40 40 0 0 1 100 62 V110" />
+      <path data-trace pathLength="1" class="loader__braise" d="M36 92 H84" />
+    </svg>
+    <span class="loader__name" data-loader-out>{site.nom}</span>
+    <span class="sr-only" data-loader-count>000</span>
+  </div>
+</div>

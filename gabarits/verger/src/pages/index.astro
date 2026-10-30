@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import Roue from '../components/Roue.astro';
-import Mois from '../components/Mois.astro';
 import { site, photoDe, horaireTexte, citations, questions } from '../data/site';
 import { u, asset } from '../lib/url';
 const hero = photoDe('/photos/plat-boeuf-confit-800.webp');
@@ -15,14 +14,16 @@ const supplements = menu.plats.filter((p) => p.prix !== null);
 <Base>
   <link slot="head" rel="preload" as="image" href={asset(hero.src)} fetchpriority="high" />
 
-  <section class="hero wrap" data-hero>
-    <p class="meta hero__sur">Bistronomie à {site.adresse.commune}</p>
-    <h1 class="mots" data-mots><span>Une</span><span>table</span><span>de</span><span>saison</span></h1>
+  <section class="hero hero--duo wrap" data-hero>
+    <div class="hero__titre">
+      <p class="meta hero__sur">Bistronomie à {site.adresse.commune}</p>
+      <h1 class="mots" data-mots><span>Une</span><span>table</span><span>de</span><span>saison</span></h1>
+      <p class="hero__accroche" data-hero-apres>{site.baseline}</p>
+    </div>
     <figure class="hero__media" data-hero-media>
       <span class="vignette"><img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical /></span>
-      <a class="etiquette etiquette--mois hero__etiquette" href={u('/carte/')} data-hero-apres><span class="etiquette__dot" aria-hidden="true"></span><Mois /> · la carte en cours</a>
+      <a class="etiquette etiquette--mois hero__etiquette" href={u('/carte/')} data-hero-apres><span class="etiquette__dot" aria-hidden="true"></span>Le menu unique de saison</a>
     </figure>
-    <p class="hero__accroche" data-hero-apres>{site.baseline}</p>
   </section>
 
   <section class="section">
@@ -42,7 +43,7 @@ const supplements = menu.plats.filter((p) => p.prix !== null);
 
   <section class="section">
     <div class="col">
-      <p class="pastille centre" style="justify-content: center; width: 100%"><Mois prefixe="La carte du mois · " /></p>
+      <p class="pastille centre" style="justify-content: center; width: 100%">Le menu actuel · unique, il suit les saisons</p>
       <h2 class="statement" data-split="lines">{site.menus[0].nom}</h2>
       <ol class="carte-liste" data-reveal="fade">
         {services.map((p) => <li class="plat"><span class="plat__nom">{p.nom}</span></li>)}
@@ -59,7 +60,7 @@ const supplements = menu.plats.filter((p) => p.prix !== null);
       <div class="paire__texte stack">
         <p class="meta">La salle</p>
         <h2 class="statement" style="text-align: left" data-split="lines">Une petite salle, la cuisine ouverte, les chefs qui servent.</h2>
-        <p data-reveal="up">{site.histoire[3]}</p>
+        <p data-reveal="up">Les chefs servent eux-mêmes leurs plats et expliquent leur démarche à table. « {citations[2].texte} » <span class="muted">({citations[2].source})</span></p>
         <ul class="stack" data-reveal="up" style="padding-left: 1.2em">{site.valeurs.map((v) => <li>{v}</li>)}</ul>
       </div>
     </div>

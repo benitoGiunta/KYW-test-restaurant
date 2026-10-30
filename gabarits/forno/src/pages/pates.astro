@@ -1,0 +1,39 @@
+---
+// Page entièrement illustrative : service que le restaurant de référence ne rend pas.
+// Bandeau d'exemple peint sans JS en tête, aucun CTA de réservation.
+import Base from '../layouts/Base.astro';
+import Fiche from '../components/Fiche.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const p = site.pates;
+let n = 0;
+---
+<Base title={`${p.titre} (exemple)`} description={`Exemple de catalogue de pâtes fraîches pour le gabarit Forno : ${p.categories.map((c) => c.categorie.toLowerCase()).join(', ')}. Données illustratives.`}>
+  <p class="bandeau">Page d'exemple : {p.intro}</p>
+  <section class="wrap page-hero">
+    <p class="eyebrow">Catalogue<span class="illu">illustratif</span></p>
+    <h1 data-split="words" data-intro>{p.titre}</h1>
+    <p class="lead" data-reveal="fade" data-intro data-delay="0.3">Douze produits détourés, par catégorie, avec en-tête à compteur. Prix affichés {p.unite}, à titre d'exemple.</p>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap">
+      {p.categories.map((c) => (
+        <div class="cat">
+          <div class="cat__head">
+            <h2 data-split="words">{c.categorie}</h2>
+            <span class="cat__num">{String(c.produits.length).padStart(2, '0')}</span>
+          </div>
+          <div class="cat__grid">
+            {c.produits.map((pr, i) => { n++; return (
+              <Fiche nom={pr.nom} description={pr.description} prix={`${pr.prix} ${p.unite}`} disque={String(n).padStart(2, '0')} tag={pr.etiquette} placeholder={pr.placeholder} delai={(i % 2) * 0.08} />
+            ); })}
+          </div>
+        </div>
+      ))}
+      <div class="actions">
+        <a class="btn" href={u('/carte/')}>La carte réelle du restaurant</a>
+      </div>
+    </div>
+  </section>
+</Base>

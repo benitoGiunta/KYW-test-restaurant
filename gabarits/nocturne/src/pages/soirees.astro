@@ -41,9 +41,9 @@ const illu = site.soirees.some((e) => e.placeholder);
         <p>{site.accroche.demande}</p>
         <div class="actions">
           <a class="btn btn--ambre" href={telHref()}>Appeler le {site.telephone}</a>
-          <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire</a>
+          {site.email.valeur && <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire</a>}
+          <a class="btn" href={site.reservation.url} rel="noopener">Réserver en ligne</a>
         </div>
-        {site.email.placeholder && <p class="note-illu"><b>* e-mail illustratif</b></p>}
       </div>
       <div class="stack" data-reveal="fade" data-delay="0.15">
         <p class="meta">Bon cadeau</p>

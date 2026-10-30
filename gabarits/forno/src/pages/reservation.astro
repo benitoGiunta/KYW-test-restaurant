@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import { asset } from '../lib/url';
+const salle = photoDe('/photos/salle-clients-bar.webp');
+---
+<Base title="Réservation" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}.`}>
+  <section class="wrap page-hero">
+    <p class="eyebrow">Réserver</p>
+    <h1 data-split="words" data-intro>Une table</h1>
+    <p class="lead" data-reveal="fade" data-intro data-delay="0.3">
+      La réservation se fait en ligne via {site.reservation.outil}. Pour une table de plus de six personnes ou une demande de dernière minute, appelez-nous.
+    </p>
+    <div class="actions" data-reveal="up" data-intro data-delay="0.5">
+      <a class="btn btn--primary" href={site.reservation.url} rel="noopener" data-magnetic="0.25">Réserver sur {site.reservation.outil}</a>
+      <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap g12">
+      <div style="grid-column: 1 / 7">
+        <div class="cat__head">
+          <h2 data-split="words">Votre demande</h2>
+        </div>
+        <p class="muted" style="margin-bottom: calc(var(--u) * 2)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+        <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
+          <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+          <label>Date <input type="date" name="date" required /></label>
+          <label>Heure <input type="time" name="heure" required /></label>
+          <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
+          <label>Message <textarea name="message" rows="3"></textarea></label>
+          <div class="actions" style="margin-top: 0">
+            <button class="btn btn--primary" type="submit">Continuer sur {site.reservation.outil}</button>
+          </div>
+        </form>
+      </div>
+      <div class="stack" style="grid-column: 8 / 13" data-reveal="up" data-delay="0.1">
+        <div class="cat__head"><h2 data-split="words">Horaires</h2></div>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+        <p style="margin-top: calc(var(--u) * 2)"><strong>Adresse</strong><br />{adresseLigne()}</p>
+        <p><a class="link" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a></p>
+        <figure style="margin: calc(var(--u) * 2) 0 0" data-reveal="clip">
+          <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" style="width: 100%; height: auto; display: block" />
+        </figure>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  @media (max-width: 767px) { .g12 > * { grid-column: 1 / 13 !important; } }
+</style>
+
+<script>
+  import { onPage } from '../engine';
+  // Formulaire sans backend : à la validation, on ouvre l'outil de réservation réel (les champs ne sont pas transmis).
+  onPage(() => {
+    const form = document.querySelector<HTMLFormElement>('[data-reservation]');
+    if (!form) return;
+    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    form.addEventListener('submit', go);
+    return () => form.removeEventListener('submit', go);
+  });
+</script>

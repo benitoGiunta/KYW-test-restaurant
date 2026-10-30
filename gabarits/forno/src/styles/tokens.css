@@ -1,0 +1,65 @@
+/* JETONS « Forno » : brun du four, farine, tomate. Les noms sont le contrat du moteur, les valeurs sont celles du cahier. */
+
+:root {
+  /* Palette du cahier */
+  --four: #2b1e19;
+  --farine: #f3ede2;
+  --tomate: #c6362a;
+  --croute: #b98558;
+  --cendre: #8e8a84;
+  --doux-farine: #625b54; /* texte doux sur farine, 5,9:1 */
+  --doux-four: #c9bfb3; /* texte doux sur brun, 9:1 */
+
+  /* Rôles (thème farine par défaut) */
+  --c-bg: var(--farine);
+  --c-fg: var(--four);
+  --c-muted: var(--doux-farine);
+  --c-line: rgb(43 30 25 / 0.18);
+  --c-accent: var(--tomate);
+  --c-curtain: var(--four);
+  --c-mark: var(--tomate); /* marque « illustratif » */
+
+  /* Familles */
+  --f-display: 'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif;
+  --f-body: 'Erode', Georgia, 'Times New Roman', serif;
+
+  /* Échelle fluide (375 → 1440) */
+  --t-mega: clamp(4rem, 20vw, 20rem);
+  --t-xl: clamp(3rem, 1.5rem + 7vw, 8.5rem);
+  --t-l: clamp(1.75rem, 1.3rem + 1.9vw, 3rem);
+  --t-m: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+  --t-body: clamp(1rem, 0.98rem + 0.2vw, 1.0625rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.75rem;
+
+  /* Espace */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+  --hdr: 4.5rem; /* hauteur réservée à l'en-tête fixe */
+
+  /* Forme : 0, sauf la carte du compte à rebours */
+  --radius: 0px;
+  --radius-compte: 12px;
+
+  /* Couches */
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}
+
+/* Zone brune : les rôles basculent, les composants du moteur suivent. */
+.s-four, html[data-theme='four'] .header, #loader, #curtain .curtain__panel {
+  --c-bg: var(--four);
+  --c-fg: var(--farine);
+  --c-muted: var(--doux-four);
+  --c-line: rgb(243 237 226 / 0.2);
+  --c-mark: var(--croute);
+}
+
+@media (max-width: 767px) {
+  :root { --hdr: 5.75rem; --t-mega: 18vw; }
+}

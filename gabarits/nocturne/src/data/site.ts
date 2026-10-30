@@ -62,7 +62,7 @@ export const site: Restaurant = {
   adresse: { rue: 'Avenue de la Plante', numero: '4', cp: '5000', commune: 'Namur', pays: 'BE' },
   geo: { lat: 50.4586737, lon: 4.8643452 },
   telephone: '+32 81 64 04 44',
-  email: { valeur: 'bonjour@lespotesaufeu.be', placeholder: true },
+  email: { valeur: '', placeholder: false }, // aucune adresse publique (dossier : formulaire uniquement) : rien n'est affiché tant que le restaurant n'en fournit pas
   reservation: { outil: 'Zenchef', url: 'https://bookings.zenchef.com/results?rid=379477' },
   horaires: [
     { jour: 'lundi', creneaux: [{ ouverture: '19:00', fermeture: '21:00' }] },
@@ -75,7 +75,7 @@ export const site: Restaurant = {
   ],
   reseaux: [
     { nom: 'Facebook', url: 'https://www.facebook.com/lespotesaufeu.bistronomie/' },
-    { nom: 'YouTube', url: 'https://www.youtube.com/watch?v=dZtMOajOefE' },
+    { nom: 'Vidéo YouTube', url: 'https://www.youtube.com/watch?v=dZtMOajOefE' },
   ],
   carte: [
     {
@@ -98,13 +98,6 @@ export const site: Restaurant = {
         { nom: 'Adaptation allergies et intolérances', description: 'à signaler lors de la réservation', prix: null, placeholder: false },
       ],
     },
-    {
-      categorie: 'Boissons',
-      plats: [
-        { nom: 'Accord mets et vins, 4 verres', description: 'sélection de vignerons belges et français', prix: '32 €', placeholder: true },
-        { nom: 'Cocktail de la maison', description: 'au bar, avant le service', prix: '12 €', placeholder: true },
-      ],
-    },
   ],
   menus: [
     {
@@ -124,7 +117,7 @@ export const site: Restaurant = {
     { nom: 'Bon cadeau', prix: '50 / 75 / 100 / 150 €', description: 'Demande en ligne, retrait au restaurant.', placeholder: false },
   ],
   histoire: [
-    "Les Potes au Feu, c'est d'abord l'histoire d'une rencontre. Il y a quatorze ans, François Schepens et Damien Gorjanec aiguisent leurs premiers couteaux au restaurant la Plage d'Amée à Namur : deux gamins pleins d'envie, le début d'une amitié.",
+    "Les Potes au Feu, c'est d'abord l'histoire d'une rencontre. Au départ, François Schepens et Damien Gorjanec aiguisent leurs premiers couteaux au restaurant la Plage d'Amée à Namur : deux gamins pleins d'envie, le début d'une amitié.",
     "François continue ses classes aux États-Unis et à Montréal, Damien se fait une place en Belgique et cumule des expériences à l'étranger, notamment à Shanghai. À chaque retrouvaille, autour d'un verre, le rêve d'ouvrir un restaurant se dessine.",
     "Début de l'hiver 2019, installés par hasard à une table de ce lieu, ils ne savent pas encore qu'ils y ouvriront leur premier restaurant. Trois mois plus tard, ils en ont les clés.",
     "Le concept : une cuisine bistronomique à quatre mains, de qualité, avec un ancrage local, et un mot d'ordre, le plaisir. Ils servent eux-mêmes leurs plats et expliquent leur démarche à table, dans une atmosphère décontractée qui ne se la raconte pas.",
@@ -142,22 +135,6 @@ export const site: Restaurant = {
       source: 'Guide MICHELIN Belgique 2026',
       date: '2026-05-04',
       placeholder: false,
-    },
-    {
-      texte: 'Les chefs viennent eux-mêmes présenter chaque assiette. Le boeuf confit est une merveille, et on repart avec le sourire.',
-      auteur: 'Claire D.',
-      source: 'Avis Google',
-      date: '2026-03-18',
-      note: 5,
-      placeholder: true,
-    },
-    {
-      texte: 'Menu unique, zéro hésitation, que du plaisir. Le cadre est chaleureux et le service aussi simple que précis.',
-      auteur: 'Thomas V.',
-      source: 'Avis Google',
-      date: '2026-02-02',
-      note: 5,
-      placeholder: true,
     },
   ],
   photos: [
@@ -205,11 +182,11 @@ export const site: Restaurant = {
     { texte: 'Le dernier service est à 21h : les horaires sont des heures d\'arrivée.', placeholder: false },
     { texte: 'Plus de six personnes ou une table de dernière minute : on vous demande d\'appeler.', placeholder: false },
     { texte: 'Un seul menu, en quatre services. Végétarien sur demande.', placeholder: false },
-    { texte: 'Allergies et intolérances : dites-le à la réservation, on adapte.', placeholder: false },
+    { texte: 'Allergies et intolérances : à signaler lors de la réservation.', placeholder: false },
     { texte: 'Le samedi, la maison se privatise : mariage, événement, chef à domicile.', placeholder: false },
   ],
   originStory: [
-    'Il y a quatorze ans, François et Damien aiguisent leurs premiers couteaux ensemble, à la Plage d\'Amée.',
+    'Tout commence à la Plage d\'Amée, à Namur : François et Damien y aiguisent ensemble leurs premiers couteaux.',
     'François file aux États-Unis puis à Montréal. Damien cuisine en Belgique, puis jusqu\'à Shanghai.',
     'Début de l\'hiver 2019, ils dînent par hasard à une table de ce lieu. Trois mois plus tard, les clés sont à eux.',
     'Une cuisine à quatre mains, un ancrage local, un mot d\'ordre : le plaisir. Ils servent eux-mêmes leurs plats.',
@@ -217,7 +194,7 @@ export const site: Restaurant = {
   cocktails: [
     { nom: 'Feu doux', ingredients: 'whisky tourbé, sirop de poire, bitter cacao', prix: '13 €', famille: 'spiritueux', placeholder: true },
     { nom: 'Plante', ingredients: 'gin, verveine, citron vert, soda', prix: '12 €', famille: 'highball', placeholder: true },
-    { nom: 'Meuse sour', ingredients: 'genièvre, citron, blanc d\'oeuf, sirop de sapin', prix: '12 €', famille: 'sour', placeholder: true },
+    { nom: 'Meuse sour', ingredients: 'genièvre, citron, blanc d\'œuf, sirop de sapin', prix: '12 €', famille: 'sour', placeholder: true },
     { nom: 'Amée', ingredients: 'rhum ambré, griotte, vermouth rouge', prix: '13 €', famille: 'spiritueux', placeholder: true },
     { nom: 'Chaï', ingredients: 'bourbon, thé chaï, orange brûlée', prix: '13 €', famille: 'spiritueux', placeholder: true },
     { nom: 'Butternut fizz', ingredients: 'vodka, courge rôtie, passion, tonic', prix: '12 €', famille: 'highball', placeholder: true },
@@ -227,7 +204,7 @@ export const site: Restaurant = {
     { nom: 'Verveine', ingredients: 'infusion froide, sirop de sureau, tonic', prix: '8 €', famille: 'sans alcool', placeholder: true },
   ],
   soirees: [
-    { nom: 'Privatisation du samedi', description: 'Le restaurant est à vous : mariage, événement, repas entre amis.', quand: 'le samedi', placeholder: false },
+    { nom: 'Privatisation du samedi', description: 'Le restaurant est à vous : mariage, événement.', quand: 'le samedi', placeholder: false },
     { nom: 'Chef à domicile', description: 'Les chefs se déplacent chez vous avec leur cuisine à quatre mains.', quand: 'sur demande', placeholder: false },
     { nom: 'Soirée au bar', description: 'Le bar ouvert avant le service, quelques cocktails, les chefs au passe.', quand: 'en semaine', placeholder: true },
   ],
