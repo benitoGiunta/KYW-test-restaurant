@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Consommation de jetons · KYW restaurants</title>
+<meta name="description" content="Tableau de bord de la consommation de jetons de la session d’orchestration du projet de refonte de 20 restaurants namurois (28 au 30 octobre 2026).">
+<style>
+:root{color-scheme:light;--color-bg:#f7f6f2;--color-fg:#17160f;--color-fg-muted:#5d5b52;--color-panel:#ffffff;--color-border-line:#e3e1d8;--color-ok:#1d7a3c;--color-warn:#9a6a00;--color-bad:#c0392b;
+ --font-anthropic-sans:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;--font-anthropic-serif:Georgia,"Times New Roman",serif;
+ --cds-font-size-caption:.85rem;--cds-font-size-body:1rem;--cds-font-size-heading:1.15rem;--cds-font-size-title:1.7rem;--cds-font-weight-medium:600;--cds-pad-lg:1.25rem;--cds-pad-xs:.3rem;--cds-pad-sm:.6rem;--cds-gap-md:1rem;--cds-radius:.6rem;
+ --cds-chart-grid:#e8e6de;--cds-chart-axis:#c9c7bd;--cds-chart-reference:#8a8778;--cds-surface-popover:#fff;--cds-border:#e3e1d8;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.12);--cds-text-secondary:#5d5b52}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--color-bg:#161613;--color-fg:#efeee8;--color-fg-muted:#a8a69b;--color-panel:#1f1f1b;--color-border-line:#33322c;--color-ok:#5fc27a;--color-warn:#e0b04a;--color-bad:#ef6b5c;--cds-chart-grid:#2c2b26;--cds-chart-axis:#4a493f;--cds-chart-reference:#9a9887;--cds-surface-popover:#262622;--cds-border:#3a3933;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.5);--cds-text-secondary:#a8a69b}
+ :root:not([data-theme="light"]) .kyw{--k-s1:#3987e5;--k-s2:#d95926;--k-s3:#199e70;--k-muted:#6f6e66}}
+:root[data-theme="dark"]{color-scheme:dark;--color-bg:#161613;--color-fg:#efeee8;--color-fg-muted:#a8a69b;--color-panel:#1f1f1b;--color-border-line:#33322c;--color-ok:#5fc27a;--color-warn:#e0b04a;--color-bad:#ef6b5c;--cds-chart-grid:#2c2b26;--cds-chart-axis:#4a493f;--cds-chart-reference:#9a9887;--cds-surface-popover:#262622;--cds-border:#3a3933;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.5);--cds-text-secondary:#a8a69b}
+:root[data-theme="dark"] .kyw{--k-s1:#3987e5;--k-s2:#d95926;--k-s3:#199e70;--k-muted:#6f6e66}
+html,body{margin:0;background:var(--color-bg);color:var(--color-fg)}
+body{padding-block:1.5rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+</style>
+</head>
+<body>
+<script>
+window.dash = (function () {
+  var DATA = {"totaux": [{"poste": "Entrée non mise en cache", "cle": "input_tokens", "jetons": 18154, "part_jetons": 0.0, "prix_fable": 10, "usd_fable": 0.18, "part_fable": 0.1, "prix_10": 10, "usd_10": 0.18, "part_10": 0.1}, {"poste": "Création de cache", "cle": "cache_creation_input_tokens", "jetons": 13620195, "part_jetons": 10.3, "prix_fable": 12.5, "usd_fable": 170.25, "part_fable": 64.6, "prix_10": 12.5, "usd_10": 170.25, "part_10": 48.4}, {"poste": "Lecture de cache", "cle": "cache_read_input_tokens", "jetons": 117781825, "part_jetons": 88.8, "prix_fable": 0.25, "usd_fable": 29.45, "part_fable": 11.2, "prix_10": 1.0, "usd_10": 117.78, "part_10": 33.5}, {"poste": "Sortie", "cle": "output_tokens", "jetons": 1269949, "part_jetons": 1.0, "prix_fable": 50, "usd_fable": 63.5, "part_fable": 24.1, "prix_10": 50, "usd_10": 63.5, "part_10": 18.1}, {"poste": "Total", "cle": "total", "jetons": 132690123, "part_jetons": 100.0, "prix_fable": null, "usd_fable": 263.38, "part_fable": 100.0, "prix_10": null, "usd_10": 351.71, "part_10": 100.0, "equiv_fable": 26.34, "equiv_10": 35.17, "appels": 705, "agents": 23, "outils": 2695, "read": 1308}], "etapes": [{"etape": "orchestration", "ordre": 1, "appels": 119, "entree": 2476, "creation_cache": 1350562, "lecture_cache": 31740262, "sortie": 119280, "usd": 30.81, "outils": 166, "agents": 1, "part_usd": 11.7}, {"etape": "sélection", "ordre": 2, "appels": 41, "entree": 1192, "creation_cache": 771091, "lecture_cache": 4349517, "sortie": 130790, "usd": 17.28, "outils": 460, "agents": 4, "part_usd": 6.6}, {"etape": "prompts", "ordre": 3, "appels": 34, "entree": 1028, "creation_cache": 838017, "lecture_cache": 4911129, "sortie": 82311, "usd": 15.83, "outils": 93, "agents": 2, "part_usd": 6.0}, {"etape": "collecte", "ordre": 4, "appels": 30, "entree": 870, "creation_cache": 356677, "lecture_cache": 2635816, "sortie": 123393, "usd": 11.29, "outils": 265, "agents": 3, "part_usd": 4.3}, {"etape": "dossier client", "ordre": 5, "appels": 16, "entree": 482, "creation_cache": 158130, "lecture_cache": 1763821, "sortie": 37777, "usd": 4.31, "outils": 88, "agents": 1, "part_usd": 1.6}, {"etape": "évaluation", "ordre": 6, "appels": 354, "entree": 8918, "creation_cache": 7911679, "lecture_cache": 55343279, "sortie": 464516, "usd": 136.05, "outils": 1382, "agents": 7, "part_usd": 51.7}, {"etape": "directions artistiques", "ordre": 7, "appels": 29, "entree": 870, "creation_cache": 567132, "lecture_cache": 5763531, "sortie": 143370, "usd": 15.71, "outils": 83, "agents": 1, "part_usd": 6.0}, {"etape": "socle Astro", "ordre": 8, "appels": 38, "entree": 1186, "creation_cache": 326651, "lecture_cache": 5296984, "sortie": 51820, "usd": 8.01, "outils": 38, "agents": 1, "part_usd": 3.0}, {"etape": "gabarits", "ordre": 9, "appels": 44, "entree": 1132, "creation_cache": 1340256, "lecture_cache": 5977486, "sortie": 116692, "usd": 24.09, "outils": 120, "agents": 3, "part_usd": 9.1}], "agents": [{"agent": "orchestrateur (session principale)", "etape": "orchestration", "appels": 119, "entree": 2476, "creation_cache": 1350562, "lecture_cache": 31740262, "sortie": 119280, "usd": 30.81, "lecture_cache_par_appel": 266725, "outils": 166, "read": 3, "bash": 79, "web": 0, "relances": 0, "debut": "2026-10-28T19:38:00Z", "fin": "2026-10-30T11:14:00Z"}, {"agent": "eval lot5", "etape": "évaluation", "appels": 65, "entree": 1506, "creation_cache": 1835093, "lecture_cache": 9247482, "sortie": 62759, "usd": 28.4, "lecture_cache_par_appel": 142269, "outils": 293, "read": 257, "bash": 32, "web": 0, "relances": 2, "debut": "2026-10-28T20:28:43.838Z", "fin": "2026-10-29T04:53:04.660Z"}, {"agent": "eval lot3", "etape": "évaluation", "appels": 59, "entree": 1412, "creation_cache": 1271666, "lecture_cache": 10320049, "sortie": 82568, "usd": 22.62, "lecture_cache_par_appel": 174916, "outils": 242, "read": 189, "bash": 50, "web": 0, "relances": 1, "debut": "2026-10-28T20:28:43.770Z", "fin": "2026-10-29T00:03:55.060Z"}, {"agent": "eval lot1", "etape": "évaluation", "appels": 49, "entree": 1414, "creation_cache": 1242424, "lecture_cache": 8875836, "sortie": 69142, "usd": 21.22, "lecture_cache_par_appel": 181140, "outils": 192, "read": 152, "bash": 39, "web": 0, "relances": 2, "debut": "2026-10-28T20:28:43.725Z", "fin": "2026-10-29T04:59:30.529Z"}, {"agent": "eval lot7", "etape": "évaluation", "appels": 47, "entree": 1412, "creation_cache": 1160014, "lecture_cache": 7341917, "sortie": 62176, "usd": 19.46, "lecture_cache_par_appel": 156211, "outils": 218, "read": 182, "bash": 35, "web": 0, "relances": 1, "debut": "2026-10-28T20:29:48.498Z", "fin": "2026-10-29T00:04:32.698Z"}, {"agent": "eval lot6", "etape": "évaluation", "appels": 55, "entree": 1192, "creation_cache": 927797, "lecture_cache": 8695843, "sortie": 70594, "usd": 17.31, "lecture_cache_par_appel": 158106, "outils": 197, "read": 159, "bash": 35, "web": 0, "relances": 1, "debut": "2026-10-28T20:29:48.470Z", "fin": "2026-10-29T00:01:29.594Z"}, {"agent": "eval lot4", "etape": "évaluation", "appels": 39, "entree": 1066, "creation_cache": 890029, "lecture_cache": 5451540, "sortie": 66752, "usd": 15.84, "lecture_cache_par_appel": 139783, "outils": 173, "read": 137, "bash": 33, "web": 0, "relances": 1, "debut": "2026-10-28T20:28:43.799Z", "fin": "2026-10-29T00:00:28.763Z"}, {"agent": "directions DA", "etape": "directions artistiques", "appels": 29, "entree": 870, "creation_cache": 567132, "lecture_cache": 5763531, "sortie": 143370, "usd": 15.71, "lecture_cache_par_appel": 198742, "outils": 83, "read": 45, "bash": 33, "web": 0, "relances": 0, "debut": "2026-10-29T04:59:53.954Z", "fin": "2026-10-29T05:32:30.763Z"}, {"agent": "eval lot2", "etape": "évaluation", "appels": 40, "entree": 916, "creation_cache": 584656, "lecture_cache": 5410612, "sortie": 50525, "usd": 11.2, "lecture_cache_par_appel": 135265, "outils": 67, "read": 36, "bash": 28, "web": 0, "relances": 2, "debut": "2026-10-28T20:28:43.748Z", "fin": "2026-10-29T04:53:05.662Z"}, {"agent": "prompt variante legacy", "etape": "prompts", "appels": 19, "entree": 578, "creation_cache": 488289, "lecture_cache": 2986452, "sortie": 45190, "usd": 9.12, "lecture_cache_par_appel": 157182, "outils": 63, "read": 29, "bash": 32, "web": 0, "relances": 0, "debut": "2026-10-28T20:05:41.341Z", "fin": "2026-10-28T20:16:18.276Z"}, {"agent": "gabarit braise", "etape": "gabarits", "appels": 16, "entree": 420, "creation_cache": 467880, "lecture_cache": 2463671, "sortie": 40597, "usd": 8.5, "lecture_cache_par_appel": 153979, "outils": 43, "read": 23, "bash": 19, "web": 0, "relances": 0, "debut": "2026-10-29T05:32:58.610Z", "fin": "2026-10-30T11:11:54.705Z"}, {"agent": "socle Astro", "etape": "socle Astro", "appels": 38, "entree": 1186, "creation_cache": 326651, "lecture_cache": 5296984, "sortie": 51820, "usd": 8.01, "lecture_cache_par_appel": 139394, "outils": 38, "read": 10, "bash": 27, "web": 0, "relances": 0, "debut": "2026-10-29T05:00:31.854Z", "fin": "2026-10-29T05:21:20.078Z"}, {"agent": "gabarit affiche", "etape": "gabarits", "appels": 13, "entree": 324, "creation_cache": 431043, "lecture_cache": 1557531, "sortie": 43682, "usd": 7.96, "lecture_cache_par_appel": 119810, "outils": 36, "read": 13, "bash": 20, "web": 0, "relances": 0, "debut": "2026-10-29T05:32:58.655Z", "fin": "2026-10-30T11:10:34.453Z"}, {"agent": "gabarit quatre-mains", "etape": "gabarits", "appels": 15, "entree": 388, "creation_cache": 441333, "lecture_cache": 1956284, "sortie": 32413, "usd": 7.63, "lecture_cache_par_appel": 130419, "outils": 41, "read": 19, "bash": 19, "web": 0, "relances": 0, "debut": "2026-10-29T05:32:58.631Z", "fin": "2026-10-30T11:10:52.317Z"}, {"agent": "prompt variante awwwards", "etape": "prompts", "appels": 15, "entree": 450, "creation_cache": 349728, "lecture_cache": 1924677, "sortie": 37121, "usd": 6.71, "lecture_cache_par_appel": 128312, "outils": 30, "read": 11, "bash": 17, "web": 0, "relances": 0, "debut": "2026-10-28T20:05:41.308Z", "fin": "2026-10-28T20:13:58.939Z"}, {"agent": "selection lot1", "etape": "sélection", "appels": 10, "entree": 290, "creation_cache": 194356, "lecture_cache": 1123845, "sortie": 35719, "usd": 4.5, "lecture_cache_par_appel": 112384, "outils": 121, "read": 1, "bash": 1, "web": 117, "relances": 0, "debut": "2026-10-28T20:05:41.191Z", "fin": "2026-10-28T20:12:45.754Z"}, {"agent": "selection lot4", "etape": "sélection", "appels": 11, "entree": 322, "creation_cache": 189496, "lecture_cache": 1165969, "sortie": 34406, "usd": 4.38, "lecture_cache_par_appel": 105997, "outils": 123, "read": 1, "bash": 1, "web": 119, "relances": 0, "debut": "2026-10-28T20:05:41.277Z", "fin": "2026-10-28T20:12:38.507Z"}, {"agent": "collecte A", "etape": "collecte", "appels": 12, "entree": 354, "creation_cache": 154612, "lecture_cache": 1273637, "sortie": 42260, "usd": 4.37, "lecture_cache_par_appel": 106136, "outils": 171, "read": 0, "bash": 3, "web": 166, "relances": 0, "debut": "2026-10-28T20:12:25.115Z", "fin": "2026-10-28T20:20:27.574Z"}, {"agent": "selection lot3", "etape": "sélection", "appels": 11, "entree": 322, "creation_cache": 190614, "lecture_cache": 1213132, "sortie": 32804, "usd": 4.33, "lecture_cache_par_appel": 110285, "outils": 119, "read": 1, "bash": 1, "web": 115, "relances": 0, "debut": "2026-10-28T20:05:41.247Z", "fin": "2026-10-28T20:12:01.905Z"}, {"agent": "dossier client Potes au Feu", "etape": "dossier client", "appels": 16, "entree": 482, "creation_cache": 158130, "lecture_cache": 1763821, "sortie": 37777, "usd": 4.31, "lecture_cache_par_appel": 110239, "outils": 88, "read": 39, "bash": 23, "web": 22, "relances": 0, "debut": "2026-10-28T20:16:22.438Z", "fin": "2026-10-28T20:27:41.429Z"}, {"agent": "selection lot2", "etape": "sélection", "appels": 9, "entree": 258, "creation_cache": 196625, "lecture_cache": 846571, "sortie": 27861, "usd": 4.07, "lecture_cache_par_appel": 94063, "outils": 97, "read": 1, "bash": 1, "web": 93, "relances": 0, "debut": "2026-10-28T20:05:41.224Z", "fin": "2026-10-28T20:11:19.284Z"}, {"agent": "collecte C", "etape": "collecte", "appels": 7, "entree": 194, "creation_cache": 113311, "lecture_cache": 474925, "sortie": 40942, "usd": 3.58, "lecture_cache_par_appel": 67846, "outils": 66, "read": 0, "bash": 3, "web": 61, "relances": 0, "debut": "2026-10-28T20:12:25.165Z", "fin": "2026-10-28T20:25:00.024Z"}, {"agent": "collecte B", "etape": "collecte", "appels": 11, "entree": 322, "creation_cache": 88754, "lecture_cache": 887254, "sortie": 40191, "usd": 3.34, "lecture_cache_par_appel": 80659, "outils": 28, "read": 0, "bash": 8, "web": 18, "relances": 0, "debut": "2026-10-28T20:12:25.146Z", "fin": "2026-10-28T20:29:14.080Z"}], "chronologie": [{"heure": "2026-10-28T19", "libelle": "28/10 19h", "sortie": 12234, "lecture_cache": 1500783, "creation_cache": 116465, "usd": 2.44, "actif": 1}, {"heure": "2026-10-28T20", "libelle": "28/10 20h", "sortie": 622266, "lecture_cache": 51371598, "creation_cache": 3629301, "usd": 89.32, "actif": 1}, {"heure": "2026-10-28T21", "libelle": "28/10 21h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-28T22", "libelle": "28/10 22h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-28T23", "libelle": "28/10 23h", "sortie": 213524, "lecture_cache": 25087553, "creation_cache": 5093516, "usd": 80.62, "actif": 1}, {"heure": "2026-10-29T00", "libelle": "29/10 00h", "sortie": 71397, "lecture_cache": 9483646, "creation_cache": 678352, "usd": 14.42, "actif": 1}, {"heure": "2026-10-29T01", "libelle": "29/10 01h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T02", "libelle": "29/10 02h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T03", "libelle": "29/10 03h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T04", "libelle": "29/10 04h", "sortie": 28759, "lecture_cache": 8032176, "creation_cache": 1506647, "usd": 22.28, "actif": 1}, {"heure": "2026-10-29T05", "libelle": "29/10 05h", "sortie": 306791, "lecture_cache": 19661919, "creation_cache": 1469848, "usd": 38.63, "actif": 1}, {"heure": "2026-10-29T06", "libelle": "29/10 06h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T07", "libelle": "29/10 07h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T08", "libelle": "29/10 08h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T09", "libelle": "29/10 09h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T10", "libelle": "29/10 10h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T11", "libelle": "29/10 11h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T12", "libelle": "29/10 12h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T13", "libelle": "29/10 13h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T14", "libelle": "29/10 14h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T15", "libelle": "29/10 15h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T16", "libelle": "29/10 16h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T17", "libelle": "29/10 17h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T18", "libelle": "29/10 18h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T19", "libelle": "29/10 19h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T20", "libelle": "29/10 20h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T21", "libelle": "29/10 21h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T22", "libelle": "29/10 22h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-29T23", "libelle": "29/10 23h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T00", "libelle": "30/10 00h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T01", "libelle": "30/10 01h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T02", "libelle": "30/10 02h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T03", "libelle": "30/10 03h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T04", "libelle": "30/10 04h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T05", "libelle": "30/10 05h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T06", "libelle": "30/10 06h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T07", "libelle": "30/10 07h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T08", "libelle": "30/10 08h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T09", "libelle": "30/10 09h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T10", "libelle": "30/10 10h", "sortie": 0, "lecture_cache": 0, "creation_cache": 0, "usd": 0.0, "actif": 0}, {"heure": "2026-10-30T11", "libelle": "30/10 11h", "sortie": 17579, "lecture_cache": 3172487, "creation_cache": 1136277, "usd": 15.88, "actif": 1}], "evenements": [{"heure": "2026-10-28T19", "position": 19.63, "libelle": "Lancement 19h38", "type": "debut"}, {"heure": "2026-10-28T20", "position": 20.85, "libelle": "Coupure 5 h n°1 (7 évaluateurs tués)", "type": "coupure"}, {"heure": "2026-10-28T23", "position": 23.0, "libelle": "Relance n°1", "type": "relance"}, {"heure": "2026-10-29T00", "position": 24.1, "libelle": "Coupure 5 h n°2", "type": "coupure"}, {"heure": "2026-10-29T04", "position": 28.8, "libelle": "Relance n°2", "type": "relance"}, {"heure": "2026-10-29T05", "position": 29.6, "libelle": "Limite hebdomadaire atteinte", "type": "coupure"}, {"heure": "2026-10-30T11", "position": 59.25, "libelle": "Reprise puis limite Fable", "type": "coupure"}], "outils": [{"outil": "Read", "appels": 1308}, {"outil": "Bash", "appels": 539}, {"outil": "WebFetch", "appels": 438}, {"outil": "WebSearch", "appels": 273}, {"outil": "Write", "appels": 28}, {"outil": "Agent", "appels": 22}, {"outil": "SubagentHandback", "appels": 19}, {"outil": "ToolSearch", "appels": 17}, {"outil": "Autres", "appels": 51}], "recommandations": [{"rang": 1, "titre": "Sonnet 5.5 pour l’évaluation visuelle, la recherche web et les revues", "mesure": "Sous-agents « jury », collecte, sélection, dossier client lancés avec model: sonnet (2 $/10 $ par million au lieu de 10 $/50 $). Fable reste pour l’orchestration, les directions artistiques et le code des gabarits.", "base": "Évaluation + sélection + collecte + dossier client", "base_usd": 168.93, "economie_pct": 80, "economie_usd": 135.14, "preuve": "Ces rôles lisent des captures et des pages web ; ils n’écrivent pas de code. Le compteur interne de WebSearch tourne déjà sur Haiku pour 2,82 $."}, {"rang": 2, "titre": "Planches-contact au lieu d’une lecture image par image", "mesure": "Une planche PIL 3×3 par site (haut, 3 frames, mobile) lue en un seul Read ; pleine résolution uniquement sur les frames décisives. Lot 2 l’a fait : 11,20 $ contre 19,4 $ en moyenne pour les six autres lots.", "base": "Évaluation (1 308 Read, 7,9 M de jetons de création de cache)", "base_usd": 136.05, "economie_pct": 40, "economie_usd": 54.42, "preuve": "Chaque image lue est écrite dans le cache (12,5 $/M) puis relue à chaque appel suivant ; lot 2 : 584 k de création de cache contre 1,2 M en moyenne."}, {"rang": 3, "titre": "Jamais plus de 3 agents lourds en parallèle, et aucune relance à froid", "mesure": "Lancer les évaluateurs par vagues de 3, avec une relance planifiée (send_later) après la fenêtre de 5 h plutôt qu’une coupure HTTP 429. Un agent tué qui repart réécrit tout son contexte dans le cache (150 à 200 k jetons, soit 2 à 2,5 $ par relance).", "base": "Création de cache des 7 évaluateurs (≈ 10 relances)", "base_usd": 98.9, "economie_pct": 25, "economie_usd": 24.72, "preuve": "12,3 M des 13,6 M de jetons de création de cache sont en cache 5 min : un contexte inactif plus de 5 minutes (captures en arrière-plan, coupure) est réécrit en entier."}, {"rang": 4, "titre": "Découper les lots : 7 sites par agent au lieu de 15, 40 appels maximum", "mesure": "Le coût d’un agent croît avec le carré de sa durée : chaque appel relit tout le contexte accumulé (140 à 180 k jetons par appel chez les évaluateurs, 267 k chez l’orchestrateur). Deux agents courts coûtent moins qu’un long.", "base": "Lecture de cache des évaluateurs et de l’orchestrateur", "base_usd": 21.77, "economie_pct": 35, "economie_usd": 7.62, "preuve": "Un lot de 15 sites atteint 65 appels (lot 5) ; à 7 sites l’agent s’arrête vers 30 appels avec un contexte deux fois plus petit en moyenne."}, {"rang": 5, "titre": "Orchestrateur maigre : une session fille par restaurant, prompts courts, pas de lecture de fichiers lourds", "mesure": "L’orchestrateur a 119 réponses et relit 31,7 M de jetons (12 % du total) sans produire de livrable. Déléguer la lecture des résultats aux agents, ne remonter que des résumés de 10 lignes, et ouvrir une session fille par restaurant (quota WebSearch propre, contexte neuf).", "base": "Orchestration", "base_usd": 30.81, "economie_pct": 50, "economie_usd": 15.4, "preuve": "267 k jetons relus par appel, le plus gros contexte de la session ; 22 lancements d’agents et 13 SendMessage dans un seul transcript."}], "projection": [{"etape": "15 gabarits restants", "unites": 15, "cout_unitaire": 12.0, "hypothese": "3 gabarits inachevés ont coûté 24 $ ; un gabarit complet ≈ 12 $ en Fable.", "constant_usd": 180.0, "reduction_pct": 35, "mesures_usd": 117.0}, {"etape": "20 restaurants × 3 variantes (60 sites)", "unites": 60, "cout_unitaire": 15.0, "hypothese": "Un site ≈ un gabarit adapté (12 $) + dossier client (3 $).", "constant_usd": 900.0, "reduction_pct": 35, "mesures_usd": 585.0}, {"etape": "Revues visuelles (jury) des 60 sites", "unites": 60, "cout_unitaire": 3.0, "hypothese": "Une revue ≈ un cinquième d’un lot d’évaluation (captures + lecture).", "constant_usd": 180.0, "reduction_pct": 80, "mesures_usd": 36.0}, {"etape": "Publications (build, index, commit)", "unites": 60, "cout_unitaire": 1.0, "hypothese": "Tâche courte, peu de contexte.", "constant_usd": 60.0, "reduction_pct": 20, "mesures_usd": 48.0}, {"etape": "Orchestration", "unites": 1, "cout_unitaire": 180.0, "hypothese": "12 % du reste, comme en session 1.", "constant_usd": 180.0, "reduction_pct": 50, "mesures_usd": 90.0}, {"etape": "Total", "unites": null, "cout_unitaire": null, "hypothese": "Somme des lignes.", "constant_usd": 1500.0, "reduction_pct": 42, "mesures_usd": 876.0}], "officiel": [{"source": "Extraction des transcripts (JSON du dépôt)", "modele": "claude-fable-5-1", "entree": 18154, "creation_cache": 13620195, "lecture_cache": 117781825, "sortie": 1269949, "usd": 263.38}, {"source": "Compteur Claude Code de la session mère (30/10 11h14)", "modele": "claude-fable-5-1", "entree": 22432, "creation_cache": 13642465, "lecture_cache": 123993235, "sortie": 1291170, "usd": 276.52}, {"source": "Compteur Claude Code de la session mère (30/10 11h14)", "modele": "claude-haiku-5-5 (WebSearch interne)", "entree": 5244053, "creation_cache": 0, "lecture_cache": 0, "sortie": 584280, "usd": 2.82}]};
+  var fns = {}, calcs = {}, order = [];
+  function run(name) { var fn = fns[name]; if (!fn) return; document.querySelectorAll('[data-draw="' + name + '"]').forEach(function (el) { fn(el); }); }
+  var api = {
+    data: function (id) { if (calcs[id]) { var c = calcs[id]; return { status: 'ok', data: c.fn.apply(null, c.inputs.map(function (i) { return DATA[i] || []; })) }; } return { status: DATA[id] ? 'ok' : 'missing', data: DATA[id] || [], columns: DATA[id] && DATA[id][0] ? Object.keys(DATA[id][0]) : [] }; },
+    calc: function (id, o) { calcs[id] = o; },
+    draw: function (name, fn) { if (fn) { fns[name] = fn; order.push(name); } run(name); },
+    onData: function (fn) { fn(); }, params: function () { return {}; }, setParams: function () {}, setLink: function () {}, colors: null
+  };
+  var tmr; window.addEventListener('resize', function () { clearTimeout(tmr); tmr = setTimeout(function () { order.forEach(run); }, 120); });
+  return api;
+})();
+</script>
+<style>
+.kyw{--k-s1:#2a78d6;--k-s2:#eb6834;--k-s3:#1baf7a;--k-s4:#6250d6;--k-muted:#b4b2ab;--k-grid:var(--cds-chart-grid,rgba(128,128,128,.22));--k-axis:var(--cds-chart-axis,rgba(128,128,128,.5));--k-ref:var(--cds-chart-reference,rgba(128,128,128,.7));
+ --k-pad:var(--cds-pad-lg,1.25rem);--k-gap:var(--cds-gap-md,1rem);--k-radius:var(--cds-radius,.6rem);
+ font-family:var(--font-anthropic-sans,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif);color:var(--color-fg);line-height:1.45;max-width:72rem;margin-inline:auto;display:flex;flex-direction:column;gap:calc(var(--k-gap)*1.5)}
+.kyw *{box-sizing:border-box;min-width:0}
+.kyw h1{font-family:var(--font-anthropic-serif,Georgia,serif);font-weight:400;font-size:var(--cds-font-size-title,1.6rem);margin:0 0 .35rem;text-wrap:balance}
+.kyw h2{font-size:var(--cds-font-size-heading,1.15rem);font-weight:var(--cds-font-weight-medium,500);margin:0 0 .25rem}
+.kyw h3{font-size:var(--cds-font-size-body,1rem);font-weight:var(--cds-font-weight-medium,500);margin:0 0 .25rem}
+.kyw p{margin:0}
+.kyw .lead{font-size:var(--cds-font-size-body,1rem);max-width:60ch}
+.kyw .note{color:var(--color-fg-muted);font-size:var(--cds-font-size-caption,.85rem);max-width:70ch}
+.kyw .sec{display:flex;flex-direction:column;gap:var(--k-gap)}
+.kyw .sec-head{max-width:70ch}
+.kyw .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:var(--k-gap)}
+.kyw .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.5rem),1fr));gap:var(--k-gap)}
+.kyw .card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--k-radius);padding:var(--k-pad);display:flex;flex-direction:column;gap:.6rem}
+.kyw .card.wide{grid-column:1/-1}
+.kyw .tile .lab{font-size:var(--cds-font-size-caption,.85rem);color:var(--color-fg-muted)}
+.kyw .tile .val{font-family:var(--font-anthropic-serif,Georgia,serif);font-weight:400;font-size:clamp(1.6rem,3.2vw,2.2rem);line-height:1.1}
+.kyw .tile .sub{font-size:var(--cds-font-size-caption,.85rem);color:var(--color-fg-muted)}
+.kyw .chart{position:relative;width:100%}
+.kyw .chart svg{display:block;width:100%;height:auto;overflow:visible}
+.kyw .chart text{font-family:inherit;font-size:11px;fill:var(--color-fg-muted)}
+.kyw .chart text.v{fill:var(--color-fg)}
+.kyw .tip{position:absolute;pointer-events:none;background:var(--cds-surface-popover,var(--color-panel));border:1px solid var(--cds-border,var(--color-border-line));border-radius:var(--k-radius);box-shadow:var(--cds-shadow-popover,0 4px 16px rgba(0,0,0,.15));padding:var(--cds-pad-xs,.3rem) var(--cds-pad-sm,.6rem);font-size:var(--cds-font-size-caption,.85rem);white-space:nowrap;z-index:2;display:none}
+.kyw .tip b{display:block;color:var(--cds-text-secondary,var(--color-fg-muted));font-weight:500}
+.kyw .legend{display:flex;flex-wrap:wrap;gap:.35rem 1rem;font-size:var(--cds-font-size-caption,.85rem);color:var(--color-fg-muted);list-style:none;margin:0;padding:0}
+.kyw .legend i{display:inline-block;width:.7rem;height:.7rem;border-radius:2px;vertical-align:-1px;margin-right:.35rem}
+.kyw .seg{display:flex;height:28px;gap:2px;width:100%}
+.kyw .seg span{display:flex;align-items:center;padding-inline:.4rem;border-radius:4px;font-size:12px;color:#fff;overflow:hidden;white-space:nowrap}
+.kyw .seg span.dark{color:#0b0b0b}
+.kyw .tbl{overflow-x:auto}
+.kyw table{border-collapse:collapse;width:100%;font-size:var(--cds-font-size-caption,.88rem);font-variant-numeric:tabular-nums}
+.kyw th,.kyw td{text-align:left;padding:.4rem .5rem;border-bottom:1px solid var(--color-border-line);vertical-align:top}
+.kyw th{color:var(--color-fg-muted);font-weight:500;white-space:nowrap}
+.kyw th.n,.kyw td.n{text-align:right}
+.kyw th button{all:unset;cursor:pointer;color:inherit}
+.kyw th button::after{content:" ↕";opacity:.5}
+.kyw th[aria-sort=descending] button::after{content:" ↓";opacity:1}
+.kyw th[aria-sort=ascending] button::after{content:" ↑";opacity:1}
+.kyw td .bar{display:block;height:6px;border-radius:0 3px 3px 0;background:var(--k-s1);margin-top:.25rem}
+.kyw tr.total td{font-weight:600;border-bottom:0}
+.kyw .ev{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:.25rem .8rem;font-size:var(--cds-font-size-caption,.85rem)}
+.kyw .ev li{display:flex;gap:.4rem;align-items:baseline}
+.kyw .ev em{font-style:normal;font-weight:600;min-width:1.2rem}
+.kyw .reco{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--k-gap);counter-reset:r}
+.kyw .reco li{display:grid;grid-template-columns:auto 1fr;gap:.25rem 1rem;align-items:start}
+.kyw .reco li::before{counter-increment:r;content:counter(r);font-family:var(--font-anthropic-serif,Georgia,serif);font-size:1.8rem;line-height:1;color:var(--color-fg-muted);grid-row:span 3}
+.kyw .reco .eco{font-size:var(--cds-font-size-caption,.85rem);color:var(--color-fg-muted)}
+.kyw .reco .eco b{color:var(--color-fg);font-weight:600}
+.kyw .kv{display:grid;grid-template-columns:auto 1fr;gap:.25rem .8rem;font-size:var(--cds-font-size-caption,.88rem)}
+.kyw .kv dt{color:var(--color-fg-muted)}
+.kyw .kv dd{margin:0}
+.kyw b{font-weight:600}
+.kyw [data-dash-source-state=empty]{color:transparent}
+.kyw [data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow,.4s)}
+.kyw .foot{font-size:var(--cds-font-size-caption,.85rem);color:var(--color-fg-muted);border-top:1px solid var(--color-border-line);padding-top:var(--k-gap)}
+@media (max-width:600px){.kyw .reco li{grid-template-columns:1fr}.kyw .reco li::before{grid-row:auto}}
+</style>
+<div class="kyw" id="haut">
+  <header>
+    <h1>Consommation de jetons · refonte de 20 restaurants namurois</h1>
+    <p class="lead">Session d’orchestration du 28 au 30 octobre 2026 (session principale et 22 sous-agents). Au tarif catalogue de Claude Fable 5.1, la session a consommé <b data-draw="n-usd" data-source="totaux" data-field="usd_fable" data-where="cle=total">—</b> de jetons, dont <b data-draw="n-part-eval" data-source="etapes" data-field="part_usd" data-where="etape=%C3%A9valuation">—</b> pour l’évaluation en navigateur des 106 sites de référence. La création de cache, c’est-à-dire le contexte réécrit à chaque image lue et à chaque relance, pèse <b data-draw="n-part-cc" data-source="totaux" data-field="part_fable" data-where="cle=cache_creation_input_tokens">—</b> de la facture.</p>
+  </header>
+
+  <section class="grid-3" aria-label="Chiffres clés">
+    <div class="card tile"><span class="lab">Coût catalogue estimé</span><span class="val" data-draw="t-usd" data-source="totaux" data-field="usd_fable" data-where="cle=total" data-fetchpriority="high">—</span><span class="sub">grille Fable 5.1, voir pondération</span></div>
+    <div class="card tile"><span class="lab">Équivalent jetons facturés</span><span class="val" data-draw="t-eq" data-source="totaux" data-field="equiv_fable" data-where="cle=total">—</span><span class="sub">en jetons d’entrée à 10 $ le million</span></div>
+    <div class="card tile"><span class="lab">Jetons de sortie</span><span class="val" data-draw="t-out" data-source="totaux" data-field="jetons" data-where="cle=output_tokens">—</span><span class="sub">texte et code produits</span></div>
+    <div class="card tile"><span class="lab">Lecture de cache</span><span class="val" data-draw="t-cr" data-source="totaux" data-field="jetons" data-where="cle=cache_read_input_tokens">—</span><span class="sub">contexte relu à chaque appel</span></div>
+    <div class="card tile"><span class="lab">Création de cache</span><span class="val" data-draw="t-cc" data-source="totaux" data-field="jetons" data-where="cle=cache_creation_input_tokens">—</span><span class="sub">contexte écrit une première fois</span></div>
+    <div class="card tile"><span class="lab">Réponses du modèle</span><span class="val" data-draw="t-appels" data-source="totaux" data-field="appels" data-where="cle=total">—</span><span class="sub"><span data-draw="t-agents" data-source="totaux" data-field="agents" data-where="cle=total">—</span> transcripts, <span data-draw="t-outils" data-source="totaux" data-field="outils" data-where="cle=total">—</span> appels d’outils</span></div>
+  </section>
+
+  <section class="sec" id="ponderation">
+    <div class="sec-head"><h2>Pondération : comment on passe des jetons à un coût</h2>
+    <p class="note">Les quatre compteurs n’ont pas la même valeur. La grille principale est le tarif catalogue publié pour Claude Fable 5.1 : 10 $ par million de jetons d’entrée, 12,50 $ en création de cache (125 %), 0,25 $ en lecture de cache (2,5 %), 50 $ en sortie (5 ×). La variante « lecture à 10 % », valable pour les modèles antérieurs, est donnée à titre de comparaison. La limite hebdomadaire du compte n’est pas publiée en jetons : ces montants sont un indicateur de poids relatif, pas une facture.</p></div>
+    <div class="grid">
+      <div class="card wide">
+        <h3>Composition du coût (grille Fable 5.1)</h3>
+        <div class="seg" data-draw="seg-postes" data-source="totaux" role="img" aria-label="Part de chaque poste dans le coût"></div>
+        <ul class="legend"><li><i style="background:var(--k-s1)"></i>Création de cache</li><li><i style="background:var(--k-s2)"></i>Sortie</li><li><i style="background:var(--k-s3)"></i>Lecture de cache</li><li><i style="background:var(--k-muted)"></i>Entrée non mise en cache</li></ul>
+        <div class="tbl"><table data-source="totaux" data-row-key="cle">
+          <thead><tr><th data-field="poste">Poste</th><th class="n" data-field="jetons">Jetons</th><th class="n" data-field="part_jetons">Part des jetons</th><th class="n" data-field="prix_fable">$ / million (Fable 5.1)</th><th class="n" data-field="usd_fable">Coût Fable 5.1</th><th class="n" data-field="part_fable">Part</th><th class="n" data-field="usd_10">Coût lecture à 10 %</th><th class="n" data-field="part_10">Part</th></tr></thead>
+          <tbody data-draw="tb-totaux"></tbody>
+        </table></div>
+        <p class="note">Lecture : 89 % des jetons sont des lectures de cache, mais elles ne pèsent que 11 % du coût ; les 10 % de jetons écrits dans le cache en pèsent 65 %. Dans la variante à 10 %, la lecture de cache passerait à un tiers du coût sans changer le classement des postes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="chronologie">
+    <div class="sec-head"><h2>Chronologie heure par heure</h2>
+    <p class="note">Coût catalogue par heure UTC, du lancement (28/10 19 h 38) à la dernière activité (30/10 11 h). Les heures vides sont celles où tout était à l’arrêt : le brief situe les coupures vers 23 h 50 et 4 h 50, mais les transcripts ne montrent aucune activité entre 21 h et 22 h ni entre 1 h et 3 h ; les relances se voient à 23 h et à 4 h 50. Les repères sont donc placés d’après les trous d’activité.</p></div>
+    <div class="card">
+      <div class="chart" data-draw="ch-chrono" data-source="chronologie evenements" style="min-height:260px"></div>
+      <ol class="ev" data-draw="ev-liste" data-source="evenements"></ol>
+      <p class="note">Les deux premières heures pleines (20 h et 23 h) concentrent <b data-draw="n-h20" data-source="chronologie" data-field="usd" data-where="heure=2026-10-28T20">—</b> et <b data-draw="n-h23" data-source="chronologie" data-field="usd" data-where="heure=2026-10-28T23">—</b> : 7 évaluateurs, 3 collecteurs et 4 vérificateurs tournaient en même temps, puis les 7 évaluateurs relancés ont réécrit leur contexte d’un coup.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="etapes">
+    <div class="sec-head"><h2>Par étape du projet</h2>
+    <p class="note">Les 23 transcripts regroupés par étape, dans l’ordre du projet. Le coût est la pondération Fable 5.1.</p></div>
+    <div class="grid">
+      <div class="card"><h3>Coût par étape</h3><div class="chart" data-draw="ch-etapes" data-source="etapes" style="min-height:300px"></div></div>
+      <div class="card"><h3>Détail</h3>
+        <div class="tbl"><table data-source="etapes" data-row-key="etape">
+          <thead><tr><th data-field="etape">Étape</th><th class="n" data-field="agents">Agents</th><th class="n" data-field="appels">Réponses</th><th class="n" data-field="sortie">Sortie</th><th class="n" data-field="lecture_cache">Lecture cache</th><th class="n" data-field="creation_cache">Création cache</th><th class="n" data-field="usd">Coût</th><th class="n" data-field="part_usd">Part</th></tr></thead>
+          <tbody data-draw="tb-etapes"></tbody>
+        </table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="agents">
+    <div class="sec-head"><h2>Classement des agents</h2>
+    <p class="note">Un transcript par agent. Cliquer un en-tête pour trier. « Contexte par appel » est la lecture de cache divisée par le nombre de réponses : la taille moyenne de ce que l’agent relit à chaque tour. « Relances » compte les redémarrages après une coupure de la limite de 5 h.</p></div>
+    <div class="card">
+      <div class="tbl"><table data-source="agents" data-row-key="agent" id="tbl-agents">
+        <thead><tr>
+          <th data-field="agent"><button type="button" data-sort="agent">Agent</button></th>
+          <th data-field="etape"><button type="button" data-sort="etape">Étape</button></th>
+          <th class="n" data-field="usd" aria-sort="descending"><button type="button" data-sort="usd">Coût</button></th>
+          <th class="n" data-field="sortie"><button type="button" data-sort="sortie">Sortie</button></th>
+          <th class="n" data-field="appels"><button type="button" data-sort="appels">Réponses</button></th>
+          <th class="n" data-field="lecture_cache"><button type="button" data-sort="lecture_cache">Lecture cache</button></th>
+          <th class="n" data-field="creation_cache"><button type="button" data-sort="creation_cache">Création cache</button></th>
+          <th class="n" data-field="lecture_cache_par_appel"><button type="button" data-sort="lecture_cache_par_appel">Contexte / appel</button></th>
+          <th class="n" data-field="read"><button type="button" data-sort="read">Read</button></th>
+          <th class="n" data-field="relances"><button type="button" data-sort="relances">Relances</button></th>
+        </tr></thead>
+        <tbody data-draw="tb-agents"></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="sec" id="causes">
+    <div class="sec-head"><h2>Pourquoi ça a coûté autant</h2>
+    <p class="note">Quatre mécanismes se cumulent. Aucun n’est un bug : c’est la manière dont un agent qui lit beaucoup et vit longtemps consomme.</p></div>
+    <div class="grid">
+      <div class="card">
+        <h3>1. Le contexte est relu à chaque appel</h3>
+        <p class="note">Chaque réponse du modèle relit tout ce que l’agent a accumulé : captures d’écran, pages HTML, fichiers. Un évaluateur relit en moyenne 140 à 180 k jetons par appel ; l’orchestrateur, <b data-draw="n-orch-ctx" data-source="agents" data-field="lecture_cache_par_appel" data-where="agent=orchestrateur%20(session%20principale)">—</b> jetons. Le coût d’un agent croît donc avec le carré de sa durée.</p>
+        <div class="chart" data-draw="ch-ctx" data-source="agents" style="min-height:520px"></div>
+      </div>
+      <div class="card">
+        <h3>2. Les images lues sont écrites dans le cache</h3>
+        <p class="note">Les évaluateurs ont fait <b data-draw="n-read-eval" data-source="etapes" data-field="outils" data-where="etape=%C3%A9valuation">—</b> appels d’outils, dont la plupart des <b data-draw="n-read" data-source="totaux" data-field="read" data-where="cle=total">—</b> Read de la session, souvent des captures d’écran. Chaque image devient du contexte écrit (12,50 $ le million), puis relu. Le lot 2, qui a fabriqué des planches-contact, est le moins cher des sept.</p>
+        <div class="chart" data-draw="ch-outils" data-source="outils" style="min-height:250px"></div>
+      </div>
+      <div class="card">
+        <h3>3. Les relances réécrivent tout le contexte</h3>
+        <p class="note">Les sept évaluateurs ont été tués par la limite de 5 h et relancés : une fois pour quatre d’entre eux, deux fois pour les lots 1, 2 et 5. À chaque reprise, et à chaque pause de plus de 5 minutes (le cache expire), tout le contexte est réécrit : 150 à 200 k jetons, soit 2 à 2,5 $ par relance.</p>
+        <div class="tbl"><table data-source="agents" data-row-key="agent">
+          <thead><tr><th data-field="agent">Agent</th><th class="n" data-field="relances">Relances</th><th class="n" data-field="appels">Réponses</th><th class="n" data-field="creation_cache">Création cache</th><th class="n" data-field="usd">Coût</th></tr></thead>
+          <tbody data-draw="tb-relances"></tbody>
+        </table></div>
+      </div>
+      <div class="card">
+        <h3>4. Trop d’agents lourds en parallèle</h3>
+        <p class="note">À 20 h, quatorze agents tournaient en même temps dans la même session : la limite de 5 h a sauté en moins d’une heure et demie, puis une seconde fois à minuit. Le parallélisme n’a pas réduit le coût total, il l’a concentré dans le temps et provoqué les relances.</p>
+        <dl class="kv">
+          <dt>Coût de l’heure 20 h</dt><dd data-draw="n-h20b" data-source="chronologie" data-field="usd" data-where="heure=2026-10-28T20">—</dd>
+          <dt>Coût de l’heure 23 h</dt><dd data-draw="n-h23b" data-source="chronologie" data-field="usd" data-where="heure=2026-10-28T23">—</dd>
+          <dt>Coût de l’heure 5 h (directions, socle, gabarits)</dt><dd data-draw="n-h05" data-source="chronologie" data-field="usd" data-where="heure=2026-10-29T05">—</dd>
+          <dt>Heures actives sur 41</dt><dd data-draw="n-actives" data-source="heures_actives">—</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="recommandations">
+    <div class="sec-head"><h2>Cinq mesures pour la suite</h2>
+    <p class="note">Pour les 15 gabarits restants, les 20 restaurants × 3 variantes, les revues et les publications. Les économies sont des estimations appliquées au poste équivalent de la session 1 ; elles se recoupent en partie, on ne peut pas les additionner.</p></div>
+    <div class="card">
+      <ol class="reco">
+        <li><h3>Sonnet 5.5 pour l’évaluation visuelle, la recherche web et les revues</h3>
+          <p class="note">Lancer les sous-agents « jury », collecte, sélection et dossier client avec le modèle Sonnet (2 $ et 10 $ le million au lieu de 10 $ et 50 $). Ces rôles lisent des captures et des pages web, ils n’écrivent pas de code. Fable reste pour l’orchestration, les directions artistiques et le code des gabarits. Le compteur interne de WebSearch tourne déjà sur Haiku pour 2,82 $.</p>
+          <p class="eco">Poste concerné : <b data-draw="r1-base" data-source="recommandations" data-field="base_usd" data-where="rang=1">—</b> · économie estimée <b data-draw="r1-pct" data-source="recommandations" data-field="economie_pct" data-where="rang=1">—</b>, soit <b data-draw="r1-usd" data-source="recommandations" data-field="economie_usd" data-where="rang=1">—</b> sur l’équivalent de la session 1.</p></li>
+        <li><h3>Planches-contact au lieu d’une lecture image par image</h3>
+          <p class="note">Une planche 3 × 3 par site (haut de page, trois frames, mobile) fabriquée avec PIL et lue en un seul Read ; la pleine résolution seulement pour les frames décisives. Le lot 2 l’a fait : <b data-draw="r2-lot2" data-source="agents" data-field="usd" data-where="agent=eval%20lot2">—</b> contre 19 $ en moyenne pour les six autres lots, et deux fois moins de création de cache.</p>
+          <p class="eco">Poste concerné : <b data-draw="r2-base" data-source="recommandations" data-field="base_usd" data-where="rang=2">—</b> · économie estimée <b data-draw="r2-pct" data-source="recommandations" data-field="economie_pct" data-where="rang=2">—</b>, soit <b data-draw="r2-usd" data-source="recommandations" data-field="economie_usd" data-where="rang=2">—</b>.</p></li>
+        <li><h3>Trois agents lourds en parallèle au maximum, aucune relance à froid</h3>
+          <p class="note">Lancer les évaluateurs par vagues de trois, avec une relance planifiée (send_later) après la fenêtre de 5 h plutôt qu’une coupure HTTP 429. 12,3 des 13,6 millions de jetons écrits dans le cache l’ont été en cache 5 minutes : tout contexte inactif plus de 5 minutes (captures en arrière-plan, coupure) est réécrit en entier.</p>
+          <p class="eco">Poste concerné : <b data-draw="r3-base" data-source="recommandations" data-field="base_usd" data-where="rang=3">—</b> · économie estimée <b data-draw="r3-pct" data-source="recommandations" data-field="economie_pct" data-where="rang=3">—</b>, soit <b data-draw="r3-usd" data-source="recommandations" data-field="economie_usd" data-where="rang=3">—</b>.</p></li>
+        <li><h3>Des lots plus courts : 7 sites par agent, 40 réponses au maximum</h3>
+          <p class="note">Un lot de 15 sites monte à 65 réponses (lot 5) avec un contexte qui grossit à chaque tour. À 7 sites, l’agent s’arrête vers 30 réponses avec un contexte moitié moindre en moyenne : deux agents courts coûtent moins qu’un long. Même règle pour les gabarits : un agent par gabarit, et un nouvel agent pour la revue.</p>
+          <p class="eco">Poste concerné : <b data-draw="r4-base" data-source="recommandations" data-field="base_usd" data-where="rang=4">—</b> · économie estimée <b data-draw="r4-pct" data-source="recommandations" data-field="economie_pct" data-where="rang=4">—</b>, soit <b data-draw="r4-usd" data-source="recommandations" data-field="economie_usd" data-where="rang=4">—</b>.</p></li>
+        <li><h3>Un orchestrateur maigre : une session fille par restaurant, prompts courts</h3>
+          <p class="note">L’orchestrateur compte <b data-draw="r5-appels" data-source="agents" data-field="appels" data-where="agent=orchestrateur%20(session%20principale)">—</b> réponses et relit <b data-draw="r5-cr" data-source="agents" data-field="lecture_cache" data-where="agent=orchestrateur%20(session%20principale)">—</b> jetons sans produire de livrable. Déléguer la lecture des résultats aux agents, ne remonter que des résumés de dix lignes, et ouvrir une session fille par restaurant (quota WebSearch propre, contexte neuf).</p>
+          <p class="eco">Poste concerné : <b data-draw="r5-base" data-source="recommandations" data-field="base_usd" data-where="rang=5">—</b> · économie estimée <b data-draw="r5-pct" data-source="recommandations" data-field="economie_pct" data-where="rang=5">—</b>, soit <b data-draw="r5-usd" data-source="recommandations" data-field="economie_usd" data-where="rang=5">—</b>.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="projection">
+    <div class="sec-head"><h2>Ordre de grandeur pour la suite</h2>
+    <p class="note">Estimation à méthode constante (Fable partout, mêmes lots, mêmes relances) contre la même charge avec les cinq mesures. Les coûts unitaires sont dérivés de la session 1 ; ce sont des hypothèses, à recaler après les trois premiers gabarits.</p></div>
+    <div class="card">
+      <div class="tbl"><table data-source="projection" data-row-key="etape">
+        <thead><tr><th data-field="etape">Étape à venir</th><th class="n" data-field="unites">Unités</th><th class="n" data-field="cout_unitaire">Coût unitaire</th><th class="n" data-field="constant_usd">À méthode constante</th><th class="n" data-field="reduction_pct">Réduction</th><th class="n" data-field="mesures_usd">Avec les mesures</th><th data-field="hypothese">Hypothèse</th></tr></thead>
+        <tbody data-draw="tb-proj"></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="sec" id="methode">
+    <div class="sec-head"><h2>Périmètre et méthode</h2></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Ce qui est mesuré</h3>
+        <p class="note">Les 23 transcripts de la session d’orchestration (fichiers de la session principale et de ses sous-agents), extraits par le script usage-extraire.py du dépôt : chaque réponse du modèle est comptée une fois, avec ses quatre compteurs de jetons. Les sessions du compte ont été passées en revue : entre le 28 et le 30 octobre, seules la session d’orchestration (« Test Site ») et cette session de reporting ont tourné ; aucune session sur le dépôt KYN n’a consommé sur la période. Les sessions Cowork ne sont pas listables depuis ici. La limite hebdomadaire du compte est partagée par toutes les sessions, mais seul le périmètre de la session 1 est chiffré.</p>
+      </div>
+      <div class="card">
+        <h3>Recoupement avec le compteur de Claude Code</h3>
+        <p class="note">La session principale tient son propre compteur par modèle. Il recoupe l’extraction à 5 % près ; l’écart vient des derniers tours de l’orchestrateur, postérieurs à l’extraction. Il ajoute le modèle Haiku utilisé en interne par les 200 recherches WebSearch.</p>
+        <div class="tbl"><table data-source="officiel" data-row-key="source,modele">
+          <thead><tr><th data-field="source">Source</th><th data-field="modele">Modèle</th><th class="n" data-field="creation_cache">Création cache</th><th class="n" data-field="lecture_cache">Lecture cache</th><th class="n" data-field="sortie">Sortie</th><th class="n" data-field="usd">Coût</th></tr></thead>
+          <tbody data-draw="tb-officiel"></tbody>
+        </table></div>
+      </div>
+    </div>
+    <p class="foot">Maquette KYW, certaines données sont illustratives : les coûts sont des équivalents au tarif catalogue, pas une facture ; les économies et la projection sont des estimations. Mise à jour à chaque nouveau fichier consommation-session-*.json déposé dans data/usage.</p>
+  </section>
+</div>
+<script>
+(function () {
+  if (dash.colors && dash.colors.length) { var kr = document.querySelector('.kyw'); if (kr) { kr.style.setProperty('--k-s1', dash.colors[0]); kr.style.setProperty('--k-s2', dash.colors[1]); kr.style.setProperty('--k-s3', dash.colors[2]); } }
+  var NS = 'http://www.w3.org/2000/svg';
+  var fr = 'fr-FR';
+  function fInt(v) { return v == null || isNaN(v) ? '—' : Math.round(v).toLocaleString(fr); }
+  function fUsd(v) { return v == null || isNaN(v) ? '—' : (Number(v) >= 100 ? Math.round(v).toLocaleString(fr) : Number(v).toLocaleString(fr, { maximumFractionDigits: 2 })) + ' $'; }
+  function fPct(v) { return v == null || isNaN(v) ? '—' : Number(v).toLocaleString(fr, { maximumFractionDigits: 1 }) + ' %'; }
+  function fTok(v) { v = Number(v); if (isNaN(v)) return '—'; if (v >= 1e6) return (v / 1e6).toLocaleString(fr, { maximumFractionDigits: v >= 1e7 ? 0 : 2 }) + ' M'; if (v >= 1e4) return Math.round(v / 1e3).toLocaleString(fr) + ' k'; return fInt(v); }
+  function fPrix(v) { return v == null ? '' : Number(v).toLocaleString(fr, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' $'; }
+  function rows(id) { var d = dash.data(id); return d && d.status === 'ok' ? (Array.isArray(d.data) ? d.data : []) : null; }
+  function find(rs, where) { if (!rs) return null; var p = where.split('='), k = decodeURIComponent(p[0]), v = decodeURIComponent(p.slice(1).join('=')); for (var i = 0; i < rs.length; i++) if (String(rs[i][k]) === v) return rs[i]; return null; }
+  function el(tag, attrs, parent) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function cssVar(name) { return 'var(' + name + ')'; }
+  function tip(box) { var t = box.querySelector('.tip'); if (!t) { t = document.createElement('div'); t.className = 'tip'; box.appendChild(t); } return t; }
+  function showTip(box, t, x, y, head, lines) {
+    t.replaceChildren(); var b = document.createElement('b'); b.textContent = head; t.appendChild(b);
+    lines.forEach(function (l) { var d = document.createElement('div'); d.textContent = l; t.appendChild(d); });
+    t.style.display = 'block'; var W = box.clientWidth, tw = t.offsetWidth; var left = x + 12; if (left + tw > W) left = Math.max(0, x - tw - 12);
+    t.style.left = left + 'px'; t.style.top = Math.max(0, y - 10) + 'px';
+  }
+  function textW(svg, s, size) { var t = el('text', { 'font-size': size || 11, x: -9999, y: -9999 }, svg); t.textContent = s; var w = t.getComputedTextLength ? t.getComputedTextLength() : s.length * 6; svg.removeChild(t); return w; }
+
+  // Number drawings: a cell of one row.
+  document.querySelectorAll('.kyw [data-draw][data-where]').forEach(function (node) {
+    var name = node.getAttribute('data-draw'), src = node.getAttribute('data-source'), field = node.getAttribute('data-field'), where = node.getAttribute('data-where');
+    var fmt = /usd|base_usd|economie_usd/.test(field) ? fUsd : /part|pct/.test(field) ? fPct : /jetons|lecture_cache|creation_cache|sortie|equiv/.test(field) ? (field === 'equiv_fable' ? function (v) { return fTok(v * 1e6); } : fTok) : fInt;
+    if (field === 'lecture_cache_par_appel') fmt = fTok;
+    dash.draw(name, function (e) { var r = find(rows(src), where); e.textContent = r && r[field] != null ? fmt(r[field]) : '—'; });
+  });
+
+  dash.calc('heures_actives', { inputs: ['chronologie'], title: 'Heures actives', description: 'Nombre d’heures UTC où au moins une réponse du modèle a été produite.', fn: function (chronologie) { return chronologie.filter(function (r) { return Number(r.actif) === 1; }).length; } });
+  dash.draw('n-actives', function (e) { var d = dash.data('heures_actives'); e.textContent = d && d.status === 'ok' ? String(d.data) : '—'; });
+
+  // Segmented bar of cost shares.
+  dash.draw('seg-postes', function (e) {
+    var rs = rows('totaux'); e.replaceChildren(); if (!rs) return;
+    var order = [['cache_creation_input_tokens', 'var(--k-s1)', false], ['output_tokens', 'var(--k-s2)', false], ['cache_read_input_tokens', 'var(--k-s3)', false], ['input_tokens', 'var(--k-muted)', true]];
+    var W = e.clientWidth || 600;
+    order.forEach(function (o) { var r = find(rs, 'cle=' + o[0]); if (!r) return; var p = Number(r.part_fable); var s = document.createElement('span'); s.style.flex = p + ' 0 0'; s.style.background = o[1]; if (o[2]) s.className = 'dark'; s.setAttribute('role', 'img'); s.setAttribute('aria-label', r.poste + ' : ' + fPct(p) + ', ' + fUsd(r.usd_fable)); if (W * p / 100 > 42) s.textContent = fPct(p); e.appendChild(s); });
+  });
+
+  // Tables.
+  function fillTable(name, src, cols, opts) {
+    dash.draw(name, function (tb) {
+      var rs = rows(src); tb.replaceChildren(); if (!rs) return; rs = rs.slice();
+      if (opts && opts.filter) rs = rs.filter(opts.filter);
+      if (opts && opts.sort) rs.sort(opts.sort);
+      var max = opts && opts.bar ? Math.max.apply(null, rs.map(function (r) { return Number(r[opts.bar]) || 0; })) : 0;
+      rs.forEach(function (r) {
+        var tr = document.createElement('tr'); if (opts && opts.total && opts.total(r)) tr.className = 'total';
+        if (opts && opts.key) tr.setAttribute('data-key', opts.key(r));
+        cols.forEach(function (c) { var td = document.createElement('td'); if (c.n) td.className = 'n'; td.textContent = r[c.f] == null ? '' : (c.fmt || String)(r[c.f]); if (opts && opts.bar === c.f && max) { var b = document.createElement('span'); b.className = 'bar'; b.style.width = (Number(r[c.f]) / max * 100) + '%'; td.appendChild(b); } tr.appendChild(td); });
+        tb.appendChild(tr);
+      });
+    });
+  }
+  fillTable('tb-totaux', 'totaux', [{ f: 'poste' }, { f: 'jetons', n: 1, fmt: fInt }, { f: 'part_jetons', n: 1, fmt: fPct }, { f: 'prix_fable', n: 1, fmt: fPrix }, { f: 'usd_fable', n: 1, fmt: fUsd }, { f: 'part_fable', n: 1, fmt: fPct }, { f: 'usd_10', n: 1, fmt: fUsd }, { f: 'part_10', n: 1, fmt: fPct }], { total: function (r) { return r.cle === 'total'; } });
+  fillTable('tb-etapes', 'etapes', [{ f: 'etape' }, { f: 'agents', n: 1, fmt: fInt }, { f: 'appels', n: 1, fmt: fInt }, { f: 'sortie', n: 1, fmt: fTok }, { f: 'lecture_cache', n: 1, fmt: fTok }, { f: 'creation_cache', n: 1, fmt: fTok }, { f: 'usd', n: 1, fmt: fUsd }, { f: 'part_usd', n: 1, fmt: fPct }], { sort: function (a, b) { return a.ordre - b.ordre; } });
+  fillTable('tb-relances', 'agents', [{ f: 'agent' }, { f: 'relances', n: 1, fmt: fInt }, { f: 'appels', n: 1, fmt: fInt }, { f: 'creation_cache', n: 1, fmt: fTok }, { f: 'usd', n: 1, fmt: fUsd }], { filter: function (r) { return r.etape === 'évaluation'; }, sort: function (a, b) { return b.relances - a.relances || b.usd - a.usd; } });
+  fillTable('tb-proj', 'projection', [{ f: 'etape' }, { f: 'unites', n: 1, fmt: fInt }, { f: 'cout_unitaire', n: 1, fmt: fUsd }, { f: 'constant_usd', n: 1, fmt: fUsd }, { f: 'reduction_pct', n: 1, fmt: fPct }, { f: 'mesures_usd', n: 1, fmt: fUsd }, { f: 'hypothese' }], { total: function (r) { return r.etape === 'Total'; } });
+  fillTable('tb-officiel', 'officiel', [{ f: 'source' }, { f: 'modele' }, { f: 'creation_cache', n: 1, fmt: fTok }, { f: 'lecture_cache', n: 1, fmt: fTok }, { f: 'sortie', n: 1, fmt: fTok }, { f: 'usd', n: 1, fmt: fUsd }], { key: function (r) { return encodeURIComponent(r.source) + ',' + encodeURIComponent(r.modele); } });
+
+  var sortKey = 'usd', sortDir = -1;
+  fillTable('tb-agents', 'agents', [{ f: 'agent' }, { f: 'etape' }, { f: 'usd', n: 1, fmt: fUsd }, { f: 'sortie', n: 1, fmt: fTok }, { f: 'appels', n: 1, fmt: fInt }, { f: 'lecture_cache', n: 1, fmt: fTok }, { f: 'creation_cache', n: 1, fmt: fTok }, { f: 'lecture_cache_par_appel', n: 1, fmt: fTok }, { f: 'read', n: 1, fmt: fInt }, { f: 'relances', n: 1, fmt: fInt }],
+    { bar: 'usd', sort: function (a, b) { var x = a[sortKey], y = b[sortKey]; if (typeof x === 'number' && typeof y === 'number') return (x - y) * sortDir; return String(x).localeCompare(String(y), fr) * sortDir; } });
+  document.querySelectorAll('.kyw th button[data-sort]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var k = b.getAttribute('data-sort'); if (sortKey === k) sortDir = -sortDir; else { sortKey = k; sortDir = (k === 'agent' || k === 'etape') ? 1 : -1; }
+      document.querySelectorAll('.kyw th[data-field]').forEach(function (th) { if (th.closest('table') !== b.closest('table')) return; if (th.getAttribute('data-field') === k) th.setAttribute('aria-sort', sortDir < 0 ? 'descending' : 'ascending'); else th.removeAttribute('aria-sort'); });
+      dash.draw('tb-agents');
+    });
+  });
+
+  // Event list under the timeline.
+  dash.draw('ev-liste', function (e) {
+    var rs = rows('evenements'); e.replaceChildren(); if (!rs) return;
+    rs.forEach(function (r, i) { var li = document.createElement('li'); var em = document.createElement('em'); em.textContent = String(i + 1); var s = document.createElement('span'); s.textContent = r.libelle; li.appendChild(em); li.appendChild(s); e.appendChild(li); });
+  });
+
+  // Horizontal bars.
+  function barsH(e, data, labelF, valueF, fmt, color, opts) {
+    e.querySelectorAll('svg').forEach(function (s) { s.remove(); }); if (!data || !data.length) return;
+    var W = e.clientWidth || 600, rowH = (opts && opts.rowH) || 24, padT = 4;
+    var svg = el('svg', { width: '100%' }, e);
+    var lw = Math.min(W * 0.42, Math.max.apply(null, data.map(function (d) { return textW(svg, labelF(d)); })) + 8);
+    var vw = Math.max.apply(null, data.map(function (d) { return textW(svg, fmt(valueF(d))); })) + 8;
+    var x0 = lw, x1 = W - vw, max = Math.max.apply(null, data.map(function (d) { return Number(valueF(d)) || 0; }));
+    var H = padT + data.length * rowH; svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.setAttribute('height', H);
+    var t = tip(e);
+    data.forEach(function (d, i) {
+      var y = padT + i * rowH, v = Number(valueF(d)) || 0, w = max ? (x1 - x0) * v / max : 0;
+      var g = el('g', {}, svg);
+      var lab = el('text', { x: x0 - 6, y: y + rowH / 2 + 4, 'text-anchor': 'end' }, g); lab.textContent = labelF(d);
+      var c = (opts && opts.colorF) ? opts.colorF(d) : color;
+      el('rect', { x: x0, y: y + rowH / 2 - 7, width: Math.max(0, w), height: 14, fill: c, rx: 3 }, g);
+      var val = el('text', { x: x0 + w + 6, y: y + rowH / 2 + 4, 'class': 'v' }, g); val.textContent = fmt(v);
+      var hit = el('rect', { x: 0, y: y, width: W, height: rowH, fill: 'transparent' }, g);
+      hit.addEventListener('mousemove', function (ev) { var r = e.getBoundingClientRect(); showTip(e, t, ev.clientX - r.left, ev.clientY - r.top, labelF(d), (opts && opts.lines) ? opts.lines(d) : [fmt(v)]); });
+      hit.addEventListener('mouseleave', function () { t.style.display = 'none'; });
+    });
+  }
+  dash.draw('ch-etapes', function (e) { var rs = rows('etapes'); if (!rs) { e.querySelectorAll('svg').forEach(function (s) { s.remove(); }); return; } rs = rs.slice().sort(function (a, b) { return a.ordre - b.ordre; }); barsH(e, rs, function (d) { return d.etape; }, function (d) { return d.usd; }, fUsd, 'var(--k-s1)', { rowH: 30, lines: function (d) { return [fUsd(d.usd) + ' · ' + fPct(d.part_usd), d.agents + ' agent(s), ' + fInt(d.appels) + ' réponses', 'Sortie ' + fTok(d.sortie) + ', lecture cache ' + fTok(d.lecture_cache)]; } }); });
+  dash.draw('ch-ctx', function (e) { var rs = rows('agents'); if (!rs) { e.querySelectorAll('svg').forEach(function (s) { s.remove(); }); return; } rs = rs.slice().sort(function (a, b) { return b.lecture_cache_par_appel - a.lecture_cache_par_appel; }); barsH(e, rs, function (d) { return d.agent; }, function (d) { return d.lecture_cache_par_appel; }, fTok, 'var(--k-s1)', { rowH: 22, colorF: function (d) { return d.etape === 'orchestration' ? 'var(--k-s2)' : 'var(--k-s1)'; }, lines: function (d) { return [fTok(d.lecture_cache_par_appel) + ' jetons relus par appel', fInt(d.appels) + ' réponses, ' + fUsd(d.usd)]; } }); });
+  dash.draw('ch-outils', function (e) { var rs = rows('outils'); if (!rs) { e.querySelectorAll('svg').forEach(function (s) { s.remove(); }); return; } barsH(e, rs, function (d) { return d.outil; }, function (d) { return d.appels; }, fInt, 'var(--k-s1)', { rowH: 24 }); });
+
+  // Timeline: columns per hour with event markers.
+  dash.draw('ch-chrono', function (e) {
+    e.querySelectorAll('svg').forEach(function (s) { s.remove(); });
+    var rs = rows('chronologie'), ev = rows('evenements'); if (!rs) return;
+    var W = e.clientWidth || 600, H = 260, mL = 44, mR = 8, mT = 22, mB = 34, n = rs.length;
+    var svg = el('svg', { width: '100%', viewBox: '0 0 ' + W + ' ' + H, height: H }, e);
+    var max = Math.max.apply(null, rs.map(function (r) { return Number(r.usd) || 0; })) || 1;
+    var step = max > 60 ? 20 : 10, top = Math.ceil(max / step) * step;
+    var x = function (i) { return mL + (W - mL - mR) * i / n; }, bw = (W - mL - mR) / n, y = function (v) { return mT + (H - mT - mB) * (1 - v / top); };
+    for (var v = 0; v <= top; v += step) { el('line', { x1: mL, x2: W - mR, y1: y(v), y2: y(v), stroke: v === 0 ? 'var(--k-axis)' : 'var(--k-grid)' }, svg); var tt = el('text', { x: mL - 6, y: y(v) + 4, 'text-anchor': 'end' }, svg); tt.textContent = fInt(v) + ' $'; }
+    var t = tip(e);
+    rs.forEach(function (r, i) {
+      var h = Number(r.usd) || 0; var g = el('g', {}, svg);
+      if (h > 0) el('rect', { x: x(i) + 1, y: y(h), width: Math.max(1, bw - 2), height: y(0) - y(h), fill: 'var(--k-s1)', rx: Math.min(3, bw / 2) }, g);
+      var hit = el('rect', { x: x(i), y: mT, width: bw, height: H - mT - mB, fill: 'transparent' }, g);
+      hit.addEventListener('mousemove', function (evn) { var rc = e.getBoundingClientRect(); showTip(e, t, evn.clientX - rc.left, evn.clientY - rc.top, r.libelle + ' UTC', [h ? fUsd(h) : 'Aucune activité', 'Sortie ' + fTok(r.sortie), 'Lecture cache ' + fTok(r.lecture_cache), 'Création cache ' + fTok(r.creation_cache)]); });
+      hit.addEventListener('mouseleave', function () { t.style.display = 'none'; });
+      var hh = Number(r.heure.slice(11, 13));
+      if (hh % 6 === 0 || i === 0) { var lab = el('text', { x: x(i) + bw / 2, y: H - mB + 14, 'text-anchor': 'middle' }, svg); lab.textContent = r.libelle; }
+    });
+    if (ev) ev.forEach(function (r, i) {
+      var px = mL + (W - mL - mR) * (Number(r.position) - 19) / n;
+      el('line', { x1: px, x2: px, y1: mT - 4, y2: y(0), stroke: r.type === 'coupure' ? 'var(--color-bad)' : 'var(--k-ref)', 'stroke-dasharray': '3 3' }, svg);
+      el('circle', { cx: px, cy: mT - 10, r: 8, fill: r.type === 'coupure' ? 'var(--color-bad)' : 'var(--k-ref)' }, svg);
+      var tl = el('text', { x: px, y: mT - 6, 'text-anchor': 'middle', fill: '#fff', 'font-size': 10, style: 'fill:#fff' }, svg); tl.textContent = String(i + 1);
+    });
+    var ax = el('text', { x: mL, y: H - 2 }, svg); ax.textContent = '28/10 19 h → 30/10 11 h UTC, une colonne par heure';
+  });
+})();
+</script>
+
+<p style="max-width:72rem;margin:1.5rem auto 0;font-size:.8rem;color:var(--color-fg-muted)">Copie autonome du tableau de bord publié sur claude.ai (artefact 39eBZZyjPAnwQfhAAx2Bxq). Données : data/usage/consommation-session-1.json et chronologie-session-1.json. Maquette KYW, certaines données sont illustratives.</p>
+</body>
+</html>
