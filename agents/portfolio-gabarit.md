@@ -75,3 +75,15 @@ seul fichier, sections indépendantes, tokens).
 - `gabarits/<id>/RAPPORT.md` : concept en une ligne, scores du critique, placeholders, ce qui manque, « Leçons
   structurelles » (à reporter dans `agents/lecons.md`).
 - Ne commite pas (l'orchestrateur le fait). Réponds : concept, score critique, points ouverts.
+
+## Leçons intégrées (30/10/2026, règles de consommation A à G de `agents/README.md`)
+
+- **Avancement sur disque** : tiens `gabarits/<id>/ETAT.md` à jour après chaque étape (fichiers faits, QA faite, reste à
+  faire). Si tu reprends un gabarit entamé, lis `ETAT.md` et `DESIGN.md` d'abord et ne refais pas ce qui existe.
+- **40 réponses au maximum**, puis tu livres l'état même imparfait (ETAT.md précis) ; un agent neuf reprendra.
+- **Captures lues en planche-contact** : après `shoot.mjs`, `python3 scripts/planche.py .shots/planche-<id>.png .shots/<page>/d-*.png .shots/<page>/m-*.png`
+  et un seul Read de la planche ; pleine résolution seulement pour un détail douteux.
+- **Pas de critique dans cet agent** : la skill `jury` et la revue sont faites ensuite par un agent Sonnet distinct, puis
+  les corrections par un agent Opus. Toi, tu construis, tu passes `shoot`/`audit` une fois, tu corriges les erreurs
+  mécaniques (console, liens, débordements, FAIL), et tu livres.
+- Ne relis jamais un fichier de référence entier deux fois ; `grep`/`sed -n` pour les passages utiles.
