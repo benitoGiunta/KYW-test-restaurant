@@ -3,8 +3,9 @@
 // le gabarit les affiche, la revue les signale, le client les remplace.
 //
 // Hypothèses du gabarit « Quatre mains » (toutes marquées placeholder dans les données ci-dessous) :
-// - les rôles « le soir / le salé » (Damien) et « le midi / le sucré » (François) sont une mise en scène du diptyque, pas une
-//   répartition réelle du travail ; l'attribution des plats à l'un ou à l'autre (tags D / F) est illustrative ;
+// - la colonne de chaque chef porte son parcours (prouvé) ; l'attribution des plats à l'un ou à l'autre (tags D / F,
+//   plats fétiches) n'est pas prouvée : `voixPlaceholder: true` / `platsFetichesPlaceholder: true`, affichée « illustrative » ;
+// - descriptions des plats : seulement ce que le dossier prouve (photos du site, carte HTML), sinon vide ;
 // - les années des parcours sont déduites du récit du site (« il y a quatorze ans ») ; seules 2019 et 2020 sont sûres ;
 // - l'e-mail, les boissons, la composition des formules du midi, les deux avis Google et les rôles de Sara et Jordan sont fictifs.
 
@@ -13,7 +14,8 @@ export type Voix = 'D' | 'F'; // D = Damien (colonne verte), F = François (colo
 
 export interface Creneau { ouverture: string; fermeture: string } // 'HH:MM'
 export interface Horaire { jour: Jour; creneaux: Creneau[]; note?: string } // creneaux vide = fermé
-export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean; voix?: Voix; photo?: string }
+// voixPlaceholder : l'attribution du plat à un chef (voix) n'est pas prouvée par le dossier ; l'interface affiche « attribution illustrative ».
+export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean; voix?: Voix; voixPlaceholder?: boolean; photo?: string }
 export interface Categorie { categorie: string; moment?: 'soir' | 'midi' | 'commun'; intro?: string; plats: Plat[] }
 export interface Menu { nom: string; prix: string; description: string; placeholder: boolean; moment?: 'soir' | 'midi' | 'commun' }
 export interface Membre { nom: string; role: string; photo?: string; placeholder: boolean; voix?: Voix }
@@ -26,9 +28,10 @@ export interface Chef {
   prenom: string;
   nom: string;
   role: string; // « Chef et co-propriétaire »
-  registre: string; // la voix de la colonne : « Le soir, le salé »
+  registre: string; // la voix de la colonne : le parcours prouvé par le dossier (« de la Belgique à Shanghai »)
   portrait: string;
-  bio: string[];
+  bio: string[]; // uniquement des phrases prouvées par dossier.md (récit du site)
+  platsFetichesPlaceholder: boolean; // attribution des plats au chef : illustrative
   parcours: Etape[];
   citation: { texte: string; placeholder: boolean };
   platsFetiches: string[]; // noms de plats, renvoient à `carteQuatreMains`
@@ -104,11 +107,11 @@ export const site: Restaurant = {
       prenom: 'Damien',
       nom: 'Gorjanec',
       role: 'Chef et co-propriétaire',
-      registre: 'Le soir, le salé',
+      registre: 'de la Belgique à Shanghai',
       portrait: '/photos/chef-damien.webp',
       bio: [
-        "Damien s'est fait une place en Belgique, puis a cuisiné à l'étranger, jusqu'à Shanghai. Il tient la partie salée du menu et le service du soir : le boeuf confit, les Saint-Jacques, les légumes racines.",
-        'À table, c\'est souvent lui qui pose l\'assiette et raconte le producteur qui est derrière.',
+        "Damien s'est fait une place en Belgique et a cumulé des expériences à l'étranger, notamment à Shanghai.",
+        'Avec François, il sert lui-même les plats et explique leur démarche à table.',
       ],
       parcours: [
         { annee: '2012', lieu: "La Plage d'Amée, Namur", texte: 'Premiers couteaux aiguisés à côté de François. Deux gamins pleins d\'envie.', placeholder: true },
@@ -118,6 +121,7 @@ export const site: Restaurant = {
         { annee: '2020', lieu: 'Les Potes au Feu', texte: 'Trois mois plus tard, les clés. Le restaurant ouvre à quatre mains.', placeholder: false },
       ],
       citation: { texte: 'On cuisine à deux parce qu\'on a appris à deux. Le reste, c\'est du plaisir.', placeholder: true },
+      platsFetichesPlaceholder: true,
       platsFetiches: ['Boeuf confit, carottes, cromesquis de pommes de terre', 'Saint-Jacques, butternut, passion'],
     },
     {
@@ -125,11 +129,11 @@ export const site: Restaurant = {
       prenom: 'François',
       nom: 'Schepens',
       role: 'Chef et co-propriétaire',
-      registre: 'Le midi, le sucré',
+      registre: 'des États-Unis à Montréal',
       portrait: '/photos/chef-francois.webp',
       bio: [
-        'François a fait ses classes aux États-Unis et à Montréal. Il signe les desserts et les formules du midi : le soufflé au caramel, la rosace de pommes, la mignardise qui ferme le repas.',
-        'Il aime les menus courts, servis à toute la table, et les explications qui tiennent en une phrase.',
+        'François a fait ses classes aux États-Unis et à Montréal.',
+        'Avec Damien, il accompagne lui-même chaque assiette jusqu\'à la table et explique leur démarche.',
       ],
       parcours: [
         { annee: '2012', lieu: "La Plage d'Amée, Namur", texte: 'Même cuisine, même année : la rencontre avec Damien, et le début d\'une amitié.', placeholder: true },
@@ -139,6 +143,7 @@ export const site: Restaurant = {
         { annee: '2020', lieu: 'Les Potes au Feu', texte: 'Les clés, puis le premier service. Le menu s\'écrit à deux depuis.', placeholder: false },
       ],
       citation: { texte: 'Un menu unique, c\'est une promesse : on ne vous laisse pas choisir, on vous régale.', placeholder: true },
+      platsFetichesPlaceholder: true,
       platsFetiches: ['Soufflé au caramel, chaï, poire', 'Rosace de pommes, glace et tuile'],
     },
   ],
@@ -147,14 +152,14 @@ export const site: Restaurant = {
     "Début de l'hiver 2019, installés par hasard à une table de ce lieu, ils ne savent pas encore qu'ils y ouvriront leur premier restaurant. Trois mois plus tard, ils en ont les clés.",
   ],
   carteQuatreMains: [
-    { nom: 'Mises en bouche', description: 'Trois bouchées pour ouvrir le repas, selon le marché du jour.', prix: null, placeholder: false, voix: 'F', photo: '/photos/cuisine-chefs-dressage.webp' },
-    { nom: 'Légumes racines, champignons, noix', description: 'Les légumes cultivés localement, rôtis et crus, un jus de champignons.', prix: null, placeholder: false, voix: 'D', photo: '/photos/cuisine-mains-pate.webp' },
-    { nom: 'Saint-Jacques, butternut, passion', description: 'Snackées, mousseline de butternut, tuile noire, vinaigrette passion.', prix: null, placeholder: false, voix: 'D', photo: '/photos/plat-saint-jacques.webp' },
-    { nom: 'Tartare de boeuf aux tuiles', description: 'Coupé au couteau, roquette, tuiles croquantes.', prix: null, placeholder: true, voix: 'D', photo: '/photos/plat-tartare.webp' },
-    { nom: 'Boeuf confit, carottes, cromesquis de pommes de terre', description: 'Cuit longtemps, carottes glacées, cromesquis fondant, jus réduit.', prix: null, placeholder: false, voix: 'D', photo: '/photos/plat-boeuf-confit.webp' },
-    { nom: 'Fromages de la région', description: 'À la place du dessert (+7 €) ou avant (+15 €).', prix: null, placeholder: false, voix: 'D', photo: '/photos/cuisine-salage-viande.webp' },
-    { nom: 'Soufflé au caramel, chaï, poire', description: 'Servi dès la sortie du four, glace au chaï, poire pochée.', prix: null, placeholder: false, voix: 'F', photo: '/photos/cuisine-francois-poele.webp' },
-    { nom: 'Rosace de pommes, glace et tuile', description: 'Pommes en rosace, glace vanille, éclats de tuile.', prix: null, placeholder: true, voix: 'F', photo: '/photos/dessert-tarte-pomme.webp' },
+    { nom: 'Mises en bouche', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true, photo: '/photos/cuisine-chefs-dressage.webp' },
+    { nom: 'Légumes racines, champignons, noix', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/cuisine-mains-pate.webp' },
+    { nom: 'Saint-Jacques, butternut, passion', description: 'Snackées, mousseline et tuile noire', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/plat-saint-jacques.webp' },
+    { nom: 'Tartare de boeuf aux tuiles', description: 'Vu en photo, hors du menu actuel', prix: null, placeholder: true, voix: 'D', voixPlaceholder: true, photo: '/photos/plat-tartare.webp' },
+    { nom: 'Boeuf confit, carottes, cromesquis de pommes de terre', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/plat-boeuf-confit.webp' },
+    { nom: 'Fromage', description: 'À la place du dessert (+7 €) ou avant (+15 €)', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/cuisine-salage-viande.webp' },
+    { nom: 'Soufflé au caramel, chaï, poire', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true, photo: '/photos/cuisine-francois-poele.webp' },
+    { nom: 'Rosace de pommes, glace et tuile', description: 'Vue en photo, hors du menu actuel', prix: null, placeholder: true, voix: 'F', voixPlaceholder: true, photo: '/photos/dessert-tarte-pomme.webp' },
   ],
   carte: [
     {
@@ -162,12 +167,12 @@ export const site: Restaurant = {
       moment: 'soir',
       intro: 'Du lundi au vendredi soir, 67 € par personne. Un seul menu, écrit à quatre mains, qui change au fil des saisons.',
       plats: [
-        { nom: 'Mises en bouche', description: 'Trois bouchées selon le marché du jour', prix: null, placeholder: false, voix: 'F' },
-        { nom: 'Légumes racines, champignons, noix', description: 'Rôtis et crus, jus de champignons', prix: null, placeholder: false, voix: 'D' },
-        { nom: 'Saint-Jacques, butternut, passion', description: 'Snackées, mousseline, tuile noire', prix: null, placeholder: false, voix: 'D' },
-        { nom: 'Boeuf confit, carottes, cromesquis de pommes de terre', description: 'Cuit longtemps, jus réduit', prix: null, placeholder: false, voix: 'D' },
-        { nom: 'Soufflé au caramel, chaï, poire', description: 'Glace au chaï, poire pochée', prix: null, placeholder: false, voix: 'F' },
-        { nom: 'Mignardise', description: 'Pour finir avec le café', prix: null, placeholder: false, voix: 'F' },
+        { nom: 'Mises en bouche', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true },
+        { nom: 'Légumes racines, champignons, noix', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true },
+        { nom: 'Saint-Jacques, butternut, passion', description: 'Snackées, mousseline et tuile noire', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true },
+        { nom: 'Boeuf confit, carottes, cromesquis de pommes de terre', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true },
+        { nom: 'Soufflé au caramel, chaï, poire', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true },
+        { nom: 'Mignardise', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true },
         { nom: 'Fromage à la place du dessert', description: 'Supplément', prix: '+7 €', placeholder: false },
         { nom: 'Fromage avant le dessert', description: 'Supplément', prix: '+15 €', placeholder: false },
       ],
@@ -177,11 +182,11 @@ export const site: Restaurant = {
       moment: 'midi',
       intro: 'Formule à choix multiples, 52 €, inspirée des produits du moment. Lunch entrée-plat ou plat-dessert à 40 €, servi à l\'ensemble de la table.',
       plats: [
-        { nom: 'Oeuf parfait, poireaux, noisettes', description: 'Entrée du moment', prix: null, placeholder: true, voix: 'F' },
-        { nom: 'Truite de rivière, fenouil, beurre blanc', description: 'Entrée du moment', prix: null, placeholder: true, voix: 'D' },
-        { nom: 'Volaille fermière, chou pointu, jus au thym', description: 'Plat du moment', prix: null, placeholder: true, voix: 'D' },
-        { nom: 'Risotto d\'épeautre, courge, pecorino', description: 'Plat du moment, végétarien', prix: null, placeholder: true, voix: 'F' },
-        { nom: 'Poire pochée, crumble de cacao, glace vanille au lait cru', description: 'Dessert du moment', prix: null, placeholder: true, voix: 'F' },
+        { nom: 'Oeuf parfait, poireaux, noisettes', description: 'Entrée du moment', prix: null, placeholder: true, voix: 'F', voixPlaceholder: true },
+        { nom: 'Truite de rivière, fenouil, beurre blanc', description: 'Entrée du moment', prix: null, placeholder: true, voix: 'D', voixPlaceholder: true },
+        { nom: 'Volaille fermière, chou pointu, jus au thym', description: 'Plat du moment', prix: null, placeholder: true, voix: 'D', voixPlaceholder: true },
+        { nom: 'Risotto d\'épeautre, courge, pecorino', description: 'Plat du moment, végétarien', prix: null, placeholder: true, voix: 'F', voixPlaceholder: true },
+        { nom: 'Poire pochée, crumble de cacao, glace vanille au lait cru', description: 'Dessert du moment', prix: null, placeholder: true, voix: 'F', voixPlaceholder: true },
       ],
     },
     {
@@ -332,3 +337,9 @@ export const horaireCourt = (h: Horaire) => (h.creneaux.length ? h.creneaux.map(
 
 /** Téléphone pour href="tel:" (sans espaces). */
 export const telHref = (r: Restaurant = site) => `tel:${r.telephone.replace(/\s+/g, '')}`;
+
+/** Légende d'un plat : description prouvée, chef (attribution illustrative), mention illustratif. */
+export const legendePlat = (p: Plat): string => {
+  const c = p.voix ? chef(p.voix).prenom + (p.voixPlaceholder ? ' (attribution illustrative)' : '') : '';
+  return [p.description, c].filter(Boolean).join(', ') + (p.placeholder ? ' (illustratif)' : '');
+};

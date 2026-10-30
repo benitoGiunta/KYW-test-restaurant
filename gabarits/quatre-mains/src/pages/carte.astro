@@ -1,13 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, chef } from '../data/site';
+import { site, chef, legendePlat } from '../data/site';
 import { u } from '../lib/url';
 const damien = chef('D');
 const francois = chef('F');
 const soir = site.carte.find((c) => c.moment === 'soir')!;
 const midi = site.carte.find((c) => c.moment === 'midi')!;
 const communs = site.carte.filter((c) => c.moment === 'commun');
-const prenom = (v?: string) => (v === 'D' ? damien.prenom : v === 'F' ? francois.prenom : null);
 ---
 <Base title="La carte" description={`La carte des Potes au Feu à Namur : menu dégustation unique du soir à 67 €, formules du midi le mercredi et le vendredi, boissons et bons cadeaux.`}>
   <section class="hero dip" data-voix="deux" aria-labelledby="carte-h1">
@@ -32,7 +31,7 @@ const prenom = (v?: string) => (v === 'D' ? damien.prenom : v === 'F' ? francois
           <li data-reveal="up" data-delay={String(i * 0.04)}>
             <div>
               <h3>{p.nom}</h3>
-              <p class="muted">{p.description}{prenom(p.voix) ? `, ${prenom(p.voix)}` : ''}{p.placeholder ? ' (illustratif)' : ''}</p>
+              <p class="muted">{legendePlat(p)}</p>
             </div>
             {p.prix && <span class="prix">{p.prix}</span>}
           </li>
@@ -74,7 +73,7 @@ const prenom = (v?: string) => (v === 'D' ? damien.prenom : v === 'F' ? francois
           <li data-reveal="up" data-delay={String(i * 0.04)}>
             <div>
               <h3>{p.nom}</h3>
-              <p class="muted">{p.description}{prenom(p.voix) ? `, ${prenom(p.voix)}` : ''}{p.placeholder ? ' (illustratif)' : ''}</p>
+              <p class="muted">{legendePlat(p)}</p>
             </div>
             {p.prix && <span class="prix">{p.prix}</span>}
           </li>

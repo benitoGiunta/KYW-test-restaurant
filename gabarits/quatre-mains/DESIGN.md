@@ -34,8 +34,8 @@ restaurant à un seul chef n'aurait aucune raison d'avoir deux colonnes.
 
 | Rôle | Valeur | Usage |
 | --- | --- | --- |
-| `--c-vert` (ground gauche) | `#1E4A3E` | colonne de Damien, le soir, le salé |
-| `--c-moutarde` (ground droite) | `#E6B13A` | colonne de François, le midi, le sucré |
+| `--c-vert` (ground gauche) | `#1E4A3E` | colonne de Damien (Belgique, Shanghai), le soir de la carte |
+| `--c-moutarde` (ground droite) | `#E6B13A` | colonne de François (États-Unis, Montréal), le midi de la carte |
 | `--c-ink` | `#111311` | texte sur moutarde et sur papier |
 | `--c-papier` | `#F7F5EE` | sections communes, texte sur vert |
 | `--c-line` | `#2C2C2A` | frontière, filets |
@@ -96,7 +96,7 @@ HERO (split frame, 100svh, data-voix=deux)                      PARCOURS (sticky
 │                          │                          │         │ ─────   [photo N&B]      │ ─────    [photo couleur] │
 │ [portrait Damien mono]   │   [portrait François]    │         │ 2017 Shanghai            │  2016 Montréal           │
 │ Damien Gorjanec          │ François Schepens        │         │ ...                      │  ...                     │
-│ chef, le soir, le salé   │ chef, le midi, le sucré  │         │                          │                          │
+│ chef, Belgique→Shanghai  │ chef, États-Unis→Montréal│         │                          │                          │
 └──────────────────────────┴──────────────────────────┘         └──────────────────────────┴──────────────────────────┘
 
 RENCONTRE (statement, commune, s'ouvre depuis le centre)         CARTE À QUATRE MANIS (index list + stage, deux)
@@ -157,8 +157,22 @@ Idle : la frontière respire (±3 px) et suit le pointeur (±6 px) ; décision �
 - [x] En-tête fixe : coupé par la frontière (deux copies, l'écho `inert` et `aria-hidden`), jamais sur le contenu (padding-top des sections).
 - [x] Navigation visible partout, page courante marquée (`aria-current`).
 - [x] Curseur natif conservé, aucun suiveur.
-- [x] Loader ≤ 2.6 s, LCP = le nom (texte HTML).
+- [x] Loader ≤ 1.8 s (0.9 s + sortie raccourcie sur mobile), une fois par session ; LCP = le nom (texte HTML).
 - [x] 390 px composé (bandes), cibles ≥ 24 px (44 px pour réserver).
 - [x] Un h1 par page, titres ordonnés, landmarks, alt descriptifs, skip link, title/description uniques, OG, canonical, sitemap, robots, JSON-LD, 404.
 - [x] Copies décoratives du nom hors du h1, `aria-hidden`.
 - [x] Copy : pas de tiret cadratin, pas de filler, vouvoiement, une phrase jamais répétée.
+
+## Révision 1 (30/10/2026, après REVUE-1)
+
+- Registre des colonnes : « le soir, le salé » / « le midi, le sucré » attribuait aux chefs une répartition du travail
+  que le dossier ne prouve pas (F1-01). Chaque colonne porte désormais le parcours prouvé du chef (« de la Belgique à
+  Shanghai », « des États-Unis à Montréal ») ; l'attribution des plats (tags D / F, plats fétiches) reste comme ressort
+  du diptyque mais est marquée `voixPlaceholder` / `platsFetichesPlaceholder` et affichée « attribution illustrative ».
+- Descriptions de plats : uniquement ce que le dossier prouve (photos, carte HTML) ; sinon le nom seul.
+- En-tête : sur bureau, fond plein dès 24 px de défilement, qui suit la frontière (vert | moutarde) ou papier sur les
+  sections communes ; sur mobile, texte papier en permanence sur l'en-tête vert (F1-02, F2-01).
+- Loader : plafond 1.8 s (0.9 s sur petit écran / tactile, sortie à 60 %), joué une fois par session (F2-02).
+- `les-deux-chefs` : la figure « ensemble » passe de `scale` à `clip` (débordement) ; le portrait de Damien (LCP mobile)
+  n'a plus de révélation et reçoit `fetchpriority="high"` (F1-03).
+

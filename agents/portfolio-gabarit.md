@@ -94,3 +94,9 @@ seul fichier, sections indépendantes, tokens).
   rideau. Le loader (plancher + sortie) tient sous 2,6 s mesuré sans charge.
 - **Pied de page** : une seule mention « Maquette KYW… » (celle du composant `KywFooter`), pas de colophon qui la répète ;
   le lien « Réalisé par » doit faire 24 px de haut (surcharge CSS dans le gabarit).
+- **Une donnée, un drapeau** (révision Quatre mains) : dans `site.ts`, `placeholder: true` ne vaut que pour le champ qu'il
+  accompagne. Toute sous-donnée non prouvée par `dossier.md` ou `donnees.json` a son propre drapeau et sa mention visible :
+  description d'un plat, attribution d'un plat à un chef, plats fétiches, rôle d'une personne, phrase de bio. Si le dossier
+  ne donne que le nom d'un plat, la description reste vide. Un ressort de concept (répartir les plats entre deux chefs, donner
+  un registre à une colonne) doit reposer sur un fait du dossier, sinon il est affiché « illustratif » partout où il apparaît.
+  Avant de livrer, chercher dans `dist/` chaque description et chaque bio et vérifier qu'elle se retrouve dans le dossier.

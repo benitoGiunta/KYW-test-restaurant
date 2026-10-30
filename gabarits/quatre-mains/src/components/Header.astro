@@ -42,6 +42,10 @@ const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : u
       burger.textContent = open ? 'Fermer' : 'Menu';
     };
     burger.addEventListener('click', toggle);
-    return () => burger.removeEventListener('click', toggle);
+    // REVISION-1 F2-01 : classe is-defile dès 24 px de défilement (fond d'en-tête, voir base.css).
+    const defile = () => document.documentElement.classList.toggle('is-defile', window.scrollY > 24);
+    defile();
+    window.addEventListener('scroll', defile, { passive: true });
+    return () => { burger.removeEventListener('click', toggle); window.removeEventListener('scroll', defile); };
   });
 </script>

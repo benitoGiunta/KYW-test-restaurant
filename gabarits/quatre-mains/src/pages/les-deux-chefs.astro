@@ -9,26 +9,27 @@ const portraitF = photoDe(francois.portrait);
 const cuisineD = photoDe('/photos/cuisine-salage-viande.webp');
 const cuisineF = photoDe('/photos/service-francois-table.webp');
 const ensemble = photoDe('/photos/cuisine-chefs-dressage.webp');
+const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
 const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
 ---
 <Base title="Les deux chefs" description={`Damien Gorjanec et François Schepens, les deux chefs et associés des Potes au Feu à Namur : deux parcours, une cuisine à quatre mains.`}>
   <section class="hero dip" data-voix="deux" aria-labelledby="chefs-h1">
     <div class="dip__g hero__col">
-      <figure class="photo photo--4x5 photo--nb hero__portrait" data-reveal="clip" data-intro data-delay="0.15">
-        <img src={asset(portraitD.src)} alt={portraitD.alt} width={portraitD.largeur} height={portraitD.hauteur} data-critical />
+      <figure class="photo photo--4x5 photo--nb hero__portrait">
+        <img src={asset(portraitD.src)} alt={portraitD.alt} width={portraitD.largeur} height={portraitD.hauteur} data-critical fetchpriority="high" />
       </figure>
       <div class="hero__legende">
-        <span class="mono muted">{damien.registre}</span>
+        <span class="mono muted">{cap(damien.registre)}</span>
         <h1 class="display t-xl" id="chefs-h1" style="margin-left: 0">{damien.prenom}<br />et {francois.prenom}</h1>
         <p class="muted">Deux chefs, deux parcours, une cuisine.</p>
       </div>
     </div>
     <div class="dip__d hero__col hero__col--d">
       <figure class="photo photo--4x5 hero__portrait" data-reveal="clip" data-intro data-delay="0.25">
-        <img src={asset(portraitF.src)} alt={portraitF.alt} width={portraitF.largeur} height={portraitF.hauteur} data-critical />
+        <img src={asset(portraitF.src)} alt={portraitF.alt} width={portraitF.largeur} height={portraitF.hauteur} data-critical fetchpriority="high" />
       </figure>
       <div class="hero__legende" data-reveal="up" data-intro data-delay="0.5">
-        <span class="mono muted">{francois.registre}</span>
+        <span class="mono muted">{cap(francois.registre)}</span>
         <p class="t-m">{francois.prenom} {francois.nom}</p>
         <p class="muted">{francois.role}</p>
       </div>
@@ -37,11 +38,11 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
 
   <section class="dip section" data-voix="gauche" data-decale aria-labelledby="damien-titre">
     <div class="dip__g">
-      <span class="mono muted eyebrow" data-reveal="fade">01, {damien.registre.toLowerCase()}</span>
+      <span class="mono muted eyebrow" data-reveal="fade">01, {damien.registre}</span>
       <h2 class="titre" id="damien-titre" data-split="lines">{damien.prenom} {damien.nom}</h2>
       <div class="stack mesure" style="margin-top: calc(var(--u) * 3)">
         {damien.bio.map((p) => <p data-reveal="up">{p}</p>)}
-        <p class="mono muted" data-reveal="fade">Plats fétiches : {damien.platsFetiches.join(' ; ')}</p>
+        <p class="mono muted" data-reveal="fade">Plats fétiches{damien.platsFetichesPlaceholder ? ' (attribution illustrative)' : ''} : {damien.platsFetiches.join(' ; ')}</p>
       </div>
       <blockquote class="citation" style="margin-top: calc(var(--u) * 6)">
         <p data-split="lines">« {damien.citation.texte} »</p>
@@ -72,11 +73,11 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
       </ol>
     </div>
     <div class="dip__d">
-      <span class="mono muted eyebrow" data-reveal="fade">02, {francois.registre.toLowerCase()}</span>
+      <span class="mono muted eyebrow" data-reveal="fade">02, {francois.registre}</span>
       <h2 class="titre" id="francois-titre" data-split="lines">{francois.prenom} {francois.nom}</h2>
       <div class="stack mesure" style="margin-top: calc(var(--u) * 3)">
         {francois.bio.map((p) => <p data-reveal="up">{p}</p>)}
-        <p class="mono muted" data-reveal="fade">Plats fétiches : {francois.platsFetiches.join(' ; ')}</p>
+        <p class="mono muted" data-reveal="fade">Plats fétiches{francois.platsFetichesPlaceholder ? ' (attribution illustrative)' : ''} : {francois.platsFetiches.join(' ; ')}</p>
       </div>
       <blockquote class="citation" style="margin-top: calc(var(--u) * 6)">
         <p data-split="lines">« {francois.citation.texte} »</p>
@@ -101,16 +102,16 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
           <a class="lien" href={u('/reservation/')}>Réserver</a>
         </div>
       </div>
-      <figure class="col-6 photo photo--4x5" data-reveal="scale">
+      <figure class="col-6 photo photo--4x5" data-reveal="clip">
         <img src={asset(ensemble.src)} alt={ensemble.alt} width={ensemble.largeur} height={ensemble.hauteur} loading="lazy" decoding="async" />
       </figure>
       <div class="col-6">
-        <h3 class="mono muted">Les plats de {damien.prenom}</h3>
-        <ul class="plats">{damien.platsFetiches.map((n) => <li><div><h4 style="font-weight: 700">{n}</h4><p class="muted">{plat(n)?.description}</p></div></li>)}</ul>
+        <h3 class="mono muted">Les plats de {damien.prenom}{damien.platsFetichesPlaceholder ? ', attribution illustrative' : ''}</h3>
+        <ul class="plats">{damien.platsFetiches.map((n) => <li><div><h4 style="font-weight: 700">{n}</h4>{plat(n)?.description && <p class="muted">{plat(n)!.description}{plat(n)!.placeholder ? ' (illustratif)' : ''}</p>}</div></li>)}</ul>
       </div>
       <div class="col-6">
-        <h3 class="mono muted">Les plats de {francois.prenom}</h3>
-        <ul class="plats">{francois.platsFetiches.map((n) => <li><div><h4 style="font-weight: 700">{n}</h4><p class="muted">{plat(n)?.description}</p></div></li>)}</ul>
+        <h3 class="mono muted">Les plats de {francois.prenom}{francois.platsFetichesPlaceholder ? ', attribution illustrative' : ''}</h3>
+        <ul class="plats">{francois.platsFetiches.map((n) => <li><div><h4 style="font-weight: 700">{n}</h4>{plat(n)?.description && <p class="muted">{plat(n)!.description}{plat(n)!.placeholder ? ' (illustratif)' : ''}</p>}</div></li>)}</ul>
       </div>
     </div>
   </section>

@@ -11,6 +11,11 @@
   figure sans marge (débordement chefs), en-tête ink sur sections papier, LCP des heros intérieurs, cibles >= 24 px
 - apercu.png, FICHE.md, RAPPORT.md
 
+## Révision 1 (reviseur-site, 30/10/2026) : faite
+- REVUE-1 traitée, voir REVISION-1.md : tous les F1 corrigés (placeholders plats/attribution/bios, en-tête mobile, débordement + LCP les-deux-chefs),
+  F2-01, F2-02, F2-04, F2-06 corrigés ; F2-03, F2-05, F3-01 refusés avec raison. DESIGN.md mis à jour (registre = parcours, en-tête, loader).
+- Captures après révision : .shots-qm-rev/{les-deux-chefs,accueil,carte,reservation} ; build OK.
+
 ## Reste (agents suivants)
-- Critique `jury` (agent Sonnet) puis corrections (agent Opus) ; reporter les leçons de RAPPORT.md dans agents/lecons.md
+- Facultatif : passe de revue 2 (fluidité mobile F2-03 dans le moteur) ; reporter les leçons de RAPPORT.md dans agents/lecons.md
 - Pas commité (l'orchestrateur le fait)

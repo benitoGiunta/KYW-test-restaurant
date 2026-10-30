@@ -71,6 +71,13 @@ html:not(.motion) [data-rejoint] { clip-path: none; }
 html.is-sur-papier .header__face { clip-path: none; color: var(--c-ink); }
 html.is-sur-papier .header__echo { visibility: hidden; }
 html.is-sur-papier .header__face .btn { background: var(--c-ink); color: var(--c-papier); }
+/* REVISION-1 F2-01 : dès le défilement, l'en-tête reçoit un fond qui suit la frontière (vert | moutarde), papier sur les
+   sections communes ; il ne se superpose plus au texte. Bureau seulement : sur mobile l'en-tête est déjà plein (vert). */
+@media (min-width: 768px) {
+  .header { transition: background-color 0.3s, box-shadow 0.3s; }
+  html.is-defile .header { background: linear-gradient(90deg, var(--c-vert) var(--frontiere), var(--c-moutarde) var(--frontiere)); box-shadow: 0 1px 0 var(--c-line); }
+  html.is-defile.is-sur-papier .header { background: var(--c-papier); }
+}
 .header__brand { font-weight: 700; letter-spacing: -0.02em; font-size: 1.0625rem; padding-block: 0.3em; }
 .nav { display: flex; gap: calc(var(--u) * 2.5); align-items: center; }
 .nav a { padding-block: 0.3em; font-size: 0.9375rem; }
@@ -196,6 +203,13 @@ html.is-sur-papier .header__face .btn { background: var(--c-ink); color: var(--c
 .index__row.is-on, .index__row:focus-visible { background-size: 100% 1px; outline: none; }
 .index__row.is-on .index__tag, .index__row:focus-visible .index__tag { opacity: 1; }
 @media (hover: hover) { .index__row:hover { background-size: 100% 1px; } .index__row:hover .index__tag { opacity: 1; } }
+/* REVISION-1 F2-04 : la ligne active par défaut (01) réagit aussi au survol : le nom glisse vers la frontière. */
+.index__nom { display: inline-block; transition: translate 0.45s cubic-bezier(0.165, 0.84, 0.44, 1); }
+@media (hover: hover) { .index__row:hover .index__nom { translate: 0.5rem 0; } }
+.index__row:focus-visible .index__nom { translate: 0.5rem 0; }
+.index__note { margin-top: calc(var(--u) * 1.5); }
+/* REVISION-1 F2-06 : cible tactile du crédit KYW >= 24 px (paquet partagé non modifié). */
+.kyw-footer__link { min-height: 24px; }
 .index__vignette { display: none; }
 .stage { position: sticky; top: calc(var(--u) * 9); display: grid; gap: calc(var(--u) * 2); }
 .stage__cadre { position: relative; aspect-ratio: 4 / 5; overflow: clip; background: rgb(17 19 17 / 0.1); }
@@ -295,6 +309,8 @@ html.is-sur-papier .header__face .btn { background: var(--c-ink); color: var(--c
   .section.dip, .section--air.dip { padding-block: 0; }
   .header { background: var(--c-vert); color: var(--c-papier); }
   .header__face { clip-path: none; }
+  /* REVISION-1 F1-02 : l'en-tête mobile est plein (vert) : texte papier partout, même au-dessus d'une section commune. */
+  html.is-sur-papier .header__face { color: var(--c-papier); }
   .header__echo { display: none; }
   .nav { display: none; }
   .header__burger { display: inline-grid; min-height: 40px; padding: 0.4em 0.2em; font-weight: 700; }

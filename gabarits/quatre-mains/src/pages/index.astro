@@ -23,7 +23,7 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
           <img src={asset(portraitD.src)} alt={portraitD.alt} width={portraitD.largeur} height={portraitD.hauteur} data-critical fetchpriority="high" />
         </figure>
         <div class="hero__legende" data-reveal="up" data-intro data-delay="0.45">
-          <span class="mono muted" id="hero-titre">Chef, {damien.registre.toLowerCase()}</span>
+          <span class="mono muted" id="hero-titre">Chef, {damien.registre}</span>
           <p class="t-m">{damien.prenom} {damien.nom}</p>
           <p class="muted">{site.baseline}</p>
         </div>
@@ -33,7 +33,7 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
           <img src={asset(portraitF.src)} alt={portraitF.alt} width={portraitF.largeur} height={portraitF.hauteur} data-critical fetchpriority="high" />
         </figure>
         <div class="hero__legende" data-reveal="up" data-intro data-delay="0.55">
-          <span class="mono muted">Chef, {francois.registre.toLowerCase()}</span>
+          <span class="mono muted">Chef, {francois.registre}</span>
           <p class="t-m">{francois.prenom} {francois.nom}</p>
           <p class="muted">Menu unique du soir, formules du midi, {site.adresse.rue} {site.adresse.numero}, {site.adresse.commune}.</p>
         </div>
@@ -46,7 +46,7 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
     <div class="dip__g">
       <div class="parcours__tete">
         <span class="mono muted" data-reveal="fade">01, {damien.prenom}</span>
-        <h2 class="titre" id="parcours-d" data-split="lines">{damien.prenom} {damien.nom}, {damien.registre.toLowerCase()}</h2>
+        <h2 class="titre" id="parcours-d" data-split="lines">{damien.prenom} {damien.nom}, {damien.registre}</h2>
       </div>
       <ol class="frise">
         {damien.parcours.map((e, i) => (
@@ -76,7 +76,7 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
     <div class="dip__d">
       <div class="parcours__tete">
         <span class="mono muted" data-reveal="fade">02, {francois.prenom}</span>
-        <h2 class="titre" id="parcours-f" data-split="lines">{francois.prenom} {francois.nom}, {francois.registre.toLowerCase()}</h2>
+        <h2 class="titre" id="parcours-f" data-split="lines">{francois.prenom} {francois.nom}, {francois.registre}</h2>
       </div>
       <ol class="frise">
         {francois.parcours.map((e, i) => (
@@ -116,7 +116,7 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
               <span class="index__num">{p.num}</span>
               <span>
                 <span class="index__nom">{p.nom}</span>
-                <span class="index__desc muted" style="display: block">{p.description}</span>
+                {(p.description || p.placeholder) && <span class="index__desc muted" style="display: block">{[p.description, p.placeholder ? 'illustratif' : ''].filter(Boolean).join(', ')}</span>}
                 <span class="index__vignette"><img src={asset(p.image.src)} alt="" width={p.image.largeur} height={p.image.hauteur} loading="lazy" decoding="async" /></span>
               </span>
               <span class="index__tag" aria-label={`Plat de ${initiale(p.voix)}`}>{p.voix ?? 'DF'}</span>
@@ -124,6 +124,7 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
           </li>
         ))}
       </ol>
+      {plats.some((p) => p.voixPlaceholder) && <p class="mono muted index__note" data-reveal="fade">D : {damien.prenom}, F : {francois.prenom}. Attribution des plats aux chefs : illustrative.</p>}
       <div class="actions">
         <a class="btn btn--papier" href={u('/carte/')}><span class="roll"><span>Toute la carte</span><span aria-hidden="true">Toute la carte</span></span></a>
       </div>
