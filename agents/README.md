@@ -65,10 +65,8 @@ data/usage/consommation-session-<N>.json`, commit, puis message « mise à jour 
 Séquence des chantiers restants : (1) gabarits par vagues de 3 (construction Fable → revue Sonnet → correction Opus →
 publication Haiku), (2) restaurant 1 en session fille test, (3) restaurants 2 à 20 par lots de 3 sessions filles.
 
-**H. Garde-fou de consommation (30/10/2026).** Avant chaque lancement d'agent ou de session fille, l'orchestrateur lit
-l'utilisation des fenêtres de limite (outil `claude-code-remote` → `list_events` sur sa propre session, `kinds:
-["rate_limit_event"]`, champ `unifiedWindows.seven_day.utilization` et `five_hour.utilization`). Seuils :
-- semaine ≥ 60 % : aucun nouveau lancement ; les agents en cours terminent, on commite, on publie, on prévient le porteur ;
-- semaine ≥ 65 % (seuil fixé par le porteur le 30/10/2026) : arrêt immédiat de tout (l'état est dans les `ETAT.md`, reprise par un agent neuf plus tard) ;
-- fenêtre de 5 h ≥ 85 % : aucun nouveau lancement avant sa réinitialisation (`resetsAt`), relance planifiée par `send_later`.
-Les seuils se changent ici ; le porteur peut aussi demander l'arrêt à tout moment.
+**H. Garde-fou de consommation (30/10/2026).** Un seul critère d'arrêt, fixé par le porteur : **65 % de la consommation
+hebdomadaire** (`unifiedWindows.seven_day.utilization` dans les événements `rate_limit_event` de la session, lus par
+`list_events` avant chaque lancement). À 65 % : arrêt immédiat de tout lancement, les agents en cours terminent, on commite,
+on publie, on prévient le porteur. La fenêtre de 5 h n'est pas un critère : si elle coupe des agents (HTTP 429), on les
+relance par des agents neufs après sa réinitialisation (`send_later`), sans pause préventive.
