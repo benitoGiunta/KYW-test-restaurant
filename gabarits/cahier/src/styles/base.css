@@ -115,12 +115,12 @@ main { counter-reset: page; }
 
 /* ---------- Photos : polaroid et timbre ---------- */
 .polaroid { display: grid; gap: 0.6em; padding: 10px 10px 14px; background: var(--c-blanc); box-shadow: 0 2px 0 rgb(30 28 25 / 0.12), 0 12px 24px -16px rgb(30 28 25 / 0.5); transform: rotate(var(--rot)); }
-.polaroid img { display: block; width: 100%; height: auto; border-radius: var(--radius-photo); aspect-ratio: 4 / 3; object-fit: cover; }
+.polaroid img { background: var(--c-quad); display: block; width: 100%; height: auto; border-radius: var(--radius-photo); aspect-ratio: 4 / 3; object-fit: cover; }
 .polaroid--portrait img { aspect-ratio: 3 / 4; }
 .polaroid figcaption { text-align: center; }
 .timbre { display: grid; gap: 0.5em; justify-items: stretch; width: 100%; transform: rotate(var(--rot)); transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.5s; }
 .timbre__papier { --r: 4px; --s: 12px; display: block; width: 100%; padding: 8px; background: var(--c-blanc); -webkit-mask: radial-gradient(circle var(--r) at 0 0, #0000 98%, #000) 0 0 / var(--s) var(--s) round, linear-gradient(#000 0 0) center / calc(100% - 2 * var(--r)) calc(100% - 2 * var(--r)) no-repeat; mask: radial-gradient(circle var(--r) at 0 0, #0000 98%, #000) 0 0 / var(--s) var(--s) round, linear-gradient(#000 0 0) center / calc(100% - 2 * var(--r)) calc(100% - 2 * var(--r)) no-repeat; }
-.timbre__papier img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-photo); }
+.timbre__papier img { background: var(--c-quad); display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-photo); }
 .timbre:hover, .timbre:focus-within { transform: rotate(0deg); filter: drop-shadow(0 8px 10px rgb(30 28 25 / 0.25)); }
 .timbre figcaption { display: grid; font-size: var(--t-s); line-height: 1.4; }
 .timbre figcaption span { color: var(--c-mine); }
@@ -187,7 +187,7 @@ main { counter-reset: page; }
 .equipe { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: calc(var(--u) * 4) calc(var(--u) * 3); }
 .fiche { display: grid; justify-items: start; gap: 0.6em; padding: calc(var(--u) * 2.5) calc(var(--u) * 2.5) calc(var(--u) * 2); background: var(--c-blanc); border: 1px solid var(--c-encre); box-shadow: 0 2px 0 rgb(30 28 25 / 0.12); transform: rotate(var(--rot)); transition: transform 0.4s; }
 .fiche:hover { transform: rotate(0deg) translateY(-4px); }
-.fiche__photo { width: 7rem; height: 7rem; border-radius: 50%; object-fit: cover; border: 3px solid var(--c-blanc); outline: 1px solid var(--c-encre); }
+.fiche__photo { background: var(--c-quad); width: 7rem; height: 7rem; border-radius: 50%; object-fit: cover; border: 3px solid var(--c-blanc); outline: 1px solid var(--c-encre); }
 .fiche__initiale { display: grid; place-items: center; width: 7rem; height: 7rem; border-radius: 50%; border: 1px dotted var(--c-encre); font-family: var(--f-display); font-size: 2.5rem; color: var(--c-bille); }
 .fiche__prenom { font-family: var(--f-display); font-size: var(--t-m); line-height: 1.05; }
 .fiche__role { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.12em; color: var(--c-mine); }
@@ -259,3 +259,14 @@ main { counter-reset: page; }
   .timbre, .fiche, .polaroid, .annot, .tampon { transform: none; }
   .timbre, .fiche, .btn, .cell, .link, .ligne__lien, .ligne__annot, .menu { transition: none; }
 }
+
+/* ---------- Données illustratives (revue 1) : une donnée, un drapeau, une marque visible ---------- */
+.illu { display: inline-block; font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.1em; color: #a32b1a; }
+.dos .illu { color: var(--c-encre); }
+p.illu { display: block; margin-top: var(--u); }
+.illu__marque { color: #a32b1a; font-weight: 700; margin-left: 0.15em; }
+.timbre figcaption .illu { color: #a32b1a; }
+.fiche__role .illu { letter-spacing: 0.12em; }
+span.illu { margin-left: 0.5em; }
+.fiche__role .illu { display: block; margin-left: 0; margin-top: 0.2em; }
+.timbre figcaption .illu { margin-left: 0; }

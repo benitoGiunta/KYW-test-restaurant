@@ -19,7 +19,7 @@ const rotsFiche = [-2, 1.5, -1, 2];
           <p><Tampon texte="depuis 2020" /></p>
         </div>
         <div class="feuille__marge stack">
-          <Polaroid photo={photoDe('/photos/chef-damien.webp')} rot={-3} legende="Damien" class="polaroid--portrait" />
+          <Polaroid photo={photoDe('/photos/chef-damien.webp')} rot={-3} legende="Damien" class="polaroid--portrait" critical />
           <Polaroid photo={photoDe('/photos/chef-francois.webp')} rot={2.5} legende="François" class="polaroid--portrait" />
           <p class="annot annot--fleche">quatorze ans après la Plage d'Amée</p>
         </div>
@@ -39,8 +39,8 @@ const rotsFiche = [-2, 1.5, -1, 2];
           <article class="fiche" style={`--rot:${rotsFiche[i]}deg`} data-fiche>
             {m.photo ? <img class="fiche__photo" src={u(m.photo)} alt={`Portrait de ${m.nom}`} width="112" height="112" loading="lazy" decoding="async" /> : <span class="fiche__initiale" aria-hidden="true">{m.nom[0]}</span>}
             <h3 class="fiche__prenom">{m.nom.split(' ')[0]}</h3>
-            <p class="fiche__role">{m.role}{m.placeholder ? ' (fiche illustrative)' : ''}</p>
-            <p class="fiche__phrase">{cahier.equipePhrases[i]}</p>
+            <p class="fiche__role">{m.role}{m.placeholder && <span class="illu"> rôle illustratif</span>}</p>
+            <p class="fiche__phrase">{cahier.equipePhrases[i].texte}{cahier.equipePhrases[i].placeholder && <span class="illu"> (illustratif)</span>}</p>
           </article>
         ))}
       </div>

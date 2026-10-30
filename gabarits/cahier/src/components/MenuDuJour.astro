@@ -1,28 +1,30 @@
 ---
-// Bande signature : trois lignes manuscrites tracées, tampon de date, prix en mono.
+// Bande signature : trois lignes manuscrites tracées, tampon du prochain midi de service, prix réels en mono.
+// Les plats sont un exemple (marqué visiblement) ; les prix et les jours viennent du client (site.menus, site.horaires).
 import { cahier } from '../data/site';
 import Manuscrit from './Manuscrit.astro';
 import Tampon from './Tampon.astro';
 const m = cahier.menuDuJour;
 ---
-<div class="jour" data-jour>
+<div class="jour" data-jour data-jours-midi={m.joursMidi.join(',')}>
   <div class="jour__tete">
     <div>
-      <p class="titre__sur">Menu du jour</p>
-      <h2 style="font-size: var(--t-l)">Ce que la cuisine a écrit ce matin</h2>
+      <p class="titre__sur">Le midi, mercredi et vendredi</p>
+      <h2 style="font-size: var(--t-l)">Un midi au cahier</h2>
     </div>
-    <Tampon texte={`${m.jour} ${m.date}`} />
+    <Tampon texte={m.tamponDefaut} />
   </div>
+  <p class="illu">Exemple : plats illustratifs, la composition du midi change avec les produits du moment.</p>
   <ul class="jour__lignes">
     {m.lignes.map((l) => (
       <li class="jour__ligne">
-        <span class="jour__service">{l.service}</span>
+        <span class="jour__service">{l.service}{l.placeholder && <span class="illu__marque" aria-label="(exemple)">*</span>}</span>
         <Manuscrit texte={l.texte} taille={40} />
       </li>
     ))}
   </ul>
   <p class="jour__prix">
     {m.prix.map((p) => <span>{p.libelle} <strong>{p.prix}</strong></span>)}
-    <span class="muted">servi le midi, mercredi et vendredi</span>
+    <span class="muted">servi à toute la table, composition sur demande par téléphone</span>
   </p>
 </div>

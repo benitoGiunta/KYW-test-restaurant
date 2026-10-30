@@ -4,7 +4,7 @@ import { setLoaderFormat, setLoaderExit, setTransition, ease } from '../engine';
 import { initCahier } from './cahier';
 
 export function setupMotion() {
-  setLoaderFormat((p) => `p. ${String(Math.round(p)).padStart(3, '0')}`);
+  setLoaderFormat((p) => `p. ${Math.max(1, Math.round(p))}`);
   setLoaderExit((root) =>
     gsap.timeline()
       .to(root.querySelector('.etiquette'), { scale: 0.97, duration: 0.18, ease: 'power2.in' })

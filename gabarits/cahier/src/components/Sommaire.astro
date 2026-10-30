@@ -1,10 +1,12 @@
 ---
 // Sommaire de la carte : plat ...... prix, annotation d'origine en marge (bille au survol / focus).
+// Une donnée, un drapeau : astérisque rouge sur le nom si la ligne est illustrative, sur l'origine si l'origine l'est.
 import type { CategorieSommaire } from '../data/site';
 interface Props { cat: CategorieSommaire; depart?: number; niveau?: 2 | 3 }
 const { cat, depart = 1, niveau = 3 } = Astro.props;
 const Titre = niveau === 2 ? 'h2' : 'h3';
 const num = (i: number) => String(depart + i).padStart(2, '0');
+const aIllu = cat.lignes.some((l) => l.placeholder || (l.origine && l.originePlaceholder));
 ---
 <section class="categorie" data-reveal="fade">
   <Titre class="categorie__titre">{cat.categorie}</Titre>
@@ -14,12 +16,13 @@ const num = (i: number) => String(depart + i).padStart(2, '0');
       <li class="ligne" data-ligne>
         <a class="ligne__lien" href={`#plat-${depart + i}`} id={`plat-${depart + i}`}>
           <span class="ligne__num">{num(i)}</span>
-          <span class="ligne__nom">{l.nom}</span>
+          <span class="ligne__nom">{l.nom}{l.placeholder && <span class="illu__marque" aria-label="(exemple)">*</span>}</span>
           <span class="ligne__points" aria-hidden="true"></span>
           <span class:list={['ligne__prix', { 'ligne__prix--inclus': !l.prix }]}>{l.prix ?? 'inclus'}</span>
         </a>
-        {l.origine && <span class="annot ligne__annot">{l.origine}</span>}
+        {l.origine && <span class="annot ligne__annot">{l.origine}{l.originePlaceholder && <span class="illu__marque" aria-label="(exemple)">*</span>}</span>}
       </li>
     ))}
   </ol>
+  {aIllu && <p class="illu"><span class="illu__marque" aria-hidden="true">*</span> exemple : ligne ou origine illustrative, à remplacer par le restaurant.</p>}
 </section>

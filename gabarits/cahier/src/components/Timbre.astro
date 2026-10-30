@@ -2,12 +2,12 @@
 // Timbre photo : image masquée par un bord dentelé, tournée ; se redresse au survol.
 import type { Photo } from '../data/site';
 import { asset } from '../lib/url';
-interface Props { photo: Photo; rot?: number; legende?: string; detail?: string; class?: string; lazy?: boolean }
-const { photo, rot = -3, legende, detail, class: cls, lazy = true } = Astro.props;
+interface Props { photo: Photo; rot?: number; legende?: string; detail?: string; class?: string; lazy?: boolean; illustratif?: boolean }
+const { photo, rot = -3, legende, detail, class: cls, lazy = true, illustratif = false } = Astro.props;
 ---
 <figure class:list={['timbre', cls]} style={`--rot:${rot}deg`} data-timbre>
   <span class="timbre__papier">
     <img src={asset(photo.src)} alt={photo.alt} width={photo.largeur} height={photo.hauteur} loading={lazy ? 'lazy' : 'eager'} decoding="async" />
   </span>
-  {legende && <figcaption><strong>{legende}</strong>{detail && <span>{detail}</span>}</figcaption>}
+  {legende && <figcaption><strong>{legende}</strong>{detail && <span>{detail}</span>}{illustratif && <span class="illu">exemple</span>}</figcaption>}
 </figure>

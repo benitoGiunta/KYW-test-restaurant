@@ -22,7 +22,7 @@ const equipePhotos = [photoDe('/photos/chef-damien.webp'), photoDe('/photos/chef
           <h1 class="etiquette__nom" id="h1">{site.nom}</h1>
           <p class="etiquette__ligne">Bistronomie, {site.adresse.commune}. Menu unique, produits du coin.</p>
         </div>
-        <p class="couverture__accroche lead">{site.baseline} Un menu unique en quatre services, servi et expliqué à table par les deux chefs, avec les légumes et les bêtes de ceux qu'ils connaissent par leur prénom.</p>
+        <p class="couverture__accroche lead">{site.baseline} Un menu unique en quatre services, servi et expliqué à table par les deux chefs, avec les produits des saisons et des producteurs du coin.</p>
         <div class="actions">
           <a class="btn btn--plein" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
           <a class="btn" href={u('/carte/')}>Lire la carte</a>
@@ -36,8 +36,8 @@ const equipePhotos = [photoDe('/photos/chef-damien.webp'), photoDe('/photos/chef
     <div class="wrap feuille">
       <MenuDuJour />
       <div class="feuille__marge">
-        <p class="annot annot--fleche">écrit chaque matin, après le marché</p>
-        <p class="muted" style="margin-top: var(--u); font-size: var(--t-s)">Le menu du jour change tous les jours de service. Il est affiché ici et sur l'ardoise, jamais plus de douze heures à l'avance.</p>
+        <p class="annot annot--fleche">le soir, c'est le menu unique à 67 €</p>
+        <p class="muted" style="margin-top: var(--u); font-size: var(--t-s)">Le midi, mercredi et vendredi : lunch à 40 € ou formule 3 services à 52 €, servis à toute la table. La composition se demande par téléphone.</p>
       </div>
     </div>
     <p class="folio"></p>
@@ -56,7 +56,7 @@ const equipePhotos = [photoDe('/photos/chef-damien.webp'), photoDe('/photos/chef
         </div>
         <div class="feuille__marge">
           <Timbre photo={photoDe('/photos/plat-saint-jacques.webp')} rot={3} legende="Saint-Jacques, butternut" detail="le deuxième service" />
-          <p class="annot annot--fleche" style="margin-top: var(--u)">assiette bleue, la seule</p>
+          <p class="annot annot--fleche" style="margin-top: var(--u)">l'assiette bleue</p>
         </div>
       </div>
     </div>
@@ -72,11 +72,12 @@ const equipePhotos = [photoDe('/photos/chef-damien.webp'), photoDe('/photos/chef
       <div class="mur" data-mur>
         {cahier.producteurs.map((p, i) => (
           <div>
-            <Timbre photo={photoDe(p.photo)} rot={rots[i]} legende={`${p.prenom}, ${p.village}`} detail={p.produit} />
+            <Timbre photo={photoDe(p.photo)} rot={rots[i]} legende={`${p.prenom}, ${p.village}`} detail={p.produit} illustratif={p.placeholder} />
             <p class="annot annot--fleche">{p.note}</p>
           </div>
         ))}
       </div>
+      <p class="illu" style="margin-top: calc(var(--u) * 2)">Producteurs illustratifs : le restaurant travaille avec des producteurs du coin, dont la liste est à fournir.</p>
       <p class="actions"><a class="btn" href={u('/producteurs/')}>Tous les producteurs</a></p>
     </div>
     <p class="folio"></p>
@@ -89,7 +90,7 @@ const equipePhotos = [photoDe('/photos/chef-damien.webp'), photoDe('/photos/chef
         <span class="postale__coin postale__coin--tl" aria-hidden="true"></span><span class="postale__coin postale__coin--tr" aria-hidden="true"></span>
         <span class="postale__coin postale__coin--bl" aria-hidden="true"></span><span class="postale__coin postale__coin--br" aria-hidden="true"></span>
         <p class="postale__lieu">Carte postale, {site.adresse.commune}</p>
-        <h2 id="h-postale" style="font-size: var(--t-m); margin-bottom: var(--u)">Un mot des chefs</h2>
+        <h2 id="h-postale" style="font-size: var(--t-m); margin-bottom: var(--u)">{cahier.postale.titre}</h2>
         <div class="postale__texte">
           {cahier.postale.lignes.map((l) => <p>{l}</p>)}
         </div>
@@ -110,8 +111,8 @@ const equipePhotos = [photoDe('/photos/chef-damien.webp'), photoDe('/photos/chef
           <article class="fiche" style={`--rot:${rotsFiche[i]}deg`} data-fiche>
             {m.photo ? <img class="fiche__photo" src={u(m.photo)} alt={`Portrait de ${m.nom}`} width="112" height="112" loading="lazy" decoding="async" /> : <span class="fiche__initiale" aria-hidden="true">{m.nom[0]}</span>}
             <h3 class="fiche__prenom">{m.nom.split(' ')[0]}</h3>
-            <p class="fiche__role">{m.role}{m.placeholder ? ' (fiche illustrative)' : ''}</p>
-            <p class="fiche__phrase">{cahier.equipePhrases[i]}</p>
+            <p class="fiche__role">{m.role}{m.placeholder && <span class="illu"> rôle illustratif</span>}</p>
+            <p class="fiche__phrase">{cahier.equipePhrases[i].texte}{cahier.equipePhrases[i].placeholder && <span class="illu"> (illustratif)</span>}</p>
           </article>
         ))}
       </div>

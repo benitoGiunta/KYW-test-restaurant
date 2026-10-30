@@ -1,8 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, cahier, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import { site, cahier, adresseLigne, horaireTexte, heureFr, telHref, photoDe } from '../data/site';
 import Plan from '../components/Plan.astro';
 import Polaroid from '../components/Polaroid.astro';
+// Pas de champ date/heure natif (format de la locale du navigateur, mm/dd/yyyy en anglais) : les vrais services du client.
+const services = site.horaires.flatMap((h) => h.creneaux.map((c) => `${h.jour} ${c.ouverture < '15:00' ? 'midi' : 'soir'}, ${heureFr(c.ouverture)}`));
 ---
 <Base title="Réserver" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone} ou par e-mail. Horaires et plan.`}>
   <section class="page-cahier" aria-labelledby="h1">
@@ -10,12 +12,12 @@ import Polaroid from '../components/Polaroid.astro';
       <div class="titre titre--grand">
         <p class="titre__sur">Cahier n° {cahier.numero}, réservations</p>
         <h1 id="h1" data-split="words" data-intro>Réserver</h1>
-        <p class="lead" style="margin-top: var(--u)">La réservation se fait en ligne via {site.reservation.outil}. Pour une table de plus de six personnes, une demande de dernière minute ou une privatisation du samedi, appelez-nous.</p>
+        <p class="lead" style="margin-top: var(--u)">La réservation se fait en ligne via {site.reservation.outil}. Pour une demande particulière ou une privatisation du samedi, appelez le restaurant.</p>
       </div>
       <div class="actions" style="margin-top: 0">
         <a class="btn btn--plein" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
         <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
-        <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire un e-mail</a>
+        <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire un e-mail</a><span class="illu">adresse e-mail illustrative</span>
       </div>
     </div>
     <p class="folio"></p>
@@ -28,8 +30,10 @@ import Polaroid from '../components/Polaroid.astro';
         <p class="muted" style="margin: var(--u) 0 calc(var(--u) * 2); font-size: var(--t-s)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
         <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
           <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
-          <label>Date <input type="date" name="date" required /></label>
-          <label>Heure <input type="time" name="heure" required /></label>
+          <label>Service <select name="service" required>
+            <option value="">Choisir un service</option>
+            {services.map((s) => <option>{s}</option>)}
+          </select></label>
           <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
           <label>Message <textarea name="message" rows="3"></textarea></label>
           <div class="actions" style="margin-top: 0">
@@ -38,7 +42,7 @@ import Polaroid from '../components/Polaroid.astro';
         </form>
       </div>
       <div class="feuille__marge">
-        <p class="annot annot--fleche">plus de six, on appelle</p>
+        <p class="annot annot--fleche">une question ? on appelle</p>
       </div>
     </div>
     <p class="folio"></p>

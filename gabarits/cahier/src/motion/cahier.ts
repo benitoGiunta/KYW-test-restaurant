@@ -54,22 +54,42 @@ function menuDuJour() {
   blocs.forEach((bloc) => {
     const svgs = q<SVGSVGElement & HTMLElement>('[data-manuscrit]', bloc);
     const tampon = bloc.querySelector<HTMLElement>('[data-tampon]');
+    if (tampon) { const d = prochainMidi(bloc.dataset.joursMidi); if (d) tampon.textContent = d; }
     if (prefersReducedMotion()) { if (tampon) gsap.set(tampon, { autoAlpha: 1 }); return; }
     const tl = gsap.timeline({ scrollTrigger: once(bloc, 'top 75%') });
     svgs.forEach((svg) => {
       const paths = q<SVGPathElement & HTMLElement>('path', svg);
       const longueurs = paths.map((p) => p.getTotalLength());
       const total = longueurs.reduce((a, b) => a + b, 0) || 1;
+      // Positions absolues : le remplissage (0,2 s) chevauche les glyphes suivants au lieu d'allonger la ligne
+      // (avant : 77 glyphes × 0,2 s = 15 s d'écriture, revue 1 F3).
+      let t = tl.duration();
       paths.forEach((p, i) => {
         const L = longueurs[i];
+        const d = Math.max(0.02, (L / total) * 1.1);
         gsap.set(p, { strokeDasharray: L, strokeDashoffset: L, fillOpacity: 0 });
-        tl.to(p, { strokeDashoffset: 0, duration: Math.max(0.03, (L / total) * 1.1), ease: 'none' })
-          .to(p, { fillOpacity: 1, duration: 0.2 }, '<');
+        tl.to(p, { strokeDashoffset: 0, duration: d, ease: 'none' }, t).to(p, { fillOpacity: 1, duration: 0.2 }, t + d * 0.5);
+        t += d;
       });
-      tl.to({}, { duration: 0.15 });
+      tl.to({}, { duration: 0.15 }, t);
     });
     if (tampon) tl.add(claque(tampon), '+=0.05');
   });
+}
+
+/* Prochain midi de service (jours getDay() du client, ex. '3,5') : aujourd'hui si le service n'est pas fini (14 h),
+   sinon le suivant. Rien de daté en dur dans le HTML : le texte par défaut reste « mercredi ou vendredi midi ». */
+function prochainMidi(jours?: string) {
+  const js = (jours || '').split(',').map(Number).filter((n) => n >= 0 && n <= 6);
+  if (!js.length) return '';
+  const d = new Date();
+  for (let k = 0; k < 8; k++) {
+    const c = new Date(d.getFullYear(), d.getMonth(), d.getDate() + k);
+    if (js.includes(c.getDay()) && (k > 0 || d.getHours() < 14)) {
+      return c.toLocaleDateString('fr-BE', { weekday: 'long', day: 'numeric', month: 'long' }) + ', midi';
+    }
+  }
+  return '';
 }
 
 /* Tampon posé avec un claquement : scale 1.4 → 1, rotation -14° → -6°, back.out, 0,25 s. */
@@ -93,7 +113,7 @@ function poses() {
     gsap.fromTo(el, { autoAlpha: 0, scale: 1.04, rotate: rot - 4, y: 16 }, {
       autoAlpha: 1, scale: 1, rotate: rot, y: 0, duration: 0.9, ease: ease.out, delay: dansIntro ? 0.35 : 0,
       scrollTrigger: dansIntro ? undefined : once(el),
-      onComplete: () => gsap.set(el, { clearProps: 'transform,opacity,visibility' }),
+      onComplete: () => gsap.set(el, { clearProps: 'transform,opacity' }),
     });
   });
 }
@@ -109,7 +129,7 @@ function timbres() {
       gsap.fromTo(t, { autoAlpha: 0, y: 56, rotate: rot + (i % 2 ? 6 : -6), scale: 1.06 }, {
         autoAlpha: 1, y: 0, rotate: rot, scale: 1, duration: 0.8, ease: ease.out, delay: i * 0.09,
         scrollTrigger: once(mur, 'top 80%'),
-        onComplete: () => gsap.set(t, { clearProps: 'transform,opacity,visibility' }),
+        onComplete: () => gsap.set(t, { clearProps: 'transform,opacity' }),
       });
     });
   });
@@ -134,7 +154,7 @@ function fiches() {
       const rot = rotDe(c);
       gsap.fromTo(c, { autoAlpha: 0, y: 40, rotate: 0 }, {
         autoAlpha: 1, y: 0, rotate: rot, duration: 0.7, ease: ease.out, delay: i * 0.1, scrollTrigger: once(g, 'top 80%'),
-        onComplete: () => gsap.set(c, { clearProps: 'transform,opacity,visibility' }),
+        onComplete: () => gsap.set(c, { clearProps: 'transform,opacity' }),
       });
     });
   });

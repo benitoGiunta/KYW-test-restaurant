@@ -105,3 +105,11 @@ seul fichier, sections indépendantes, tokens).
   l'en-tête en mobile ; un libellé décoratif caché jusqu'au survol se masque par `clip-path`, jamais par `opacity: 0`
   (compté comme texte caché en reduced-motion). En mobile, pas de loader à compteur : l'accroche est peinte au premier
   rendu et le titre du hero ne dépend pas du démarrage du JS pour être lisible.
+- **Rien de daté, rien de promis** (révision Cahier) : un gabarit n'écrit jamais une date en dur (menu du jour, événement) ;
+  une date affichée se calcule côté client à partir de `site.horaires`, sinon on affiche les jours de service. Aucune
+  promesse de service (délais de réponse, retrait, emballage, livraison, minimum de couverts, jours d'arrivage) qui ne
+  soit pas dans `dossier.md`, et aucun texte en dur dans une page `.astro` qui affirme un fait sur le client : tout passe
+  par `site.ts` avec son drapeau. Une donnée illustrative porte une marque visible à l'endroit même où elle s'affiche
+  (astérisque, « exemple », « illustratif »), pas seulement une mention en bas de page. Une animation de révélation
+  n'efface jamais `visibility` en fin de mouvement si le CSS cache l'élément au départ : contrôler
+  `getComputedStyle().visibility` après défilement complet, en desktop et en mobile.

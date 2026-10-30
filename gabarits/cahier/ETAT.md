@@ -15,3 +15,11 @@
 - Jury + revue visuelle de toutes les captures ; « retire un accessoire » ; confirmer à l'œil les hovers `colorOnly`.
 - Supprimer scripts/cahier-qa.sh et scripts/cahier-fin.sh si plus utiles (laissés pour
   relancer la QA : port 4404).
+
+## Révision 1 (agent reviseur-site, 30/10/2026)
+- REVUE-1 traitée : 2 F0 et 5 F1 corrigés, F2-1 à F2-4 corrigés, F2-5 refusé (dos du cahier), F2-6 impossible
+  (routage Vercel), F3 corrigés sauf « héros intérieurs vides » (refusé, esthétique). Détail : `REVISION-1.md`.
+- Build OK ; captures `.shots-cahier-rev/<page>/` (accueil, histoire, producteurs, carte, commander, reservation,
+  accueil-2 après les derniers correctifs) ; visibilité contrôlée par script après défilement complet.
+- Reste : passe 2 de revue (relecteur) ; vérifier la 404 sous `base` au déploiement ; liste réelle des producteurs,
+  rôles de Sara et Jordan et composition du midi à obtenir du client.
