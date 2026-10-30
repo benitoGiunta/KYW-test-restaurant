@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="Formules" description={`Les trois formules des Potes au Feu à Namur : menu dégustation ${site.menus[0].prix} le soir, formule 3 services ${site.menus[1].prix} et lunch ${site.menus[2].prix} le midi.`}>
+  <HeroPage titre="Formules" sur="Trois prix, une cuisine">
+    <p>Le soir, un menu unique. Le midi, deux formules plus courtes. Chaque prix est celui de la carte du restaurant.</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Les formules">
+    <div class="wrap">
+      <ol class="formules">
+        {site.menus.map((m, i) => (
+          <li class="formule" data-reveal="up" data-delay={String(i * 0.08)}>
+            <p class="formule__prix" aria-hidden="true">{m.prix.replace(/\s*€/, '')}<span class="formule__euro">€</span></p>
+            <div class="formule__texte">
+              <h2 class="formule__nom">{m.nom}<span class="sr-only">, {m.prix}</span></h2>
+              <p class="petite-cap">{m.services} services, {m.quand}</p>
+              <p>{m.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div class="formules__pied" data-reveal="fade">
+        <p><strong>Bons cadeaux</strong> de {site.bonCadeau.montants}. {site.bonCadeau.texte}</p>
+        <div class="actions">
+          <a class="btn" href={u('/menu/')}>Le menu en détail</a>
+          <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

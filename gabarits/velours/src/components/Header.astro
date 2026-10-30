@@ -1,0 +1,27 @@
+---
+// En-tête « Velours » : logo cerclé (la seule rondeur du site), navigation en petites capitales, bouton Réserver.
+// Collant et opaque (vert sapin) : il ne flotte jamais sur une photo, aucun coin occupé par un instrument.
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const liens = [
+  { href: u('/menu/'), label: 'Le menu' },
+  { href: u('/carte/'), label: 'Formules' },
+  { href: u('/histoire/'), label: 'Les chefs' },
+  { href: u('/privatisation/'), label: 'Privatiser' },
+];
+const ici = Astro.url.pathname.replace(/\/+$/, '');
+const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+const initiales = site.nom.split(/\s+/).filter((m) => /^[A-Z]/.test(m)).map((m) => m[0]).join('');
+---
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="header__brand" href={u('/')} aria-label={`${initiales} ${site.nom}, accueil`}>
+      <span class="header__cercle" aria-hidden="true">{initiales}</span>
+      <span class="header__nom">{site.nom}</span>
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      {liens.map((l) => <a class="nav__lien" href={l.href} aria-current={courant(l.href)}><span>{l.label}</span></a>)}
+    </nav>
+    <a class="btn btn--petit header__resa" href={u('/reservation/')} aria-current={courant(u('/reservation/'))}><span>Réserver</span></a>
+  </div>
+</header>

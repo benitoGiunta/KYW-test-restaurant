@@ -1,0 +1,41 @@
+---
+// Pied de page « Velours » : fond profond, logo cerclé, coordonnées, horaires, liens ; puis le pied de page KYW obligatoire
+// (une seule mention « Maquette KYW… », celle du composant).
+import KywFooter from '@kyw/footer';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { u } from '../lib/url';
+const initiales = site.nom.split(/\s+/).filter((m) => /^[A-Z]/.test(m)).map((m) => m[0]).join('');
+---
+<footer class="footer">
+  <div class="wrap footer__cols">
+    <div class="footer__col footer__marque">
+      <span class="header__cercle footer__cercle" aria-hidden="true">{initiales}</span>
+      <p class="footer__nom">{site.nom}</p>
+      <address>{adresseLigne()}</address>
+      <p><a class="lien" href={telHref()}>{site.telephone}</a></p>
+      {/* E-mail : affiché seulement s'il est prouvé (dossier : inconnu). Jamais de mailto: illustratif. */}
+      {site.email.valeur && !site.email.placeholder && <p><a class="lien" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>}
+    </div>
+    <div class="footer__col">
+      <p class="petite-cap">Services</p>
+      <dl class="horaires">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+    </div>
+    <div class="footer__col">
+      <p class="petite-cap">Pages</p>
+      <p><a class="lien" href={u('/menu/')}>Le menu</a></p>
+      <p><a class="lien" href={u('/carte/')}>Formules</a></p>
+      <p><a class="lien" href={u('/histoire/')}>Les chefs</a></p>
+      <p><a class="lien" href={u('/privatisation/')}>Privatiser</a></p>
+      <p><a class="lien" href={u('/reservation/')}>Réserver</a></p>
+    </div>
+    <div class="footer__col">
+      <p class="petite-cap">Suivre</p>
+      {site.reseaux.map((r) => <p><a class="lien" href={r.url} rel="noopener">{r.nom}</a></p>)}
+      <p><a class="lien" href={site.url} rel="noopener">Site actuel</a></p>
+      <p><a class="lien" href={site.distinctions[0].url} rel="noopener">Fiche Guide MICHELIN</a></p>
+    </div>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

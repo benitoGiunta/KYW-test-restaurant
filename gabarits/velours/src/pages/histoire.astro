@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const chefs = site.equipe.filter((m) => m.photo);
+const autres = site.equipe.filter((m) => !m.photo);
+const damienM = photoDe('/photos/chef-damien-nb-700.webp');
+---
+<Base title="Les chefs" description={`${site.equipe[0].nom} et ${site.equipe[1].nom}, deux chefs et une cuisine à quatre mains aux Potes au Feu, Namur, depuis ${site.chiffres.ouverture.valeur}.`} preloadImage={{ href: damienM.src, media: '(max-width: 767px)' }}>
+  <HeroPage titre="Les chefs" chiffre={site.chiffres.chefs} sur="Une cuisine à quatre mains">
+    <p>{site.histoire[0]}</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Portraits">
+    <div class="wrap portraits">
+      {chefs.map((m, i) => { const p = photoDe(m.photo!); return (
+        <article class="portrait">
+          <figure class="portrait__photo" {...(i === 0 ? {} : { 'data-reveal': 'clip' })}>
+            {i === 0 ? (
+              <picture>
+                <source media="(max-width: 767px)" srcset={asset(damienM.src)} />
+                <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} fetchpriority="high" decoding="async" />
+              </picture>
+            ) : (
+              <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            )}
+          </figure>
+          <h2 class="portrait__nom">{m.nom}</h2>
+          <p class="petite-cap">{m.role}</p>
+          {m.bio?.map((b) => <p class="portrait__bio">{b}{m.bioPlaceholder && <span class="illu">illustratif</span>}</p>)}
+        </article>
+      ); })}
+    </div>
+  </section>
+
+  <section class="section section--recit" aria-labelledby="recit-titre">
+    <div class="wrap recit">
+      <h2 class="petite-cap" id="recit-titre">L'histoire</h2>
+      <div class="recit__texte stack">
+        {site.histoire.slice(1).map((p) => <p data-reveal="fade">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="equipe-titre">
+    <div class="wrap equipe">
+      <h2 class="petite-cap" id="equipe-titre">En salle</h2>
+      <ul class="equipe__liste">
+        {autres.map((m) => <li><strong>{m.nom}</strong><span class="equipe__role">{m.role}{m.rolePlaceholder && <span class="illu">rôle illustratif</span>}</span></li>)}
+      </ul>
+      <ul class="valeurs" aria-label="Ce qui compte">
+        {site.valeurs.map((v) => <li>{v}</li>)}
+      </ul>
+      <p class="actions"><a class="btn btn--primary" href={u('/reservation/')}>Réserver une table</a></p>
+    </div>
+  </section>
+</Base>

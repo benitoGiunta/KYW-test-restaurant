@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const menu = site.menus[0];
+const degustation = site.carte[0];
+const supplements = site.carte[1];
+// Les mises en bouche et la mignardise encadrent les 4 services annoncés : pas de numéro (constante menus[0].services).
+const horsService = new Set(['Mises en bouche', 'Mignardise']);
+let n = 0;
+const lignes = degustation.plats.map((p) => ({ ...p, numero: horsService.has(p.nom) ? null : ++n }));
+const photos = ['/photos/plat-saint-jacques.webp', '/photos/plat-tartare.webp', '/photos/dessert-tarte-pomme.webp'].map(photoDe);
+---
+<Base title="Le menu" description={`Le menu dégustation unique des Potes au Feu à Namur : ${menu.services} services à ${menu.prix}, ${menu.quand}. Saint-Jacques, boeuf confit, soufflé au caramel.`}>
+  <HeroPage titre="Le menu" chiffre={site.chiffres.services} sur={`${menu.nom}, ${menu.prix}`}>
+    <p>{menu.services} services, {menu.quand}. Une seule carte, écrite par les deux chefs avec les produits du moment, et servie par eux.</p>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="menu-titre">
+    <div class="wrap menu__grille">
+      <h2 class="sr-only" id="menu-titre">{degustation.categorie}</h2>
+      <ol class="menu__liste" aria-labelledby="menu-titre">
+        {lignes.map((p) => (
+          <li class:list={['menu__ligne', { 'menu__ligne--hors': p.numero === null }]} data-reveal="up">
+            <span class="menu__numero" aria-hidden="true">{p.numero ? String(p.numero).padStart(2, '0') : '·'}</span>
+            <span class="menu__nom">{p.nom}</span>
+            {p.description && <span class="menu__desc">{p.description}{p.descriptionPlaceholder && <span class="illu">illustratif</span>}</span>}
+          </li>
+        ))}
+      </ol>
+      <aside class="menu__cote" data-reveal="fade">
+        <p class="petite-cap">{supplements.categorie}</p>
+        <ul class="menu__options">
+          {supplements.plats.map((p) => <li><span>{p.nom}{p.description ? `, ${p.description}` : ''}</span>{p.prix && <strong>{p.prix}</strong>}</li>)}
+        </ul>
+        <p class="muted">{menu.quand.charAt(0).toUpperCase() + menu.quand.slice(1)}. {site.reservation.note}</p>
+        <p><a class="btn btn--primary" href={u('/reservation/')}>Réserver</a></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--photos" aria-label="Assiettes">
+    <div class="wrap triptyque">
+      {photos.map((p, i) => (
+        <figure class:list={['triptyque__item', `triptyque__item--${i}`]} data-reveal="clip" data-delay={String(i * 0.1)}>
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+</Base>

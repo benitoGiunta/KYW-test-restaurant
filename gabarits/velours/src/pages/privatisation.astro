@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { asset } from '../lib/url';
+const offres = site.privatisation.offres;
+---
+<Base title="Privatisation" description={`Le samedi, Les Potes au Feu (Namur) se privatise : mariages, événements ou chef à domicile. Renseignements au ${site.telephone}.`}>
+  <HeroPage titre="Le samedi" sur="Privatisation, mariage, chef à domicile">
+    <p>{site.privatisation.intro} Le restaurant est fermé au public ce jour-là : la salle, la cuisine et les deux chefs sont à vous.</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Les trois formules du samedi">
+    <div class="wrap offres">
+      {offres.map((o, i) => { const p = photoDe(o.photo); return (
+        <article class:list={['offre', { 'offre--inverse': i % 2 === 1 }]}>
+          <figure class="offre__photo" data-reveal="clip">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+          <div class="offre__texte">
+            <p class="chiffre chiffre--petit" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+            <h2 class="offre__nom">{o.nom}</h2>
+            <p>{o.texte}{o.textePlaceholder && <span class="illu">texte illustratif</span>}</p>
+          </div>
+        </article>
+      ); })}
+    </div>
+  </section>
+
+  <section class="section section--contact" aria-labelledby="contact-titre">
+    <div class="wrap contact">
+      <h2 class="petite-cap" id="contact-titre">Parler de votre samedi</h2>
+      <p class="contact__texte">La privatisation se discute de vive voix avec François et Damien : appelez le restaurant aux heures de service.</p>
+      <p class="actions"><a class="btn btn--primary" href={telHref()}>Appeler le {site.telephone}</a></p>
+    </div>
+  </section>
+</Base>
