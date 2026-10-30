@@ -1,27 +1,35 @@
 ---
-// Pied de page du restaurant, suivi du pied de page KYW obligatoire (un seul logo, kyw-signature).
+// Pied de page « finale » : le nom géant monte en parallaxe sur brun, puis le pied de page KYW obligatoire.
 import KywFooter from '@kyw/footer';
 import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
 import { u } from '../lib/url';
 ---
-<footer class="footer">
-  <div class="wrap footer__cols">
-    <div class="stack">
-      <p><strong>{site.nom}</strong></p>
-      <address>{adresseLigne()}</address>
-      <p><a class="link" href={telHref()}>{site.telephone}</a></p>
-      <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
+<footer class="footer" data-temp="80">
+  <div class="wrap">
+    <p class="footer__name" aria-hidden="true" data-parallax="0.12">{site.nom}</p>
+    <p class="sr-only">{site.nom}</p>
+    <div class="footer__cols">
+      <div class="stack">
+        <p class="t-xs muted">Adresse</p>
+        <address>{adresseLigne()}</address>
+        <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+        <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
+      </div>
+      <div>
+        <p class="t-xs muted" style="margin-bottom: var(--u)">Horaires</p>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+      </div>
+      <div class="stack">
+        <p class="t-xs muted">Suivre</p>
+        {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
+        <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+        <p><a class="link" href={u('/privatisation/')}>Privatiser le restaurant</a></p>
+      </div>
     </div>
-    <div>
-      <p><strong>Horaires</strong></p>
-      <dl class="horaires">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-      </dl>
-    </div>
-    <div class="stack">
-      <p><strong>Suivre</strong></p>
-      {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
-      <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+    <div class="footer__colophon">
+      {site.colophon.map((c) => <p>{c}</p>)}
     </div>
   </div>
 </footer>

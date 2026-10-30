@@ -2,58 +2,66 @@
 import Base from '../layouts/Base.astro';
 import { site, photoDe } from '../data/site';
 import { u, asset } from '../lib/url';
-const equipePhoto = photoDe('/photos/equipe-trio.webp');
-const coulisses = ['/photos/cuisine-chefs-dressage.webp', '/photos/cuisine-mains-pate.webp', '/photos/salle-clients-bar.webp'].map(photoDe);
+const passe = photoDe('/photos/cuisine-chefs-dressage.webp');
+const poele = photoDe('/photos/cuisine-francois-poele.webp');
+const trio = photoDe('/photos/equipe-trio.webp');
+const profil = photoDe('/photos/portrait-damien-profil.webp');
+const pain = photoDe('/photos/cuisine-mains-pate.webp');
+const initiales = (n: string) => n.split(' ').map((x) => x[0]).join('');
 ---
-<Base title="Notre histoire" description={`L'histoire de ${site.nom} : deux chefs amis, Damien Gorjanec et François Schepens, une cuisine bistronomique à quatre mains à ${site.adresse.commune}.`}>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>Notre histoire</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">{site.baseline}</p>
-  </section>
-
-  <section class="section">
-    <div class="wrap stack">
-      <h2 class="section__title" data-split="words">Deux potes, un feu</h2>
-      {site.histoire.map((p) => <p data-reveal="up">{p}</p>)}
+<Base title="Les potes" description={`L'histoire des ${site.nom} : Damien Gorjanec et François Schepens, deux chefs namurois, une cuisine à quatre mains au bord de la Meuse depuis 2020.`} start={420} reperes={[{ id: 'recit', label: 'Récit' }, { id: 'equipe', label: 'Équipe' }]}>
+  <section class="hero hero--page" data-temp="420">
+    <div class="hero__media" aria-hidden="true">
+      <img src={asset(passe.src)} alt="" width={passe.largeur} height={passe.hauteur} fetchpriority="high" data-critical />
+      <div class="hero__voile"></div>
+    </div>
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro>Les mains</p>
+      <h1 class="hero__title" data-split="lines" data-intro data-delay="0.1">Deux potes, un feu</h1>
+      <p class="hero__lead" data-reveal="up" data-intro data-delay="0.5" style="margin-top: calc(var(--u) * 3)">Quatorze ans d'amitié, trois continents, et un restaurant trouvé par hasard à une table de ce lieu.</p>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">L'équipe</h2>
-      <div class="grid">
-        {site.equipe.map((m) => {
-          const p = m.photo ? photoDe(m.photo) : null;
-          return (
-            <article class="card" data-reveal="up">
-              {p && <figure><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>}
-              <h3>{m.nom}</h3>
-              <p class="muted">{m.role}{m.placeholder ? ' (rôle à confirmer)' : ''}</p>
-            </article>
-          );
-        })}
+  <section class="section" id="recit" data-temp="300" data-temp-end="150">
+    <div class="wrap cols">
+      <div class="c1-7">
+        <figure class="fig" data-reveal="clip" style="aspect-ratio: 4 / 3"><img src={asset(poele.src)} alt={poele.alt} width={poele.largeur} height={poele.hauteur} loading="lazy" decoding="async" /></figure>
+        <figure class="duo" data-reveal="clip" data-delay="0.1" style="width: 55%; margin: calc(var(--u) * -8) 0 0 auto; aspect-ratio: 4 / 3"><img src={asset(profil.src)} alt={profil.alt} width={profil.largeur} height={profil.hauteur} loading="lazy" decoding="async" /><figcaption>Damien, entre deux services</figcaption></figure>
       </div>
-      <figure class="card" style="margin-top: calc(var(--u) * 4); max-width: 36rem" data-reveal="scale">
-        <img src={asset(equipePhoto.src)} alt={equipePhoto.alt} width={equipePhoto.largeur} height={equipePhoto.hauteur} loading="lazy" decoding="async" />
-        <figcaption class="muted">{equipePhoto.alt}</figcaption>
-      </figure>
+      <div class="c9-12 prose" style="padding-top: 12vh">
+        <p class="chapeau">Le récit</p>
+        {site.histoire.map((p) => <p data-reveal="up">{p}</p>)}
+      </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="equipe" data-temp="110" data-temp-end="60" aria-labelledby="t-equipe">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">Dans les coulisses</h2>
-      <div class="grid">
-        {coulisses.map((p, i) => (
-          <figure class="card" data-reveal="clip" data-delay={String(i * 0.1)}>
-            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
-            <figcaption class="muted">{p.alt}</figcaption>
-          </figure>
+      <div class="section__head">
+        <p class="chapeau">Table</p>
+        <h2 class="t-xl" id="t-equipe" data-split="lines">Ceux qui servent</h2>
+      </div>
+      <div class="equipe">
+        {site.equipe.map((m, i) => (
+          <article data-reveal="up" data-delay={String(i * 0.08)}>
+            {m.photo ? (
+              <figure class="fig"><img src={asset(m.photo)} alt={photoDe(m.photo).alt} width={photoDe(m.photo).largeur} height={photoDe(m.photo).hauteur} loading="lazy" decoding="async" /></figure>
+            ) : (
+              <div class="fig fig--vide" aria-hidden="true">{initiales(m.nom)}</div>
+            )}
+            <h3>{m.nom}</h3>
+            <p class="t-s muted">{m.role}{m.placeholder && ' (rôle illustratif)'}</p>
+            <p class="t-s">{m.phrase}</p>
+          </article>
         ))}
       </div>
+      <div class="salle__wall" style="margin-top: calc(var(--u) * 8)">
+        <figure class="s1"><div class="fig" data-parallax="0.1"><img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="lazy" decoding="async" /></div><figcaption>{trio.legende}</figcaption></figure>
+        <figure class="s2"><div class="fig" data-parallax="0.18"><img src={asset(pain.src)} alt={pain.alt} width={pain.largeur} height={pain.hauteur} loading="lazy" decoding="async" /></div><figcaption>{pain.legende}</figcaption></figure>
+      </div>
       <div class="actions">
-        <a class="btn" href={u('/carte/')}>Découvrir la carte</a>
-        <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+        <a class="btn btn--solid" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={u('/carte/')}>Voir la carte</a>
       </div>
     </div>
   </section>

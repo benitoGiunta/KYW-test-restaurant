@@ -2,19 +2,20 @@
 import { site } from '../data/site';
 import { u } from '../lib/url';
 const liens = [
-  { href: u('/'), label: 'Accueil' },
   { href: u('/carte/'), label: 'La carte' },
-  { href: u('/histoire/'), label: 'Notre histoire' },
-  { href: u('/reservation/'), label: 'Réserver' },
+  { href: u('/histoire/'), label: 'Les potes' },
+  { href: u('/privatisation/'), label: 'Privatiser', mobileHide: true },
 ];
 const ici = Astro.url.pathname.replace(/\/+$/, '');
 const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+const resa = u('/reservation/');
 ---
 <header class="header">
   <div class="wrap header__inner">
-    <a class="header__brand" href={u('/')}>{site.nom}</a>
+    <a class="header__brand" href={u('/')} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
     <nav class="nav" aria-label="Navigation principale">
-      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)} data-mobile-hide={l.mobileHide ? '' : undefined}>{l.label}</a>)}
+      <a href={resa} aria-current={courant(resa)}>Réserver</a>
     </nav>
   </div>
 </header>

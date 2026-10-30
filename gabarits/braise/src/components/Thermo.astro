@@ -1,0 +1,23 @@
+---
+// Thermomètre fixe : valeur + libellé de chapitre, réglette avec les repères (ancres) au survol.
+// Les valeurs sont écrites par le driver (data-thermo-val / data-thermo-chap) ; `start` donne l'état sans JS.
+import { chapitreDe } from '../data/site';
+interface Props { start?: number; reperes?: { id: string; label: string }[] }
+const { start = 900, reperes = [] } = Astro.props;
+const pos = (t: number) => `${((900 - t) / 880) * 100}%`;
+const temps: Record<string, number> = { cuisson: 520, carte: 240, salle: 150, pratique: 60 };
+---
+<div class="thermo" aria-live="off">
+  <div>
+    <div class="thermo__val num"><span data-thermo-val>{start}</span><small>°C</small></div>
+    <div class="thermo__chap" data-thermo-chap>{chapitreDe(start)}</div>
+  </div>
+  {reperes.length > 0 && (
+    <div class="thermo__regle">
+      <i class="thermo__fill" aria-hidden="true"></i>
+      <ul class="thermo__reperes" aria-label="Chapitres">
+        {reperes.map((r) => <li><a href={`#${r.id}`} style={`top:${pos(temps[r.id] ?? 400)}`}>{r.label}</a></li>)}
+      </ul>
+    </div>
+  )}
+</div>

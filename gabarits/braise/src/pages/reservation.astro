@@ -1,61 +1,56 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
-import { asset } from '../lib/url';
-const salle = photoDe('/photos/salle-banquette.webp');
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
 ---
-<Base title="Réservation" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone} ou par e-mail.`}>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>Réserver</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">
-      La réservation se fait en ligne via {site.reservation.outil}. Pour une table de plus de six personnes ou une demande de dernière minute, appelez-nous.
-    </p>
-    <div class="actions" data-reveal="up" data-intro data-delay="0.5">
-      <a class="btn btn--primary" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
-      <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
-      <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire un e-mail</a>
-    </div>
-  </section>
-
-  <section class="section">
+<Base title="Réserver" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone} ou par e-mail.`} start={90}>
+  <section class="hero hero--page" data-temp="90">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">Votre demande</h2>
-      <p class="muted" style="margin-bottom: calc(var(--u) * 2)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
-      <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
-        <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
-        <label>Date <input type="date" name="date" required /></label>
-        <label>Heure <input type="time" name="heure" required /></label>
-        <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
-        <label>Message <textarea name="message" rows="3"></textarea></label>
-        <div class="actions" style="margin-top: 0">
-          <button class="btn btn--primary" type="submit">Continuer sur {site.reservation.outil}</button>
+      <p class="chapeau" data-reveal="fade" data-intro>Nuit</p>
+      <h1 class="hero__title" data-split="lines" data-intro data-delay="0.1">Réserver une table</h1>
+      <div class="hero__foot">
+        <p class="hero__lead" data-reveal="up" data-intro data-delay="0.5">En ligne via {site.reservation.outil}, ou par téléphone pour une table de plus de six personnes et les demandes de dernière minute.</p>
+        <div class="actions" data-reveal="fade" data-intro data-delay="0.7" style="margin-top: 0">
+          <a class="btn btn--solid" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
+          <a class="btn" href={telHref()}>{site.telephone}</a>
         </div>
-      </form>
+      </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap grid">
-      <div class="stack" data-reveal="up">
-        <h2 class="section__title">Horaires</h2>
+  <section class="section" data-temp="60" data-temp-end="20">
+    <div class="wrap pratique__grid">
+      <div class="pratique__a stack" data-reveal="up">
+        <p class="chapeau">Horaires</p>
         <dl class="horaires">
           {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
         </dl>
-        <p><strong>Adresse</strong><br />{adresseLigne()}</p>
+        <address style="margin-top: calc(var(--u) * 3)">{adresseLigne()}<br /><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></address>
+        <p class="note">Bons cadeaux de {site.bonCadeau.montants} : <a class="link" href={site.bonCadeau.url} rel="noopener">commander en ligne</a>.</p>
       </div>
-      <figure class="card" data-reveal="scale">
-        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
-      </figure>
+      <div class="pratique__b" data-reveal="up" data-delay="0.1">
+        <p class="chapeau">Votre demande</p>
+        <p class="note" style="margin-bottom: calc(var(--u) * 2)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+        <form class="form" data-reservation action={site.reservation.url} method="get">
+          <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+          <label>Téléphone <input type="tel" name="tel" autocomplete="tel" /></label>
+          <label>Date <input type="date" name="date" required /></label>
+          <label>Heure <input type="time" name="heure" required /></label>
+          <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
+          <label class="full">Message <textarea name="message" rows="3"></textarea></label>
+          <div class="actions full" style="margin-top: 0">
+            <button class="btn btn--solid" type="submit">Continuer sur {site.reservation.outil}</button>
+          </div>
+        </form>
+      </div>
     </div>
   </section>
 </Base>
 
 <script>
   import { onPage } from '../engine';
-  // Formulaire sans backend : à la validation, on ouvre l'outil de réservation réel (les champs ne sont pas transmis).
   onPage(() => {
     const form = document.querySelector<HTMLFormElement>('[data-reservation]');
-    if (!form) return; // tourne sur chaque page : vérifier la présence
+    if (!form) return;
     const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
     form.addEventListener('submit', go);
     return () => form.removeEventListener('submit', go);

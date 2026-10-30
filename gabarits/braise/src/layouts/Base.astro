@@ -5,6 +5,8 @@ import { asset } from '../lib/url';
 import Loader from '../components/Loader.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Thermo from '../components/Thermo.astro';
+import Barre from '../components/Barre.astro';
 import '../styles/tokens.css';
 import '../styles/base.css';
 
@@ -12,9 +14,10 @@ interface Props {
   title?: string;
   description?: string;
   image?: string; // image OG (1200x630) dans public/, chemin sans base : '/og.jpg'
-  theme?: string; // crochet de thème par page, ex. data-theme="dark"
+  start?: number; // température de départ de la page (900 = le passe) : état initial sans JS
+  reperes?: { id: string; label: string }[]; // repères du thermomètre (ancres de la page)
 }
-const { title, description = site.description, image = '/og.jpg', theme } = Astro.props;
+const { title, description = site.description, image = '/og.jpg', start = 900, reperes = [] } = Astro.props;
 const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Restaurant bistronomique à ${site.adresse.commune}`;
 const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
 // Astro.url.pathname contient déjà `base` au build.
@@ -23,7 +26,9 @@ const ogImage = new URL(asset(image), siteUrl).href;
 
 // Polices : un <link rel="preload"> par woff2 utilisé au-dessus de la ligne de flottaison (fichiers dans public/fonts/).
 // Le socle n'embarque aucune police (styles neutres) ; un gabarit remplit cette liste et les @font-face de tokens.css.
-const polices: string[] = [];
+const polices: string[] = ['/fonts/melodrama-400-normal.woff2', '/fonts/literata-400-normal.woff2'];
+const font = (f: string, w: number, st = 'normal') => `@font-face{font-family:'${f === 'melodrama' ? 'Melodrama' : 'Literata'}';font-style:${st};font-weight:${w};font-display:swap;src:url(${asset(`/fonts/${f}-${w}-${st}.woff2`)}) format('woff2')}`;
+const fontCss = [font('melodrama', 400), font('melodrama', 700), font('literata', 400), font('literata', 400, 'italic'), font('literata', 600), font('literata', 600, 'italic')].join('');
 
 const jours: Record<string, string> = { lundi: 'Monday', mardi: 'Tuesday', mercredi: 'Wednesday', jeudi: 'Thursday', vendredi: 'Friday', samedi: 'Saturday', dimanche: 'Sunday' };
 const jsonLd = {
@@ -51,7 +56,7 @@ const jsonLd = {
 };
 ---
 <!doctype html>
-<html lang="fr" transition:animate="none" data-theme={theme}>
+<html lang="fr" transition:animate="none" data-start={String(start)}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -59,7 +64,8 @@ const jsonLd = {
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#101010" />
+    <meta name="theme-color" content="#141110" />
+    <style set:html={fontCss} />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
     <link rel="sitemap" href={asset('/sitemap-index.xml')} />
     <meta property="og:type" content="website" />
@@ -86,6 +92,9 @@ const jsonLd = {
   <body>
     <a class="skip-link" href="#main">Aller au contenu</a>
     <div id="gl" transition:persist="gl" aria-hidden="true"></div>
+    <div id="halo" aria-hidden="true"></div>
+    <div id="grain" aria-hidden="true"></div>
+    <div id="vignette" aria-hidden="true"><img alt="" width="200" height="250" /></div>
     <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
     <div id="cursor" transition:persist="cursor" aria-hidden="true"><span data-cursor-label></span></div>
     <Loader />
@@ -94,6 +103,8 @@ const jsonLd = {
       <slot />
     </main>
     <Footer />
+    <Thermo start={start} reperes={reperes} />
+    <Barre />
     <script>
       import { start } from '../engine/astro';
       import { setupMotion } from '../motion/setup';
