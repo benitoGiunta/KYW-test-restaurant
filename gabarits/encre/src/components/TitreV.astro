@@ -1,0 +1,11 @@
+---
+// Titre vertical (writing-mode: vertical-rl en desktop, horizontal ≤ 1023 px). Chaque caractère est un <span> pour
+// l'allumage au défilement (setup.ts, [data-allume]) ; le titre garde un nom accessible lisible d'un trait.
+interface Props { texte: string; id?: string; niveau?: 'h1' | 'h2'; classe?: string }
+const { texte, id, niveau = 'h2', classe = '' } = Astro.props;
+const Tag = niveau;
+const chars = [...texte];
+---
+<Tag class={`titre-v ${classe}`} id={id} aria-label={texte} data-allume>
+  <span aria-hidden="true" class="titre-v__mot">{chars.map((c) => <span class="titre-v__c">{c === ' ' ? ' ' : c}</span>)}</span>
+</Tag>

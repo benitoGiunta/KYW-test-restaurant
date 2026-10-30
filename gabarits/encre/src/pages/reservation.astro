@@ -1,51 +1,98 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
-import { asset } from '../lib/url';
-const salle = photoDe('/photos/salle-banquette.webp');
+import HeroPage from '../components/HeroPage.astro';
+import Plan from '../components/Plan.astro';
+import TitreV from '../components/TitreV.astro';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+const cadeau = site.menus.find((m) => m.nom === 'Bon cadeau');
 ---
-<Base title="Réservation" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone} ou par e-mail.`}>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>Réserver</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">
-      La réservation se fait en ligne via {site.reservation.outil}. Pour une table de plus de six personnes ou une demande de dernière minute, appelez-nous.
-    </p>
-    <div class="actions" data-reveal="up" data-intro data-delay="0.5">
-      <a class="btn btn--primary" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
-      <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
-      <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire un e-mail</a>
+<Base title="Réserver" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}. Privatisation le samedi, bons cadeaux.`} preloads={[{ href: '/photos/bar-cocktails-960.webp', media: '(max-width: 767px)' }, { href: '/photos/bar-cocktails.webp', media: '(min-width: 768px)' }]}>
+  <HeroPage photo="/photos/bar-cocktails.webp" photoMobile="/photos/bar-cocktails-960.webp" titre="Réserver" phrase={`En ligne via ${site.reservation.outil}, ou par téléphone pour une table de plus de six personnes et les demandes de dernière minute.`} />
+
+  <section class="section" aria-labelledby="resa-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">01</p>
+      <h2 class="titre-centre" id="resa-titre" data-split="lines">Une table</h2>
+      <div class="actions actions--centre" data-reveal="up">
+        <a class="btn btn--plein" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
+        <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+      </div>
+      <p class="muted" style="margin-top: 1.5rem; font-size: var(--t-s)" data-reveal="fade">{site.email.valeur}<span class="illu">adresse d’exemple, le restaurant répond par son formulaire</span></p>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--serre" aria-labelledby="demande-titre">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">Votre demande</h2>
-      <p class="muted" style="margin-bottom: calc(var(--u) * 2)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+      <div class="colonne" style="margin-bottom: calc(var(--u) * 3)">
+        <p class="chapeau" data-reveal="fade">02</p>
+        <h2 class="titre-centre" id="demande-titre" data-split="lines">Votre demande</h2>
+        <p class="muted" data-reveal="fade">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+      </div>
       <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
         <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
-        <label>Date <input type="date" name="date" required /></label>
-        <label>Heure <input type="time" name="heure" required /></label>
-        <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
+        <div class="form__deux">
+          <label>Date <input type="date" name="date" required data-min-aujourdhui /></label>
+          <label>Heure <input type="time" name="heure" required /></label>
+          <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
+        </div>
         <label>Message <textarea name="message" rows="3"></textarea></label>
         <div class="actions" style="margin-top: 0">
-          <button class="btn btn--primary" type="submit">Continuer sur {site.reservation.outil}</button>
+          <button class="btn btn--plein" type="submit">Continuer sur {site.reservation.outil}</button>
         </div>
       </form>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap grid">
-      <div class="stack" data-reveal="up">
-        <h2 class="section__title">Horaires</h2>
-        <dl class="horaires">
-          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-        </dl>
-        <p><strong>Adresse</strong><br />{adresseLigne()}</p>
+  <section class="section section--v section--serre" aria-labelledby="samedi-titre" id="cadeau">
+    <div class="wrap">
+      <TitreV texte="Le samedi" id="samedi-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">03</p>
+        <div class="formules" style="margin-inline: 0">
+          <article class="formule" data-reveal="up">
+            <h3>Privatisation</h3>
+            <p class="formule__prix">Le samedi</p>
+            <p>Possibilité de privatisation du restaurant : mariage, événement, ou chef à domicile. Sur demande par téléphone.</p>
+          </article>
+          {cadeau && (
+            <article class="formule" data-reveal="up" data-delay="0.1">
+              <h3>{cadeau.nom}</h3>
+              <p class="formule__prix">{cadeau.prix}</p>
+              <p>{cadeau.description}</p>
+            </article>
+          )}
+        </div>
       </div>
-      <figure class="card" data-reveal="scale">
-        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
-      </figure>
+    </div>
+  </section>
+
+  <section class="section section--v section--serre" aria-labelledby="venir-titre">
+    <div class="wrap">
+      <TitreV texte="Venir" id="venir-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">04</p>
+        <div class="venir">
+          <Plan />
+          <div class="infos" data-reveal="up">
+            <div>
+              <h3>Adresse</h3>
+              <address>{adresseLigne()}</address>
+              <ul>
+                {site.acces.reperes.map((r) => <li>{r.nom}</li>)}
+                <li>{site.acces.gare.nom} : environ {site.acces.gare.marche}<span class="illu illu--ast" aria-hidden="true">*</span></li>
+                <li>{site.acces.parking.texte}<span class="illu illu--ast" aria-hidden="true">*</span></li>
+              </ul>
+              <p class="muted" style="font-size: var(--t-xs); margin-top: 0.5rem"><span class="illu illu--ast" style="margin-left: 0">*</span> estimation illustrative, à confirmer par le restaurant</p>
+            </div>
+            <div>
+              <h3>Horaires</h3>
+              <dl class="horaires">
+                {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </Base>

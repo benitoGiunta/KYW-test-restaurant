@@ -1,0 +1,32 @@
+---
+// Page d'exemple : le restaurant de référence ne propose pas de service à emporter (inconnu au dossier).
+// Bandeau peint sans JS en tête, aucun CTA de réservation, chaque ligne marquée « exemple ».
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const { emporter } = site;
+---
+<Base title="À emporter (exemple)" description={`Page d'exemple du gabarit : un service de plats à emporter, que ${site.nom} ne propose pas.`} preloads={[{ href: '/photos/service-planche-960.webp', media: '(max-width: 767px)' }, { href: '/photos/service-planche.webp', media: '(min-width: 768px)' }]}>
+  <p class="bandeau"><strong>Page d’exemple.</strong> Ce restaurant ne propose pas de service à emporter : cette page montre ce que le gabarit en ferait.</p>
+  <HeroPage photo="/photos/service-planche.webp" photoMobile="/photos/service-planche-960.webp" titre={emporter.titre} phrase="Exemple de page pour un service de plats à emporter." />
+
+  <section class="section" aria-labelledby="emporter-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">01</p>
+      <h2 class="titre-centre" id="emporter-titre" data-split="lines">Boîtes et bentos</h2>
+      <p class="texte" data-reveal="up">{emporter.texte}</p>
+    </div>
+    <div class="wrap emporter-liste" style="margin-top: calc(var(--u) * 3)">
+      <ul style="list-style: none; padding: 0" data-reveal="up">
+        {emporter.lignes.map((l) => (
+          <li class="ligne ligne--sans"><span class="ligne__num" aria-hidden="true">·</span><span class="ligne__nom">{l.nom}<span class="illu">exemple</span></span><span class="ligne__prix">{l.prix}<span class="illu illu--ast" aria-hidden="true">*</span></span></li>
+        ))}
+      </ul>
+      <p class="muted" style="font-size: var(--t-xs); margin-top: 1rem"><span class="illu illu--ast" style="margin-left: 0">*</span> prix illustratifs</p>
+      <div class="actions actions--centre">
+        <a class="btn" href={u('/carte/')}>Voir la carte réelle</a>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,18 +1,21 @@
 ---
+// En-tête « Encre » : posé sur la page en mix-blend-mode difference (encre sur ivoire, ivoire sur la photo du hero).
+// Marque à gauche, navigation à droite, heure locale calculée côté client (jamais écrite en dur).
 import { site } from '../data/site';
 import { u } from '../lib/url';
 const liens = [
-  { href: u('/'), label: 'Accueil' },
   { href: u('/carte/'), label: 'La carte' },
-  { href: u('/histoire/'), label: 'Notre histoire' },
+  { href: u('/histoire/'), label: 'L’histoire' },
+  { href: u('/emporter/'), label: 'Emporter' },
   { href: u('/reservation/'), label: 'Réserver' },
 ];
 const ici = Astro.url.pathname.replace(/\/+$/, '');
 const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
 ---
 <header class="header">
-  <div class="wrap header__inner">
-    <a class="header__brand" href={u('/')}>{site.nom}</a>
+  <div class="header__inner">
+    <a class="header__brand" href={u('/')} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
+    <p class="header__heure" aria-hidden="true"><span>{site.adresse.commune}</span> <time data-horloge></time></p>
     <nav class="nav" aria-label="Navigation principale">
       {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
     </nav>

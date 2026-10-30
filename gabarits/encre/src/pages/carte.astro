@@ -1,55 +1,94 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, photoDe } from '../data/site';
-import { u, asset } from '../lib/url';
-const visuel = photoDe('/photos/plat-boeuf-confit.webp');
+import HeroPage from '../components/HeroPage.astro';
+import Rouleau from '../components/Rouleau.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+
+// Carte réelle : menu unique du dossier. Les services numérotés sont la constante `servicesMenu`, jamais un length.
+const [menuUnique, options, boissons] = site.carte;
+const lignes = menuUnique.plats.filter((p) => !p.prix);
+const extras = menuUnique.plats.filter((p) => p.prix);
+const ouverture = lignes[0];
+const services = lignes.slice(1, 1 + site.servicesMenu);
+const fermeture = lignes.slice(1 + site.servicesMenu);
+const prixMenu = site.menus[0].prix;
 ---
-<Base title="La carte" description={`La carte et les formules de ${site.nom} à ${site.adresse.commune} : menu dégustation unique de saison, formule du midi, lunch et bon cadeau.`}>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>La carte</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">
-      Un menu unique qui change au fil des saisons, écrit à quatre mains et servi par les chefs.
-    </p>
-  </section>
+<Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : menu dégustation unique en ${site.servicesMenu} services, formule du midi et lunch, options végétariennes.`} preloads={[{ href: '/photos/salle-ampoules-960.webp', media: '(max-width: 767px)' }, { href: '/photos/salle-ampoules.webp', media: '(min-width: 768px)' }]}>
+  <HeroPage photo="/photos/salle-ampoules.webp" photoMobile="/photos/salle-ampoules-960.webp" titre="La carte" phrase="Un menu unique, écrit au fil des saisons, servi du lundi au vendredi soir." />
 
-  {site.carte.map((cat) => (
-    <section class="section">
-      <div class="wrap">
-        <h2 class="section__title" data-split="words">{cat.categorie}</h2>
-        <div data-reveal="up">
-          {cat.plats.map((p) => (
-            <div class="plat">
-              <div>
-                <h3>{p.nom}{p.placeholder ? <span class="muted"> (exemple)</span> : null}</h3>
-                {p.description && <p class="muted">{p.description}</p>}
-              </div>
-              {p.prix && <p class="plat__prix">{p.prix}</p>}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  ))}
-
-  <section class="section">
+  <section class="section" aria-labelledby="menu-titre">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">Les formules</h2>
-      <div class="grid">
-        {site.menus.map((m) => (
-          <article class="menu stack" data-reveal="up">
-            <h3>{m.nom}</h3>
-            <p><strong>{m.prix}</strong></p>
-            <p class="muted">{m.description}</p>
-          </article>
-        ))}
-      </div>
-      <figure class="card" style="margin-top: calc(var(--u) * 4); max-width: 36rem" data-reveal="clip">
-        <img src={asset(visuel.src)} alt={visuel.alt} width={visuel.largeur} height={visuel.hauteur} loading="lazy" decoding="async" />
-        <figcaption class="muted">{visuel.alt}</figcaption>
-      </figure>
-      <div class="actions">
-        <a class="btn btn--primary" href={u('/reservation/')}>Réserver une table</a>
+      <div class="menu-reel">
+        <div class="menu-reel__entete">
+          <p class="chapeau" data-reveal="fade">01</p>
+          <h2 class="titre-centre" id="menu-titre" data-split="lines">Le menu des Potes</h2>
+          <p class="menu-reel__prix" data-reveal="fade">{site.servicesMenu} services, {prixMenu}</p>
+          <p class="menu-reel__sous" data-reveal="fade" data-delay="0.1">Du lundi au vendredi soir. Menu unique, sans carte à la carte.</p>
+        </div>
+        <ol class="menu-reel__lignes" style="list-style: none; padding: 0" data-reveal="up">
+          <li class="ligne ligne--sans"><span class="ligne__num" aria-hidden="true">·</span><span class="ligne__nom">{ouverture.nom}</span><span class="ligne__prix"></span></li>
+          {services.map((p, i) => (
+            <li class="ligne"><span class="ligne__num">{String(i + 1).padStart(2, '0')}</span><span class="ligne__nom">{p.nom}</span><span class="ligne__prix"></span></li>
+          ))}
+          {fermeture.map((p) => (
+            <li class="ligne ligne--sans"><span class="ligne__num" aria-hidden="true">·</span><span class="ligne__nom">{p.nom}</span><span class="ligne__prix"></span></li>
+          ))}
+          {extras.map((p) => (
+            <li class="ligne ligne--sans"><span class="ligne__num" aria-hidden="true">+</span><span class="ligne__nom">{p.nom}<span class="ligne__desc">{p.description}</span></span><span class="ligne__prix">{p.prix}</span></li>
+          ))}
+        </ol>
       </div>
     </div>
   </section>
+
+  <section class="section section--serre" aria-labelledby="formules-titre">
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade">02</p>
+      <h2 class="titre-centre" id="formules-titre" data-split="lines" style="text-align: center">Formules et bons cadeaux</h2>
+      <div class="formules">
+        {site.menus.slice(1).map((m, i) => (
+          <article class="formule" data-reveal="up" data-delay={String(i * 0.1)}>
+            <h3>{m.nom}</h3>
+            <p class="formule__prix">{m.prix}</p>
+            <p>{m.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--serre" aria-labelledby="options-titre">
+    <div class="wrap">
+      <div class="menu-reel">
+        <p class="chapeau" data-reveal="fade">03</p>
+        <h2 class="titre-centre" id="options-titre" data-split="lines" style="text-align: center">{options.categorie}</h2>
+        <ul style="list-style: none; padding: 0" data-reveal="up">
+          {options.plats.map((p) => (
+            <li class="ligne ligne--sans"><span class="ligne__num" aria-hidden="true">·</span><span class="ligne__nom">{p.nom}<span class="ligne__desc">{p.description}</span></span><span class="ligne__prix"></span></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--serre" aria-labelledby="boissons-titre">
+    <div class="wrap">
+      <div class="menu-reel">
+        <p class="chapeau" data-reveal="fade">04</p>
+        <h2 class="titre-centre" id="boissons-titre" data-split="lines" style="text-align: center">{boissons.categorie}</h2>
+        <p class="menu-reel__sous" style="text-align: center; margin-bottom: 1.5rem" data-reveal="fade"><span class="illu" style="margin-left: 0">Exemple</span> : la carte des boissons n’est pas publiée ; ces lignes sont illustratives.</p>
+        <ul style="list-style: none; padding: 0" data-reveal="up">
+          {boissons.plats.map((p) => (
+            <li class="ligne ligne--sans"><span class="ligne__num" aria-hidden="true">·</span><span class="ligne__nom">{p.nom}<span class="ligne__desc">{p.description}</span>{p.placeholder && <span class="illu">exemple</span>}</span><span class="ligne__prix">{p.prix}</span></li>
+          ))}
+        </ul>
+        <div class="actions actions--centre">
+          <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Rouleau epingle={false} id="rouleau" numero="05" />
 </Base>

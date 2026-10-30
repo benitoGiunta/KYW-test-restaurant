@@ -1,0 +1,54 @@
+---
+// Le Rouleau (signature) : bande horizontale de 12 plats d'exemple. Deux modes :
+//   epingle (accueil, desktop) : section épinglée, la bande glisse au scrub, les traits de pinceau se tracent
+//     à l'entrée de chaque plat, le sceau se pose à la fin (setup.ts, [data-rouleau="epingle"]).
+//   libre (page carte, mobile, reduced motion) : défilement horizontal natif avec snap, 80 vw par plat en mobile.
+// Chaque plat est illustratif (placeholder) : la note le dit sur le rouleau, chaque prix porte l'astérisque.
+import { site, photoDe } from '../data/site';
+import { asset } from '../lib/url';
+import Sceau from './Sceau.astro';
+import TitreV from './TitreV.astro';
+interface Props { epingle?: boolean; id?: string; numero?: string }
+const { epingle = true, id = 'rouleau', numero = '02' } = Astro.props;
+const { rouleau } = site;
+---
+<section class={`rouleau ${epingle ? 'rouleau--epingle' : 'rouleau--libre'}`} data-rouleau={epingle ? 'epingle' : 'libre'} id={id} aria-labelledby={`${id}-titre`}>
+  <div class="rouleau__scene" data-rouleau-scene>
+    <div class="rouleau__tete">
+      <p class="chapeau">{numero}</p>
+      <TitreV texte={rouleau.titre} id={`${id}-titre`} />
+      <p class="rouleau__note"><span class="illu">Exemple</span> {rouleau.note}</p>
+    </div>
+    <div class="rouleau__piste" data-rouleau-piste tabindex="0" role="group" aria-label="Rouleau de douze plats d’exemple ; flèches gauche et droite pour le dérouler">
+      <ol class="rouleau__bande" data-rouleau-bande>
+        {rouleau.plats.map((p, i) => {
+          const ph = p.photo ? photoDe(p.photo) : null;
+          return (
+            <li class={`plat${ph ? ' plat--photo' : ''}`} data-plat>
+              <span class="plat__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              {ph && (
+                <svg class="plat__photo" viewBox="0 0 400 500" role="img" aria-label={ph.alt}>
+                  <mask id={`${id}-m${i}`} maskUnits="userSpaceOnUse">
+                    <path data-pinceau d="M90 70 C 240 20, 340 110, 320 190 S 90 250, 95 330 S 330 390, 310 450" fill="none" stroke="#fff" stroke-width="210" stroke-linecap="round" stroke-linejoin="round" />
+                  </mask>
+                  <image href={asset(ph.src)} width="400" height="500" preserveAspectRatio="xMidYMid slice" mask={`url(#${id}-m${i})`} />
+                </svg>
+              )}
+              <svg class="plat__trait" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true">
+                <path data-pinceau d="M2 7 C 50 1, 120 12, 198 5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+              </svg>
+              <h3 class="plat__nom">{p.nom}</h3>
+              <p class="plat__mots">{p.mots}</p>
+              <p class="plat__prix">{p.prix}<span class="illu illu--ast" aria-label="prix d’exemple">*</span></p>
+            </li>
+          );
+        })}
+        <li class="plat plat--fin">
+          <p class="plat__fin-texte">La carte réelle est écrite au fil des saisons.</p>
+          <Sceau taille="l" />
+        </li>
+      </ol>
+    </div>
+    <div class="rouleau__barre" aria-hidden="true"><span data-rouleau-progres></span></div>
+  </div>
+</section>

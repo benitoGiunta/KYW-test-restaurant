@@ -1,27 +1,45 @@
 ---
-// Pied de page du restaurant, suivi du pied de page KYW obligatoire (un seul logo, kyw-signature).
+// Pied de page « Encre » : diptyque décalé (deux photos de hauteurs différentes), coordonnées, horaires, liens,
+// le sceau (lien vers la réservation), puis le pied de page KYW obligatoire (un seul logo, kyw-signature).
 import KywFooter from '@kyw/footer';
-import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
-import { u } from '../lib/url';
+import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+import Sceau from './Sceau.astro';
+const haute = photoDe('/photos/cuisine-francois-poele.webp');
+const basse = photoDe('/photos/service-sauce-table.webp');
 ---
 <footer class="footer">
-  <div class="wrap footer__cols">
-    <div class="stack">
-      <p><strong>{site.nom}</strong></p>
-      <address>{adresseLigne()}</address>
-      <p><a class="link" href={telHref()}>{site.telephone}</a></p>
-      <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
+  <div class="wrap footer__grid">
+    <div class="footer__diptyque" aria-hidden="true">
+      <figure class="footer__photo footer__photo--haute">
+        <img src={asset(haute.src)} alt="" width={haute.largeur} height={haute.hauteur} loading="lazy" decoding="async" />
+      </figure>
+      <figure class="footer__photo footer__photo--basse">
+        <img src={asset(basse.src)} alt="" width={basse.largeur} height={basse.hauteur} loading="lazy" decoding="async" />
+      </figure>
     </div>
-    <div>
-      <p><strong>Horaires</strong></p>
-      <dl class="horaires">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-      </dl>
-    </div>
-    <div class="stack">
-      <p><strong>Suivre</strong></p>
-      {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
-      <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+    <div class="footer__cols">
+      <div class="stack">
+        <p class="footer__nom">{site.nom}</p>
+        <address>{adresseLigne()}</address>
+        <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+        <p class="muted">{site.email.valeur} <span class="illu">adresse d’exemple</span></p>
+      </div>
+      <div>
+        <p class="footer__titre">Horaires</p>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+      </div>
+      <div class="stack">
+        <p class="footer__titre">Suivre</p>
+        {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
+        <p><a class="link" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a></p>
+        <p><a class="link" href={u('/reservation/')}>Bons cadeaux et privatisation</a></p>
+      </div>
+      <div class="footer__sceau">
+        <Sceau />
+      </div>
     </div>
   </div>
 </footer>

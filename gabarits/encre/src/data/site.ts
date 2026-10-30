@@ -215,7 +215,7 @@ export const site: Restaurant = {
     gare: { nom: 'Gare de Namur', marche: '20 min à pied', placeholder: true },
     parking: { texte: 'Stationnement le long de la Meuse', placeholder: true },
   },
-  sceau: { initiales: 'PF', placeholder: true },
+  sceau: { initiales: 'PF', placeholder: false }, // initiales dérivées du nom (Potes au Feu)
   // Page « Emporter » : service que le restaurant ne rend pas (inconnu au dossier) : page d'exemple, sans réservation.
   emporter: {
     placeholder: true,

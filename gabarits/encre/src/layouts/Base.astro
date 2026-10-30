@@ -12,18 +12,27 @@ interface Props {
   title?: string;
   description?: string;
   image?: string; // image OG (1200x630) dans public/, chemin sans base : '/og.jpg'
-  theme?: string; // crochet de thème par page, ex. data-theme="dark"
+  theme?: string; // crochet de thème par page, ex. data-theme="sombre"
+  preloads?: { href: string; media?: string }[]; // photos LCP (chemins sans base), préchargées fetchpriority high
 }
-const { title, description = site.description, image = '/og.jpg', theme } = Astro.props;
-const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Restaurant bistronomique à ${site.adresse.commune}`;
+const { title, description = site.description, image = '/og.jpg', theme, preloads = [] } = Astro.props;
+const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Menu unique à quatre mains à ${site.adresse.commune}`;
 const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
 // Astro.url.pathname contient déjà `base` au build.
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
 const ogImage = new URL(asset(image), siteUrl).href;
 
-// Polices : un <link rel="preload"> par woff2 utilisé au-dessus de la ligne de flottaison (fichiers dans public/fonts/).
-// Le socle n'embarque aucune police (styles neutres) ; un gabarit remplit cette liste et les @font-face de tokens.css.
-const polices: string[] = [];
+// Polices auto-hébergées (Google, licence OFL) : Shippori Mincho B1 pour l'affichage, Spectral pour le texte.
+// Préchargées : celles qui servent au-dessus de la ligne de flottaison.
+const polices: string[] = ['/fonts/shippori-mincho-b1-500-normal.woff2', '/fonts/spectral-300-normal.woff2'];
+const fontFaces = [
+  `@font-face{font-family:'Shippori Mincho B1';font-style:normal;font-weight:500;font-display:swap;src:url(${asset('/fonts/shippori-mincho-b1-500-normal.woff2')}) format('woff2')}`,
+  `@font-face{font-family:'Shippori Mincho B1';font-style:normal;font-weight:700;font-display:swap;src:url(${asset('/fonts/shippori-mincho-b1-700-normal.woff2')}) format('woff2')}`,
+  `@font-face{font-family:'Spectral';font-style:normal;font-weight:300;font-display:swap;src:url(${asset('/fonts/spectral-300-normal.woff2')}) format('woff2')}`,
+  `@font-face{font-family:'Spectral';font-style:italic;font-weight:300;font-display:swap;src:url(${asset('/fonts/spectral-300-italic.woff2')}) format('woff2')}`,
+  `@font-face{font-family:'Spectral';font-style:normal;font-weight:400;font-display:swap;src:url(${asset('/fonts/spectral-400-normal.woff2')}) format('woff2')}`,
+  `@font-face{font-family:'Spectral';font-style:italic;font-weight:400;font-display:swap;src:url(${asset('/fonts/spectral-400-italic.woff2')}) format('woff2')}`,
+].join('');
 
 const jours: Record<string, string> = { lundi: 'Monday', mardi: 'Tuesday', mercredi: 'Wednesday', jeudi: 'Thursday', vendredi: 'Friday', samedi: 'Saturday', dimanche: 'Sunday' };
 const jsonLd = {
@@ -59,7 +68,7 @@ const jsonLd = {
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#101010" />
+    <meta name="theme-color" content="#f6f1e6" />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
     <link rel="sitemap" href={asset('/sitemap-index.xml')} />
     <meta property="og:type" content="website" />
@@ -75,6 +84,8 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     {polices.map((p) => <link rel="preload" as="font" type="font/woff2" href={asset(p)} crossorigin />)}
+    {preloads.map((p) => <link rel="preload" as="image" href={asset(p.href)} media={p.media} fetchpriority="high" />)}
+    <style is:inline set:html={fontFaces} />
     <slot name="head" />
     <!-- Avant le premier rendu : marque JS + motion pour que les états « caché avant reveal » ne clignotent jamais. -->
     <script is:inline>

@@ -1,59 +1,89 @@
 ---
 import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import TitreV from '../components/TitreV.astro';
 import { site, photoDe } from '../data/site';
 import { u, asset } from '../lib/url';
-const equipePhoto = photoDe('/photos/equipe-trio.webp');
-const coulisses = ['/photos/cuisine-chefs-dressage.webp', '/photos/cuisine-mains-pate.webp', '/photos/salle-clients-bar.webp'].map(photoDe);
+
+const chefs = site.equipe.filter((m) => m.photo).map((m) => ({ ...m, img: photoDe(m.photo!) }));
+const salle = site.equipe.filter((m) => !m.photo);
+const diptyque1 = ['/photos/cuisine-chefs-passe.webp', '/photos/cuisine-francois-poele.webp'].map(photoDe);
+const diptyque2 = ['/photos/salle-banquette.webp', '/photos/equipe-trio.webp'].map(photoDe);
 ---
-<Base title="Notre histoire" description={`L'histoire de ${site.nom} : deux chefs amis, Damien Gorjanec et François Schepens, une cuisine bistronomique à quatre mains à ${site.adresse.commune}.`}>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>Notre histoire</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">{site.baseline}</p>
-  </section>
+<Base title="L’histoire" description={`L'histoire de ${site.nom} : la rencontre de François Schepens et Damien Gorjanec, deux chefs qui cuisinent à quatre mains à ${site.adresse.commune}.`} preloads={[{ href: '/photos/portrait-damien-profil-960.webp', media: '(max-width: 767px)' }, { href: '/photos/portrait-damien-profil.webp', media: '(min-width: 768px)' }]}>
+  <HeroPage photo="/photos/portrait-damien-profil.webp" photoMobile="/photos/portrait-damien-profil-960.webp" titre="L’histoire" phrase="D’abord l’histoire d’une rencontre, celle de deux potes passionnés." />
 
-  <section class="section">
-    <div class="wrap stack">
-      <h2 class="section__title" data-split="words">Deux potes, un feu</h2>
-      {site.histoire.map((p) => <p data-reveal="up">{p}</p>)}
+  <section class="section section--v" aria-labelledby="rencontre-titre">
+    <div class="wrap">
+      <TitreV texte="La rencontre" id="rencontre-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">01</p>
+        <div class="diptyque">
+          {diptyque1.map((p, i) => (
+            <figure data-reveal="clip" data-delay={String(i * 0.15)}>
+              <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+        <div class="histoire__texte" data-reveal="up">
+          <p>{site.histoire[0]}</p>
+          <p>{site.histoire[1]}</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--v section--serre" aria-labelledby="lieu-titre">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">L'équipe</h2>
-      <div class="grid">
-        {site.equipe.map((m) => {
-          const p = m.photo ? photoDe(m.photo) : null;
-          return (
-            <article class="card" data-reveal="up">
-              {p && <figure><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>}
-              <h3>{m.nom}</h3>
-              <p class="muted">{m.role}{m.placeholder ? ' (rôle à confirmer)' : ''}</p>
-            </article>
-          );
-        })}
+      <TitreV texte="Le lieu" id="lieu-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">02</p>
+        <div class="diptyque">
+          {diptyque2.map((p, i) => (
+            <figure data-reveal="clip" data-delay={String(i * 0.15)}>
+              <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+        <div class="histoire__texte" data-reveal="up">
+          <p>{site.histoire[2]}</p>
+          <p>{site.histoire[3]}</p>
+        </div>
       </div>
-      <figure class="card" style="margin-top: calc(var(--u) * 4); max-width: 36rem" data-reveal="scale">
-        <img src={asset(equipePhoto.src)} alt={equipePhoto.alt} width={equipePhoto.largeur} height={equipePhoto.hauteur} loading="lazy" decoding="async" />
-        <figcaption class="muted">{equipePhoto.alt}</figcaption>
-      </figure>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Dans les coulisses</h2>
-      <div class="grid">
-        {coulisses.map((p, i) => (
-          <figure class="card" data-reveal="clip" data-delay={String(i * 0.1)}>
-            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
-            <figcaption class="muted">{p.alt}</figcaption>
-          </figure>
-        ))}
-      </div>
-      <div class="actions">
-        <a class="btn" href={u('/carte/')}>Découvrir la carte</a>
-        <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+  <section class="section section--serre" aria-labelledby="equipe-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">03</p>
+      <h2 class="titre-centre" id="equipe-titre" data-split="lines">Les chefs et l’équipe</h2>
+    </div>
+    <div class="wrap portraits">
+      {chefs.map((m, i) => (
+        <div class="portrait" data-reveal="scale" data-delay={String(i * 0.15)}>
+          <figure><img src={asset(m.img.src)} alt={m.img.alt} width={m.img.largeur} height={m.img.hauteur} loading="lazy" decoding="async" /></figure>
+          <p class="portrait__nom">{m.nom}</p>
+          <p class="portrait__role">{m.role}</p>
+        </div>
+      ))}
+    </div>
+    <ul class="wrap equipe-liste" data-reveal="fade">
+      {salle.map((m) => (
+        <li><strong>{m.nom}</strong>, {m.role.toLowerCase()}{m.placeholder && <span class="illu">rôle illustratif, à confirmer</span>}</li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section section--serre" aria-labelledby="valeurs-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">04</p>
+      <h2 class="titre-centre" id="valeurs-titre" data-split="lines">Ce qui ne change pas</h2>
+      <ul style="list-style: none; padding: 0" class="stack" data-reveal="up">
+        {site.valeurs.map((v) => <li>{v}</li>)}
+      </ul>
+      <div class="actions actions--centre">
+        <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={u('/carte/')}>Voir la carte</a>
       </div>
     </div>
   </section>

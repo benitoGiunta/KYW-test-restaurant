@@ -1,85 +1,139 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, photoDe, horaireTexte } from '../data/site';
+import Rouleau from '../components/Rouleau.astro';
+import Plan from '../components/Plan.astro';
+import TitreV from '../components/TitreV.astro';
+import { site, photoDe, horaireTexte, adresseLigne } from '../data/site';
 import { u, asset } from '../lib/url';
-const hero = photoDe('/photos/cuisine-chefs-passe.webp');
-const galerie = ['/photos/plat-boeuf-confit.webp', '/photos/salle-banquette.webp', '/photos/service-francois-table.webp'].map(photoDe);
+
+const hero = photoDe('/photos/salle-clients-bar.webp');
+const heroMobile = '/photos/salle-clients-bar-960.webp';
+const diptyque = ['/photos/salle-banquette.webp', '/photos/cuisine-mains-pate.webp'].map(photoDe);
+const chefs = site.equipe.filter((m) => m.photo).map((m) => ({ ...m, img: photoDe(m.photo!) }));
+const galerie = ['/photos/plat-saint-jacques.webp', '/photos/dessert-tarte-pomme.webp', '/photos/plat-tartare.webp', '/photos/service-planche.webp'].map(photoDe);
+const michelin = site.avis.find((a) => !a.placeholder);
+const ouverts = site.horaires.filter((h) => h.creneaux.length);
 ---
-<Base>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>{site.nom}</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">{site.baseline}</p>
-    <div class="actions" data-reveal="up" data-intro data-delay="0.5">
-      <a class="btn btn--primary" href={u('/reservation/')} data-magnetic="0.25">Réserver une table</a>
-      <a class="btn" href={u('/carte/')}>Voir la carte</a>
-    </div>
-    <figure class="hero__media" data-reveal="clip" data-intro data-delay="0.2">
-      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical data-parallax="0.1" />
-    </figure>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Ce qui nous anime</h2>
-      <ul class="liste stack" data-reveal="up">
-        {site.valeurs.map((v) => <li>{v}</li>)}
-      </ul>
+<Base preloads={[{ href: heroMobile, media: '(max-width: 767px)' }, { href: hero.src, media: '(min-width: 768px)' }]}>
+  <section class="hero" data-hero aria-label="Accueil">
+    <picture class="hero__photo">
+      <source media="(max-width: 767px)" srcset={asset(heroMobile)} width="960" height="541" />
+      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-hero-photo data-critical />
+    </picture>
+    <div class="hero__voile" data-vapeur aria-hidden="true"></div>
+    <div class="hero__contenu wrap">
+      <svg class="hero__trace" viewBox="0 0 12 200" preserveAspectRatio="none" aria-hidden="true"><path data-trace-hero d="M6 2 C 1 50, 11 120, 6 198" /></svg>
+      <h1 class="hero__nom">{site.nom}</h1>
+      <p class="hero__phrase">{site.phraseHero}</p>
+      <a class="hero__lien" href="#rouleau" data-hero-lien>Dérouler la carte</a>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Nos formules</h2>
-      <div class="grid">
-        {site.menus.map((m, i) => (
-          <article class="menu stack" data-reveal="up" data-delay={String(i * 0.1)}>
-            <h3>{m.nom}</h3>
-            <p><strong>{m.prix}</strong></p>
-            <p class="muted">{m.description}</p>
-          </article>
-        ))}
-      </div>
-      <p class="actions"><a class="link" href={u('/carte/')}>La carte complète</a></p>
+  <section class="section concept" aria-labelledby="concept-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">01</p>
+      <h2 class="titre-centre" id="concept-titre" data-split="lines">{site.manifeste.titre}</h2>
+      <p class="texte-l" data-reveal="up" data-delay="0.1">{site.manifeste.texte}</p>
+      {michelin && (
+        <blockquote class="citation" data-reveal="up" data-delay="0.2">
+          <p>« {michelin.texte} »</p>
+          <cite>{michelin.source}</cite>
+        </blockquote>
+      )}
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">En images</h2>
-      <div class="grid">
-        {galerie.map((p, i) => (
-          <figure class="card" data-reveal="scale" data-delay={String(i * 0.1)} data-cursor="Voir">
-            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
-            <figcaption class="muted">{p.alt}</figcaption>
-          </figure>
-        ))}
-      </div>
-    </div>
-  </section>
+  <Rouleau epingle={true} id="rouleau" numero="02" />
 
-  <section class="section">
+  <section class="section section--v" aria-labelledby="histoire-titre">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">Ils en parlent</h2>
-      <div class="grid">
-        {site.avis.map((a) => (
-          <blockquote class="avis" data-reveal="fade">
-            <p>{a.texte}</p>
-            <cite>{a.auteur}, {a.source}{a.placeholder ? ' (avis illustratif)' : ''}</cite>
-          </blockquote>
-        ))}
+      <TitreV texte="L’histoire" id="histoire-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">03</p>
+        <div class="diptyque">
+          {diptyque.map((p, i) => (
+            <figure data-reveal="clip" data-delay={String(i * 0.15)}>
+              <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+        <div class="histoire__texte" data-reveal="up">
+          <p>{site.histoire[0]}</p>
+          <p>{site.histoire[2]}</p>
+          <p class="lien-suite"><a class="link" href={u('/histoire/')}>Lire l’histoire des deux chefs</a></p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--serre" aria-labelledby="chefs-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">04</p>
+      <h2 class="titre-centre" id="chefs-titre" data-split="lines">Les chefs</h2>
+      <p class="texte" data-reveal="up">
+        François et Damien accompagnent eux-mêmes leurs plats jusqu’à votre table et vous expliquent leur démarche, épaulés par Sara et Jordan.
+      </p>
+    </div>
+    <div class="wrap portraits">
+      {chefs.map((m, i) => (
+        <div class="portrait" data-reveal="scale" data-delay={String(i * 0.15)}>
+          <figure><img src={asset(m.img.src)} alt={m.img.alt} width={m.img.largeur} height={m.img.hauteur} loading="lazy" decoding="async" /></figure>
+          <p class="portrait__nom">{m.nom}</p>
+          <p class="portrait__role">{m.role}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--v" aria-labelledby="images-titre">
     <div class="wrap">
-      <h2 class="section__title" data-split="words">Horaires et accès</h2>
-      <dl class="horaires" data-reveal="up">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-      </dl>
-      <div class="actions">
-        <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
-        <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
+      <TitreV texte="En images" id="images-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">05</p>
+        <div class="quinconce">
+          {galerie.map((p, i) => (
+            <figure data-reveal="fade" data-delay={String((i % 2) * 0.1)}>
+              <div class="cadre"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" data-parallax="0.06" /></div>
+              <figcaption>{p.alt}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--v" aria-labelledby="venir-titre">
+    <div class="wrap">
+      <TitreV texte="Venir" id="venir-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">06</p>
+        <div class="venir">
+          <Plan />
+          <div class="infos" data-reveal="up">
+            <div>
+              <h3>Adresse</h3>
+              <address>{adresseLigne()}</address>
+              <ul>
+                {site.acces.reperes.map((r) => <li>{r.nom}</li>)}
+                <li>{site.acces.gare.nom} : environ {site.acces.gare.marche}<span class="illu illu--ast" aria-hidden="true">*</span></li>
+                <li>{site.acces.parking.texte}<span class="illu illu--ast" aria-hidden="true">*</span></li>
+              </ul>
+              <p class="muted" style="font-size: var(--t-xs); margin-top: 0.5rem"><span class="illu illu--ast" style="margin-left: 0">*</span> estimation illustrative, à confirmer par le restaurant</p>
+            </div>
+            <div>
+              <h3>Horaires</h3>
+              <dl class="horaires">
+                {ouverts.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+                <dt>samedi</dt><dd>{horaireTexte(site.horaires[5])}</dd>
+                <dt>dimanche</dt><dd>{horaireTexte(site.horaires[6])}</dd>
+              </dl>
+            </div>
+            <div class="actions" style="margin-top: 0">
+              <a class="btn btn--plein" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
+              <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

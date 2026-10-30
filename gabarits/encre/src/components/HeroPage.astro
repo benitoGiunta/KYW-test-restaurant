@@ -1,0 +1,20 @@
+---
+// Hero des pages intérieures : photo sombre pleine largeur (peinte au premier rendu, préchargée par la page),
+// titre vertical en desktop, phrase d'une ou deux lignes. Pas de data-reveal sur la photo ni sur le titre.
+import { photoDe } from '../data/site';
+import { asset } from '../lib/url';
+interface Props { photo: string; photoMobile: string; titre: string; phrase?: string }
+const { photo, photoMobile, titre, phrase } = Astro.props;
+const p = photoDe(photo);
+---
+<section class="hero hero--page" data-hero>
+  <picture class="hero__photo">
+    <source media="(max-width: 767px)" srcset={asset(photoMobile)} width="960" height="541" />
+    <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} fetchpriority="high" decoding="async" data-hero-photo data-critical />
+  </picture>
+  <div class="hero__voile" data-vapeur aria-hidden="true"></div>
+  <div class="hero__contenu wrap">
+    <h1 class="hero__nom hero__nom--page">{titre}</h1>
+    {phrase && <p class="hero__phrase">{phrase}</p>}
+  </div>
+</section>
