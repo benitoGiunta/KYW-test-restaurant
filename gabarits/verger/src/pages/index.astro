@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import Roue from '../components/Roue.astro';
+import Mois from '../components/Mois.astro';
+import { site, photoDe, horaireTexte, citations, questions } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/plat-boeuf-confit-800.webp');
+const mains = photoDe('/photos/cuisine-mains-pate.webp');
+const salle = photoDe('/photos/salle-banquette.webp');
+const passe = photoDe('/photos/cuisine-chefs-passe.webp');
+const menu = site.carte[0];
+const services = menu.plats.filter((p) => p.prix === null);
+const supplements = menu.plats.filter((p) => p.prix !== null);
+---
+<Base>
+  <link slot="head" rel="preload" as="image" href={asset(hero.src)} fetchpriority="high" />
+
+  <section class="hero wrap" data-hero>
+    <p class="meta hero__sur">Bistronomie à {site.adresse.commune}</p>
+    <h1 class="mots" data-mots><span>Une</span><span>table</span><span>de</span><span>saison</span></h1>
+    <figure class="hero__media" data-hero-media>
+      <span class="vignette"><img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical /></span>
+      <a class="etiquette etiquette--mois hero__etiquette" href={u('/carte/')} data-hero-apres><span class="etiquette__dot" aria-hidden="true"></span><Mois /> · la carte en cours</a>
+    </figure>
+    <p class="hero__accroche" data-hero-apres>{site.baseline}</p>
+  </section>
+
+  <section class="section">
+    <div class="col">
+      <blockquote class="statement" data-split="lines">
+        <p>« {citations[0].texte} »</p>
+        <cite class="statement__source meta">{citations[0].source}</cite>
+      </blockquote>
+    </div>
+    <div class="wrap escalier" style="margin-top: calc(var(--u) * 10)">
+      <p class="lead" data-reveal="up">{site.histoire[3]}</p>
+      <figure class="vignette" data-reveal="clip" data-cursor="Voir"><img src={asset(mains.src)} alt={mains.alt} width={mains.largeur} height={mains.hauteur} loading="lazy" decoding="async" /></figure>
+    </div>
+  </section>
+
+  <div class="section"><Roue /></div>
+
+  <section class="section">
+    <div class="col">
+      <p class="pastille centre" style="justify-content: center; width: 100%"><Mois prefixe="La carte du mois · " /></p>
+      <h2 class="statement" data-split="lines">{site.menus[0].nom}</h2>
+      <ol class="carte-liste" data-reveal="fade">
+        {services.map((p) => <li class="plat"><span class="plat__nom">{p.nom}</span></li>)}
+        {supplements.map((p) => <li class="plat"><span class="plat__nom">{p.nom}<span class="plat__desc">{p.description}</span></span><span class="plat__prix">{p.prix}</span></li>)}
+      </ol>
+      <p class="menu-prix" data-reveal="fade"><span>Du lundi au vendredi soir</span><strong>{site.menus[0].prix}</strong></p>
+      <p class="actions"><a class="link link--caps" href={u('/carte/')}>Toute la carte et les formules du midi</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap paire">
+      <figure class="paire__media" data-reveal="clip" data-cursor="La salle"><img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" /></figure>
+      <div class="paire__texte stack">
+        <p class="meta">La salle</p>
+        <h2 class="statement" style="text-align: left" data-split="lines">Une petite salle, la cuisine ouverte, les chefs qui servent.</h2>
+        <p data-reveal="up">{site.histoire[3]}</p>
+        <ul class="stack" data-reveal="up" style="padding-left: 1.2em">{site.valeurs.map((v) => <li>{v}</li>)}</ul>
+      </div>
+    </div>
+    <div class="wrap paire paire--inverse" style="margin-top: calc(var(--u) * 10)">
+      <figure class="paire__media" data-reveal="clip" data-cursor="La cuisine"><img src={asset(passe.src)} alt={passe.alt} width={passe.largeur} height={passe.hauteur} loading="lazy" decoding="async" /></figure>
+      <div class="paire__texte stack">
+        <p class="meta">D'où ça vient</p>
+        <blockquote class="statement" style="text-align: left" data-split="lines"><p>« {citations[1].texte} »</p><cite class="statement__source meta">{citations[1].source}</cite></blockquote>
+        <p data-reveal="up"><a class="link" href={u('/producteurs/')}>Voir la page des producteurs</a> <span class="muted">(mise en page illustrative, producteurs à communiquer)</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="col">
+      <p class="meta centre">Questions</p>
+      <h2 class="statement" data-split="lines">Avant de venir</h2>
+      <div class="faq" data-faq>
+        {questions.map((q, i) => (
+          <details name="faq" data-reveal="up" data-delay={String(i * 0.08)}>
+            <summary>{q.q}{q.placeholder && <span class="exemple">exemple</span>}</summary>
+            <p class="faq__r">{q.r}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--fin">
+    <div class="col bande">
+      <a class="btn btn--plein" href={site.reservation.url} rel="noopener" data-magnetic="0.15">Réserver une table <span class="btn__fleche" aria-hidden="true">→</span></a>
+      <dl class="horaires horaires--centre">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+      <p class="centre muted">Plus de six personnes ou dernière minute : <a class="link" href={`tel:${site.telephone.replace(/\s+/g, '')}`}>{site.telephone}</a></p>
+    </div>
+  </section>
+</Base>

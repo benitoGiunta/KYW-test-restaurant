@@ -1,0 +1,37 @@
+---
+// Page ENTIÈREMENT illustrative : le dossier client ne nomme aucun producteur. Chaque fiche porte la marque « exemple ».
+import Base from '../layouts/Base.astro';
+import { site, producteurs, citations } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="Les producteurs" description={`Les producteurs des Potes au Feu à ${site.adresse.commune} : page de démonstration, mise en page des étiquettes d'origine (nom, village, distance).`}>
+  <section class="hero wrap" data-hero>
+    <p class="meta hero__sur">Étiquettes d'origine</p>
+    <h1 class="mots" data-mots><span>D'où</span><span>ça</span><span>vient</span></h1>
+    <p class="hero__accroche" data-hero-apres>« {citations[1].texte} »</p>
+  </section>
+
+  <section class="section">
+    <div class="col">
+      <p class="bandeau" data-reveal="fade">Mise en page illustrative : les producteurs ci-dessous sont des exemples inventés, à remplacer par les vrais partenaires du restaurant.</p>
+      <ul class="index" style="margin-top: calc(var(--u) * 3)">
+        {producteurs.map((p, i) => (
+          <li data-reveal="up" data-delay={String(i * 0.06)}>
+            <span class="index__nom">{p.nom} <span class="exemple">exemple</span></span>
+            <span class="meta meta--terre">{p.village}</span>
+            <span class="index__km">{p.km} km</span>
+            <span class="muted">{p.produit}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--fin">
+    <div class="col centre stack">
+      <p class="meta">L'étiquette d'origine</p>
+      <p class="lead">À l'adaptation, chaque plat de la carte reçoit son étiquette : produit, producteur, village, distance.</p>
+      <p><a class="etiquette" href={u('/carte/')}><span class="etiquette__dot" aria-hidden="true"></span>Butternut · {producteurs[1].nom} · {producteurs[1].village} · {producteurs[1].km} km <span class="exemple">exemple</span></a></p>
+    </div>
+  </section>
+</Base>

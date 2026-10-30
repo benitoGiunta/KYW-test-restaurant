@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import Mois from '../components/Mois.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const photos = ['/photos/plat-saint-jacques.webp', '/photos/dessert-tarte-pomme.webp'].map(photoDe);
+---
+<Base title="La carte" description={`La carte des Potes au Feu à ${site.adresse.commune} : menu dégustation unique 4 services, formule du midi et lunch, produits de saison.`}>
+  <section class="hero wrap" data-hero>
+    <p class="meta hero__sur"><Mois prefixe="La carte · " /></p>
+    <h1 class="mots" data-mots><span>Un</span><span>menu</span><span>unique</span></h1>
+    <p class="hero__accroche" data-hero-apres>Pas de carte à la carte : un menu dégustation qui suit les produits du moment, servi et expliqué par les chefs.</p>
+  </section>
+
+  {site.carte.map((cat, ci) => (
+    <section class="section">
+      <div class="col">
+        <h2 class="statement" data-split="lines">{cat.categorie}</h2>
+        <ul class="carte-liste" data-reveal="fade">
+          {cat.plats.map((p) => (
+            <li class="plat">
+              <span class="plat__nom">{p.nom}{p.placeholder && <span class="exemple"> exemple</span>}{p.description && <span class="plat__desc">{p.description}</span>}</span>
+              {p.prix && <span class="plat__prix">{p.prix}</span>}
+            </li>
+          ))}
+        </ul>
+        {ci === 0 && <p class="menu-prix" data-reveal="fade"><span>Du lundi au vendredi soir</span><strong>{site.menus[0].prix}</strong></p>}
+      </div>
+    </section>
+  ))}
+
+  <section class="section">
+    <div class="col">
+      <p class="meta centre">Le midi et les cadeaux</p>
+      <h2 class="statement" data-split="lines">Les formules</h2>
+      <div class="formules">
+        {site.menus.slice(1).map((m, i) => (
+          <article class="formule" data-reveal="up" data-delay={String(i * 0.1)}>
+            <p class="meta">{m.prix}</p>
+            <h3>{m.nom}</h3>
+            <p class="muted">{m.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--fin">
+    <div class="wrap escalier">
+      {photos.map((p) => <figure class="vignette" data-reveal="clip" data-cursor="Voir"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>)}
+    </div>
+    <div class="col actions"><a class="btn" href={u('/reservation/')}>Réserver une table</a><a class="btn btn--ligne" href={u('/saisons/')}>Les saisons</a></div>
+  </section>
+</Base>

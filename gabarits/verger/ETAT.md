@@ -1,0 +1,12 @@
+# ETAT — gabarit verger
+- [x] Socle copié (sans node_modules/dist), package.json renommé, pnpm install
+- [x] Polices (Newsreader 400/500 + italiques, Sofia Sans Condensed 300/600) ; @font-face inline dans Base.astro
+- [x] DESIGN.md, tokens.css, base.css
+- [x] site.ts (ingredients, platsDuMois, citations, producteurs illustratifs, questions, saisons, photo hero 800)
+- [x] composants Loader, Header, Footer, Mois, Branche, Roue ; Base.astro (data-mois avant rendu)
+- [x] pages : index, carte, histoire, reservation, producteurs, saisons, 404
+- [x] motion/setup.ts : loader branche, rideau, hero, roue (pin+scrub, mois réel, idle), FAQ
+- [x] build OK (dist/gabarits/verger/, 7 pages)
+- [x] QA 2 passes (port 4409, `.shots-verger/`, audit 0 FAIL, console 0, débordement 0, reduced OK), corrections mécaniques
+- [x] FICHE.md, RAPPORT.md, apercu.png, leçons dans agents/lecons.md
+- [ ] critique `jury` et revue (agent suivant) ; pas de commit (orchestrateur)

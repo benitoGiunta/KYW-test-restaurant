@@ -1,0 +1,14 @@
+---
+// Loader « branche » : les 12 feuilles se remplissent avec la progression ; le compteur affiche le mois courant.
+import { site } from '../data/site';
+import Branche from './Branche.astro';
+import Mois from './Mois.astro';
+---
+<div id="loader" role="status" aria-label="Chargement">
+  <div class="loader__inner">
+    <span class="loader__name" data-loader-out>{site.nom}</span>
+    <Branche classe="loader__branche" />
+    <span class="loader__count" data-loader-out><Mois /></span>
+    <span class="sr-only" data-loader-count>000</span>
+  </div>
+</div>

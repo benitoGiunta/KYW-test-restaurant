@@ -1,0 +1,271 @@
+/* « Verger » : axe central strict, crème, encre vert feuille, rose radis. Le vert est l'encre, jamais un décor. */
+@import './engine.css';
+
+body { font-family: var(--f-body); font-weight: 400; letter-spacing: -0.01em; line-height: 1.55; color: var(--c-fg); background: var(--c-bg); }
+::selection { background: var(--c-ink); color: var(--c-bg); }
+:focus-visible { outline: 2px solid var(--c-ink); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 500; letter-spacing: -0.01em; }
+em, i { font-style: italic; }
+strong { font-weight: 500; }
+
+/* Trois largeurs : 560 (texte), 880 (compositions), pleine. Tout est centré. */
+.wrap { width: min(100% - 2 * var(--gutter), 880px); margin-inline: auto; }
+.col { width: min(100% - 2 * var(--gutter), var(--col)); margin-inline: auto; }
+.centre { text-align: center; }
+.section { padding-block: var(--silence) 0; }
+.section--fin { padding-bottom: var(--silence); }
+.stack > * + * { margin-top: var(--u); }
+.muted { color: var(--c-muted); }
+.lead { font-size: var(--t-m); line-height: 1.4; }
+
+/* Meta et étiquettes : condensée, capitales, +0.04em */
+.meta, .etiquette, .nav a, .btn, .mois-btn, .vignette__nom, .plat__ingredient, .pastille, .horaires dt {
+  font-family: var(--f-cond); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: var(--t-xs); line-height: 1.2;
+}
+.meta { color: var(--c-ink); }
+.meta--terre { color: var(--c-terre); }
+.etiquette {
+  display: inline-flex; align-items: center; gap: 0.6em; padding: 0.55em 0.9em; min-height: 24px;
+  background: var(--c-bg); color: var(--c-fg); border: 1px solid var(--c-line); border-radius: var(--radius-etiquette);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+}
+.etiquette--mois { color: var(--c-ink); border-color: var(--c-ink); }
+a.etiquette:hover, a.etiquette:focus-visible { transform: translateY(-2px); border-color: var(--c-ink); }
+.etiquette__dot { width: 0.5em; height: 0.5em; border-radius: 50%; background: var(--c-accent); }
+.pastille { display: inline-flex; align-items: center; gap: 0.5em; color: var(--c-ink); }
+.pastille::before { content: ''; width: 0.6em; height: 0.6em; border-radius: 50%; background: var(--c-accent); }
+.exemple { font-family: var(--f-cond); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; color: var(--c-terre); vertical-align: 0.15em; white-space: nowrap; }
+
+/* Mois courant (html[data-mois] posé avant le premier rendu ; sans JS : « de saison ») */
+[data-mois-nom] { display: none; }
+html:not([data-mois]) [data-mois-nom='0'] { display: inline; }
+html[data-mois='1'] [data-mois-nom='1'], html[data-mois='2'] [data-mois-nom='2'], html[data-mois='3'] [data-mois-nom='3'], html[data-mois='4'] [data-mois-nom='4'],
+html[data-mois='5'] [data-mois-nom='5'], html[data-mois='6'] [data-mois-nom='6'], html[data-mois='7'] [data-mois-nom='7'], html[data-mois='8'] [data-mois-nom='8'],
+html[data-mois='9'] [data-mois-nom='9'], html[data-mois='10'] [data-mois-nom='10'], html[data-mois='11'] [data-mois-nom='11'], html[data-mois='12'] [data-mois-nom='12'] { display: inline; }
+.branche { width: 100%; max-width: 320px; height: auto; color: var(--c-ink); }
+.branche__feuille { fill: var(--c-line); transition: fill 0.4s; }
+html[data-mois='1'] [data-feuille='1'], html[data-mois='2'] [data-feuille='2'], html[data-mois='3'] [data-feuille='3'], html[data-mois='4'] [data-feuille='4'],
+html[data-mois='5'] [data-feuille='5'], html[data-mois='6'] [data-feuille='6'], html[data-mois='7'] [data-feuille='7'], html[data-mois='8'] [data-feuille='8'],
+html[data-mois='9'] [data-feuille='9'], html[data-mois='10'] [data-feuille='10'], html[data-mois='11'] [data-feuille='11'], html[data-mois='12'] [data-feuille='12'] { fill: var(--c-accent); }
+.branche__feuille.is-on { fill: var(--c-ink); }
+
+/* Liens : soulignement qui pousse depuis la ligne de base */
+.link { position: relative; display: inline-block; padding-block: 0.25em; color: var(--c-ink); }
+.link::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.15em; height: 1px; background: currentColor; transform: scaleY(1); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.link:hover::after, .link:focus-visible::after { transform: scaleY(3); }
+.link--caps { font-family: var(--f-cond); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: var(--t-xs); }
+
+/* Boutons : rectangles d'encre, 0 radius */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.6em; min-height: 48px; padding: 0.9em 1.6em; background: var(--c-ink); color: var(--c-bg); border: 1px solid var(--c-ink); border-radius: var(--radius); font-size: var(--t-s); transition: background 0.35s, color 0.35s, border-color 0.35s; }
+.btn:hover, .btn:focus-visible { background: var(--c-terre); border-color: var(--c-terre); }
+.btn--ligne { background: transparent; color: var(--c-ink); }
+.btn--ligne:hover, .btn--ligne:focus-visible { background: var(--c-ink); color: var(--c-bg); border-color: var(--c-ink); }
+.btn--plein { display: flex; width: 100%; min-height: 72px; font-size: var(--t-m); font-weight: 300; letter-spacing: 0.1em; }
+.btn--plein .btn__fleche { font-weight: 600; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.btn--plein:hover .btn__fleche { transform: translateX(6px); }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--u); margin-top: calc(var(--u) * 3); }
+
+/* En-tête : marque centrée, nav en petites capitales sous la marque */
+.header { position: relative; z-index: var(--z-header); background: var(--c-bg); }
+.header__inner { display: grid; justify-items: center; gap: calc(var(--u) * 1.2); padding-block: calc(var(--u) * 2) calc(var(--u) * 1.5); border-bottom: 1px solid var(--c-line); }
+.header__brand { font-family: var(--f-display); font-style: italic; font-weight: 500; font-size: var(--t-m); color: var(--c-ink); transition: color 0.3s; }
+.header__brand:hover { color: var(--c-terre); }
+.nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.2em calc(var(--u) * 2); }
+.nav a { position: relative; display: inline-block; padding: 0.4em 0; min-height: 24px; color: var(--c-fg); }
+.nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.1em; height: 1px; background: var(--c-ink); transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.nav a:hover::after, .nav a:focus-visible::after, .nav a[aria-current='page']::after { transform: scaleX(1); }
+.nav a[aria-current='page'] { color: var(--c-ink); }
+
+/* Hero : poster centré, mots empilés, vignette carrée, étiquette du mois */
+.hero { display: grid; justify-items: center; gap: calc(var(--u) * 3); padding-block: calc(var(--u) * 7) 0; text-align: center; }
+.hero__sur { color: var(--c-terre); }
+.mots { display: grid; justify-items: center; font-family: var(--f-cond); font-weight: 300; text-transform: uppercase; letter-spacing: 0.04em; line-height: 0.9; font-size: var(--t-mega); color: var(--c-ink); }
+.mots > span { display: block; }
+.mots > span:nth-child(2n) { color: var(--c-fg); }
+.hero__media { position: relative; width: var(--vignette); max-width: calc(100% - 2 * var(--gutter)); }
+.hero__media .etiquette { position: absolute; left: 50%; bottom: calc(var(--u) * -1.5); transform: translateX(-50%); white-space: nowrap; }
+.hero__media a.etiquette:hover, .hero__media a.etiquette:focus-visible { transform: translate(-50%, -2px); border-color: var(--c-accent); color: var(--c-terre); }
+.hero__accroche { font-size: var(--t-m); font-style: italic; max-width: 32ch; margin-top: calc(var(--u) * 2); }
+
+/* Vignettes carrées : 0 radius, 280 px, ou typographiques (nom sur carré teinté) */
+.vignette { display: block; width: var(--vignette); max-width: 100%; aspect-ratio: 1; overflow: clip; background: var(--c-vignette); }
+.vignette img { width: 100%; height: 100%; object-fit: cover; }
+.vignette--typo { display: grid; place-content: center; text-align: center; padding: var(--u); color: var(--c-ink); gap: 0.4em; }
+.vignette__nom { font-weight: 300; font-size: var(--t-m); letter-spacing: 0.08em; }
+.vignette--petite { width: 160px; }
+
+/* Statement : italique Newsreader, puis paragraphe en escalier */
+.statement { font-family: var(--f-display); font-style: italic; font-weight: 400; font-size: var(--t-l); line-height: 1.25; text-align: center; }
+.statement__source { display: block; margin-top: calc(var(--u) * 2); font-style: normal; }
+.escalier { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 4) calc(var(--u) * 3); }
+.escalier > :nth-child(odd) { grid-column: 1; }
+.escalier > :nth-child(even) { grid-column: 2; margin-top: calc(var(--u) * 6); }
+.escalier figure.vignette { justify-self: center; }
+
+/* Roue des saisons : une seule variable --rot (GSAP au scroll) + --derive (idle) pilote disque et vignettes */
+.roue { --rot: 0deg; --derive: 0deg; }
+html[data-mois='2'] .roue { --rot: -30deg; } html[data-mois='3'] .roue { --rot: -60deg; } html[data-mois='4'] .roue { --rot: -90deg; }
+html[data-mois='5'] .roue { --rot: -120deg; } html[data-mois='6'] .roue { --rot: -150deg; } html[data-mois='7'] .roue { --rot: -180deg; }
+html[data-mois='8'] .roue { --rot: -210deg; } html[data-mois='9'] .roue { --rot: -240deg; } html[data-mois='10'] .roue { --rot: -270deg; }
+html[data-mois='11'] .roue { --rot: -300deg; } html[data-mois='12'] .roue { --rot: -330deg; }
+.roue__stage { min-height: 100svh; display: grid; grid-template-rows: auto 1fr auto; justify-items: center; align-items: center; gap: var(--u); padding-block: calc(var(--u) * 2); }
+.roue__haut { display: grid; justify-items: center; gap: var(--u); text-align: center; }
+.roue__scene { position: relative; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: calc(var(--u) * 3); width: min(100%, 1120px); }
+.roue__disque { position: relative; width: min(560px, 90vw, 62svh); aspect-ratio: 1; container-type: size; transform: rotate(calc(var(--rot) + var(--derive))); will-change: transform; }
+.roue__svg { width: 100%; height: 100%; overflow: visible; }
+.roue__secteur { fill: var(--c-bg); stroke: var(--c-line); stroke-width: 1; transition: fill 0.4s; }
+.roue__secteur:hover, .roue__secteur.is-hover { fill: var(--c-vignette); }
+html[data-mois='1'] [data-secteur='1'], html[data-mois='2'] [data-secteur='2'], html[data-mois='3'] [data-secteur='3'], html[data-mois='4'] [data-secteur='4'],
+html[data-mois='5'] [data-secteur='5'], html[data-mois='6'] [data-secteur='6'], html[data-mois='7'] [data-secteur='7'], html[data-mois='8'] [data-secteur='8'],
+html[data-mois='9'] [data-secteur='9'], html[data-mois='10'] [data-secteur='10'], html[data-mois='11'] [data-secteur='11'], html[data-mois='12'] [data-secteur='12'] { fill: var(--c-ink); }
+.roue__mois { font-family: var(--f-cond); font-weight: 600; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--c-fg); text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+html[data-mois='1'] [data-secteur-mois='1'], html[data-mois='2'] [data-secteur-mois='2'], html[data-mois='3'] [data-secteur-mois='3'], html[data-mois='4'] [data-secteur-mois='4'],
+html[data-mois='5'] [data-secteur-mois='5'], html[data-mois='6'] [data-secteur-mois='6'], html[data-mois='7'] [data-secteur-mois='7'], html[data-mois='8'] [data-secteur-mois='8'],
+html[data-mois='9'] [data-secteur-mois='9'], html[data-mois='10'] [data-secteur-mois='10'], html[data-mois='11'] [data-secteur-mois='11'], html[data-mois='12'] [data-secteur-mois='12'] { fill: var(--c-bg); }
+.roue__centre { fill: var(--c-bg); stroke: var(--c-line); }
+.roue__coeur { font-family: var(--f-display); font-style: italic; font-size: 22px; fill: var(--c-ink); text-anchor: middle; dominant-baseline: middle; }
+.vig {
+  position: absolute; left: 50%; top: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px;
+  display: grid; place-content: center; text-align: center; padding: 4px;
+  background: var(--c-vignette); border: 1px solid var(--c-line); color: var(--c-ink);
+  font-family: var(--f-cond); font-weight: 600; font-size: 10px; line-height: 1.1; letter-spacing: 0.04em; text-transform: uppercase;
+  transform: rotate(var(--a)) translateY(-50cqw) rotate(calc(-1 * var(--a) - var(--rot) - var(--derive)));
+  transition: background 0.3s, color 0.3s;
+}
+.vig.is-top { background: var(--c-ink); color: var(--c-bg); border-color: var(--c-accent); }
+.roue__plats { display: grid; gap: calc(var(--u) * 5); }
+.roue__plats--g { justify-items: end; text-align: right; }
+.roue__plats--g > :nth-child(2) { margin-right: calc(var(--u) * 6); }
+.roue__plats--d > :nth-child(2) { margin-left: calc(var(--u) * 6); }
+.plat-mois { display: grid; gap: 0.3em; max-width: 22ch; }
+.plat-mois__nom { font-family: var(--f-display); font-size: var(--t-m); line-height: 1.2; color: var(--c-fg); }
+.plat-mois__nom:hover { color: var(--c-ink); }
+.plat__ingredient { color: var(--c-ink); }
+.roue__bas { display: grid; justify-items: center; gap: var(--u); text-align: center; width: 100%; }
+.roue__legende { font-family: var(--f-display); font-size: var(--t-m); min-height: 1.4em; }
+.roue__legende b { font-weight: 500; color: var(--c-ink); text-transform: capitalize; }
+.mois-liste { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3em 0.6em; list-style: none; padding: 0; }
+.mois-btn { padding: 0.4em 0.55em; min-height: 24px; color: var(--c-muted); border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
+.mois-btn:hover, .mois-btn:focus-visible, .mois-btn[aria-pressed='true'] { color: var(--c-ink); border-color: var(--c-ink); }
+.mois-btn[data-courant] { color: var(--c-terre); border-bottom-color: var(--c-accent); }
+
+/* Carte du mois : liste 560 */
+.carte-liste { list-style: none; padding: 0; margin-top: calc(var(--u) * 3); border-top: 1px solid var(--c-line); }
+.plat { display: flex; justify-content: space-between; align-items: baseline; gap: calc(var(--u) * 2); padding-block: calc(var(--u) * 1.3); border-bottom: 1px solid var(--c-line); }
+.plat__nom { font-family: var(--f-display); font-size: var(--t-m); line-height: 1.25; }
+.plat__desc { display: block; margin-top: 0.2em; color: var(--c-muted); font-size: var(--t-s); }
+.plat__prix { white-space: nowrap; font-family: var(--f-cond); font-weight: 600; letter-spacing: 0.04em; color: var(--c-ink); }
+.menu-prix { display: flex; justify-content: space-between; align-items: baseline; gap: var(--u); margin-top: calc(var(--u) * 2); font-family: var(--f-cond); font-weight: 300; font-size: var(--t-l); text-transform: uppercase; letter-spacing: 0.04em; color: var(--c-ink); }
+.menu-prix strong { font-weight: 600; }
+.formules { display: grid; gap: calc(var(--u) * 2); margin-top: calc(var(--u) * 3); }
+.formule { padding: calc(var(--u) * 2); border: 1px solid var(--c-line); display: grid; gap: 0.4em; }
+.formule h3 { font-size: var(--t-m); }
+
+/* Paire asymétrique : photo + texte, décalés */
+.paire { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 4); align-items: start; }
+.paire__media { overflow: clip; aspect-ratio: 1; background: var(--c-vignette); }
+.paire__media img { width: 100%; height: 100%; object-fit: cover; }
+.paire__texte { padding-top: calc(var(--u) * 8); }
+.paire--inverse .paire__media { order: 2; }
+.paire--inverse .paire__texte { padding-top: 0; }
+.paire--inverse .paire__media { margin-top: calc(var(--u) * 8); }
+
+/* FAQ : accordéon natif, une réponse ouverte à la fois */
+.faq { border-top: 1px solid var(--c-line); margin-top: calc(var(--u) * 3); }
+.faq details { border-bottom: 1px solid var(--c-line); }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: var(--u); padding: calc(var(--u) * 1.5) 0; cursor: pointer; list-style: none; font-family: var(--f-display); font-size: var(--t-m); color: var(--c-fg); transition: color 0.3s; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: var(--c-ink); }
+.faq summary::after { content: ''; flex: none; width: 0.6em; height: 0.6em; border-right: 1.5px solid var(--c-ink); border-bottom: 1.5px solid var(--c-ink); transform: rotate(45deg); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.faq details[open] summary::after { transform: rotate(-135deg); }
+.faq .faq__r { padding: 0 0 calc(var(--u) * 2); max-width: 52ch; color: var(--c-fg); }
+
+/* Bande réserver */
+.bande { display: grid; gap: calc(var(--u) * 3); }
+.horaires { display: grid; grid-template-columns: max-content 1fr; gap: 0.4em calc(var(--u) * 2); align-items: baseline; }
+.horaires dt { color: var(--c-ink); }
+.horaires--centre { justify-content: center; width: max-content; margin-inline: auto; }
+
+/* Index des producteurs : liste, portrait carré au survol */
+.index { list-style: none; padding: 0; border-top: 1px solid var(--c-line); }
+.index li { display: grid; grid-template-columns: 1.6fr 1fr auto 1fr; gap: var(--u) calc(var(--u) * 2); align-items: baseline; padding-block: calc(var(--u) * 1.4); border-bottom: 1px solid var(--c-line); transition: background 0.3s; }
+.index li:hover { background: var(--c-vignette); }
+.index__nom { font-family: var(--f-display); font-size: var(--t-m); }
+.index__km { font-family: var(--f-cond); font-weight: 600; letter-spacing: 0.06em; color: var(--c-ink); }
+.bandeau { padding: calc(var(--u) * 1.5) calc(var(--u) * 2); border: 1px solid var(--c-accent); color: var(--c-terre); font-size: var(--t-s); text-align: center; }
+
+/* Saisons : 4 cartes, grille 2 colonnes en escalier */
+.saisons { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 6) calc(var(--u) * 4); }
+.saison { display: grid; gap: var(--u); }
+.saison:nth-child(even) { margin-top: calc(var(--u) * 8); }
+.saison h2 { font-family: var(--f-cond); font-weight: 300; font-size: var(--t-xl); text-transform: uppercase; letter-spacing: 0.04em; line-height: 1; color: var(--c-ink); }
+.saison__ingredients { display: flex; flex-wrap: wrap; gap: 0.4em; }
+.saison .carte-liste { margin-top: var(--u); }
+
+/* Formulaire */
+.form { display: grid; gap: calc(var(--u) * 2); }
+.form label { display: grid; gap: 0.4em; }
+.form label > span { font-family: var(--f-cond); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: var(--t-xs); color: var(--c-ink); }
+.form input, .form textarea { padding: 0.7em 0.9em; border: 1px solid var(--c-line); border-radius: var(--radius-etiquette); background: transparent; transition: border-color 0.3s; }
+.form input:focus, .form textarea:focus { border-color: var(--c-ink); outline: none; }
+.form__deux { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 2); }
+
+/* Équipe et galerie */
+.equipe { display: grid; grid-template-columns: repeat(2, var(--vignette)); justify-content: center; gap: calc(var(--u) * 5) calc(var(--u) * 4); }
+.membre { display: grid; gap: 0.3em; justify-items: center; text-align: center; }
+.membre h3 { font-size: var(--t-m); }
+.galerie { display: grid; grid-template-columns: repeat(3, var(--vignette)); justify-content: center; gap: calc(var(--u) * 3); }
+.galerie > :nth-child(3n + 2) { margin-top: calc(var(--u) * 6); }
+
+/* Pied de page finale */
+.footer { border-top: 1px solid var(--c-line); padding-block: calc(var(--u) * 5) calc(var(--u) * 4); font-size: var(--t-s); }
+.footer__branche { display: grid; justify-items: center; gap: var(--u); margin-bottom: calc(var(--u) * 5); }
+.footer__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--u) * 3); }
+.footer__col { display: grid; gap: 0.4em; align-content: start; }
+.footer__col .meta { margin-bottom: 0.4em; }
+.footer address { font-style: normal; }
+/* Pied de page KYW : le lien « Réalisé par » doit faire 24 px de haut */
+.kyw-footer a, .kyw-signature a { display: inline-block; min-height: 24px; line-height: 24px; }
+
+/* Loader : branche sur crème, nom et mois */
+#loader { background: var(--c-bg); color: var(--c-ink); display: grid; place-content: center; padding: var(--gutter); }
+.loader__inner { display: grid; justify-items: center; gap: calc(var(--u) * 2); overflow: hidden; }
+.loader__name { font-family: var(--f-display); font-style: italic; font-size: var(--t-m); }
+.loader__count { font-family: var(--f-cond); font-weight: 300; font-size: var(--t-l); text-transform: uppercase; letter-spacing: 0.1em; }
+.loader__branche .branche__tige { transform-origin: left; transform: scaleX(0); }
+.loader__branche .branche__feuille { fill: var(--c-line); }
+.loader__branche .branche__feuille.is-on { fill: var(--c-ink); }
+
+/* Rideau : panneau vert qui pousse depuis le bas (GSAP pilote scaleY) */
+.curtain__panel { transform-origin: bottom; }
+
+/* 404 */
+.page-404 { min-height: 60svh; display: grid; place-content: center; text-align: center; gap: calc(var(--u) * 2); padding-block: var(--silence); }
+
+@media (max-width: 767px) {
+  :root { --silence: 9rem; --vignette: 240px; }
+  .mots { font-size: 12vw; }
+  .escalier, .paire, .saisons, .form__deux { grid-template-columns: 1fr; }
+  .escalier > :nth-child(even), .saison:nth-child(even) { margin-top: 0; grid-column: 1; }
+  .escalier > :nth-child(even) { padding-left: 10%; }
+  .escalier > :nth-child(odd) { padding-right: 10%; }
+  .paire__texte, .paire--inverse .paire__media { padding-top: 0; margin-top: 0; }
+  .paire--inverse .paire__media { order: 0; }
+  .roue__scene { grid-template-columns: 1fr; }
+  .roue__plats { display: none; } /* les 4 services sont listés dans « La carte du mois » juste après */
+  .roue__disque { width: min(90vw, 60svh); }
+  .vig { width: 34px; height: 34px; margin: -17px 0 0 -17px; font-size: 0; }
+  .vig::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .roue__mois { font-size: 20px; }
+  .roue__coeur { font-size: 26px; }
+  .index li { grid-template-columns: 1fr auto; }
+  .index li > :nth-child(2), .index li > :nth-child(4) { grid-column: 1 / -1; }
+  .equipe, .galerie { grid-template-columns: var(--vignette); }
+  .galerie > :nth-child(3n + 2) { margin-top: 0; }
+  .footer__cols { grid-template-columns: 1fr; }
+  .nav { gap: 0.1em calc(var(--u) * 1.6); }
+  .loader__count { display: none; }
+  .btn--plein { min-height: 64px; font-size: var(--t-body); }
+}
+.roue__coeur-html { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 0.2em; text-align: center; pointer-events: none; }
+.roue__coeur-mois { font-family: var(--f-display); font-style: italic; font-size: var(--t-m); color: var(--c-ink); }

@@ -1,0 +1,31 @@
+---
+// Archive des quatre saisons : ingrédients du calendrier indicatif et un EXEMPLE de carte par saison (la carte réelle est sur /carte/).
+import Base from '../layouts/Base.astro';
+import { site, saisons, ingredients, mois } from '../data/site';
+import { u } from '../lib/url';
+const ingDe = (s: (typeof saisons)[number]) => ingredients.filter((i) => s.mois.includes(i.mois[0]));
+---
+<Base title="Les saisons" description={`Comment la carte des Potes au Feu à ${site.adresse.commune} tourne avec les saisons : ingrédients et exemples de cartes de printemps, d'été, d'automne et d'hiver.`}>
+  <section class="hero wrap" data-hero>
+    <p class="meta hero__sur">Archive</p>
+    <h1 class="mots" data-mots><span>Quatre</span><span>cartes</span><span>par</span><span>an</span></h1>
+    <p class="hero__accroche" data-hero-apres>Le menu change avec le verger. Voici ce que chaque saison apporte, et un exemple de ce qu'elle peut devenir à table.</p>
+  </section>
+
+  <section class="section section--fin">
+    <div class="wrap saisons">
+      {saisons.map((s) => (
+        <article class="saison" data-reveal="up">
+          <p class="meta">{s.mois.map((m) => mois[m - 1]).join(' · ')}</p>
+          <h2>{s.nom}</h2>
+          <p class="saison__ingredients">{ingDe(s).map((i) => <span class="etiquette">{i.nom}</span>)}</p>
+          <p class="meta meta--terre">Exemple de carte<span class="exemple">*</span></p>
+          <ul class="carte-liste">{s.plats.map((p) => <li class="plat"><span class="plat__nom">{p.nom}</span></li>)}</ul>
+        </article>
+      ))}
+    </div>
+    <div class="col centre" style="margin-top: calc(var(--u) * 6)">
+      <p class="muted"><span class="exemple">*</span> Calendrier et cartes de saison illustratifs. <a class="link" href={u('/carte/')}>La carte en cours</a> est la seule carte réelle.</p>
+    </div>
+  </section>
+</Base>

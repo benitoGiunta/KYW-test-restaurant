@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { asset } from '../lib/url';
+const galerie = ['/photos/cuisine-chefs-dressage.webp', '/photos/salle-ampoules.webp', '/photos/service-francois-table.webp', '/photos/equipe-trio.webp', '/photos/cuisine-francois-poele.webp', '/photos/salle-clients-bar.webp'].map(photoDe);
+const portraits = ['/photos/chef-damien.webp', '/photos/chef-francois.webp'];
+---
+<Base title="Notre histoire" description={`L'histoire des Potes au Feu à ${site.adresse.commune} : François Schepens et Damien Gorjanec, deux amis, une cuisine à quatre mains.`}>
+  <section class="hero wrap" data-hero>
+    <p class="meta hero__sur">Deux potes, quatre mains</p>
+    <h1 class="mots" data-mots><span>Une</span><span>rencontre</span></h1>
+    <p class="hero__accroche" data-hero-apres>{site.baseline}</p>
+  </section>
+
+  <section class="section">
+    <div class="wrap escalier">
+      {site.histoire.map((p, i) => (i === 1 ? <><figure class="vignette" data-reveal="clip"><img src={asset(portraits[0])} alt={photoDe(portraits[0]).alt} width="1351" height="1800" loading="lazy" decoding="async" /></figure><p class="lead" data-reveal="up">{p}</p></> : <p class="lead" data-reveal="up">{p}</p>))}
+      <figure class="vignette" data-reveal="clip"><img src={asset(portraits[1])} alt={photoDe(portraits[1]).alt} width="1351" height="1800" loading="lazy" decoding="async" /></figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="col"><p class="meta centre">L'équipe</p><h2 class="statement" data-split="lines">En cuisine et en salle</h2></div>
+    <div class="wrap equipe" style="margin-top: calc(var(--u) * 4)">
+      {site.equipe.map((m, i) => (
+        <article class="membre" data-reveal="up" data-delay={String(i * 0.1)}>
+          {m.photo ? <figure class="vignette"><img src={asset(m.photo)} alt={photoDe(m.photo).alt} width="1351" height="1800" loading="lazy" decoding="async" /></figure> : <span class="vignette vignette--typo"><span class="vignette__nom">{m.nom}</span><span class="meta">photo à fournir</span></span>}
+          <h3>{m.nom}</h3>
+          <p class="meta">{m.role}{m.placeholder && <span class="exemple"> rôle à confirmer</span>}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--fin">
+    <div class="col"><p class="meta centre">En images</p><h2 class="statement" data-split="lines">La cuisine ouverte, la salle, le service</h2></div>
+    <div class="wrap galerie" style="margin-top: calc(var(--u) * 4)">
+      {galerie.map((p, i) => <figure class="vignette" data-reveal="clip" data-delay={String((i % 3) * 0.1)} data-cursor="Voir"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>)}
+    </div>
+  </section>
+</Base>
