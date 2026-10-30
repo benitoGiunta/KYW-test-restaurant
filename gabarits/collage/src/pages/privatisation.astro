@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, telHref, photoDe } from '../data/site';
+import { asset } from '../lib/url';
+const salle = photoDe('/photos/salle-banquette.webp');
+const bar = photoDe('/photos/bar-cocktails.webp');
+---
+<Base title="Privatisation" description={`Privatiser ${site.nom} à ${site.adresse.commune} le samedi : mariages, événements, chef à domicile. Demande par téléphone.`}>
+  <section class="page-hero" style="background: var(--c-bg)" data-activite="Privatiser" data-couleur="ecru">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">Le lieu est à <em>vous</em></span></h1>
+      <p class="lead">{site.privatisation.phrase}</p>
+    </div>
+  </section>
+
+  <section class="surphoto" style="border-top: 0">
+    <div class="surphoto__photo">
+      <picture>
+        <source media="(max-width: 47.9375rem)" srcset={asset('/photos/salle-banquette-960.webp')} />
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="eager" decoding="async" />
+      </picture>
+    </div>
+    <div class="wrap">
+      <div class="cartouche">
+        <p class="sur">Votre demande</p>
+        <p class="muted" style="margin-bottom: var(--u)">Formulaire de démonstration sans envoi. Pour une vraie demande, appelez le <a class="link" href={telHref()}>{site.telephone}</a>.</p>
+        <form class="form" data-demo="privatisation" action="#" method="post">
+          <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+          <div class="form__deux">
+            <label>Jour souhaité <input type="date" name="date" required /></label>
+            <label>Invités <input type="number" name="couverts" min="2" max="60" value="20" required /></label>
+          </div>
+          <label>Type <select name="type"><option>Mariage</option><option>Événement</option><option>Chef à domicile</option></select></label>
+          <label>Message <textarea name="message" rows="3"></textarea></label>
+          <div class="actions" style="margin-top: 0"><button class="btn btn--ink" type="submit">Envoyer la demande</button></div>
+          <p class="form__ok" role="status">Démonstration : en production, cette demande part par e-mail au restaurant.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--vert" aria-labelledby="t-form">
+    <div class="wrap damier damier--inv">
+      <div>
+        <h2 class="titre titre--l" id="t-form"><span class="etiquette etiquette--ink" data-split="lines">Trois <em>formats</em></span></h2>
+        <ul class="lignes">
+          <li><span>Mariage, le samedi, la salle entière</span></li>
+          <li><span>Événement d'entreprise ou de famille</span></li>
+          <li><span>Chef à domicile, le menu chez vous</span></li>
+        </ul>
+        <p class="muted" style="margin-top: var(--u)">Couverts, tarifs et déroulé se fixent avec les chefs par téléphone.</p>
+      </div>
+      <div class="damier__photo"><img src={asset(bar.src)} alt={bar.alt} width={bar.largeur} height={bar.hauteur} loading="lazy" decoding="async" /></div>
+    </div>
+  </section>
+</Base>

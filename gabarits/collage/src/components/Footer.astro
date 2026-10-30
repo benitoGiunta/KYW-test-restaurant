@@ -1,0 +1,39 @@
+---
+// Pied de page finale : logo en cases, liens, puis le pied de page KYW obligatoire (un seul logo, kyw-signature).
+import KywFooter from '@kyw/footer';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { u } from '../lib/url';
+const [a, b, ...reste] = site.nom.split(' ');
+---
+<footer class="footer">
+  <div class="wrap">
+    <p class="logo"><span class="sr-only">{site.nom}</span>
+      <span class="logo__case" aria-hidden="true">{a}</span>
+      <span class="logo__case" aria-hidden="true">{b}</span>
+      <span class="logo__case" aria-hidden="true">{reste.join(' ')}</span>
+      <span class="logo__case logo__section" data-couleur="postit" aria-hidden="true">Namur</span>
+    </p>
+    <div class="footer__cols">
+      <div class="stack">
+        <address>{adresseLigne()}</address>
+        <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+        <p>{site.email.valeur}<span class="illu">(e-mail illustratif)</span></p>
+      </div>
+      <div>
+        <p><strong>Horaires</strong></p>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+      </div>
+      <div class="stack">
+        <p><a class="link" href={u('/carte/')}>La carte</a></p>
+        <p><a class="link" href={u('/agenda/')}>Agenda (exemple)</a></p>
+        <p><a class="link" href={u('/privatisation/')}>Privatiser</a></p>
+        <p><a class="link" href={u('/histoire/')}>Histoire et équipe</a></p>
+        <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+        {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
+      </div>
+    </div>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import { asset } from '../lib/url';
+const salle = photoDe('/photos/salle-bar-panoramique.webp');
+---
+<Base title="Réservation et contact" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}.`}>
+  <section class="page-hero" style="background: var(--c-postit)">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">Réserver, <em>venir</em></span></h1>
+      <p class="lead">La réservation se fait en ligne via {site.reservation.outil}. Pour une table de plus de six personnes ou une demande de dernière minute, appelez-nous.</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" style="border-top: 0">
+    <div class="wrap damier">
+      <div>
+        <p class="sur">En ligne ou par téléphone</p>
+        <div class="actions" style="margin-top: var(--u)">
+          <a class="btn btn--ink" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
+          <a class="btn" href={telHref()}>{site.telephone}</a>
+        </div>
+        <p class="muted" style="margin-block: calc(var(--u) * 3) var(--u)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+        <form class="form" data-demo="reservation" action={site.reservation.url} method="get">
+          <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+          <div class="form__deux">
+            <label>Date <input type="date" name="date" required /></label>
+            <label>Heure <input type="time" name="heure" required /></label>
+          </div>
+          <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
+          <label>Message <textarea name="message" rows="3"></textarea></label>
+          <div class="actions" style="margin-top: 0">
+            <button class="btn btn--ink" type="submit">Continuer sur {site.reservation.outil}</button>
+          </div>
+        </form>
+      </div>
+      <div class="damier__photo">
+        <img src={asset('/photos/salle-bar-panoramique-1200.webp')} alt={salle.alt} width="1200" height="312" loading="eager" decoding="async" style="aspect-ratio: auto" />
+        <div style="padding: calc(var(--u) * 3)">
+          <h2 class="titre titre--l" style="margin-bottom: var(--u)"><span class="etiquette">Horaires</span></h2>
+          <dl class="horaires">{site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}</dl>
+          <p style="margin-top: calc(var(--u) * 2)"><strong>Adresse</strong><br />{adresseLigne()}</p>
+          <p class="muted" style="margin-top: var(--u)">{site.quartier.phrase}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

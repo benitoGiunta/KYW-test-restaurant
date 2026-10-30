@@ -1,0 +1,35 @@
+---
+// Page entièrement consacrée à une activité que le restaurant ne rend pas : bandeau d'exemple sans JS, aucun CTA de réservation.
+import Base from '../layouts/Base.astro';
+import Agenda from '../components/Agenda.astro';
+import { site, joursService } from '../data/site';
+import { u } from '../lib/url';
+const jours = joursService();
+---
+<Base title="Agenda (exemple)" description={`Agenda d'exemple du gabarit Collage pour ${site.nom} : comment un lieu à plusieurs vies afficherait ses soirées et ses brunchs.`}>
+  <p class="bandeau">Page d'exemple : {site.nom} ne programme pas de soirées. Les événements ci-dessous sont illustratifs et sans date.</p>
+  <section class="page-hero" style="background: var(--c-rose)" data-activite="Scène" data-couleur="rose">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">L'<em>agenda</em></span></h1>
+      <p class="lead">Un cahier ligné où chaque soirée se colle sur une page. Ici, six exemples pour montrer la mécanique.</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--rose" style="border-top: 0">
+    <div class="wrap">
+      <h2 class="sr-only">Les événements d'exemple</h2>
+      <Agenda />
+      <p class="postit" style="margin-top: calc(var(--u) * 3)"><strong>Jours de service réels</strong>{jours.join(', ')}. Les jours de l'agenda ne sont que des exemples.</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru">
+    <div class="wrap">
+      <h2 class="titre titre--l"><span class="etiquette">Ce que le restaurant <em>propose</em> vraiment</span></h2>
+      <div class="actions">
+        <a class="btn btn--ink" href={u('/carte/')}>Le menu</a>
+        <a class="btn" href={u('/privatisation/')}>Privatiser le samedi</a>
+      </div>
+    </div>
+  </section>
+</Base>

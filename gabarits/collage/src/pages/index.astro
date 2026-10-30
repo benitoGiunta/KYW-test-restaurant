@@ -1,0 +1,181 @@
+---
+import Base from '../layouts/Base.astro';
+import Agenda from '../components/Agenda.astro';
+import Vague from '../components/Vague.astro';
+import { site, photoDe, horaireTexte, telHref, activiteDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/salle-clients-bar.webp');
+const tablePhoto = photoDe('/photos/plat-boeuf-confit.webp');
+const brunchPhoto = photoDe('/photos/dessert-tarte-pomme.webp');
+const privPhoto = photoDe('/photos/salle-banquette.webp');
+const [a, b, ...reste] = site.nom.split(' ');
+const table = activiteDe('table');
+const scene = activiteDe('scene');
+const brunch = activiteDe('brunch');
+const menu = site.menus[0];
+const menuLignes = site.carte[0].plats.filter((p) => p.prix === null);
+const michelin = site.avis.find((x) => !x.placeholder)!;
+---
+<Base>
+  <Fragment slot="head">
+    <link rel="preload" as="image" href={asset('/photos/salle-clients-bar-960.webp')} fetchpriority="high" />
+  </Fragment>
+
+  <section class="hero" data-hero>
+    <div class="hero__photo">
+      <img src={asset('/photos/salle-clients-bar-960.webp')} alt={hero.alt} width="960" height="540" fetchpriority="high" decoding="sync" />
+    </div>
+    <div class="wrap hero__inner">
+      <h1 class="hero__cases">
+        <span class="hero__case" data-hero-case>{a}</span>
+        <span class="hero__case" data-hero-case>{b}</span>
+        <span class="hero__case" data-hero-case>{reste.join(' ')}</span>
+      </h1>
+      <div class="hero__ligne">
+        <p class="etiquette" data-hero-apres>Bistronomie à {site.adresse.commune}, au bord de la Meuse</p>
+        <a class="btn btn--ink" href={u('/reservation/')} data-hero-apres data-magnetic="0.2">Réserver une table</a>
+        <a class="btn" href={u('/carte/')} data-hero-apres>Le menu</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" aria-labelledby="manifeste">
+    <div class="wrap manifeste">
+      <div>
+        <h2 class="sr-only" id="manifeste">Manifeste</h2>
+        <p class="manifeste__phrase" data-split="lines">{site.manifeste.avant}<em>{site.manifeste.italique}</em>{site.manifeste.apres}</p>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)" data-reveal="up">{site.histoire[3]}</p>
+      </div>
+      <div class="bulle" data-reveal="up" data-delay="0.15">
+        <p class="sur">On en parle</p>
+        <p>« {michelin.texte} »</p>
+        <span class="bulle__qui">{michelin.source}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--vert" id="table" data-activite={table.nom} data-couleur={table.couleur} aria-labelledby="t-table">
+    <div class="wrap">
+      <h2 class="titre" id="t-table"><span class="etiquette etiquette--ink" data-split="lines">{table.accroche} <em>{table.motItalique}</em></span></h2>
+      <div class="damier" data-reveal="up">
+        <div>
+          <p class="sur">{menu.nom}</p>
+          <p class="prix">{menu.prix}</p>
+          <p class="muted" style="margin-bottom: var(--u)">Du lundi au vendredi soir, servi et expliqué à table par les chefs.</p>
+          <ul class="lignes">
+            {menuLignes.map((p) => <li><span>{p.nom}</span></li>)}
+          </ul>
+          <div class="stickers">
+            {site.stickers.map((s) => <span class="sticker" tabindex="0">{s.texte}{s.placeholder && <span class="illu">exemple</span>}</span>)}
+          </div>
+          <div class="actions">
+            <a class="btn" href={u('/carte/')}>Toute la carte</a>
+            <a class="btn btn--ink" href={u('/reservation/')}>Réserver</a>
+          </div>
+        </div>
+        <div class="damier__photo">
+          <img src={asset(tablePhoto.src)} alt={tablePhoto.alt} width={tablePhoto.largeur} height={tablePhoto.hauteur} loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--rose" id="scene" data-activite={scene.nom} data-couleur={scene.couleur} aria-labelledby="t-scene">
+    <div class="wrap">
+      <div class="split" style="align-items: end; margin-bottom: calc(var(--u) * 3)">
+        <h2 class="titre" id="t-scene" style="margin: 0"><span class="etiquette etiquette--ink" data-split="lines">{scene.accroche} <em>{scene.motItalique}</em></span></h2>
+        <p class="postit" data-reveal="up"><strong>Activité d'exemple</strong>{site.nom} n'a pas de scène : ce bloc montre comment le gabarit affiche un agenda de soirées. Aucune date, aucune billetterie réelle.</p>
+      </div>
+      <Agenda max={3} />
+      <div class="actions">
+        <a class="btn" href={u('/agenda/')}>Tout l'agenda (exemple)</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--bleu" id="brunch" data-activite={brunch.nom} data-couleur={brunch.couleur} aria-labelledby="t-brunch" style="padding-top: 0; border-top: 0">
+    <Vague couleur="rose" />
+    <div class="wrap split" style="padding-top: calc(var(--u) * 4)">
+      <div>
+        <h2 class="titre" id="t-brunch"><span class="etiquette" data-split="lines">{brunch.accroche} <em>{brunch.motItalique}</em></span></h2>
+        <p class="postit" style="margin-bottom: calc(var(--u) * 2)" data-reveal="up"><strong>Formule d'exemple</strong>Le restaurant est fermé le dimanche : ce brunch illustre une deuxième vie du lieu.</p>
+        <div class="cadre" style="padding: calc(var(--u) * 2)" data-reveal="up" data-delay="0.1">
+          <p class="sur">{site.brunch.nom}<span class="illu">exemple</span></p>
+          <p class="prix">{site.brunch.prix}</p>
+          <ul class="lignes">
+            {site.brunch.lignes.map((l) => <li><span>{l}</span></li>)}
+          </ul>
+        </div>
+      </div>
+      <div class="cadre" data-reveal="up" data-delay="0.2">
+        <img src={asset(brunchPhoto.src)} alt={brunchPhoto.alt} width={brunchPhoto.largeur} height={brunchPhoto.hauteur} loading="lazy" decoding="async" />
+      </div>
+    </div>
+    <svg class="tasse" data-derive viewBox="0 0 180 150" aria-hidden="true" focusable="false">
+      <path d="M20 40 h100 v60 a40 40 0 0 1 -40 40 h-20 a40 40 0 0 1 -40 -40 z" fill="#f2eee6" stroke="#0b0b0b" stroke-width="4" />
+      <path d="M120 55 h18 a22 22 0 0 1 0 44 h-18" fill="none" stroke="#0b0b0b" stroke-width="4" />
+      <path d="M45 20 c0 -10 10 -10 10 0 c0 10 -10 10 -10 20 M70 15 c0 -10 10 -10 10 0 c0 10 -10 10 -10 20" fill="none" stroke="#0b0b0b" stroke-width="4" stroke-linecap="round" />
+      <ellipse cx="70" cy="40" rx="50" ry="8" fill="#f7e25a" stroke="#0b0b0b" stroke-width="4" />
+    </svg>
+  </section>
+
+  <section class="surphoto" id="privatiser" data-activite="Privatiser" data-couleur="ecru" aria-labelledby="t-priv">
+    <div class="surphoto__photo">
+      <img src={asset(privPhoto.src)} alt={privPhoto.alt} width={privPhoto.largeur} height={privPhoto.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+    </div>
+    <div class="wrap">
+      <div class="cartouche" data-reveal="scale">
+        <p class="sur">Le samedi</p>
+        <h2 class="titre titre--l" id="t-priv">Le lieu est à <em>vous</em></h2>
+        <p>{site.privatisation.phrase}</p>
+        <div class="actions">
+          <a class="btn btn--ink" href={u('/privatisation/')}>Privatiser le restaurant</a>
+          <a class="btn" href={telHref()}>{site.telephone}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" aria-labelledby="t-avis">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-avis"><span class="etiquette" data-split="lines">Ce qu'on en <em>dit</em></span></h2>
+      <div class="avis-grille">
+        {site.avis.map((x, i) => (
+          <blockquote class="avis" data-reveal="scale" data-delay={String(i * 0.12)}>
+            {x.placeholder && <p class="tag" style="margin-bottom: var(--u)">Exemple d'avis</p>}
+            <p>« {x.texte} »</p>
+            <cite>{x.placeholder ? 'Avis illustratif' : `${x.auteur}, ${x.source}`}</cite>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--postit" aria-labelledby="t-infos">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-infos"><span class="etiquette" data-split="lines">Pour <em>venir</em></span></h2>
+      <div class="infos">
+        <div data-reveal="up">
+          <h3>Horaires</h3>
+          <dl class="horaires">{site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}</dl>
+        </div>
+        <div data-reveal="up" data-delay="0.08">
+          <h3>Adresse</h3>
+          <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+          <p style="margin-top: var(--u)"><a class="link" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a></p>
+        </div>
+        <div data-reveal="up" data-delay="0.16">
+          <h3>Contact</h3>
+          <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+          <p>Réservation en ligne via {site.reservation.outil}.</p>
+          <p style="margin-top: var(--u)"><a class="btn btn--ink" href={u('/reservation/')}>Réserver</a></p>
+        </div>
+        <div data-reveal="up" data-delay="0.24">
+          <h3>Le bâtiment</h3>
+          <p>{site.quartier.phrase}</p>
+          <p class="muted" style="margin-top: var(--u)">Petite salle, cuisine ouverte sur la salle, bar en chêne.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

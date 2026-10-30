@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const trio = photoDe('/photos/equipe-trio.webp');
+const galerie = ['/photos/cuisine-chefs-passe.webp', '/photos/salle-ampoules.webp', '/photos/service-planche.webp', '/photos/cuisine-mains-pate.webp', '/photos/salle-bar-panoramique.webp', '/photos/service-francois-table.webp'].map(photoDe);
+---
+<Base title="Histoire et équipe" description={`L'histoire de ${site.nom} : deux chefs, François Schepens et Damien Gorjanec, une rencontre à Namur et un restaurant à quatre mains.`}>
+  <section class="page-hero" style="background: var(--c-rose)">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">Deux <em>potes</em></span></h1>
+      <p class="lead">{site.baseline}</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" style="border-top: 0">
+    <div class="wrap damier">
+      <div class="prose">
+        {site.histoire.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="damier__photo">
+        <picture>
+          <source media="(max-width: 47.9375rem)" srcset={asset('/photos/equipe-trio-800.webp')} />
+          <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="eager" decoding="async" />
+        </picture>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--bleu" aria-labelledby="t-equipe">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-equipe"><span class="etiquette" data-split="lines">L'<em>équipe</em></span></h2>
+      <div class="equipe">
+        {site.equipe.map((m, i) => {
+          const p = m.photo ? photoDe(m.photo) : null;
+          return (
+            <article class="fiche" class:list={[p ? '' : 'fiche--sansphoto']} data-reveal="up" data-delay={String(i * 0.08)}>
+              {p && <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />}
+              <div class="fiche__nom">
+                <h3>{m.nom}</h3>
+                <p class="muted">{m.role}{m.placeholder && <span class="illu">rôle illustratif</span>}</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" aria-labelledby="t-galerie">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-galerie"><span class="etiquette" data-split="lines">Sur le <em>mur</em></span></h2>
+      <div class="galerie">
+        {galerie.map((p, i) => (
+          <figure data-reveal="scale" data-delay={String((i % 3) * 0.1)} data-cursor="Voir">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            <figcaption>{p.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions">
+        <a class="btn btn--ink" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={u('/carte/')}>Le menu</a>
+      </div>
+    </div>
+  </section>
+</Base>

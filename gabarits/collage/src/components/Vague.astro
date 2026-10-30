@@ -1,0 +1,10 @@
+---
+// Vague organique de transition : posée en haut d'un aplat, dans la couleur de l'aplat précédent, avec son filet.
+interface Props { couleur: 'vert' | 'rose' | 'bleu' | 'ecru' | 'postit' }
+const { couleur } = Astro.props;
+const fill = couleur === 'ecru' ? 'var(--c-bg)' : `var(--c-${couleur})`;
+---
+<svg class="vague" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <path d="M0 0 H1440 V22 C1240 46 1040 2 820 24 C600 46 380 6 180 28 C110 36 50 40 0 30 Z" fill={fill} />
+  <path d="M0 30 C50 40 110 36 180 28 C380 6 600 46 820 24 C1040 2 1240 46 1440 22" fill="none" stroke="var(--c-fg)" stroke-width="2" vector-effect="non-scaling-stroke" />
+</svg>

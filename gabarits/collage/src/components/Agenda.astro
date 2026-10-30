@@ -1,0 +1,29 @@
+---
+// Agenda ligné : jour de semaine en Caslon géant (jamais de date), carte d'événement bordée. Tout est illustratif.
+import { site, photoDe, activiteDe } from '../data/site';
+import { asset } from '../lib/url';
+interface Props { max?: number }
+const { max = site.evenements.length } = Astro.props;
+const items = site.evenements.slice(0, max);
+const abrege = (j: string) => j.slice(0, 3);
+---
+<ol class="agenda">
+  {items.map((e, i) => {
+    const p = photoDe(e.photo);
+    const a = activiteDe(e.activite);
+    return (
+      <li class="agenda__item" data-reveal="up" data-delay={String(i * 0.08)}>
+        <p class="agenda__jour"><abbr title={e.jour}>{abrege(e.jour)}</abbr><small>{e.placeholder ? 'jour d’exemple' : e.jour}</small></p>
+        <article class="agenda__carte">
+          <img src={asset(p.src.replace('.webp', '-640.webp'))} alt={p.alt} width="640" height={Math.round((640 * p.hauteur) / p.largeur)} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} decoding="async" />
+          <div class="agenda__corps">
+            <p class="agenda__meta"><span class={`sticker sticker--${a.couleur === 'vert' ? 'ecru' : a.couleur}`}>{a.nom}</span>{e.placeholder && <span class="tag">exemple</span>}</p>
+            <h3>{e.titre}</h3>
+            <p>{e.detail}</p>
+            <p class="agenda__meta"><strong>{e.heure}</strong><span class="muted">{e.placeholder ? 'Billetterie à venir (démonstration)' : 'Billetterie'}</span></p>
+          </div>
+        </article>
+      </li>
+    );
+  })}
+</ol>

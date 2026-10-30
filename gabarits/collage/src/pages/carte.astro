@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const visuel = photoDe('/photos/plat-saint-jacques.webp');
+const seconde = photoDe('/photos/service-sauce-table.webp');
+---
+<Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : menu dégustation unique en 4 services, formule du midi, lunch et bon cadeau.`}>
+  <section class="page-hero aplat--vert" style="background: var(--c-vert)" data-activite="Table" data-couleur="vert">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">La <em>carte</em></span></h1>
+      <p class="lead">Un menu unique qui change avec les saisons, écrit à quatre mains et servi par les chefs.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    {site.carte.map((cat, i) => (
+      <section class="carte-cat">
+        <div class="damier" class:list={[i % 2 ? 'damier--inv' : '']}>
+          <div>
+            <h2 class="titre titre--l"><span class="etiquette">{cat.categorie}</span></h2>
+            <ul class="lignes">
+              {cat.plats.map((p) => (
+                <li>
+                  <span>{p.nom}{p.placeholder && <span class="illu">exemple</span>}{p.description && <span class="muted"> ({p.description})</span>}</span>
+                  {p.prix && <span>{p.prix}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {i === 0 && <div class="damier__photo"><img src={asset(visuel.src)} alt={visuel.alt} width={visuel.largeur} height={visuel.hauteur} loading="eager" decoding="async" /></div>}
+          {i === 1 && <div class="damier__photo"><img src={asset(seconde.src)} alt={seconde.alt} width={seconde.largeur} height={seconde.hauteur} loading="lazy" decoding="async" /></div>}
+          {i === 2 && <div><p class="postit"><strong>Boissons</strong>La carte des boissons n'est pas publiée par le restaurant : ces deux lignes sont des exemples.</p></div>}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <section class="aplat aplat--postit" aria-labelledby="t-formules">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-formules"><span class="etiquette" data-split="lines">Les <em>formules</em></span></h2>
+      <div class="formules" data-reveal="up">
+        {site.menus.map((m) => (
+          <article class="formule">
+            <h3>{m.nom}{m.placeholder && <span class="illu">exemple</span>}</h3>
+            <p class="prix">{m.prix}</p>
+            <p class="muted">{m.description}</p>
+          </article>
+        ))}
+      </div>
+      <div class="actions">
+        <a class="btn btn--ink" href={u('/reservation/')}>Réserver une table</a>
+      </div>
+    </div>
+  </section>
+</Base>
