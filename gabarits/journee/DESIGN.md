@@ -1,0 +1,79 @@
+# DESIGN.md : gabarit « Journée »
+
+## Concept Card
+
+- **Idée** : la page d'accueil est un cadran. Six moments (7h café, 9h brunch, 12h déjeuner, 17h apéro, 19h dîner,
+  23h dernier verre) se suivent au scroll ; le ciel (dégradé à deux arrêts, aube → blanc → ocre → corail → nuit) tourne
+  avec eux, un disque soleil/lune descend sur une frise sticky, et le site s'ouvre à l'heure réelle du visiteur
+  (loader qui compte jusqu'à l'heure, badge « ouvert jusqu'à… » calculé sur les horaires réels, arrivée douce au moment
+  en cours).
+- **Métaphore** : une journée de service vue depuis la terrasse.
+- **Émotion** : la disponibilité, « à n'importe quelle heure, il y a quelque chose pour vous ».
+- **Verbe de motion** : tourne comme une horloge.
+- **Signature** : le ciel qui tourne (gsap.to sur `--ciel-haut`, `--ciel-bas`, `--encre` déclenché par 6 ScrollTrigger
+  `onToggle`) + le disque de la frise qui passe de soleil à lune en 6 crans + l'horloge du hero dont les chiffres
+  défilent de 00:00 à l'heure réelle.
+- **Capture rêvée** : le moment 17h, fond corail, « L'apéro, dès 17h » en Bricolage 800, trois verres, la frise à droite
+  avec le soleil bas.
+
+## Références (ce qu'on retient, sans copier)
+
+- florporto : frise du jour sticky à droite, heure locale en direct, sections « from 10:00 ».
+- delice : horaires par jour à flèches avec lignes salle / bar, médaillons ronds à titre courbé.
+- hangar-7 : badge « ouvert aujourd'hui 09:00 - 22:00 » à point coloré, chips sous le hero.
+
+## Système
+
+- **Palette** (jetons `tokens.css`) : aube `#FBF6EC`, midi `#FFFFFF`, soleil `#E79A2E`, crépuscule `#D9614E`, nuit
+  `#13203A`, nuit profonde `#0B1324`, ink `#1B1B1B`, ivoire `#FBF6EC` (texte inversé). Ciel = deux arrêts, jamais de
+  flou, jamais de violet.
+- **Typo** : Bricolage Grotesque (Google, variable opsz 12..96 / wght 400..800, auto-hébergée
+  `public/fonts/bricolage-400_800-normal.woff2`) en display 800, tracking -0.03em, `font-optical-sizing: auto` ;
+  Rethink Sans (Google, variable 400..800, `rethink-400_800-normal.woff2`) pour le texte et l'UI, 400 et 600,
+  `tabular-nums` sur les chiffres.
+- **Échelle** : `--t-mega` clamp(3.4rem … 11rem) plafonnée 4.6rem en mobile (mot le plus long « Potes » / « Déjeuner »
+  tient en 390 px) ; `--t-xl`, `--t-l`, `--t-m`, `--t-body`, `--t-s`.
+- **Grille** : 12 colonnes ; frise sticky dans la colonne 12 (desktop), contenu sur 1-10 ; en mobile, frise horizontale
+  fixée sous l'en-tête.
+- **Radius** : 999px chips et boutons, 24 px cartes de moment, 16 px photos.
+- **Motion language** : easing `ease.out` / `ease.inOut` du moteur ; ciel tweené 1,1 s ; soleil 0,9 s ; révélations
+  par masque (`data-split`, `data-reveal`) ; aucune texture, aucun flou.
+
+## Wireframes
+
+```
+HERO (100vh, ciel réglé à l'heure réelle)          FRISE (sticky droite)
+┌───────────────────────────────────────┬──┐       7h ─●  (disque soleil)
+│ ● ouvert jusqu'à 21:00     19:42:07   │  │       9h ─
+│                                       │  │      12h ─
+│ LES POTES AU FEU  (mega, Bricolage)   │  │      17h ─
+│ Bistronomie à Namur, du matin au soir │  │      19h ─
+│ (chips) ☕7h  🍳9h  12h  🍸17h  19h  23h │  │      23h ─
+└───────────────────────────────────────┴──┘
+7h CAFÉ (split)        [titre+heure | photo salle de jour] + 3 lignes de carte
+9h BRUNCH (médaillons) [3 cercles d'assiettes vues du dessus, titre courbé en textPath, formule + prix]
+12h DÉJEUNER (liste)   [7 lignes lundi…dimanche, plat + prix tabulaire ; formules réelles 52 € / 40 €]
+17h APÉRO (bande)      [rangée de cartes cocktails/bières défilable, badge happy hour, photo bar]
+19h DÎNER (pair asym.) [photo cuisine | menu dégustation 67 € (réel) + réserver] texte inversé
+23h DERNIER VERRE      [phrase courte, horaires à flèches ‹ jour › lignes cuisine / bar]
+FOOTER finale          [nom géant, adresse, réseaux] + KywFooter
+```
+
+## Test de généricité
+
+Un modèle ferait trois blocs petit-déjeuner / déjeuner / dîner avec une photo chacun. Ici l'heure réelle entre dans
+la page : le loader compte jusqu'à l'heure, le badge dit ce qui est ouvert maintenant à partir des horaires réels, le
+ciel et la frise sont à l'heure, l'arrivée se fait au moment courant. Cela n'a de sens que pour un lieu qui vit toute la
+journée, ce que le gabarit assume (les moments non prouvés pour Les Potes au Feu sont marqués illustratifs).
+
+## Checklist des règles dures (preuves dans RAPPORT.md après QA)
+
+- [x] Polices auto-hébergées, préchargées (`Base.astro` liste `polices`).
+- [x] Hero LCP peint au premier rendu (horloge et nom sans `data-reveal`/`data-intro` sur l'accroche).
+- [x] Loader < 2,6 s (plancher 1,1 s + sortie 0,8 s).
+- [x] Reduced motion : pas de scrollTo automatique, ciel par section sans tween, heure affichée sans défilement.
+- [x] Hover par rôle : chips (fond soleil), flèches (4 px), liens (soulignement), boutons (inversion), cartes apéro (lever).
+- [x] Idle : la seconde tourne sur l'anneau de l'horloge du hero (idleMotion).
+- [x] `noindex`, `lang="fr"`, KywFooter sur chaque page, une seule mention « Maquette KYW ».
+- [x] Tout lien/asset via `u()`/`asset()`.
+- [ ] 0 FAIL shoot/audit, 0 erreur console, pas de débordement, axe sans violation sérieuse (à prouver).

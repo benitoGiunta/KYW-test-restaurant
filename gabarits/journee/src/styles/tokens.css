@@ -1,0 +1,79 @@
+/* Jetons « Journée » : le ciel tourne (aube → nuit), Bricolage Grotesque en display, Rethink Sans en texte.
+   Les @font-face sont déclarées dans Base.astro (chemins préfixés par la base du site). */
+
+:root {
+  /* Palette du cahier */
+  --aube: #fbf6ec;
+  --midi: #ffffff;
+  --soleil: #e79a2e;
+  --crepuscule: #d9614e;
+  --nuit: #13203a;
+  --nuit-profonde: #0b1324;
+  --ink: #1b1b1b;
+  --ivoire: #fbf6ec;
+  --ocre-pale: #f6e2b7;
+  --aube-basse: #f4e3c8;
+
+  /* Ciel (deux arrêts) et encre : tweenés par le driver sur l'accueil, fixés par data-theme ailleurs. */
+  --ciel-haut: var(--aube);
+  --ciel-bas: var(--aube-basse);
+  --encre: var(--ink);
+  --encre-doux: rgb(27 27 27 / 0.62);
+  --ligne: rgb(27 27 27 / 0.16);
+  --voile: rgb(255 255 255 / 0.55);
+  --heure: 7; /* 7 → 23, position du disque sur la frise */
+
+  /* Contrat du moteur */
+  --c-bg: var(--ciel-haut);
+  --c-fg: var(--encre);
+  --c-muted: var(--encre-doux);
+  --c-line: var(--ligne);
+  --c-accent: var(--soleil);
+  --c-curtain: var(--soleil);
+
+  --f-display: 'Bricolage', 'Arial Black', system-ui, sans-serif;
+  --f-body: 'Rethink', system-ui, sans-serif;
+
+  --t-mega: clamp(3.4rem, 1rem + 9.6vw, 11rem);
+  --t-xl: clamp(2.6rem, 1.4rem + 4.6vw, 6rem);
+  --t-l: clamp(1.8rem, 1.3rem + 2vw, 3.2rem);
+  --t-m: clamp(1.2rem, 1.05rem + 0.6vw, 1.6rem);
+  --t-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.75rem;
+
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.8vw, 2.75rem);
+  --cols: 12;
+  --frise: clamp(3.5rem, 2rem + 3vw, 5.5rem); /* largeur réservée à la frise en desktop */
+
+  --radius: 999px;
+  --radius-carte: 24px;
+  --radius-photo: 16px;
+
+  --z-gl: 0;
+  --z-content: 1;
+  --z-frise: 40;
+  --z-header: 50;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}
+
+/* Thèmes fixes des pages intérieures (et point de départ des sections de l'accueil). */
+:root[data-theme='aube'] { --ciel-haut: var(--aube); --ciel-bas: var(--aube-basse); --heure: 7; }
+:root[data-theme='midi'] { --ciel-haut: var(--midi); --ciel-bas: var(--aube); --heure: 9; }
+:root[data-theme='ocre'] { --ciel-haut: var(--midi); --ciel-bas: var(--ocre-pale); --heure: 12; }
+:root[data-theme='corail'] { --ciel-haut: var(--soleil); --ciel-bas: var(--crepuscule); --heure: 17; }
+:root[data-theme='nuit'], :root[data-theme='nuitProfonde'] {
+  --encre: var(--ivoire);
+  --encre-doux: rgb(251 246 236 / 0.66);
+  --ligne: rgb(251 246 236 / 0.2);
+  --voile: rgb(11 19 36 / 0.45);
+}
+:root[data-theme='nuit'] { --ciel-haut: var(--nuit); --ciel-bas: #223659; --heure: 19; }
+:root[data-theme='nuitProfonde'] { --ciel-haut: var(--nuit-profonde); --ciel-bas: var(--nuit); --heure: 23; }
+
+@media (max-width: 767px) {
+  :root { --t-mega: 4.6rem; --t-xl: 2.6rem; --frise: 0px; }
+}
