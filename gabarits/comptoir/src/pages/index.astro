@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, photoDe, romain, telHref } from '../data/site';
+import { site, photoDe, numeroService, nbServices, telHref } from '../data/site';
 import { u, asset } from '../lib/url';
 const hero = photoDe('/photos/assiette-boeuf.webp');
 const chef = photoDe('/photos/chef-damien-nb.webp');
@@ -25,7 +25,7 @@ const trait = (c: (typeof comps)[number]) => {
       <p class="petite-cap">Bistronomie, {site.adresse.commune}</p>
       <h1 class="hero__titre" data-split="lines" data-intro>{site.nom}</h1>
       <p class="hero__sous">Menu unique de saison, à quatre mains, servi à table par les chefs. {site.adresse.rue} {site.adresse.numero}, bord de Meuse.</p>
-      <a class="filet" data-filet href={u('/menu/')}><span>Le menu du moment, 67 €</span><span class="fleche" aria-hidden="true">→</span></a>
+      <a class="filet" data-filet href={u('/menu/')}><span>Le menu du moment, {site.menus[0].prix}</span><span class="fleche" aria-hidden="true">→</span></a>
     </div>
   </section>
 
@@ -68,11 +68,11 @@ const trait = (c: (typeof comps)[number]) => {
 
   <section class="section wrap" aria-labelledby="menu-titre">
     <p class="petite-cap">Le menu</p>
-    <h2 id="menu-titre" style="margin: 0.4em 0 1.6em">Menu dégustation unique, {services.length} services</h2>
+    <h2 id="menu-titre" style="margin: 0.4em 0 1.6em">Menu dégustation unique, {nbServices()} services</h2>
     <ol class="menu-liste">
       {services.map((p, i) => (
         <li data-reveal="fade" data-delay={String(i * 0.06)}>
-          <span class="num">{romain(i + 1)}</span>
+          <span class="num">{numeroService(services, i)}</span>
           <span class="nom">{p.nom}</span>
           <span class="prix">{i === 0 ? site.menus[0].prix : ''}</span>
         </li>
@@ -103,7 +103,7 @@ const trait = (c: (typeof comps)[number]) => {
     </figure>
     <figure class="quinconce__b angle" data-reveal="fade" data-delay="0.2">
       <img src={asset(salleB.src)} alt={salleB.alt} width={salleB.largeur} height={salleB.hauteur} loading="lazy" decoding="async" />
-      <figcaption>Fait maison, tous les jours</figcaption>
+      <figcaption>Fait maison</figcaption>
     </figure>
   </section>
 

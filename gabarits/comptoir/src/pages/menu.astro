@@ -2,24 +2,24 @@
 // Page longue du menu unique : services numérotés, prix, suppléments, note allergènes. Descriptions vides : le dossier
 // ne donne que les intitulés.
 import Base from '../layouts/Base.astro';
-import { site, photoDe, romain } from '../data/site';
+import { site, photoDe, numeroService, nbServices } from '../data/site';
 import { u, asset } from '../lib/url';
 const services = site.carte[0].plats;
 const options = site.carte[1].plats;
 const photos: Record<number, ReturnType<typeof photoDe>> = { 2: photoDe('/photos/assiette-saint-jacques.webp'), 3: photoDe('/photos/assiette-boeuf.webp') };
 ---
-<Base title="Le menu" description={`Le menu dégustation unique des Potes au Feu à Namur : ${services.length} services, ${site.menus[0].prix}, du lundi au vendredi soir ; menu végétarien sur demande.`}>
+<Base title="Le menu" description={`Le menu dégustation unique des Potes au Feu à Namur : ${nbServices()} services, ${site.menus[0].prix}, du lundi au vendredi soir ; menu végétarien sur demande.`}>
   <section class="entete-page wrap">
     <p class="petite-cap">Le menu</p>
     <h1 data-split="lines" data-intro>Menu dégustation unique</h1>
-    <p class="lead">{services.length} services, {site.menus[0].prix}. {site.menus[0].description}</p>
+    <p class="lead">{nbServices()} services, {site.menus[0].prix}, mises en bouche et mignardise comprises. {site.menus[0].description}</p>
   </section>
 
   <section class="section--serree wrap" aria-label="Les services">
     <ol class="menu-liste menu-grand">
       {services.map((p, i) => (
         <li data-reveal="fade">
-          <span class="num">{romain(i + 1)}</span>
+          <span class="num">{numeroService(services, i)}</span>
           <span class="nom">{p.nom}{p.description && <small>{p.description}</small>}{p.placeholder && <span class="illu">illustratif</span>}</span>
           <span class="prix">{p.prix ?? ''}</span>
           {photos[i] && (

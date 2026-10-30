@@ -249,3 +249,21 @@ html:not(.motion) .dressage__comp, html:not(.motion) .dressage__legende { visibi
 /* Assiettes détourées dans un split : entières sur fond blanc, jamais recadrées */
 .split__media--assiette { aspect-ratio: 1; display: grid; place-items: center; padding: 10%; }
 .split__media--assiette img { width: min(100%, 520px); height: auto; object-fit: contain; }
+
+/* Révision 1 */
+/* En-tête mobile : marque sur une ligne, navigation en une barre alignée dessous (F2-3). */
+@media (max-width: 767px) {
+  .header__inner { flex-direction: column; align-items: stretch; gap: 0.35rem; padding: 0.9rem 1rem 0.6rem; min-height: 0; }
+  .header__brand { white-space: nowrap; align-self: flex-start; display: inline-flex; align-items: center; min-height: 24px; }
+  .nav { flex-wrap: nowrap; justify-content: space-between; gap: 0.5rem; }
+  .nav a { white-space: nowrap; }
+}
+/* Photo LCP dans <picture> : l'image garde la taille de la figure. */
+.split__media picture { display: contents; }
+/* Avis d'exemple : la marque précède la citation, en capitales, lisible comme une étiquette (F1-3). */
+.citation .exemple { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.14em; color: var(--c-ink); margin-bottom: 0.6em; padding-left: 0.8em; border-left: 1px solid var(--c-accent); font-family: inherit; font-style: normal; }
+/* Dressage : le composant mis en avant depuis la liste respire d'un cran (F2-5). */
+.dressage__comp img { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.dressage__comp.is-avant img { transform: scale(1.04); }
+@media (prefers-reduced-motion: reduce) { .dressage__comp img { transition: none; } }
+label small { display: block; margin-top: 0.25em; font-size: var(--t-xs); }

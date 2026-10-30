@@ -14,7 +14,7 @@ import { site, adresseLigne, telHref } from '../data/site';
     <p class="muted" style="margin: 0.8em 0 calc(var(--u) * 4); max-width: 46rem">Formulaire de démonstration sans envoi : la validation ouvre {site.reservation.outil}, où la réservation se termine.</p>
     <form class="form-ligne" data-reservation action={site.reservation.url} method="get">
       <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
-      <label>Date <input type="date" name="date" data-min-aujourdhui required /></label>
+      <label>Date <input type="date" name="date" lang="fr-BE" data-min-aujourdhui required aria-describedby="date-aide" /><small id="date-aide" class="muted">jj/mm/aaaa</small></label>
       <label>Heure <input type="time" name="heure" required /></label>
       <label>Couverts <input type="number" name="couverts" min="1" max="6" value="2" required /></label>
       <label class="large">Message <textarea name="message" rows="2"></textarea></label>
@@ -30,17 +30,17 @@ import { site, adresseLigne, telHref } from '../data/site';
     <div>
       <p class="petite-cap">Services</p>
       <h2 id="horaires-titre" style="margin-top: 0.4em">Heures d'arrivée</h2>
-      <p class="muted" style="margin-top: 1em; max-width: 30ch">Dernier service à 21:00. Le samedi : privatisation possible.</p>
+      <p class="muted" style="margin-top: 1em; max-width: 30ch">Dernier service à 21 h. Le samedi : privatisation possible.</p>
     </div>
     <div class="stack">
-      <p class="lead" data-reveal="fade">Le soir, du lundi au vendredi, arrivée entre 19:00 et 21:00. Le midi, les mercredis et vendredis, entre 12:00 et 14:00.</p>
+      <p class="lead" data-reveal="fade">Le soir, du lundi au vendredi, arrivée entre 19 h et 21 h. Le midi, les mercredis et vendredis, entre 12 h et 14 h.</p>
       <p style="margin-top: calc(var(--u) * 3)">{adresseLigne()}<br /><a class="lien" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a></p>
     </div>
   </section>
 
   <section class="bande wrap" id="cadeau" aria-labelledby="cadeau-titre">
     <h2 id="cadeau-titre" class="petite-cap" style="font-weight: 400; letter-spacing: 0.18em; font-size: var(--t-xs); margin-bottom: 1em">Bon cadeau</h2>
-    <p>{site.bonCadeau.montants}<span class="source">{site.bonCadeau.mode}. Demande par téléphone au <a class="lien" href={telHref()}>{site.telephone}</a> ou sur <a class="lien" href={site.url} rel="noopener">le site du restaurant</a>.</span></p>
+    <p>{site.bonCadeau.montants}<span class="source">{site.bonCadeau.mode}. Demande sur <a class="lien" href={site.url} rel="noopener">le site du restaurant</a>.</span></p>
   </section>
 </Base>
 

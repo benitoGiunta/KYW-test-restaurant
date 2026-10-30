@@ -12,7 +12,8 @@ import { u } from '../lib/url';
         <p class="petite-cap">Adresse</p>
         <address>{adresseLigne()}<br />Bord de Meuse, côté Citadelle</address>
         <p><a class="lien" href={telHref()}>{site.telephone}</a></p>
-        <p><a class="lien" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a> <span class="illu">adresse illustrative</span></p>
+        {/* E-mail : affiché seulement s'il est prouvé (dossier : « E-mail : inconnu ») ; jamais de mailto: illustratif. */}
+        {site.email.valeur && !site.email.placeholder && <p><a class="lien" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>}
       </div>
       <div class="footer__col">
         <p class="petite-cap">Services</p>

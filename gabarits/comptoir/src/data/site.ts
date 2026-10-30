@@ -6,10 +6,13 @@ export type Jour = 'lundi' | 'mardi' | 'mercredi' | 'jeudi' | 'vendredi' | 'same
 
 export interface Creneau { ouverture: string; fermeture: string } // 'HH:MM'
 export interface Horaire { jour: Jour; creneaux: Creneau[]; note?: string } // creneaux vide = fermé
-export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean }
+// horsService : ligne du menu qui n'est pas un des services comptés (mises en bouche, mignardise) : pas de numéro.
+export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean; horsService?: boolean }
 export interface Categorie { categorie: string; plats: Plat[] }
-export interface Menu { nom: string; prix: string; description: string; placeholder: boolean }
+// services : nombre de services annoncé par le dossier (constante, jamais `plats.length`).
+export interface Menu { nom: string; prix: string; description: string; placeholder: boolean; services?: number }
 export interface Membre { nom: string; role: string; photo?: string; placeholder: boolean; rolePlaceholder?: boolean }
+// Avis placeholder : jamais de nom de personne ni de source réelle (Google…) ; auteur et source vides, marque « exemple » avant la citation.
 export interface Avis { texte: string; auteur: string; source: string; date: string; note?: number; placeholder: boolean }
 export interface Photo { src: string; alt: string; largeur: number; hauteur: number; placeholder: boolean }
 export interface Reseau { nom: string; url: string }
@@ -38,7 +41,7 @@ export interface Restaurant {
   adresse: { rue: string; numero: string; cp: string; commune: string; pays: string };
   geo: { lat: number; lon: number };
   telephone: string; // format international
-  email: { valeur: string; placeholder: boolean };
+  email: { valeur: string; placeholder: boolean }; // placeholder : affiché en texte non cliquable marqué, jamais en mailto:
   reservation: { outil: string; url: string };
   horaires: Horaire[];
   reseaux: Reseau[];
@@ -54,6 +57,7 @@ export interface Restaurant {
   phrase: { avant: string; accent: string; apres: string }; // la phrase-manifeste de l'accueil
   groupes: string; // note groupes et privatisation (dossier)
   bonCadeau: { montants: string; mode: string };
+  legendes: Record<string, string>; // légende courte par photo (distincte du texte alternatif)
 }
 
 const photo = (src: string, alt: string, largeur: number, hauteur: number, placeholder = false): Photo => ({ src, alt, largeur, hauteur, placeholder });
@@ -89,12 +93,12 @@ export const site: Restaurant = {
     {
       categorie: 'Menu dégustation unique, 4 services, 67 € (du lundi au vendredi soir)',
       plats: [
-        { nom: 'Mises en bouche', description: '', prix: null, placeholder: false },
+        { nom: 'Mises en bouche', description: '', prix: null, placeholder: false, horsService: true },
         { nom: 'Légumes racines / Champignons / Noix', description: '', prix: null, placeholder: false },
         { nom: 'Saint-Jacques / Butternut / Passion', description: '', prix: null, placeholder: false },
-        { nom: 'Boeuf confit / Carottes / Cromesquis de pommes de terre', description: '', prix: null, placeholder: false },
+        { nom: 'Bœuf confit / Carottes / Cromesquis de pommes de terre', description: '', prix: null, placeholder: false },
         { nom: 'Soufflé au caramel / Chaï / Poire', description: '', prix: null, placeholder: false },
-        { nom: 'Mignardise', description: '', prix: null, placeholder: false },
+        { nom: 'Mignardise', description: '', prix: null, placeholder: false, horsService: true },
       ],
     },
     {
@@ -120,6 +124,7 @@ export const site: Restaurant = {
       prix: '67 €',
       description: 'Du lundi au vendredi soir. Fromage à la place du dessert +7 €, avant le dessert +15 €.',
       placeholder: false,
+      services: 4, // dossier : « 4 services » (6 lignes, mises en bouche et mignardise comprises)
     },
     { nom: 'Formule 3 services, le midi', prix: '52 €', description: 'Formule à choix multiples inspirée des produits du moment, les mercredis et vendredis midi.', placeholder: false },
     {
@@ -130,7 +135,7 @@ export const site: Restaurant = {
     },
   ],
   histoire: [
-    "Les Potes au Feu, c'est d'abord l'histoire d'une rencontre. Il y a quatorze ans, François Schepens et Damien Gorjanec aiguisent leurs premiers couteaux au restaurant la Plage d'Amée à Namur : deux gamins pleins d'envie, le début d'une amitié.",
+    "Les Potes au Feu, c'est d'abord l'histoire d'une rencontre. Dès leurs débuts, François Schepens et Damien Gorjanec aiguisent leurs premiers couteaux au restaurant la Plage d'Amée à Namur : deux gamins pleins d'envie, le début d'une amitié.",
     "François continue ses classes aux États-Unis et à Montréal, Damien se fait une place en Belgique et cumule des expériences à l'étranger, notamment à Shanghai. À chaque retrouvaille, autour d'un verre, le rêve d'ouvrir un restaurant se dessine.",
     "Début de l'hiver 2019, installés par hasard à une table de ce lieu, ils ne savent pas encore qu'ils y ouvriront leur premier restaurant. Trois mois plus tard, ils en ont les clés.",
     "Le concept : une cuisine bistronomique à quatre mains, de qualité, avec un ancrage local, et un mot d'ordre, le plaisir. Ils servent eux-mêmes leurs plats et expliquent leur démarche à table, dans une atmosphère décontractée qui ne se la raconte pas.",
@@ -144,30 +149,28 @@ export const site: Restaurant = {
   avis: [
     {
       texte: "Un restaurant décontracté qui swingue sur tous les plans. Le plaisir déborde de l'assiette !",
-      auteur: 'Inspecteur du Guide MICHELIN',
-      source: 'Guide MICHELIN Belgique 2026',
+      auteur: 'Guide MICHELIN Belgique 2026',
+      source: 'avis d’inspecteur',
       date: '2026-05-04',
       placeholder: false,
     },
     {
       texte: 'Les chefs viennent eux-mêmes présenter chaque assiette. On repart avec le sourire.',
-      auteur: 'Claire D.',
-      source: 'Avis Google',
+      auteur: '',
+      source: '',
       date: '',
-      note: 5,
-      placeholder: true,
+      placeholder: true, // exemple de gabarit : aucun avis client dans le dossier
     },
     {
       texte: 'Menu unique, zéro hésitation, que du plaisir. Le service est aussi simple que précis.',
-      auteur: 'Thomas V.',
-      source: 'Avis Google',
+      auteur: '',
+      source: '',
       date: '',
-      note: 5,
       placeholder: true,
     },
   ],
   photos: [
-    photo('/photos/assiette-boeuf.webp', 'Boeuf confit, carottes et cromesquis sur assiette rouge, vue de dessus, détourée', 1400, 1400),
+    photo('/photos/assiette-boeuf.webp', 'Bœuf confit, carottes et cromesquis sur assiette rouge, vue de dessus, détourée', 1400, 1400),
     photo('/photos/assiette-saint-jacques.webp', 'Saint-Jacques snackées et mousseline, vue de dessus, détourée', 410, 410),
     photo('/photos/assiette-dessert.webp', 'Rosace de pommes et glace, vue de dessus, détourée', 1040, 1040),
     photo('/photos/chef-damien-nb.webp', 'Damien Gorjanec en cuisine, portrait en noir et blanc', 1200, 1599),
@@ -176,7 +179,7 @@ export const site: Restaurant = {
     photo('/photos/chef-francois.webp', 'François Schepens en cuisine, tablier noir devant la hotte rouge', 1351, 1800),
     photo('/photos/equipe-trio.webp', "L'équipe riant sur une banquette autour d'une table en chêne", 800, 725),
     photo('/photos/dessert-tarte-pomme.webp', 'Rosace de pommes, glace et éclats de tuile, vue de dessus', 800, 725),
-    photo('/photos/plat-tartare.webp', 'Tartare de boeuf, roquette et tuiles sur assiette noire', 550, 825),
+    photo('/photos/plat-tartare.webp', 'Tartare de bœuf, roquette et tuiles sur assiette noire', 550, 825),
     photo('/photos/plat-saint-jacques.webp', 'Saint-Jacques snackées, mousseline et tuile noire sur assiette bleue', 550, 825),
     photo('/photos/salle-bar-panoramique.webp', 'Le bar vert sombre et une table haute dressée, vue sur la cuisine', 1800, 468),
     photo('/photos/salle-ampoules.webp', 'Ampoules à filament suspendues devant une étagère en bois', 1140, 642),
@@ -189,7 +192,7 @@ export const site: Restaurant = {
     photo('/photos/service-francois-table.webp', 'François verse une sauce à table devant une cliente', 1140, 642),
     photo('/photos/salle-banquette.webp', 'La salle de jour : banquette, coussins moutarde, lambris vert-gris', 1600, 1600),
     photo('/photos/cuisine-mains-pate.webp', 'Des mains travaillent une pâte sur une balance', 1600, 1600),
-    photo('/photos/plat-boeuf-confit.webp', 'Boeuf confit, carottes et cromesquis sur assiette rouge', 1600, 1600),
+    photo('/photos/plat-boeuf-confit.webp', 'Bœuf confit, carottes et cromesquis sur assiette rouge', 1600, 1600),
   ],
   valeurs: [
     'Fait maison',
@@ -201,10 +204,10 @@ export const site: Restaurant = {
   // Dressage : le plat est réel (carte du 28/10/2026) ; les trois premiers composants sont son intitulé.
   // « Jus » et « pousses » sont lus sur la photo, pas dans le dossier : drapeau propre, mention « illustratif ».
   dressage: {
-    plat: 'Boeuf confit / Carottes / Cromesquis de pommes de terre',
-    service: 'Quatrième service du menu dégustation',
+    plat: 'Bœuf confit / Carottes / Cromesquis de pommes de terre',
+    service: 'Au menu dégustation, entre la Saint-Jacques et le soufflé',
     composants: [
-      { nom: 'Boeuf confit', src: '/photos/composant-boeuf.webp', x: 52, y: 53, d: 23, cote: 'droite', ly: 56, placeholder: false },
+      { nom: 'Bœuf confit', src: '/photos/composant-boeuf.webp', x: 52, y: 53, d: 23, cote: 'droite', ly: 56, placeholder: false },
       { nom: 'Carottes', src: '/photos/composant-carotte.webp', x: 41, y: 40, d: 16, cote: 'gauche', ly: 32, placeholder: false },
       { nom: 'Cromesquis de pommes de terre', src: '/photos/composant-cromesquis.webp', x: 60, y: 39, d: 11, cote: 'droite', ly: 28, placeholder: false },
       { nom: 'Jus', src: '/photos/composant-jus.webp', x: 61, y: 63, d: 11, cote: 'droite', ly: 84, placeholder: true },
@@ -213,8 +216,8 @@ export const site: Restaurant = {
   },
   distinctions: [
     {
-      texte: 'Sélection du Guide MICHELIN Belgique 2026',
-      source: 'guide.michelin.com, fiche consultée le 28/10/2026',
+      texte: 'Restaurant sélectionné par le Guide MICHELIN',
+      source: 'Guide MICHELIN Belgique 2026',
       url: 'https://guide.michelin.com/fr/fr/namur/namur/restaurant/les-potes-au-feu',
       placeholder: false,
     },
@@ -222,6 +225,16 @@ export const site: Restaurant = {
   phrase: { avant: 'Deux potes au passe, un menu unique de saison, et des assiettes', accent: 'servies par ceux qui les cuisinent', apres: '.' },
   groupes: 'Au-delà de six personnes ou pour une demande de dernière minute, réservez par téléphone. Le samedi, le restaurant se privatise : mariage, événement ou chef à domicile.',
   bonCadeau: { montants: '50, 75, 100 ou 150 €', mode: 'demande en ligne, retrait au restaurant' },
+  legendes: {
+    '/photos/cuisine-chefs-passe.webp': 'Au passe',
+    '/photos/service-francois-table.webp': 'La sauce, à table',
+    '/photos/equipe-trio.webp': "L'équipe",
+    '/photos/cuisine-chefs-dressage.webp': 'Le dressage',
+    '/photos/salle-clients-bar.webp': 'Le bar',
+    '/photos/service-planche.webp': 'En salle',
+    '/photos/salle-ampoules.webp': 'La salle',
+    '/photos/dessert-tarte-pomme.webp': 'Rosace de pommes',
+  },
 };
 
 /** Photo par chemin (erreur explicite si le chemin n'existe pas : un gabarit ne doit pas pointer dans le vide). */
@@ -234,9 +247,19 @@ export function photoDe(src: string): Photo {
 /** Adresse sur une ligne. */
 export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adresse.numero}, ${r.adresse.cp} ${r.adresse.commune}`;
 
-/** Horaires lisibles : '12:00 à 14:00, 19:00 à 21:00' ou la note. */
+/** Heure à la française : '19:00' → '19 h', '12:30' → '12 h 30'. */
+export const heure = (hhmm: string) => { const [h, m] = hhmm.split(':'); return m === '00' ? `${Number(h)} h` : `${Number(h)} h ${m}`; };
+
+/** Horaires lisibles : '12 h à 14 h, 19 h à 21 h' ou la note. */
 export const horaireTexte = (h: Horaire) =>
-  h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé';
+  h.creneaux.length ? h.creneaux.map((c) => `${heure(c.ouverture)} à ${heure(c.fermeture)}`).join(', ') : h.note || 'fermé';
+
+/** Numéro romain d'une ligne du menu : les lignes hors service (mises en bouche, mignardise) n'en ont pas. */
+export const numeroService = (plats: Plat[], i: number) =>
+  plats[i].horsService ? '' : romain(plats.slice(0, i + 1).filter((p) => !p.horsService).length);
+
+/** Nombre de services annoncé (constante du dossier ; repli : lignes comptées hors service). */
+export const nbServices = (r: Restaurant = site) => r.menus[0].services ?? r.carte[0].plats.filter((p) => !p.horsService).length;
 
 /** Téléphone pour href="tel:" (sans espaces). */
 export const telHref = (r: Restaurant = site) => `tel:${r.telephone.replace(/\s+/g, '')}`;

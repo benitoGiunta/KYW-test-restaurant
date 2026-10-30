@@ -125,3 +125,9 @@ seul fichier, sections indépendantes, tokens).
   client ne rend pas porte un bandeau d'exemple peint sans JS en tête et aucun CTA de réservation. Le contraste du texte
   doux se calcule sur les deux arrêts de chaque dégradé de fond, ≥ 4,5:1. Les photos de hero sont servies en 960 px
   (≤ 80 Ko) ; les libellés d'un instrument dans l'en-tête mobile restent dans la boîte de l'en-tête opaque.
+- **Phrases du dossier et comptes** (révision Comptoir) : une « phrase vraie » de `dossier.md` peut contenir une date
+  relative (« il y a quatorze ans ») ou une source datée (« fiche consultée le ») : la neutraliser à la copie. Un nombre
+  annoncé par le dossier (services d'un menu, couverts) est une constante de `site.ts`, jamais un `length` calculé sur
+  des lignes qui comprennent des extras. Un avis d'exemple n'a ni nom de personne ni source réelle : une étiquette
+  « Exemple d'avis » avant la citation. La première photo d'une page intérieure ne porte pas `data-reveal` et se sert en
+  800 px au plus sur mobile.

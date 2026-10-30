@@ -13,8 +13,9 @@ interface Props {
   description?: string;
   image?: string; // image OG (1200x630) dans public/, chemin sans base : '/og.jpg'
   theme?: string; // crochet de thème par page, ex. data-theme="dark"
+  preloadImage?: { href: string; media?: string }; // photo LCP d'une page intérieure (chemin sans base)
 }
-const { title, description = site.description, image = '/og.jpg', theme } = Astro.props;
+const { title, description = site.description, image = '/og.jpg', theme, preloadImage } = Astro.props;
 const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Menu unique de saison à ${site.adresse.commune}`;
 const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
 // Astro.url.pathname contient déjà `base` au build.
@@ -79,6 +80,7 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     {polices.map((p) => <link rel="preload" as="font" type="font/woff2" href={asset(p)} crossorigin />)}
+    {preloadImage && <link rel="preload" as="image" href={asset(preloadImage.href)} media={preloadImage.media} fetchpriority="high" />}
     <style is:inline set:html={fontFaces} />
     <slot name="head" />
     <!-- Avant le premier rendu : marque JS + motion pour que les états « caché avant reveal » ne clignotent jamais. -->

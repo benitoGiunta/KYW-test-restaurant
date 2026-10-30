@@ -25,3 +25,8 @@ supprimer apercu/, arrêter le serveur (PID dans .shots-comptoir/serve.pid, jama
 
 ## Étape 4 (faite) : passe 2 lue, débordement histoire corrigé (`.angle { position: relative }`), apercu.png posé,
 serveur 4407 arrêté par son PID. Gabarit livré ; reste pour les agents suivants : jury / revue, LCP mobile chefs (2,65 s).
+
+## Révision 1 (30/10/2026, agent reviseur-site) : REVUE-1 traitée
+Corrections dans `src/data/site.ts`, pages, Header/Footer/Base, `base.css` (bloc « Révision 1 »). Build OK
+(`node scripts/build-site.mjs gabarits/comptoir`), captures `.shots-comptoir-rev/<page>` (port 4428), détail dans
+`REVISION-1.md`. Reste pour les agents suivants : revue passe 2 (relecteur) puis adaptation client.

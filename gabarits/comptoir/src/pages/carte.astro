@@ -3,7 +3,9 @@
 import Base from '../layouts/Base.astro';
 import { site, photoDe } from '../data/site';
 import { u, asset } from '../lib/url';
-const visuels = [photoDe('/photos/assiette-boeuf.webp'), photoDe('/photos/assiette-saint-jacques.webp'), photoDe('/photos/assiette-dessert.webp')];
+// Soir : l'assiette du menu (vrai plat). Midi : la composition n'est pas publiée, donc aucune assiette du soir ;
+// des photos de cuisine et de service, sans prétention sur le contenu de la formule.
+const visuels = [photoDe('/photos/assiette-boeuf.webp'), photoDe('/photos/cuisine-chefs-dressage.webp'), photoDe('/photos/service-francois-table.webp')];
 const liens = [u('/menu/'), u('/reservation/'), u('/reservation/')];
 const libelles = ['Voir les services', 'Réserver le midi', 'Réserver le midi'];
 const boissons = site.carte[2].plats;
@@ -17,7 +19,7 @@ const boissons = site.carte[2].plats;
 
   {site.menus.map((m, i) => (
     <section class:list={['split', { 'split--inverse': i % 2 === 1 }]} aria-labelledby={`formule-${i}`}>
-      <figure class="split__media split__media--assiette" data-reveal="fade" style={i % 2 === 0 ? 'margin-left: var(--lane)' : 'margin-right: var(--lane)'}>
+      <figure class:list={['split__media', { 'split__media--assiette': i === 0 }]} data-reveal="fade" style={i === 0 ? 'margin-left: var(--lane)' : undefined}>
         <img src={asset(visuels[i].src)} srcset={i === 0 ? `${asset('/photos/assiette-boeuf-900.webp')} 900w, ${asset(visuels[i].src)} 1400w` : undefined} sizes={i === 0 ? '(max-width: 767px) 80vw, 40vw' : undefined} alt={visuels[i].alt} width={visuels[i].largeur} height={visuels[i].hauteur} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
       </figure>
       <div class="split__aplat">

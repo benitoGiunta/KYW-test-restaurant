@@ -10,7 +10,7 @@ const galerie = [
   '/photos/salle-clients-bar.webp', '/photos/service-planche.webp', '/photos/salle-ampoules.webp', '/photos/dessert-tarte-pomme.webp',
 ].map(photoDe);
 ---
-<Base title="Les chefs" description={`Damien Gorjanec et François Schepens, deux potes au passe : l'histoire des Potes au Feu à ${site.adresse.commune}, de la Plage d'Amée à l'avenue de la Plante.`}>
+<Base title="Les chefs" preloadImage={{ href: '/photos/chef-damien-nb-800.webp', media: '(max-width: 767px)' }} description={`Damien Gorjanec et François Schepens, deux potes au passe : l'histoire des Potes au Feu à ${site.adresse.commune}, de la Plage d'Amée à l'avenue de la Plante.`}>
   <section class="entete-page wrap">
     <p class="petite-cap">Les chefs</p>
     <h1 data-split="lines" data-intro>L'histoire d'une rencontre</h1>
@@ -18,8 +18,11 @@ const galerie = [
   </section>
 
   <section class="split" aria-label="Damien Gorjanec">
-    <figure class="split__media bord" data-reveal="fade">
-      <img src={asset(damien.src)} srcset={`${asset('/photos/chef-damien-nb-800.webp')} 800w, ${asset(damien.src)} 1200w`} sizes="(max-width: 767px) 100vw, 50vw" alt={damien.alt} width={damien.largeur} height={damien.hauteur} fetchpriority="high" decoding="async" />
+    <figure class="split__media bord">
+      <picture>
+        <source media="(max-width: 767px)" srcset={asset('/photos/chef-damien-nb-800.webp')} />
+        <img src={asset(damien.src)} alt={damien.alt} width={damien.largeur} height={damien.hauteur} fetchpriority="high" decoding="async" />
+      </picture>
     </figure>
     <div class="split__aplat">
       <p class="petite-cap">Depuis la Plage d'Amée</p>
@@ -41,7 +44,7 @@ const galerie = [
   <section class="section wrap deux-colonnes" aria-labelledby="equipe-titre">
     <div>
       <p class="petite-cap">L'équipe</p>
-      <h2 id="equipe-titre" style="margin-top: 0.4em">Quatre au service</h2>
+      <h2 id="equipe-titre" style="margin-top: 0.4em">Autour des chefs</h2>
     </div>
     <ul class="equipe">
       {site.equipe.map((m) => (
@@ -57,8 +60,9 @@ const galerie = [
     <div class="galerie">
       {site.avis.map((a) => (
         <blockquote class="citation" data-reveal="fade">
+          {a.placeholder && <p class="exemple">Exemple d'avis, texte illustratif</p>}
           <p>« {a.texte} »</p>
-          <cite>{a.auteur}, {a.source}{a.placeholder && <span class="illu">avis illustratif</span>}</cite>
+          {!a.placeholder && <cite>{a.auteur}{a.source && `, ${a.source}`}</cite>}
         </blockquote>
       ))}
     </div>
@@ -68,7 +72,7 @@ const galerie = [
     {galerie.map((p, i) => (
       <figure class:list={[{ angle: i % 3 === 1 }]} data-reveal="fade">
         <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
-        <figcaption>{p.alt}</figcaption>
+        <figcaption>{site.legendes[p.src] ?? ''}</figcaption>
       </figure>
     ))}
   </section>

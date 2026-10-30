@@ -61,4 +61,20 @@ face) et le logo vertical fixe tient la page.
 - [x] UI fixe sans collision : logo vertical dans la voie `--lane`, pastille bas droite avec `padding-bottom` du body.
 - [x] Reduced motion : dressage complet et légendes visibles, filets dessinés (`html:not(.motion)`).
 - [x] Mobile : titres 200 à 28 px minimum, images avec marge 16 px, dressage en pin vertical 80 vw, légendes empilées.
-- [x] Idle : aucun, décision écrite (site calme, cahier).
+- [x] Idle : aucun, décision écrite (site calme, cahier) ; confirmée en révision 1 (voir plus bas).
+
+## Décisions de la révision 1 (30/10/2026, REVUE-1 → REVISION-1)
+
+- **Mouvement au repos : aucun, décision maintenue.** Le verbe est « respire » : un passe silencieux où rien ne bouge
+  sans raison. Le seul ajout est une réaction discrète : le composant mis en avant depuis la liste du dressage (survol ou
+  focus) grossit de 4 % dans son médaillon (`transform` sur l'image, 0,5 s). Pas de boucle d'idle, pas de marquee.
+- **Services comptés, pas énumérés** : le menu affiche le nombre du dossier (`menus[0].services`, 4) ; les lignes
+  « Mises en bouche » et « Mignardise » portent `horsService` et n'ont pas de numéro romain (I à IV pour les 4 services).
+- **Photos du midi** : la composition des formules du midi n'est pas publiée ; elles prennent des photos de cuisine et de
+  service (cadre `split__media` plein, sans assiette du soir). Seul le menu du soir montre une assiette détourée.
+- **En-tête mobile** : marque sur une ligne, navigation en une barre de quatre liens alignée dessous (pas de retour à la
+  ligne).
+- **Avis d'exemple** : sans nom ni source, étiquette « Exemple d'avis, texte illustratif » en capitales avant la citation ;
+  l'e-mail non prouvé n'est pas affiché (jamais de `mailto:` illustratif).
+- **Heures** en français (« 19 h à 21 h ») via `heure()` dans `site.ts` ; « bœuf » avec ligature dans les textes (chemins
+  de photos inchangés).
