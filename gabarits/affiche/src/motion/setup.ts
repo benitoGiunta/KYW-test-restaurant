@@ -14,8 +14,8 @@ export function setupMotion() {
   setLoaderExit((root) =>
     gsap
       .timeline()
-      .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -120, autoAlpha: 0, duration: 0.5, ease: ease.inOut })
-      .to(root.querySelectorAll('[data-loader-bande]'), { yPercent: -100, duration: 0.9, ease: ease.inOut, stagger: 0.07 }, '-=0.3')
+      .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -120, autoAlpha: 0, duration: 0.35, ease: ease.inOut })
+      .to(root.querySelectorAll('[data-loader-bande]'), { yPercent: -100, duration: 0.6, ease: ease.inOut, stagger: 0.05 }, '-=0.25')
       .to(root, { autoAlpha: 0, duration: 0.01 }),
   );
 

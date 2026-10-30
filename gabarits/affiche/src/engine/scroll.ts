@@ -52,6 +52,11 @@ export function resetScroll() {
   state.y = 0;
   state.velocity = 0;
 }
+/** Saut immédiat (sans lissage), p. ex. pour amener un élément focalisé au clavier dans la vue. */
+export function jumpTo(y: number) {
+  if (lenis) lenis.scrollTo(y, { immediate: true, force: true });
+  else scrollTo({ top: y });
+}
 export function scrollToTarget(target: string | HTMLElement | number) {
   if (lenis) lenis.scrollTo(target, { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) });
   else if (typeof target === 'number') scrollTo({ top: target });

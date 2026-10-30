@@ -16,7 +16,7 @@ import { runLoader } from './loader';
 import { playEnter, playLeave } from './transition';
 import { prefersReducedMotion } from './env';
 
-export { onScroll, scrollState, scrollToTarget, stopScroll, startScroll } from './scroll';
+export { jumpTo, onScroll, scrollState, scrollToTarget, stopScroll, startScroll } from './scroll';
 export { setTransition } from './transition';
 export { setLoaderFormat, setLoaderExit } from './loader';
 export { ease, isTouch, isMobile, prefersReducedMotion } from './env';

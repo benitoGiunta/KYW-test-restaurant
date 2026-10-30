@@ -87,3 +87,10 @@ seul fichier, sections indépendantes, tokens).
   les corrections par un agent Opus. Toi, tu construis, tu passes `shoot`/`audit` une fois, tu corriges les erreurs
   mécaniques (console, liens, débordements, FAIL), et tu livres.
 - Ne relis jamais un fichier de référence entier deux fois ; `grep`/`sed -n` pour les passages utiles.
+- **Titres géants et loader** (révision Affiche) : SplitText découpe en `lines,words,chars` (jamais `lines,chars`, sinon le
+  mot est coupé entre deux lettres) ; en mobile (≤ 767 px) la taille des titres géants est plafonnée pour que le mot le plus
+  long du site tienne dans 390 px moins deux gouttières ; vérifier en 390 px que chaque mot tient sur une ligne. Le texte
+  d'accroche du hero (élément LCP) ne porte ni `data-reveal` ni `data-intro` : il est peint dès le premier rendu sous le
+  rideau. Le loader (plancher + sortie) tient sous 2,6 s mesuré sans charge.
+- **Pied de page** : une seule mention « Maquette KYW… » (celle du composant `KywFooter`), pas de colophon qui la répète ;
+  le lien « Réalisé par » doit faire 24 px de haut (surcharge CSS dans le gabarit).

@@ -71,7 +71,7 @@ dans une puce crème posée sur l'aplat.
 
 | moment | mouvement | durée / ease |
 | --- | --- | --- |
-| rideau d'entrée (loader) | 4 bandes verticales (R J V C) avec le nom centré et une barre réelle ; se lèvent en stagger | 0,9 s `expo.inOut`, stagger 0,07 |
+| rideau d'entrée (loader) | 4 bandes verticales (R J V C) avec le nom centré et une barre réelle ; se lèvent en stagger | 0,6 s `expo.inOut`, stagger 0,05 (révision 1 : plancher 0,7 s, total ≤ 2,6 s) |
 | intro hero | lettres du nom en stagger (SplitText chars), pastille et plat en `up` | moteur, 0,9 s |
 | transition de page | une affiche (rouge) **descend** par clip-path sur la page, puis se décolle vers le haut | 0,8 s / 0,9 s `expo.inOut` |
 | cartes (bento, horaires) | claquent : scale 1,06 → 1, y 24 → 0, 0,35 s, stagger 0,06 | `back.out(1.6)` |
@@ -124,7 +124,7 @@ VISITE (vert)                                       split
 │ Facebook · YouTube        └──────────────────┘       │
 FOOTER (ink)                                        finale
 │ À TABLE !                                            │  mot d'adieu géant
-│ adresse · tél · réseaux · colophon · KYW             │
+│ adresse · tél · réseaux · KYW                        │
 ```
 
 Pages intérieures : `carte` (affiche jaune + bento complet + 3 formules + menu du jour), `histoire`
@@ -151,8 +151,14 @@ prononciation dans la définition).
 - Pas de WebGL (canvas: false). Pas de curseur personnalisé (le natif suffit ; `data-cursor` non utilisé).
 - Idle : un seul objet en lévitation (le plat du hero) + le disque CTA de la galerie. Rien d'autre ne bouge au
   repos.
-- Le loader est gardé (le cahier l'exige : rideau de 4 bandes avec barre réelle) ; il relève le LCP d'environ
-  1,1 s + 0,9 s de sortie, comportement prévu par le moteur.
+- Le loader est gardé (le cahier l'exige : rideau de 4 bandes avec barre réelle). Révision 1 : plancher 0,7 s,
+  sortie 0,35 + 0,6 s ; l'accroche du hero (`.hero__baseline`) n'est plus révélée à l'intro, elle est peinte dès
+  le premier rendu sous le rideau pour que le LCP ne l'attende pas.
+- Révision 1 : en mobile (≤ 767 px) les titres `--t-mega` et le nom du hero sont plafonnés à 9,5vw pour que le mot
+  le plus long (COMMANDER, LES POTES) tienne sans césure ; SplitText découpe `chars` dans des mots insécables.
+  Sur rouge et vert, l'étiquette « exemple » devient une puce crème (règle dure des contrastes). Le pied n'a plus
+  de colophon : une seule mention « Maquette KYW », portée par le pied KYW. Sara n'a pas de photo (aucune au
+  dossier) : cadre à initiale, comme Jordan.
 - Les données fictives (bento, menu du jour, à emporter, avis Google, définition, équipe Sara/Jordan) sont
   marquées `placeholder: true` dans `site.ts` et signalées à l'écran par « (exemple) » ou « illustratif ».
 

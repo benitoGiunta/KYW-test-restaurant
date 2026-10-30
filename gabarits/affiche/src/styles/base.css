@@ -9,7 +9,7 @@ body { background: var(--c-bg); color: var(--c-fg); font-stretch: 100%; }
 /* Vocabulaire typographique */
 .display {
   font-family: var(--f-display); font-stretch: 125%; font-weight: 900; text-transform: uppercase;
-  letter-spacing: -0.03em; line-height: 0.88; margin-left: -0.04em; text-wrap: balance;
+  letter-spacing: -0.03em; line-height: 0.88; margin-left: -0.04em; text-wrap: balance; overflow-wrap: normal; hyphens: manual;
   font-variant-numeric: tabular-nums;
 }
 .display--mega { font-size: var(--t-mega); }
@@ -22,7 +22,14 @@ body { background: var(--c-bg); color: var(--c-fg); font-stretch: 100%; }
 .texte p + p { margin-top: calc(var(--u) * 1.5); }
 .muted { color: var(--c-muted); }
 .num { font-variant-numeric: tabular-nums; }
-.exemple { font-size: var(--t-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; }
+.exemple { font-size: var(--t-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+/* Règle dure DESIGN.md : pas de petit texte nu sur rouge ou vert → l'étiquette devient une puce crème. */
+[data-tone='rouge'] .exemple, [data-tone='vert'] .exemple { display: inline-block; padding: 0.15em 0.5em; background: var(--creme); color: var(--ink); vertical-align: middle; line-height: 1.2; }
+[data-tone='rouge'] .ui.affiche__chapeau, [data-tone='vert'] .ui.affiche__chapeau { font-size: 1.25rem; }
+/* Mobile : le mot le plus long d'un titre géant (COMMANDER, RÉSERVER, LES POTES) tient dans 342 px. */
+@media (max-width: 767px) { .display--mega, .display.hero__nom { font-size: min(var(--t-mega), 9.5vw); } }
+/* Pied KYW : cible ≥ 24 px. */
+.kyw-footer__link { min-height: 24px; }
 
 /* Mise en page : une colonne, marges de 24 px, jamais plus */
 .wrap { padding-inline: var(--gutter); }
@@ -205,7 +212,7 @@ html.motion .cercle::before { --rempli: 0; }
 .galerie__carte img { aspect-ratio: 4 / 5; width: 100%; height: auto; object-fit: cover; border: var(--filet) solid var(--ink); }
 .galerie__carte figcaption { display: flex; justify-content: space-between; gap: var(--u); margin-top: var(--u); font-size: var(--t-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
 .galerie__num { font-family: var(--f-display); font-stretch: 125%; font-weight: 900; font-size: var(--t-l); line-height: 1; color: var(--rouge); }
-.galerie__fin { flex: 0 0 auto; display: grid; place-items: center; padding-inline: var(--gutter); }
+.galerie__fin { flex: 0 0 auto; display: grid; place-items: center; padding-inline: var(--gutter); scroll-snap-align: center; }
 .disque { position: relative; display: grid; place-items: center; width: clamp(9rem, 16vw, 13rem); aspect-ratio: 1; border-radius: 50%; background: var(--rouge); color: var(--creme); border: var(--filet) solid var(--ink); box-shadow: var(--ombre) var(--ombre) 0 0 var(--ink); transition: transform 0.1s, box-shadow 0.1s; }
 .disque svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .disque svg text { font-family: var(--f-body); font-weight: 700; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; fill: currentColor; }

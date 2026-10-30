@@ -11,7 +11,7 @@ let exit: ((root: HTMLElement) => gsap.core.Timeline) | null = null;
 /** Replace the exit choreography (the loader → hero handoff). Return a timeline. */
 export const setLoaderExit = (fn: (root: HTMLElement) => gsap.core.Timeline) => { exit = fn; };
 
-const MIN = 1.1; // seconds: long enough to read as a designed moment
+const MIN = 0.7; // seconds: long enough to read as a designed moment
 const MAX = 2.6; // seconds: a longer loader is a usability problem
 
 function criticalAssets(): Promise<unknown>[] {

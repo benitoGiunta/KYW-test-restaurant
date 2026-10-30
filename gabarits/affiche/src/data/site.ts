@@ -200,7 +200,7 @@ export const site: Restaurant = {
   equipe: [
     { nom: 'Damien Gorjanec', role: 'Chef et co-propriétaire', photo: '/photos/chef-damien.webp', placeholder: false },
     { nom: 'François Schepens', role: 'Chef et co-propriétaire', photo: '/photos/chef-francois.webp', placeholder: false },
-    { nom: 'Sara', role: 'Salle et bar', photo: '/photos/bar-cocktails.webp', placeholder: true },
+    { nom: 'Sara', role: 'Salle et bar', placeholder: true }, // aucune photo de Sara au dossier : cadre sans photo
     { nom: 'Jordan', role: 'Salle', placeholder: true },
   ],
   avis: [

@@ -3,7 +3,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
-import { ease, isMobile, onPage, onScroll, prefersReducedMotion } from '../engine';
+import { ease, isMobile, jumpTo, onPage, onScroll, prefersReducedMotion } from '../engine';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 const CLAP = { duration: 0.35, ease: ease.spring } as const;
@@ -149,18 +149,39 @@ function galerie() {
   const section = document.querySelector<HTMLElement>('[data-galerie]');
   const piste = section?.querySelector<HTMLElement>('[data-galerie-piste]');
   if (!section || !piste || prefersReducedMotion() || isMobile()) return;
-  gsap.to(piste, {
+  const tw = gsap.to(piste, {
     x: () => -(piste.scrollWidth - window.innerWidth),
     ease: 'none',
     scrollTrigger: { trigger: section, start: 'top top', end: () => `+=${piste.scrollWidth - window.innerWidth}`, scrub: 0.6, pin: true, invalidateOnRefresh: true, anticipatePin: 1 },
   });
+  // Clavier : un lien de la piste qui prend le focus hors écran (disque « Réserver une table ») ramène la piste
+  // jusqu'à lui (scroll vertical équivalent, sans lissage) ; le scrub est terminé tout de suite.
+  const onFocus = (e: FocusEvent) => {
+    const st = tw.scrollTrigger;
+    const el = e.target as HTMLElement;
+    if (!st || !(el instanceof HTMLElement) || !piste.contains(el)) return;
+    const max = piste.scrollWidth - window.innerWidth;
+    if (max <= 0) return;
+    const gauche = el.getBoundingClientRect().left - piste.getBoundingClientRect().left;
+    const x = Math.min(max, Math.max(0, gauche + el.offsetWidth / 2 - window.innerWidth / 2));
+    const y = st.start + (x / max) * (st.end - st.start);
+    jumpTo(y);
+    st.update();
+    st.getTween?.()?.progress(1);
+    gsap.set(piste, { x: -x });
+  };
+  section.addEventListener('focusin', onFocus);
+  return () => section.removeEventListener('focusin', onFocus);
 }
 
 /* Marquee de la carte : un ticker, vitesse liée à la vélocité de scroll. Reduced : fixe. */
 function marquee() {
   const piste = document.querySelector<HTMLElement>('[data-marquee]');
   if (!piste || prefersReducedMotion()) return;
-  const moitie = piste.scrollWidth / 2;
+  let moitie = piste.scrollWidth / 2;
+  const mesure = () => { moitie = piste.scrollWidth / 2; };
+  document.fonts.ready.then(mesure); // la police change la largeur : sans re-mesure, le raccord de la boucle saute
+  window.addEventListener('resize', mesure);
   let x = 0;
   let v = 0;
   const off = onScroll((s) => { v = s.velocity; });
@@ -170,7 +191,7 @@ function marquee() {
     piste.style.transform = `translate3d(${x}px,0,0)`;
   };
   gsap.ticker.add(tick);
-  return () => { gsap.ticker.remove(tick); off(); };
+  return () => { gsap.ticker.remove(tick); off(); window.removeEventListener('resize', mesure); };
 }
 
 /* Idle : un seul objet lévite (le plat du hero, ±6 px), pause hors écran, rien en reduced. */
