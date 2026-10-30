@@ -1,20 +1,31 @@
 ---
+// En-tête « Comptoir » : navigation en petites capitales 200 à droite, marque horizontale en mobile seulement
+// (en desktop, la marque est le logo vertical fixé en bas à gauche, dans la voie --lane). Pastille Réserver fixe.
 import { site } from '../data/site';
 import { u } from '../lib/url';
 const liens = [
-  { href: u('/'), label: 'Accueil' },
-  { href: u('/carte/'), label: 'La carte' },
-  { href: u('/histoire/'), label: 'Notre histoire' },
+  { href: u('/menu/'), label: 'Le menu' },
+  { href: u('/carte/'), label: 'Formules' },
+  { href: u('/histoire/'), label: 'Les chefs' },
   { href: u('/reservation/'), label: 'Réserver' },
 ];
 const ici = Astro.url.pathname.replace(/\/+$/, '');
 const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
 ---
 <header class="header">
-  <div class="wrap header__inner">
-    <a class="header__brand" href={u('/')}>{site.nom}</a>
+  <div class="header__inner">
+    <a class="header__brand" href={u('/')} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
     <nav class="nav" aria-label="Navigation principale">
       {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
     </nav>
   </div>
 </header>
+<a class="logo-vertical" href={u('/')} aria-label={`${site.nom}, retour à l'accueil`}><span aria-hidden="true">{site.nom}</span></a>
+<div class="pastille" data-pastille>
+  <a class="pastille__resa" href={u('/reservation/')} data-magnetic="0.2">Réserver</a>
+  <a class="pastille__cadeau" href={u('/reservation/#cadeau')} aria-label="Bon cadeau" title="Bon cadeau">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+      <rect x="2" y="7" width="14" height="9" /><path d="M2 10h14M9 7v9M9 7c-2-4-5-3-5-1s3 1 5 1zm0 0c2-4 5-3 5-1s-3 1-5 1z" />
+    </svg>
+  </a>
+</div>

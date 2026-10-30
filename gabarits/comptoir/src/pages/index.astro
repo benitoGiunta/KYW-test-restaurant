@@ -1,86 +1,127 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, photoDe, horaireTexte } from '../data/site';
+import { site, photoDe, romain, telHref } from '../data/site';
 import { u, asset } from '../lib/url';
-const hero = photoDe('/photos/cuisine-chefs-passe.webp');
-const galerie = ['/photos/plat-boeuf-confit.webp', '/photos/salle-banquette.webp', '/photos/service-francois-table.webp'].map(photoDe);
+const hero = photoDe('/photos/assiette-boeuf.webp');
+const chef = photoDe('/photos/chef-damien-nb.webp');
+const salleA = photoDe('/photos/salle-banquette.webp');
+const salleB = photoDe('/photos/cuisine-mains-pate.webp');
+const services = site.carte[0].plats;
+const comps = site.dressage.composants;
+// Trait : du bord du médaillon vers l'ancre de la légende (coordonnées en % de la scène carrée).
+const trait = (c: (typeof comps)[number]) => {
+  const ax = c.cote === 'gauche' ? 20 : 80;
+  const dx = ax - c.x, dy = c.ly - c.y, n = Math.hypot(dx, dy) || 1;
+  const r = c.d / 2 + 1;
+  return `M${(c.x + (dx / n) * r).toFixed(2)} ${(c.y + (dy / n) * r).toFixed(2)} L${ax} ${c.ly}`;
+};
 ---
 <Base>
-  <section class="hero wrap">
-    <h1 class="hero__title" data-split="lines" data-intro>{site.nom}</h1>
-    <p class="hero__baseline lead" data-reveal="fade" data-intro data-delay="0.3">{site.baseline}</p>
-    <div class="actions" data-reveal="up" data-intro data-delay="0.5">
-      <a class="btn btn--primary" href={u('/reservation/')} data-magnetic="0.25">Réserver une table</a>
-      <a class="btn" href={u('/carte/')}>Voir la carte</a>
+  <section class="hero" aria-label="Accueil">
+    <figure class="hero__media" data-hero-media>
+      <img src={asset(hero.src)} srcset={`${asset('/photos/assiette-boeuf-900.webp')} 900w, ${asset(hero.src)} 1400w`} sizes="(max-width: 1023px) 100vw, 50vw" alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" />
+    </figure>
+    <div class="hero__texte">
+      <p class="petite-cap">Bistronomie, {site.adresse.commune}</p>
+      <h1 class="hero__titre" data-split="lines" data-intro>{site.nom}</h1>
+      <p class="hero__sous">Menu unique de saison, à quatre mains, servi à table par les chefs. {site.adresse.rue} {site.adresse.numero}, bord de Meuse.</p>
+      <a class="filet" data-filet href={u('/menu/')}><span>Le menu du moment, 67 €</span><span class="fleche" aria-hidden="true">→</span></a>
     </div>
-    <figure class="hero__media" data-reveal="clip" data-intro data-delay="0.2">
-      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical data-parallax="0.1" />
+  </section>
+
+  <section class="section phrase wrap" aria-label="Notre cuisine">
+    <p class="phrase__texte" data-split="lines">{site.phrase.avant} <em>{site.phrase.accent}</em>{site.phrase.apres}</p>
+  </section>
+
+  <section class="dressage" data-dressage aria-labelledby="dressage-titre">
+    <div class="dressage__scene" data-dressage-scene>
+      <div class="dressage__entete">
+        <p class="petite-cap">Le dressage</p>
+        <h2 id="dressage-titre">{site.dressage.plat}</h2>
+        <p class="muted">{site.dressage.service}</p>
+      </div>
+      <div class="stage">
+        <div class="assiette" aria-hidden="true"><div class="assiette__fond"></div></div>
+        {comps.map((c, i) => (
+          <figure class="dressage__comp" data-composant={String(i)} data-cote={c.cote} style={`left:${c.x}%;top:${c.y}%;width:${c.d}%`}>
+            <img src={asset(c.src)} alt="" width="380" height="380" loading="lazy" decoding="async" />
+          </figure>
+        ))}
+        <svg class="dressage__traits" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          {comps.map((c, i) => <path data-trait={String(i)} d={trait(c)} />)}
+        </svg>
+        {comps.map((c, i) => (
+          <p class="dressage__legende" data-legende={String(i)} data-cote={c.cote} style={`top:${c.ly}%`} aria-hidden="true">
+            {c.nom}{c.placeholder && <span class="illu">composant illustratif</span>}
+          </p>
+        ))}
+      </div>
+      <ol class="dressage__liste" aria-label="Composants du plat">
+        {comps.map((c, i) => (
+          <li data-liste-item={String(i)}>
+            <button type="button">{c.nom}{c.placeholder && <span class="illu">illustratif</span>}</button>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="menu-titre">
+    <p class="petite-cap">Le menu</p>
+    <h2 id="menu-titre" style="margin: 0.4em 0 1.6em">Menu dégustation unique, {services.length} services</h2>
+    <ol class="menu-liste">
+      {services.map((p, i) => (
+        <li data-reveal="fade" data-delay={String(i * 0.06)}>
+          <span class="num">{romain(i + 1)}</span>
+          <span class="nom">{p.nom}</span>
+          <span class="prix">{i === 0 ? site.menus[0].prix : ''}</span>
+        </li>
+      ))}
+    </ol>
+    <div class="menu-note muted">
+      <p>Du lundi au vendredi soir. Allergies et intolérances : le menu est adapté, à signaler lors de la réservation. Menu végétarien sur demande.</p>
+    </div>
+    <p style="margin-top: calc(var(--u) * 3); max-width: 46rem"><a class="filet" data-filet href={u('/menu/')}><span>Le menu en entier, suppléments et formules du midi</span><span class="fleche" aria-hidden="true">→</span></a></p>
+  </section>
+
+  <section class="split" aria-labelledby="chefs-titre">
+    <figure class="split__media bord" data-reveal="fade">
+      <img src={asset(chef.src)} alt={chef.alt} width={chef.largeur} height={chef.hauteur} loading="lazy" decoding="async" />
+    </figure>
+    <div class="split__aplat">
+      <p class="petite-cap">Les chefs</p>
+      <h2 id="chefs-titre" data-split="lines">Deux potes au passe</h2>
+      <p class="texte">{site.histoire[3]}</p>
+      <a class="filet" data-filet href={u('/histoire/')}><span>Damien Gorjanec et François Schepens</span><span class="fleche" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="section wrap quinconce" aria-label="La salle">
+    <figure class="quinconce__a" data-reveal="fade">
+      <img src={asset(salleA.src)} alt={salleA.alt} width={salleA.largeur} height={salleA.hauteur} loading="lazy" decoding="async" />
+      <figcaption>La salle, avenue de la Plante</figcaption>
+    </figure>
+    <figure class="quinconce__b angle" data-reveal="fade" data-delay="0.2">
+      <img src={asset(salleB.src)} alt={salleB.alt} width={salleB.largeur} height={salleB.hauteur} loading="lazy" decoding="async" />
+      <figcaption>Fait maison, tous les jours</figcaption>
     </figure>
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Ce qui nous anime</h2>
-      <ul class="liste stack" data-reveal="up">
-        {site.valeurs.map((v) => <li>{v}</li>)}
-      </ul>
-    </div>
+  <section class="bande wrap" aria-label="Distinctions">
+    {site.distinctions.map((d) => (
+      <p>{d.url ? <a class="lien" href={d.url} rel="noopener">{d.texte}</a> : d.texte}{d.placeholder && <span class="illu">illustratif</span>}<span class="source">{d.source}</span></p>
+    ))}
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Nos formules</h2>
-      <div class="grid">
-        {site.menus.map((m, i) => (
-          <article class="menu stack" data-reveal="up" data-delay={String(i * 0.1)}>
-            <h3>{m.nom}</h3>
-            <p><strong>{m.prix}</strong></p>
-            <p class="muted">{m.description}</p>
-          </article>
-        ))}
-      </div>
-      <p class="actions"><a class="link" href={u('/carte/')}>La carte complète</a></p>
+  <section class="section wrap deux-colonnes" aria-labelledby="resa-titre">
+    <div>
+      <p class="petite-cap">Réserver</p>
+      <h2 id="resa-titre" style="margin-top: 0.4em">Une table, un menu</h2>
     </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">En images</h2>
-      <div class="grid">
-        {galerie.map((p, i) => (
-          <figure class="card" data-reveal="scale" data-delay={String(i * 0.1)} data-cursor="Voir">
-            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
-            <figcaption class="muted">{p.alt}</figcaption>
-          </figure>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Ils en parlent</h2>
-      <div class="grid">
-        {site.avis.map((a) => (
-          <blockquote class="avis" data-reveal="fade">
-            <p>{a.texte}</p>
-            <cite>{a.auteur}, {a.source}{a.placeholder ? ' (avis illustratif)' : ''}</cite>
-          </blockquote>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <h2 class="section__title" data-split="words">Horaires et accès</h2>
-      <dl class="horaires" data-reveal="up">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-      </dl>
-      <div class="actions">
-        <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
-        <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
-      </div>
+    <div class="stack" style="max-width: 46rem">
+      <p class="lead">Réservation en ligne via {site.reservation.outil}, ou par téléphone au <a class="lien" href={telHref()}>{site.telephone}</a>.</p>
+      <p class="muted">{site.groupes}</p>
+      <a class="filet" data-filet href={u('/reservation/')}><span>Réserver une table</span><span class="fleche" aria-hidden="true">→</span></a>
     </div>
   </section>
 </Base>

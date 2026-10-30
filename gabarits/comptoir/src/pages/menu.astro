@@ -1,0 +1,54 @@
+---
+// Page longue du menu unique : services numérotés, prix, suppléments, note allergènes. Descriptions vides : le dossier
+// ne donne que les intitulés.
+import Base from '../layouts/Base.astro';
+import { site, photoDe, romain } from '../data/site';
+import { u, asset } from '../lib/url';
+const services = site.carte[0].plats;
+const options = site.carte[1].plats;
+const photos: Record<number, ReturnType<typeof photoDe>> = { 2: photoDe('/photos/assiette-saint-jacques.webp'), 3: photoDe('/photos/assiette-boeuf.webp') };
+---
+<Base title="Le menu" description={`Le menu dégustation unique des Potes au Feu à Namur : ${services.length} services, ${site.menus[0].prix}, du lundi au vendredi soir ; menu végétarien sur demande.`}>
+  <section class="entete-page wrap">
+    <p class="petite-cap">Le menu</p>
+    <h1 data-split="lines" data-intro>Menu dégustation unique</h1>
+    <p class="lead">{services.length} services, {site.menus[0].prix}. {site.menus[0].description}</p>
+  </section>
+
+  <section class="section--serree wrap" aria-label="Les services">
+    <ol class="menu-liste menu-grand">
+      {services.map((p, i) => (
+        <li data-reveal="fade">
+          <span class="num">{romain(i + 1)}</span>
+          <span class="nom">{p.nom}{p.description && <small>{p.description}</small>}{p.placeholder && <span class="illu">illustratif</span>}</span>
+          <span class="prix">{p.prix ?? ''}</span>
+          {photos[i] && (
+            <figure class="assiette-photo">
+              <img src={asset(photos[i].src)} alt={photos[i].alt} width={photos[i].largeur} height={photos[i].hauteur} loading="lazy" decoding="async" />
+            </figure>
+          )}
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="section wrap deux-colonnes" aria-labelledby="options-titre">
+    <div>
+      <p class="petite-cap">Suppléments et options</p>
+      <h2 id="options-titre" style="margin-top: 0.4em">À votre table</h2>
+    </div>
+    <ul class="menu-liste" style="list-style: none">
+      {options.map((p) => (
+        <li data-reveal="fade">
+          <span class="num" aria-hidden="true"></span>
+          <span class="nom">{p.nom}{p.description && <small>{p.description}</small>}{p.placeholder && <span class="illu">illustratif</span>}</span>
+          <span class="prix">{p.prix ?? ''}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section--serree wrap" style="padding-bottom: calc(var(--u) * 14)">
+    <p style="max-width: 46rem"><a class="filet" data-filet href={u('/carte/')}><span>Les formules du midi et le bon cadeau</span><span class="fleche" aria-hidden="true">→</span></a></p>
+  </section>
+</Base>

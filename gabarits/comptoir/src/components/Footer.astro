@@ -1,27 +1,31 @@
 ---
-// Pied de page du restaurant, suivi du pied de page KYW obligatoire (un seul logo, kyw-signature).
+// Pied de page finale : le nom en 200 très grand, puis coordonnées et horaires sur une ligne de filets ; KywFooter obligatoire.
 import KywFooter from '@kyw/footer';
 import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
 import { u } from '../lib/url';
 ---
 <footer class="footer">
-  <div class="wrap footer__cols">
-    <div class="stack">
-      <p><strong>{site.nom}</strong></p>
-      <address>{adresseLigne()}</address>
-      <p><a class="link" href={telHref()}>{site.telephone}</a></p>
-      <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
-    </div>
-    <div>
-      <p><strong>Horaires</strong></p>
-      <dl class="horaires">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-      </dl>
-    </div>
-    <div class="stack">
-      <p><strong>Suivre</strong></p>
-      {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
-      <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+  <div class="wrap">
+    <p class="footer__nom" aria-hidden="true">{site.nom}</p>
+    <div class="footer__cols">
+      <div class="footer__col">
+        <p class="petite-cap">Adresse</p>
+        <address>{adresseLigne()}<br />Bord de Meuse, côté Citadelle</address>
+        <p><a class="lien" href={telHref()}>{site.telephone}</a></p>
+        <p><a class="lien" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a> <span class="illu">adresse illustrative</span></p>
+      </div>
+      <div class="footer__col">
+        <p class="petite-cap">Services</p>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+      </div>
+      <div class="footer__col">
+        <p class="petite-cap">Suivre</p>
+        {site.reseaux.map((r) => <p><a class="lien" href={r.url} rel="noopener">{r.nom}</a></p>)}
+        <p><a class="lien" href={u('/reservation/')}>Réserver une table</a></p>
+        <p><a class="lien" href={site.url} rel="noopener">Site actuel</a></p>
+      </div>
     </div>
   </div>
 </footer>
