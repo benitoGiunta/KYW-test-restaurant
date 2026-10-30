@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { asset, u } from '../lib/url';
+const nb = photoDe('/photos/cuisine-chefs-passe.webp');
+const trio = photoDe('/photos/equipe-trio.webp');
+const avisIllu = site.avis.some((a) => a.placeholder);
+const roleIllu = site.equipe.some((m) => m.rolePlaceholder);
+---
+<Base title="Histoire et équipe" description={`L'histoire de ${site.nom} : deux potes, Damien Gorjanec et François Schepens, de la Plage d'Amée à l'avenue de la Plante, et l'équipe qui les épaule.`}>
+  <section class="hero hero--page col-l">
+    <h1 class="hero__titre tube" data-tube>Deux potes</h1>
+    <p class="lead" data-reveal="fade">{site.baseline}</p>
+  </section>
+
+  <section class="origin" data-origin aria-labelledby="origine">
+    <div class="origin__stage">
+      <p class="meta origin__tete" id="origine">D'où ça vient</p>
+      <div class="origin__photo">
+        <img src={asset(nb.src)} alt={nb.alt} width={nb.largeur} height={nb.hauteur} loading="lazy" decoding="async" />
+      </div>
+      <div class="origin__phrases">
+        {site.originStory.map((p) => <p class="origin__phrase" data-origin-phrase>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section col" aria-labelledby="recit">
+    <h2 id="recit" class="tube tube--xl" data-tube data-reveal="fade" style="margin-bottom: calc(var(--u) * 4)">Le récit</h2>
+    <div class="stack" style="--u: 1.4rem">
+      {site.histoire.map((p) => <p data-reveal="fade" style="font-size: var(--t-m); line-height: 1.45">{p}</p>)}
+    </div>
+  </section>
+
+  <section class="section col-l" aria-labelledby="equipe">
+    <div class="section__tete">
+      <h2 id="equipe" class="tube tube--xl" data-tube data-reveal="fade">L'équipe</h2>
+      {roleIllu && <p class="note-illu"><b>* illustratif</b> : rôle à confirmer par le restaurant.</p>}
+    </div>
+    <ul class="equipe">
+      {site.equipe.map((m, i) => {
+        const p = m.photo ? photoDe(m.photo) : null;
+        return (
+          <li class="membre" data-reveal="up" data-delay={String(i * 0.08)}>
+            {p ? (
+              <figure><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>
+            ) : (
+              <figure aria-hidden="true"></figure>
+            )}
+            <p class="membre__nom">{m.nom}{m.placeholder && <span class="illu">illustratif</span>}</p>
+            <p class="membre__role">{m.role}{m.rolePlaceholder && <span class="illu">illustratif</span>}</p>
+          </li>
+        );
+      })}
+    </ul>
+  </section>
+
+  <section class="mos" aria-label="L'équipe en salle" style="grid-template-columns: 1fr">
+    <figure class="mos__item" data-lampe-item style="aspect-ratio: 21 / 9">
+      <img class="mos__img" src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="lazy" decoding="async" />
+      <img class="mos__lum" src={asset(trio.src)} alt="" aria-hidden="true" width={trio.largeur} height={trio.hauteur} loading="lazy" decoding="async" />
+    </figure>
+  </section>
+
+  <section class="section col-l" aria-labelledby="avis">
+    <div class="section__tete">
+      <h2 id="avis" class="tube tube--xl" data-tube data-reveal="fade">On en dit</h2>
+      {avisIllu && <p class="note-illu"><b>* illustratif</b> : avis d'exemple, le restaurant n'a pas encore fourni ses extraits.</p>}
+    </div>
+    <ul class="avis-liste">
+      {site.avis.map((a, i) => (
+        <li class="avis" data-reveal="up" data-delay={String(i * 0.1)}>
+          <p>« {a.texte} »</p>
+          <cite>{a.auteur}, {a.source}{a.placeholder && <span class="illu">illustratif</span>}</cite>
+        </li>
+      ))}
+    </ul>
+    <div class="actions">
+      <a class="btn btn--ambre" href={u('/reservation/')}>Réserver <span class="fleche" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</Base>

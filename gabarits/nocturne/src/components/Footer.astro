@@ -1,0 +1,30 @@
+---
+// Pied de page finale : nom incliné en tube, colonnes contact / horaires / suivre, puis le pied de page KYW obligatoire.
+import KywFooter from '@kyw/footer';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { u } from '../lib/url';
+---
+<footer class="footer">
+  <p class="footer__nom tube" aria-hidden="true">{site.nom}</p>
+  <div class="footer__cols">
+    <div class="stack">
+      <p class="meta">Contact</p>
+      <address>{adresseLigne()}</address>
+      <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+      <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a>{site.email.placeholder && <span class="illu">e-mail illustratif</span>}</p>
+    </div>
+    <div>
+      <p class="meta">Horaires</p>
+      <dl class="horaires">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+    </div>
+    <div class="stack">
+      <p class="meta">Suivre</p>
+      {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
+      <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+      <p><a class="link" href={u('/soirees/')}>Privatiser le samedi</a></p>
+    </div>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

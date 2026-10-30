@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, telHref, photoDe } from '../data/site';
+import { asset, u } from '../lib/url';
+const salle = photoDe('/photos/salle-clients-bar.webp');
+const illu = site.soirees.some((e) => e.placeholder);
+---
+<Base title="Soirées et privatisation" description={`Privatiser ${site.nom} le samedi, mariage ou événement, ou recevoir les chefs à domicile. Demande par téléphone au ${site.telephone}.`}>
+  <section class="hero hero--page col-l">
+    <h1 class="hero__titre tube" data-tube>Soirées</h1>
+    <p class="lead" data-reveal="fade">{site.accroche.soirees}</p>
+  </section>
+
+  <section class="mos" aria-label="La salle le soir" style="grid-template-columns: 1fr">
+    <figure class="mos__item" data-lampe-item style="aspect-ratio: 21 / 9">
+      <img class="mos__img" src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
+      <img class="mos__lum" src={asset(salle.src)} alt="" aria-hidden="true" width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
+    </figure>
+  </section>
+
+  <section class="section col-l" aria-labelledby="formats">
+    <div class="section__tete">
+      <h2 id="formats" class="tube tube--xl" data-tube data-reveal="fade">Trois façons</h2>
+      {illu && <p class="note-illu"><b>* illustratif</b> : format d'exemple, à valider avec le restaurant.</p>}
+    </div>
+    <ul class="soirees">
+      {site.soirees.map((e, i) => (
+        <li class="soiree" data-reveal="up" data-delay={String(i * 0.1)}>
+          <p class="soiree__quand">{e.quand}</p>
+          <p class="titre" style="font-size: var(--t-m)">{e.nom}{e.placeholder && <span class="illu">illustratif</span>}</p>
+          <p>{e.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section col-l" aria-labelledby="demande">
+    <div class="venir">
+      <div class="stack" data-reveal="fade">
+        <h2 id="demande" class="tube tube--xl" data-tube>Demander</h2>
+        <p>{site.accroche.demande}</p>
+        <div class="actions">
+          <a class="btn btn--ambre" href={telHref()}>Appeler le {site.telephone}</a>
+          <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire</a>
+        </div>
+        {site.email.placeholder && <p class="note-illu"><b>* e-mail illustratif</b></p>}
+      </div>
+      <div class="stack" data-reveal="fade" data-delay="0.15">
+        <p class="meta">Bon cadeau</p>
+        <p>{site.menus.find((m) => m.nom === 'Bon cadeau')?.prix}. {site.menus.find((m) => m.nom === 'Bon cadeau')?.description}</p>
+        <p><a class="link" href={u('/carte/')}>Voir les formules</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

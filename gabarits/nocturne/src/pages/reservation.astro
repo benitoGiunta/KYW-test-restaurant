@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, adresseLigne, horaireTexte, telHref, serviceSoir } from '../data/site';
+const s = serviceSoir(site);
+---
+<Base title="Réservation" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}. Service du soir ${s.texte}.`}>
+  <section class="hero hero--page col-l">
+    <h1 class="hero__titre tube" data-tube>Réserver</h1>
+    <p class="lead" data-reveal="fade">En ligne via {site.reservation.outil}. {site.regles[1].texte}</p>
+    <div class="actions" data-reveal="up" data-delay="0.15">
+      <a class="btn btn--ambre" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil} <span class="fleche" aria-hidden="true">→</span></a>
+      <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+    </div>
+  </section>
+
+  <section class="section section--serre col-l" aria-labelledby="demande">
+    <div class="section__tete">
+      <h2 id="demande" class="tube tube--xl" data-tube data-reveal="fade">Votre table</h2>
+      <p class="muted">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+    </div>
+    <form class="form" data-reservation action={site.reservation.url} method="get">
+      <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+      <label>Date <input type="date" name="date" required /></label>
+      <label>Heure <input type="time" name="heure" min={s.ouverture} max={s.fermeture} required /></label>
+      <label>Couverts <input type="number" name="couverts" min="1" max="6" value="2" required /></label>
+      <label>Message <textarea name="message" rows="3"></textarea></label>
+      <div class="actions" style="margin-top: 0">
+        <button class="btn btn--ambre" type="submit">Continuer sur {site.reservation.outil}</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="section col-l venir" aria-labelledby="horaires">
+    <div data-reveal="fade">
+      <h2 id="horaires" class="tube tube--xl" data-tube style="margin-bottom: calc(var(--u) * 2)">Horaires</h2>
+      <dl class="horaires">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+    </div>
+    <div class="stack" data-reveal="fade" data-delay="0.15">
+      <p class="meta">Adresse</p>
+      <address>{adresseLigne()}</address>
+      <p class="meta" style="margin-top: calc(var(--u) * 2)">À savoir</p>
+      <ol class="regles" style="border-top: 0">
+        {site.regles.slice(0, 4).map((r) => <li class="regle" style="font-size: var(--t-body)">{r.texte}{r.placeholder && <span class="illu">illustratif</span>}</li>)}
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { onPage } from '../engine';
+  onPage(() => {
+    const form = document.querySelector<HTMLFormElement>('[data-reservation]');
+    if (!form) return;
+    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    form.addEventListener('submit', go);
+    return () => form.removeEventListener('submit', go);
+  });
+</script>

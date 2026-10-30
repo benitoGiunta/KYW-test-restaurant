@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { asset, u } from '../lib/url';
+const bar = photoDe('/photos/bar-cocktails.webp');
+const familles: { nom: string; var: string }[] = [
+  { nom: 'sour', var: 'var(--c-accent)' },
+  { nom: 'highball', var: 'var(--c-rouge)' },
+  { nom: 'spiritueux', var: 'var(--c-fg)' },
+  { nom: 'sans alcool', var: 'var(--c-muted)' },
+];
+---
+<Base title="Cocktails" description={`Le bar de ${site.nom} à ${site.adresse.commune} : une carte de cocktails illustrative, par famille, en attendant celle du restaurant.`}>
+  <section class="hero hero--page col-l">
+    <h1 class="hero__titre tube" data-tube>Cocktails</h1>
+    <p class="lead" data-reveal="fade">{site.accroche.bar}</p>
+    <p class="note-illu" data-reveal="fade" data-delay="0.1" style="margin-top: var(--u)"><b>* Carte illustrative</b> : le restaurant ne publie pas de carte de bar. Les cocktails de la photo existent, leurs noms et leurs prix ci-dessous sont des exemples.</p>
+  </section>
+
+  <section class="mos" aria-label="Le bar" style="grid-template-columns: 1fr">
+    <figure class="mos__item" data-lampe-item style="aspect-ratio: 21 / 9">
+      <img class="mos__img" src={asset(bar.src)} alt={bar.alt} width={bar.largeur} height={bar.hauteur} loading="lazy" decoding="async" />
+      <img class="mos__lum" src={asset(bar.src)} alt="" aria-hidden="true" width={bar.largeur} height={bar.hauteur} loading="lazy" decoding="async" />
+    </figure>
+  </section>
+
+  <section class="section col-l" aria-labelledby="liste">
+    <h2 id="liste" class="meta" style="margin-bottom: calc(var(--u) * 2)">Par famille</h2>
+    <ul class="familles">
+      {familles.map((f) => <li><i style={`--fam: ${f.var}`}></i>{f.nom}</li>)}
+    </ul>
+    <ul class="ckt" data-reveal="fade">
+      {site.cocktails.map((c) => (
+        <li class="ckt__item" data-fam={c.famille}>
+          <span class="ckt__nom tube tube--l" data-tube>{c.nom}{c.placeholder && <span class="illu">illustratif</span>}</span>
+          <span class="ckt__prix">{c.prix}</span>
+          <span class="ckt__ing">{c.ingredients}</span>
+          <span class="ckt__fam">{c.famille}</span>
+        </li>
+      ))}
+    </ul>
+    <div class="actions">
+      <a class="btn btn--ambre" href={u('/reservation/')}>Réserver <span class="fleche" aria-hidden="true">→</span></a>
+      <a class="btn" href={u('/carte/')}>Le menu</a>
+    </div>
+  </section>
+</Base>

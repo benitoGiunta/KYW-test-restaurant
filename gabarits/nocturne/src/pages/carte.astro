@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, serviceSoir } from '../data/site';
+import { u } from '../lib/url';
+const s = serviceSoir(site);
+const aPlaceholder = site.carte.some((c) => c.plats.some((p) => p.placeholder));
+---
+<Base title="La carte" description={`Le menu dégustation unique en quatre services de ${site.nom} à ${site.adresse.commune}, ${site.menus[0].prix}, les formules du midi et le bon cadeau.`}>
+  <section class="hero hero--page col-l">
+    <h1 class="hero__titre tube" data-tube>La carte</h1>
+    <p class="lead" data-reveal="fade">{site.accroche.carte} Le soir, {s.texte}.</p>
+  </section>
+
+  <section class="section section--serre col-l" aria-labelledby="formules">
+    <h2 id="formules" class="meta" style="margin-bottom: calc(var(--u) * 3)">Les formules</h2>
+    <ul class="menus" style="list-style: none; padding: 0">
+      {site.menus.map((m, i) => (
+        <li class="menu" data-reveal="up" data-delay={String(i * 0.08)}>
+          <p class="titre" style="font-size: var(--t-m)">{m.nom}{m.placeholder && <span class="illu">illustratif</span>}</p>
+          <p class="menu__prix">{m.prix}</p>
+          <p>{m.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  {site.carte.map((cat) => {
+    const [titre, ...reste] = cat.categorie.split(/,\s*/);
+    const detail = reste.join(', ').replace(/[()]/g, '');
+    return (
+    <section class="section section--serre col-l">
+      <div class="section__tete">
+        <h2 class="tube tube--l" data-tube data-reveal="fade">{titre}</h2>
+        {detail && <p class="meta">{detail}</p>}
+      </div>
+      <ol class="index" data-reveal="fade">
+        {cat.plats.map((p, i) => (
+          <li class="index__item">
+            <span class="index__num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="index__nom">{p.nom}{p.placeholder && <span class="illu">illustratif</span>}</span>
+            <span class="index__prix">{p.prix ?? ''}</span>
+            {p.description && <span class="index__desc">{p.description}</span>}
+          </li>
+        ))}
+      </ol>
+    </section>
+    );
+  })}
+
+  <section class="section col-l">
+    {aPlaceholder && <p class="note-illu" style="margin-bottom: calc(var(--u) * 3)"><b>* illustratif</b> : donnée d'exemple, à remplacer par celle du restaurant.</p>}
+    <div class="actions" style="margin-top: 0">
+      <a class="btn btn--ambre" href={u('/reservation/')}>Réserver <span class="fleche" aria-hidden="true">→</span></a>
+      <a class="btn" href={u('/cocktails/')}>Au bar</a>
+    </div>
+  </section>
+</Base>

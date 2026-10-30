@@ -1,0 +1,148 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, serviceSoir, heure, photoDe, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { asset, u } from '../lib/url';
+const voletG = photoDe('/photos/bar-cocktails.webp');
+const voletD = photoDe('/photos/salle-ampoules.webp');
+const nb = photoDe('/photos/portrait-damien-profil.webp');
+const s = serviceSoir(site);
+const statut = JSON.stringify(site.horaires.map((h) => ({ jour: h.jour, creneaux: h.creneaux })));
+const mosaique = site.mosaique.map((m) => photoDe(m.src));
+const menu = site.carte[0];
+const michelin = site.avis.find((a) => !a.placeholder)!;
+const bandes = [
+  { texte: michelin.texte, cite: michelin.source, placeholder: false },
+  { texte: site.accroche.bande, cite: '', placeholder: false },
+];
+---
+<Base description={`${site.nom}, bistronomie à ${site.adresse.commune} : menu unique en quatre services servi par les chefs, ${s.texte}. Réservation en ligne.`}>
+  <section class="hero" data-hero aria-labelledby="titre">
+    <div class="hero__volet hero__volet--g" data-volet="gauche">
+      <img src={asset(voletG.src)} alt={voletG.alt} width={voletG.largeur} height={voletG.hauteur} fetchpriority="high" decoding="async" />
+    </div>
+    <div class="hero__centre">
+      <p class="hero__nom">{site.nom}</p>
+      <h1 id="titre" class="hero__titre tube" data-tube>{site.accroche.titre[0]}<br />{site.accroche.titre[1]}</h1>
+      <p class="statut" data-statut={statut}><span data-statut-texte>{`Service ${s.texte}, ${heure(s.ouverture)} à ${heure(s.fermeture)}`}</span></p>
+      <p class="hero__sous" data-hero-apres>{site.accroche.sousTitre}</p>
+      <div class="actions" style="margin-top: 0" data-hero-apres>
+        <a class="btn btn--ambre" href={u('/reservation/')}>Réserver <span class="fleche" aria-hidden="true">→</span></a>
+        <a class="btn" href={u('/carte/')}>Le menu</a>
+      </div>
+    </div>
+    <div class="hero__volet hero__volet--d" data-volet="droite">
+      <img src={asset(voletD.src)} alt={voletD.alt} width={voletD.largeur} height={voletD.hauteur} fetchpriority="high" decoding="async" />
+    </div>
+  </section>
+
+  <section class="section col-l" aria-labelledby="regles">
+    <div class="section__tete">
+      <h2 id="regles" class="tube tube--xl" data-tube data-reveal="fade">Règles de la maison</h2>
+      <p class="meta">Ce qu'il faut savoir avant de venir</p>
+    </div>
+    <ol class="regles">
+      {site.regles.map((r, i) => <li class="regle" data-reveal="fade" data-delay={String(i * 0.08)}>{r.texte}{r.placeholder && <span class="illu">illustratif</span>}</li>)}
+    </ol>
+  </section>
+
+  <section class="mos" aria-label="La salle, le bar et la cuisine en photos">
+    {mosaique.map((p, i) => (
+      <>
+        <figure class={`mos__item ${i % 4 === 1 || i % 4 === 2 ? 'mos__item--s' : 'mos__item--l'}`} data-lampe-item>
+          <img class="mos__img" src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          <img class="mos__lum" src={asset(p.src)} alt="" aria-hidden="true" width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+        {(i === 5 || i === 11) && (
+          <div class="mos__bande" data-reveal="fade">
+            {i === 5 && <p class="meta">Le Guide MICHELIN écrit</p>}
+            <p>{bandes[i === 5 ? 0 : 1].texte}</p>
+            {bandes[i === 5 ? 0 : 1].cite && <cite class="meta">{bandes[0].cite}</cite>}
+          </div>
+        )}
+      </>
+    ))}
+  </section>
+
+  <section class="section col-l" aria-labelledby="menu">
+    <div class="section__tete">
+      <h2 id="menu" class="tube tube--xl" data-tube data-reveal="fade">Le menu</h2>
+      <p class="meta">{site.menus[0].nom}, {site.menus[0].prix}</p>
+    </div>
+    <ol class="index" data-reveal="fade">
+      {menu.plats.slice(0, 6).map((p, i) => (
+        <li class="index__item">
+          <span class="index__num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="index__nom">{p.nom}{p.placeholder && <span class="illu">illustratif</span>}</span>
+          <span class="index__prix">{p.prix ?? ''}</span>
+          {p.description && <span class="index__desc">{p.description}</span>}
+        </li>
+      ))}
+    </ol>
+    <div class="actions">
+      <a class="btn" href={u('/carte/')}>Toute la carte <span class="fleche" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="section col-l" aria-labelledby="bar">
+    <div class="section__tete">
+      <h2 id="bar" class="tube tube--xl" data-tube data-reveal="fade">Au bar</h2>
+      <p class="note-illu"><b>* Carte illustrative</b> : le restaurant ne publie pas de carte de bar.</p>
+    </div>
+    <ul class="ckt" data-reveal="fade">
+      {site.cocktails.slice(0, 4).map((c) => (
+        <li class="ckt__item" data-fam={c.famille}>
+          <span class="ckt__nom tube tube--l" data-tube>{c.nom}{c.placeholder && <span class="illu">illustratif</span>}</span>
+          <span class="ckt__prix">{c.prix}</span>
+          <span class="ckt__ing">{c.ingredients}</span>
+          <span class="ckt__fam">{c.famille}</span>
+        </li>
+      ))}
+    </ul>
+    <div class="actions">
+      <a class="btn" href={u('/cocktails/')}>Les cocktails <span class="fleche" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="origin" data-origin aria-labelledby="origine">
+    <div class="origin__stage">
+      <p class="meta origin__tete" id="origine">D'où ça vient</p>
+      <div class="origin__photo">
+        <img src={asset(nb.src)} alt={nb.alt} width={nb.largeur} height={nb.hauteur} loading="lazy" decoding="async" />
+      </div>
+      <div class="origin__phrases">
+        {site.originStory.map((p) => <p class="origin__phrase" data-origin-phrase>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section col-l" aria-labelledby="soirees">
+    <div class="section__tete">
+      <h2 id="soirees" class="tube tube--xl" data-tube data-reveal="fade">Soirées</h2>
+      <a class="link" href={u('/soirees/')}>Privatisation et chef à domicile</a>
+    </div>
+    <ul class="soirees">
+      {site.soirees.map((e, i) => (
+        <li class="soiree" data-reveal="up" data-delay={String(i * 0.1)}>
+          <p class="soiree__quand">{e.quand}</p>
+          <p class="titre" style="font-size: var(--t-m)">{e.nom}{e.placeholder && <span class="illu">illustratif</span>}</p>
+          <p>{e.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section col-l venir" aria-labelledby="venir">
+    <div class="stack" data-reveal="fade">
+      <h2 id="venir" class="tube tube--xl" data-tube>Venir</h2>
+      <address>{adresseLigne()}<br />{site.accroche.complementAdresse}</address>
+      <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+      <p class="muted">{site.regles[1].texte}</p>
+    </div>
+    <div data-reveal="fade" data-delay="0.15">
+      <p class="meta" style="margin-bottom: var(--u)">Horaires</p>
+      <dl class="horaires">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+    </div>
+  </section>
+</Base>
