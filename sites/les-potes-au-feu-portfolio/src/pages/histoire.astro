@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, chef, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const damien = chef('D');
+const francois = chef('F');
+const equipe = site.equipe.map((m) => ({ ...m, image: m.photo ? photoDe(m.photo) : null }));
+const video = site.video ? { ...site.video, image: photoDe(site.video.poster) } : null;
+const dateFr = (d: string) => new Date(d + 'T12:00:00').toLocaleDateString('fr-BE', { month: 'long', year: 'numeric' });
+const galerie = site.galerie.map(photoDe);
+const salle = photoDe('/photos/salle-banquette.webp');
+---
+<Base title="Notre histoire" description={`L'histoire des Potes au Feu à Namur : la rencontre de deux chefs à la Plage d'Amée, l'ouverture avenue de la Plante en 2020, l'équipe et les coulisses.`}>
+  <section class="hero dip" data-voix="deux" aria-labelledby="histoire-h1">
+    <div class="dip__g hero__texte">
+      <span class="mono muted" data-reveal="fade" data-intro>Depuis 2020, avenue de la Plante</span>
+      <h1 class="display t-xl" id="histoire-h1" data-split="lines" data-intro>Notre histoire</h1>
+      <p class="mesure">{site.histoire[0]}</p>
+    </div>
+    <div class="dip__d hero__texte">
+      <figure class="photo photo--3x2" data-reveal="clip" data-intro data-delay="0.2">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} data-critical />
+      </figure>
+    </div>
+  </section>
+
+  <section class="commune section" data-voix="commune" data-rejoint aria-labelledby="rencontre-titre">
+    <div class="wrap statement">
+      <h2 class="mono muted statement__meta" id="rencontre-titre" style="margin-top: 0; grid-row: 1">La rencontre</h2>
+      {site.histoire.slice(1, 3).map((p) => <p class="statement__texte" data-split="lines">{p}</p>)}
+    </div>
+  </section>
+
+  <section class="dip parcours" data-voix="deux" data-decale aria-label="Les deux chronologies">
+    {[damien, francois].map((c, i) => (
+      <div class={i === 0 ? 'dip__g' : 'dip__d'}>
+        <div class="parcours__tete">
+          <span class="mono muted" data-reveal="fade">0{i + 1}, {c.registre}</span>
+          <h2 class="titre" data-split="lines">{c.prenom} {c.nom}</h2>
+        </div>
+        <ol class="frise">
+          {c.parcours.map((e, j) => (
+            <li data-reveal="up" data-delay={String(j * 0.06)}>
+              <span class="frise__annee">{e.annee}</span>
+              <div><p class="frise__lieu">{e.lieu}</p><p class="frise__texte muted">{e.texte}{e.placeholder ? ' (étape illustrative)' : ''}</p></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    ))}
+  </section>
+
+  <section class="commune section" data-voix="commune" data-rejoint aria-labelledby="equipe-titre">
+    <div class="wrap">
+      <h2 class="titre" id="equipe-titre" data-split="lines">L'équipe</h2>
+      <p class="muted mesure" style="margin-block: var(--u) calc(var(--u) * 4)" data-reveal="fade">{site.histoire[3]}</p>
+      <div class="grille">
+        {equipe.map((m, i) => (
+          <article class="membre col-3" data-reveal="up" data-delay={String(i * 0.08)}>
+            {m.image
+              ? <figure class="photo photo--4x5"><img src={asset(m.image.src)} alt={m.image.alt} width={m.image.largeur} height={m.image.hauteur} loading="lazy" decoding="async" /></figure>
+              : <div class={`tuile photo--4x5 ${i % 2 ? 'tuile--d' : ''}`} aria-hidden="true"><span>{m.nom.charAt(0)}</span></div>}
+            <h3>{m.nom}</h3>
+            <p class="muted">{m.role}{m.placeholder ? ' (rôle illustratif)' : ''}</p>
+            {m.mot && <p class="mono muted">{m.mot}</p>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="dip section" data-voix="deux" aria-labelledby="coulisses-titre">
+    <div class="dip__g">
+      <span class="mono muted eyebrow" data-reveal="fade">Coulisses</span>
+      <h2 class="titre" id="coulisses-titre" data-split="lines">La salle, le bar, le passe</h2>
+      <p class="mesure muted" style="margin-top: calc(var(--u) * 2)" data-reveal="up">Une petite salle sombre et chaleureuse, le bar et les tables hautes en chêne, les ampoules à filament, et la cuisine ouverte sur la salle.</p>
+      <div class="stack" style="margin-top: calc(var(--u) * 4)">
+        {galerie.filter((_, i) => i % 2 === 0).map((p) => (
+          <figure class="photo photo--3x2 photo--nb" data-reveal="clip" tabindex="0"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>
+        ))}
+      </div>
+    </div>
+    <div class="dip__d">
+      <div class="stack" style="margin-top: calc(var(--u) * 12)">
+        {galerie.filter((_, i) => i % 2 === 1).map((p) => (
+          <figure class="photo photo--3x2" data-reveal="clip"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="commune section" data-voix="commune" data-rejoint aria-labelledby="presse-titre">
+    <div class="wrap grille">
+      <div class="col-6">
+        <span class="mono muted eyebrow" data-reveal="fade">Ce qu'on en dit</span>
+        <h2 class="titre" id="presse-titre" data-split="lines">Guides et presse</h2>
+        <ul class="presse">
+          {site.presse.map((p) => (
+            <li data-reveal="up">
+              <p class="mono muted">{p.nom}, {dateFr(p.date)}</p>
+              {p.citation ? <blockquote><p>« {p.texte} »</p></blockquote> : <p>{p.texte}</p>}
+              {p.url && <a class="link mono" href={p.url} rel="noopener">Lire la fiche</a>}
+            </li>
+          ))}
+          {site.noteGoogle && (
+            <li data-reveal="up">
+              <p class="mono muted">{site.noteGoogle.source}{site.noteGoogle.aConfirmer ? ', à confirmer' : ''}</p>
+              <p><strong>{site.noteGoogle.note} sur {site.noteGoogle.sur}</strong>, {site.noteGoogle.nombre} avis Google.</p>
+            </li>
+          )}
+        </ul>
+      </div>
+      {video && (
+        <div class="col-6">
+          <span class="mono muted eyebrow" data-reveal="fade">En vidéo</span>
+          <a class="video photo photo--16x9" href={video.url} rel="noopener" target="_blank" data-reveal="clip">
+            <img src={asset(video.image.src)} alt="" width={video.image.largeur} height={video.image.hauteur} loading="lazy" decoding="async" />
+            <span class="video__play" aria-hidden="true"></span>
+            <span class="sr-only">Voir la vidéo « {video.titre} » sur YouTube (nouvel onglet)</span>
+          </a>
+          <p class="mono muted" style="margin-top: var(--u)">{video.titre}, chaîne {video.chaine}, sur YouTube.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="commune section--serre commune" data-voix="commune" aria-label="Réserver">
+    <div class="wrap actions" style="margin-top: 0">
+      <a class="btn" href={u('/reservation/')}><span class="roll"><span>Réserver une table</span><span aria-hidden="true">Réserver une table</span></span></a>
+      <a class="lien" href={u('/les-deux-chefs/')}>Les deux chefs</a>
+    </div>
+  </section>
+</Base>

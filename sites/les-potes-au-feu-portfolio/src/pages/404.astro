@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import NomCoupe from '../components/NomCoupe.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="Page introuvable" description={`Cette page n'existe pas ou plus sur le site de ${site.nom}. Retrouvez la carte, les deux chefs et la réservation depuis l'accueil.`}>
+  <section class="hero" data-voix="deux" aria-labelledby="h404">
+    <div class="hero__nom"><NomCoupe /></div>
+    <div class="dip">
+      <div class="dip__g hero__texte">
+        <span class="mono muted" data-reveal="fade" data-intro>Erreur 404</span>
+        <h1 class="display t-xl" id="h404" data-split="lines" data-intro>Cette table n'existe pas</h1>
+      </div>
+      <div class="dip__d hero__texte">
+        <p class="mesure">La page demandée est introuvable. Elle a peut-être changé de nom, ou l'adresse contient une coquille. Tout le reste est à sa place.</p>
+        <div class="actions" data-reveal="up" data-intro data-delay="0.45">
+          <a class="btn" href={u('/')}><span class="roll"><span>Retour à l'accueil</span><span aria-hidden="true">Retour à l'accueil</span></span></a>
+          <a class="lien" href={u('/carte/')}>La carte</a>
+          <a class="lien" href={u('/reservation/')}>Réserver</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

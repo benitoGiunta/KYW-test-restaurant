@@ -1,0 +1,189 @@
+---
+import Base from '../layouts/Base.astro';
+import NomCoupe from '../components/NomCoupe.astro';
+import { site, chef, photoDe, horaireCourt, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const damien = chef('D');
+const francois = chef('F');
+const portraitD = photoDe(damien.portrait);
+const portraitF = photoDe(francois.portrait);
+const salle = photoDe('/photos/salle-clients-bar.webp');
+const photoParcoursD = photoDe('/photos/portrait-damien-profil.webp');
+const photoParcoursF = photoDe('/photos/cuisine-francois-poele.webp');
+const plats = site.carteQuatreMains.map((p, i) => ({ ...p, id: `plat-${i + 1}`, num: String(i + 1).padStart(2, '0'), image: photoDe(p.photo!) }));
+const soir = site.horaires.find((h) => h.jour === 'mercredi')!.creneaux[1];
+const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `${francois.prenom}` : 'À quatre mains');
+---
+<Base>
+  <section class="hero" data-voix="deux" aria-labelledby="hero-titre">
+    <div class="hero__nom"><NomCoupe tag="h1" /></div>
+    <div class="dip">
+      <div class="dip__g hero__col">
+        <figure class="photo photo--4x5 photo--nb hero__portrait" data-reveal="clip" data-intro data-delay="0.15">
+          <img src={asset(portraitD.src)} alt={portraitD.alt} width={portraitD.largeur} height={portraitD.hauteur} data-critical fetchpriority="high" />
+        </figure>
+        <div class="hero__legende" data-reveal="up" data-intro data-delay="0.45">
+          <span class="mono muted" id="hero-titre">Chef, {damien.registre}</span>
+          <p class="t-m">{damien.prenom} {damien.nom}</p>
+          <p class="muted">{site.baseline}</p>
+        </div>
+      </div>
+      <div class="dip__d hero__col hero__col--d">
+        <figure class="photo photo--4x5 hero__portrait" data-reveal="clip" data-intro data-delay="0.25">
+          <img src={asset(portraitF.src)} alt={portraitF.alt} width={portraitF.largeur} height={portraitF.hauteur} data-critical fetchpriority="high" />
+        </figure>
+        <div class="hero__legende" data-reveal="up" data-intro data-delay="0.55">
+          <span class="mono muted">Chef, {francois.registre}</span>
+          <p class="t-m">{francois.prenom} {francois.nom}</p>
+          <p class="muted">Menu unique du soir, formules du midi, {site.adresse.rue} {site.adresse.numero}, {site.adresse.commune}.</p>
+        </div>
+      </div>
+    </div>
+    <a class="hero__scroll mono lien" href="#parcours" data-reveal="fade" data-intro data-delay="0.9">Deux parcours ↓</a>
+  </section>
+
+  <section class="dip parcours" id="parcours" data-voix="gauche" data-decale aria-labelledby="parcours-d">
+    <div class="dip__g">
+      <div class="parcours__tete">
+        <span class="mono muted" data-reveal="fade">01, {damien.prenom}</span>
+        <h2 class="titre" id="parcours-d" data-split="lines">{damien.prenom} {damien.nom}, {damien.registre}</h2>
+      </div>
+      <ol class="frise">
+        {damien.parcours.map((e, i) => (
+          <li data-reveal="up" data-delay={String(i * 0.06)}>
+            <span class="frise__annee">{e.annee}</span>
+            <div>
+              <p class="frise__lieu">{e.lieu}</p>
+              <p class="frise__texte muted">{e.texte}{e.placeholder ? ' (étape illustrative)' : ''}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <div class="dip__d escalier--d">
+      <figure class="photo photo--4x5 photo--nb frise__photo" data-reveal="clip">
+        <img class="photo__para" src={asset(photoParcoursD.src)} alt={photoParcoursD.alt} width={photoParcoursD.largeur} height={photoParcoursD.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="dip parcours" data-voix="droite" data-decale aria-labelledby="parcours-f">
+    <div class="dip__g escalier--g">
+      <figure class="photo photo--3x2 frise__photo" data-reveal="clip">
+        <img class="photo__para" src={asset(photoParcoursF.src)} alt={photoParcoursF.alt} width={photoParcoursF.largeur} height={photoParcoursF.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+      </figure>
+    </div>
+    <div class="dip__d">
+      <div class="parcours__tete">
+        <span class="mono muted" data-reveal="fade">02, {francois.prenom}</span>
+        <h2 class="titre" id="parcours-f" data-split="lines">{francois.prenom} {francois.nom}, {francois.registre}</h2>
+      </div>
+      <ol class="frise">
+        {francois.parcours.map((e, i) => (
+          <li data-reveal="up" data-delay={String(i * 0.06)}>
+            <span class="frise__annee">{e.annee}</span>
+            <div>
+              <p class="frise__lieu">{e.lieu}</p>
+              <p class="frise__texte muted">{e.texte}{e.placeholder ? ' (étape illustrative)' : ''}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="commune section" data-voix="commune" data-rejoint aria-labelledby="rencontre">
+    <div class="wrap statement">
+      <h2 class="mono muted statement__meta" id="rencontre" style="margin-top: 0; grid-row: 1">La rencontre</h2>
+      {site.rencontre.map((p) => <p class="statement__texte" data-split="lines">{p}</p>)}
+      <div class="statement__meta actions" style="margin-top: calc(var(--u) * 3)" data-reveal="up">
+        <a class="btn" href={u('/histoire/')}><span class="roll"><span>Notre histoire</span><span aria-hidden="true">Notre histoire</span></span></a>
+        <a class="lien" href={u('/les-deux-chefs/')}>Les deux chefs</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="dip section" data-voix="deux" aria-labelledby="carte-titre">
+    <div class="dip__g">
+      <div class="parcours__tete">
+        <span class="mono muted" data-reveal="fade">Le menu du soir, 67 €</span>
+        <h2 class="titre" id="carte-titre" data-split="lines">La carte à quatre mains</h2>
+      </div>
+      <ol class="index">
+        {plats.map((p, i) => (
+          <li data-reveal="up" data-delay={String(i * 0.05)}>
+            <a class="index__row" href={u('/carte/')} data-stage-for={p.id} data-stage-legende={`${p.num}, ${initiale(p.voix)}`}>
+              <span class="index__num">{p.num}</span>
+              <span>
+                <span class="index__nom">{p.nom}</span>
+                {(p.description || p.placeholder) && <span class="index__desc muted" style="display: block">{[p.description, p.placeholder ? 'illustratif' : ''].filter(Boolean).join(', ')}</span>}
+                <span class="index__vignette"><img src={asset(p.image.src)} alt="" width={p.image.largeur} height={p.image.hauteur} loading="lazy" decoding="async" /></span>
+              </span>
+              <span class="index__tag" aria-label={`Plat de ${initiale(p.voix)}`}>{p.voix ?? 'DF'}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+      {plats.some((p) => p.voixPlaceholder) && <p class="mono muted index__note" data-reveal="fade">D : {damien.prenom}, F : {francois.prenom}. Attribution des plats aux chefs : illustrative.</p>}
+      <div class="actions">
+        <a class="btn btn--papier" href={u('/carte/')}><span class="roll"><span>Toute la carte</span><span aria-hidden="true">Toute la carte</span></span></a>
+      </div>
+    </div>
+    <div class="dip__d">
+      <div class="stage" data-stage data-reveal="clip">
+        <div class="stage__cadre">
+          {plats.map((p) => <img src={asset(p.image.src)} alt={p.image.alt} width={p.image.largeur} height={p.image.hauteur} loading="lazy" decoding="async" data-stage={p.id} />)}
+        </div>
+        <p class="stage__legende mono"><span data-stage-legende>01, {francois.prenom}</span><span class="muted">D = {damien.prenom}, F = {francois.prenom}</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="commune salle" data-voix="commune" data-rejoint aria-label="La salle et le bar">
+    <figure class="salle__photo">
+      <img class="photo__para" src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" data-parallax="0.1" />
+    </figure>
+    <div class="salle__badge" data-reveal="up">
+      <span class="mono muted">Le soir, du lundi au vendredi</span>
+      <p class="t-m">{soir.ouverture} à {soir.fermeture}</p>
+      <p class="muted">Menu unique, servi par les chefs.</p>
+    </div>
+  </section>
+
+  <section class="dip section" data-voix="deux" aria-label="Ce qu'on en dit">
+    <div class="dip__g">
+      {site.avis.slice(0, 1).map((a) => (
+        <blockquote class="citation">
+          <p data-split="lines">« {a.texte} »</p>
+          <cite class="mono muted" data-reveal="fade">{a.source}{a.placeholder ? ', avis illustratif' : ''}</cite>
+        </blockquote>
+      ))}
+    </div>
+    <div class="dip__d">
+      {site.noteGoogle && (
+        <div class="note" data-reveal="up">
+          <p class="note__chiffre"><span>{site.noteGoogle.note}</span><span class="note__sur">/{site.noteGoogle.sur}</span></p>
+          <p class="t-m">{site.noteGoogle.nombre} avis Google</p>
+          <p class="mono muted">{site.noteGoogle.source}{site.noteGoogle.aConfirmer ? ', à confirmer' : ''}. Aucun avis n'est cité ici sans l'accord de son auteur.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="commune section" data-voix="commune" data-rejoint aria-labelledby="reserver-titre">
+    <div class="wrap reserver">
+      <div class="reserver__cta" data-reveal="up">
+        <h2 class="titre" id="reserver-titre">Réserver une table</h2>
+        <a class="btn btn--large" href={u('/reservation/')}><span class="roll"><span>Réserver</span><span aria-hidden="true">Réserver</span></span></a>
+        <p class="muted">{site.reservation.note} <a class="link" href={telHref()}>{site.telephone}</a></p>
+      </div>
+      <div class="reserver__infos" data-reveal="up" data-delay="0.15">
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireCourt(h)}{h.note && h.jour === 'samedi' ? ', privatisation possible' : ''}</dd></>)}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <div class="btn-fixe"><a class="btn" href={u('/reservation/')}>Réserver une table</a></div>
+</Base>

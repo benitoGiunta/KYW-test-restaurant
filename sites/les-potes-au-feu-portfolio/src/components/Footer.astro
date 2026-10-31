@@ -1,0 +1,42 @@
+---
+// Pied de page en finale : le nom coupé revient, puis les deux colonnes (adresse / liens), la bande de mention,
+// et le pied de page KYW obligatoire (un seul logo, kyw-signature).
+import KywFooter from '@kyw/footer';
+import NomCoupe from './NomCoupe.astro';
+import { site, adresseLigne, horaireCourt, telHref } from '../data/site';
+import { u } from '../lib/url';
+---
+<footer class="footer" data-voix="finale">
+  <div class="footer__nom"><NomCoupe /></div>
+  <div class="dip">
+    <div class="dip__g">
+      <address class="stack">
+        <p><strong>{site.nom}</strong></p>
+        <p>{adresseLigne()}<br /><span class="muted">{site.adresse.repere}</span></p>
+        <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+        {site.email && <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a>{site.email.placeholder ? ' (illustratif)' : ''}</p>}
+      </address>
+      <dl class="horaires">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireCourt(h)}</dd></>)}
+      </dl>
+    </div>
+    <div class="dip__d">
+      <nav class="liste-liens" aria-label="Pied de page">
+        <a class="lien" href={u('/carte/')}>La carte</a>
+        <a class="lien" href={u('/les-deux-chefs/')}>Les deux chefs</a>
+        <a class="lien" href={u('/histoire/')}>Notre histoire</a>
+        <a class="lien" href={u('/reservation/')}>Réserver</a>
+      </nav>
+      <div class="liste-liens">
+        {site.reseaux.map((r) => <a class="lien" href={r.url} rel="noopener">{r.nom}</a>)}
+      </div>
+      <p class="mono muted">{site.privatisation}</p>
+      <p class="mono muted">{site.colophon.join(' ')}</p>
+    </div>
+  </div>
+  <div class="footer__bas mono">
+    <span>Maquette KYW, certaines données sont illustratives.</span>
+    <span>{site.nom}, {site.adresse.commune}</span>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

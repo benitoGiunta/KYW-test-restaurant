@@ -1,0 +1,51 @@
+---
+// En-tête fixe, coupé par la frontière : la copie « face » (papier) est la vraie navigation ; l'écho (ink) est
+// décoratif, inert et aria-hidden. Sur mobile, une seule copie sur fond vert et un bouton de menu.
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const liens = [
+  { href: u('/carte/'), label: 'La carte' },
+  { href: u('/les-deux-chefs/'), label: 'Les deux chefs' },
+  { href: u('/histoire/'), label: 'Notre histoire' },
+];
+const ici = Astro.url.pathname.replace(/\/+$/, '');
+const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+---
+<header class="header" data-header>
+  <div class="header__face">
+    <a class="header__brand lien" href={u('/')} aria-current={courant(u('/'))}>{site.nom}</a>
+    <button class="header__burger" type="button" aria-expanded="false" aria-controls="nav" data-burger>Menu</button>
+    <nav class="nav" id="nav" aria-label="Navigation principale">
+      {liens.map((l) => <a class="lien" href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+      <a class="btn" href={u('/reservation/')} aria-current={courant(u('/reservation/'))}><span class="roll"><span>Réserver</span><span aria-hidden="true">Réserver</span></span></a>
+    </nav>
+  </div>
+  <div class="header__echo" aria-hidden="true" inert>
+    <span class="header__brand">{site.nom}</span>
+    <span class="header__burger">Menu</span>
+    <span class="nav">
+      {liens.map((l) => <span class="lien" aria-current={courant(l.href)}>{l.label}</span>)}
+      <span class="btn">Réserver</span>
+    </span>
+  </div>
+</header>
+
+<script>
+  import { onPage } from '../engine';
+  onPage(() => {
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    const burger = header?.querySelector<HTMLButtonElement>('[data-burger]');
+    if (!header || !burger) return;
+    const toggle = () => {
+      const open = header.classList.toggle('is-open');
+      burger.setAttribute('aria-expanded', String(open));
+      burger.textContent = open ? 'Fermer' : 'Menu';
+    };
+    burger.addEventListener('click', toggle);
+    // REVISION-1 F2-01 : classe is-defile dès 24 px de défilement (fond d'en-tête, voir base.css).
+    const defile = () => document.documentElement.classList.toggle('is-defile', window.scrollY > 24);
+    defile();
+    window.addEventListener('scroll', defile, { passive: true });
+    return () => { burger.removeEventListener('click', toggle); window.removeEventListener('scroll', defile); };
+  });
+</script>

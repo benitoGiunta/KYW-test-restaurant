@@ -1,0 +1,117 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, chef, legendePlat } from '../data/site';
+import { u } from '../lib/url';
+const damien = chef('D');
+const francois = chef('F');
+const soir = site.carte.find((c) => c.moment === 'soir')!;
+const midi = site.carte.find((c) => c.moment === 'midi')!;
+const communs = site.carte.filter((c) => c.moment === 'commun');
+---
+<Base title="La carte" description={`La carte des Potes au Feu à Namur : menu dégustation unique du soir à 67 €, formules du midi le mercredi et le vendredi, boissons et bons cadeaux.`}>
+  <section class="hero dip" data-voix="deux" aria-labelledby="carte-h1">
+    <div class="dip__g hero__texte">
+      <span class="mono muted" data-reveal="fade" data-intro>Le soir, du lundi au vendredi</span>
+      <h1 class="display t-xl" id="carte-h1" data-split="lines" data-intro>La carte</h1>
+      <p class="mesure">{soir.intro}</p>
+    </div>
+    <div class="dip__d hero__texte">
+      <span class="mono muted" data-reveal="fade" data-intro data-delay="0.1">Le midi, mercredi et vendredi</span>
+      <p class="display t-xl" aria-hidden="true" data-split="lines" data-intro data-delay="0.1">Le midi</p>
+      <p class="mesure" data-reveal="up" data-intro data-delay="0.4">{midi.intro}</p>
+    </div>
+  </section>
+
+  <section class="dip section" data-voix="gauche" aria-labelledby="soir-titre">
+    <div class="dip__g">
+      <span class="mono muted eyebrow" data-reveal="fade">{site.menus[0].prix} par personne</span>
+      <h2 class="titre" id="soir-titre" data-split="lines">{soir.categorie}</h2>
+      <ul class="plats" style="margin-top: calc(var(--u) * 4)">
+        {soir.plats.map((p, i) => (
+          <li data-reveal="up" data-delay={String(i * 0.04)}>
+            <div>
+              <h3>{p.nom}</h3>
+              <p class="muted">{legendePlat(p)}</p>
+            </div>
+            {p.prix && <span class="prix">{p.prix}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="dip__d">
+      <div class="ardoise" data-reveal="up">
+        <span class="mono muted">Vu par le Guide MICHELIN 2026</span>
+        <p class="t-m">Cerises noires et griottes, crumble de cacao, glace vanille au lait cru.</p>
+        <p class="muted">Un dessert de saison cité par l'inspecteur : le menu change avec les produits, demandez celui du moment. Menu végétarien sur demande, allergies à signaler à la réservation.</p>
+      </div>
+      <blockquote class="citation" style="margin-top: calc(var(--u) * 6)">
+        <p data-split="lines">« {damien.citation.texte} »</p>
+        <cite class="mono muted" data-reveal="fade">{damien.citation.source ?? damien.prenom}{damien.citation.placeholder ? ', citation illustrative' : ''}</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="dip section" data-voix="droite" aria-labelledby="midi-titre">
+    <div class="dip__g">
+      <div class="ardoise" data-reveal="up">
+        <span class="mono muted">{site.menuDuJour.titre}{site.menuDuJour.placeholder ? ', exemple' : ''}</span>
+        <ul>
+          {site.menuDuJour.lignes.map((l) => <li>{l}</li>)}
+        </ul>
+        <p class="prix mono">{site.menuDuJour.prix}</p>
+      </div>
+      <blockquote class="citation" style="margin-top: calc(var(--u) * 6)">
+        <p data-split="lines">« {francois.citation.texte} »</p>
+        <cite class="mono muted" data-reveal="fade">{francois.citation.source ?? francois.prenom}{francois.citation.placeholder ? ', citation illustrative' : ''}</cite>
+      </blockquote>
+    </div>
+    <div class="dip__d">
+      <span class="mono muted eyebrow" data-reveal="fade">{site.menus[1].prix} ou {site.menus[2].prix}</span>
+      <h2 class="titre" id="midi-titre" data-split="lines">{midi.categorie}</h2>
+      <ul class="plats" style="margin-top: calc(var(--u) * 4)">
+        {midi.plats.map((p, i) => (
+          <li data-reveal="up" data-delay={String(i * 0.04)}>
+            <div>
+              <h3>{p.nom}</h3>
+              <p class="muted">{legendePlat(p)}</p>
+            </div>
+            {p.prix && <span class="prix">{p.prix}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="commune section" data-voix="commune" data-rejoint aria-labelledby="commun-titre">
+    <div class="wrap grille">
+      <div class="col-6">
+        <h2 class="titre" id="commun-titre" data-split="lines">Les formules</h2>
+        {site.menus.map((m) => (
+          <article class="menu" data-reveal="up">
+            <h3>{m.nom}</h3>
+            <span class="prix">{m.prix}</span>
+            <p class="muted">{m.description}</p>
+          </article>
+        ))}
+      </div>
+      {communs.map((c) => (
+        <div class="col-6">
+          <h2 class="titre" data-split="lines">{c.categorie}</h2>
+          <p class="muted" style="margin-block: var(--u) calc(var(--u) * 2)">{c.intro}</p>
+          <ul class="plats">
+            {c.plats.map((p) => (
+              <li data-reveal="up">
+                <div><h3>{p.nom}</h3><p class="muted">{p.description}{p.placeholder ? ' (illustratif)' : ''}</p></div>
+                {p.prix && <span class="prix">{p.prix}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <div class="col-6 actions" style="margin-top: 0">
+        <a class="btn" href={u('/reservation/')}><span class="roll"><span>Réserver une table</span><span aria-hidden="true">Réserver une table</span></span></a>
+        <a class="lien" href={u('/les-deux-chefs/')}>Qui cuisine quoi</a>
+      </div>
+    </div>
+  </section>
+</Base>
