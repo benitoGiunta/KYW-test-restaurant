@@ -1,0 +1,33 @@
+---
+// Calendrier indicatif par saison (un seul tableau `ingredients`) et une assiette réelle de Bossimé par saison (saison indicative).
+import Base from '../layouts/Base.astro';
+import { saisons, ingredients, mois, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const ingDe = (s: (typeof saisons)[number]) => ingredients.filter((i) => i.mois.some((m) => s.mois.includes(m)));
+---
+<Base title="Les saisons" description="Au fil des saisons à L'Atelier de Bossimé : calendrier indicatif d'un potager de la région et assiettes photographiées à la ferme.">
+  <section class="hero wrap" data-hero>
+    <p class="meta hero__sur">Calendrier indicatif</p>
+    <h1 class="mots" data-mots><span>Au</span><span>fil</span><span>des</span><span>saisons</span></h1>
+    <p class="hero__accroche">Environ 45 variétés poussent au potager de la ferme. Voici ce que chaque saison apporte d’ordinaire dans un potager de la région<span class="exemple">*</span>, et des assiettes photographiées à Bossimé.</p>
+  </section>
+
+  <section class="section section--fin">
+    <div class="wrap saisons">
+      {saisons.map((s) => { const p = photoDe(s.photo); return (
+        <article class="saison" data-reveal="up">
+          <p class="meta">{s.mois.map((m) => mois[m - 1]).join(' · ')}</p>
+          <h2>{s.nom}</h2>
+          <p class="saison__ingredients">{ingDe(s).map((i) => <span class="etiquette">{i.nom}</span>)}</p>
+          <figure class="saison__photo">
+            <span class="vignette"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></span>
+            <figcaption class="meta meta--terre">{s.legende}{s.saisonPlaceholder && <span class="exemple">saison indicative</span>}</figcaption>
+          </figure>
+        </article>
+      ); })}
+    </div>
+    <div class="col centre" style="margin-top: calc(var(--u) * 6)">
+      <p class="muted"><span class="exemple">*</span> Calendrier indicatif, pas la liste des variétés de la ferme. Les assiettes sont de vraies photos de la maison ; leur saison est déduite du produit. <a class="link" href={u('/carte/')}>La carte</a> donne les menus réels.</p>
+    </div>
+  </section>
+</Base>

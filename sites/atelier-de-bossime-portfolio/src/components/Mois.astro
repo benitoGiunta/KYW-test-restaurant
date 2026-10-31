@@ -1,0 +1,6 @@
+---
+// Nom du mois courant, choisi par CSS à partir de html[data-mois] (posé avant le premier rendu). Sans JS : « de saison ».
+import { mois } from '../data/site';
+const { prefixe = '' } = Astro.props;
+---
+<span class="mois" data-mois-courant>{prefixe}<span data-mois-nom="0">de saison</span>{mois.map((m, i) => <span data-mois-nom={String(i + 1)}>{m}</span>)}</span>

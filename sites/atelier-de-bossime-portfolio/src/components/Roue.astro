@@ -1,0 +1,57 @@
+---
+// Roue des saisons : SVG de 12 secteurs (tourne avec --rot) + 24 vignettes HTML contre-rotées par la même variable.
+// Le mois courant vient de html[data-mois] (horloge du visiteur) : secteur encré, feuille rose, --rot initial en CSS.
+import { mois, ingredients, platsDuMois } from '../data/site';
+import { u } from '../lib/url';
+import Mois from './Mois.astro';
+const R = 300; const C = 300;
+const pol = (deg: number, r: number) => { const a = ((deg - 90) * Math.PI) / 180; return [C + r * Math.cos(a), C + r * Math.sin(a)]; };
+const secteur = (i: number) => { const a0 = i * 30 - 15, a1 = i * 30 + 15; const [x0, y0] = pol(a0, R); const [x1, y1] = pol(a1, R); return `M${C} ${C} L${x0.toFixed(1)} ${y0.toFixed(1)} A${R} ${R} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)} Z`; };
+const parMois = new Map<number, typeof ingredients>();
+ingredients.forEach((ing) => { const m = ing.pic; parMois.set(m, [...(parMois.get(m) || []), ing]); });
+const vignettes = ingredients.map((ing) => { const m = ing.pic; const liste = parMois.get(m)!; const k = liste.indexOf(ing); const n = liste.length; return { ...ing, angle: (m - 1) * 30 + (k - (n - 1) / 2) * 12 }; });
+const gauche = platsDuMois.slice(0, 2); const droite = platsDuMois.slice(2);
+const platItem = (p: (typeof platsDuMois)[number]) => p;
+---
+<section class="roue" data-roue data-ingredients={JSON.stringify(ingredients.map((i) => ({ n: i.nom, m: i.mois })))} aria-labelledby="roue-titre">
+  <div class="roue__stage" data-roue-stage>
+    <div class="roue__haut">
+      <p class="meta">La roue des saisons</p>
+      <h2 id="roue-titre" class="statement" style="font-size: var(--t-l)">Ce qui pousse, ce qui vient.</h2>
+    </div>
+    <div class="roue__scene">
+      <div class="roue__plats roue__plats--g">
+        {gauche.map((p) => (
+          <a class="plat-mois" href={u('/saisons/')}>
+            <span class="plat__ingredient">{p.service}</span>
+            <span class="plat-mois__nom">{p.nom}</span>
+          </a>
+        ))}
+      </div>
+      <div class="roue__disque" data-roue-disque>
+        <svg class="roue__svg" viewBox="0 0 600 600" role="img" aria-label="Roue des douze mois de l'année">
+          {mois.map((m, i) => <path class="roue__secteur" data-secteur={String(i + 1)} d={secteur(i)} />)}
+          {mois.map((m, i) => { const [x, y] = pol(i * 30, 212); return <text class="roue__mois" data-secteur-mois={String(i + 1)} x={x.toFixed(1)} y={y.toFixed(1)} transform={`rotate(${i * 30} ${x.toFixed(1)} ${y.toFixed(1)})`}>{m}</text>; })}
+          <circle class="roue__centre" cx={C} cy={C} r="78" />
+        </svg>
+        {vignettes.map((v) => <span class="vig" data-vig data-mois-vig={v.mois.join(',')} style={`--a:${v.angle}deg`}>{v.nom}</span>)}
+      </div>
+      <div class="roue__plats roue__plats--d">
+        {droite.map((p) => (
+          <a class="plat-mois" href={u('/saisons/')}>
+            <span class="plat__ingredient">{p.service}</span>
+            <span class="plat-mois__nom">{p.nom}</span>
+          </a>
+        ))}
+      </div>
+      <div class="roue__coeur-html" aria-hidden="true"><span class="meta">nous sommes en</span><span class="roue__coeur-mois"><Mois /></span></div>
+    </div>
+    <div class="roue__bas">
+      <p class="roue__legende" data-roue-legende aria-live="off"><b data-roue-legende-mois><Mois /></b><span data-roue-legende-liste></span></p>
+      <ul class="mois-liste" aria-label="Choisir un mois">
+        {mois.map((m, i) => <li><button type="button" class="mois-btn" data-mois-btn={String(i + 1)} aria-pressed="false">{m}</button></li>)}
+      </ul>
+      <p class="meta meta--terre">Calendrier indicatif<span class="exemple">*</span> d’un potager de la région, pas la liste des 45 variétés de la ferme. Autour de la roue : quatre assiettes photographiées à Bossimé, décrites d’après la photo (les noms des plats figurent dans le livret remis à table).</p>
+    </div>
+  </div>
+</section>

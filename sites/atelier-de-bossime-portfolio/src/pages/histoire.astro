@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe, citations } from '../data/site';
+import { asset } from '../lib/url';
+const galerie = ['/photos/chef-cuisine-ouverte.webp', '/photos/salle-chaises.webp', '/photos/plateau-plats.webp', '/photos/equipe-cuisine-trois.webp', '/photos/table-brique.webp', '/photos/cocktail-coupe.webp'].map(photoDe);
+const portrait = photoDe('/photos/portrait-chef.webp');
+const ferme = photoDe('/photos/salle-service-soir.webp');
+---
+<Base title="Notre histoire" description="L'histoire de L'Atelier de Bossimé : ouvert en 2011 par Ludovic Vanackere, à vingt ans, dans la ferme familiale de Loyers.">
+  <section class="hero wrap" data-hero>
+    <p class="meta hero__sur">Depuis 2011, à Loyers</p>
+    <h1 class="mots" data-mots><span>Un</span><span>fenil</span><span>une</span><span>ferme</span></h1>
+    <p class="hero__accroche">« {citations[0].texte} »</p>
+  </section>
+
+  <section class="section">
+    <div class="wrap escalier">
+      <p class="lead">{site.histoire[0]}</p>
+      <figure class="vignette" data-reveal="clip"><img src={asset(portrait.src)} alt={portrait.alt} width={portrait.largeur} height={portrait.hauteur} loading="lazy" decoding="async" /></figure>
+      <figure class="vignette" data-reveal="clip"><img src={asset(ferme.src)} alt={ferme.alt} width={ferme.largeur} height={ferme.hauteur} loading="lazy" decoding="async" /></figure>
+      <p class="lead" data-reveal="up">{site.histoire[1]}</p>
+      <p class="lead" data-reveal="up">{site.histoire[2]}</p>
+      <p class="lead" data-reveal="up">{site.histoire[3]}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="col"><p class="meta centre">La maison</p><h2 class="statement" data-split="lines">En cuisine, en salle et au bar</h2></div>
+    <div class="wrap equipe" style="margin-top: calc(var(--u) * 4)">
+      {site.equipe.map((m, i) => { const p = m.photo ? photoDe(m.photo) : null; return (
+        <article class="membre" data-reveal="up" data-delay={String(i * 0.1)}>
+          {p ? <figure class="vignette"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure> : <span class="vignette vignette--typo"><span class="vignette__nom">{m.nom}</span><span class="meta">photo à fournir</span></span>}
+          <h3>{m.nom}</h3>
+          <p class="meta">{m.role}{m.placeholder && <span class="exemple"> rôle à confirmer</span>}{m.photoPlaceholder && <span class="exemple"> portrait à confirmer</span>}</p>
+        </article>
+      ); })}
+    </div>
+  </section>
+
+  <section class="section section--fin">
+    <div class="col"><p class="meta centre">En images</p><h2 class="statement" data-split="lines">La cuisine ouverte, la salle, le service</h2></div>
+    <div class="wrap galerie" style="margin-top: calc(var(--u) * 4)">
+      {galerie.map((p, i) => <figure class="vignette" data-reveal="clip" data-delay={String((i % 3) * 0.1)} data-cursor="Voir"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>)}
+    </div>
+  </section>
+</Base>

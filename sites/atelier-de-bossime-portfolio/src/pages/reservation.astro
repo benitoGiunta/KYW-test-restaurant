@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+---
+<Base title="Réservation" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}.`}>
+  <section class="hero wrap" data-hero>
+    <p class="meta hero__sur">Réserver</p>
+    <h1 class="mots" data-mots><span>À</span><span>table</span></h1>
+    <p class="hero__accroche">La réservation se fait en ligne via {site.reservation.outil}, à toute heure, ou par téléphone. Le menu 7 Moments se réserve deux jours à l’avance.</p>
+  </section>
+
+  <section class="section">
+    <div class="col bande">
+      <a class="btn btn--plein" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil} <span class="btn__fleche" aria-hidden="true">→</span></a>
+      <div class="actions" style="margin-top: 0"><a class="btn btn--ligne" href={telHref()}>Appeler le {site.telephone}</a>{site.email.placeholder ? <span class="btn btn--ligne btn--inerte">E-mail à communiquer<span class="exemple">illustratif</span></span> : <a class="btn btn--ligne" href={`mailto:${site.email.valeur}`}>Écrire un e-mail</a>}</div>
+      <p class="centre muted">Allergies ou intolérances : précisez-les dans votre réservation.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="col">
+      <p class="meta centre">Votre demande</p>
+      <h2 class="statement" data-split="lines">Dites-nous quand</h2>
+      <p class="centre muted" style="margin-block: var(--u) calc(var(--u) * 3)">Formulaire de démonstration sans envoi : la validation ouvre {site.reservation.outil}, où la date, l'heure et le nombre de couverts sont à saisir de nouveau.</p>
+      <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
+        <label><span>Nom</span><input type="text" name="nom" autocomplete="name" required /></label>
+        <div class="form__deux">
+          <label><span>Date</span><input type="date" name="date" required /></label>
+          <label><span>Heure</span><input type="time" name="heure" required /></label>
+        </div>
+        <label><span>Couverts</span><input type="number" name="couverts" min="1" max="9" value="2" required /></label>
+        <label><span>Message</span><textarea name="message" rows="3"></textarea></label>
+        <button class="btn" type="submit">Continuer sur {site.reservation.outil}</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="col stack centre">
+      <p class="meta">Groupes, réunions et événements</p>
+      <h2 class="statement" data-split="lines">De dix à cent vingt personnes</h2>
+      <p data-reveal="up">Jusqu’à 60 personnes assises ou 120 en dînatoire debout. Dès dix personnes, la maison peut ouvrir en dehors de ses horaires. Une salle de réunion est également proposée : appelez-nous ou écrivez-nous pour en parler.</p>
+      <p data-reveal="up"><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
+    </div>
+  </section>
+
+  <section class="section section--fin">
+    <div class="col bande">
+      <p class="meta centre">Horaires et adresse</p>
+      <dl class="horaires horaires--centre" data-reveal="fade">{site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}</dl>
+      <p class="centre">{adresseLigne()}<br /><span class="muted">L’entrée se fait par un escalier de cinq marches.</span><br /><a class="link" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a></p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { onPage } from '../engine';
+  onPage(() => {
+    const form = document.querySelector<HTMLFormElement>('[data-reservation]');
+    if (!form) return;
+    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    form.addEventListener('submit', go);
+    return () => form.removeEventListener('submit', go);
+  });
+</script>

@@ -1,0 +1,36 @@
+---
+// Pied de page « finale » : branche du mois, colonnes, puis le pied de page KYW obligatoire (une seule mention maquette).
+import KywFooter from '@kyw/footer';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { u } from '../lib/url';
+import Branche from './Branche.astro';
+import Mois from './Mois.astro';
+---
+<footer class="footer">
+  <div class="footer__branche">
+    <Branche classe="footer__svg" />
+    <p class="etiquette etiquette--mois"><Mois prefixe="Nous sommes en " /></p>
+  </div>
+  <div class="wrap footer__cols">
+    <div class="footer__col">
+      <p class="meta">Adresse</p>
+      <p><strong>{site.nom}</strong></p>
+      <address>{adresseLigne()}</address>
+      <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+      {site.email.placeholder ? <p>{site.email.valeur} <span class="exemple">adresse illustrative</span></p> : <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>}
+    </div>
+    <div class="footer__col">
+      <p class="meta">Horaires</p>
+      <dl class="horaires">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+    </div>
+    <div class="footer__col">
+      <p class="meta">Suivre</p>
+      {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
+      <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+      <p><a class="link" href={u('/ferme/')}>La ferme</a></p>
+    </div>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

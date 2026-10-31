@@ -1,0 +1,83 @@
+---
+// La ferme : potager, engagements, le projet Bossimé en nombres, distinctions. Remplace la page « Producteurs » du gabarit
+// (aucun producteur nommé dans le dossier : la page de démonstration a été retirée, voir DESIGN.md).
+import Base from '../layouts/Base.astro';
+import { site, photoDe, citations, chiffres, distinctions } from '../data/site';
+import { u, asset } from '../lib/url';
+const ferme = photoDe('/photos/ferme-batiment.webp');
+const facade = photoDe('/photos/facade-nuit.webp');
+const bouteilles = photoDe('/photos/bouteilles-etiquetees.webp');
+---
+<Base title="La ferme" description="La ferme de L'Atelier de Bossimé à Loyers : potager bio d'environ 45 variétés, circuit court, zéro déchet, étoile verte MICHELIN.">
+  <section class="hero wrap" data-hero>
+    <p class="meta hero__sur">{citations[1].texte.replace(/\.$/, '')}</p>
+    <h1 class="mots" data-mots><span>La</span><span>ferme</span></h1>
+    <p class="hero__accroche">Bossimé est né dans une ferme et n’en est jamais sorti : le potager est à quelques pas de la salle, et la cuisine part de ce qu’il donne.</p>
+  </section>
+
+  <section class="section">
+    <div class="wrap paire">
+      <figure class="paire__media" data-reveal="clip" data-cursor="La ferme"><img src={asset(ferme.src)} alt={ferme.alt} width={ferme.largeur} height={ferme.hauteur} loading="lazy" decoding="async" /></figure>
+      <div class="paire__texte stack">
+        <p class="meta">Le potager</p>
+        <h2 class="statement" style="text-align: left" data-split="lines">Environ 45 variétés, en bio, sur un sol vivant.</h2>
+        <p data-reveal="up">{site.histoire[2]}</p>
+        <p data-reveal="up" class="muted">Le nombre et les noms des producteurs partenaires sont à communiquer par la maison.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="col">
+      <p class="meta centre">Trois accents sur le E</p>
+      <h2 class="statement" data-split="lines">Les engagements de la maison</h2>
+      <ul class="index index--valeurs" style="margin-top: calc(var(--u) * 3)">
+        {site.valeurs.map((v, i) => (
+          <li data-reveal="up" data-delay={String(i * 0.06)}>
+            <span class="index__km">0{i + 1}</span>
+            <span class="index__nom">{v.titre}</span>
+            <span class="muted">{v.texte}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="col">
+      <p class="meta centre">Le projet Bossimé</p>
+      <h2 class="statement" data-split="lines">En quelques nombres</h2>
+    </div>
+    <ul class="wrap chiffres" style="margin-top: calc(var(--u) * 4)">
+      {chiffres.map((c, i) => (
+        <li data-reveal="up" data-delay={String((i % 3) * 0.08)}>
+          <span class="chiffres__valeur">{c.valeur}</span>
+          <span class="chiffres__libelle">{c.libelle}</span>
+          <span class="meta meta--terre">{c.source}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="wrap paire paire--inverse">
+      <figure class="paire__media" data-reveal="clip" data-cursor="Fait maison"><img src={asset(bouteilles.src)} alt={bouteilles.alt} width={bouteilles.largeur} height={bouteilles.hauteur} loading="lazy" decoding="async" /></figure>
+      <div class="paire__texte stack">
+        <p class="meta">Distinctions</p>
+        <h2 class="statement" style="text-align: left" data-split="lines">Une étoile verte pour la démarche.</h2>
+        <ul class="distinctions" data-reveal="up" aria-label="Distinctions">
+          {distinctions.map((d) => <li class="etiquette"><span class="etiquette__dot" aria-hidden="true"></span>{d.nom}, {d.detail}{d.annee && <> {d.annee}</>}{d.anneePlaceholder && <span class="exemple">année à confirmer</span>}</li>)}
+        </ul>
+        <p data-reveal="up">Le Guide MICHELIN distingue d’une étoile verte les tables engagées pour une gastronomie durable. Bossimé figure dans sa sélection, en cuisine bio et française moderne.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--fin">
+    <div class="col centre stack">
+      <figure class="vignette" style="margin-inline: auto" data-reveal="clip"><img src={asset(facade.src)} alt={facade.alt} width={facade.largeur} height={facade.hauteur} loading="lazy" decoding="async" /></figure>
+      <p class="lead" data-reveal="up">À 35 minutes de Bruxelles, 30 de Charleroi et 40 de Liège.</p>
+      <div class="actions"><a class="btn" href={u('/reservation/')}>Réserver une table</a><a class="btn btn--ligne" href={u('/histoire/')}>L’histoire</a></div>
+    </div>
+  </section>
+</Base>

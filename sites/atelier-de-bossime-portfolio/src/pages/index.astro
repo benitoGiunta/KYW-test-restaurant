@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import Roue from '../components/Roue.astro';
+import { site, photoDe, horaireTexte, telHref, citations, questions, distinctions } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/plat-veloute-vert.webp');
+const hero560 = photoDe('/photos/plat-veloute-vert-560.webp');
+const ferme = photoDe('/photos/ferme-batiment.webp');
+const salle = photoDe('/photos/vitrine-salle-jardin.webp');
+const dressage = photoDe('/photos/dressage-assiettes.webp');
+const moments = site.carte[1];
+const srcset = `${asset(hero560.src)} 560w, ${asset(hero.src)} 800w`;
+---
+<Base>
+  <link slot="head" rel="preload" as="image" imagesrcset={srcset} imagesizes="(min-width: 1024px) 560px, 280px" fetchpriority="high" />
+
+  <section class="hero hero--duo wrap" data-hero>
+    <div class="hero__titre">
+      <p class="meta hero__sur">Ferme gastronomique à Loyers, Namur</p>
+      <h1 class="mots" data-mots><span>La ferme</span><span>à table</span></h1>
+      <p class="hero__accroche" data-hero-apres>{site.baseline}</p>
+    </div>
+    <figure class="hero__media" data-hero-media>
+      <span class="vignette"><img src={asset(hero.src)} srcset={srcset} sizes="(min-width: 1024px) 560px, 280px" alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical /></span>
+      <a class="etiquette etiquette--mois hero__etiquette" href={u('/carte/')} data-hero-apres><span class="etiquette__dot" aria-hidden="true"></span>Les menus en Moments</a>
+    </figure>
+  </section>
+
+  <section class="section">
+    <div class="col">
+      <blockquote class="statement" data-split="lines">
+        <p>« {citations[0].texte} »</p>
+        <cite class="statement__source meta">{citations[0].source}</cite>
+      </blockquote>
+    </div>
+    <div class="wrap escalier" style="margin-top: calc(var(--u) * 10)">
+      <p class="lead" data-reveal="up">{site.histoire[0]} {site.histoire[2]}</p>
+      <figure class="vignette" data-reveal="clip" data-cursor="La ferme"><img src={asset(ferme.src)} alt={ferme.alt} width={ferme.largeur} height={ferme.hauteur} loading="lazy" decoding="async" /></figure>
+    </div>
+  </section>
+
+  <div class="section"><Roue /></div>
+
+  <section class="section">
+    <div class="col">
+      <p class="pastille centre" style="justify-content: center; width: 100%">Le soir et le midi · à composer ou en carte blanche</p>
+      <h2 class="statement" data-split="lines">Les menus en Moments</h2>
+      <ul class="carte-liste" data-reveal="fade">
+        {moments.plats.map((p) => <li class="plat"><span class="plat__nom">{p.nom}<span class="plat__desc">{p.description}</span></span><span class="plat__prix">{p.prix}</span></li>)}
+      </ul>
+      <p class="menu-prix" data-reveal="fade"><span>Lunch, lundi au vendredi</span><strong>{site.menus[0].prix}</strong></p>
+      <p class="centre muted" data-reveal="fade">Le menu surprise historique de la maison existe toujours : laissez carte blanche, ou composez vos plats sur le livret remis à table.</p>
+      <p class="actions"><a class="link link--caps" href={u('/carte/')}>Toute la carte, le lunch et les boissons</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap paire">
+      <figure class="paire__media" data-reveal="clip" data-cursor="La salle"><img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" /></figure>
+      <div class="paire__texte stack">
+        <p class="meta">La salle</p>
+        <h2 class="statement" style="text-align: left" data-split="lines">Un ancien fenil, la cuisine ouverte, les baies sur les jardins.</h2>
+        <p data-reveal="up">{site.histoire[1]} Depuis votre table, vous voyez la brigade dresser les assiettes.</p>
+        <p data-reveal="up"><a class="link" href={u('/histoire/')}>L’histoire de la maison</a></p>
+      </div>
+    </div>
+    <div class="wrap paire paire--inverse" style="margin-top: calc(var(--u) * 10)">
+      <figure class="paire__media" data-reveal="clip" data-cursor="La cuisine"><img src={asset(dressage.src)} alt={dressage.alt} width={dressage.largeur} height={dressage.hauteur} loading="lazy" decoding="async" /></figure>
+      <div class="paire__texte stack">
+        <p class="meta">D'où ça vient</p>
+        <blockquote class="statement" style="text-align: left" data-split="lines"><p>« {citations[1].texte} »</p><cite class="statement__source meta">{citations[1].source}</cite></blockquote>
+        <p data-reveal="up">Le potager de la ferme d’abord, puis des producteurs de la région, en circuit court. Le logo porte trois accents sur le E : un par pilier de la durabilité.</p>
+        <ul class="distinctions" data-reveal="up" aria-label="Distinctions">
+          {distinctions.map((d) => <li class="etiquette"><span class="etiquette__dot" aria-hidden="true"></span>{d.nom}, {d.detail}{d.annee && <> {d.annee}</>}{d.anneePlaceholder && <span class="exemple">année à confirmer</span>}</li>)}
+        </ul>
+        <p data-reveal="up"><a class="link" href={u('/ferme/')}>La ferme, le potager, les engagements</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="col">
+      <p class="meta centre">Ils en parlent</p>
+      <ul class="avis">
+        {site.avis.map((a, i) => (
+          <li data-reveal="up" data-delay={String(i * 0.08)}>
+            <blockquote><p>« {a.texte} »</p></blockquote>
+            <p class="meta meta--terre"><a class="link" href={a.url} rel="noopener">{a.source}</a>, {a.auteur}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="col">
+      <p class="meta centre">Questions</p>
+      <h2 class="statement" data-split="lines">Avant de venir</h2>
+      <div class="faq" data-faq>
+        {questions.map((q, i) => (
+          <details name="faq" data-reveal="up" data-delay={String(i * 0.08)}>
+            <summary>{q.q}{q.placeholder && <span class="exemple">exemple</span>}</summary>
+            <p class="faq__r">{q.r}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--fin">
+    <div class="col bande">
+      <a class="btn btn--plein" href={site.reservation.url} rel="noopener" data-magnetic="0.15">Réserver une table <span class="btn__fleche" aria-hidden="true">→</span></a>
+      <dl class="horaires horaires--centre">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+      <p class="centre muted">Réservation en ligne à toute heure, ou par téléphone : <a class="link" href={telHref()}>{site.telephone}</a></p>
+    </div>
+  </section>
+</Base>
