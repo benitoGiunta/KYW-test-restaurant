@@ -101,8 +101,10 @@ const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.g
               return (
                 <tr data-jour-ligne-tab={h.jour}>
                   <td>{h.jour}</td>
-                  <td class={midi ? undefined : 'ferme'}>{midi ? `${midi.ouverture} à ${midi.fermeture}` : h.creneaux.length ? '' : h.note || 'fermé'}</td>
-                  <td class={soir ? undefined : 'ferme'}>{soir ? `${soir.ouverture} à ${soir.fermeture}` : ''}</td>
+                  {h.creneaux.length ? (<>
+                    <td class={midi ? undefined : 'ferme'}>{midi ? `${midi.ouverture} à ${midi.fermeture}` : ''}</td>
+                    <td class={soir ? undefined : 'ferme'}>{soir ? `${soir.ouverture} à ${soir.fermeture}` : ''}</td>
+                  </>) : <td class="ferme" colspan="2">{h.note || 'fermé'}</td>}
                 </tr>
               );
             })}

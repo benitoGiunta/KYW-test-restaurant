@@ -14,10 +14,8 @@ const { cat, ecrit = true } = Astro.props;
   <ul class="lignes" data-ecrit={ecrit ? '' : undefined}>
     {cat.plats.map((p) => (
       <li class="ligne">
-        <div class="ligne__in" tabindex={p.apercu ? 0 : undefined} data-preview={p.apercu ? asset(p.apercu) : undefined} aria-label={p.apercu ? `${p.nom}, voir la photo` : undefined}>
-          {p.apercu
-            ? <img class="ligne__vignette" src={asset(p.apercu)} alt="" width="56" height="56" loading="lazy" decoding="async" />
-            : <span class="ligne__vignette ligne__vignette--vide" aria-hidden="true"></span>}
+        <div class:list={["ligne__in", { "ligne__in--sans": !p.apercu }]} tabindex={p.apercu ? 0 : undefined} data-preview={p.apercu ? asset(p.apercu) : undefined} aria-label={p.apercu ? `${p.nom}, voir la photo` : undefined}>
+          {p.apercu && <img class="ligne__vignette" src={asset(p.apercu)} alt="" width="56" height="56" loading="lazy" decoding="async" />}
           <span class="ligne__texte">
             <span class="ligne__nom">{p.nom}</span>
             {p.badges?.map((b) => <span class="badge">{b}</span>)}

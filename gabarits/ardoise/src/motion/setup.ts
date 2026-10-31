@@ -14,8 +14,8 @@ export function setupMotion() {
   setLoaderFormat((p) => String(Math.round(p)).padStart(2, '0'));
   setLoaderExit((root) =>
     gsap.timeline()
-      .to(root.querySelectorAll('[data-loader-out]'), { autoAlpha: 0, y: -6, duration: 0.35, ease: ease.inOut, stagger: 0.05 })
-      .to(root, { clipPath: 'inset(0 0 0 100%)', duration: 0.8, ease: ease.inOut }, '-=0.1'),
+      .to(root.querySelectorAll('[data-loader-out]'), { autoAlpha: 0, y: -6, duration: 0.25, ease: ease.inOut, stagger: 0.04 })
+      .to(root, { clipPath: 'inset(0 0 0 100%)', duration: 0.5, ease: ease.inOut }, '-=0.1'),
   );
   setTransition({
     leave: (c) => gsap.timeline()
@@ -217,8 +217,10 @@ function motsGeants() {
   const mots = document.querySelectorAll<HTMLElement>('[data-mots] li');
   if (!mots.length) return;
   mots.forEach((m, k) => {
-    const v = [-60, 50, -35][k % 3];
-    gsap.fromTo(m, { x: -v }, { x: v, ease: 'none', scrollTrigger: { trigger: m.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } });
+    // Dérive bornée vers l'intérieur du .wrap : mot 1 (aligné à gauche) 0 → +60, mot 2 (à droite) 0 → −50,
+    // mot 3 (retrait 0,5em) +35 → 0. Aucun mot ne passe au-delà de son bord d'alignement.
+    const [de, a] = ([[0, 60], [0, -50], [35, 0]] as const)[k % 3];
+    gsap.fromTo(m, { x: de }, { x: a, ease: 'none', scrollTrigger: { trigger: m.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
 }
 

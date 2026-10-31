@@ -4,7 +4,7 @@ import Base from '../layouts/Base.astro';
 import { site, telHref } from '../data/site';
 import { u } from '../lib/url';
 ---
-<Base title="Formules et groupes" description={`Les formules de ${site.nom} : menu dégustation 67 €, formule 3 services 52 €, lunch 40 €, bon cadeau et privatisation du samedi.`}>
+<Base title="Formules et groupes" description={`Les formules des Potes au Feu : menu dégustation 67 €, formule 3 services 52 €, lunch 40 €, bon cadeau et privatisation du samedi.`}>
   <section class="entete wrap">
     <h1 class="cap">Formules</h1>
     <p class="lead muted">Trois façons de passer à table, un bon cadeau, et le samedi pour vous seuls.</p>
@@ -12,7 +12,7 @@ import { u } from '../lib/url';
   <section class="wrap" aria-label="Les formules">
     <div class="formules">
       {site.menus.map((m, i) => (
-        <article class="formule" data-reveal="fade" data-delay={String(i * 0.1)}>
+        <article class="formule" data-reveal={i > 0 ? "fade" : undefined} data-delay={i > 0 ? String(i * 0.1) : undefined}>
           <p class="formule__prix num" data-prix-ecrit>{m.prix}</p>
           <h2 class="formule__nom">{m.nom}</h2>
           <p class="formule__quand">{m.quand}</p>

@@ -112,7 +112,7 @@ html:not(.js) .panneau__titre-js { display: block; }
 @media (max-width: 1023px) {
   .ligne__in { grid-template-columns: auto minmax(0, 1fr) auto; }
   .ligne__vignette { display: block; width: 56px; height: 56px; object-fit: cover; }
-  .ligne__vignette--vide { background: var(--c-line); }
+  .ligne__in--sans { grid-template-columns: minmax(0, 1fr) auto; }
 }
 /* Entrée des lignes : s'écrivent de gauche à droite (clip-path), sous html.motion seulement. */
 .motion .lignes[data-ecrit] .ligne { clip-path: inset(0 100% 0 0); }
@@ -148,11 +148,12 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 @media (min-width: 1024px) { .salle__grid { grid-template-columns: 7fr 5fr; } }
 .salle__media { margin: 0; aspect-ratio: 1; overflow: clip; }
 .salle__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.mots { list-style: none; margin: calc(var(--u) * 3) 0 0; padding: 0; font-size: var(--t-mega); line-height: 0.86; }
+.mots { list-style: none; margin: calc(var(--u) * 3) auto 0; padding: 0; font-size: var(--t-mega); line-height: 0.86; }
 @media (max-width: 767px) { .mots { font-size: 14vw; } }
 .mots li:nth-child(2) { text-align: right; }
 .mots li:nth-child(3) { padding-left: 0.5em; }
 .mots li { will-change: transform; }
+.mots { overflow-x: clip; } /* les boîtes li pleine largeur dérivent ; le texte reste dans la fenêtre (setup.ts motsGeants) */
 
 /* La maison (asymmetric pair) */
 .maison { display: grid; gap: calc(var(--u) * 3); align-items: end; }
@@ -168,11 +169,12 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 .horaires th, .horaires td { text-align: left; padding: 0.7rem 0; border-bottom: 1px solid var(--c-line); }
 .horaires th { font-size: var(--t-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); font-weight: 700; }
 .horaires td:first-child { text-transform: capitalize; font-weight: 700; }
-.horaires td:not(:first-child) { width: 30%; }
+.horaires td:not(:first-child) { width: 1%; white-space: nowrap; padding-left: var(--u); }
+.horaires td.ferme { white-space: normal; }
 .horaires tr[data-aujourdhui] td { color: var(--c-accent); }
 .clair .horaires tr[data-aujourdhui] td { color: var(--c-clair-fg); background: rgb(233 208 100 / 0.4); }
 .mots { font-size: clamp(4.4rem, 1rem + 13vw, 13rem); }
-.horaires .ferme { color: var(--c-muted); }
+.horaires .ferme { color: var(--c-muted); font-variant-numeric: normal; } /* tnum élargit aussi la virgule (« fermé , ») */
 .clair .horaires th, .clair .horaires .ferme { color: var(--c-clair-muted); }
 .acces { display: grid; gap: calc(var(--u) * 3); }
 @media (min-width: 1024px) { .acces { grid-template-columns: 7fr 5fr; } }

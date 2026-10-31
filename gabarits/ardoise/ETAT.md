@@ -39,3 +39,8 @@ Passe 2 (index2, carte2, reservation2) : 0 failed, 0 erreur, 0 axe, CLS 0, LCP m
 fermés), e-mail illustratif retiré du Footer (FICHE.md mise à jour). Rebuild fait (`dist/gabarits/ardoise/` à jour),
 `apercu.png` recapturé, serveurs 4414 arrêtés (PID 1617 puis 2374, `kill`), RAPPORT.md écrit. Rien ne reste côté constructeur :
 relecture jury par un agent distinct.
+
+## Révision 1 (faite, 31/10) : REVUE-1 traitée
+F1-1 et F2-1 à F2-5 corrigés, F3-1 et F3-2 corrigés, F3-3 sans action. Détail et preuves : `REVISION-1.md`
+(captures `.shots-ardoise-rev/`). Rebuild OK, `apercu.png` recapturé et recopié dans `dist/gabarits/ardoise/`,
+serveur 4437 arrêté (`kill`). Non commité ; `pnpm index` à relancer à la publication.
