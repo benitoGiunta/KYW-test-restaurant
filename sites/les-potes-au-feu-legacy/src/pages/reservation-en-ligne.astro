@@ -21,10 +21,16 @@ import { resto } from '../data/site';
   <section class="book section section--top0" aria-label="Module de réservation">
     <div class="container book__grid">
       <div>
-        <div class="book__frame">
-          <iframe src={resto.zenchef} title="Réserver une table aux Potes au Feu avec Zenchef" loading="lazy"></iframe>
+        <div class="book__frame" data-zenchef={resto.zenchef}>
+          <div class="book__start">
+            <h2 class="book__title">Votre table en trois choix</h2>
+            <p>La réservation se fait avec Zenchef, l’outil du restaurant ; le module s’ouvre dans ce cadre.</p>
+            <div class="actions">
+              <button class="btn" type="button" data-zenchef-open hidden>Ouvrir le module ici</button>
+              <a class="link-action" href={resto.zenchef}>Réserver sur Zenchef</a>
+            </div>
+          </div>
         </div>
-        <p class="caption">Le module ne s’affiche pas ? <a href={resto.zenchef}>Ouvrir la réservation Zenchef</a>.</p>
       </div>
       <aside class="book__aside" aria-labelledby="tel-titre">
         <h2 id="tel-titre">Dernière minute ou plus de six personnes</h2>
@@ -32,7 +38,7 @@ import { resto } from '../data/site';
         <p class="book__phone"><a href={resto.telHref}>{resto.telAffiche}</a></p>
         <Horaires compact />
         <Photo nom="23-salle-banquette-michelin" largeurs={[640, 1280]} w={1280} h={1280} slot="salle-jour"
-          alt="La salle de jour : banquette, coussins moutarde, lambris vert-gris, tables en chêne" sizes="(min-width: 60rem) 36vw, 100vw" />
+          alt="La salle de jour : banquette, coussins moutarde, lambris vert-gris, tables en chêne" sizes="(min-width: 60rem) 36vw, 100vw" />
       </aside>
     </div>
   </section>

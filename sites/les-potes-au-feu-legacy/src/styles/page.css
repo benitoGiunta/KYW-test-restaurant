@@ -1,6 +1,6 @@
 /* Hallmark · shape: a bistro diptych (kept, Split Studio fingerprint) · genre: editorial · theme: Solstice (deal 1/3, seed restaurant-namur-bistronomy-seasonal-5457·3309c0dd·2026-10-31·r0) · redesign: full
  * hero: Poster (kept: the two chefs side by side, full bleed), Banner (/les-potes-au-feu, /le-menu-des-potes, /reservation-en-ligne, /contactez-nous) · nav: masthead (kept: links either side of the centred logo) · footer: index columns (kept: a real sitemap) · imagery: photographs, client 18 + library 0, warm · signature: les deux Potes côte à côte, une moitié d'écran chacun, la rencontre posée en bas sur un puits crème · solstice: long-light · draw: b9eaa1
- * axes: light/high-contrast-serif/warm · posture: restrained · contrast: pass · fold: pass · job: book · comp: 2 built, no key · c1 chosen · reproduced (checked at 1280x800) · hero-review: self (no subagent tool) · finish-review: self (no subagent tool) · v2.0.0 */
+ * axes: light/high-contrast-serif/warm · posture: restrained · contrast: pass · fold: pass · job: book · comp: 2 built, no key · c2 chosen · reproduced (checked at 1280x800) · hero-review: self (no subagent tool) · 3 findings · 3 resolved · finish-review: self · 5 findings · 3 resolved 2 unresolved · gap: the video section is a photograph linked to YouTube · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S5 R4 V4 · weakest: P, the old page argued nothing; the hero now states the offer (quatre mains, 67 €) under the two faces */
 /* Hallmark · waive 8 · the kept sequence hero, Comme des Potes, moment de cuisine, vidéo, piliers in a new composition · KYW legacy keeps the bistro's own order */
 /* Hallmark · dropped /page/contribuez-via-notre-boite-a-idees.html, /page/recommandez-notre-entreprise-ou-association.html, /page/nos-partenaires-web.html, /categorie/nos-services-en-ligne.html · E-net agency utility pages, not the restaurant's content */
@@ -13,6 +13,8 @@
 /* Hallmark · reworded "HOME MADE, PRODUITS DES SAISONS, RENCONTRE ET CONVIVIALITÉ" to sentence case · 67 names tracked capitals */
 /* Hallmark · dismissed 28a · the lazy image in Footer.astro is the footer logo; the LCP is the hero photo, loaded eager with fetchpriority high */
 /* Hallmark · dismissed 25 · the 22ch measure is the Michelin quote set as a display statement, not running prose */
+/* Hallmark · waive 59 · the 44px seam is the site footer above the shared KYW credit strip · the agency credit closes every Potes au Feu page as one block with the footer */
+/* Hallmark · dismissed 77 · /reservation-en-ligne and /contactez-nous keep the four blocks the bistro's own pages had: banner, module or form, footer */
 /* Hallmark · answered F6 · prices and hours carry tabular-nums through .num */
 /* Hallmark · answered F16 · base.css themes selection, caret and scrollbar */
 @import url("./tokens.css");
@@ -193,7 +195,7 @@ html:not(.js) .seg { display: none; }
 .carte__note { margin-top: var(--space-xl); max-width: 60ch; }
 
 /* Quote split (/le-menu-des-potes) */
-.quote__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-3xl); align-items: center; }
+.quote__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-3xl); align-items: center; }
 .quote__grid .photo { aspect-ratio: 1; min-height: 440px; }
 .quote blockquote { margin: 0; }
 .quote blockquote p { max-width: 22ch; font: 400 var(--text-display-s)/1.12 var(--font-display); color: var(--color-ink); text-wrap: balance; }
@@ -203,6 +205,12 @@ html:not(.js) .seg { display: none; }
 .book__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-3xl); align-items: start; }
 .book__frame { border: var(--rule-bar) solid var(--color-ink); background: var(--color-paper-2); box-shadow: var(--shadow-card); }
 .book__frame iframe { display: block; width: 100%; height: 640px; border: 0; }
+.book__frame:focus-within { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.book__frame iframe:focus, .book__frame iframe:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+.book__aside .photo { aspect-ratio: 1; width: 100%; }
+.book__start { display: grid; gap: var(--space-md); align-content: center; min-height: 420px; padding: var(--space-2xl); }
+.book__title { font-size: var(--text-section); max-width: 14ch; }
+.book__start p { max-width: 46ch; }
 .book__aside { display: grid; gap: var(--space-lg); }
 .book__aside h2 { font-size: var(--text-section); }
 .book__phone { font: 400 var(--text-2xl)/1.1 var(--font-display); color: var(--color-ink); }
@@ -236,7 +244,7 @@ html:not(.js) .seg { display: none; }
 .site-footer__logo:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
 .site-footer__head { margin-bottom: var(--space-sm); font: 600 var(--text-sm)/1.3 var(--font-outlier); color: var(--color-muted); max-width: none; }
 .site-footer ul { margin: 0; padding: 0; list-style: none; }
-.site-footer li a, .site-footer address a, .site-footer p a { display: inline-flex; min-height: 32px; align-items: center; color: var(--color-ink); }
+.site-footer li a, .site-footer address a, .site-footer p a { white-space: nowrap; display: inline-flex; min-height: 32px; align-items: center; color: var(--color-ink); }
 .site-footer address { font-style: normal; color: var(--color-ink); }
 .site-footer p { margin-top: var(--space-xs); }
 .site-footer__legal { margin-top: var(--space-xl); padding-top: var(--space-md); border-top: var(--rule-hair) solid var(--color-rule); font-size: var(--text-sm); color: var(--color-muted); }

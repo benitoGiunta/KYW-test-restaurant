@@ -39,7 +39,7 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
       document.querySelectorAll<HTMLElement>('[data-jour]').forEach((el) => {
         if (Number(el.dataset.jour) === j) { el.classList.add('is-today'); el.setAttribute('aria-current', 'date'); }
       });
-      // Switcher de la carte : flèches gauche/droite, sans script tous les panneaux se lisent.
+      // Switcher de la carte : flèches gauche/droite, sans script tous les panneaux se lisent.
       document.querySelectorAll<HTMLElement>('[data-switch]').forEach((sw) => {
         const tabs = [...sw.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
         const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls') || ''));
@@ -57,7 +57,20 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
           });
         });
       });
-      // Formulaire sans backend : il dit qu'il n'a rien envoyé (gate 70).
+      // Réservation : le module Zenchef d'origine (iframe) se charge à la demande ; sans script, le lien suffit.
+      document.querySelectorAll<HTMLElement>('[data-zenchef]').forEach((box) => {
+        const btn = box.querySelector<HTMLButtonElement>('[data-zenchef-open]');
+        if (!btn) return;
+        btn.hidden = false;
+        btn.addEventListener('click', () => {
+          const f = document.createElement('iframe');
+          f.src = box.dataset.zenchef || '';
+          f.title = 'Réserver une table aux Potes au Feu avec Zenchef';
+          box.replaceChildren(f);
+          f.focus();
+        });
+      });
+      // Formulaire sans backend : il dit qu'il n'a rien envoyé (gate 70).
       document.querySelectorAll<HTMLFormElement>('form[data-endpoint]').forEach((form) => {
         const fields = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input[required], textarea[required]')];
         const status = form.querySelector<HTMLElement>('[data-status]');
@@ -75,8 +88,8 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
         form.addEventListener('submit', (e) => {
           e.preventDefault();
           const bad = fields.filter((f) => !check(f));
-          if (bad.length) { bad[0].focus(); if (status) status.textContent = 'Il manque une information : voyez le champ signalé.'; return; }
-          if (!form.dataset.endpoint && status) status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié. Appelez le +32 (0)81 64 04 44.';
+          if (bad.length) { bad[0].focus(); if (status) status.textContent = 'Il manque une information : voyez le champ signalé.'; return; }
+          if (!form.dataset.endpoint && status) status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié. Appelez le +32 (0)81 64 04 44.';
         });
       });
     </script>
