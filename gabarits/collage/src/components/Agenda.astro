@@ -12,10 +12,10 @@ const abrege = (j: string) => j.slice(0, 3);
     const p = photoDe(e.photo);
     const a = activiteDe(e.activite);
     return (
-      <li class="agenda__item" data-reveal="up" data-delay={String(i * 0.08)}>
+      <li class="agenda__item" data-reveal={i === 0 ? undefined : 'up'} data-delay={i === 0 ? undefined : String(i * 0.08)}>
         <p class="agenda__jour"><abbr title={e.jour}>{abrege(e.jour)}</abbr><small>{e.placeholder ? 'jour d’exemple' : e.jour}</small></p>
         <article class="agenda__carte">
-          <img src={asset(p.src.replace('.webp', '-640.webp'))} alt={p.alt} width="640" height={Math.round((640 * p.hauteur) / p.largeur)} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} decoding="async" />
+          <img src={asset(p.src.replace('.webp', '-640.webp'))} alt={p.alt} width="640" height={Math.round((640 * p.hauteur) / p.largeur)} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} decoding={i === 0 ? 'sync' : 'async'} />
           <div class="agenda__corps">
             <p class="agenda__meta"><span class={`sticker sticker--${a.couleur === 'vert' ? 'ecru' : a.couleur}`}>{a.nom}</span>{e.placeholder && <span class="tag">exemple</span>}</p>
             <h3>{e.titre}</h3>

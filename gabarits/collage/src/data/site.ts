@@ -86,7 +86,7 @@ export const site: Restaurant = {
         { nom: 'Mises en bouche', description: '', prix: null, placeholder: false },
         { nom: 'Légumes racines / Champignons / Noix', description: '', prix: null, placeholder: false },
         { nom: 'Saint-Jacques / Butternut / Passion', description: '', prix: null, placeholder: false },
-        { nom: 'Boeuf confit / Carottes / Cromesquis de pommes de terre', description: '', prix: null, placeholder: false },
+        { nom: 'Bœuf confit / Carottes / Cromesquis de pommes de terre', description: '', prix: null, placeholder: false },
         { nom: 'Soufflé au caramel / Chaï / Poire', description: '', prix: null, placeholder: false },
         { nom: 'Mignardise', description: '', prix: null, placeholder: false },
         { nom: 'Fromage à la place du dessert', description: 'supplément', prix: '+7 €', placeholder: false },
@@ -113,7 +113,7 @@ export const site: Restaurant = {
       nom: 'Menu dégustation unique 4 services',
       prix: '67 €',
       description:
-        'Du lundi au vendredi soir. Mises en bouche, Légumes racines / Champignons / Noix, Saint-Jacques / Butternut / Passion, Boeuf confit / Carottes / Cromesquis de pommes de terre, Soufflé au caramel / Chaï / Poire, Mignardise. Fromage à la place du dessert +7 €, avant le dessert +15 €.',
+        'Du lundi au vendredi soir. Mises en bouche, Légumes racines / Champignons / Noix, Saint-Jacques / Butternut / Passion, Bœuf confit / Carottes / Cromesquis de pommes de terre, Soufflé au caramel / Chaï / Poire, Mignardise. Fromage à la place du dessert +7 €, avant le dessert +15 €.',
       placeholder: false,
     },
     { nom: 'Formule 3 services (le midi)', prix: '52 €', description: 'Formule 3 services à choix multiples inspirée des produits du moment.', placeholder: false },
@@ -146,7 +146,7 @@ export const site: Restaurant = {
       placeholder: false,
     },
     {
-      texte: 'Les chefs viennent eux-mêmes présenter chaque assiette. Le boeuf confit est une merveille, et on repart avec le sourire.',
+      texte: 'Les chefs viennent eux-mêmes présenter chaque assiette. Le bœuf confit est une merveille, et on repart avec le sourire.',
       auteur: '',
       source: "Exemple d'avis",
       date: '2026-03-18',
@@ -167,7 +167,7 @@ export const site: Restaurant = {
     photo('/photos/chef-francois.webp', 'François Schepens en cuisine, tablier noir devant la hotte rouge', 1351, 1800),
     photo('/photos/equipe-trio.webp', "L'équipe riant sur une banquette autour d'une table en chêne", 800, 725),
     photo('/photos/dessert-tarte-pomme.webp', 'Rosace de pommes, glace et éclats de tuile, vue de dessus', 800, 725),
-    photo('/photos/plat-tartare.webp', 'Tartare de boeuf, roquette et tuiles sur assiette noire', 550, 825),
+    photo('/photos/plat-tartare.webp', 'Tartare de bœuf, roquette et tuiles sur assiette noire', 550, 825),
     photo('/photos/plat-saint-jacques.webp', 'Saint-Jacques snackées, mousseline et tuile noire sur assiette bleue', 550, 825),
     photo('/photos/salle-bar-panoramique.webp', 'Le bar vert sombre et une table haute dressée, vue sur la cuisine', 1800, 468),
     photo('/photos/salle-ampoules.webp', 'Ampoules à filament suspendues devant une étagère en bois', 1140, 642),
@@ -184,7 +184,7 @@ export const site: Restaurant = {
     photo('/photos/portrait-damien-profil.webp', 'Damien de profil en clair-obscur, mains jointes', 1140, 642),
     photo('/photos/salle-banquette.webp', 'La salle de jour : banquette, coussins moutarde, lambris vert-gris', 1600, 1600),
     photo('/photos/cuisine-mains-pate.webp', 'Des mains travaillent une pâte sur une balance', 1600, 1600),
-    photo('/photos/plat-boeuf-confit.webp', 'Boeuf confit, carottes et cromesquis sur assiette rouge', 1600, 1600),
+    photo('/photos/plat-boeuf-confit.webp', 'Bœuf confit, carottes et cromesquis sur assiette rouge', 1600, 1600),
   ],
   valeurs: [
     'Fait maison',
@@ -208,7 +208,7 @@ export const site: Restaurant = {
     { titre: 'Soirée vigneron', jour: 'mardi', heure: '19:00', activite: 'table', photo: '/photos/salle-clients-bar.webp', detail: 'Un vigneron à table, cinq verres.', placeholder: true },
     { titre: 'Brunch en famille', jour: 'dimanche', heure: '10:30', activite: 'brunch', photo: '/photos/cuisine-mains-pate.webp', detail: 'Pâtisserie du matin, jus pressés.', placeholder: true },
   ],
-  brunch: { nom: 'Formule brunch', prix: '32 €', lignes: ['Viennoiseries maison', 'Oeufs au choix', 'Pain, beurre, confitures', 'Jus pressé et café'], placeholder: true },
+  brunch: { nom: 'Formule brunch', prix: '32 €', lignes: ['Viennoiseries maison', 'Œufs au choix', 'Pain, beurre, confitures', 'Jus pressé et café'], placeholder: true },
   stickers: [
     { texte: 'Fait maison', placeholder: false },
     { texte: 'Produits des saisons', placeholder: false },

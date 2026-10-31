@@ -35,7 +35,7 @@ const galerie = ['/photos/cuisine-chefs-passe.webp', '/photos/salle-ampoules.web
           const p = m.photo ? photoDe(m.photo) : null;
           return (
             <article class="fiche" class:list={[p ? '' : 'fiche--sansphoto']} data-reveal="up" data-delay={String(i * 0.08)}>
-              {p && <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />}
+              {p ? <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /> : <p class="fiche__avenir"><span class="sticker">photo à venir</span></p>}
               <div class="fiche__nom">
                 <h3>{m.nom}</h3>
                 <p class="muted">{m.role}{m.placeholder && <span class="illu">rôle illustratif</span>}</p>

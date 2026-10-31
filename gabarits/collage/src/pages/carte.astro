@@ -15,7 +15,7 @@ const seconde = photoDe('/photos/service-sauce-table.webp');
 
   <div class="wrap">
     {site.carte.map((cat, i) => (
-      <section class="carte-cat">
+      <section class="carte-cat" id={i === 0 ? 'menu-degustation' : undefined}>
         <div class="damier" class:list={[i % 2 ? 'damier--inv' : '']}>
           <div>
             <h2 class="titre titre--l"><span class="etiquette">{cat.categorie}</span></h2>
@@ -40,11 +40,11 @@ const seconde = photoDe('/photos/service-sauce-table.webp');
     <div class="wrap">
       <h2 class="titre titre--l" id="t-formules"><span class="etiquette" data-split="lines">Les <em>formules</em></span></h2>
       <div class="formules" data-reveal="up">
-        {site.menus.map((m) => (
+        {site.menus.map((m, i) => (
           <article class="formule">
             <h3>{m.nom}{m.placeholder && <span class="illu">exemple</span>}</h3>
             <p class="prix">{m.prix}</p>
-            <p class="muted">{m.description}</p>
+            <p class="muted">{i === 0 ? <>Du lundi au vendredi soir. Le détail des services est <a class="link" href="#menu-degustation">plus haut</a>.</> : m.description}</p>
           </article>
         ))}
       </div>
