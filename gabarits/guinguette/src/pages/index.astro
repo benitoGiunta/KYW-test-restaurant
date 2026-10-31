@@ -26,7 +26,7 @@ const etoiles = Array.from({ length: 5 });
     </div>
     <div class="hero__zone" data-hero-zone>
       {g.objets.map((o, i) => (
-        <button type="button" class:list={['obj', { 'obj--mobile': o.mobile, 'obj--corail': i % 3 === 0, 'obj--canard': i % 3 === 1 }]} data-obj aria-label={`${o.label}, déplaçable aux flèches`} style={`--x:${o.x}%;--y:${o.y}%;--r:${o.r}deg;--taille:${o.taille}px;--delai:${(i * 0.6).toFixed(1)}s`}>
+        <button type="button" class:list={['obj', { 'obj--mobile': o.mobile, 'obj--corail': i % 3 === 0, 'obj--canard': i % 3 === 1 }]} data-obj aria-label={`${o.label}, déplaçable aux flèches`} style={`--x:${o.x}%;--y:${o.y}%;--r:${o.r}deg;--taille:${o.taille}px;${o.mx !== undefined ? `--mx:${o.mx}%;` : ''}--delai:${(i * 0.6).toFixed(1)}s`}>
           <Objet id={o.id} classe="obj__svg" />
         </button>
       ))}
@@ -56,7 +56,7 @@ const etoiles = Array.from({ length: 5 });
   <!-- La table : signature -->
   <section class="section section--canard table" id="table" data-table aria-label="La table : photos à déplacer">
     <div class="table__titre wrap">
-      <h2>La table du dimanche</h2>
+      <h2>La table des potes</h2>
       <p>Attrapez un tirage, posez-le où vous voulez.</p>
     </div>
     <div class="table__scene" data-table-scene>
@@ -72,7 +72,7 @@ const etoiles = Array.from({ length: 5 });
         </button>
       ))}
     </div>
-    <div class="table__rail rail" aria-label="Photos de la table">
+    <div class="table__rail rail" role="region" tabindex="0" aria-label="Photos de la table, défilement horizontal">
       {g.tirages.slice(0, 8).map((t) => (
         <figure class="tirage" style={`--r:${t.r}deg`}>
           <img src={petite(t.src)} alt={t.alt} width="640" height="640" loading="lazy" decoding="async" />

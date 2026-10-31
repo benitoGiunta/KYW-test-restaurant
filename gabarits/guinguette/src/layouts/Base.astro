@@ -37,6 +37,8 @@ const fontCss = fontFaces
   .join('');
 const polices = ['/fonts/zodiak-700-normal.woff2', '/fonts/zodiak-400-italic.woff2', '/fonts/satoshi-500-normal.woff2'];
 
+// Loader seulement sur l'accueil (REVISION-1, F2-4) : les sous-pages sont peintes en 0,2 s.
+const accueil = Astro.url.pathname.replace(/\/+$/, '') === import.meta.env.BASE_URL.replace(/\/+$/, '');
 const jours: Record<string, string> = { lundi: 'Monday', mardi: 'Tuesday', mercredi: 'Wednesday', jeudi: 'Thursday', vendredi: 'Friday', samedi: 'Saturday', dimanche: 'Sunday' };
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -101,7 +103,7 @@ const jsonLd = {
     <div id="gl" transition:persist="gl" aria-hidden="true"></div>
     <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
     <div id="cursor" transition:persist="cursor" aria-hidden="true"><span data-cursor-label></span></div>
-    <Loader />
+    {accueil && <Loader />}
     <Marquee />
     <Header />
     <main id="main" tabindex="-1">

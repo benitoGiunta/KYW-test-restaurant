@@ -21,7 +21,7 @@ function criticalAssets(): Promise<unknown>[] {
 
 export async function runLoader(): Promise<void> {
   const root = document.getElementById('loader');
-  if (!root) return;
+  if (!root) { document.documentElement.classList.add('is-loaded'); return; } // sous-pages : pas de loader
   if (prefersReducedMotion()) {
     await Promise.race([Promise.all(criticalAssets()), wait(MAX)]);
     await gsap.to(root, { autoAlpha: 0, duration: 0.3 });

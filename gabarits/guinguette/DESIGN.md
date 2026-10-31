@@ -29,7 +29,7 @@
 [marquee état ▸ OUVERT · prochain service · adresse · réserver en ligne ▸]
 [ brand ·      (nav pilule)      · Réserver ]
 HERO poster        ⌒ parasol                 ⌒ verre
-     Dimanche à la terrasse  (Zodiak 2 lignes)
+     À table, entre potes  (Zodiak 2 lignes ; titre neutre depuis REVISION-1 : le restaurant de référence ferme le dimanche)
           — « à quatre mains, les coudes sur la table » (italique corail décalé)
      Avenue de la Plante 4, Namur        ( Réserver ) ( La carte )
   frites ⌒           fourchette ⌒        bouteille ⌒     citron ⌒
@@ -55,3 +55,16 @@ mot « Avis » sort du flou pendant que les cartes glissent.
 - [x] KywFooter unique, noindex, lang fr, u()/asset() partout.
 - [x] Texte caché décoratif par clip-path, jamais opacity: 0 ; reduced-motion complet.
 - [x] Contraste ≥ 4,5:1 pour le texte courant (corail réservé aux surfaces et aux grands titres).
+
+## Décisions de la révision 1 (31/10/2026)
+
+- Titre du hero « À table, entre potes » et table « La table des potes » : « dimanche » contredisait les horaires réels
+  (fermé le dimanche). L'idée « dimanche en famille » reste l'émotion, pas un fait affiché.
+- En-tête : le flou est porté par `.header::before` ; jamais de `backdrop-filter`/`filter`/`transform` sur `.header`,
+  sinon la pilule mobile `position: fixed` se cale sur l'en-tête au lieu du bas de l'écran.
+- Mobile : les objets du hero se posent en rangée sous les boutons (`--mx` dans `site.ts`, `bottom` fixe), jamais sur
+  le titre ni sur un bouton. Badge « attrapez-moi » 6,5 rem en mobile, main de 2,2 rem au centre.
+- Pied de page canard : « fermé » en pastille paille, texte encre (le corail sur canard tenait 1,81:1).
+- Loader « nappe » sur l'accueil seulement (sortie 0,6 s) ; les sous-pages s'affichent sans loader.
+- Survol : marque d'en-tête en canard + soulignement corail ; onglets de la pilule montent de 2 px, onglet courant passe
+  en corail au survol.

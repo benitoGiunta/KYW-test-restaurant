@@ -188,22 +188,22 @@ export const telHref = (r: Restaurant = site) => `tel:${r.telephone.replace(/\s+
 // ---------------------------------------------------------------------------------------------
 
 export type ObjetId = 'frites' | 'fourchette' | 'verre' | 'parasol' | 'bouteille' | 'citron';
-export interface Objet { id: ObjetId; label: string; x: number; y: number; r: number; taille: number; mobile: boolean }
+export interface Objet { id: ObjetId; label: string; x: number; y: number; r: number; taille: number; mobile: boolean; mx?: number }
 export interface Tirage { src: string; alt: string; x: number; y: number; r: number; legende: string; placeholder: boolean }
 export interface AvisExemple { texte: string; note: number; r: number; placeholder: true }
 export interface Picto { categorie: string; picto: ObjetId }
 
 export const guinguette = {
   /** Titre et slogan du hero. Le slogan est une proposition de copy (fictif, marqué). */
-  heroTitre: ['Dimanche', 'à la terrasse'],
+  heroTitre: ['À table,', 'entre potes'], // titre neutre : le restaurant est fermé le dimanche (REVISION-1, F2-5)
   slogan: { texte: 'à quatre mains, les coudes sur la table', placeholder: true },
   /** Objets au trait du hero : position en % de la section, rotation en degrés. `mobile` = reste visible en 390 px. */
   objets: [
-    { id: 'parasol', label: 'Parasol dessiné au trait', x: 6, y: 10, r: -12, taille: 150, mobile: true },
+    { id: 'parasol', label: 'Parasol dessiné au trait', x: 6, y: 10, r: -12, taille: 150, mobile: true, mx: 4 },
     { id: 'verre', label: 'Verre à pied dessiné au trait', x: 84, y: 8, r: 10, taille: 110, mobile: false },
-    { id: 'frites', label: 'Cornet de frites dessiné au trait', x: 10, y: 66, r: 8, taille: 130, mobile: true },
+    { id: 'frites', label: 'Cornet de frites dessiné au trait', x: 10, y: 66, r: 8, taille: 130, mobile: true, mx: 40 },
     { id: 'fourchette', label: 'Fourchette dessinée au trait', x: 30, y: 78, r: -40, taille: 120, mobile: false },
-    { id: 'bouteille', label: 'Bouteille dessinée au trait', x: 80, y: 60, r: 14, taille: 140, mobile: true },
+    { id: 'bouteille', label: 'Bouteille dessinée au trait', x: 80, y: 60, r: 14, taille: 140, mobile: true, mx: 74 },
     { id: 'citron', label: 'Citron coupé dessiné au trait', x: 62, y: 82, r: -6, taille: 90, mobile: false },
   ] as Objet[],
   /** La table : 12 tirages à cadre blanc (photos réelles, légendes réelles), positions en % et rotation. */
@@ -277,7 +277,7 @@ export const guinguette = {
   ] as (Categorie & { plats: (Plat & { vege: boolean })[] })[],
   /** Avis d'exemple : sans nom ni source, étiquetés « Exemple d'avis » à l'écran. */
   avisExemples: [
-    { texte: 'On a attrapé la dernière table du dimanche. Les enfants ont fini les frites des parents.', note: 5, r: -4, placeholder: true },
+    { texte: 'On a attrapé la dernière table du vendredi midi. Les enfants ont fini les frites des parents.', note: 5, r: -4, placeholder: true },
     { texte: 'Les chefs posent l’assiette et racontent le plat. On repart avec le sourire et la recette.', note: 5, r: 3, placeholder: true },
     { texte: 'Menu unique, zéro hésitation. Le soufflé au caramel a mis la table d’accord.', note: 5, r: -2, placeholder: true },
     { texte: 'Simple, généreux, précis. Le genre d’adresse qu’on garde pour soi puis qu’on donne quand même.', note: 5, r: 5, placeholder: true },

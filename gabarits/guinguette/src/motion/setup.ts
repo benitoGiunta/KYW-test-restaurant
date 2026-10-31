@@ -15,8 +15,8 @@ export function setupMotion() {
   });
   setLoaderExit((root) =>
     gsap.timeline()
-      .to(root.querySelectorAll('[data-loader-out]'), { y: -30, autoAlpha: 0, duration: 0.35, ease: ease.inOut, stagger: 0.06 })
-      .to(root, { yPercent: -110, duration: 0.65, ease: ease.inOut }, '-=0.15'),
+      .to(root.querySelectorAll('[data-loader-out]'), { y: -30, autoAlpha: 0, duration: 0.25, ease: ease.inOut, stagger: 0.04 })
+      .to(root, { yPercent: -110, duration: 0.5, ease: ease.inOut }, '-=0.15'),
   );
   setTransition({
     leave: (c) => gsap.timeline().set(c, { autoAlpha: 1 }).fromTo(c.querySelector('.curtain__panel'), { yPercent: 100 }, { yPercent: 0, duration: 0.7, ease: ease.inOut }),

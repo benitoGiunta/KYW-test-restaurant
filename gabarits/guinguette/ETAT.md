@@ -14,5 +14,6 @@
 - [x] README.md hérité du socle retiré
 - [x] apercu.png, FICHE.md, RAPPORT.md (QA + leçons), agents/lecons.md
 - [x] rebuild final `node scripts/build-site.mjs gabarits/guinguette` (12:3x, 7 pages)
-- [ ] revue `jury` + corrections : agent distinct (non fait ici)
+- [x] revue 1 (REVUE-1.md, A_CORRIGER : 3 F1, 6 F2, 3 F3)
+- [x] révision 1 (REVISION-1.md, 31/10) : 3 F1 + 6 F2 + F3-1/F3-2 corrigés, F3-3 refusé en partie (phrase issue du dossier), débordement mobile 10 px du menu corrigé ; DESIGN.md (décisions révision 1), rebuild, apercu.png recapturé (gabarit + dist) ; captures `.shots-guinguette-rev/`
 - Aucun serveur laissé actif (PID 2827, 5243, 5535, 5829 tués).
