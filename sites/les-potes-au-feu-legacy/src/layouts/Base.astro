@@ -2,9 +2,33 @@
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import KywFooter from '@kyw/footer';
+import { resto, horaires } from '../data/site';
 interface Props { title: string; description: string; page: string }
 const { title, description, page } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+// Partage et données structurées (REVUE-1, C2) ; le noindex reste.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const accueil = new URL(base, Astro.site).href;
+const ogImage = new URL(`${base}og.jpg`, Astro.site).href;
+const jours = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const ldJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: resto.nom,
+  url: accueil,
+  image: ogImage,
+  telephone: '+32 81 64 04 44',
+  address: { '@type': 'PostalAddress', streetAddress: resto.adresse.rue, postalCode: '5000', addressLocality: 'Namur', addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: 50.4586737, longitude: 4.8643452 },
+  servesCuisine: ['Bistronomie', 'Cuisine française moderne'],
+  priceRange: '€€',
+  acceptsReservations: resto.zenchef,
+  sameAs: [resto.facebook],
+  openingHoursSpecification: horaires.flatMap((d) => d.services.map((s) => {
+    const [opens, closes] = s.split(' à ');
+    return { '@type': 'OpeningHoursSpecification', dayOfWeek: `https://schema.org/${jours[d.jour]}`, opens, closes };
+  })),
+});
 ---
 <!doctype html>
 <html lang="fr">
@@ -17,9 +41,21 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     <meta name="theme-color" content="#f3e9d9" />
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
     <script is:inline>document.documentElement.classList.add('js');</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@600&display=swap" rel="stylesheet" />
+    <link rel="preload" href={`${base}fonts/yeseva-one-400-normal.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${base}fonts/archivo-400-500.woff2`} as="font" type="font/woff2" crossorigin />
+    {page !== '404' && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content={resto.nom} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="La salle des Potes au Feu, le bar et le logo du restaurant" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={ldJson} />
     <style is:global>
       @import "../styles/page.css";
     </style>

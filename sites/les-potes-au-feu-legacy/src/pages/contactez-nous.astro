@@ -9,11 +9,11 @@ import { resto } from '../data/site';
   title="Contact, Les Potes au Feu à Namur"
   description="Adresse, téléphone et heures d’ouverture des Potes au Feu, avenue de la Plante 4 à Namur ; privatisation possible le samedi."
 >
-  <section class="banner banner--split" aria-labelledby="page-titre">
+  <section class="banner banner--split banner--court" aria-labelledby="page-titre">
     <div class="container">
       <div class="banner__head">
         <h1 id="page-titre">Contactez-nous</h1>
-        <p class="lead">Pour plus d’informations, une privatisation le samedi ou une remarque : écrivez-nous.</p>
+        <p class="lead">Une question, une privatisation le samedi : le plus rapide est de nous appeler au <a href={resto.telHref}>{resto.telAffiche}</a>.</p>
       </div>
       <Photo nom="11-salle-ampoules" largeurs={[640, 1140]} w={1140} h={642} slot="banner-contact"
         alt="Ampoules à filament suspendues devant une étagère en bois, murs sombres" sizes="(min-width: 90rem) 1312px, 100vw" priorite />
@@ -22,14 +22,32 @@ import { resto } from '../data/site';
 
   <section class="contact section" aria-label="Formulaire et coordonnées">
     <div class="container contact__grid">
-      <form class="form" data-endpoint="" novalidate aria-label="Écrire au restaurant">
+      <aside class="contact__aside">
+        <div>
+          <h2>Les potes au feu</h2>
+          <address class="contact__address">
+            {resto.adresse.rue}<br />{resto.adresse.ville}<br />
+            <a href={resto.telHref}>{resto.telAffiche}</a>
+          </address>
+          <a class="link-action" href={resto.plan}>Voir le plan</a>
+        </div>
+        <div id="horaire-contact">
+          <h2>Heures d’ouverture</h2>
+          <Horaires compact />
+          <p class="small">Le samedi : possibilité de privatisation du restaurant, mariage, chef à domicile.</p>
+        </div>
+        <p class="legal">TVA {resto.tva}, RPM Namur 0741.540.749, {resto.societe}.</p>
+      </aside>
+      <form class="form" data-endpoint="" novalidate aria-label="Écrire au restaurant" aria-describedby="form-note">
+        <p class="form__note" id="form-note">Ce formulaire de maquette n’est pas encore relié : rien ne sera envoyé. Pour une réponse, appelez-nous.</p>
         <div class="field">
           <label for="field_objet">Objet</label>
           <select id="field_objet" name="objet">
-            <option value="1. Demande d'infos / Devis">Demande d’infos ou devis</option>
-            <option value="2. Réclamation / Plainte">Réclamation ou plainte</option>
-            <option value="3. Autres">Autre</option>
+            <option value="Question">Question</option>
+            <option value="Privatisation du samedi">Privatisation du samedi</option>
+            <option value="Autre">Autre</option>
           </select>
+          <p class="field__help" aria-hidden="true"></p>
         </div>
         <div class="field">
           <label for="field_civilite">Civilité</label>
@@ -37,6 +55,7 @@ import { resto } from '../data/site';
             <option value="Monsieur">Monsieur</option>
             <option value="Madame">Madame</option>
           </select>
+          <p class="field__help" aria-hidden="true"></p>
         </div>
         <div class="field">
           <label for="field_nom">Nom</label>
@@ -68,22 +87,6 @@ import { resto } from '../data/site';
           <p class="form__status" data-status aria-live="polite"></p>
         </div>
       </form>
-      <aside class="contact__aside">
-        <div>
-          <h2>Les potes au feu</h2>
-          <address class="contact__address">
-            {resto.adresse.rue}<br />{resto.adresse.ville}<br />
-            <a href={resto.telHref}>{resto.telAffiche}</a>
-          </address>
-          <a class="link-action" href={resto.plan}>Voir le plan</a>
-        </div>
-        <div id="horaire-contact">
-          <h2>Heures d’ouverture</h2>
-          <Horaires compact />
-          <p class="small">Le samedi : possibilité de privatisation du restaurant, mariage, chef à domicile.</p>
-        </div>
-        <p class="legal">TVA {resto.tva}, RPM Namur 0741.540.749, {resto.societe}.</p>
-      </aside>
     </div>
   </section>
 </Base>

@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base
+  page="404"
+  title="Page introuvable, Les Potes au Feu à Namur"
+  description="Cette page n’existe pas sur le site des Potes au Feu : retrouvez l’accueil, le menu ou la réservation."
+>
+  <section class="banner banner--split banner--court notfound" aria-labelledby="page-titre">
+    <div class="container">
+      <div class="banner__head">
+        <h1 id="page-titre">Cette page n’existe pas</h1>
+        <div>
+          <p class="lead">L’adresse a sans doute changé. Le menu et la réservation sont toujours là.</p>
+          <div class="actions">
+            <a class="btn" href={`${base}reservation-en-ligne/`}>Réserver une table</a>
+            <a class="link-action" href={base}>Retour à l’accueil</a>
+          </div>
+        </div>
+      </div>
+      <Photo nom="19-cuisine-chefs-passe" largeurs={[640, 1140]} w={1140} h={642} slot="banner-404"
+        alt="Les deux chefs au passe sous les lampes chauffantes" sizes="(min-width: 90rem) 1312px, 100vw" position="50% 40%" />
+    </div>
+  </section>
+</Base>

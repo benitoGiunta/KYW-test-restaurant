@@ -53,7 +53,7 @@ L'échelle d'espace, l'échelle de type, les easings et les durées sont celles 
 
 ## Approche
 - **Macrostructure conservée** : le site d'origine est un Split Studio irrégulier (texte d'un côté, photo de l'autre, en zigzag), multipage. Empreinte gardée et corrigée (`Heading|Body|Divider|Button|Image|Reveal`) : `Overlapping (hero) puis left-margin | Two-column asymmetric | Hairline rule + bande | Solid (une pilule) | Full-bleed (hero) puis cadré à la grille | None`. Nom court : *une carte de bistro en diptyque*.
-- **Posture conservée** : multi-pages, mêmes routes utiles (`/`, `/les-potes-au-feu/`, `/le-menu-des-potes/`, `/reservation-en-ligne/`, `/contactez-nous/`) ; hero Poster (diptyque plein cadre) à l'accueil, bannière photo sur les pages intérieures (Banner) ; calme (aucune animation au scroll à l'origine, aucune ici).
+- **Posture conservée** : multi-pages, mêmes routes utiles (`/`, `/les-potes-au-feu/`, `/le-menu-des-potes/`, `/reservation-en-ligne/`, `/contactez-nous/`) ; hero Poster (diptyque plein cadre) à l'accueil, Banner sur les pages intérieures (photo de 320 px de haut sur le contact, aucune photo sur le menu et la réservation depuis la révision 1, pour que la carte et le module tiennent dans le premier écran) ; calme (aucune animation au scroll à l'origine, aucune ici).
 - **Dérogations justifiées** :
   - Zigzag texte-photo → la photo garde son côté, une seule section photo de suite au plus (`layout.md` § 7, 83).
   - « Un vrai moment de cuisine » perd sa photo de dessert et devient une Statement sur bande d'encre (jamais deux sections photo de suite ; le dessert n'est plus nécessaire).
@@ -161,8 +161,20 @@ Solstice, `dealt 1/3, seed restaurant-namur-bistronomy-seasonal-5457·3309c0dd·
 - [x] 67. Le téléphone reçoit tout · preuve : F25 absent ; captures 375 full
 
 **Craft, imagery, responsive, brand, patterns**
-- [x] 68. Type : Yeseva One + Archivo (+ Archivo Narrow outlier), display 1,0-1,12, corps 17 px à 1,55, `display=swap`, `font-synthesis: none` · preuve : Base.astro (lien Google Fonts), base.css
+- [x] 68. Type : Yeseva One + Archivo (+ Archivo Narrow outlier), display 1,0-1,12, corps 17 px à 1,55, `display=swap`, `font-synthesis: none` · preuve : `tokens.css` (`@font-face` woff2 auto-hébergés depuis la révision 1, préchargés dans Base.astro), base.css
 - [x] 69. Couleur : OKLCH, papier/encre/neutres/accent + accent-ink + focus, posture déclarée · preuve : tokens.css, stamp
 - [x] 70. Surfaces : axe à gauche, une ombre dure (`--shadow-card`), huit z, radius 0/pilule ; pas de texture (Solstice : « no texture ») · preuve : tokens.css
 - [x] 71. Imagery : photos du client seules, hero LCP `fetchpriority="high"`, traitement du thème, texte jamais posé sur la photo sans puits opaque, légendes = faits · preuve : Photo.astro, base.css ; dark-mode non chargé (un seul mode à l'origine)
 - [x] 72. Responsive : 60rem et 40rem, `@media (hover: none)`, horaires et formules restackés, `dvh`/`svh`, `width: 100%` ; brand-spec écrite (`.hallmark/brand-spec.md`) ; patterns pris pour leur forme · preuve : page.css:246-284
+
+
+## Révision 1 (REVUE-1, 31/10/2026)
+Décisions changées, et pourquoi (détail : `REVISION-1.md`) :
+- **Menu** : la bannière perd sa photo (salage de la viande, toujours dans la galerie de `/les-potes-au-feu/`) ; la section carte suit à `--section-gap-s`. Raison : le menu à 67 € doit être dans le premier écran 1440×900 (C6). Seuls les 4 services sont numérotés ; mises en bouche et mignardise sont des lignes `horsService` sans numéro (C1).
+- **Contact** : bannière courte (320 px, 2:1 en mobile), coordonnées et horaires à gauche et en premier dans le DOM, formulaire à droite ; une note en tête du formulaire dit dès l'ouverture qu'il n'est pas relié (C5). Objets : « Question », « Privatisation du samedi », « Autre ».
+- **Réservation** : titre « Réserver avec Zenchef », cadre à la hauteur de son contenu ; le module reste chargé à la demande (gate 26a, voir Approche).
+- **Accueil** : un filet crème de 4 px (`--space-2xs`) sépare les deux portraits du diptyque (C15) ; la vidéo est titrée « L'aftermovie « Alfonse » » et sa photo plafonnée à 1140 px, sa largeur d'origine (C4) ; la Statement porte une phrase vraie du dossier (les chefs servent et expliquent) (C8).
+- **Rythme** : `.section + .section { padding-top: 0 }`, plus de double marge entre deux sections de papier (C10).
+- **Polices** : auto-hébergées en woff2 latin (Yeseva One 400, Archivo 400-500 variable, Archivo Narrow 600), plus d'appel à Google Fonts (C13).
+- **Tête de page** : canonical, Open Graph (image `og.jpg` = l'image de partage du client, 1200×630), JSON-LD `Restaurant` ; noindex conservé (C2). 404 propre sur le gabarit Banner (C3).
+- Stamp : `waive 44c` ajouté (Banner sans photo sur le menu et la réservation).

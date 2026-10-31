@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   title="Le menu des potes, Les Potes au Feu à Namur"
   description="Menu dégustation unique en 4 services à 67 € le soir, formule 3 services à 52 € et lunch à 40 € le mercredi et le vendredi midi."
 >
-  <section class="banner banner--split" aria-labelledby="page-titre">
+  <section class="banner" aria-labelledby="page-titre">
     <div class="container">
       <div class="banner__head">
         <div>
@@ -21,14 +21,12 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
           <div class="actions"><a class="btn" href={`${base}reservation-en-ligne/`}>Réserver une table</a></div>
         </div>
       </div>
-      <Photo nom="16-cuisine-salage-viande" largeurs={[640, 1140]} w={1140} h={642} slot="banner-carte"
-        alt="Une main sale une pièce de viande tranchée sur une plaque" sizes="(min-width: 90rem) 1312px, 100vw" position="50% 50%" priorite />
     </div>
   </section>
 
-  <section class="carte section" aria-labelledby="carte-titre">
+  <section class="carte section section--top0" aria-labelledby="carte-titre">
     <div class="container">
-      <h2 id="carte-titre" class="carte__head">Le soir ou le midi</h2>
+      <h2 id="carte-titre" class="carte__head">À table, du lundi au vendredi</h2>
       <div data-switch>
         <div class="seg" role="tablist" aria-label="Choisir le service">
           <button type="button" role="tab" id="tab-soir" aria-controls="panel-soir" aria-selected="true">Le soir</button>
@@ -43,7 +41,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
             <p class="menu-panel__price num">{menuSoir.prix}</p>
           </div>
           <ol class="courses">
-            {menuSoir.plats.map((p) => <li>{p}</li>)}
+            {menuSoir.plats.map((p) => <li class:list={{ 'courses__hors': p.horsService }}>{p.nom}</li>)}
           </ol>
           <ul class="priced">
             {menuSoir.supplements.map((s) => <li><span>{s.nom}</span><span class="num">{s.prix}</span></li>)}
@@ -52,7 +50,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <div class="menu-panel" role="tabpanel" id="panel-midi" aria-labelledby="tab-midi">
           <div class="menu-panel__top">
             <div>
-              <h3>Le midi</h3>
+              <h3>Deux formules au choix</h3>
               <p class="menu-panel__when">{menuMidi.quand}</p>
             </div>
           </div>
@@ -81,8 +79,8 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       </figure>
       <div>
         <Photo nom="25-plat-boeuf-confit-michelin" largeurs={[640, 1280]} w={1280} h={1280} slot="plat-boeuf"
-          alt="Boeuf confit, carottes et cromesquis dans une assiette rouge, vue du dessus" sizes="(min-width: 60rem) 55vw, 100vw" />
-        <p class="caption">Boeuf confit, carottes, cromesquis de pommes de terre : un plat du menu dégustation.</p>
+          alt="Bœuf confit, carottes et cromesquis dans une assiette rouge, vue du dessus" sizes="(min-width: 60rem) 55vw, 100vw" />
+        <p class="caption">Bœuf confit, carottes, cromesquis de pommes de terre : un plat du menu dégustation.</p>
       </div>
     </div>
   </section>

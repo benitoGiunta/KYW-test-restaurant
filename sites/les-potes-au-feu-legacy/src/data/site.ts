@@ -32,14 +32,17 @@ export const menuSoir = {
   titre: 'Menu dégustation, 4 services',
   prix: '67 €',
   quand: 'Du lundi au vendredi soir',
+  // `services` = le nombre annoncé (4) ; mises en bouche et mignardise accompagnent le menu sans compter
+  // comme services (`horsService`) : elles ne sont pas numérotées (REVUE-1, C1).
+  services: 4,
   plats: [
-    'Mises en bouche',
-    'Légumes racines / Champignons / Noix',
-    'Saint-Jacques / Butternut / Passion',
-    'Boeuf confit / Carottes / Cromesquis de pdt',
-    'Soufflé au caramel / Chaï / Poire',
-    'Mignardise',
-  ],
+    { nom: 'Mises en bouche', horsService: true },
+    { nom: 'Légumes racines / Champignons / Noix' },
+    { nom: 'Saint-Jacques / Butternut / Passion' },
+    { nom: 'Bœuf confit / Carottes / Cromesquis de pdt' },
+    { nom: 'Soufflé au caramel / Chaï / Poire' },
+    { nom: 'Mignardise', horsService: true },
+  ] as { nom: string; horsService?: boolean }[],
   supplements: [
     { nom: 'Fromage à la place du dessert', prix: '+7 €' },
     { nom: 'Fromage avant le dessert', prix: '+15 €' },
