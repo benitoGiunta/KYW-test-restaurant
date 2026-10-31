@@ -32,3 +32,10 @@ Reste : lire les report.json et planches, corriger, RAPPORT.md, apercu.png, arr�
 (`.ardoise__lien` craie sur fond clair) corrigée dans base.css ; l'aperçu restait visible pendant le défilement (pointeur
 au centre) → réécrit : tout défilement cache l'aperçu, le pointermove sur une ligne le montre. Sources corrigées, rebuild
 APRÈS la fin du shoot en cours (sinon dist/ vidé pendant les captures), puis passe 2 sur index et carte.
+
+## Étape 3 (faite, 31/10) : passe 2 lue, finitions, livraison
+Passe 2 (index2, carte2, reservation2) : 0 failed, 0 erreur, 0 axe, CLS 0, LCP mobile 1,2 / 1,2 / 1,3 s ; planches lues, rien
+à corriger visuellement. Corrections : `.ex[hidden] { display: none }` (pastille « suggestion illustrative » visible les jours
+fermés), e-mail illustratif retiré du Footer (FICHE.md mise à jour). Rebuild fait (`dist/gabarits/ardoise/` à jour),
+`apercu.png` recapturé, serveurs 4414 arrêtés (PID 1617 puis 2374, `kill`), RAPPORT.md écrit. Rien ne reste côté constructeur :
+relecture jury par un agent distinct.

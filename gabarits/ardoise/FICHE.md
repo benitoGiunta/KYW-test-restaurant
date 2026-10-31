@@ -50,6 +50,6 @@ en tête, une barre de réservation fixe tient le bas de l'écran.
 - Les Potes au Feu travaillent en menu unique : la carte longue est composée du menu réel et de lignes d'exemple marquées
   « exemple » ; les suggestions du jour sont illustratives et marquées.
 - Pas de WebGL, pas de texture craie (interdite par le cahier) ; l'ardoise est une couleur et une liste.
-- Formulaire de démonstration (ouvre Zenchef) ; e-mail illustratif.
+- Formulaire de démonstration (ouvre Zenchef) ; l'e-mail (inconnu au dossier) n'est pas affiché.
 
 Aperçu : `apercu.png`.
