@@ -7,7 +7,7 @@
 // les trois traits bougent comme trois pousses au vent. Un seul setProperty par frame, sur le ticker GSAP.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { onPage, onScroll, prefersReducedMotion, ease } from '../engine';
+import { onPage, onScroll, prefersReducedMotion } from '../engine';
 import { idle } from './idle';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -35,8 +35,7 @@ export function startAccents() {
     const o = { v: 0 };
     poser(svg, 0);
     intro.add(gsap.to(o, { v: 1, duration: 1.2, ease: 'power2.inOut', onUpdate: () => poser(svg, o.v) }), 0.25);
-    const photo = document.querySelector('.cadre--hero img');
-    if (photo) intro.add(gsap.fromTo(photo, { scale: 1.08 }, { scale: 1, duration: 1.6, ease: ease.out }), 0);
+    // Passe finale « retirer un accessoire » : le zoom d'entrée de la photo du hero est retiré (les accents suffisent).
   });
 
   // 3. Signature : « Trois accents ». Chaque chapitre trace son accent pendant qu'il traverse le milieu de l'écran.
@@ -84,10 +83,12 @@ export function startAccents() {
   let visibles = new Set<SVGElement>();
   onPage(() => {
     const groupes = [...document.querySelectorAll<SVGElement>('[data-accents]')].filter((g) => g.dataset.accents !== 'rideau');
-    const sts = groupes.map((g) => g.dataset.accents === 'tete'
-      ? (visibles.add(g), null)
-      : ScrollTrigger.create({ trigger: g, start: 'top bottom', end: 'bottom top', onToggle: (st) => (st.isActive ? visibles.add(g) : visibles.delete(g)) }));
-    return () => { sts.forEach((st) => st?.kill()); visibles = new Set(); };
+    const io = new IntersectionObserver((entrees) => entrees.forEach((e) => {
+      const g = e.target as SVGElement;
+      if (e.isIntersecting) visibles.add(g); else visibles.delete(g);
+    }));
+    groupes.forEach((g) => io.observe(g));
+    return () => { io.disconnect(); visibles = new Set(); };
   });
   let dernier = '';
   gsap.ticker.add(() => {
