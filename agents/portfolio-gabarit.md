@@ -140,3 +140,5 @@ seul fichier, sections indépendantes, tokens).
   page, sans prix chiffré. Son bandeau « Page d'exemple » se pose dans le hero, sous l'en-tête, jamais en flux en tête de
   page. Dans un rouleau ou un carrousel de plats d'exemple, chaque titre de plat porte sa pastille « exemple » (≥ 12 px)
   et la fin de la bande renvoie à la vraie carte. Une donnée de contact inconnue (e-mail) n'est pas affichée, même marquée.
+
+- Dans « 6. QA » : si l'en-tête ou un titre est dessiné en deux copies clipées (clip-path), seule la copie non clipée reçoit les clics. La copie décorative qui couvre l'autre moitié doit donc porter de vrais liens : <a tabindex="-1"> dans un conteneur aria-hidden, jamais inert ni pointer-events: none. Ajoute aussi un état de focus clavier qui retire le clip de la copie accessible. Vérifie par un page.mouse.click réel sur chaque lien de l'en-tête, à scrollY 0 et à mi-page. Vérifie aussi, sur une capture de fenêtre en 1440 (pas fullPage, qui ne peint un fond fixe que sur la première hauteur d'écran), que le pied de page KYW n'est pas recouvert par un fond fixe.

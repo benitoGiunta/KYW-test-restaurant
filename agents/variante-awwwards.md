@@ -688,3 +688,7 @@ manque de l'agent lui-même), jamais le goût ou le contenu d'un restaurant. Cha
   final et sa nature (critique indépendant ou auto-notation), les deux corrections qui feraient
   le plus monter le score, les placeholders à remplacer, et la ligne « `/jury $U` re-note le site
   avec un critique neuf une fois les placeholders remplacés ».
+
+## Leçons intégrées
+
+- **3.6 bis. Grille et marges (avant le premier shoot).** Un élément qui porte la classe `.wrap` ne reçoit jamais `padding: X 0` (cela annule le gutter latéral) : uniquement `padding-block`. Dans un hero en grille, le texte et le média se placent explicitement dans la même rangée (`grid-row: 1` des deux côtés, sur des colonnes qui ne se chevauchent pas) : sinon le placement automatique pousse le texte sous le média et le h1 tombe sous la ligne de flottaison. Avant tout shoot, mesure par un mini-script Playwright (`launch()` de browser.mjs) le `getBoundingClientRect()` du h1, des CTA et du média du hero à 1440×900, 1280×720, 1024×768 et 390×844, et le `left` de chaque `.display` (il doit valoir au moins le gutter). Le producteur écrit les pages avant d'affiner le CSS : un site dont `src/pages/` est vide n'est jamais confié à la relecture.

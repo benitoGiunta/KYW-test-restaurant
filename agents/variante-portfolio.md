@@ -71,3 +71,7 @@ adaptation. Arrête le serveur.
   « Leçons structurelles » (à reporter dans `agents/lecons.md` si un gabarit a un défaut : corrige aussi le gabarit
   dans `gabarits/<nom>/` pour les prochains restaurants, et note-le).
 - Réponse finale : gabarit choisi et pourquoi (2 lignes), adéquation estimée, placeholders, problèmes ouverts.
+
+## Leçons intégrées
+
+- Dans « 3. Vérification avant de rendre la main » : shoot.mjs et axe ne voient pas deux défauts de couches propres aux gabarits à fond fixe ou à en-tête clipé. Avant de rendre la main, lance donc un mini-script Playwright (launch() de .claude/skills/awwwards/scripts/browser.mjs, importé par chemin absolu) qui fait deux choses. (a) Sur chaque page en 1440, à scrollY 0 après is-loaded : un page.mouse.click réel au centre de chaque lien de l'en-tête, puis le contrôle que l'URL a changé. elementFromPoint doit renvoyer un <a>, jamais une section ni une image. (b) Une capture de fenêtre, pas fullPage, du bas de chaque page en 1440 après défilement à la molette : la bande du site, la mention « Maquette KYW, certaines données sont illustratives » et le logo KYW doivent y être visibles. Un élément position: fixed en z-index ≥ 0 (fond, grain, canvas) passe devant un footer statique : .footer et .kyw-footer en position: relative; z-index: var(--z-content).
