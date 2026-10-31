@@ -7,19 +7,19 @@ import { u } from '../lib/url';
 import { carte, euro, pratique, site } from '../data/site';
 import { photos, type CleePhoto } from '../lib/photos';
 
-// URL d'aperçu calculée au build (une vignette lazy cachée n'a pas de currentSrc : lecons.md).
+// URL d’aperçu calculée au build (une vignette lazy cachée n’a pas de currentSrc : lecons.md).
 const apercus: Record<string, string> = {};
 for (const r of carte) for (const l of r.lignes) if (l.photo && !apercus[l.photo]) {
   const img = await getImage({ src: photos[l.photo as CleePhoto].src, width: 640, format: 'webp' });
   apercus[l.photo] = img.src;
 }
 ---
-<Base title="La carte" description="La carte de L'Atelier de Bossimé : lunch en 2 ou 3 services à 42 et 52 €, menus de 3, 4, 5 ou 7 Moments de 68 à 130 €, au choix ou en carte blanche.">
+<Base title="La carte" description="La carte de L’Atelier de Bossimé : lunch en 2 ou 3 services à 42 et 52 €, menus de 3, 4, 5 ou 7 Moments de 68 à 130 €, au choix ou en carte blanche.">
   <section class="ph ph--carte" aria-labelledby="carte-titre">
     <div class="wrap ph__grille">
       <h1 id="carte-titre" class="ph__titre">La carte se lit en Moments.</h1>
       <div class="ph__chapo">
-        <p>Un Moment, c'est un plat. Vous en prenez trois, quatre, cinq ou sept, choisis sur le livret remis à table, ou vous laissez la cuisine décider pour vous : c'est la carte blanche, le menu surprise des débuts.</p>
+        <p>Un Moment, c’est un plat. Vous en prenez trois, quatre, cinq ou sept, choisis sur le livret remis à table, ou vous laissez la cuisine décider pour vous : c’est la carte blanche, le menu surprise des débuts.</p>
         <p class="ph__cle"><Accents n={3} id="cle" classe="ph__traits" /> <span>Chaque trait corail compte un Moment ou un service.</span></p>
       </div>
     </div>
@@ -48,7 +48,7 @@ for (const r of carte) for (const l of r.lignes) if (l.photo && !apercus[l.photo
   </div>
   <div class="apercu" aria-hidden="true"><img alt="" width="640" height="400" /></div>
 
-  <section class="avant" aria-labelledby="avant-titre">
+  <section class="avant" data-tone="nuit" aria-labelledby="avant-titre">
     <div class="wrap avant__grille">
       <h2 id="avant-titre" class="avant__titre" data-split="lines">Avant de venir</h2>
       <ul class="avant__liste">

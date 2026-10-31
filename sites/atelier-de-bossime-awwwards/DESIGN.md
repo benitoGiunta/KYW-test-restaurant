@@ -136,7 +136,7 @@ pas de 01/02/03 décoratifs (les chiffres des chapitres sont des années ou des 
 
 Les accents bougent : chaque trait oscille de 1 à 2 degrés autour de son pied, comme une pousse au vent
 (les trois traits du logo ressemblent à trois pousses), et le pointeur donne la direction du vent (±4°). Un
-seul `setProperty('--vent')` par frame sur `<html>` depuis le ticker GSAP (src/motion/accents.ts), à zéro en
+`setProperty("--vent")` par frame sur les seuls groupes d'accents visibles, depuis le ticker GSAP (src/motion/accents.ts), à zéro en
 mouvement réduit, coupé quand l'onglet est caché (le ticker GSAP s'arrête).
 
 ### Plan de composition

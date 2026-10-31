@@ -1,7 +1,7 @@
 ---
 import KywFooter from '@kyw/footer';
 import { u } from '../lib/url';
-import { site, horaires, journee, credits } from '../data/site';
+import { site, credits } from '../data/site';
 import Mot from './Mot.astro';
 ---
 <footer class="pied" data-tone="nuit">
@@ -16,12 +16,14 @@ import Mot from './Mot.astro';
     <div class="pied__bloc">
       <h2 class="pied__titre">Adresse</h2>
       <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune} ({site.adresse.ville})</address>
-      <p><a class="lien" href={site.carteUrl} rel="noopener">Voir sur la carte</a></p>
+      <p><a class="lien lien--seul" href={site.carteUrl} rel="noopener">Voir sur la carte</a></p>
     </div>
     <div class="pied__bloc">
       <h2 class="pied__titre">Horaires</h2>
       <ul class="pied__horaires num">
-        {horaires.map((h) => <li><span>{h.jour}</span> <span>{journee(h)}</span></li>)}
+        <li><span>Lundi au vendredi</span> <span>le midi dès 12&nbsp;h, le soir dès 19&nbsp;h</span></li>
+        <li><span>Samedi</span> <span>le soir dès 19&nbsp;h</span></li>
+        <li><span>Dimanche</span> <span>fermé</span></li>
       </ul>
     </div>
     <div class="pied__bloc">

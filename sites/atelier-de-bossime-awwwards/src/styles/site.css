@@ -55,28 +55,33 @@ strong { font-weight: 500; }
 .btn--clair .btn__aplat { background: var(--c-fg); }
 .btn--ligne { color: inherit; }
 .btn:active .btn__aplat, .btn:focus-visible .btn__aplat { translate: 0 0; }
+.btn:active, .btn:focus-visible { color: var(--c-bg); }
 .btn--ligne:active, .btn--ligne:focus-visible, .btn--clair:active, .btn--clair:focus-visible { color: var(--c-bg); }
 .btn--plein:active, .btn--plein:focus-visible { color: var(--c-fg); }
 [data-tone='nuit'] .btn--ligne:active, [data-tone='nuit'] .btn--ligne:focus-visible { color: var(--c-fg); }
 [data-tone='nuit'] .btn--ligne .btn__aplat { background: var(--c-bg); }
+[data-tone='nuit'] .btn--plein { background: var(--c-bg); color: var(--c-fg); border-color: var(--c-bg); }
+[data-tone='nuit'] .btn--plein .btn__aplat { background: var(--c-fg); }
+[data-tone='nuit'] .btn--plein:active, [data-tone='nuit'] .btn--plein:focus-visible { color: var(--c-bg); }
 @media (hover: hover) {
   .btn:hover .btn__aplat { translate: 0 0; }
-  .btn--ligne:hover, .btn--clair:hover { color: var(--c-bg); }
+  .btn:hover, .btn--ligne:hover, .btn--clair:hover { color: var(--c-bg); }
   .btn--plein:hover { color: var(--c-fg); }
   [data-tone='nuit'] .btn--ligne:hover { color: var(--c-fg); }
+  [data-tone='nuit'] .btn--plein:hover { color: var(--c-bg); }
   .btn--clair:hover { border-color: var(--c-bg); }
 }
 .btn[aria-current='page'] { box-shadow: inset 0 -3px 0 var(--c-accent); }
 
 /* ---------- Liens de navigation : un accent se trace au-dessus du mot ---------- */
 .nl { position: relative; display: inline-block; padding: 0.9em 0.15em 0.35em; font-weight: 500; font-size: var(--t-s); }
-.nl::before {
-  content: ''; position: absolute; right: 0.1em; top: 0.25em; width: 3px; height: 0.62em; border-radius: 2px;
+.nl__accent {
+  position: absolute; right: 0.1em; top: 0.25em; width: 3px; height: 0.62em; border-radius: 2px;
   background: var(--c-accent); rotate: 28deg; transform-origin: 50% 100%; scale: 1 0;
   transition: scale 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-.nl[aria-current='page']::before, .nl:focus-visible::before { scale: 1 1; }
-@media (hover: hover) { .nl:hover::before { scale: 1 1; } .nl:hover { color: var(--c-muted); } }
+.nl[aria-current='page'] .nl__accent, .nl:focus-visible .nl__accent { scale: 1 1; }
+@media (hover: hover) { .nl:hover .nl__accent { scale: 1 1; } .nl:hover { color: var(--c-muted); } }
 [data-tone='nuit'] .nl:hover { color: var(--c-night-muted); }
 
 /* Liens dans le texte : soulignés au repos, le trait s'épaissit en corail */
@@ -156,7 +161,7 @@ html.menu-open .tete { translate: none; }
   display: flex; flex-direction: column; justify-content: center; gap: calc(var(--u) * 2);
 }
 .trois__titre { font-family: var(--f-display); font-weight: 800; font-size: var(--t-l); line-height: 1; letter-spacing: -0.025em; }
-.trois__e { position: relative; font-family: var(--f-display); font-weight: 800; font-size: min(36vw, 64svh); line-height: 0.74; letter-spacing: -0.05em; width: max-content; margin-left: -0.05em; padding-top: 0.42em; }
+.trois__e { position: relative; font-family: var(--f-display); font-weight: 800; font-size: min(36vw, 64svh); line-height: 0.74; letter-spacing: -0.05em; width: max-content; margin-left: -0.05em; padding-top: 0.2em; }
 .trois__lettre { display: block; }
 .trois__accents { position: absolute; left: 0.06em; top: 0.02em; width: 0.6em; }
 .trois__accents path { stroke-width: 7; }
@@ -217,14 +222,15 @@ html.menu-open .tete { translate: none; }
 .pied__titre { font-size: var(--t-xs); font-weight: 500; color: var(--c-night-muted); }
 .pied address { font-style: normal; }
 .pied__horaires, .pied__liens { list-style: none; padding: 0; display: grid; gap: 0.25rem; }
-.pied__horaires { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gutter); }
+.pied__horaires { grid-template-columns: minmax(0, 1fr); }
 .pied__horaires li { display: flex; gap: 0.6em; }
-.pied__horaires li span:first-child { min-width: 5.6em; color: var(--c-night-muted); }
+.pied__horaires li span:first-child { min-width: 9.5em; color: var(--c-night-muted); }
 .pied__liens a { display: inline-flex; min-height: 28px; align-items: center; }
 .pied__mot { padding-block: var(--normal) calc(var(--u) * 2); container-type: inline-size; }
 .mot--pied { font-size: 30.1cqi; line-height: 0.86; letter-spacing: -0.055em; margin-left: -0.045em; }
 .pied__colophon { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem var(--gutter); padding-block: calc(var(--u) * 2) calc(var(--u) * 3); border-top: 1px solid rgb(227 229 222 / 0.18); font-size: var(--t-xs); color: var(--c-night-muted); }
 .pied .lien { color: var(--c-bg); }
+.lien--seul { display: inline-block; padding-block: 0.35em 0.4em; }
 
 /* ---------- Pages intérieures : têtes ---------- */
 .ph { padding-block: calc(var(--u) * 6) var(--serre); }
@@ -235,7 +241,7 @@ html.menu-open .tete { translate: none; }
 .ph__cle { display: flex; align-items: center; gap: 0.9rem; font-size: var(--t-s); color: var(--c-muted); }
 .ph__traits { width: 3.2rem; flex: none; }
 .ph__grille--paire .ph__texte { grid-column: 1 / 6; grid-row: 1; align-self: end; display: grid; gap: calc(var(--u) * 2.4); }
-.ph__grille--paire .ph__titre { max-width: 12ch; }
+.ph__grille--paire .ph__titre { grid-column: auto; max-width: 12ch; }
 .ph__grille--paire .ph__chapo { grid-column: auto; max-width: 34ch; }
 .ph__photo { grid-column: 7 / -1; grid-row: 1; }
 .ph__photo .cadre { aspect-ratio: 16 / 10; }
@@ -385,7 +391,7 @@ html.menu-open .tete { translate: none; }
     padding-block: 0.8rem; background: var(--c-fg); border-bottom: 1px solid rgb(227 229 222 / 0.16);
   }
   .trois__titre { order: 2; font-size: var(--t-m); flex: 1 1 10rem; }
-  .trois__e { order: 1; font-size: 4.8rem; padding-top: 0.42em; }
+  .trois__e { order: 1; font-size: 4.8rem; padding-top: 0.3em; }
   .trois__etat { order: 3; flex-basis: 100%; }
   .trois__intro { grid-column: 1; grid-row: 2; padding-top: var(--serre); }
   .trois__chapitres { grid-column: 1; grid-row: 3; gap: var(--normal); padding-block: var(--serre) var(--normal); }
@@ -410,6 +416,7 @@ html.menu-open .tete { translate: none; }
   .pied__bloc:nth-of-type(4) { grid-column: 4 / -1; grid-row: auto; }
   .pied__bloc:nth-of-type(3) { grid-column: 1 / -1; grid-row: auto; }
   .pied__horaires { grid-template-columns: minmax(0, 1fr); }
+  .pied__bloc:nth-of-type(3) { order: 1; }
 
   .ph__grille { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .ph__titre { grid-column: 1 / -1; }

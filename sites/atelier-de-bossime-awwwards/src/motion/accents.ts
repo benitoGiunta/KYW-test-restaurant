@@ -3,7 +3,7 @@
 //   - en-tête : v = progression de lecture de la page (les accents marquent où vous en êtes) ;
 //   - narration « Trois accents » de l'accueil : v = progression dans les trois chapitres (signature) ;
 //   - hero, pied de page : v passe de 0 à 1 à l'intro ou à l'entrée dans l'écran (les accents se posent d'un trait).
-// Entrée de repos : `--vent` sur <html>, une oscillation lente de 1 à 2 degrés et la direction du pointeur (±4°) :
+// Entrée de repos : `--vent` sur chaque groupe d’accents visible, une oscillation lente de 1 à 2 degrés et la direction du pointeur (±4°) :
 // les trois traits bougent comme trois pousses au vent. Un seul setProperty par frame, sur le ticker GSAP.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -78,13 +78,23 @@ export function startAccents() {
     });
   });
 
-  // 5. Repos : le vent dans les trois pousses.
+  // 5. Repos : le vent dans les trois pousses. Écrit sur les seuls groupes d'accents visibles (pas sur <html> :
+  // un setProperty à la racine recalcule tout le document à chaque frame, trop cher sur un téléphone bridé).
   if (reduit) return;
-  const html = document.documentElement;
+  let visibles = new Set<SVGElement>();
+  onPage(() => {
+    const groupes = [...document.querySelectorAll<SVGElement>('[data-accents]')].filter((g) => g.dataset.accents !== 'rideau');
+    const sts = groupes.map((g) => g.dataset.accents === 'tete'
+      ? (visibles.add(g), null)
+      : ScrollTrigger.create({ trigger: g, start: 'top bottom', end: 'bottom top', onToggle: (st) => (st.isActive ? visibles.add(g) : visibles.delete(g)) }));
+    return () => { sts.forEach((st) => st?.kill()); visibles = new Set(); };
+  });
   let dernier = '';
   gsap.ticker.add(() => {
     const v = Math.sin(idle.t * 0.9) * 1.6 + Math.sin(idle.t * 0.37 + 1.3) * 0.8 + idle.x * 8 + idle.y * 3;
     const s = v.toFixed(2);
-    if (s !== dernier) { html.style.setProperty('--vent', s); dernier = s; }
+    if (s === dernier) return;
+    dernier = s;
+    visibles.forEach((g) => g.style.setProperty('--vent', s));
   });
 }

@@ -1,16 +1,16 @@
-// Contenu de la variante awwwards de L'Atelier de Bossimé. Toute donnée vient de
+// Contenu de la variante awwwards de L’Atelier de Bossimé. Toute donnée vient de
 // data/restaurants/atelier-de-bossime/donnees.json et dossier.md (recherche du 31/10/2026).
 // Hypothèses (listées dans RAPPORT.md) :
 // 1. piliersPlaceholder : la lecture des trois accents (la terre, les gens, la maison) est la nôtre ; le client
 //    dit seulement « un accent par pilier de la durabilité ».
-// 2. emailPlaceholder : info@bossime.be vient de data/restaurants.json, il n'est pas affiché sur le site du client.
+// 2. emailPlaceholder : info@bossime.be vient de data/restaurants.json, il n’est pas affiché sur le site du client.
 // 3. horairesFermeturePlaceholder : les heures de fin (16 h, 23 h 30) viennent du Guide MICHELIN ; le client écrit
 //    « dès 12 h » et « dès 19 h ». Le texte visible suit le client, le JSON-LD suit Michelin.
-// 4. Aucun plat nommé : le livret change à table. Les photos d'assiettes sont des assiettes passées.
-// 5. Aucune photo n'est légendée « Ludovic Vanackere » (portrait non confirmé dans photos/index.json).
+// 4. Aucun plat nommé : le livret change à table. Les photos d’assiettes sont des assiettes passées.
+// 5. Aucune photo n’est légendée « Ludovic Vanackere » (portrait non confirmé dans photos/index.json).
 
 export const site = {
-  nom: "L'Atelier de Bossimé",
+  nom: "L’Atelier de Bossimé",
   nomCourt: 'Bossimé',
   baseline: 'Ferme gastronomique à Loyers, Namur',
   description:
@@ -31,7 +31,7 @@ export const site = {
   },
   reseaux: [{ nom: 'Facebook', url: 'https://www.facebook.com/atelierdebossime/' }],
   devise: 'Remettre la ferme au milieu du village.',
-  deviseBis: "L'exigence de la cuisine, la simplicité de la nature.",
+  deviseBis: "L’exigence de la cuisine, la simplicité de la nature.",
   tva: 'BE 0552.992.842',
 };
 
@@ -68,22 +68,22 @@ export const piliers = [
     cle: 'gens',
     titre: 'Les gens',
     texte:
-      "La cuisine est ouverte sur la salle : vous voyez la brigade dresser chaque assiette. La maison fait de l'emploi de qualité un engagement, au même titre que le bio.",
+      "La cuisine est ouverte sur la salle : vous voyez la brigade dresser chaque assiette. La maison fait de l’emploi de qualité un engagement, au même titre que le bio.",
     photo: 'dressage',
   },
   {
     cle: 'maison',
     titre: 'La maison',
     texte:
-      "La salle occupe l'ancien fenil de la ferme, rénové en matériaux durables. Les contenants sont réutilisables et la maison vise le zéro déchet.",
+      "La salle occupe l’ancien fenil de la ferme, rénové en matériaux durables. Les contenants sont réutilisables et la maison vise le zéro déchet.",
     photo: 'serviceFenil',
   },
 ] as const;
 
-// Repères chiffrés : uniquement des faits sourcés (site du client, L'Avenir 22/01/2024).
+// Repères chiffrés : uniquement des faits sourcés (site du client, L’Avenir 22/01/2024).
 export const reperes = [
-  { valeur: '2011', libelle: "l'ouverture, dans un coin de la ferme familiale" },
-  { valeur: '20', unite: 'ans', libelle: "l'âge du chef Ludovic Vanackere ce jour-là" },
+  { valeur: '2011', libelle: "l’ouverture, dans un coin de la ferme familiale" },
+  { valeur: '20', unite: 'ans', libelle: "l’âge du chef Ludovic Vanackere ce jour-là" },
   { valeur: '8', unite: 'tables', libelle: 'au premier service' },
   { valeur: '45', unite: 'variétés', libelle: 'environ, au potager bio' },
   { valeur: '60', unite: 'places', libelle: 'assises pour un groupe, 120 debout' },
@@ -100,7 +100,7 @@ export const carte: Rubrique[] = [
     lignes: [
       { nom: 'Lunch en 2 services', detail: 'Accueil, puis deux plats au choix sur le livret ou en surprise.', prix: 42, moments: 2, photo: 'platConcombre' },
       { nom: 'Lunch en 3 services', detail: 'Accueil, puis trois plats au choix sur le livret ou en surprise.', prix: 52, moments: 3, photo: 'platVolaille' },
-      { nom: "L'option verre de vin", detail: 'Ou sa version sans alcool, à 10\u00a0€.', prix: 12 },
+      { nom: "L’option verre de vin", detail: 'Ou sa version sans alcool, à 10\u00a0€.', prix: 12 },
       { nom: 'Le chariot de fromages belges', detail: 'Fromages affinés, confits, fruits secs et pain maison.', prix: 16 },
     ],
   },
@@ -120,10 +120,10 @@ export const carte: Rubrique[] = [
     titre: 'À boire',
     intro: 'Le bar fait ses cocktails et ses boissons maison.',
     lignes: [
-      { nom: "L'apéritif au verre", prix: 16, photo: 'cocktailSour' },
+      { nom: "L’apéritif au verre", prix: 16, photo: 'cocktailSour' },
       { nom: 'Le vin au verre', prix: 12 },
       { nom: 'La bière artisanale', prix: 6 },
-      { nom: "L'eau", prix: 12 },
+      { nom: "L’eau", prix: 12 },
       { nom: 'Le café ou le thé', prix: 4 },
       { nom: 'La carte des vins', detail: 'Des bouteilles de 44 à 160 €.', prix: [44, 160] },
     ],
@@ -135,14 +135,14 @@ export const euro = (p: Ligne['prix']) =>
 // Pratique (site du client).
 export const pratique = {
   acces: 'À 35 minutes de Bruxelles, 30 de Charleroi et 40 de Liège.',
-  groupes: "Jusqu'à 60 personnes assises et 120 en dînatoire debout. Dès 10 personnes, la maison peut ouvrir hors des horaires.",
-  pmr: "L'accès compte un escalier de cinq marches, jusqu'aux travaux prévus en 2027.",
+  groupes: "Jusqu’à 60 personnes assises et 120 en dînatoire debout. Dès 10 personnes, la maison peut ouvrir hors des horaires.",
+  pmr: "L’accès compte un escalier de cinq marches, jusqu’aux travaux prévus en 2027.",
   chiens: 'Les chiens sont acceptés.',
   allergies: 'Signalez vos allergies en réservant : la cuisine adapte le menu.',
 };
 
 export const credits = {
-  photos: "photos : L'Atelier de Bossimé",
+  photos: "photos : L’Atelier de Bossimé",
   polices: 'Cabinet Grotesk et General Sans (Indian Type Foundry, Fontshare)',
   outils: 'Astro, GSAP et Lenis',
 };
