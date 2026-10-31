@@ -47,9 +47,11 @@ Ce que l’ancien site faisait mieux : il montrait une assiette dès le premier 
 | --- | --- | --- | --- |
 | Légendes « Tomates, fleur de bourrache, jus vert », « Canard rosé, pain maison », « Poireau grillé, herbes, galette » | /notre-cuisine, trois assiettes (`data-descriptif="true"`) | description de la photo, pas un plat de la carte du moment | le nom réel de chaque assiette |
 | Légende « Volaille, carottes, sauce nappée » | /notre-carte, photo pleine largeur (`data-descriptif="true"`) | description de la photo | le nom du plat |
-| Portrait | /notre-cuisine, « Ouvert à 20 ans » | photo 18, homme en tablier Bossimé, présumé Ludovic Vanackere | confirmer l’identité et légender |
+| Portrait | /notre-cuisine, « Ouvert à 20 ans » | photo 18, homme en tablier Bossimé, présumé Ludovic Vanackere ; alt neutre et légende visible « Portrait, nom à confirmer (illustratif) » | confirmer l’identité et légender |
 | « Eau, volume à confirmer » 12 € | /notre-carte, boissons | libellé d’origine « Eau l » illisible | le volume |
 | Année de fondation 2011 | /notre-cuisine | site d’origine (Mapstr dit 2010) | confirmer |
+| Courriel `info@bossime.be` | pied de toutes les pages, /contactez-nous, message du formulaire | `donnees.json` (vient de restaurants.json, non vu sur le site d’origine) | confirmer l’adresse avant livraison (revue 1, R1-13) |
+| Lunch « Accueil, puis les plats choisis sur le livret » | /notre-carte | la source dit « trois plats » aussi pour la formule 2 services (contradiction) : nombre non repris | le nombre de plats de chaque formule lunch (revue 1, R1-03) |
 Slots texte `.fill` : 0. Aucun avis repris (le bloc E-net 4,84/5 est un module de l’agence). Données non affichées faute de source sûre : heure de fermeture (Michelin seul : 16:00 et 23:30), nombre de producteurs (40 ou 70 selon la page), toques Gault&Millau.
 
 ## Demande de matériel

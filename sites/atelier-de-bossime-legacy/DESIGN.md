@@ -60,7 +60,7 @@ Still (Vellum) : aucun reveal, aucune parallaxe ; survols en `--dur-micro`, redu
   - Slider auto du hero → une photo fixe (18, et le slider n’avait pas de pause).
   - Parallaxe et contenu caché au chargement → aucune animation (62, Vellum still).
   - Trois vignettes « Lire la suite » répétées deux fois → un index de quatre rangs (3, 8, 63).
-  - Quatre valeurs en icônes → les quatre lignes du livre de jour de l’engagement (3, F5).
+  - Quatre valeurs en icônes → les lignes du livre de jour de l’engagement (3, F5), sans numéros : les valeurs n’ont pas d’ordre (revue 1, R1-16).
   - Avis E-net 4,84/5 → retiré (46a : module de l’agence, non vérifiable).
   - Club privé (newsletter) → retiré (85).
   - Carte Leaflet → lien OpenStreetMap aux mêmes coordonnées.
@@ -77,8 +77,8 @@ Vellum, `dealt 1/3, seed restaurant-namur-farm-table-2f10·53eb64c8·2026-10-31�
 | Bouton | Primaire outremer unique, 48 px, huit états (hover, active, focus-visible, disabled, aria-busy), `transition` listée ; libellé verbe « Réserver une table », `nowrap` | patterns.md § Controls, F4, 19, 39b, 49a |
 | Nav | Edge-aligned, 72 px, sticky `--z-sticky-nav`, double filet, liens 600 en casse de phrase, « Réserver » à droite ; sous 60rem un menu Popover ; skip link | layout.md § 7, anatomy book, 42, 56, microinteractions § Menu |
 | La carte | Accueil : Switcher midi/soir (premier panneau visible sans script, flèches). /notre-carte : table ledger (formule, contenu, prix, accord, sans alcool), prix tabulaires, restackée au téléphone avec libellés | patterns.md § switcher, Vellum Range day book, F6, F25 |
-| Horaires | Table midi/soir par jour, « dès 12:00 / dès 19:00 » (heure de fin inconnue), fermé en `--color-muted`, jour courant soulevé en `--color-paper-3` ; une fois par page | layout.md § 5.16, 69, anatomy book |
-| Réservation | Le Zenchef d’origine (rid 367643) chargé à la demande derrière un bouton, lien direct sans script ; téléphone | redesign.md wiring, lecons.md (26a iframe) |
+| Horaires | Table midi/soir par jour, « dès 12 h / dès 19 h » (heure de fin inconnue ; `<time datetime="12:00">` gardé), en-têtes Midi et Soir alignés à droite comme leurs valeurs, fermé en `--color-muted`, jour courant soulevé en `--color-paper-3` ; une fois par page | layout.md § 5.16, 69, anatomy book |
+| Réservation | Le Zenchef d’origine (rid 367643, `primaryColor=2942ab` = `--color-accent`) chargé à la demande derrière un bouton, lien direct sans script ; cadre vide à la hauteur de son texte et de ses boutons, 560 px seulement une fois l’iframe chargée ; téléphone | redesign.md wiring, lecons.md (26a iframe) |
 | Formulaire | Contact : 7 champs d’origine, labels visibles, `autocomplete`, `aria-describedby`, validation au blur puis à l’input, « Rien n’a été envoyé » | patterns.md § A form that posts nowhere yet, 70, 39a, F14 |
 | Pied de page | Colophon : nom en Gotisch, un paragraphe adresse, contacts, TVA, crédits photo, liens réels, liens vers le site actuel ; puis `<KywFooter />` | layout.md § 7, 76, 85 |
 | Photo | `Photo.astro` : `figure[data-slot][data-alt]`, `srcset` WebP 640 à 2000, `width`/`height`, hero `fetchpriority="high"`, autres lazy, traitement warm de base.css | patterns.md § photo, imagery.md |
@@ -167,3 +167,12 @@ Format : `- [x] n. règle · preuve`. Sources : `src/styles/page.css` (PC), sort
 - [x] 70. Surfaces : axe gauche, aucune ombre, z tokens, rayon 2 px ; fibre seule texture, sur deux bandes · PC:103
 - [x] 71. Photos du client d’abord (13, bibliothèque 0), hero LCP `fetchpriority="high"`, traitement warm, texte sur papier (pas sur la photo), légendes = faits · Photo.astro
 - [x] 72. Breakpoints 60rem et 40rem, `(hover: hover)`, tables restackées, `dvh`/`svh`, safe-area sur la barre · PC:304, 329 ; brand-truth : aucune couleur de marque de mémoire ; patterns pris pour leur forme
+
+## Révision 1 (revue 1, 31/10/2026)
+Ce qui a changé dans le design et pourquoi (détail dans `REVISION-1.md`) :
+- **Zenchef** : le module prend l’outremer du site (`primaryColor=2942ab`, rid inchangé) ; le cadre vide ne réserve plus 560 px (REFLEX 79 : 200 px de vide au premier écran) ; `.counter` et la section des étapes se resserrent à `--space-2xl` pour que « Comment se passe la réservation » entre dans le premier écran à 1440×900 (h2 à 585 px).
+- **Drapeau illustratif** : `.illu` (texte `--color-muted`, graisse 400, marge 0,35 em) ajoute « (illustratif) » ou « (légende illustrative) » à chaque donnée non confirmée visible : portrait, eau, légendes d’assiettes. Le portrait passe dans `figure.split__media` (grille 7 / -1) avec sa légende.
+- **Engagement** : la colonne de numéros 1 à 5 est retirée (`.ledger--book .idx` supprimé) ; la séquence 1 à 4 de la réservation reste.
+- **Heures** : « 12 h » et « 19 h » en texte, espace insécable.
+- **Carte** : cellule Accord en `nowrap` (le prix ne se sépare plus de son libellé à 1440).
+- **Gardé tel quel** : palette Vellum outremer et Grenze Gotisch (R1-15, à trancher avec le client).

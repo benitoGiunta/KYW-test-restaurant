@@ -11,12 +11,13 @@ export const resto = {
   telHref: 'tel:+32478137125',
   email: 'info@bossime.be',
   // Le module Zenchef du site d'origine (page réservation, iframe) : même rid, même URL.
-  zenchef: 'https://bookings.zenchef.com/results?rid=367643&lang=fr&primaryColor=0a0a0a',
+  // primaryColor : l'outremer du site (--color-accent) au lieu du noir d'origine (revue 1, R1-05) ; rid inchangé.
+  zenchef: 'https://bookings.zenchef.com/results?rid=367643&lang=fr&primaryColor=2942ab',
   facebook: 'https://www.facebook.com/atelierdebossime/',
   plan: 'https://www.openstreetmap.org/?mlat=50.4548436&mlon=4.9317527#map=16/50.4548436/4.9317527',
   michelin: 'https://guide.michelin.com/be/fr/namur/loyers/restaurant/atelier-de-bossime',
-  tva: 'BE 0552.992.842',
-  rpm: 'RPM Namur 0552 992 842',
+  tva: `BE${n}0552.992.842`,
+  rpm: `RPM${n}Namur${n}0552${n}992${n}842`,
   // Pages du site d'origine que cette maquette ne refait pas : liées telles quelles (câblage conservé).
   enLigne: {
     cheque: 'https://www.atelier-de-bossime.be/page/cheque-cadeau-bon-voucher-restaurant-gastronomique-namur.html',
@@ -53,7 +54,8 @@ export const formules = [
     id: 'onglet_lunch-42-52-47',
     nom: 'Lunch',
     quand: 'Du lundi au vendredi midi',
-    texte: 'Accueil, trois plats à choisir sur le livret ou la surprise. Servi en 60 minutes sur demande.',
+    // La source dit « sélectionner trois plats » aussi pour 2 services : le nombre n'est pas repris (revue 1, R1-03, à confirmer).
+    texte: 'Accueil, puis les plats choisis sur le livret, ou la surprise. Servi en 60 minutes sur demande.',
     prix: [`2 services${n}: 42${n}€`, `3 services${n}: 52${n}€`],
     accord: `Un verre de vin${n}: 12${n}€`,
     sansAlcool: `10${n}€`,
@@ -89,7 +91,7 @@ export const formules = [
     id: 'onglet_menu-7-moments-130-46',
     nom: 'Menu 7 Moments',
     quand: 'Sur pré-réservation, deux jours avant',
-    texte: 'Carte blanche au chef : accueil, mise en bouche puis une suite de créations au rythme des saisons.',
+    texte: `Carte blanche au chef${n}: accueil, mise en bouche puis une suite de créations au rythme des saisons.`,
     prix: [`130${n}€`],
     accord: `Accord mets et vins${n}: 58${n}€`,
     sansAlcool: `46${n}€`,
@@ -105,14 +107,14 @@ export const formules = [
   },
 ];
 
-export const fromages = `Chariot de fromages affinés belges, confits, fruits secs et pain maison${n}: 16${n}€, en option sur chaque formule.`;
+export const fromages = `Chariot de fromages affinés belges, confits, fruits secs et pain maison${n}: 16${n}€, en option sur le lunch et les menus 3, 4 et 5 Moments.`;
 
 export const boissons = [
   { nom: 'Apéritif au verre', prix: `16${n}€` },
   { nom: 'Vin au verre', prix: `12${n}€` },
   { nom: 'Bière artisanale', prix: `6${n}€` },
   // Libellé du site d'origine « Eau l : 12 € » : le volume n'est pas lisible (à confirmer, voir RAPPORT.md).
-  { nom: 'Eau', prix: `12${n}€`, note: 'volume à confirmer' },
+  { nom: 'Eau', prix: `12${n}€`, note: 'volume à confirmer', placeholder: true },
   { nom: 'Café ou thé', prix: `4${n}€` },
   { nom: 'Carte des vins', prix: `de 44 à 160${n}€` },
 ];
