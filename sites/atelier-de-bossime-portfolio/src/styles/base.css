@@ -340,8 +340,9 @@ html[data-mois='9'] [data-secteur-mois='9'], html[data-mois='10'] [data-secteur-
 /* ---- Révision 1 (REVUE-1) ---- */
 /* Roue : 12 vignettes (une par mois, ses deux produits), largeur en cqw : la corde entre deux mois (0,52 × diamètre) reste
    plus grande que la diagonale d'une vignette à toutes les tailles du disque. Le nom encré = de saison au mois du haut. */
-.vig { width: 15cqw; height: auto; margin: 0; padding: 5px 4px; gap: 3px; font-size: max(9px, 1.8cqw); letter-spacing: 0.03em; hyphens: auto;
-  transform: rotate(var(--a)) translateY(-46cqw) rotate(calc(-1 * var(--a) - var(--rot) - var(--derive))) translate(-50%, -50%); } /* 46cqw : dans le bord du disque, sans toucher le titre au-dessus ni les noms de mois */
+/* Taille fixe et centrage par marges (avant transform) : un translate(-50 %) dans la chaîne tournerait avec le disque. */
+.vig { width: 15cqw; height: 11cqw; margin: -5.5cqw 0 0 -7.5cqw; padding: 4px; gap: 2px; align-content: center; font-size: max(9px, 1.8cqw); letter-spacing: 0.03em; hyphens: auto;
+  transform: rotate(var(--a)) translateY(-46cqw) rotate(calc(-1 * var(--a) - var(--rot) - var(--derive))); } /* 46cqw : dans le bord du disque, sans toucher le titre au-dessus ni les noms de mois */
 .vig__nom { display: block; padding: 1px 2px; transition: background 0.3s, color 0.3s; }
 .vig__nom.is-top { background: var(--c-ink); color: var(--c-bg); }
 /* Assiettes de la roue en mobile : liste sous la roue, hors de la scène épinglée. */
