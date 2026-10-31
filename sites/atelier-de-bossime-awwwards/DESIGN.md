@@ -178,4 +178,94 @@ la liste de carte montre ses vignettes en ligne ; menu plein écran par bouton �
 
 ## Sur-utilisation de la skill
 
-(Cochée en fin de phase 4, voir plus bas.)
+Preuves de la passe finale (passe 3) : `.shots/` et `.shots/audit.txt` ; passes 1 et 2 dans `.shots-passe1/`,
+`.shots-passe2/` et `.jury/127.0.0.1-4467/scorecard-{1,2}.md`. Captures non commitées (ignorées par `.gitignore`).
+
+**Concept et direction artistique (concepts.md, art-direction.md)**
+- [x] 1. Trois concepts de trois territoires différents, scorés O/F/Fe/P, avec ancre et test de l'échange : § Concept, tableau.
+- [x] 2. Aucun concept ne ressemble aux exemples travaillés : § Concept, paragraphe « Choix ».
+- [x] 3. Concept Card au format exact, verbe compris : § Concept Card.
+- [x] 4. Le concept survit : pied `home/d-07-scroll` (mot et accents), carte `carte/d-02-scroll` (traits = Moments), réservation `reservation/d-01-hero` (trois façons, un accent chacune), 404 `404/d-01-hero` (mot sans accents, accents tombés).
+- [x] 5. Un seul moment signature : « Trois accents », `src/motion/accents.ts` § 3 (hero sticky patterns.md § 2 + motion.md « Pinned chapters »), captures `home/d-03-scroll`, `home/d-04-scroll`.
+- [x] 6. Palette de 5 rôles nommés, références réelles : § Palette.
+- [x] 7. Défauts d'IA écartés, n° 1 justifié : § Palette, paragraphe « Défaut n° 1 ».
+- [x] 8. Test de généricité fait, changements listés : § Test de généricité.
+- [x] 9. Détails 7→8 : sélection aubergine (`site.css` l. 6), anneau de focus corail (`engine.css` `:focus-visible` sur `--c-accent`, `home/k-02-focus`), favicon des trois accents (`public/favicon.svg`), OG composée (`public/og.png` : mot, accents, assiette), pied de page final, 404 dans le concept.
+
+**Typographie (typography.md)**
+- [x] 10. Cabinet Grotesk (display) + General Sans (texte), Fontshare via `font.mjs`, 4 woff2 auto-hébergés, 2 préchargés (`Base.astro`).
+- [x] 11. Échelle fluide unique dans `tokens.css` (`--t-mega` à `--t-xs`), saut display/texte de 1 à 20.
+- [x] 12. Display : `-0.055em` méga, `-0.035em` xl, interligne 0,86 à 1, marge optique `-0.045em`, `text-wrap: balance` (engine.css), mot en `nowrap` calé par `cqi` (ratio mesuré 3,304 em).
+- [x] 13. Corps 16 à 17 px, interligne 1,5 à 1,55, mesures 34 à 62ch ; UI 13 à 14 px en 500, 0 violation axe.
+- [x] 14. `tabular-nums` sur prix et horaires (`.num`, `.ligne__prix`), U+00A0 dans « 42 € » et « 12 h » (`site.ts`), guillemets « », apostrophes ’.
+
+**Mise en page (layout.md)**
+- [x] 15. Grille 12 colonnes, lignes fortes colonnes 1, 5 (ou 7) et 9 ; en-tête deux coins + action, sans cadre fixe aux quatre coins (restaurant : l'en-tête suffit et s'écarte au défilement).
+- [x] 16. Familles de section uniques par page (accueil : poster, statement, narration collante, données, mur, média pleine largeur, pied) ; humeurs `--serre`, `--normal`, `--aere`, plein écran.
+- [x] 17. Hero : nom, « ferme gastronomique », Réserver et La carte en un écran (`home/d-01-hero`, `home/m-01-hero`).
+- [x] 18. Mobile recomposé : mot à 30cqi sur une ligne, grille 6 colonnes en lignes `auto`, bande collante du é, vignettes en ligne sur la carte (`home/m-*`, `carte/m-*`).
+- [x] 19. Menu mobile : `aria-expanded`, plein écran, focus piégé, Échap ferme, focus rendu (vérifié par script : `verif.mjs`, sortie dans RAPPORT.md).
+
+**Engine et continuité (engine.md, astro.md, patterns.md)**
+- [x] 20. Engine copié verbatim (diff nul hors lignes GL retirées et `lines,words,chars` de lecons.md), `astro.ts`, `#curtain` en `transition:persist`, `<html transition:animate="none">`.
+- [x] 21. Une horloge : `grep -rn "addEventListener('scroll'\|requestAnimationFrame" src/` ne renvoie que l'engine (aucun dans `src/motion`).
+- [x] 22. Tout code de page dans `onPage()` avec nettoyage (`accents.ts`, `biais.ts`, `carte.ts`, `menu.ts`).
+- [x] 23. Pas de CSS `transform` sur un élément animé par GSAP : rideau sans transform CSS, aplat des boutons en `transform` statique non animé par GSAP (transition CSS sur `translate`), aperçu de carte en `translate`.
+- [x] 24. Module pilote `src/motion/accents.ts` : une règle `clamp(v × 3 − i)` pour tous les porteurs, repos `--vent` (`startIdle`, pointeur ±4°).
+- [x] 25. Loader : non, décision écrite (Concept Card « Théâtre ») ; `loaderMs` null.
+- [x] 26. Transition « un trait en biais » via `setTransition` (0,75 + 0,85 s), captures `home/d-90-transition-*`.
+- [x] 27. Intro du hero : les accents se posent (timeline `intro`), mot et photo peints au premier rendu (LCP).
+- [x] 28. Signature en hero sticky (patterns.md § 2), ScrollTrigger `scrub` avec `invalidateOnRefresh`.
+- [x] 29. Repli statique : sans `.motion`, les accents valent 1 (posés), aucune révélation masquée (`home/r-01-hero`, `home/r-02-mid`).
+- [x] 30. Copies décoratives (`Mot.astro`) en `aria-hidden`, hors des titres lisibles (texte réel en `sr-only`) ; audit sans titre dupliqué.
+
+**Mouvement et hover (motion.md, art-direction.md)**
+- [x] 31. `ease.out`, `ease.inOut`, `ease.soft` de l'engine ; durées du tableau Timing ; décalage 60 à 80 ms (`repere` 0,06 s, `facon` 0,08 s).
+- [x] 32. Trois traitements : aplat incliné (CTA), accent tracé (nav et liens de rubrique), traits redressés + aperçu (lignes de carte) ; liens de texte soulignés.
+- [x] 33. `:hover` sous `@media (hover: hover)`, mêmes états sur `:focus-visible`, aplat immédiat en mouvement réduit.
+- [x] 34. Liens dans le texte soulignés au repos (`.lien`).
+- [x] 35. `hover.noHoverChange` vide sur les 6 rapports ; paires lues (scorecard-1 et 2) ; `covered` de la marque vérifié à la main (en-tête escamoté pendant le test, clic réel OK après remontée).
+- [x] 36. Repos : `--vent` (pousses au vent), `desktop.idleMotion` dans `.shots/*/report.json`.
+- [x] 37. Curseur natif conservé, aucun follower ; rien ne dépend du survol au toucher (vignettes de carte en ligne).
+- [x] 38. Aucun `filter: blur()` animé, pas de `box-shadow` au défilement, pas de `will-change` global.
+- [x] 39. Mouvement réduit : Lenis coupé (engine), pas de scrub ni de vent, contenu visible (`reduced.hiddenText` 0, `moving` false).
+
+**WebGL (webgl.md)**
+- [x] 40. Sans objet, décision écrite (Concept Card « Théâtre ») ; lignes `// GL` retirées d'`index.ts`.
+- [x] 41. Sans objet (pas de GL).
+
+**Sémantique, SEO, accessibilité**
+- [x] 42. `lang="fr"`, un `<h1>` par page, titres ordonnés, landmarks, listes en listes (horaires, carte, repères), boutons pour le menu.
+- [x] 43. Titres et descriptions uniques, canonical, OG, `twitter:card`, favicon, sitemap lié, JSON-LD `Restaurant` (`Base.astro`).
+- [x] 44. Lien d'évitement premier arrêt (`keyboard.stops[0]` = « Aller au contenu » ; `skipLinkFirst: false` est le faux négatif connu de lecons.md), `noVisibleFocus` et `invisibleFocus` vides.
+- [x] 45. Contraste : 0 violation axe, `contrastNeedsReview` lus sur les captures (texte grès sur aubergine 13,4:1, scrim de la façade).
+- [x] 46. Texte réel partout (SplitText), aucun canvas.
+- [x] 47. Cibles : `smallTargets` vide sur toutes les pages (passes 2 et 3), CTA à 44 / 48 px.
+- [x] 48. `<Picture>` AVIF/WebP avec dimensions, hero `fetchpriority="high"`, reste `lazy`, alt descriptifs, vignettes de carte `alt=""`.
+
+**Performance**
+- [x] 49. LCP mobile 1,08 à 1,25 s (texte du mot ou `<img>`).
+- [x] 50. CLS 0 partout ; `font-display: swap` + préchargement.
+- [x] 51. JS 61 Ko gz, page la plus lourde ≈ 688 Ko, images < 500 Ko, woff2 seulement (ligne « heaviest page » de l'audit).
+- [x] 52. `settledMs` non null (≈ 2,4 à 2,6 s desktop) ; `scrollFps` 60 desktop et mobile.
+
+**Copy et contenu**
+- [x] 53. 0 « em/en dash » dans l'audit.
+- [x] 54. 0 « filler », 0 « cliche », 0 « sentence repeated » (passe 2 et 3) ; aucun « survolez ».
+- [x] 55. Français, accroche de 17 mots, « Réserver » pour l'action sur tout le site.
+- [x] 56. Données réelles ; compléments et lectures marqués dans `site.ts` (`piliersPlaceholder`, `emailPlaceholder`, `horairesFermeturePlaceholder`) et listés dans RAPPORT.md ; 0 placeholder détecté.
+- [x] 57. Crédit « photos : L'Atelier de Bossimé » et colophon (polices, Astro, GSAP, Lenis) dans le pied.
+
+**Contraintes KYW**
+- [x] 58. `grep -L 'name="robots"'` sur le build : vide.
+- [x] 59. `KywFooter` sur toutes les pages (un logo, mention rendue), non listé dans `noHoverChange`.
+- [x] 60. Liens, polices, favicon, OG et sitemap sous `BASE_URL` ; `failed` vide sur toutes les pages (hors document 404 attendu).
+
+**QA et jury**
+- [x] 61. Trois passes complètes (crawl + pages + audit). Critique : **auto-notation**, faute d'outil de sous-agent ; noté sur chaque carte et dans RAPPORT.md.
+- [x] 62. La lecture de l'idée sur les captures concorde avec la Concept Card (scorecard-2, scorecard final).
+- [x] 63. Scores ≥ 8 sauf écarts justifiés dans RAPPORT.md ; accessoire retiré : le zoom d'entrée de la photo du hero.
+
+### Décisions écrites
+- En-tête : pas de cadre fixe aux quatre coins ; un en-tête collant qui s'écarte au défilement vers le bas et revient en remontant.
+- WARN audit « no sitemap » : l'audit sonde la racine de l'origine ; le sitemap est `/atelier-de-bossime/awwwards/sitemap-index.xml`, lié depuis `<head>`. Le `robots.txt` partagé et le `meta robots noindex` couvrent l'indexation.

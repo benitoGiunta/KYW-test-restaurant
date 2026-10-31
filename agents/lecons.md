@@ -120,3 +120,30 @@ Chaque agent qui rencontre un problème de méthode, d'outillage ou un piège r�
 - 2026-10-31 variante-legacy atelier-de-bossime : une barre de réservation fixe au téléphone + le primaire du hero = deux « Réserver une table » remplis empilés dans le premier écran, que sloplint F4 ne voit pas (il compare des recettes CSS) → masquer le primaire du hero sous 40rem ; et un onglet de Switcher « sélectionné = rempli » déclenche F4 → le cercler (`box-shadow: inset`) au lieu de le remplir.
 - 2026-10-31 variante-legacy atelier-de-bossime : une table ledger restackée en blocs au téléphone (`thead` masqué) laisse des cellules chiffrées sans sens (« 27 € ») → `data-label` sur les `td` et `::before { content: attr(data-label) }` sous 40rem ; des `style="grid-column: …"` en ligne dans les pages échappent au reset mobile (FAIL 34 à 375) → toujours des classes.
 - 2026-10-31 variante-legacy atelier-de-bossime : les onglets de la carte E-net portent des ancres `#onglet_<slug>-<id>` (dans `before.json`) : garder ces `id` sur les lignes de la nouvelle carte conserve le câblage ; les prix complets des onglets (accords, menu jeune gastronome) ne sont que dans le HTML sauvegardé, pas dans `infos.json` ni `donnees.json` → extraire les panneaux `id="onglet_*"` du `page.html` avant d'écrire la carte.
+
+## 2026-10-31 · atelier-de-bossime · variante awwwards
+- **Symptôme** : `mobile.scrollFps` à 33 (accueil 47, carte 23) alors que le desktop tenait 60.
+- **Cause** : l'entrée de repos écrivait une variable CSS (`--vent`) sur `<html>` à chaque frame du ticker : tout le document est restylé à chaque image, ruineux sur le téléphone bridé (CPU ×4).
+- **Correction appliquée** : la variable est écrite sur les seuls éléments porteurs visibles (ensemble tenu par un `IntersectionObserver` dans `onPage`) ; FPS mobile 60 sur les 5 pages.
+- **À faire par le prochain agent** : jamais de `setProperty` par frame sur `<html>` ou `<body>` ; viser l'élément porteur. Et pour tenir l'ensemble « visibles », `IntersectionObserver` plutôt que `ScrollTrigger.onToggle` : un déclencheur déjà dans l'écran à sa création n'a pas appelé `onToggle`, d'où `idleMotion: false` sur 4 pages sur 6.
+- **Symptôme** : `keyboard.stuck: true` sur l'accueil, et le lien « Lire l'histoire » absent de l'ordre de tabulation.
+- **Cause** : `shoot.mjs` compte les arrêts consécutifs de même libellé sans jamais remettre le compteur à zéro (« Réserver » de l'en-tête puis du hero, « La carte et les prix » du hero puis du mur = 2 → `stuck`) ; et un lien dans un bloc `data-reveal` reste `visibility: hidden`, donc hors tabulation, tant qu'il n'est pas révélé.
+- **Correction appliquée** : libellé du second bouton changé (« Voir la carte »), `data-reveal` retiré du paragraphe qui porte un lien.
+- **À faire par le prochain agent** : pas de deux liens consécutifs au même libellé ; jamais de `data-reveal` sur un bloc qui contient un lien ou un bouton.
+- **Symptôme** : `hover.covered` sur la marque de l'en-tête à chaque passe.
+- **Cause** : l'en-tête s'écarte au défilement vers le bas (`frame-away`) ; le test de survol de `shoot.mjs` vise l'en-tête après avoir défilé vers d'autres cibles, l'en-tête est alors escamoté.
+- **Correction appliquée** : aucune sur le site ; vérifié par script (défilement bas puis haut : `frame-away` retiré, `elementFromPoint` touche la marque).
+- **À faire par le prochain agent** : un `covered` sur un en-tête qui s'écarte se tranche par un défilement inverse réel, pas par une correction.
+- **Symptôme** : chapô du hero de la page histoire en colonne de 150 px à 1440.
+- **Cause** : un titre en `grid-column: 1 / 10` placé dans un conteneur `display: grid` sans colonnes crée dix colonnes implicites ; le chapô voisin tombe dans la première.
+- **Correction appliquée** : `grid-column: auto` sur les enfants quand le bloc est réutilisé dans un sous-conteneur.
+- **À faire par le prochain agent** : mesurer la largeur des paragraphes du hero de chaque page intérieure dans le mini-script d'avant shoot.
+- **Symptôme** : `dist/<slug>/awwwards/` à 18 Mo.
+- **Cause** : `<Picture formats={['avif','webp']}>` génère aussi un repli JPG par largeur (format d'origine).
+- **Correction appliquée** : `fallbackFormat="webp"` (12 Mo).
+- **À faire par le prochain agent** : toujours `fallbackFormat="webp"` sur `<Picture>`.
+- **Symptôme** : critique jury non indépendant.
+- **Cause** : pas d'outil `Agent` ni `Task` dans la session de l'agent.
+- **Correction appliquée** : auto-notation marquée comme telle sur chaque carte et dans RAPPORT.md.
+- **À faire par le prochain agent** : le superviseur doit ajouter `Agent` aux outils de `variante-awwwards` (déjà signalé par d'autres rôles).
+- 2026-10-31 relecteur-site atelier-de-bossime portfolio (passe 1) : un RAPPORT qui annonce « CLS 0,105 → 0,0001 » et « LCP ferme 200 ms » se contrôle à 390 px sous CPU ×4 + 4G lente (`PerformanceObserver('layout-shift')` avec `sources`, deux passes en série) : le CLS de /saisons/ restait à 0,1415 (bascule de l'italique non préchargée à 2,77 s) et le LCP de /ferme/ à 2,74 s ; un shoot lancé pendant qu'un autre Chromium tourne gonfle le LCP desktop (carte 2 644 ms dans le shoot, 104 ms en série) ; une image dans un cadre carré peut mesurer 204 px dans 240 px (bande beige persistante en mobile, `shoot.mjs` et axe ne la voient pas) : comparer `getBoundingClientRect().width` de chaque `<img>` à celui de son parent après défilement complet ; un disque de roue `width: min(90vw, …)` dans une grille à une colonne reste collé à gauche (left 0, right 351 pour 390) : mesurer `left`/`right` du disque ; les heros à h1 empilé sur 3-4 lignes (130 px) poussent l'accroche et les boutons de la 404 sous le pli à 1440×900 et 1280×720 : mesurer le bas du h1 par page ; `.exemple` sans marge colle les mentions « à confirmer » au texte (« VERTSAISON INDICATIVE »). Fichiers temporaires `rp1-*` dans le scratchpad, serveur 4571 arrêté par son script, 4572 par `kill <PID noté>`.
