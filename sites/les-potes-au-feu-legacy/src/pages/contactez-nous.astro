@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+---
+<Base
+  page="contactez-nous"
+  title="Contact, Les Potes au Feu à Namur"
+  description="Adresse, téléphone et heures d’ouverture des Potes au Feu, avenue de la Plante 4 à Namur ; privatisation possible le samedi."
+>
+  <section class="banner banner--split" aria-labelledby="page-titre">
+    <div class="container">
+      <div class="banner__head">
+        <h1 id="page-titre">Contactez-nous</h1>
+        <p class="lead">Pour plus d’informations, une privatisation le samedi ou une remarque : écrivez-nous.</p>
+      </div>
+      <Photo nom="11-salle-ampoules" largeurs={[640, 1140]} w={1140} h={642} slot="banner-contact"
+        alt="Ampoules à filament suspendues devant une étagère en bois, murs sombres" sizes="(min-width: 90rem) 1312px, 100vw" priorite />
+    </div>
+  </section>
+
+  <section class="contact section" aria-label="Formulaire et coordonnées">
+    <div class="container contact__grid">
+      <form class="form" data-endpoint="" novalidate aria-label="Écrire au restaurant">
+        <div class="field">
+          <label for="field_objet">Objet</label>
+          <select id="field_objet" name="objet">
+            <option value="1. Demande d'infos / Devis">Demande d’infos ou devis</option>
+            <option value="2. Réclamation / Plainte">Réclamation ou plainte</option>
+            <option value="3. Autres">Autre</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="field_civilite">Civilité</label>
+          <select id="field_civilite" name="civilite">
+            <option value="Monsieur">Monsieur</option>
+            <option value="Madame">Madame</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="field_nom">Nom</label>
+          <input id="field_nom" name="nom" type="text" autocomplete="family-name" required aria-describedby="field_nom-aide" data-erreur="Indiquez votre nom." />
+          <p class="field__help" id="field_nom-aide" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="field_prenom">Prénom</label>
+          <input id="field_prenom" name="prenom" type="text" autocomplete="given-name" required aria-describedby="field_prenom-aide" data-erreur="Indiquez votre prénom." />
+          <p class="field__help" id="field_prenom-aide" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="field_email">Adresse e-mail</label>
+          <input id="field_email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="nom@exemple.be" required aria-describedby="field_email-aide" data-erreur="Cette adresse semble incomplète : écrivez-la comme nom@exemple.be." />
+          <p class="field__help" id="field_email-aide" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="field_telephone">Téléphone</label>
+          <input id="field_telephone" name="telephone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+32 470 12 34 56" aria-describedby="field_telephone-aide" />
+          <p class="field__help" id="field_telephone-aide" aria-live="polite"></p>
+        </div>
+        <div class="field field--wide">
+          <label for="field_message">Message</label>
+          <textarea id="field_message" name="message" rows="5" required aria-describedby="field_message-aide" data-erreur="Écrivez votre message."></textarea>
+          <p class="field__help" id="field_message-aide" aria-live="polite"></p>
+        </div>
+        <div class="form__end">
+          <button class="btn" type="submit">Envoyer le message</button>
+          <p class="form__status" data-status aria-live="polite"></p>
+        </div>
+      </form>
+      <aside class="contact__aside">
+        <div>
+          <h2>Les potes au feu</h2>
+          <address class="contact__address">
+            <a href={resto.plan}>{resto.adresse.rue}<br />{resto.adresse.ville}</a><br />
+            <a href={resto.telHref}>{resto.telAffiche}</a>
+          </address>
+        </div>
+        <div id="horaire-contact">
+          <h2>Heures d’ouverture</h2>
+          <Horaires compact />
+          <p class="small">Le samedi : possibilité de privatisation du restaurant, mariage, chef à domicile.</p>
+        </div>
+        <p class="legal">TVA {resto.tva}, RPM Namur 0741.540.749, {resto.societe}.</p>
+      </aside>
+    </div>
+  </section>
+</Base>

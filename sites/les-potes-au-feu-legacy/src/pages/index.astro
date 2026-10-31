@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Cloture from '../components/Cloture.astro';
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base
+  page="accueil"
+  title="Les Potes au Feu, restaurant bistronomique à Namur"
+  description="Damien Gorjanec et François Schepens ont créé à Namur un restaurant basé sur les produits frais et de saison, et sur une ambiance conviviale."
+>
+  <section class="hero" aria-labelledby="hero-titre">
+    <div class="hero__diptych">
+      <Photo nom="02-chef-francois" largeurs={[640, 1280]} w={1280} h={1706} slot="hero-francois"
+        alt="François Schepens en cuisine, tablier noir, sous la hotte rouge" sizes="(min-width: 60rem) 50vw, 50vw" position="50% 12%" priorite />
+      <Photo nom="01-chef-damien" largeurs={[640, 1280]} w={1280} h={1706} slot="hero-damien"
+        alt="Damien Gorjanec en cuisine, tablier noir, sous la hotte rouge" sizes="(min-width: 60rem) 50vw, 50vw" position="50% 12%" priorite />
+    </div>
+    <div class="container hero__frame">
+      <div class="hero__well well">
+        <h1 id="hero-titre">L’histoire d’une rencontre</h1>
+        <div class="hero__aside">
+        <p class="lead">Deux Potes, une cuisine bistronomique à quatre mains, un menu à 67&nbsp;€.</p>
+        <div class="actions">
+          <a class="btn" href={`${base}reservation-en-ligne/`}>Réserver une table</a>
+          <a class="link-action" href={`${base}le-menu-des-potes/`}>Le menu des potes</a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="split section" aria-labelledby="potes-titre">
+    <div class="container split__grid">
+      <div class="split__text">
+        <h2 id="potes-titre">Comme des Potes</h2>
+        <p class="lead">Une carte pensée et réalisée à quatre mains, des aliments frais et des échanges autour de l’assiette.</p>
+        <p>François et Damien vous accueillent comme des Potes, accompagnent leurs plats jusqu’à votre table, épaulés par la pétillante Sara et Jordan, pour vous faire passer un agréable moment.</p>
+        <a class="link-action" href={`${base}les-potes-au-feu/`}>Lire l’histoire des Potes</a>
+      </div>
+      <div class="split__proof">
+        <Photo nom="03-equipe-trio" largeurs={[640, 800]} w={800} h={725} slot="potes"
+          alt="Damien, François et une membre de l’équipe riant sur la banquette, table en chêne" sizes="(min-width: 60rem) 50vw, 100vw" />
+        <p class="caption">Sur la banquette de la salle, avenue de la Plante.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="statement band band--ink" aria-labelledby="moment-titre">
+    <div class="container statement__grid">
+      <h2 id="moment-titre">Un vrai moment de cuisine</h2>
+      <div class="statement__body">
+        <p class="statement__line">Des produits locaux et de saison, une carte soignée, une atmosphère généreuse et propice à la rencontre… pour un véritable moment culinaire.</p>
+        <p>Le restaurant est pensé comme un lieu convivial et chaleureux au service d’une cuisine bistronomique actuelle.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="showcase section" aria-labelledby="video-titre">
+    <div class="container">
+      <div class="showcase__head">
+        <h2 id="video-titre">Notre concept en vidéo</h2>
+        <p>L’aftermovie « Alfonse, Les potes au feu » se regarde sur la chaîne YouTube du restaurant.</p>
+      </div>
+      <a class="showcase__link" href={resto.video}>
+        <Photo nom="17-cuisine-chefs-dressage" largeurs={[640, 1140]} w={1140} h={642} slot="video"
+          alt="Les deux chefs concentrés au dressage, sous les lampes chauffantes" sizes="(min-width: 90rem) 1312px, 100vw" position="50% 45%" />
+        <span class="showcase__cta"><svg class="showcase__play" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z" fill="currentColor"/></svg>Regarder l’aftermovie sur YouTube</span>
+      </a>
+      <p class="caption">Au passe, les deux chefs dressent les assiettes du soir.</p>
+    </div>
+  </section>
+
+  <section class="pillars section" aria-label="Nos trois piliers">
+    <div class="container">
+      <ul class="rows">
+        <li class="rows__item">
+          <h2 class="rows__title">Home made</h2>
+          <p>Une cuisine à quatre mains, faite ici, dans la cuisine ouverte sur la salle.</p>
+        </li>
+        <li class="rows__item">
+          <h2 class="rows__title">Produits des saisons</h2>
+          <p>Les producteurs du coin fournissent les produits frais ; le menu suit leurs saisons.</p>
+        </li>
+        <li class="rows__item">
+          <h2 class="rows__title">Rencontre et convivialité</h2>
+          <p>Les chefs servent eux-mêmes leurs plats et expliquent leur démarche à table.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <Cloture />
+</Base>

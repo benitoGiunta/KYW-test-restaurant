@@ -1,0 +1,17 @@
+---
+import { horaires } from '../data/site';
+interface Props { id?: string; compact?: boolean }
+const { id, compact = false } = Astro.props;
+---
+<dl class:list={['schedule', { 'schedule--compact': compact }]} id={id}>
+  {horaires.map((d) => (
+    <div class="schedule__row" data-jour={d.jour}>
+      <dt>{d.nom}</dt>
+      <dd>
+        {d.services.length
+          ? d.services.map((s) => <span class="schedule__slot num">{s}</span>)
+          : <span class="schedule__closed">Fermé{d.note ? `, ${d.note}` : ''}</span>}
+      </dd>
+    </div>
+  ))}
+</dl>

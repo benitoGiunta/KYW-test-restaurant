@@ -1,0 +1,34 @@
+---
+import { nav, resto } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const gauche = nav.slice(0, 2);
+const droite = nav.slice(2);
+const current = (href: string) => (href === '' ? page === 'accueil' : href.startsWith(page)) ? 'page' : undefined;
+---
+<header class="masthead">
+  <nav class="masthead__bar container" aria-label="Navigation principale">
+    <ul class="masthead__links masthead__links--left">
+      {gauche.map((l) => <li><a href={`${base}${l.href}`} aria-current={current(l.href)}>{l.label}</a></li>)}
+    </ul>
+    <a class="masthead__logo" href={base} aria-label="Les Potes au Feu, accueil">
+      <img src={`${base}photos/logo.png`} width="425" height="279" alt="" />
+    </a>
+    <div class="masthead__right">
+      <ul class="masthead__links">
+        {droite.map((l) => <li><a href={`${base}${l.href}`} aria-current={current(l.href)}>{l.label}</a></li>)}
+      </ul>
+      <a class="btn btn--nav" href={`${base}reservation-en-ligne/`} aria-current={page === 'reservation-en-ligne' ? 'page' : undefined}>Réserver</a>
+      <button class="masthead__menu" type="button" popovertarget="menu-mobile" aria-label="Ouvrir le menu">Menu</button>
+    </div>
+  </nav>
+  <div id="menu-mobile" class="menu-mobile" popover>
+    <ul>
+      {nav.map((l) => <li><a href={`${base}${l.href}`} aria-current={current(l.href)}>{l.label}</a></li>)}
+      <li><a href={`${base}reservation-en-ligne/`}>Réservation en ligne</a></li>
+      <li><a href={resto.telHref}>Appeler le {resto.telAffiche}</a></li>
+    </ul>
+    <button class="btn btn--quiet" type="button" popovertarget="menu-mobile" popovertargetaction="hide">Fermer</button>
+  </div>
+</header>

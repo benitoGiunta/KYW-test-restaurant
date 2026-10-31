@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Cloture from '../components/Cloture.astro';
+const galerie = [
+  { nom: '19-cuisine-chefs-passe', alt: 'Les deux chefs au passe sous les lampes chauffantes', legende: 'Au passe, le dressage à quatre mains.' },
+  { nom: '21-service-francois-table', alt: 'François verse une sauce à table devant une cliente', legende: 'François termine l’assiette à table.' },
+  { nom: '12-salle-clients-bar', alt: 'Clients attablés au bar sous les ampoules, Damien en salle', legende: 'Le bar et la salle, le soir.' },
+  { nom: '14-cuisine-francois-poele', alt: 'François poêle en main, Damien penché au premier plan', legende: 'La cuisine est ouverte sur la salle.' },
+  { nom: '13-bar-cocktails-sara', alt: 'Deux cocktails rouges dosés au bar', legende: 'Les cocktails se préparent au bar.' },
+  { nom: '15-service-sara-planche', alt: 'Une planche de viande portée vers la salle', legende: 'Le service, de la cuisine à la table.' },
+  { nom: '16-cuisine-salage-viande', alt: 'Une main sale une pièce de viande tranchée', legende: 'Le geste juste avant l’envoi.' },
+  { nom: '20-service-sauce-table', alt: 'Une sauce versée à la cuillère sur un plat, un verre de rosé', legende: 'La sauce se verse devant vous.' },
+];
+---
+<Base
+  page="les-potes-au-feu"
+  title="L’histoire des Potes au Feu, Namur"
+  description="François Schepens et Damien Gorjanec, deux amis de cuisine, ont ouvert Les Potes au Feu à Namur : une cuisine bistronomique à quatre mains."
+>
+  <section class="banner" aria-labelledby="page-titre">
+    <div class="container">
+      <div class="banner__head">
+        <h1 id="page-titre">Les potes au feu</h1>
+        <p class="lead">L’histoire d’une rencontre, celle de deux Potes passionnés.</p>
+      </div>
+      <Photo nom="08-salle-bar-table-haute" largeurs={[640, 1280, 1600]} w={1600} h={416} slot="banner-salle"
+        alt="La salle : bar vert sombre, table haute en chêne dressée, tabourets blancs, la cuisine au fond" sizes="(min-width: 90rem) 1312px, 100vw" priorite />
+    </div>
+  </section>
+
+  <section class="story section section--top0" aria-label="Notre histoire">
+    <div class="container">
+      <div class="story__item">
+        <h2>Une rencontre</h2>
+        <p>François et Damien aiguisent leurs premiers couteaux au restaurant « la Plage d’Amée », à Namur. Deux gamins pleins d’envie, le début d’une amitié.</p>
+      </div>
+      <div class="story__item">
+        <h2>Deux parcours</h2>
+        <p>François continue ses classes aux États-Unis et à Montréal ; Damien se fait une place en Belgique et cumule des expériences à l’étranger, notamment à Shanghai. À chaque retrouvaille, autour d’un verre, le rêve d’ouvrir un restaurant se dessine.</p>
+      </div>
+      <div class="story__item">
+        <h2>Un lieu</h2>
+        <p>Début de l’hiver 2019, installés par hasard à une table de ce lieu, ils ne savent pas encore que c’est là qu’ils ouvriront leur premier restaurant. Trois mois plus tard, ils ont entre leurs mains les clés de l’établissement.</p>
+      </div>
+      <div class="story__item">
+        <h2>Le concept</h2>
+        <p>Une cuisine bistronomique à quatre mains, de qualité, avec un ancrage local. Et un mot d’ordre : le plaisir. Les Potes créent le lien à table, en servant eux-mêmes leurs plats et en expliquant leur démarche.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="rail-section section" aria-labelledby="galerie-titre">
+    <div class="container rail-section__head">
+      <h2 id="galerie-titre">Notre concept en images</h2>
+    </div>
+    <ul class="rail" tabindex="0" aria-label="Galerie, faites défiler">
+      {galerie.map((p) => (
+        <li>
+          <Photo nom={p.nom} largeurs={[640, 1140]} w={1140} h={642} slot={`galerie-${p.nom}`} alt={p.alt} sizes="(min-width: 60rem) 30vw, 82vw" />
+          <p class="caption">{p.legende}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <Cloture />
+</Base>

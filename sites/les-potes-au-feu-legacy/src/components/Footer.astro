@@ -1,0 +1,36 @@
+---
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <a class="site-footer__logo" href={base} aria-label="Les Potes au Feu, accueil">
+      <img src={`${base}photos/logo.png`} width="425" height="279" alt="" loading="lazy" />
+    </a>
+    <div class="site-footer__col">
+      <h2 class="site-footer__head">Menu principal</h2>
+      <ul>
+        <li><a href={base}>Accueil</a></li>
+        <li><a href={`${base}les-potes-au-feu/`}>Les potes au feu</a></li>
+        <li><a href={`${base}le-menu-des-potes/`}>Le menu des potes</a></li>
+        <li><a href={`${base}contactez-nous/`}>Contactez-nous</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__col">
+      <h2 class="site-footer__head">Nos services en ligne</h2>
+      <ul>
+        <li><a href={`${base}reservation-en-ligne/`}>Réservation en ligne</a></li>
+        <li><a href={resto.bonCadeau}>Bon cadeau en ligne</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__col">
+      <h2 class="site-footer__head">Nous trouver</h2>
+      <address>
+        <a href={resto.plan}>{resto.adresse.rue}<br />{resto.adresse.ville}</a><br />
+        <a href={resto.telHref}>{resto.telAffiche}</a>
+      </address>
+      <p><a href={resto.facebook}>Rejoignez-nous sur Facebook</a></p>
+    </div>
+  </div>
+  <p class="container site-footer__legal">© 2026 Les Potes au Feu, {resto.societe}, TVA {resto.tva}, RPM Namur. Photographies : Les Potes au Feu et Guide MICHELIN.</p>
+</footer>

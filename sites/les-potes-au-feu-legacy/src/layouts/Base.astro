@@ -1,0 +1,85 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import KywFooter from '@kyw/footer';
+interface Props { title: string; description: string; page: string }
+const { title, description, page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f3e9d9" />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@600&display=swap" rel="stylesheet" />
+    <style is:global>
+      @import "../styles/page.css";
+    </style>
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Nav page={page} />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
+document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+    <script>
+      // Jour courant dans les horaires (le rang du jour se soulève d'un cran de surface).
+      const j = new Date().getDay();
+      document.querySelectorAll<HTMLElement>('[data-jour]').forEach((el) => {
+        if (Number(el.dataset.jour) === j) { el.classList.add('is-today'); el.setAttribute('aria-current', 'date'); }
+      });
+      // Switcher de la carte : flèches gauche/droite, sans script tous les panneaux se lisent.
+      document.querySelectorAll<HTMLElement>('[data-switch]').forEach((sw) => {
+        const tabs = [...sw.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+        const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls') || ''));
+        const select = (i: number, focus = false) => {
+          tabs.forEach((t, k) => { const on = k === i; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; if (panels[k]) panels[k]!.hidden = !on; });
+          if (focus) tabs[i].focus();
+        };
+        sw.classList.add('is-ready');
+        select(0);
+        tabs.forEach((t, i) => {
+          t.addEventListener('click', () => select(i));
+          t.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') { e.preventDefault(); select((i + 1) % tabs.length, true); }
+            if (e.key === 'ArrowLeft') { e.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
+          });
+        });
+      });
+      // Formulaire sans backend : il dit qu'il n'a rien envoyé (gate 70).
+      document.querySelectorAll<HTMLFormElement>('form[data-endpoint]').forEach((form) => {
+        const fields = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input[required], textarea[required]')];
+        const status = form.querySelector<HTMLElement>('[data-status]');
+        const check = (f: HTMLInputElement | HTMLTextAreaElement) => {
+          const ok = f.checkValidity();
+          const help = document.getElementById(`${f.id}-aide`);
+          f.toggleAttribute('aria-invalid', !ok);
+          if (help) help.textContent = ok ? '' : (f.dataset.erreur || 'Ce champ est à compléter.');
+          return ok;
+        };
+        fields.forEach((f) => {
+          f.addEventListener('blur', () => { f.dataset.touche = '1'; check(f); });
+          f.addEventListener('input', () => { if (f.dataset.touche) check(f); });
+        });
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const bad = fields.filter((f) => !check(f));
+          if (bad.length) { bad[0].focus(); if (status) status.textContent = 'Il manque une information : voyez le champ signalé.'; return; }
+          if (!form.dataset.endpoint && status) status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié. Appelez le +32 (0)81 64 04 44.';
+        });
+      });
+    </script>
+    <KywFooter base={import.meta.env.BASE_URL} />
+  </body>
+</html>

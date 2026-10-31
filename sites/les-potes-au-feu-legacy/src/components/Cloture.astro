@@ -1,0 +1,24 @@
+---
+// La clôture d'une page : horaires, adresse et la réservation à nouveau (anatomy.md § book, Ends).
+import Horaires from './Horaires.astro';
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<section class="close band band--paper" aria-labelledby="horaires-titre">
+  <div class="container close__grid">
+    <div class="close__hours">
+      <h2 id="horaires-titre">Heures d’ouverture</h2>
+      <Horaires />
+    </div>
+    <div class="close__book">
+      <p class="close__address">
+        <a href={resto.plan}>{resto.adresse.rue}, {resto.adresse.ville}</a>, au bord de la Meuse.
+      </p>
+      <div class="actions">
+        <a class="btn" href={`${base}reservation-en-ligne/`}>Réserver une table</a>
+        <a class="link-action" href={resto.bonCadeau}>Offrir un bon cadeau</a>
+      </div>
+      <p class="small">Dernière minute ou plus de six personnes : <a href={resto.telHref}>{resto.telAffiche}</a>.</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Cloture from '../components/Cloture.astro';
+import { menuSoir, menuMidi } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base
+  page="le-menu-des-potes"
+  title="Le menu des potes, Les Potes au Feu à Namur"
+  description="Menu dégustation unique en 4 services à 67 € le soir, formule 3 services à 52 € et lunch à 40 € le mercredi et le vendredi midi."
+>
+  <section class="banner banner--split" aria-labelledby="page-titre">
+    <div class="container">
+      <div class="banner__head">
+        <div>
+          <h1 id="page-titre">Le menu des potes</h1>
+        </div>
+        <div>
+          <p class="lead">Un menu unique, pensé à quatre mains, inspiré des produits du moment.</p>
+          <div class="actions"><a class="btn" href={`${base}reservation-en-ligne/`}>Réserver une table</a></div>
+        </div>
+      </div>
+      <Photo nom="16-cuisine-salage-viande" largeurs={[640, 1140]} w={1140} h={642} slot="banner-carte"
+        alt="Une main sale une pièce de viande tranchée sur une plaque" sizes="(min-width: 90rem) 1312px, 100vw" position="50% 50%" priorite />
+    </div>
+  </section>
+
+  <section class="carte section" aria-labelledby="carte-titre">
+    <div class="container">
+      <h2 id="carte-titre" class="carte__head">Le soir ou le midi</h2>
+      <div data-switch>
+        <div class="seg" role="tablist" aria-label="Choisir le service">
+          <button type="button" role="tab" id="tab-soir" aria-controls="panel-soir" aria-selected="true">Le soir</button>
+          <button type="button" role="tab" id="tab-midi" aria-controls="panel-midi" aria-selected="false" tabindex="-1">Le midi</button>
+        </div>
+        <div class="menu-panel" role="tabpanel" id="panel-soir" aria-labelledby="tab-soir">
+          <div class="menu-panel__top">
+            <div>
+              <h3>{menuSoir.titre}</h3>
+              <p class="menu-panel__when">{menuSoir.quand}</p>
+            </div>
+            <p class="menu-panel__price num">{menuSoir.prix}</p>
+          </div>
+          <ol class="courses">
+            {menuSoir.plats.map((p) => <li>{p}</li>)}
+          </ol>
+          <ul class="priced">
+            {menuSoir.supplements.map((s) => <li><span>{s.nom}</span><span class="num">{s.prix}</span></li>)}
+          </ul>
+        </div>
+        <div class="menu-panel" role="tabpanel" id="panel-midi" aria-labelledby="tab-midi">
+          <div class="menu-panel__top">
+            <div>
+              <h3>Le midi</h3>
+              <p class="menu-panel__when">{menuMidi.quand}</p>
+            </div>
+          </div>
+          <div class="formules">
+            {menuMidi.formules.map((f) => (
+              <div class="formule">
+                <h4 class="formule__title">{f.titre}</h4>
+                <p>{f.texte}</p>
+                <p class="num">{f.prix}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <p class="carte__note">Nous pouvons adapter notre menu en cas d’allergie ou d’intolérance, à signaler lors de votre réservation. Un menu végétarien est également possible, sur demande.</p>
+    </div>
+  </section>
+
+  <section class="quote section" aria-label="L’avis du Guide MICHELIN">
+    <div class="container quote__grid">
+      <figure>
+        <blockquote>
+          <p>« Un restaurant décontracté qui swingue sur tous les plans. Le plaisir déborde de l’assiette&nbsp;! »</p>
+        </blockquote>
+        <figcaption>Guide MICHELIN Belgique 2026, avis de l’inspecteur</figcaption>
+      </figure>
+      <div>
+        <Photo nom="25-plat-boeuf-confit-michelin" largeurs={[640, 1280]} w={1280} h={1280} slot="plat-boeuf"
+          alt="Boeuf confit, carottes et cromesquis dans une assiette rouge, vue du dessus" sizes="(min-width: 60rem) 55vw, 100vw" />
+        <p class="caption">Boeuf confit, carottes, cromesquis de pommes de terre : un plat du menu dégustation.</p>
+      </div>
+    </div>
+  </section>
+
+  <Cloture />
+</Base>

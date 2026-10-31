@@ -1,0 +1,36 @@
+---
+// Une photo du client dans un slot Hallmark (patterns.md § A photograph in a slot).
+// `nom` = fichier sans suffixe dans public/photos ; `largeurs` = variantes WebP disponibles.
+interface Props {
+  nom: string;
+  largeurs: number[];
+  w: number;
+  h: number;
+  alt: string;
+  slot: string;
+  sizes?: string;
+  position?: string;
+  priorite?: boolean;
+  class?: string;
+}
+const { nom, largeurs, w, h, alt, slot, sizes = '100vw', position = '50% 50%', priorite = false, class: cls } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const src = (l: number) => `${base}photos/${nom}-${l}.webp`;
+const tri = [...largeurs].sort((a, b) => a - b);
+const srcset = tri.map((l) => `${src(l)} ${l}w`).join(', ');
+const defaut = tri.find((l) => l >= 1100) ?? tri[tri.length - 1];
+---
+<figure class:list={['photo', cls]} data-slot={slot} data-alt={alt}>
+  <img
+    src={src(defaut)}
+    srcset={srcset}
+    sizes={sizes}
+    width={w}
+    height={h}
+    alt={alt}
+    style={`object-position: ${position}`}
+    loading={priorite ? 'eager' : 'lazy'}
+    fetchpriority={priorite ? 'high' : 'auto'}
+    decoding={priorite ? 'sync' : 'async'}
+  />
+</figure>
