@@ -54,6 +54,8 @@ fournit un jour un plat signature nommé et photographié en composants.
   `/saisons/`), note sous la roue qui explique le calendrier indicatif et les libellés descriptifs.
 - Classes nouvelles dans `base.css` (bloc « Adaptation ») : `.distinctions`, `.avis`, `.index--valeurs`, `.chiffres`
   (nombres en condensée 300, même voix que les mots empilés), `.saison__photo`.
+- Horaires groupés (`horairesGroupes()` dans `site.ts`) : « lundi au vendredi / samedi / dimanche », un créneau par
+  ligne (`.creneau`), dans l'accueil, la réservation et le pied de page.
 - `site.ts` : `distinctions`, `chiffres`, `saisons` avec photo réelle, `platsDuMois` avec `nomDescriptif`,
   `equipe[].photoPlaceholder`.
 

@@ -176,6 +176,22 @@ export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adre
 export const horaireTexte = (h: Horaire) =>
   h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé';
 
+/** Horaires groupés par jours consécutifs identiques : [{ jours: 'lundi au vendredi', texte: '12:00 à 16:00, 19:00 à 23:30' }, …]. */
+export const horairesGroupes = (r: Restaurant = site) => {
+  const out: { jours: string; texte: string }[] = [];
+  let debut = 0;
+  r.horaires.forEach((h, i) => {
+    const t = horaireTexte(h);
+    const suivant = r.horaires[i + 1];
+    if (!suivant || horaireTexte(suivant) !== t) {
+      const a = r.horaires[debut].jour, b = h.jour;
+      out.push({ jours: a === b ? a : i - debut === 1 ? `${a} et ${b}` : `${a} au ${b}`, texte: t });
+      debut = i + 1;
+    }
+  });
+  return out;
+};
+
 /** Téléphone pour href="tel:" (sans espaces). */
 export const telHref = (r: Restaurant = site) => `tel:${r.telephone.replace(/\s+/g, '')}`;
 

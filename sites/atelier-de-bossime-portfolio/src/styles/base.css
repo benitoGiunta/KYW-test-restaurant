@@ -85,7 +85,7 @@ html[data-mois='9'] [data-feuille='9'], html[data-mois='10'] [data-feuille='10']
 .hero__media { position: relative; width: var(--vignette); max-width: calc(100% - 2 * var(--gutter)); }
 .hero__media .etiquette { position: absolute; left: 50%; bottom: calc(var(--u) * -1.5); transform: translateX(-50%); white-space: nowrap; }
 .hero__media a.etiquette:hover, .hero__media a.etiquette:focus-visible { transform: translate(-50%, -2px); border-color: var(--c-accent); color: var(--c-terre); }
-.hero__accroche { font-size: var(--t-m); font-style: italic; max-width: 32ch; margin-top: calc(var(--u) * 2); }
+.hero__accroche { font-size: var(--t-m); font-style: italic; max-width: 17em; margin-top: calc(var(--u) * 2); } /* em, pas ch : la largeur ne doit pas changer au swap de l’italique (CLS) */
 
 /* Vignettes carrées : 0 radius, 280 px, ou typographiques (nom sur carré teinté) */
 .vignette { display: block; width: var(--vignette); max-width: 100%; aspect-ratio: 1; overflow: clip; background: var(--c-vignette); }
@@ -331,3 +331,7 @@ html[data-mois='9'] [data-secteur-mois='9'], html[data-mois='10'] [data-secteur-
   .logo__sous { font-size: 0.55rem; }
   .chiffres { grid-template-columns: minmax(0, 1fr); }
 }
+/* Horaires groupés (« lundi au vendredi ») : la liste centrée ne dépasse jamais la colonne en mobile */
+.horaires--centre { max-width: 100%; }
+.horaires dd { min-width: 0; }
+.horaires .creneau { display: block; white-space: nowrap; }

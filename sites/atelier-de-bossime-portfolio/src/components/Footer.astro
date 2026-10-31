@@ -1,7 +1,7 @@
 ---
 // Pied de page « finale » : branche du mois, colonnes, puis le pied de page KYW obligatoire (une seule mention maquette).
 import KywFooter from '@kyw/footer';
-import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { site, adresseLigne, horairesGroupes, telHref } from '../data/site';
 import { u } from '../lib/url';
 import Branche from './Branche.astro';
 import Mois from './Mois.astro';
@@ -22,7 +22,7 @@ import Mois from './Mois.astro';
     <div class="footer__col">
       <p class="meta">Horaires</p>
       <dl class="horaires">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        {horairesGroupes().map((h) => <><dt>{h.jours}</dt><dd>{h.texte.split(', ').map((t) => <span class="creneau">{t}</span>)}</dd></>)}
       </dl>
     </div>
     <div class="footer__col">

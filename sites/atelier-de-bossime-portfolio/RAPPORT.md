@@ -26,7 +26,7 @@ pas repris (choix éditorial, signalé ici). Le bloc « 4,84/5 (38 avis) » du s
 
 ## Vérification
 
-- Build : OK, garde-fou noindex + pied de page KYW passé.
+- Build final : OK, garde-fou noindex + pied de page KYW passé.
 - Mini-script Playwright (`launch()` de browser.mjs, serveur 4533 arrêté par le script) sur 6 pages en 1440×900 et
   390×844 : 0 erreur console, `scrollWidth` = largeur de fenêtre partout, 0 élément `[data-reveal]`/`[data-split]` resté
   caché après défilement, 7 liens d'en-tête sur 7 cliquables à scrollY 0 (`elementFromPoint` = le lien) sur chaque page ;
@@ -38,7 +38,26 @@ pas repris (choix éditorial, signalé ici). Le bloc « 4,84/5 (38 avis) » du s
 
 ## Shoot et audit
 
-(à compléter après la série de fond `.shots-bossime-pf/`)
+Série de fond `.shots-bossime-pf/` (serveur 4534 lancé et tué par le script, 6 pages en série, puis `audit.mjs`) :
+
+| Page | Erreurs | Débordement d/m | LCP d/m (ms) | CLS d/m | axe sérieux | Texte caché (reduced) | Clavier |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Accueil | 0 | non / non | 140 / 1356 | 0 / 0,007 | 0 | 0 | OK, pas de piège |
+| Carte | 0 | non / non | 128 / 1316 | 0 / 0,028 | 0 | 0 | OK |
+| Saisons | 0 | non / non | 140 / 1204 | 0 / **0,105** → 0,0001 après correction | 0 | 0 | OK |
+| Ferme | 0 | non / non | 104 / **3368** → image LCP peinte à 200 ms après correction | 0 / 0,022 | 0 | 0 | OK |
+| Histoire | 0 | non / non | 140 / 1184 | 0 / 0,002 | 0 | 0 | OK |
+| Réservation | 0 | non / non | 160 / 1236 | 0 / 0,028 | 0 | 0 | OK |
+
+- Navigation `--nav` (accueil → carte) : OK ; scroll 60 fps desktop et mobile throttlé ; idle de la roue détecté.
+- `audit.mjs` : **0 FAIL**, 9 WARN : horaires répétés 5 à 10 fois par page (corrigé : horaires groupés « lundi au
+  vendredi / samedi / dimanche », 3 lignes au lieu de 7), et les trois WARN « site » connus sous `base` (robots.txt,
+  sitemap et 404 cherchés à la racine de l'origine, faux positifs, voir lecons.md).
+- `smallTargets` « A 42x22 » sur l'accueil mobile : liens de navigation de l'en-tête du gabarit (inchangés).
+- Corrections après le shoot : (1) `.hero__accroche` bornée en `em` au lieu de `ch` (CLS au swap de l'italique,
+  corrigé aussi dans `gabarits/verger`) ; (2) photo du potager de /ferme/ peinte au premier rendu ; (3) horaires
+  groupés, un créneau par ligne ; (4) note sous la roue raccourcie. Vérifiées par mini-scripts (layout-shift et LCP sous
+  CPU ×4, scrollWidth, clics d'en-tête, bas de page) sur le build final ; pas de second shoot complet.
 
 ## Points ouverts
 
@@ -53,4 +72,8 @@ pas repris (choix éditorial, signalé ici). Le bloc « 4,84/5 (38 avis) » du s
 
 - Verger suppose des plats nommés et des producteurs : quand ni l'un ni l'autre n'existe, les vraies photos d'assiettes
   (libellé descriptif signalé) remplacent avantageusement les cartes de saison d'exemple, et une page « La ferme » en
-  nombres sourcés remplace la page producteurs de démonstration. Rien à corriger dans le gabarit lui-même.
+  nombres sourcés remplace la page producteurs de démonstration.
+- Défaut du gabarit corrigé dans `gabarits/verger/src/styles/base.css` : `.hero__accroche { max-width: 32ch }` →
+  `17em` (CLS 0,105 en mobile au swap de la police italique non préchargée). Le `dist/gabarits/verger/` n'a pas été
+  reconstruit (le rebuild efface `apercu.png`, voir lecons.md) : à faire avec la prochaine passe du gabarit. Leçon
+  reportée dans `agents/lecons.md`.

@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Roue from '../components/Roue.astro';
-import { site, photoDe, horaireTexte, telHref, citations, questions, distinctions } from '../data/site';
+import { site, photoDe, horairesGroupes, telHref, citations, questions, distinctions } from '../data/site';
 import { u, asset } from '../lib/url';
 const hero = photoDe('/photos/plat-veloute-vert.webp');
 const hero560 = photoDe('/photos/plat-veloute-vert-560.webp');
@@ -111,7 +111,7 @@ const srcset = `${asset(hero560.src)} 560w, ${asset(hero.src)} 800w`;
     <div class="col bande">
       <a class="btn btn--plein" href={site.reservation.url} rel="noopener" data-magnetic="0.15">Réserver une table <span class="btn__fleche" aria-hidden="true">→</span></a>
       <dl class="horaires horaires--centre">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        {horairesGroupes().map((h) => <><dt>{h.jours}</dt><dd>{h.texte.split(', ').map((t) => <span class="creneau">{t}</span>)}</dd></>)}
       </dl>
       <p class="centre muted">Réservation en ligne à toute heure, ou par téléphone : <a class="link" href={telHref()}>{site.telephone}</a></p>
     </div>

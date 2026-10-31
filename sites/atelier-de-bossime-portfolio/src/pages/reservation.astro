@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { site, adresseLigne, horairesGroupes, telHref } from '../data/site';
 ---
 <Base title="Réservation" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}.`}>
   <section class="hero wrap" data-hero>
@@ -47,7 +47,7 @@ import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
   <section class="section section--fin">
     <div class="col bande">
       <p class="meta centre">Horaires et adresse</p>
-      <dl class="horaires horaires--centre" data-reveal="fade">{site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}</dl>
+      <dl class="horaires horaires--centre" data-reveal="fade">{horairesGroupes().map((h) => <><dt>{h.jours}</dt><dd>{h.texte.split(', ').map((t) => <span class="creneau">{t}</span>)}</dd></>)}</dl>
       <p class="centre">{adresseLigne()}<br /><span class="muted">L’entrée se fait par un escalier de cinq marches.</span><br /><a class="link" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a></p>
     </div>
   </section>
