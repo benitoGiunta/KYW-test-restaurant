@@ -4,10 +4,10 @@ import { site, photoDe } from '../data/site';
 import { u, asset } from '../lib/url';
 const photos = ['/photos/plat-volaille-carottes.webp', '/photos/dessert-chocolat.webp'].map(photoDe);
 ---
-<Base title="La carte" description="La carte de L'Atelier de Bossimé à Loyers (Namur) : lunch 2 ou 3 services, menus de 3 à 7 Moments à composer ou en carte blanche, boissons.">
+<Base title="La carte" description="La carte de L’Atelier de Bossimé à Loyers (Namur) : lunch 2 ou 3 services, menus de 3 à 7 Moments à composer ou en carte blanche, boissons.">
   <section class="hero wrap" data-hero>
-    <p class="meta hero__sur">La carte · à composer ou en surprise</p>
-    <h1 class="mots" data-mots><span>Lunch</span><span>et</span><span>Moments</span></h1>
+    <p class="meta hero__sur">La carte</p>
+    <h1 class="mots" data-mots><span>Lunch et</span><span>Moments</span></h1>
     <p class="hero__accroche">Aucun plat n’est écrit ici : la carte change avec le potager. À table, un livret vous permet de composer vos Moments ; le menu surprise, historique, reste possible.</p>
   </section>
 
@@ -18,7 +18,7 @@ const photos = ['/photos/plat-volaille-carottes.webp', '/photos/dessert-chocolat
         <ul class="carte-liste" data-reveal="fade">
           {cat.plats.map((p) => (
             <li class="plat">
-              <span class="plat__nom">{p.nom}{p.placeholder && <span class="exemple"> exemple</span>}{p.description && <span class="plat__desc">{p.description}</span>}</span>
+              <span class="plat__nom">{p.nom}{p.placeholder && <span class="exemple">exemple</span>}{p.description && <span class="plat__desc">{p.description}</span>}</span>
               {p.prix && <span class="plat__prix">{p.prix}</span>}
             </li>
           ))}
@@ -31,17 +31,15 @@ const photos = ['/photos/plat-volaille-carottes.webp', '/photos/dessert-chocolat
 
   <section class="section">
     <div class="col">
-      <p class="meta centre">En résumé, et les soirées</p>
-      <h2 class="statement" data-split="lines">Les formules</h2>
-      <div class="formules">
-        {site.menus.map((m, i) => (
-          <article class="formule" data-reveal="up" data-delay={String(i * 0.1)}>
-            <p class="meta">{m.prix}{m.placeholder && <span class="exemple"> modalités à confirmer</span>}</p>
-            <h3>{m.nom}</h3>
-            <p class="muted">{m.description}</p>
-          </article>
+      <h2 class="statement" data-split="lines">Les soirées et les chèques-cadeaux</h2>
+      <ul class="carte-liste" data-reveal="fade">
+        {site.menus.slice(2).map((m) => (
+          <li class="plat">
+            <span class="plat__nom">{m.nom}{m.placeholder && <span class="exemple">modalités à confirmer</span>}<span class="plat__desc">{m.description}</span></span>
+            <span class="plat__prix">{m.prix}</span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 

@@ -13,8 +13,12 @@ interface Props {
   description?: string;
   image?: string;
   theme?: string;
+  /** false : pas de <link rel="canonical"> (404 servie sous n'importe quelle URL). */
+  canonical?: boolean;
+  /** false : pas de barre « Réserver » fixe au téléphone (page réservation). */
+  resaMobile?: boolean;
 }
-const { title, description = site.description, image = '/og.jpg', theme } = Astro.props;
+const { title, description = site.description, image = '/og.jpg', theme, canonical: avecCanonical = true, resaMobile = true } = Astro.props;
 const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Ferme gastronomique à Loyers, Namur`;
 const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
@@ -28,10 +32,18 @@ const fontFaces = [
   ['Sofia Sans Condensed', 'sofia-sans-condensed-300-normal', 300, 'normal'],
   ['Sofia Sans Condensed', 'sofia-sans-condensed-600-normal', 600, 'normal'],
 ] as const;
+// Révision 1 : l'italique (accroches des heros) passe en `optional` : quand il arrive après le premier rendu (4G lente), la page
+// garde l'italique de repli au lieu de re-couper l'accroche d'une ligne (CLS 0,14 à 0,17 sur /saisons/ en mobile). Il est
+// téléchargé et sert dès la page suivante ; sur une connexion rapide il arrive dans la période de blocage et s'affiche tout de suite.
 const fontCss = fontFaces
-  .map(([fam, f, w, s]) => `@font-face{font-family:'${fam}';font-weight:${w};font-style:${s};font-display:swap;src:url(${asset(`/fonts/${f}.woff2`)}) format('woff2')}`)
+  .map(([fam, f, w, s]) => `@font-face{font-family:'${fam}';font-weight:${w};font-style:${s};font-display:${s === 'italic' ? 'optional' : 'swap'};src:url(${asset(`/fonts/${f}.woff2`)}) format('woff2')}`)
   .join('');
+// L'italique est préchargé : sur une connexion rapide il arrive dans la période de blocage de `optional` (vrai Newsreader au
+// premier rendu) ; sur 4G lente il arrive trop tard et la page garde le repli, sans décalage.
+// Au téléphone (media), pas de préchargement : il retarderait l'image LCP (/ferme/ 1,7 → 2,1 s) pour une police qui arriverait
+// de toute façon après la période de blocage.
 const polices = ['/fonts/sofia-sans-condensed-300-normal.woff2', '/fonts/newsreader-400-normal.woff2', '/fonts/sofia-sans-condensed-600-normal.woff2'];
+const policesDesktop = ['/fonts/newsreader-400-italic.woff2'];
 
 const jours: Record<string, string> = { lundi: 'Monday', mardi: 'Tuesday', mercredi: 'Wednesday', jeudi: 'Thursday', vendredi: 'Friday', samedi: 'Saturday', dimanche: 'Sunday' };
 const jsonLd = {
@@ -58,7 +70,7 @@ const jsonLd = {
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
-    <link rel="canonical" href={canonical} />
+    {avecCanonical && <link rel="canonical" href={canonical} />}
     <meta name="theme-color" content="#f7f3ec" />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
     <link rel="sitemap" href={asset('/sitemap-index.xml')} />
@@ -75,6 +87,7 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     {polices.map((p) => <link rel="preload" as="font" type="font/woff2" href={asset(p)} crossorigin />)}
+    {policesDesktop.map((p) => <link rel="preload" as="font" type="font/woff2" href={asset(p)} media="(min-width: 768px)" crossorigin />)}
     <style is:inline set:html={fontCss} />
     <slot name="head" />
     <!-- Avant le premier rendu : JS + motion, et le mois réel de l'horloge du visiteur (aucune date en dur dans le gabarit). -->
@@ -96,6 +109,8 @@ const jsonLd = {
       <slot />
     </main>
     <Footer />
+    {resaMobile && <a class="resa-mobile" href={site.reservation.url} rel="noopener">Réserver une table <span aria-hidden="true">→</span></a>}
+    {resaMobile && <div class="resa-mobile__place" aria-hidden="true"></div>}
     <script>
       import { start } from '../engine/astro';
       import { setupMotion } from '../motion/setup';

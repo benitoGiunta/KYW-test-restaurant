@@ -75,9 +75,21 @@ function roue() {
 
   const reduit = prefersReducedMotion();
   const vars = { rot: rot0, derive: 0 };
+  // Révision 1 : un nom de mois qui passe dans la moitié basse du disque est retourné de 180° pour rester lisible.
+  const textesMois = [...root.querySelectorAll<SVGTextElement>('[data-secteur-mois]')];
+  const retournes = textesMois.map(() => false);
+  const redresser = (r: number) => textesMois.forEach((t, i) => {
+    const a0 = parseFloat(t.dataset.angle || '0');
+    const abs = (((a0 + r) % 360) + 360) % 360;
+    const f = abs > 90 && abs < 270;
+    if (f === retournes[i]) return;
+    retournes[i] = f;
+    t.setAttribute('transform', `rotate(${a0 + (f ? 180 : 0)} ${t.getAttribute('x')} ${t.getAttribute('y')})`);
+  });
   const peindre = () => {
     root.style.setProperty('--rot', `${vars.rot}deg`);
     root.style.setProperty('--derive', `${vars.derive}deg`);
+    redresser(vars.rot + vars.derive);
     const enHaut = ((Math.round(-(vars.rot + vars.derive) / 30) % 12) + 12) % 12 + 1;
     montrer(enHaut);
   };

@@ -19,6 +19,7 @@ const srcset = `${asset(hero560.src)} 560w, ${asset(hero.src)} 800w`;
       <p class="meta hero__sur">Ferme gastronomique à Loyers, Namur</p>
       <h1 class="mots" data-mots><span>La ferme</span><span>à table</span></h1>
       <p class="hero__accroche" data-hero-apres>{site.baseline}</p>
+      <p class="actions hero__cta" data-hero-apres><a class="btn" href={site.reservation.url} rel="noopener">Réserver une table <span aria-hidden="true">→</span></a></p>
     </div>
     <figure class="hero__media" data-hero-media>
       <span class="vignette"><img src={asset(hero.src)} srcset={srcset} sizes="(min-width: 1024px) 560px, 280px" alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical /></span>
@@ -34,7 +35,7 @@ const srcset = `${asset(hero560.src)} 560w, ${asset(hero.src)} 800w`;
       </blockquote>
     </div>
     <div class="wrap escalier" style="margin-top: calc(var(--u) * 10)">
-      <p class="lead" data-reveal="up">{site.histoire[0]} {site.histoire[2]}</p>
+      <p class="lead" data-reveal="up">Huit tables en 2011, dans un coin de la ferme familiale de Loyers ; aujourd’hui encore, la cuisine part du potager voisin et de producteurs de la région.</p>
       <figure class="vignette" data-reveal="clip" data-cursor="La ferme"><img src={asset(ferme.src)} alt={ferme.alt} width={ferme.largeur} height={ferme.hauteur} loading="lazy" decoding="async" /></figure>
     </div>
   </section>
@@ -43,10 +44,10 @@ const srcset = `${asset(hero560.src)} 560w, ${asset(hero.src)} 800w`;
 
   <section class="section">
     <div class="col">
-      <p class="pastille centre" style="justify-content: center; width: 100%">Le soir et le midi · à composer ou en carte blanche</p>
+      <p class="pastille centre" style="justify-content: center; width: 100%">Le midi et le soir</p>
       <h2 class="statement" data-split="lines">Les menus en Moments</h2>
       <ul class="carte-liste" data-reveal="fade">
-        {moments.plats.map((p) => <li class="plat"><span class="plat__nom">{p.nom}<span class="plat__desc">{p.description}</span></span><span class="plat__prix">{p.prix}</span></li>)}
+        {moments.plats.map((p) => <li class="plat"><span class="plat__nom">{p.nom}{p.description && <span class="plat__desc">{p.description}</span>}</span><span class="plat__prix">{p.prix}</span></li>)}
       </ul>
       <p class="menu-prix" data-reveal="fade"><span>Lunch, lundi au vendredi</span><strong>{site.menus[0].prix}</strong></p>
       <p class="centre muted" data-reveal="fade">Le menu surprise historique de la maison existe toujours : laissez carte blanche, ou composez vos plats sur le livret remis à table.</p>
@@ -58,20 +59,18 @@ const srcset = `${asset(hero560.src)} 560w, ${asset(hero.src)} 800w`;
     <div class="wrap paire">
       <figure class="paire__media" data-reveal="clip" data-cursor="La salle"><img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" /></figure>
       <div class="paire__texte stack">
-        <p class="meta">La salle</p>
         <h2 class="statement" style="text-align: left" data-split="lines">Un ancien fenil, la cuisine ouverte, les baies sur les jardins.</h2>
-        <p data-reveal="up">{site.histoire[1]} Depuis votre table, vous voyez la brigade dresser les assiettes.</p>
+        <p data-reveal="up">Le fenil a été rénové en matériaux durables. Depuis votre table, vous voyez la brigade dresser les assiettes.</p>
         <p data-reveal="up"><a class="link" href={u('/histoire/')}>L’histoire de la maison</a></p>
       </div>
     </div>
     <div class="wrap paire paire--inverse" style="margin-top: calc(var(--u) * 10)">
       <figure class="paire__media" data-reveal="clip" data-cursor="La cuisine"><img src={asset(dressage.src)} alt={dressage.alt} width={dressage.largeur} height={dressage.hauteur} loading="lazy" decoding="async" /></figure>
       <div class="paire__texte stack">
-        <p class="meta">D'où ça vient</p>
         <blockquote class="statement" style="text-align: left" data-split="lines"><p>« {citations[1].texte} »</p><cite class="statement__source meta">{citations[1].source}</cite></blockquote>
         <p data-reveal="up">Le potager de la ferme d’abord, puis des producteurs de la région, en circuit court. Le logo porte trois accents sur le E : un par pilier de la durabilité.</p>
         <ul class="distinctions" data-reveal="up" aria-label="Distinctions">
-          {distinctions.map((d) => <li class="etiquette"><span class="etiquette__dot" aria-hidden="true"></span>{d.nom}, {d.detail}{d.annee && <> {d.annee}</>}{d.anneePlaceholder && <span class="exemple">année à confirmer</span>}</li>)}
+          {distinctions.map((d) => <li class="etiquette"><span class="etiquette__dot" aria-hidden="true"></span>{d.nom}, {d.detail}{d.annee && ` ${d.annee}`}{d.anneePlaceholder && <span class="exemple">année à confirmer</span>}</li>)}
         </ul>
         <p data-reveal="up"><a class="link" href={u('/ferme/')}>La ferme, le potager, les engagements</a></p>
       </div>
@@ -94,7 +93,6 @@ const srcset = `${asset(hero560.src)} 560w, ${asset(hero.src)} 800w`;
 
   <section class="section">
     <div class="col">
-      <p class="meta centre">Questions</p>
       <h2 class="statement" data-split="lines">Avant de venir</h2>
       <div class="faq" data-faq>
         {questions.map((q, i) => (
@@ -113,7 +111,7 @@ const srcset = `${asset(hero560.src)} 560w, ${asset(hero.src)} 800w`;
       <dl class="horaires horaires--centre">
         {horairesGroupes().map((h) => <><dt>{h.jours}</dt><dd>{h.texte.split(', ').map((t) => <span class="creneau">{t}</span>)}</dd></>)}
       </dl>
-      <p class="centre muted">Réservation en ligne à toute heure, ou par téléphone : <a class="link" href={telHref()}>{site.telephone}</a></p>
+      <p class="centre muted">Réservation en ligne à toute heure, ou par téléphone : <a class="link nowrap" href={telHref()}>{site.telephone}</a></p>
     </div>
   </section>
 </Base>

@@ -3,13 +3,15 @@
 import Base from '../layouts/Base.astro';
 import { saisons, ingredients, mois, photoDe } from '../data/site';
 import { u, asset } from '../lib/url';
-const ingDe = (s: (typeof saisons)[number]) => ingredients.filter((i) => i.mois.some((m) => s.mois.includes(m)));
+// Révision 1 : un produit est rangé dans la saison de son pic (`pic`), pas dans toutes celles qu'il touche (la tomate de septembre
+// n'est plus listée en automne). Six produits par saison.
+const ingDe = (s: (typeof saisons)[number]) => ingredients.filter((i) => s.mois.includes(i.pic));
 ---
-<Base title="Les saisons" description="Au fil des saisons à L'Atelier de Bossimé : calendrier indicatif d'un potager de la région et assiettes photographiées à la ferme.">
+<Base title="Les saisons" description="Au fil des saisons à L’Atelier de Bossimé : calendrier indicatif d’un potager de la région et assiettes photographiées à la ferme.">
   <section class="hero wrap" data-hero>
     <p class="meta hero__sur">Calendrier indicatif</p>
-    <h1 class="mots" data-mots><span>Au</span><span>fil</span><span>des</span><span>saisons</span></h1>
-    <p class="hero__accroche">Environ 45 variétés poussent au potager de la ferme. Voici ce que chaque saison apporte d’ordinaire dans un potager de la région<span class="exemple">*</span>, et des assiettes photographiées à Bossimé.</p>
+    <h1 class="mots" data-mots><span>Au fil</span><span>des saisons</span></h1>
+    <p class="hero__accroche">Environ 45 variétés poussent au potager de la ferme. Voici ce que chaque saison apporte d’ordinaire dans un potager de la région<sup class="renvoi">*</sup>, et des assiettes photographiées à Bossimé.</p>
   </section>
 
   <section class="section section--fin">
@@ -27,7 +29,7 @@ const ingDe = (s: (typeof saisons)[number]) => ingredients.filter((i) => i.mois.
       ); })}
     </div>
     <div class="col centre" style="margin-top: calc(var(--u) * 6)">
-      <p class="muted"><span class="exemple">*</span> Calendrier indicatif, pas la liste des variétés de la ferme. Les assiettes sont de vraies photos de la maison ; leur saison est déduite du produit. <a class="link" href={u('/carte/')}>La carte</a> donne les menus réels.</p>
+      <p class="muted"><sup class="renvoi">*</sup> Calendrier indicatif, pas la liste des variétés de la ferme. Les assiettes sont de vraies photos de la maison ; leur saison est déduite du produit. <a class="link" href={u('/carte/')}>La carte</a> donne les menus réels.</p>
     </div>
   </section>
 </Base>

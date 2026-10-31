@@ -42,11 +42,11 @@ const photo = (src: string, alt: string, largeur = 800, hauteur = 800): Photo =>
 
 export const site: Restaurant = {
   slug: 'atelier-de-bossime',
-  nom: "L'Atelier de Bossimé",
+  nom: 'L’Atelier de Bossimé',
   nomCourt: 'Bossimé',
   baseline: 'Cuisine gastronomique issue du circuit court, servie dans l’ancien fenil de la ferme, à deux pas du potager.',
   description:
-    "L'Atelier de Bossimé, ferme gastronomique à Loyers (Namur) : légumes du potager, circuit court, menus en Moments à composer ou en carte blanche. Étoile verte MICHELIN.",
+    "L’Atelier de Bossimé, ferme gastronomique à Loyers (Namur) : légumes du potager, circuit court, menus en Moments à composer ou en carte blanche. Étoile verte MICHELIN.",
   url: 'https://www.atelier-de-bossime.be',
   typeCuisine: 'Cuisine française moderne, cuisine bio, gastronomie durable',
   adresse: { rue: 'Rue Bossimé', numero: '2B', cp: '5101', commune: 'Loyers (Namur)', pays: 'BE' },
@@ -79,9 +79,9 @@ export const site: Restaurant = {
     {
       categorie: 'Les Moments, à composer ou en carte blanche',
       plats: [
-        { nom: 'Menu 3 Moments', description: 'au choix sur le livret ou carte blanche', prix: '68 €', placeholder: false },
-        { nom: 'Menu 4 Moments', description: 'au choix sur le livret ou carte blanche', prix: '80 €', placeholder: false },
-        { nom: 'Menu 5 Moments', description: 'au choix sur le livret ou carte blanche', prix: '92 €', placeholder: false },
+        { nom: 'Menu 3 Moments', description: '', prix: '68 €', placeholder: false },
+        { nom: 'Menu 4 Moments', description: '', prix: '80 €', placeholder: false },
+        { nom: 'Menu 5 Moments', description: '', prix: '92 €', placeholder: false },
         { nom: 'Menu 7 Moments', description: 'sur réservation, deux jours à l’avance', prix: '130 €', placeholder: false },
       ],
     },
@@ -130,6 +130,7 @@ export const site: Restaurant = {
     photo('/photos/plat-veloute-vert.webp', 'Assiette vue du dessus : velouté vert, légumes en bâtonnet, quenelle brune et pot de sauce'),
     photo('/photos/plat-veloute-vert-560.webp', 'Assiette vue du dessus : velouté vert, légumes en bâtonnet, quenelle brune et pot de sauce', 560, 560),
     photo('/photos/ferme-batiment.webp', 'La ferme en briques et tuiles rouges, herbes hautes au premier plan'),
+    photo('/photos/ferme-batiment-560.webp', 'La ferme en briques et tuiles rouges, herbes hautes au premier plan', 560, 560),
     photo('/photos/vitrine-salle-jardin.webp', 'La salle vue à travers la baie vitrée, reflets de verdure'),
     photo('/photos/salle-service-soir.webp', 'La salle au service du soir : briques, poutres et tables occupées'),
     photo('/photos/dressage-assiettes.webp', 'Dressage en brigade : une pince pose les derniers éléments sur une rangée d’assiettes'),
@@ -157,8 +158,8 @@ export const site: Restaurant = {
   valeurs: [
     { titre: 'Circuit court', texte: 'Le potager de la ferme et un réseau de producteurs de la région.', placeholder: false },
     { titre: 'Agriculture biologique', texte: 'Culture bio sur sol vivant, variétés anciennes.', placeholder: false },
-    { titre: 'Zéro déchet', texte: 'Contenants réutilisables, rien ne se perd.', placeholder: false },
-    { titre: 'Des métiers de qualité', texte: 'Former et faire grandir les talents de la maison.', placeholder: false },
+    { titre: 'Zéro déchet', texte: 'Contenants réutilisables.', placeholder: false },
+    { titre: 'Des métiers de qualité', texte: 'Gestion des talents, emploi de qualité.', placeholder: false },
   ],
 };
 
@@ -269,11 +270,11 @@ export const chiffres = [
 /** Questions fréquentes : réponses prouvées par le dossier sauf drapeau. */
 export interface Question { q: string; r: string; placeholder: boolean }
 export const questions: Question[] = [
-  { q: 'Menu surprise ou à composer ?', r: 'Les deux. Composez vos Moments sur le livret remis à table, ou laissez carte blanche à la cuisine, comme au premier jour.', placeholder: false },
-  { q: 'Allergies et intolérances ?', r: 'Signalez-les lors de votre réservation : la cuisine s’adapte.', placeholder: false },
-  { q: 'Déjeuner en une heure ?', r: 'Du lundi au vendredi midi, le lunch peut être servi en soixante minutes : demandez-le en arrivant.', placeholder: false },
+  { q: 'Menu surprise ou à composer ?', r: 'Les deux. Composez vos Moments sur le livret remis à table, ou laissez carte blanche à la cuisine : c’est le menu surprise historique de la maison.', placeholder: false },
+  { q: 'Allergies et intolérances ?', r: 'Signalez-les lors de votre réservation.', placeholder: false },
+  { q: 'Déjeuner en une heure ?', r: 'Du lundi au vendredi midi, le lunch peut être servi en une heure, sur demande.', placeholder: false },
   { q: 'Groupes et événements ?', r: 'Jusqu’à 60 personnes assises ou 120 en dînatoire debout. Dès dix personnes, la maison peut ouvrir en dehors des horaires.', placeholder: false },
-  { q: 'Accès en fauteuil roulant ?', r: 'L’entrée se fait par un escalier de cinq marches : l’accès reste réduit jusqu’aux travaux prévus en 2027. Appelez-nous, nous chercherons une solution.', placeholder: false },
+  { q: 'Accès en fauteuil roulant ?', r: 'L’accès est réduit jusqu’aux travaux prévus en 2027 : l’entrée se fait par un escalier de cinq marches. Renseignez-vous par téléphone avant de venir.', placeholder: false },
   { q: 'Les chiens sont-ils admis ?', r: 'Oui, les chiens sont acceptés.', placeholder: false },
   { q: 'Où se garer ?', r: 'Réponse à compléter par le restaurant (exemple : parking dans la cour de la ferme).', placeholder: true },
 ];

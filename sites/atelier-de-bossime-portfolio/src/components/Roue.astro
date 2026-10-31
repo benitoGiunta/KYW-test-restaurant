@@ -9,7 +9,10 @@ const pol = (deg: number, r: number) => { const a = ((deg - 90) * Math.PI) / 180
 const secteur = (i: number) => { const a0 = i * 30 - 15, a1 = i * 30 + 15; const [x0, y0] = pol(a0, R); const [x1, y1] = pol(a1, R); return `M${C} ${C} L${x0.toFixed(1)} ${y0.toFixed(1)} A${R} ${R} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)} Z`; };
 const parMois = new Map<number, typeof ingredients>();
 ingredients.forEach((ing) => { const m = ing.pic; parMois.set(m, [...(parMois.get(m) || []), ing]); });
-const vignettes = ingredients.map((ing) => { const m = ing.pic; const liste = parMois.get(m)!; const k = liste.indexOf(ing); const n = liste.length; return { ...ing, angle: (m - 1) * 30 + (k - (n - 1) / 2) * 12 }; });
+// Révision 1 : une vignette par mois (12, à 30° l'une de l'autre) qui porte les produits dont c'est le pic. Les 24 vignettes de
+// 12° se chevauchaient et tronquaient leurs noms (« CHAMPIGNO »). Chaque nom garde son propre `data-vig` (encré quand le produit
+// est de saison au mois du haut).
+const vignettes = [...parMois.entries()].sort((a, b) => a[0] - b[0]).map(([m, liste]) => ({ mois: m, liste, angle: (m - 1) * 30 }));
 const gauche = platsDuMois.slice(0, 2); const droite = platsDuMois.slice(2);
 const platItem = (p: (typeof platsDuMois)[number]) => p;
 ---
@@ -29,12 +32,12 @@ const platItem = (p: (typeof platsDuMois)[number]) => p;
         ))}
       </div>
       <div class="roue__disque" data-roue-disque>
-        <svg class="roue__svg" viewBox="0 0 600 600" role="img" aria-label="Roue des douze mois de l'année">
+        <svg class="roue__svg" viewBox="0 0 600 600" role="img" aria-label="Roue des douze mois de l’année">
           {mois.map((m, i) => <path class="roue__secteur" data-secteur={String(i + 1)} d={secteur(i)} />)}
-          {mois.map((m, i) => { const [x, y] = pol(i * 30, 212); return <text class="roue__mois" data-secteur-mois={String(i + 1)} x={x.toFixed(1)} y={y.toFixed(1)} transform={`rotate(${i * 30} ${x.toFixed(1)} ${y.toFixed(1)})`}>{m}</text>; })}
+          {mois.map((m, i) => { const [x, y] = pol(i * 30, 212); return <text class="roue__mois" data-secteur-mois={String(i + 1)} data-angle={String(i * 30)} x={x.toFixed(1)} y={y.toFixed(1)} transform={`rotate(${i * 30} ${x.toFixed(1)} ${y.toFixed(1)})`}>{m}</text>; })}
           <circle class="roue__centre" cx={C} cy={C} r="78" />
         </svg>
-        {vignettes.map((v) => <span class="vig" data-vig data-mois-vig={v.mois.join(',')} style={`--a:${v.angle}deg`}>{v.nom}</span>)}
+        {vignettes.map((v) => <span class="vig" style={`--a:${v.angle}deg`}>{v.liste.map((ing) => <span class="vig__nom" data-vig data-mois-vig={ing.mois.join(',')}>{ing.nom}</span>)}</span>)}
       </div>
       <div class="roue__plats roue__plats--d">
         {droite.map((p) => (
@@ -44,14 +47,20 @@ const platItem = (p: (typeof platsDuMois)[number]) => p;
           </a>
         ))}
       </div>
-      <div class="roue__coeur-html" aria-hidden="true"><span class="meta">nous sommes en</span><span class="roue__coeur-mois"><Mois /></span></div>
+      <div class="roue__coeur-html" aria-hidden="true"><span class="meta">ce mois-ci</span><span class="roue__coeur-mois"><Mois /></span></div>
     </div>
     <div class="roue__bas">
-      <p class="roue__legende" data-roue-legende aria-live="off"><b data-roue-legende-mois><Mois /></b><span data-roue-legende-liste></span></p>
+      <p class="roue__legende" data-roue-legende aria-live="off"><span class="roue__legende-pre">En haut de la roue</span>{' '}<b data-roue-legende-mois><Mois /></b><span data-roue-legende-liste></span></p>
       <ul class="mois-liste" aria-label="Choisir un mois">
         {mois.map((m, i) => <li><button type="button" class="mois-btn" data-mois-btn={String(i + 1)} aria-pressed="false">{m}</button></li>)}
       </ul>
-      <p class="meta meta--terre">Calendrier indicatif<span class="exemple">*</span> d’un potager de la région. Autour de la roue : des assiettes de Bossimé, décrites d’après la photo.</p>
+      <p class="meta meta--terre">Calendrier indicatif<sup class="renvoi">*</sup> d’un potager de la région. Avec la roue : des assiettes de Bossimé, décrites d’après la photo.</p>
     </div>
+  </div>
+  <div class="roue__assiettes">
+    <p class="meta">Vu dans l’assiette</p>
+    <ul>
+      {platsDuMois.map((p) => <li><a class="plat-mois" href={u('/saisons/')}><span class="plat-mois__nom">{p.nom}</span></a></li>)}
+    </ul>
   </div>
 </section>

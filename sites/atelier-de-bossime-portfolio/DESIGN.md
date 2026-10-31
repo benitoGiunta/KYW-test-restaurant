@@ -85,3 +85,27 @@ Ce qui limite encore : aucun plat nommé (la roue montre des assiettes décrites
 indicatif, pas la liste réelle des variétés) ; aucun producteur nommé ; l'identité du portrait du chef à confirmer ;
 le logo n'existe qu'en 270 px (marque redessinée en texte + SVG, à valider par le client) ; heures de fermeture
 issues du Guide MICHELIN.
+
+## Révision 1 (31/10/2026, REVUE-1)
+
+Décisions de design changées, et pourquoi (détail par finding dans `REVISION-1.md`) :
+
+- **Roue, desktop** : 12 vignettes (une par mois, les deux produits dont c'est le pic) au lieu de 24 à 12° d'écart, qui se
+  chevauchaient et tronquaient leurs noms (« CHAMPIGNO »). Largeur `15cqw`, police `max(9px, 1.8cqw)` : la corde entre
+  deux mois reste plus grande que la diagonale d'une vignette à toutes les tailles du disque. Le nom encré est celui du
+  produit de saison au mois du haut (`.vig__nom.is-top`). Les noms de mois de la moitié basse se retournent de 180° pendant
+  la rotation pour rester lisibles.
+- **Roue, mobile** : disque centré dans la gouttière (`min(100vw - 2 × gouttière, 52svh)`), vignettes masquées (des points
+  de 6 px sans information) : la liste du mois s'affiche en clair sous le disque (« En haut de la roue · octobre ·
+  Épinard, … »). Les quatre assiettes passent dans une liste sous la scène épinglée (`.roue__assiettes`).
+- **Titres** : une seule couleur par h1 (fin de l'alternance encre/texte un mot sur deux), deux lignes au plus, taille
+  plafonnée à `15svh` pour garder l'accroche dans la fenêtre à 1440×900 et 1280×720. Sur-titres retirés quand ils
+  répétaient le titre ; engagements sans numérotation ; « Les formules » remplacées par une liste des seules offres hors
+  carte (soirées, chèques-cadeaux).
+- **Réservation** : bouton dans le hero de l'accueil (desktop) et de `/reservation/` ; au téléphone, barre fixe
+  « Réserver une table » en bas de toutes les pages sauf `/reservation/` (le site du client en a une), réservée en bas de
+  page par `.resa-mobile__place` pour ne jamais couvrir le pied KYW.
+- **Polices** : Newsreader italique en `font-display: optional` (CLS 0,17 → 0 sur /saisons/ en mobile bridé) ; les autres
+  graisses restent en `swap` préchargé.
+- **Photos** : /ferme/ sert une image de 560 px (45 Ko) au téléphone (LCP mobile 2,74 → 1,70 s) ; la bouteille « GIN » ne
+  coiffe plus les distinctions (assiette de canard à la place) ; `plateau-plats` (molle) sort de la galerie de l'histoire.
