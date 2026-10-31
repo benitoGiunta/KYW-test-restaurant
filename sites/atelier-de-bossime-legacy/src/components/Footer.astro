@@ -1,0 +1,30 @@
+---
+// Pied de page en colophon : un paragraphe d'adresse et de crédits, puis les liens réels.
+import { resto, nav } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<footer class="colophon">
+  <div class="container colophon__inner">
+    <p class="colophon__name">L’Atelier de Bossimé</p>
+    <p class="colophon__text">
+      Ferme gastronomique, {resto.adresse.rue}, {resto.adresse.ville}.
+      Téléphone <a href={resto.telHref}>{resto.telAffiche}</a>, courriel <a href={`mailto:${resto.email}`}>{resto.email}</a>.
+      TVA {resto.tva}, {resto.rpm}. Photographies&nbsp;: L’Atelier de Bossimé, reprises de son site.
+    </p>
+    <ul class="colophon__links">
+      <li><a href={base}>Accueil</a></li>
+      {nav.map((l) => <li><a href={`${base}${l.href}`}>{l.label}</a></li>)}
+      <li><a href={`${base}reserver-une-table/`}>Réserver une table</a></li>
+      <li><a href={resto.facebook}>Facebook</a></li>
+      <li><a href={resto.michelin}>Guide MICHELIN</a></li>
+    </ul>
+    <p class="colophon__live">Sur le site actuel&nbsp;:
+      <a href={resto.enLigne.cheque}>chèques-cadeaux</a>,
+      <a href={resto.enLigne.salles}>salle de réunion</a>,
+      <a href={resto.enLigne.agenda}>agenda gourmand</a>,
+      <a href={resto.enLigne.news}>nos news</a>,
+      <a href={resto.enLigne.jobs}>jobs</a>,
+      et les événements sur <a href="https://www.event-bossime.be/">event-bossime.be</a>.
+    </p>
+  </div>
+</footer>

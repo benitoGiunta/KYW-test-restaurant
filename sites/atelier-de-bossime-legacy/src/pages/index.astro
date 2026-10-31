@@ -1,0 +1,155 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+// Hallmark · reworded "Réservez une table" to "Réserver une table" · le libellé dit l'action, à l'infinitif, partout pareil
+// Hallmark · reworded "Notre Engagement - Produits de Bouche Issus du Circuit-Court" to "Notre engagement : le circuit court" · 67 (capitales) et tiret
+---
+<Base
+  title="L’Atelier de Bossimé, ferme gastronomique à Loyers (Namur)"
+  description="Cuisine gastronomique issue du circuit court, dans un ancien fenil de la ferme de Bossimé à Loyers : lunch en semaine, menus de trois à sept moments, réservation en ligne."
+  page="accueil"
+>
+  <section class="hero" aria-labelledby="hero-titre">
+    <Photo
+      class="hero__photo"
+      slot="hero"
+      nom="14-ferme-batiment"
+      largeurs={[640, 1140, 1600, 2000]}
+      w={2000}
+      h={800}
+      position="58% 50%"
+      alt="La ferme de Bossimé à Loyers, ses briques et ses tuiles rouges, des herbes hautes au premier plan"
+      priorite
+    />
+    <div class="container hero__inner">
+      <div class="hero__card">
+        <h1 id="hero-titre">Cuisine gastronomique issue du circuit court</h1>
+        <p class="lead">Une ferme gastronomique à Loyers&nbsp;: le menu suit la récolte du jardin.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href={`${base}reserver-une-table/`}>Réserver une table</a>
+          <a class="link" href={`${base}notre-carte/`}>Voir la carte</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="restaurant-titre">
+    <div class="container grid">
+      <div class="head">
+        <h2 id="restaurant-titre">Bossimé, restaurant</h2>
+        <p class="lead">Ludovic Vanackere et son équipe ont fait le choix de l’engagement durable.</p>
+      </div>
+      <ul class="doors body">
+        <li><a href={`${base}notre-cuisine/`}><span class="doors__title">Notre cuisine</span><span class="doors__line">Un menu issu du circuit court, en accord avec la saison, à découvrir au fil du repas.</span><span class="doors__go">Lire</span></a></li>
+        <li><a href={`${base}notre-carte/`}><span class="doors__title">Notre carte</span><span class="doors__line">Le lunch en semaine, les menus de trois à sept moments, choisis sur le livret ou en surprise.</span><span class="doors__go">Voir</span></a></li>
+        <li><a href={`${base}reserver-une-table/`}><span class="doors__title">Réserver une table</span><span class="doors__line">L’agenda en ligne est mis à jour en temps réel, 24&nbsp;h sur 24.</span><span class="doors__go">Réserver</span></a></li>
+        <li><a href={resto.enLigne.cheque}><span class="doors__title">Chèques-cadeaux</span><span class="doors__line">De la valeur de votre choix, pour vos proches ou vos partenaires.</span><span class="doors__go">Offrir</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band--field section--s" aria-labelledby="menu-titre">
+    <div class="container grid switch" data-switch>
+      <div class="head">
+        <h2 id="menu-titre">Un menu à votre choix</h2>
+        <p class="lead">Composez-le sur le livret remis à table, ou laissez carte blanche au chef.</p>
+        <div class="switch__tabs" role="tablist" aria-label="Le menu, midi ou soir">
+          <button type="button" role="tab" id="tab-midi" aria-controls="panel-midi" aria-selected="true">Le midi</button>
+          <button type="button" role="tab" id="tab-soir" aria-controls="panel-soir" aria-selected="false" tabindex="-1">Le soir</button>
+        </div>
+      </div>
+      <div class="switch__panel" role="tabpanel" id="panel-midi" aria-labelledby="tab-midi">
+        <h3>Le midi, du lundi au vendredi</h3>
+        <ul class="prices">
+          <li><span class="prices__name">Lunch 2 services<span class="prices__note">servi en 60 minutes sur demande</span></span><span class="prices__price">42&nbsp;€</span></li>
+          <li><span class="prices__name">Lunch 3 services</span><span class="prices__price">52&nbsp;€</span></li>
+          <li><span class="prices__name">Menu 3, 4 ou 5 Moments<span class="prices__note">au choix ou en surprise</span></span><span class="prices__price">68 à 92&nbsp;€</span></li>
+        </ul>
+      </div>
+      <div class="switch__panel" role="tabpanel" id="panel-soir" aria-labelledby="tab-soir">
+        <h3>Le soir, du lundi au samedi</h3>
+        <ul class="prices">
+          <li><span class="prices__name">Menu 3 Moments<span class="prices__note">sauf vendredi et samedi soir</span></span><span class="prices__price">68&nbsp;€</span></li>
+          <li><span class="prices__name">Menu 4 Moments</span><span class="prices__price">80&nbsp;€</span></li>
+          <li><span class="prices__name">Menu 5 Moments</span><span class="prices__price">92&nbsp;€</span></li>
+          <li><span class="prices__name">Menu 7 Moments<span class="prices__note">carte blanche, sur pré-réservation deux jours avant</span></span><span class="prices__price">130&nbsp;€</span></li>
+        </ul>
+      </div>
+      <p class="switch__more"><a class="link" href={`${base}notre-carte/`}>Toute la carte</a></p>
+    </div>
+  </section>
+
+  <section class="room" aria-label="La salle">
+    <Photo
+      class="room__photo"
+      slot="salle"
+      nom="01-salle-service-soir"
+      largeurs={[640, 1140, 1600, 2000]}
+      w={2000}
+      h={800}
+      position="50% 60%"
+      alt="La salle au service du soir : murs de briques, poutres, tables rondes occupées"
+    />
+    <p class="container caption">La salle, dans l’ancien fenil rénové en matériaux durables, avec vue sur la cuisine ouverte et sur les jardins.</p>
+  </section>
+
+  <section class="section--l" aria-labelledby="engagement-titre">
+    <div class="container grid">
+      <div class="head">
+        <h2 id="engagement-titre">Notre engagement&nbsp;: le circuit court</h2>
+        <p class="lead">«&nbsp;Remettre la ferme au milieu du village.&nbsp;»</p>
+      </div>
+      <div class="body">
+        <table class="ledger ledger--book">
+          <caption class="visually-hidden">Ce que le projet Bossimé met dans l’assiette</caption>
+          <thead><tr><th scope="col" class="idx"><span class="visually-hidden">Numéro</span></th><th scope="col">Valeur</th><th scope="col">Ce qu’elle veut dire à Bossimé</th></tr></thead>
+          <tbody>
+            <tr><td class="idx">1</td><th scope="row">Goût authentique</th><td>Tous les légumes viennent du potager&nbsp;: environ 45 variétés au fil de l’année, en bio, sur sol vivant, de semences anciennes.</td></tr>
+            <tr><td class="idx">2</td><th scope="row">Partage et passion</th><td>Éleveurs, fromagers, vignerons et micro-brasseurs de la région de Namur.</td></tr>
+            <tr><td class="idx">3</td><th scope="row">Cuisine éco-responsable</th><td>Contenants réutilisables et carte simplifiée, dans une démarche zéro déchet.</td></tr>
+            <tr><td class="idx">4</td><th scope="row">Une équipe à votre écoute</th><td>Allergies et restrictions&nbsp;: dites-les à la réservation, les plats s’adaptent.</td></tr>
+            <tr><td class="idx">5</td><th scope="row">Reconnaissances</th><td>Étoile verte du Guide MICHELIN, jeune chef de l’année au Gault&amp;Millau, prix namurois dont les Alfer.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--fibre fibre section" aria-labelledby="venir-titre">
+    <div class="container close">
+      <Photo
+        class="close__photo"
+        slot="facade"
+        nom="09-facade-nuit"
+        largeurs={[640, 1140, 1600, 2000]}
+        w={2000}
+        h={800}
+        position="40% 50%"
+        sizes="(min-width: 60rem) 40vw, 100vw"
+        alt="La façade vitrée du restaurant, de nuit, et l’escalier extérieur"
+      />
+      <div class="close__body">
+        <h2 id="venir-titre">Horaires et adresse</h2>
+        <Horaires />
+        <div class="close__facts">
+          <div>
+            <h3>Adresse</h3>
+            <address>{resto.adresse.rue}<br />{resto.adresse.ville}</address>
+            <a class="link" href={resto.plan}>Voir le plan</a>
+          </div>
+          <div>
+            <h3>Téléphone</h3>
+            <p><a href={resto.telHref}>{resto.telAffiche}</a></p>
+            <p>Groupes dès 10&nbsp;personnes, aussi en dehors des horaires.</p>
+          </div>
+        </div>
+        <div class="actions">
+          <a class="btn btn--primary" href={`${base}reserver-une-table/`}>Réserver une table</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

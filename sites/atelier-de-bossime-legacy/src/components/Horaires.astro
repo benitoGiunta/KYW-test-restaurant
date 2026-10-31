@@ -1,0 +1,21 @@
+---
+// Les horaires en livre de jour (Vellum, Range « Table as a day book ») : midi et soir, le jour courant soulevé.
+import { horaires } from '../data/site';
+interface Props { id?: string }
+const { id } = Astro.props;
+---
+<table class="ledger ledger--hours" id={id}>
+  <caption class="visually-hidden">Heures d’ouverture, midi et soir</caption>
+  <thead>
+    <tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr>
+  </thead>
+  <tbody>
+    {horaires.map((d) => (
+      <tr data-jour={d.jour}>
+        <th scope="row">{d.nom}</th>
+        <td class="num">{d.midi ? <span>dès <time datetime="12:00">12:00</time></span> : <span class="closed">fermé</span>}</td>
+        <td class="num">{d.soir ? <span>dès <time datetime="19:00">19:00</time></span> : <span class="closed">fermé</span>}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>

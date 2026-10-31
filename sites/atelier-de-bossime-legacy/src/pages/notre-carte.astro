@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { formules, fromages, boissons } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base
+  title="Notre carte, lunch et menus de L’Atelier de Bossimé"
+  description="La carte de Bossimé : lunch 2 ou 3 services à 42 € et 52 €, menus de 3, 4, 5 et 7 Moments de 68 € à 130 €, accords mets et vins, boissons et groupes."
+  page="notre-carte"
+>
+  <section class="index-hero" aria-labelledby="carte-titre">
+    <div class="container">
+      <div class="index-hero__head">
+        <h1 id="carte-titre">Notre carte</h1>
+        <p class="lead">Chaque formule se compose sur le livret, ou en surprise.</p>
+      </div>
+      <table class="ledger ledger--menu">
+        <caption class="visually-hidden">Les formules, leurs prix et leurs accords</caption>
+        <thead>
+          <tr><th scope="col">Formule</th><th scope="col">Ce qu’elle comprend</th><th scope="col" class="num">Prix</th><th scope="col">Accord</th><th scope="col" class="num">Sans alcool</th></tr>
+        </thead>
+        <tbody>
+          {formules.map((f) => (
+            <tr id={f.id}>
+              <th scope="row">{f.nom}<span class="when">{f.quand}</span></th>
+              <td>{f.texte}</td>
+              <td class="num price">{f.prix.map((p) => <span>{p}</span>)}</td>
+              <td>{f.accord ?? <span class="closed">sans accord</span>}</td>
+              <td class="num">{f.sansAlcool ?? <span class="closed">non</span>}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="caption">{fromages}</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="boissons-titre">
+    <div class="container grid">
+      <div class="head">
+        <h2 id="boissons-titre">Boissons</h2>
+        <p class="lead">Des vignerons et micro-brasseurs de la région, et le bar à cocktails de la maison.</p>
+      </div>
+      <div class="body">
+        <table class="ledger">
+          <caption class="visually-hidden">Boissons et prix</caption>
+          <thead><tr><th scope="col">Boisson</th><th scope="col" class="num">Prix</th></tr></thead>
+          <tbody>
+            {boissons.map((b) => (
+              <tr><th scope="row">{b.nom}{b.note && <span class="closed">, {b.note}</span>}</th><td class="num">{b.prix}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="room" aria-label="Une assiette" data-descriptif="true">
+    <Photo
+      class="room__photo"
+      slot="assiette"
+      nom="10-plat-volaille-carottes"
+      largeurs={[640, 1140, 1600, 2000]}
+      w={2000}
+      h={800}
+      position="50% 50%"
+      alt="Volaille et carottes nappées de sauce dans une assiette creuse grise"
+    />
+    <p class="container caption">Volaille, carottes, sauce nappée.</p>
+  </section>
+
+  <section class="section--l" aria-labelledby="groupes-titre">
+    <div class="container">
+      <div class="grid">
+        <div class="head head--7">
+          <h2 id="groupes-titre">Groupes et événements</h2>
+          <p class="lead">Menus classiques ou formules tout compris, sur simple demande.</p>
+        </div>
+      </div>
+      <div class="figures">
+        <div><b>60</b><span>personnes assises, au plus</span></div>
+        <div><b>120</b><span>personnes en formule dînatoire debout</span></div>
+        <div><b>10</b><span>personnes suffisent pour ouvrir en dehors des horaires</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--fibre fibre section--s" aria-labelledby="carte-resa">
+    <div class="container grid">
+      <div class="head head--7">
+        <h2 id="carte-resa">Réservez votre table</h2>
+        <p class="lead">Midi du lundi au vendredi dès 12:00, soir du lundi au samedi dès 19:00. Signalez allergies et restrictions&nbsp;: les plats s’adaptent.</p>
+      </div>
+      <div class="actions actions--end">
+        <a class="btn btn--primary" href={`${base}reserver-une-table/`}>Réserver une table</a>
+        <a class="link" href={`${base}contactez-nous/`}>Demander un devis</a>
+      </div>
+    </div>
+  </section>
+</Base>

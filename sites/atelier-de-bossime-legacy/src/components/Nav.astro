@@ -1,0 +1,28 @@
+---
+import { nav, resto } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const current = (p: string) => (p === page ? 'page' : undefined);
+---
+<header class="nav">
+  <nav class="nav__bar container" aria-label="Navigation principale">
+    <a class="nav__logo" href={base} aria-label="L’Atelier de Bossimé, accueil">
+      <img src={`${base}photos/logo.png`} width="270" height="88" alt="" />
+    </a>
+    <ul class="nav__links">
+      {nav.map((l) => <li><a href={`${base}${l.href}`} aria-current={current(l.page)}>{l.label}</a></li>)}
+    </ul>
+    <a class="btn btn--primary btn--nav" href={`${base}reserver-une-table/`} aria-current={current('reserver-une-table')}>Réserver</a>
+    <button class="nav__menu" type="button" popovertarget="menu-mobile" aria-label="Ouvrir le menu">Menu</button>
+  </nav>
+  <div id="menu-mobile" class="menu-mobile" popover>
+    <ul>
+      <li><a href={base} aria-current={current('accueil')}>Accueil</a></li>
+      {nav.map((l) => <li><a href={`${base}${l.href}`} aria-current={current(l.page)}>{l.label}</a></li>)}
+      <li><a href={`${base}reserver-une-table/`} aria-current={current('reserver-une-table')}>Réserver une table</a></li>
+      <li><a href={resto.telHref}>Appeler le {resto.telAffiche}</a></li>
+    </ul>
+    <button class="btn btn--ghost" type="button" popovertarget="menu-mobile" popovertargetaction="hide">Fermer</button>
+  </div>
+</header>

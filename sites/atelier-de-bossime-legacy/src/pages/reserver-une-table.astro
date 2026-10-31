@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+---
+<Base
+  title="Réserver une table à L’Atelier de Bossimé"
+  description="Réservez votre table à Bossimé, 24 h sur 24 : l’agenda en ligne Zenchef est à jour en temps réel. Ou appelez le +32 478 13 71 25."
+  page="reserver-une-table"
+>
+  <section class="container counter" aria-labelledby="resa-titre">
+    <div class="counter__head">
+      <h1 id="resa-titre">Réserver une table</h1>
+      <p class="lead">Réservez 24&nbsp;h sur 24&nbsp;: l’agenda est à jour en temps réel.</p>
+      <div class="actions">
+        <a class="link" href={resto.telHref}>Ou appeler le {resto.telAffiche}</a>
+      </div>
+    </div>
+    <div class="counter__module">
+      <div class="zenchef" data-zenchef={resto.zenchef}>
+        <div>
+          <p>Le module de réservation Zenchef de Bossimé&nbsp;: date, heure, nombre de couverts, puis vos coordonnées.</p>
+          <div class="actions">
+            <button class="btn btn--primary" type="button" data-zenchef-open hidden>Choisir une date</button>
+            <a class="btn btn--ghost" href={resto.zenchef}>Ouvrir l’agenda Zenchef</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--s section--top" aria-labelledby="etapes-titre">
+    <div class="container">
+      <h2 id="etapes-titre">Comment se passe la réservation</h2>
+      <ol class="steps">
+        <li><h3>Les disponibilités</h3><p>Vérifiez les places libres à la date de votre choix&nbsp;: aucun risque de surbooking.</p></li>
+        <li><h3>Vos coordonnées</h3><p>Téléphone, e-mail, et les allergies ou restrictions éventuelles.</p></li>
+        <li><h3>La confirmation</h3><p>Un e-mail vous confirme la table.</p></li>
+        <li><h3>Le rappel</h3><p>Quelques jours avant, un e-mail&nbsp;: cliquez sur son lien pour confirmer. Sans réponse, nous vous appelons.</p></li>
+      </ol>
+      <p class="caption">Merci de nous prévenir au plus vite d’une annulation ou d’un empêchement.</p>
+    </div>
+  </section>
+
+  <section class="band--fibre fibre section" aria-labelledby="heures-titre">
+    <div class="container close">
+      <Photo
+        class="close__photo"
+        slot="table"
+        nom="05-table-brique"
+        largeurs={[640, 1140, 1600, 2000]}
+        w={2000}
+        h={800}
+        position="50% 50%"
+        sizes="(min-width: 60rem) 40vw, 100vw"
+        alt="Une table dressée contre un mur de briques, deux chaises et une plante"
+      />
+      <div class="close__body">
+        <h2 id="heures-titre">Heures d’ouverture</h2>
+        <Horaires />
+        <div class="close__facts">
+          <div>
+            <h3>Adresse</h3>
+            <address>{resto.adresse.rue}<br />{resto.adresse.ville}</address>
+          </div>
+          <div>
+            <h3>Groupes</h3>
+            <p>Dès 10&nbsp;personnes, ouverture possible en dehors de ces horaires.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

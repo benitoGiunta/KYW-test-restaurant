@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+// Les légendes des trois assiettes décrivent la photo (index photos du dossier), pas un plat de la carte du moment : drapeau data-descriptif.
+---
+<Base
+  title="Notre cuisine, L’Atelier de Bossimé à Namur"
+  description="La cuisine de Bossimé : un menu issu du circuit court, les légumes du potager de la ferme, trois piliers de durabilité et un livret pour composer son repas."
+  page="notre-cuisine"
+>
+  <section class="banner" aria-labelledby="cuisine-titre">
+    <div class="container">
+      <div class="banner__head">
+        <h1 id="cuisine-titre">Notre cuisine</h1>
+        <p class="lead">Laissez-vous surprendre par de nouvelles saveurs.</p>
+      </div>
+    </div>
+    <Photo
+      class="banner__photo"
+      slot="dressage"
+      nom="12-dressage-assiettes"
+      largeurs={[640, 1140, 1600, 2000]}
+      w={2000}
+      h={800}
+      position="50% 55%"
+      alt="La brigade dresse six assiettes à la pince, dans la cuisine ouverte"
+      priorite
+    />
+  </section>
+
+  <section class="section" aria-labelledby="piliers-titre">
+    <div class="container">
+      <div class="grid">
+        <div class="head head--7">
+          <h2 id="piliers-titre">Trois accents sur le E</h2>
+          <p class="lead">Les trois piliers de la durabilité sont dans le logo&nbsp;: un accent chacun, sur le E de Bossimé.</p>
+        </div>
+      </div>
+      <div class="trio">
+        <div>
+          <h3>Environnement</h3>
+          <p>Une ferme gastronomique biologique, des principes environnementaux stricts et une économie transparente.</p>
+        </div>
+        <div>
+          <h3>Social</h3>
+          <p>Un management de talents&nbsp;: chacun apporte sa passion, son envie d’apprendre et son dévouement.</p>
+        </div>
+        <div>
+          <h3>Économie</h3>
+          <p>Un réseau de producteurs locaux et artisanaux, qui préservent les terres et l’histoire culinaire de la région.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--s section--top" aria-labelledby="histoire-titre">
+    <div class="container split">
+      <div class="split__text">
+        <h2 id="histoire-titre">Ouvert à 20 ans</h2>
+        <p>Ludovic Vanackere a fondé Bossimé en 2011, à 20 ans, pour montrer qu’une gastronomie peut naître d’ingrédients simples et locaux.</p>
+        <p class="measure" style="margin-top: var(--space-md)">La qualité d’un produit ne tient ni à son prix ni à sa rareté supposée, mais au temps et à la passion investis pour le sublimer.</p>
+      </div>
+      <Photo
+        class="split__photo"
+        slot="portrait"
+        nom="18-portrait-chef"
+        largeurs={[640, 1140, 1460]}
+        w={1460}
+        h={600}
+        position="45% 40%"
+        sizes="(min-width: 60rem) 45vw, 100vw"
+        alt="Un homme en tablier Bossimé, lunettes, dans la salle (portrait à légender par le restaurant)"
+      />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="livret-titre">
+    <div class="container">
+      <div class="grid">
+        <div class="head head--8">
+          <h2 id="livret-titre">Choisir, ou se laisser surprendre</h2>
+        </div>
+      </div>
+      <ul class="rows" style="margin-top: var(--space-2xl)">
+        <li><h3>Le livret</h3><p>Au début du repas, un livret présente les créations de la cuisine&nbsp;: vous composez votre menu avec les plats qui vous attirent.</p></li>
+        <li><h3>Carte blanche</h3><p>Vous choisissez le nombre de plats, l’équipe compose le repas et le dévoile étape par étape, comme le menu surprise historique.</p></li>
+        <li><h3>Le même engagement</h3><p>Le produit brut, la saison, le goût et le savoir-faire de celles et ceux qui font vivre le terroir.</p></li>
+      </ul>
+      <div class="plates">
+        <figure data-descriptif="true">
+          <Photo slot="assiette-1" nom="22-plat-tomate-borage" largeurs={[640, 1140]} w={1140} h={641} position="55% 50%" sizes="(min-width: 60rem) 30vw, 100vw" alt="Tomates et fleur de bourrache, un jus vert versé à la bouteille" />
+          <figcaption class="caption">Tomates, fleur de bourrache, jus vert.</figcaption>
+        </figure>
+        <figure data-descriptif="true">
+          <Photo slot="assiette-2" nom="23-plat-canard-pain" largeurs={[640, 1140]} w={1140} h={641} position="62% 50%" sizes="(min-width: 60rem) 30vw, 100vw" alt="Canard rosé sur assiette ronde, pain maison et crème en ramequin" />
+          <figcaption class="caption">Canard rosé, pain maison.</figcaption>
+        </figure>
+        <figure data-descriptif="true">
+          <Photo slot="assiette-3" nom="24-plat-poireau-galette" largeurs={[640, 1140]} w={1140} h={641} position="50% 50%" sizes="(min-width: 60rem) 30vw, 100vw" alt="Poireau grillé, herbes et galette brune sur assiette claire" />
+          <figcaption class="caption">Poireau grillé, herbes, galette.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band--fibre fibre section--s" aria-labelledby="cuisine-resa">
+    <div class="container grid">
+      <div class="head head--7">
+        <h2 id="cuisine-resa">Envie d’y goûter&nbsp;?</h2>
+        <p class="lead">Midi du lundi au vendredi dès 12:00, soir du lundi au samedi dès 19:00. Allergies et restrictions&nbsp;: à préciser en réservant.</p>
+      </div>
+      <div class="actions actions--end">
+        <a class="btn btn--primary" href={`${base}reserver-une-table/`}>Réserver une table</a>
+        <a class="link" href={`${base}notre-carte/`}>Voir la carte</a>
+      </div>
+    </div>
+  </section>
+</Base>

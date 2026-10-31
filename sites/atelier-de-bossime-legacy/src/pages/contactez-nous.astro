@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base
+  title="Contactez L’Atelier de Bossimé, à Loyers (Namur)"
+  description="Écrire ou téléphoner à Bossimé, rue Bossimé 2B à Loyers (Namur) : formulaire de contact, horaires, accès, accessibilité et informations pratiques."
+  page="contactez-nous"
+>
+  <section class="banner" aria-labelledby="contact-titre">
+    <div class="container">
+      <div class="banner__head">
+        <h1 id="contact-titre">Contactez-nous</h1>
+        <p class="lead">Une question, un devis&nbsp;: nous répondons dans les meilleurs délais.</p>
+      </div>
+    </div>
+    <Photo
+      class="banner__photo"
+      slot="vitrine"
+      nom="07-vitrine-salle-jardin"
+      largeurs={[640, 1140, 1600, 2000]}
+      w={2000}
+      h={800}
+      position="50% 50%"
+      alt="La salle vue à travers la baie vitrée, avec le reflet des jardins"
+      priorite
+    />
+  </section>
+
+  <section class="section" aria-labelledby="form-titre">
+    <div class="container contact">
+      <div class="contact__form">
+        <h2 id="form-titre" style="margin-bottom: var(--space-xl)">Formulaire de contact</h2>
+        <form class="form" data-endpoint="" novalidate>
+          <div class="field">
+            <label for="field_objet">Objet</label>
+            <select id="field_objet" name="objet" required data-erreur="Choisissez l’objet de votre message." aria-describedby="field_objet-aide">
+              <option value="">Choisir</option>
+              <option>Demande d’infos ou devis</option>
+              <option>Postuler une offre d’emploi</option>
+              <option>Réclamation ou plainte</option>
+              <option>Autres</option>
+            </select>
+            <p class="field__help" id="field_objet-aide" aria-live="polite"></p>
+          </div>
+          <fieldset class="field">
+            <legend>Civilité</legend>
+            <div class="seg">
+              <input type="radio" id="civ-m" name="civilite" value="Monsieur" /><label for="civ-m">Monsieur</label>
+              <input type="radio" id="civ-mme" name="civilite" value="Madame" /><label for="civ-mme">Madame</label>
+              <input type="radio" id="civ-mlle" name="civilite" value="Mademoiselle" /><label for="civ-mlle">Mademoiselle</label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="field_nom">Nom</label>
+            <input id="field_nom" name="nom" type="text" autocomplete="family-name" required data-erreur="Indiquez votre nom." aria-describedby="field_nom-aide" />
+            <p class="field__help" id="field_nom-aide" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="field_prenom">Prénom</label>
+            <input id="field_prenom" name="prenom" type="text" autocomplete="given-name" required data-erreur="Indiquez votre prénom." aria-describedby="field_prenom-aide" />
+            <p class="field__help" id="field_prenom-aide" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="field_email">Adresse e-mail</label>
+            <input id="field_email" name="email" type="email" autocomplete="email" placeholder="nom@exemple.be" required data-erreur="Écrivez l’adresse sous la forme nom@exemple.be." aria-describedby="field_email-aide" />
+            <p class="field__help" id="field_email-aide" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="field_telephone">Téléphone <span class="field__hint">(facultatif)</span></label>
+            <input id="field_telephone" name="telephone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+32 474 12 34 56" aria-describedby="field_telephone-aide" />
+            <p class="field__help field__hint" id="field_telephone-aide">Avec le préfixe international.</p>
+          </div>
+          <div class="field field--wide">
+            <label for="field_message">Message</label>
+            <textarea id="field_message" name="message" required data-erreur="Écrivez votre message." aria-describedby="field_message-aide"></textarea>
+            <p class="field__help" id="field_message-aide" aria-live="polite"></p>
+          </div>
+          <p class="form__legal">En envoyant ce formulaire, vous acceptez les conditions d’utilisation du site et de protection des données personnelles.</p>
+          <div class="form__foot">
+            <button class="btn btn--primary" type="submit">Envoyer le message</button>
+            <p class="form__status" data-status aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+      <aside class="contact__aside" aria-labelledby="direct-titre">
+        <h2 id="direct-titre">En direct</h2>
+        <address>{resto.adresse.rue}<br />{resto.adresse.ville}<br />Belgique</address>
+        <p><a href={resto.telHref}>{resto.telAffiche}</a><br /><a href={`mailto:${resto.email}`}>{resto.email}</a></p>
+        <p><a class="link" href={`${base}reserver-une-table/`}>Réserver une table en ligne</a></p>
+        <Horaires />
+      </aside>
+    </div>
+  </section>
+
+  <section class="band--fibre fibre section--s" aria-labelledby="venir-titre">
+    <div class="container">
+      <h2 id="venir-titre">Venir à Bossimé</h2>
+      <ul class="rows" style="margin-top: var(--space-2xl)">
+        <li><h3>En voiture</h3><p>À 30 minutes de Charleroi, 35 de Bruxelles, 40 de Liège, 50 de Givet, à 1&nbsp;h&nbsp;30 de Luxembourg. <a href={resto.plan}>Voir le plan</a></p></li>
+        <li><h3>Accessibilité</h3><p>Pendant les travaux, l’accès au restaurant passe par un escalier de 5&nbsp;marches. Dès 2027, il sera de nouveau accessible aux personnes à mobilité réduite.</p></li>
+        <li><h3>Chiens</h3><p>Les chiens domestiques sont acceptés.</p></li>
+      </ul>
+    </div>
+  </section>
+</Base>
