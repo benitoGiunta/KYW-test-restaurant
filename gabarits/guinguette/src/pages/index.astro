@@ -45,7 +45,7 @@ const etoiles = Array.from({ length: 5 });
         <p class="meta">La maison</p>
         <h2 class="section__titre">Deux potes, <em>un feu</em></h2>
         <div class="prose">
-          <p>{site.histoire[0].replace('Il y a quatorze ans, ', '')}</p>
+          <p>{site.histoire[0]}</p>
           <p>{site.histoire[3]}</p>
         </div>
         <div class="actions"><a class="btn" href={u('/histoire/')}>Toute l'histoire</a></div>
@@ -96,7 +96,7 @@ const etoiles = Array.from({ length: 5 });
           {site.carte.map((c) => (
             <div>
               <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie.split(',')[0].split(' 4 ')[0]}</h3>
-              {c.categorie.includes('67') && <p class="cat__note">4 services, 67 €, du lundi au vendredi soir</p>}
+              {c.categorie.startsWith('Menu dégustation') && <p class="cat__note">{g.menuUnique.services} services, {g.menuUnique.prix}, {g.menuUnique.periode}</p>}
               <ul role="list">
                 {c.plats.map((p) => (
                   <li class="plat">

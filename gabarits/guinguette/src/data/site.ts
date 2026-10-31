@@ -50,7 +50,7 @@ export const site: Restaurant = {
   adresse: { rue: 'Avenue de la Plante', numero: '4', cp: '5000', commune: 'Namur', pays: 'BE' },
   geo: { lat: 50.4586737, lon: 4.8643452 },
   telephone: '+32 81 64 04 44',
-  email: { valeur: 'bonjour@lespotesaufeu.be', placeholder: true },
+  email: { valeur: '', placeholder: true }, // inconnu au dossier : jamais affiché,
   reservation: { outil: 'Zenchef', url: 'https://bookings.zenchef.com/results?rid=379477' },
   horaires: [
     { jour: 'lundi', creneaux: [{ ouverture: '19:00', fermeture: '21:00' }] },
@@ -112,7 +112,7 @@ export const site: Restaurant = {
     { nom: 'Bon cadeau', prix: '50 / 75 / 100 / 150 €', description: 'Demande en ligne, retrait au restaurant.', placeholder: false },
   ],
   histoire: [
-    "Les Potes au Feu, c'est d'abord l'histoire d'une rencontre. Il y a quatorze ans, François Schepens et Damien Gorjanec aiguisent leurs premiers couteaux au restaurant la Plage d'Amée à Namur : deux gamins pleins d'envie, le début d'une amitié.",
+    "Les Potes au Feu, c'est d'abord l'histoire d'une rencontre. François Schepens et Damien Gorjanec aiguisent leurs premiers couteaux au restaurant la Plage d'Amée à Namur : deux gamins pleins d'envie, le début d'une amitié.",
     "François continue ses classes aux États-Unis et à Montréal, Damien se fait une place en Belgique et cumule des expériences à l'étranger, notamment à Shanghai. À chaque retrouvaille, autour d'un verre, le rêve d'ouvrir un restaurant se dessine.",
     "Début de l'hiver 2019, installés par hasard à une table de ce lieu, ils ne savent pas encore qu'ils y ouvriront leur premier restaurant. Trois mois plus tard, ils en ont les clés.",
     "Le concept : une cuisine bistronomique à quatre mains, de qualité, avec un ancrage local, et un mot d'ordre, le plaisir. Ils servent eux-mêmes leurs plats et expliquent leur démarche à table, dans une atmosphère décontractée qui ne se la raconte pas.",
@@ -130,22 +130,6 @@ export const site: Restaurant = {
       source: 'Guide MICHELIN Belgique 2026',
       date: '2026-05-04',
       placeholder: false,
-    },
-    {
-      texte: 'Les chefs viennent eux-mêmes présenter chaque assiette. Le boeuf confit est une merveille, et on repart avec le sourire.',
-      auteur: 'Claire D.',
-      source: 'Avis Google',
-      date: '2026-03-18',
-      note: 5,
-      placeholder: true,
-    },
-    {
-      texte: 'Menu unique, zéro hésitation, que du plaisir. Le cadre est chaleureux et le service aussi simple que précis.',
-      auteur: 'Thomas V.',
-      source: 'Avis Google',
-      date: '2026-02-02',
-      note: 5,
-      placeholder: true,
     },
   ],
   photos: [
@@ -298,8 +282,17 @@ export const guinguette = {
     { texte: 'Menu unique, zéro hésitation. Le soufflé au caramel a mis la table d’accord.', note: 5, r: -2, placeholder: true },
     { texte: 'Simple, généreux, précis. Le genre d’adresse qu’on garde pour soi puis qu’on donne quand même.', note: 5, r: 5, placeholder: true },
   ] as AvisExemple[],
+  /** Menu unique : nombre de services et période annoncés par le dossier (constantes, jamais calculées). */
+  menuUnique: { services: 4, prix: '67 €', periode: 'du lundi au vendredi soir' },
   /** Terrasse et emporter : inconnus au dossier → entièrement illustratifs. */
-  terrasse: { connue: false, placeholder: true },
+  terrasse: {
+    connue: false,
+    placeholder: true,
+    exemple: {
+      texte: 'Exemple de texte : une terrasse de vingt couverts côté Meuse, ouverte aux mêmes heures que la salle, sans réservation en terrasse.',
+      points: ['20 couverts dehors*', 'parasols et plaids*', 'enfants bienvenus*', 'chiens tenus en laisse*'],
+    },
+  },
   emporter: { connu: false, placeholder: true },
   /** Manifeste : phrases tirées des valeurs réelles du dossier. */
   manifeste: {

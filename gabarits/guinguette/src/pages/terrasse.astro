@@ -4,7 +4,7 @@
 import Base from '../layouts/Base.astro';
 import Objet from '../components/Objet.astro';
 import Ornements from '../components/Ornements.astro';
-import { site, photoDe, telHref } from '../data/site';
+import { site, guinguette as g, photoDe, telHref } from '../data/site';
 import { asset } from '../lib/url';
 const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
 const photos = ['/photos/salle-clients-bar.webp', '/photos/bar-cocktails.webp', '/photos/service-frites.webp'].map(photoDe);
@@ -26,9 +26,9 @@ const samedi = site.horaires.find((h) => h.jour === 'samedi');
     <div class="wrap manifeste__inner">
       <Ornements />
       <h2 style="font-size: var(--t-xl)">Dehors, <em class="ital">dès qu'il fait beau</em></h2>
-      <p class="lead">Exemple de texte : une terrasse de vingt couverts côté Meuse, ouverte aux mêmes heures que la salle, sans réservation en terrasse.<span class="illu">illustratif</span></p>
+      <p class="lead">{g.terrasse.exemple.texte}<span class="illu">illustratif</span></p>
       <ul role="list" style="display:flex;flex-wrap:wrap;gap:0.6em;justify-content:center;margin-top:calc(var(--u)*3)">
-        {['20 couverts dehors*', 'parasols et plaids*', 'enfants bienvenus*', 'chiens tenus en laisse*'].map((t) => <li class="vege" style="font-size:var(--t-s);padding:0.4em 1em">{t}</li>)}
+        {g.terrasse.exemple.points.map((t) => <li class="vege" style="font-size:var(--t-s);padding:0.4em 1em">{t}</li>)}
       </ul>
       <p class="muted" style="margin-top:calc(var(--u)*2);font-size:var(--t-s)">* exemples, à remplacer par les données du restaurant</p>
     </div>

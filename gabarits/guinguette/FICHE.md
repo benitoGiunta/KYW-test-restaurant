@@ -35,8 +35,9 @@ quickTo + flèches clavier + zone d'exclusion du texte), `heroObjets()`, `table(
 - Carte réelle avec prix par catégorie (la carte longue d'exemple est à remplacer ou retirer).
 - 12 photos lifestyle carrées ou recadrables en carré pour la table, 3 à 6 photos de plats, 1 photo d'équipe.
 - Slogan de la maison (le slogan du gabarit est un exemple), texte « la maison » (2 paragraphes).
-- Terrasse : oui / non, places, jours ; service à emporter : oui / non (sinon retirer la page).
-- Avis réels avec autorisation (les 4 cartes d'avis sont des exemples sans nom ni source).
+- Terrasse : oui / non, places, jours (`guinguette.terrasse.exemple` à remplacer) ; service à emporter : oui / non (sinon retirer la page).
+- Nombre de services, prix et période du menu unique : constantes `guinguette.menuUnique`.
+- Avis réels avec autorisation (les 4 cartes d'avis sont des exemples sans nom ni source) ; e-mail de contact (non affiché tant qu'il est inconnu).
 
 ## Limites
 - Les objets dessinés sont ceux d'une guinguette (frites, parasol, verre…) : pour une pizzeria, redessiner 2 ou 3 objets

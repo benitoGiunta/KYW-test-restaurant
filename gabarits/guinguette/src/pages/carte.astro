@@ -22,11 +22,12 @@ const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
   <section class="section" style="padding-top:0">
     <div class="wrap">
       <div class="carte">
+        <h2 class="sr-only">Le menu</h2>
         <div class="carte__grille">
           {site.carte.map((c) => (
             <div>
               <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie.split(',')[0].split(' 4 ')[0]}</h3>
-              {c.categorie.includes('67') && <p class="cat__note">4 services, 67 €, du lundi au vendredi soir</p>}
+              {c.categorie.startsWith('Menu dégustation') && <p class="cat__note">{g.menuUnique.services} services, {g.menuUnique.prix}, {g.menuUnique.periode}</p>}
               <ul role="list">
                 {c.plats.map((p) => (
                   <li class="plat">
