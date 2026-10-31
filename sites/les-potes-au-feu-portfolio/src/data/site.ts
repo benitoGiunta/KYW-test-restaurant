@@ -128,7 +128,7 @@ export const site: Restaurant = {
         { annee: '2019', lieu: 'Avenue de la Plante, Namur', texte: 'Début de l\'hiver, installés par hasard à une table de ce lieu. Le rêve prend une adresse.', placeholder: false },
         { annee: '2020', lieu: 'Les Potes au Feu', texte: 'Trois mois plus tard, les clés. Le restaurant ouvre à quatre mains.', placeholder: false },
       ],
-      citation: { texte: 'Une cuisine bistronomique à quatre mains, de qualité, avec un ancrage local. Et un mot d\'ordre : le plaisir.', source: 'Le concept, site des Potes au Feu', placeholder: false },
+      citation: { texte: 'Une cuisine bistronomique à quatre mains, de qualité, avec un ancrage local. Et un mot d\'ordre : le plaisir.', source: 'Le concept, sur le site du restaurant', placeholder: false },
       platsFetichesPlaceholder: true,
       platsFetiches: ['Boeuf confit, carottes, cromesquis de pommes de terre', 'Saint-Jacques, butternut, passion'],
     },
@@ -148,9 +148,9 @@ export const site: Restaurant = {
         { annee: 'Ensuite', lieu: 'États-Unis', texte: 'Il continue ses classes outre-Atlantique.', placeholder: false },
         { annee: 'Puis', lieu: 'Montréal', texte: 'Ses classes se poursuivent au Québec.', placeholder: false },
         { annee: '2019', lieu: 'Avenue de la Plante, Namur', texte: 'Début de l\'hiver, la même table, par hasard. Ils ne savent pas encore qu\'ils ouvriront ici.', placeholder: false },
-        { annee: '2020', lieu: 'Les Potes au Feu', texte: 'Trois mois plus tard, les clés. Le menu s\'écrit à deux depuis.', placeholder: false },
+        { annee: '2020', lieu: 'Les Potes au Feu', texte: 'Le premier service, à deux. Le menu s\'écrit à quatre mains depuis.', placeholder: false },
       ],
-      citation: { texte: 'Un restaurant à l\'image des Potes : bon, généreux et accueillant.', source: 'Le concept, site des Potes au Feu', placeholder: false },
+      citation: { texte: 'Un restaurant à l\'image des Potes : bon, généreux et accueillant.', source: 'Les Potes, sur le site du restaurant', placeholder: false },
       platsFetichesPlaceholder: true,
       platsFetiches: ['Soufflé au caramel, chaï, poire', 'Rosace de pommes, glace et tuile'],
     },
@@ -354,6 +354,7 @@ export const telHref = (r: Restaurant = site) => `tel:${r.telephone.replace(/\s+
 
 /** Légende d'un plat : description prouvée, chef (attribution illustrative), mention illustratif. */
 export const legendePlat = (p: Plat): string => {
-  const c = p.voix ? chef(p.voix).prenom + (p.voixPlaceholder ? ' (attribution illustrative)' : '') : '';
+  // Un plat déjà illustratif ne porte qu'une seule marque (pas « (attribution illustrative) (illustratif) »).
+  const c = p.voix ? chef(p.voix).prenom + (p.voixPlaceholder && !p.placeholder ? ' (attribution illustrative)' : '') : '';
   return [p.description, c].filter(Boolean).join(', ') + (p.placeholder ? ' (illustratif)' : '');
 };

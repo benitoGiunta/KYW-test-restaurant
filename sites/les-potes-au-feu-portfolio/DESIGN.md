@@ -1,4 +1,108 @@
-# Quatre mains : DESIGN.md
+# Les Potes au Feu, variante Portfolio : DESIGN.md
+
+Agent variante-portfolio, 31/10/2026. Sources : `data/restaurants/les-potes-au-feu/` (dossier.md, complément du
+31/10 : note Google Rankeat, Le Fooding ; photos/index.json). Gabarit retenu : **Quatre mains** (`gabarits/quatre-mains`).
+
+## Choix du gabarit
+
+Notes sur 5 : positionnement (bistronomie, duo de chefs, menu unique), ambiance (petite salle sombre, murs vert-gris,
+coussins moutarde, chêne, ampoules, cuisine ouverte), richesse du contenu disponible (25 photos dont 2 portraits
+verticaux, histoire écrite, pas de producteurs nommés, pas d'avis citables hors MICHELIN), type de carte (menu unique
+du soir 4 services + 2 formules du midi), réservation (Zenchef réel), signature (le moment mémorable a-t-il un sens ici).
+
+| Gabarit | Position. | Ambiance | Contenu | Carte | Résa | Signature | Total /30 | Remarque |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| affiche | 1 | 1 | 3 | 2 | 4 | 2 | 13 | street food criarde, à éviter pour une table qui « tend vers le gastronomique » |
+| ardoise | 3 | 2 | 4 | 2 | 5 | 3 | 19 | conçu pour une carte longue : la moitié serait des lignes d'exemple |
+| braise | 4 | 3 | 4 | 3 | 5 | 3 | 22 | « au feu » est un jeu de mots (pot-au-feu), pas un grill : la température raconte un feu absent |
+| cahier | 4 | 3 | 2 | 4 | 5 | 3 | 21 | exige 6 producteurs nommés et un menu du jour daté : inconnus |
+| collage | 2 | 2 | 3 | 3 | 5 | 1 | 16 | lieu à plusieurs vies (scène, brunch) : aucune n'existe |
+| comptoir | 3 | 3 | 3 | 5 | 5 | 3 | 22 | menu unique parfait, mais blanc clinique contre une salle sombre et décontractée ; dressage sans détourage |
+| encre | 1 | 3 | 3 | 2 | 5 | 1 | 15 | table asiatique ; le rouleau de 12 plats serait inventé |
+| forno | 2 | 2 | 3 | 3 | 5 | 2 | 17 | four à pizza absent, pages pâtes et fournées illustratives |
+| guinguette | 2 | 1 | 3 | 3 | 5 | 2 | 16 | terrasse familiale ; photos de reportage sombres |
+| journee | 2 | 3 | 3 | 2 | 5 | 1 | 16 | six moments de la journée pour un lieu ouvert 5 soirs et 2 midis |
+| maree | 2 | 1 | 3 | 3 | 5 | 2 | 16 | lumineux et salin ; photos d'eau libres à fournir |
+| nocturne | 2 | 4 | 3 | 3 | 5 | 2 | 19 | bon accord avec les photos sombres, mais bar à cocktails sans carte de bar |
+| **quatre-mains** | **5** | **5** | **5** | **4** | **5** | **5** | **29** | duo de chefs associés, « cuisine bistronomique à quatre mains » est leur propre phrase ; vert et moutarde sont les couleurs de la salle |
+| velours | 4 | 3 | 4 | 5 | 5 | 4 | 25 | les nombres vrais existent (4 services, 67 €, 2 chefs, 2020), mais le feutré gastronomique dément « décontracté qui swingue » |
+| verger | 3 | 2 | 2 | 3 | 5 | 2 | 17 | calendrier des produits et producteurs inconnus |
+
+**Décision : Quatre mains.** Le gabarit ne prend tout son sens que pour un duo, et le restaurant se définit lui-même par
+« une cuisine bistronomique à quatre mains » ; le diptyque vert bouteille / moutarde reprend le lambris vert-gris et les
+coussins moutarde de la salle (photo MICHELIN). Velours (25) est le second ; Quatre mains l'emporte de 4 points, la règle
+« gabarit non utilisé » n'a pas eu à départager (aucun gabarit n'avait encore été attribué, `gabarits/UTILISATION.md` mis
+à jour).
+
+## Ce qui a changé par rapport au gabarit
+
+Le gabarit avait été construit sur ce restaurant ; l'adaptation a donc surtout consisté à **remplacer le fictif par du
+réel** (complément du dossier du 31/10) et à retirer ce qui ne pouvait pas l'être honnêtement.
+
+Sections conservées : toutes les pages (accueil, carte, les deux chefs, histoire, réservation, 404) et leur rythme
+diptyque / diptyque / commune.
+
+Sections modifiées :
+- Accueil, « Avis » : les deux avis Google inventés (Claire D., Thomas V.) sont **retirés** (témoignages fictifs
+  interdits). Colonne verte : l'avis réel du Guide MICHELIN 2026. Colonne moutarde : composant **note** (chiffre
+  monumental « 4,8/5 », « 212 avis Google », source Rankeat du 22/08/2025, « à confirmer »), sans extrait.
+- Accueil, bande « salle » : le badge disait « Ce soir 19:00 à 21:00 » en dur, faux le samedi et le dimanche ; il dit
+  « Le soir, du lundi au vendredi ».
+- Parcours des chefs (accueil, histoire, les deux chefs) : les années 2012 à 2017 et leurs anecdotes inventées (wok à
+  Shanghai, marchés de Jean-Talon, « Bruxelles ») sont remplacées par les seules étapes prouvées, repérées par des
+  jalons sans date (« Débuts », « Ensuite », « Ailleurs », « Puis ») ; 2019 et 2020 restent datées. Plus aucune étape
+  illustrative.
+- « Il y a quatorze ans » (date relative du site, piège noté dans lecons.md) : remplacé par « adolescents » (Le Fooding :
+  « amis d'adolescence ») ; la Plage d'Amée est située à Jambes (Le Fooding).
+- Citations des chefs : les deux phrases inventées et attribuées à Damien et François sont remplacées par deux phrases
+  réelles du site du restaurant, sourcées « Le concept, site des Potes au Feu » (champ `citation.source`).
+- Carte, boissons : la liste fictive (accord 32 €, bière namuroise…) est remplacée par les trois références relevées par
+  Le Fooding (amaretto sour maison 13 €, Anjou Domaine Olivier 9 € le verre, Syrah Stéphane Ogier 50 € la bouteille).
+- Carte, encadré du soir : l'« accord mets et vins » fictif devient « Vu par le Guide MICHELIN 2026 » (cerises noires et
+  griottes, crumble de cacao, glace vanille au lait cru) + menu végétarien sur demande et allergies (réels).
+- E-mail : `bonjour@lespotesaufeu.be` (fictif, affiché sans marque dans le pied de page et la réservation) est retiré ;
+  `site.email` vaut `null` et n'affiche rien. La réservation propose Zenchef et le téléphone.
+- Équipe : Jordan n'a aucune photo prouvée (la photo « planche » était au nom de Sara dans les fichiers) : **tuile
+  typographique** à l'initiale (nouveau composant `.tuile`, aplats vert ou moutarde des deux voix). Sara : photo du
+  service avec alt neutre (identité « à confirmer » dans photos/index.json) ; rôles « illustratifs ».
+- Histoire, coulisses : la phrase méta « les photos de la colonne verte reprennent leurs couleurs au survol » devient une
+  description réelle de la salle.
+
+Sections ajoutées :
+- Histoire, **« Guides et presse »** (commune) : avis MICHELIN daté avec lien vers la fiche, résumé Le Fooding (jamais
+  entre guillemets, `citation: false`), note Google à confirmer.
+- Histoire, **« En vidéo »** : façade légère (photo du passe + bouton lecture moutarde) qui ouvre l'aftermovie YouTube
+  du restaurant dans un nouvel onglet ; pas d'iframe (ni requête tierce ni erreur console au chargement).
+
+Composants créés : `.note` (chiffre monumental), `.tuile` (membre sans photo), `.presse` (liste sourcée), `.video`
+(façade vidéo). Tous dans les jetons du gabarit : Switzer 700 en `--t-mega`, tracking -0.04em, Fragment Mono pour les
+sources, radius 0 sauf le bouton lecture (seul cercle, comme une pastille), survol en 0,45 s.
+
+Données : `site.ts` gagne `noteGoogle`, `presse`, `video`, `prixGamme` ; JSON-LD `priceRange: €€` et
+`paymentAccepted: Mastercard, Visa` (fiche MICHELIN). La note Google n'est **pas** mise en `aggregateRating` (à confirmer).
+
+## Décisions d'art direction
+
+- Palette conservée telle quelle : vert bouteille `#1E4A3E` et moutarde `#E6B13A` sont déjà les couleurs de la salle.
+  L'orange du site actuel (`#f38935`, CTA E-net) n'est pas repris : il n'est pas dans le logo (le O orange de
+  « BISTRONOMIE » est un détail) et il échoue en contraste sur moutarde.
+- Typographie conservée (Switzer + Fragment Mono) : le logo manuscrit n'existe qu'en PNG 425 px, inutilisable en titrage.
+- Favicon : le pictogramme navet du logo (SVG officiel du site) en moutarde sur carré vert, à la place du rond générique
+  du socle.
+- Photos : celles du gabarit (déjà les 22 photos client en WebP ≤ 1800 px) ; aucune photo libre.
+
+## Taux d'adéquation estimé : 88 %
+
+1. Le concept est le restaurant : deux chefs associés, une cuisine « à quatre mains » (leur phrase), servie par eux.
+2. Tout le contenu affiché est réel ou marqué : menu 67 / 52 / 40 €, horaires, Zenchef, MICHELIN, boissons Le Fooding,
+   récit du site ; plus aucun témoignage, chiffre ou étape inventés.
+3. Les couleurs et les photos sont celles de la salle (vert-gris, moutarde, chêne, ampoules).
+
+Ce qui limite encore : la composition des formules du midi et l'exemple de lunch sont illustratifs (aucune source) ;
+l'attribution des plats à l'un ou l'autre chef (ressort D / F du diptyque) n'est pas prouvée ; les rôles de Sara et
+Jordan sont inconnus ; pas de portrait détouré ; aucun extrait d'avis client autorisé ; pas d'e-mail.
+
+## Annexe : système du gabarit « Quatre mains » (repris tel quel)
 
 Gabarit de la collection KYW, direction `quatre-mains` (cahier : `data/portfolio/directions.json`). Restaurant de
 référence : Les Potes au Feu, Namur (deux chefs associés, Damien Gorjanec et François Schepens).
