@@ -109,6 +109,7 @@ function compte() {
   const lib = el.querySelector<HTMLElement>('[data-compte-lib]');
   const texte = el.querySelector<HTMLElement>('[data-compte-texte]');
   const hover = el.querySelector<HTMLElement>('[data-compte-hover]');
+  const nums = el.querySelector<HTMLElement>('.compte__nums');
   const cases = { j: el.querySelector('[data-c="j"]'), h: el.querySelector('[data-c="h"]'), m: el.querySelector('[data-c="m"]'), s: el.querySelector('[data-c="s"]') };
   const reduit = prefersReducedMotion();
   const h2m = (h: string) => { const [a, b] = h.split(':').map(Number); return a * 60 + b; };
@@ -147,11 +148,15 @@ function compte() {
       if (lib) lib.textContent = 'Prochain service';
       const diff = Math.max(0, Math.floor((r.quand.getTime() - now.getTime()) / 1000));
       const j = Math.floor(diff / 86400), h = Math.floor((diff % 86400) / 3600), m = Math.floor((diff % 3600) / 60), s = diff % 60;
+      el.classList.toggle('sans-jours', j === 0);
       poser(cases.j, deux(j)); poser(cases.h, deux(h)); poser(cases.m, deux(m)); poser(cases.s, reduit ? '' : deux(s));
-      const t = `Prochain service ${prochain}, dans ${j} jours ${h} heures ${m} minutes. Réserver une table.`;
+      const unite = (n: number, mot: string) => `${n} ${mot}${n > 1 ? 's' : ''}`;
+      const parts = [j && unite(j, 'jour'), h && unite(h, 'heure'), (m || (!j && !h)) && unite(m, 'minute')].filter(Boolean);
+      const t = `Prochain service ${prochain}, dans ${parts.join(' ')}. Réserver une table.`;
       if (texte && t !== dernier) { texte.textContent = t; dernier = t; }
       if (hover) hover.textContent = `Prochain créneau : ${prochain}`;
     }
+    nums?.removeAttribute('hidden');
     el.classList.add('is-ready');
   };
   tick();

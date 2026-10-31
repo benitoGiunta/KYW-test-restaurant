@@ -1,0 +1,57 @@
+---
+// La maison : histoire des deux chefs (phrases du dossier, dates relatives neutralisées), équipe, avis.
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { asset, u } from '../lib/url';
+const damien = photoDe('/photos/chef-damien.webp');
+const francois = photoDe('/photos/chef-francois.webp');
+const trio = photoDe('/photos/equipe-trio-800.webp');
+---
+<Base title="La maison" preloadImage={{ href: trio.src }} description={`L'histoire des Potes au Feu à ${site.adresse.commune} : Damien Gorjanec et François Schepens, deux potes de la Plage d'Amée à l'avenue de la Plante.`}>
+  <section class="entete wrap">
+    <h1 class="cap">La maison</h1>
+    <p class="lead muted">{site.baseline}</p>
+  </section>
+  <section class="wrap maison">
+    <figure class="maison__media">
+      <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} fetchpriority="high" decoding="async" />
+    </figure>
+    <div class="prose">
+      {site.histoire.map((p) => <p>{p}</p>)}
+    </div>
+  </section>
+  <section class="section" aria-labelledby="equipe-titre">
+    <div class="wrap">
+      <p class="petite-cap">L'équipe</p>
+      <h2 class="cap cat__titre" id="equipe-titre" data-split="words">Au feu et en salle</h2>
+      <div class="galerie" style="margin-top: calc(var(--u) * 2); grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 40rem">
+        {[damien, francois].map((p) => (
+          <figure data-reveal="clip" style="grid-row: auto; aspect-ratio: 3 / 4">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+      <ul class="equipe" style="margin-top: calc(var(--u) * 3)">
+        {site.equipe.map((m) => (
+          <li><span class="nom">{m.nom}</span><span class="muted">{m.role}</span>{m.rolePlaceholder && <span class="illu">rôle illustratif</span>}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="avis-titre">
+    <div class="wrap">
+      <p class="petite-cap">Ils en parlent</p>
+      <h2 class="cap cat__titre" id="avis-titre">Ce qu'on en dit</h2>
+      <div style="margin-top: calc(var(--u) * 2)">
+        {site.avis.map((a) => (
+          <blockquote class="avis" data-reveal="fade">
+            {a.placeholder && <span class="ex" style="margin: 0 0 0.5rem">Exemple d'avis</span>}
+            <p>{a.texte}</p>
+            {!a.placeholder && <cite>{a.auteur}, {a.source}</cite>}
+          </blockquote>
+        ))}
+      </div>
+      <div class="actions"><a class="btn" href={u('/carte/')}>La carte</a><a class="btn btn--plein" href={u('/reservation/')}>Réserver</a></div>
+    </div>
+  </section>
+</Base>

@@ -15,10 +15,12 @@ interface Props {
 }
 const { nom, description = '', prix = null, photo, disque = '', tag, placeholder = false, descPlaceholder = false, delai = 0 } = Astro.props;
 ---
-<article class="fiche" data-fiche data-delay={String(delai)}>
-  <div class={`fiche__vig${photo ? '' : ' fiche__vig--disque'}`} aria-hidden={photo ? undefined : 'true'}>
-    {photo ? <img src={asset(photo.src)} alt={photo.alt} width="520" height="520" loading="lazy" decoding="async" /> : <span>{disque}</span>}
-  </div>
+<article class={`fiche${photo || disque ? '' : ' fiche--nue'}`} data-fiche data-delay={String(delai)}>
+  {(photo || disque) && (
+    <div class={`fiche__vig${photo ? '' : ' fiche__vig--disque'}`} aria-hidden={photo ? undefined : 'true'}>
+      {photo ? <img src={asset(photo.src)} alt={photo.alt} width="520" height="520" loading="lazy" decoding="async" /> : <span>{disque}</span>}
+    </div>
+  )}
   <div>
     <h3 class="fiche__nom">{nom}{tag && <span class="fiche__tag">{tag}</span>}{placeholder && <span class="illu">illustratif</span>}</h3>
     {description && <p class="fiche__desc">{description}{descPlaceholder && !placeholder && <span class="illu">illustratif</span>}</p>}

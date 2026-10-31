@@ -23,7 +23,7 @@ const salle = photoDe('/photos/salle-clients-bar.webp');
         <div class="cat__head">
           <h2 data-split="words">Votre demande</h2>
         </div>
-        <p class="muted" style="margin-bottom: calc(var(--u) * 2)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+        <p class="muted" style="margin-bottom: calc(var(--u) * 2)">Formulaire de démonstration sans envoi : la validation récapitule votre demande, à confirmer ensuite sur {site.reservation.outil} ou par téléphone.</p>
         <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
           <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
           <label>Date <input type="date" name="date" required /></label>
@@ -31,9 +31,19 @@ const salle = photoDe('/photos/salle-clients-bar.webp');
           <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
           <label>Message <textarea name="message" rows="3"></textarea></label>
           <div class="actions" style="margin-top: 0">
-            <button class="btn btn--primary" type="submit">Continuer sur {site.reservation.outil}</button>
+            <button class="btn btn--primary" type="submit">Préparer ma demande</button>
           </div>
         </form>
+        <div class="recap" data-recap role="status" aria-live="polite" tabindex="-1" hidden>
+          <p class="recap__titre">Votre demande, à confirmer</p>
+          <p data-recap-texte></p>
+          <p class="muted">Rien n'a été envoyé : la table est réservée une fois confirmée sur {site.reservation.outil} ou par téléphone.</p>
+          <div class="actions" style="margin-top: var(--u)">
+            <a class="btn btn--primary" href={site.reservation.url} rel="noopener" target="_blank">Confirmer sur {site.reservation.outil}</a>
+            <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+            <button class="link" type="button" data-recap-modifier>Modifier</button>
+          </div>
+        </div>
       </div>
       <div class="stack" style="grid-column: 8 / 13" data-reveal="up" data-delay="0.1">
         <div class="cat__head"><h2 data-split="words">Horaires</h2></div>
@@ -56,12 +66,28 @@ const salle = photoDe('/photos/salle-clients-bar.webp');
 
 <script>
   import { onPage } from '../engine';
-  // Formulaire sans backend : à la validation, on ouvre l'outil de réservation réel (les champs ne sont pas transmis).
+  // Formulaire sans backend : la validation garde la saisie et l'affiche en récapitulatif, avec les deux voies réelles
+  // (outil de réservation, téléphone). Rien n'est perdu : « Modifier » rend le formulaire tel qu'il était rempli.
   onPage(() => {
     const form = document.querySelector<HTMLFormElement>('[data-reservation]');
-    if (!form) return;
-    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    const recap = document.querySelector<HTMLElement>('[data-recap]');
+    const texte = recap?.querySelector<HTMLElement>('[data-recap-texte]');
+    const modifier = recap?.querySelector<HTMLButtonElement>('[data-recap-modifier]');
+    if (!form || !recap || !texte) return;
+    const go = (e: SubmitEvent) => {
+      e.preventDefault();
+      const d = new FormData(form);
+      const v = (k: string) => String(d.get(k) || '').trim();
+      const date = v('date') ? new Date(`${v('date')}T12:00`).toLocaleDateString('fr-BE', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
+      const n = Number(v('couverts')) || 0;
+      texte.textContent = `${v('nom')}, ${n} couvert${n > 1 ? 's' : ''}, le ${date} à ${v('heure')}.${v('message') ? ` Message : ${v('message')}` : ''}`;
+      form.hidden = true;
+      recap.hidden = false;
+      recap.focus();
+    };
+    const retour = () => { recap.hidden = true; form.hidden = false; form.querySelector<HTMLInputElement>('input')?.focus(); };
     form.addEventListener('submit', go);
-    return () => form.removeEventListener('submit', go);
+    modifier?.addEventListener('click', retour);
+    return () => { form.removeEventListener('submit', go); modifier?.removeEventListener('click', retour); };
   });
 </script>

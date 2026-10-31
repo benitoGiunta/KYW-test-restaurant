@@ -1,0 +1,56 @@
+---
+// Terrasse et événements. La terrasse est inconnue au dossier : la page est marquée illustrative en tête (sans JS),
+// aucun CTA de réservation ; la privatisation du samedi, elle, est réelle (dossier.md).
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import Ornements from '../components/Ornements.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { asset } from '../lib/url';
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const photos = ['/photos/salle-clients-bar.webp', '/photos/bar-cocktails.webp', '/photos/service-frites.webp'].map(photoDe);
+const samedi = site.horaires.find((h) => h.jour === 'samedi');
+---
+<Base title="Terrasse et événements" description={`Terrasse (page d'exemple) et privatisation le samedi chez ${site.nom} à ${site.adresse.commune}.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <p class="bandeau-ex" style="margin: 0 auto calc(var(--u) * 3)">Page d'exemple : la terrasse n'est pas documentée pour ce restaurant, ce contenu est illustratif</p>
+    <div class="hero__inner">
+      <h1>Terrasse</h1>
+      <p class="lead">Ce que montrerait cette page pour une maison avec terrasse : les places dehors, les jours d'ouverture, ce qu'on y boit, et les événements.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--canard is-flottant" style="--x:84%;--y:0%;--r:-8deg;--taille:130px" aria-hidden="true"><Objet id="parasol" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section section--corail">
+    <div class="wrap manifeste__inner">
+      <Ornements />
+      <h2 style="font-size: var(--t-xl)">Dehors, <em class="ital">dès qu'il fait beau</em></h2>
+      <p class="lead">Exemple de texte : une terrasse de vingt couverts côté Meuse, ouverte aux mêmes heures que la salle, sans réservation en terrasse.<span class="illu">illustratif</span></p>
+      <ul role="list" style="display:flex;flex-wrap:wrap;gap:0.6em;justify-content:center;margin-top:calc(var(--u)*3)">
+        {['20 couverts dehors*', 'parasols et plaids*', 'enfants bienvenus*', 'chiens tenus en laisse*'].map((t) => <li class="vege" style="font-size:var(--t-s);padding:0.4em 1em">{t}</li>)}
+      </ul>
+      <p class="muted" style="margin-top:calc(var(--u)*2);font-size:var(--t-s)">* exemples, à remplacer par les données du restaurant</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section__titre">Privatiser <em>un samedi</em></h2>
+      <div class="maison__grille">
+        <div class="prose">
+          <p>Le samedi, le restaurant se privatise : mariages, événements, ou chef à domicile. {samedi?.note && <span class="muted">(Samedi : {samedi.note}.)</span>}</p>
+          <p>Pour organiser une privatisation, appelez le restaurant au <a class="link" href={telHref()}>{site.telephone}</a>.</p>
+        </div>
+        <div class="grille-photos">
+          {photos.map((p, i) => (
+            <figure class="tirage" style={`--r:${[-4, 3, -2][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+              <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+              <figcaption>{p.alt.split(',')[0]}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

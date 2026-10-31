@@ -1,0 +1,41 @@
+---
+// Formules et groupes : les trois formules réelles en prix géants, le bon cadeau, la privatisation du samedi, les groupes.
+import Base from '../layouts/Base.astro';
+import { site, telHref } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="Formules et groupes" description={`Les formules de ${site.nom} : menu dégustation 67 €, formule 3 services 52 €, lunch 40 €, bon cadeau et privatisation du samedi.`}>
+  <section class="entete wrap">
+    <h1 class="cap">Formules</h1>
+    <p class="lead muted">Trois façons de passer à table, un bon cadeau, et le samedi pour vous seuls.</p>
+  </section>
+  <section class="wrap" aria-label="Les formules">
+    <div class="formules">
+      {site.menus.map((m, i) => (
+        <article class="formule" data-reveal="fade" data-delay={String(i * 0.1)}>
+          <p class="formule__prix num" data-prix-ecrit>{m.prix}</p>
+          <h2 class="formule__nom">{m.nom}</h2>
+          <p class="formule__quand">{m.quand}</p>
+          <p class="formule__desc">{m.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="section clair" id="cadeau" aria-labelledby="cadeau-titre" style="margin-top: calc(var(--u) * 6)">
+    <div class="wrap acces">
+      <div>
+        <p class="petite-cap">Bon cadeau</p>
+        <h2 class="cap cat__titre" id="cadeau-titre">Offrir une table</h2>
+        <p style="margin-top: var(--u)">Bons cadeaux de <span class="cercle num">{site.cadeau.montants}</span>. {site.cadeau.note}</p>
+        <div class="actions"><a class="btn btn--plein" href={site.cadeau.url} rel="noopener">Demander un bon cadeau</a></div>
+      </div>
+      <div>
+        <p class="petite-cap">Groupes et privatisation</p>
+        <h2 class="cap cat__titre">Le samedi, pour vous</h2>
+        <p style="margin-top: var(--u)">{site.privatisation.texte}</p>
+        <p style="margin-top: var(--u)">{site.reservation.note}</p>
+        <div class="actions"><a class="btn" href={telHref()}>Appeler le {site.telephone}</a><a class="btn" href={u('/reservation/')}>Réserver</a></div>
+      </div>
+    </div>
+  </section>
+</Base>

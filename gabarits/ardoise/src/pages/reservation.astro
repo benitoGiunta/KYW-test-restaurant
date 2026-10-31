@@ -1,0 +1,58 @@
+---
+// Réserver et contact : page claire, formulaire de démonstration (ouvre Zenchef), horaires, adresse.
+import Base from '../layouts/Base.astro';
+import { site, adresseLigne, telHref, creneauService } from '../data/site';
+const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`;
+---
+<Base title="Réserver" theme="clair" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}.`}>
+  <div class="clair" style="padding-bottom: calc(var(--u) * 6)">
+    <section class="entete wrap">
+      <h1 class="cap">Réserver</h1>
+      <p class="lead muted">En ligne via {site.reservation.outil}, ou par téléphone. {site.reservation.note}</p>
+    </section>
+    <section class="wrap acces">
+      <div>
+        <div class="actions" style="margin-top: 0">
+          <a class="btn btn--plein" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
+          <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+        </div>
+        <p class="muted" style="margin: calc(var(--u) * 3) 0 var(--u); font-size: var(--t-s)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+        <form class="form" data-reservation action={site.reservation.url} method="get">
+          <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+          <label>Date <input type="date" name="date" required /></label>
+          <label>Service
+            <select name="service" required>
+              <option value="soir">Soir, du lundi au vendredi</option>
+              <option value="midi">Midi, mercredi et vendredi</option>
+            </select>
+          </label>
+          <label>Couverts <input type="number" name="couverts" min="1" max="6" value="2" required /></label>
+          <label>Message <textarea name="message" rows="3"></textarea></label>
+          <div class="actions" style="margin-top: 0"><button class="btn btn--plein" type="submit">Continuer sur {site.reservation.outil}</button></div>
+        </form>
+      </div>
+      <div>
+        <p class="petite-cap">Horaires</p>
+        <table class="horaires">
+          <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
+          <tbody>
+            {site.horaires.map((h) => {
+              const midi = creneauService(h, 'midi'); const soir = creneauService(h, 'soir');
+              return (
+                <tr data-jour-ligne-tab={h.jour}>
+                  <td>{h.jour}</td>
+                  <td class={midi ? undefined : 'ferme'}>{midi ? `${midi.ouverture} à ${midi.fermeture}` : h.creneaux.length ? '' : h.note || 'fermé'}</td>
+                  <td class={soir ? undefined : 'ferme'}>{soir ? `${soir.ouverture} à ${soir.fermeture}` : ''}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <p class="petite-cap" style="margin-top: calc(var(--u) * 3)">Adresse</p>
+        <address style="font-style: normal"><strong>{site.nom}</strong><br />{adresseLigne()}</address>
+        {site.acces.filter((a) => !a.placeholder).map((a) => <p style="margin-top: var(--u)">{a.texte}</p>)}
+        <p style="margin-top: var(--u)"><a class="link" href={carte} rel="noopener">Voir sur la carte</a></p>
+      </div>
+    </section>
+  </div>
+</Base>

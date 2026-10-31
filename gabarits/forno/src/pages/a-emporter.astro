@@ -7,7 +7,7 @@ const e = site.emporter;
 const services = servicesTexte();
 ---
 <Base title="À emporter (exemple)" description="Exemple de page « à emporter » du gabarit Forno : horaires de fournées illustratifs, téléphone du restaurant. Données illustratives." theme="four">
-  <p class="bandeau">Page d'exemple : {e.intro}</p>
+  <p class="bandeau" role="note">Page d'exemple : {e.intro}</p>
   <section class="s-four page-hero page-hero--four" data-theme-zone="four">
     <div class="wrap">
       <p class="eyebrow">À emporter<span class="illu">illustratif</span></p>
@@ -31,9 +31,9 @@ const services = servicesTexte();
       </div>
       <div class="stack" style="grid-column: 9 / 13" data-reveal="up" data-delay="0.1">
         <h3>Le restaurant</h3>
-        <p class="muted">Service en salle uniquement d'après le dossier. Pour toute question, le téléphone du restaurant :</p>
+        <p class="muted">Pour toute question, appelez le restaurant :</p>
         <p><a class="btn" href={telHref()}>{site.telephone}</a></p>
-        {services.map((s) => <p class="muted">{s.libelle} · {s.jours} · {s.heures}</p>)}
+        {services.map((s) => <p class="muted">{`${s.libelle} · ${s.jours} · ${s.heures}`}</p>)}
         <p><a class="link" href={u('/carte/')}>Voir la carte réelle</a></p>
       </div>
     </div>

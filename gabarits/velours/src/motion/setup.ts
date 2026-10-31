@@ -84,15 +84,17 @@ function compteurs() {
 
 /** Citation : les mots (spans posés au build) passent de 0,22 à 1 d'opacité au scrub, dans l'ordre. */
 function citation() {
-  if (prefersReducedMotion()) return () => {};
+  // Mobile : texte plein, pas de scrub (révision 1 : la moitié de la citation restait à 2:1 tant qu'on ne défilait pas).
+  // Desktop : départ à 0,5 (≥ 4,5:1 sur profond) et allumage complet quand le bloc atteint le milieu de l'écran.
+  if (prefersReducedMotion() || isMobile()) return () => {};
   document.querySelectorAll<HTMLElement>('[data-allume]').forEach((bloc) => {
     const mots = bloc.querySelectorAll<HTMLElement>('.mot');
     if (!mots.length) return;
-    gsap.fromTo(mots, { opacity: 0.22 }, {
+    gsap.fromTo(mots, { opacity: 0.5 }, {
       opacity: 1,
       stagger: 0.06,
       ease: 'none',
-      scrollTrigger: { trigger: bloc, start: 'top 80%', end: 'bottom 45%', scrub: 0.6 },
+      scrollTrigger: { trigger: bloc, start: 'top 85%', end: 'center 55%', scrub: 0.6 },
     });
   });
   return () => {};

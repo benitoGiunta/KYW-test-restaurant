@@ -3,7 +3,7 @@
 ## Concept Card
 - **Idée** : la maison se raconte par ses nombres vrais. Chaque chapitre est un rideau vert sapin qui se lève sur un chiffre
   cuivre monumental posé à cheval sur une photo sombre, puis le texte suit. Ici : **4** services, **67** euros (le menu
-  unique), **2** chefs, et **2020** en carte de clôture. Aucun nombre inventé : le nombre de tables est inconnu dans le
+  unique), **2** chefs, et **2020** en carte de clôture, libellé « société fondée » (BCE : DAMFRA SRL constituée le 14/01/2020 ; la date d'ouverture du restaurant est inconnue, révision 1). Aucun nombre inventé : le nombre de tables est inconnu dans le
   dossier, le chapitre « tables » du cahier est donc remplacé par le prix unique (67 €), un fait du dossier.
 - **Métaphore** : le lever de rideau d'une petite salle de théâtre. **Émotion** : l'attente heureuse, la rareté.
 - **Verbe de motion** : « se dévoile comme un rideau ». Loader = rideau baissé (vert sapin, nom en cuivre, compteur
@@ -35,11 +35,11 @@
 HERO (100svh, photo salle pleine largeur, scrim sapin 55 %)        | MOBILE
 [◯ logo]   MENU  CARTE  LES CHEFS  PRIVATISER   [RÉSERVER]         | [◯]  ≡ (nav repliée en liste) [RÉSERVER]
                                                                    |
-        L E S   P O T E S   A U   F E U   (Boska caps cuivre)      | LES POTES / AU FEU (plafonné 390)
+        L E S   P O T E S   A U   F E U   (Boska 700 cuivre clair) | LES POTES / AU FEU (plafonné 390)
         Bistronomie à Namur. (accroche ivoire, peinte au 1er rendu)| accroche
         [Réserver une table]  Voir le menu ↓                       | [Réserver]
 -------------------------------------------------------------------
-BANDE DISTINCTIONS  « Sélectionné par le Guide MICHELIN Belgique 2026 » (cuivre, petites capitales, fondu)
+BANDE DISTINCTIONS  « Guide MICHELIN · Restaurant sélectionné, Belgique » (aucune année en dur) (cuivre, petites capitales, fondu)
 -------------------------------------------------------------------
 CHAPITRE 1   ┌photo boeuf (déborde à gauche)┐   4 SERVICES         | 4 (160 px) SERVICES
              │  4 (260 px cuivre à cheval)  │   texte 500 px       | photo pleine largeur
@@ -49,7 +49,7 @@ CITATION (fond profond)  « Un restaurant décontracté qui swingue… » mots q
 CHAPITRE 3   ┌portrait N&B Damien┐ ┌portrait N&B François┐   2 CHEFS  bio courte (phrases du dossier)
 ONGLETS      PRIVATISATION ▬▬▬▬  MARIAGE ▬▬  CHEF À DOMICILE ▬  (barre cuivre 6 s)  photo de fond qui change
 GALERIE N&B  bande horizontale de 5 photos de hauteurs variées (scroll natif en mobile)
-CLÔTURE      « Depuis 2020 »  adresse  3 lignes d'horaires  [Réserver]  (rideau)
+CLÔTURE      « 2020 · société fondée »  adresse  3 lignes d'horaires  [Réserver]  (rideau)
 FOOTER       logo cerclé, liens, KywFooter
 ```
 Pages : `/` accueil, `/menu/` (4 services détaillés), `/carte/` (3 formules + options + bons cadeaux), `/histoire/`
@@ -73,3 +73,20 @@ Pages : `/` accueil, `/menu/` (4 services détaillés), `/carte/` (3 formules + 
 - [x] Copies décoratives (chiffre dupliqué pour le filigrane) hors des titres, `aria-hidden`.
 - [x] Copy : pas de tiret cadratin, pas de filler, vouvoiement, phrases du dossier neutralisées (pas de « il y a quatorze
   ans »), chaque donnée non prouvée a son drapeau et sa marque visible.
+
+## Décisions de la révision 1 (30/10/2026, REVUE-1)
+- **Nom du hero** : Boska **700** en cuivre clair `--c-muted` (#E2BE94) avec une ombre portée douce, sur un voile qui
+  descend du profond 30 % au sapin 94 % sous le bloc texte. Contraste mesuré derrière le h1 (pixel au 98e centile de
+  luminance) : 4,8:1 en 390 et en 1440, médiane 8,9 à 9,4:1. Boska 700 est préchargée. Le cuivre `--c-accent` reste aux
+  chiffres, filets et aplats.
+- **2020** : chiffre de clôture libellé « société fondée » (h2 lu « société fondée en 2020 »), sous-libellé « DAMFRA SRL,
+  la société des deux chefs, constituée en janvier » ; le mot « ouverture » et « depuis 2020 » disparaissent du site.
+- **Chiffre monumental** : seulement pour une donnée prouvée ; les numéros 01/02/03 des offres de privatisation sont retirés.
+- **Citation** : en mobile, texte plein (pas de scrub) ; en desktop, départ à 0,5 d'opacité et allumage complet au milieu
+  de l'écran.
+- **Nav mobile** : une seule ligne d'en-tête (logo, bouton « Menu », Réserver) ; la nav s'ouvre en liste sous la ligne
+  (`aria-expanded`, Échap ferme). Sans JS, la nav reste visible (règles sous `.js`).
+- **Réservation** : un seul chemin (Zenchef + téléphone dans le hero de page) ; le formulaire de démonstration est retiré,
+  la page garde les services jour par jour et l'adresse.
+- **Pied de page** : horaires condensés en trois lignes (`horairesResume`) ; le détail jour par jour vit sur la réservation.
+- **Années** : aucune année en dur hors de la source exacte de la citation (« Guide MICHELIN Belgique 2026 »).

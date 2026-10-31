@@ -23,7 +23,7 @@ const resume = horairesResume();
     <div class="hero__scrim" aria-hidden="true"></div>
     <div class="wrap hero__contenu">
       <p class="petite-cap hero__sur">{adresseLigne()}</p>
-      <h1 class="hero__nom">{motsNom.map((m) => <span class="hero__mot"><span class="hero__mot-in" data-hero-mot>{m}</span></span>)}</h1>
+      <h1 class="hero__nom">{motsNom.map((m, i) => <><span class="hero__mot"><span class="hero__mot-in" data-hero-mot>{m}</span></span>{i < motsNom.length - 1 ? ' ' : ''}</>)}</h1>
       <p class="hero__accroche">{site.baseline}</p>
       <div class="actions">
         <a class="btn btn--primary" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
@@ -49,7 +49,7 @@ const resume = horairesResume();
   </Chapitre>
 
   <Chapitre id="prix" chiffre={c.prix} photo={photoDe('/photos/chap-salle-1200.webp')} inverse filet lien={{ href: u('/carte/'), label: 'Les trois formules' }}>
-    <p>{menu.prix} pour le menu du soir. Le midi, les mercredis et vendredis, la formule 3 services à choix multiples est à {site.menus[1].prix} et le lunch entrée-plat ou plat-dessert à {site.menus[2].prix}, servi à l'ensemble de la table.</p>
+    <p>{menu.prix} pour le menu du soir. Le midi, la formule 3 services à choix multiples est à {site.menus[1].prix} et le lunch entrée-plat ou plat-dessert à {site.menus[2].prix}, servi à l'ensemble de la table.</p>
     <p>Produits frais et de saison, producteurs du coin, tout est fait maison.</p>
   </Chapitre>
 
@@ -105,7 +105,7 @@ const resume = horairesResume();
     <div class="rideau" aria-hidden="true"></div>
     <div class="wrap cloture__bloc">
       <p class="chiffre chiffre--centre" aria-hidden="true"><span data-compteur={String(c.ouverture.valeur)}>{c.ouverture.valeur}</span></p>
-      <h2 class="petite-cap" id="cloture-titre"><span class="sr-only">{c.ouverture.valeur}, </span>l'{c.ouverture.libelle}</h2>
+      <h2 class="petite-cap" id="cloture-titre"><span class="sr-only">{c.ouverture.libelle} en {c.ouverture.valeur}</span><span aria-hidden="true">{c.ouverture.libelle}</span></h2>
       <p class="cloture__sous">{c.ouverture.sousLibelle}.</p>
       <address class="cloture__adresse">{adresseLigne()}</address>
       <dl class="cloture__horaires">

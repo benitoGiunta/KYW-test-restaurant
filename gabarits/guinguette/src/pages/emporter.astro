@@ -1,0 +1,44 @@
+---
+// À emporter : service inconnu au dossier → page d'exemple marquée en tête, sans CTA de réservation ni de commande.
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, guinguette } from '../data/site';
+const g = guinguette;
+const exemple = g.carteExemple.slice(0, 2);
+---
+<Base title="À emporter (page d'exemple)" description={`Page d'exemple du gabarit : ce que montrerait une offre à emporter chez ${site.nom}. Service non documenté.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <p class="bandeau-ex" style="margin: 0 auto calc(var(--u) * 3)">Page d'exemple : ce restaurant ne propose pas de vente à emporter documentée, tout ce contenu est illustratif</p>
+    <div class="hero__inner">
+      <h1>À emporter</h1>
+      <p class="lead">Ce que montrerait cette page pour une maison qui emballe : une courte carte, les horaires de retrait, et la marche à suivre.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:84%;--y:0%;--r:10deg;--taille:120px" aria-hidden="true"><Objet id="frites" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="carte">
+        <div class="carte__grille">
+          {exemple.map((c) => (
+            <div>
+              <h3 class="cat__titre"><Objet id={g.pictos.find((p) => p.categorie === c.categorie)?.picto ?? 'frites'} />{c.categorie}</h3>
+              <ul role="list">
+                {c.plats.map((p) => (
+                  <li class="plat">
+                    <span class="plat__nom">{p.nom}<span class="illu" aria-label="exemple">*</span>{p.vege && <span class="vege">végé</span>}<span class="plat__desc">{p.description}</span></span>
+                    <span class="plat__points" aria-hidden="true"></span>
+                    <span class="plat__prix">{p.prix}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <p class="muted" style="margin-top:calc(var(--u)*3);font-size:var(--t-s)">* plats et prix d'exemple. Les horaires de retrait et la marche à suivre dépendent du restaurant et ne sont pas affichés ici.</p>
+      </div>
+    </div>
+  </section>
+</Base>

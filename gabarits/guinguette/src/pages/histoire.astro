@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import Ornements from '../components/Ornements.astro';
+import { site, guinguette, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const galerie = ['/photos/salle-banquette.webp', '/photos/cuisine-chefs-passe.webp', '/photos/salle-ampoules.webp', '/photos/cuisine-mains-pate.webp', '/photos/service-planche.webp', '/photos/portrait-damien-profil.webp'].map(photoDe);
+const trio = photoDe('/photos/equipe-trio.webp');
+const histoire = site.histoire.map((p) => p.replace('Il y a quatorze ans, ', ''));
+---
+<Base title="La maison et l'équipe" description={`L'histoire de ${site.nom} : deux chefs amis, une cuisine à quatre mains à ${site.adresse.commune}, et l'équipe qui les épaule.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>La maison</h1>
+      <p class="lead">{site.baseline}</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--canard is-flottant" style="--x:86%;--y:0%;--r:-10deg;--taille:120px" aria-hidden="true"><Objet id="parasol" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap maison__grille">
+      <figure class="tirage" style="--w:100%; cursor: default; --r:-3deg">
+        <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="eager" decoding="async" />
+        <figcaption>Autour de la table</figcaption>
+      </figure>
+      <div class="maison__texte">
+        <Ornements />
+        <h2 class="section__titre">Deux potes, <em>un feu</em></h2>
+        <div class="prose">{histoire.map((p) => <p>{p}</p>)}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--blanc">
+    <div class="wrap">
+      <h2 class="section__titre">L'<em>équipe</em></h2>
+      <div class="equipe">
+        {site.equipe.map((m, i) => {
+          const ph = m.photo ? photoDe(m.photo) : null;
+          return (
+            <article class="membre" data-reveal="up" data-delay={String(i * 0.08)}>
+              {ph ? (
+                <figure class="tirage" style={`--r:${i % 2 ? 2 : -2}deg`}>
+                  <img src={petite(ph.src)} alt={ph.alt} width="640" height="853" style="aspect-ratio: 3 / 4" loading="lazy" decoding="async" />
+                </figure>
+              ) : (
+                <div class="membre__sans" aria-hidden="true"><Objet id={i % 2 ? 'citron' : 'verre'} /></div>
+              )}
+              <h3>{m.nom}</h3>
+              <p class="muted">{m.role}{m.placeholder && <span class="illu">rôle illustratif</span>}</p>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">La salle, <em>la cuisine</em></h2>
+      <div class="grille-photos">
+        {galerie.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-3, 4, -2, 3, -5, 2][i]}deg`} data-reveal="up" data-delay={String((i % 3) * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Venir à table</a></div>
+    </div>
+  </section>
+</Base>

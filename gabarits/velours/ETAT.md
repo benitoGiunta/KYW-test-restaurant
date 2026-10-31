@@ -26,3 +26,5 @@ Faits : DESIGN.md, site.ts (chiffres, distinctions, citation, privatisation, dra
   audit-velours-2.txt 0 FAIL (9 WARN normaux). apercu.png posé, serveur 4412 arrêté par son PID (journal2.log).
 - Livrables : DESIGN.md, FICHE.md, RAPPORT.md, apercu.png, dist/gabarits/velours/. README du socle retiré du gabarit.
 - Reste pour les agents suivants : jury / revue (agent distinct), puis corrections ; ne pas commiter ici (orchestrateur).
+
+- [x] Révision 1 : 3 F1, 5 F2, 3 F3 corrigés, voir REVISION-1.md (captures `.shots-velours-rev/<page>`). Reste : commit par l orchestrateur.

@@ -3,9 +3,9 @@
 // Le compte à rebours du prochain service est calculé côté client depuis site.horaires (jamais de date en dur).
 import { site } from '../data/site';
 import { u } from '../lib/url';
-const liens = [
+const liens: { href: string; label: string; suite?: string }[] = [
   { href: u('/carte/'), label: 'La carte' },
-  { href: u('/pates/'), label: 'Pâtes fraîches' },
+  { href: u('/pates/'), label: 'Pâtes', suite: ' fraîches' },
   { href: u('/histoire/'), label: 'Histoire' },
   { href: u('/a-emporter/'), label: 'À emporter' },
   { href: u('/reservation/'), label: 'Réserver' },
@@ -18,11 +18,11 @@ const horaires = JSON.stringify(site.horaires.map((h) => h.creneaux));
   <div class="wrap header__inner">
     <a class="header__brand" href={u('/')} aria-current={courant(u('/'))}>{site.nom}</a>
     <nav class="nav" aria-label="Navigation principale">
-      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}{l.suite && <span class="nav__suite">{l.suite}</span>}</a>)}
     </nav>
     <a class="compte" href={u('/reservation/')} data-compte data-horaires={horaires} aria-live="off">
-      <span class="compte__lib" data-compte-lib>Prochain service</span>
-      <span class="compte__nums" aria-hidden="true">
+      <span class="compte__lib" data-compte-lib>Réserver une table</span>
+      <span class="compte__nums" aria-hidden="true" hidden>
         <span data-u="j" data-c="j">00<small>jours</small></span>
         <span data-u="h" data-c="h">00<small>heures</small></span>
         <span data-u="min" data-c="m">00<small>minutes</small></span>

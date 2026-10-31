@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, adresseLigne, horaireTexte, telHref, guinguette } from '../data/site';
+const g = guinguette;
+---
+<Base title="Réserver et nous contacter" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>Réserver</h1>
+      <p class="lead">En ligne via {site.reservation.outil}, ou par téléphone pour une table de plus de six personnes et les demandes de dernière minute.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:86%;--y:0%;--r:12deg;--taille:110px" aria-hidden="true"><Objet id="verre" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="actions" style="margin-top:0">
+        <a class="btn btn--plein" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
+        <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--blanc">
+    <div class="wrap">
+      <h2 class="section__titre">Votre <em>demande</em></h2>
+      <p class="muted" style="margin-bottom: calc(var(--u) * 2.5)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
+      <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
+        <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+        <label>Téléphone <input type="tel" name="tel" autocomplete="tel" /></label>
+        <label>Date <input type="date" name="date" required /></label>
+        <label>Heure <input type="time" name="heure" required /></label>
+        <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
+        <label class="large">Message <textarea name="message" rows="3"></textarea></label>
+        <div class="actions"><button class="btn btn--plein" type="submit">Continuer sur {site.reservation.outil}</button></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="hcarte">
+        <p class="meta">Horaires et adresse</p>
+        <h2 class="section__titre" style="margin-bottom:0">Quand <em>venir</em></h2>
+        <dl class="horaires">
+          {site.horaires.map((h) => (
+            <>
+              <dt>{h.jour}</dt>
+              <span class="pts" aria-hidden="true"></span>
+              <dd class:list={{ ferme: !h.creneaux.length }}>{h.creneaux.length ? horaireTexte(h) : 'fermé'}</dd>
+            </>
+          ))}
+        </dl>
+        <p class="hcarte__ligne"><span>Adresse</span><span>{adresseLigne()}</span></p>
+        <p class="hcarte__ligne"><span>Téléphone</span><a class="link" href={telHref()}>{site.telephone}</a></p>
+        <p class="hcarte__ligne"><span>E-mail</span><span>{site.email.valeur}{site.email.placeholder && <span class="illu">exemple</span>}</span></p>
+        <p class="hcarte__ligne"><span>Terrasse</span><span>{g.terrasse.connue ? 'oui' : 'à confirmer'}<span class="illu">illustratif</span></span></p>
+        <div class="actions">
+          <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { onPage } from '../engine';
+  onPage(() => {
+    const form = document.querySelector<HTMLFormElement>('[data-reservation]');
+    if (!form) return;
+    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    form.addEventListener('submit', go);
+    return () => form.removeEventListener('submit', go);
+  });
+</script>

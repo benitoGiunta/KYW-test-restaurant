@@ -1,0 +1,32 @@
+---
+// La salle : page claire, pleine de photos (les seules du site avec les aperçus), mots géants.
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { asset, u } from '../lib/url';
+const premiere = photoDe('/photos/salle-clients-bar-960.webp');
+const galerie = ['/photos/salle-banquette.webp', '/photos/salle-ampoules.webp', '/photos/bar-cocktails.webp', '/photos/cuisine-chefs-passe.webp', '/photos/service-francois-table.webp', '/photos/salle-bar-panoramique.webp', '/photos/cuisine-chefs-dressage.webp', '/photos/service-planche.webp'].map(photoDe);
+---
+<Base title="La salle" theme="clair" preloadImage={{ href: premiere.src }} description={`La salle de ${site.nom} à ${site.adresse.commune} : murs vert-gris, bar en chêne, banquette aux coussins moutarde et cuisine ouverte sur la table.`}>
+  <div class="clair" style="padding-bottom: calc(var(--u) * 6)">
+    <section class="entete wrap">
+      <h1 class="cap">La salle</h1>
+      <p class="lead muted">Une petite salle sombre et chaleureuse, et la cuisine ouverte : les chefs servent eux-mêmes leurs plats à table.</p>
+    </section>
+    <figure class="wrap" style="margin: 0 auto; overflow: clip; aspect-ratio: 16 / 9">
+      <img src={asset(premiere.src)} alt={premiere.alt} width={premiere.largeur} height={premiere.hauteur} fetchpriority="high" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block" />
+    </figure>
+    <ul class="mots cap wrap" data-mots aria-label="Salle, bar, cuisine">
+      {site.motsSalle.map((m) => <li>{m}</li>)}
+    </ul>
+    <section class="wrap section" aria-label="En images">
+      <div class="galerie">
+        {galerie.map((p, i) => (
+          <figure data-reveal="clip" data-delay={String((i % 4) * 0.08)}>
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a></div>
+    </section>
+  </div>
+</Base>

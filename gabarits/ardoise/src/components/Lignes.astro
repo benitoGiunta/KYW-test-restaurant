@@ -1,0 +1,33 @@
+---
+// Une catégorie d'ardoise : titre, prix du menu, note, lignes plat / prix. Les lignes d'exemple portent la marque « exemple ».
+import type { Categorie } from '../data/site';
+import { asset } from '../lib/url';
+interface Props { cat: Categorie; ecrit?: boolean }
+const { cat, ecrit = true } = Astro.props;
+---
+<section class="cat" aria-labelledby={`cat-${cat.categorie.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${cat.service}`}>
+  <div class="cat__tete">
+    <h3 class="cat__titre cap" id={`cat-${cat.categorie.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${cat.service}`}>{cat.categorie}{cat.exemple && <span class="ex">exemples</span>}</h3>
+    {cat.prix && <span class="cat__prix num">{cat.prix}</span>}
+  </div>
+  {cat.note && <p class="cat__note">{cat.note}</p>}
+  <ul class="lignes" data-ecrit={ecrit ? '' : undefined}>
+    {cat.plats.map((p) => (
+      <li class="ligne">
+        <div class="ligne__in" tabindex={p.apercu ? 0 : undefined} data-preview={p.apercu ? asset(p.apercu) : undefined} aria-label={p.apercu ? `${p.nom}, voir la photo` : undefined}>
+          {p.apercu
+            ? <img class="ligne__vignette" src={asset(p.apercu)} alt="" width="56" height="56" loading="lazy" decoding="async" />
+            : <span class="ligne__vignette ligne__vignette--vide" aria-hidden="true"></span>}
+          <span class="ligne__texte">
+            <span class="ligne__nom">{p.nom}</span>
+            {p.badges?.map((b) => <span class="badge">{b}</span>)}
+            {p.placeholder && <span class="ex">exemple</span>}
+            {p.description && <span class="ligne__desc">{p.description}</span>}
+          </span>
+          <span class="ligne__prix num">{p.prix ?? ''}</span>
+          {p.apercu && <img class="ligne__statique" src={asset(p.apercu)} alt="" width="160" height="200" loading="lazy" decoding="async" />}
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>

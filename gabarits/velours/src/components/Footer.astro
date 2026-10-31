@@ -2,7 +2,7 @@
 // Pied de page « Velours » : fond profond, logo cerclé, coordonnées, horaires, liens ; puis le pied de page KYW obligatoire
 // (une seule mention « Maquette KYW… », celle du composant).
 import KywFooter from '@kyw/footer';
-import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { site, adresseLigne, horairesResume, telHref } from '../data/site';
 import { u } from '../lib/url';
 const initiales = site.nom.split(/\s+/).filter((m) => /^[A-Z]/.test(m)).map((m) => m[0]).join('');
 ---
@@ -19,7 +19,7 @@ const initiales = site.nom.split(/\s+/).filter((m) => /^[A-Z]/.test(m)).map((m) 
     <div class="footer__col">
       <p class="petite-cap">Services</p>
       <dl class="horaires">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        {horairesResume().map((r) => <><dt>{r.libelle}</dt><dd>{r.valeur}</dd></>)}
       </dl>
     </div>
     <div class="footer__col">

@@ -7,4 +7,6 @@
 - [x] build `node scripts/build-site.mjs gabarits/forno` passe (dernier build 21:58, dist/gabarits/forno/)
 - [x] QA : pré-contrôle Playwright, 2 séries shoot (port 4410, `.shots-forno/<page>`), audit 0 FAIL, corrections mécaniques faites (voir RAPPORT.md)
 - [x] FICHE.md, RAPPORT.md, apercu.png, leçons dans agents/lecons.md
-- [ ] Reste : revue `jury` par un agent distinct, puis corrections ; commit par l'orchestrateur (rien n'est commité)
+- [x] Revue REVUE-1.md (agent distinct)
+- [x] Révision 1 : 3 F1 + F2/F3 traités, voir REVISION-1.md (captures `.shots-forno-rev/<page>`, port 4432)
+- [ ] Reste : relecture de contrôle éventuelle ; commit par l'orchestrateur (rien n'est commité)

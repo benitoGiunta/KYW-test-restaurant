@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Fiche from '../components/Fiche.astro';
-import { site, photoDe, servicesTexte, telHref } from '../data/site';
+import { site, photoDe, servicesTexte, telHref, numerosServices, compteCategorie } from '../data/site';
 import { u, asset } from '../lib/url';
 const heroPhoto = photoDe('/photos/plat-boeuf-confit-960.webp');
 const leveePhoto = photoDe(site.levee.photo);
@@ -63,12 +63,12 @@ const m = site.manifeste;
       <div class="cat">
         <div class="cat__head">
           <h2 data-split="words">Le menu du soir</h2>
-          <span class="cat__num">{String(menu.plats.length).padStart(2, '0')}</span>
+          <span class="cat__num">{compteCategorie(menu)}</span>
         </div>
         <p class="muted" style="margin-bottom: calc(var(--u) * 3)">{site.menus[0].nom}, {site.menus[0].prix}, du lundi au vendredi soir.</p>
         <div class="cat__grid">
-          {menu.plats.map((p, i) => (
-            <Fiche nom={p.nom} description={p.description} prix={p.prix} photo={p.photo ? photoDe(p.photo) : undefined} disque={String(i + 1).padStart(2, '0')} placeholder={p.placeholder} delai={(i % 2) * 0.08} />
+          {menu.plats.map((p, i, all) => (
+            <Fiche nom={p.nom} description={p.description} prix={p.prix} photo={p.photo ? photoDe(p.photo) : undefined} disque={numerosServices(all)[i]} placeholder={p.placeholder} delai={(i % 2) * 0.08} />
           ))}
         </div>
         <div class="actions">

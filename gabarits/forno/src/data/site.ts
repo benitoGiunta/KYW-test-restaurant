@@ -7,9 +7,9 @@ export type Jour = 'lundi' | 'mardi' | 'mercredi' | 'jeudi' | 'vendredi' | 'same
 
 export interface Creneau { ouverture: string; fermeture: string } // 'HH:MM'
 export interface Horaire { jour: Jour; creneaux: Creneau[]; note?: string } // creneaux vide = fermé
-export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean; photo?: string }
-export interface Categorie { categorie: string; plats: Plat[] }
-export interface Menu { nom: string; prix: string; description: string; placeholder: boolean }
+export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean; photo?: string; /** ligne du menu hors des services numérotés (mise en bouche, mignardise, supplément) */ horsService?: boolean }
+export interface Categorie { categorie: string; plats: Plat[]; /** nombre de services annoncé (le compteur ne compte pas les lignes) */ services?: number }
+export interface Menu { nom: string; prix: string; description: string; placeholder: boolean; /** n'est pas une formule de repas (bon cadeau) : hors du compteur */ horsFormule?: boolean }
 export interface Membre { nom: string; role: string; rolePlaceholder: boolean; photo?: string; placeholder: boolean }
 export interface Avis { texte: string; auteur: string; source: string; date: string; note?: number; placeholder: boolean }
 export interface Photo { src: string; alt: string; largeur: number; hauteur: number; placeholder: boolean }
@@ -86,15 +86,16 @@ export const site: Restaurant = {
   carte: [
     {
       categorie: 'Menu dégustation unique, 4 services',
+      services: 4,
       plats: [
-        { nom: 'Mises en bouche', description: '', prix: null, placeholder: false },
+        { nom: 'Mises en bouche', description: '', prix: null, placeholder: false, horsService: true },
         { nom: 'Légumes racines / Champignons / Noix', description: '', prix: null, placeholder: false },
         { nom: 'Saint-Jacques / Butternut / Passion', description: '', prix: null, placeholder: false, photo: '/photos/plat-saint-jacques-carre.webp' },
         { nom: 'Bœuf confit / Carottes / Cromesquis de pommes de terre', description: '', prix: null, placeholder: false, photo: '/photos/plat-boeuf-confit-carre.webp' },
         { nom: 'Soufflé au caramel / Chaï / Poire', description: '', prix: null, placeholder: false },
-        { nom: 'Mignardise', description: '', prix: null, placeholder: false },
-        { nom: 'Fromage à la place du dessert', description: 'supplément', prix: '+7 €', placeholder: false },
-        { nom: 'Fromage avant le dessert', description: 'supplément', prix: '+15 €', placeholder: false },
+        { nom: 'Mignardise', description: '', prix: null, placeholder: false, horsService: true },
+        { nom: 'Fromage à la place du dessert', description: 'supplément', prix: '+7 €', placeholder: false, horsService: true },
+        { nom: 'Fromage avant le dessert', description: 'supplément', prix: '+15 €', placeholder: false, horsService: true },
       ],
     },
     {
@@ -117,7 +118,7 @@ export const site: Restaurant = {
       nom: 'Menu dégustation unique 4 services',
       prix: '67 €',
       description:
-        'Du lundi au vendredi soir. Mises en bouche, Légumes racines / Champignons / Noix, Saint-Jacques / Butternut / Passion, Bœuf confit / Carottes / Cromesquis de pommes de terre, Soufflé au caramel / Chaï / Poire, Mignardise. Fromage à la place du dessert +7 €, avant le dessert +15 €.',
+        'Du lundi au vendredi soir : mises en bouche, quatre services et mignardise, détaillés plus haut. Fromage en supplément.',
       placeholder: false,
     },
     { nom: 'Formule 3 services (le midi)', prix: '52 €', description: 'Formule 3 services à choix multiples inspirée des produits du moment.', placeholder: false },
@@ -127,7 +128,7 @@ export const site: Restaurant = {
       description: "Proposé en fonction des envies des chefs et servi à l'ensemble de la table ; composition sur demande par téléphone.",
       placeholder: false,
     },
-    { nom: 'Bon cadeau', prix: '50 / 75 / 100 / 150 €', description: 'Demande en ligne, retrait au restaurant.', placeholder: false },
+    { nom: 'Bon cadeau', prix: '50 / 75 / 100 / 150 €', description: 'Demande en ligne, retrait au restaurant.', placeholder: false, horsFormule: true },
   ],
   histoire: [
     "Les Potes au Feu, c'est d'abord l'histoire d'une rencontre. François Schepens et Damien Gorjanec aiguisent leurs premiers couteaux au restaurant la Plage d'Amée à Namur : deux gamins pleins d'envie, le début d'une amitié.",
@@ -152,7 +153,7 @@ export const site: Restaurant = {
     {
       texte: 'Les chefs viennent eux-mêmes présenter chaque assiette. Le bœuf confit est une merveille, et on repart avec le sourire.',
       auteur: 'Exemple d’avis',
-      source: 'texte illustratif, aucun avis client trouvé dans le dossier',
+      source: 'texte illustratif',
       date: '2026-03-18',
       note: 5,
       placeholder: true,
@@ -227,7 +228,7 @@ export const site: Restaurant = {
       {
         categorie: 'Longues',
         produits: [
-          { nom: 'Tagliatelle', description: 'Pâte à l’œuf laminée fine, roulée et coupée au couteau.', prix: '9,50 €', etiquette: 'exemple', placeholder: true },
+          { nom: 'Tagliatelle', description: 'Pâte à l’œuf laminée fine, roulée et coupée au couteau.', prix: '9,50 €', placeholder: true },
           { nom: 'Pappardelle', description: 'Larges rubans pour les sauces longues et les ragoûts.', prix: '10 €', placeholder: true },
           { nom: 'Spaghetti alla chitarra', description: 'Section carrée, tirée sur la guitare à cordes.', prix: '9 €', placeholder: true },
           { nom: 'Linguine', description: 'Plates et étroites, pour les sauces légères et les coquillages.', prix: '9,50 €', placeholder: true },
@@ -237,7 +238,7 @@ export const site: Restaurant = {
         categorie: 'Courtes',
         produits: [
           { nom: 'Orecchiette', description: 'Petites oreilles creusées au pouce, semoule et eau.', prix: '8,50 €', placeholder: true },
-          { nom: 'Rigatoni', description: 'Tubes striés, tréfilés au bronze pour accrocher la sauce.', prix: '8,50 €', etiquette: 'exemple', placeholder: true },
+          { nom: 'Rigatoni', description: 'Tubes striés, tréfilés au bronze pour accrocher la sauce.', prix: '8,50 €', placeholder: true },
           { nom: 'Gnocchi', description: 'Pomme de terre, farine et œuf, roulés à la fourchette.', prix: '9 €', placeholder: true },
           { nom: 'Fusilli', description: 'Spirales serrées, roulées autour d’un fer.', prix: '8,50 €', placeholder: true },
         ],
@@ -246,7 +247,7 @@ export const site: Restaurant = {
         categorie: 'Farcies',
         produits: [
           { nom: 'Ravioli ricotta et épinards', description: 'Carrés fermés à la main, farce ricotta, épinards et muscade.', prix: '12 €', placeholder: true },
-          { nom: 'Tortellini', description: 'Petits anneaux pliés autour du doigt, farce de viande.', prix: '12,50 €', etiquette: 'exemple', placeholder: true },
+          { nom: 'Tortellini', description: 'Petits anneaux pliés autour du doigt, farce de viande.', prix: '12,50 €', placeholder: true },
           { nom: 'Agnolotti', description: 'Pincés en petits coussins, farce de légumes braisés.', prix: '13 €', placeholder: true },
           { nom: 'Cappelletti', description: 'Petits chapeaux, farce de fromage affiné.', prix: '12,50 €', placeholder: true },
         ],
@@ -254,7 +255,7 @@ export const site: Restaurant = {
     ],
   },
   emporter: {
-    intro: 'Exemple de bande « à emporter » pour un fournil : les fournées ci-dessous sont illustratives, le restaurant de référence ne propose pas ce service.',
+    intro: 'Exemple de bande « à emporter » pour un fournil : les fournées ci-dessous sont illustratives, le restaurant de référence n’annonce pas ce service.',
     fournees: [
       { libelle: 'Pain de campagne', heure: '07:30' },
       { libelle: 'Focaccia', heure: '11:30' },
@@ -301,4 +302,14 @@ export function servicesTexte(r: Restaurant = site): { libelle: string; jours: s
     jours: jours.map((j) => abr[j]).join(', '),
     heures,
   }));
+}
+
+/** Numéros des disques : seuls les services comptent (01 à 04) ; mises en bouche, mignardise et suppléments n'ont pas de numéro. */
+export function numerosServices(plats: Plat[]): string[] {
+  let n = 0;
+  return plats.map((p) => (p.horsService ? '' : String(++n).padStart(2, '0')));
+}
+/** Compteur d'une catégorie : le nombre de services annoncé, sinon le nombre de lignes. */
+export function compteCategorie(c: Categorie): string {
+  return String(c.services ?? c.plats.length).padStart(2, '0');
 }

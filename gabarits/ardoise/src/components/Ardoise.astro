@@ -1,0 +1,26 @@
+---
+// L'ardoise : onglets midi / soir (sticky), panneaux de catégories. Sans JS : les deux services affichés l'un sous l'autre.
+import { carteDe, site, creneauService } from '../data/site';
+import Lignes from './Lignes.astro';
+const joursMidi = site.horaires.filter((h) => creneauService(h, 'midi')).map((h) => h.jour.slice(0, 3) + '.');
+const joursSoir = site.horaires.filter((h) => creneauService(h, 'soir')).map((h) => h.jour);
+const services = [
+  { id: 'midi', label: 'Midi', sous: joursMidi.join(' et '), cats: carteDe('midi') },
+  { id: 'soir', label: 'Soir', sous: `${joursSoir[0].slice(0, 3)}. au ${joursSoir[joursSoir.length - 1].slice(0, 3)}.`, cats: carteDe('soir') },
+];
+---
+<div class="onglets" role="tablist" aria-label="Service" data-onglets>
+  {services.map((s) => (
+    <button class="onglets__tab" role="tab" id={`tab-${s.id}`} aria-controls={`panneau-${s.id}`} aria-selected="false" data-service={s.id} type="button">
+      {s.label}<small>{s.sous}</small>
+    </button>
+  ))}
+  <span class="onglets__trait" data-trait aria-hidden="true"></span>
+</div>
+{services.map((s) => (
+  <div class="panneau" id={`panneau-${s.id}`} role="tabpanel" aria-labelledby={`tab-${s.id}`} hidden>
+    <h2 class="panneau__titre-js cap cat__titre" style="margin-top: calc(var(--u) * 4)">{s.label} <span class="muted" style="font-size: var(--t-s); font-family: var(--f-body); letter-spacing: 0.1em">{s.sous}</span></h2>
+    {s.cats.map((c) => <Lignes cat={c} />)}
+  </div>
+))}
+<div class="apercu" data-apercu aria-hidden="true"><img alt="" width="560" height="700" /></div>

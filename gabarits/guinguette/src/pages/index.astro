@@ -1,0 +1,200 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import Ornements from '../components/Ornements.astro';
+import { site, guinguette, photoDe, horaireTexte, adresseLigne } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const trio = photoDe('/photos/equipe-trio.webp');
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const picto = (cat: string) => g.pictos.find((p) => cat.startsWith(p.categorie))?.picto ?? 'fourchette';
+const avisVrai = site.avis.find((a) => !a.placeholder);
+const [m1, m2] = g.manifeste.titre;
+const etoiles = Array.from({ length: 5 });
+---
+<Base>
+  <!-- Hero poster : tout est peint au premier rendu ; les objets tombent puis deviennent saisissables -->
+  <section class="hero wrap" data-hero>
+    <div class="hero__inner" data-hero-texte>
+      <h1 class="hero__titre"><span>{g.heroTitre[0]}</span><span class="l2">{g.heroTitre[1]}</span></h1>
+      <p class="hero__slogan">{g.slogan.texte}{g.slogan.placeholder && <span class="illu">exemple</span>}</p>
+      <p class="hero__adresse">{site.nom} · {adresseLigne()}</p>
+      <div class="actions">
+        <a class="btn btn--plein" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+        <a class="btn" href={u('/carte/')}>Voir la carte</a>
+      </div>
+    </div>
+    <div class="hero__zone" data-hero-zone>
+      {g.objets.map((o, i) => (
+        <button type="button" class:list={['obj', { 'obj--mobile': o.mobile, 'obj--corail': i % 3 === 0, 'obj--canard': i % 3 === 1 }]} data-obj aria-label={`${o.label}, déplaçable aux flèches`} style={`--x:${o.x}%;--y:${o.y}%;--r:${o.r}deg;--taille:${o.taille}px;--delai:${(i * 0.6).toFixed(1)}s`}>
+          <Objet id={o.id} classe="obj__svg" />
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <!-- La maison -->
+  <section class="section" id="maison">
+    <div class="wrap maison__grille">
+      <figure class="tirage" style="--w:100%; cursor: default">
+        <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="eager" decoding="async" />
+        <figcaption>Les deux chefs et l'équipe</figcaption>
+      </figure>
+      <div class="maison__texte" data-reveal="fade">
+        <Ornements />
+        <p class="meta">La maison</p>
+        <h2 class="section__titre">Deux potes, <em>un feu</em></h2>
+        <div class="prose">
+          <p>{site.histoire[0].replace('Il y a quatorze ans, ', '')}</p>
+          <p>{site.histoire[3]}</p>
+        </div>
+        <div class="actions"><a class="btn" href={u('/histoire/')}>Toute l'histoire</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- La table : signature -->
+  <section class="section section--canard table" id="table" data-table aria-label="La table : photos à déplacer">
+    <div class="table__titre wrap">
+      <h2>La table du dimanche</h2>
+      <p>Attrapez un tirage, posez-le où vous voulez.</p>
+    </div>
+    <div class="table__scene" data-table-scene>
+      {g.tirages.map((t, i) => (
+        <figure class="tirage" data-tirage tabindex="0" aria-label={`${t.legende}, photo déplaçable aux flèches`} style={`--x:${t.x}%;--y:${t.y}%;--r:${t.r}deg`}>
+          <img src={petite(t.src)} alt={t.alt} width="640" height="640" loading="lazy" decoding="async" draggable="false" />
+          <figcaption>{t.legende}</figcaption>
+        </figure>
+      ))}
+      {(['verre', 'citron', 'fourchette'] as const).map((id, i) => (
+        <button type="button" class="obj" data-obj aria-label={`${id} dessiné au trait, déplaçable aux flèches`} style={`--x:${[48, 8, 88][i]}%;--y:${[30, 80, 78][i]}%;--r:${[12, -20, 40][i]}deg;--taille:110px`}>
+          <Objet id={id} classe="obj__svg" />
+        </button>
+      ))}
+    </div>
+    <div class="table__rail rail" aria-label="Photos de la table">
+      {g.tirages.slice(0, 8).map((t) => (
+        <figure class="tirage" style={`--r:${t.r}deg`}>
+          <img src={petite(t.src)} alt={t.alt} width="640" height="640" loading="lazy" decoding="async" />
+          <figcaption>{t.legende}</figcaption>
+        </figure>
+      ))}
+    </div>
+    <div class="badge" aria-hidden="true">
+      <svg viewBox="0 0 120 120"><defs><path id="cercle" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" /></defs><text><textPath href="#cercle">attrapez-moi · attrapez-moi · attrapez-moi · </textPath></text></svg>
+      <svg class="badge__main" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M30 60 V30 a6 6 0 0 1 12 0 V52" /><path d="M42 50 V26 a6 6 0 0 1 12 0 V52" /><path d="M54 50 V30 a6 6 0 0 1 12 0 V56" /><path d="M66 54 V40 a6 6 0 0 1 12 0 V68 a26 26 0 0 1 -26 26 h-6 a24 24 0 0 1 -20 -11 L18 66 a6 6 0 0 1 10 -7 L30 62" /></svg>
+    </div>
+  </section>
+
+  <!-- Le menu : carte blanche -->
+  <section class="section" id="menu">
+    <div class="wrap">
+      <p class="meta" style="text-align:center">Le menu</p>
+      <h2 class="section__titre" style="text-align:center">Ce qu'on <em>pose</em> sur la table</h2>
+      <div class="carte" data-reveal="scale">
+        <div class="carte__grille">
+          {site.carte.map((c) => (
+            <div>
+              <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie.split(',')[0].split(' 4 ')[0]}</h3>
+              {c.categorie.includes('67') && <p class="cat__note">4 services, 67 €, du lundi au vendredi soir</p>}
+              <ul role="list">
+                {c.plats.map((p) => (
+                  <li class="plat">
+                    <span class="plat__nom">{p.nom}{p.placeholder && <span class="illu">exemple</span>}{p.description && <span class="plat__desc">{p.description}</span>}</span>
+                    <span class="plat__points" aria-hidden="true"></span>
+                    {p.prix && <span class="plat__prix">{p.prix}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <p class="bandeau-ex" style="margin-top: calc(var(--u) * 5)">Carte longue d'exemple : ces plats et prix sont illustratifs</p>
+        <div class="carte__grille">
+          {g.carteExemple.map((c) => (
+            <div>
+              <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie}</h3>
+              <ul role="list">
+                {c.plats.map((p) => (
+                  <li class="plat">
+                    <span class="plat__nom">{p.nom}<span class="illu" aria-label="exemple">*</span>{p.vege && <span class="vege">végé</span>}<span class="plat__desc">{p.description}</span></span>
+                    <span class="plat__points" aria-hidden="true"></span>
+                    <span class="plat__prix">{p.prix}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="actions" style="justify-content:center"><a class="btn" href={u('/carte/')}>La carte et les formules</a></div>
+    </div>
+  </section>
+
+  <!-- Avis : mot géant flou → net, cartes inclinées -->
+  <section class="section section--blanc avis" id="avis" data-avis>
+    <p class="display avis__mot" aria-hidden="true" data-avis-mot>Avis</p>
+    <div class="wrap">
+      <p class="meta" style="text-align:center">Ils en parlent</p>
+      <h2 class="sr-only">Avis</h2>
+      <div class="avis__cartes">
+        {avisVrai && (
+          <blockquote class="carte-avis carte-avis--vraie" data-carte-avis style="--r:-3deg">
+            <span class="carte-avis__etiq">{avisVrai.source}</span>
+            <p>{avisVrai.texte}</p>
+            <cite>{avisVrai.auteur}</cite>
+          </blockquote>
+        )}
+        {g.avisExemples.map((a) => (
+          <blockquote class="carte-avis" data-carte-avis style={`--r:${a.r}deg`}>
+            <span class="carte-avis__etiq">Exemple d'avis</span>
+            <span class="carte-avis__etoiles" role="img" aria-label={`${a.note} étoiles sur 5, exemple`}>
+              {etoiles.map(() => <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.5L12 17.3 6.1 20.5l1.3-6.5L2.5 9.4l6.6-.8z" /></svg>)}
+            </span>
+            <p>{a.texte}</p>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Manifeste corail -->
+  <section class="section section--corail manifeste" id="manifeste">
+    <div class="wrap manifeste__inner">
+      <Ornements />
+      <h2 data-split="lines,words">{m1}<br />{m2.replace(g.manifeste.motItalique, '').trim()} <em class="ital">{g.manifeste.motItalique}</em></h2>
+      <p class="lead">{g.manifeste.texte}</p>
+      <div class="actions">
+        <a class="btn" href={u('/reservation/')}>Réserver</a>
+        <a class="btn" href={u('/terrasse/')}>Privatiser un samedi</a>
+      </div>
+      <span class="obj is-flottant obj--mobile" style="--x:2%;--y:8%;--r:-15deg;--taille:120px;--delai:0.4s" aria-hidden="true"><Objet id="parasol" classe="obj__svg" /></span>
+      <span class="obj is-flottant" style="--x:88%;--y:55%;--r:18deg;--taille:110px;--delai:1.4s" aria-hidden="true"><Objet id="verre" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <!-- Horaires -->
+  <section class="section" id="horaires">
+    <div class="wrap">
+      <div class="hcarte" data-reveal="up">
+        <p class="meta">Horaires</p>
+        <h2 class="section__titre" style="margin-bottom:0">Quand <em>venir</em></h2>
+        <dl class="horaires">
+          {site.horaires.map((h) => (
+            <>
+              <dt>{h.jour}</dt>
+              <span class="pts" aria-hidden="true"></span>
+              <dd class:list={{ ferme: !h.creneaux.length }}>{h.creneaux.length ? horaireTexte(h) : 'fermé'}{!h.creneaux.length && h.note?.includes('privatisation') && <span class="illu" style="color:var(--c-canard);text-transform:none;letter-spacing:0">privatisation possible</span>}</dd>
+            </>
+          ))}
+        </dl>
+        <p class="hcarte__ligne"><span>Terrasse</span><span>{g.terrasse.connue ? 'oui' : 'à confirmer'}{g.terrasse.placeholder && <span class="illu">illustratif</span>}</span></p>
+        <p class="hcarte__ligne"><span>Adresse</span><span>{adresseLigne()}</span></p>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/reservation/')}>Réserver</a>
+          <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

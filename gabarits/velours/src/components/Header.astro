@@ -19,9 +19,27 @@ const initiales = site.nom.split(/\s+/).filter((m) => /^[A-Z]/.test(m)).map((m) 
       <span class="header__cercle" aria-hidden="true">{initiales}</span>
       <span class="header__nom">{site.nom}</span>
     </a>
-    <nav class="nav" aria-label="Navigation principale">
+    <button class="header__menu" type="button" aria-expanded="false" aria-controls="nav-principale" data-menu><span class="header__menu-trait" aria-hidden="true"></span>Menu</button>
+    <nav class="nav" id="nav-principale" aria-label="Navigation principale">
       {liens.map((l) => <a class="nav__lien" href={l.href} aria-current={courant(l.href)}><span>{l.label}</span></a>)}
     </nav>
     <a class="btn btn--petit header__resa" href={u('/reservation/')} aria-current={courant(u('/reservation/'))}><span>Réserver</span></a>
   </div>
 </header>
+
+<script>
+  import { onPage } from '../engine';
+  // Mobile : la nav se replie derrière un bouton « Menu » (une seule ligne d'en-tête). Sans JS, la nav reste visible (CSS .js).
+  onPage(() => {
+    const btn = document.querySelector<HTMLButtonElement>('[data-menu]');
+    const header = btn?.closest<HTMLElement>('.header');
+    if (!btn || !header) return;
+    const set = (ouvert: boolean) => { header.classList.toggle('is-open', ouvert); btn.setAttribute('aria-expanded', String(ouvert)); };
+    const toggle = () => set(!header.classList.contains('is-open'));
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape' && header.classList.contains('is-open')) { set(false); btn.focus(); } };
+    btn.addEventListener('click', toggle);
+    document.addEventListener('keydown', esc);
+    set(false);
+    return () => { btn.removeEventListener('click', toggle); document.removeEventListener('keydown', esc); };
+  });
+</script>

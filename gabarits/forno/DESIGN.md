@@ -45,7 +45,7 @@ MANIFESTE (brun)         Une cuisine bistronomique à quatre mains, avec un ancr
                                                      Et un mot d'ordre : le plaisir.   (deux mots soulignés épais = liens)
 LEVÉE (brun, 350vh, scène sticky)    [vignette 320 px]  →  photo plein écran ; « AU FEU » 20vw → 4vw en coin ;
                                      marquee 2 lignes en sens inverse (services du menu) qui traverse l'image à la fin
-MENU (farine)            LE MENU DU SOIR ———————————————————————— 08      ○ Mises en bouche      ◉ Saint-Jacques…
+MENU (farine)            LE MENU DU SOIR ———————————————————————— 04      ○ Mises en bouche      ◉ Saint-Jacques…
                          (fiches : vignette ronde ou disque chiffré, nom gras, description italique, prix)
 FOURNIL (farine)         ▇▇▇▇▇ (1-5)        ▇▇▇▇▇▇ (7-12)    ▇▇▇ (2-4)   ▇▇▇▇▇▇ (6-12)    ▇▇▇▇ (1-6)   parallaxe différenciée
 GENS (farine)            LES GENS ——— (◄)(►)   [Damien][François][Sara][Jordan] → déborde à droite
@@ -56,7 +56,7 @@ KYW FOOTER
 Carte : hero mots + 3 catégories en fiches + menus. Pâtes : bandeau « page d'exemple » peint sans JS, 3 catégories ×
 4 produits en disques typographiques, aucun CTA de réservation. Histoire : 4 paragraphes réels, portraits, carrousel
 des gens, 3 photos. À emporter : bandeau d'exemple, fournées illustratives, téléphone réel, aucun CTA de réservation.
-Réservation : Zenchef, téléphone, formulaire de démonstration, horaires. 404 : four éteint.
+Réservation : Zenchef, téléphone, formulaire de démonstration (récapitulatif de la saisie, puis Zenchef ou téléphone), horaires. 404 : four éteint.
 
 ## Test de généricité
 Un modèle ferait un site crème avec une photo de pizza et une carte en trois colonnes. Ici la structure suit la fournée
@@ -73,3 +73,17 @@ capitales géantes, et le compte à rebours part des vrais horaires : rien n'est
 - [x] Une donnée, un drapeau : `site.ts` (rolePlaceholder, pates.placeholder, emporter.placeholder, avis, email).
 - [x] Rien de daté : le compte à rebours et le statut se calculent depuis `site.horaires` ; aucune date en dur.
 - [x] 0 FAIL audit, 0 erreur console, 0 débordement, axe sans violation sérieuse (`.shots-forno/`, RAPPORT.md).
+
+## Révision 1 (30/10/2026, REVUE-1.md → REVISION-1.md)
+- **Accents des capitales** : Big Shoulders Display 800 porte É, À, Â, Ç (vérifié par fontkitten) ; c'est le masque de
+  ligne SplitText (`.split-line-mask`, `overflow: clip`) qui les coupait avec un line-height de 0,85. Règle :
+  `:is(h1, h2, h3, .display) .split-line { padding-top: 0.18em; margin-top: -0.18em }`, et `.page-hero .eyebrow + h1`
+  écarte le surtitre pour que l'accent ne le touche pas. Les titres restent en capitales.
+- **En-tête mobile** : marque et compte à rebours sur la même rangée, nav en dessous (92 px au lieu de 122 px, = `--hdr`) ;
+  « Pâtes fraîches » devient « Pâtes » en ≤ 767 px (`.nav__suite`), les 5 liens tiennent dans 358 px.
+- **Compte à rebours** : le libellé (« Prochain service » / « C'est ouvert ») reste visible en mobile, en petite ligne
+  au-dessus des chiffres ; jours masqués quand ils valent 0 ; en service, les unités (`small`) sont masquées ; sans JS
+  les chiffres sont `hidden` et la carte dit « Réserver une table ». Texte lecteur d'écran accordé, sans « 0 jours ».
+- **Bandeau d'exemple** : `margin-top: var(--hdr)` (sous l'en-tête fixe), la page-hero qui suit ne réserve plus l'en-tête.
+- **Fiches** : seuls les 4 services sont numérotés (01 à 04) ; une fiche sans photo ni numéro n'a pas de disque
+  (`.fiche--nue`), plus de disques à initiale.

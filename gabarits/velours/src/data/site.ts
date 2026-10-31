@@ -109,12 +109,12 @@ export const site: Restaurant = {
       description: 'Mises en bouche, quatre services et mignardise. Fromage à la place du dessert +7 €, avant le dessert +15 €.',
       placeholder: false,
     },
-    { nom: 'Formule 3 services', prix: '52 €', services: 3, quand: 'le midi, mercredi et vendredi', description: 'À choix multiples, inspirée des produits du moment.', placeholder: false },
+    { nom: 'Formule 3 services', prix: '52 €', services: 3, quand: 'le midi', description: 'À choix multiples, inspirée des produits du moment.', placeholder: false },
     {
       nom: 'Lunch',
       prix: '40 €',
       services: 2,
-      quand: 'le midi, mercredi et vendredi',
+      quand: 'le midi',
       description: "Entrée-plat ou plat-dessert, proposé selon les envies des chefs et servi à l'ensemble de la table ; composition sur demande par téléphone.",
       placeholder: false,
     },
@@ -123,7 +123,7 @@ export const site: Restaurant = {
   histoire: [
     "Les Potes au Feu, c'est d'abord l'histoire d'une rencontre : François Schepens et Damien Gorjanec ont aiguisé leurs premiers couteaux ensemble à la Plage d'Amée, à Namur. Deux gamins pleins d'envie, le début d'une amitié.",
     "François a fait ses classes aux États-Unis et à Montréal ; Damien s'est fait une place en Belgique et a cuisiné jusqu'à Shanghai. À chaque retrouvaille, autour d'un verre, le rêve d'ouvrir un restaurant se dessine.",
-    "Début de l'hiver 2019, installés par hasard à une table de ce lieu, ils ne savaient pas encore qu'ils y ouvriraient leur premier restaurant. Trois mois plus tard, ils en avaient les clés : la maison ouvre en 2020.",
+    "Début de l'hiver 2019, installés par hasard à une table de ce lieu, ils ne savaient pas encore qu'ils y ouvriraient leur premier restaurant. Trois mois plus tard, ils en avaient les clés.",
     "Une cuisine bistronomique à quatre mains, de qualité, avec un ancrage local, et un mot d'ordre : le plaisir. Les chefs accompagnent eux-mêmes leurs plats jusqu'à votre table et vous expliquent leur démarche.",
   ],
   equipe: [
@@ -153,13 +153,14 @@ export const site: Restaurant = {
     { texte: 'Menu unique, zéro hésitation : le cadre est chaleureux et le service aussi simple que précis.', auteur: '', source: "Exemple d'avis", date: '', placeholder: true },
   ],
   chiffres: {
-    services: { valeur: 4, libelle: 'services', sousLibelle: 'un menu dégustation unique, le soir', preuve: 'dossier.md, carte du 28/10/2026', placeholder: false },
-    prix: { valeur: 67, libelle: 'euros', sousLibelle: 'le prix du menu, du lundi au vendredi soir', preuve: 'dossier.md, carte du 28/10/2026', placeholder: false },
+    services: { valeur: 4, libelle: 'services', sousLibelle: 'un menu dégustation unique, le soir', preuve: 'dossier.md, carte du site client', placeholder: false },
+    prix: { valeur: 67, libelle: 'euros', sousLibelle: 'le prix du menu, du lundi au vendredi soir', preuve: 'dossier.md, carte du site client', placeholder: false },
     chefs: { valeur: 2, libelle: 'chefs', sousLibelle: 'une cuisine à quatre mains', preuve: 'dossier.md, identité', placeholder: false },
-    ouverture: { valeur: 2020, libelle: 'ouverture', sousLibelle: 'les clés de la maison, trois mois après une table prise par hasard', preuve: 'dossier.md, BCE 14/01/2020', placeholder: false },
+    // 2020 = constitution de la société DAMFRA SRL (BCE), pas une date d'ouverture prouvée (dossier : « date exacte d'ouverture : inconnue »).
+    ouverture: { valeur: 2020, libelle: 'société fondée', sousLibelle: 'DAMFRA SRL, la société des deux chefs, constituée en janvier', preuve: 'BCE 0741.540.749, société constituée le 14/01/2020 ; date d’ouverture du restaurant inconnue', placeholder: false },
   },
   distinctions: [
-    { nom: 'Guide MICHELIN', detail: 'Sélection Belgique 2026', url: 'https://guide.michelin.com/fr/fr/namur/namur/restaurant/les-potes-au-feu', placeholder: false },
+    { nom: 'Guide MICHELIN', detail: 'Restaurant sélectionné, Belgique', url: 'https://guide.michelin.com/fr/fr/namur/namur/restaurant/les-potes-au-feu', placeholder: false }, // pas d'année en dur : l'édition exacte reste dans citation.source
   ],
   privatisation: {
     intro: 'Le samedi, le restaurant se privatise : mariages, événements, ou chef à domicile.',

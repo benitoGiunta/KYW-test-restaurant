@@ -1,0 +1,26 @@
+---
+// La carte complète : les deux services déployés l'un sous l'autre, avec ancres.
+import Base from '../layouts/Base.astro';
+import Lignes from '../components/Lignes.astro';
+import { site, carteDe } from '../data/site';
+---
+<Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : menu dégustation du soir, formule et lunch du midi, suppléments et options, lue comme une ardoise.`}>
+  <section class="entete wrap">
+    <h1 class="cap">La carte</h1>
+    <p class="lead muted">Le soir, un menu dégustation unique en quatre services. Le midi, mercredi et vendredi, une formule à choix et un lunch. Les lignes marquées « exemple » montrent la carte longue du gabarit : la carte réelle est un menu unique.</p>
+  </section>
+  <div class="col-carte">
+    <div>
+      <nav aria-label="Services" class="actions" style="margin-top: 0">
+        <a class="btn" href="#soir">Le soir</a>
+        <a class="btn" href="#midi">Le midi</a>
+      </nav>
+      <h2 class="cap cat__titre" id="soir" style="margin-top: calc(var(--u) * 5)">Soir <span class="muted" style="font-size: var(--t-s); font-family: var(--f-body); letter-spacing: 0.1em">du lundi au vendredi</span></h2>
+      {carteDe('soir').map((c) => <Lignes cat={c} />)}
+      <h2 class="cap cat__titre" id="midi" style="margin-top: calc(var(--u) * 8)">Midi <span class="muted" style="font-size: var(--t-s); font-family: var(--f-body); letter-spacing: 0.1em">mercredi et vendredi</span></h2>
+      {carteDe('midi').filter((c) => c.service === 'midi').map((c) => <Lignes cat={c} />)}
+    </div>
+  </div>
+  <div class="apercu" data-apercu aria-hidden="true"><img alt="" width="560" height="700" /></div>
+  <div style="height: calc(var(--u) * 6)"></div>
+</Base>

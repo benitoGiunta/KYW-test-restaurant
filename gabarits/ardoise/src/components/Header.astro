@@ -1,0 +1,34 @@
+---
+// En-tête « Ardoise » : barre d'état (marquee calculé côté client, repli statique), marque, navigation ; barre basse fixe.
+import { site, servicesTexte, telHref } from '../data/site';
+import { u } from '../lib/url';
+const liens = [
+  { href: u('/carte/'), label: 'La carte' },
+  { href: u('/formules/'), label: 'Formules', mobile: 'cache' },
+  { href: u('/salle/'), label: 'La salle', mobile: 'cache' },
+  { href: u('/histoire/'), label: 'La maison' },
+  { href: u('/reservation/'), label: 'Réserver' },
+];
+const ici = Astro.url.pathname.replace(/\/+$/, '');
+const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+const statique = servicesTexte();
+---
+<div class="etat" data-etat data-horaires={JSON.stringify(site.horaires)} aria-label="État d'ouverture">
+  <div class="etat__piste" data-etat-piste>
+    <p data-etat-texte>{statique}</p>
+    <p aria-hidden="true" data-etat-copie>{statique}</p>
+  </div>
+</div>
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="header__brand" href={u('/')}>{site.nom}</a>
+    <nav class="nav" aria-label="Navigation principale">
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)} data-mobile={l.mobile}>{l.label}</a>)}
+    </nav>
+  </div>
+</header>
+<div class="barre" role="navigation" aria-label="Actions rapides">
+  <a href={u('/reservation/')}>Réserver</a>
+  <a href={telHref()}>Appeler</a>
+  <a href={u('/formules/#cadeau')}>Bon cadeau</a>
+</div>

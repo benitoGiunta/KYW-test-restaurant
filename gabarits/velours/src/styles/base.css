@@ -49,6 +49,9 @@ strong { font-weight: 400; color: var(--c-fg); }
 .header__brand:hover .header__cercle, .header__brand:focus-visible .header__cercle { background: var(--c-accent); color: var(--c-deep); }
 .header__nom { font-family: var(--f-display); font-weight: 400; font-size: 1.125rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-fg); }
 .nav { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2.2); }
+.header__menu { display: none; align-items: center; gap: 0.6em; min-height: 44px; padding-inline: 0.25em; background: none; border: 0; color: var(--c-fg); font: inherit; font-size: 0.8125rem; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; }
+.header__menu-trait { display: inline-block; width: 1.4rem; height: 0.45rem; border-block: 1px solid var(--c-accent); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.header.is-open .header__menu-trait { transform: scaleY(0.2); }
 .nav__lien { position: relative; display: inline-flex; align-items: center; min-height: 44px; font-size: 0.8125rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-fg); }
 .nav__lien::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.7em; height: 1px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 .nav__lien:hover::after, .nav__lien:focus-visible::after, .nav__lien[aria-current='page']::after { transform: scaleX(1); }
@@ -71,10 +74,10 @@ strong { font-weight: 400; color: var(--c-fg); }
 /* Hero : photo de salle pleine largeur sous un voile sapin, nom en Boska capitales cuivre, accroche peinte au premier rendu. */
 .hero { position: relative; display: grid; align-items: end; min-height: calc(100svh - 4.5rem); overflow: clip; }
 .hero__photo, .hero__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.hero__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(27 55 48 / 0.35) 0%, rgb(27 55 48 / 0.55) 55%, var(--c-bg) 100%); }
+.hero__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(14 21 18 / 0.3) 0%, rgb(14 21 18 / 0.55) 35%, rgb(14 21 18 / 0.78) 60%, rgb(27 55 48 / 0.94) 82%, var(--c-bg) 100%); }
 .hero__contenu { position: relative; padding-block: calc(var(--u) * 6) calc(var(--u) * 7); }
 .hero__sur { margin-bottom: calc(var(--u) * 2); }
-.hero__nom { display: flex; flex-wrap: wrap; column-gap: 0.28em; font-family: var(--f-display); font-weight: 400; font-size: clamp(2.75rem, 1.4rem + 5.6vw, 7rem); line-height: 0.95; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-accent); margin-left: -0.04em; }
+.hero__nom { display: flex; flex-wrap: wrap; column-gap: 0.28em; font-family: var(--f-display); font-weight: 700; font-size: clamp(2.75rem, 1.4rem + 5.6vw, 7rem); line-height: 0.95; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c-muted); margin-left: -0.04em; text-shadow: 0 0.04em 0.5em rgb(14 21 18 / 0.55); }
 .hero__mot { display: inline-block; overflow: clip; padding-bottom: 0.08em; margin-bottom: -0.08em; }
 .hero__mot-in { display: inline-block; }
 .hero__accroche { margin-top: calc(var(--u) * 2.5); max-width: var(--col-texte); font-size: var(--t-m); font-weight: 300; }
@@ -251,6 +254,8 @@ html:not(.motion) .onglet[aria-selected='true'] .onglet__barre::after { transfor
 .form label { display: grid; gap: 0.4em; font-size: var(--t-s); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-muted); }
 .form input, .form textarea { padding: 0.7em 0.9em; border: 1px solid var(--c-line); background: rgb(14 21 18 / 0.35); color: var(--c-fg); font-size: var(--t-body); letter-spacing: 0; text-transform: none; color-scheme: dark; }
 .form input:focus-visible, .form textarea:focus-visible { border-color: var(--c-accent); outline-offset: 0; }
+.resa__horaires { display: grid; gap: calc(var(--u) * 2); }
+.resa__note { font-size: var(--t-s); }
 .resa__infos { display: grid; gap: calc(var(--u) * 1.5); padding: calc(var(--u) * 3); border: 1px solid var(--c-line); }
 .resa__infos address { font-style: normal; }
 @media (min-width: 900px) { .resa { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); } }
@@ -274,6 +279,13 @@ html:not(.motion) .onglet[aria-selected='true'] .onglet__barre::after { transfor
   .header__nom { display: none; }
   .nav { order: 3; width: 100%; gap: calc(var(--u) * 1.5) calc(var(--u) * 2); }
   .nav__lien { min-height: 32px; font-size: 0.75rem; letter-spacing: 0.12em; }
+  /* Une seule ligne d'en-tête : logo, bouton Menu, Réserver ; la nav s'ouvre en liste sous la ligne (révision 1, F3-1). */
+  .js .header__inner { flex-wrap: wrap; gap: 0 calc(var(--u) * 2); }
+  .js .header__menu { display: inline-flex; margin-left: auto; }
+  .js .nav { display: none; flex-direction: column; gap: 0; padding-block: var(--u) calc(var(--u) * 1.5); }
+  .js .header.is-open .nav { display: flex; }
+  .js .nav__lien { min-height: 44px; font-size: 0.8125rem; border-top: 1px solid var(--c-line); }
+  .js .nav__lien::after { bottom: 0.9em; right: auto; width: 2rem; }
   .hero { min-height: calc(100svh - 7rem); }
   .hero__nom { font-size: clamp(2.75rem, 12vw, 3.5rem); }
   .loader__count { display: none; }

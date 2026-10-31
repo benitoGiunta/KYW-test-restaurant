@@ -1,0 +1,121 @@
+---
+// Accueil = l'ardoise. Pas de hero photo : nom en deux lignes, suggestion du jour, onglets midi / soir, lignes plat / prix.
+// Nom et accroche sont peints au premier rendu (aucun data-intro) : le texte est l'élément LCP.
+import Base from '../layouts/Base.astro';
+import Ardoise from '../components/Ardoise.astro';
+import { site, photoDe, adresseLigne, horaireTexte, creneauService } from '../data/site';
+import { u, asset } from '../lib/url';
+const salle = photoDe('/photos/salle-banquette-960.webp');
+const trio = photoDe('/photos/equipe-trio-800.webp');
+const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`;
+---
+<Base>
+  <section class="ardoise col-carte" aria-label="L'ardoise">
+    <div>
+      <h1 class="ardoise__nom cap"><span>{site.nomLignes[0]}</span><span>{site.nomLignes[1]}</span></h1>
+      <p class="ardoise__accroche lead">{site.baseline}</p>
+      <a class="ardoise__lien" href={u('/formules/')}>Les formules <span aria-hidden="true">→</span></a>
+
+      <div class="jour" data-jour={JSON.stringify(site.suggestions)} aria-live="polite">
+        <button class="jour__btn" type="button" data-dir="prev" aria-label="Jour précédent"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M11 3 5 9l6 6" /></svg></button>
+        <div class="jour__texte">
+          <span class="petite-cap jour__label" data-jour-label>Suggestion du jour</span>
+          <p class="jour__ligne" data-jour-ligne>
+            <span data-jour-texte>{site.suggestions[0].texte}</span>
+            <span class="jour__prix num" data-jour-prix>{site.suggestions[0].prix}</span>
+            <span class="ex" data-jour-marque>suggestion illustrative</span>
+          </p>
+        </div>
+        <button class="jour__btn" type="button" data-dir="next" aria-label="Jour suivant"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m7 3 6 6-6 6" /></svg></button>
+      </div>
+
+      <Ardoise />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="formules-titre">
+    <div class="col-carte">
+      <div>
+        <p class="petite-cap">Formules</p>
+        <h2 class="cap cat__titre" id="formules-titre" data-split="words">Trois façons de passer à table</h2>
+        <div class="formules" style="margin-top: calc(var(--u) * 3)">
+          {site.menus.map((m, i) => (
+            <article class="formule" data-reveal="fade" data-delay={String(i * 0.1)}>
+              <p class="formule__prix num" data-prix-ecrit>{m.prix}</p>
+              <h3 class="formule__nom">{m.nom}</h3>
+              <p class="formule__quand">{m.quand}</p>
+              <p class="formule__desc">{m.description}</p>
+            </article>
+          ))}
+        </div>
+        <div class="cadeau">
+          <p><strong>Bon cadeau</strong> de {site.cadeau.montants}. {site.cadeau.note}</p>
+          <a class="ardoise__lien" href={u('/formules/#cadeau')}>En savoir plus <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="salle clair" aria-labelledby="salle-titre">
+    <div class="wrap salle__grid">
+      <figure class="salle__media" data-reveal="clip">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
+      </figure>
+      <div>
+        <p class="petite-cap">La salle</p>
+        <h2 class="cat__titre cap" id="salle-titre" data-split="lines">Une petite salle sombre et chaleureuse, la cuisine ouverte sur la table</h2>
+        <p class="muted" style="margin-top: var(--u)">Murs vert-gris, bar et tables hautes en chêne, banquette aux coussins moutarde, ampoules à filament, et la hotte rouge de la cuisine ouverte.</p>
+        <a class="ardoise__lien" href={u('/salle/')}>Voir la salle <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <ul class="mots cap wrap" data-mots aria-label="Salle, bar, cuisine">
+      {site.motsSalle.map((m) => <li>{m}</li>)}
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="maison-titre">
+    <div class="wrap maison">
+      <figure class="maison__media" data-reveal="fade">
+        <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="lazy" decoding="async" />
+      </figure>
+      <div data-reveal="fade" data-delay="0.15">
+        <p class="petite-cap">La maison</p>
+        <h2 class="cap" id="maison-titre">Deux potes, un feu</h2>
+        <p>{site.histoire[0]}</p>
+        <p style="margin-top: var(--u)">{site.histoire[3]}</p>
+        <a class="lien" href={u('/histoire/')}>Toute l'histoire <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="horaires-titre">
+    <div class="wrap acces">
+      <div>
+        <p class="petite-cap">Horaires</p>
+        <h2 class="cap cat__titre" id="horaires-titre">Midi et soir</h2>
+        <table class="horaires" style="margin-top: var(--u)">
+          <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
+          <tbody>
+            {site.horaires.map((h) => {
+              const midi = creneauService(h, 'midi'); const soir = creneauService(h, 'soir');
+              return (
+                <tr data-jour-ligne-tab={h.jour}>
+                  <td>{h.jour}</td>
+                  <td class={midi ? undefined : 'ferme'}>{midi ? `${midi.ouverture} à ${midi.fermeture}` : h.creneaux.length ? '' : h.note || 'fermé'}</td>
+                  <td class={soir ? undefined : 'ferme'}>{soir ? `${soir.ouverture} à ${soir.fermeture}` : ''}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div class="stack">
+        <p class="petite-cap">Accès</p>
+        <address><strong>{site.nom}</strong><br />{adresseLigne()}</address>
+        {site.acces.map((a) => <p class={a.placeholder ? 'muted' : undefined}>{a.texte}</p>)}
+        <p><a class="link" href={carte} rel="noopener">Voir sur la carte</a></p>
+        <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

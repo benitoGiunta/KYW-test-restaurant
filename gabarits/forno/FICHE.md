@@ -20,7 +20,7 @@ calculé depuis les horaires réels, bat dans l'en-tête et devient « c'est ouv
   typographiques, aucun CTA de réservation.
 - **Histoire** : quatre paragraphes réels, portraits en escalier, carrousel de l'équipe, valeurs et galerie sur brun.
 - **À emporter** (page d'exemple) : bandeau d'exemple, horaires de fournées illustratifs, téléphone réel, aucun CTA.
-- **Réservation** : bouton vers l'outil réel, téléphone, formulaire de démonstration (ouvre l'outil), horaires, itinéraire.
+- **Réservation** : bouton vers l'outil réel, téléphone, formulaire de démonstration (récapitule la saisie, puis renvoie vers l'outil réel ou le téléphone ; à remplacer par le widget de l'outil ou à supprimer à l'adaptation), horaires, itinéraire.
 - **404** : « Four éteint ».
 
 ## Composants
@@ -46,7 +46,10 @@ du compte à rebours (12 px). Texture unique : poudre de farine sur le brun.
 ## Limites
 - Le restaurant de référence n'a pas de four à pizza : la levée montre ses mains dans la pâte, le marquee ses services ;
   pâtes fraîches et fournées sont illustratives et marquées à l'endroit où elles s'affichent.
-- Le compte à rebours dépend de l'horloge du visiteur et de `site.horaires` ; sans JS, la carte affiche « Prochain
-  service » et renvoie vers la réservation.
+- Le compte à rebours dépend de l'horloge et du fuseau du visiteur et de `site.horaires` : pas de jours fériés ni de
+  fermetures exceptionnelles, et un visiteur hors Belgique voit une heure décalée. Sans JS, la carte affiche « Réserver
+  une table » (chiffres masqués par `hidden`) et renvoie vers la réservation.
+- Compteurs du menu : `services` de la catégorie (4) ; mises en bouche, mignardise et suppléments portent `horsService`
+  (pas de numéro, pas de disque). Les formules ne comptent pas le bon cadeau (`horsFormule`).
 - Un seul marquee par site (accueil) ; en mobile il passe à une ligne, la levée va de 70 vw à 100 vw.
 - Le loader est masqué en mobile (l'accroche est peinte au premier rendu).
