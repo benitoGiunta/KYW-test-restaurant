@@ -1,0 +1,125 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Assiette from '../components/Assiette.astro';
+import { u } from '../lib/url';
+import { assiettes, photos } from '../lib/photos';
+import { site, services, histoire, faits } from '../data/site';
+---
+<Base description="Les Potes au Feu, bistronomie à Namur : un menu unique en quatre services, de saison et fait maison, apporté à votre table par les chefs Damien et François.">
+  <section class="hero" aria-labelledby="titre">
+    <div class="wrap grid hero__grid">
+      <div class="hero__texte">
+        <h1 id="titre" class="display t-mega hero__h1">Les Potes<br />au Feu<span class="point">.</span></h1>
+        <p class="lead hero__lead">Un menu unique en quatre services, de saison et fait maison. Les chefs Damien et François l’apportent eux-mêmes à votre table, avenue de la Plante, à Namur.</p>
+        <div class="hero__actions">
+          <a class="btn btn--plein" data-fill href={site.reservation.url} rel="noopener"><span class="btn__fill" aria-hidden="true"></span>Réserver une table</a>
+          <a class="btn" data-fill href={u('/carte/')}><span class="btn__fill" aria-hidden="true"></span>Voir la carte</a>
+        </div>
+      </div>
+      <div class="hero__assiette" data-hero-plate>
+        <div data-plate-idle>
+          <Assiette image={assiettes.boeuf.src} alt={assiettes.boeuf.alt} widths={[360, 560, 800, 1100]} sizes="(max-width: 767px) 52vw, 34vw" priorite />
+        </div>
+      </div>
+      <div class="hero__meta petit">
+        <p>{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</p>
+        <p>Le soir du lundi au vendredi, le midi le mercredi et le vendredi</p>
+        <p>Menu dégustation <span class="num">67 €</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="service" data-service aria-labelledby="service-titre">
+    <div class="wrap grid service__tete">
+      <h2 id="service-titre" class="display t-xl" data-split="lines">Quatre services, une seule carte.</h2>
+      <p>Le menu change avec les saisons. Voici celui de cet automne, assiette par assiette, comme les chefs vous le présentent à table.</p>
+    </div>
+    <div class="service__corps">
+      <div class="service__stage">
+        <div class="service__table">
+          {services.map((s, i) => (
+            <div class="service__plate" data-plate>
+              <figure>
+                {s.photo
+                  ? <Assiette image={assiettes[s.photo].src} alt={assiettes[s.photo].alt} widths={[320, 480, 640]} sizes="(max-width: 767px) 60vw, 38vw" />
+                  : <Assiette creme={i === 0} />}
+              </figure>
+            </div>
+          ))}
+        </div>
+        <p class="service__legende" data-service-legende aria-hidden="true"><span class="num" data-service-n>Service 1 sur {services.length}</span><span data-service-titre>{services[0].titre}</span></p>
+      </div>
+      <ol class="service__chapitres" data-chapitres>
+        {services.map((s) => (
+          <li class="service__chapitre" data-chapitre={s.titre}>
+            <p class="etiquette num">Service {s.n} sur {services.length}</p>
+            <h3 class="display t-xl">{s.titre}</h3>
+            <p class="t-m">{s.plats}</p>
+            <p class="hand">{s.note}</p>
+            {s.legende && <p class="petit">{s.legende}</p>}
+          </li>
+        ))}
+      </ol>
+    </div>
+    <div class="wrap service__fin">
+      <a class="btn btn--oak" data-fill href={u('/carte/')}><span class="btn__fill" aria-hidden="true"></span>Toute la carte et les prix</a>
+    </div>
+  </section>
+
+  <section class="duo" aria-labelledby="duo-titre">
+    <div class="wrap grid">
+      <div class="duo__texte">
+        <h2 id="duo-titre" class="display t-xl" data-split="lines">Deux potes, quatre mains.</h2>
+        <div class="prose">
+          <p>{histoire[0]}</p>
+          <p>Ils cuisinent ensemble, puis sortent de la cuisine pour vous servir et vous raconter l’assiette. Ils sont épaulés par Sara et Jordan.</p>
+        </div>
+        <a class="btn" data-fill href={u('/histoire/')}><span class="btn__fill" aria-hidden="true"></span>Lire leur histoire</a>
+      </div>
+      <div class="duo__portraits">
+        <figure class="duo__portrait" data-reveal="up">
+          <div class="cadre"><Image src={photos.chefDamien.src} alt={photos.chefDamien.alt} widths={[360, 540, 760]} sizes="(max-width: 767px) 46vw, 24vw" loading="lazy" decoding="async" /></div>
+          <figcaption class="petit"><span>Damien Gorjanec</span><span>chef</span></figcaption>
+        </figure>
+        <figure class="duo__portrait" data-reveal="up" data-delay="0.15">
+          <div class="cadre"><Image src={photos.chefFrancois.src} alt={photos.chefFrancois.alt} widths={[360, 540, 760]} sizes="(max-width: 767px) 46vw, 24vw" loading="lazy" decoding="async" /></div>
+          <figcaption class="petit"><span>François Schepens</span><span>chef</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="salle" aria-label="La salle">
+    <div class="salle__cadre">
+      <Image src={photos.salleClientsBar.src} alt={photos.salleClientsBar.alt} widths={[640, 960, 1140]} sizes="100vw" loading="lazy" decoding="async" data-parallax="0.08" />
+    </div>
+    <div class="wrap salle__legende petit">
+      <p>La salle, le soir : le bar, les ampoules à filament, la table haute en chêne.</p>
+      <p>Samedi, le restaurant se privatise.</p>
+    </div>
+  </section>
+
+  <section class="faits" aria-labelledby="faits-titre">
+    <div class="wrap">
+      <h2 id="faits-titre" class="sr-only">En chiffres</h2>
+      <ul>
+        {faits.map((f) => (
+          <li>
+            <span class="chiffre">{f.chiffre}{f.unite && <small>{f.unite}</small>}</span>
+            <p class="petit">{f.label}{f.aConfirmer && <span class="illu">à confirmer</span>}{f.aConfirmer && '.'}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="citation" aria-label="Le Guide MICHELIN">
+    <div class="wrap grid">
+      <blockquote cite={site.michelin.url}>
+        <p class="display t-xl" data-split="lines">« {site.michelin.texte} »</p>
+        <cite class="petit"><a class="lk" href={site.michelin.url} rel="noopener">{site.michelin.source}</a></cite>
+      </blockquote>
+    </div>
+  </section>
+</Base>

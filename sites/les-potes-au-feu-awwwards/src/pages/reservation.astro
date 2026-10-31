@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+import { journee } from '../lib/horaires';
+import { photos } from '../lib/photos';
+import { site } from '../data/site';
+---
+<Base title="Réserver" description="Réserver une table aux Potes au Feu, avenue de la Plante 4 à Namur : en ligne avec Zenchef ou par téléphone au 081 64 04 44. Horaires, accès et bons cadeaux.">
+  <section class="page-hero" aria-labelledby="titre">
+    <div class="wrap grid">
+      <div class="page-hero__texte">
+        <h1 id="titre" class="display t-xl">Une table<br />pour vous<span class="point">.</span></h1>
+        <p class="lead page-hero__lead">Réservez en ligne, ou appelez pour la dernière minute et les tables de plus de six personnes. Un menu végétarien ou une allergie ? Dites-le en réservant.</p>
+        <div class="hero__actions">
+          <a class="btn btn--plein" data-fill href={site.reservation.url} rel="noopener"><span class="btn__fill" aria-hidden="true"></span>Réserver en ligne</a>
+          <a class="btn" data-fill href={site.telephoneHref}><span class="btn__fill" aria-hidden="true"></span>Appeler le {site.telephone.replace('+32 ', '0')}</a>
+        </div>
+      </div>
+      <div class="page-hero__photo">
+        <Image src={photos.salleBanquette.src} alt={photos.salleBanquette.alt} widths={[480, 760, 960]} sizes="(max-width: 767px) 100vw, 40vw" loading="eager" fetchpriority="high" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  <section class="resa" aria-label="Infos pratiques">
+    <div class="resa__bloc wrap grid">
+      <h2 class="t-l">Horaires</h2>
+      <dl class="horaires">
+        {site.horaires.map((h) => (<><dt>{h.jour}</dt><dd class:list={{ ouvert: h.creneaux.length > 0 }}>{journee(h)}</dd></>))}
+      </dl>
+    </div>
+    <div class="resa__bloc wrap grid">
+      <h2 class="t-l">Adresse</h2>
+      <div>
+        <address class="t-m">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p class="petit">Au bord de la Meuse.</p>
+        <p class="resa__lien"><a class="lk" href={site.carteUrl} rel="noopener">Ouvrir le plan (OpenStreetMap)</a></p>
+      </div>
+    </div>
+    <div class="resa__bloc wrap grid">
+      <h2 class="t-l">Contact</h2>
+      <div>
+        <p class="t-m"><a class="lk num" href={site.telephoneHref}>{site.telephone}</a></p>
+        <p class="petit">Le restaurant ne publie pas d’adresse e-mail : le téléphone et la réservation en ligne sont les deux chemins.</p>
+      </div>
+    </div>
+    <div class="resa__bloc wrap grid">
+      <h2 class="t-l">Offrir</h2>
+      <div>
+        <p>Bons cadeaux de 50, 75, 100 ou 150 €, à demander en ligne et à retirer au restaurant.</p>
+        <p class="resa__lien"><a class="lk" href={site.bonCadeauUrl} rel="noopener">Demander un bon cadeau</a></p>
+      </div>
+    </div>
+    <div class="resa__bloc wrap grid">
+      <h2 class="t-l">Privatiser</h2>
+      <div>
+        <p>Le samedi, le restaurant est fermé au public et se privatise. Appelez les chefs pour en parler.</p>
+        <p class="resa__lien"><a class="lk" href={u('/carte/')}>Voir la carte et les prix</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

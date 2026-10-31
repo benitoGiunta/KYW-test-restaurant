@@ -1,0 +1,60 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Assiette from '../components/Assiette.astro';
+import { assiettes } from '../lib/photos';
+import { site, formules } from '../data/site';
+// Aperçu au curseur (desktop) : URL d'une variante 440 px, la vignette inline étant masquée (et donc jamais chargée) au pointeur fin.
+const apercus: Record<string, string> = {};
+for (const k of Object.keys(assiettes) as (keyof typeof assiettes)[]) apercus[k] = (await getImage({ src: assiettes[k].src, width: Math.min(440, assiettes[k].src.width), format: 'webp' })).src;
+---
+<Base title="La carte" description="La carte des Potes au Feu à Namur : menu dégustation en quatre services à 67 €, lunch du midi, quelques verres du bar et bons cadeaux, de saison et fait maison.">
+  <section class="page-hero" aria-labelledby="titre">
+    <div class="wrap grid">
+      <div class="page-hero__texte">
+        <h1 id="titre" class="display t-xl">La carte<span class="point">.</span></h1>
+        <p class="lead page-hero__lead">Le soir, un seul menu, le même pour toute la table. Il suit les saisons et les producteurs du coin. Végétarien sur demande, allergies à signaler en réservant.</p>
+      </div>
+      <div class="page-hero__assiette">
+        <figure>
+          <div data-plate-idle>
+            <Assiette image={assiettes['saint-jacques'].src} alt={assiettes['saint-jacques'].alt} widths={[280, 440]} sizes="(max-width: 767px) 50vw, 26vw" priorite />
+          </div>
+          <figcaption class="petit">Saint-Jacques, butternut, passion : le deuxième service.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="carte" data-index aria-label="Menus et prix">
+    {formules.map((f) => (
+      <div class="carte__bloc wrap grid" id={f.id}>
+        <div class="carte__entete">
+          <h2 class="t-l">{f.nom}</h2>
+          {f.prix && <span class="prix num">{f.prix}</span>}
+          {f.prixNote && <p class="petit"><span class="illu illu--seul">{f.prixNote}</span></p>}
+          <p class="petit">{f.quand}</p>
+          {f.note && <p class="petit">{f.note}</p>}
+        </div>
+        <ol class="carte__liste">
+          {f.lignes.map((l, i) => (
+            <li class:list={['carte__ligne', { 'carte__ligne--photo': l.photo }]} data-preview={l.photo ? apercus[l.photo] : undefined}>
+              {l.photo && (
+                <span class="vignette" aria-hidden="true"><Image src={assiettes[l.photo].src} alt="" widths={[120, 240, 440]} sizes="(hover: none) 52px, 18rem" loading="lazy" decoding="async" data-apercu-src /></span>
+              )}
+              <span class="n">{String(i + 1).padStart(2, '0')}</span>
+              <span class="nom">{l.nom}{l.description && <span class="desc">{l.description}</span>}</span>
+              {l.prix
+                ? <span class="prix">{l.prix}{l.aConfirmer && <span class="illu">à confirmer</span>}</span>
+                : <span class="prix" aria-hidden="true"></span>}
+            </li>
+          ))}
+        </ol>
+        {f.id === 'cadeau' && (
+          <p class="carte__note petit"><a class="lk" href={site.bonCadeauUrl} rel="noopener">Demander un bon cadeau sur le site du restaurant</a></p>
+        )}
+      </div>
+    ))}
+    <div class="apercu" data-apercu aria-hidden="true"><img alt="" width="288" height="288" decoding="async" /></div>
+  </section>
+</Base>

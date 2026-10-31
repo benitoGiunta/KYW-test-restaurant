@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Assiette from '../components/Assiette.astro';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+---
+<Base title="Page introuvable" description="Cette page n’existe pas sur le site des Potes au Feu, bistronomie à Namur. Retrouvez l’accueil, la carte du moment ou la réservation en ligne.">
+  <section class="vide" aria-labelledby="titre">
+    <div class="wrap grid">
+      <div class="vide__assiette"><div data-plate-idle><Assiette /></div></div>
+      <div class="vide__texte">
+        <p class="etiquette">Erreur 404</p>
+        <h1 id="titre" class="display t-xl">Cette assiette n’est pas au menu<span class="point">.</span></h1>
+        <p class="lead page-hero__lead">La page demandée n’existe pas, ou plus. La carte, elle, est servie juste à côté.</p>
+        <div class="vide__actions">
+          <a class="btn btn--plein" data-fill href={u('/')}><span class="btn__fill" aria-hidden="true"></span>Retour à l’accueil</a>
+          <a class="btn" data-fill href={u('/carte/')}><span class="btn__fill" aria-hidden="true"></span>Voir la carte</a>
+          <a class="btn" data-fill href={site.reservation.url} rel="noopener"><span class="btn__fill" aria-hidden="true"></span>Réserver</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

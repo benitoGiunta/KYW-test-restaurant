@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+import { photos } from '../lib/photos';
+import { histoire, equipe } from '../data/site';
+const mur = [
+  { p: photos.serviceTable, legende: 'Les chefs finissent l’assiette à table.' },
+  { p: photos.equipeTrio, legende: 'Les potes, sur la banquette.' },
+  { p: photos.cuisinePate, legende: 'Fait maison, pesé à la main.' },
+  { p: photos.salleAmpoules, legende: 'La salle, le soir.' },
+  { p: photos.cuisineSalage, legende: 'Le geste, en cuisine.' },
+  { p: photos.serviceFrites, legende: 'Le service, avec le sourire.' },
+];
+---
+<Base title="Histoire" description="L’histoire des Potes au Feu : François Schepens et Damien Gorjanec, amis depuis la Plage d’Amée, ouvrent leur bistrot à quatre mains avenue de la Plante à Namur.">
+  <section class="page-hero" aria-labelledby="titre">
+    <div class="wrap grid">
+      <div class="page-hero__texte">
+        <h1 id="titre" class="display t-xl">L’histoire d’une rencontre<span class="point">.</span></h1>
+        <p class="lead page-hero__lead">Deux gamins au même piano de cuisine, des années de route chacun de son côté, puis une table de l’avenue de la Plante.</p>
+      </div>
+      <div class="page-hero__photo">
+        <Image src={photos.cuisinePasse.src} alt={photos.cuisinePasse.alt} widths={[480, 760, 960]} sizes="(max-width: 767px) 100vw, 40vw" loading="eager" fetchpriority="high" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  <section class="recit" aria-label="Le récit">
+    <div class="wrap grid">
+      <p class="recit__ouverture display t-l">{histoire[0]}</p>
+      <div class="recit__texte prose">
+        {histoire.slice(1).map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="mur" aria-label="En images">
+    <div class="wrap">
+      <ul>
+        {mur.map((m, i) => (
+          <li>
+            <figure data-reveal="clip" data-delay={String((i % 2) * 0.1)}>
+              <div class="cadre"><Image src={m.p.src} alt={m.p.alt} widths={[400, 640, 960].filter((w) => w <= m.p.src.width)} sizes="(max-width: 767px) 100vw, 50vw" loading="lazy" decoding="async" /></div>
+              <figcaption class="petit">{m.legende}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="equipe" aria-labelledby="equipe-titre">
+    <div class="wrap grid">
+      <h2 id="equipe-titre" class="display t-l" data-split="lines">La bande</h2>
+      <ul>
+        {equipe.map((m) => (
+          <li>
+            <span class="nom">{m.nom}</span>
+            <span class="role">{m.role}{m.placeholder && <span class="illu">illustratif</span>}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="wrap equipe__suite">
+      <a class="btn" data-fill href={u('/carte/')}><span class="btn__fill" aria-hidden="true"></span>Voir ce qu’ils cuisinent</a>
+    </div>
+  </section>
+</Base>

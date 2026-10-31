@@ -1,0 +1,83 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { site } from '../data/site';
+import { asset } from '../lib/url';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/tokens.css';
+import '../styles/engine.css';
+import '../styles/site.css';
+
+interface Props { title?: string; description?: string; image?: string }
+const { title, description = site.description, image = '/og.jpg' } = Astro.props;
+const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | ${site.baseline}`;
+const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
+const canonical = new URL(Astro.url.pathname, siteUrl).href; // Astro.url.pathname contient déjà `base` au build
+const ogImage = new URL(asset(image), siteUrl).href;
+const jours: Record<string, string> = { Lundi: 'Monday', Mardi: 'Tuesday', Mercredi: 'Wednesday', Jeudi: 'Thursday', Vendredi: 'Friday', Samedi: 'Saturday', Dimanche: 'Sunday' };
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: site.nom,
+  description: site.description,
+  url: site.url,
+  telephone: site.telephone,
+  servesCuisine: site.typeCuisine,
+  priceRange: '€€',
+  image: ogImage,
+  address: { '@type': 'PostalAddress', streetAddress: `${site.adresse.rue} ${site.adresse.numero}`, postalCode: site.adresse.cp, addressLocality: site.adresse.commune, addressCountry: site.adresse.pays },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon },
+  openingHoursSpecification: site.horaires.flatMap((h) => h.creneaux.map((c) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: jours[h.jour], opens: c.ouverture, closes: c.fermeture }))),
+  acceptsReservations: site.reservation.url,
+  sameAs: site.reseaux.map((r) => r.url),
+};
+---
+<!doctype html>
+<html lang="fr" transition:animate="none">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#1b1a19" />
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
+    <link rel="sitemap" href={asset('/sitemap-index.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.nom} />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <link rel="preload" as="font" type="font/woff2" href={asset('/fonts/bricolage-200_800-normal.woff2')} crossorigin />
+    <slot name="head" />
+    <!-- Avant le premier rendu : marque JS + motion pour que les états « caché avant reveal » ne clignotent jamais. -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+    </script>
+    <ClientRouter fallback="swap" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import { start } from '../engine/astro';
+      import { setupMotion } from '../motion/setup';
+      start(setupMotion);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+---
+import { u } from '../lib/url';
+import { site } from '../data/site';
+const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
+const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
+const liens = [
+  { href: '/carte/', label: 'Carte' },
+  { href: '/histoire/', label: 'Histoire' },
+];
+---
+<header class="top">
+  <a class="top__marque" href={base} aria-current={path === base ? 'page' : undefined}>{site.nomLogo}<span class="point" aria-hidden="true">.</span></a>
+  <nav class="top__nav" aria-label="Navigation principale">
+    <ul>
+      {liens.map((l) => (
+        <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}><span class="nl__dot" aria-hidden="true"></span><span class="nl__txt">{l.label}</span></a></li>
+      ))}
+      <li><a class="btn" data-fill href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="btn__fill" aria-hidden="true"></span>Réserver</a></li>
+    </ul>
+  </nav>
+  <button class="top__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-bouton>Menu</button>
+</header>
+<nav id="menu" class="menu" hidden aria-label="Menu" data-menu>
+  <button class="menu__fermer" type="button" data-menu-fermer>Fermer</button>
+  <ul>
+    <li><a class="menu__lien" href={base}>Accueil</a></li>
+    {liens.map((l) => <li><a class="menu__lien" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+    <li><a class="menu__lien" href={u('/reservation/')} aria-current={courant('/reservation/')}>Réserver</a></li>
+  </ul>
+  <div class="menu__pied">
+    <a href={site.telephoneHref}>{site.telephone}</a>
+    <span>{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</span>
+  </div>
+</nav>

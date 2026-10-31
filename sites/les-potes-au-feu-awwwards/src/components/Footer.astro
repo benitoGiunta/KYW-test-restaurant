@@ -1,0 +1,41 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { journee } from '../lib/horaires';
+import { site, credits } from '../data/site';
+---
+<footer class="pied">
+  <div class="wrap grid">
+    <div class="pied__appel">
+      <p class="display t-xl" data-split="lines">À table ?<br />Les chefs vous attendent.</p>
+      <div class="pied__actions">
+        <a class="btn btn--plein" data-fill href={site.reservation.url} rel="noopener"><span class="btn__fill" aria-hidden="true"></span>Réserver</a>
+        <a class="btn" data-fill href={site.telephoneHref}><span class="btn__fill" aria-hidden="true"></span>Appeler le {site.telephone.replace('+32 ', '0')}</a>
+      </div>
+    </div>
+    <div class="pied__infos">
+      <div>
+        <h2>Adresse</h2>
+        <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}, au bord de la Meuse</address>
+      </div>
+      <div>
+        <h2>Horaires</h2>
+        <dl class="num">
+          {site.horaires.map((h) => (<><dt>{h.jour}</dt><dd>{journee(h)}</dd></>))}
+        </dl>
+      </div>
+      <div>
+        <h2>Suivre</h2>
+        <ul>
+          {site.reseaux.map((r) => <li><a class="lk" href={r.url} rel="noopener">{r.nom}</a></li>)}
+          <li><a class="lk" href={u('/reservation/')}>Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied__colophon petit">
+      <p>{credits.photos}. Polices {credits.polices}. Construit avec {credits.outils}.</p>
+      <p>{site.nom}, {site.adresse.commune}. Société DAMFRA SRL.</p>
+    </div>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

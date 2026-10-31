@@ -1,0 +1,69 @@
+/* JETONS DE DESIGN des Potes au Feu, variante awwwards. Les NOMS sont le contrat du moteur, les VALEURS
+   viennent de DESIGN.md § Système : la salle sombre (#1b1a19, le noir chaud du restaurant), la porcelaine
+   sous les ampoules à filament, le chêne de la table haute, l'assiette rouge du boeuf confit, l'ocre du navet. */
+
+@font-face {
+  font-family: 'Bricolage';
+  src: url('/les-potes-au-feu/awwwards/fonts/bricolage-200_800-normal.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: normal;
+  font-stretch: 75% 100%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Caveat';
+  src: url('/les-potes-au-feu/awwwards/fonts/caveat-400_700-normal.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Couleur, par rôle */
+  --c-bg: #1b1a19;          /* ground : le noir chaud de la salle (murs sombres, soir) */
+  --c-fg: #f3ebdd;          /* ink : la porcelaine sous les ampoules à filament */
+  --c-muted: #b7ab97;       /* muted : le chêne patiné, texte secondaire (7,5:1 sur ground) */
+  --c-line: rgb(243 235 221 / 0.16);
+  --c-accent: #b4231d;      /* accent : l'assiette rouge du boeuf confit */
+  --c-oak: #ac844d;         /* la table haute en chêne, le champ de couleur de la scène (révision 1 : éclairci de #a27a44 pour 5,1:1 avec l'encre) */
+  --c-oak-ink: #1b1a19;     /* encre sur le chêne (5,1:1) */
+  --c-plate: #272527;       /* l'assiette noire du tartare */
+  --c-ocre: #e5962a;        /* l'ocre du navet du logo (7:1 sur ground) */
+  --c-curtain: var(--c-oak);
+
+  /* Familles */
+  --f-display: 'Bricolage', 'Helvetica Neue', Arial, sans-serif;
+  --f-body: 'Bricolage', 'Helvetica Neue', Arial, sans-serif;
+  --f-hand: 'Caveat', 'Segoe Script', cursive;
+
+  /* Échelle fluide (375 → 1440) : grands sauts entre display et texte */
+  --t-mega: clamp(3.3rem, 0.6rem + 11.2vw, 12.4rem);
+  --t-xl: clamp(2.1rem, 1.1rem + 4.4vw, 5.6rem);
+  --t-l: clamp(1.55rem, 1.15rem + 1.8vw, 2.8rem);
+  --t-m: clamp(1.2rem, 1.05rem + 0.6vw, 1.55rem);
+  --t-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.78rem;
+
+  /* Espace : une unité fluide ; les humeurs de section la multiplient */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+  --serre: calc(var(--u) * 6);    /* humeur serrée */
+  --normal: calc(var(--u) * 14);  /* humeur normale */
+  --aere: calc(var(--u) * 26);    /* humeur aérée */
+
+  /* Forme : deux formes seulement, le disque (assiettes, boutons) et le rectangle */
+  --radius: 999px;
+
+  /* Couches */
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-menu: 60;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}
