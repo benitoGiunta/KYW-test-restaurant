@@ -1,9 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, chef, legendePlat } from '../data/site';
+import { site, legendePlat } from '../data/site';
 import { u } from '../lib/url';
-const damien = chef('D');
-const francois = chef('F');
 const soir = site.carte.find((c) => c.moment === 'soir')!;
 const midi = site.carte.find((c) => c.moment === 'midi')!;
 const communs = site.carte.filter((c) => c.moment === 'commun');
@@ -22,7 +20,7 @@ const communs = site.carte.filter((c) => c.moment === 'commun');
     </div>
   </section>
 
-  <section class="dip section" data-voix="gauche" aria-labelledby="soir-titre">
+  <section class="dip section dip--plein" data-voix="gauche" aria-labelledby="soir-titre">
     <div class="dip__g">
       <span class="mono muted eyebrow" data-reveal="fade">{site.menus[0].prix} par personne</span>
       <h2 class="titre" id="soir-titre" data-split="lines">{soir.categorie}</h2>
@@ -42,16 +40,12 @@ const communs = site.carte.filter((c) => c.moment === 'commun');
       <div class="ardoise" data-reveal="up">
         <span class="mono muted">Vu par le Guide MICHELIN 2026</span>
         <p class="t-m">Cerises noires et griottes, crumble de cacao, glace vanille au lait cru.</p>
-        <p class="muted">Un dessert de saison cité par l'inspecteur : le menu change avec les produits, demandez celui du moment. Menu végétarien sur demande, allergies à signaler à la réservation.</p>
+        <p class="muted">Un dessert de saison cité par l'inspecteur&nbsp;: le menu change avec les produits, demandez celui du moment. Menu végétarien sur demande, allergies à signaler à la réservation.</p>
       </div>
-      <blockquote class="citation" style="margin-top: calc(var(--u) * 6)">
-        <p data-split="lines">« {damien.citation.texte} »</p>
-        <cite class="mono muted" data-reveal="fade">{damien.citation.source ?? damien.prenom}{damien.citation.placeholder ? ', citation illustrative' : ''}</cite>
-      </blockquote>
     </div>
   </section>
 
-  <section class="dip section" data-voix="droite" aria-labelledby="midi-titre">
+  <section class="dip section dip--plein" data-voix="droite" aria-labelledby="midi-titre">
     <div class="dip__g">
       <div class="ardoise" data-reveal="up">
         <span class="mono muted">{site.menuDuJour.titre}{site.menuDuJour.placeholder ? ', exemple' : ''}</span>
@@ -60,10 +54,6 @@ const communs = site.carte.filter((c) => c.moment === 'commun');
         </ul>
         <p class="prix mono">{site.menuDuJour.prix}</p>
       </div>
-      <blockquote class="citation" style="margin-top: calc(var(--u) * 6)">
-        <p data-split="lines">« {francois.citation.texte} »</p>
-        <cite class="mono muted" data-reveal="fade">{francois.citation.source ?? francois.prenom}{francois.citation.placeholder ? ', citation illustrative' : ''}</cite>
-      </blockquote>
     </div>
     <div class="dip__d">
       <span class="mono muted eyebrow" data-reveal="fade">{site.menus[1].prix} ou {site.menus[2].prix}</span>

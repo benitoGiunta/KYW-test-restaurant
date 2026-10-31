@@ -19,13 +19,15 @@ export type Voix = 'D' | 'F'; // D = Damien (colonne verte), F = François (colo
 export interface Creneau { ouverture: string; fermeture: string } // 'HH:MM'
 export interface Horaire { jour: Jour; creneaux: Creneau[]; note?: string } // creneaux vide = fermé
 // voixPlaceholder : l'attribution du plat à un chef (voix) n'est pas prouvée par le dossier ; l'interface affiche « attribution illustrative ».
-export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean; voix?: Voix; voixPlaceholder?: boolean; photo?: string }
+// photoDuPlat : la photo montre bien ce plat ; sinon c'est une photo de cuisine ou de salle, légendée comme telle (REVISION-1 F2-04).
+// service : numéro de service du menu (1 à 4) ; mises en bouche et mignardise n'en ont pas (« 4 services »).
+export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean; voix?: Voix; voixPlaceholder?: boolean; photo?: string; photoDuPlat?: boolean; service?: number }
 export interface Categorie { categorie: string; moment?: 'soir' | 'midi' | 'commun'; intro?: string; plats: Plat[] }
 export interface Menu { nom: string; prix: string; description: string; placeholder: boolean; moment?: 'soir' | 'midi' | 'commun' }
-export interface Membre { nom: string; role: string; photo?: string; placeholder: boolean; voix?: Voix; mot?: string }
+export interface Membre { nom: string; role: string; photo?: string; photoAConfirmer?: boolean; placeholder: boolean; voix?: Voix; mot?: string }
 export interface Avis { texte: string; auteur: string; source: string; date: string; note?: number; placeholder: boolean }
 export interface Photo { src: string; alt: string; largeur: number; hauteur: number; placeholder: boolean }
-export interface Reseau { nom: string; url: string }
+export interface Reseau { nom: string; url: string; profil: boolean } // profil false : lien vers un contenu (vidéo), exclu de sameAs
 export interface Etape { annee: string; lieu: string; texte: string; placeholder: boolean }
 export interface Chef {
   voix: Voix;
@@ -37,7 +39,6 @@ export interface Chef {
   bio: string[]; // uniquement des phrases prouvées par dossier.md (récit du site)
   platsFetichesPlaceholder: boolean; // attribution des plats au chef : illustrative
   parcours: Etape[];
-  citation: { texte: string; source?: string; placeholder: boolean };
   platsFetiches: string[]; // noms de plats, renvoient à `carteQuatreMains`
 }
 
@@ -58,7 +59,8 @@ export interface Restaurant {
   reseaux: Reseau[];
   chefs: [Chef, Chef];
   rencontre: string[]; // la section commune « La rencontre »
-  carteQuatreMains: Plat[]; // les 8 plats de la liste à stage de l'accueil
+  concept: { texte: string; source: string }; // phrase du site du restaurant, citée une seule fois (les-deux-chefs), jamais dans la colonne d'un chef
+  carteQuatreMains: Plat[]; // le menu du soir réel (6 lignes, 4 services) de la liste à stage de l'accueil
   carte: Categorie[];
   menus: Menu[];
   menuDuJour: { titre: string; date: string; lignes: string[]; prix: string; placeholder: boolean };
@@ -78,7 +80,7 @@ export interface Restaurant {
 
 const photo = (src: string, alt: string, largeur: number, hauteur: number): Photo => ({ src, alt, largeur, hauteur, placeholder: false });
 
-export const site: Restaurant = {
+const brut: Restaurant = {
   slug: 'les-potes-au-feu',
   nom: 'Les Potes au Feu',
   nomCoupe: ['Les Potes', 'au Feu'],
@@ -106,8 +108,8 @@ export const site: Restaurant = {
     { jour: 'dimanche', creneaux: [], note: 'fermé' },
   ],
   reseaux: [
-    { nom: 'Facebook', url: 'https://www.facebook.com/lespotesaufeu.bistronomie/' },
-    { nom: 'YouTube', url: 'https://www.youtube.com/watch?v=dZtMOajOefE' },
+    { nom: 'Facebook', url: 'https://www.facebook.com/lespotesaufeu.bistronomie/', profil: true },
+    { nom: 'Vidéo YouTube', url: 'https://www.youtube.com/watch?v=dZtMOajOefE', profil: false },
   ],
   chefs: [
     {
@@ -119,18 +121,17 @@ export const site: Restaurant = {
       portrait: '/photos/chef-damien.webp',
       bio: [
         "Damien s'est fait une place en Belgique et a cumulé des expériences à l'étranger, notamment à Shanghai.",
-        'Avec François, il sert lui-même les plats et explique leur démarche à table.',
       ],
+      // REVISION-1 F2-03 : aucun ordre entre la Belgique et Shanghai n'est prouvé : une seule étape « Parcours ».
+      // F2-08 : textes courts qui ne recopient pas les paragraphes de l'histoire.
       parcours: [
-        { annee: 'Débuts', lieu: "La Plage d'Amée, Jambes", texte: 'Premiers couteaux aiguisés à côté de François. Deux gamins pleins d\'envie.', placeholder: false },
-        { annee: 'Ensuite', lieu: 'Belgique', texte: 'Il se fait une place dans les cuisines belges.', placeholder: false },
-        { annee: 'Ailleurs', lieu: 'Shanghai', texte: 'Quelques expériences à l\'étranger, notamment à Shanghai.', placeholder: false },
-        { annee: '2019', lieu: 'Avenue de la Plante, Namur', texte: 'Début de l\'hiver, installés par hasard à une table de ce lieu. Le rêve prend une adresse.', placeholder: false },
-        { annee: '2020', lieu: 'Les Potes au Feu', texte: 'Trois mois plus tard, les clés. Le restaurant ouvre à quatre mains.', placeholder: false },
+        { annee: 'Débuts', lieu: "La Plage d'Amée, Jambes", texte: 'Premiers couteaux aiguisés, à côté de François.', placeholder: false },
+        { annee: 'Parcours', lieu: 'Belgique et Shanghai', texte: "Une place dans les cuisines belges, des expériences à l'étranger.", placeholder: false },
+        { annee: '2019', lieu: 'Avenue de la Plante, Namur', texte: "Une table, par hasard, au début de l'hiver.", placeholder: false },
+        { annee: '2020', lieu: 'Les Potes au Feu', texte: 'Les clés, trois mois plus tard.', placeholder: false },
       ],
-      citation: { texte: 'Une cuisine bistronomique à quatre mains, de qualité, avec un ancrage local. Et un mot d\'ordre : le plaisir.', source: 'Le concept, sur le site du restaurant', placeholder: false },
       platsFetichesPlaceholder: true,
-      platsFetiches: ['Boeuf confit, carottes, cromesquis de pommes de terre', 'Saint-Jacques, butternut, passion'],
+      platsFetiches: ['Bœuf confit, carottes, cromesquis de pommes de terre', 'Saint-Jacques, butternut, passion'],
     },
     {
       voix: 'F',
@@ -141,33 +142,31 @@ export const site: Restaurant = {
       portrait: '/photos/chef-francois.webp',
       bio: [
         'François a fait ses classes aux États-Unis et à Montréal.',
-        'Avec Damien, il accompagne lui-même chaque assiette jusqu\'à la table et explique leur démarche.',
       ],
+      // REVISION-1 F2-03 : « États-Unis et Montréal » sans ordre prouvé ; F1-02 : plus de « premier service, à deux » (non prouvé).
       parcours: [
-        { annee: 'Débuts', lieu: "La Plage d'Amée, Jambes", texte: 'Même cuisine, même époque : la rencontre avec Damien, et le début d\'une amitié d\'adolescence.', placeholder: false },
-        { annee: 'Ensuite', lieu: 'États-Unis', texte: 'Il continue ses classes outre-Atlantique.', placeholder: false },
-        { annee: 'Puis', lieu: 'Montréal', texte: 'Ses classes se poursuivent au Québec.', placeholder: false },
-        { annee: '2019', lieu: 'Avenue de la Plante, Namur', texte: 'Début de l\'hiver, la même table, par hasard. Ils ne savent pas encore qu\'ils ouvriront ici.', placeholder: false },
-        { annee: '2020', lieu: 'Les Potes au Feu', texte: 'Le premier service, à deux. Le menu s\'écrit à quatre mains depuis.', placeholder: false },
+        { annee: 'Débuts', lieu: "La Plage d'Amée, Jambes", texte: "Même cuisine, même époque : une amitié d'adolescence commence.", placeholder: false },
+        { annee: 'Parcours', lieu: 'États-Unis et Montréal', texte: 'Ses classes continuent outre-Atlantique.', placeholder: false },
+        { annee: '2019', lieu: 'Avenue de la Plante, Namur', texte: "La même table. Ils ne savent pas encore qu'ils ouvriront ici.", placeholder: false },
+        { annee: '2020', lieu: 'Les Potes au Feu', texte: 'Le restaurant ouvre, la cuisine se fait à quatre mains.', placeholder: false },
       ],
-      citation: { texte: 'Un restaurant à l\'image des Potes : bon, généreux et accueillant.', source: 'Les Potes, sur le site du restaurant', placeholder: false },
       platsFetichesPlaceholder: true,
-      platsFetiches: ['Soufflé au caramel, chaï, poire', 'Rosace de pommes, glace et tuile'],
+      platsFetiches: ['Soufflé au caramel, chaï, poire', 'Mises en bouche'],
     },
   ],
   rencontre: [
     "Adolescents, François et Damien aiguisent leurs premiers couteaux ensemble à la Plage d'Amée, à Jambes. À chaque retrouvaille, autour d'un verre, le rêve d'ouvrir un restaurant se dessine.",
     "Début de l'hiver 2019, installés par hasard à une table de ce lieu, ils ne savent pas encore qu'ils y ouvriront leur premier restaurant. Trois mois plus tard, ils en ont les clés.",
   ],
+  concept: { texte: "Une cuisine bistronomique à quatre mains, de qualité, avec un ancrage local. Et un mot d'ordre : le plaisir.", source: 'Le concept, sur le site du restaurant' },
+  // REVISION-1 F2-02 / F2-04 : uniquement le menu du soir réel ; la photo n'est « du plat » que pour Saint-Jacques et bœuf confit.
   carteQuatreMains: [
     { nom: 'Mises en bouche', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true, photo: '/photos/cuisine-chefs-dressage.webp' },
-    { nom: 'Légumes racines, champignons, noix', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/cuisine-mains-pate.webp' },
-    { nom: 'Saint-Jacques, butternut, passion', description: 'Snackées, mousseline et tuile noire', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/plat-saint-jacques.webp' },
-    { nom: 'Tartare de boeuf aux tuiles', description: 'Vu en photo, hors du menu actuel', prix: null, placeholder: true, voix: 'D', voixPlaceholder: true, photo: '/photos/plat-tartare.webp' },
-    { nom: 'Boeuf confit, carottes, cromesquis de pommes de terre', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/plat-boeuf-confit.webp' },
-    { nom: 'Fromage', description: 'À la place du dessert (+7 €) ou avant (+15 €)', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/cuisine-salage-viande.webp' },
-    { nom: 'Soufflé au caramel, chaï, poire', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true, photo: '/photos/cuisine-francois-poele.webp' },
-    { nom: 'Rosace de pommes, glace et tuile', description: 'Vue en photo, hors du menu actuel', prix: null, placeholder: true, voix: 'F', voixPlaceholder: true, photo: '/photos/dessert-tarte-pomme.webp' },
+    { nom: 'Légumes racines, champignons, noix', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/cuisine-mains-pate.webp', service: 1 },
+    { nom: 'Saint-Jacques, butternut, passion', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/plat-saint-jacques.webp', photoDuPlat: true, service: 2 },
+    { nom: 'Bœuf confit, carottes, cromesquis de pommes de terre', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/plat-boeuf-confit.webp', photoDuPlat: true, service: 3 },
+    { nom: 'Soufflé au caramel, chaï, poire', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true, photo: '/photos/cuisine-francois-poele.webp', service: 4 },
+    { nom: 'Mignardise', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true, photo: '/photos/cuisine-chefs-passe.webp' },
   ],
   carte: [
     {
@@ -178,7 +177,7 @@ export const site: Restaurant = {
         { nom: 'Mises en bouche', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true },
         { nom: 'Légumes racines, champignons, noix', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true },
         { nom: 'Saint-Jacques, butternut, passion', description: 'Snackées, mousseline et tuile noire', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true },
-        { nom: 'Boeuf confit, carottes, cromesquis de pommes de terre', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true },
+        { nom: 'Bœuf confit, carottes, cromesquis de pommes de terre', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true },
         { nom: 'Soufflé au caramel, chaï, poire', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true },
         { nom: 'Mignardise', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true },
         { nom: 'Fromage à la place du dessert', description: 'Supplément', prix: '+7 €', placeholder: false },
@@ -190,7 +189,7 @@ export const site: Restaurant = {
       moment: 'midi',
       intro: 'Formule à choix multiples, 52 €, inspirée des produits du moment. Lunch entrée-plat ou plat-dessert à 40 €, servi à l\'ensemble de la table.',
       plats: [
-        { nom: 'Oeuf parfait, poireaux, noisettes', description: 'Entrée du moment', prix: null, placeholder: true, voix: 'F', voixPlaceholder: true },
+        { nom: 'Œuf parfait, poireaux, noisettes', description: 'Entrée du moment', prix: null, placeholder: true, voix: 'F', voixPlaceholder: true },
         { nom: 'Truite de rivière, fenouil, beurre blanc', description: 'Entrée du moment', prix: null, placeholder: true, voix: 'D', voixPlaceholder: true },
         { nom: 'Volaille fermière, chou pointu, jus au thym', description: 'Plat du moment', prix: null, placeholder: true, voix: 'D', voixPlaceholder: true },
         { nom: 'Risotto d\'épeautre, courge, pecorino', description: 'Plat du moment, végétarien', prix: null, placeholder: true, voix: 'F', voixPlaceholder: true },
@@ -200,7 +199,7 @@ export const site: Restaurant = {
     {
       categorie: 'Boissons',
       moment: 'commun',
-      intro: 'Quelques bouteilles et un cocktail relevés par Le Fooding (fiche de juillet 2026). La carte complète se découvre à table.',
+      intro: 'Quelques bouteilles et un cocktail relevés par Le Fooding (fiche de juillet 2026).',
       plats: [
         { nom: 'Amaretto sour maison', description: 'Cocktail, au verre', prix: '13 €', placeholder: false },
         { nom: 'Anjou, Domaine Olivier', description: 'Au verre', prix: '9 €', placeholder: false },
@@ -213,7 +212,7 @@ export const site: Restaurant = {
       nom: 'Menu dégustation unique, 4 services',
       prix: '67 €',
       moment: 'soir',
-      description: 'Du lundi au vendredi soir. Mises en bouche, légumes racines, Saint-Jacques, boeuf confit, soufflé au caramel, mignardise.',
+      description: 'Du lundi au vendredi soir. Mises en bouche, légumes racines, Saint-Jacques, bœuf confit, soufflé au caramel, mignardise.',
       placeholder: false,
     },
     { nom: 'Formule 3 services, le midi', prix: '52 €', moment: 'midi', description: 'Mercredi et vendredi midi. Formule à choix multiples inspirée des produits du moment.', placeholder: false },
@@ -229,7 +228,7 @@ export const site: Restaurant = {
   menuDuJour: {
     titre: 'Lunch du vendredi',
     date: '',
-    lignes: ['Oeuf parfait, poireaux, noisettes', 'Volaille fermière, chou pointu, jus au thym', 'Poire pochée, crumble de cacao'],
+    lignes: ['Œuf parfait, poireaux, noisettes', 'Volaille fermière, chou pointu, jus au thym', 'Poire pochée, crumble de cacao'],
     prix: '40 €',
     placeholder: true,
   },
@@ -242,7 +241,7 @@ export const site: Restaurant = {
   equipe: [
     { nom: 'Damien Gorjanec', role: 'Chef et co-propriétaire', photo: '/photos/chef-damien.webp', placeholder: false, voix: 'D' },
     { nom: 'François Schepens', role: 'Chef et co-propriétaire', photo: '/photos/chef-francois.webp', placeholder: false, voix: 'F' },
-    { nom: 'Sara', role: 'Salle et bar', photo: '/photos/service-frites.webp', placeholder: true, mot: 'La pétillante Sara' },
+    { nom: 'Sara', role: 'Salle et bar', photo: '/photos/service-frites.webp', photoAConfirmer: true, placeholder: true, mot: 'La pétillante Sara' },
     { nom: 'Jordan', role: 'Salle', placeholder: true, mot: 'Épaule les chefs' },
   ],
   avis: [
@@ -259,7 +258,7 @@ export const site: Restaurant = {
   presse: [
     {
       nom: 'Guide MICHELIN Belgique 2026',
-      texte: "Un duo d'amis revisite le concept de bistronomie avec pour fil rouge la créativité. Légumes cultivés localement, associations originales et saveurs intenses sont au rendez-vous.",
+      texte: "Un duo d'amis, Damien Gorjanec et François Schepens, revisite le concept de bistronomie avec pour fil rouge la créativité. Légumes cultivés localement, associations originales et saveurs intenses sont au rendez-vous.",
       citation: true,
       date: '2026-05-04',
       url: 'https://guide.michelin.com/fr/fr/namur/namur/restaurant/les-potes-au-feu',
@@ -283,7 +282,7 @@ export const site: Restaurant = {
     photo('/photos/chef-francois.webp', 'François Schepens en cuisine, tablier noir devant la hotte rouge', 1351, 1800),
     photo('/photos/equipe-trio.webp', "L'équipe riant sur une banquette autour d'une table en chêne", 800, 725),
     photo('/photos/dessert-tarte-pomme.webp', 'Rosace de pommes, glace et éclats de tuile, vue de dessus', 800, 725),
-    photo('/photos/plat-tartare.webp', 'Tartare de boeuf, roquette et tuiles sur assiette noire', 550, 825),
+    photo('/photos/plat-tartare.webp', 'Tartare de bœuf, roquette et tuiles sur assiette noire', 550, 825),
     photo('/photos/plat-saint-jacques.webp', 'Saint-Jacques snackées, mousseline et tuile noire sur assiette bleue', 550, 825),
     photo('/photos/salle-bar-panoramique.webp', 'Le bar vert sombre et une table haute dressée, vue sur la cuisine', 1800, 468),
     photo('/photos/salle-ampoules.webp', 'Ampoules à filament suspendues devant une étagère en bois', 1140, 642),
@@ -300,7 +299,7 @@ export const site: Restaurant = {
     photo('/photos/portrait-damien-profil.webp', 'Damien de profil en clair-obscur, mains jointes', 1140, 642),
     photo('/photos/salle-banquette.webp', 'La salle de jour : banquette, coussins moutarde, lambris vert-gris', 1600, 1600),
     photo('/photos/cuisine-mains-pate.webp', 'Des mains travaillent une pâte sur une balance', 1600, 1600),
-    photo('/photos/plat-boeuf-confit.webp', 'Boeuf confit, carottes et cromesquis sur assiette rouge', 1600, 1600),
+    photo('/photos/plat-boeuf-confit.webp', 'Bœuf confit, carottes et cromesquis sur assiette rouge', 1600, 1600),
   ],
   galerie: [
     '/photos/salle-banquette.webp',
@@ -328,6 +327,13 @@ export const site: Restaurant = {
     'Gabarit « Quatre mains » de la collection KYW.',
   ],
 };
+
+/** Typographie française (REVISION-1 F3-01) : espace insécable avant « : ; ? ! » et à l'intérieur des guillemets.
+ * Appliquée à toutes les chaînes du contenu ; les URL et les chemins n'ont jamais d'espace avant ces signes. */
+export const nbsp = (t: string) => t.replace(/ ([:;?!»])/g, '\u00A0$1').replace(/« /g, '«\u00A0');
+const typo = <T,>(v: T): T =>
+  (typeof v === 'string' ? nbsp(v) : Array.isArray(v) ? v.map(typo) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, typo(x)])) : v) as T;
+export const site: Restaurant = typo(brut);
 
 /** Photo par chemin (erreur explicite si le chemin n'existe pas : un gabarit ne doit pas pointer dans le vide). */
 export function photoDe(src: string): Photo {

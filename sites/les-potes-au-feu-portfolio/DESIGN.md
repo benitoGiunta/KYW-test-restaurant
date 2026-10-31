@@ -102,6 +102,28 @@ Ce qui limite encore : la composition des formules du midi et l'exemple de lunch
 l'attribution des plats à l'un ou l'autre chef (ressort D / F du diptyque) n'est pas prouvée ; les rôles de Sara et
 Jordan sont inconnus ; pas de portrait détouré ; aucun extrait d'avis client autorisé ; pas d'e-mail.
 
+## Révision 1 (31/10/2026, REVUE-1)
+
+Décisions de design changées par la révision (détail dans `REVISION-1.md`) :
+- **En-tête coupé** : l'écho (ink, moitié moutarde) porte désormais de vrais liens (`tabindex="-1"`, `aria-hidden`) ; les
+  clip-path de la face et de l'écho sont complémentaires, chaque point de l'en-tête a un seul lien cliquable. Au focus
+  clavier (bureau), l'en-tête passe sur papier et la face n'est plus coupée (même traitement que sur une section commune).
+- **Pied de page** : `.footer` et `.kyw-footer` en `position: relative; z-index: var(--z-content)` au-dessus du fond fixe ;
+  la mention « Maquette KYW » n'est portée qu'une fois (composant KywFooter), la bande du site dit « Les Potes au Feu, Namur ».
+- **Carte, soir puis midi** : ces deux sections (`.dip--plein`) portent leur propre couleur en bureau ; la frontière y est
+  le bord des sections et non le fond fixe, pour que la fin du menu du soir ne soit jamais en papier sur moutarde.
+  Les autres pages gardent la bascule du fond (le concept n'y produit pas de texte sur la mauvaise couleur).
+- **Liste à stage de l'accueil** : uniquement le menu du soir réel (6 lignes, numérotées par service 01 à 04, mises en
+  bouche et mignardise sans numéro) ; la légende du stage dit « le plat » ou « photo prise en cuisine, pas le plat ».
+- **Parcours** : étapes sans ordre inventé (« Débuts », « Parcours », 2019, 2020) ; la frise détaillée (avec textes) n'est
+  que sur la page histoire, l'accueil et les deux chefs montrent les lieux seuls.
+- **Citations** : plus aucune phrase du site placée dans la colonne d'un chef ; la phrase du concept est citée une seule
+  fois (les deux chefs, section commune « Ensemble »), signée « Le concept, sur le site du restaurant ».
+- **Réservation** : le formulaire de démonstration est remplacé par « Avant de venir » (menus, régimes, paiement) et un
+  lien Zenchef ; la photo du bar passe en 3:2 (source 1140 × 642).
+- **Loader** : plancher 0,6 s, plafond 0,9 s, sortie ≈ 0,8 s (≈ 2 s mesurés jusqu'à `is-loaded` en 1440, contre 3,1 s).
+- Typographie : espaces insécables (`nbsp()` appliqué à tout le contenu de `site.ts`), ligatures œ.
+
 ## Annexe : système du gabarit « Quatre mains » (repris tel quel)
 
 Gabarit de la collection KYW, direction `quatre-mains` (cahier : `data/portfolio/directions.json`). Restaurant de

@@ -49,7 +49,7 @@ const jsonLd = {
     h.creneaux.map((c) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: jours[h.jour], opens: c.ouverture, closes: c.fermeture })),
   ),
   acceptsReservations: site.reservation.url,
-  sameAs: site.reseaux.map((r) => r.url),
+  sameAs: site.reseaux.filter((r) => r.profil).map((r) => r.url), // REVISION-1 F3-08 : pas la vidéo
 };
 ---
 <!doctype html>

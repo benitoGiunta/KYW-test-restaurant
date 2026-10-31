@@ -1,1 +1,0 @@
-import{o}from"./index.CZ-3B-jD.js";o(()=>{const e=document.querySelector("[data-reservation]");if(!e)return;const n=t=>{t.preventDefault(),window.open(e.action,"_blank","noopener")};return e.addEventListener("submit",n),()=>e.removeEventListener("submit",n)});

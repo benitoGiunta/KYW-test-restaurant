@@ -2,11 +2,11 @@
 // Le nom coupé : deux copies superposées, clipées par --split (papier sur vert / ink sur moutarde).
 // `tag` = balise de la copie lisible (h1 sur l'accueil, p ailleurs) ; l'écho est décoratif (aria-hidden).
 import { site } from '../data/site';
-interface Props { tag?: 'h1' | 'p'; ink?: boolean; class?: string }
-const { tag: Tag = 'p', ink = false, class: cls = '' } = Astro.props;
+interface Props { tag?: 'h1' | 'p'; ink?: boolean; class?: string; id?: string }
+const { tag: Tag = 'p', ink = false, class: cls = '', id } = Astro.props;
 const [l1, l2] = site.nomCoupe;
 ---
 <div class:list={['nom', { 'nom--ink': ink }, cls]} data-nom>
-  <Tag class="nom__face"><span class="nom__l1">{l1}</span><span class="nom__l2">{l2}</span></Tag>
+  <Tag class="nom__face" id={id}><span class="nom__l1">{l1}</span><span class="nom__l2">{l2}</span></Tag>
   <div class="nom__echo" aria-hidden="true"><span class="nom__l1">{l1}</span><span class="nom__l2">{l2}</span></div>
 </div>

@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import { site, adresseLigne, horaireCourt, telHref, photoDe } from '../data/site';
 import { asset } from '../lib/url';
 const bar = photoDe('/photos/bar-cocktails.webp');
+// REVISION-1 F2-07 : le formulaire de démonstration jetait la saisie ; remplacé par « Avant de venir » + lien Zenchef.
 ---
 <Base title="Réservation" description={`Réserver une table aux Potes au Feu à Namur : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone}. Samedi : privatisation, mariage, chef à domicile.`}>
   <section class="commune hero hero--commune" data-voix="commune" aria-labelledby="resa-h1">
@@ -24,42 +25,28 @@ const bar = photoDe('/photos/bar-cocktails.webp');
 
   <section class="dip section" data-voix="deux" aria-labelledby="demande-titre">
     <div class="dip__g">
-      <h2 class="titre" id="demande-titre" data-split="lines">Votre demande</h2>
-      <p class="muted" style="margin-block: var(--u) calc(var(--u) * 3)" data-reveal="fade">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
-      <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
-        <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
-        <label>Téléphone <input type="tel" name="tel" autocomplete="tel" /></label>
-        <label>Date <input type="date" name="date" required /></label>
-        <label>Heure <input type="time" name="heure" required /></label>
-        <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
-        <label>Moment <select name="moment"><option>Le soir</option><option>Le midi</option></select></label>
-        <label class="pleine">Message <textarea name="message" rows="3"></textarea></label>
-        <div class="actions pleine" style="margin-top: 0">
-          <button class="btn btn--papier" type="submit"><span class="roll"><span>Continuer sur {site.reservation.outil}</span><span aria-hidden="true">Continuer sur {site.reservation.outil}</span></span></button>
-        </div>
-      </form>
+      <h2 class="titre" id="demande-titre" data-split="lines">Avant de venir</h2>
+      <dl class="pratique" data-reveal="up">
+        <dt>Le soir</dt><dd>{site.menus[0].nom}, {site.menus[0].prix}, du lundi au vendredi.</dd>
+        <dt>Le midi</dt><dd>Mercredi et vendredi&nbsp;: formule {site.menus[1].prix}, lunch {site.menus[2].prix}.</dd>
+        <dt>Régimes</dt><dd>Menu végétarien sur demande&nbsp;; allergies et intolérances à signaler à la réservation.</dd>
+        <dt>Paiement</dt><dd>Mastercard, Visa.</dd>
+      </dl>
+      <div class="actions">
+        <a class="btn btn--papier" href={site.reservation.url} rel="noopener"><span class="roll"><span>Choisir une date sur {site.reservation.outil}</span><span aria-hidden="true">Choisir une date sur {site.reservation.outil}</span></span></a>
+      </div>
     </div>
     <div class="dip__d">
-      <figure class="photo photo--4x5" data-reveal="clip">
-        <img src={asset(bar.src)} alt={bar.alt} width={bar.largeur} height={bar.hauteur} loading="lazy" decoding="async" />
+      <figure class="photo photo--3x2" data-reveal="clip">
+        <img style="object-position: 62% 50%" src={asset(bar.src)} alt={bar.alt} width={bar.largeur} height={bar.hauteur} loading="lazy" decoding="async" />
       </figure>
       <div class="stack" style="margin-top: calc(var(--u) * 3)">
         <h2 class="t-m" style="font-weight: 700">Privatiser, offrir</h2>
         <p class="muted">{site.privatisation}</p>
-        <p class="muted">{site.menus[3].nom} : {site.menus[3].prix}. {site.menus[3].description}</p>
+        <p class="muted">{site.menus[3].nom}&nbsp;: {site.menus[3].prix}. {site.menus[3].description}</p>
         <p><a class="link" href={telHref()}>Appeler le {site.telephone}</a></p>
       </div>
     </div>
   </section>
 </Base>
 
-<script>
-  import { onPage } from '../engine';
-  onPage(() => {
-    const form = document.querySelector<HTMLFormElement>('[data-reservation]');
-    if (!form) return;
-    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
-    form.addEventListener('submit', go);
-    return () => form.removeEventListener('submit', go);
-  });
-</script>

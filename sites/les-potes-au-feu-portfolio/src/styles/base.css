@@ -62,15 +62,24 @@ html:not(.motion) [data-rejoint] { clip-path: none; }
 .header { position: fixed; inset: 0 0 auto 0; z-index: var(--z-header); pointer-events: none; }
 .header__face, .header__echo { display: flex; justify-content: space-between; align-items: center; gap: var(--u); padding: calc(var(--u) * 1.5) var(--gutter); }
 .header__face { color: var(--c-papier); clip-path: inset(0 calc(100% - var(--frontiere)) 0 0); }
-.header__echo { position: absolute; inset: 0; color: transparent; clip-path: inset(0 0 0 var(--frontiere)); }
-.header__echo > *, .header__echo .nav > * { color: transparent; background: var(--c-ink); -webkit-background-clip: text; background-clip: text; }
-.header__echo .btn { background: var(--c-ink); color: var(--c-papier); -webkit-background-clip: border-box; background-clip: border-box; }
+/* REVISION-1 F0-02 : l'écho porte de vrais liens (tabindex -1, aria-hidden) en ink ; son clip-path complète celui de la
+   face, si bien que chaque point de l'en-tête a exactement un lien cliquable, quelle que soit la position de la frontière. */
+.header__echo { position: absolute; inset: 0; color: var(--c-ink); clip-path: inset(0 0 0 var(--frontiere)); }
+.header__echo .btn { background: var(--c-ink); color: var(--c-papier); border-color: var(--c-ink); }
 .header a, .header button { pointer-events: auto; }
 /* Sur une section commune (papier), une seule voix : la copie lisible passe en ink sur toute la largeur. */
 .header__face { transition: color 0.3s; }
 html.is-sur-papier .header__face { clip-path: none; color: var(--c-ink); }
 html.is-sur-papier .header__echo { visibility: hidden; }
 html.is-sur-papier .header__face .btn { background: var(--c-ink); color: var(--c-papier); }
+/* Focus clavier dans l'en-tête (bureau) : la face n'est plus coupée, l'en-tête passe sur papier le temps du focus,
+   sinon le lien focalisé de la moitié moutarde resterait invisible sous le clip-path. */
+@media (min-width: 768px) {
+  .header:has(.header__face :focus-visible) { background: var(--c-papier); }
+  .header:has(.header__face :focus-visible) .header__face { clip-path: none; color: var(--c-ink); }
+  .header:has(.header__face :focus-visible) .header__echo { visibility: hidden; }
+  .header:has(.header__face :focus-visible) .header__face .btn { background: var(--c-ink); color: var(--c-papier); }
+}
 /* REVISION-1 F2-01 : dès le défilement, l'en-tête reçoit un fond qui suit la frontière (vert | moutarde), papier sur les
    sections communes ; il ne se superpose plus au texte. Bureau seulement : sur mobile l'en-tête est déjà plein (vert). */
 @media (min-width: 768px) {
@@ -278,6 +287,21 @@ html.is-sur-papier .header__face .btn { background: var(--c-ink); color: var(--c
 .form input, .form select, .form textarea { padding: 0.75em 0.9em; border: 1px solid var(--c-ink); background: transparent; border-radius: 0; font-size: var(--t-body); }
 .form input:focus-visible, .form textarea:focus-visible { outline-offset: 2px; }
 
+/* REVISION-1 F2-01 : sur la carte, le soir (vert) et le midi (moutarde) se suivent ; avec le seul fond fixe, toute la
+   fenêtre basculait en moutarde alors que la fin du menu du soir (texte papier) était encore lisible. Ces deux sections
+   portent leur propre couleur : la frontière est le bord des sections, le texte reste toujours sur sa couleur. */
+@media (min-width: 768px) {
+  .dip--plein[data-voix='gauche'] { background: var(--c-vert); }
+  .dip--plein[data-voix='droite'] { background: var(--c-moutarde); }
+  .dip--plein + .dip--plein { padding-top: calc(var(--u) * 10); }
+  .dip--plein:has(+ .dip--plein) { padding-bottom: calc(var(--u) * 10); }
+}
+/* Réservation : informations pratiques (remplace le formulaire de démonstration, F2-07). */
+.pratique { display: grid; grid-template-columns: max-content 1fr; gap: calc(var(--u) * 1.4) calc(var(--u) * 2.5); margin-top: calc(var(--u) * 3); max-width: 36rem; }
+.pratique dt { font-family: var(--f-mono); font-size: var(--t-mono); letter-spacing: 0.02em; padding-top: 0.3em; }
+.pratique dd { margin: 0; }
+.citation--concept p { font-size: var(--t-m); line-height: 1.25; }
+
 /* ---------- Pied de page : finale ---------- */
 .footer { padding-top: calc(var(--u) * 12); }
 .footer__nom { padding-inline: var(--gutter); margin-bottom: calc(var(--u) * 6); }
@@ -285,6 +309,8 @@ html.is-sur-papier .header__face .btn { background: var(--c-ink); color: var(--c
 .footer address { font-style: normal; }
 .footer__bas { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--u); padding: calc(var(--u) * 2) var(--gutter); border-top: 1px solid rgb(17 19 17 / 0.16); background: var(--c-papier); color: var(--c-ink); }
 .kyw-footer { background: var(--c-papier); color: var(--c-ink); }
+/* REVISION-1 F0-01 : #fond est fixe en z-index 0 ; un pied de page statique était peint dessous (invisible en bureau). */
+.footer, .kyw-footer { position: relative; z-index: var(--z-content); }
 
 /* ---------- Loader : la ligne, puis les deux couleurs qui se répandent ---------- */
 #loader { background: var(--c-papier); color: var(--c-ink); display: block; padding: 0; }

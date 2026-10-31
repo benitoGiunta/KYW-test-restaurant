@@ -25,7 +25,7 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
       </div>
     </div>
     <div class="dip__d hero__col hero__col--d">
-      <figure class="photo photo--4x5 hero__portrait" data-reveal="clip" data-intro data-delay="0.25">
+      <figure class="photo photo--4x5 hero__portrait">
         <img src={asset(portraitF.src)} alt={portraitF.alt} width={portraitF.largeur} height={portraitF.hauteur} data-critical fetchpriority="high" />
       </figure>
       <div class="hero__legende" data-reveal="up" data-intro data-delay="0.5">
@@ -42,12 +42,8 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
       <h2 class="titre" id="damien-titre" data-split="lines">{damien.prenom} {damien.nom}</h2>
       <div class="stack mesure" style="margin-top: calc(var(--u) * 3)">
         {damien.bio.map((p) => <p data-reveal="up">{p}</p>)}
-        <p class="mono muted" data-reveal="fade">Plats fétiches{damien.platsFetichesPlaceholder ? ' (attribution illustrative)' : ''} : {damien.platsFetiches.join(' ; ')}</p>
+        <p class="mono muted" data-reveal="fade">Plats fétiches{damien.platsFetichesPlaceholder ? ' (attribution illustrative)' : ''}&nbsp;: {damien.platsFetiches.join(' ; ')}</p>
       </div>
-      <blockquote class="citation" style="margin-top: calc(var(--u) * 6)">
-        <p data-split="lines">« {damien.citation.texte} »</p>
-        <cite class="mono muted" data-reveal="fade">{damien.citation.source ?? damien.prenom}{damien.citation.placeholder ? ', citation illustrative' : ''}</cite>
-      </blockquote>
     </div>
     <div class="dip__d escalier--d">
       <figure class="photo photo--3x2 photo--nb frise__photo" data-reveal="clip">
@@ -77,12 +73,8 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
       <h2 class="titre" id="francois-titre" data-split="lines">{francois.prenom} {francois.nom}</h2>
       <div class="stack mesure" style="margin-top: calc(var(--u) * 3)">
         {francois.bio.map((p) => <p data-reveal="up">{p}</p>)}
-        <p class="mono muted" data-reveal="fade">Plats fétiches{francois.platsFetichesPlaceholder ? ' (attribution illustrative)' : ''} : {francois.platsFetiches.join(' ; ')}</p>
+        <p class="mono muted" data-reveal="fade">Plats fétiches{francois.platsFetichesPlaceholder ? ' (attribution illustrative)' : ''}&nbsp;: {francois.platsFetiches.join(' ; ')}</p>
       </div>
-      <blockquote class="citation" style="margin-top: calc(var(--u) * 6)">
-        <p data-split="lines">« {francois.citation.texte} »</p>
-        <cite class="mono muted" data-reveal="fade">{francois.citation.source ?? francois.prenom}{francois.citation.placeholder ? ', citation illustrative' : ''}</cite>
-      </blockquote>
     </div>
   </section>
 
@@ -92,7 +84,11 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
         <span class="mono muted eyebrow" data-reveal="fade">Ensemble</span>
         <h2 class="titre" id="ensemble-titre" data-split="lines">À quatre mains, au passe et en salle</h2>
         <div class="stack mesure" style="margin-top: calc(var(--u) * 3)">
-          <p data-reveal="up">{site.histoire[3]}</p>
+          <blockquote class="citation citation--concept" data-reveal="up">
+            <p>«&nbsp;{site.concept.texte}&nbsp;»</p>
+            <cite class="mono muted">{site.concept.source}</cite>
+          </blockquote>
+          <p data-reveal="up">En salle, Sara et Jordan les épaulent.</p>
           <ul class="stack" data-reveal="up">
             {site.valeurs.map((v) => <li>{v}</li>)}
           </ul>

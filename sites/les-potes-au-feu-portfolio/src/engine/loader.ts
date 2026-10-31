@@ -11,8 +11,9 @@ let exit: ((root: HTMLElement) => gsap.core.Timeline) | null = null;
 /** Replace the exit choreography (the loader → hero handoff). Return a timeline. */
 export const setLoaderExit = (fn: (root: HTMLElement) => gsap.core.Timeline) => { exit = fn; };
 
-const MIN = 1.1; // seconds: long enough to read as a designed moment
-const MAX = 1.8; // seconds: a longer loader is a usability problem (REVISION-1 F2-02 : 2.6 → 1.8)
+// REVISION-1 (site) F2-05 : loader total ≤ 1,6 s visé (plancher 0,6 s, plafond 0,9 s + sortie ≈ 0,8 s).
+const MIN = 0.6; // seconds: long enough to read as a designed moment
+const MAX = 0.9; // seconds: a longer loader is a usability problem
 // Petits écrans / tactile : le JS arrive déjà tard sur réseau mobile, le compteur est raccourci (REVISION-1 F2-02).
 export const loaderCourt = () => typeof matchMedia === 'function' && matchMedia('(max-width: 767px), (pointer: coarse)').matches;
 const VU = 'qm-loader-vu'; // une seule fois par session : les visites suivantes passent directement au hero
@@ -29,7 +30,7 @@ export async function runLoader(): Promise<void> {
   try { vu = sessionStorage.getItem(VU) === '1'; sessionStorage.setItem(VU, '1'); } catch { /* stockage bloqué : loader normal */ }
   if (vu) return finish(root);
   const min = loaderCourt() ? 0.3 : MIN;
-  const max = loaderCourt() ? 0.9 : MAX;
+  const max = loaderCourt() ? 0.6 : MAX;
   if (prefersReducedMotion()) {
     await Promise.race([Promise.all(criticalAssets()), wait(MAX)]);
     await gsap.to(root, { autoAlpha: 0, duration: 0.3 });

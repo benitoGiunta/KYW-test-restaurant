@@ -7,8 +7,9 @@ const francois = chef('F');
 const equipe = site.equipe.map((m) => ({ ...m, image: m.photo ? photoDe(m.photo) : null }));
 const video = site.video ? { ...site.video, image: photoDe(site.video.poster) } : null;
 const dateFr = (d: string) => new Date(d + 'T12:00:00').toLocaleDateString('fr-BE', { month: 'long', year: 'numeric' });
-const galerie = site.galerie.map(photoDe);
 const salle = photoDe('/photos/salle-banquette.webp');
+// REVISION-1 F3-06 : la photo du hero ne revient pas en tête des coulisses.
+const galerie = site.galerie.filter((src) => src !== salle.src).map(photoDe);
 ---
 <Base title="Notre histoire" description={`L'histoire des Potes au Feu à Namur : la rencontre de deux chefs à la Plage d'Amée, l'ouverture avenue de la Plante en 2020, l'équipe et les coulisses.`}>
   <section class="hero dip" data-voix="deux" aria-labelledby="histoire-h1">
@@ -62,6 +63,7 @@ const salle = photoDe('/photos/salle-banquette.webp');
               : <div class={`tuile photo--4x5 ${i % 2 ? 'tuile--d' : ''}`} aria-hidden="true"><span>{m.nom.charAt(0)}</span></div>}
             <h3>{m.nom}</h3>
             <p class="muted">{m.role}{m.placeholder ? ' (rôle illustratif)' : ''}</p>
+            {m.photoAConfirmer && <p class="mono muted">Personne sur la photo&nbsp;: à confirmer</p>}
             {m.mot && <p class="mono muted">{m.mot}</p>}
           </article>
         ))}
@@ -76,7 +78,7 @@ const salle = photoDe('/photos/salle-banquette.webp');
       <p class="mesure muted" style="margin-top: calc(var(--u) * 2)" data-reveal="up">Une petite salle sombre et chaleureuse, le bar et les tables hautes en chêne, les ampoules à filament, et la cuisine ouverte sur la salle.</p>
       <div class="stack" style="margin-top: calc(var(--u) * 4)">
         {galerie.filter((_, i) => i % 2 === 0).map((p) => (
-          <figure class="photo photo--3x2 photo--nb" data-reveal="clip" tabindex="0"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>
+          <figure class="photo photo--3x2 photo--nb" data-reveal="clip"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>
         ))}
       </div>
     </div>
@@ -98,7 +100,7 @@ const salle = photoDe('/photos/salle-banquette.webp');
           {site.presse.map((p) => (
             <li data-reveal="up">
               <p class="mono muted">{p.nom}, {dateFr(p.date)}</p>
-              {p.citation ? <blockquote><p>« {p.texte} »</p></blockquote> : <p>{p.texte}</p>}
+              {p.citation ? <blockquote><p>«&nbsp;{p.texte}&nbsp;»</p></blockquote> : <p>{p.texte}</p>}
               {p.url && <a class="link mono" href={p.url} rel="noopener">Lire la fiche</a>}
             </li>
           ))}
@@ -116,7 +118,7 @@ const salle = photoDe('/photos/salle-banquette.webp');
           <a class="video photo photo--16x9" href={video.url} rel="noopener" target="_blank" data-reveal="clip">
             <img src={asset(video.image.src)} alt="" width={video.image.largeur} height={video.image.hauteur} loading="lazy" decoding="async" />
             <span class="video__play" aria-hidden="true"></span>
-            <span class="sr-only">Voir la vidéo « {video.titre} » sur YouTube (nouvel onglet)</span>
+            <span class="sr-only">Voir la vidéo «&nbsp;{video.titre}&nbsp;» sur YouTube (nouvel onglet)</span>
           </a>
           <p class="mono muted" style="margin-top: var(--u)">{video.titre}, chaîne {video.chaine}, sur YouTube.</p>
         </div>

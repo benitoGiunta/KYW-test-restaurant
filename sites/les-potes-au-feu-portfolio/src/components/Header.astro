@@ -1,6 +1,8 @@
 ---
-// En-tête fixe, coupé par la frontière : la copie « face » (papier) est la vraie navigation ; l'écho (ink) est
-// décoratif, inert et aria-hidden. Sur mobile, une seule copie sur fond vert et un bouton de menu.
+// En-tête fixe, coupé par la frontière : la copie « face » (papier) est la vraie navigation (clavier, lecteurs d'écran) ;
+// l'écho (ink) est aria-hidden et hors tabulation, mais ses liens sont de vrais liens : c'est lui qui reçoit les clics
+// sur la moitié moutarde, là où la face est coupée par son clip-path (REVISION-1 F0-02). Sur mobile, une seule copie
+// sur fond vert et un bouton de menu.
 import { site } from '../data/site';
 import { u } from '../lib/url';
 const liens = [
@@ -20,12 +22,12 @@ const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : u
       <a class="btn" href={u('/reservation/')} aria-current={courant(u('/reservation/'))}><span class="roll"><span>Réserver</span><span aria-hidden="true">Réserver</span></span></a>
     </nav>
   </div>
-  <div class="header__echo" aria-hidden="true" inert>
-    <span class="header__brand">{site.nom}</span>
+  <div class="header__echo" aria-hidden="true">
+    <a class="header__brand lien" href={u('/')} tabindex="-1" aria-current={courant(u('/'))}>{site.nom}</a>
     <span class="header__burger">Menu</span>
     <span class="nav">
-      {liens.map((l) => <span class="lien" aria-current={courant(l.href)}>{l.label}</span>)}
-      <span class="btn">Réserver</span>
+      {liens.map((l) => <a class="lien" href={l.href} tabindex="-1" aria-current={courant(l.href)}>{l.label}</a>)}
+      <a class="btn" href={u('/reservation/')} tabindex="-1" aria-current={courant(u('/reservation/'))}><span class="roll"><span>Réserver</span><span aria-hidden="true">Réserver</span></span></a>
     </span>
   </div>
 </header>
