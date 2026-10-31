@@ -5,3 +5,4 @@ Un gabarit par ligne, les restaurants qui l ont reçu en variante portfolio (pou
 | Gabarit | Restaurants |
 | --- | --- |
 | quatre-mains | les-potes-au-feu |
+| verger | atelier-de-bossime |
