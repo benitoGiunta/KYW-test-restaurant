@@ -2,7 +2,7 @@
 // couleurs », compteur mono, et le driver de la frontière (diptyque.ts).
 import { gsap } from 'gsap';
 import { ease, setLoaderExit, setLoaderFormat, setTransition } from '../engine';
-import { loaderCourt } from '../engine/loader';
+import { arriveeTardive, loaderCourt } from '../engine/loader';
 import { initDiptyque } from './diptyque';
 
 export function setupMotion() {
@@ -12,7 +12,8 @@ export function setupMotion() {
   // le hero dessous a la même frontière à 50 %, le loader s'efface sur un décor identique (handoff continu).
   // REVISION-1 F2-02 : sortie raccourcie de 40 % sur petit écran / tactile.
   setLoaderExit((root) => {
-    const k = loaderCourt() ? 0.45 : 0.6; // REVISION-1 (site) F2-05 : sortie ≈ 0,8 s bureau, 0,6 s mobile
+    // REVISION-1 (site) F2-05 : sortie ≈ 0,8 s bureau, 0,7 s mobile ; REVISION-2 F2-01 : 0,4 s quand le JS arrive tard.
+    const k = arriveeTardive() ? 0.25 : loaderCourt() ? 0.45 : 0.6;
     return gsap.timeline()
       .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -110, duration: 0.6 * k, ease: ease.inOut, stagger: 0.05 * k })
       .to([root.querySelector('[data-loader-g]'), root.querySelector('[data-loader-d]')], { scaleX: 1, duration: 0.9 * k, ease: ease.inOut }, `-=${0.3 * k}`)

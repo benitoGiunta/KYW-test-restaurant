@@ -174,7 +174,7 @@ html.is-sur-papier .header__face .btn { background: var(--c-ink); color: var(--c
 .hero__portrait { width: min(100%, 24rem); }
 .hero__legende { display: grid; gap: 0.35em; padding-bottom: var(--u); }
 .hero__legende .t-m { font-weight: 700; letter-spacing: -0.02em; }
-.hero__scroll { position: absolute; left: calc(50% + var(--u)); bottom: calc(var(--u) * 2); min-height: 24px; display: inline-grid; align-items: center; }
+.hero__scroll { justify-self: start; margin-top: 1.5rem; min-height: 24px; display: inline-grid; align-items: center; }
 
 /* ---------- Parcours : deux frises (la droite est décalée par le driver) ---------- */
 .parcours { padding-block: calc(var(--u) * 20) calc(var(--u) * 24); }
@@ -242,6 +242,8 @@ html.is-sur-papier .header__face .btn { background: var(--c-ink); color: var(--c
 .citation { display: grid; gap: calc(var(--u) * 2); max-width: 36rem; }
 .citation p { font-size: var(--t-l); line-height: 1.12; letter-spacing: -0.02em; }
 .citation cite { font-style: normal; display: block; }
+/* REVISION-2 F3-01 : dernier mot + « ! » + « » » sur la même ligne, même après le découpage SplitText. */
+.insec { white-space: nowrap; }
 
 /* ---------- Réserver : bande commune ---------- */
 .reserver { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gutter); align-items: center; }
@@ -391,7 +393,12 @@ html.is-sur-papier .header__face .btn { background: var(--c-ink); color: var(--c
 .hero--commune { min-height: 0; padding-block: calc(var(--u) * 14) calc(var(--u) * 10); display: block; }
 .hero--commune .reserver__cta { gap: calc(var(--u) * 2.5); }
 .form .pleine { grid-column: 1 / -1; }
-@media (max-width: 767px) { .hero.dip { padding-bottom: 0; } .hero__texte { padding-block: calc(var(--u) * 5); } }
+/* REVISION-2 F3-02 : en mobile, le hero en bandes n'a plus de hauteur minimale (bande de papier vide sous « Le midi »). */
+@media (max-width: 767px) { .hero.dip { padding-bottom: 0; min-height: 0; } .hero__texte { padding-block: calc(var(--u) * 5); } }
+/* REVISION-2 F3-02 : accueil, moins de vide sous la citation MICHELIN et avant « Réserver une table ». */
+.section--avis { padding-bottom: calc(var(--u) * 8); }
+.section--resa { padding-top: calc(var(--u) * 10); }
+@media (max-width: 767px) { .section--avis { padding-bottom: 0; } }
 
 /* ---------- Adaptation Les Potes au Feu (portfolio) ---------- */
 /* Note Google relevée (accueil, colonne moutarde) : un chiffre, jamais un extrait d'avis inventé. */

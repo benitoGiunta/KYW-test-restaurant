@@ -16,6 +16,11 @@ const MIN = 0.6; // seconds: long enough to read as a designed moment
 const MAX = 0.9; // seconds: a longer loader is a usability problem
 // Petits écrans / tactile : le JS arrive déjà tard sur réseau mobile, le compteur est raccourci (REVISION-1 F2-02).
 export const loaderCourt = () => typeof matchMedia === 'function' && matchMedia('(max-width: 767px), (pointer: coarse)').matches;
+// REVISION-2 F2-01 : sur téléphone, le JS du moteur arrive tard (≈ 2 s en 4G lente, CPU ×4) ; si le loader démarre
+// après TARDIF secondes, il ne rejoue pas son compteur : il passe à 100 et sort en version courte (motion/setup.ts).
+const TARDIF = 1.2;
+let tardif = false;
+export const arriveeTardive = () => tardif;
 const VU = 'qm-loader-vu'; // une seule fois par session : les visites suivantes passent directement au hero
 
 function criticalAssets(): Promise<unknown>[] {
@@ -29,6 +34,7 @@ export async function runLoader(): Promise<void> {
   let vu = false;
   try { vu = sessionStorage.getItem(VU) === '1'; sessionStorage.setItem(VU, '1'); } catch { /* stockage bloqué : loader normal */ }
   if (vu) return finish(root);
+  tardif = loaderCourt() && performance.now() / 1000 > TARDIF;
   const min = loaderCourt() ? 0.3 : MIN;
   const max = loaderCourt() ? 0.6 : MAX;
   if (prefersReducedMotion()) {
@@ -38,6 +44,13 @@ export async function runLoader(): Promise<void> {
   }
   const count = root.querySelector<HTMLElement>('[data-loader-count]');
   const bar = root.querySelector<HTMLElement>('[data-loader-bar]');
+  if (tardif) {
+    if (count) count.textContent = format(100);
+    if (bar) bar.style.transform = 'scaleX(1)';
+    if (exit) { await exit(root); return finish(root); }
+    await gsap.to(root, { autoAlpha: 0, duration: 0.3 });
+    return finish(root);
+  }
   const tasks = criticalAssets();
   let done = 0;
   const shown = { v: 0 };

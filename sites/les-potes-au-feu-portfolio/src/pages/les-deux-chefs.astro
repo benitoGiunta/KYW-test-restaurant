@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site, chef, photoDe } from '../data/site';
-import { u, asset } from '../lib/url';
+import { u, asset, srcsetPortrait, sizesPortrait } from '../lib/url';
 const damien = chef('D');
 const francois = chef('F');
 const portraitD = photoDe(damien.portrait);
@@ -16,7 +16,7 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
   <section class="hero dip" data-voix="deux" aria-labelledby="chefs-h1">
     <div class="dip__g hero__col">
       <figure class="photo photo--4x5 photo--nb hero__portrait">
-        <img src={asset(portraitD.src)} alt={portraitD.alt} width={portraitD.largeur} height={portraitD.hauteur} data-critical fetchpriority="high" />
+        <img src={asset(portraitD.src)} srcset={srcsetPortrait(portraitD.src, portraitD.largeur)} sizes={sizesPortrait} alt={portraitD.alt} width={portraitD.largeur} height={portraitD.hauteur} data-critical fetchpriority="high" />
       </figure>
       <div class="hero__legende">
         <span class="mono muted">{cap(damien.registre)}</span>
@@ -26,7 +26,7 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
     </div>
     <div class="dip__d hero__col hero__col--d">
       <figure class="photo photo--4x5 hero__portrait">
-        <img src={asset(portraitF.src)} alt={portraitF.alt} width={portraitF.largeur} height={portraitF.hauteur} data-critical fetchpriority="high" />
+        <img src={asset(portraitF.src)} srcset={srcsetPortrait(portraitF.src, portraitF.largeur)} sizes={sizesPortrait} alt={portraitF.alt} width={portraitF.largeur} height={portraitF.hauteur} data-critical fetchpriority="high" />
       </figure>
       <div class="hero__legende" data-reveal="up" data-intro data-delay="0.5">
         <span class="mono muted">{cap(francois.registre)}</span>
@@ -88,7 +88,7 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
             <p>«&nbsp;{site.concept.texte}&nbsp;»</p>
             <cite class="mono muted">{site.concept.source}</cite>
           </blockquote>
-          <p data-reveal="up">En salle, Sara et Jordan les épaulent.</p>
+          <p data-reveal="up">Sara et Jordan les épaulent.</p>
           <ul class="stack" data-reveal="up">
             {site.valeurs.map((v) => <li>{v}</li>)}
           </ul>

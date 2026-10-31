@@ -124,6 +124,21 @@ Décisions de design changées par la révision (détail dans `REVISION-1.md`) :
 - **Loader** : plancher 0,6 s, plafond 0,9 s, sortie ≈ 0,8 s (≈ 2 s mesurés jusqu'à `is-loaded` en 1440, contre 3,1 s).
 - Typographie : espaces insécables (`nbsp()` appliqué à tout le contenu de `site.ts`), ligatures œ.
 
+## Révision 2 (31/10/2026, REVUE-2)
+
+Décisions changées (détail dans `REVISION-2.md`) :
+- **Invitation « Deux parcours ↓ »** (accueil) : elle n'est plus posée en absolu sur la frontière, sous le texte de
+  François ; elle ferme la légende de Damien, dans la colonne verte, 24 px sous le texte. Toujours masquée en mobile.
+- **Loader mobile** : quand le moteur démarre après 1,2 s (JS arrivé tard sur réseau mobile), le compteur ne se rejoue
+  pas : il passe à 100 et la sortie (mêmes deux couleurs depuis la ligne) dure ≈ 0,4 s au lieu de ≈ 0,7 s. En bureau et
+  sur un téléphone rapide, rien ne change.
+- **Portraits du hero** (accueil, les deux chefs) : `srcset` 640 / 960 px tirés des originaux du client (23 à 60 Ko au
+  lieu de 91 et 149 Ko), `sizes` calé sur `.hero__portrait` (18rem mobile, 24rem bureau).
+- **Rythme** : sur l'accueil, la section avis garde 8u en bas (au lieu de 16u) et la réservation 10u en haut ; en mobile,
+  les heros en bandes des pages intérieures n'ont plus de `min-height` (bande de papier vide sous « Le midi » sur la carte).
+- **Citation** : le dernier mot, « ! » et « » » forment un groupe `.insec` (`white-space: nowrap`), le découpage SplitText
+  ne les sépare plus.
+
 ## Annexe : système du gabarit « Quatre mains » (repris tel quel)
 
 Gabarit de la collection KYW, direction `quatre-mains` (cahier : `data/portfolio/directions.json`). Restaurant de

@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import NomCoupe from '../components/NomCoupe.astro';
 import { site, chef, photoDe, horaireCourt, telHref } from '../data/site';
-import { u, asset } from '../lib/url';
+import { u, asset, srcsetPortrait, sizesPortrait } from '../lib/url';
 const damien = chef('D');
 const francois = chef('F');
 const portraitD = photoDe(damien.portrait);
@@ -15,6 +15,9 @@ const photoParcoursF = photoDe('/photos/cuisine-francois-poele.webp');
 const plats = site.carteQuatreMains.map((p, i) => ({ ...p, id: `plat-${i + 1}`, num: p.service ? String(p.service).padStart(2, '0') : '·', image: photoDe(p.photo!) }));
 const legende = (p: (typeof plats)[number]) => `${p.service ? `Service ${p.service}` : p.nom}, ${p.photoDuPlat ? 'le plat' : 'photo prise en cuisine, pas le plat'}`;
 const soir = site.horaires.find((h) => h.jour === 'mercredi')!.creneaux[1];
+// REVISION-2 F3-01 : le découpage en mots du moteur (SplitText) coupe aux U+00A0 ; le dernier mot, sa ponctuation et
+// le guillemet fermant forment un groupe insécable (`.insec`, white-space: nowrap).
+const finInsecable = (t: string) => { const i = t.lastIndexOf(' '); return i < 0 ? ['', t] : [t.slice(0, i), t.slice(i + 1)]; };
 const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `${francois.prenom}` : 'À quatre mains');
 ---
 <Base>
@@ -23,17 +26,19 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
     <div class="dip">
       <div class="dip__g hero__col">
         <figure class="photo photo--4x5 photo--nb hero__portrait" data-reveal="clip" data-intro data-delay="0.15">
-          <img src={asset(portraitD.src)} alt={portraitD.alt} width={portraitD.largeur} height={portraitD.hauteur} data-critical fetchpriority="high" />
+          <img src={asset(portraitD.src)} srcset={srcsetPortrait(portraitD.src, portraitD.largeur)} sizes={sizesPortrait} alt={portraitD.alt} width={portraitD.largeur} height={portraitD.hauteur} data-critical fetchpriority="high" />
         </figure>
         <div class="hero__legende" data-reveal="up" data-intro data-delay="0.45">
           <span class="mono muted">Chef, {damien.registre}</span>
           <p class="t-m">{damien.prenom} {damien.nom}</p>
           <p class="muted">{site.baseline}</p>
+          {/* REVISION-2 F3-03 : l'invitation quitte la frontière et se pose dans la colonne verte, 24 px sous le texte. */}
+          <a class="hero__scroll mono lien" href="#parcours">Deux parcours ↓</a>
         </div>
       </div>
       <div class="dip__d hero__col hero__col--d">
         <figure class="photo photo--4x5 hero__portrait" data-reveal="clip" data-intro data-delay="0.25">
-          <img src={asset(portraitF.src)} alt={portraitF.alt} width={portraitF.largeur} height={portraitF.hauteur} data-critical fetchpriority="high" />
+          <img src={asset(portraitF.src)} srcset={srcsetPortrait(portraitF.src, portraitF.largeur)} sizes={sizesPortrait} alt={portraitF.alt} width={portraitF.largeur} height={portraitF.hauteur} data-critical fetchpriority="high" />
         </figure>
         <div class="hero__legende" data-reveal="up" data-intro data-delay="0.55">
           <span class="mono muted">Chef, {francois.registre}</span>
@@ -42,7 +47,6 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
         </div>
       </div>
     </div>
-    <a class="hero__scroll mono lien" href="#parcours" data-reveal="fade" data-intro data-delay="0.9">Deux parcours ↓</a>
   </section>
 
   <section class="dip parcours" id="parcours" data-voix="gauche" data-decale aria-labelledby="parcours-d">
@@ -151,11 +155,11 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
     </div>
   </section>
 
-  <section class="dip section" data-voix="deux" aria-label="Ce qu'on en dit">
+  <section class="dip section section--avis" data-voix="deux" aria-label="Ce qu'on en dit">
     <div class="dip__g">
       {site.avis.slice(0, 1).map((a) => (
         <blockquote class="citation">
-          <p data-split="lines">«&nbsp;{a.texte}&nbsp;»</p>
+          <p data-split="lines">«&nbsp;{finInsecable(a.texte)[0]} <span class="insec">{finInsecable(a.texte)[1]}&nbsp;»</span></p>
           <cite class="mono muted" data-reveal="fade">{a.source}{a.placeholder ? ', avis illustratif' : ''}</cite>
         </blockquote>
       ))}
@@ -165,13 +169,13 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
         <div class="note" data-reveal="up">
           <p class="note__chiffre"><span>{site.noteGoogle.note}</span><span class="note__sur">/{site.noteGoogle.sur}</span></p>
           <p class="t-m">{site.noteGoogle.nombre} avis Google</p>
-          <p class="mono muted">{site.noteGoogle.source}{site.noteGoogle.aConfirmer ? ', à confirmer' : ''}. Aucun avis n'est cité ici sans l'accord de son auteur.</p>
+          <p class="mono muted">{site.noteGoogle.source}{site.noteGoogle.aConfirmer ? ', à confirmer' : ''}. Aucun avis client n'est cité sur cette maquette.</p>
         </div>
       )}
     </div>
   </section>
 
-  <section class="commune section" data-voix="commune" data-rejoint aria-labelledby="reserver-titre">
+  <section class="commune section section--resa" data-voix="commune" data-rejoint aria-labelledby="reserver-titre">
     <div class="wrap reserver">
       <div class="reserver__cta" data-reveal="up">
         <h2 class="titre" id="reserver-titre">Réserver une table</h2>
