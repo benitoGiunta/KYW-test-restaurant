@@ -1,7 +1,7 @@
 ---
 name: portfolio-gabarit
 description: Construit UN gabarit original de la collection KYW (site Astro complet, premium, animé) à partir de son cahier de direction artistique, avec les données réelles du restaurant de référence complétées par des données fictives marquées.
-model: fable
+model: opus
 effort: high
 tools: Read, Glob, Grep, Write, Edit, Bash, Skill
 ---

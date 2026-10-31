@@ -1,7 +1,7 @@
 ---
 name: portfolio-da
 description: À partir des évaluations de sites, définit 15 directions artistiques complètement différentes et originales pour la collection de gabarits KYW, chacune adossée aux 3 meilleurs sites évalués de sa famille, avec un cahier de conception précis.
-model: fable
+model: opus
 effort: xhigh
 tools: Read, Glob, Grep, Write, Bash
 ---

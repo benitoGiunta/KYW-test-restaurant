@@ -38,7 +38,7 @@ log(`Recherche ${slug} : ${recherche.photos} photos ; ${recherche.resume}`)
 const resultats = await pipeline(
   variantes,
   async (v) => {
-    const b = await agent(`${socle(prompts[v].replace('.md', ''))} Variante à produire : « ${v} ». Sortie : ${ROOT}/sites/${slug}-${v}/ et ${ROOT}/dist/${slug}/${v}/ (via node scripts/build-site.mjs). Le build final doit passer.`, { label: `build:${v}:${slug}`, phase: 'Construction', schema: SCHEMA_BUILD, effort: 'high', ...(v === 'awwwards' ? {} : { model: 'opus' }) })
+    const b = await agent(`${socle(prompts[v].replace('.md', ''))} Variante à produire : « ${v} ». Sortie : ${ROOT}/sites/${slug}-${v}/ et ${ROOT}/dist/${slug}/${v}/ (via node scripts/build-site.mjs). Le build final doit passer.`, { label: `build:${v}:${slug}`, phase: 'Construction', schema: SCHEMA_BUILD, effort: 'high', model: 'opus' })
     return { v, build: b }
   },
   async (etat) => {

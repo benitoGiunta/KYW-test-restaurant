@@ -34,6 +34,7 @@ grandeur visé : ≈ 880 $ pour tout ce qui reste (15 gabarits, 20 restaurants �
 
 **A. Un modèle par rôle** (en-tête `model:` de chaque prompt, `model:` dans le workflow)
 - Fable 5.1 : directions artistiques, code des gabarits et de la variante awwwards, arbitrages finaux.
+- Depuis le 31/10 (limite Fable atteinte, consigne du porteur) : tous les rôles Fable tournent sur Opus 5.5 (frontmatter et workflow mis à jour).
 - Opus 5.5 (`opus`) : orchestration des sessions filles, variantes portfolio et legacy, révisions après revue.
 - Sonnet 5.5 (`sonnet`) : évaluation visuelle et jury, recherche web, dossiers clients, revues de site, leçons.
 - Haiku 5.5 (`haiku`) : captures par script, vérifications mécaniques (liens, axe, tailles), index, publication.

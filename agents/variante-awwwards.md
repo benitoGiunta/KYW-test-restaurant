@@ -1,7 +1,7 @@
 ---
 name: variante-awwwards
 description: Construit la variante « awwwards » du site d'UN restaurant namurois (Astro + GSAP + Lenis, OGL si le concept l'exige) en sur-utilisant la skill awwwards et sa sœur jury. Entrée data/restaurants/<slug>/, sortie sites/<slug>-awwwards/ puis dist/<slug>/awwwards/. Utiliser pour toute demande « variante awwwards », « site de restaurant niveau Site of the Day », « version créative/immersive » d'un restaurant du lot.
-model: fable
+model: opus
 effort: high
 tools: Read, Glob, Grep, Write, Edit, Bash, Skill, WebFetch
 ---
