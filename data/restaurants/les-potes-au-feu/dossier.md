@@ -203,3 +203,8 @@ Phrases vraies et réutilisables telles quelles :
 Trous à combler avec des données fictives marquées « illustratif » : note Google et extraits d'avis clients, nombre
 d'abonnés Instagram/Facebook, e-mail de contact, nombre de couverts, carte des vins/cocktails, composition du lunch,
 menus de fêtes, parking.
+
+## Complément (2026-10-31, reprise)
+- Avis Google : 4,8/5 pour 212 avis (Rankeat, fiche du 22/08/2025 ; à confirmer sur Google Maps).
+- Le Fooding (maj 28/07/2026) : menus 52 € midi et 67 € soir (midi à confirmer), chefs Damien Gorjanec et François Schepens, amis d'adolescence rencontrés à La Plage d'Amée (Jambes), cuisine ouverte, les chefs servent eux-mêmes ; boissons citées : amaretto sour maison 13 €/verre, Anjou Domaine Olivier 9 €/verre, Syrah Stéphane Ogier 50 €/bouteille. E-mail, Instagram et couverts : inconnus.
+- Horaires recoupés (Rankeat, Le Fooding) : identiques au dossier.
