@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Mot from '../components/Mot.astro';
+import Accents from '../components/Accents.astro';
+import { u } from '../lib/url';
+---
+<Base title="Page introuvable" description="Cette adresse n'existe pas ou plus sur le site de L'Atelier de Bossimé. La carte, l'histoire de la ferme et la réservation sont toujours là." etat="perdu">
+  <section class="perdu" aria-labelledby="perdu-titre">
+    <div class="wrap perdu__grille">
+      <p class="perdu__mot" aria-hidden="true"><Mot sans classe="mot--perdu" /></p>
+      <div class="perdu__texte">
+        <h1 id="perdu-titre" class="perdu__titre">Cette page a perdu ses accents.</h1>
+        <p>L'adresse demandée n'existe pas, ou plus. Sans ses trois accents, Bossimé ne se prononce plus pareil : reprenez par l'un de ces chemins.</p>
+        <ul class="perdu__chemins">
+          <li><a class="btn btn--plein" href={u('/')}><span class="btn__aplat" aria-hidden="true"></span><span class="btn__txt">Retour à l'accueil</span></a></li>
+          <li><a class="nl" href={u('/carte/')}>La carte</a></li>
+          <li><a class="nl" href={u('/reservation/')}>Réserver</a></li>
+        </ul>
+      </div>
+      <Accents id="perdu" classe="perdu__accents" />
+    </div>
+  </section>
+</Base>

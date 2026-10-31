@@ -1,0 +1,8 @@
+---
+// Le mot « bossimé » en display : visuel seulement (aria-hidden). Le texte lisible est porté par le parent
+// (sr-only dans le h1 du hero, nom du restaurant ailleurs). L'accent du é est remplacé par les trois traits.
+import Accents from './Accents.astro';
+interface Props { classe?: string; id?: string; sans?: boolean }
+const { classe = '', id, sans = false } = Astro.props;
+---
+<span class={`mot ${classe}`} aria-hidden="true"><span class="mot__lettres">bossim</span><span class="mot__e">e{!sans && <Accents id={id} classe="mot__accents" />}</span></span>

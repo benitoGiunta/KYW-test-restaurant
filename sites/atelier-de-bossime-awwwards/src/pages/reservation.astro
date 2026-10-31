@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import Accents from '../components/Accents.astro';
+import Photo from '../components/Photo.astro';
+import { site, horaires, journee, pratique } from '../data/site';
+
+const facons = [
+  { titre: 'En ligne', texte: 'Le module de réservation de la maison, ouvert jour et nuit. Choisissez la date, l’heure et le nombre de couverts.', lien: site.reservation.url, action: 'Réserver en ligne', externe: true },
+  { titre: 'Par téléphone', texte: `Au ${site.telephoneLisible}. Le plus simple pour un groupe ou une demande particulière.`, lien: site.telephoneHref, action: 'Appeler', externe: false },
+  { titre: 'Par e-mail', texte: `À ${site.email}. Indiquez la date, le service, le nombre de personnes et vos allergies.`, lien: `mailto:${site.email}?subject=${encodeURIComponent('Réservation')}`, action: 'Écrire un e-mail', externe: false },
+];
+---
+<Base title="Réserver et venir" description="Réserver une table à L'Atelier de Bossimé, rue Bossimé 2B à Loyers : en ligne, au 0478 13 71 25 ou par e-mail. Horaires, accès, groupes et allergies.">
+  <section class="ph ph--resa" aria-labelledby="resa-titre">
+    <div class="wrap">
+      <Accents id="resa" classe="ph__accents" />
+      <h1 id="resa-titre" class="ph__titre">Trois façons de réserver.</h1>
+      <p class="ph__chapo ph__chapo--etroit">Une par accent. Le midi du lundi au vendredi, le soir du lundi au samedi : la maison est fermée le dimanche.</p>
+    </div>
+  </section>
+
+  <section class="facons" aria-label="Façons de réserver">
+    <ol class="wrap facons__liste">
+      {facons.map((f, i) => (
+        <li class="facon" data-reveal="up" data-delay={String(i * 0.08)}>
+          <Accents id={`facon-${i}`} classe={`facon__accents facon__accents--${i}`} />
+          <h2 class="facon__titre">{f.titre}</h2>
+          <p class="facon__texte">{f.texte}</p>
+          <a class={`btn ${i === 0 ? 'btn--plein' : 'btn--ligne'}`} href={f.lien} rel={f.externe ? 'noopener' : undefined}><span class="btn__aplat" aria-hidden="true"></span><span class="btn__txt">{f.action}</span></a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="venir" aria-labelledby="venir-titre">
+    <div class="wrap venir__grille">
+      <div class="venir__horaires">
+        <h2 id="venir-titre" class="venir__titre" data-split="lines">Horaires</h2>
+        <ul class="horaires num">
+          {horaires.map((h) => <li class={!h.midi && !h.soir ? 'horaires__ferme' : undefined}><span class="horaires__jour">{h.jour}</span><span>{journee(h)}</span></li>)}
+        </ul>
+      </div>
+      <div class="venir__adresse">
+        <h2 class="venir__titre">Adresse</h2>
+        <address class="venir__lieu">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune} ({site.adresse.ville})</address>
+        <p>{pratique.acces}</p>
+        <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan d'accès</a></p>
+      </div>
+      <figure class="venir__photo">
+        <div class="cadre" data-biais><Photo cle="tableBrique" widths={[480, 800, 1200]} sizes="(max-width: 767px) 100vw, 40vw" /></div>
+        <figcaption class="legende">Une table pour deux, contre le mur de briques.</figcaption>
+      </figure>
+      <ul class="venir__infos">
+        <li><h3>Groupes</h3><p>{pratique.groupes}</p></li>
+        <li><h3>Accès</h3><p>{pratique.pmr}</p></li>
+        <li><h3>Allergies</h3><p>Dites-les en réservant : la cuisine adapte chaque Moment.</p></li>
+        <li><h3>Animaux</h3><p>{pratique.chiens}</p></li>
+      </ul>
+    </div>
+  </section>
+</Base>

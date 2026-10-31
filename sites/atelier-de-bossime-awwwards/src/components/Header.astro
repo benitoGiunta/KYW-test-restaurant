@@ -1,0 +1,39 @@
+---
+import { u } from '../lib/url';
+import { site } from '../data/site';
+import Accents from './Accents.astro';
+const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
+const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
+const liens = [
+  { href: '/carte/', label: 'La carte' },
+  { href: '/histoire/', label: 'Histoire' },
+];
+---
+<header class="tete">
+  <a class="tete__marque" href={base} aria-current={path === base ? 'page' : undefined}>
+    <span class="sr-only">{site.nom}, accueil</span>
+    <span class="tete__mot" aria-hidden="true">bossim<span class="tete__e">e<Accents id="tete" fantome classe="tete__accents" /></span></span>
+  </a>
+  <nav class="tete__nav" aria-label="Navigation principale">
+    <ul>
+      {liens.map((l) => (
+        <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>
+      ))}
+      <li><a class="btn" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="btn__aplat" aria-hidden="true"></span><span class="btn__txt">Réserver</span></a></li>
+    </ul>
+  </nav>
+  <button class="tete__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-bouton>Menu</button>
+</header>
+<nav id="menu" class="menu" hidden aria-label="Menu" data-menu>
+  <button class="menu__fermer" type="button" data-menu-fermer>Fermer</button>
+  <ul>
+    <li><a class="menu__lien" href={base} aria-current={path === base ? 'page' : undefined}>Accueil</a></li>
+    {liens.map((l) => <li><a class="menu__lien" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+    <li><a class="menu__lien" href={u('/reservation/')} aria-current={courant('/reservation/')}>Réserver</a></li>
+  </ul>
+  <div class="menu__pied">
+    <a href={site.telephoneHref}>{site.telephoneLisible}</a>
+    <span>{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</span>
+  </div>
+</nav>

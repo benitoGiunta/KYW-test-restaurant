@@ -1,0 +1,43 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site, horaires, journee, credits } from '../data/site';
+import Mot from './Mot.astro';
+---
+<footer class="pied" data-tone="nuit">
+  <div class="wrap pied__grille">
+    <div class="pied__appel">
+      <p class="pied__phrase">Une table au milieu de la ferme, à Loyers, aux portes de Namur.</p>
+      <div class="actions">
+        <a class="btn btn--clair" href={site.reservation.url} rel="noopener"><span class="btn__aplat" aria-hidden="true"></span><span class="btn__txt">Réserver en ligne</span></a>
+        <a class="btn btn--ligne" href={site.telephoneHref}><span class="btn__aplat" aria-hidden="true"></span><span class="btn__txt">Appeler le {site.telephoneLisible}</span></a>
+      </div>
+    </div>
+    <div class="pied__bloc">
+      <h2 class="pied__titre">Adresse</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune} ({site.adresse.ville})</address>
+      <p><a class="lien" href={site.carteUrl} rel="noopener">Voir sur la carte</a></p>
+    </div>
+    <div class="pied__bloc">
+      <h2 class="pied__titre">Horaires</h2>
+      <ul class="pied__horaires num">
+        {horaires.map((h) => <li><span>{h.jour}</span> <span>{journee(h)}</span></li>)}
+      </ul>
+    </div>
+    <div class="pied__bloc">
+      <h2 class="pied__titre">Ailleurs</h2>
+      <ul class="pied__liens">
+        <li><a class="util" href={u('/carte/')}>La carte</a></li>
+        <li><a class="util" href={u('/histoire/')}>Histoire</a></li>
+        <li><a class="util" href={u('/reservation/')}>Réserver et venir</a></li>
+        {site.reseaux.map((r) => <li><a class="util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+  </div>
+  <div class="pied__mot wrap"><Mot id="pied" classe="mot--pied" /></div>
+  <div class="wrap pied__colophon">
+    <p>{site.nom}, ferme gastronomique. TVA {site.tva}. Étoile verte du Guide MICHELIN.</p>
+    <p>Crédits : {credits.photos}. Polices {credits.polices}. Construit avec {credits.outils}.</p>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

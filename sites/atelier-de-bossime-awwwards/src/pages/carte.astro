@@ -1,0 +1,66 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Accents from '../components/Accents.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { carte, euro, pratique, site } from '../data/site';
+import { photos, type CleePhoto } from '../lib/photos';
+
+// URL d'aperçu calculée au build (une vignette lazy cachée n'a pas de currentSrc : lecons.md).
+const apercus: Record<string, string> = {};
+for (const r of carte) for (const l of r.lignes) if (l.photo && !apercus[l.photo]) {
+  const img = await getImage({ src: photos[l.photo as CleePhoto].src, width: 640, format: 'webp' });
+  apercus[l.photo] = img.src;
+}
+---
+<Base title="La carte" description="La carte de L'Atelier de Bossimé : lunch en 2 ou 3 services à 42 et 52 €, menus de 3, 4, 5 ou 7 Moments de 68 à 130 €, au choix ou en carte blanche.">
+  <section class="ph ph--carte" aria-labelledby="carte-titre">
+    <div class="wrap ph__grille">
+      <h1 id="carte-titre" class="ph__titre">La carte se lit en Moments.</h1>
+      <div class="ph__chapo">
+        <p>Un Moment, c'est un plat. Vous en prenez trois, quatre, cinq ou sept, choisis sur le livret remis à table, ou vous laissez la cuisine décider pour vous : c'est la carte blanche, le menu surprise des débuts.</p>
+        <p class="ph__cle"><Accents n={3} id="cle" classe="ph__traits" /> <span>Chaque trait corail compte un Moment ou un service.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="carte wrap">
+    {carte.map((r) => (
+      <section class={`rubrique rubrique--${r.cle}`} aria-labelledby={`r-${r.cle}`}>
+        <div class="rubrique__tete">
+          <h2 id={`r-${r.cle}`} class="rubrique__titre" data-split="lines">{r.titre}</h2>
+          <p class="rubrique__intro">{r.intro}</p>
+        </div>
+        <ul class="index" data-index>
+          {r.lignes.map((l) => (
+            <li class="ligne" data-preview={l.photo ? apercus[l.photo] : undefined}>
+              <span class="ligne__nom">{l.nom}</span>
+              {l.moments ? <span class="ligne__traits"><Accents n={l.moments} /><span class="sr-only">{l.moments} {r.cle === 'lunch' ? 'services' : 'Moments'}</span></span> : <span class="ligne__traits" aria-hidden="true"></span>}
+              {l.detail ? <span class="ligne__detail">{l.detail}</span> : <span class="ligne__detail" aria-hidden="true"></span>}
+              <span class="ligne__prix num">{euro(l.prix)}</span>
+              {l.photo && <span class="ligne__vignette"><Photo cle={l.photo as CleePhoto} widths={[160, 320]} sizes="5.5rem" decorative /></span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+  <div class="apercu" aria-hidden="true"><img alt="" width="640" height="400" /></div>
+
+  <section class="avant" aria-labelledby="avant-titre">
+    <div class="wrap avant__grille">
+      <h2 id="avant-titre" class="avant__titre" data-split="lines">Avant de venir</h2>
+      <ul class="avant__liste">
+        <li><strong>Allergies.</strong> {pratique.allergies}</li>
+        <li><strong>Le menu en 7 Moments</strong> se réserve deux jours avant votre venue.</li>
+        <li><strong>En groupe.</strong> {pratique.groupes}</li>
+        <li><strong>Les prix</strong> sont ceux affichés par la maison en octobre 2026.</li>
+      </ul>
+      <div class="actions avant__actions">
+        <a class="btn btn--plein" href={u('/reservation/')}><span class="btn__aplat" aria-hidden="true"></span><span class="btn__txt">Réserver</span></a>
+        <a class="btn btn--ligne" href={site.telephoneHref}><span class="btn__aplat" aria-hidden="true"></span><span class="btn__txt">Appeler le {site.telephoneLisible}</span></a>
+      </div>
+    </div>
+  </section>
+</Base>

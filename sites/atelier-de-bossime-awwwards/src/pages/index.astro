@@ -1,0 +1,106 @@
+---
+import Base from '../layouts/Base.astro';
+import Mot from '../components/Mot.astro';
+import Accents from '../components/Accents.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, piliers, reperes } from '../data/site';
+import type { CleePhoto } from '../lib/photos';
+
+const rangs = ['Premier accent', 'Deuxième accent', 'Troisième accent'];
+const assiettes: { cle: CleePhoto; legende: string; place: string }[] = [
+  { cle: 'platTarte', legende: 'Tartelette, champignons crus tranchés.', place: 'a' },
+  { cle: 'platConcombre', legende: 'Concombre sauté, sésame, noisettes.', place: 'b' },
+  { cle: 'platSauceRouge', legende: 'Trois pièces sur une sauce rouge.', place: 'c' },
+  { cle: 'platPoireau', legende: 'Poireau grillé, herbes, galette.', place: 'd' },
+  { cle: 'dessertChocolat', legende: 'Tuile de chocolat, sauce versée à table.', place: 'e' },
+];
+---
+<Base>
+  <section class="hero" aria-labelledby="hero-titre">
+    <div class="wrap hero__grille">
+      <h1 id="hero-titre" class="hero__titre"><span class="sr-only">{site.nom}, ferme gastronomique à Loyers (Namur)</span><Mot id="hero" classe="mot--hero" /></h1>
+      <div class="hero__texte">
+        <p class="hero__accroche">Une ferme gastronomique à Loyers, près de Namur. Les légumes viennent du potager, derrière la baie vitrée.</p>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/reservation/')}><span class="btn__aplat" aria-hidden="true"></span><span class="btn__txt">Réserver</span></a>
+          <a class="btn btn--ligne" href={u('/carte/')}><span class="btn__aplat" aria-hidden="true"></span><span class="btn__txt">La carte et les prix</span></a>
+        </div>
+        <p class="hero__meta num">Midi du lundi au vendredi. Soir du lundi au samedi.</p>
+      </div>
+      <figure class="hero__photo">
+        <div class="cadre cadre--hero"><Photo cle="platVeloute" prioritaire widths={[640, 960, 1400]} sizes="(max-width: 767px) 100vw, 52vw" /></div>
+        <figcaption class="legende">Velouté vert et légumes du potager, une assiette passée.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="devise" aria-labelledby="devise-titre">
+    <div class="wrap devise__grille">
+      <h2 id="devise-titre" class="devise__phrase" data-split="lines">« Remettre la ferme au milieu du village. »</h2>
+      <div class="devise__texte">
+        <p data-reveal="up">C'est la devise de la maison. Ludovic Vanackere a ouvert Bossimé à 20 ans, dans un coin de la ferme familiale. La salle occupe aujourd'hui l'ancien fenil : cuisine ouverte d'un côté, grandes baies sur les jardins de l'autre.</p>
+        <p data-reveal="up" data-delay="0.1"><a class="lien" href={u('/histoire/')}>Lire l'histoire de la ferme</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="trois" aria-labelledby="trois-titre" data-trois>
+    <div class="wrap trois__grille">
+      <div class="trois__scene">
+        <h2 id="trois-titre" class="trois__titre">Trois accents sur le e</h2>
+        <div class="trois__e" aria-hidden="true"><span class="trois__lettre">e</span><Accents id="trois" classe="trois__accents" /></div>
+        <p class="trois__etat" aria-hidden="true" data-trois-etat>Trois piliers</p>
+      </div>
+      <p class="trois__intro">Le logo de la maison porte trois accents, un par pilier de la durabilité. Nous les lisons ainsi.</p>
+      <ol class="trois__chapitres">
+        {piliers.map((p, i) => (
+          <li class="chapitre" data-chapitre={i} data-titre={p.titre}>
+            <figure class="chapitre__photo cadre" data-biais><Photo cle={p.photo} widths={[480, 800, 1140]} sizes="(max-width: 767px) 100vw, 44vw" /></figure>
+            <h3 class="chapitre__titre"><span class="chapitre__rang">{rangs[i]}</span> {p.titre}</h3>
+            <p class="chapitre__texte">{p.texte}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="reperes" aria-labelledby="reperes-titre">
+    <div class="wrap">
+      <h2 id="reperes-titre" class="reperes__titre" data-split="lines">La ferme en cinq repères.</h2>
+      <ul class="reperes__liste">
+        {reperes.map((r, i) => (
+          <li class="repere" data-reveal="up" data-delay={String(i * 0.06)}>
+            <span class="repere__valeur num">{r.valeur}{r.unite && <span class="repere__unite">&nbsp;{r.unite}</span>}</span>
+            <span class="repere__libelle">{r.libelle}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="mur" aria-labelledby="mur-titre">
+    <div class="wrap mur__grille">
+      <div class="mur__tete">
+        <h2 id="mur-titre" class="mur__titre" data-split="lines">Des assiettes déjà parties</h2>
+        <p class="mur__intro">Le livret change avec le potager. Ces assiettes ne sont plus à la carte : elles montrent la main de la cuisine, pas le menu de ce soir.</p>
+        <a class="btn btn--ligne" href={u('/carte/')}><span class="btn__aplat" aria-hidden="true"></span><span class="btn__txt">La carte et les prix</span></a>
+      </div>
+      {assiettes.map((a) => (
+        <figure class={`mur__assiette mur__assiette--${a.place}`}>
+          <div class="cadre" data-biais><Photo cle={a.cle} widths={[400, 640, 960]} sizes="(max-width: 767px) 50vw, 30vw" /></div>
+          <figcaption class="legende">{a.legende}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="nuit" aria-labelledby="nuit-titre">
+    <div class="nuit__photo"><Photo cle="facadeNuit" widths={[640, 1024, 1600, 2000]} sizes="100vw" /></div>
+    <div class="wrap nuit__texte">
+      <h2 id="nuit-titre" class="nuit__titre" data-split="lines">Le soir, la baie s'allume.</h2>
+      <p class="nuit__horaires">Le soir du lundi au samedi, dès 19&nbsp;h. À midi du lundi au vendredi, dès 12&nbsp;h. Fermé le dimanche.</p>
+      <a class="btn btn--clair" href={u('/reservation/')}><span class="btn__aplat" aria-hidden="true"></span><span class="btn__txt">Réserver</span></a>
+    </div>
+  </section>
+</Base>

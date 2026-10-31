@@ -1,0 +1,15 @@
+---
+// Les trois accents du é (le logo du client : un accent par pilier de la durabilité).
+// Chaque trait se trace par stroke-dashoffset depuis une variable CSS (--a0, --a1, --a2 : 0 → 1) posée par
+// src/motion/accents.ts ; sans JS et en mouvement réduit les variables valent 1 : les trois accents sont posés.
+// `n` > 3 sert à la carte : un menu de 5 Moments s'écrit avec cinq traits.
+interface Props { n?: number; fantome?: boolean; classe?: string; id?: string }
+const { n = 3, fantome = false, classe = '', id } = Astro.props;
+const pas = 26; // écart entre deux traits (unités du viewBox)
+const largeur = 30 + (n - 1) * pas + 8;
+const traits = Array.from({ length: n }, (_, i) => ({ i, d: `M${8 + i * pas} 54 L${8 + i * pas + 24} 8` }));
+---
+<svg class={`accents ${classe}`} viewBox={`0 0 ${largeur} 62`} aria-hidden="true" focusable="false" data-accents={id} style={`--n:${n}`}>
+  {fantome && <g class="accents__fantome">{traits.map((t) => <path d={t.d} />)}</g>}
+  <g class="accents__traits">{traits.map((t) => <path d={t.d} pathLength="1" style={`--i:${t.i}`} />)}</g>
+</svg>

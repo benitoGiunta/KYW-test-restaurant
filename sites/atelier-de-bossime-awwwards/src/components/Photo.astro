@@ -1,0 +1,19 @@
+---
+// Photo du client servie par astro:assets (AVIF + WebP, largeurs utiles, dimensions explicites).
+import { Picture } from 'astro:assets';
+import { photos, type CleePhoto } from '../lib/photos';
+interface Props { cle: CleePhoto; widths?: number[]; sizes: string; prioritaire?: boolean; decorative?: boolean; classe?: string }
+const { cle, widths = [480, 800, 1200], sizes, prioritaire = false, decorative = false, classe } = Astro.props;
+const p = photos[cle];
+---
+<Picture
+  src={p.src}
+  alt={decorative ? '' : p.alt}
+  formats={['avif', 'webp']}
+  widths={widths.filter((w) => w <= p.src.width)}
+  sizes={sizes}
+  loading={prioritaire ? 'eager' : 'lazy'}
+  fetchpriority={prioritaire ? 'high' : undefined}
+  decoding="async"
+  class={classe}
+/>
