@@ -275,3 +275,33 @@ lev.append(dict(id='revision', ordre=5, levier='Réviser seulement les points de
 json.dump(lev, open(os.path.join(OUT, 'leviers.json'), 'w'), ensure_ascii=False, indent=0)
 for r in cats: print(r['categorie'], r['cout'], r['part_ecriture'], r['part_relecture'], r['part_reflexion'], r['part_production'], r['reponses'], r['contexte_par_reponse'])
 for r in lev: print(r)
+
+# --- Comparaison avant / après : une ligne par restaurant, indicateurs de mécanisme ---
+for a in lignes:
+    a['contexte_par_reponse'] = round(a['jetons_relecture'] / a['appels']) if a['appels'] else None
+json.dump(lignes, open(os.path.join(OUT, 'agents.json'), 'w'), ensure_ascii=False, indent=0)
+RESTOS = [('Les Potes au Feu', 1, 'avant'), ("L'Atelier de Bossimé", 2, 'avant')] + [(n, 3 + i, 'après') for i, n in enumerate(RESTOS_GEN)]
+restos = []
+for nom, rang, phase in RESTOS:
+    s = [a for a in lignes if a['groupe'] == nom]; est = any(a['source'] == 'estimé' for a in s)
+    c = collections.Counter()
+    for a in s:
+        c['cout'] += a['cout']
+        for n, _ in NATURES: c['n_' + n] += a['cout_' + n]
+        c['t_' + CLE_T[a['tache']]] += a['cout']; c['v_' + a['chantier'].split('· ')[1]] += a['cout']
+        if not est:
+            c['reponses'] += a['appels']; c['relu'] += a['jetons_relecture']; c['cmd'] += a['car_commandes']; c['img'] += a['images']
+    ag = [a for a in s if a['appels'] and a['tache'] != 'Orchestration']
+    row = dict(restaurant=nom, rang=rang, phase=phase, source='estimé' if est else 'mesuré', cout=round(c['cout'], 2), cout_par_site=round(c['cout'] / 3, 2),
+               **{('site_' + v): round(c['v_' + v], 2) for v in ('portfolio', 'awwwards', 'legacy', 'commun')},
+               **{('n_' + n): round(c['n_' + n], 2) for n, _ in NATURES},
+               **{('t_' + k): round(c['t_' + k], 2) for k in CLE_T.values()},
+               agents=None if est else len(ag), reponses=None if est else c['reponses'],
+               max_reponses=None if est else max(a['appels'] for a in ag),
+               agents_plus_40=None if est else sum(1 for a in ag if a['appels'] > 40),
+               contexte_par_reponse=None if est else round(c['relu'] / c['reponses']),
+               cout_par_agent=None if est else round(sum(a['cout'] for a in ag) / len(ag), 2),
+               sorties_commandes=None if est else int(c['cmd']), images=None if est else int(c['img']))
+    restos.append(row)
+json.dump(restos, open(os.path.join(OUT, 'restos.json'), 'w'), ensure_ascii=False, indent=0)
+for r in restos: print(r)
