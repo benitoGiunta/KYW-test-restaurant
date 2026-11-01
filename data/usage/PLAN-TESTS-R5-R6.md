@@ -108,3 +108,31 @@ Ce restaurant reprend tout ce qui a réussi au restaurant 5.
 | Fin du restaurant 5 | Session de reporting | Verdict des tests A, B et C |
 | Avant le restaurant 6 | Test Site | Tests D, E et F, plus ce qui a réussi au restaurant 5 |
 | Fin du restaurant 6 | Session de reporting | Verdict des tests D, E et F, nouvelle règle de sobriété consolidée |
+
+## Résultats du restaurant 5 (Chez Guillaume, 01/11) et plan révisé du restaurant 6
+
+Coût : 27,30 $, soit 9,10 $ par site, contre 11,12 $ à La Brasserie du Quai (−18 %) et 10,04 $ chez Partage.
+
+| Test | Verdict | Résultat principal |
+|---|---|---|
+| A · contexte de départ allégé | partiel, conservé | sorties de commandes −16 % par site (486 000 caractères, seuil 300 000 manqué) ; contexte relu par réponse inchangé (75 000 jetons pour les captures, 120 000 pour la construction) |
+| B · revue 2 conditionnelle | réussi, adopté | 1 revue 2 au lieu de 3 ; revues et révisions 7,32 $ contre 10,05 $ ; corrections des variantes dispensées vérifiées dans le code |
+| C · legacy sur Sonnet | réussi, adopté | construction legacy 3,71 $ contre 6,40 $ ; revue 1 legacy publiable, 0 F0 et 0 F1 ; témoin awwwards sur Opus stable (7,60 $ contre 7,31 $) |
+
+**Découverte :** chaque agent démarre avec environ 66 400 jetons de contexte dès sa première réponse, quel que soit son rôle
+ou son modèle : c'est le socle du harnais (instructions système, définitions d'outils, outils et connecteurs disponibles).
+Il pèse 62 % de la relecture de contexte du restaurant et jusqu'à 39 % de son coût. Les consignes du test A ne pèsent que
+quelques milliers de jetons face à lui. Mesure : champ `contexte_premiere_reponse` de `scripts/usage-detail.py`.
+
+**Restaurant 6, plan révisé :**
+- **Test D, maintenu :** effort « medium » pour les phases 1 et 3 de construction et pour la révision ; « low » pour les
+  captures et la publication.
+- **Test E, abandonné :** plafonner à 30 réponses multiplierait les agents, donc les socles ; le plafond reste à 40.
+- **Test F, abandonné :** le socle du harnais est déjà identique pour tous les agents ; déplacer la ligne d'identification
+  ne change presque rien.
+- **Test G, nouveau, à décider par Benito :** désactiver avant le lancement, dans les connecteurs du compte
+  (claude.ai/customize/connectors), ceux dont le pipeline restaurant n'a pas besoin. Le pipeline n'en utilise aucun : la
+  publication vérifie les adresses avec curl, le connecteur Vercel y est facultatif. Les connecteurs sont lus au démarrage
+  d'une session et le réglage vaut pour tout le compte. Mesure : contexte de la première réponse ; cible sous 45 000 jetons.
+- **Test H, nouveau :** construction portfolio et révisions sur Sonnet 5.5 (extension du test C), l'awwwards restant sur
+  Opus comme témoin. Garde-fou : défauts F0 et F1 de la revue 1 au plus égaux au restaurant 5.
