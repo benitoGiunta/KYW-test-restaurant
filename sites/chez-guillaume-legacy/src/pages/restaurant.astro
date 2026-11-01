@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { resto, menus, brunchCarte } from '../data/site';
+---
+<Base page="restaurant" title="Le restaurant | Chez Guillaume, Namur" description="Les trois menus du mois et le brunch stand-up du dimanche de Chez Guillaume, restaurant et comedy club à Namur.">
+  <div class="container page-hero">
+    <h1>Le restaurant</h1>
+    <p class="lead">Une cuisine et un bar maison, des produits locaux et des recettes de saison.</p>
+  </div>
+  <section class="sec--tight" aria-label="Menu du soir et brunch">
+    <div class="container">
+      <div class="tabs" role="tablist" aria-label="Choisir le service" data-tabs>
+        <button class="tab" role="tab" id="t-soir" aria-controls="p-soir" aria-selected="true" type="button">Menu du soir</button>
+        <button class="tab" role="tab" id="t-brunch" aria-controls="p-brunch" aria-selected="false" type="button">Brunch</button>
+      </div>
+      <div class="panel" id="p-soir" role="tabpanel" aria-labelledby="t-soir">
+        <h2>Menus du soir, du mercredi au samedi</h2>
+        <p class="lead">Le repas est obligatoire (non compris dans le ticket spectacle) et servi entre 18 h 30 et 20 h 30, juste avant le spectacle. Chaque mois, trois menus de la cheffe, en 2 ou 3 services.</p>
+        {menus.map((m) => (
+          <article class="menu-card">
+            <header>
+              <h3>{m.nom}</h3>
+              <p>2 services {m.prix2}, 3 services {m.prix3}</p>
+            </header>
+            <ul class="rows">
+              {m.plats.map(([k, v]) => <li><div class="t"><h4>{k}</h4></div><p class="d">{v}</p></li>)}
+            </ul>
+          </article>
+        ))}
+        <p class="small" style="margin-top:var(--space-lg)">Menus d’octobre 2026, renouvelés chaque mois.</p>
+      </div>
+      <div class="panel" id="p-brunch" role="tabpanel" aria-labelledby="t-brunch">
+        <h2>Brunch du dimanche</h2>
+        <div class="duo">
+          <div class="duo__text">
+            <p class="lead">Tous les dimanches, de 11 h 30 à 14 h 00, un buffet sucré-salé à volonté : 35 € par personne, 15 € pour les moins de 12 ans.</p>
+            <ul class="checks" style="grid-template-columns:1fr">
+              {brunchCarte.map((b) => <li>{b}</li>)}
+            </ul>
+            <p>Réservez votre table du brunch par mail à <a class="link" href={`mailto:${resto.emailTables}`}>{resto.emailTables}</a> ou par téléphone au <a class="link" href={resto.telHref}>{resto.tel}</a>. Le spectacle de 15 h 00 se prend à part, à 20 €.</p>
+          </div>
+          <div class="duo__img"><Fig src="brunch-dessert" slot="brunch" alt="Dessert (tartelette au citron meringuée) sur assiette à liseré rouge, latte en arrière-plan" w={1024} h={1280} /></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec" aria-labelledby="h-bar">
+    <div class="container duo">
+      <div class="duo__img"><Fig src="cocktails" slot="cocktails" alt="Service de cocktails (shaker, coupes) au bar" w={1000} h={1250} /></div>
+      <div class="duo__text">
+        <h2 id="h-bar">Cocktails et mocktails maison</h2>
+        <p class="lead">Les plats et les boissons sont préparés dans notre cuisine et notre bar. Une large sélection de boissons sans alcool, et un vin rouge et un vin blanc certifiés bio à la carte.</p>
+        <a class="btn btn--primary" href={resto.billetterie} rel="noopener">Réserver un spectacle</a>
+      </div>
+    </div>
+  </section>
+  <script is:inline>
+    (function () {
+      var bar = document.querySelector('[data-tabs]'); if (!bar) return;
+      var tabs = [].slice.call(bar.querySelectorAll('[role=tab]'));
+      function show(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); }
+      tabs.forEach(function (t) { t.addEventListener('click', function () { show(t); }); t.addEventListener('keydown', function (e) { var i = tabs.indexOf(t); if (e.key === 'ArrowRight') { tabs[(i + 1) % tabs.length].focus(); show(tabs[(i + 1) % tabs.length]); } if (e.key === 'ArrowLeft') { tabs[(i + tabs.length - 1) % tabs.length].focus(); show(tabs[(i + tabs.length - 1) % tabs.length]); } }); });
+      if (location.hash === '#brunch') show(tabs[1]); else show(tabs[0]);
+    })();
+  </script>
+</Base>

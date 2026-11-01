@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import { resto, faq } from '../data/site';
+---
+<Base page="faq" title="Questions courantes | Chez Guillaume, Namur" description="Horaires, réservations, cuisine et spectacles : les réponses aux questions courantes sur Chez Guillaume, comedy club à Namur.">
+  <div class="container page-hero">
+    <h1>Questions courantes</h1>
+    <p class="lead">Horaires, réservations, cuisine et spectacles. Une question reste sans réponse ? Écrivez à <a class="link" href={resto.emailHref}>{resto.email}</a>.</p>
+  </div>
+  <section class="sec--tight faq" aria-label="Réponses">
+    <div class="container">
+      {faq.map((g) => (
+        <div>
+          <h2>{g.theme}</h2>
+          {g.items.map(([q, r]) => <details><summary>{q}</summary><p>{r}</p></details>)}
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>

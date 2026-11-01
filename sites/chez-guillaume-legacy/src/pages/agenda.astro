@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { resto, agenda, dateFr, urlEvenement, typeLibelle } from '../data/site';
+const mois = [...new Set(agenda.map((a) => a.d.slice(0, 7)))];
+const nomMois = (m: string) => { const d = dateFr(m + '-01'); return `${d.mois} ${d.annee}`; };
+---
+<Base page="agenda" title="Agenda | Chez Guillaume, Namur" description="Les spectacles, soirées et brunchs stand-up de Chez Guillaume à Namur : chaque date mène à sa fiche et à la billetterie.">
+  <div class="container page-hero">
+    <h1>Agenda</h1>
+    <p class="lead">Spectacles, soirées et brunchs stand-up. Du mercredi au samedi, la table est réservée avec le spectacle.</p>
+  </div>
+  <section class="sec--tight" aria-label="Dates">
+    <div class="container">
+      <ol class="agenda">
+        {mois.map((m) => (
+          <>
+            <li class="mois"><h2 style="font-size:inherit;max-width:none">{nomMois(m)}</h2></li>
+            {agenda.filter((a) => a.d.startsWith(m)).map((a) => {
+              const d = dateFr(a.d);
+              return (
+                <li class={a.complet ? 'is-full' : undefined}>
+                  <div class="row">
+                    <span class="when">{d.court} {d.jour} {d.mois}{a.heure && <small> à {a.heure}</small>}</span>
+                    <span class="what">{a.titre}</span>
+                    <span class="kind">{typeLibelle[a.type]}</span>
+                    <span class="go"><a href={urlEvenement(a.slug)} rel="noopener" aria-label={`${a.complet ? 'Voir la fiche (complet)' : 'Réserver'} : ${a.titre}, ${d.long} ${d.jour} ${d.mois}`}>{a.complet ? 'Complet' : 'Réserver'}</a></span>
+                  </div>
+                </li>
+              );
+            })}
+          </>
+        ))}
+      </ol>
+      <p class="agenda-note small">Programme relevé sur chezguillaume.be le 1er novembre 2026 ; la billetterie fait foi. <a class="link" href={resto.billetterie} rel="noopener">Toutes les dates sur la billetterie</a></p>
+    </div>
+  </section>
+</Base>

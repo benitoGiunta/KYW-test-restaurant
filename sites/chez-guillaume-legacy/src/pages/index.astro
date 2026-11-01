@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { resto, horaires, agenda, prochains, dateFr, urlEvenement, typeLibelle } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const aVenir = agenda.slice(1, 9);
+---
+<Base page="accueil" accueil={true} title="Chez Guillaume, restaurant et comedy club à Namur" description="Chez Guillaume, restaurant et comedy club au cœur de Namur : repas avant le spectacle du mercredi au samedi, brunch stand-up le dimanche.">
+  <section class="hero" aria-labelledby="h-hero">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <h1 id="h-hero">On va voir qui ?</h1>
+        <p class="lead">Le restaurant et comedy club au cœur de Namur.</p>
+        <div class="hero__acts">
+          <a class="btn btn--primary" href={`${base}agenda/`}>Voir l’agenda</a>
+          <a class="btn" href={`${base}restaurant/`}>La carte du mois</a>
+        </div>
+      </div>
+      <div class="hero__stage">
+        <div class="sheet sheet--sugar" aria-hidden="true"><i></i></div>
+        <div class="sheet sheet--photo">
+          <Fig src="scene-humoriste" slot="hero" alt="Humoriste au micro sur la scène, public de dos, mur blanc à lumière en arc" w={1000} h={1250} hero={true} sizes="(max-width: 60rem) 100vw, 58vw" pos="50% 35%" />
+        </div>
+        <section class="ticket" aria-labelledby="h-prochains">
+          <h2 id="h-prochains">Prochains spectacles</h2>
+          <ol>
+            {prochains.map((p) => {
+              const d = dateFr(p.d);
+              return (
+                <li>
+                  <a href={urlEvenement(p.slug)} rel="noopener" aria-label={`Réserver ${p.titre}, ${d.long} ${d.jour} ${d.mois} à ${p.heure}`}>
+                    <b>{p.titre}</b>
+                    <span>{d.court} {d.jour} {d.mois}, {p.heure}</span>
+                    <em aria-hidden="true">Réserver</em>
+                  </a>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="salle" aria-label="La salle">
+    <div class="container">
+      <Fig src="salle-projecteurs" slot="salle" alt="Salle : rampe de projecteurs, tables en bois clair, rideaux rouille" w={1000} h={1250} sizes="100vw" pos="50% 40%" />
+      <p class="small" style="padding-top:var(--space-md)">La salle de Chez Guillaume : rampe de projecteurs, tables en bois clair et rideaux rouille.</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-moments">
+    <div class="container stack">
+      <div class="stack__pane">
+        <h2 id="h-moments">On y rit, on y mange, on y vit.</h2>
+        <p class="lead">Stand-up, découvertes, cocktails maison, plats savoureux et ambiance chaleureuse : bienvenue chez Guillaume.</p>
+        <a class="btn" href={`${base}restaurant/`}>Les menus et le brunch</a>
+      </div>
+      <div class="stack__list">
+        <article class="moment">
+          <h3>Du mercredi au samedi, le repas puis le spectacle</h3>
+          <p>Le repas est obligatoire (non compris dans le ticket spectacle) et servi entre 18 h 30 et 20 h 30. Votre table est automatiquement réservée avec le spectacle.</p>
+          <Fig src="plat-boudin" slot="plat" alt="Plat : boudin, purée et compote sur assiette à liseré rouge, verre de vin rouge" w={1000} h={1250} pos="50% 55%" />
+        </article>
+        <article class="moment moment--accent">
+          <h3>Le dimanche, brunch stand-up</h3>
+          <p class="big">35 € <small>le buffet à volonté, 15 € pour les moins de 12 ans</small></p>
+          <p>Buffet de 11 h 30 à 14 h 00, spectacle à 15 h 00 (ticket à 20 €). Le buffet n’est pas obligatoire : contactez-nous par mail ou téléphone pour réserver votre table.</p>
+        </article>
+        <article class="moment">
+          <h3>Certains lundis ou mardis, spectacle sans repas</h3>
+          <p class="big">12 € <small>croque-monsieur et boisson, les lundis « face à la crise »</small></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="agenda" aria-labelledby="h-agenda">
+    <div class="container">
+      <div class="head">
+        <h2 id="h-agenda">Agenda</h2>
+        <p class="lead">Chaque date mène à sa fiche et à la billetterie.</p>
+      </div>
+      <ol class="agenda">
+        {aVenir.map((a) => {
+          const d = dateFr(a.d);
+          return (
+            <li class={a.complet ? 'is-full' : undefined}>
+              <div class="row">
+                <span class="when">{d.court} {d.jour} {d.mois}{a.heure && <small> à {a.heure}</small>}</span>
+                <span class="what">{a.titre}</span>
+                <span class="kind">{typeLibelle[a.type]}</span>
+                <span class="go"><a href={urlEvenement(a.slug)} rel="noopener" aria-label={`${a.complet ? 'Voir la fiche (complet)' : 'Réserver'} : ${a.titre}, ${d.long} ${d.jour} ${d.mois}`}>{a.complet ? 'Complet' : 'Réserver'}</a></span>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+      <p class="more"><a class="btn" href={`${base}agenda/`}>Tout l’agenda</a></p>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="h-priv">
+    <div class="container">
+      <h2 id="h-priv">Privatisez Chez Guillaume.</h2>
+      <p class="lead">Envie d’organiser un moment spécial ? Chez Guillaume accueille aussi vos événements privés et professionnels.</p>
+      <a class="btn" href={`${base}privatisation/`}>En savoir plus</a>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-horaires">
+    <div class="container close">
+      <div class="close__text">
+        <h2 id="h-horaires">Horaires et adresse</h2>
+        <dl class="sched">
+          {horaires.map((h) => <div data-jour={h.jour}><dt>{h.nom}</dt><dd><time>{h.h}</time></dd></div>)}
+        </dl>
+        <address class="addr">{resto.rue}<br />{resto.ville}<br /><a class="link" href={resto.carte} rel="noopener">Voir sur la carte</a></address>
+        <a class="btn btn--primary" href={resto.billetterie} rel="noopener">Réserver un spectacle</a>
+      </div>
+      <div class="close__photo">
+        <Fig src="salle-rideaux" slot="rideaux" alt="Salle : scène ronde, rideaux bordeaux, tables" w={864} h={1080} sizes="(max-width: 60rem) 100vw, 40vw" />
+      </div>
+    </div>
+  </section>
+</Base>

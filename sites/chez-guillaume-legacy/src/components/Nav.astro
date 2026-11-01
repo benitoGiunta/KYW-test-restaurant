@@ -1,0 +1,27 @@
+---
+import { resto, nav } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<header class="nav">
+  <div class="container">
+    <div class="nav__pill">
+      <a class="nav__logo" href={base} aria-label="Chez Guillaume, accueil"><img src={`${base}logo.svg`} width="168" height="26" alt="Chez Guillaume" /></a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav__links">
+          {nav.map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>)}
+          <li><a href={`${base}#contact`}>Contact</a></li>
+        </ul>
+      </nav>
+      <details class="nav__menu">
+        <summary>Menu</summary>
+        <ul>
+          {nav.map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>)}
+          <li><a href={`${base}#contact`}>Contact</a></li>
+        </ul>
+      </details>
+      <a class="btn btn--primary nav__cta" href={resto.billetterie} rel="noopener">Réserver</a>
+    </div>
+  </div>
+</header>

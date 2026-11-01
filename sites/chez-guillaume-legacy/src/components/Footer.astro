@@ -1,0 +1,28 @@
+---
+import { resto, nav, horaires } from '../data/site';
+interface Props { accueil?: boolean }
+const { accueil = false } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<footer class="letter" id="contact">
+  <div class="container letter__in">
+    <h2>À bientôt chez Guillaume.</h2>
+    <div class="letter__body">
+      <p class="lead">Besoin d’infos ou des difficultés avec votre réservation ? Écrivez-nous ou consultez la <a class="link" href={`${base}faq/`}>FAQ</a>.</p>
+      <address class="addr"><a class="link" href={resto.carte} rel="noopener">{resto.rue}, {resto.ville}</a></address>
+      <p><a class="link" href={resto.telHref}>{resto.tel}</a></p>
+      <p><a class="link" href={resto.emailHref}>{resto.email}</a></p>
+      {!accueil && <p class="small">Lundi au samedi, {horaires[0].h}. Dimanche, {horaires[6].h}.</p>}
+    </div>
+    <ul class="letter__links">
+      {nav.map((n) => <li><a href={`${base}${n.href}`}>{n.label}</a></li>)}
+      <li><a href={resto.facebook} rel="noopener">Facebook</a></li>
+      <li><a href={resto.instagram} rel="noopener">Instagram</a></li>
+    </ul>
+    <div class="letter__sign">
+      <span>Chez Guillaume, restaurant et comedy club à Namur.</span>
+      <a href={resto.mentions} rel="noopener">Mentions légales</a>
+      <span data-credits>Photographies : Chez Guillaume.</span>
+    </div>
+  </div>
+</footer>
