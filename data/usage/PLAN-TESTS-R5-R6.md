@@ -8,11 +8,15 @@ Tableau de bord : https://claude.ai/artifact/5KDwC8bNQe7he4U6uxLmgp (onglet « A
 | Référence | Coût | Par site | Contexte relu par réponse | Sorties de commandes |
 |---|---:|---:|---:|---:|
 | Partage (restaurant 3) | 30,13 $ | 10,04 $ | 102 000 jetons | 550 000 caractères par site |
-| Restaurant 4 (en cours) | à mesurer | à mesurer | à mesurer | cible < 200 000 caractères par site |
+| La Brasserie du Quai (restaurant 4) | 33,36 $ | 11,12 $ | 105 000 jetons | 610 000 caractères par site |
 
-Le restaurant 4 tourne avec l'enveloppe `scripts/q.sh` imposée dans les prompts (commit 1cf0f6f). Il sert de nouvelle
-référence et valide, ou non, la baisse des sorties de commandes. **Aucune modification de ce plan ne doit être appliquée
-aux prompts ou au workflow avant la fin du restaurant 4** : ses agents lisent les prompts à leur lancement.
+Le restaurant 4 a tourné avec l'enveloppe `scripts/q.sh` imposée dans les prompts (commit 1cf0f6f). Les sorties de
+commandes n'ont pas baissé. Le diagnostic (`data/usage/commandes-brasserie-du-quai.json`, par
+`scripts/usage-commandes.py`) en donne la raison : 87 % du volume ne passe pas par q.sh. Ce ne sont pas des builds,
+mais des lectures de fichiers par commande : `cat` 503 000 caractères, `sed -n` 367 000, `grep` 252 000. Dans les 40
+plus grosses commandes, `agents/lecons.md` pèse 53 % du volume et les prompts de variante 21 %. `agents/lecons.md`
+fait 93 000 caractères, soit environ 25 000 jetons ; `variante-legacy.md` en fait 60 000 et `variante-awwwards.md`
+51 000. Chaque agent les relit par morceaux, souvent plusieurs fois.
 
 Constats de Partage qui orientent les tests :
 - La construction fait 66 % du coût, soit 6 à 7 $ par variante en trois phases.
@@ -26,14 +30,18 @@ Constats de Partage qui orientent les tests :
 Les tests A et B s'appliquent à tout le restaurant. Le test C ne concerne que la variante legacy : les variantes
 portfolio et awwwards servent de témoin.
 
-### Test A : contexte de départ allégé (tous les agents)
-- **Changement :** remplacer la lecture de `agents/lecons.md` en entier par un résumé par rôle de 2 000 jetons au plus
-  (`agents/lecons/<rôle>.md`, régénéré par l'étape leçons). Ne plus faire lire `README.md` et `agents/README.md` aux
-  agents ; seul le prompt de rôle, `agents/sobriete.md` et le résumé du rôle restent obligatoires.
-- **Mesure :** contexte relu par réponse, par rôle.
-- **Réussite :** captures et publication sous 45 000 jetons (75 000 et 82 000 chez Partage), construction sous
-  90 000 (112 000 à 126 000), revue sous 80 000 (107 000).
-- **Gain attendu :** environ 3 $ par restaurant.
+### Test A : contexte de départ allégé (tous les agents) — priorité 1
+- **Changement 1 :** remplacer la lecture de `agents/lecons.md` par un résumé par rôle de 2 000 jetons au plus
+  (`agents/lecons/<rôle>.md`, régénéré par l'étape leçons). `agents/lecons.md` reste l'archive, que plus aucun agent ne lit.
+- **Changement 2 :** découper `variante-legacy.md` et `variante-awwwards.md` par phase (structure, motion, QA) ; chaque
+  agent de construction ne reçoit que la partie commune et sa phase, 15 000 caractères au plus.
+- **Changement 3 :** dans `agents/sobriete.md`, interdire de relire un prompt ou les leçons par commande, lire un fichier
+  de plus de 80 lignes autrement que par plages ciblées (`grep -n … | head -20`, `sed -n` sur 60 lignes au plus) et
+  `cat` sur les pages d'un site sauf celle qu'on modifie. Ne plus faire lire `README.md` et `agents/README.md` aux agents.
+- **Mesure :** contexte relu par réponse par rôle, sorties de commandes, rediagnostic par `scripts/usage-commandes.py`.
+- **Réussite :** sorties de commandes sous 300 000 caractères par site (610 000 au restaurant 4) ; captures et
+  publication sous 45 000 jetons relus par réponse, construction sous 90 000, revue sous 80 000.
+- **Gain attendu :** 4 à 6 $ par restaurant.
 - **Garde-fou :** aucune leçon déjà intégrée ne réapparaît comme défaut dans la revue 1.
 
 ### Test B : revue 2 seulement si nécessaire (toutes les variantes)
@@ -95,7 +103,7 @@ Ce restaurant reprend tout ce qui a réussi au restaurant 5.
 
 | Quand | Qui | Quoi |
 |---|---|---|
-| Fin du restaurant 4 | Session de reporting | Mesure du restaurant 4, validation de l'enveloppe silencieuse, seuils du plan recalés si besoin |
+| Fin du restaurant 4 (fait) | Session de reporting | Mesure : 33,36 $, sorties de commandes inchangées ; diagnostic des commandes ; test A renforcé |
 | Avant le restaurant 5 | Test Site | Tests A, B et C dans le workflow, les prompts et `agents/lecons/` ; un commit par test |
 | Fin du restaurant 5 | Session de reporting | Verdict des tests A, B et C |
 | Avant le restaurant 6 | Test Site | Tests D, E et F, plus ce qui a réussi au restaurant 5 |
