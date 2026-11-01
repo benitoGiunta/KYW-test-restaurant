@@ -1,0 +1,96 @@
+---
+// Accueil : la séquence d'origine (hero plein écran au logo, « Une expérience au fil de l'eau », Restauration,
+// fil Instagram, pied de page) gardée dans une nouvelle composition, plus deux sections du draw 333a6d :
+// la salle en pleine largeur sans titre, et les horaires avec l'adresse en section propre avant la fin.
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Saisons from '../components/Saisons.astro';
+import { resto, photo, ecailler } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const normandes = ecailler.huitres[0];
+---
+<Base
+  title="La Brasserie du Quai · brasserie et banc d’écailler sur la Meuse, Namur"
+  description="Brasserie et banc d’écailler au pied du pont du Luxembourg, à Namur : grandes baies vitrées et terrasse chauffée au bord de la Meuse."
+  page="accueil"
+>
+  <section class="hero" aria-labelledby="hero-titre">
+    <Photo {...photo('07-salle-baies-vitrees')} slot="hero" class="hero__photo" priorite sizes="100vw" position="50% 55%"
+      alt="La salle de la Brasserie du Quai, tables dressées devant les grandes baies vitrées ouvertes sur la Meuse" />
+    <div class="hero__texte container">
+      <img class="hero__logo" src={`${base}photos/logo.svg`} width="465" height="465" alt="" />
+      <h1 id="hero-titre">Une expérience au fil de l’eau</h1>
+      <p class="lead">Brasserie et banc d’écailler au pied du pont du Luxembourg, sur les berges de la Meuse.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary hero__primaire" href={`${base}reservation/`}>Réserver une table</a>
+        <a class="btn btn--secondary" href={`${base}la-carte/`}>Lire la carte</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lieu container" aria-labelledby="lieu-titre">
+    <div class="lieu__texte">
+      <h2 id="lieu-titre">Au pied du pont du Luxembourg</h2>
+      <p>C’est au pied du pont du Luxembourg, sur les berges de la Meuse, que s’est posée la Brasserie du Quai. De grandes baies vitrées offrent une vue imprenable sur la Meuse.</p>
+      <p>La grande terrasse vous accueille au bord de l’eau, chauffée et à l’abri du vent : elle permet de profiter de l’endroit jusque tard dans la saison.</p>
+    </div>
+    <Photo {...photo('05-terrasse-meuse')} slot="terrasse" class="lieu__photo" sizes="(min-width: 60rem) 55vw, 100vw"
+      alt="La terrasse de la brasserie sous ses parasols, face à la Meuse" />
+  </section>
+
+  <section class="chiffre" aria-labelledby="chiffre-titre">
+    <div class="container chiffre__in grained">
+      <p class="chiffre__fig figure">{normandes.six}</p>
+      <div class="chiffre__texte">
+        <h2 id="chiffre-titre">Six Normandes au banc d’écailler</h2>
+        <ul class="rangs">
+          <li><span>Le banc est ouvert</span><span>du jeudi au lundi</span></li>
+          <li><span>Les huîtres</span><span>Normandes, Fines de Claire, Gillardeaux</span></li>
+          <li><span>Les plateaux</span><span>de 45 à 195 €</span></li>
+        </ul>
+        <a class="lien" href={`${base}lecailler/`}>Voir le banc d’écailler</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cuisine container" aria-labelledby="cuisine-titre">
+    <div class="cuisine__tete">
+      <h2 id="cuisine-titre">Une cuisine de brasserie, selon le marché</h2>
+      <p>Pierre-Alexandre et son équipe vous proposent une cuisine de brasserie authentique et variée, élaborée avec des produits frais et de qualité. Que ce soit pour un repas en famille, entre amis ou pour vos occasions spéciales, nous vous accueillons dans une ambiance chaleureuse et conviviale.</p>
+      <p>Depuis juillet 2026, Martin et Rémy mènent la cuisine.</p>
+      <a class="btn btn--secondary" href={`${base}la-carte/`}>Lire la carte</a>
+    </div>
+    <ul class="cuisine__faits rangs rangs--grand">
+      <li><span>Croquettes de crevettes grises</span><span>faites maison</span></li>
+      <li><span>Vol-au-vent « Royal »</span><span>truffe et ris de veau</span></li>
+      <li><span>Américain et tartare de bœuf</span><span>hachés minute</span></li>
+      <li><span>Les frites</span><span>cuites à la graisse de bœuf</span></li>
+      <li><span>Les suggestions de saison</span><span>chaque semaine</span></li>
+    </ul>
+  </section>
+
+  <Photo {...photo('10-salle-panorama')} slot="salle" class="pleine" sizes="100vw"
+    alt="La salle en panorama, sa banquette courbe et les baies sur la Meuse" />
+
+  <section class="suivre container" aria-labelledby="suivre-titre">
+    <h2 id="suivre-titre">Les suggestions de la semaine sont sur Instagram</h2>
+    <p>Saint-Jacques, couleurs d’automne et nouvelles assiettes : la maison les publie au fil des semaines.</p>
+    <ul class="suivre__liens">
+      <li><a class="btn btn--secondary" href={resto.instagram} rel="noopener">Instagram</a></li>
+      <li><a class="btn btn--secondary" href={resto.facebook} rel="noopener">Facebook</a></li>
+    </ul>
+  </section>
+
+  <section class="venir" aria-labelledby="venir-titre">
+    <div class="container venir__in">
+      <Saisons titre="Les heures de service" />
+      <div class="venir__adresse">
+        <h2 id="venir-titre">9 rue du Quai, Namur</h2>
+        <p>Au bord de la Meuse, au pied du pont du Luxembourg.</p>
+        <p><a href={resto.maps} rel="noopener">Itinéraire dans Google Maps</a></p>
+        <p><a href={resto.telHref}>{resto.tel}</a></p>
+        <a class="btn btn--primary" href={`${base}reservation/`}>Réserver une table</a>
+      </div>
+    </div>
+  </section>
+</Base>

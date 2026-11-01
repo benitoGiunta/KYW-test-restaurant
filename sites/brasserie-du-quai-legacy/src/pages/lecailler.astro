@@ -1,0 +1,83 @@
+---
+// L'écailler : les huîtres en table 6 / 12 pièces (Index/Table), les produits de la mer en Rows,
+// les plateaux en deux groupes (1 et 2 personnes), le jour d'ouverture en Schedule.
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { ecailler, ecaillerJours, prixLigne, photo } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const groupes = [1, 2].map((n) => ({ n, plateaux: ecailler.plateaux.filter((p) => p.pers === n) }));
+---
+<Base
+  title="Le banc d’écailler · La Brasserie du Quai, Namur"
+  description="Le banc d’écailler de la Brasserie du Quai, du jeudi au lundi : huîtres Normandes, Fines de Claire et Gillardeaux, crustacés et plateaux de 45 à 195 €."
+  page="lecailler"
+>
+  <section class="ecailler-tete container" aria-labelledby="ecailler-titre">
+    <div class="ecailler-tete__texte">
+      <h1 id="ecailler-titre">Le banc d’écailler</h1>
+      <p class="lead">La Brasserie du Quai a le plaisir de vous proposer son banc d’écailler, accessible du jeudi au lundi inclus.</p>
+      <p>Venez y déguster une sélection de fruits de mer, huîtres fraîches, coquillages et autres spécialités iodées, préparées avec soin.</p>
+    </div>
+    <ol class="semaine" aria-label="Jours du banc d’écailler">
+      {ecaillerJours.map((j) => (
+        <li class:list={['semaine__jour', { 'semaine__jour--ferme': !j.ouvert }]} data-jour={j.jour}>
+          <span>{j.nom}</span><span>{j.ouvert ? 'ouvert' : 'fermé'}</span>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="huitres container" aria-labelledby="huitres-titre">
+    <h2 id="huitres-titre">Nos huîtres</h2>
+    <table class="table-huitres">
+      <thead><tr><th scope="col">Huître</th><th scope="col" class="num">6 pièces</th><th scope="col" class="num">12 pièces</th></tr></thead>
+      <tbody>
+        {ecailler.huitres.map((h) => (
+          <tr><th scope="row">{h.nom}</th><td class="num" data-label="6 pièces">{h.six}</td><td class="num" data-label="12 pièces">{h.douze}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="mer container" aria-labelledby="mer-titre">
+    <Photo {...photo('01-huitres')} slot="huitres" class="mer__photo" sizes="(min-width: 60rem) 40vw, 100vw"
+      alt="Un plateau d’huîtres ouvertes sur la glace, un demi-citron au centre" />
+    <div class="mer__liste">
+      <h2 id="mer-titre">Les produits de la mer</h2>
+      <ul class="lignes">
+        {ecailler.mer.map((p) => {
+          const l = prixLigne(p);
+          return (
+            <li class="ligne">
+              <span class="ligne__nom">{p.nom}</span>
+              <span class:list={['ligne__prix', { 'ligne__prix--jour': l.jour }]}>{l.prix}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <section class="plateaux grained" aria-labelledby="plateaux-titre">
+    <div class="container">
+      <h2 id="plateaux-titre">Nos plateaux</h2>
+      <div class="plateaux__groupes">
+        {groupes.map((g) => (
+          <div class="plateaux__groupe">
+            <h3>{g.n === 1 ? 'Pour une personne' : 'Pour deux personnes'}</h3>
+            <ul class="lignes">
+              {g.plateaux.map((p) => (
+                <li class="ligne">
+                  <span class="ligne__nom">{p.nom}</span>
+                  <span class="ligne__prix">{p.prix}</span>
+                  <span class="ligne__detail">{p.detail}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <a class="btn btn--primary" href={`${base}reservation/`}>Réserver une table</a>
+    </div>
+  </section>
+</Base>

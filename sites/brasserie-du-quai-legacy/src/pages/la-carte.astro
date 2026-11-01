@@ -1,0 +1,52 @@
+---
+// La carte : Rows (gates F6, F25) rubrique par rubrique, ordre du site d'origine. « Prix du jour » reste en toutes lettres.
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { laCarte, prixLigne, photo } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base
+  title="La carte · La Brasserie du Quai, Namur"
+  description="La carte de la Brasserie du Quai : entrées, poissons, viandes, pâtes fraîches et carte des enfants, avec les suggestions de saison chaque semaine."
+  page="la-carte"
+>
+  <section class="page-tete container" aria-labelledby="carte-titre">
+    <h1 id="carte-titre">Notre carte</h1>
+    <p class="lead">Une cuisine de brasserie selon les produits du marché. Chaque semaine, une sélection de suggestions de saison la complète.</p>
+    <nav class="sommaire" aria-label="Rubriques de la carte">
+      <ul>
+        {laCarte.map((c) => <li><a href={`#${c.id}`}>{c.titre}</a></li>)}
+        <li><a href={`${base}lecailler/`}>Le banc d’écailler</a></li>
+      </ul>
+    </nav>
+  </section>
+
+  <div class="carte container">
+    <aside class="carte__cote">
+      <Photo {...photo('02-plat-tartare-saumon')} slot="carte" class="carte__photo" sizes="(min-width: 60rem) 30vw, 100vw"
+        alt="Le tartare de saumon, crème au raifort, dressé à l’assiette" />
+      <p class="carte__legende">Tartare de saumon, crème au raifort et caviar de hareng · 20&nbsp;€</p>
+      <p class="carte__note">Allergènes : notre personnel est à votre disposition pour vous renseigner.</p>
+    </aside>
+    <div class="carte__rubriques">
+      {laCarte.map((c) => (
+        <section class="rubrique" id={c.id} aria-labelledby={`${c.id}-titre`}>
+          <h2 id={`${c.id}-titre`}>{c.titre}</h2>
+          <ul class="lignes">
+            {c.plats.map((p) => {
+              const l = prixLigne(p);
+              return (
+                <li class="ligne">
+                  <span class="ligne__nom">{p.nom}</span>
+                  <span class:list={['ligne__prix', { 'ligne__prix--jour': l.jour }]}>{l.prix}</span>
+                  {l.detail && <span class="ligne__detail">{l.detail}</span>}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))}
+      <p class="carte__fin">Desserts, vins et boissons : <span class="fill" data-placeholder="true">la carte n’est pas encore publiée</span>.</p>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,28 @@
+---
+// Bon cadeau : la page d'origine ne portait que le module Brydge, sans texte ; le module est conservé (câblage)
+// et chargé à la demande, avec une phrase qui dit ce qu'il fait.
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { resto, photo } from '../data/site';
+---
+<Base
+  title="Bon cadeau · La Brasserie du Quai, Namur"
+  description="Offrez un repas à la Brasserie du Quai, sur la Meuse à Namur : le bon cadeau se commande en ligne."
+  page="cheque-cadeau"
+>
+  <section class="cadeau container" aria-labelledby="cadeau-titre">
+    <div class="cadeau__texte">
+      <h1 id="cadeau-titre">Offrir un repas sur la Meuse</h1>
+      <p class="lead">Le bon cadeau de la Brasserie du Quai se commande en ligne, par le service Brydge.</p>
+      <p>Pour une question sur un bon déjà reçu, appelez le <a href={resto.telHref}>{resto.tel}</a>.</p>
+      <div class="cadeau__module" data-module={resto.bonCadeau} data-titre="Commander un bon cadeau de La Brasserie du Quai">
+        <div data-module-cadre>
+          <a class="btn btn--primary" href={resto.bonCadeau} rel="noopener">Commander un bon cadeau</a>
+        </div>
+        <button class="btn btn--secondary" type="button" data-module-open hidden>Ouvrir la boutique ici</button>
+      </div>
+    </div>
+    <Photo {...photo('14-table-dressee')} slot="cadeau" class="cadeau__photo" sizes="(min-width: 60rem) 40vw, 100vw"
+      alt="Une table dressée, verres et serviettes, la cave à vins au fond" />
+  </section>
+</Base>

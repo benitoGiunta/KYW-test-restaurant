@@ -1,0 +1,23 @@
+---
+// Schedule (layout.md § 5.16) : deux saisons, seule donnée publiée. La saison en cours se soulève d'un cran (Spore).
+// Jours de fermeture : inconnus, slot `.fill` (patterns.md § A fact the prompt did not give).
+import { saisons } from '../data/site';
+interface Props { titre?: string; niveau?: 'h2' | 'h3' }
+const { titre = 'Les heures de service', niveau = 'h2' } = Astro.props;
+const T = niveau;
+---
+<div class="saisons">
+  <T class="saisons__titre">{titre}</T>
+  <dl class="saisons__liste">
+    {saisons.map((s) => (
+      <div class="saisons__ligne" data-mois={s.mois.join(',')}>
+        <dt>{s.nom}</dt>
+        <dd>
+          <span>Midi <time datetime={s.midi[0]}>{s.midi[0]}</time> à <time datetime={s.midi[1]}>{s.midi[1]}</time></span>
+          <span>Soir <time datetime={s.soir[0]}>{s.soir[0]}</time> à <time datetime={s.soir[1]}>{s.soir[1]}</time></span>
+        </dd>
+      </div>
+    ))}
+  </dl>
+  <p class="saisons__note">Jour de fermeture : <span class="fill" data-placeholder="true">à confirmer par la maison</span>.</p>
+</div>

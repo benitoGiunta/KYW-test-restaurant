@@ -1,0 +1,35 @@
+---
+// Réservation : le module Zenchef du site d'origine (rid 379458) EST la réservation (câblage conservé), chargé à la
+// demande dans son cadre ; sans script, le lien direct. La carte Google intégrée devient un lien d'itinéraire.
+import Base from '../layouts/Base.astro';
+import Saisons from '../components/Saisons.astro';
+import { resto } from '../data/site';
+---
+<Base
+  title="Réserver une table · La Brasserie du Quai, Namur"
+  description="Réservez une table à la Brasserie du Quai, 9 rue du Quai à Namur : en ligne avec Zenchef ou par téléphone au 081 65 70 03."
+  page="reservation"
+>
+  <section class="resa container" aria-labelledby="resa-titre">
+    <div class="resa__tete">
+      <h1 id="resa-titre">Réserver une table</h1>
+      <p class="lead">En ligne, en quelques instants, ou par téléphone au <a href={resto.telHref}>{resto.tel}</a>.</p>
+    </div>
+    <div class="resa__module well grained" data-module={resto.zenchef} data-titre="Réserver une table à La Brasserie du Quai avec Zenchef">
+      <div class="resa__cadre" data-module-cadre>
+        <p>La réservation passe par Zenchef, le service de la maison.</p>
+        <a class="btn btn--primary" href={resto.zenchef} rel="noopener">Réserver en ligne</a>
+      </div>
+      <button class="btn btn--secondary" type="button" data-module-open hidden>Ouvrir le module ici</button>
+    </div>
+  </section>
+
+  <section class="infos container" aria-label="Informations pratiques">
+    <dl class="infos__liste">
+      <div><dt>Adresse</dt><dd><a href={resto.maps} rel="noopener">{resto.adresse.rue}, {resto.adresse.cp} {resto.adresse.commune}</a></dd></div>
+      <div><dt>Téléphone</dt><dd><a href={resto.telHref}>{resto.tel}</a></dd></div>
+      <div><dt>Courriel</dt><dd><a href={`mailto:${resto.email}`}>{resto.email}</a></dd></div>
+    </dl>
+    <Saisons titre="Les heures de service" />
+  </section>
+</Base>

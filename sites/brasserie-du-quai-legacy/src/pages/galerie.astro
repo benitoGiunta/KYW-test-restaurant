@@ -1,0 +1,28 @@
+---
+// Galerie : la page d'origine (grille Swiper sans texte) devient une planche de photos légendées par un fait.
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { galerie, photo } from '../data/site';
+---
+<Base
+  title="Galerie · La Brasserie du Quai, Namur"
+  description="La salle, la terrasse sur la Meuse, le bar, la cave et les assiettes de la Brasserie du Quai, en photographies."
+  page="galerie"
+>
+  <section class="page-tete container" aria-labelledby="galerie-titre">
+    <h1 id="galerie-titre">La maison en photographies</h1>
+    <p class="lead">La salle et ses baies, la terrasse sur l’eau, le bar, la cave et quelques assiettes.</p>
+  </section>
+  <ul class="galerie container">
+    {galerie.map((g, i) => {
+      const p = photo(g.nom);
+      const forme = p.h > p.w * 1.15 ? 'haute' : p.w > p.h * 1.3 ? 'large' : 'carree';
+      return (
+        <li class:list={['galerie__item', `galerie__item--${forme}`]}>
+          <Photo {...p} slot={`galerie-${i + 1}`} class="galerie__photo" sizes="(min-width: 60rem) 33vw, (min-width: 40rem) 50vw, 100vw" alt={g.legende} />
+          <p class="galerie__legende">{g.legende}</p>
+        </li>
+      );
+    })}
+  </ul>
+</Base>

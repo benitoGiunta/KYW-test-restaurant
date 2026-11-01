@@ -1,0 +1,100 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import KywFooter from '@kyw/footer';
+import { resto } from '../data/site';
+interface Props { title: string; description: string; page: string }
+const { title, description, page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const accueil = new URL(base, Astro.site).href;
+const ogImage = new URL(`${base}photos/07-salle-baies-vitrees-1140.webp`, Astro.site).href;
+// Données structurées : horaires de la saison en cours, jours non publiés donc non déclarés.
+const ldJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: resto.nom,
+  url: accueil,
+  image: ogImage,
+  telephone: '+3281657003',
+  email: resto.email,
+  address: { '@type': 'PostalAddress', streetAddress: 'Rue du Quai 9', postalCode: '5000', addressLocality: 'Namur', addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: 50.4656346, longitude: 4.8794989 },
+  servesCuisine: ['Brasserie', 'Fruits de mer', 'Banc d’écailler'],
+  priceRange: '€€',
+  acceptsReservations: resto.zenchef,
+  sameAs: [resto.facebook, resto.instagram, resto.michelin],
+});
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#140f0b" />
+    <link rel="icon" href={`${base}photos/logo.svg`} type="image/svg+xml" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+    {page !== '404' && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content={resto.nom} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {page !== '404' && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="La salle de La Brasserie du Quai et ses baies vitrées sur la Meuse" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={ldJson} />
+    <style is:global>
+      @import "../styles/page.css";
+    </style>
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Nav page={page} />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer />
+    <div class="barre" aria-label="Réserver ou appeler">
+      <a class="btn btn--primary" href={`${base}reservation/`}>Réserver une table</a>
+      <a class="btn btn--secondary" href={resto.telHref}>Appeler</a>
+    </div>
+    <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
+document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+    <script>
+      // La saison en cours se soulève d'un cran de surface (Spore : « tonight's row lifted »).
+      const mois = new Date().getMonth();
+      document.querySelectorAll<HTMLElement>('[data-mois]').forEach((el) => {
+        if ((el.dataset.mois || '').split(',').map(Number).includes(mois)) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); }
+      });
+      // Le jour courant au banc d'écailler.
+      const jour = new Date().getDay();
+      document.querySelectorAll<HTMLElement>('[data-jour]').forEach((el) => {
+        if (Number(el.dataset.jour) === jour) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); }
+      });
+      // Modules tiers du site d'origine (Zenchef, Brydge) chargés à la demande ; sans script, le lien direct suffit.
+      document.querySelectorAll<HTMLElement>('[data-module]').forEach((box) => {
+        const btn = box.querySelector<HTMLButtonElement>('[data-module-open]');
+        if (!btn) return;
+        btn.hidden = false;
+        btn.addEventListener('click', () => {
+          const f = document.createElement('iframe');
+          f.src = box.dataset.module || '';
+          f.title = box.dataset.titre || 'Module externe';
+          f.loading = 'eager';
+          box.querySelector('[data-module-cadre]')?.replaceChildren(f);
+          btn.hidden = true;
+          f.focus();
+        });
+      });
+    </script>
+    <KywFooter base={import.meta.env.BASE_URL} />
+  </body>
+</html>
