@@ -18,8 +18,8 @@ R2_VARIANTE = {'a1334a9871f51f325': 'awwwards', 'a771f6e9ed6303ab4': 'legacy', '
                'aa2b3c67acf4e8e41': 'portfolio', 'a646f1131c4163625': 'legacy', 'afcfa8d161614ac5d': 'awwwards'}
 NATURES = [('ecriture', 'Écriture de contexte'), ('relecture', 'Relecture de contexte'), ('reflexion', 'Réflexion'),
            ('production', 'Production (texte, code)'), ('entree', 'Entrée hors cache')]
-TACHES = ['Construction', 'Revue', 'Révision', 'Recherche client', 'Publication', 'Leçons', 'Orchestration', 'Préparation']
-CLE_T = dict(zip(TACHES, ['construction', 'revue', 'revision', 'recherche', 'publication', 'lecons', 'orchestration', 'preparation']))
+TACHES = ['Construction', 'Revue', 'Révision', 'Recherche client', 'Captures', 'Publication', 'Leçons', 'Orchestration', 'Préparation']
+CLE_T = dict(zip(TACHES, ['construction', 'revue', 'revision', 'recherche', 'captures', 'publication', 'lecons', 'orchestration', 'preparation']))
 
 def cout_natures(pm):
     c = collections.Counter(); j = collections.Counter()
@@ -110,6 +110,26 @@ for m, tok in R1.items():
         c, j = cout_natures(pm)
         ajoute('Restaurant 1', 'Les Potes au Feu', ch, ta, NOM_MODELE[m], None, c, j, 'estimé')
 
+
+# Restaurants 3 et suivants : chaque prompt d'agent commence par « Rôle : … · Restaurant : … · Variante : … · Passe : … ».
+ROLE_T = {'recherche-client': 'Recherche client', 'captures': 'Captures', 'relecteur-site': 'Revue', 'reviseur-site': 'Révision',
+          'publication': 'Publication', 'gardien-des-lecons': 'Leçons'}
+RESTOS_GEN = []
+for f in sorted(glob.glob('data/usage/detail-*.json')):
+    if f.endswith(('detail-test-site.json', 'detail-atelier-de-bossime.json')): continue
+    d = json.load(open(f)); slug = f.split('detail-')[1][:-5]
+    try: nom = json.load(open(f'data/restaurants/{slug}/donnees.json')).get('nom') or slug
+    except Exception: nom = slug
+    RESTOS_GEN.append(nom)
+    for r in d['lignes']:
+        t = r['premier_message'] or ''
+        m = re.match(r'Rôle : ([\w-]+) · Restaurant : ([\w-]+) · Variante : ([\w-]+)', t)
+        role, v = (m.group(1), m.group(3)) if m else (None, '-')
+        ta = 'Orchestration' if r['principal'] else ('Construction' if role and role.startswith('variante-') else ROLE_T.get(role, 'Préparation'))
+        chantier = f"{nom} · {v}" if v in ('portfolio', 'awwwards', 'legacy') else f"{nom} · commun"
+        c, j = cout_natures(r.get('par_modele', {})); mod = ', '.join(NOM_MODELE.get(x, x) for x in r['modeles'] if x in PRIX)
+        ajoute(nom, nom, chantier, ta, mod, r['appels'], c, j, 'mesuré', r)
+
 json.dump(lignes, open(os.path.join(OUT, 'agents.json'), 'w'), ensure_ascii=False, indent=0)
 
 def agrege(cle):
@@ -123,7 +143,7 @@ def agrege(cle):
         a['estime'] = max(a['estime'], 1 if x['source'] == 'estimé' else 0)
     return A
 
-ORD_GROUPE = ['Portfolio', 'Les Potes au Feu', "L'Atelier de Bossimé", 'Préparation', 'Pilotage']
+ORD_GROUPE = ['Portfolio', 'Les Potes au Feu', "L'Atelier de Bossimé"] + RESTOS_GEN + ['Préparation', 'Pilotage']
 ch = []
 for (g, c), a in agrege(lambda x: (x['groupe'], x['chantier'])).items():
     row = dict(groupe=g, chantier=c, ordre=ORD_GROUPE.index(g), source='estimé' if a['estime'] else 'mesuré', agents=a['agents'], appels=a['appels'],
@@ -153,7 +173,7 @@ json.dump(na, open(os.path.join(OUT, 'natures.json'), 'w'), ensure_ascii=False, 
 
 gr = []
 for g, a in agrege(lambda x: x['groupe']).items():
-    nb = {'Portfolio': 15, 'Les Potes au Feu': 3, "L'Atelier de Bossimé": 3}.get(g)
+    nb = 15 if g == 'Portfolio' else (3 if g not in ('Préparation', 'Pilotage') else None)
     gr.append(dict(groupe=g, ordre=ORD_GROUPE.index(g), cout=round(a['cout'], 2), agents=a['agents'], sites=nb,
                    cout_par_site=round(a['cout'] / nb, 2) if nb else None, part=round(a['cout'] / tot * 100, 1),
                    source='estimé' if a['estime'] else 'mesuré'))
@@ -181,6 +201,10 @@ CATS = [('Portfolio complet', 'ensemble', lambda a: a['groupe'] == 'Portfolio'),
         ('Bossimé · site 2 awwwards', 'site', lambda a: a['chantier'] == 'Bossimé · awwwards'),
         ('Bossimé · site 3 legacy', 'site', lambda a: a['chantier'] == 'Bossimé · legacy'),
         ('Bossimé complet', 'ensemble', lambda a: a['groupe'] == "L'Atelier de Bossimé")]
+for nom in RESTOS_GEN:
+    for i, v in enumerate(('portfolio', 'awwwards', 'legacy'), 1):
+        CATS.append((f'{nom} · site {i} {v}', 'site', (lambda ch: lambda a: a['chantier'] == ch)(f'{nom} · {v}')))
+    CATS.append((f'{nom} complet', 'ensemble', (lambda g: lambda a: a['groupe'] == g)(nom)))
 cats = []
 for i, (nom, typ, f) in enumerate(CATS):
     s = [a for a in lignes if f(a)]; c = collections.Counter()
