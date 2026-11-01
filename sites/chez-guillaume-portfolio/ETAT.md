@@ -1,4 +1,4 @@
-# ETAT · chez-guillaume-portfolio (construction phase 2 sur 3 terminée, 01/11/2026)
+# ETAT · chez-guillaume-portfolio (construction 3/3 terminée, QA faite, 01/11/2026)
 
 ## Fait
 - [x] Choix du gabarit argumenté (matrice dans DESIGN.md) : **collage** (28/30), copié sans dist/node_modules/rapports.
@@ -36,13 +36,18 @@
       0 texte caché, pas de loader, tasse masquée.
 - [x] Build OK (`scripts/q.sh cg-p2-build node scripts/build-site.mjs sites/chez-guillaume-portfolio`).
 
-## Reste (phase 3)
-- Shoot + audit complets par l'agent « captures » (lire `QA-*.md`), corrections éventuelles.
-- `pnpm index`, commit `dist/`, push.
-- `gabarits/UTILISATION.md` : ajouter `| collage | chez-guillaume |` (gabarits/ protégé).
-- Gabarit collage (protégé, à reporter par l'orchestrateur) : case d'activité vide sur pages dédiées (correctif de
-  `logoSection()` ci-dessus), `abbr` pointillé de l'agenda, `h2.sur` en Caslon, nom en trois mots supposé (phase 1).
+## Fait en phase 3 (QA)
+- [x] Audit complet (0 FAIL, 14 WARN expliqués dans RAPPORT.md), captures ciblées des 6 pages hors accueil (1440, 390).
+- [x] Corrigé : bloc Horaires de la réservation masqué sous la FAQ (`.damier__photo--infos`, base.css) ; fiche
+      « Notre cheffe » → « En cuisine ». Vérifié par mesure et capture.
+- [x] Build final OK (`scripts/q.sh cgp3-build …`), `pnpm index`, commit.
+
+## Reste
+- `gabarits/UTILISATION.md` : ajouter `| collage | chez-guillaume |` (gabarits/ protégé, à faire par l'orchestrateur).
+- Gabarit collage (protégé) : case d'activité vide sur pages dédiées, `abbr` pointillé de l'agenda, `h2.sur` en
+  Caslon, nom en trois mots supposé, `.damier__photo img { height: 100% }` qui masque tout contenu ajouté sous l'image.
 - Limite connue : photos sources de 1000 px de large, le hero est étiré à 1440 (pas de source plus grande).
+- À confirmer client : nom de la cheffe actuelle, photo de GuiHome (fiche « photo à venir »).
 
 ## Décisions
 - Aucun avis client inventé : la section avis devient « La presse en parle » (3 titres réels L'Avenir, ELLE.be, La DH).
@@ -51,4 +56,4 @@
 - Réservation : pas de formulaire de démo (le soir passe par le ticket, le brunch par e-mail / téléphone).
 - Équipe réduite à « La maison » : GuiHome (L'Avenir) et « Notre cheffe » (sans nom, le site actuel dit « notre
   cheffe ») ; Tamara Truyts citée seulement dans le récit, datée de janvier 2025.
-- Phase 1 : pas de serveur. Phase 2 : serveur `serve.mjs --port 4471`, arrêté par son PID.
+- Phase 1 : pas de serveur. Phase 2 : serveur `serve.mjs --port 4471`, phase 3 : port 4473, arrêtés par leur PID.

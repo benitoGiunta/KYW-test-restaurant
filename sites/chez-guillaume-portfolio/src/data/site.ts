@@ -134,7 +134,7 @@ export const site: Restaurant = {
   ],
   equipe: [
     { nom: 'Guillaume Wattecamps, alias GuiHome', role: 'Fondateur, humoriste', placeholder: false },
-    { nom: 'Notre cheffe', role: 'Cuisine : les menus du mois et le brunch', photo: '/photos/cuisine-dressage.webp', placeholder: false },
+    { nom: 'En cuisine', role: 'Les menus du mois et le brunch', photo: '/photos/cuisine-dressage.webp', placeholder: false },
   ],
   // Aucun avis client affiché par le site : la section cite des titres de presse réels (donnees.json, presse).
   avis: [
