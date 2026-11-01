@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Fiche from '../components/Fiche.astro';
+import { site, photoDe, compteCategorie } from '../data/site';
+import { u } from '../lib/url';
+const categories = site.carte.filter((c) => !site.pizze.categories.includes(c.categorie));
+---
+<Base title="La carte" description={`La carte de La Dolce Vita à ${site.adresse.commune} : antipasti, pasta, scaloppine, secondi, menu bambini, dolci et gelati. Pizze sur une page à part.`}>
+  <section class="wrap page-hero">
+    <p class="eyebrow">La carte</p>
+    <h1 data-split="words">À table</h1>
+    <p class="lead">Antipasti, pasta, scaloppine et secondi, puis les dolci. Les pizze ont leur page. Allergènes : à signaler au personnel.</p>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap">
+      {categories.map((c) => (
+        <div class="cat">
+          <div class="cat__head">
+            <h2 data-split="words">{c.categorie}</h2>
+            <span class="cat__num">{compteCategorie(c)}</span>
+          </div>
+          <div class="cat__grid">
+            {c.plats.map((p, i) => (
+              <Fiche nom={p.nom} description={p.description} prix={p.prix} photo={p.photo ? photoDe(p.photo) : undefined} tag={p.tags?.[0]} placeholder={p.placeholder} delai={(i % 2) * 0.08} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section s-four" data-theme-zone="four">
+    <div class="wrap">
+      <div class="cat__head" style="margin-bottom: calc(var(--u) * 4); border-color: var(--farine)">
+        <h2 data-split="words">Les pizze</h2>
+        <span class="cat__num">{String(site.carte.filter((c) => site.pizze.categories.includes(c.categorie)).reduce((n, c) => n + c.plats.length, 0))}</span>
+      </div>
+      <p class="lead">Une trentaine de pizzas, des classiques aux preferite de la maison, sur une page à part.</p>
+      <div class="actions">
+        <a class="btn btn--primary" href={u('/pizze/')}>Voir les pizze</a>
+        <a class="btn" href={u('/reservation/')}>Réserver une table</a>
+      </div>
+    </div>
+  </section>
+</Base>

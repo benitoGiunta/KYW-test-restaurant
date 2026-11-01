@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import { asset } from '../lib/url';
+const salle = photoDe('/photos/salle-mur-olive.webp');
+const plan = `https://www.openstreetmap.org/search?query=${encodeURIComponent(`${site.adresse.rue} ${site.adresse.numero}, ${site.adresse.cp} Wépion`)}`;
+---
+<Base title="Réservation" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : par téléphone au ${site.telephone}. Horaires et adresse.`}>
+  <section class="wrap page-hero">
+    <p class="eyebrow">Réserver</p>
+    <h1 data-split="words">Une table</h1>
+    <p class="lead">
+      La réservation se fait par téléphone. Appelez le restaurant aux heures d'ouverture ci-dessous.
+    </p>
+    <div class="actions">
+      <a class="btn btn--primary" href={telHref()} data-magnetic="0.25">Appeler le {site.telephone}</a>
+      <a class="btn" href={telHref(site.telephoneMobile)}>Mobile {site.telephoneMobile}</a>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap g12">
+      <div class="stack" style="grid-column: 1 / 7">
+        <div class="cat__head"><h2 data-split="words">Horaires</h2></div>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+        <p style="margin-top: calc(var(--u) * 2)"><strong>Adresse</strong><br />{adresseLigne()}</p>
+        <p><a class="link" href={plan} rel="noopener">Voir sur le plan</a></p>
+      </div>
+      <div class="stack" style="grid-column: 8 / 13" data-reveal="up" data-delay="0.1">
+        <figure style="margin: 0" data-reveal="clip">
+          <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" style="width: 100%; height: auto; display: block" />
+        </figure>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  @media (max-width: 767px) { .g12 > * { grid-column: 1 / 13 !important; } }
+</style>
