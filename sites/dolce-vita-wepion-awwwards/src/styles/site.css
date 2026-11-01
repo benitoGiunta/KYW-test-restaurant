@@ -46,8 +46,13 @@ body::after {
 .neon--xl { font-size: var(--t-xl); }
 .neon--l { font-size: var(--t-l); }
 .neon__tube { display: inline; }
-.neon__l { display: inline; }
-.neon__l.is-grille { --lum: 0; color: #4c5644; }
+.neon__l { display: inline; color: color-mix(in srgb, #fff6f0 calc(var(--lum) * 100%), #4c5644); }
+.neon__l.is-grille { --lum: 0; }
+/* Allumage (src/motion/neon.ts) : sous .motion, les tubes partent éteints ; le pilote écrit --lum en ligne.
+   Secours si le module ne démarre pas : tout s'allume à 2,5 s. */
+.motion .neon__l { --lum: 0; }
+.motion:not(.is-booted) .neon__l:not(.is-grille) { animation: neon-secours 0s 2.5s forwards; }
+@keyframes neon-secours { to { --lum: 1; } }
 
 .surtitre {
   font-size: var(--t-xs);
@@ -86,8 +91,6 @@ p { max-width: 62ch; text-wrap: pretty; }
   cursor: pointer;
   transition: box-shadow 0.35s, background-color 0.35s, color 0.35s;
 }
-.cta:hover { background: var(--c-accent); color: var(--c-bg); box-shadow: 0 0 0.8rem rgb(244 166 188 / 0.55), 0 0 2.4rem rgb(244 166 188 / 0.3); }
-.cta:active { box-shadow: none; }
 .cta--petit { min-height: 2.75rem; padding: 0.5em 1.1em; font-size: var(--t-s); }
 .lien-fleche {
   display: inline-block;
@@ -99,11 +102,8 @@ p { max-width: 62ch; text-wrap: pretty; }
   transition: color 0.3s, text-shadow 0.3s;
 }
 .lien-fleche::after { content: ' →'; }
-.lien-fleche:hover { color: #fff6f0; text-shadow: var(--halo); }
 .lien { color: inherit; text-decoration: underline; text-decoration-color: var(--c-accent); text-underline-offset: 0.2em; padding-block: 2px; }
-.lien:hover { color: var(--c-accent); }
 .lien-util { color: var(--c-muted); text-decoration: none; padding-block: 0.4rem; display: inline-block; }
-.lien-util:hover { color: var(--c-fg); text-decoration: underline; }
 
 /* ---- En-tête ---- */
 .tete {
@@ -123,7 +123,7 @@ p { max-width: 62ch; text-wrap: pretty; }
 .tete__lieu { font-size: var(--t-xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-muted); }
 .tete__nav ul { display: flex; justify-content: center; gap: calc(var(--u) * 3); }
 .nav-lien { color: var(--c-muted); text-decoration: none; font-weight: 600; font-size: var(--t-s); padding-block: 0.75rem; display: inline-block; transition: color 0.3s, text-shadow 0.3s; }
-.nav-lien:hover, .nav-lien[aria-current='page'] { color: #fff6f0; text-shadow: var(--halo); }
+.nav-lien[aria-current='page'] { color: #fff6f0; text-shadow: var(--halo); }
 .tete__menu {
   display: none;
   min-height: 2.75rem;
@@ -193,7 +193,6 @@ p { max-width: 62ch; text-wrap: pretty; }
 .plat__nom { font-weight: 600; font-size: var(--t-body); transition: color 0.3s, text-shadow 0.3s; }
 .plat__prix { font-variant-numeric: tabular-nums lining-nums; font-weight: 600; white-space: nowrap; text-align: right; color: var(--c-accent); }
 .plat__desc { grid-column: 1 / 2; font-size: var(--t-s); color: var(--c-muted); margin-top: 0.2rem; max-width: 58ch; }
-.plat:hover .plat__nom { color: #fff6f0; text-shadow: var(--halo); }
 
 /* ---- Accueil : ardoise (paire asymétrique) ---- */
 .ardoise { padding-block: var(--aere); align-items: center; row-gap: var(--normal); }
@@ -259,7 +258,6 @@ p { max-width: 62ch; text-wrap: pretty; }
 .sommaire ul { display: flex; gap: calc(var(--u) * 2.5); overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; }
 .sommaire li { flex: none; scroll-snap-align: start; }
 .sommaire__lien { display: inline-block; padding-block: 0.85rem; color: var(--c-muted); text-decoration: none; font-size: var(--t-s); font-weight: 600; white-space: nowrap; }
-.sommaire__lien:hover { color: #fff6f0; text-shadow: var(--halo); }
 .carte { padding-block: var(--normal) var(--aere); }
 .chapitre {
   grid-column: 1 / -1;
@@ -270,11 +268,11 @@ p { max-width: 62ch; text-wrap: pretty; }
   border-bottom: 1px solid var(--c-line);
   align-items: start;
 }
-.chapitre__tete { grid-column: 1 / 4; position: sticky; top: 8.5rem; }
+.chapitre__tete { grid-column: 1 / 4; position: sticky; top: calc(var(--tete-h, 4.25rem) + var(--sommaire-h, 3.5rem) + var(--serre)); }
 .chapitre__titre { font-size: var(--t-l); font-weight: 700; letter-spacing: -0.03em; line-height: 1.02; }
 .chapitre__compte { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.4rem; letter-spacing: 0.04em; }
 .chapitre .liste-plats { grid-column: 4 / 10; }
-.chapitre__media { grid-column: 10 / 13; position: sticky; top: 8.5rem; }
+.chapitre__media { grid-column: 10 / 13; position: sticky; top: calc(var(--tete-h, 4.25rem) + var(--sommaire-h, 3.5rem) + var(--serre)); }
 .chapitre__media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .chapitre:not(.chapitre--illustre) .liste-plats { grid-column: 4 / 10; }
 #ardoise .chapitre__titre { color: var(--c-accent); }
@@ -324,7 +322,6 @@ p { max-width: 62ch; text-wrap: pretty; }
   padding-block: 0.1em;
   transition: color 0.3s, text-shadow 0.3s;
 }
-.appel__numero:hover { color: #fff6f0; text-shadow: var(--halo); }
 .appel__numero--second { grid-column: 8 / -1; font-size: var(--t-l); color: var(--c-muted); }
 .appel__libelle { font-size: var(--t-xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-accent); margin-bottom: 0.6rem; }
 .appel__note { grid-column: 1 / 8; color: var(--c-muted); }
@@ -332,7 +329,6 @@ p { max-width: 62ch; text-wrap: pretty; }
 .jour ::selection { background: var(--c-jour-ink); color: var(--c-jour); }
 .jour .doux, .jour .legende { color: var(--c-jour-muted); }
 .jour .lien { text-decoration-color: var(--c-jour-accent); }
-.jour .lien:hover { color: var(--c-jour-accent); }
 .jour :focus-visible { outline-color: var(--c-jour-accent); }
 .jour__grille { row-gap: var(--normal); align-items: start; }
 .jour__titre { grid-column: 1 / -1; }
@@ -383,7 +379,6 @@ p { max-width: 62ch; text-wrap: pretty; }
 .pied__col--3 { grid-column: 10 / -1; }
 .pied__titre { font-size: var(--t-xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-accent); }
 .pied__tel { font-size: var(--t-m); font-weight: 800; color: var(--c-fg); text-decoration: none; white-space: nowrap; padding-block: 0.3rem; display: inline-block; }
-.pied__tel:hover { text-shadow: var(--halo); }
 .pied__reseaux { display: flex; gap: var(--serre); }
 .pied__colophon { grid-column: 1 / -1; font-size: var(--t-xs); color: var(--c-muted); border-top: 1px solid var(--c-line); padding-top: var(--serre); max-width: none; }
 
@@ -438,3 +433,41 @@ p { max-width: 62ch; text-wrap: pretty; }
 .equipe--grand .equipe__nom { font-size: clamp(2.75rem, 1.6rem + 3.6vw, 5rem); }
 .facade .legende { display: block; }
 @media (max-width: 47.99rem) { .hero .neon--mega { font-size: min(var(--t-mega), 24vw); } }
+
+/* ---- États (phase 2). Trois traitements, dans le verbe « allumer » (DESIGN.md § Mouvement) :
+   1. CTA : le tube se remplit de rose et s'allume en deux battements ;
+   2. nav, plats, numéros, liens fléchés, sommaire : le libellé s'allume (halo par paliers) ;
+   3. liens utilitaires et liens texte : couleur + soulignement (soulignés au repos pour les liens texte).
+   Survol seulement sous (hover: hover) ; le même état sur :focus-visible ; :active marqué. ---- */
+@keyframes allumer {
+  0% { --lum: 0; } 18% { --lum: 0.6; } 32% { --lum: 0.12; } 58% { --lum: 0.85; } 72% { --lum: 0.5; } 100% { --lum: 1; }
+}
+.cta { transition: box-shadow 0.35s cubic-bezier(0.215, 0.61, 0.355, 1), background-color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), color 0.3s; }
+.cta:focus-visible { background: var(--c-accent); color: var(--c-bg); box-shadow: 0 0 0.8rem rgb(244 166 188 / calc(0.55 * var(--lum))), 0 0 2.4rem rgb(244 166 188 / calc(0.3 * var(--lum))); animation: allumer 0.42s linear both; }
+.nav-lien:focus-visible, .lien-fleche:focus-visible, .sommaire__lien:focus-visible, .appel__numero:focus-visible, .pied__tel:focus-visible, .menu-mobile__lien:focus-visible { color: #fff6f0; text-shadow: var(--halo); animation: allumer 0.42s linear both; }
+.lien:focus-visible { color: var(--c-accent); text-decoration-thickness: 2px; }
+.lien-util:focus-visible { color: var(--c-fg); text-decoration: underline; }
+.jour .lien:focus-visible { color: var(--c-jour-accent); }
+@media (hover: hover) {
+  .cta:hover { background: var(--c-accent); color: var(--c-bg); box-shadow: 0 0 0.8rem rgb(244 166 188 / calc(0.55 * var(--lum))), 0 0 2.4rem rgb(244 166 188 / calc(0.3 * var(--lum))); animation: allumer 0.42s linear both; }
+  .nav-lien:hover, .lien-fleche:hover, .sommaire__lien:hover, .appel__numero:hover, .pied__tel:hover, .menu-mobile__lien:hover, .plat:hover .plat__nom {
+    color: #fff6f0; text-shadow: var(--halo); animation: allumer 0.42s linear both;
+  }
+  .lien:hover { color: var(--c-accent); text-decoration-thickness: 2px; }
+  .jour .lien:hover { color: var(--c-jour-accent); }
+  .lien-util:hover { color: var(--c-fg); text-decoration: underline; }
+  .kyw-footer__link:hover { text-decoration: underline; }
+}
+.kyw-footer__link:focus-visible { text-decoration: underline; }
+.cta:active { box-shadow: none; background: #e48ba5; color: var(--c-bg); animation: none; }
+.nav-lien:active, .lien-fleche:active, .sommaire__lien:active, .appel__numero:active, .pied__tel:active, .menu-mobile__lien:active { --lum: 0.5; color: #fff6f0; text-shadow: var(--halo); }
+.lien:active, .lien-util:active { color: var(--c-accent); }
+.tete__menu:active, .menu-mobile__fermer:active { background: var(--c-line); }
+@media (hover: hover) { .tete__menu:hover, .menu-mobile__fermer:hover { border-color: var(--c-accent); color: #fff6f0; } }
+.tete__menu:focus-visible, .menu-mobile__fermer:focus-visible { border-color: var(--c-accent); color: #fff6f0; }
+
+/* ---- Mouvement réduit : rien ne clignote, tout est allumé et visible, les états restent (sans animation) ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after { animation: none !important; }
+  .neon__l:not(.is-grille) { --lum: 1; }
+}

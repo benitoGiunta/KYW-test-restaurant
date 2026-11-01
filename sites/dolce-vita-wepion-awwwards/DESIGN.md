@@ -78,7 +78,7 @@ Défaut n° 1 évité : fond sombre olive, pas de crème, pas de serif, pas de t
 - Traduction du verbe : rien ne glisse ni ne rebondit ; les choses s'allument (opacité et halo par paliers) et s'éteignent.
 - Rôles de hover (trois traitements) : 1. CTA « Réserver / Appeler » : le tube se remplit de rose avec halo ; 2. nav, plats, numéros, liens fléchés : le libellé s'allume (`--halo`) ; 3. liens utilitaires : changement de couleur.
 - État de repos : le néon bourdonne (`--lum` 0,92 à 1, lent, irrégulier), seul objet en mouvement au repos.
-- Transition : la salle s'éteint (rideau `--c-curtain` en fondu), la page suivante s'allume (`src/motion/setup.ts`).
+- Transition : la salle s'éteint (rideau `--c-curtain`, deux battements puis noir, 0,32 s), la page suivante sort du noir (0,6 s) pendant que son néon s'allume (`src/motion/setup.ts`).
 
 ### Plan de composition
 
@@ -126,3 +126,43 @@ Mobile 390 : 4 colonnes, néon à 25vw sur une ligne, CTA du hero masqué (doubl
 16. [x] Famille de section au plus une fois par page : § Plan de composition.
 17. [x] Hero en 3 s : mesure Playwright (01/11, `.logs/aw-mesure.log`) à 1440×900 : h1 32→940 × 231→466, CTA bas 635, photo 968→1407 ; 1280×720 : CTA bas 595 ; 1024×768 : CTA bas 530 ; 390×844 : h1 157→243, « Voir la carte » et le menu « Appeler » visibles.
 18. [x] Mobile 390 recomposé : `@media (max-width: 47.99rem)` de `site.css` (4 colonnes, néon 25vw, lignes `auto`, bandes `overflow-x` + `scroll-snap`) ; `scrollWidth` = 390 et 320 sur les 5 pages (mesure du 01/11).
+
+## Mouvement livré (phase 2, 01/11/2026)
+
+- **Pilote** `src/motion/neon.ts` : une variable, le courant `--lum` de chaque segment de tube, écrite en ligne sur les seuls `.neon__l` des tubes visibles (IntersectionObserver), arrondie au centième et écrite seulement si elle change. Allumage par paliers irréguliers dans un ordre mélangé (un vrai néon ne s'allume pas de gauche à droite) ; repos : respiration 0,9 à 1 et hoquet d'un segment toutes les 4 à 9 s ; sur la 404, les tubes grillés tentent de repartir et retombent ; pointeur : le tube se renforce jusqu'à 1,15 à moins de 260 px ; au toucher : baisse de tension quand on défile vite.
+- **Halo** : `--halo` est déclaré sur `*` (tokens.css) et non plus sur `:root`, sinon le `--lum` écrit sur un enfant n'entrait pas dans le calcul. Couleur du segment : `color-mix` entre le tube allumé `#fff6f0` et le tube éteint `#4c5644`.
+- **Hovers** : animation CSS `allumer` (paliers discrets de `--lum`, 0,42 s) sur le libellé ou le CTA ; même état sur `:focus-visible` ; `:active` marqué (CTA rose foncé, libellés à mi-courant).
+- **Reveals** : `data-split="lines"` sur les h2 et la devise, `data-reveal` sur les photos hors premier écran et les trois faits ; rien sur le h1, l'accroche, la photo du hero ni la première photo de l'histoire (LCP).
+- **Pas de magnétisme ni de suiveur de curseur** : rien ne glisse dans ce concept (verbe « allumer ») ; `#cursor` absent, décision écrite.
+- **Mesure du repos** (01/11, 1440×900, diff de pixels par 0,5 s, seuil 24) : 0,00 à 0,15 % ; amplitude compatible avec `settledMs`, à confirmer en phase 3 par `report.json` (`idleMotion`, `settledMs`).
+- Favicon PNG 32 px et `apple-touch-icon` 180 px rendus depuis `favicon.svg` (sharp).
+
+## Sur-utilisation de la skill (phase 2)
+
+19. [x] Menu mobile accessible : popover natif plein écran (390×844 mesuré), `aria-expanded` tenu à jour (`src/motion/menu.ts:14`, `:31`), focus sur le premier lien (`:18`), focus piégé (`:26-29`, 8 Tab restent dans le menu), Échap (natif, mesuré : `aria-expanded=false`, focus rendu à `.tete__menu`, `:22`). Journal `.logs/aw2-test.log`.
+20. [x] Engine verbatim (`src/engine/`), `astro.ts`, `transition:persist="curtain"` (`Base.astro:77`), `transition:animate="none"` (`Base.astro:40`) ; `#gl` et `#cursor` sans objet (ni GL ni suiveur).
+21. [x] Une horloge : grep `addEventListener('scroll'|requestAnimationFrame` vide dans `src/motion`, `src/components`, `src/pages` ; tout par `gsap.ticker` (`neon.ts:28`, `:132`).
+22. [x] Code de page dans `onPage()` avec nettoyage : `neon.ts:75` (retire le tick, déconnecte l'observateur, `:133`), `neon.ts:142` (ResizeObserver, `:154`), `menu.ts:7` (`:35`).
+23. [x] Aucune CSS `transform` sur élément GSAP : grep `transform` dans `site.css` ne renvoie que `text-transform` ; le néon est piloté par variable, pas par transformation.
+24. [x] Module pilote avec `startIdle` (`neon.ts:22`) et pointeur (`neon.ts:112-113`), appelé une fois depuis `setup.ts:18-21`.
+25. [x] Loader décidé : aucun (Concept Card, l'allumage du hero est le premier moment), ni composant ni `role="status"`.
+26. [x] Transition du concept : sortie 0,32 s, entrée 0,65 s (`setup.ts:12-16`), mesurée : rideau `hidden` après navigation vers `/carte/`.
+27. [x] Intro : l'allumage du premier tube est ajouté à `intro` (`neon.ts:93`) ; mesuré à 150 ms (segments à 0 ou en palier) puis 0,96 partout à 2,15 s ; le premier frame stable est le néon allumé (`.shots/aw2-hero.png`).
+28. [x] Épinglages : aucun pin GSAP ; éléments collants CSS calés sur les hauteurs réelles `--tete-h` et `--sommaire-h` (`neon.ts:142`, mesurées 82 px et 51 px sur `/carte/`).
+29. [x] Repli statique : en mouvement réduit tout est allumé (`--lum: 1`, `site.css:470`), tubes grillés de la 404 éteints (mesure : `1 1 1 1 0 … 0 1 1`), aucune animation.
+30. [x] Copies décoratives : le tube est `aria-hidden`, le texte est porté une fois en `sr-only` (`Neon.astro`) ; aucun titre dupliqué.
+31. [x] Une famille d'easing (`ease.*` de l'engine, courbe power3 en CSS pour les transitions d'UI), durées du tableau Timing (hovers 0,3 à 0,42 s, reveals de l'engine, transition ≤ 0,65 s), stagger d'allumage `min(80 ms, 0,7 s / n)` et 60 ms sur les faits et le mur.
+32. [x] Trois traitements dans le verbe : CTA qui se remplit et s'allume, libellés qui s'allument, liens utilitaires couleur + soulignement (`site.css:436-468`).
+33. [x] Hover sous `@media (hover: hover)` (`site.css:451`), mêmes états sur `:focus-visible` (`:446-450`), visibles en réduit (seule l'animation est coupée).
+34. [x] Liens texte `.lien` soulignés au repos (accent).
+35. [ ] Phase 3 (`report.json`, `hover.*`).
+36. [ ] Phase 3 (`desktop.idleMotion`, `idleAt`) ; repos mesuré à la main ci-dessus.
+37. [x] Curseur natif visible (aucun `cursor: none`), aucun contenu ni action dépendant du hover au toucher.
+38. [x] Pas de `filter: blur`, pas de `box-shadow` au scroll (seulement au survol des CTA), aucun `will-change`.
+39. [x] Réduit : ni Lenis (engine), ni GL, ni scrub, ni loader ; mesuré : 0 élément caché, `motion=false`. Champs `report.json` en phase 3.
+40. [x] GL sans objet, décision écrite (Concept Card) ; lignes `// GL` retirées de l'engine.
+41. [x] Sans objet (pas de GL).
+44. [x] Skip link en premier (`Base.astro`), anneau `:focus-visible` dans l'accent (`site.css:5`), rose foncé sur la section jour ; confirmation `report.json` en phase 3.
+45. [ ] Phase 3 (contraste mesuré sur chaque état) ; le tube à `--lum` 0 n'existe qu'à l'allumage et sur les segments grillés décoratifs (le texte lisible est le `sr-only` et le h1).
+46. [x] Texte réel partout, aucun canvas.
+47. [x] Cibles : CTA 48 px, « Appeler » d'en-tête et « Menu » 44 px (`min-height: 2.75rem`) ; confirmation phase 3.

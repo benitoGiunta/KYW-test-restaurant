@@ -29,11 +29,8 @@
   --c-jour-ink: #1a2017;      /* 14,6:1 */
   --c-jour-muted: #4f5a46;    /* 6,4:1 */
   --c-jour-accent: #a3304f;   /* rose foncé pour le texte sur la façade (6,0:1) */
-  /* Halo du néon : trois couches, posées une fois, réglées par --lum (1 = allumé, 0 = éteint) */
+  /* Courant du néon : 1 = allumé, 0 = éteint. Le halo (--halo) est recalculé sur chaque élément, plus bas. */
   --lum: 1;
-  --halo: 0 0 0.04em rgb(255 255 255 / calc(0.9 * var(--lum))),
-          0 0 0.18em rgb(244 166 188 / calc(0.75 * var(--lum))),
-          0 0 0.6em rgb(244 166 188 / calc(0.45 * var(--lum)));
   /* Familles */
   --f-neon: 'Sacramento', 'Brush Script MT', cursive;
   --f-body: 'Archivo', system-ui, sans-serif;
@@ -63,4 +60,12 @@
   --z-cursor: 80;
   --z-curtain: 90;
   --z-loader: 100;
+}
+
+/* Halo du néon : trois couches réglées par --lum. Déclaré sur chaque élément (et non sur :root) pour que le --lum
+   écrit sur un segment ou animé au survol soit bien celui du calcul (une var() se résout là où elle est déclarée). */
+*, ::before, ::after {
+  --halo: 0 0 0.04em rgb(255 255 255 / calc(0.9 * var(--lum))),
+          0 0 0.18em rgb(244 166 188 / calc(0.75 * var(--lum))),
+          0 0 0.6em rgb(244 166 188 / calc(0.45 * var(--lum)));
 }
