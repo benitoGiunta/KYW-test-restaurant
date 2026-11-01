@@ -41,7 +41,7 @@ const photo = (src: string, alt: string, largeur: number, hauteur: number): Phot
 
 /** Horaires de la saison en cours (novembre à avril, page Réservation du site). De mai à octobre, le soir va jusqu'à 22:00.
  *  Les jours de fermeture ne sont pas publiés : jeudi à lundi sont les jours du banc d'écailler (site) ; mardi, mercredi
- *  et dimanche portent `aConfirmer` et s'affichent « à confirmer » (le dimanche « toute la journée » de Gault&Millau n'est pas repris). */
+ *  et dimanche portent `aConfirmer` et s'affichent « à confirmer » (le dimanche « toute la journée » de Gault&Millau n'est pas repris). */
 const saison: Creneau[] = [{ ouverture: '12:00', fermeture: '14:30' }, { ouverture: '18:00', fermeture: '21:30' }];
 
 export const site: Restaurant = {
@@ -87,25 +87,25 @@ export const site: Restaurant = {
         "placeholder": false
       },
       {
-        "nom": "Tomate aux crevettes grises « épluchées main » (1 pièce)",
+        "nom": "Tomate aux crevettes grises « épluchées main » (1 pièce)",
         "description": "",
         "prix": "prix du jour",
         "placeholder": false
       },
       {
-        "nom": "Notre assiette de saumon norvégien « Maison Dawagne »",
+        "nom": "Notre assiette de saumon norvégien « Maison Dawagne »",
         "description": "",
         "prix": "24 €",
         "placeholder": false
       },
       {
-        "nom": "Croquettes de crevettes grises « maison »",
+        "nom": "Croquettes de crevettes grises « maison »",
         "description": "1 pièce 11,00 € · 2 pièces 22,00 €",
         "prix": "11 / 22 €",
         "placeholder": false
       },
       {
-        "nom": "Fondus au parmesan « maison »",
+        "nom": "Fondus au parmesan « maison »",
         "description": "1 pièce 9,00 € · 2 pièces 18,00 €",
         "prix": "9 / 18 €",
         "placeholder": false
@@ -146,7 +146,7 @@ export const site: Restaurant = {
         "placeholder": false
       },
       {
-        "nom": "Notre belle sole « meunière »",
+        "nom": "Notre belle sole « meunière »",
         "description": "purée de pommes de terre",
         "prix": "prix du jour",
         "placeholder": false
@@ -193,7 +193,7 @@ export const site: Restaurant = {
         "placeholder": false
       },
       {
-        "nom": "Contrefilet « Holstein »",
+        "nom": "Contrefilet « Holstein »",
         "description": "salade composée, frites, sauce au choix",
         "prix": "39 €",
         "placeholder": false
@@ -205,7 +205,7 @@ export const site: Restaurant = {
         "placeholder": false
       },
       {
-        "nom": "Notre vol-au-vent « Royal » (truffe et ris de veau)",
+        "nom": "Notre vol-au-vent « Royal » (truffe et ris de veau)",
         "description": "croustade au beurre, frites",
         "prix": "34 €",
         "placeholder": false
@@ -385,7 +385,7 @@ export const site: Restaurant = {
         "placeholder": false
       },
       {
-        "nom": "Les crevettes « Bouquet Royal » (la pièce)",
+        "nom": "Les crevettes « Bouquet Royal » (la pièce)",
         "description": "",
         "prix": "3,50 €",
         "placeholder": false
@@ -513,10 +513,31 @@ export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adre
 export const horaireTexte = (h: Horaire) =>
   (h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé') + (h.aConfirmer ? ' (jour à confirmer)' : '');
 
+/** Jours aux horaires identiques regroupés (« lundi, jeudi à samedi ») : évite sept lignes presque identiques. */
+export const horairesGroupes = (r: Restaurant = site) => {
+  const groupes: { idx: number[]; texte: string }[] = [];
+  r.horaires.forEach((h, i) => {
+    const texte = horaireTexte(h).replace(' (jour à confirmer)', ' (jours à confirmer)');
+    const g = groupes.find((x) => x.texte === texte);
+    g ? g.idx.push(i) : groupes.push({ idx: [i], texte });
+  });
+  return groupes.map(({ idx, texte }) => {
+    const plages: string[] = [];
+    for (let k = 0; k < idx.length; ) {
+      let j = k; while (j + 1 < idx.length && idx[j + 1] === idx[j] + 1) j++;
+      const a = r.horaires[idx[k]].jour, b = r.horaires[idx[j]].jour;
+      plages.push(j - k >= 2 ? `${a} à ${b}` : j > k ? `${a}, ${b}` : a);
+      k = j + 1;
+    }
+    if (idx.length === 1) texte = texte.replace('(jours à confirmer)', '(jour à confirmer)');
+    return { jours: plages.join(', '), texte };
+  });
+};
+
 /** Téléphone pour href="tel:" (sans espaces). */
 export const telHref = (r: Restaurant = site) => `tel:${r.telephone.replace(/\s+/g, '')}`;
 
-/* ───────── Données propres au gabarit « Marée » (chaque donnée non prouvée par le dossier porte son drapeau) ───────── */
+/* ───────── Données propres au gabarit « Marée » (chaque donnée non prouvée par le dossier porte son drapeau) ───────── */
 
 export interface Arrivage { nom: string; detail: string; prix: string; placeholder: boolean }
 export interface PointPlan { numero: number; nom: string; detail: string; x: number; y: number; placeholder: boolean }
@@ -534,7 +555,7 @@ export const univers = [
 export const ecailler = site.carte.filter((c) => c.categorie.startsWith('Banc d’écailler'));
 export const carteSalle = site.carte.filter((c) => !c.categorie.startsWith('Banc d’écailler'));
 
-/** Les huîtres, en liste « arrivages » (réelles, prix de la carte). */
+/** Les huîtres, en liste « arrivages » (réelles, prix de la carte). */
 export const arrivages: Arrivage[] = (ecailler[0]?.plats ?? []).map((p) => ({ nom: p.nom, detail: p.description, prix: p.prix ?? '', placeholder: p.placeholder }));
 
 /** Règles maison : faits du dossier ; les deux dernières viennent de Gault&Millau, à confirmer. */

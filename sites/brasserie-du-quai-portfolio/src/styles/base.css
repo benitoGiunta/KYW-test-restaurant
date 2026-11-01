@@ -208,7 +208,10 @@ h2, h3 { text-wrap: balance; }
 .form input, .form select, .form textarea { padding: 0.7em 0.9em; border: 1px solid var(--c-fg); border-radius: 0; background: #fff; font: inherit; color: inherit; min-height: 44px; }
 .form .deux { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 2); }
 .horaires { display: grid; grid-template-columns: max-content 1fr; gap: 0.3em calc(var(--u) * 2); }
-.horaires dt { text-transform: capitalize; }
+.horaires dt::first-letter { text-transform: uppercase; }
+/* Footer : jours regroupés (libellés longs) au-dessus des créneaux, sinon la colonne étroite des 4 colonnes casse les heures. */
+.footer .horaires { grid-template-columns: 1fr; row-gap: 0; margin-top: 0.75em; }
+.footer .horaires dd { margin: 0 0 0.7em; }
 
 /* Équipe */
 .equipe { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: calc(var(--u) * 3); }
@@ -281,7 +284,7 @@ h2, h3 { text-wrap: balance; }
 /* Hero de l'accueil : les parasols sombres occupent le haut de la photo ; en-tête crème sur un voile Meuse. */
 [data-theme='photo'] .header { color: var(--c-bg); }
 [data-theme='photo'] .nav__sous { color: rgb(251 251 248 / 0.85); }
-[data-theme='photo'] .hero__media::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 38%; z-index: 1; pointer-events: none; background: linear-gradient(to bottom, rgb(23 57 91 / 0.62), rgb(23 57 91 / 0)); }
+[data-theme='photo'] .hero__media::before, [data-theme='sombre'] .hero__media::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 38%; z-index: 1; pointer-events: none; background: linear-gradient(to bottom, rgb(23 57 91 / 0.62), rgb(23 57 91 / 0)); }
 .header__brand, .nav__label { white-space: nowrap; }
 @media (max-width: 767px) { .nav a[data-barre] { display: none; } }
 @media (max-width: 380px) { .header__brand { font-size: 1rem; } .nav { gap: calc(var(--u) * 1.5); } }
@@ -301,3 +304,6 @@ h2, h3 { text-wrap: balance; }
 .hero__media::after { background: linear-gradient(to top, rgb(23 57 91 / 0.68), rgb(23 57 91 / 0)); }
 /* Plan en mobile : pastilles proches (10 % ≈ 36 px) ; cibles de 36 px qui ne se chevauchent plus, disque de 24 px. */
 @media (max-width: 599px) { .plan__pastille { width: 36px; height: 36px; margin: -18px 0 0 -18px; } .plan__pastille span { width: 24px; height: 24px; font-size: 0.68rem; } }
+
+/* Heros photo des pages intérieures (huîtres et citron clairs) : voile bas plus haut et plus dense sous le surtitre et le titre crème. */
+[data-theme='sombre'] .hero__media::after { height: 70%; background: linear-gradient(to top, rgb(23 57 91 / 0.8), rgb(23 57 91 / 0.35) 55%, rgb(23 57 91 / 0)); }

@@ -2,7 +2,7 @@
 // Footer en finale : nom bord à bord sur écume sous une houle, puis adresse, horaires, réseaux, crédits photo,
 // puis le pied de page KYW obligatoire (seule mention « Maquette KYW »).
 import KywFooter from '@kyw/footer';
-import { site, adresseLigne, horaireTexte, telHref, bonCadeau } from '../data/site';
+import { site, adresseLigne, horairesGroupes, telHref, bonCadeau } from '../data/site';
 import { u } from '../lib/url';
 import Houle from './Houle.astro';
 ---
@@ -19,7 +19,7 @@ import Houle from './Houle.astro';
     <div>
       <p class="mono">Horaires, novembre à avril</p>
       <dl class="horaires">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        {horairesGroupes().map((g) => <><dt>{g.jours}</dt><dd>{g.texte}</dd></>)}
       </dl>
     </div>
     <nav class="stack" aria-label="Pages du site">

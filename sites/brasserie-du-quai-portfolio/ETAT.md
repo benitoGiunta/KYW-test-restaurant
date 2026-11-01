@@ -1,4 +1,4 @@
-# ETAT — brasserie-du-quai, variante portfolio (fin de construction-2, 01/11/2026)
+# ETAT — brasserie-du-quai, variante portfolio (fin de construction-3 / QA, 01/11/2026)
 
 ## Fait
 - Gabarit **Marée** retenu (matrice dans `DESIGN.md`, 28/30 contre 24 pour Ardoise, déjà pris par Partage).
@@ -33,22 +33,17 @@
   horizontal, 0 texte caché après défilement ; clics réels des 6 liens d'en-tête OK sur les 7 pages ; bas de page 1440 :
   `.kyw-footer` visible et au premier plan. Build OK (`.logs/vp-bdq-build6.log`).
 
-## Reste (phase 3)
-- Shoot + audit complets (agent « captures ») ; `RAPPORT.md` à écrire.
-- Captures d'éléments Playwright : la barre mobile et le lien d'évitement apparaissent au milieu des captures `locator.screenshot`
-  (artefact des éléments fixes, pas un défaut : le lien est à `translateY(-200%)` hors focus).
-- Horaires du footer à 4 colonnes : la ligne « (jour à confirmer) » peut passer à la ligne entre 1024 et 1280 px, à regarder.
+## Fait en construction-3 (QA)
+- Lu `QA-build.md` : 0 FAIL, 17 WARN ; 0 erreur console, 0 violation axe sur le site (la « 404 » du shoot est la page de repli de `serve.mjs`).
+- Corrigé : titre de l'accueil (78 → 64 caractères) ; horaires regroupés (`horairesGroupes()` dans `site.ts`, footer en
+  jours au-dessus des créneaux : plus de colonne cassée à 1024-1280 px, plus de répétition x7) ; espaces insécables dans
+  les guillemets (28) ; voiles haut et bas des heros photo intérieurs (`[data-theme='sombre']`) pour l'en-tête et le surtitre.
+- Vérifié par captures ciblées (390 / 1024 / 1280 / 1440) : 0 erreur, 0 débordement. Build final OK (`.logs/vp-bdq-qa-build3.log`).
+- `RAPPORT.md` écrit (shoot, audit, placeholders, points ouverts). Variante prête pour la revue.
 
-## Reste (notes de construction-1)
-- Phase 2 (motion) : vérifier `data-split`, `data-reveal`, `data-parallax` sur les nouvelles sections (titres de hero des
-  pages intérieures volontairement sans `data-intro`/`data-split`, leçon LCP) ; houle sur les nouvelles sections ;
-  fit du nom « La Brasserie / du Quai » (2 lignes mobile) à vérifier.
-- Phase 3 (QA navigateur) : shoot + audit ; à surveiller : `.paire .media` (4:3 forcé) avec les photos portrait de la
-  terrasse ; grille `.plateaux` à 390 px ; pastilles du plan proches (48/52, 58/46, 68/38 %) en mobile ; contraste du
-  sable doré (filets seulement, jamais de texte) ; clic réel des liens d'en-tête et bas de page visible (leçon intégrée du prompt).
-- `RAPPORT.md` (placeholders, shoot, audit) à écrire en phase 3.
-- Orchestrateur : ajouter `| maree | brasserie-du-quai |` à `gabarits/UTILISATION.md` (non fait : consigne de ne pas toucher à `gabarits/`).
-- `pnpm-lock.yaml` modifié par `pnpm install` (nouveaux paquets du workspace) : non commité, à laisser à l'orchestrateur.
+## Reste
+- Orchestrateur : `gabarits/UTILISATION.md` (`| maree | brasserie-du-quai |`) et `pnpm-lock.yaml`.
+- Revue : padding de section du gabarit (112 px) après la houle des heros intérieurs, un peu vide en mobile (non modifié).
 
 ## Décisions et hypothèses
 - Horaires affichés = saison en cours (novembre à avril) ; mai-octobre en texte. Jeudi à lundi = jours de l'écailler,
