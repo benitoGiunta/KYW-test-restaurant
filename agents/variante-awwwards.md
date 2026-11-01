@@ -55,7 +55,7 @@ SplitText compris), **Lenis** (défilement lissé), **OGL** uniquement si le con
 le justifie dans DESIGN.md. Workspace **pnpm** à la racine du dépôt (astro, gsap, lenis, ogl,
 playwright, axe-core et sharp sont déjà des devDependencies de la racine, hissées par
 `shamefully-hoist`). `base` Astro = `/<slug>/awwwards/`, build via
-`pnpm build:site sites/<slug>-awwwards` qui écrit `dist/<slug>/awwwards/` et refuse un build
+`scripts/q.sh build pnpm build:site sites/<slug>-awwwards` qui écrit `dist/<slug>/awwwards/` et refuse un build
 sans `meta robots noindex` ni pied de page KYW.
 
 Pages requises : accueil (`/`), carte (`/carte/`), histoire ou à propos (`/histoire/` ou
@@ -228,7 +228,7 @@ export default defineConfig({
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
 });
 EOF
-cd $REPO && pnpm install
+cd $REPO && scripts/q.sh install pnpm install
 ```
 
 Vérifie `node -e "require.resolve('playwright'); require.resolve('axe-core'); require.resolve('gsap'); require.resolve('lenis')"`
@@ -327,7 +327,7 @@ concept, pas les défauts de l'engine.
 **3.9 Build local.** Toujours depuis `$REPO` :
 
 ```bash
-cd $REPO && pnpm build:site sites/$SLUG-awwwards     # écrit dist/<slug>/awwwards/, refuse sans noindex ni pied KYW
+cd $REPO && scripts/q.sh build pnpm build:site sites/$SLUG-awwwards     # écrit dist/<slug>/awwwards/, refuse sans noindex ni pied KYW
 ```
 
 ### Phase 4 : boucle QA (deux passes complètes minimum)
@@ -354,9 +354,9 @@ restante séparément :
 ```bash
 cd $REPO
 U=http://127.0.0.1:$PORT$BASE
-node $SKILL/scripts/shoot.mjs $U --crawl --nav --out $SITE/.shots
-for p in carte histoire reservation; do node $SKILL/scripts/shoot.mjs ${U}$p/ --out $SITE/.shots/$p; done
-node $SKILL/scripts/audit.mjs $U > $SITE/.shots/audit.txt ; echo "exit $?"   # 1 = au moins un FAIL
+scripts/q.sh shoot node $SKILL/scripts/shoot.mjs $U --crawl --nav --out $SITE/.shots
+for p in carte histoire reservation; do scripts/q.sh shoot node $SKILL/scripts/shoot.mjs ${U}$p/ --out $SITE/.shots/$p; done
+scripts/q.sh audit node $SKILL/scripts/audit.mjs $U ; cp .logs/audit.log $SITE/.shots/audit.txt ; echo "exit $?"   # 1 = au moins un FAIL
 ```
 
 (Remplace `histoire` par `a-propos` si c'est ton choix.) Pour recadrer une seule page pendant
@@ -568,7 +568,7 @@ de `report.json`, ou une ligne d'`audit.txt`. Un point sans preuve est un point 
 
 **Concept** : une ligne (la Concept Card résumée).
 **Stack** : Astro 5 + GSAP + Lenis (+ OGL : oui/non, pourquoi). Base `/<slug>/awwwards/`.
-**Lancer** : `pnpm build:site sites/<slug>-awwwards` puis `node .claude/skills/awwwards/scripts/serve.mjs <racine QA> --port 4400`.
+**Lancer** : `scripts/q.sh build pnpm build:site sites/<slug>-awwwards` puis `node .claude/skills/awwwards/scripts/serve.mjs <racine QA> --port 4400`.
 
 ## Scores du critique jury (passe finale, critique <indépendant | auto-notation>)
 | Critère | Score | Preuve citée par le critique |

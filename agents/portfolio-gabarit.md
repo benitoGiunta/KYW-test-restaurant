@@ -30,7 +30,7 @@ seul fichier, sections indépendantes, tokens).
    `gabarits/<id>/DESIGN.md` : Concept Card, système (palette, typo avec sources, grille, radius, motion language),
    wireframes ASCII par section, test de généricité, et la checklist des règles dures de la skill cochée avec preuve.
 3. Scaffold **sans CLI interactive** : pars du socle testé `gabarits/_socle/` (`cp -r gabarits/_socle gabarits/<id>`, puis
-   renomme `name` dans package.json, `pnpm install` à la racine ; lis `gabarits/_socle/README.md`). Le socle contient déjà le
+   renomme `name` dans package.json, `scripts/q.sh install pnpm install` à la racine ; lis `gabarits/_socle/README.md`). Le socle contient déjà le
    moteur de la skill, le layout avec en-tête complet, le pied de page KYW, `site.ts` typé avec les données des Potes au
    Feu et des pages neutres. Tu remplaces le design, la structure des pages et le motion, pas la plomberie. Arborescence :
    ```
@@ -45,7 +45,7 @@ seul fichier, sections indépendantes, tokens).
    gabarits/<id>/public/photos/ (WebP ≤ 1800 px via sharp), fonts/ (via node .claude/skills/awwwards/scripts/font.mjs … --dir gabarits/<id>/public/fonts), favicon.svg, robots.txt (Disallow: /)
    gabarits/<id>/FICHE.md            pour qui, sections, composants, limites, données exigées, aperçu
    ```
-   Après `pnpm install` à la racine (nouveau paquet du workspace), build avec `node scripts/build-site.mjs gabarits/<id>`.
+   Après `scripts/q.sh install pnpm install` à la racine (nouveau paquet du workspace), build avec `scripts/q.sh build node scripts/build-site.mjs gabarits/<id>`.
    Tous les liens, images et polices passent par `import.meta.env.BASE_URL` (le site est servi sous `/gabarits/<id>/`).
 4. Contenu : données réelles des Potes au Feu (nom, adresse, horaires, carte, histoire des deux chefs, photos) ;
    complète avec des données fictives plausibles pour que le gabarit soit **pleinement illustré** (au moins 5 plats
@@ -58,10 +58,10 @@ seul fichier, sections indépendantes, tokens).
    `<meta name="robots" content="noindex, nofollow">`, `lang="fr"`.
 6. QA, minimum deux passes complètes, exactement comme la skill l'exige (production build) :
    ```bash
-   node scripts/build-site.mjs gabarits/<id>
+   scripts/q.sh build node scripts/build-site.mjs gabarits/<id>
    node .claude/skills/awwwards/scripts/serve.mjs dist --port 44<nn> &      # port unique par gabarit (44 + 2 chiffres de ton choix)
-   node .claude/skills/awwwards/scripts/shoot.mjs http://127.0.0.1:44<nn>/gabarits/<id>/ --crawl --nav
-   node .claude/skills/awwwards/scripts/audit.mjs http://127.0.0.1:44<nn>/gabarits/<id>/ > .shots/audit-<id>.txt
+   scripts/q.sh shoot node .claude/skills/awwwards/scripts/shoot.mjs http://127.0.0.1:44<nn>/gabarits/<id>/ --crawl --nav
+   scripts/q.sh audit node .claude/skills/awwwards/scripts/audit.mjs http://127.0.0.1:44<nn>/gabarits/<id>/ ; cp .logs/audit.log .shots/audit-<id>.txt
    ```
    Regarde chaque capture ; applique la liste de sortie de la skill (0 FAIL, 0 erreur console, pas de débordement,
    reduced-motion complet, axe sans violation sérieuse, hover par rôle, idleMotion ou décision écrite, LCP mobile

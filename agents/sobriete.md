@@ -9,6 +9,12 @@ chaque réponse ; une attente de plus de 5 min fait réécrire tout le contexte.
    (journal complet dans `.logs/`, 20 dernières lignes affichées). Jamais de `cat` d'un journal, d'un report.json ou
    d'un HTML entier : `grep` ciblé, `tail -20`, `jq` sur les champs utiles. Lis les captures par planche-contact
    (`python3 scripts/planche.py`), pas une par une.
+   **Obligatoire (mesure Partage : 550 000 caractères de sorties par site malgré la règle)** : `scripts/q.sh` pour
+   `pnpm` (install, build:site), `node scripts/*.mjs`, `shoot.mjs`, `audit.mjs`, `sloplint.mjs`, `theme.mjs`, Playwright
+   et tout script de contrôle maison ; depuis un sous-dossier, utilise le chemin absolu
+   `/home/user/KYW-test-restaurant/scripts/q.sh`. Interdit : `cat`, `sed -n 1,999p` ou Read complet d'un fichier de plus
+   de 200 lignes (lis la plage utile) ; un script de contrôle maison n'imprime que des totaux et les écarts, jamais
+   l'objet complet (`console.log(JSON.stringify(…))` sur tout un rapport est interdit).
 2. **Aucune attente de plus de 5 minutes.** Pas de `sleep`, de Monitor ni de boucle d'attente sur un traitement long.
    Les captures et audits complets sont faits par l'agent « captures » (Haiku) du workflow, AVANT toi ; tu lis son
    résumé `QA-<étape>.md`. Toi, tu ne relances que des captures ciblées (une page, `shoot.mjs <url> --out …`).

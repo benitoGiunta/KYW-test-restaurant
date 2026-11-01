@@ -42,7 +42,7 @@ Pour UN restaurant :
 - **Sortie** : `$OUT/`, un paquet Astro du workspace pnpm (`package.json` avec `"@kyw/footer": "workspace:*"`,
   `astro.config.mjs` identique à celui de `sites/_test-legacy/`), `base` Astro = `/$SLUG/legacy/` (fourni par
   `KYW_BASE` dans `scripts/build-site.mjs`, ne jamais le coder en dur), build dans `dist/$SLUG/legacy/` via
-  `cd $ROOT && pnpm build:site sites/$SLUG-legacy`.
+  `cd $ROOT && scripts/q.sh build pnpm build:site sites/$SLUG-legacy`.
 - **Livrables écrits** : `$OUT/DESIGN.md` (le système verrouillé + la liste de sur-utilisation cochée, § 6),
   `$OUT/comp.md` (la comp avant build, § 4.d), `$OUT/RAPPORT.md` (§ 8), `$OUT/.hallmark/` (before, shots, compare.html,
   preflight.json), et une entrée dans `$LOG`.
@@ -73,7 +73,7 @@ conservées** (dérogations possibles, justifiées, § 4.b).
 Avant la première commande, exécute ce bloc une fois (il est idempotent) :
 
 ```bash
-# 1. puppeteer-core est une devDependency du workspace (pnpm install à la racine suffit) ; rien à installer ailleurs.
+# 1. puppeteer-core est une devDependency du workspace (scripts/q.sh install pnpm install à la racine suffit) ; rien à installer ailleurs.
 # 2. Chromium Playwright est préinstallé ; interdit de lancer `playwright install`. Mais il tourne en root et refuse
 #    de démarrer sans --no-sandbox, et sloplint-render.mjs n'ajoute aucun argument de lancement : on passe par un wrapper.
 # Le wrapper sans sandbox est commité : scripts/chrome-nosandbox.sh
@@ -117,9 +117,9 @@ mkdir -p $OUT && cd $OUT
 mkdir -p .hallmark/site-actuel && cp -r $IN/site-actuel/*.html $IN/site-actuel/*.css .hallmark/site-actuel/ 2>/dev/null
 # 1. pré-vol : le genre est inféré (une page non estampillée n'a pas de genre, redesign.md § Before 1) ; dis-le
 # 2. enregistrement de l'état « avant » : findings par gate + captures 1280x800, 1440x900, 1920x1080, 1440 full, 375 full
-HALLMARK_PUPPETEER=... CHROME_PATH=... node $SKILL/scripts/sloplint.mjs .hallmark/site-actuel --genre <genre inféré> --render --before
+HALLMARK_PUPPETEER=... CHROME_PATH=... /home/user/KYW-test-restaurant/scripts/q.sh sloplint node $SKILL/scripts/sloplint.mjs .hallmark/site-actuel --genre <genre inféré> --render --before
 # 3. si le site actuel est encore en ligne et que le HTML sauvegardé ne rend pas (CSS externe, JS), ajoute --url :
-HALLMARK_PUPPETEER=... CHROME_PATH=... node $SKILL/scripts/sloplint.mjs .hallmark/site-actuel --genre <genre> --render --before --url https://<site-du-restaurant>/
+HALLMARK_PUPPETEER=... CHROME_PATH=... /home/user/KYW-test-restaurant/scripts/q.sh sloplint node $SKILL/scripts/sloplint.mjs .hallmark/site-actuel --genre <genre> --render --before --url https://<site-du-restaurant>/
 ```
 
 Ce que `--before` écrit (vérifié) : `.hallmark/before.txt` (chaque ligne de finding), `.hallmark/before.json` (liens,
@@ -318,7 +318,7 @@ un graphique réel (rare).
    `<KywFooter base={import.meta.env.BASE_URL} />` en dernier élément du `<body>`, avant `</body>` ; le script
    `hallmarkSlots` juste avant lui si la page a des `data-slot`.
 2. **Hero d'abord**, rien dessous : nav + hero, puis
-   `HALLMARK_PUPPETEER=... CHROME_PATH=... node $SKILL/scripts/sloplint.mjs src --genre <genre> --render --stage hero --url http://localhost:4321/$SLUG/legacy/`
+   `HALLMARK_PUPPETEER=... CHROME_PATH=... /home/user/KYW-test-restaurant/scripts/q.sh sloplint node $SKILL/scripts/sloplint.mjs src --genre <genre> --render --stage hero --url http://localhost:4321/$SLUG/legacy/`
    avec le serveur de dev lancé en arrière-plan (`cd $ROOT && KYW_BASE=/$SLUG/legacy/ pnpm exec astro dev --root sites/$SLUG-legacy --port 4321`),
    puis la **hero review en sous-agent frais** (`gates.md` § 6) : lance un sous-agent avec pour seule consigne
    *« Lis `$SKILL/references/review-hero.md` et suis-le »* et passe-lui : les quatre `.hallmark/shots/*-hero-*.png`, les
@@ -356,7 +356,7 @@ un graphique réel (rare).
 
 ```bash
 cd $OUT
-HALLMARK_PUPPETEER=... CHROME_PATH=... node $SKILL/scripts/sloplint.mjs src --genre <genre> --render --kept \
+HALLMARK_PUPPETEER=... CHROME_PATH=... /home/user/KYW-test-restaurant/scripts/q.sh sloplint node $SKILL/scripts/sloplint.mjs src --genre <genre> --render --kept \
   --url http://localhost:4321/$SLUG/legacy/ [--url http://localhost:4321/$SLUG/legacy/carte/ ...]
 ```
 
@@ -382,7 +382,7 @@ findings de la hero review et leur règlement, `$SKILL/references/gates.md` § 4
 `rebuild`, `fix`, `ship`), un lot de corrections, recapture, score toi-même chaque finding, et consigne
 `finish-review: subagent · n findings · n resolved m unresolved · gap: <le plus grand écart entre le stamp et la page>`.
 
-**Puis les contrôles du projet** : `cd $ROOT && pnpm build:site sites/$SLUG-legacy` (il copie le logo KYW dans
+**Puis les contrôles du projet** : `cd $ROOT && scripts/q.sh build pnpm build:site sites/$SLUG-legacy` (il copie le logo KYW dans
 `public/kyw/`, build Astro avec `KYW_BASE`, copie dans `dist/$SLUG/legacy/` et refuse une page sans `noindex` ou sans
 `kyw-footer`), puis `pnpm index`. Optionnel, si le temps le permet : un score aveugle avec la skill `jury` sur
 `dist/` servi (`node $ROOT/.claude/skills/jury/scripts/serve.mjs dist --port 4400`) : il va dans le rapport comme
@@ -434,7 +434,7 @@ node $SKILL/scripts/theme.mjs log --log $LOG --entry '{
   ne pas la dupliquer ailleurs.
 - **Pied de page KYW** : `packages/kyw-footer` (`import KywFooter from '@kyw/footer'`), un seul logo `kyw-signature`,
   dernier élément de chaque page, dans la couleur et la police héritées du thème ; `scripts/build-site.mjs` refuse une
-  page sans `kyw-footer`. Le `package.json` du site déclare `"@kyw/footer": "workspace:*"` et tu lances `cd $ROOT && pnpm install --offline || pnpm install` une fois.
+  page sans `kyw-footer`. Le `package.json` du site déclare `"@kyw/footer": "workspace:*"` et tu lances `cd $ROOT && scripts/q.sh install pnpm install --offline || scripts/q.sh install pnpm install` une fois.
 - **Astro** : `astro.config.mjs` copié de `sites/_test-legacy/` (base par `KYW_BASE`, `trailingSlash: 'ignore'`,
   `build.format: 'directory'`) ; tout chemin d'asset passe par `import.meta.env.BASE_URL` ; pas de framework UI, pas de
   Tailwind (les tokens sont en CSS natif, c'est ce que sloplint lit le mieux) ; GSAP/Lenis existent à la racine pour la
@@ -589,7 +589,7 @@ Kept     <liens n/n · champs n/n · handlers n/n · headings n/n · figures n/n
 Dropped  <none | liste consignée>
 Reworded <n lignes, listées avant/après>
 Render   <5 captures par page, chemins> · Compare .hallmark/compare.html
-Build    pnpm build:site OK → dist/<slug>/legacy/ · pnpm index OK
+Build    scripts/q.sh build pnpm build:site OK → dist/<slug>/legacy/ · pnpm index OK
 
 ## Hero review et finish review
 hero-review: <fix|ship> · n findings · n resolved
@@ -664,7 +664,7 @@ En fin de tâche, **ajoute** (jamais écrase) les leçons structurelles à `$ROO
 16. **Le composant KYW hérite la couleur** : sur un thème sombre (Spore, Darkroom) il reste lisible ; vérifier le
     contraste du logo WebP (il est sombre) sur fond sombre et, si besoin, l'envelopper dans un puits `--color-paper-2`
     sans le modifier (le composant est partagé).
-17. **`pnpm build:site` échoue** si `noindex` ou `kyw-footer` manque dans `dist/.../index.html` : c'est un garde-fou,
+17. **`scripts/q.sh build pnpm build:site` échoue** si `noindex` ou `kyw-footer` manque dans `dist/.../index.html` : c'est un garde-fou,
     pas un bug ; il ne vérifie que `index.html` : les autres routes sont à vérifier par `grep` toi-même.
 18. **Tier render et polices** : les fonts Google/Fontshare se chargent par le réseau via le proxy ; si une capture
     montre une police de repli, c'est `recapture` pour la review (gates.md § 6), pas un finding.
@@ -677,6 +677,6 @@ En fin de tâche, **ajoute** (jamais écrase) les leçons structurelles à `$ROO
 - Hero review et finish review faites en sous-agent, consignées dans le stamp.
 - `DESIGN.md` : Picks, Approche, Thème, Composants, les 72 cases.
 - `comp.md`, `AUDIT.md`, `RAPPORT.md` écrits ; `$LOG` enrichi ; `agents/lecons.md` enrichi.
-- `pnpm build:site sites/$SLUG-legacy` et `pnpm index` passés ; `dist/$SLUG/legacy/` commité ; push.
+- `scripts/q.sh build pnpm build:site sites/$SLUG-legacy` et `pnpm index` passés ; `dist/$SLUG/legacy/` commité ; push.
 - Réponds ensuite en dix lignes au maximum : approche conservée, thème, résultat sloplint before/after, verdict des
   reviews, placeholders, et la photo qui manque le plus.

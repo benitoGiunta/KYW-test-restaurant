@@ -29,7 +29,7 @@ Lis `agents/lecons.md` d'abord.
 ## 2. Adaptation (le gabarit donne la direction, pas le résultat)
 
 1. Copie le gabarit dans `sites/<slug>-portfolio/` (`cp -r gabarits/<nom> sites/<slug>-portfolio`, retire `dist/` et
-   `node_modules/`, renomme le `name` du package.json, `pnpm install` à la racine).
+   `node_modules/`, renomme le `name` du package.json, `scripts/q.sh install pnpm install` à la racine).
 2. Remplace **tout** le contenu d'exemple par les données du dossier : `src/data/site.ts` (nom, baseline, histoire,
    carte complète, horaires, adresse, téléphone, réservation, réseaux, avis cités avec source, photos avec alt
    descriptifs). Données manquantes : complète avec des éléments fictifs **plausibles et marqués `placeholder: true`**
@@ -55,10 +55,10 @@ Lis `agents/lecons.md` d'abord.
 ## 3. Vérification avant de rendre la main
 
 ```bash
-node scripts/build-site.mjs sites/<slug>-portfolio
+scripts/q.sh build node scripts/build-site.mjs sites/<slug>-portfolio
 node .claude/skills/awwwards/scripts/serve.mjs dist --port 4400 &
-node .claude/skills/awwwards/scripts/shoot.mjs http://127.0.0.1:4400/<slug>/portfolio/ --crawl --nav
-node .claude/skills/awwwards/scripts/audit.mjs http://127.0.0.1:4400/<slug>/portfolio/ > .shots/audit.txt
+scripts/q.sh shoot node .claude/skills/awwwards/scripts/shoot.mjs http://127.0.0.1:4400/<slug>/portfolio/ --crawl --nav
+scripts/q.sh audit node .claude/skills/awwwards/scripts/audit.mjs http://127.0.0.1:4400/<slug>/portfolio/ ; cp .logs/audit.log .shots/audit.txt
 ```
 Regarde chaque capture (desktop, mobile, reduced motion, clavier, hover). Corrige : erreurs console, débordements,
 liens cassés, texte caché, images déformées, audit FAIL. Le gabarit était propre : toute régression vient de ton

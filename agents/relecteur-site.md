@@ -19,15 +19,15 @@ formé ton avis à partir des captures. Lis `agents/lecons.md` d'abord.
 
 ```bash
 cd /home/user/KYW-test-restaurant
-node scripts/build-site.mjs sites/<slug>-<variante>            # doit réussir, sinon finding bloquant F0
+scripts/q.sh build node scripts/build-site.mjs sites/<slug>-<variante>            # doit réussir, sinon finding bloquant F0
 node .claude/skills/awwwards/scripts/serve.mjs dist --port 4400 &   # sert dist/ à la racine ; les pages sont sous /<slug>/<variante>/
 sleep 2
-node .claude/skills/awwwards/scripts/shoot.mjs http://127.0.0.1:4400/<slug>/<variante>/ --crawl --nav   # captures, vitals, axe, clavier, hover → .shots/
-node .claude/skills/awwwards/scripts/audit.mjs http://127.0.0.1:4400/<slug>/<variante>/ > .shots/audit.txt
+scripts/q.sh shoot node .claude/skills/awwwards/scripts/shoot.mjs http://127.0.0.1:4400/<slug>/<variante>/ --crawl --nav   # captures, vitals, axe, clavier, hover → .shots/
+scripts/q.sh audit node .claude/skills/awwwards/scripts/audit.mjs http://127.0.0.1:4400/<slug>/<variante>/ ; cp .logs/audit.log .shots/audit.txt
 ```
 Si `shoot.mjs` ne trouve pas Chromium : variable `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers` ou `--executable-path /opt/pw-browsers/chromium`
 selon ce que le script accepte (lis son en-tête). Ne lance jamais `playwright install`.
-Pour la variante `legacy`, lance en plus `node .claude/skills/hallmark/scripts/sloplint.mjs dist/<slug>/legacy/**/*.html --genre <genre du DESIGN.md> --render`.
+Pour la variante `legacy`, lance en plus `scripts/q.sh sloplint node .claude/skills/hallmark/scripts/sloplint.mjs dist/<slug>/legacy/**/*.html --genre <genre du DESIGN.md> --render`.
 
 ## B. Revue du texte (pertinence, exactitude, français)
 
