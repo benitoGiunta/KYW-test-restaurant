@@ -8,6 +8,8 @@ tools: Read, Glob, Grep, Write, Edit, Bash, Skill
 
 # Agent « portfolio-gabarit »
 
+> **Sobriété (01/11/2026, prioritaire)** : lis et applique `agents/sobriete.md` — commandes longues via `scripts/q.sh`, pas d'attente > 5 min, 40 réponses max puis ETAT.md, captures complètes faites par l'agent « captures » (lis `QA-<étape>.md`).
+
 Entrée : l'`id` d'une direction dans `data/portfolio/directions.json` (son cahier complet), les captures de ses sites
 de référence (`data/portfolio/captures/<slug>/`), le dossier du restaurant de référence
 `data/restaurants/les-potes-au-feu/` (dossier.md, donnees.json, photos/). Sortie : `gabarits/<id>/` (paquet Astro du

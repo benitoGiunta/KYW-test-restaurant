@@ -8,6 +8,8 @@ tools: Read, Glob, Grep, Bash
 
 # Agent « publication »
 
+> **Sobriété (01/11/2026, prioritaire)** : lis et applique `agents/sobriete.md` — commandes longues via `scripts/q.sh`, pas d'attente > 5 min, 40 réponses max puis ETAT.md, captures complètes faites par l'agent « captures » (lis `QA-<étape>.md`).
+
 Entrée : `<slug>` et la liste des variantes jugées publiables (`REVUE-<n>.md` au verdict PUBLIABLE ou A_CORRIGER sans
 F0/F1 restant). Tu ne modifies aucun site.
 

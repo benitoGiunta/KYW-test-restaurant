@@ -25,6 +25,16 @@ démarrer une session avec `session-restaurant.md` comme message initial, en rem
 Export : tout ce dossier plus `scripts/`, `packages/kyw-footer`, `gabarits/` et `.claude/skills/` constitue l'agent
 complet ; il se copie tel quel dans un autre dépôt.
 
+## Sobriété (01/11/2026, mesure de la session de reporting)
+
+Règles détaillées dans `agents/sobriete.md`, lues en premier par tout agent : (1) modèle explicite partout, Fable hors
+pipeline ; (2) sorties de commandes coupées par `scripts/q.sh` (journal dans `.logs/`) ; (3) aucune attente > 5 min dans
+un agent : captures et audits complets par l'agent « captures » (Haiku) du workflow, résumé `QA-<étape>.md` ; (4) 40 réponses
+max par agent, construction d'une variante en 3 agents (structure → motion → QA) reliés par ETAT.md ; (5) révision ciblée
+sur la liste de la revue. Chaque prompt d'agent commence par « Rôle : … · Restaurant : … · Variante : … · Passe : … ».
+Chaque session fille mesure sa consommation (`scripts/usage-detail.py`) et prévient la session de reporting. Cible ~13 $ par
+site, ~40 $ par restaurant ; alerte au-delà de 20 $ par site ou 60 réponses par agent.
+
 ## Organisation et budget (décision du 30/10/2026, après le rapport `data/usage/RAPPORT-1.md`)
 
 La session 1 a coûté environ 263 $ au tarif Fable (52 % pour l'évaluation en navigateur des 106 sites, 12 % pour

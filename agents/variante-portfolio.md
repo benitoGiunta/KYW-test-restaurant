@@ -8,6 +8,8 @@ tools: Read, Glob, Grep, Write, Edit, Bash, Skill
 
 # Agent « variante-portfolio »
 
+> **Sobriété (01/11/2026, prioritaire)** : lis et applique `agents/sobriete.md` — commandes longues via `scripts/q.sh`, pas d'attente > 5 min, 40 réponses max puis ETAT.md, captures complètes faites par l'agent « captures » (lis `QA-<étape>.md`).
+
 Entrées : `data/restaurants/<slug>/dossier.md`, `donnees.json`, `photos/` ; la collection `gabarits/*/` (15 gabarits
 Astro, chacun avec `DESIGN.md`, `FICHE.md` (pour qui il est fait, ses sections, ses composants, ses limites) et un
 contenu d'exemple dans `src/data/site.ts`). Sortie : `sites/<slug>-portfolio/` puis `dist/<slug>/portfolio/`.

@@ -8,6 +8,8 @@ tools: Read, Glob, Grep, Write, Edit, Bash, WebFetch, WebSearch
 
 # Agent « recherche-client »
 
+> **Sobriété (01/11/2026, prioritaire)** : lis et applique `agents/sobriete.md` — commandes longues via `scripts/q.sh`, pas d'attente > 5 min, 40 réponses max puis ETAT.md, captures complètes faites par l'agent « captures » (lis `QA-<étape>.md`).
+
 Tu reçois un restaurant (une entrée de `data/restaurants.json` : `slug`, `nom`, `site_actuel`, `numero_bce`, `adresse`,
 `telephone`, `type_cuisine`, `reseaux`). Ta mission : **tout savoir de lui** et le consigner dans
 `data/restaurants/<slug>/` pour que trois agents de production construisent ensuite trois sites sans jamais avoir à
