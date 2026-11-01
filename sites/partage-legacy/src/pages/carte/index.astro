@@ -1,0 +1,95 @@
+---
+import Base from '../../layouts/Base.astro';
+import Rubrique from '../../components/Rubrique.astro';
+import Photo from '../../components/Photo.astro';
+import { carteCuisine, carteVins, carteFin, lunch, dateCarte, u } from '../../data/site';
+const onglets = [
+  { id: 'lunch', label: 'Lunch du midi' },
+  { id: 'cuisine', label: 'La carte' },
+  { id: 'vins', label: 'Vins et boissons' },
+  { id: 'fin', label: 'Fin de repas' },
+];
+---
+<Base page="carte" title="Menus et carte · Partage, Namur"
+  description="La carte de Partage à Namur : starters, entrées, plats et desserts à partager, lunch à 38 € le midi, vins au verre.">
+  <section class="tete-page" aria-labelledby="carte-titre">
+    <div class="container tete-page__grille">
+      <div>
+        <h1 id="carte-titre">Menus et carte</h1>
+        <p class="lead">Plusieurs plats au milieu de la table, pas une assiette chacun.</p>
+        <p class="edition">Carte du {dateCarte}, elle change avec les saisons</p>
+      </div>
+      <Photo id="14-plat-bol-assaisonnement" alt="Un cuisinier assaisonne un bol au passe" class="tete-page__photo" sizes="(min-width: 60rem) 30vw, 100vw" ratio="4 / 3" pos="50% 60%" hero />
+    </div>
+  </section>
+
+  <section class="carte section" aria-label="La carte">
+    <div class="container">
+      <div class="switcher" data-switcher>
+        <div class="switcher__onglets" role="tablist" aria-label="Rubriques de la carte">
+          {onglets.map((o, i) => (
+            <button type="button" role="tab" id={`tab-${o.id}`} aria-controls={`panneau-${o.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{o.label}</button>
+          ))}
+        </div>
+
+        <div class="panneau" role="tabpanel" id="panneau-lunch" aria-labelledby="tab-lunch" tabindex="0">
+          <div class="panneau__lunch">
+            <div class="lunch-tete">
+              <h2>Le lunch, <span class="num">{lunch.prix}</span></h2>
+              <p>{lunch.regle} Entrée, plat et dessert ; la proposition change chaque semaine (celle du {lunch.date} ci-contre).</p>
+              <p class="muted">{lunch.fromages}</p>
+            </div>
+            <ol class="rangs services" role="list">
+              {lunch.services.map((s) => (
+                <li class="rang"><div class="rang__nom"><p class="rang__plat">{s.nom}</p><p>{s.description}</p></div></li>
+              ))}
+            </ol>
+          </div>
+        </div>
+
+        <div class="panneau" role="tabpanel" id="panneau-cuisine" aria-labelledby="tab-cuisine" tabindex="0">
+          <h2 class="panneau__titre">La carte, à partager</h2>
+          <div class="rubriques">{carteCuisine.map((r) => <Rubrique r={r} />)}</div>
+        </div>
+
+        <div class="panneau" role="tabpanel" id="panneau-vins" aria-labelledby="tab-vins" tabindex="0">
+          <h2 class="panneau__titre">Vins et boissons</h2>
+          <p class="panneau__note">Vins au verre : prix au verre, puis à la bouteille.</p>
+          <div class="rubriques">{carteVins.map((r) => <Rubrique r={r} />)}</div>
+        </div>
+
+        <div class="panneau" role="tabpanel" id="panneau-fin" aria-labelledby="tab-fin" tabindex="0">
+          <h2 class="panneau__titre">Pour finir</h2>
+          <div class="rubriques">{carteFin.map((r) => <Rubrique r={r} />)}</div>
+        </div>
+      </div>
+      <p class="carte__pied">Une allergie, un régime : dites-le en réservant, la cuisine s’adapte. <a class="lien" href={u('#reservation')}>Réserver une table</a></p>
+    </div>
+  </section>
+</Base>
+<script>
+  // Switcher : sans script, les quatre panneaux se lisent à la suite ; avec, un seul à la fois.
+  const sw = document.querySelector<HTMLElement>('[data-switcher]');
+  if (sw) {
+    const tabs = [...sw.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const choisir = (t: HTMLButtonElement, focus = false) => {
+      tabs.forEach((x) => {
+        const on = x === t;
+        x.setAttribute('aria-selected', String(on));
+        x.tabIndex = on ? 0 : -1;
+        document.getElementById(x.getAttribute('aria-controls')!)!.hidden = !on;
+      });
+      if (focus) t.focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => choisir(t));
+      t.addEventListener('keydown', (e) => {
+        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (d) { e.preventDefault(); choisir(tabs[(i + d + tabs.length) % tabs.length], true); }
+      });
+    });
+    const depart = tabs.find((t) => '#' + t.id.replace('tab-', '') === location.hash) ?? tabs[0];
+    choisir(depart);
+    sw.classList.add('switcher--actif');
+  }
+</script>

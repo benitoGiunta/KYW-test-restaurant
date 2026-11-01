@@ -1,0 +1,14 @@
+---
+// Une photo dans un slot (patterns.md § A photograph in a slot). Légende = un fait, jamais un crédit.
+import { photo } from '../data/site';
+interface Props { id: string; alt: string; sizes?: string; hero?: boolean; class?: string; pos?: string; legende?: string; ratio?: string }
+const { id, alt, sizes = '(min-width: 60rem) 50vw, 100vw', hero = false, class: cls = '', pos = '50% 50%', legende, ratio } = Astro.props;
+const p = photo(id);
+---
+<figure class:list={['photo', cls]}>
+  <div class="photo__cadre" data-slot={id} data-alt={alt} style={ratio ? `aspect-ratio: ${ratio}` : `aspect-ratio: ${p.width} / ${p.height}`}>
+    <img src={p.src} srcset={p.srcset} sizes={sizes} width={p.width} height={p.height} alt={alt}
+      style={`object-position: ${pos}`} loading={hero ? 'eager' : 'lazy'} fetchpriority={hero ? 'high' : 'auto'} decoding="async" />
+  </div>
+  {legende && <figcaption class="photo__legende">{legende}</figcaption>}
+</figure>

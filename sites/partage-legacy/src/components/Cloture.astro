@@ -1,0 +1,25 @@
+---
+// Pied de page : letter close (draw cdb6cc). Une lettre signée, puis l'adresse, le téléphone, les réseaux.
+// Aucune newsletter (85), jamais « Tous droits réservés » (19).
+import { resto, u } from '../data/site';
+---
+<footer class="cloture">
+  <div class="container cloture__grille">
+    <div class="cloture__lettre">
+      <p class="cloture__mot">À bientôt à table, et à plusieurs.</p>
+      <p class="cloture__signe">Charles Jeandrain, Luca Recloux, Loïc Goumet et l’équipe de Partage</p>
+      <a class="btn" href={u('#reservation')}>Réserver une table</a>
+    </div>
+    <dl class="cloture__infos">
+      <div><dt>Adresse</dt><dd><a href={resto.maps} rel="noopener">{resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.ville}</a></dd></div>
+      <div><dt>Téléphone</dt><dd><a class="num" href={resto.tel}>{resto.telAffiche}</a></dd></div>
+      <div><dt>Fermeture</dt><dd>Dimanche, lundi et mardi midi</dd></div>
+      <div><dt>Ailleurs</dt><dd><a href={resto.instagram} rel="noopener">Instagram</a>, <a href={resto.facebook} rel="noopener">Facebook</a></dd></div>
+    </dl>
+  </div>
+  <div class="container cloture__pied">
+    <p>Charles Jeandrain tient aussi <a href={resto.attablez} rel="noopener">Attablez-vous</a>, sa table étoilée à Namur.</p>
+    <p>Numéro d’entreprise {resto.entreprise}</p>
+    <p><a href={u('politique-de-confidentialite/')}>Politique de confidentialité</a></p>
+  </div>
+</footer>

@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { bonsCadeaux, resto, u } from '../../data/site';
+---
+<Base page="bon-cadeau" title="Bon cadeau · Partage, Namur"
+  description="Offrir un repas chez Partage à Namur : un lunch pour deux, une soirée à partager ou un montant libre.">
+  <section class="tete-page" aria-labelledby="bc-titre">
+    <div class="container tete-page__grille">
+      <div>
+        <h1 id="bc-titre">Offrir un repas à partager</h1>
+        <p class="lead">Un bon cadeau pour une table chez Partage, valable sur la carte comme sur le lunch.</p>
+        <a class="btn btn--plein" href={resto.bonCadeauEnLigne} rel="noopener">Commander le bon en ligne</a>
+      </div>
+      <Photo id="17-verres-table" alt="Deux verres à vin et deux gobelets sur une table dressée" class="tete-page__photo" sizes="(min-width: 60rem) 30vw, 100vw" ratio="4 / 3" hero />
+    </div>
+  </section>
+  <section class="section bons" aria-labelledby="bons-titre">
+    <div class="container bons__grille">
+      <h2 id="bons-titre">Trois façons de l’offrir</h2>
+      <ul class="rangs ruled" role="list">
+        {bonsCadeaux.map((b) => (
+          <li class="rang" data-placeholder={b.placeholder ? 'true' : undefined}>
+            <div class="rang__nom"><h3>{b.nom}</h3><p>{b.detail}</p></div>
+            <p class="rang__prix num">{b.valeur}</p>
+          </li>
+        ))}
+      </ul>
+      <div class="bons__comment">
+        <h3>Comment ça se passe</h3>
+        <p>Le bon se commande en ligne ou par téléphone au <a class="num" href={resto.tel}>{resto.telAffiche}</a>. La personne qui le reçoit réserve ensuite sa table comme d’habitude, en précisant qu’elle vient avec un bon.</p>
+        <a class="lien" href={u('#reservation')}>Réserver une table</a>
+      </div>
+    </div>
+  </section>
+</Base>

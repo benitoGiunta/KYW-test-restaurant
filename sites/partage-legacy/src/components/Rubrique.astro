@@ -1,0 +1,17 @@
+---
+// Une rubrique de carte en Rows : nom (Sentient 400) et description à gauche, prix à droite en chiffres tabulaires.
+import type { Rubrique } from '../data/site';
+interface Props { r: Rubrique; niveau?: 'h3' | 'h4' }
+const { r } = Astro.props;
+---
+<div class="rubrique">
+  <h3 class="rubrique__titre">{r.categorie}</h3>
+  <ul class="rangs" role="list">
+    {r.plats.map((p) => (
+      <li class="rang" data-placeholder={p.placeholder ? 'true' : undefined}>
+        <div class="rang__nom"><p class="rang__plat">{p.nom}</p>{p.description && <p>{p.description}</p>}</div>
+        <p class="rang__prix num">{p.prix ?? ''}</p>
+      </li>
+    ))}
+  </ul>
+</div>

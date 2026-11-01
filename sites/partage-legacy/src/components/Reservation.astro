@@ -1,0 +1,23 @@
+---
+// La réservation comme une carte (Atelier). Le site d'origine réserve par Zenchef (rid=371394, trouvé dans le HTML
+// sauvegardé) : ce lien EST la réservation, conservé tel quel (câblage). Pas de formulaire mimé (gate 84).
+// Phase 2 possible : module Zenchef chargé à la demande derrière un bouton (agents/lecons.md, 31/10, iframe et 26a).
+import Photo from './Photo.astro';
+import { resto } from '../data/site';
+---
+<section class="resa section" id="reservation" aria-labelledby="resa-titre">
+  <div class="container resa__grille">
+    <div class="resa__carte stock">
+      <h2 id="resa-titre">Réserver une table</h2>
+      <p class="resa__intro">Le jour, l’heure et le nombre de couverts se choisissent en ligne, en une minute. Le lunch se commande pour la table entière.</p>
+      <dl class="resa__faits">
+        <div><dt>Groupes</dt><dd>De 20 à 30 personnes, la salle se privatise</dd></div>
+      </dl>
+      <div class="resa__actions">
+        <a class="btn btn--plein" href={resto.zenchef} rel="noopener">Choisir un jour et une heure</a>
+        <p class="resa__tel">Ou par téléphone : <a class="num" href={resto.tel}>{resto.telAffiche}</a></p>
+      </div>
+    </div>
+    <Photo id="10-facade-equipe" alt="La façade de Partage, rue des Fossés Fleuris, et l’équipe devant la porte" class="resa__photo" sizes="(min-width: 60rem) 34vw, 100vw" legende="La porte, rue des Fossés Fleuris 18." pos="50% 40%" />
+  </div>
+</section>

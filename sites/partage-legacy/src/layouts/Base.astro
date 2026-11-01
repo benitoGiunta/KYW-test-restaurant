@@ -1,0 +1,57 @@
+---
+import Nav from '../components/Nav.astro';
+import Cloture from '../components/Cloture.astro';
+import KywFooter from '@kyw/footer';
+import { resto, horaires, base } from '../data/site';
+interface Props { title: string; description: string; page: string }
+const { title, description, page } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const jours = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const ld = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, url: new URL(base, Astro.site).href,
+  telephone: '+32 81 81 00 98', servesCuisine: ['Cuisine locale à partager', 'Bistro'], priceRange: '€€',
+  address: { '@type': 'PostalAddress', streetAddress: resto.adresse.rue, postalCode: resto.adresse.cp, addressLocality: resto.adresse.ville, addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: resto.geo.lat, longitude: resto.geo.lon },
+  sameAs: [resto.facebook, resto.instagram],
+  openingHoursSpecification: horaires.flatMap((d) => [d.midi, d.soir].filter(Boolean).map((s) => {
+    const [opens, closes] = (s as string).split(' à ');
+    return { '@type': 'OpeningHoursSpecification', dayOfWeek: `https://schema.org/${jours[d.jour]}`, opens, closes };
+  })),
+});
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content="Partage" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@300,400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400&display=swap" rel="stylesheet" />
+    <script type="application/ld+json" set:html={ld} />
+    <style is:global>
+      @import "../styles/page.css";
+    </style>
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Nav page={page} />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Cloture />
+    <KywFooter base={import.meta.env.BASE_URL} />
+  </body>
+</html>

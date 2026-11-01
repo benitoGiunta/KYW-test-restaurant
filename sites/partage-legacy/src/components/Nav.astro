@@ -1,0 +1,30 @@
+---
+// Nav : pilule flottante (draw cdb6cc), les trois destinations du site d'origine + « Réserver une table ».
+import { nav, u } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+---
+<header class="nav" data-nav>
+  <div class="nav__pill">
+    <a class="nav__logo" href={u()} aria-label="Partage, retour à l’accueil">
+      <span class="nav__nom">Partage</span>
+      <span class="nav__sig">Charles Jeandrain</span>
+    </a>
+    <nav class="nav__liens" aria-label="Navigation principale">
+      <ul>
+        {nav.slice(1).map((l) => (
+          <li><a href={u(l.href)} aria-current={page === l.id ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a class="btn btn--nav" href={u('#reservation')}>Réserver une table</a>
+    <button class="nav__menu" type="button" popovertarget="menu-mobile" aria-label="Ouvrir le menu">Menu</button>
+  </div>
+  <div id="menu-mobile" class="menu" popover>
+    <ul>
+      {nav.map((l) => (<li><a href={u(l.href)} aria-current={page === l.id ? 'page' : undefined}>{l.label}</a></li>))}
+      <li><a href={u('#infos')}>Horaires et adresse</a></li>
+    </ul>
+    <button class="btn" type="button" popovertarget="menu-mobile" popovertargetaction="hide">Fermer</button>
+  </div>
+</header>

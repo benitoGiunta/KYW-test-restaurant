@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Reservation from '../components/Reservation.astro';
+import Horaires from '../components/Horaires.astro';
+import { presentation, aPartager, lunch, resto, u } from '../data/site';
+---
+<Base page="accueil" title="Partage, plats à partager à Namur · Charles Jeandrain"
+  description="Partage, le bistro de Charles Jeandrain dans le piétonnier de Namur : plats à partager, produits locaux, lunch à 38 € le midi.">
+
+  <section class="hero" aria-labelledby="hero-titre">
+    <Photo id="19-chef-cuisine-hero" alt="Charles Jeandrain en veste blanche dans la cuisine de Partage" hero sizes="100vw" class="hero__photo" pos="62% 40%" ratio="auto" />
+    <div class="hero__texte container">
+      <h1 id="hero-titre">Partage</h1>
+      <p class="hero__phrase">Plats à partager et produits d’ici, dans le piétonnier de Namur.</p>
+      <div class="hero__actions">
+        <a class="btn btn--clair" href="#reservation">Réserver une table</a>
+        <a class="lien lien--clair" href={u('carte/')}>Lire la carte</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro section" id="partage" aria-labelledby="intro-titre">
+    <div class="container intro__grille">
+      <div class="intro__texte">
+        <h2 id="intro-titre" class="statement">Ici, l’expérience se vit dans le partage.</h2>
+        <p class="edition">Ouvert le {resto.ouverture}, pour {resto.couverts} de couverts</p>
+        <div class="intro__corps">
+          <p class="dropcap">{presentation[0]}</p>
+          <p>{presentation[1]}</p>
+          <p>{presentation[2]}</p>
+        </div>
+        <p class="intro__equipe">En cuisine, Luca Recloux et Antoine ; en salle, Loïc Goumet.</p>
+      </div>
+      <Photo id="09-chef-portrait-sourire" alt="Portrait de Charles Jeandrain, lunettes et veste noire, dans sa cuisine" class="intro__photo print" sizes="(min-width: 60rem) 30vw, 80vw" legende="Charles Jeandrain, chef de Partage et d’Attablez-vous." />
+    </div>
+  </section>
+
+  <section class="table section section--puits" aria-labelledby="table-titre">
+    <div class="container table__grille">
+      <div class="table__tete">
+        <h2 id="table-titre">À poser au milieu de la table</h2>
+        <p class="table__chapo">Quatre plats de la carte du moment. On en commande plusieurs, on partage tout.</p>
+        <div class="table__liens">
+          <a class="btn" href={u('carte/')}>Toute la carte</a>
+          <a class="lien" href={u('bon-cadeau/')}>Offrir un bon cadeau</a>
+        </div>
+      </div>
+      <ul class="rangs" role="list">
+        {aPartager.map((p) => (
+          <li class="rang">
+            <div class="rang__nom"><h3>{p.nom}</h3>{p.description && <p>{p.description}</p>}</div>
+            <p class="rang__prix num">{p.prix}</p>
+          </li>
+        ))}
+      </ul>
+      <aside class="lunch stock" aria-labelledby="lunch-titre">
+        <h3 id="lunch-titre">Le lunch du midi</h3>
+        <p class="lunch__prix num">{lunch.prix}</p>
+        <p class="lunch__regle">Entrée, plat et dessert. {lunch.regle}</p>
+      </aside>
+    </div>
+  </section>
+
+  <Reservation />
+
+  <section class="images section" aria-labelledby="images-titre">
+    <div class="container">
+      <h2 id="images-titre">La salle, la cuisine, la table</h2>
+      <div class="accrochage">
+        <Photo id="08-salle-vue-large" alt="La salle de Partage : murs de brique chaulée, chaises en bois clair, sculpture noire au mur" class="acc acc--a" sizes="(min-width: 60rem) 40vw, 100vw" legende="La salle, une trentaine de couverts." />
+        <Photo id="12-plat-jambon-iberique" alt="Assiette de jambon ibérique et gressins" class="acc acc--b" sizes="(min-width: 60rem) 28vw, 50vw" legende="Jambon ibérique." pos="50% 45%" />
+        <Photo id="16-cuisinier-passe" alt="Un cuisinier dresse une poêle au passe" class="acc acc--c" sizes="(min-width: 60rem) 28vw, 50vw" legende="Au passe, le soir." />
+        <Photo id="06-table-dressee-citronnier" alt="Une table dressée près du citronnier" class="acc acc--d" sizes="(min-width: 60rem) 24vw, 50vw" legende="La table près du citronnier." />
+        <Photo id="15-plat-tartines" alt="Tartines garnies d’herbes sur une planche" class="acc acc--e" sizes="(min-width: 60rem) 24vw, 50vw" legende="Tartines, à partager." />
+      </div>
+    </div>
+  </section>
+
+  <section class="infos section section--puits" id="infos" aria-labelledby="infos-titre">
+    <div class="container infos__grille">
+      <div>
+        <h2 id="infos-titre">Les jours où la porte est ouverte</h2>
+        <Horaires />
+      </div>
+      <div class="infos__venir">
+        <h3>Venir</h3>
+        <p>Dans le piétonnier, {resto.adresse.repere}.</p>
+        <ul class="venir ruled-list" role="list">
+          {resto.parkings.map((p) => <li><span>{p.nom}</span><span class="muted">{p.temps}</span></li>)}
+        </ul>
+        <a class="lien" href={resto.maps} rel="noopener">Itinéraire dans Google Maps</a>
+      </div>
+    </div>
+  </section>
+</Base>
