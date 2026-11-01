@@ -1,0 +1,35 @@
+---
+import KywFooter from '@kyw/footer';
+import Neon from './Neon.astro';
+import { u } from '../lib/url';
+import { restaurant, horaires, creneaux } from '../data/site';
+---
+<footer class="pied">
+  <div class="wrap pied__grille">
+    <div class="pied__devise">
+      <Neon texte="più bella" taille="xl" />
+      <p class="pied__devise-txt"><span lang="it">« {restaurant.devise.replace(/\.$/, '')} »</span> <span class="pied__doux">{restaurant.deviseFr} (devise de la maison, traduction KYW)</span></p>
+    </div>
+    <div class="pied__col pied__col--1">
+      <h2 class="pied__titre">Venir</h2>
+      <address>{restaurant.adresse.rue} {restaurant.adresse.numero}<br />{restaurant.adresse.cp} {restaurant.adresse.commune} ({restaurant.adresse.ville})</address>
+      <p><a class="lien" href={restaurant.planUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col pied__col--2">
+      <h2 class="pied__titre">Horaires</h2>
+      <ul class="horaires horaires--court">
+        {horaires.map((h) => <li class:list={{ 'is-ferme': !h.services.length }}><span>{h.jour}</span><span>{creneaux(h.services)}</span></li>)}
+      </ul>
+    </div>
+    <div class="pied__col pied__col--3">
+      <h2 class="pied__titre">Contact</h2>
+      <p><a class="pied__tel" href={`tel:${restaurant.telephone}`}>{restaurant.telephoneLisible}</a></p>
+      <p><a class="lien" href={`mailto:${restaurant.email}`}>{restaurant.email}</a></p>
+      <ul class="pied__reseaux">
+        {restaurant.reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+    <p class="pied__colophon">Photos : La Dolce Vita. Polices : Sacramento (Astigmatic) et Archivo (Omnibus-Type), Google Fonts. Construit avec Astro, GSAP et Lenis. <a class="lien-util" href={u('/reservation/')}>Réserver</a></p>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

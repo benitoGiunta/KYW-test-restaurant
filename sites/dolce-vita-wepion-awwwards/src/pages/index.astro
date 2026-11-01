@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import Neon from '../components/Neon.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { restaurant, carte, prix, equipe } from '../data/site';
+const ardoise = carte.find((c) => c.id === 'ardoise')!;
+const nbPlats = carte.reduce((n, c) => n + c.plats.length, 0);
+const nbPizze = carte.filter((c) => c.id === 'pizze' || c.id === 'preferite').reduce((n, c) => n + c.plats.length, 0);
+const table = [
+  { cle: 'planche', legende: 'Planche de charcuteries et fromages' },
+  { cle: 'burrata', legende: 'Burrata, jambon cru, figues' },
+  { cle: 'margherita', legende: 'Pizza margherita' },
+  { cle: 'palourdes', legende: 'Pâtes aux palourdes' },
+  { cle: 'escalope', legende: 'Escalope gratinée, sauce tomate' },
+  { cle: 'moelleux', legende: 'Moelleux au chocolat' },
+] as const;
+---
+<Base description="La Dolce Vita, ristorante pizzeria à Wépion depuis 2017 : pizze, pasta, scaloppine et dolci maison. Réservation au 081 85 54 20, chaussée de Dinant 1080.">
+  <section class="hero wrap" aria-labelledby="hero-titre">
+    <div class="hero__texte">
+      <p class="surtitre">{restaurant.sousTitre} · {restaurant.lieu}</p>
+      <h1 id="hero-titre" class="hero__titre"><Neon texte="la dolce vita" tag="span" taille="mega" /></h1>
+      <p class="hero__accroche">{restaurant.baseline}</p>
+      <div class="hero__actions">
+        <a class="cta" href={`tel:${restaurant.telephone}`}><span class="cta__txt">Réserver au <span class="nw">{restaurant.telephoneLisible}</span></span></a>
+        <a class="lien-fleche" href={u('/carte/')}>Voir la carte</a>
+      </div>
+    </div>
+    <figure class="hero__media">
+      <Photo cle="facadeSoir" widths={[640, 960, 1440]} sizes="(max-width: 47.99rem) 100vw, 42vw" prioritaire />
+      <figcaption class="legende">Chaussée de Dinant 1080, le soir</figcaption>
+    </figure>
+  </section>
+
+  <section class="devise wrap" aria-label="La devise de la maison">
+    <p class="devise__it" lang="it">« {restaurant.devise.replace(/\.$/, '')} »</p>
+    <p class="devise__fr">{restaurant.deviseFr} <span class="doux">Devise de la maison, traduction KYW.</span></p>
+    <ul class="faits">
+      <li><span class="faits__n">{restaurant.depuis}</span><span class="faits__l">Ouvert depuis, à Wépion</span></li>
+      <li><span class="faits__n">{nbPlats}</span><span class="faits__l">Plats à la carte, dont {nbPizze} pizze</span></li>
+      <li><span class="faits__n">2</span><span class="faits__l">Sur place ou à emporter, livraison dès deux plats</span></li>
+    </ul>
+  </section>
+
+  <section class="ardoise wrap" aria-labelledby="ardoise-titre">
+    <figure class="ardoise__media">
+      <Photo cle="chariot" widths={[480, 800, 1200]} sizes="(max-width: 47.99rem) 100vw, 40vw" />
+    </figure>
+    <div class="ardoise__texte">
+      <h2 id="ardoise-titre" class="titre-l">L’ardoise du moment</h2>
+      <p class="chapeau">Les suggestions changent au fil du marché. Celles-ci étaient à l’ardoise le jour de la maquette.</p>
+      <ul class="liste-plats">
+        {ardoise.plats.map((p) => (
+          <li class="plat">
+            <span class="plat__nom">{p.nom}</span>
+            <span class="plat__prix">{prix(p.prix)}</span>
+            {p.description && <span class="plat__desc">{p.description}</span>}
+          </li>
+        ))}
+      </ul>
+      <a class="lien-fleche" href={u('/carte/')}>Toute la carte</a>
+    </div>
+  </section>
+
+  <section class="table" aria-labelledby="table-titre">
+    <div class="wrap table__tete">
+      <h2 id="table-titre" class="titre-l">À table</h2>
+      <p class="chapeau">Antipasti, pasta, pizze, scaloppine, secondi, dolci et gelati : la carte entière se lit sur une seule page.</p>
+    </div>
+    <ul class="table__mur" role="list">
+      {table.map((t, i) => (
+        <li class:list={['table__case', `table__case--${i + 1}`]}>
+          <figure>
+            <Photo cle={t.cle} widths={[480, 800, 1200]} sizes="(max-width: 47.99rem) 80vw, 33vw" />
+            <figcaption class="legende">{t.legende}</figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="geste wrap" aria-labelledby="geste-titre">
+    <figure class="geste__media">
+      <Photo cle="geste" widths={[400, 607]} sizes="(max-width: 47.99rem) 70vw, 25vw" />
+    </figure>
+    <div class="geste__texte">
+      <h2 id="geste-titre" class="titre-l">Deux prénoms, une maison</h2>
+      <ul class="equipe">
+        {equipe.map((e) => (
+          <li><p class="equipe__nom">{e.nom}</p><p class="equipe__role">{e.role}</p><p>{e.texte}</p></li>
+        ))}
+      </ul>
+      <a class="lien-fleche" href={u('/histoire/')}>Notre histoire</a>
+    </div>
+  </section>
+</Base>

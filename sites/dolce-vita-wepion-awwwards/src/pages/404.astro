@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import Neon from '../components/Neon.astro';
+import { u } from '../lib/url';
+import { restaurant } from '../data/site';
+---
+<Base title="Page introuvable" page="404" description="Cette page de La Dolce Vita n’existe pas ou plus : un tube du néon a grillé. Retrouvez l’accueil, la carte ou réservez au 081 85 54 20 à Wépion.">
+  <section class="perdu wrap" aria-labelledby="perdu-titre">
+    <p class="surtitre">Erreur 404</p>
+    <Neon texte="la dolce vita" tag="p" taille="mega" grilles={[4, 10]} classe="perdu__neon" />
+    <h1 id="perdu-titre" class="titre-l">Un tube a grillé.</h1>
+    <p class="chapeau">Cette page n’existe pas, ou plus. Le reste de la salle est allumé.</p>
+    <ul class="perdu__liens">
+      <li><a class="cta" href={u('/')}><span class="cta__txt">Revenir à l’accueil</span></a></li>
+      <li><a class="lien-fleche" href={u('/carte/')}>Voir la carte</a></li>
+      <li><a class="lien-fleche" href={`tel:${restaurant.telephone}`}>Appeler le <span class="nw">{restaurant.telephoneLisible}</span></a></li>
+    </ul>
+  </section>
+</Base>

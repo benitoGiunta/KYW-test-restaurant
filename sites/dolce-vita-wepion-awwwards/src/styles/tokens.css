@@ -1,0 +1,66 @@
+/* Jetons de La Dolce Vita (variante awwwards « Il neon »). Les NOMS sont le contrat de l'engine ; les valeurs
+   viennent de DESIGN.md : la salle le soir (mur olive dans l'ombre), le tube blanc du néon, la sauge du mur végétal,
+   le rose des branches de cerisier, la salle éteinte. Les url() portent la base (/dolce-vita-wepion/awwwards/). */
+@font-face {
+  font-family: 'Sacramento';
+  src: url('/dolce-vita-wepion/awwwards/fonts/sacramento-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Archivo';
+  src: url('/dolce-vita-wepion/awwwards/fonts/archivo-400_800-normal.woff2') format('woff2');
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+:root {
+  /* Couleur : par rôle (contrastes mesurés sur --c-bg, voir DESIGN.md) */
+  --c-bg: #1a2017;            /* ground : le mur olive de la salle, le soir */
+  --c-fg: #f4ede4;            /* ink : le tube blanc chaud du néon (14,3:1) */
+  --c-muted: #aab49c;         /* muted : la sauge du mur végétal (7,7:1) */
+  --c-line: #3b4634;          /* line : les joints du mur olive */
+  --c-accent: #f4a6bc;        /* accent : le rose des branches de cerisier, halo du néon (8,7:1) */
+  --c-curtain: #0c0f0a;       /* curtain : la salle éteinte, l'interrupteur coupé */
+  /* Sections « jour » : la façade blanche de la chaussée de Dinant */
+  --c-jour: #f2f0ea;
+  --c-jour-ink: #1a2017;      /* 14,6:1 */
+  --c-jour-muted: #4f5a46;    /* 6,4:1 */
+  --c-jour-accent: #a3304f;   /* rose foncé pour le texte sur la façade (6,0:1) */
+  /* Halo du néon : trois couches, posées une fois, réglées par --lum (1 = allumé, 0 = éteint) */
+  --lum: 1;
+  --halo: 0 0 0.04em rgb(255 255 255 / calc(0.9 * var(--lum))),
+          0 0 0.18em rgb(244 166 188 / calc(0.75 * var(--lum))),
+          0 0 0.6em rgb(244 166 188 / calc(0.45 * var(--lum)));
+  /* Familles */
+  --f-neon: 'Sacramento', 'Brush Script MT', cursive;
+  --f-body: 'Archivo', system-ui, sans-serif;
+  /* Échelle fluide (390 → 1440 px). Le néon (script fin) est plus grand que ne le serait une capitale. */
+  --t-mega: clamp(5.5rem, 2rem + 15vw, 17rem);
+  --t-xl: clamp(3.75rem, 1.8rem + 8vw, 9rem);
+  --t-l: clamp(2rem, 1.35rem + 2.7vw, 3.75rem);
+  --t-m: clamp(1.25rem, 1.08rem + 0.7vw, 1.625rem);
+  --t-body: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem;
+  /* Espace : quatre humeurs */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+  --serre: calc(var(--u) * 3);
+  --normal: calc(var(--u) * 7);
+  --aere: calc(var(--u) * 13);
+  --nuit: calc(var(--u) * 22);
+  /* Forme : tout est droit ; seuls les CTA ont le rond du tube (rayon plein) */
+  --radius: 0px;
+  --radius-tube: 999px;
+  /* Couches */
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}

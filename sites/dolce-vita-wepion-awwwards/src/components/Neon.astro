@@ -1,0 +1,16 @@
+---
+// Le néon : un mot en lettres attachées, seule source de lumière de chaque page (concept « Il neon »).
+// Une lettre = un segment de tube (`data-i`), pour l'allumage de la phase 2. `grilles` : segments éteints (404).
+// Le texte lisible est porté une fois, en clair, pour les lecteurs d'écran.
+type Tag = 'h1' | 'h2' | 'p' | 'span';
+interface Props { texte: string; tag?: Tag; taille?: 'mega' | 'xl' | 'l'; grilles?: number[]; classe?: string }
+const { texte, tag = 'p', taille = 'xl', grilles = [], classe = '' } = Astro.props;
+const Balise = tag;
+const lettres = [...texte];
+---
+<Balise class:list={['neon', `neon--${taille}`, classe]} data-neon>
+  <span class="sr-only">{texte}</span>
+  <span class="neon__tube" aria-hidden="true">{lettres.map((l, i) => (
+    <span class:list={['neon__l', { 'is-grille': grilles.includes(i) }]} data-i={i}>{l === ' ' ? ' ' : l}</span>
+  ))}</span>
+</Balise>

@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import Neon from '../components/Neon.astro';
+import Photo from '../components/Photo.astro';
+import { restaurant, horaires, creneaux } from '../data/site';
+const sujet = encodeURIComponent('Réservation à La Dolce Vita');
+---
+<Base title="Réserver" page="reservation" description="Réserver une table à La Dolce Vita, Wépion : par téléphone au 081 85 54 20. Adresse chaussée de Dinant 1080, horaires, terrasse et plats à emporter.">
+  <section class="page-tete wrap" aria-labelledby="resa-titre">
+    <p class="surtitre">Réservation par téléphone</p>
+    <h1 id="resa-titre" class="page-tete__titre"><Neon texte="pronto ?" tag="span" taille="xl" /><span class="page-tete__fr">Réserver une table</span></h1>
+    <p class="page-tete__chapeau">La maison prend les réservations au téléphone. Un appel suffit.</p>
+  </section>
+
+  <section class="appel wrap" aria-label="Téléphoner">
+    <a class="appel__numero" href={`tel:${restaurant.telephone}`}><span class="appel__libelle">Fixe</span><span class="nw">{restaurant.telephoneLisible}</span></a>
+    <a class="appel__numero appel__numero--second" href={`tel:${restaurant.mobile}`}><span class="appel__libelle">Portable</span><span class="nw">{restaurant.mobileLisible}</span></a>
+    <p class="appel__note">Vous préférez écrire ? <a class="lien" href={`mailto:${restaurant.email}?subject=${sujet}`}>{restaurant.email}</a></p>
+  </section>
+
+  <section class="jour" aria-labelledby="infos-titre">
+    <div class="wrap jour__grille">
+      <h2 id="infos-titre" class="titre-l jour__titre">Venir de jour comme de nuit</h2>
+      <div class="jour__col">
+        <h3 class="titre-s">Horaires</h3>
+        <ul class="horaires">
+          {horaires.map((h) => <li class:list={{ 'is-ferme': !h.services.length }}><span>{h.jour}</span><span>{creneaux(h.services)}</span></li>)}
+        </ul>
+        <p class="doux">Fermé le mardi, le mercredi midi et le samedi midi.</p>
+      </div>
+      <div class="jour__col">
+        <h3 class="titre-s">Adresse</h3>
+        <address>{restaurant.adresse.rue} {restaurant.adresse.numero}<br />{restaurant.adresse.cp} {restaurant.adresse.commune} ({restaurant.adresse.ville})</address>
+        <p><a class="lien" href={restaurant.planUrl} rel="noopener">Ouvrir le plan dans Google Maps</a></p>
+        <h3 class="titre-s">Terrasse</h3>
+        <p>Une terrasse pavée devant la façade, avec salon de jardin, côté chaussée.</p>
+        <h3 class="titre-s">À emporter</h3>
+        <p>{restaurant.emporter} Carte de fidélité sur demande.</p>
+      </div>
+      <figure class="jour__media">
+        <Photo cle="terrasse" widths={[480, 800, 1200]} sizes="(max-width: 47.99rem) 100vw, 33vw" />
+        <figcaption class="legende">La terrasse, de jour</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="ecrire wrap" aria-labelledby="ecrire-titre">
+    <div class="ecrire__texte">
+      <h2 id="ecrire-titre" class="titre-l">Ou par e-mail</h2>
+      <p>Ce formulaire prépare un message dans votre messagerie. La réservation n’est confirmée qu’après la réponse de la maison ; pour ce soir, appelez plutôt.</p>
+    </div>
+    <form class="formulaire" action={`mailto:${restaurant.email}?subject=${sujet}`} method="post" enctype="text/plain">
+      <label>Nom<input name="nom" type="text" autocomplete="name" required /></label>
+      <label>Téléphone<input name="telephone" type="tel" autocomplete="tel" /></label>
+      <label>Date<input name="date" type="date" required /></label>
+      <label>Heure<input name="heure" type="time" min="12:00" max="22:00" step="900" /></label>
+      <label>Couverts<input name="couverts" type="number" min="1" value="2" /></label>
+      <label class="formulaire__large">Message<textarea name="message" rows="3"></textarea></label>
+      <button class="cta" type="submit"><span class="cta__txt">Ouvrir mon e-mail</span></button>
+    </form>
+  </section>
+
+  <figure class="facade">
+    <Photo cle="facadeEnseigne" widths={[800, 1200, 1600]} sizes="100vw" />
+    <figcaption class="legende wrap">La façade, chaussée de Dinant</figcaption>
+  </figure>
+</Base>

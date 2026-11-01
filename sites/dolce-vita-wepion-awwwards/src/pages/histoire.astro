@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Neon from '../components/Neon.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { restaurant, histoire, equipe } from '../data/site';
+---
+<Base title="Histoire" page="histoire" description="L’histoire de La Dolce Vita à Wépion : ouverte en 2017 chaussée de Dinant, Armando en cuisine, Antigone en salle, tiramisu et crème brûlée faits maison.">
+  <section class="page-tete wrap" aria-labelledby="histoire-titre">
+    <p class="surtitre">Wépion, depuis {restaurant.depuis}</p>
+    <h1 id="histoire-titre" class="page-tete__titre"><Neon texte="la storia" tag="span" taille="xl" /><span class="page-tete__fr">Histoire</span></h1>
+  </section>
+
+  <section class="recit wrap" aria-label="Le récit">
+    <figure class="recit__media">
+      <Photo cle="neon" widths={[640, 960, 1440]} sizes="(max-width: 47.99rem) 100vw, 50vw" prioritaire />
+      <figcaption class="legende">Le néon de la salle, sur le mur végétal</figcaption>
+    </figure>
+    <div class="recit__texte">
+      {histoire.map((p, i) => <p class:list={{ 'recit__lead': i === 0 }}>{p}</p>)}
+    </div>
+  </section>
+
+  <section class="salle" aria-labelledby="salle-titre">
+    <div class="wrap salle__tete">
+      <h2 id="salle-titre" class="titre-l">La salle</h2>
+      <p class="chapeau">Bois blond, mur olive, banquettes sombres et branches de cerisier.</p>
+    </div>
+    <div class="salle__bande">
+      <figure><Photo cle="salleOlive" widths={[640, 960, 1440]} sizes="(max-width: 47.99rem) 85vw, 58vw" /><figcaption class="legende">Le mur olive</figcaption></figure>
+      <figure><Photo cle="salleArdoise" widths={[480, 800, 1200]} sizes="(max-width: 47.99rem) 85vw, 38vw" /><figcaption class="legende">Le chariot des vins et l’ardoise</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="duo wrap" aria-labelledby="duo-titre">
+    <h2 id="duo-titre" class="titre-l">Qui vous reçoit</h2>
+    <ul class="equipe equipe--grand">
+      {equipe.map((e) => (
+        <li><p class="equipe__nom">{e.nom}</p><p class="equipe__role">{e.role}</p><p>{e.texte}</p></li>
+      ))}
+    </ul>
+    <a class="lien-fleche" href={u('/reservation/')}>Venir nous voir</a>
+  </section>
+</Base>

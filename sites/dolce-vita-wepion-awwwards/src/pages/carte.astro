@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import Neon from '../components/Neon.astro';
+import Photo from '../components/Photo.astro';
+import { restaurant, carte, prix, notesCarte } from '../data/site';
+import type { CleePhoto } from '../lib/photos';
+// Une photo du client par chapitre quand elle existe (sujet de photos/index.json), jamais présentée comme un plat précis.
+const illustrations: Record<string, { cle: CleePhoto; legende: string }> = {
+  antipasti: { cle: 'planche', legende: 'Charcuteries, fromages et olives' },
+  pasta: { cle: 'palourdes', legende: 'Pâtes aux palourdes' },
+  pizze: { cle: 'margherita', legende: 'Pizza margherita' },
+  scaloppine: { cle: 'escalope', legende: 'Escalope gratinée, sauce tomate' },
+  dolci: { cle: 'moelleux', legende: 'Moelleux au chocolat' },
+};
+const total = carte.reduce((n, c) => n + c.plats.length, 0);
+---
+<Base title="La carte" page="carte" description={`La carte de La Dolce Vita à Wépion : ${total} plats, antipasti, pasta, pizze dès 12 €, scaloppine, secondi, dolci maison et gelati, sur place ou à emporter.`}>
+  <section class="page-tete wrap" aria-labelledby="carte-titre">
+    <p class="surtitre">{total} plats · prix TVA comprise</p>
+    <h1 id="carte-titre" class="page-tete__titre"><Neon texte="la carta" tag="span" taille="xl" /><span class="page-tete__fr">La carte</span></h1>
+    <p class="page-tete__chapeau">Antipasti, pasta, pizze, scaloppine, secondi, dolci et gelati. Sur place, ou à emporter de 18 h à 22 h.</p>
+  </section>
+
+  <nav class="sommaire" aria-label="Chapitres de la carte">
+    <ul class="wrap">
+      {carte.map((c) => <li><a class="sommaire__lien" href={`#${c.id}`}>{c.titre}</a></li>)}
+    </ul>
+  </nav>
+
+  <div class="carte wrap">
+    {carte.map((c) => {
+      const ill = illustrations[c.id];
+      return (
+        <section class:list={['chapitre', { 'chapitre--illustre': ill }]} id={c.id} aria-labelledby={`t-${c.id}`}>
+          <header class="chapitre__tete">
+            <h2 id={`t-${c.id}`} class="chapitre__titre">{c.titre}</h2>
+            <p class="chapitre__compte">{c.plats.length} plats</p>
+          </header>
+          <ul class="liste-plats">
+            {c.plats.map((p) => (
+              <li class="plat">
+                <span class="plat__nom">{p.nom}</span>
+                <span class="plat__prix">{prix(p.prix)}</span>
+                {p.description && <span class="plat__desc">{p.description}</span>}
+              </li>
+            ))}
+          </ul>
+          {ill && (
+            <figure class="chapitre__media">
+              <Photo cle={ill.cle} widths={[480, 800]} sizes="(max-width: 47.99rem) 100vw, 28vw" />
+              <figcaption class="legende">{ill.legende}</figcaption>
+            </figure>
+          )}
+        </section>
+      );
+    })}
+  </div>
+
+  <section class="notes wrap" aria-labelledby="notes-titre">
+    <h2 id="notes-titre" class="titre-m">Bon à savoir</h2>
+    <ul>{notesCarte.map((n) => <li>{n}</li>)}</ul>
+    <a class="cta" href={`tel:${restaurant.telephone}`}><span class="cta__txt">Commander ou réserver au <span class="nw">{restaurant.telephoneLisible}</span></span></a>
+  </section>
+</Base>
