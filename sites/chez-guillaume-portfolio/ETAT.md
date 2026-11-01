@@ -57,3 +57,8 @@
 - Équipe réduite à « La maison » : GuiHome (L'Avenir) et « Notre cheffe » (sans nom, le site actuel dit « notre
   cheffe ») ; Tamara Truyts citée seulement dans le récit, datée de janvier 2025.
 - Phase 1 : pas de serveur. Phase 2 : serveur `serve.mjs --port 4471`, phase 3 : port 4473, arrêtés par leur PID.
+
+## Revue 1 (relecteur-site, 01/11/2026)
+- Fait : `REVUE-1.md` écrit (verdict A_CORRIGER : 0 F0, 2 F1, 6 F2, 6 F3). Contrôles ciblés : texte vs donnees.json, liens (0 mort), axe 7 pages × 2 largeurs, contraste, menu mobile, 404.html, histoire.
+- Reste : la révision traite F1-1 (SplitText `aria: 'none'`), F1-2 (aria-label du logo), puis F2 ; relancer axe par page.
+- Pièges : le QA n'a capturé que 3 pages sur 7 ; le contraste « On va voir qui ? » est transitoire (reveal).
