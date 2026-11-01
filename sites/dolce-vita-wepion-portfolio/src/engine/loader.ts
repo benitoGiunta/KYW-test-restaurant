@@ -12,7 +12,7 @@ let exit: ((root: HTMLElement) => gsap.core.Timeline) | null = null;
 export const setLoaderExit = (fn: (root: HTMLElement) => gsap.core.Timeline) => { exit = fn; };
 
 const MIN = 1.1; // seconds: long enough to read as a designed moment
-const MAX = 2.6; // seconds: a longer loader is a usability problem
+const MAX = 2.2; // seconds: a longer loader is a usability problem
 
 function criticalAssets(): Promise<unknown>[] {
   const imgs = [...document.querySelectorAll<HTMLImageElement>('img[data-critical], [data-intro] img, [data-gl-instant] img')];
@@ -22,6 +22,11 @@ function criticalAssets(): Promise<unknown>[] {
 export async function runLoader(): Promise<void> {
   const root = document.getElementById('loader');
   if (!root) return;
+  // Loader masqué (CSS, < 768 px) : aucune attente décorative, seulement les polices et images critiques (plafond 1,2 s).
+  if (getComputedStyle(root).display === 'none') {
+    await Promise.race([Promise.all(criticalAssets()), wait(1.2)]);
+    return finish(root);
+  }
   if (prefersReducedMotion()) {
     await Promise.race([Promise.all(criticalAssets()), wait(MAX)]);
     await gsap.to(root, { autoAlpha: 0, duration: 0.3 });

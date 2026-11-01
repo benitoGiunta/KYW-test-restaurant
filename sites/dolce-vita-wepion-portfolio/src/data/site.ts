@@ -133,6 +133,7 @@ export const site: Restaurant = {
     photo('/photos/planche-antipasti.webp', 'Planche en bois de charcuteries, fromages et olives', 1800, 1201),
     photo('/photos/planche-antipasti-carre.webp', 'Planche en bois de charcuteries, fromages et olives', 520, 520),
     photo('/photos/burrata.webp', 'Assiette de burrata, jambon cru, figues, fruits jaunes et basilic', 1800, 1201),
+    photo('/photos/burrata-960.webp', 'Assiette de burrata, jambon cru, figues, fruits jaunes et basilic', 960, 641),
     photo('/photos/pates-palourdes.webp', 'Pâtes aux palourdes et tomates sur une assiette bleue décorée', 1800, 1201),
     photo('/photos/escalope.webp', 'Escalope gratinée à la sauce tomate sur une assiette grise', 1800, 1199),
     photo('/photos/pizza-margherita.webp', 'Pizza margherita sur un plateau noir, basilic frais', 1600, 1194),
@@ -165,7 +166,7 @@ export const site: Restaurant = {
     ],
   },
   emporter: {
-    intro: 'Les plats de la carte se prennent aussi à emporter.',
+    intro: 'À emporter : livraison gratuite dès 2 plats, de 18 h à 22 h.',
     lignes: [
       { libelle: 'Livraison gratuite', valeur: 'dès 2 plats' },
       { libelle: 'Livraison', valeur: '18 h à 22 h' },

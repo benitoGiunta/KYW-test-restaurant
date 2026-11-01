@@ -64,7 +64,6 @@ const m = site.manifeste;
       <div class="cat">
         <div class="cat__head">
           <h2 data-split="words">Les signatures</h2>
-          <span class="cat__num">{String(signatures.length).padStart(2, '0')}</span>
         </div>
         <p class="muted" style="margin-bottom: calc(var(--u) * 3)">Les plats que la maison met en avant sur sa carte, des antipasti aux dolci.</p>
         <div class="cat__grid">
@@ -85,7 +84,6 @@ const m = site.manifeste;
     <div class="wrap">
       <div class="cat__head" style="margin-bottom: calc(var(--u) * 4)">
         <h2 data-split="words">La maison</h2>
-        <span class="cat__num">{String(mur.length).padStart(2, '0')}</span>
       </div>
       <div class="g12 mur">
         {mur.map((p, i) => (
@@ -99,32 +97,15 @@ const m = site.manifeste;
   </section>
 
   <!-- LES GENS : deux personnes, sans photo à ce jour. -->
-  <section class="section gens" data-theme-zone="farine" data-gens>
+  <section class="section gens" data-theme-zone="farine">
     <div class="wrap">
       <div class="gens__head">
         <h2 data-split="words">Les gens</h2>
-        <div class="gens__fleches">
-          <button class="rond" type="button" data-gens-prev aria-label="Personnes précédentes" aria-disabled="true"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2 4 8l6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
-          <button class="rond" type="button" data-gens-next aria-label="Personnes suivantes"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 2 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
-        </div>
       </div>
-      <ul class="gens__piste" data-gens-piste role="list" tabindex="0" aria-label="Les gens de la maison">
-        {site.equipe.map((p, i) => {
-          const ph = p.photo ? photoDe(p.photo) : null;
-          return (
-            <li>
-              <figure class="gens__carte" data-reveal="up" data-delay={String(i * 0.08)}>
-                <div class={`gens__photo${ph ? '' : ' gens__photo--vide'}`}>
-                  {ph ? <img src={asset(ph.src)} alt={ph.alt} width={ph.largeur} height={ph.hauteur} loading="lazy" decoding="async" /> : <Fragment><span class="gens__initiale" aria-hidden="true">{p.nom[0]}</span><span class="gens__vide">Photo à fournir</span></Fragment>}
-                </div>
-                <figcaption>
-                  <p class="gens__nom">{p.nom}</p>
-                  <p class="gens__role">{p.role}{p.rolePlaceholder && <span class="illu">rôle à confirmer</span>}</p>
-                </figcaption>
-              </figure>
-            </li>
-          );
-        })}
+      <ul class="fournees equipe" role="list" data-reveal="up">
+        {site.equipe.map((p) => (
+          <li><span class="equipe__nom">{p.nom}</span><span class="equipe__role">{p.role}{p.rolePlaceholder && <span class="illu">rôle à confirmer</span>}</span></li>
+        ))}
       </ul>
     </div>
   </section>

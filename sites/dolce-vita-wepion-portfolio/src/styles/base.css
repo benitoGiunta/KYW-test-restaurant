@@ -162,7 +162,7 @@ html:not(.motion) .levee__legende { display: none; }
 .fiche__nom a:focus-visible { outline: 2px solid var(--tomate); }
 .fiche__desc { font-style: italic; color: var(--c-muted); margin-top: 0.3em; }
 .fiche__prix { font-weight: 500; margin-top: 0.4em; }
-.fiche__tag { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--tomate); margin-left: 0.6em; font-family: var(--f-body); font-weight: 500; }
+.fiche__tag { display: inline-block; white-space: nowrap; overflow-wrap: normal; font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--tomate); margin-left: 0.6em; font-family: var(--f-body); font-weight: 500; }
 @media (max-width: 767px) {
   .cat__grid { gap: calc(var(--u) * 2.5) var(--u); }
   .fiche { grid-template-columns: 1fr; }
@@ -310,3 +310,9 @@ html:not(.motion) .loader__four path { stroke-dashoffset: 0; }
 .quatre { font-size: clamp(6rem, 30vw, 30rem); line-height: 0.8; color: var(--croute); }
 
 @media (prefers-reduced-motion: reduce) { .gens__initiale { transition: none; } }
+
+/* Équipe : liste de texte tant qu'aucune photo n'est fournie (revue 1, F2-2) */
+.equipe { padding-left: 0; list-style: none; margin-block: 0; }
+.equipe__nom { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: var(--t-l); line-height: 1; }
+.equipe__role { color: var(--c-muted); text-align: right; align-self: center; }
+@media (max-width: 767px) { .equipe li { flex-direction: column; align-items: flex-start; gap: 0.2em; } .equipe__role { text-align: left; align-self: flex-start; } }
