@@ -9,7 +9,7 @@ const quai = carte.filter((c) => c.rive === 'quai');
 const eau = carte.filter((c) => c.rive === 'eau');
 const photoDe: Record<string, CleePhoto> = { 'les-entrees': 'tartare', poissons: 'sole', viandes: 'boeuf', huitres: 'huitres', plateaux: 'ecailler' };
 const prix = (p: number[] | null, portions?: string[]) =>
-  p === null ? 'prix du jour' : p.map((v, i) => (portions?.[i] ? `${portions[i]} ${euros(v)}` : euros(v))).join(' · ');
+  p === null ? ['prix du jour'] : p.map((v, i) => (portions?.[i] ? `${portions[i]} ${euros(v)}` : euros(v)));
 ---
 <Base title="La carte" page="carte" description="La carte de la Brasserie du Quai à Namur : entrées, poissons, viandes, banc d’écailler, huîtres et plateaux de fruits de mer, avec les prix.">
   <Quai lignes={['La carte']} id="titre-carte">
@@ -29,7 +29,7 @@ const prix = (p: number[] | null, portions?: string[]) =>
           {c.plats.map((p) => (
             <li class="plat">
               <span class="plat__nom">{p.nom}{p.detail && <span class="plat__detail">{p.detail}</span>}</span>
-              <span class="plat__prix">{p.placeholder ? 'à confirmer' : prix(p.prix, p.portions)}</span>
+              <span class="plat__prix">{p.placeholder ? 'à confirmer' : prix(p.prix, p.portions).map((t) => <span class="plat__portion">{t}</span>)}</span>
             </li>
           ))}
         </ul>
@@ -50,7 +50,7 @@ const prix = (p: number[] | null, portions?: string[]) =>
           {c.plats.map((p) => (
             <li class="plat">
               <span class="plat__nom">{p.nom}{p.detail && <span class="plat__detail">{p.detail}</span>}</span>
-              <span class="plat__prix">{prix(p.prix, p.portions)}</span>
+              <span class="plat__prix">{prix(p.prix, p.portions).map((t) => <span class="plat__portion">{t}</span>)}</span>
             </li>
           ))}
         </ul>

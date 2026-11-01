@@ -11,7 +11,7 @@ const nb = ' ';
 export const site = {
   nom: 'La Brasserie du Quai',
   nomCourt: 'Brasserie du Quai',
-  baseline: 'Brasserie et banc d’écailler sur la Meuse, à Namur',
+  baseline: 'Brasserie et écailler sur la Meuse, Namur',
   description:
     'Brasserie et banc d’écailler au pied du pont du Luxembourg, à Namur : baies vitrées et terrasse chauffée sur la Meuse, huîtres du jeudi au lundi.',
   typeCuisine: ['Brasserie', 'Fruits de mer', 'Cuisine belge'],

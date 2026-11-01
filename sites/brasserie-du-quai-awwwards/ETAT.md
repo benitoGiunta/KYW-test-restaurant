@@ -1,4 +1,4 @@
-# ETAT : brasserie-du-quai, variante awwwards (fin de construction-2, 01/11/2026)
+# ETAT : brasserie-du-quai, variante awwwards (fin de construction-3, 01/11/2026)
 
 ## Fait (phase 1 sur 3)
 
@@ -40,13 +40,22 @@
   partout (1440 : 720-768 ; 1280 : 662-710 ; 1024 : 573-621 ; 390 : 575-675 sur 844) ; navigation ClientRouter
   rejoue l'entrée ; en mouvement réduit rien ne bouge (filtre au repos, repère à 62 %).
 
-## Reste (phase 3)
+## Fait (phase 3 sur 3, construction-3 : QA)
 
-1. QA complète par l'agent « captures » (`QA-<étape>.md`), puis jury, deux passes.
-2. À surveiller : coût du filtre SVG sur mobile throttlé (FPS non mesuré) ; si < 50 i/s, couper l'animation
-   du filtre sous 760 px (le garder au repos) ou passer à 20 i/s.
-3. Calage fin du titre sur la ligne (`margin-bottom: -0.06em`) : bon à l'œil à 1440 et 390.
-4. RAPPORT.md, `pnpm index`, commit de dist.
+- Lu `QA-build.md` et les planches accueil, carte, 404. Corrigé : vignette des huîtres qui recouvrait le texte du banc
+  (desktop et mobile), prix d'huîtres en `nowrap` qui écrasaient le nom sur la carte mobile (une ligne par portion),
+  note « Allergènes » écrasée en colonne 1 (`<p class="wrap">`), virgule « 19 ,20 » (`tabular-nums` retiré des prix),
+  contraste axe du reflet (`::before { content: attr(data-texte) }`), titre de l'accueil 73 → 64 caractères,
+  phrases répétées pied/corps.
+- Vérifié par captures ciblées `.shots/home/`, `.shots/carte/` (0 erreur, 0 axe sérieux, LCP mobile 1,1 à 1,3 s,
+  CLS 0, 59-60 i/s) et mesure Playwright des recouvrements (1440, 1024, 390). Audit sur racine de QA : 0 FAIL, 2 WARN
+  justifiés. 404 de QA-build = faux positif (servie sans racine de QA).
+- `RAPPORT.md` écrit (QA, mesures, placeholders). Build final OK, `pnpm index` relancé.
+
+## Reste
+
+1. Passe jury indépendante (`/jury`) : aucun critique n'a tourné (pas d'outil `Agent`).
+2. Relire à l'œil les paires hover `colorOnly` de l'accueil et les pages histoire et réservation en capture.
 
 ## Décisions
 
