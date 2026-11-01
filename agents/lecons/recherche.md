@@ -7,3 +7,4 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 - Recouper l'adresse de `data/restaurants.json` avec le pied de page du site du client (elle peut être celle d'un autre établissement).
 - Les descriptions de technologies et de mécaniques d'un site sont à vérifier dans le HTML (les faux positifs abondent) ; ne rien affirmer sans preuve ; avis Google et abonnés `null` sauf affichage par le site.
 - 2026-11-01 : site WordPress/Elementor avec agenda : la page restaurant donne la carte en texte HTML (strip des balises) ; l'adresse de restaurants.json est le siège BCE, le site donne une autre adresse (Rue Lelièvre 4).
+- 2026-11-01 : site Next.js sur mesure (carte en texte HTML dans /carte/, strip des balises) ; la note de restaurants.json annonçait une réservation en ligne alors que le site n'accepte que le téléphone ; les posters vidéo (hero-poster.jpg) peuvent montrer autre chose que la vidéo.
