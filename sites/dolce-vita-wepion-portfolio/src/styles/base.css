@@ -1,4 +1,4 @@
-/* STYLES « Forno » : brun du four, farine, tomate. Le moteur (engine.css) reste intact. */
+/* STYLES « Dolce Vita » (gabarit Forno) : vert du four, farine, tomate. Le moteur (engine.css) reste intact. */
 @import './engine.css';
 
 body { background: var(--c-bg); color: var(--c-fg); font-family: var(--f-body); font-size: var(--t-body); line-height: 1.5; }
@@ -124,6 +124,8 @@ em, .it { font-style: italic; }
   top: calc(50% * (1 - var(--p)) + (var(--hdr) + var(--u)) * var(--p));
   translate: calc(-50% * (1 - var(--p))) calc(-50% * (1 - var(--p)));
   text-shadow: 0 0 40px rgb(29 42 34 / 0.5); }
+.levee__rail { position: absolute; z-index: 3; left: 0; right: 0; top: var(--hdr); height: 3px; background: var(--tomate); transform-origin: left; transform: scaleX(var(--p)); }
+html:not(.motion) .levee__rail { display: none; }
 .levee__legende { position: absolute; z-index: 2; left: var(--gutter); bottom: calc(var(--u) * 3); max-width: 18rem; color: var(--farine); opacity: calc(1 - var(--p) * 2); font-size: var(--t-s); }
 .marquee { position: absolute; z-index: 2; left: 0; right: 0; bottom: calc(var(--u) * 2); overflow: hidden; opacity: clamp(0, (var(--p) - 0.72) * 4, 1); translate: 0 calc((1 - var(--p)) * 20vh); color: var(--farine); }
 .marquee__track { display: flex; gap: 0; width: max-content; will-change: transform; }
@@ -188,16 +190,26 @@ html:not(.motion) .levee__legende { display: none; }
 /* Les gens : carrousel qui déborde à droite */
 .gens__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--u); margin-bottom: calc(var(--u) * 3); }
 .gens__fleches { display: flex; gap: 0.5rem; }
+.gens__fleches[hidden] { display: none; }
 .rond { width: 44px; height: 44px; border-radius: 50%; border: 1px solid currentColor; background: transparent; color: inherit; display: grid; place-items: center; cursor: pointer; transition: background 0.3s, color 0.3s; }
 .rond:hover { background: var(--c-fg); color: var(--c-bg); }
 .rond:focus-visible { outline: 2px solid var(--tomate); outline-offset: 3px; }
 .gens__piste { display: flex; gap: var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-right: calc(-1 * var(--gutter)); padding-right: var(--gutter); padding-bottom: 0.5rem; }
+.gens__piste { list-style: none; margin-block: 0; padding-left: 0; }
+.gens__piste > li { list-style: none; }
 .gens__piste::-webkit-scrollbar { display: none; }
 .gens__piste > * { flex: 0 0 min(18rem, 72vw); scroll-snap-align: start; }
 .gens__carte { margin: 0; }
 .gens__carte .gens__photo { aspect-ratio: 3 / 4; overflow: clip; display: grid; place-items: center; background: var(--four); color: var(--farine); }
 .gens__carte img { width: 100%; height: 100%; object-fit: cover; }
 .gens__carte .gens__photo--vide { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: 1.1rem; text-align: center; padding: 1rem; border: 1px solid var(--c-line); background: transparent; color: var(--c-muted); }
+.gens__carte .gens__photo--vide { position: relative; background: var(--four); color: var(--farine); border-color: var(--four); align-content: end; justify-items: start; text-align: left; font-size: var(--t-xs); letter-spacing: 0.08em; transition: background 0.4s; }
+.gens__initiale { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--f-display); font-weight: 800; font-size: 9rem; line-height: 1; color: var(--tomate); opacity: 0.9; transition: scale 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+.gens__vide { position: relative; opacity: 0.8; }
+.gens__carte:hover .gens__initiale { scale: 1.12; }
+.rond[aria-disabled='true'] { opacity: 0.3; cursor: default; }
+.rond[aria-disabled='true']:hover { background: transparent; color: inherit; }
+.gens__piste:focus-visible { outline: 2px solid var(--tomate); outline-offset: 4px; }
 .gens__carte figcaption { margin-top: 0.8em; }
 .gens__nom { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: 1.6rem; line-height: 0.95; }
 .gens__role { color: var(--c-muted); }
@@ -296,3 +308,5 @@ html:not(.motion) .loader__four path { stroke-dashoffset: 0; }
 
 /* 404 */
 .quatre { font-size: clamp(6rem, 30vw, 30rem); line-height: 0.8; color: var(--croute); }
+
+@media (prefers-reduced-motion: reduce) { .gens__initiale { transition: none; } }

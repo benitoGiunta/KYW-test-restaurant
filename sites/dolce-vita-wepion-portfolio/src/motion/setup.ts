@@ -1,4 +1,4 @@
-// Motion « Forno » : loader four tracé, rideau porte de four, hero qui monte, levée (--p scrubée), marquee lié à la
+// Motion « Dolce Vita » (gabarit Forno) : loader four tracé, rideau porte de four, hero qui monte, levée (--p scrubée), marquee lié à la
 // vélocité, compte à rebours calculé depuis les horaires réels, zones de thème pour l'en-tête, carrousel des gens.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -174,9 +174,22 @@ function gens() {
     const pas = () => (piste.firstElementChild as HTMLElement | null)?.offsetWidth ?? 300;
     const prev = () => piste.scrollBy({ left: -pas() - 24, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
     const next = () => piste.scrollBy({ left: pas() + 24, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
-    const bp = root.querySelector('[data-gens-prev]'), bn = root.querySelector('[data-gens-next]');
-    bp?.addEventListener('click', prev); bn?.addEventListener('click', next);
-    offs.push(() => { bp?.removeEventListener('click', prev); bn?.removeEventListener('click', next); });
+    const bp = root.querySelector<HTMLElement>('[data-gens-prev]'), bn = root.querySelector<HTMLElement>('[data-gens-next]');
+    const fleches = root.querySelector<HTMLElement>('.gens__fleches');
+    // Flèches : état inactif (aria-disabled, pas de perte de focus) aux deux bouts de la piste.
+    const etat = () => {
+      const max = piste.scrollWidth - piste.clientWidth - 2;
+      if (fleches) fleches.hidden = max <= 0; // rien à faire défiler : les flèches disparaissent
+      bp?.setAttribute('aria-disabled', String(piste.scrollLeft <= 2));
+      bn?.setAttribute('aria-disabled', String(piste.scrollLeft >= max));
+    };
+    const clicP = () => { if (bp?.getAttribute('aria-disabled') !== 'true') prev(); };
+    const clicN = () => { if (bn?.getAttribute('aria-disabled') !== 'true') next(); };
+    bp?.addEventListener('click', clicP); bn?.addEventListener('click', clicN);
+    piste.addEventListener('scroll', etat, { passive: true });
+    window.addEventListener('resize', etat);
+    etat();
+    offs.push(() => { bp?.removeEventListener('click', clicP); bn?.removeEventListener('click', clicN); piste.removeEventListener('scroll', etat); window.removeEventListener('resize', etat); });
   });
   return () => offs.forEach((o) => o());
 }

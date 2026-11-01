@@ -41,6 +41,7 @@ const m = site.manifeste;
   <!-- LEVÉE (signature) : la photo grossit de la vignette au plein écran, le titre rétrécit en coin, le marquee traverse. -->
   <section class="levee s-four" id="levee" data-theme-zone="four" data-levee aria-label="La pizza lève">
     <div class="levee__stage">
+      <span class="levee__rail" aria-hidden="true"></span>
       <figure class="levee__media">
         <img src={asset(leveePhoto.src)} alt={leveePhoto.alt} width={leveePhoto.largeur} height={leveePhoto.hauteur} loading="lazy" decoding="async" />
       </figure>
@@ -103,18 +104,18 @@ const m = site.manifeste;
       <div class="gens__head">
         <h2 data-split="words">Les gens</h2>
         <div class="gens__fleches">
-          <button class="rond" type="button" data-gens-prev aria-label="Personnes précédentes"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2 4 8l6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <button class="rond" type="button" data-gens-prev aria-label="Personnes précédentes" aria-disabled="true"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2 4 8l6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
           <button class="rond" type="button" data-gens-next aria-label="Personnes suivantes"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 2 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
         </div>
       </div>
-      <ul class="gens__piste" data-gens-piste role="list">
+      <ul class="gens__piste" data-gens-piste role="list" tabindex="0" aria-label="Les gens de la maison">
         {site.equipe.map((p, i) => {
           const ph = p.photo ? photoDe(p.photo) : null;
           return (
             <li>
               <figure class="gens__carte" data-reveal="up" data-delay={String(i * 0.08)}>
                 <div class={`gens__photo${ph ? '' : ' gens__photo--vide'}`}>
-                  {ph ? <img src={asset(ph.src)} alt={ph.alt} width={ph.largeur} height={ph.hauteur} loading="lazy" decoding="async" /> : <span>Photo à fournir</span>}
+                  {ph ? <img src={asset(ph.src)} alt={ph.alt} width={ph.largeur} height={ph.hauteur} loading="lazy" decoding="async" /> : <Fragment><span class="gens__initiale" aria-hidden="true">{p.nom[0]}</span><span class="gens__vide">Photo à fournir</span></Fragment>}
                 </div>
                 <figcaption>
                   <p class="gens__nom">{p.nom}</p>
