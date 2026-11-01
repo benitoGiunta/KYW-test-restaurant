@@ -55,3 +55,8 @@
   emporter » (à confirmer, source Gault&Millau), année d'ouverture (à confirmer). Aucune photo libre.
 - Plan : schéma non à l'échelle (orientation de la Meuse supposée sud-ouest → nord-est à cet endroit), à retracer sur OSM.
 - Photo `chef-ecailler` : légendée « au poste de l'écailler » sans nom (personne non identifiée).
+
+## Passe 2 de relecture (relecteur-site, 01/11/2026)
+- Fait : `REVUE-2.md` écrit ; REVISION-1 vérifiée (6 corrections confirmées, F2-1 partielle). Verdict A_CORRIGER : 0 F0, 0 F1, 2 F2, 9 F3.
+- Reste pour le réviseur : F2-1 (note de la frise : dimanche en pointillé alors que la note le range dans « jeudi au lundi »), F2-2 (fit du nom en reduced-motion : coupé à 320 px, 64 % de largeur à 1440), puis les F3 de REVUE-2.
+- Pièges : la « 404 » du shoot est la page de repli de `serve.mjs` (tester `404.html`) ; le fit se vérifie après 5 s d'attente et à 320 px avec `reducedMotion: 'reduce'`.
