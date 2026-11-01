@@ -121,6 +121,7 @@ mark { background: color-mix(in oklab, var(--color-accent) 22%, transparent); co
 .moment .big small { font-size: var(--text-lg); font-weight: 500; letter-spacing: 0; }
 .moment .fig { aspect-ratio: 4 / 3; border-radius: var(--radius-stock); }
 .moment--accent { background: var(--grain), var(--fibre), var(--color-accent-soft); }
+.moment--accent .link { color: var(--color-ink); } /* révision 1 : le bleu tombe à 4,3:1 sur le rose */
 @media (max-width: 60rem) { .stack__pane { grid-column: 1 / -1; position: static; margin-bottom: var(--space-xl); } .stack__list { grid-column: 1 / -1; } .moment { padding: var(--space-lg); } }
 
 /* Agenda : Index */
@@ -216,8 +217,10 @@ mark { background: color-mix(in oklab, var(--color-accent) 22%, transparent); co
 .barre__in { pointer-events: auto; display: flex; align-items: center; gap: var(--space-lg); padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-lg); border-radius: var(--radius-pill); background: var(--grain), var(--fibre), var(--color-ink); color: var(--color-paper); box-shadow: var(--shadow-card); }
 .js .barre__in { visibility: hidden; translate: 0 calc(100% + var(--space-xl)); transition: translate var(--dur-short) var(--ease-out), visibility 0s linear var(--dur-short); }
 .js .is-barre .barre__in { visibility: visible; translate: 0 0; transition-delay: 0s; }
+/* Révision 1 (F2-2) : la barre s'efface pendant la liste de l'agenda (chaque ligne a son bouton) et sous 40 rem (le Réserver de la nav suffit) */
+.js .is-barre.is-agenda .barre__in { visibility: hidden; translate: 0 calc(100% + var(--space-xl)); transition: translate var(--dur-short) var(--ease-out), visibility 0s linear var(--dur-short); }
 .barre__in p { font-size: var(--text-sm); margin: 0; max-width: none; } .barre .btn { min-height: 44px; }
-@media (max-width: 40rem) { .barre__in p { display: none; } .barre__in { padding: var(--space-xs); } }
+@media (max-width: 40rem) { .barre { display: none; } }
 
 /* Mouvement : un seul reveal (.js, sans préférence de réduction) et la pose du billet */
 @media (prefers-reduced-motion: no-preference) {
