@@ -2,13 +2,13 @@
 import { NAV, SITE, u } from '../data/site';
 const { current = '', over = false } = Astro.props;
 ---
-<header class:list={['nav', { 'nav--over': over }]}>
+<header class:list={['nav', { 'nav--over': over }]} data-nav>
   <div class="container nav__in">
-    <a class="nav__brand" href={u()}>
+    <a class="nav__brand" href={u()} aria-label={`${SITE.nom}, accueil`}>
       <img src={u('logo-cream.png')} width="44" height="44" alt="" />
       <span class="nav__txt"><span class="nav__name">{SITE.nom}</span><span class="nav__sub">{SITE.lieu}</span></span>
     </a>
-    <nav aria-label="Navigation principale">
+    <nav class="nav__desk" aria-label="Navigation principale">
       <ul class="nav__list">
         {NAV.map((n) => (
           <li><a href={u(n.href)} aria-current={current === n.href ? 'page' : undefined}>{n.label}</a></li>
@@ -16,5 +16,21 @@ const { current = '', over = false } = Astro.props;
       </ul>
     </nav>
     <a class="btn btn--primary nav__cta" href={SITE.tel.href}>Réserver</a>
+    <button class="nav__toggle" type="button" popovertarget="menu" aria-controls="menu" aria-expanded="false">
+      <span class="nav__toggle-t">Menu</span>
+      <svg class="nav__burger" width="20" height="14" viewBox="0 0 20 14" aria-hidden="true" focusable="false"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="1.5" fill="none" /></svg>
+    </button>
+  </div>
+  <div class="menu" id="menu" popover>
+    <nav aria-label="Menu">
+      <ul class="menu__list">
+        <li><a href={u()} aria-current={current === '/' ? 'page' : undefined}>Accueil</a></li>
+        {NAV.map((n) => (
+          <li><a href={u(n.href)} aria-current={current === n.href ? 'page' : undefined}>{n.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <p class="menu__resa"><span>Réserver par téléphone</span><a href={SITE.tel.href}>{SITE.tel.aff}</a></p>
+    <p class="menu__etat" data-statut-menu></p>
   </div>
 </header>

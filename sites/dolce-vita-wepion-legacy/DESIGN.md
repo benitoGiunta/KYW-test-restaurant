@@ -12,6 +12,8 @@
 - **Sections** · Hero · Maison (Split) · Table (Index) · Geste (Split portrait) · Ardoise (Rows sur puits grainé) · Avis (3 colonnes) · À emporter (bande) · Fin (Schedule midi/soir)
 - **Material** · real : 14 photos, 86 plats, horaires, adresse, téléphone, 3 avis · pictures : client uniquement · absent : presse, GPS, abonnés, menus de fêtes, réservation en ligne
 - **Comp** · 2 built, no key · c1 chosen (`comp.md`)
+- **Hero review** · self (pas d'outil Agent en session d'agent) · fix · 1 finding · 1 resolved (bande sombre sous le hero à 1920×1080 : plafond 62rem retiré)
+- **Comp** · reproduced (checked at 1280x800) : voir comp.md
 - **Sweep** · phase 3
 
 ## Approche
@@ -48,4 +50,29 @@ Spore, dark/roman-serif/warm, committed. Young Serif sur Instrument Sans. Papier
 - [x] 6. Contraste calculé (accent sur papier 7,5 à 8,5:1, crème sur terracotta ≥ 4,5:1) · preuve : tokens.css:15
 - [x] 7. Typographie française : apostrophes, insécables, « 12 h 00 », prix « 18 € », aucun tiret cadratin · preuve : `src/data/site.ts` `typo()`, contrôle Python 0 tiret
 - [x] 8. Noindex, mention KYW, un seul pied KYW sur les 5 routes · preuve : grep de `dist/` (robots, kyw-signature, Maquette KYW = 1 chacun)
-- [ ] 9. `sloplint --render`, états des contrôles en navigateur, horaires « ce soir » : phase 2 et 3
+- [x] 9. `sloplint --render --stage hero` : 0 FAIL, 3 WARN 49 (faux positifs : `.btn` est `nowrap`), états en navigateur, horaires testés avec `page.clock` · preuve : `.logs/sloplint-l2c.log`, `.logs/dvl2-test.log`
+- [x] 2. Pas de `transition: all`, aucune animation de géométrie : `transform`, `opacity`, couleurs seulement · preuve : page.css `.nav`, `.menu`, `[data-reveal]`, `.btn`
+- [x] 6. `:focus-visible` global, instantané, 2 px `--color-focus` (78 % L, > 3:1 sur le papier) · preuve : base.css:7
+- [x] 7. Fallback reduced motion : règle globale base.css (durées 0,01 ms), reveal non posé par le script, lever de lumière figé à 0 ; contenu visible sans script (mesuré : 0 élément à opacité 0, nav `absolute`) · preuve : ui.ts (`reduit`), `.logs/dvl2-ui.log`
+- [x] 17. Hero `max(34rem, 100dvh)` · preuve : page.css `.hero`
+- [x] 19. Un seul sticky `top: 0` (la nav, `z-sticky-nav`), `scroll-padding-top` = `--nav-h` + 16 px · preuve : page.css `.nav`, `html`
+- [x] 20. Radios-onglets : aucun (pas de switcher de carte, Index de catégories en liens) · preuve : § Approche
+- [x] 21. Vidéo de fond : aucune (photo fixe, dérogation 28a) · preuve : § Approche
+- [x] 22. Reveal posé par le script (`data-reveal`, `.js` seulement), une fois, jamais sur le hero, `.phead` ni `.fin` · preuve : ui.ts, page.css `[data-reveal]`
+- [x] 23. États d'input : sans objet, aucun champ (réservation par téléphone, `tel:` conservé) · preuve : site.ts `SITE.tel`
+- [x] 24. Aucune auto-rotation, aucun tooltip · preuve : grep `setInterval`, `title=` dans src
+- [x] 29. Aucun faux envoi : aucun formulaire · preuve : grep `<form` dans src
+- [x] 30. SVG décoratif (burger) en `aria-hidden` · preuve : Nav.astro
+- [x] 48. Hover : un signal par contrôle, dans `@media (hover: hover)`, pas de rebond, pas de toast · preuve : page.css `.btn`, `.link`, `.nav__list`
+- [x] 49. `:active` sur bouton, lien, puce, bascule du menu ; disabled par trois canaux (fond, bordure, curseur) ; contrôles 44 à 56 px, mesurés à 7 largeurs · preuve : `.logs/dvl2-test.log`
+- [x] 56. Un primaire rempli par écran (le CTA de nav est masqué sous 40rem, il reste le primaire du hero) · preuve : page.css `.nav__cta`
+- [x] 58. Une recette de conteneur (plaque, puits) ; pilule réservée aux contrôles ; aucune chorégraphie de scroll (original non animé au scroll) · preuve : page.css
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` thémés · preuve : base.css:3-5
+- [x] 72. Breakpoints 60rem et 40rem, `(hover: hover)`, `(pointer: coarse)`, tableau restacké, `dvh`, safe-area dans `.container`, aucun débordement de 320 à 1440 sur les 4 routes · preuve : `.logs/dvl2-test.log`
+
+## Phase 2 : composants interactifs (réalisés)
+
+- **Nav** : bandeau (banner), 72 px, sticky, fixe sur la photo à l'accueil (transparente puis `is-solid` après 24 px), se rétracte au défilement vers le bas au-delà de 240 px et revient vers le haut ; reste visible au focus et menu ouvert. Sous 60rem : `<button popovertarget>` + Popover (pas de `<dialog>`), fermé par Échap, clic extérieur, lien ; le CTA « Réserver » passe dans le menu sous 40rem (numéro de téléphone en grand). Logo `aria-label`. Skip link et `main tabindex="-1"`.
+- **Signature** : « la lumière du soir se lève » (voile `--color-paper` de 55 % à 0 en 2,4 s sur la façade, opacité seule, une fois) et l'état « Ouvert, jusqu'à 22 h 00 » / « ouvre ce soir dès 18 h 00 » calculé depuis les horaires, heure de Bruxelles ; la ligne du jour et le créneau en cours sont marqués dans le tableau (`aria-current="date"`). Caractère de motion : calm.
+- **Reveal** : un seul, 18 px et opacité, 420 ms `--ease-out`, décalage 70 ms plafonné à 4 rangs, sur les blocs sous le premier écran (hors hero, `.phead`, `.fin`).
+- **Formulaire** : aucun (réservation par téléphone), `tel:` conservé.

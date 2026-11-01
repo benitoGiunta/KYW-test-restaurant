@@ -20,7 +20,7 @@ const { photo = null } = Astro.props;
         <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
         <tbody>
           {HORAIRES.map((j) => (
-            <tr data-jour={j.jour.toLowerCase()} class:list={{ 'is-ferme': j.ferme }}>
+            <tr data-jour={j.jour.toLowerCase()} data-midi={j.rmidi} data-soir={j.rsoir} class:list={{ 'is-ferme': j.ferme }}>
               <th scope="row">{j.jour}</th>
               <td data-label="Midi" class:list={{ muted: !j.midi }}>{j.midi ?? 'Fermé'}</td>
               <td data-label="Soir" class:list={{ muted: !j.soir }}>{j.soir ?? 'Fermé'}</td>

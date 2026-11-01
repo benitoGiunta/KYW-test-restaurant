@@ -60,6 +60,9 @@ export const HORAIRES = [
   jour: j.jour,
   midi: j.midi ? cr(...j.midi) : null,
   soir: j.soir ? cr(...j.soir) : null,
+  /** créneaux bruts « HH:MM-HH:MM » lus par le script d'état (nav, hero, tableau) */
+  rmidi: j.midi ? j.midi.join('-') : '',
+  rsoir: j.soir ? j.soir.join('-') : '',
   ferme: !j.midi && !j.soir,
 }));
 
