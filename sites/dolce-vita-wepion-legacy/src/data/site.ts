@@ -70,7 +70,7 @@ type P = { file: string; w: number; h: number; w2: number; h2: number; alt: stri
 export const ph = (id: string): P => (photos as Record<string, P>)[id];
 
 const TAGLINES: Record<string, string | null> = {
-  Antipasti: 'Pour commencer en partageant.',
+  Antipasti: 'Pour commencer à plusieurs.',
   Pasta: 'Cuites al dente, comme il se doit.',
   Pizze: 'Une pâte travaillée avec soin, des ingrédients choisis pour leur qualité.',
   'Le preferite': 'Les pizzas qui ont leurs habitués.',

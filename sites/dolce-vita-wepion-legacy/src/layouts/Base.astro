@@ -2,10 +2,30 @@
 import KywFooter from '@kyw/footer';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { u } from '../data/site';
+import { u, SITE, HORAIRES } from '../data/site';
 
-interface Props { title: string; description: string; current?: string; over?: boolean; og?: string }
-const { title, description, current = '', over = false } = Astro.props;
+interface Props { title: string; description: string; current?: string; over?: boolean; og?: string; ld?: boolean }
+const { title, description, current = '', over = false, ld = true } = Astro.props;
+const site = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
+const ogImage = new URL(u('photos/01-facade-soir-poster.webp'), site).href;
+const pageUrl = new URL(Astro.url.pathname, site).href;
+const JOURS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: SITE.nom,
+  servesCuisine: 'Italienne',
+  telephone: '+3281855420',
+  email: SITE.email,
+  address: { '@type': 'PostalAddress', streetAddress: SITE.adresse.rue, postalCode: '5100', addressLocality: 'Wépion', addressCountry: 'BE' },
+  openingHoursSpecification: HORAIRES.flatMap((j, i) =>
+    [j.rmidi, j.rsoir].filter(Boolean).map((c) => {
+      const [opens, closes] = c.split('-');
+      return { '@type': 'OpeningHoursSpecification', dayOfWeek: JOURS[i], opens, closes };
+    })),
+  sameAs: [SITE.facebook, SITE.instagram],
+  image: ogImage,
+};
 const base = import.meta.env.BASE_URL;
 ---
 <!doctype html>
@@ -18,7 +38,18 @@ const base = import.meta.env.BASE_URL;
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#1c1a15" />
-    <link rel="icon" href={u('logo-cream.png')} type="image/png" />
+    <link rel="icon" href={u('favicon.png')} type="image/png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content={SITE.nom} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="900" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {ld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
