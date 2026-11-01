@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, telHref, photoDe } from '../data/site';
+import { asset } from '../lib/url';
+const salle = photoDe('/photos/salle-rideaux-large.webp');
+const scene = photoDe('/photos/scene-rires.webp');
+const mail = `mailto:${site.email.valeur}?subject=${encodeURIComponent('Privatisation')}`;
+---
+<Base title="Privatisation" description={`Privatiser ${site.nom} à ${site.adresse.commune} : team building, anniversaire, soirée d'entreprise, stand-up privé. Demande par e-mail ou téléphone.`}>
+  <section class="page-hero" style="background: var(--c-bg)" data-activite="Privatiser" data-couleur="ecru">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">Le lieu est à <em>vous</em></span></h1>
+      <p class="lead">{site.privatisation.phrase}</p>
+    </div>
+  </section>
+
+  <section class="surphoto" style="border-top: 0">
+    <div class="surphoto__photo">
+      <img src={asset(salle.src)} srcset={`${asset('/photos/salle-rideaux-large-640.webp')} 640w, ${asset(salle.src)} ${salle.largeur}w`} sizes="100vw" alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="eager" fetchpriority="high" decoding="async" />
+    </div>
+    <div class="wrap">
+      <div class="cartouche">
+        <p class="sur">Votre demande</p>
+        <p class="muted" style="margin-bottom: var(--u)">Formulaire de démonstration sans envoi. Pour une vraie demande, écrivez à <a class="link" href={mail}>{site.email.valeur}</a> ou appelez le <a class="link" href={telHref()}>{site.telephone}</a>.</p>
+        <form class="form" data-demo="privatisation" action="#" method="post">
+          <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+          <div class="form__deux">
+            <label>Jour souhaité <input type="date" name="date" required /></label>
+            <label>Invités <input type="number" name="couverts" min="2" value="20" required /></label>
+          </div>
+          <label>Occasion <select name="type"><option>Team building</option><option>Anniversaire</option><option>Soirée d'entreprise</option><option>Stand-up privé</option></select></label>
+          <label>Message <textarea name="message" rows="3"></textarea></label>
+          <div class="actions" style="margin-top: 0"><button class="btn btn--ink" type="submit">Envoyer la demande</button></div>
+          <p class="form__ok" role="status">Démonstration : en production, cette demande part par e-mail à Chez Guillaume.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--rose" aria-labelledby="t-form">
+    <div class="wrap damier damier--inv">
+      <div>
+        <h2 class="titre titre--l" id="t-form"><span class="etiquette etiquette--ink" data-split="lines">Trois <em>occasions</em></span></h2>
+        <ul class="lignes">
+          <li><span>Team building : un repas, une scène, des collègues</span></li>
+          <li><span>Anniversaire : la salle pour vous et vos invités</span></li>
+          <li><span>Soirée d'entreprise, avec un stand-up privé si vous le souhaitez</span></li>
+        </ul>
+        <div class="actions">
+          <a class="btn btn--ink" href={mail}>Écrire pour privatiser</a>
+          <a class="btn" href={telHref()}>{site.telephone}</a>
+        </div>
+      </div>
+      <div class="damier__photo"><img src={asset(scene.src)} alt={scene.alt} width={scene.largeur} height={scene.hauteur} loading="lazy" decoding="async" /></div>
+    </div>
+  </section>
+</Base>

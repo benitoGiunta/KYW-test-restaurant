@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import { asset } from '../lib/url';
+const bar = photoDe('/photos/bar-cocktails.webp');
+const mail = (sujet: string) => `mailto:${site.email.valeur}?subject=${encodeURIComponent(sujet)}`;
+---
+<Base title="Billets et réservation" description={`Réserver chez ${site.nom} à ${site.adresse.commune} : ticket et table du soir sur la billetterie, brunch du dimanche par e-mail ou au ${site.telephone}, bon cadeau.`}>
+  <section class="page-hero" style="background: var(--c-postit)">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">Réserver, <em>venir</em></span></h1>
+      <p class="lead">Le soir, votre table est liée à votre ticket de spectacle. Le dimanche, le brunch se réserve par e-mail ou par téléphone.</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" style="border-top: 0">
+    <div class="wrap damier">
+      <div>
+        <div class="formules formules--colonne">
+          <article class="formule">
+            <h2 class="sur">Le soir, du mercredi au samedi</h2>
+            <p>Prenez votre ticket sur la billetterie : la table du repas (18h30 à 20h30) vous est attribuée avec lui. Le repas est obligatoire et se règle à part.</p>
+            <div class="actions"><a class="btn btn--ink" href={site.reservation.url} rel="noopener">Ouvrir la billetterie</a></div>
+          </article>
+          <article class="formule">
+            <h2 class="sur">Le dimanche, brunch et spectacle</h2>
+            <p>Brunch de 11h30 à 14h (35 €, 15 € moins de 12 ans), spectacle à 15h (ticket 20 €). Réservation du brunch par e-mail ou par téléphone.</p>
+            <div class="actions">
+              <a class="btn btn--ink" href={mail('Brunch du dimanche')}>Écrire</a>
+              <a class="btn" href={telHref()}>{site.telephone}</a>
+            </div>
+          </article>
+          <article class="formule" id="bon-cadeau">
+            <h2 class="sur">Bon cadeau</h2>
+            <p>{site.bonCadeau.phrase}</p>
+            <div class="actions"><a class="btn" href={site.bonCadeau.url} rel="noopener">Offrir un bon cadeau</a></div>
+          </article>
+        </div>
+      </div>
+      <div class="damier__photo">
+        <img src={asset(bar.src.replace('.webp', '-800.webp'))} srcset={`${asset('/photos/bar-cocktails-640.webp')} 640w, ${asset('/photos/bar-cocktails-800.webp')} 800w`} sizes="(max-width: 47.9375rem) 100vw, 42rem" alt={bar.alt} width="800" height="1000" loading="eager" decoding="async" />
+        <div style="padding: calc(var(--u) * 3)">
+          <h2 class="titre titre--l" style="margin-bottom: var(--u)"><span class="etiquette">Horaires</span></h2>
+          <dl class="horaires">{site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}</dl>
+          <p style="margin-top: calc(var(--u) * 2)"><strong>Adresse</strong><br />{adresseLigne()}</p>
+          <p class="muted" style="margin-top: var(--u)">{site.quartier.phrase}</p>
+          <p style="margin-top: var(--u)"><a class="link" href={telHref()}>{site.telephone}</a><br /><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--bleu" aria-labelledby="t-faq">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-faq"><span class="etiquette" data-split="lines">Les questions <em>fréquentes</em></span></h2>
+      <div class="faq">
+        {site.faq.map((f) => (
+          <details class="faq__item">
+            <summary>{f.q}</summary>
+            <p>{f.r}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,184 @@
+---
+import Base from '../layouts/Base.astro';
+import Agenda from '../components/Agenda.astro';
+import Vague from '../components/Vague.astro';
+import { site, photoDe, horaireTexte, telHref, activiteDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/hero-scene.webp');
+const tablePhoto = photoDe('/photos/plat-boudin.webp');
+const brunchPhoto = photoDe('/photos/brunch-tartelette.webp');
+const privPhoto = photoDe('/photos/salle-projecteurs-large.webp');
+const [a, b] = site.nom.split(' ');
+const table = activiteDe('table');
+const scene = activiteDe('scene');
+const brunch = activiteDe('brunch');
+const presse = site.avis[0];
+const ticketDimanche = site.formules[1];
+const enfants = site.formules[2];
+const itineraire = `https://www.openstreetmap.org/search?query=${encodeURIComponent(`${site.adresse.rue} ${site.adresse.numero}, ${site.adresse.cp} ${site.adresse.commune}`)}`;
+---
+<Base>
+  <Fragment slot="head">
+    <link rel="preload" as="image" href={asset('/photos/hero-scene.webp')} imagesrcset={`${asset('/photos/hero-scene-640.webp')} 640w, ${asset('/photos/hero-scene.webp')} 1000w`} imagesizes="100vw" fetchpriority="high" />
+  </Fragment>
+
+  <section class="hero" data-hero>
+    <div class="hero__photo">
+      <img src={asset('/photos/hero-scene.webp')} srcset={`${asset('/photos/hero-scene-640.webp')} 640w, ${asset('/photos/hero-scene.webp')} 1000w`} sizes="100vw" alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="sync" />
+    </div>
+    <div class="wrap hero__inner">
+      <h1 class="hero__cases">
+        <span class="hero__case" data-hero-case>{a}</span>
+        <span class="hero__case" data-hero-case>{b}</span>
+        <span class="hero__case hero__case--petit" data-hero-case>restaurant <em>&amp;</em> comedy club</span>
+      </h1>
+      <div class="hero__ligne">
+        <p class="etiquette" data-hero-apres>{site.adresse.commune}, en face de la place Saint-Aubain</p>
+        <a class="btn btn--ink" href={site.reservation.url} rel="noopener" data-hero-apres data-magnetic="0.2">Prendre un ticket</a>
+        <a class="btn" href={u('/carte/')} data-hero-apres>Les menus du mois</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" aria-labelledby="manifeste">
+    <div class="wrap manifeste">
+      <div>
+        <h2 class="sr-only" id="manifeste">Manifeste</h2>
+        <p class="manifeste__phrase" data-split="lines">{site.manifeste.avant}<em>{site.manifeste.italique}</em>{site.manifeste.apres}</p>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)" data-reveal="up">{site.histoire[1]}</p>
+      </div>
+      <div class="bulle" data-reveal="up" data-delay="0.15">
+        <p class="sur">On en parle</p>
+        <p>« {presse.texte} »</p>
+        <span class="bulle__qui">{presse.source}, septembre 2025</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--vert" id="table" data-activite={table.nom} data-couleur={table.couleur} aria-labelledby="t-table">
+    <div class="wrap">
+      <h2 class="titre" id="t-table"><span class="etiquette etiquette--ink" data-split="lines">{table.accroche} <em>{table.motItalique}</em></span></h2>
+      <div class="damier" data-reveal="up">
+        <div>
+          <p class="sur">Trois menus, renouvelés chaque mois</p>
+          <ul class="lignes">
+            {site.menus.map((m) => <li><span>{m.nom}</span><span class="prix-ligne">{m.prix}</span></li>)}
+          </ul>
+          <p class="muted" style="margin-block: var(--u)">2 ou 3 services. Du mercredi au samedi, servi entre 18h30 et 20h30, juste avant le spectacle. Repas obligatoire, hors ticket.</p>
+          <div class="stickers">
+            {site.stickers.map((s) => <span class="sticker" tabindex="0">{s.texte}{s.placeholder && <span class="illu">exemple</span>}</span>)}
+          </div>
+          <div class="actions">
+            <a class="btn" href={u('/carte/')}>Toute la carte</a>
+            <a class="btn btn--ink" href={site.reservation.url} rel="noopener">Prendre un ticket</a>
+          </div>
+        </div>
+        <div class="damier__photo">
+          <img src={asset(tablePhoto.src)} srcset={`${asset('/photos/plat-boudin-640.webp')} 640w, ${asset('/photos/plat-boudin-800.webp')} 800w, ${asset(tablePhoto.src)} 1000w`} sizes="(max-width: 47.9375rem) 100vw, 42rem" alt={tablePhoto.alt} width={tablePhoto.largeur} height={tablePhoto.hauteur} loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--rose" id="scene" data-activite={scene.nom} data-couleur={scene.couleur} aria-labelledby="t-scene">
+    <div class="wrap">
+      <div class="split" style="align-items: end; margin-bottom: calc(var(--u) * 3)">
+        <h2 class="titre" id="t-scene" style="margin: 0"><span class="etiquette etiquette--ink" data-split="lines">{scene.accroche} <em>{scene.motItalique}</em></span></h2>
+        <p class="postit"><strong>La programmation</strong>{site.programmation.phrase}</p>
+      </div>
+      <Agenda max={4} />
+      <div class="actions">
+        <a class="btn" href={u('/agenda/')}>Toute la semaine</a>
+        <a class="btn btn--ink" href={site.programmation.url} rel="noopener">Voir les spectacles</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--bleu" id="brunch" data-activite={brunch.nom} data-couleur={brunch.couleur} aria-labelledby="t-brunch" style="padding-top: 0; border-top: 0">
+    <Vague couleur="rose" />
+    <div class="wrap split" style="padding-top: calc(var(--u) * 4)">
+      <div>
+        <h2 class="titre" id="t-brunch"><span class="etiquette" data-split="lines">{brunch.accroche} <em>{brunch.motItalique}</em></span></h2>
+        <p class="postit" style="margin-bottom: calc(var(--u) * 2)" data-reveal="up"><strong>Le spectacle à 15h</strong>{ticketDimanche.nom} : {ticketDimanche.prix}, avec ou sans buffet.</p>
+        <div class="cadre" style="padding: calc(var(--u) * 2)" data-reveal="up" data-delay="0.1">
+          <p class="sur">{site.brunch.nom}</p>
+          <p class="prix">{site.brunch.prix}</p>
+          <p class="muted">De 11h30 à 14h. {enfants.prix} pour les moins de 12 ans.</p>
+          <ul class="lignes">
+            {site.brunch.lignes.map((l) => <li><span>{l}</span></li>)}
+          </ul>
+        </div>
+      </div>
+      <div class="cadre" data-reveal="up" data-delay="0.2">
+        <img src={asset(brunchPhoto.src)} srcset={`${asset('/photos/brunch-tartelette-640.webp')} 640w, ${asset('/photos/brunch-tartelette-800.webp')} 800w, ${asset(brunchPhoto.src)} 1024w`} sizes="(max-width: 47.9375rem) 100vw, 40rem" alt={brunchPhoto.alt} width={brunchPhoto.largeur} height={brunchPhoto.hauteur} loading="lazy" decoding="async" />
+      </div>
+    </div>
+    <svg class="tasse" data-derive viewBox="0 0 180 150" aria-hidden="true" focusable="false">
+      <path d="M20 40 h100 v60 a40 40 0 0 1 -40 40 h-20 a40 40 0 0 1 -40 -40 z" fill="var(--c-bg)" stroke="#0b0b0b" stroke-width="4" />
+      <path d="M120 55 h18 a22 22 0 0 1 0 44 h-18" fill="none" stroke="#0b0b0b" stroke-width="4" />
+      <path d="M45 20 c0 -10 10 -10 10 0 c0 10 -10 10 -10 20 M70 15 c0 -10 10 -10 10 0 c0 10 -10 10 -10 20" fill="none" stroke="#0b0b0b" stroke-width="4" stroke-linecap="round" />
+      <ellipse cx="70" cy="40" rx="50" ry="8" fill="var(--c-postit)" stroke="#0b0b0b" stroke-width="4" />
+    </svg>
+  </section>
+
+  <section class="surphoto" id="privatiser" data-activite="Privatiser" data-couleur="ecru" aria-labelledby="t-priv">
+    <div class="surphoto__photo">
+      <img src={asset(privPhoto.src)} srcset={`${asset('/photos/salle-projecteurs-large-640.webp')} 640w, ${asset(privPhoto.src)} 1000w`} sizes="100vw" alt={privPhoto.alt} width={privPhoto.largeur} height={privPhoto.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+    </div>
+    <div class="wrap">
+      <div class="cartouche">
+        <p class="sur">Team building, anniversaire, soirée d'entreprise</p>
+        <h2 class="titre titre--l" id="t-priv">Le lieu est à <em>vous</em></h2>
+        <p>{site.privatisation.phrase}</p>
+        <div class="actions">
+          <a class="btn btn--ink" href={u('/privatisation/')}>Privatiser Chez Guillaume</a>
+          <a class="btn" href={telHref()}>{site.telephone}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" aria-labelledby="t-avis">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-avis"><span class="etiquette" data-split="lines">La presse en <em>parle</em></span></h2>
+      <div class="avis-grille">
+        {site.avis.map((x, i) => (
+          <blockquote class="avis" data-reveal="scale" data-delay={String(i * 0.12)}>
+            <p>« {x.texte} »</p>
+            <cite>{x.source}</cite>
+          </blockquote>
+        ))}
+      </div>
+      <p class="muted" style="margin-top: calc(var(--u) * 2)">Titres d'articles parus à l'ouverture et huit mois plus tard. Les liens sont sur la page <a class="link" href={u('/histoire/')}>Histoire</a>.</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--postit" aria-labelledby="t-infos">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-infos"><span class="etiquette" data-split="lines">Pour <em>venir</em></span></h2>
+      <div class="infos">
+        <div data-reveal="up">
+          <h3>Horaires</h3>
+          <dl class="horaires">{site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}</dl>
+        </div>
+        <div>
+          <h3>Adresse</h3>
+          <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+          <p class="muted">{site.quartier.phrase}</p>
+          <p style="margin-top: var(--u)"><a class="link" href={itineraire} rel="noopener">Itinéraire</a></p>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+          <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
+          <p style="margin-top: var(--u)"><a class="btn btn--ink" href={u('/reservation/')}>Réserver</a></p>
+        </div>
+        <div>
+          <h3>Bon cadeau</h3>
+          <p>{site.bonCadeau.phrase}</p>
+          <p style="margin-top: var(--u)"><a class="link" href={u('/reservation/#bon-cadeau')}>Offrir une soirée</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

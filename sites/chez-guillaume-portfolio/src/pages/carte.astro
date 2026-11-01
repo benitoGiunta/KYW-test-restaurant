@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+// Une photo par catégorie, libellée d'après la photo (photos/index.json), jamais d'après le plat du mois.
+const visuels = ['/photos/plat-boudin.webp', '/photos/cuisine-dressage.webp', '/photos/salle-banquette.webp', '/photos/bar-cocktails.webp'].map(photoDe);
+const prixDe = (categorie: string) => site.menus.find((m) => m.nom === categorie)?.prix;
+const formules = [
+  { nom: site.brunch.nom, prix: site.brunch.prix, texte: 'Le dimanche de 11h30 à 14h, buffet sucré-salé.' },
+  ...site.formules.map((f) => ({ nom: f.nom, prix: f.prix, texte: f.lignes.join('. ') + '.' })),
+];
+---
+<Base title="Les menus du mois" description={`La carte de ${site.nom} à ${site.adresse.commune} : menus Bonne Maman, de la Cheffe et végétarien en 2 ou 3 services, brunch du dimanche et cocktails maison.`}>
+  <section class="page-hero aplat--vert" style="background: var(--c-vert)" data-activite="Table" data-couleur="vert">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">Les menus du <em>mois</em></span></h1>
+      <p class="lead">Trois menus renouvelés chaque mois, en 2 ou 3 services, servis du mercredi au samedi entre 18h30 et 20h30, avant le spectacle. Ci-dessous, le relevé d'octobre 2026.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    {site.carte.map((cat, i) => {
+      const v = visuels[i];
+      const prix = prixDe(cat.categorie);
+      return (
+        <section class="carte-cat" id={i === 0 ? 'menus' : undefined}>
+          <div class="damier" class:list={[i % 2 ? 'damier--inv' : '']}>
+            <div>
+              <h2 class="titre titre--l"><span class="etiquette">{cat.categorie}</span></h2>
+              {prix && <p class="prix">{prix}</p>}
+              {prix && <p class="muted" style="margin-bottom: var(--u)">2 services ou 3 services</p>}
+              <ul class="lignes">
+                {cat.plats.map((p) => (
+                  <li>
+                    <span>{p.nom}{p.placeholder && <span class="illu">exemple</span>}{p.description && <span class="muted"> : {p.description}</span>}</span>
+                    {p.prix && <span>{p.prix}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {v && <div class="damier__photo"><img src={asset(v.src)} srcset={`${asset(v.src.replace('.webp', '-640.webp'))} 640w, ${asset(v.src.replace('.webp', '-800.webp'))} 800w, ${asset(v.src)} ${v.largeur}w`} sizes="(max-width: 47.9375rem) 100vw, 42rem" alt={v.alt} width={v.largeur} height={v.hauteur} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} decoding="async" /></div>}
+          </div>
+        </section>
+      );
+    })}
+  </div>
+
+  <section class="aplat aplat--postit" aria-labelledby="t-formules">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-formules"><span class="etiquette" data-split="lines">Brunch et <em>formules</em></span></h2>
+      <div class="formules">
+        {formules.map((f) => (
+          <article class="formule">
+            <h3>{f.nom}</h3>
+            <p class="prix">{f.prix}</p>
+            <p class="muted">{f.texte}</p>
+          </article>
+        ))}
+      </div>
+      <h3 class="titre" style="margin-top: calc(var(--u) * 3)">Au buffet du dimanche</h3>
+      <ul class="lignes">
+        {site.brunch.lignes.map((l) => <li><span>{l}</span></li>)}
+      </ul>
+      <div class="actions">
+        <a class="btn btn--ink" href={site.reservation.url} rel="noopener">Prendre un ticket</a>
+        <a class="btn" href={u('/reservation/')}>Réserver le brunch</a>
+      </div>
+    </div>
+  </section>
+</Base>

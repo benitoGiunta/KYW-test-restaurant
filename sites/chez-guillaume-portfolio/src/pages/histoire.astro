@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const salle = photoDe('/photos/salle-projecteurs.webp');
+const galerie = ['/photos/scene-micro.webp', '/photos/salle-banquette.webp', '/photos/bar-cocktails.webp', '/photos/brunch-cafe.webp', '/photos/plat-boudin.webp', '/photos/salle-rideaux.webp'].map(photoDe);
+const dateFr = (d: string) => {
+  const [a, m, j] = d.split('-');
+  const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'][Number(m) - 1];
+  return j ? `${Number(j)} ${mois} ${a}` : `${mois} ${a}`;
+};
+---
+<Base title="Histoire et équipe" description={`L'histoire de ${site.nom} : un restaurant et comedy club ouvert à Namur en janvier 2025 par l'humoriste namurois GuiHome.`}>
+  <section class="page-hero" style="background: var(--c-rose)">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">Un humoriste, une <em>table</em></span></h1>
+      <p class="lead">{site.baseline}</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" style="border-top: 0">
+    <div class="wrap damier">
+      <div class="prose">
+        {site.histoire.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="damier__photo">
+        <img src={asset(salle.src)} srcset={`${asset('/photos/salle-projecteurs-640.webp')} 640w, ${asset('/photos/salle-projecteurs-800.webp')} 800w, ${asset(salle.src)} 1000w`} sizes="(max-width: 47.9375rem) 100vw, 42rem" alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="eager" fetchpriority="high" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--bleu" aria-labelledby="t-equipe">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-equipe"><span class="etiquette" data-split="lines">La <em>maison</em></span></h2>
+      <div class="equipe">
+        {site.equipe.map((m, i) => {
+          const p = m.photo ? photoDe(m.photo) : null;
+          return (
+            <article class="fiche" class:list={[p ? '' : 'fiche--sansphoto']} data-reveal="up" data-delay={String(i * 0.08)}>
+              {p ? <img src={asset(p.src.replace('.webp', '-640.webp'))} alt={p.alt} width="640" height={Math.round((640 * p.hauteur) / p.largeur)} loading="lazy" decoding="async" /> : <p class="fiche__avenir"><span class="sticker">photo à venir</span></p>}
+              <div class="fiche__nom">
+                <h3>{m.nom}</h3>
+                <p class="muted">{m.role}{m.placeholder && <span class="illu">rôle illustratif</span>}</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--postit" aria-labelledby="t-presse">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-presse"><span class="etiquette" data-split="lines">Dans la <em>presse</em></span></h2>
+      <ul class="lignes">
+        {site.avis.map((x) => (
+          <li>
+            <span><a class="link" href={x.url} rel="noopener">« {x.texte} »</a></span>
+            <span>{x.source}, {dateFr(x.date)}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" aria-labelledby="t-galerie">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-galerie"><span class="etiquette" data-split="lines">Sur le <em>mur</em></span></h2>
+      <div class="galerie">
+        {galerie.map((p, i) => (
+          <figure data-reveal="scale" data-delay={String((i % 3) * 0.1)}>
+            <img src={asset(p.src.replace('.webp', '-640.webp'))} alt={p.alt} width="640" height={Math.round((640 * p.hauteur) / p.largeur)} loading="lazy" decoding="async" />
+            <figcaption>{p.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions">
+        <a class="btn btn--ink" href={site.reservation.url} rel="noopener">Prendre un ticket</a>
+        <a class="btn" href={u('/carte/')}>Les menus du mois</a>
+      </div>
+    </div>
+  </section>
+</Base>

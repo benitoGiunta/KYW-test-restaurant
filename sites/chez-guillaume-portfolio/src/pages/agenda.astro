@@ -1,0 +1,34 @@
+---
+// L'agenda de Chez Guillaume : le rythme réel de la semaine (dossier). Les artistes et les dates vivent sur la billetterie.
+import Base from '../layouts/Base.astro';
+import Agenda from '../components/Agenda.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="Agenda" description={`La semaine de ${site.nom} à ${site.adresse.commune} : repas-spectacle du mercredi au samedi, brunch et stand-up le dimanche, lundi « face à la crise ».`}>
+  <section class="page-hero" style="background: var(--c-rose)" data-activite="Scène" data-couleur="rose">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">La <em>semaine</em></span></h1>
+      <p class="lead">Du mercredi au samedi, on dîne puis on rit. Le dimanche, brunch à 11h30 et spectacle à 15h. Le lundi, on fait face à la crise.</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--rose" style="border-top: 0">
+    <div class="wrap">
+      <h2 class="sr-only">Les rendez-vous de la semaine</h2>
+      <Agenda />
+      <p class="postit" style="margin-top: calc(var(--u) * 3)"><strong>Qui est sur scène ?</strong>{site.programmation.phrase}</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru">
+    <div class="wrap">
+      <h2 class="titre titre--l"><span class="etiquette">Prendre sa <em>place</em></span></h2>
+      <p class="lead" style="margin-bottom: calc(var(--u) * 2)">Le soir, la table est liée au ticket du spectacle. Le repas se règle à part.</p>
+      <div class="actions">
+        <a class="btn btn--ink" href={site.programmation.url} rel="noopener">Voir les spectacles</a>
+        <a class="btn" href={u('/carte/')}>Les menus du mois</a>
+      </div>
+    </div>
+  </section>
+</Base>
