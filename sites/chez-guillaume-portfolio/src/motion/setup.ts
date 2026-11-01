@@ -65,6 +65,12 @@ function logoSection() {
     caseEl.dataset.couleur = couleur;
     if (nom && !reduit) gsap.fromTo(caseEl, { scale: 1.15, rotate: -4, autoAlpha: 0 }, { scale: 1, rotate: 0, autoAlpha: 1, duration: 0.3, ease: COLLE, overwrite: true });
   };
+  // Page d'activité (carte, agenda, privatisation) : toute la page appartient à l'activité, la case reste collée.
+  const pageActivite = sections.find((s) => s.classList.contains('page-hero'));
+  if (pageActivite) {
+    poser(pageActivite.dataset.activite || '', pageActivite.dataset.couleur || 'postit');
+    return () => poser('', 'postit');
+  }
   const triggers = sections.map((s) =>
     ScrollTrigger.create({
       trigger: s, start: 'top 45%', end: 'bottom 45%',
@@ -115,15 +121,23 @@ function menuMobile() {
   return () => { ouvrir.removeEventListener('click', open); fermerBtn.removeEventListener('click', close); document.removeEventListener('keydown', key); if (!overlay.hidden) close(); };
 }
 
-/** Formulaires de démonstration : aucun envoi ; réservation → outil réel, privatisation → message de démo. */
+/** Formulaires : réservation → outil réel, privatisation → e-mail prérempli vers l'adresse du restaurant. */
 function formulaires() {
   const forms = [...document.querySelectorAll<HTMLFormElement>('form[data-demo]')];
   if (!forms.length) return () => {};
   const hs = forms.map((form) => {
     const h = (e: SubmitEvent) => {
       e.preventDefault();
-      if (form.dataset.demo === 'reservation') window.open(form.action, '_blank', 'noopener');
-      else form.dataset.envoye = '';
+      if (form.dataset.demo === 'reservation') { window.open(form.action, '_blank', 'noopener'); return; }
+      // Privatisation : la demande devient un e-mail prérempli vers l'adresse réelle du restaurant.
+      const mail = form.dataset.mail;
+      if (mail) {
+        const d = new FormData(form);
+        const sujet = `Privatisation : ${d.get('type') || ''}, ${d.get('date') || ''}`;
+        const corps = [`Nom : ${d.get('nom') || ''}`, `Jour souhaité : ${d.get('date') || ''}`, `Invités : ${d.get('couverts') || ''}`, `Occasion : ${d.get('type') || ''}`, '', String(d.get('message') || '')].join('\n');
+        window.location.href = `mailto:${mail}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+      }
+      form.dataset.envoye = '';
     };
     form.addEventListener('submit', h);
     return () => form.removeEventListener('submit', h);

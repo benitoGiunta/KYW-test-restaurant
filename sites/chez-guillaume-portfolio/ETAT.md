@@ -1,4 +1,4 @@
-# ETAT · chez-guillaume-portfolio (construction phase 1 sur 3, 01/11/2026)
+# ETAT · chez-guillaume-portfolio (construction phase 2 sur 3 terminée, 01/11/2026)
 
 ## Fait
 - [x] Choix du gabarit argumenté (matrice dans DESIGN.md) : **collage** (28/30), copié sans dist/node_modules/rapports.
@@ -14,15 +14,35 @@
       assets vérifiés, obligations KYW présentes sur 7 pages.
 - [x] DESIGN.md, RAPPORT.md.
 
-## Reste (phases 2 et 3)
-- Motion : vérifier que la case de section du logo reçoit bien Table / Scène / Brunch / Privatiser ; loader (3e case
-  « comedy club ») ; tasse du brunch (couleurs passées en variables CSS) ; `data-split` des titres.
-- QA navigateur : `hero__case--petit` (taille, retour à la ligne à 390 px), hero paysage 1000 px étiré en 1440 (qualité),
-  `.lignes` des menus (descriptions longues), FAQ `<details>` (focus, contraste ink/écru sur fond bleu), formulaire,
-  mini-script de clics d'en-tête et bas de page (leçon du prompt), scrollWidth 320/360/390.
-- Shoot + audit complets, puis `pnpm index`, commit dist, push.
-- `gabarits/UTILISATION.md` : ajouter `| collage | chez-guillaume |` (gabarits/ protégé dans cette passe).
-- Reporter les deux leçons de RAPPORT.md dans `agents/lecons/construction.md` si confirmées.
+## Fait en phase 2 (motion, signature, interactions, états, mobile, reduced motion, finitions)
+- [x] Signature vérifiée par script (Playwright, 1440) : la case du logo prend Table / Scène / Brunch / Privatiser sur
+      l'accueil. **Corrigé** : sur les pages d'activité (carte, agenda, privatisation) le `page-hero` est trop court pour
+      croiser la ligne 45 % du ScrollTrigger, la case restait vide ; `logoSection()` la pose désormais d'office quand la
+      section `[data-activite]` est un `.page-hero` (`src/motion/setup.ts`).
+- [x] Reveal : `data-reveal` retiré du damier Table de l'accueil (il contient des liens) et posé en `scale` sur la photo ;
+      contrôle : 0 bloc `data-reveal`/`data-split` contenant un lien, sur les 7 pages.
+- [x] Privatisation : le formulaire de démo devient un vrai e-mail prérempli (`mailto:` vers hello@chezguillaume.be,
+      sujet + corps depuis les champs) ; états : `:user-invalid` (tirets + ombre rouille), focus (ombre ink), message
+      `role="status"` avec lien direct. Testé : soumission vide bloquée (2 champs invalides), remplie → état « envoyé ».
+- [x] Finitions : espace insécable avant `€` et `%` (19 occurrences, site.ts + réservation) ; colonne Horaires de « Pour
+      venir » élargie (1,7fr, plus de retours à la ligne) ; agenda : soulignement pointillé de `<abbr>` retiré, jour en
+      toutes lettres en petite étiquette bordée (il chevauchait les lignes du cahier) ; réservation : cadre doublé
+      supprimé (`.damier__formules`) ; `h2.sur` en police mono (étaient en Caslon minuscule illisible) ; FAQ ouverte
+      + focus : contour écru.
+- [x] Contrôles (script `cg-p2-check.mjs`, scratchpad) : 0 erreur console / 0 ressource 4xx sur 7 pages ; 7/7 liens
+      d'en-tête cliquables à scrollY 0 sur chaque page ; bas de page : bandeau KYW visible au-dessus de tout et mention
+      présente sur 7 pages ; aucun texte caché après défilement ; scrollWidth = largeur et aucun débordement à
+      320 / 360 / 390 ; aucune cible tactile < 24 px hors texte courant ; reduced motion : pas de classe `motion`,
+      0 texte caché, pas de loader, tasse masquée.
+- [x] Build OK (`scripts/q.sh cg-p2-build node scripts/build-site.mjs sites/chez-guillaume-portfolio`).
+
+## Reste (phase 3)
+- Shoot + audit complets par l'agent « captures » (lire `QA-*.md`), corrections éventuelles.
+- `pnpm index`, commit `dist/`, push.
+- `gabarits/UTILISATION.md` : ajouter `| collage | chez-guillaume |` (gabarits/ protégé).
+- Gabarit collage (protégé, à reporter par l'orchestrateur) : case d'activité vide sur pages dédiées (correctif de
+  `logoSection()` ci-dessus), `abbr` pointillé de l'agenda, `h2.sur` en Caslon, nom en trois mots supposé (phase 1).
+- Limite connue : photos sources de 1000 px de large, le hero est étiré à 1440 (pas de source plus grande).
 
 ## Décisions
 - Aucun avis client inventé : la section avis devient « La presse en parle » (3 titres réels L'Avenir, ELLE.be, La DH).
@@ -31,4 +51,4 @@
 - Réservation : pas de formulaire de démo (le soir passe par le ticket, le brunch par e-mail / téléphone).
 - Équipe réduite à « La maison » : GuiHome (L'Avenir) et « Notre cheffe » (sans nom, le site actuel dit « notre
   cheffe ») ; Tamara Truyts citée seulement dans le récit, datée de janvier 2025.
-- Pas de serveur lancé dans cette phase.
+- Phase 1 : pas de serveur. Phase 2 : serveur `serve.mjs --port 4471`, arrêté par son PID.

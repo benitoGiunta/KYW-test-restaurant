@@ -21,8 +21,8 @@ const mail = `mailto:${site.email.valeur}?subject=${encodeURIComponent('Privatis
     <div class="wrap">
       <div class="cartouche">
         <p class="sur">Votre demande</p>
-        <p class="muted" style="margin-bottom: var(--u)">Formulaire de démonstration sans envoi. Pour une vraie demande, écrivez à <a class="link" href={mail}>{site.email.valeur}</a> ou appelez le <a class="link" href={telHref()}>{site.telephone}</a>.</p>
-        <form class="form" data-demo="privatisation" action="#" method="post">
+        <p class="muted" style="margin-bottom: var(--u)">Ce formulaire prépare un e-mail à <a class="link" href={mail}>{site.email.valeur}</a> dans votre messagerie. Vous préférez parler ? Appelez le <a class="link" href={telHref()}>{site.telephone}</a>.</p>
+        <form class="form" data-demo="privatisation" data-mail={site.email.valeur} action="#" method="post">
           <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
           <div class="form__deux">
             <label>Jour souhaité <input type="date" name="date" required /></label>
@@ -30,8 +30,8 @@ const mail = `mailto:${site.email.valeur}?subject=${encodeURIComponent('Privatis
           </div>
           <label>Occasion <select name="type"><option>Team building</option><option>Anniversaire</option><option>Soirée d'entreprise</option><option>Stand-up privé</option></select></label>
           <label>Message <textarea name="message" rows="3"></textarea></label>
-          <div class="actions" style="margin-top: 0"><button class="btn btn--ink" type="submit">Envoyer la demande</button></div>
-          <p class="form__ok" role="status">Démonstration : en production, cette demande part par e-mail à Chez Guillaume.</p>
+          <div class="actions" style="margin-top: 0"><button class="btn btn--ink" type="submit">Préparer l’e-mail</button></div>
+          <p class="form__ok" role="status" aria-live="polite">Votre messagerie s’ouvre avec la demande prête à partir. Rien ne s’ouvre ? Écrivez directement à <a class="link" href={mail}>{site.email.valeur}</a>.</p>
         </form>
       </div>
     </div>

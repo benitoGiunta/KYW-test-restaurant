@@ -18,7 +18,13 @@ référencés dans `dist/` existent, aucun reste du gabarit (grep Potes, MICHELI
 ## Points ouverts
 Voir ETAT.md (phases 2 et 3).
 
+## Phase 2 (01/11/2026)
+Contrôles scriptés sans erreur sur 7 pages (console, clics d'en-tête, bas de page KYW, débordements 320/360/390,
+reduced motion) ; détail dans ETAT.md. Shoot et audit complets : agent « captures ».
+
 ## Leçons structurelles
+- Gabarit collage : la case d'activité du logo ne s'affiche jamais sur une page dédiée (`page-hero` plus court que
+  45 % du viewport, le ScrollTrigger `top 45%`/`bottom 45%` ne s'active pas) ; poser la case d'office pour un `.page-hero`.
 - Gabarit collage : `Logo.astro`, `Footer.astro`, `Loader.astro` et le h1 du hero supposent un nom en trois mots
   (case vide sinon) ; corrigé dans le site par rendu conditionnel. À reporter dans le gabarit (protégé ici).
 - `Agenda.astro` force la variante `-640` de chaque photo : casse sur une photo source de moins de 640 px.

@@ -54,7 +54,7 @@ quatre-mains, verger). `gabarits/UTILISATION.md` n'est pas mis à jour : `gabari
 | Accueil | hero, manifeste + bulle, Table, Scène (agenda), vague, Brunch + tasse, Privatiser, Infos | post-its « activité d'exemple », avis illustratifs, carte « le bâtiment » | Table : les trois menus du mois et leurs prix ; Scène : rythme réel de la semaine + renvoi billetterie ; Brunch : buffet réel, ticket du dimanche ; « La presse en parle » (3 titres réels) ; carte « Bon cadeau » |
 | Carte | damiers alternés | postit « boissons d'exemple » | 3 menus (entrée, plat, dessert, prix 2/3 services), « Au bar » (cocktails, mocktails, vins bio), formules (brunch, lundi, ticket du dimanche, moins de 12 ans), liste du buffet |
 | Agenda | Agenda ligné | bandeau « page d'exemple » | 7 rendez-vous réels sans date (mer-sam repas-spectacle, dim brunch 11h30 + spectacle 15h, lundi « face à la crise ») ; la programmation renvoie à la billetterie |
-| Privatisation | cartouche + formulaire de démo | formats mariage / chef à domicile | occasions réelles : team building, anniversaire, soirée d'entreprise, stand-up privé ; contact e-mail réel |
+| Privatisation | cartouche + formulaire (devient un e-mail prérempli, phase 2) | formats mariage / chef à domicile | occasions réelles : team building, anniversaire, soirée d'entreprise, stand-up privé ; contact e-mail réel |
 | Histoire | récit, fiches, galerie | fiches illustratives | « La maison » (GuiHome, notre cheffe), « Dans la presse » (liens réels datés) |
 | Réservation | horaires, adresse | formulaire Zenchef de démo | trois voies réelles (billetterie du soir, brunch par e-mail / téléphone, bon cadeau `#bon-cadeau`), FAQ en volets `<details>` |
 | 404 | « Décollé » | | texte adapté |

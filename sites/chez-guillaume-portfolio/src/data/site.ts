@@ -122,9 +122,9 @@ export const site: Restaurant = {
   ],
   // Prix des trois menus du mois (relevé d'octobre 2026) : 2 services / 3 services.
   menus: [
-    { nom: 'Menu Bonne Maman', prix: '29 € / 39 €', description: '2 ou 3 services', placeholder: false },
-    { nom: 'Menu de la Cheffe', prix: '39 € / 49 €', description: '2 ou 3 services', placeholder: false },
-    { nom: 'Menu végétarien', prix: '29 € / 39 €', description: '2 ou 3 services', placeholder: false },
+    { nom: 'Menu Bonne Maman', prix: '29 € / 39 €', description: '2 ou 3 services', placeholder: false },
+    { nom: 'Menu de la Cheffe', prix: '39 € / 49 €', description: '2 ou 3 services', placeholder: false },
+    { nom: 'Menu végétarien', prix: '29 € / 39 €', description: '2 ou 3 services', placeholder: false },
   ],
   histoire: [
     "Chez Guillaume ouvre ses portes en janvier 2025, rue Lelièvre, en face de la place Saint-Aubain. Derrière le nom, l'humoriste namurois Guillaume Wattecamps, alias GuiHome.",
@@ -171,13 +171,13 @@ export const site: Restaurant = {
     { titre: 'Repas-spectacle', jour: 'jeudi', heure: '18:30', activite: 'scene', photo: '/photos/salle-projecteurs.webp', detail: 'Repas servi de 18h30 à 20h30, puis le spectacle. Repas obligatoire, hors ticket.', placeholder: false },
     { titre: 'Repas-spectacle', jour: 'vendredi', heure: '18:30', activite: 'scene', photo: '/photos/plat-boudin.webp', detail: 'Repas servi de 18h30 à 20h30, puis le spectacle. Repas obligatoire, hors ticket.', placeholder: false },
     { titre: 'Repas-spectacle', jour: 'samedi', heure: '18:30', activite: 'scene', photo: '/photos/salle-rideaux.webp', detail: 'Repas servi de 18h30 à 20h30, puis le spectacle. Repas obligatoire, hors ticket.', placeholder: false },
-    { titre: 'Brunch à volonté', jour: 'dimanche', heure: '11:30', activite: 'brunch', photo: '/photos/brunch-tartelette.webp', detail: 'Buffet sucré-salé de 11h30 à 14h, 35 € (15 € moins de 12 ans).', placeholder: false },
-    { titre: 'Spectacle du dimanche', jour: 'dimanche', heure: '15:00', activite: 'scene', photo: '/photos/scene-rires.webp', detail: 'Ticket 20 €, avec ou sans buffet.', placeholder: false },
-    { titre: 'Lundi « face à la crise »', jour: 'lundi', heure: '18:00', activite: 'table', photo: '/photos/salle-banquette.webp', detail: 'Croque-monsieur et boisson, 12 €.', placeholder: false },
+    { titre: 'Brunch à volonté', jour: 'dimanche', heure: '11:30', activite: 'brunch', photo: '/photos/brunch-tartelette.webp', detail: 'Buffet sucré-salé de 11h30 à 14h, 35 € (15 € moins de 12 ans).', placeholder: false },
+    { titre: 'Spectacle du dimanche', jour: 'dimanche', heure: '15:00', activite: 'scene', photo: '/photos/scene-rires.webp', detail: 'Ticket 20 €, avec ou sans buffet.', placeholder: false },
+    { titre: 'Lundi « face à la crise »', jour: 'lundi', heure: '18:00', activite: 'table', photo: '/photos/salle-banquette.webp', detail: 'Croque-monsieur et boisson, 12 €.', placeholder: false },
   ],
   brunch: {
     nom: 'Brunch du dimanche, buffet à volonté',
-    prix: '35 €',
+    prix: '35 €',
     lignes: [
       'Eau, jus d’orange et thé glacé à volonté',
       'Œufs brouillés et bacon',
@@ -190,9 +190,9 @@ export const site: Restaurant = {
     placeholder: false,
   },
   formules: [
-    { nom: 'Lundi « face à la crise »', prix: '12 €', lignes: ['Croque-monsieur et boisson', 'Spectacle sans repas complet'], placeholder: false },
-    { nom: 'Ticket spectacle du dimanche', prix: '20 €', lignes: ['Spectacle à 15h', 'Avec ou sans buffet'], placeholder: false },
-    { nom: 'Brunch, moins de 12 ans', prix: '15 €', lignes: ['Le même buffet, à volonté'], placeholder: false },
+    { nom: 'Lundi « face à la crise »', prix: '12 €', lignes: ['Croque-monsieur et boisson', 'Spectacle sans repas complet'], placeholder: false },
+    { nom: 'Ticket spectacle du dimanche', prix: '20 €', lignes: ['Spectacle à 15h', 'Avec ou sans buffet'], placeholder: false },
+    { nom: 'Brunch, moins de 12 ans', prix: '15 €', lignes: ['Le même buffet, à volonté'], placeholder: false },
   ],
   stickers: [
     { texte: 'Cuisine maison', placeholder: false },
@@ -207,7 +207,7 @@ export const site: Restaurant = {
   faq: [
     { q: 'Le repas est-il compris dans le ticket ?', r: "Non. Du mercredi au samedi, le repas est obligatoire et se règle à part ; il est servi entre 18h30 et 20h30, avant le spectacle." },
     { q: 'Comment réserver une table ?', r: "Le soir, la table est liée au ticket du spectacle, pris sur la billetterie. Pour le brunch du dimanche, écrivez-nous ou appelez-nous." },
-    { q: 'Peut-on venir sans manger ?', r: 'Le lundi « face à la crise » : croque-monsieur et boisson pour 12 €. Le dimanche, le ticket spectacle (20 €) se prend avec ou sans buffet.' },
+    { q: 'Peut-on venir sans manger ?', r: 'Le lundi « face à la crise » : croque-monsieur et boisson pour 12 €. Le dimanche, le ticket spectacle (20 €) se prend avec ou sans buffet.' },
     { q: 'Y a-t-il une option végétarienne ?', r: 'Oui : chaque mois, un menu végétarien en 2 ou 3 services, à côté des menus Bonne Maman et de la Cheffe.' },
     { q: 'Et à boire ?', r: 'Des cocktails maison, des mocktails signatures, un vin rouge et un vin blanc bio.' },
   ],
