@@ -104,7 +104,7 @@ function monter(h: HTMLElement, texte: string) {
 }
 
 /** Barre de régie du téléphone, collée sous l'en-tête : reprend le top actif. */
-function monterBarre(reduit: boolean) {
+function monterBarre(reduit: boolean, regieVue: (e: Top) => boolean) {
   const el = document.querySelector<HTMLElement>('[data-barre]');
   if (!el) return null;
   const h = el.querySelector<HTMLElement>('[data-barre-heure]')!;
@@ -115,19 +115,26 @@ function monterBarre(reduit: boolean) {
   h.replaceChildren(tc.node, mot);
   let visible = false;
   gsap.set(el, { yPercent: -100, autoAlpha: 0 });
-  return (e: Top, prec: string, anim: boolean) => {
+  let courant: Top | null = null;
+  // Montrer ou cacher la barre : jamais tant que la régie en ligne du top actif est encore à l'écran (doublon).
+  const montrer = (e: Top) => {
+    const doit = !e.premier && !regieVue(e); // au premier top, la régie du hero est déjà à l'écran
+    if (doit === visible) return;
+    visible = doit;
+    if (reduit) gsap.set(el, { yPercent: 0, autoAlpha: doit ? 1 : 0 });
+    else gsap.to(el, { yPercent: doit ? 0 : -100, autoAlpha: doit ? 1 : 0, duration: 0.45, ease: ease.soft, overwrite: true });
+  };
+  const maj = (e: Top, prec: string, anim: boolean) => {
+    courant = e;
     const num = HEURE.test(e.texte);
     tc.node.hidden = !num;
     mot.hidden = num;
     mot.textContent = num ? '' : e.texte;
     if (num) { if (anim && HEURE.test(prec)) tc.aller(e.texte, prec); else tc.poser(e.texte); }
     l.textContent = e.libelle;
-    const doit = !e.premier; // au premier top, la régie du hero est déjà à l'écran
-    if (doit === visible) return;
-    visible = doit;
-    if (reduit) gsap.set(el, { yPercent: 0, autoAlpha: doit ? 1 : 0 });
-    else gsap.to(el, { yPercent: doit ? 0 : -100, autoAlpha: doit ? 1 : 0, duration: 0.45, ease: ease.soft, overwrite: true });
+    montrer(e);
   };
+  return { maj, revoir: () => { if (courant) montrer(courant); } };
 }
 
 /** Poursuite du hero : un projecteur qui suit le pointeur et dérive au repos ; balaie la scène à l'intro. */
@@ -136,8 +143,8 @@ function poursuite(intro: gsap.core.Timeline) {
   if (!fig || prefersReducedMotion()) return;
   const balai = { x: -70, a: 0 };
   const tick = () => {
-    const x = 50 + idle.x * 36 + Math.sin(idle.t * 0.35) * 7 + balai.x;
-    const y = 40 + idle.y * 28 + Math.cos(idle.t * 0.27) * 5;
+    const x = 50 + idle.x * 36 + Math.sin(idle.t * 0.3) * 7 + balai.x;
+    const y = 40 + idle.y * 28 + Math.cos(idle.t * 0.22) * 5;
     fig.style.setProperty('--px', `${x.toFixed(2)}%`);
     fig.style.setProperty('--py', `${y.toFixed(2)}%`);
     fig.style.setProperty('--spot', balai.a.toFixed(3));
@@ -242,7 +249,17 @@ export function startConduite() {
       };
     });
     nettoyages.push(() => restaurer.forEach(([h, html]) => { h.innerHTML = html; }));
-    const barre = monterBarre(reduit);
+    // Régies en ligne visibles sous l'en-tête et la barre : la barre ne les double pas.
+    const vues = new Set<Element>();
+    const regieVue = (e: Top) => { const r = e.s.querySelector('.regie'); return !!r && vues.has(r); };
+    const barre = monterBarre(reduit, regieVue);
+    const haut = (document.querySelector('.tete')?.getBoundingClientRect().height ?? 68) + 40;
+    const io = new IntersectionObserver((ents) => {
+      ents.forEach((en) => { if (en.isIntersecting) vues.add(en.target); else vues.delete(en.target); });
+      barre?.revoir();
+    }, { rootMargin: `-${Math.round(haut)}px 0px 0px 0px` });
+    sections.forEach((s) => { const r = s.querySelector('.regie'); if (r) io.observe(r); });
+    nettoyages.push(() => io.disconnect());
 
     let actif = -1;
     let courant = 0;
@@ -257,7 +274,7 @@ export function startConduite() {
         if (e.tc && HEURE.test(prec)) e.tc.aller(e.texte, prec);
         if (e.pastille) gsap.fromTo(e.pastille, { scale: 0 }, { scale: 1, duration: 0.5, ease: ease.out, delay: e.tc ? 0.2 : 0 });
       }
-      barre?.(e, prec, !reduit);
+      barre?.maj(e, prec, !reduit);
     };
 
     // Sous le rideau : le premier time-code affiche encore l'heure de la page quittée, puis roule à l'intro.

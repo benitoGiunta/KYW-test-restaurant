@@ -212,3 +212,23 @@ Phase 2, preuves `self` (code et mini-script Playwright `aw2-check.mjs`, 01/11/2
 45. [ ] Contraste AA de chaque état : phase 3 (`report.json`).
 46. [x] Texte réel partout, rien que dans un canvas (pas de canvas).
 47. [ ] Cibles : phase 1 mesurée ; à reprouver par `report.json` en phase 3.
+
+### Phase 3 (construction-3, 01/11/2026) : QA sur preuves
+
+45. [x] Contraste : axe 0 violation sérieuse (`.shots/home/report.json`, `axe.serious` 0) ; 29 `contrastNeedsReview` relevés sur photo et aplat rideau, vus à l'œil sur `d-05`, `m-04` (texte crème sur `#5B1519`).
+47. [x] Cibles : `mobile.smallTargets` vide (`.shots/home/report.json`).
+35. [x] Survol : `hover.noHoverChange` vide après correction (logo incliné, téléphone du pied souligné, `site.css` bloc `@media (hover: hover)`) ; `colorOnly` restant (« Appeler le… », « Lire la carte complète… ») : soulignement qui s'épaissit (1 à 3 px) et descend (0,22 à 0,34 em), lu à l'œil sur `h-02`/`h-04`, traitement retenu.
+36. [x] Repos : `desktop.idleMotion` = false par `shoot.mjs`, mais mesure maison (`qa3-idle.mjs`, 1440×900, pointeur garé) : 0,6 à 1,3 % de pixels changent toutes les 1,5 s dans la figure du hero (poursuite) ; amplitude bornée pour garder `desktop.settledMs` = 2437 (`.shots/home3/report.json`). Faux négatif noté.
+44. [x] `keyboard.stops[0]` = « Aller au contenu » (`.shots/home/report.json`).
+42. [x] `lang="fr"`, un h1 par page, landmarks (`Base.astro`, `Header.astro`, `Footer.astro`).
+43. [x] Titre et description uniques, canonical, OG, `twitter:card`, favicon SVG, sitemap lié, JSON-LD `Restaurant` (head de `Base.astro`).
+48. [x] Images `<Picture>` webp avec `width`/`height`, hero `fetchpriority="high"`, alt d'après `photos/index.json`.
+49. [x] LCP mobile 1168 ms, élément `img` (`.shots/home3/report.json`). 50. [x] CLS mobile 0,01.
+51. [x] Page la plus lourde 402 Ko, JS 62 Ko gz, polices woff2 (`.shots/audit.txt`).
+52. [x] `desktop.settledMs` 2437, `scrollFps` 60 desktop et mobile. `mobile.settledMs` null : dérive de la poursuite et barre de régie, déjà null en phase 2.
+53. [x] 0 tiret cadratin ou demi-cadratin (contrôle Python sur `dist/` et `src/`).
+54. [x] audit 0 FAIL ; WARN « sentence repeated » sur la carte : prix 29 € / 39 € et dessert identiques dans deux menus réels (`donnees.json`), justifiés.
+56. [x] 0 `placeholder: true`, aucun « lorem », « example.com », « TODO » dans `dist/`.
+58. [x] `grep -L 'name="robots"'` vide. 59. [x] `KywFooter` sur les 5 pages, mention rendue. 60. [x] 0 requête échouée (`failed` 0).
+61. [ ] Critique jury indépendant : non lancé (pas d'outil Agent dans cette session), voir RAPPORT.md.
+Correction phase 3 : barre de régie du téléphone (`conduite.ts`, `monterBarre`) qui affichait « 18:30RIDEAU » et « 18:3029 € » (`[hidden]` écrasé par `.tc { display: inline-flex }`) et doublait la régie en ligne : cachée tant que la régie du top actif est visible (`IntersectionObserver`), contrôlé par `qa3-barre.mjs` (0 doublon sur l'accueil, 0 double contenu, 0 erreur).

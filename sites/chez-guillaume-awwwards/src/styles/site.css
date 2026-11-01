@@ -319,7 +319,9 @@ html { scroll-padding-top: calc(var(--tete-h) + var(--u)); }
 
 /* ---------- Phase 2 : interactions (survol réservé aux pointeurs fins, même état au focus clavier) ---------- */
 @media (hover: hover) {
-  .lien:hover { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); }
+  .lien:hover { text-decoration-thickness: 3px; text-underline-offset: 0.34em; text-decoration-color: var(--c-accent); }
+  .tete__marque:hover img { transform: rotate(-2.5deg) translateY(-1px); }
+  .pied__tel:hover { color: var(--c-salle-accent); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 0.3em; }
   .top--rideau .lien:hover, .top--salle .lien:hover { text-decoration-color: var(--c-salle-accent); }
   .lien-util:hover { color: var(--c-accent-texte); }
   .pied .lien-util:hover, .presse__lien:hover { color: var(--c-salle-accent); }
@@ -335,6 +337,10 @@ html { scroll-padding-top: calc(var(--tete-h) + var(--u)); }
 .menu__lien:focus-visible { color: var(--c-salle-accent); }
 .kyw-footer__link:focus-visible { text-decoration: underline; }
 .tete__marque:active img, .nl:active { opacity: 0.75; }
+.tete__marque img { transition: transform 0.3s; }
+.pied__tel { transition: color 0.25s; }
+.pied__tel:focus-visible { color: var(--c-salle-accent); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 0.3em; }
+.lien { transition: text-decoration-thickness 0.25s, text-underline-offset 0.25s; }
 .index__lien:active { transition-duration: 0.1s; }
 
 /* Capitales accentuées dans les masques de SplitText */
@@ -366,6 +372,7 @@ html { scroll-padding-top: calc(var(--tete-h) + var(--u)); }
   }
   .barre__heure { font-family: var(--f-display); font-size: 1.35rem; line-height: 1; color: var(--c-accent); }
   .barre__mot { text-transform: uppercase; }
+  .barre__heure > [hidden] { display: none; }
   .barre__libelle { display: inline-flex; align-items: center; gap: 0.45em; min-width: 0; font-size: var(--t-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   html:not(.js) .barre { display: none; }
 }

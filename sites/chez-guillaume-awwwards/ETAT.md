@@ -1,4 +1,4 @@
-# ETAT, chez-guillaume-awwwards (fin de phase 2, construction-2, 01/11/2026)
+# ETAT, chez-guillaume-awwwards (fin de phase 3, construction-3, 01/11/2026)
 
 ## Fait
 
@@ -34,14 +34,23 @@
 - Contrôle (mini-script, pas de shoot) : 0 erreur console, 0 texte caché après défilement et en réduit, idle
   visible, réduit immobile, menu mobile OK, `scrollWidth` 390 = 390, transition 1,8 s aller-retour. Build OK.
 
-## Reste (phase 3)
+## Fait en phase 3 (construction-3, 01/11/2026)
 
-- Shoot complet et jury par l'agent captures, puis : `hover.noHoverChange`, `idleMotion`, contraste, cibles,
-  `keyboard.stops[0]`, `settledMs` (points 35, 36, 44, 45, 47).
-- OG composée proprement, RAPPORT.md (données douteuses : horaires FAQ incohérents avec les spectacles, adresse
-  BCE à Jambes, cheffe 2026 non confirmée ; aucun fictif utilisé), points 42 à 63.
-- À regarder : au téléphone, la barre peut doubler la régie en ligne quand le haut du top est à l'écran
-  (déclenchement à 55 %) ; noms de menus sur deux lignes dans l'index à 1440.
+- Lecture de QA-build.md et des planches. Corrigé : barre de régie mobile (time-code et mot collés, doublon avec
+  la régie en ligne, `conduite.ts` + `site.css`), survols manquants (logo, téléphone du pied), soulignement des
+  liens plus marqué. Vérifié par mini-script `qa3-barre.mjs`, shoot ciblé de l'accueil (`.shots/home`, `home3`)
+  et audit (`.shots/audit.txt` : 0 FAIL, 3 WARN justifiés). RAPPORT.md écrit, DESIGN.md points de phase 3.
+
+## Reste
+
+- Critique jury indépendant (`/jury`) : non lancé (pas d'outil Agent), aucun score.
+- OG : `og.mjs` à relancer sur le hero (l'actuelle est la capture provisoire de phase 1).
+- `idleMotion` false à la mesure malgré la poursuite (faux négatif probable) ; `mobile.settledMs` null.
+- Accessoire à retirer après la note jury.
+
+## Pièges
+
+- Amplitude de la poursuite : au-delà de `sin(t*0.3)*7`, ou alpha du halo > 0,14, `desktop.settledMs` passe à null.
 
 ## Décisions
 
