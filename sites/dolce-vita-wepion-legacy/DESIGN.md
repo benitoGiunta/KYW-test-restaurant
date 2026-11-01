@@ -14,7 +14,7 @@
 - **Comp** · 2 built, no key · c1 chosen (`comp.md`)
 - **Hero review** · self (pas d'outil Agent en session d'agent) · fix · 1 finding · 1 resolved (bande sombre sous le hero à 1920×1080 : plafond 62rem retiré)
 - **Comp** · reproduced (checked at 1280x800) : voir comp.md
-- **Sweep** · phase 3
+- **Sweep** · `sloplint --render --kept` sur 4 routes : avant 48 FAIL / 3 REFLEX, après 0 FAIL / 0 REFLEX ouvert / 8 WAIVED (8, 59, 77) / 5 WARN 49 (faux positifs, `.btn` nowrap) / 3 NOTE 58 · gates jugées sur captures 1440 et 390 de l'accueil · review finale en auto-notation `self` (pas d'outil Agent)
 
 ## Approche
 
