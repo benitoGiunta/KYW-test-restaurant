@@ -1,4 +1,4 @@
-# ETAT, chez-guillaume-awwwards (fin de phase 1, construction-1, 01/11/2026)
+# ETAT, chez-guillaume-awwwards (fin de phase 2, construction-2, 01/11/2026)
 
 ## Fait
 
@@ -19,17 +19,29 @@
   aucune image plus large que son parent, h1 et `.display` au gutter, CTA du hero au-dessus de la flottaison partout
   (1280×720 : CTA à 651-699 px), cibles < 24 px corrigées.
 
-## Reste (phases 2 et 3)
+## Fait en phase 2 (construction-2, 01/11/2026)
 
-- Phase 2 : signature (time-code de régie qui roule de top en top, pastille « top », barre de régie collée sous
-  l'en-tête au téléphone), horloge de repos dans `.tete__horloge` (`data-horloge`, heure de Bruxelles + prochain
-  top calculé des horaires, mise à jour à la minute), rideau de transition bordeaux (`setTransition`), reveals,
-  intro du hero (sans `data-intro` sur h1 et accroche, LCP).
-- Phase 3 : QA navigateur et jury, OG composée proprement, RAPPORT.md (données douteuses : horaires FAQ incohérents
-  avec les spectacles, adresse BCE à Jambes, cheffe 2026 non confirmée ; aucun fictif utilisé), points 42 à 63.
-- À vérifier : captures en pleine page avec images lazy (les figures sous la flottaison sont vides en capture
-  `fullPage` sans défilement, pas un défaut du site) ; noms de menus sur deux lignes dans l'index de l'accueil à
-  1440 (acceptable, ou passer à `m.court`).
+- Module pilote `src/motion/conduite.ts` : top actif par ScrollTrigger, time-code à bandes masquées qui roule
+  toujours en avant depuis le top précédent (tour complet si même heure), conservé entre les pages ; pastille
+  « top » qui se pose ; barre de régie fixe sous l'en-tête au téléphone (`Header.astro`, `.barre`) ; poursuite
+  du hero (`data-poursuite`, projecteur radial qui suit le pointeur, dérive au repos, balaie à l'intro) ; horloge
+  de régie de l'en-tête (heure de Bruxelles, prochain top, deux-points qui battent la seconde).
+- Rideau de transition plissé (`setup.ts`, `site.css` `.curtain__panel`), reveals `data-split="words"` sur les h2
+  `display`, `data-reveal="clip"` sur les photos hors hero et hors première photo de page, « Rideau. » en chars.
+- Survols sous `(hover: hover)`, `:focus-visible` et `:active` alignés, lien du pied KYW souligné au survol.
+- `.split-line` à 0,16 em (capitales accentuées). Time-code du hero plafonné à la largeur de la régie
+  (débordait de 30 à 40 px sur le h1 à 1024 et 1280).
+- Contrôle (mini-script, pas de shoot) : 0 erreur console, 0 texte caché après défilement et en réduit, idle
+  visible, réduit immobile, menu mobile OK, `scrollWidth` 390 = 390, transition 1,8 s aller-retour. Build OK.
+
+## Reste (phase 3)
+
+- Shoot complet et jury par l'agent captures, puis : `hover.noHoverChange`, `idleMotion`, contraste, cibles,
+  `keyboard.stops[0]`, `settledMs` (points 35, 36, 44, 45, 47).
+- OG composée proprement, RAPPORT.md (données douteuses : horaires FAQ incohérents avec les spectacles, adresse
+  BCE à Jambes, cheffe 2026 non confirmée ; aucun fictif utilisé), points 42 à 63.
+- À regarder : au téléphone, la barre peut doubler la régie en ligne quand le haut du top est à l'écran
+  (déclenchement à 55 %) ; noms de menus sur deux lignes dans l'index à 1440.
 
 ## Décisions
 
@@ -39,3 +51,6 @@
 - Prix par menu seulement (aucun prix par plat inventé) ; boissons sans prix.
 - Aucun élément fictif : pas de `placeholder: true` à ce stade.
 - `.hero__titre` plafonné à `19svh` pour garder le CTA visible à 1280×720.
+- Repos : horloge de régie et poursuite, pas d'objet flottant ; horloge `aria-hidden` (l'information est dans le
+  pied et la réservation).
+- Pas de follower de curseur ni de `data-magnetic` : le verbe « enchaîner » porte sur le time-code et le rideau.

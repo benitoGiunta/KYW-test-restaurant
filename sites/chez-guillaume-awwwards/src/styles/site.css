@@ -20,12 +20,12 @@ html { scroll-padding-top: calc(var(--tete-h) + var(--u)); }
 
 /* Liens et CTA : trois traitements (DESIGN.md § Mouvement) */
 .lien { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.22em; transition: text-decoration-thickness 0.25s; }
-.lien:hover { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); }
+.lien:focus-visible, .lien:active { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); }
 .lien--fort { font-weight: 600; display: inline-block; padding-block: 0.5em; }
 .texte .lien { padding-block: 2px; }
 .index__suite .lien, .pied .lien, .venir__texte > p > .lien { display: inline-block; padding-block: 0.35em; }
 .lien-util { display: inline-block; padding-block: 0.35em; transition: color 0.25s; }
-.lien-util:hover { color: var(--c-accent-texte); }
+.lien-util:focus-visible, .lien-util:active { color: var(--c-accent-texte); }
 .cta {
   position: relative; display: inline-flex; align-items: center; min-height: 3rem; padding: 0.8em 1.4em;
   background: var(--c-fg); color: var(--c-bg); font-weight: 600; font-size: var(--t-s);
@@ -35,17 +35,18 @@ html { scroll-padding-top: calc(var(--tete-h) + var(--u)); }
   content: ''; position: absolute; inset: 0; z-index: -1; background: var(--c-accent-texte);
   clip-path: inset(0 100% 0 0); transition: clip-path 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.cta:hover::before, .cta:focus-visible::before { clip-path: inset(0 0 0 0); }
-.cta:active { transform: translateY(1px); }
+.cta:focus-visible::before, .cta:active::before { clip-path: inset(0 0 0 0); }
+.cta:active { translate: 0 1px; }
 .cta--petit { min-height: 2.5rem; padding: 0.6em 1.1em; font-size: var(--t-xs); }
 .cta--salle { background: var(--c-bg); color: var(--c-fg); }
-.cta--salle:hover, .cta--salle:focus-visible { color: var(--c-bg); }
+.cta--salle:focus-visible, .cta--salle:active { color: var(--c-bg); }
 .nl { position: relative; display: inline-flex; align-items: center; gap: 0.45em; padding-block: 0.5em; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 .nl__pastille, .regie__pastille {
   display: inline-block; flex: none; width: 0.55em; height: 0.55em; border-radius: 50%; background: var(--c-accent);
 }
 .nl .nl__pastille { transform: scale(0); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-.nl:hover .nl__pastille, .nl[aria-current='page'] .nl__pastille, .nl:focus-visible .nl__pastille { transform: scale(1); }
+.nl[aria-current='page'] .nl__pastille, .nl:focus-visible .nl__pastille, .nl:active .nl__pastille { transform: scale(1); }
+.nl:focus-visible { transform: translateX(0.4em); }
 
 /* En-tête */
 .tete {
@@ -99,7 +100,7 @@ html { scroll-padding-top: calc(var(--tete-h) + var(--u)); }
 .top--rideau .regie__heure { color: var(--c-salle-muted); }
 .top--rideau .regie__detail, .top--salle .regie__detail { color: var(--c-salle-muted); }
 .top--rideau .regie__pastille, .top--salle .regie__pastille { background: var(--c-salle-accent); }
-.top--rideau .lien:hover, .top--salle .lien:hover { text-decoration-color: var(--c-salle-accent); }
+.top--rideau .lien:focus-visible, .top--salle .lien:focus-visible { text-decoration-color: var(--c-salle-accent); }
 
 /* Accueil : hero (poster) */
 .top--hero { border-top: 0; padding-block: var(--serre) var(--normal); }
@@ -133,8 +134,8 @@ html { scroll-padding-top: calc(var(--tete-h) + var(--u)); }
 }
 .index__nom { display: inline-flex; align-items: center; gap: 0.3em; font-family: var(--f-display); font-size: var(--t-l); line-height: 1; text-transform: uppercase; }
 .index__nom .nl__pastille { width: 0.3em; height: 0.3em; transform: scale(0); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-.index__lien:hover, .index__lien:focus-visible { transform: translateX(0.4em); }
-.index__lien:hover .nl__pastille, .index__lien:focus-visible .nl__pastille { transform: scale(1); }
+.index__lien:focus-visible, .index__lien:active { transform: translateX(0.4em); }
+.index__lien:focus-visible .nl__pastille, .index__lien:active .nl__pastille { transform: scale(1); }
 .index__plat { font-size: var(--t-s); color: var(--c-muted); line-height: 1.45; }
 .index__prix { display: grid; justify-items: end; }
 .index__prix .prix { font-family: var(--f-display); font-size: var(--t-m); }
@@ -210,7 +211,7 @@ html { scroll-padding-top: calc(var(--tete-h) + var(--u)); }
 .top--presse .titre-l { grid-column: 1 / 7; }
 .presse { grid-column: 1 / 8; list-style: none; padding: 0; margin-top: var(--normal); border-top: 1px solid rgb(238 234 228 / 0.3); }
 .presse__lien { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 6fr) minmax(0, 2fr); column-gap: var(--gutter); padding-block: calc(var(--u) * 2); border-bottom: 1px solid rgb(238 234 228 / 0.3); align-items: baseline; transition: color 0.25s; }
-.presse__lien:hover { color: var(--c-salle-accent); }
+.presse__lien:focus-visible, .presse__lien:active { color: var(--c-salle-accent); }
 .presse__media { font-size: var(--t-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
 .presse__titre { line-height: 1.4; }
 .presse__date { font-size: var(--t-xs); text-align: right; font-variant-numeric: tabular-nums; }
@@ -262,7 +263,7 @@ html { scroll-padding-top: calc(var(--tete-h) + var(--u)); }
 .pied__horaires li { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid rgb(238 234 228 / 0.2); padding-block: 0.4em; }
 .pied__tel { display: inline-block; font-family: var(--f-body); font-weight: 600; font-size: var(--t-m); white-space: nowrap; padding-block: 0.2em; }
 .pied__reseaux { list-style: none; padding: 0; display: flex; gap: 1.25rem; }
-.pied .lien-util:hover { color: var(--c-salle-accent); }
+.pied .lien-util:focus-visible, .pied .lien-util:active { color: var(--c-salle-accent); }
 .pied__cta { grid-column: 10 / 11; margin-top: var(--normal); justify-self: end; }
 .pied__colophon { grid-column: 1 / -1; margin-top: var(--aere); font-size: var(--t-xs); color: var(--c-salle-muted); max-width: 60em; }
 
@@ -314,4 +315,79 @@ html { scroll-padding-top: calc(var(--tete-h) + var(--u)); }
   .form { grid-template-columns: minmax(0, 1fr); }
   .pied__cta { justify-self: start; }
   .pied__mot { font-size: clamp(4rem, 26vw, 7rem); }
+}
+
+/* ---------- Phase 2 : interactions (survol réservé aux pointeurs fins, même état au focus clavier) ---------- */
+@media (hover: hover) {
+  .lien:hover { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); }
+  .top--rideau .lien:hover, .top--salle .lien:hover { text-decoration-color: var(--c-salle-accent); }
+  .lien-util:hover { color: var(--c-accent-texte); }
+  .pied .lien-util:hover, .presse__lien:hover { color: var(--c-salle-accent); }
+  .cta:hover::before { clip-path: inset(0 0 0 0); }
+  .cta--salle:hover { color: var(--c-bg); }
+  .nl:hover { transform: translateX(0.4em); }
+  .nl:hover .nl__pastille { transform: scale(1); }
+  .index__lien:hover { transform: translateX(0.4em); }
+  .index__lien:hover .nl__pastille { transform: scale(1); }
+  .menu__lien:hover { color: var(--c-salle-accent); }
+  .kyw-footer__link:hover { text-decoration: underline; }
+}
+.menu__lien:focus-visible { color: var(--c-salle-accent); }
+.kyw-footer__link:focus-visible { text-decoration: underline; }
+.tete__marque:active img, .nl:active { opacity: 0.75; }
+.index__lien:active { transition-duration: 0.1s; }
+
+/* Capitales accentuées dans les masques de SplitText */
+.split-line { padding-top: 0.16em; margin-top: -0.16em; }
+
+/* Time-code de régie : une bande 0 à 9 par chiffre, déplacée par GSAP (yPercent), jamais par CSS */
+.tc { display: inline-flex; align-items: flex-start; height: 1em; line-height: 1; margin-block: -0.05em; }
+.tc__c { display: inline-block; height: 1em; overflow: hidden; }
+.tc__b { display: block; }
+.tc__b > span { display: block; height: 1em; text-align: center; }
+.tc__sep { display: inline-block; }
+.regie__pastille { transform-origin: 50% 50%; }
+@media (min-width: 48.01rem) { .top--hero .regie__heure { font-size: min(var(--t-xl), calc((var(--col) * 2 + var(--gutter)) / 2.3)); } }
+
+/* Horloge de régie de l'en-tête (bureau) : heure de Bruxelles, prochain top, deux-points qui battent */
+.tete__horloge { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.horloge__h { color: var(--c-fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+.horloge__sep { transition: opacity 0.2s; }
+.horloge__top::before { content: '· '; }
+
+/* Barre de régie du téléphone, collée sous l'en-tête (cachée au bureau, la colonne collante y suffit) */
+.barre { display: none; }
+@media (max-width: 48rem) {
+  html { scroll-padding-top: calc(var(--tete-h) + 2.75rem); }
+  .barre {
+    position: fixed; left: 0; right: 0; top: var(--tete-h); z-index: calc(var(--z-header) - 1);
+    display: flex; align-items: baseline; gap: 0.75rem; height: 2.5rem; padding: 0.55rem var(--gutter) 0;
+    background: var(--c-bg); border-bottom: 1px solid var(--c-line); visibility: hidden;
+  }
+  .barre__heure { font-family: var(--f-display); font-size: 1.35rem; line-height: 1; color: var(--c-accent); }
+  .barre__mot { text-transform: uppercase; }
+  .barre__libelle { display: inline-flex; align-items: center; gap: 0.45em; min-width: 0; font-size: var(--t-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  html:not(.js) .barre { display: none; }
+}
+
+/* Poursuite du hero : projecteur qui suit le pointeur et dérive au repos (variables posées par le pilote) */
+.hero__media { position: relative; overflow: hidden; }
+.motion .hero__media::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: var(--spot, 0);
+  background: radial-gradient(circle at var(--px, 50%) var(--py, 40%), rgb(255 236 214 / 0.14) 0 18%, transparent 34%, rgb(24 8 9 / 0.42) 72%);
+}
+
+/* Rideau de transition : velours bordeaux plissé, frange rouge en bas */
+.curtain__panel {
+  background:
+    linear-gradient(to top, var(--c-accent) 0 6px, transparent 6px),
+    repeating-linear-gradient(90deg, rgb(0 0 0 / 0.22) 0, rgb(255 255 255 / 0.05) 2.5vw, rgb(0 0 0 / 0.22) 5vw),
+    var(--c-curtain);
+}
+
+/* Repli statique (mouvement réduit ou sans JS) : la régie reste dessinée, rien n'est caché */
+html:not(.motion) .hero__media::after { content: none; }
+html:not(.motion) .barre { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .nl, .nl .nl__pastille, .index__lien, .index__nom .nl__pastille, .cta::before, .lien, .lien-util { transition: none; }
 }

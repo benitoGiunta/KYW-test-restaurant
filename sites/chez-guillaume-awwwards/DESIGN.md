@@ -89,7 +89,7 @@ piloté par le défilement.
 Espacements : `--serre` (dans un top), `--normal` (entre tops), `--aere` (avant le rideau), `--entracte` (pied).
 Rayon : **0** partout ; seule forme ronde, la pastille du top (le rond de la scène, photo 09).
 
-### Mouvement (planifié, réalisé en phase 2)
+### Mouvement (réalisé en phase 2)
 
 - Easing de l'engine : `ease.out` (entrées), `ease.inOut` (rideau de transition), pas de `spring`.
 - Durées : 0,25 s hover, 0,6 s chiffre du time-code, 0,9 s rideau de page, décalages de 40 ms.
@@ -166,3 +166,49 @@ Phase 1, preuves `self`.
 16. [x] Famille de section au plus une fois par page : § Plan de composition.
 17. [x] Hero en 3 s : nom, « restaurant et comedy club », heure et CTA « Réserver » au-dessus de la flottaison.
 18. [x] Mobile 390 recomposé : § Plan (régie en ligne, filet supprimé), media query 48rem de site.css.
+
+Phase 2, preuves `self` (code et mini-script Playwright `aw2-check.mjs`, 01/11/2026 ; `report.json` en phase 3).
+
+19. [x] Menu mobile : bouton « Menu » `aria-expanded`, overlay plein écran, focus piégé, Échap ferme, focus rendu
+    au bouton : `src/motion/menu.ts` ; contrôle 390 px : `aria-expanded` true puis false après Échap, focus revenu.
+20. [x] Engine verbatim (`src/engine/`, sans lignes GL), `astro.ts` ; `transition:persist` sur `#curtain`
+    (`Base.astro:79`, ni `#gl` ni `#cursor` : pas de GL, pas de follower) ; `transition:animate="none"` (`Base.astro:44`).
+21. [x] Une horloge : grep hors engine, aucun `addEventListener('scroll')` ni `requestAnimationFrame` ; tout
+    par `gsap.ticker` (`conduite.ts:28`, `:147`, `:218`).
+22. [x] Code de page dans `onPage()` avec nettoyage : `conduite.ts:222-274` (tickers retirés, régies restaurées,
+    ScrollTrigger tués), `menu.ts`.
+23. [x] Aucune CSS `transform` sur un élément GSAP : bandes `.tc__b`, `.barre`, `.regie__pastille`, image du hero,
+    `.curtain__panel` sans `transform` CSS ; `.cta:active` passé en `translate`.
+24. [x] Module pilote `src/motion/conduite.ts` : variable = top actif (ScrollTrigger par `.top` et `.pied`),
+    distribuée au time-code, à la pastille, à la barre du téléphone ; `startIdle()` (`:21`) et pointeur (poursuite
+    du hero `:134`) ; appelé une fois depuis `setup.ts`.
+25. [x] Loader décidé : aucun (Concept Card), pas de composant ni de `role="status"`.
+26. [x] Transition du concept : rideau bordeaux plissé qui tombe du cintre (0,8 s) et se relève (0,9 s),
+    `setup.ts` ; mesure clic vers rideau levé 1,8 s (aller + retour, chargement en parallèle).
+27. [x] Intro : h1 et accroche sans `data-intro` (LCP) ; la poursuite balaie la scène et la photo se pose
+    (`conduite.ts:151`) ; après navigation, le time-code roule de l'heure de la page quittée vers celle du hero.
+28. [x] Épinglages : aucun pin ni scrub ; la régie collante est en CSS `position: sticky` (phase 1).
+29. [x] Repli statique dessiné : `site.css:388` (régie en texte, pas de poursuite, barre sans animation),
+    `.motion [data-reveal]` seul caché ; réduit mesuré : 0 texte caché, page immobile.
+30. [x] Copies décoratives `aria-hidden` : `.tc` (vrai texte en `.sr-only`), `.barre`, « Rideau. » du pied ;
+    aucun titre dupliqué.
+31. [x] Une famille d'easing (`ease.out`, `ease.inOut`, `ease.soft` de l'engine), Timing : chiffre 0,6 s,
+    décalage 40 ms, rideau 0,8/0,9 s, survol 0,25 à 0,45 s ; staggers de l'engine 18 à 80 ms.
+32. [x] Trois traitements dans le verbe : CTA poursuite rouge de gauche à droite (clip-path), nav et index
+    pastille + décalage 0,4 em, liens texte soulignés épaissis ; utilitaires couleur seule.
+33. [x] Survol sous `@media (hover: hover)` (`site.css:321`), même état sur `:focus-visible` et `:active`.
+34. [x] Liens texte soulignés au repos (`.lien`).
+35. [ ] `hover.noHoverChange` : à lire dans `report.json` (phase 3).
+36. [x] Repos : deux-points de l'horloge de régie qui battent la seconde, heure de Bruxelles et prochain top
+    calculés des tops réels (`conduite.ts:192`) ; poursuite qui dérive au repos ; captures à 1,2 s d'écart
+    différentes (desktop), identiques en réduit. `idleMotion` à confirmer en phase 3.
+37. [x] Curseur natif, pas de follower ; aucune copy « survolez », rien ne dépend du survol au toucher.
+38. [x] Pas de blur animé ni de `box-shadow` au scroll ; aucun `will-change` posé.
+39. [x] Réduit : ni Lenis (engine), ni GL, ni scrub, ni loader ; 0 texte caché mesuré.
+40. [x] GL : sans objet, décision écrite (Concept Card) ; lignes `// GL` absentes de l'engine.
+41. [x] Sans objet (pas de GL).
+44. [x] Lien d'évitement premier (`Base.astro`), anneau de focus dans l'accent (`engine.css:33`) ; à prouver par
+    `keyboard.stops[0]` en phase 3.
+45. [ ] Contraste AA de chaque état : phase 3 (`report.json`).
+46. [x] Texte réel partout, rien que dans un canvas (pas de canvas).
+47. [ ] Cibles : phase 1 mesurée ; à reprouver par `report.json` en phase 3.
