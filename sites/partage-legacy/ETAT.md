@@ -30,3 +30,18 @@
 - Bons cadeaux : « lunch pour deux 76 € » dérivé du lunch à 38 € ; deux autres formules illustratives (`placeholder: true`). Politique de confidentialité : texte illustratif.
 - Aucun avis affiché (aucun extrait réel), aucune photo de bibliothèque.
 - Téléphone affiché : 081 81 00 98 (celui du site officiel).
+
+# ETAT · partage-legacy · fin de revue 1 (relecteur-site) · 01/11/2026
+
+## Fait
+- `REVUE-1.md` écrit : verdict A_CORRIGER (F0 0, F1 2, F2 2, F3 4). Mesures ciblées : 5 pages x 2 largeurs (console, requêtes, débordement, images DPR 2), contraste (0 écart), menu mobile, onglets, 27 liens locaux, `sloplint src` (0 FAIL, 0 WARN).
+- Serveur 4701 arrêté (PID noté puis `kill`). Aucun fichier du site modifié.
+
+## Reste (réviseur)
+- F1-1 page bon cadeau (phrases inventées : téléphone, « avec un bon », « un midi au choix ») ; F1-2 carte (« change chaque semaine », « la cuisine s'adapte »).
+- F2-1 légendes « citronnier » / « le soir » ; F2-2 « boeuf » et apostrophes droites de la carte.
+- F3 : numéro BE et attablezvous.be « à confirmer », « en une minute », `priceRange`, composition de la page bon cadeau.
+- Les 12 REFLEX `sloplint --render` de `RAPPORT.md` ne sont pas retranchés (hero accueil : 900 px, chiffre 912 périmé).
+
+## Pièges
+- Ne pas confondre la « 404 » des captures (repli de `serve.mjs`) avec `404.html`.
