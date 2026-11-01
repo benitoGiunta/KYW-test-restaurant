@@ -17,3 +17,7 @@
 ## Décisions / pièges
 - Les JPG originaux émis dans `_astro/` ne sont référencés par aucune page.
 - `gabarits/` non touché.
+
+## Passe de revue 1 (relecteur-site, 01/11/2026)
+- Fait : REVUE-1.md (A_CORRIGER : F0 0, F1 2, F2 5, F3 5). Captures de l'agent captures en échec (`shootFailed`) : mesures par script maison, planches dans `.shots-dolce-vita-wepion-awwwards-revue1/self/`.
+- Reste (réviseur) : F1-1 aria-label du SplitText sur `.devise__it`, F1-2 bandes défilantes mobiles focalisables, puis F2.
