@@ -60,6 +60,12 @@ const resultats = await pipeline(
     await captures(v, `revue${passe}`)
     let revue = await agent(`${socle('relecteur-site', v, passe)} Site : ${site}. Les captures complètes et l'audit sont déjà faits : lis ${site}QA-revue${passe}.md et ses planches (ne relance pas de shoot complet ; captures ciblées seulement si une preuve manque). Écris REVUE-${passe}.md dans ce dossier.`, { label: `revue${passe}:${v}:${slug}`, phase: 'Revue', schema: SCHEMA_REVUE, effort: 'high', model: 'sonnet' })
     revues.push(revue)
+    // Test B (01/11) : revue 1 sans F0 ni F1 → une révision ciblée des F2 éventuels, sans revue 2.
+    if (revue && revue.f0 === 0 && revue.f1 === 0 && revue.verdict !== 'BLOQUANT' && ((revue.f2 || 0) > 0)) {
+      const rev = await agent(`${socle('reviseur-site', v, passe)} Site : ${site}, revue à traiter : REVUE-${passe}.md (aucun F0 ni F1). RÉVISION CIBLÉE des F2 seulement, chacun vérifié par capture ciblée, grep ou mesure ; pas de QA complète. Rebuild final via scripts/q.sh. Écris REVISION-${passe}.md. Pas de revue 2 ensuite : la session de reporting contrôlera un échantillon. Rends amendements_prompts (tableau vide si rien).`, { label: `revision${passe}:${v}:${slug}`, phase: 'Révision', schema: SCHEMA_REVISION, effort: 'high', model: 'opus' })
+      revisions.push(rev)
+      log(`${v} : revue 1 sans F0/F1 → révision des F2, revue 2 dispensée (test B)`)
+    }
     while (revue && revue.verdict !== 'PUBLIABLE' && (revue.f0 > 0 || revue.f1 > 0 || revue.verdict === 'BLOQUANT') && passe <= passesMax) {
       const rev = await agent(`${socle('reviseur-site', v, passe)} Site : ${site}, revue à traiter : REVUE-${passe}.md. RÉVISION CIBLÉE : corrige la liste F0, F1, F2 de la revue et vérifie seulement ces points (capture ciblée d'une page, grep, mesure) ; pas de QA complète. Rebuild final via scripts/q.sh. Écris REVISION-${passe}.md. Rends dans amendements_prompts les paragraphes exacts à ajouter aux prompts de agents/ si tu as détecté une lacune de méthode (sinon tableau vide).`, { label: `revision${passe}:${v}:${slug}`, phase: 'Révision', schema: SCHEMA_REVISION, effort: 'high', model: 'opus' })
       revisions.push(rev)
