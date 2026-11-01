@@ -28,3 +28,10 @@ const { page } = Astro.props;
     <button class="btn" type="button" popovertarget="menu-mobile" popovertargetaction="hide">Fermer</button>
   </div>
 </header>
+<script>
+  // Menu mobile : un lien vers une ancre de la même page ferme le panneau (sinon il couvre la section visée).
+  const menu = document.getElementById('menu-mobile');
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
+    if (menu.matches(':popover-open')) menu.hidePopover();
+  }));
+</script>

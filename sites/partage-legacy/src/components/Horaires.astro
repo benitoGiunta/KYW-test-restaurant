@@ -24,5 +24,6 @@ import { horaires, fermeture } from '../data/site';
 </div>
 <script>
   const j = new Date().getDay();
-  document.querySelector(`.horaires__table tr[data-jour="${j}"]`)?.classList.add('aujourdhui');
+  const tr = document.querySelector(`.horaires__table tr[data-jour="${j}"]`);
+  if (tr) { tr.classList.add('aujourdhui'); tr.querySelector('th')?.setAttribute('aria-current', 'date'); }
 </script>

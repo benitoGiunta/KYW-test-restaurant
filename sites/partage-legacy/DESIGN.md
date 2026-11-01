@@ -1,7 +1,7 @@
-**Hallmark · v2.0.0 · variante legacy KYW** · Partage (Namur) · 01/11/2026 · phase 1 sur 3
+**Hallmark · v2.0.0 · variante legacy KYW** · Partage (Namur) · 01/11/2026 · phase 2 sur 3
 
 - **Redesign** · full · 4 pages (/, /carte/, /bon-cadeau/, /politique-de-confidentialite/), mêmes routes que restaurantpartage.be
-- **Before** · sloplint `--before` pas encore lancé (phase 2) ; lecture sur les captures du client : one-page WordPress/Divi blanc, nav capitales trackées, trois boutons noirs remplis côte à côte, portrait rond, module Zenchef (rid=371394), mur de 16 photos, footer noir 3 colonnes, carte en 5 GIF illisibles au téléphone, aucun horaire ; ce qui reste : les photos de janvier 2026, le texte de présentation mot pour mot, la séquence de la page
+- **Before** · sloplint `--before` lancé en phase 2 : 444 FAIL · 174 REFLEX · 26 WARN (AUDIT.md), record `.hallmark/before.json` ; lecture sur les captures du client : one-page WordPress/Divi blanc, nav capitales trackées, trois boutons noirs remplis côte à côte, portrait rond, module Zenchef (rid=371394), mur de 16 photos, footer noir 3 colonnes, carte en 5 GIF illisibles au téléphone, aucun horaire ; ce qui reste : les photos de janvier 2026, le texte de présentation mot pour mot, la séquence de la page
 - **Keeps** · liens : accueil, #partage, /carte/, /bon-cadeau/, #reservation, Facebook, Instagram, Google Maps, Zenchef `bookings.zenchef.com/results?rid=371394&pid=1001` (lien direct, au lieu de l'iframe), tel:+3281810098, /politique-de-confidentialite ; dropped : les 16 liens directs vers les JPG de la galerie (la galerie devient un accrochage de 5), le lien La-Carte.be (crédit du prestataire sortant) ; à consigner au sweep
 - **Files** · create: sites/partage-legacy/** · delete: none
 - **Shape** · une page de bistro, Photographic (kept) · genre editorial · job: book, l'action dans la nav, sous la présentation et à la clôture
@@ -35,20 +35,21 @@ L'« air » WebGL du thème n'est pas construit (variante legacy : CSS d'abord ;
 - Type : Sentient 300 (titres, statement), Sentient 400 (h3, noms de plats, jours), Hanken Grotesk 400 (corps 16 px, 1,6). Trois graisses.
 - Espace : échelle `--space-*` du scaffold ; `--section-gap` 120/96/72 ; `--container` 1440, `--gutter` 64/24/16.
 - Surfaces : papier, puits `--color-paper-2`, carton coton `.stock` (dégradé lit/shade, filet intérieur à 14 px, `--shadow-card`), filets. Rayon 3 px contrôles, 2 px cartes.
-- Motion : un fondu du texte du hero (`--dur-long`, `--ease-out`), sous `prefers-reduced-motion: no-preference`, visible sans script.
+- Motion (phase 2) : caractère Atelier « fade-in after fonts » : le texte du hero (et la tête des pages /carte/ et /bon-cadeau/) se lève après `document.fonts.ready` (repli 1,5 s), `--dur-long`, `--ease-out`. Un seul reveal par page : le tirage du chef (la signature) se pose une fois à l'entrée dans l'écran (IntersectionObserver, `.vu` jamais retiré), sa légende crayonnée un temps après. Le panneau choisi du Switcher arrive en `--dur-short`. Le menu mobile (Popover) entre en fondu + 0,5 rem (`@starting-style`). Tout sous `prefers-reduced-motion: no-preference` : en reduced motion et sans script, tout est visible et immobile (vérifié : opacités 1). `transform`/`opacity` seulement (10a).
+- Air (phase 2) : pas de WebGL (site d'origine calme, variante legacy CSS d'abord) ; un air immobile `.air` = deux voiles de lumière du jour (`--air-1` carton éclairé, `--air-2` puits) + `--grain` (feTurbulence 180 px, 1,15) multiplié à 0,16, derrière la carte de réservation et les têtes des pages intérieures. `--fibre` (feTurbulence 220 px, 0,85 × 0,08) sur tout le carton `.stock`, texte pressé (ombre claire 1 px).
 
 ## Composants
 
 | Composant | Décision | Référence |
 | --- | --- | --- |
 | Bouton | contour filet encre 3 px (hover : encre pleine) ; un seul `.btn--plein` par page (Zenchef sur l'accueil, commande du bon sur /bon-cadeau/) ; `.btn--clair` sur photo ; 48 px ; `white-space: nowrap` | thème § Controls, F4, 39b, 49a |
-| Nav | pilule flottante sticky (hauteur 0, se pose sur le hero), nom en Sentient + signature « Charles Jeandrain », 2 liens + « Réserver une table » ; sous 60rem, menu Popover | draw, anatomy § book, microinteractions § Menu |
-| Carte | Rows sous filet encre, nom Sentient 400, description muted, prix tabulaire à droite ; Switcher 4 onglets, les 4 panneaux lisibles sans script | patterns § rail and switcher, F6 |
-| Horaires | table réglée, jour fermé muted (jamais barré), aujourd'hui sur carton, heures du soir `data-placeholder` (à confirmer) | thème § Timetable, layout § 5.16 |
+| Nav | pilule flottante sticky (hauteur 0, se pose sur le hero), nom en Sentient + signature « Charles Jeandrain », 2 liens + « Réserver une table » ; sous 60rem, menu Popover (un lien d'ancre le referme ; liens soulignés ardoise au survol et sur la page courante) | draw, anatomy § book, microinteractions § Menu |
+| Carte | Rows sous filet encre, nom Sentient 400, description muted, prix tabulaire à droite ; Switcher 4 onglets (flèches, Début, Fin ; l'onglet suit l'ancre `#lunch|#cuisine|#vins|#fin`, `hashchange` compris), les 4 panneaux lisibles sans script | patterns § rail and switcher, F6 |
+| Horaires | table réglée, jour fermé muted (jamais barré), aujourd'hui sur carton + « · aujourd'hui » + `aria-current="date"`, heures du soir `data-placeholder` (à confirmer) | thème § Timetable, layout § 5.16 |
 | Réservation | carte coton : titre, une phrase, le fait « groupes 20 à 30 », le primaire rempli « Choisir un jour et une heure » vers Zenchef (lien conservé), téléphone en clair ; à côté, la façade | redesign § What a redesign keeps, 84 |
 | Footer | letter close : une phrase signée par l'équipe, la réservation, adresse, téléphone, fermeture, réseaux ; Attablez-vous ; n° d'entreprise ; KYW en dernier | draw, 85 |
 | Photo | `figure > [data-slot][data-alt] > img` avec `width/height`, `srcset`, hero `fetchpriority="high"` ; légende = un fait | patterns § photograph in a slot |
 
 ## Liste de sur-utilisation (§ 6 du prompt)
 
-À cocher en phase 3, après `sloplint --render --kept`. État phase 1 : tier statique `0 FAIL, 4 WARN, 1 NOTE` (WARN 41 hero sur fond sombre, F15 trois gaps de colonnes, 49 libellés longs, F24 corrigé).
+À cocher en phase 3, après `sloplint --render --kept`. État phase 2 : tier statique `0 FAIL, 0 WARN, 4 DISMISSED` (49 ×3 : nowrap dans la feuille ; F15 : deux gaps voulus) ; 58 reformulé sur /bon-cadeau/ ; F24 du menu corrigé (ombre seule). État phase 1 : tier statique `0 FAIL, 4 WARN, 1 NOTE` (WARN 41 hero sur fond sombre, F15 trois gaps de colonnes, 49 libellés longs, F24 corrigé).

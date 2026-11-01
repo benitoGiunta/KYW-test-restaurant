@@ -1,8 +1,11 @@
 /* Hallmark · shape: une page de bistro, Photographic (kept) · genre: editorial · theme: Atelier (deal 2/3, seed restaurant-namur-sharing-plates-e651·ed7c7216·2026-11-01·r0) · redesign: full
  * hero: Poster (kept) · nav: floating pill · footer: letter close · imagery: photographs, client 11 + library 0, warm daylight · signature: le portrait du chef monté en tirage sur passe-partout, sous la phrase « Ici, l’expérience se vit dans le partage » · atelier: no air (phase 1) · draw: cdb6cc
  * axes: light/roman-serif/cool · posture: restrained · contrast: pass · fold: pass · job: book · comp: pending (phase 2) · v2.0.0 */
-/* Hallmark · pre-emit critique: P3 H4 E3 S3 R4 V4 · weakest: S (surfaces), the card stock and the matted print carry the theme until the air lands in phase 2 */
+/* Hallmark · pre-emit critique: P3 H4 E4 S4 R4 V4 · weakest: P (posture), the page stays as calm as the old one; the still air, the fibre on the stock and the print that settles carry the theme */
 /* Hallmark · waive 8 · kept sequence hero, présentation, réservation, en images, infos · KYW legacy keeps the original one-page order in a new composition */
+/* Hallmark · reworded "Un bon cadeau pour une table chez Partage, valable sur la carte comme sur le lunch." to "Un bon pour une table chez Partage, à la carte ou au lunch." · 58 */
+/* Hallmark · dismissed 49 · every .btn and .nav__logo carries white-space: nowrap in this sheet; the static tier reads the markup only */
+/* Hallmark · dismissed F15 · two column gaps on purpose: 96px between text and picture in the 7/4 splits, 32px (16 to 24px on small screens) inside the photo hang and the closing list */
 @import url("./tokens.css");
 @import url("./base.css");
 
@@ -12,7 +15,11 @@
   --scrim: color-mix(in oklab, var(--color-ink) 62%, transparent);
   --scrim-0: color-mix(in oklab, var(--color-ink) 0%, transparent);
   --on-photo: var(--color-card);
-  --fibre: none;
+  /* texture.md: generated feTurbulence data URIs, as the theme's Surfaces line names them */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.26 0 0 0 0 0.22 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85 0.08' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.37 0 0 0 0 0.3 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  --air-1: var(--card-lit);
+  --air-2: color-mix(in oklab, var(--color-paper-2) 55%, var(--color-card-edge));
   scroll-padding-top: calc(var(--nav-h) + var(--space-xl));
 }
 
@@ -65,7 +72,13 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); letter-spacing: 0
 .nav__liens a[aria-current="page"] { color: var(--color-ink); border-bottom-color: var(--color-accent); }
 .nav__menu { display: none; min-height: 44px; padding: 0 var(--space-md); background: transparent; border: var(--rule-hair) solid var(--color-ink); border-radius: var(--radius-pill); color: var(--color-ink); cursor: pointer; }
 .nav__menu:active { transform: translateY(1px); }
-.menu { margin: var(--space-sm) var(--gutter) auto auto; width: min(20rem, 100% - 2 * var(--gutter)); padding: var(--space-lg); border: var(--rule-hair) solid var(--color-card-edge); border-radius: var(--radius-pill); background: var(--color-card); box-shadow: var(--shadow-card); color: var(--color-ink); }
+.menu { margin: var(--space-sm) var(--gutter) auto auto; width: min(20rem, 100% - 2 * var(--gutter)); padding: var(--space-lg); border: 0; border-radius: var(--radius-pill); background: var(--color-card); box-shadow: var(--shadow-card); color: var(--color-ink); }
+.menu { opacity: 0; transform: translateY(-0.5rem); transition: opacity var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out), overlay var(--dur-short) allow-discrete, display var(--dur-short) allow-discrete; }
+.menu:popover-open { opacity: 1; transform: none; }
+@starting-style { .menu:popover-open { opacity: 0; transform: translateY(-0.5rem); } }
+.menu a:hover { text-decoration: underline; text-decoration-color: var(--color-accent); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.menu a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--color-accent); text-underline-offset: 0.2em; }
+.nav__logo:hover .nav__nom { text-decoration: underline; text-decoration-color: var(--color-accent); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
 .menu::backdrop { background: color-mix(in oklab, var(--color-ink) 30%, transparent); }
 .menu ul { margin: 0 0 var(--space-lg); padding: 0; list-style: none; border-top: var(--rule-head) solid var(--color-ink); }
 .menu li { border-bottom: var(--rule-hair) solid var(--color-rule); }
@@ -81,7 +94,12 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); letter-spacing: 0
 .dropcap::first-letter { float: left; font: var(--serif-small) 3.3em/0.8 var(--font-display); padding: 0.1em 0.1em 0 0; color: var(--color-accent); }
 
 /* stock: cotton card */
-.stock { position: relative; border-radius: 2px; background: linear-gradient(160deg, var(--card-lit), var(--color-card) 55%, var(--card-shade)); box-shadow: var(--shadow-card), inset 1px 1px 0 var(--lit); }
+.stock { position: relative; border-radius: 2px; background: var(--fibre) 0 0 / 220px, linear-gradient(160deg, var(--card-lit), var(--color-card) 55%, var(--card-shade)); box-shadow: var(--shadow-card), inset 1px 1px 0 var(--lit); text-shadow: 0 1px 0 var(--lit); }
+.stock .btn--plein { text-shadow: none; }
+
+/* the air, still: no WebGL on a calm legacy site; two daylight veils and the grain, behind the booking card and the inner page heads */
+.air { position: relative; isolation: isolate; background: radial-gradient(55% 75% at 16% 28%, var(--air-1), transparent 72%), radial-gradient(45% 65% at 86% 74%, var(--air-2), transparent 70%), var(--color-paper); }
+.air::after { content: ""; position: absolute; inset: 0; z-index: -1; background-image: var(--grain); background-size: 180px; opacity: 0.16; mix-blend-mode: multiply; pointer-events: none; }
 .stock::before { content: ""; position: absolute; inset: 0.875rem; border: var(--rule-hair) solid var(--color-card-edge); pointer-events: none; }
 .stock > * { position: relative; }
 
@@ -100,6 +118,7 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); letter-spacing: 0
 .hero__texte { grid-area: 1 / 1; position: relative; z-index: var(--z-raised); align-self: end; padding-bottom: var(--space-3xl); color: var(--on-photo); }
 .hero h1 { color: var(--on-photo); font-size: var(--text-display); }
 .hero__phrase { margin-top: var(--space-md); max-width: 38ch; font-size: var(--text-lead); line-height: 1.45; }
+.hero :focus-visible { outline-color: var(--on-photo); }
 .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-lg); margin-top: var(--space-xl); }
 
 /* ---------- présentation ---------- */
@@ -136,25 +155,6 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); letter-spacing: 0
 .resa__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md) var(--space-xl); margin-top: var(--space-xl); }
 .resa__actions .resa__tel { margin-top: 0; }
 @media (max-width: 40rem) { .resa__faits { grid-template-columns: minmax(0, 1fr); } }
-.form { display: grid; gap: var(--space-md); margin-top: var(--space-xl); }
-.form__rang { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--space-md); }
-.champ { display: grid; gap: var(--space-3xs); min-width: 0; }
-.champ label { font-size: var(--text-sm); color: var(--color-ink); }
-.champ input, .champ select, .champ textarea {
-  width: 100%; min-height: 48px; padding: var(--space-xs) var(--space-sm);
-  border: var(--rule-hair) solid var(--color-pencil); border-radius: var(--radius-pill);
-  background: var(--color-card); color: var(--color-ink);
-  transition: border-color var(--dur-short) var(--ease-out);
-}
-.champ textarea { min-height: 4.5rem; resize: vertical; }
-.champ input:hover, .champ select:hover, .champ textarea:hover { border-color: var(--color-ink); }
-.champ input:focus-visible, .champ select:focus-visible, .champ textarea:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
-.champ [aria-invalid="true"] { border-color: var(--color-error); }
-.champ :disabled { opacity: 0.5; cursor: not-allowed; border-style: dashed; }
-.champ__aide { min-height: 1lh; font-size: var(--text-sm); color: var(--color-muted); }
-.champ:has([aria-invalid="true"]) .champ__aide { color: var(--color-error); }
-.form__pied { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md); }
-.form__statut { min-height: 1lh; font-size: var(--text-sm); color: var(--color-ink); max-width: 44ch; }
 
 /* ---------- en images: an uneven hang ---------- */
 .accrochage { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-xl) var(--gap-columns); margin-top: var(--space-2xl); align-items: start; }
@@ -175,6 +175,7 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); letter-spacing: 0
 .ruled-table tr.ferme th, .ruled-table tr.ferme td { color: var(--color-muted); }
 .ruled-table tr.aujourdhui { background: var(--color-card); }
 .ruled-table tr.aujourdhui th { padding-left: var(--space-sm); }
+.ruled-table tr.aujourdhui th::after { content: " · aujourd’hui"; font-family: var(--font-body); font-size: var(--text-xs); color: var(--color-muted); white-space: nowrap; }
 .horaires__note { margin-top: var(--space-md); font-size: var(--text-sm); color: var(--color-muted); }
 .infos__venir { display: grid; gap: var(--space-md); padding-top: var(--space-sm); }
 .ruled-list { margin: 0; padding: 0; list-style: none; border-top: var(--rule-head) solid var(--color-ink); }
@@ -221,7 +222,7 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); letter-spacing: 0
 .cloture__mot { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--text-3xl); line-height: 1.1; color: var(--color-ink); letter-spacing: var(--tracking-statement); max-width: 20ch; }
 .cloture__signe { margin-top: var(--space-sm); color: var(--color-pencil); font-size: var(--text-sm); }
 .cloture__lettre .btn { margin-top: var(--space-xl); }
-.cloture__infos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); margin: 0; }
+.cloture__infos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg) var(--gap-columns); margin: 0; }
 .cloture__infos dt { font-size: var(--text-sm); color: var(--color-muted); }
 .cloture__infos dd { margin: var(--space-3xs) 0 0; color: var(--color-ink); }
 .cloture__infos a { text-decoration-color: var(--color-accent); }
@@ -253,8 +254,18 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); letter-spacing: 0
   .ruled-table th { width: auto; }
 }
 
-/* ---------- motion: one fade after fonts, visible without script ---------- */
+/* ---------- motion: Atelier, "fade-in after fonts", one reveal (the signature print), visible without script ---------- */
 @media (prefers-reduced-motion: no-preference) {
-  .js .hero__texte { animation: lever var(--dur-long) var(--ease-out) both; }
   @keyframes lever { from { opacity: 0; transform: translateY(0.75rem); } to { opacity: 1; transform: none; } }
+  /* entrance: waits for the fonts (or 1.5 s), so the light Sentient never swaps under the eye */
+  .js .hero__texte, .js .tete-page__texte { opacity: 0; }
+  .js.fonts .hero__texte, .js.fonts .tete-page__texte { animation: lever var(--dur-long) var(--ease-out) both; }
+  /* the one reveal: the matted print settles once as it enters, its pencilled line a beat later (IntersectionObserver in
+     Base.astro adds .vu once and never removes it). Without script or under reduced motion the print simply hangs there. */
+  .js [data-reveal] .photo__cadre, .js [data-reveal] .photo__legende { transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out); }
+  .js [data-reveal]:not(.vu) .photo__cadre { opacity: 0; transform: translateY(1.5rem); }
+  .js [data-reveal]:not(.vu) .photo__legende { opacity: 0; }
+  .js [data-reveal].vu .photo__legende { transition-delay: var(--dur-short); }
+  /* switcher: the chosen panel arrives, it does not jump */
+  .switcher--actif .panneau:not([hidden]) { animation: lever var(--dur-short) var(--ease-out); }
 }

@@ -12,9 +12,9 @@ const onglets = [
 ---
 <Base page="carte" title="Menus et carte · Partage, Namur"
   description="La carte de Partage à Namur : starters, entrées, plats et desserts à partager, lunch à 38 € le midi, vins au verre.">
-  <section class="tete-page" aria-labelledby="carte-titre">
+  <section class="tete-page air" aria-labelledby="carte-titre">
     <div class="container tete-page__grille">
-      <div>
+      <div class="tete-page__texte">
         <h1 id="carte-titre">Menus et carte</h1>
         <p class="lead">Plusieurs plats au milieu de la table, pas une assiette chacun.</p>
         <p class="edition">Carte du {dateCarte}, elle change avec les saisons</p>
@@ -81,15 +81,23 @@ const onglets = [
       });
       if (focus) t.focus();
     };
+    const garder = (t: HTMLButtonElement) => history.replaceState(null, '', '#' + t.id.replace('tab-', ''));
     tabs.forEach((t, i) => {
-      t.addEventListener('click', () => choisir(t));
+      t.addEventListener('click', () => { choisir(t); garder(t); });
       t.addEventListener('keydown', (e) => {
-        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-        if (d) { e.preventDefault(); choisir(tabs[(i + d + tabs.length) % tabs.length], true); }
+        const n = tabs.length;
+        const cible = e.key === 'ArrowRight' ? tabs[(i + 1) % n] : e.key === 'ArrowLeft' ? tabs[(i - 1 + n) % n]
+          : e.key === 'Home' ? tabs[0] : e.key === 'End' ? tabs[n - 1] : null;
+        if (cible) { e.preventDefault(); choisir(cible, true); garder(cible); }
       });
     });
     const depart = tabs.find((t) => '#' + t.id.replace('tab-', '') === location.hash) ?? tabs[0];
     choisir(depart);
+    // un lien « #vins » posé sur la page (ou le retour arrière) choisit l'onglet sans recharger
+    addEventListener('hashchange', () => {
+      const t = tabs.find((x) => '#' + x.id.replace('tab-', '') === location.hash);
+      if (t) choisir(t);
+    });
     sw.classList.add('switcher--actif');
   }
 </script>
