@@ -3,13 +3,14 @@
 import { carteDe, site, creneauService } from '../data/site';
 import Lignes from './Lignes.astro';
 const joursMidi = site.horaires.filter((h) => creneauService(h, 'midi')).map((h) => h.jour.slice(0, 3) + '.');
+const joursMidiComplets = site.horaires.filter((h) => creneauService(h, 'midi')).map((h) => h.jour);
 const joursSoir = site.horaires.filter((h) => creneauService(h, 'soir')).map((h) => h.jour);
 const services = [
   { id: 'midi', label: 'Midi', sous: joursMidi.length > 2 ? `${joursMidi[0]} au ${joursMidi[joursMidi.length - 1]}` : joursMidi.join(' et '), cats: carteDe('midi') },
   { id: 'soir', label: 'Soir', sous: `${joursSoir[0].slice(0, 3)}. au ${joursSoir[joursSoir.length - 1].slice(0, 3)}.`, cats: carteDe('soir') },
 ];
 ---
-<div class="onglets" role="tablist" aria-label="Service" data-onglets>
+<div class="onglets" role="tablist" aria-label="Service" data-onglets data-jours-midi={JSON.stringify(joursMidiComplets)}>
   {services.map((s) => (
     <button class="onglets__tab" role="tab" id={`tab-${s.id}`} aria-controls={`panneau-${s.id}`} aria-selected="false" data-service={s.id} type="button">
       {s.label}<small>{s.sous}</small>

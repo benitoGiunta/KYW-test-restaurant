@@ -26,10 +26,20 @@ export function setupMotion() {
       .set(c, { autoAlpha: 0 }),
   });
 
-  onPage(() => {
-    const cleanups = [etat(), suggestion(), onglets(), lignesEcrites(), apercu(), prixEcrits(), motsGeants(), aujourdhui(), formulaire()];
+  onPage(({ intro }) => {
+    const cleanups = [signature(intro), etat(), suggestion(), onglets(), lignesEcrites(), apercu(), prixEcrits(), motsGeants(), aujourdhui(), formulaire()];
     return () => cleanups.forEach((c) => c && c());
   });
+}
+
+/** Signature : sous le nom, « Charles Jeandrain » s'écrit de gauche à droite puis le trait ocre du loader se trace
+ *  à sa suite (variable --trait). Le nom reste peint au premier rendu (LCP). Reduced motion : tout est posé. */
+function signature(intro: gsap.core.Timeline) {
+  const sig = document.querySelector<HTMLElement>('.ardoise__signature');
+  if (!sig || prefersReducedMotion()) return;
+  intro
+    .fromTo(sig, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.1, ease: ease.out, clearProps: 'clipPath' }, 0.15)
+    .fromTo(sig, { '--trait': 0 }, { '--trait': 1, duration: 0.8, ease: ease.out }, 0.9);
 }
 
 /* ---------- Outils horaires (aucune date en dur : tout vient de data-horaires et de l'horloge du visiteur) ---------- */
@@ -40,9 +50,9 @@ function etatOuverture(horaires: Horaire[], now = new Date()) {
   const t = now.getHours() * 60 + now.getMinutes();
   const h = horaires.find((x) => x.jour === JOURS[jourIdx]);
   const ouvert = h?.creneaux.find((c) => t >= minutes(c.ouverture) && t < minutes(c.fermeture));
-  if (ouvert) return { ouvert: true, texte: `Ouvert jusqu'à ${hhmm(ouvert.fermeture)}` };
+  if (ouvert) return { ouvert: true, texte: `Ouvert jusqu’à ${hhmm(ouvert.fermeture)}` };
   const plusTard = h?.creneaux.find((c) => t < minutes(c.ouverture));
-  if (plusTard) return { ouvert: false, texte: `Fermé, ouvre aujourd'hui à ${hhmm(plusTard.ouverture)}` };
+  if (plusTard) return { ouvert: false, texte: `Fermé, ouvre aujourd’hui à ${hhmm(plusTard.ouverture)}` };
   for (let i = 1; i <= 7; i++) {
     const j = horaires.find((x) => x.jour === JOURS[(jourIdx + i) % 7]);
     if (j?.creneaux.length) return { ouvert: false, texte: `Fermé, ouvre ${i === 1 ? 'demain' : j.jour} à ${hhmm(j.creneaux[0].ouverture)}` };
@@ -88,7 +98,7 @@ function suggestion() {
   const reduced = prefersReducedMotion();
   let tl: gsap.core.Timeline | null = null;
   const ecrire = (d: (typeof data)[number], estAujourdhui: boolean) => {
-    label.textContent = estAujourdhui ? `Aujourd'hui, ${d.jour}` : d.jour[0].toUpperCase() + d.jour.slice(1);
+    label.textContent = estAujourdhui ? `Aujourd’hui, ${d.jour}` : d.jour[0].toUpperCase() + d.jour.slice(1);
     texte.innerHTML = d.texte.split(' ').map((m) => `<span class="mot">${m}</span>`).join(' ');
     prix.textContent = d.prix || '';
     marque.hidden = !d.placeholder;
@@ -133,11 +143,13 @@ function onglets() {
   const choisir = (idx: number, anime = true) => {
     tabs.forEach((t, k) => { t.setAttribute('aria-selected', String(k === idx)); t.tabIndex = k === idx ? 0 : -1; panneaux[k].hidden = k !== idx; });
     poser(tabs[idx], anime);
-    const lignes = panneaux[idx].querySelectorAll<HTMLElement>('[data-ecrit]');
-    lignes.forEach((l) => ScrollTrigger.refresh());
+    ScrollTrigger.refresh();
   };
-  const h = new Date().getHours();
-  const defaut = tabs.findIndex((t) => t.dataset.service === (h < 15 ? 'midi' : 'soir'));
+  // Midi seulement avant 15 h un jour où le lunch est servi (mer. au sam.) ; sinon la carte du soir.
+  const now = new Date();
+  const joursMidi = JSON.parse(root.dataset.joursMidi || '[]') as string[];
+  const midi = now.getHours() < 15 && joursMidi.includes(JOURS[now.getDay()]);
+  const defaut = tabs.findIndex((t) => t.dataset.service === (midi ? 'midi' : 'soir'));
   choisir(defaut < 0 ? 0 : defaut, false);
   const handlers = tabs.map((t, k) => { const f = () => choisir(k); t.addEventListener('click', f); return f; });
   const clavier = (e: KeyboardEvent) => {

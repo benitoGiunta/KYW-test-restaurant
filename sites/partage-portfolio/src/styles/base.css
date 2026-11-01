@@ -34,6 +34,10 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.5; p
 .etat__piste p { flex: 0 0 auto; white-space: nowrap; margin: 0; padding-right: 3rem; }
 .etat__piste p::after { content: '·'; margin-left: 3rem; color: var(--c-accent); }
 .motion .etat__piste[data-anime] { animation: defile 40s linear infinite; }
+/* Statique (sans JS, reduced motion) : une seule ligne, coupée proprement par des points de suspension. */
+.etat__piste:not([data-anime]) { width: 100%; padding-inline: var(--gutter); }
+.etat__piste:not([data-anime]) p { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; padding-right: 0; }
+.etat__piste:not([data-anime]) p::after, .etat__piste:not([data-anime]) [data-etat-copie] { display: none; }
 @keyframes defile { to { transform: translateX(-50%); } }
 .etat[data-ouvert='oui'] { color: var(--c-accent); }
 
@@ -57,6 +61,10 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.5; p
 .ardoise__nom { font-size: var(--t-mega); margin: 0; }
 .ardoise__nom span { display: block; }
 .ardoise__nom .ardoise__signature { font-family: var(--f-body); font-weight: 400; font-size: var(--t-m); letter-spacing: 0.32em; padding-left: 0.2em; margin-top: 0.4em; color: var(--c-muted); }
+.ardoise__nom .ardoise__signature::after { content: ''; display: inline-block; width: 2.5em; height: 2px; margin-left: 0.4em; vertical-align: middle; background: var(--c-accent); transform: scaleX(var(--trait, 1)); transform-origin: left; }
+@media (max-width: 479px) { .ardoise__nom .ardoise__signature { letter-spacing: 0.22em; } .ardoise__nom .ardoise__signature::after { width: 1.5em; } }
+/* Appui : retour tactile sur les commandes (désactivé en reduced motion par la règle globale des transitions). */
+.jour__btn:active, .btn:active, .onglets__tab:active { transform: scale(0.96); }
 .note-horaires { margin-top: var(--u); font-size: var(--t-s); color: var(--c-muted); }
 .clair .note-horaires { color: var(--c-clair-muted); }
 .ardoise__accroche { margin-top: calc(var(--u) * 1.5); max-width: 42ch; color: var(--c-muted); }
@@ -67,7 +75,7 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.5; p
 
 /* Suggestion du jour */
 .jour { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--u); margin-top: calc(var(--u) * 4); padding-block: var(--u); border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); }
-.jour__btn { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--c-line); background: transparent; color: var(--c-fg); font: inherit; cursor: pointer; transition: border-color 0.3s, color 0.3s; }
+.jour__btn { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--c-line); background: transparent; color: var(--c-fg); font: inherit; cursor: pointer; transition: border-color 0.3s, color 0.3s, transform 0.15s; }
 .jour__btn svg { transition: transform 0.3s var(--ease-out, ease); }
 .jour__btn:hover { border-color: var(--c-accent); color: var(--c-accent); }
 .jour__btn[data-dir='prev']:hover svg { transform: translateX(-4px); }
@@ -82,7 +90,7 @@ html:not(.js) .jour__btn { display: none; }
 
 /* Onglets midi / soir */
 .onglets { position: sticky; top: 3.5rem; z-index: 5; display: flex; gap: clamp(1rem, 4vw, 3rem); margin-top: calc(var(--u) * 3); padding-top: var(--u); background: var(--c-bg); border-bottom: 1px solid var(--c-line); }
-.onglets__tab { position: relative; padding: 0.4rem 0 0.9rem; background: none; border: 0; color: var(--c-muted); font-family: var(--f-display); font-weight: 800; font-size: var(--t-l); text-transform: uppercase; letter-spacing: -0.03em; cursor: pointer; transition: color 0.3s; }
+.onglets__tab { position: relative; padding: 0.4rem 0 0.9rem; background: none; border: 0; color: var(--c-muted); font-family: var(--f-display); font-weight: 800; font-size: var(--t-l); text-transform: uppercase; letter-spacing: -0.03em; cursor: pointer; transition: color 0.3s, transform 0.15s; }
 .onglets__tab small { display: block; font-family: var(--f-body); font-weight: 700; font-size: var(--t-xs); letter-spacing: 0.1em; margin-top: 0.3rem; }
 .onglets__tab:hover, .onglets__tab[aria-selected='true'] { color: var(--c-fg); }
 .onglets__trait { position: absolute; left: 0; bottom: -1px; height: 3px; width: 0; background: var(--c-accent); transition: transform 0.5s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)), width 0.5s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)); }
@@ -189,7 +197,7 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 @media (max-width: 767px) { .barre a { letter-spacing: 0.1em; } }
 
 /* Boutons, liens, formulaire */
-.btn { display: inline-flex; align-items: center; gap: 0.5em; min-height: 44px; padding: 0.7em 1.3em; border: 1px solid currentColor; font-weight: 700; font-size: var(--t-s); letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
+.btn { display: inline-flex; align-items: center; gap: 0.5em; min-height: 44px; padding: 0.7em 1.3em; border: 1px solid currentColor; font-weight: 700; font-size: var(--t-s); letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.3s, color 0.3s, transform 0.15s; }
 .btn:hover { background: var(--c-fg); color: var(--c-bg); }
 .clair .btn:hover { background: var(--c-clair-fg); color: var(--c-clair); }
 .btn--plein { background: var(--c-accent); color: var(--c-bg); border-color: var(--c-accent); }

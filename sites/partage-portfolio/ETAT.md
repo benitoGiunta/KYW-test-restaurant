@@ -1,41 +1,50 @@
-# ETAT : partage-portfolio (fin de la phase 1 sur 3, construction)
+# ETAT : partage-portfolio (fin de la phase 2 sur 3, construction)
 
-Date : 01/11/2026. Agent : variante-portfolio, passe construction-1.
+Date : 01/11/2026. Phase 1 : variante-portfolio, construction-1. Phase 2 : variante-portfolio, construction-2.
 
-## Fait
-- Gabarit choisi : **Ardoise** (matrice et décision dans `DESIGN.md`), copié dans `sites/partage-portfolio/`
-  (sans dist, node_modules, fichiers de revue du gabarit ni photos d'exemple), package renommé `site-partage-portfolio`.
-- `src/data/site.ts` entièrement remplacé par les données de Partage : carte réelle du 28/09/2026 (starters, entrées,
-  plats, desserts), lunch du 21/10/2026 (38 €, 4 plats + suppléments fromages), vins au verre, 13 catégories de bar,
-  horaires (fermetures réelles, heures à confirmer), accès, téléphone du site, réseaux, presse (La Libre, DH) et note
-  Google, équipe (Charles Jeandrain, Luca Recloux, Loïc Goumet, Antoine), 19 photos avec alt descriptifs.
-- Toutes les pages adaptées : accueil (ardoise MIDI/SOIR), carte (+ rubrique « Le bar » `#bar`), « Lunch et groupes »
-  (`/formules/`), salle, maison, réservation, 404. Libellés de nav, titres, descriptions, OG, favicon.
-- Tokens : noir chaud `#1D1C1A`, ocre `#D99A1E`, crème `#F0EBE1`.
-- Photos : 19 WebP + 3 aperçus 4:5 + `og.jpg` + `logo-partage.png` (non utilisé pour l'instant) dans `public/`.
-- Build OK (`scripts/q.sh pf-partage-build pnpm build:site sites/partage-portfolio`), 7 pages, 2,0 Mo ;
-  noindex, mention KYW et `kyw-footer` présents sur les 7 pages, aucun reste « Potes / Zenchef / exemple », aucun tiret
-  cadratin.
+## Fait en phase 1
+- Gabarit **Ardoise** (matrice dans `DESIGN.md`), contenu complet de Partage dans `src/data/site.ts` (carte du
+  28/09/2026, lunch du 21/10/2026, vins, bar, horaires, presse, note Google, équipe, 19 photos), 7 pages adaptées,
+  tokens noir chaud / ocre / crème, OG, favicon. noindex, mention KYW et `kyw-footer` sur les 7 pages.
 
-## Reste (phases 2 et 3)
-- Phase 2 : motion (vérifier que `setup.ts` suggestion / onglets / barre d'état tournent avec les nouvelles données,
-  notamment les jours fermés lundi et dimanche et le mardi sans midi), aperçus au survol (3 seulement).
-- Phase 3 : QA navigateur (lire `QA-<étape>.md` de l'agent captures), contrôles de la section « Leçons intégrées » du
-  prompt (clics réels sur l'en-tête, bas de page visible), `RAPPORT.md` (placeholders, résultats), `pnpm index`.
-- Mesurer à 390 px : largeur du h1 « PARTAGE » + signature, des mots géants, et des noms de vins longs dans `.ligne`.
-- `gabarits/UTILISATION.md` : ajouter « ardoise | partage » (non fait : consigne de ne pas toucher à `gabarits/`).
+## Fait en phase 2
+- **Signature** : « Charles Jeandrain » s'écrit (clip-path) à l'intro de l'accueil, puis un trait ocre se trace à sa
+  suite (variable CSS `--trait`, `::after`). Rejoué à chaque retour sur l'accueil ; posé d'emblée en reduced motion.
+  Le nom « PARTAGE » reste peint au premier rendu (LCP).
+- **Onglets** : par défaut « Midi » seulement avant 15 h un jour de lunch (mer. au sam., lu dans `data-jours-midi`
+  calculé depuis les horaires) ; sinon « Soir ». Vérifié par horloge simulée : mercredi 12 h 30 → midi, barre
+  « Ouvert jusqu’à 14h00 », ligne du tableau marquée ; mardi 12 h 30 → soir, « Fermé, ouvre aujourd’hui à 18h30 ».
+  Flèches clavier OK.
+- **Suggestion du jour** : dimanche et lundi = phrases réelles de fermeture, pastille « illustrative » masquée ;
+  flèches et réécriture mot à mot OK. Apostrophes typographiques dans les textes calculés (`Aujourd’hui`, `jusqu’à`).
+- **Horaires** : cellule vide du mardi midi remplacée par « fermé » (accueil et réservation).
+- **Barre d'état** statique (sans JS, reduced motion) : une ligne coupée par des points de suspension au lieu d'un mot
+  tronqué net ; la copie du marquee est masquée.
+- **États** : retour d'appui `scale(0.96)` sur les flèches du jour, les onglets et les boutons ; lignes à aperçu en
+  `role="group"` (leur `aria-label` n'était pas permis sur un `div` générique).
+- **Mobile 390 px** : aucun débordement de page sur les 7 pages (h1 + signature, mots géants, noms de vins longs) ;
+  signature resserrée sous 480 px (tracking 0,22 em, trait 1,5 em).
+- **Contrôles faits** (script Playwright ciblé, pas de shoot) : 7 pages × 390 / 1440 / 1440 reduced motion, aucune
+  erreur console ; lignes non masquées en reduced motion ; aperçu au survol visible sur /carte/ (opacité 1) ;
+  transitions par clics réels sur les 5 liens de l'en-tête + logo + retour arrière, sans erreur.
+- Build OK : `scripts/q.sh pf-partage-build3 pnpm build:site sites/partage-portfolio` (7 pages).
 
-## Décisions et hypothèses
-- Heures de service : 12:00-14:00 et 18:30-22:00 (source « Que faire à Namur »), marquées « à confirmer » sous chaque
-  tableau d'horaires (`horairesNote.placeholder`). Mardi : soir seulement (fermé le mardi midi selon le site).
-- Le lunch est en service `midi` ; la carte à partager en `soir` (hypothèse : la carte n'est pas affichée au midi faute
-  de source) ; vins au verre en `tous`.
-- Suggestions du jour : plats réels de la carte, attribution au jour illustrative (marque « suggestion illustrative ») ;
-  lundi et dimanche : phrases réelles de fermeture.
-- Aucun avis client inventé : la section avis montre deux titres de presse et la note Google 4,7 (Rankeat, août 2025).
-- Menus cités par la presse (4 services 49 €, homard 67 €) non affichés (absents du site actuel).
-- Réservation : outil inconnu, lien vers `https://restaurantpartage.be/#reservation` ; e-mail inconnu, jamais affiché.
-- Téléphone : +32 81 81 00 98 (site officiel) ; le second numéro (Le Fooding) écarté.
-- Coquilles du GIF corrigées : « Tripel Karmeliet », « Gin Mare Méditerranée ».
-- Photo 11 (cuisinier) : identité non confirmée, alt sans nom. Photo 19 (chef en veste blanche) attribuée à Charles
-  Jeandrain d'après le portrait 09 (à confirmer).
+## Reste (phase 3)
+- Lire `QA-<étape>.md` de l'agent captures et corriger.
+- Contrôle (b) de la section « Leçons intégrées » du prompt : capture fenêtre du bas de chaque page en 1440
+  (bande du site, mention KYW, logo KYW visibles). Le contrôle (a) (clics réels sur l'en-tête) est passé en phase 2.
+- `RAPPORT.md` (placeholders, résultats), `pnpm index`, `gabarits/UTILISATION.md` (« ardoise | partage », non fait :
+  consigne de ne pas toucher à `gabarits/`).
+
+## Décisions et hypothèses (inchangées depuis la phase 1)
+- Heures 12:00-14:00 et 18:30-22:00 « à confirmer » ; mardi soir seulement ; lundi et dimanche fermés.
+- Lunch en service `midi`, carte à partager en `soir`, vins au verre en `tous`.
+- Suggestions : plats réels, attribution au jour illustrative (marquée). Aucun avis inventé (presse + note Google).
+- Réservation : lien vers `https://restaurantpartage.be/#reservation` ; e-mail inconnu, jamais affiché.
+- Mobile : « Lunch et groupes » et « La salle » absents de l'en-tête (choix du gabarit), joignables par l'accueil et
+  le pied de page.
+
+## Pièges
+- La barre d'état passe en défilement seulement quand le JS pose `data-anime` (pas en reduced motion).
+- Un test d'aperçu au survol juste après un `scrollIntoView` échoue : tout défilement cache l'aperçu ; attendre la fin
+  du défilement avant de bouger le pointeur.

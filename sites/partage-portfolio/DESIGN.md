@@ -64,7 +64,8 @@ midi, carte à partager le soir) ; la suggestion du jour devient « à partager 
   hauteur (l'ardoise). **Radius** : 0 ; prix cerclés à 999 px sur la version claire seulement. **Textures** : aucune.
 - **Motion language** : `expo.out`, 0,4 à 1,2 s ; lignes qui « s'écrivent » (clip-path gauche → droite, stagger 0,04) ;
   prix des formules en chars ; mots géants en parallaxe à vitesses différentes ; marquee d'état lent (idle unique).
-  Loader : ardoise, nom en Cabinet, trait jaune qui se trace ; sortie : le panneau glisse vers la droite comme un coup
+  Signature (phase 2) : sous le nom, « Charles Jeandrain » s'écrit de gauche à droite à l'intro, puis un trait ocre
+  (celui du loader) se trace à sa suite. Loader : ardoise, nom en Cabinet, trait jaune qui se trace ; sortie : le panneau glisse vers la droite comme un coup
   d'éponge. Transition : panneau ardoise qui balaie de gauche à droite.
 
 ## Taux d'adéquation estimé : 85 %
