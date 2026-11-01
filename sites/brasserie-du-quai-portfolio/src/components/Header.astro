@@ -7,7 +7,7 @@ const liens = [
   { href: u('/ecailler/'), label: 'L’écailler', sous: 'du jeudi au lundi', mobileHide: true },
   { href: u('/terrasse/'), label: 'La terrasse', sous: 'chauffée, sur la Meuse', mobileHide: true },
   { href: u('/histoire/'), label: 'La maison', sous: 'Martin et Rémy' },
-  { href: u('/reservation/'), label: 'Réserver', sous: '081 65 70 03' },
+  { href: u('/reservation/'), label: 'Réserver', sous: '081 65 70 03', barre: true }, // en mobile, la barre fixe porte déjà « Réserver »
 ];
 const ici = Astro.url.pathname.replace(/\/+$/, '');
 const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
@@ -17,7 +17,7 @@ const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : u
     <a class="header__brand" href={u('/')} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
     <nav class="nav" aria-label="Navigation principale">
       {liens.map((l) => (
-        <a href={l.href} aria-current={courant(l.href)} data-mobile-hide={l.mobileHide ? '' : undefined}>
+        <a href={l.href} aria-current={courant(l.href)} data-mobile-hide={l.mobileHide ? '' : undefined} data-barre={l.barre ? '' : undefined}>
           <span class="nav__label">{l.label}</span><span class="nav__sous mono">{l.sous}</span>
         </a>
       ))}

@@ -40,7 +40,7 @@ const galerie = ['/photos/bar.webp', '/photos/cave-a-vins.webp', '/photos/deco-m
     <Houle fill="ciel" />
     <div class="wrap grid12">
       <div class="col-texte">
-        <span class="eyebrow mono">Au fil de l’eau</span>
+        <span class="eyebrow mono" data-reveal="fade">Au fil de l’eau</span>
         <h2 id="t-chrono" style="font-size: var(--t-l); font-weight: 500">Quatre repères</h2>
       </div>
       <ol class="chrono col-large" data-reveal="up">
@@ -52,7 +52,7 @@ const galerie = ['/photos/bar.webp', '/photos/cave-a-vins.webp', '/photos/deco-m
   <section class="sec sec--eau" aria-labelledby="t-equipe">
     <Houle fill="eau" />
     <div class="wrap">
-      <span class="eyebrow mono">L’équipe</span>
+      <span class="eyebrow mono" data-reveal="fade">L’équipe</span>
       <h2 id="t-equipe" style="font-size: var(--t-l); font-weight: 500; margin-bottom: calc(var(--u) * 4)">En cuisine, à l’écailler, en salle</h2>
       <ul class="equipe" style="list-style: none; padding: 0">
         {site.equipe.map((m, i) => {
@@ -77,10 +77,10 @@ const galerie = ['/photos/bar.webp', '/photos/cave-a-vins.webp', '/photos/deco-m
     <Houle fill="ciel" />
     <div class="wrap grid12">
       <div class="col-texte">
-        <span class="eyebrow mono">Ce qu’en disent les clients</span>
+        <span class="eyebrow mono" data-reveal="fade">Ce qu’en disent les clients</span>
         <h2 id="t-avis" style="font-size: var(--t-l); font-weight: 500">L’écailler, le cadre, la terrasse</h2>
         <ul class="notes" style="list-style: none; padding: 0">
-          {notes.map((n) => <li><span class="notes__chiffre">{n.note}</span><span class="mono muted">{n.source}, {n.nombre}</span></li>)}
+          {notes.map((n, i) => <li data-reveal="up" data-delay={String(i * 0.08)}><span class="notes__chiffre">{n.note}</span><span class="mono muted">{n.source}, {n.nombre}</span></li>)}
         </ul>
         <p class="muted" style="margin-top: calc(var(--u) * 3)"><a class="link" href={presse.url} rel="noopener">{presse.media}, {presse.titre}</a></p>
       </div>

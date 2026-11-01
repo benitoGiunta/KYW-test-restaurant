@@ -274,3 +274,30 @@ h2, h3 { text-wrap: balance; }
 .plateaux { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: calc(var(--u) * 3); }
 .plateau { border-top: 1px solid var(--c-fg); padding-top: calc(var(--u) * 2); display: flex; flex-direction: column; gap: calc(var(--u) * 1); }
 .plateau__prix { font-family: var(--f-display); font-size: var(--t-m); }
+
+/* ───────── Phase 2 (motion, états, mobile) ───────── */
+/* Le nom bord à bord : la rangée du bas ne doit pas s'élargir au contenu nowrap, sinon le fit mesure une boîte trop large. */
+.hero__bas, .nom { min-width: 0; }
+/* Hero de l'accueil : les parasols sombres occupent le haut de la photo ; en-tête crème sur un voile Meuse. */
+[data-theme='photo'] .header { color: var(--c-bg); }
+[data-theme='photo'] .nav__sous { color: rgb(251 251 248 / 0.85); }
+[data-theme='photo'] .hero__media::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 38%; z-index: 1; pointer-events: none; background: linear-gradient(to bottom, rgb(23 57 91 / 0.62), rgb(23 57 91 / 0)); }
+.header__brand, .nav__label { white-space: nowrap; }
+@media (max-width: 767px) { .nav a[data-barre] { display: none; } }
+@media (max-width: 380px) { .header__brand { font-size: 1rem; } .nav { gap: calc(var(--u) * 1.5); } }
+/* États : appui, plateaux et notes au survol (filet qui s'épaissit, comme un segment de la marée). */
+.btn:active { transform: translateY(0); }
+.plateau, .notes li { transition: box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.plateau:hover { box-shadow: inset 0 2px 0 var(--c-fg); }
+.notes li:hover { box-shadow: inset 0 2px 0 var(--c-sable); }
+.plateau__prix, .notes__chiffre { font-variant-numeric: tabular-nums; }
+.form input:focus-visible, .form textarea:focus-visible { outline-offset: 0; }
+.form input:user-invalid, .form textarea:user-invalid { border-color: var(--c-accent); }
+@media (prefers-reduced-motion: reduce) { .plateau, .notes li { transition: none; } }
+/* Taille CSS du nom calée sur le résultat du fit (« La Brasserie du Quai » est plus long que le nom du gabarit) : pas de CLS. */
+.nom > span { font-size: 10.8vw; }
+.footer__nom span { font-size: 10.8vw; }
+@media (max-width: 767px) { .nom .nom__w { font-size: 18.3vw; } .nom .nom__w + .nom__w { font-size: 27.7vw; } }
+.hero__media::after { background: linear-gradient(to top, rgb(23 57 91 / 0.68), rgb(23 57 91 / 0)); }
+/* Plan en mobile : pastilles proches (10 % ≈ 36 px) ; cibles de 36 px qui ne se chevauchent plus, disque de 24 px. */
+@media (max-width: 599px) { .plan__pastille { width: 36px; height: 36px; margin: -18px 0 0 -18px; } .plan__pastille span { width: 24px; height: 24px; font-size: 0.68rem; } }
