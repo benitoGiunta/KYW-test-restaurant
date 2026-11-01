@@ -155,14 +155,46 @@ Mobile 390 : 4 colonnes, néon à 25vw sur une ligne, CTA du hero masqué (doubl
 32. [x] Trois traitements dans le verbe : CTA qui se remplit et s'allume, libellés qui s'allument, liens utilitaires couleur + soulignement (`site.css:436-468`).
 33. [x] Hover sous `@media (hover: hover)` (`site.css:451`), mêmes états sur `:focus-visible` (`:446-450`), visibles en réduit (seule l'animation est coupée).
 34. [x] Liens texte `.lien` soulignés au repos (accent).
-35. [ ] Phase 3 (`report.json`, `hover.*`).
-36. [ ] Phase 3 (`desktop.idleMotion`, `idleAt`) ; repos mesuré à la main ci-dessus.
+35. [x] Phase 3 : `hover.noHoverChange` de l'accueil et de la carte = marque « Wépion » et « La carte » (lien courant) ; marque corrigée (soulignement accent sur « Wépion », `site.css:459`), lien courant de la nav justifié (page en cours, `aria-current`). `colorOnly` lu à l'œil : « Voir la carte », « La carte », téléphone = halo de néon par paliers (traitement du verbe, pas une simple couleur) ; « Ouvrir le plan » prend désormais couleur, épaisseur et décalage du soulignement (`site.css:458`).
+36. [x] `desktop.idleMotion` = false (QA-build, accueil et carte) : immobilité assumée et écrite ici. Le repos du néon est un bourdonnement de 0,15 % de pixels par 0,5 s (mesure phase 2) plus les hoquets ; l'augmenter pour franchir le seuil de l'outil ferait passer `settledMs` à null (leçon chez-guillaume) et trahirait le concept (un néon qui pulse fort est un néon en panne).
 37. [x] Curseur natif visible (aucun `cursor: none`), aucun contenu ni action dépendant du hover au toucher.
 38. [x] Pas de `filter: blur`, pas de `box-shadow` au scroll (seulement au survol des CTA), aucun `will-change`.
 39. [x] Réduit : ni Lenis (engine), ni GL, ni scrub, ni loader ; mesuré : 0 élément caché, `motion=false`. Champs `report.json` en phase 3.
 40. [x] GL sans objet, décision écrite (Concept Card) ; lignes `// GL` retirées de l'engine.
 41. [x] Sans objet (pas de GL).
 44. [x] Skip link en premier (`Base.astro`), anneau `:focus-visible` dans l'accent (`site.css:5`), rose foncé sur la section jour ; confirmation `report.json` en phase 3.
-45. [ ] Phase 3 (contraste mesuré sur chaque état) ; le tube à `--lum` 0 n'existe qu'à l'allumage et sur les segments grillés décoratifs (le texte lisible est le `sr-only` et le h1).
+45. [x] Phase 3 : axe 0 violation de contraste ; 2 `contrastNeedsReview` sur l'accueil = segments du tube pendant l'allumage (texte porté en `sr-only`, tube `aria-hidden`), vus à l'œil sur `d-01-hero` : allumé, blanc chaud sur fond nuit. Ancienne note : (contraste mesuré sur chaque état) ; le tube à `--lum` 0 n'existe qu'à l'allumage et sur les segments grillés décoratifs (le texte lisible est le `sr-only` et le h1).
 46. [x] Texte réel partout, aucun canvas.
 47. [x] Cibles : CTA 48 px, « Appeler » d'en-tête et « Menu » 44 px (`min-height: 2.75rem`) ; confirmation phase 3.
+
+## QA et ship (phase 3, 01/11/2026)
+
+Sources : `QA-build.md` (agent captures : accueil, carte, 404 brute), puis captures ciblées `.shots/reservation/` et `.shots/carte/` après corrections, `.shots/audit.txt`.
+
+Corrections de la passe :
+- Marque d'en-tête : `aria-label` « la dolce vita Wépion, accueil » (contient le texte visible) et espace entre les deux spans (`Header.astro:13`) ; axe `label-content-name-mismatch` levé (mesure : nom = « la dolce vita Wépion, accueil », texte = « la dolce vita Wépion »).
+- Survol de la marque : « Wépion » passe au clair et se souligne en accent.
+- Cibles tactiles du pied (« Ouvrir le plan », e-mail) : 21 px vers 44 px (`.pied__col .lien`, mesure 44/44 à 390 et 1440).
+- Sommaire collant de la carte au téléphone : le premier chapitre collait au bord (snap sans marge) ; `scroll-padding-inline: var(--gutter)`, premier lien à 16 px.
+- Réservation : horaires listés deux fois (WARN audit x6) ; le pied de cette page renvoie au détail plus haut (`Footer.astro`, prop `page`).
+
+Checklist phase 3 :
+
+42. [x] `lang="fr"` sur les 5 pages, un h1 par page (404 : « Un tube a grillé. »), landmarks header/main/footer, listes pour horaires et plats.
+43. [x] Titres uniques (`Base.astro`), description par page, canonical, OG (`public/og.png`), `twitter:card`, favicon SVG + PNG 32 + apple-touch 180, `sitemap-index.xml`, JSON-LD `Restaurant` (grep `dist/…/index.html`).
+48. [x] `<Picture>` avec `width`/`height`, webp, hero `fetchpriority="high"` (1 occurrence), lazy ailleurs, alt d'après `sujet`.
+49. [x] LCP mobile 1264 ms accueil (`img`), 1188 ms carte (texte) (QA-build).
+50. [x] CLS 0 desktop et mobile sur toutes les pages capturées ; polices `font-display: swap`.
+51. [x] JS 61 Ko gz, page la plus lourde ~959 Ko, polices woff2 seulement (audit.txt « heaviest page »). Les JPG originaux émis par Astro dans `_astro/` (jusqu'à 725 Ko) ne sont référencés par aucune page (grep vide) : pas de poids servi.
+52. [~] `settledMs` 3461 (accueil, `.shots/home`) et 2464 (réservation) ; `scrollFps` desktop 54 accueil (pire trame 83 ms, contre 50 avant retrait du reveal de galerie), 60 carte et réservation, mobile 60 partout. Accueil desktop à 1 FPS de la cible : écart noté dans RAPPORT.md.
+53. [x] 0 tiret cadratin ou demi-cadratin dans `dist/` (contrôle Python).
+54. [x] Audit (`.shots/audit.txt`) : 0 FAIL ; phrase répétée corrigée ; cibles de la réservation (e-mail, plan) passées à 44 px (`site.css:371`) ; seul WARN restant « no sitemap » (faux positif sous `base`, `sitemap-index.xml` présent).
+55. [x] Accroche « À Wépion, l'Italie prend son temps. » (6 mots), chiffres vrais (2017, 86 plats, 2 modes), « Réserver » dans l'en-tête de chaque page.
+56. [x] Aucun `placeholder: true` nécessaire ; 0 « lorem », « example.com », « TODO ».
+57. [x] « Photos : La Dolce Vita » et colophon dans le pied.
+58. [x] `grep -L 'name="robots"'` vide sur les 5 HTML.
+59. [x] `KywFooter` sur chaque page (refus du build sinon), mention rendue, absent de `noHoverChange`.
+60. [x] `BASE_URL` partout, 0 requête échouée (report.json de chaque page).
+61. [ ] Deux passes de critique neuf : impossible sans outil Agent dans cette session ; auto-notation marquée « Self-score, non indépendant » (RAPPORT.md).
+62. [~] Lecture de l'idée : auto-notation, donc non probante.
+63. [x] Accessoire retiré : le reveal « up » échelonné de la galerie de l'accueil (`index.astro:74`), qui laissait des trous sur `d-04/d-05-scroll` pendant le défilement ; les photos sont peintes d'emblée (lazy). Scores ≥ 8 non prouvés (auto-notation), voir RAPPORT.md.
