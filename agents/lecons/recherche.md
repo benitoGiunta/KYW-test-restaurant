@@ -6,3 +6,4 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 - Une carte en images (WordPress/Divi, GIF) : extraire les `<img>` de `page.html` et lire les GIF convertis en PNG par PIL ; une carte en texte HTML : strip des balises plutôt que lire les captures.
 - Recouper l'adresse de `data/restaurants.json` avec le pied de page du site du client (elle peut être celle d'un autre établissement).
 - Les descriptions de technologies et de mécaniques d'un site sont à vérifier dans le HTML (les faux positifs abondent) ; ne rien affirmer sans preuve ; avis Google et abonnés `null` sauf affichage par le site.
+- 2026-11-01 : site WordPress/Elementor avec agenda : la page restaurant donne la carte en texte HTML (strip des balises) ; l'adresse de restaurants.json est le siège BCE, le site donne une autre adresse (Rue Lelièvre 4).
