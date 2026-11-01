@@ -62,3 +62,8 @@
 - Fait : `REVUE-1.md` écrit (verdict A_CORRIGER : 0 F0, 2 F1, 6 F2, 6 F3). Contrôles ciblés : texte vs donnees.json, liens (0 mort), axe 7 pages × 2 largeurs, contraste, menu mobile, 404.html, histoire.
 - Reste : la révision traite F1-1 (SplitText `aria: 'none'`), F1-2 (aria-label du logo), puis F2 ; relancer axe par page.
 - Pièges : le QA n'a capturé que 3 pages sur 7 ; le contraste « On va voir qui ? » est transitoire (reveal).
+
+## Revue 2 (relecteur-site, 01/11/2026)
+- Fait : `REVUE-2.md` écrit, verdict PUBLIABLE (0 F0, 0 F1, 0 F2, 8 F3 dont 6 restes de la passe 1). Les 8 corrections de REVISION-1 vérifiées (axe, captures, mesure du loader en deux passes).
+- Reste (optionnel) : F3-1 (double `contentinfo`), F3-7 (photo de salle sous la fiche Guillaume), F3-8 (JS avant loader sur mobile lent).
+- Pièges : `QA-revue2.md` absent et `summary.json` en `shootFailed` ; contrôles faits sur port 4721 (arrêté).
