@@ -18,8 +18,8 @@ const huitres = carte.find((c) => c.id === 'huitres')!.plats;
 
   <section class="reperes eau" aria-labelledby="titre-reperes">
     <div class="wrap reperes__grille">
-      <h2 id="titre-reperes" class="reperes__phrase">{site.situation}, une brasserie qui regarde l’eau.</h2>
-      <ul class="reperes__faits">
+      <h2 id="titre-reperes" class="reperes__phrase" data-split="lines">{site.situation}, une brasserie qui regarde l’eau.</h2>
+      <ul class="reperes__faits" data-accoste>
         {faits.map((f) => (
           <li><h3 class="reperes__titre">{f.titre}</h3><p>{f.texte}</p></li>
         ))}
@@ -29,13 +29,13 @@ const huitres = carte.find((c) => c.id === 'huitres')!.plats;
 
   <section class="banc" aria-labelledby="titre-banc">
     <div class="wrap banc__grille">
-      <div class="banc__photo">
+      <div class="banc__photo" data-reveal="clip">
         <Photo cle="ecailler" sizes="(min-width: 760px) 40vw, 100vw" widths={[480, 800]} />
       </div>
       <div class="banc__texte">
-        <h2 id="titre-banc" class="titre-xl">Le banc d’écailler</h2>
+        <h2 id="titre-banc" class="titre-xl" data-split="lines">Le banc d’écailler</h2>
         <p class="chapo">{ecailler} Trois huîtres, trois calibres, à la demi-douzaine ou à la douzaine.</p>
-        <ul class="huitres">
+        <ul class="huitres" data-accoste>
           {huitres.map((h) => (
             <li class="huitres__ligne">
               <span class="huitres__nom">{h.nom}</span>
@@ -53,8 +53,8 @@ const huitres = carte.find((c) => c.id === 'huitres')!.plats;
 
   <section class="classiques" aria-labelledby="titre-classiques">
     <div class="wrap">
-      <h2 id="titre-classiques" class="titre-xl">Les classiques de la maison</h2>
-      <ol class="index">
+      <h2 id="titre-classiques" class="titre-xl" data-split="lines">Les classiques de la maison</h2>
+      <ol class="index" data-accoste>
         {classiques.map((c) => (
           <li class="index__ligne">
             <span class="index__nom">{c.nom}</span>
@@ -69,9 +69,9 @@ const huitres = carte.find((c) => c.id === 'huitres')!.plats;
 
   <section class="terrasse" aria-labelledby="titre-terrasse">
     <figure class="terrasse__media">
-      <Photo cle="terrasse" sizes="100vw" widths={[800, 1200, 1500]} />
+      <div class="terrasse__cadre"><div data-parallax="0.08"><Photo cle="terrasse" sizes="100vw" widths={[800, 1200, 1500]} /></div></div>
       <figcaption class="wrap terrasse__legende">
-        <h2 id="titre-terrasse" class="titre-l">La terrasse sur la Meuse</h2>
+        <h2 id="titre-terrasse" class="titre-l" data-split="lines">La terrasse sur la Meuse</h2>
         <span>Chauffée, à l’abri du vent, ouverte jusque tard dans la saison.</span>
       </figcaption>
     </figure>

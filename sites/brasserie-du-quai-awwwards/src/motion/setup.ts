@@ -1,9 +1,10 @@
 // Motion globale de La Brasserie du Quai : tourne une fois sur le client, avant la première page.
 // Pas de loader ni de WebGL (DESIGN.md « Théâtre »). Phase 1 : transition d'eau, en-tête qui s'écarte, menu.
-// Phase 2 : module pilote ./quai.ts (ligne d'eau qui monte, reflet ondulant, startIdle).
+// Phase 2 : module pilote ./quai.ts (houle du reflet, crue, échelle, verbe « accoster »).
 import { gsap } from 'gsap';
 import { setTransition, onScroll, ease } from '../engine';
 import { menuMobile } from './menu';
+import { startQuai } from './quai';
 
 export function setupMotion() {
   // Transition « la Meuse monte » : l'eau couvre la page depuis le bas (0,7 s), puis se retire vers le haut (0,8 s).
@@ -31,4 +32,5 @@ export function setupMotion() {
   });
 
   menuMobile();
+  startQuai();
 }

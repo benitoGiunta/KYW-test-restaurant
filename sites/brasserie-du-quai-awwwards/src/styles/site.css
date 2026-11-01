@@ -36,7 +36,7 @@ a { color: inherit; }
   font: 600 var(--t-xs)/1.2 var(--f-body); text-transform: none; letter-spacing: 0.02em;
   border: 1px solid currentColor; color: var(--c-accent-ink);
 }
-.eau .exemple { color: var(--c-accent); }
+.eau .exemple { color: var(--c-accent-eau); }
 
 /* Hovers : trois rôles (DESIGN.md) */
 .cta {
@@ -50,7 +50,8 @@ a { color: inherit; }
 }
 .cta:hover::before, .cta:focus-visible::before { clip-path: inset(0 0 0 0); }
 .cta:hover, .cta:focus-visible { color: var(--c-fg); }
-.eau .cta { background: var(--c-eau-fg); color: var(--c-eau); }
+.eau .cta, .quai__bas .cta { background: var(--c-eau-fg); color: var(--c-eau); }
+.eau .cta:hover, .eau .cta:focus-visible, .quai__bas .cta:hover, .quai__bas .cta:focus-visible { color: var(--c-fg); }
 .cta--petit { min-height: 2.5rem; padding: 0 1rem; font-size: var(--t-s); }
 .nl {
   position: relative; display: inline-block; padding-block: 0.35rem; text-decoration: none; font-weight: 600;
@@ -125,7 +126,7 @@ main { padding-top: var(--tete); display: block; }
   font: 600 var(--t-xl)/1 var(--f-body); white-space: nowrap; text-decoration: none; letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
-.resa__numero:hover, .resa__numero:focus-visible { color: var(--c-accent); }
+.resa__numero:hover, .resa__numero:focus-visible { color: var(--c-accent-eau); }
 
 /* Accueil : repères (statement, dans l'eau) */
 .reperes { padding-block: var(--normal) var(--aere); border-top: 1px solid var(--c-eau-line); }
@@ -134,7 +135,7 @@ main { padding-top: var(--tete); display: block; }
   margin-top: var(--normal); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter);
   border-top: 1px solid var(--c-eau-line); padding-top: calc(var(--u) * 2);
 }
-.reperes__titre { font: 600 var(--t-m)/1.2 var(--f-body); color: var(--c-accent); margin-bottom: 0.4rem; }
+.reperes__titre { font: 600 var(--t-m)/1.2 var(--f-body); color: var(--c-accent-eau); margin-bottom: 0.4rem; }
 .reperes__faits p { color: var(--c-eau-muted); max-width: 26em; }
 
 /* Accueil : banc d'écailler (paire asymétrique) */
@@ -169,7 +170,10 @@ main { padding-top: var(--tete); display: block; }
 
 /* Accueil : terrasse (média pleine largeur) */
 .terrasse__media { position: relative; }
-.terrasse__media img { width: 100%; height: min(88vh, 62vw); object-fit: cover; }
+.terrasse__media { --h-terrasse: min(88vh, 62vw); }
+.terrasse__cadre { height: var(--h-terrasse); overflow: hidden; }
+.terrasse__cadre > div { margin-top: calc(var(--h-terrasse) * -0.09); }
+.terrasse__media img { width: 100%; height: calc(var(--h-terrasse) * 1.18); object-fit: cover; }
 .terrasse__legende {
   background: var(--c-eau); color: var(--c-eau-fg); padding-block: calc(var(--u) * 3);
   border-top: 3px solid var(--c-accent); max-width: none; align-items: baseline;
@@ -209,7 +213,7 @@ main { padding-top: var(--tete); display: block; }
 .equipe__photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .equipe__texte { grid-column: 8 / 13; display: grid; gap: var(--serre); }
 .equipe__liste { display: grid; gap: calc(var(--u) * 3); }
-.equipe__nom { font: 600 var(--t-m)/1.2 var(--f-body); color: var(--c-accent); }
+.equipe__nom { font: 600 var(--t-m)/1.2 var(--f-body); color: var(--c-accent-eau); }
 .equipe__liste p { color: var(--c-eau-muted); }
 .details { padding-block: var(--normal) var(--aere); }
 .mur { margin-top: var(--serre); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); }
@@ -232,14 +236,14 @@ address { font-style: normal; }
 /* Pied de page du site (dans l'eau, échelle de crue) */
 .pied { background: var(--c-eau); color: var(--c-eau-fg); padding-block: var(--aere) var(--normal); border-top: 3px solid var(--c-accent); }
 .pied__grille { row-gap: var(--normal); align-items: start; }
-.pied__echelle { grid-column: 1 / 2; grid-row: 1 / 4; display: grid; border-left: 2px solid var(--c-accent); }
+.pied__echelle { grid-column: 1 / 2; grid-row: 1 / 4; display: grid; border-left: 2px solid var(--c-accent); position: relative; --niveau: 0.62; }
 .pied__grad { height: calc(var(--u) * 4); border-top: 1px solid var(--c-eau-line); position: relative; }
-.pied__grad span { font: 800 var(--t-s)/1 var(--f-display); color: var(--c-accent); padding-left: 0.5rem; }
-.pied__marque { grid-column: 2 / 5; display: grid; gap: calc(var(--u) * 1.5); }
+.pied__grad span { font: 800 var(--t-s)/1 var(--f-display); color: var(--c-accent-eau); padding-left: 0.5rem; }
+.pied__marque { grid-column: 2 / 4; display: grid; gap: calc(var(--u) * 1.5); }
 .pied__marque img { width: 8rem; height: auto; }
 .pied__situation { color: var(--c-eau-muted); max-width: 18em; }
 .pied__col { grid-column: span 3; display: grid; gap: 0.5rem; }
-.pied__titre { font: 600 var(--t-s)/1.2 var(--f-body); color: var(--c-accent); text-transform: uppercase; letter-spacing: 0.08em; }
+.pied__titre { font: 600 var(--t-s)/1.2 var(--f-body); color: var(--c-accent-eau); text-transform: uppercase; letter-spacing: 0.08em; }
 .pied__liste { display: grid; gap: 0.4rem; }
 .pied__liste span { display: block; color: var(--c-eau-muted); font-size: var(--t-s); }
 .pied__note { color: var(--c-eau-muted); font-size: var(--t-s); }
@@ -285,3 +289,35 @@ address { font-style: normal; }
   .pied__echelle { display: none; }
   .pied__marque, .pied__col, .pied__nav, .pied__colophon { grid-column: 1 / -1; }
 }
+
+/* Phase 2 : motion du concept (src/motion/quai.ts) ------------------------------------------- */
+.filtres { position: absolute; width: 0; height: 0; overflow: hidden; }
+/* Le reflet passe dans l'eau : filtre #houle (animé seulement avec motion, au repos sinon). */
+.quai__reflet, .quai__photo-reflet picture { filter: url(#houle); }
+.quai { --crue: 0; }
+.quai__reflet-cadre, .quai__photo-reflet { transform-origin: 50% 0; scale: 1 calc(1 + var(--crue) * 0.35); }
+/* Repère de crue : monte avec la lecture de la page ; posé à mi-hauteur sans mouvement. */
+.pied__niveau {
+  position: absolute; left: -2px; bottom: calc(var(--niveau) * 100%); width: 1.75rem; height: 3px;
+  background: var(--c-eau-fg); pointer-events: none;
+}
+.pied__niveau::after {
+  content: ''; position: absolute; left: 100%; top: -4px; border: 5.5px solid transparent; border-left-color: var(--c-eau-fg);
+}
+/* Accoster : les enfants attendent leur tour seulement quand le mouvement est permis. */
+.motion [data-accoste]:not(.accoste) > * { opacity: 0; }
+
+/* États : CTA et liens réagissent à l'appui, le bouton du menu aussi. */
+.cta { transition: color 0.35s, scale 0.2s; }
+.cta:active { scale: 0.97; }
+.nl:active, .lt:active { opacity: 0.7; }
+
+/* Masque SplitText : les capitales accentuées (É de « ÉCAILLER », « ÉQUIPE ») dépassent la hauteur de ligne
+   serrée des titres : on agrandit le masque vers le haut sans déplacer la ligne. */
+.split-line { padding-top: 0.16em; margin-top: -0.16em; }
+
+/* Premier rendu = premier image de l'entrée (pas de saut quand le script prend la main) : la ligne n'est pas
+   encore tracée, le reflet pas encore apparu, le texte à 24 px de son quai. Le titre reste peint (LCP). */
+.motion .quai:not(.quai--entre) .quai__ligne-eau { transform: scaleX(0); transform-origin: 0 50%; }
+.motion .quai:not(.quai--entre) :is(.quai__reflet-cadre, .quai__photo-reflet) { opacity: 0; }
+.motion .quai:not(.quai--entre) :is(.quai__titre .quai__ligne, .quai__suite > *) { transform: translateX(-24px); }

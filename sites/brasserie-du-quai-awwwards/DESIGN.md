@@ -169,7 +169,7 @@ RÉSERVATION
 - [x] Concept Card, trois concepts, test de l'échange (ci-dessus)
 - [x] Palette dérivée du monde, défaut n° 1 évité
 - [x] Polices téléchargées par `font.mjs`, 3 fichiers, 2 préchargés
-- [ ] Reveals déclaratifs (`data-split`, `data-reveal`), jamais sur un bloc qui porte un lien
-- [ ] Module pilote `src/motion/quai.ts` (ligne d'eau, reflet ondulant, `startIdle`)
-- [ ] Micro-interactions par rôle (trois traitements)
+- [x] Reveals déclaratifs : `data-split="lines"` sur 9 titres h2 (masque agrandi vers le haut pour les capitales accentuées), `data-reveal="clip"` sur 5 photos, `data-parallax` sur la terrasse ; aucun sur un bloc à lien
+- [x] Module pilote `src/motion/quai.ts` : niveau (progression) et houle (vitesse lissée, retombe au repos) → filtre `#houle` du reflet (30 i/s, pause hors écran), étirement du reflet (`--crue` sur `.quai`), repère de l'échelle de crue (`--niveau` sur `.pied__echelle`), verbe « accoster » (`[data-accoste]`, `back.out(1.1)`), entrée du quai (ligne tracée, reflet, texte qui accoste)
+- [x] Micro-interactions par rôle : CTA (laiton qui monte, `:active` 0,97), liens de navigation (filet), liens de texte (épaisseur) ; CTA clair sur l'eau
 - [ ] QA : shoot, audit, jury (deux passes)

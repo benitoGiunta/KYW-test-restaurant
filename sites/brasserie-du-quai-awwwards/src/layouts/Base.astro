@@ -73,6 +73,12 @@ const jsonLd = {
   <body data-page={page}>
     <a class="skip-link" href="#main">Aller au contenu</a>
     <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
+    <svg class="filtres" width="0" height="0" aria-hidden="true" focusable="false">
+      <filter id="houle" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.004 0.055" numOctaves="1" seed="7" />
+        <feDisplacementMap in="SourceGraphic" scale="7" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
     <Header />
     <main id="main" tabindex="-1">
       <slot />

@@ -25,7 +25,7 @@ const prix = (p: number[] | null, portions?: string[]) =>
     {quai.map((c) => (
       <section class="cat wrap" id={c.id} aria-labelledby={`t-${c.id}`}>
         <h2 class="cat__titre" id={`t-${c.id}`}>{c.titre}{c.placeholder && <span class="exemple">exemple</span>}</h2>
-        <ul class="plats">
+        <ul class="plats" data-accoste>
           {c.plats.map((p) => (
             <li class="plat">
               <span class="plat__nom">{p.nom}{p.detail && <span class="plat__detail">{p.detail}</span>}</span>
@@ -33,20 +33,20 @@ const prix = (p: number[] | null, portions?: string[]) =>
             </li>
           ))}
         </ul>
-        {photoDe[c.id] && <div class="cat__photo"><Photo cle={photoDe[c.id]} sizes="(min-width: 760px) 28vw, 100vw" widths={[400, 720]} /></div>}
+        {photoDe[c.id] && <div class="cat__photo" data-reveal="clip"><Photo cle={photoDe[c.id]} sizes="(min-width: 760px) 28vw, 100vw" widths={[400, 720]} /></div>}
       </section>
     ))}
   </div>
 
   <div class="rive rive--eau eau">
     <div class="wrap rive__entete">
-      <h2 class="titre-xl">Le banc d’écailler</h2>
+      <h2 class="titre-xl" data-split="lines">Le banc d’écailler</h2>
       <p class="chapo">{ecailler}</p>
     </div>
     {eau.map((c) => (
       <section class="cat wrap" id={c.id} aria-labelledby={`t-${c.id}`}>
         <h3 class="cat__titre" id={`t-${c.id}`}>{c.titre}</h3>
-        <ul class="plats">
+        <ul class="plats" data-accoste>
           {c.plats.map((p) => (
             <li class="plat">
               <span class="plat__nom">{p.nom}{p.detail && <span class="plat__detail">{p.detail}</span>}</span>
@@ -54,7 +54,7 @@ const prix = (p: number[] | null, portions?: string[]) =>
             </li>
           ))}
         </ul>
-        {photoDe[c.id] && <div class="cat__photo"><Photo cle={photoDe[c.id]} sizes="(min-width: 760px) 28vw, 100vw" widths={[400, 720]} /></div>}
+        {photoDe[c.id] && <div class="cat__photo" data-reveal="clip"><Photo cle={photoDe[c.id]} sizes="(min-width: 760px) 28vw, 100vw" widths={[400, 720]} /></div>}
       </section>
     ))}
     <p class="wrap rive__note">Allergènes : notre personnel est à votre disposition. Les prix « du jour » vous sont donnés à table.</p>

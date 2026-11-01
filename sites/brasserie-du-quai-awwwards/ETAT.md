@@ -1,4 +1,4 @@
-# ETAT : brasserie-du-quai, variante awwwards (fin de construction-1, 01/11/2026)
+# ETAT : brasserie-du-quai, variante awwwards (fin de construction-2, 01/11/2026)
 
 ## Fait (phase 1 sur 3)
 
@@ -18,21 +18,35 @@
 - Build OK : `scripts/q.sh build pnpm build:site sites/brasserie-du-quai-awwwards` → `dist/brasserie-du-quai/awwwards/`
   (5 pages, 9,3 Mo, noindex et pied KYW validés par build-site.mjs).
 
-## Reste
+## Fait (phase 2 sur 3, construction-2)
 
-1. **Phase 2 (motion)** : module pilote `src/motion/quai.ts` : reflet ondulant (filtre SVG feTurbulence,
-   ticker GSAP, pause hors écran via IntersectionObserver, zéro en mouvement réduit), ligne d'eau qui monte
-   au défilement, reveals déclaratifs (`data-split="lines"` sur les titres, `data-reveal` jamais sur un bloc à lien),
-   verbe « accoster » (x: -24 → 0 avec tangage). Le mettre dans `setup.ts`.
-2. `public/og.png` absent (référencé par le layout) : `og.mjs` avec le serveur lancé, phase 2 ou 3.
-3. Jamais vu en navigateur : mesurer avant tout shoot (lecons « 3.6 bis ») le h1, les CTA et la photo du hero
-   à 1440×900, 1280×720, 1024×768, 390×844 ; vérifier que les CTA de l'accueil tiennent au-dessus de la
-   ligne de flottaison (le reflet est rogné à 55 % de la hauteur du titre pour ça) ; vérifier le calage
-   du titre sur la ligne (`margin-bottom: -0.06em` de `.quai__titre`, à ajuster à l'œil).
-4. Contrastes à mesurer : `--c-accent` #B3813B sert de texte sur l'eau (titres de pied, `.reperes__titre`,
-   `.equipe__nom`) : à vérifier (≥ 4,5:1 attendu sur #16282B) ; `--c-accent-ink` sur ground.
-5. KywFooter sous le pied sombre : vérifier sa lisibilité (surcharger les variables du site si besoin, pas le paquet).
-6. Phase 3 : QA (QA-<étape>.md de l'agent « captures »), jury, RAPPORT.md, `pnpm index`, commit de dist.
+- Module pilote `src/motion/quai.ts`, appelé par `setup.ts` (`startQuai()`) : une source, le défilement
+  (niveau = progression, houle = vitesse lissée qui retombe au repos). Distribuée au filtre SVG `#houle`
+  (feTurbulence + feDisplacementMap, dans `Base.astro`) sur le reflet du titre et de la photo (30 i/s, pause
+  hors écran par IntersectionObserver, `scale` 7 au repos, jusqu'à ~33 en défilant), à `--crue` sur `.quai`
+  (le reflet s'étire quand le quai sort), à `--niveau` sur `.pied__echelle` (repère clair de l'échelle de crue),
+  au verbe « accoster » (`[data-accoste]` : listes de faits, huîtres, classiques, plats, équipe, mur, horaires).
+- Entrée du quai sur chaque page : ligne de laiton tracée de gauche à droite, reflet qui apparaît, titre et
+  chapô qui accostent (x -24 → 0, `back.out(1.1)`). Le premier rendu CSS est l'état de départ (aucun saut) ;
+  le titre reste peint (LCP). Classe `quai--entre` posée par le script.
+- Reveals déclaratifs : `data-split="lines"` sur 9 h2, `data-reveal="clip"` sur 5 photos, parallaxe terrasse.
+- États : `:active` sur CTA et liens ; CTA clair sur l'eau (était sombre sur sombre dans le hero).
+- Finitions : grille du pied (colonne « Joindre » qui passait à la ligne), masque SplitText agrandi vers le haut
+  (les É de « ÉCAILLER », « ÉQUIPE » étaient coupés), token `--c-accent-eau` #BF8D46 (5,2:1) pour les textes
+  d'accent sur l'eau (le laiton #B3813B faisait 4,46:1).
+- `public/og.png` généré (og.mjs). Build OK (`scripts/q.sh aww-build5 …`).
+- Mesures (script maison, 4 tailles × 5 pages, motion et mouvement réduit) : 0 erreur console, 0 débordement
+  horizontal, 0 élément resté caché après défilement ; CTA de l'accueil au-dessus de la ligne de flottaison
+  partout (1440 : 720-768 ; 1280 : 662-710 ; 1024 : 573-621 ; 390 : 575-675 sur 844) ; navigation ClientRouter
+  rejoue l'entrée ; en mouvement réduit rien ne bouge (filtre au repos, repère à 62 %).
+
+## Reste (phase 3)
+
+1. QA complète par l'agent « captures » (`QA-<étape>.md`), puis jury, deux passes.
+2. À surveiller : coût du filtre SVG sur mobile throttlé (FPS non mesuré) ; si < 50 i/s, couper l'animation
+   du filtre sous 760 px (le garder au repos) ou passer à 20 i/s.
+3. Calage fin du titre sur la ligne (`margin-bottom: -0.06em`) : bon à l'œil à 1440 et 390.
+4. RAPPORT.md, `pnpm index`, commit de dist.
 
 ## Décisions
 
