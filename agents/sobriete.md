@@ -24,3 +24,9 @@ chaque réponse ; une attente de plus de 5 min fait réécrire tout le contexte.
    ciblée, grep, mesure). Il ne refait pas de QA complète : c'est le rôle de la revue suivante (Sonnet).
 5. **Modèle explicite.** Chaque agent et chaque session fille a un modèle explicite (règle A). Fable n'est jamais
    utilisé dans le pipeline standard.
+
+6. **Contexte de départ minimal (test A, 01/11).** Lis une seule fois, au début, les fichiers que ton prompt désigne
+   (sobriete.md, ton prompt ou ta partie de prompt, `agents/lecons/commun.md` et la fiche de ton rôle) ; ne les relis
+   jamais ensuite par commande. Ne lis ni `README.md` ni `agents/README.md`. Tout fichier de plus de 80 lignes se lit par
+   plages ciblées : `grep -n <motif> <fichier> | head -20`, puis `sed -n 'a,bp'` sur 60 lignes au plus. Pas de `cat` des
+   pages d'un site, sauf celle que tu modifies. `agents/lecons-archive.md` n'est jamais lu.
