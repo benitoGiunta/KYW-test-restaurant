@@ -169,3 +169,85 @@ for r in gr: print(r)
 for r in ta: print(r['tache'], r['cout'], r['agents'], r['cout_par_agent'])
 for r in na: print(r)
 for r in mo: print(r)
+
+# --- Catégories demandées (portfolio complet, chaque site, chaque restaurant complet) et leviers chiffrés ---
+import math
+CATS = [('Portfolio complet', 'ensemble', lambda a: a['groupe'] == 'Portfolio'),
+        ('Potes au Feu · site 1 portfolio', 'site', lambda a: a['chantier'] == 'Potes au Feu · portfolio'),
+        ('Potes au Feu · site 2 awwwards', 'site', lambda a: a['chantier'] == 'Potes au Feu · awwwards'),
+        ('Potes au Feu · site 3 legacy', 'site', lambda a: a['chantier'] == 'Potes au Feu · legacy'),
+        ('Potes au Feu complet', 'ensemble', lambda a: a['groupe'] == 'Les Potes au Feu'),
+        ('Bossimé · site 1 portfolio', 'site', lambda a: a['chantier'] == 'Bossimé · portfolio'),
+        ('Bossimé · site 2 awwwards', 'site', lambda a: a['chantier'] == 'Bossimé · awwwards'),
+        ('Bossimé · site 3 legacy', 'site', lambda a: a['chantier'] == 'Bossimé · legacy'),
+        ('Bossimé complet', 'ensemble', lambda a: a['groupe'] == "L'Atelier de Bossimé")]
+cats = []
+for i, (nom, typ, f) in enumerate(CATS):
+    s = [a for a in lignes if f(a)]; c = collections.Counter()
+    for a in s:
+        for k in ['cout'] + ['cout_' + n for n, _ in NATURES] + ['jetons_' + n for n, _ in NATURES] + ['images', 'car_fichiers', 'car_commandes', 'car_web']:
+            c[k] += a[k]
+        c['appels'] += a['appels'] or 0; c['t_' + CLE_T[a['tache']]] += a['cout']
+    est = any(a['source'] == 'estimé' for a in s); rep = c['appels'] if not est else None
+    row = dict(categorie=nom, ordre=i, type=typ, source='estimé' if est else 'mesuré', cout=round(c['cout'], 2),
+               **{('cout_' + n): round(c['cout_' + n], 2) for n, _ in NATURES},
+               **{('part_' + n): round(c['cout_' + n] / c['cout'] * 100, 1) for n, _ in NATURES},
+               **{('t_' + v): round(c['t_' + v], 2) for v in CLE_T.values()},
+               reponses=rep, contexte_par_reponse=round(c['jetons_relecture'] / rep) if rep else None,
+               cout_par_reponse=round(c['cout'] / rep, 3) if rep else None,
+               images=None if est else int(c['images']), car_commandes=None if est else int(c['car_commandes']),
+               car_fichiers=None if est else int(c['car_fichiers']))
+    cats.append(row)
+json.dump(cats, open(os.path.join(OUT, 'categories.json'), 'w'), ensure_ascii=False, indent=0)
+
+mes = [a for a in lignes if a['source'] == 'mesuré' and a['groupe'] in ('Portfolio', "L'Atelier de Bossimé")]
+def lev_constr_opus(rows):
+    pc = [a for a in rows if a['tache'] == 'Construction' and 'Fable' in a['modele']]
+    avant = sum(a['cout'] for a in pc)
+    apres = sum(a['jetons_ecriture'] * 5 + a['jetons_relecture'] * 0.2 + (a['jetons_reflexion'] + a['jetons_production']) * 20 + a['jetons_entree'] * 4 for a in pc) / 1e6
+    return avant, avant - apres
+def lev_courts(rows, B=45e3, cap=40):
+    base = g = 0
+    for a in rows:
+        n = a['appels']
+        if not n or n <= cap or not a['jetons_relecture']: continue
+        avg = a['jetons_relecture'] / n; k = math.ceil(n / cap); pr = a['cout_relecture'] / a['jetons_relecture']
+        base += a['cout_relecture']; g += (a['jetons_relecture'] - n * (B + (avg - B) / k)) * pr if avg > B else 0
+    return base, g
+def lev_reecriture(rows):
+    base = g = 0
+    for a in rows:
+        n = a['appels']
+        if not n or not a['jetons_ecriture']: continue
+        final = 2 * a['jetons_relecture'] / n   # contexte final ≈ 2 × contexte moyen
+        exces = max(0, a['jetons_ecriture'] - 1.2 * final); pr = a['cout_ecriture'] / a['jetons_ecriture']
+        base += a['cout_ecriture']; g += exces * pr
+    return base, g
+def lev_commandes(rows, coupe=0.7):
+    c = collections.Counter()
+    for a in rows:
+        c['cmd'] += a['car_commandes']; c['fich'] += a['car_fichiers']; c['web'] += a['car_web']; c['img'] += a['images'] * 6400
+    part = c['cmd'] / sum(c.values()); base = sum(a['cout_ecriture'] + a['cout_relecture'] for a in rows)
+    return base, base * part * coupe * 0.6, round(part * 100, 1)
+def lev_revision(rows):
+    rv = [a for a in rows if a['tache'] == 'Révision']; base = sum(a['cout'] for a in rv)
+    g = sum(max(0, a['cout'] - a['cout'] * 40 / a['appels']) for a in rv if a['appels'] and a['appels'] > 40)
+    return base, g
+P = [a for a in mes if a['groupe'] == 'Portfolio']; R = [a for a in mes if a['groupe'] == "L'Atelier de Bossimé"]
+lev = []
+b, g = lev_constr_opus(P)
+lev.append(dict(id='opus', ordre=1, levier='Construire les gabarits sur Opus 5.5 au lieu de Fable 5.1', perimetre='Portfolio complet', base=round(b, 2), gain=round(g, 2), part=round(g / b * 100), statut='déjà appliqué aux restaurants depuis le 31/10'))
+for nom, rows in (('Portfolio complet', P), ('Bossimé complet', R)):
+    b, g, p = lev_commandes(rows)
+    lev.append(dict(id='cmd-' + nom[:4].lower(), ordre=2, levier='Couper de 70 % les sorties de commandes qui entrent dans le contexte', perimetre=nom, base=round(b, 2), gain=round(g, 2), part=round(g / b * 100), part_commandes=p, statut='part des sorties de commandes dans ce qui entre dans le contexte'))
+for nom, rows in (('Portfolio complet', P), ('Bossimé complet', R)):
+    b, g = lev_reecriture(rows)
+    lev.append(dict(id='reec-' + nom[:4].lower(), ordre=3, levier='Supprimer les réécritures de contexte après une pause de plus de 5 minutes', perimetre=nom, base=round(b, 2), gain=round(g, 2), part=round(g / b * 100) if b else 0, statut='écriture au-delà de la taille finale du contexte'))
+for nom, rows in (('Portfolio complet', P), ('Bossimé complet', R)):
+    b, g = lev_courts(rows)
+    lev.append(dict(id='court-' + nom[:4].lower(), ordre=4, levier='Plafonner chaque agent à 40 réponses, relais par un agent neuf', perimetre=nom, base=round(b, 2), gain=round(g, 2), part=round(g / b * 100) if b else 0, statut='relecture des agents de plus de 40 réponses'))
+b, g = lev_revision(R)
+lev.append(dict(id='revision', ordre=5, levier='Réviser seulement les points de la revue, sans refaire toute la QA', perimetre='Bossimé complet', base=round(b, 2), gain=round(g, 2), part=round(g / b * 100) if b else 0, statut='révisions de plus de 40 réponses'))
+json.dump(lev, open(os.path.join(OUT, 'leviers.json'), 'w'), ensure_ascii=False, indent=0)
+for r in cats: print(r['categorie'], r['cout'], r['part_ecriture'], r['part_relecture'], r['part_reflexion'], r['part_production'], r['reponses'], r['contexte_par_reponse'])
+for r in lev: print(r)
