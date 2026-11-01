@@ -63,3 +63,6 @@
 - Repos : horloge de régie et poursuite, pas d'objet flottant ; horloge `aria-hidden` (l'information est dans le
   pied et la réservation).
 - Pas de follower de curseur ni de `data-magnetic` : le verbe « enchaîner » porte sur le time-code et le rideau.
+
+## Revue 1 (relecteur-site, 01/11/2026)
+Fait : REVUE-1.md écrit (verdict A_CORRIGER : F0 0, F1 0, F2 2, F3 6) ; captures ciblées histoire, reservation, 404.html dans `.shots-chez-guillaume-awwwards-revue1/p-*` (non commitées). Reste : révision ciblée des F2 (légende carte.astro:53, champ spectacle radios) puis F3. Pièges : ne pas retoucher le time-code ni le rideau ; la 404 de QA-revue1 est un faux positif (lire /404.html).
