@@ -71,7 +71,8 @@ def lire(path):
                     lignes = [l.strip() for l in t.splitlines()[1:] if l.startswith((' ', '\t'))]
                     t = ' '.join(l for l in lignes if l)
                 if t.strip():
-                    premier = t[:600]
+                    t = ' '.join(t.split())
+                    premier = t if len(t) <= 900 else t[:400] + ' […] ' + t[-500:]
             if isinstance(c, list):
                 for x in c:
                     if isinstance(x, dict) and x.get('type') == 'tool_result':
