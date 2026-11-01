@@ -73,7 +73,7 @@ export const equipe = [
 export const histoire = [
   'La Dolce Vita ouvre en 2017 au 1080 de la chaussée de Dinant, à Wépion. Une maison de ristorante et de pizzeria, sur place ou à emporter.',
   'Armando, passé par de belles tables italiennes à Bruxelles, tient la cuisine. Antigone imagine l’atmosphère : bois blond, mur olive, banquettes sombres, branches de cerisier en fleur. Sur le mur végétal, un néon écrit le nom de la maison.',
-  'Le tiramisu della casa, la crème brûlée, la mousse au chocolat et le nougat glacé sont faits ici. L’ardoise des suggestions, elle, change au fil du marché.',
+  'Le tiramisu della casa, la crème brûlée, la mousse au chocolat et le nougat glacé sont maison. L’ardoise des suggestions, elle, change au fil du marché.',
 ];
 
 export const notesCarte = [

@@ -25,6 +25,7 @@ function splitTween(el: HTMLElement, isIntro: boolean) {
     type: type === 'lines' ? 'lines' : type === 'chars' ? 'lines,words,chars' : 'lines,words', // chars dans des mots insécables (lecons.md)
     mask: 'lines',
     autoSplit: true,
+    aria: 'none', // sinon aria-label sur un <p> sans rôle (axe aria-prohibited-attr) ; le texte réel reste lisible
     linesClass: 'split-line',
     onSplit(self) {
       gsap.set(el, { visibility: 'visible' });
