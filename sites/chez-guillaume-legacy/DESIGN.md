@@ -12,7 +12,7 @@
 - **Sections** · Hero (Stage) · La salle (photo pleine largeur sans titre) · Trois moments (Feature Stack : volet collant, trois cartes) · Agenda (Index) · Privatisation (Band rouge, Statement) · Horaires et adresse (Schedule + photo) · Footer (lettre)
 - **Material** · real : toute la copie, les menus d'octobre, l'agenda de novembre, les horaires de la FAQ · pictures : 8 photos du client (scène, salle, plat, brunch, cocktails, cuisine, banquette, salle rideaux) · absent : avis, nombre de couverts, noms de l'équipe, abonnés (aucun inventé)
 - **Comp** · 2 built, no key · c1 chosen (voir `comp.md`)
-- **Sweep** · phase 3
+- **Sweep** · phase 3 : sloplint `--render` sur 6 URL, 0 FAIL, 0 REFLEX ouvert, 9 waivers lus (8, 44c, 59 propres à la page), WARN 23, F7, 77 et kept expliqués au RAPPORT ; finish review en auto-notation `self` (pas de sous-agent)
 
 ## Approche
 
@@ -43,7 +43,7 @@ Papier crème `--color-paper oklch(97% 0.012 95)` avec grain et fibres SVG ; enc
 - [x] 4. Aucun tiret cadratin, apostrophes typographiques, insécables à vérifier en phase 3 · preuve : `grep '[—–]' src` vide
 - [x] 5. Pied KYW, noindex et mention sur les 7 pages · preuve : grep de `dist/chez-guillaume/legacy/**/*.html`
 - [x] 6. sloplint statique sur `src` : 0 FAIL après correctif · preuve : `.logs/sloplint.log`
-- [ ] 7. Contraste, fold, rendu `--render` des 7 pages · à faire en phase 3
+- [x] 7. Contraste, fold, rendu `--render` des pages · preuve : phase 3, ratios calculés (ink/paper 16,6 ; muted/paper 6,26 ; accent-ink/accent 5,07 ; lien/paper 5,42), sloplint `--render` 6 URL sans FAIL ni REFLEX ouvert
 - [x] 8. Motion : un reveal, volet collant, barre de billetterie, focus et états · preuve : `page.css` fin de fichier (reveal, pose du billet), `Base.astro` (script), mesures du build
 
 ### Phase 2 (construction-2)
@@ -67,3 +67,14 @@ Papier crème `--color-paper oklch(97% 0.012 95)` avec grain et fibres SVG ; enc
 - [x] 63. `::selection`, `caret-color`, `scrollbar-color`, `accent-color` · preuve : `base.css`
 - [x] 72. Responsive : seuils 60/40 rem (+ 75 rem pour la nav), `hover: hover`, tables restackées à 48 rem, `dvh`, safe-area (`viewport-fit=cover`, gouttière, barre) ; aucun débordement à 320/375/390/768/1024/1280/1440 (script `scrollWidth` et sloplint 34)
 - [x] hero-review : `ship` (auto-notation `self`, pas de sous-agent en session d'agent) · 2 findings (44c, 49b) · 2 resolved
+
+### Phase 3 (construction-3)
+
+- [x] 1. Couleurs et polices par tokens · preuve : `grep "#[0-9a-f]\{3,6\}\|rgb(" page.css` = 1 occurrence, dans le commentaire du stamp (ligne 3)
+- [x] 16. `sloplint --render` : 0 FAIL, 0 REFLEX ouvert, rendu tourné · preuve : `.logs/cg3-sloplint.log` (30 captures, 6 URL)
+- [x] 25. Contraste · preuve : calcul OKLCH, voir case 7 ; menu et pied testés en clair
+- [x] 26. Aucune image cassée · preuve : audit captures, 0 requête en échec
+- [x] 27. Aucun lien de nav qui replie · preuve : nav pilule à 7 liens, Popover sous 75 rem
+- [x] 42. Titres de section ≥ 40 px à 1440 · preuve : `.agenda .mois` et `.faq h2` en `--text-section` (REFLEX 78 corrigé)
+- [x] 49. Cibles ≥ 24 px à 390 · preuve : script `cg3-verif`, 0 cible sous 24 px (logo, « Voir sur la carte », lien de billetterie corrigés)
+- [x] 66. `lang`, `<title>`, description sur les 7 pages · preuve : grep `dist/` (404 comprise, faux positif de l'audit)

@@ -5,12 +5,14 @@
 /* Hallmark · waive 8 · hero, three moments, agenda, hours keeps the original's order (hero, shows, agenda, privatisation, contact) in a new composition · the client's sequence is kept on purpose */
 /* Hallmark · answered F23 · meta description written on every page */
 /* Hallmark · dropped nav "Spectacles" and "Programme" · merged into the primary action "Réserver", same destination https://chezguillaume.be/events/ */
-/* Hallmark · reworded "Chez Guillaume, c’est LE restaurant & comedy club au cœur de Namur. On y rit, on y mange, on y vit !" to the hero line "Le restaurant et comedy club au cœur de Namur." (the second sentence heads the three moments) · 58 */
+/* Hallmark · reworded "Chez Guillaume, c’est LE restaurant & comedy club au cœur de Namur. On y rit, on y mange, on y vit !" to the hero line "Le restaurant et comedy club au cœur de Namur." (the second sentence heads the three moments) · the line was split so the hero keeps one sentence */
 /* Hallmark · answered F4 · .btn--primary is the one filled variant, .btn the quiet one; answered F7 · pills only on controls and the ticket call-to-action; answered 23 · the band is the declared full-palette accent field, one per page */
 /* Hallmark · phase 2 · nav: floating pill (edge-aligned logo, five links, Réserver), popover sheet under 75rem · motion: calm, one reveal (opacity + 24px rise, once, .js and no-preference only), the ticket laid on the stage (700 ms) · action: ticket bar appears once the first section has scrolled away */
 /* Hallmark · hero-review: ship (self, no sub-agent in an agent session) · 2 findings · 2 resolved (44c margin-left -24px, 49b address link on one line) */
 /* Hallmark · comp: 2 built, no key · c1 chosen · reproduced (checked at 1280x800) */
-/* Hallmark · answered 58 · the ticket of the next three shows is the declared Stage signature, headline and one sentence stay the only text before the actions */
+/* Hallmark · waive 44c · hero ends at 369 to 654px on agenda, restaurant, faq, bon cadeau, privatisation · these are utility lists: the title sits above the first rows so dates, menu and questions start inside the first screen, a filler visual would push them under the fold */
+/* Hallmark · waive 59 · smallest gap 92px on the home (gaps 92, 120, 240, 264, 264, 436, 115) · sections use --section-gap-s (120px) or more; the measure runs to the box of the torn-edge salle, band and letter (clip-path), whose visible edge is ragged */
+/* Hallmark · note 58 (Floor, not waivable, kept as a NOTE) · home hero (3 text blocks, 101 words) · the ticket of the next three shows is the declared Stage signature, headline and one sentence stay the only text before the actions */
 @import url("./tokens.css");
 @import url("./base.css");
 
@@ -51,7 +53,7 @@ mark { background: color-mix(in oklab, var(--color-accent) 22%, transparent); co
 /* Barre flottante : nav en pilule */
 .nav { position: sticky; top: var(--space-sm); z-index: var(--z-sticky-nav); padding-block: var(--space-sm) 0; pointer-events: none; }
 .nav__pill { pointer-events: auto; display: flex; align-items: center; gap: var(--space-lg); min-height: var(--nav-h); padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-lg); border-radius: var(--radius-pill); background: var(--grain), var(--fibre), var(--color-card); box-shadow: var(--shadow-card), inset 0 0 0 1px var(--color-rule); }
-.nav__logo { display: block; flex: none; } .nav__logo img { height: 26px; width: auto; }
+.nav__logo { display: flex; align-items: center; flex: none; min-height: 44px; } .nav__logo img { height: 26px; width: auto; }
 .nav__links { display: flex; gap: var(--space-xs); margin: 0 auto; padding: 0; list-style: none; }
 .nav__links a { display: block; padding: var(--space-sm) var(--space-md); border-radius: var(--radius-pill); color: var(--color-ink); text-decoration: none; font-weight: 500; font-size: var(--text-sm); }
 @media (hover: hover) { .nav__links a:hover { background: var(--color-paper-2); } }
@@ -135,17 +137,19 @@ mark { background: color-mix(in oklab, var(--color-accent) 22%, transparent); co
 .agenda .go a { transition: background var(--dur-micro) var(--ease-snap), translate var(--dur-micro) var(--ease-snap); }
 .agenda .is-full .what, .agenda .is-full .when { color: var(--color-muted); }
 .agenda .is-full .go a { background: var(--color-paper-3); color: var(--color-ink-2); }
-.agenda .mois { padding-block: var(--space-xl) var(--space-sm); border-bottom: 0; font-size: var(--text-title); font-weight: 600; letter-spacing: var(--tracking-display); }
+.agenda .mois { padding-block: var(--space-xl) var(--space-sm); border-bottom: 0; font-size: var(--text-section); font-weight: 600; letter-spacing: var(--tracking-display); }
 .agenda .mois + li { border-top: 2px solid var(--color-ink); }
 .agenda-note { margin-top: var(--space-lg); color: var(--color-muted); }
+.agenda-note .link { display: inline-block; padding-block: var(--space-sm); }
+.addr .link { display: inline-block; padding-block: var(--space-sm); }
 @media (max-width: 48rem) { .agenda .row { grid-template-columns: minmax(0, 1fr) auto; row-gap: var(--space-3xs); padding-block: var(--space-sm); } .agenda .when, .agenda .what, .agenda .kind { grid-column: 1; } .agenda .go { grid-column: 2; grid-row: 1 / 4; } .agenda .when small { display: inline; } }
 .more { margin-top: var(--space-xl); }
 
 /* Bande : privatisation (champ d'accent) */
 .band { position: relative; padding-block: calc(var(--section-gap-s) + var(--space-lg)); color: var(--color-accent-ink); background: var(--grain), var(--fibre), var(--color-accent); clip-path: var(--torn); }
 .band .container { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); row-gap: var(--space-lg); align-items: end; }
-.band h2 { grid-column: 1 / 9; font-size: var(--text-display-s); max-width: 14ch; } .band .lead { grid-column: 1 / 8; }
-.band .btn { grid-column: 1 / 7; justify-self: start; color: var(--color-ink); }
+.band h2 { grid-column: 1 / 7; grid-row: 1 / span 2; font-size: var(--text-display-s); max-width: 14ch; align-self: center; } .band .lead { grid-column: 7 / 13; grid-row: 1; align-self: end; }
+.band .btn { grid-column: 7 / 13; grid-row: 2; justify-self: start; color: var(--color-ink); }
 .band a.link { color: inherit; }
 
 /* Horaires : Schedule */
@@ -158,10 +162,10 @@ mark { background: color-mix(in oklab, var(--color-accent) 22%, transparent); co
 .sched dt { font-weight: 600; } .sched dd { margin: 0; font-variant-numeric: tabular-nums; }
 .sched .is-now { background: var(--color-paper-2); }
 .addr { font-style: normal; font-size: var(--text-lg); line-height: 1.4; }
-@media (max-width: 60rem) { .close__text, .close__photo { grid-column: 1 / -1; } .close__photo { max-width: 420px; } .band h2, .band .lead, .band .btn { grid-column: 1 / -1; } .head h2, .head .lead { grid-column: 1 / -1; } }
+@media (max-width: 60rem) { .close__text, .close__photo { grid-column: 1 / -1; } .close__photo { max-width: 420px; } .band h2, .band .lead, .band .btn { grid-column: 1 / -1; grid-row: auto; } .head h2, .head .lead { grid-column: 1 / -1; } }
 
 /* Pages intérieures : Banner */
-.page-hero { padding-block: var(--space-3xl) var(--space-2xl); display: grid; gap: var(--space-lg); }
+.page-hero { padding-block: var(--space-3xl) 0; display: grid; gap: var(--space-lg); }
 .page-hero h1 { font-size: var(--text-display); max-width: 14ch; } .page-hero .lead { color: var(--color-ink-2); }
 .tabs { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-xl); }
 .tab { min-height: 48px; padding: 0 var(--space-lg); border: 0; border-radius: var(--radius-pill); background: var(--color-card); box-shadow: inset 0 0 0 1px var(--color-rule); font-weight: 600; cursor: pointer; color: var(--color-ink); transition: background var(--dur-micro) var(--ease-snap); }
@@ -185,7 +189,7 @@ mark { background: color-mix(in oklab, var(--color-accent) 22%, transparent); co
 @media (max-width: 60rem) { .rows .t, .rows .d { grid-column: 1 / -1; } .rows .p { grid-column: 1 / -1; justify-self: start; text-align: left; } .menu-card .rows .t, .menu-card .rows .d { grid-column: 1 / -1; } .menu-card header h3, .menu-card header p { grid-column: 1 / -1; justify-self: start; text-align: left; } .duo__text, .duo__img { grid-column: 1 / -1; } .checks { grid-template-columns: 1fr; } .duo__img { max-width: 420px; } }
 
 /* FAQ */
-.faq h2 { font-size: var(--text-title); margin: var(--space-2xl) 0 var(--space-md); }
+.faq { padding-top: var(--space-2xl); } .faq h2 { font-size: var(--text-section); margin: var(--space-xl) 0 var(--space-sm); }
 .faq details { border-bottom: 1px solid var(--color-rule); }
 .faq details:first-of-type { border-top: 2px solid var(--color-ink); }
 .faq summary { list-style: none; cursor: pointer; padding: var(--space-md) 0; min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: var(--space-lg); font-weight: 600; font-size: var(--text-lg); }
