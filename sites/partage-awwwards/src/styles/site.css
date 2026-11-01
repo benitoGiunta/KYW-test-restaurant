@@ -38,9 +38,9 @@ main::before { content: ''; position: absolute; inset: 0 var(--gutter); pointer-
 main > * { position: relative; z-index: 1; }
 
 /* ---------- Liens et CTA (trois rôles de hover) ---------- */
-.lien { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.22em; text-decoration-color: currentColor; transition: text-decoration-color 0.3s, text-decoration-thickness 0.3s; }
-@media (hover: hover) { .lien:hover { text-decoration-color: var(--c-accent); text-decoration-thickness: 3px; } }
-.lien:focus-visible { text-decoration-color: var(--c-accent); text-decoration-thickness: 3px; }
+.lien { text-decoration: none; padding-bottom: 0.18em; background-image: linear-gradient(var(--c-accent), var(--c-accent)), linear-gradient(currentColor, currentColor); background-repeat: no-repeat; background-position: 0 100%, 0 100%; background-size: 0% 3px, 100% 1px; transition: background-size 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+@media (hover: hover) { .lien:hover { background-size: 100% 3px, 100% 1px; } }
+.lien:focus-visible { background-size: 100% 3px, 100% 1px; }
 
 .nl { position: relative; display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; font-weight: 500; transition: translate 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 .nl::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.55rem; height: 2px; background: var(--c-accent); scale: 0 1; transform-origin: left; transition: scale 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -133,7 +133,7 @@ html.frame-away .tete { translate: 0 -100%; }
 .lunch { padding-block: var(--aere); row-gap: 2rem; }
 .lunch__titre { grid-column: 1 / 6; padding-right: calc(var(--gutter) * 1.25); text-align: right; display: grid; gap: 1rem; align-content: start; }
 .lunch__prix { grid-column: 6 / 8; display: grid; place-items: center; align-content: center; gap: 0.25rem; padding: 2rem 0.5rem; text-align: center; }
-.lunch__prix strong { font-family: var(--f-display); font-weight: 800; font-size: var(--t-xl); line-height: 0.9; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.lunch__prix strong { font-family: var(--f-display); font-weight: 800; font-size: min(var(--t-xl), calc((100vw - 2 * var(--gutter)) / 6 / 3.9)); line-height: 0.9; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .lunch__prix span { font-size: var(--t-xs); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-table-muted); }
 .lunch__menu { grid-column: 8 / 13; padding-left: calc(var(--gutter) * 1.25); display: grid; gap: 1rem; align-content: start; }
 .lunch__menu li { display: grid; gap: 0.1rem; }
@@ -163,6 +163,7 @@ html.frame-away .tete { translate: 0 -100%; }
 .pied__mot { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; font-family: var(--f-display); font-weight: 800; font-size: calc((100vw - 2 * var(--gutter)) * 5 / 12 / 4.7); line-height: 0.85; color: var(--c-line); padding-top: var(--serre); user-select: none; }
 .pied__mot span:first-child { grid-column: 1 / 6; justify-self: end; }
 .pied__mot span:last-child { grid-column: 8 / 13; }
+.pied__mot span::before, .perdu__mot span::before { content: attr(data-mot); }
 .pied__colophon { grid-column: 1 / -1; font-size: var(--t-xs); color: var(--c-muted); text-align: center; }
 .kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
 
@@ -289,6 +290,7 @@ html.frame-away .tete { translate: 0 -100%; }
   .hero__chemin { display: none; }
   .paire__chemin, .lunch__prix, .pied__milieu, .resa__chemin { margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); flex-direction: row; flex-wrap: wrap; justify-content: space-between; text-align: left; }
   .lunch__prix { display: flex; align-items: baseline; }
+  .lunch__prix strong { font-size: var(--t-xl); }
   .index__tete h2, .index__tete p, .categorie__titre h2, .categorie__titre p { grid-column: 1 / -1; text-align: left; padding: 0; }
   .index__ligne { grid-template-columns: 1fr 2.5rem; }
   .index__nom { grid-column: 1; text-align: left; padding: 1.1rem 1rem 0.25rem 0; }
