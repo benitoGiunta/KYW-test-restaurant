@@ -1,4 +1,4 @@
-# ETAT : dolce-vita-wepion-portfolio (phase 2 sur 3 faite)
+# ETAT : dolce-vita-wepion-portfolio (phase 3 sur 3 faite)
 
 ## Fait
 - Gabarit forno copié, adapté : palette, contenu (`src/data/site.ts` + `src/data/carte.json` tiré de donnees.json), 7 pages (accueil, carte, pizze, histoire, à emporter, réservation, 404), photos WebP dans `public/photos/`, favicon, OG.
@@ -33,3 +33,6 @@
 
 ## Pièges
 - `gabarits/` non touché. Défaut gabarit connu à reporter : le gabarit suppose un nom en deux lignes (ici « La Dolce » / « Vita », le titre de la levée est « Vita »).
+
+## Phase 3 (faite)
+- QA : captures ciblées pizze, histoire, à emporter, réservation (1440, 390) RAS ; inventions « par téléphone » et « carte de fidélité » retirées ; build OK ; RAPPORT.md écrit. Reste : `pnpm index`, commit, push (publication).

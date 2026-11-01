@@ -169,7 +169,6 @@ export const site: Restaurant = {
     lignes: [
       { libelle: 'Livraison gratuite', valeur: 'dès 2 plats' },
       { libelle: 'Livraison', valeur: '18 h à 22 h' },
-      { libelle: 'Carte de fidélité', valeur: 'sur demande' },
     ],
   },
   ardoise: 'L’ardoise du moment',
