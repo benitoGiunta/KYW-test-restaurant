@@ -46,9 +46,8 @@ const jsonLd = {
     addressCountry: site.adresse.pays,
   },
   geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon },
-  openingHoursSpecification: site.horaires.flatMap((h) =>
-    h.creneaux.map((c) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: jours[h.jour], opens: c.ouverture, closes: c.fermeture })),
-  ),
+  // Pas d'openingHoursSpecification : aucun jour d'ouverture n'est confirmé par le dossier (REVUE-1, F1-1).
+  // À rétablir depuis site.horaires quand la maison aura confirmé ses jours (seulement les jours sans aConfirmer).
   acceptsReservations: site.reservation.url,
   sameAs: site.reseaux.map((r) => r.url),
 };

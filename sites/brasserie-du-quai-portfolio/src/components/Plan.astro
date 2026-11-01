@@ -1,7 +1,8 @@
 ---
 // Plan schématique du quai : la Meuse, les berges et le pont du Luxembourg sont cités par le site de la maison ;
 // tracé non à l'échelle (à retracer sur OpenStreetMap). Dessiné au scroll (setup.ts), pastilles qui ouvrent la légende.
-import { plan } from '../data/site';
+import { plan, site } from '../data/site';
+const itineraire = `https://www.google.com/maps/dir/?api=1&destination=${site.geo.lat},${site.geo.lon}`;
 ---
 <div class="plan" data-plan>
   <div class="plan__boite">
@@ -23,7 +24,6 @@ import { plan } from '../data/site';
       <text class="plan__texte" x="720" y="230" transform="rotate(40 720 230)">pont du Luxembourg</text>
       <text class="plan__texte" x="170" y="440" transform="rotate(-22 170 440)">Rue du Quai</text>
       <text class="plan__texte" x="80" y="230">Namur, centre</text>
-      <text class="plan__texte" x="20" y="600">Schéma, pas à l’échelle</text>
     </svg>
     <div class="plan__pastilles">
       {plan.map((p) => (
@@ -34,7 +34,6 @@ import { plan } from '../data/site';
     </div>
   </div>
   <div>
-    <span class="eyebrow mono">Le plan</span>
     <h2 class="display" style="font-size: var(--t-l); font-weight: 500; margin-bottom: calc(var(--u) * 3)">Sur les berges, au pied du pont du Luxembourg</h2>
     <ol class="plan__legende">
       {plan.map((p) => (
@@ -44,5 +43,6 @@ import { plan } from '../data/site';
         </li>
       ))}
     </ol>
+    <p class="plan__note">Schéma, pas à l’échelle : l’orientation de la Meuse et la place de la terrasse sont indicatives. <a class="link" href={itineraire} rel="noopener">Itinéraire jusqu’à la Rue du Quai 9</a></p>
   </div>
 </div>

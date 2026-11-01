@@ -12,10 +12,9 @@ const etapes = [
 ];
 const galerie = ['/photos/bar.webp', '/photos/cave-a-vins.webp', '/photos/deco-machine-a-ecrire.webp'].map(photoDe);
 ---
-<Base title="La maison" description={`${site.nom} à Namur : une brasserie au pied du pont du Luxembourg, Martin et Rémy en cuisine depuis juillet 2026, Pierre-Alexandre et son équipe en salle.`}>
+<Base title="La maison" description={`${site.nom} à Namur : une brasserie au pied du pont du Luxembourg, Martin et Rémy en cuisine depuis juillet 2026, avec Pierre-Alexandre et son équipe.`}>
   <section class="hero hero--texte" aria-labelledby="t-histoire">
     <div class="wrap hero__bas">
-      <span class="eyebrow mono">La maison</span>
       <h1 id="t-histoire" style="font-size: var(--t-xl)">Une brasserie posée au bord de la Meuse</h1>
       <p class="lead" style="margin-top: calc(var(--u) * 3)">{site.histoire[0]}</p>
     </div>
@@ -40,7 +39,6 @@ const galerie = ['/photos/bar.webp', '/photos/cave-a-vins.webp', '/photos/deco-m
     <Houle fill="ciel" />
     <div class="wrap grid12">
       <div class="col-texte">
-        <span class="eyebrow mono" data-reveal="fade">Au fil de l’eau</span>
         <h2 id="t-chrono" style="font-size: var(--t-l); font-weight: 500">Quatre repères</h2>
       </div>
       <ol class="chrono col-large" data-reveal="up">
@@ -52,8 +50,7 @@ const galerie = ['/photos/bar.webp', '/photos/cave-a-vins.webp', '/photos/deco-m
   <section class="sec sec--eau" aria-labelledby="t-equipe">
     <Houle fill="eau" />
     <div class="wrap">
-      <span class="eyebrow mono" data-reveal="fade">L’équipe</span>
-      <h2 id="t-equipe" style="font-size: var(--t-l); font-weight: 500; margin-bottom: calc(var(--u) * 4)">En cuisine, à l’écailler, en salle</h2>
+      <h2 id="t-equipe" style="font-size: var(--t-l); font-weight: 500; margin-bottom: calc(var(--u) * 4)">Ceux qui font le Quai</h2>
       <ul class="equipe" style="list-style: none; padding: 0">
         {site.equipe.map((m, i) => {
           const p = m.photo ? photoDe(m.photo) : null;
@@ -62,7 +59,7 @@ const galerie = ['/photos/bar.webp', '/photos/cave-a-vins.webp', '/photos/deco-m
               {p ? (
                 <figure class="media"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>
               ) : (
-                <div class="media media--vide" aria-hidden="true">{m.nom[0]}</div>
+                <div class="media media--texte"><p>{site.baseline}</p><p class="mono muted">Les mots de la maison</p></div>
               )}
               <h3>{m.nom}</h3>
               <p class="muted">{m.role}</p>
@@ -77,7 +74,6 @@ const galerie = ['/photos/bar.webp', '/photos/cave-a-vins.webp', '/photos/deco-m
     <Houle fill="ciel" />
     <div class="wrap grid12">
       <div class="col-texte">
-        <span class="eyebrow mono" data-reveal="fade">Ce qu’en disent les clients</span>
         <h2 id="t-avis" style="font-size: var(--t-l); font-weight: 500">L’écailler, le cadre, la terrasse</h2>
         <ul class="notes" style="list-style: none; padding: 0">
           {notes.map((n, i) => <li data-reveal="up" data-delay={String(i * 0.08)}><span class="notes__chiffre">{n.note}</span><span class="mono muted">{n.source}, {n.nombre}</span></li>)}

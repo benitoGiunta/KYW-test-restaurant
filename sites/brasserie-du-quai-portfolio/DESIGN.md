@@ -70,3 +70,9 @@ richesse du contenu (24 photos réelles dont terrasse et eau, carte complète, p
 
 
 Le reste du système (wireframes, test de généricité, règles dures) : `gabarits/maree/DESIGN.md`.
+
+## Décisions de la révision 1 (01/11/2026)
+- Surtitres mono gardés seulement là où ils portent une information (jours de l'écailler) ; ailleurs, le titre seul (REVUE-1 F2-5).
+- En-tête mobile (< 768 px) sur deux lignes, les quatre rubriques sous la marque, sans burger ; de 768 à 1023 px, sous-lignes mono masquées (F2-4).
+- Équipe sans photo : carte texte (accroche du site actuel), jamais d'initiale en guise d'avatar (F2-3).
+- JSON-LD sans `openingHoursSpecification` tant que la maison n'a pas confirmé ses jours ; badge de la frise neutre (ni « Ouvert » ni « Fermé ») (F1-1, F2-1).

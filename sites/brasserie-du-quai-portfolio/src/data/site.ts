@@ -439,12 +439,12 @@ export const site: Restaurant = {
     'C’est au pied du pont du Luxembourg, sur les berges de la Meuse, que s’est posée la Brasserie du Quai.',
     'De grandes baies vitrées offrent une vue imprenable sur la Meuse. La grande terrasse au bord de l’eau est chauffée et à l’abri du vent : elle permet de profiter de l’endroit jusque tard dans la saison.',
     'Une cuisine de brasserie authentique et variée, travaillée avec des produits frais. Chaque semaine, une sélection de suggestions de saison complète la carte ; les croquettes de crevettes grises et les fondus au parmesan sont faits maison, et les frites sont cuites à la graisse de bœuf.',
-    'Depuis juillet 2026, Martin et Rémy mènent la cuisine, après le départ à la retraite du chef de longue date. Pierre-Alexandre et son équipe vous accueillent en salle.',
+    'Depuis juillet 2026, Martin et Rémy mènent la cuisine, après le départ à la retraite du chef de longue date. Pierre-Alexandre et son équipe font vivre la maison.',
   ],
   equipe: [
     { nom: 'Martin et Rémy', role: 'En cuisine depuis juillet 2026', photo: '/photos/equipe-cuisine-martin-remy.webp', placeholder: false },
     { nom: 'Le banc d’écailler', role: 'Ouvert du jeudi au lundi inclus', photo: '/photos/chef-ecailler.webp', placeholder: false },
-    { nom: 'Pierre-Alexandre et son équipe', role: 'La maison et la salle', placeholder: false },
+    { nom: 'Pierre-Alexandre et son équipe', role: 'L’équipe de la maison', placeholder: false },
   ],
   avis: [
     { texte: 'Une spécialité d’écailler délicieuse, une vraie brasserie et un service attentionné.', auteur: 'Client', source: 'Tripadvisor, avis résumé', date: '', placeholder: false },

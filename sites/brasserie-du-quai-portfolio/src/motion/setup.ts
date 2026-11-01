@@ -98,7 +98,7 @@ function ligneDeTemps() {
     const encours = services.find((s) => s.jour === jour && m >= min(s.debut) && m < min(s.fin));
     if (badge && aConfirmer.has(jour)) badge.textContent = 'Aujourd’hui : horaires à confirmer par téléphone';
     else if (badge) {
-      if (encours) badge.textContent = `Ouvert, service du ${encours.nom} jusqu’à ${encours.fin.replace(':', 'h')}`;
+      if (encours) badge.textContent = `Service du ${encours.nom} jusqu’à ${encours.fin.replace(':', 'h')} (horaires de saison)`;
       else {
         let prochain: typeof tous[number] | undefined;
         let dans = '';
@@ -107,7 +107,7 @@ function ligneDeTemps() {
           prochain = tous.find((s) => s.jour === j && (i > 0 || m < min(s.debut)));
           if (prochain) dans = i === 0 ? 'ce ' + prochain.nom : i === 1 ? 'demain' : j;
         }
-        badge.textContent = prochain ? `Fermé, prochain service ${dans} à ${prochain.debut.replace(':', 'h')}${prochain.aConfirmer ? ' (à confirmer)' : ''}` : 'Fermé';
+        badge.textContent = prochain ? `Prochain service ${dans} à ${prochain.debut.replace(':', 'h')}${prochain.aConfirmer ? ' (à confirmer)' : ''}` : 'Horaires à confirmer par téléphone';
       }
       badge.classList.toggle('is-ouvert', !!encours);
     }
