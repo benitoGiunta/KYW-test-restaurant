@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import Top from '../components/Top.astro';
+import Photo from '../components/Photo.astro';
+import { site, histoire, equipe, presse } from '../data/site';
+---
+<Base title="L’histoire" page="histoire" description="L’histoire de Chez Guillaume, restaurant et comedy club ouvert en janvier 2025 à Namur par l’humoriste GuiHome : la salle, la cuisine, la presse.">
+  <section class="top top--poster" aria-labelledby="titre">
+    <div class="top__regie">
+      <p class="regie">
+        <span class="regie__heure">2025</span>
+        <span class="regie__libelle"><span class="regie__pastille" aria-hidden="true"></span>Première</span>
+        <span class="regie__detail">9 janvier</span>
+      </p>
+    </div>
+    <div class="top__corps">
+      <h1 id="titre" class="display poster__titre">L’histoire</h1>
+      <div class="recit">
+        <p class="recit__lead">Chez Guillaume a ouvert en janvier 2025, en face de la place Saint-Aubain.</p>
+        <p class="texte">Derrière le nom, Guillaume Wattecamps, humoriste namurois connu sur scène sous le nom de GuiHome. L’idée tient en une soirée : un vrai repas de brasserie, servi à heure fixe, puis du stand-up dans la même salle. La semaine d’ouverture, les 9, 10 et 11 janvier, a lancé les premières soirées. Huit mois plus tard, L’Avenir parlait de «&nbsp;sold-out sur sold-out&nbsp;». Aujourd’hui, trois menus changent chaque mois, le dimanche se passe en brunch et le lundi se contente d’un croque.</p>
+      </div>
+      <figure class="recit__media">
+        <Photo cle="salleRideaux" prioritaire widths={[480, 864]} sizes="(max-width: 48rem) 100vw, 30vw" />
+      </figure>
+    </div>
+  </section>
+
+  <Top heure="Repères" libelle="Dates sourcées" titre="t-reperes" classe="top--reperes">
+    <h2 id="t-reperes" class="sr-only">Repères</h2>
+    <ol class="reperes">
+      {histoire.map((h) => (
+        <li class="reperes__ligne">
+          <span class="reperes__date">{h.date}</span>
+          <span class="reperes__texte">{h.texte}</span>
+          <span class="reperes__source">{h.source}</span>
+        </li>
+      ))}
+    </ol>
+  </Top>
+
+  <Top heure="Équipe" libelle="Scène et cuisine" titre="t-equipe" classe="top--equipe">
+    <figure class="equipe__media">
+      <Photo cle="cuisine" widths={[480, 800]} sizes="(max-width: 48rem) 100vw, 30vw" />
+      <figcaption>La cuisine de la maison.</figcaption>
+    </figure>
+    <div class="equipe__texte">
+      <h2 id="t-equipe" class="display titre-l">Qui fait quoi</h2>
+      <ul class="equipe">
+        {equipe.map((e) => (
+          <li><span class="equipe__nom">{e.nom}</span><span class="equipe__role">{e.role}</span><span class="equipe__source">Source : {e.source}</span></li>
+        ))}
+      </ul>
+      <p class="texte">Le lieu se privatise pour des team buildings, des anniversaires et des soirées d’entreprise, stand-up privé compris. Le bon cadeau s’offre par virement, avec la preuve envoyée par e-mail, ou en version papier sur place.</p>
+    </div>
+  </Top>
+
+  <Top heure="Presse" libelle="Ils sont venus" titre="t-presse" ton="salle" classe="top--presse">
+    <h2 id="t-presse" class="display titre-l">Dans la presse</h2>
+    <ul class="presse">
+      {presse.map((p) => (
+        <li><a class="presse__lien" href={p.url} rel="noopener"><span class="presse__media">{p.media}</span><span class="presse__titre">{p.titre}</span><span class="presse__date">{p.date}</span></a></li>
+      ))}
+    </ul>
+    <figure class="presse__media-photo">
+      <Photo cle="banquette" widths={[480, 800]} sizes="(max-width: 48rem) 100vw, 24vw" />
+    </figure>
+  </Top>
+</Base>

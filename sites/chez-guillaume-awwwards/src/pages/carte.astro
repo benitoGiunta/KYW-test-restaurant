@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import Top from '../components/Top.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, menus, brunch, lundi, bar, prix, tops } from '../data/site';
+---
+<Base title="La carte" page="carte" description="La carte de Chez Guillaume à Namur : menus Bonne Maman, de la Cheffe et végétarien en 2 ou 3 services, brunch à volonté du dimanche et bar maison.">
+  <section class="top top--poster" aria-labelledby="titre">
+    <div class="top__regie">
+      <p class="regie">
+        <span class="regie__heure"><span class="sr-only">Top à </span>{tops.service.heure}</span>
+        <span class="regie__libelle"><span class="regie__pastille" aria-hidden="true"></span>Service</span>
+        <span class="regie__detail">jusqu’à 20:30</span>
+      </p>
+    </div>
+    <div class="top__corps">
+      <h1 id="titre" class="display poster__titre">La carte</h1>
+      <p class="texte poster__texte">Trois menus changent chaque mois, en 2 ou 3 services : voici ceux d’octobre 2026. Le soir, le repas est servi de 18&nbsp;h&nbsp;30 à 20&nbsp;h&nbsp;30, avant le spectacle ; il est obligatoire et se paie à part du ticket.</p>
+      <nav class="poster__sommaire" aria-label="Sur cette page">
+        <ul>
+          {menus.map((m) => <li><a class="nl" href={`#${m.id}`}><span class="nl__pastille" aria-hidden="true"></span>{m.court}</a></li>)}
+          <li><a class="nl" href="#brunch"><span class="nl__pastille" aria-hidden="true"></span>Brunch</a></li>
+          <li><a class="nl" href="#bar"><span class="nl__pastille" aria-hidden="true"></span>Bar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  {menus.map((m, i) => (
+    <section class="top top--menu" id={m.id} aria-labelledby={`t-${m.id}`}>
+      <div class="top__regie">
+        <p class="regie regie--prix">
+          <span class="regie__heure prix">{prix(m.prix2)}</span>
+          <span class="regie__libelle"><span class="regie__pastille" aria-hidden="true"></span>2 services</span>
+          <span class="regie__heure regie__heure--second prix">{prix(m.prix3)}</span>
+          <span class="regie__libelle">3 services</span>
+        </p>
+      </div>
+      <div class="top__corps">
+        <h2 id={`t-${m.id}`} class="display menu__titre">{m.nom}</h2>
+        <ol class="services">
+          {m.plats.map((p) => (
+            <li class="services__ligne">
+              <span class="services__nom">{p.service}</span>
+              <span class="services__desc">{p.description}</span>
+            </li>
+          ))}
+        </ol>
+        {i === 0 && (
+          <figure class="menu__media">
+            <Photo cle="boudin" widths={[480, 800]} sizes="(max-width: 48rem) 100vw, 24vw" />
+            <figcaption>Une assiette de la maison, hors menu du mois.</figcaption>
+          </figure>
+        )}
+      </div>
+    </section>
+  ))}
+
+  <Top heure={tops.brunch.heure} libelle="Dimanche" detail="jusqu’à 14:00" id="brunch" titre="t-brunch" classe="top--brunch">
+    <div class="brunch__tete">
+      <h2 id="t-brunch" class="display titre-l">Brunch du dimanche</h2>
+      <dl class="donnees donnees--serre">
+        <div><dt>À volonté, par personne</dt><dd class="prix">{prix(brunch.prix)}</dd></div>
+        <div><dt>Moins de 12 ans</dt><dd class="prix">{prix(brunch.prixEnfant)}</dd></div>
+        <div><dt>Ticket du spectacle de 15&nbsp;h</dt><dd class="prix">{prix(brunch.spectacle)}</dd></div>
+      </dl>
+    </div>
+    <ul class="buffet" aria-label="Au buffet">
+      {brunch.buffet.map((b) => <li>{b}</li>)}
+    </ul>
+    <figure class="brunch__media">
+      <Photo cle="cafe" widths={[480, 800]} sizes="(max-width: 48rem) 100vw, 24vw" />
+    </figure>
+  </Top>
+
+  <Top heure="Bar" libelle="Toute la soirée" id="bar" titre="t-bar" ton="salle" classe="top--bar">
+    <figure class="bar__media">
+      <Photo cle="cocktails" widths={[480, 800]} sizes="(max-width: 48rem) 100vw, 30vw" />
+    </figure>
+    <div class="bar__texte">
+      <h2 id="t-bar" class="display titre-l">Au bar</h2>
+      <ul class="bar__liste">
+        {bar.map((b) => <li>{b}</li>)}
+      </ul>
+      <p class="texte">Cuisine et bar maison, produits locaux et recettes de saison.</p>
+      <h3 class="bar__lundi">{lundi.nom}</h3>
+      <p class="texte">{lundi.contenu}, <span class="prix">{prix(lundi.prix)}</span>.</p>
+      <p><a class="cta cta--salle" href={u('/reservation/')}><span class="cta__txt">Réserver une soirée</span></a></p>
+    </div>
+  </Top>
+</Base>

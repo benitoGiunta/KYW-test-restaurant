@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import Top from '../components/Top.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, menus, brunch, lundi, prix, tops } from '../data/site';
+---
+<Base page="accueil" description="Chez Guillaume, restaurant et comedy club à Namur : on dîne de 18 h 30 à 20 h 30, puis le rideau se lève. Brunch stand-up le dimanche, en face de Saint-Aubain.">
+  <section class="top top--hero" aria-labelledby="titre">
+    <div class="top__regie">
+      <p class="regie">
+        <span class="regie__heure"><span class="sr-only">Top à </span>18:30</span>
+        <span class="regie__libelle"><span class="regie__pastille" aria-hidden="true"></span>Mercredi au samedi</span>
+        <span class="regie__detail">Dimanche, 11:30</span>
+      </p>
+    </div>
+    <div class="top__corps">
+      <h1 id="titre" class="display hero__titre">Chez <span class="hero__nom">Guillaume</span></h1>
+      <div class="hero__texte">
+        <p class="hero__accroche">Restaurant et comedy club à Namur. On dîne de 18&nbsp;h&nbsp;30 à 20&nbsp;h&nbsp;30, le rideau se lève juste après.</p>
+        <div class="hero__ctas">
+          <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une soirée</span></a>
+          <a class="lien lien--fort" href={site.telephoneHref}>Appeler le <span class="nowrap">{site.telephoneLisible}</span></a>
+        </div>
+        <p class="hero__lieu">Rue Lelièvre 4, en face de la place Saint-Aubain.</p>
+      </div>
+      <figure class="hero__media">
+        <Photo cle="scene" prioritaire widths={[480, 800, 1000]} sizes="(max-width: 48rem) 100vw, 34vw" />
+      </figure>
+    </div>
+  </section>
+
+  <Top heure={tops.salle.heure} libelle={tops.salle.libelle} titre="t-salle" classe="top--salle-statement">
+    <h2 id="t-salle" class="display statement">Une salle de brasserie tournée vers une scène.</h2>
+    <p class="texte statement__texte">Tables en bois clair, rideaux rouille, rampe de projecteurs au plafond : on dîne face au micro. Le soir, la table vous est attribuée avec votre ticket de spectacle.</p>
+    <figure class="statement__media">
+      <Photo cle="salleProjecteurs" widths={[480, 800, 1000]} sizes="(max-width: 48rem) 100vw, 44vw" />
+    </figure>
+  </Top>
+
+  <Top heure={tops.service.heure} libelle={tops.service.libelle} detail="jusqu’à 20:30" titre="t-service" classe="top--index">
+    <div class="index__tete">
+      <h2 id="t-service" class="display titre-l">Trois menus, renouvelés chaque mois.</h2>
+      <p class="texte">Le soir, du mercredi au samedi, le repas est obligatoire et n’est pas compris dans le ticket. Carte relevée en octobre 2026.</p>
+    </div>
+    <ol class="index" aria-label="Les menus du mois">
+      {menus.map((m) => (
+        <li class="index__ligne">
+          <a class="index__lien" href={u(`/carte/#${m.id}`)}>
+            <span class="index__nom"><span class="nl__pastille" aria-hidden="true"></span>{m.nom}</span>
+            <span class="index__plat">{m.plats[1].description}</span>
+            <span class="index__prix"><span class="prix">{prix(m.prix2)}</span><span class="index__unite">2 services</span></span>
+            <span class="index__prix"><span class="prix">{prix(m.prix3)}</span><span class="index__unite">3 services</span></span>
+          </a>
+        </li>
+      ))}
+    </ol>
+    <p class="index__suite"><a class="lien" href={u('/carte/')}>Lire la carte complète, brunch et bar compris</a></p>
+  </Top>
+
+  <Top heure="Rideau" libelle="Après le repas" ton="rideau" titre="t-rideau" classe="top--paire">
+    <figure class="paire__media">
+      <Photo cle="humoristes" widths={[480, 546]} sizes="(max-width: 48rem) 100vw, 30vw" />
+    </figure>
+    <div class="paire__texte">
+      <h2 id="t-rideau" class="display titre-xl">La scène s’allume.</h2>
+      <p class="texte">Du stand-up du mercredi au samedi soir, à quelques pas de votre assiette. Les places et les tables se prennent ensemble sur l’agenda de Chez Guillaume.</p>
+      <p><a class="cta cta--salle" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Voir l’agenda des spectacles</span></a></p>
+      <p class="paire__note">Lien vers la billetterie du site actuel, chezguillaume.be.</p>
+    </div>
+  </Top>
+
+  <Top heure={tops.brunch.heure} libelle="Dimanche" detail="jusqu’à 14:00" titre="t-brunch" classe="top--donnees">
+    <div class="donnees__tete">
+      <h2 id="t-brunch" class="display titre-l">Brunch stand-up.</h2>
+      <p class="texte">Buffet sucré-salé à volonté de 11&nbsp;h&nbsp;30 à 14&nbsp;h, puis spectacle à 15&nbsp;h, avec ou sans buffet. Réservation par e-mail ou par téléphone.</p>
+    </div>
+    <dl class="donnees">
+      <div><dt>Buffet, par personne</dt><dd class="prix">{prix(brunch.prix)}</dd></div>
+      <div><dt>Moins de 12 ans</dt><dd class="prix">{prix(brunch.prixEnfant)}</dd></div>
+      <div><dt>Spectacle de 15&nbsp;h</dt><dd class="prix">{prix(brunch.spectacle)}</dd></div>
+    </dl>
+    <figure class="donnees__media">
+      <Photo cle="dessert" widths={[480, 800]} sizes="(max-width: 48rem) 100vw, 26vw" />
+    </figure>
+  </Top>
+
+  <Top heure="Lundi" libelle="Face à la crise" titre="t-lundi" classe="top--bande">
+    <h2 id="t-lundi" class="bande__titre">{lundi.contenu}</h2>
+    <p class="bande__prix prix">{prix(lundi.prix)}</p>
+    <p class="texte bande__texte">Le lundi, le spectacle se passe de menu.</p>
+  </Top>
+</Base>

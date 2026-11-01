@@ -1,0 +1,67 @@
+/* Jetons de Chez Guillaume (variante awwwards « La conduite »). Les NOMS sont le contrat de l'engine ; les valeurs
+   viennent de DESIGN.md : le plâtre du mur de scène, la salle éteinte, le rouge du logo, le rideau bordeaux.
+   Les url() des polices portent la base (/chez-guillaume/awwwards/) : Vite ne réécrit pas ces chemins vers public/. */
+
+@font-face {
+  font-family: 'Tanker';
+  src: url('/chez-guillaume/awwwards/fonts/tanker-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Schibsted';
+  src: url('/chez-guillaume/awwwards/fonts/schibsted-var.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Couleur : par rôle */
+  --c-bg: #eeeae4;            /* ground : plâtre du mur de scène */
+  --c-fg: #1a1210;            /* ink : la salle éteinte (15,4:1) */
+  --c-muted: #5e534d;         /* muted : bois des tables dans l'ombre (6,2:1) */
+  --c-line: #cfc6bc;          /* line : joints du plâtre */
+  --c-accent: #cd3b08;        /* accent : rouge du logo ; grands titres, time-codes, aplats (4,15:1) */
+  --c-accent-texte: #a8300a;  /* accent pour texte courant et fond de CTA (5,7:1) */
+  --c-curtain: #5b1519;       /* curtain : rideau bordeaux de la scène ronde */
+
+  /* Sections « salle » : fond rideau ou noir, texte plâtre */
+  --c-salle-muted: #f3b79e;   /* 7,7:1 sur rideau */
+  --c-salle-accent: #f06a3c;  /* 6,0:1 sur ink */
+
+  /* Familles */
+  --f-display: 'Tanker', 'Impact', 'Arial Narrow', sans-serif;
+  --f-body: 'Schibsted', system-ui, sans-serif;
+
+  /* Échelle fluide (390 → 1440 px), sauts × 2 environ */
+  --t-mega: clamp(4.5rem, 1.6rem + 12vw, 15rem);
+  --t-xl: clamp(3rem, 1.5rem + 6.2vw, 7.5rem);
+  --t-l: clamp(2rem, 1.3rem + 2.9vw, 4rem);
+  --t-m: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
+  --t-body: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem;
+
+  /* Espace : quatre humeurs */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+  --serre: calc(var(--u) * 3);
+  --normal: calc(var(--u) * 8);
+  --aere: calc(var(--u) * 14);
+  --entracte: calc(var(--u) * 22);
+
+  /* Forme : tout est droit, seule la pastille du top est ronde (la scène ronde) */
+  --radius: 0px;
+
+  /* Couches */
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}

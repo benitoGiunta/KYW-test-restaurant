@@ -1,0 +1,38 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+---
+<footer class="pied">
+  <div class="pied__regie">
+    <p class="regie"><span class="regie__heure regie__heure--mot">Fin</span><span class="regie__libelle"><span class="regie__pastille" aria-hidden="true"></span>de conduite</span></p>
+  </div>
+  <div class="pied__corps">
+    <p class="pied__mot" aria-hidden="true">Rideau.</p>
+    <div class="pied__col">
+      <h2 class="pied__titre">Venir</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}<br /><span class="pied__doux">En face de la place Saint-Aubain</span></address>
+      <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Horaires</h2>
+      <ul class="pied__horaires">
+        <li><span>Lundi au samedi</span><span>18 h à minuit</span></li>
+        <li><span>Dimanche</span><span>10 h à 18 h</span></li>
+      </ul>
+      <p class="pied__doux">Horaires du site actuel, à confirmer par téléphone.</p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Contact</h2>
+      <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a><br /><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
+      <ul class="pied__reseaux">
+        {site.reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+    <div class="pied__cta">
+      <a class="cta cta--salle" href={u('/reservation/')}><span class="cta__txt">Réserver</span></a>
+    </div>
+    <p class="pied__colophon">Photos : Chez Guillaume. Polices : Tanker (Indian Type Foundry, Fontshare) et Schibsted Grotesk (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

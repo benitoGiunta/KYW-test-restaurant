@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import Top from '../components/Top.astro';
+import Photo from '../components/Photo.astro';
+import { site, horaires, brunch, prix } from '../data/site';
+const sujet = encodeURIComponent('Réservation brunch du dimanche');
+---
+<Base title="Réserver" page="reservation" description="Réserver chez Guillaume à Namur : table du soir avec le ticket de spectacle, brunch du dimanche par e-mail ou téléphone, privatisation. Rue Lelièvre 4.">
+  <section class="top top--poster" aria-labelledby="titre">
+    <div class="top__regie">
+      <p class="regie">
+        <span class="regie__heure"><span class="sr-only">Top à </span>18:30</span>
+        <span class="regie__libelle"><span class="regie__pastille" aria-hidden="true"></span>Mercredi au samedi</span>
+      </p>
+    </div>
+    <div class="top__corps">
+      <h1 id="titre" class="display poster__titre">Réserver</h1>
+      <p class="texte poster__texte">Trois façons de prendre place, selon le jour. Pour toute question, un appel suffit.</p>
+      <div class="hero__ctas">
+        <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nowrap">{site.telephoneLisible}</span></span></a>
+        <a class="lien lien--fort" href={`mailto:${site.email}`}>{site.email}</a>
+      </div>
+    </div>
+  </section>
+
+  <Top heure="Soir" libelle="Mercredi au samedi" detail="18:30" titre="t-portes" classe="top--portes">
+    <h2 id="t-portes" class="sr-only">Les trois façons de réserver</h2>
+    <ol class="portes">
+      <li class="porte">
+        <h3 class="porte__titre">Repas et spectacle</h3>
+        <p class="texte">Prenez votre ticket sur l’agenda : la table du soir vous est attribuée avec la place. Le repas, servi de 18&nbsp;h&nbsp;30 à 20&nbsp;h&nbsp;30, est obligatoire et se règle à part.</p>
+        <p><a class="lien lien--fort" href={site.reservationUrl} rel="noopener">Ouvrir l’agenda et la billetterie</a></p>
+      </li>
+      <li class="porte">
+        <h3 class="porte__titre">Brunch du dimanche</h3>
+        <p class="texte">Buffet de 11&nbsp;h&nbsp;30 à 14&nbsp;h, {prix(brunch.prix)} par personne, {prix(brunch.prixEnfant)} pour les moins de 12&nbsp;ans ; spectacle à 15&nbsp;h, {prix(brunch.spectacle)}. Réservation par e-mail ou par téléphone.</p>
+        <p><a class="lien lien--fort" href={`mailto:${site.email}?subject=${sujet}`}>Écrire pour le brunch</a></p>
+      </li>
+      <li class="porte">
+        <h3 class="porte__titre">Entreprises et fêtes</h3>
+        <p class="texte">Team building, anniversaire, soirée d’entreprise ou stand-up privé : la salle se privatise. Le bon cadeau s’offre aussi, par virement ou en papier sur place.</p>
+        <p><a class="lien lien--fort" href={`mailto:${site.email}?subject=${encodeURIComponent('Privatisation')}`}>Demander une privatisation</a></p>
+      </li>
+    </ol>
+  </Top>
+
+  <Top heure="Brunch" libelle="Formulaire" detail="par e-mail" titre="t-form" classe="top--form">
+    <div class="form__tete">
+      <h2 id="t-form" class="display titre-l">Préparer votre e-mail</h2>
+      <p class="texte">Ce formulaire n’envoie rien lui-même : il ouvre votre messagerie avec un message prérempli à l’adresse {site.email}.</p>
+    </div>
+    <form class="form" action={`mailto:${site.email}?subject=${sujet}`} method="post" enctype="text/plain">
+      <label class="champ"><span>Nom</span><input name="nom" type="text" autocomplete="name" required /></label>
+      <label class="champ"><span>Dimanche souhaité</span><input name="dimanche" type="text" placeholder="ex. 15 novembre" /></label>
+      <label class="champ"><span>Adultes</span><input name="adultes" type="number" min="1" max="40" inputmode="numeric" /></label>
+      <label class="champ"><span>Moins de 12 ans</span><input name="enfants" type="number" min="0" max="40" inputmode="numeric" /></label>
+      <label class="champ champ--large"><span>Spectacle de 15&nbsp;h aussi ?</span><input name="spectacle" type="text" placeholder="oui ou non" /></label>
+      <button class="cta" type="submit"><span class="cta__txt">Ouvrir mon e-mail</span></button>
+    </form>
+  </Top>
+
+  <Top heure="Venir" libelle="Saint-Aubain" titre="t-venir" ton="salle" classe="top--venir">
+    <div class="venir__texte">
+      <h2 id="t-venir" class="display titre-l">Rue Lelièvre 4</h2>
+      <address class="texte">{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}<br />En face de la place Saint-Aubain, au cœur de Namur.</address>
+      <p><a class="lien lien--fort" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
+      <p class="texte">Pour une table hors spectacle : <a class="lien" href={`mailto:${site.emailJour}`}>{site.emailJour}</a>.</p>
+    </div>
+    <div class="venir__horaires">
+      <h3 class="venir__sous">Horaires</h3>
+      <ul class="horaires">
+        {horaires.map((h) => (
+          <li><span class="horaires__jour">{h.jour}</span><span class="horaires__h">{h.lisible}</span><span class="horaires__note">{h.note}</span></li>
+        ))}
+      </ul>
+      <p class="venir__note">Horaires publiés par le site actuel, à confirmer par téléphone.</p>
+    </div>
+    <figure class="venir__media">
+      <Photo cle="banquette" widths={[480, 800]} sizes="(max-width: 48rem) 100vw, 22vw" />
+    </figure>
+  </Top>
+</Base>

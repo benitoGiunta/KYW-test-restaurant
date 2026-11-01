@@ -1,0 +1,18 @@
+---
+// Un top de la conduite : colonne de régie (heure + libellé) et corps sur 10 colonnes.
+interface Props { heure: string; libelle: string; detail?: string; ton?: 'plateau' | 'rideau' | 'salle'; classe?: string; id?: string; titre?: string }
+const { heure, libelle, detail, ton = 'plateau', classe = '', id, titre } = Astro.props;
+const estHeure = /\d/.test(heure);
+---
+<section class={`top top--${ton} ${classe}`} id={id} aria-labelledby={titre}>
+  <div class="top__regie">
+    <p class="regie">
+      <span class:list={['regie__heure', { 'regie__heure--mot': !estHeure }]}>{estHeure ? <><span class="sr-only">Top à </span>{heure}</> : heure}</span>
+      <span class="regie__libelle"><span class="regie__pastille" aria-hidden="true"></span>{libelle}</span>
+      {detail && <span class="regie__detail">{detail}</span>}
+    </p>
+  </div>
+  <div class="top__corps">
+    <slot />
+  </div>
+</section>
