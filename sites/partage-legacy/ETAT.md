@@ -45,3 +45,18 @@
 
 ## Pièges
 - Ne pas confondre la « 404 » des captures (repli de `serve.mjs`) avec `404.html`.
+
+# ETAT · partage-legacy · fin de revue 2 (relecteur-site) · 01/11/2026
+
+## Fait
+- `REVUE-2.md` : verdict A_CORRIGER (F0 0, F1 0, F2 3, F3 6). F1-1, F1-2, F2-1 de la passe 1 vérifiés corrigés ; F2-2 corrigé en partie (3 apostrophes droites : `\w` ASCII dans `nettoie`).
+- Serveur 4811 arrêté (PID noté, `kill`). Aucun fichier source modifié.
+
+## Reste (réviseur)
+- F2-1 `nettoie` : `/(\p{L})'(\p{L})/gu` ; F2-2 retirer « elle change avec les saisons » (`carte/index.astro:20`) ; F2-3 lettre signée de `Cloture.astro` (parole attribuée à des personnes réelles, absente du dossier).
+- F3 : BE 0451 659 813 à marquer ou retirer, « en une minute », `priceRange`, doublon du bouton sur `bon-cadeau`, reprise de « Ici, l'expérience se vit dans le partage ».
+- 12 REFLEX de `RAPPORT.md` toujours non tranchés.
+
+## Pièges
+- `sloplint --render` échoue en root (Chromium sans `--no-sandbox`) ; pas d'option dans l'outil.
+- Les planches 12 colonnes sont illisibles ; mesurer par script.
