@@ -3,6 +3,7 @@ import KywFooter from '@kyw/footer';
 import Neon from './Neon.astro';
 import { u } from '../lib/url';
 import { restaurant, horaires, creneaux } from '../data/site';
+const { page } = Astro.props as { page?: string };
 ---
 <footer class="pied">
   <div class="wrap pied__grille">
@@ -17,9 +18,11 @@ import { restaurant, horaires, creneaux } from '../data/site';
     </div>
     <div class="pied__col pied__col--2">
       <h2 class="pied__titre">Horaires</h2>
-      <ul class="horaires horaires--court">
-        {horaires.map((h) => <li class:list={{ 'is-ferme': !h.services.length }}><span>{h.jour}</span><span>{creneaux(h.services)}</span></li>)}
-      </ul>
+      {page === 'reservation'
+        ? <p><a class="lien" href="#infos-titre">Le détail des jours est plus haut</a></p>
+        : <ul class="horaires horaires--court">
+            {horaires.map((h) => <li class:list={{ 'is-ferme': !h.services.length }}><span>{h.jour}</span><span>{creneaux(h.services)}</span></li>)}
+          </ul>}
     </div>
     <div class="pied__col pied__col--3">
       <h2 class="pied__titre">Contact</h2>
