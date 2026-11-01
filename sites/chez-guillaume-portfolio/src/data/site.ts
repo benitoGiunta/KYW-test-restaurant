@@ -17,7 +17,7 @@ export type CouleurActivite = 'vert' | 'rose' | 'bleu';
 /** Une activité du lieu : `reelle: false` = activité illustrative du gabarit (marquée partout où elle s'affiche). */
 export interface Activite { id: string; nom: string; motItalique: string; couleur: CouleurActivite; accroche: string; reelle: boolean }
 /** Événement d'exemple : jamais de date en dur, seulement un jour de semaine et une heure. */
-export interface Evenement { titre: string; jour: Jour; heure: string; activite: string; photo: string; detail: string; placeholder: boolean }
+export interface Evenement { titre: string; jour: Jour; /** dernier jour d'une plage (mer → sam) */ jusqua?: Jour; heure: string; activite: string; photo: string; detail: string; placeholder: boolean }
 export interface Formule { nom: string; prix: string; lignes: string[]; placeholder: boolean }
 export interface Sticker { texte: string; placeholder: boolean }
 
@@ -133,7 +133,8 @@ export const site: Restaurant = {
     "Les plats et les cocktails sont préparés dans la cuisine et au bar de la maison, avec des produits locaux et des recettes de saison.",
   ],
   equipe: [
-    { nom: 'Guillaume Wattecamps, alias GuiHome', role: 'Fondateur, humoriste', placeholder: false },
+    // Pas de portrait sourcé : photo de la salle (sans personne), alt neutre d'après photos/index.json.
+    { nom: 'Guillaume Wattecamps, alias GuiHome', role: 'Fondateur, humoriste', photo: '/photos/salle-rideaux.webp', placeholder: false },
     { nom: 'En cuisine', role: 'Les menus du mois et le brunch', photo: '/photos/cuisine-dressage.webp', placeholder: false },
   ],
   // Aucun avis client affiché par le site : la section cite des titres de presse réels (donnees.json, presse).
@@ -167,10 +168,8 @@ export const site: Restaurant = {
   ],
   // Le rythme réel de la semaine (dossier) ; les artistes et les dates sont publiés sur la billetterie du site.
   evenements: [
-    { titre: 'Repas-spectacle', jour: 'mercredi', heure: '18:30', activite: 'scene', photo: '/photos/scene-micro.webp', detail: 'Repas servi de 18h30 à 20h30, puis le spectacle. Repas obligatoire, hors ticket.', placeholder: false },
-    { titre: 'Repas-spectacle', jour: 'jeudi', heure: '18:30', activite: 'scene', photo: '/photos/salle-projecteurs.webp', detail: 'Repas servi de 18h30 à 20h30, puis le spectacle. Repas obligatoire, hors ticket.', placeholder: false },
-    { titre: 'Repas-spectacle', jour: 'vendredi', heure: '18:30', activite: 'scene', photo: '/photos/plat-boudin.webp', detail: 'Repas servi de 18h30 à 20h30, puis le spectacle. Repas obligatoire, hors ticket.', placeholder: false },
-    { titre: 'Repas-spectacle', jour: 'samedi', heure: '18:30', activite: 'scene', photo: '/photos/salle-rideaux.webp', detail: 'Repas servi de 18h30 à 20h30, puis le spectacle. Repas obligatoire, hors ticket.', placeholder: false },
+    // Mer à sam : même formule chaque soir (dossier), une seule ligne au lieu de quatre cartes identiques.
+    { titre: 'Repas-spectacle', jour: 'mercredi', jusqua: 'samedi', heure: '18:30', activite: 'scene', photo: '/photos/scene-micro.webp', detail: 'Repas servi de 18h30 à 20h30, puis le spectacle. Repas obligatoire, hors ticket.', placeholder: false },
     { titre: 'Brunch à volonté', jour: 'dimanche', heure: '11:30', activite: 'brunch', photo: '/photos/brunch-tartelette.webp', detail: 'Buffet sucré-salé de 11h30 à 14h, 35 € (15 € moins de 12 ans).', placeholder: false },
     { titre: 'Spectacle du dimanche', jour: 'dimanche', heure: '15:00', activite: 'scene', photo: '/photos/scene-rires.webp', detail: 'Ticket 20 €, avec ou sans buffet.', placeholder: false },
     { titre: 'Lundi « face à la crise »', jour: 'lundi', heure: '18:00', activite: 'table', photo: '/photos/salle-banquette.webp', detail: 'Croque-monsieur et boisson, 12 €.', placeholder: false },
@@ -207,7 +206,7 @@ export const site: Restaurant = {
   faq: [
     { q: 'Le repas est-il compris dans le ticket ?', r: "Non. Du mercredi au samedi, le repas est obligatoire et se règle à part ; il est servi entre 18h30 et 20h30, avant le spectacle." },
     { q: 'Comment réserver une table ?', r: "Le soir, la table est liée au ticket du spectacle, pris sur la billetterie. Pour le brunch du dimanche, écrivez-nous ou appelez-nous." },
-    { q: 'Peut-on venir sans manger ?', r: 'Le lundi « face à la crise » : croque-monsieur et boisson pour 12 €. Le dimanche, le ticket spectacle (20 €) se prend avec ou sans buffet.' },
+    { q: 'Peut-on venir sans manger ?', r: 'Pas du mercredi au samedi : le repas est obligatoire. Le lundi « face à la crise » : croque-monsieur et boisson pour 12 €. Le dimanche, le ticket spectacle (20 €) se prend avec ou sans buffet.' },
     { q: 'Y a-t-il une option végétarienne ?', r: 'Oui : chaque mois, un menu végétarien en 2 ou 3 services, à côté des menus Bonne Maman et de la Cheffe.' },
     { q: 'Et à boire ?', r: 'Des cocktails maison, des mocktails signatures, un vin rouge et un vin blanc bio.' },
   ],

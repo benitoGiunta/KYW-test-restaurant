@@ -6,6 +6,7 @@ interface Props { max?: number }
 const { max = site.evenements.length } = Astro.props;
 const items = site.evenements.slice(0, max);
 const abrege = (j: string) => j.slice(0, 3);
+const semaine = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
 ---
 <ol class="agenda">
   {items.map((e, i) => {
@@ -13,14 +14,17 @@ const abrege = (j: string) => j.slice(0, 3);
     const a = activiteDe(e.activite);
     return (
       <li class="agenda__item" data-reveal={i === 0 ? undefined : 'up'} data-delay={i === 0 ? undefined : String(i * 0.08)}>
-        <p class="agenda__jour"><abbr title={e.jour}>{abrege(e.jour)}</abbr><small>{e.placeholder ? 'jour d’exemple' : e.jour}</small></p>
+        <p class="agenda__jour">{e.jusqua
+          ? <abbr title={`du ${e.jour} au ${e.jusqua}`}>{abrege(e.jour)}<br />{abrege(e.jusqua)}</abbr>
+          : <abbr title={e.jour}>{abrege(e.jour)}</abbr>}<small>{e.placeholder ? 'jour d’exemple' : e.jusqua ? `du ${e.jour} au ${e.jusqua}` : e.jour}</small></p>
         <article class="agenda__carte">
           <img src={asset(p.largeur > 640 ? p.src.replace('.webp', '-640.webp') : p.src)} alt={p.alt} width={Math.min(640, p.largeur)} height={Math.round((Math.min(640, p.largeur) * p.hauteur) / p.largeur)} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} decoding={i === 0 ? 'sync' : 'async'} />
           <div class="agenda__corps">
             <p class="agenda__meta"><span class={`sticker sticker--${a.couleur === 'vert' ? 'ecru' : a.couleur}`}>{a.nom}</span>{e.placeholder && <span class="tag">exemple</span>}</p>
             <h3>{e.titre}</h3>
+            {e.jusqua && <p class="agenda__jours">{semaine.slice(semaine.indexOf(e.jour), semaine.indexOf(e.jusqua) + 1).map((j) => <span class="tag">{abrege(j)}</span>)}</p>}
             <p>{e.detail}</p>
-            <p class="agenda__meta"><strong>{e.heure}</strong><span class="muted">{e.placeholder ? 'Billetterie à venir (démonstration)' : 'Ticket sur la billetterie'}</span></p>
+            <p class="agenda__meta"><strong>{e.heure}</strong><span class="muted">{e.placeholder ? 'Billetterie à venir (démonstration)' : e.activite === 'brunch' ? 'Réservation par e-mail ou téléphone' : 'Ticket sur la billetterie'}</span></p>
           </div>
         </article>
       </li>

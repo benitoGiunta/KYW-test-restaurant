@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { site, photoDe } from '../data/site';
 import { u, asset } from '../lib/url';
 const salle = photoDe('/photos/salle-projecteurs.webp');
-const galerie = ['/photos/scene-micro.webp', '/photos/salle-banquette.webp', '/photos/bar-cocktails.webp', '/photos/brunch-cafe.webp', '/photos/plat-boudin.webp', '/photos/salle-rideaux.webp'].map(photoDe);
+const galerie = ['/photos/scene-micro.webp', '/photos/salle-banquette.webp', '/photos/bar-cocktails.webp', '/photos/brunch-cafe.webp', '/photos/plat-boudin.webp', '/photos/brunch-tartelette.webp'].map(photoDe);
 const dateFr = (d: string) => {
   const [a, m, j] = d.split('-');
   const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'][Number(m) - 1];
@@ -31,7 +31,7 @@ const dateFr = (d: string) => {
 
   <section class="aplat aplat--bleu" aria-labelledby="t-equipe">
     <div class="wrap">
-      <h2 class="titre titre--l" id="t-equipe"><span class="etiquette" data-split="lines">La <em>maison</em></span></h2>
+      <h2 class="titre titre--l" id="t-equipe"><span class="etiquette" data-split="lines">La maison</span></h2>
       <div class="equipe">
         {site.equipe.map((m, i) => {
           const p = m.photo ? photoDe(m.photo) : null;
@@ -51,7 +51,7 @@ const dateFr = (d: string) => {
 
   <section class="aplat aplat--postit" aria-labelledby="t-presse">
     <div class="wrap">
-      <h2 class="titre titre--l" id="t-presse"><span class="etiquette" data-split="lines">Dans la <em>presse</em></span></h2>
+      <h2 class="titre titre--l" id="t-presse"><span class="etiquette" data-split="lines">Dans la presse</span></h2>
       <ul class="lignes">
         {site.avis.map((x) => (
           <li>
@@ -65,7 +65,7 @@ const dateFr = (d: string) => {
 
   <section class="aplat aplat--ecru" aria-labelledby="t-galerie">
     <div class="wrap">
-      <h2 class="titre titre--l" id="t-galerie"><span class="etiquette" data-split="lines">Sur le <em>mur</em></span></h2>
+      <h2 class="titre titre--l" id="t-galerie"><span class="etiquette" data-split="lines">Sur le mur</span></h2>
       <div class="galerie">
         {galerie.map((p, i) => (
           <figure data-reveal="scale" data-delay={String((i % 3) * 0.1)}>

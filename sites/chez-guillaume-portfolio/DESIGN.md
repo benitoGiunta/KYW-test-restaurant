@@ -77,3 +77,9 @@ quatre-mains, verger). `gabarits/UTILISATION.md` n'est pas mis à jour : `gabari
 Limites : pas d'artistes ni de dates (la programmation vit sur la billetterie du site actuel, non branchée) ; aucune
 photo de GuiHome ni de façade ; les illustrations au trait de l'identité ne sont pas reprises (aucun fichier source) ;
 identité de la cheffe actuelle non confirmée (le récit date le nom à janvier 2025).
+
+## Révision 1 (01/11/2026) — décisions de design modifiées
+- **Italique** : le mot en italique n'est plus une formule de chaque titre ; il reste sur trois titres clés (accueil « On va *voir qui ?* », h1 Histoire « Un humoriste, une *table* », h1 Privatisation « Le lieu est à *vous* »). Sur-titres redondants retirés (« On en parle », « La programmation »).
+- **Agenda** : mercredi à samedi fusionnés en une ligne « MER / SAM » (plage, pastilles de jour dans la carte) : le dossier ne distingue pas les soirs. L'agenda compte 4 lignes au lieu de 7. Les lignes du cahier passent sous un fond de section derrière le libellé du jour.
+- **Loader** : plafond 1,8 s (au lieu de 2,6 s), sortie ≈ 0,9 s (au lieu de 1,35 s).
+- **Histoire, La maison** : la fiche du fondateur porte la photo de la salle (`salle-rideaux`, sans personne) au lieu d'un bloc « photo à venir ».

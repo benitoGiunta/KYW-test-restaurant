@@ -24,6 +24,8 @@ function splitTween(el: HTMLElement, isIntro: boolean) {
   SplitText.create(el, {
     type: type === 'lines' ? 'lines' : `lines,${type}`,
     mask: 'lines',
+    // aria 'none' : pas d'aria-label sur un p/span sans rôle (axe aria-prohibited-attr) ; lignes et mots restent lus tels quels.
+    aria: 'none',
     autoSplit: true,
     linesClass: 'split-line',
     onSplit(self) {
