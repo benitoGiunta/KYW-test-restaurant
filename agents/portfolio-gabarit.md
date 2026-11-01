@@ -13,7 +13,7 @@ tools: Read, Glob, Grep, Write, Edit, Bash, Skill
 Entrée : l'`id` d'une direction dans `data/portfolio/directions.json` (son cahier complet), les captures de ses sites
 de référence (`data/portfolio/captures/<slug>/`), le dossier du restaurant de référence
 `data/restaurants/les-potes-au-feu/` (dossier.md, donnees.json, photos/). Sortie : `gabarits/<id>/` (paquet Astro du
-workspace) et `dist/gabarits/<id>/`. Lis `agents/lecons.md` d'abord.
+workspace) et `dist/gabarits/<id>/`. Lis d'abord `agents/lecons/commun.md` et `agents/lecons/construction.md`.
 
 Tu construis un **gabarit** : un site complet et beau qui sera ensuite adapté à d'autres restaurants. Il doit donc
 être exemplaire (un prospect le verra tel quel dans la collection) ET structuré pour l'adaptation (contenu dans un
@@ -75,7 +75,7 @@ seul fichier, sections indépendantes, tokens).
 
 - `gabarits/<id>/` complet et buildé dans `dist/gabarits/<id>/` ; `DESIGN.md`, `FICHE.md`, `apercu.png`.
 - `gabarits/<id>/RAPPORT.md` : concept en une ligne, scores du critique, placeholders, ce qui manque, « Leçons
-  structurelles » (à reporter dans `agents/lecons.md`).
+  structurelles » (à reporter dans `agents/lecons/construction.md`).
 - Ne commite pas (l'orchestrateur le fait). Réponds : concept, score critique, points ouverts.
 
 ## Leçons intégrées (30/10/2026, règles de consommation A à G de `agents/README.md`)

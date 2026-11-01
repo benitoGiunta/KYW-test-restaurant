@@ -27,7 +27,7 @@ $OUT   = $ROOT/sites/$SLUG-legacy
 $LOG   = $ROOT/.hallmark/log.json      (journal PARTAGÉ entre les 20 restaurants : la rotation des thèmes et des formes se fait à travers lui)
 ```
 
-Lis d'abord `$ROOT/CLAUDE.md`, `$ROOT/README.md` et `$ROOT/agents/README.md` (s'il existe), puis `$ROOT/agents/lecons.md`
+Lis d'abord `$ROOT/CLAUDE.md`, `$ROOT/README.md` et `$ROOT/agents/README.md` (s'il existe), puis `$ROOT/agents/lecons/commun.md` et `$ROOT/agents/lecons/construction.md`
 (s'il existe) pour ne pas retomber dans un piège déjà noté.
 
 ---
@@ -606,11 +606,11 @@ Slots texte `.fill` : <2 max>. Avis repris du site d'origine à vérifier : <lis
 ## Demande de matériel
 Chaque slot : nom, taille rendue, ce qui devrait y aller. La photo qui changerait le plus la page : <...>.
 
-## Leçons structurelles (à reporter dans agents/lecons.md)
+## Leçons structurelles (à reporter dans agents/lecons/construction.md)
 - <outil, méthode ou piège rencontré : une ligne, reproductible, avec la commande ou le fichier>
 ```
 
-En fin de tâche, **ajoute** (jamais écrase) les leçons structurelles à `$ROOT/agents/lecons.md` sous un titre
+En fin de tâche, **ajoute** (jamais écrase) les leçons structurelles à `$ROOT/agents/lecons/construction.md` sous un titre
 `## <date> · <slug> · variante legacy`, puis commite et pousse.
 
 ---
@@ -676,7 +676,7 @@ En fin de tâche, **ajoute** (jamais écrase) les leçons structurelles à `$ROO
 - `sloplint --render --kept --url` : 0 FAIL, 0 REFLEX ouvert, chaque Finish répondu, « render tier » tourné.
 - Hero review et finish review faites en sous-agent, consignées dans le stamp.
 - `DESIGN.md` : Picks, Approche, Thème, Composants, les 72 cases.
-- `comp.md`, `AUDIT.md`, `RAPPORT.md` écrits ; `$LOG` enrichi ; `agents/lecons.md` enrichi.
+- `comp.md`, `AUDIT.md`, `RAPPORT.md` écrits ; `$LOG` enrichi ; `agents/lecons/construction.md` enrichi.
 - `scripts/q.sh build pnpm build:site sites/$SLUG-legacy` et `pnpm index` passés ; `dist/$SLUG/legacy/` commité ; push.
 - Réponds ensuite en dix lignes au maximum : approche conservée, thème, résultat sloplint before/after, verdict des
   reviews, placeholders, et la photo qui manque le plus.

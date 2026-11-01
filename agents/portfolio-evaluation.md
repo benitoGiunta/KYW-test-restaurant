@@ -43,4 +43,4 @@ Tu ne te fies pas aux descriptions de la recherche : tu regardes.
 motion, usabilite, contenu, transposabilite, total}, preuves: {…une phrase par score}, composants_remarquables: [],
 da: {}, structure: [], mecaniques_techniques: [], points_faibles: [], famille_da, captures: "data/portfolio/captures/<slug>" }`.
 Réponds par un classement (total décroissant) et les 5 composants les plus réutilisables du lot. Si tu as rencontré
-un problème d'outillage, ajoute une ligne à `agents/lecons.md`.
+un problème d'outillage, ajoute une ligne à `agents/lecons/construction.md`.

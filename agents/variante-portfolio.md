@@ -13,7 +13,7 @@ tools: Read, Glob, Grep, Write, Edit, Bash, Skill
 Entrées : `data/restaurants/<slug>/dossier.md`, `donnees.json`, `photos/` ; la collection `gabarits/*/` (15 gabarits
 Astro, chacun avec `DESIGN.md`, `FICHE.md` (pour qui il est fait, ses sections, ses composants, ses limites) et un
 contenu d'exemple dans `src/data/site.ts`). Sortie : `sites/<slug>-portfolio/` puis `dist/<slug>/portfolio/`.
-Lis `agents/lecons.md` d'abord.
+Lis d'abord `agents/lecons/commun.md` et `agents/lecons/construction.md`.
 
 ## 1. Choix du gabarit (écrit, argumenté)
 
@@ -70,7 +70,7 @@ adaptation. Arrête le serveur.
   composants créés, décisions d'art direction, taux d'adéquation estimé (en %, avec les 3 raisons principales) et ce qui
   limiterait encore l'adéquation.
 - `sites/<slug>-portfolio/RAPPORT.md` : placeholders (liste), résultat du shoot/audit, points ouverts, section
-  « Leçons structurelles » (à reporter dans `agents/lecons.md` si un gabarit a un défaut : corrige aussi le gabarit
+  « Leçons structurelles » (à reporter dans `agents/lecons/construction.md` si un gabarit a un défaut : corrige aussi le gabarit
   dans `gabarits/<nom>/` pour les prochains restaurants, et note-le).
 - Réponse finale : gabarit choisi et pourquoi (2 lignes), adéquation estimée, placeholders, problèmes ouverts.
 

@@ -1,0 +1,11 @@
+# Leçons relecteur-site
+Nouvelle leçon : une ligne datée à la fin de ce fichier.
+- Avant de lancer la revue : `ls src/pages` non vide, `QA-revue<n>.md` présent et `summary.json` sans `shootFailed` ; sinon shoots ciblés par page, en série (trois variantes en parallèle sur le même hôte font fermer Chromium).
+- Lister les pages touchées par REVISION-n (le QA ne les recapture pas) et les shooter une à une sur son propre port.
+- Contrôler tout chiffre annoncé par un RAPPORT (CLS, LCP, décomptes) sous CPU ×4 + 4G lente, en deux passes en série ; `PerformanceObserver('layout-shift')` avec `sources` nomme l'élément fautif ; recompter sur le `dist/`, texte visible et méta séparés.
+- Contenu : extraire le texte du HTML servi et le confronter ligne à ligne à `donnees.json`, `dossier.md` et `site-actuel/` ; grep sur chaque verbe d'action et chiffre des champs hors carte ; relire la note d'une légende contre les données du graphique.
+- Ouvrir chaque vignette d'aperçu et chaque alt tiré d'un nom de fichier (planche PIL) ; les captures `fullPage` ne peignent pas un fond fixe en dessous de la première hauteur : juger sur captures de fenêtre après défilement.
+- Défauts invisibles à axe et shoot.mjs, à mesurer : en-tête transparent chevauchant le contenu, boîte d'image plus petite que son cadre, débordement de 1 px, `reducedMotion`, CLS d'italique, `srcset` vers des fichiers absents, JSON-LD d'horaires.
+- Mobile en contexte tactile : défiler par `scrollTo` par pas de 300 px et vérifier `scrollY` (la molette ne défile pas) ; attendre `html.is-loaded` puis ~2 s avant toute capture maison ; `naturalWidth` est corrigé de la densité : lire les dimensions du fichier avec PIL.
+- Contraste « à vérifier » d'axe : script `getComputedStyle` + opacité cumulée sur chaque nœud texte ; mesurer les onglets après clic, ignorer les lettres de split avant la fin du reveal.
+- Un finding qui contredit le prompt de la variante n'est pas un défaut : vérifier le paragraphe cité.

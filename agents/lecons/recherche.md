@@ -1,0 +1,8 @@
+# Leçons recherche-client
+Nouvelle leçon : une ligne datée à la fin de ce fichier.
+- Quota WebSearch épuisé : relancer un WebSearch de test avant de conclure (il revient entre deux passes) ; lancer les recherche-client en début de tour ; repli : BCE `kbopub.economie.fgov.be/kbopub/zoeknummerform.html?nummer=<BCE>&actionLu=Rechercher&lang=fr`, Nominatim pour la géolocalisation, Rankeat (note Google, horaires), Le Fooding (prix), Mapstr (extraits d'avis).
+- WebFetch renvoie une page vide sur guide.michelin.com (rendre avec `capture-site.mjs`) ; Tripadvisor et Facebook donnent 403 : extraits d'avis en paraphrase via WebSearch seulement ; une fiche tierce (Gault&Millau) qui contredit la fiche officielle : « à confirmer ».
+- Les sites E-net Business : le bloc « avis de nos clients x/5 » est un module de l'agence, jamais un avis sur le restaurant ; le texte des pages internes contient des coquilles à ne pas recopier ; les sliders contiennent des doublons de photos (dédupliquer par hash perceptuel PIL 16×16 puis planche-contact avant de nommer) ; les onglets de carte portent des ancres `#onglet_<slug>-<id>` et leurs prix complets ne sont que dans `page.html`.
+- Une carte en images (WordPress/Divi, GIF) : extraire les `<img>` de `page.html` et lire les GIF convertis en PNG par PIL ; une carte en texte HTML : strip des balises plutôt que lire les captures.
+- Recouper l'adresse de `data/restaurants.json` avec le pied de page du site du client (elle peut être celle d'un autre établissement).
+- Les descriptions de technologies et de mécaniques d'un site sont à vérifier dans le HTML (les faux positifs abondent) ; ne rien affirmer sans preuve ; avis Google et abonnés `null` sauf affichage par le site.

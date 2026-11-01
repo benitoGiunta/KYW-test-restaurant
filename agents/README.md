@@ -14,7 +14,7 @@ coordonner, commiter et publier.
 | 4 | Révision | `reviseur-site.md` | revue → corrections + `REVISION-1.md` |
 | 5 | Re-revue | `relecteur-site.md` (passe 2) | → `REVUE-2.md` ; si BLOQUANT ou A_CORRIGER avec F0/F1, une révision 2 puis revue 3 ; au-delà, publier avec les réserves listées |
 | 6 | Publication | `publication.md` | build, index, commit, push, vérification de l'URL Vercel |
-| 7 | Leçons | tous | `lecons.md` enrichi ; l'orchestrateur reporte dans les prompts les paragraphes proposés par les agents |
+| 7 | Leçons | tous | `lecons/<rôle>.md` enrichi ; l'orchestrateur reporte dans les prompts les paragraphes proposés par les agents |
 
 Les trois variantes (2a, 2b, 2c) sont indépendantes et tournent en parallèle ; la chaîne 3 → 5 est par variante.
 

@@ -34,9 +34,9 @@ BASE=/$SLUG/awwwards/                        # `base` Astro, injecté par script
 PORT=4400
 ```
 
-Lis d'abord `$REPO/CLAUDE.md`, puis `$REPO/agents/lecons.md` s'il existe (les pièges déjà
+Lis d'abord `$REPO/CLAUDE.md`, puis `$REPO/agents/lecons/commun.md` et `$REPO/agents/lecons/construction.md` (les pièges déjà
 rencontrés par les agents précédents s'appliquent à toi). Ne modifie rien hors de `$SITE`,
-`$OUT`, `$REPO/agents/lecons.md` et `$REPO/dist/index.html` (via `pnpm index`).
+`$OUT`, `$REPO/agents/lecons/construction.md` et `$REPO/dist/index.html` (via `pnpm index`).
 
 ## 1. Mission
 
@@ -65,7 +65,7 @@ génère des pages que si le concept en a besoin.
 
 Le résultat attendu, dans l'ordre : `$SITE/DESIGN.md` (brief, concept, système, checklist de
 sur-utilisation cochée), le site, `$SITE/.shots/` et `$SITE/.jury/` (preuves QA, non commités),
-`$OUT/` (build commité), `$SITE/RAPPORT.md`, et si besoin une entrée dans `$REPO/agents/lecons.md`.
+`$OUT/` (build commité), `$SITE/RAPPORT.md`, et si besoin une entrée dans `$REPO/agents/lecons/construction.md`.
 
 ## 2. Ce que la skill impose avant toute chose (lis, puis applique)
 
@@ -397,7 +397,7 @@ Rien d'autre : pas de DESIGN.md, pas de code, pas de Concept Card, pas de score 
   avec `--out $SITE/.jury/127.0.0.1-$PORT/shots`, puis écris la carte de score au format de
   `$JURY/SKILL.md` § 5 dans `$SITE/.jury/127.0.0.1-$PORT/scorecard.md` (renomme l'ancienne en
   `scorecard-<n>.md` avant). Si même cela reste une auto-notation, note-le sur la carte (« Self-score,
-  non indépendant ») et note-le dans RAPPORT.md et lecons.md : le superviseur devra ajouter
+  non indépendant ») et note-le dans RAPPORT.md et lecons/construction.md : le superviseur devra ajouter
   `Agent` aux outils de cet agent.
 - Compare la phrase « The idea, as the critic read it » à la Concept Card. Si elles ne
   concordent pas, le concept ne passe pas à l'écran : c'est un problème de Creativity à corriger
@@ -594,13 +594,13 @@ LCP mobile, CLS, loaderMs, settledMs, FPS desktop/mobile, axe sérieux, overflow
 Loader : oui/non, raison. GL : oui/non, raison. Repos : mobile ou immobile, raison. Accessoire retiré en passe finale : lequel.
 
 ## Leçons structurelles
-(Vide si rien de structurel. Sinon, chaque leçon est recopiée dans `agents/lecons.md`.)
+(Vide si rien de structurel. Sinon, chaque leçon est recopiée dans `agents/lecons/construction.md`.)
 ```
 
 Les **Leçons structurelles** ne concernent que la méthode et l'outillage (un script qui se
 comporte autrement que documenté, un piège de `base`, une incompatibilité Astro/engine, un
 manque de l'agent lui-même), jamais le goût ou le contenu d'un restaurant. Chaque leçon va dans
-`$REPO/agents/lecons.md` au format :
+`$REPO/agents/lecons/construction.md` au format :
 
 ```markdown
 ## <date> · <slug> · variante awwwards
@@ -645,7 +645,7 @@ manque de l'agent lui-même), jamais le goût ou le contenu d'un restaurant. Cha
 8. **Astro 5, pas Astro 7.** `astro.md` a été testé sous Astro 7 ; le dépôt est en Astro 5.18.
    `ClientRouter` et les événements `astro:before-preparation`, `astro:before-swap`,
    `astro:after-swap`, `astro:page-load` existent en 5 ; si une API diffère, adapte et note-le dans
-   lecons.md.
+   lecons/construction.md.
 9. **Attributs de `<html>` remplacés à la navigation.** L'adaptateur restaure `.js`, `.motion`,
    `.gl-on` dans `astro:after-swap` ; toute classe que ton module pilote pose sur `<html>`
    (`is-dark`, `frame-away`) doit y être restaurée aussi.

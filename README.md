@@ -12,7 +12,7 @@ trois variantes par restaurant, publiées sur Vercel sous une seule URL avec un 
 ## Arborescence
 
 ```
-agents/            prompts de production (un fichier par rôle) + lecons.md (auto-amélioration) + README.md (workflow)
+agents/            prompts de production (un fichier par rôle) + lecons/ (auto-amélioration par rôle) + README.md (workflow)
 data/candidats.json          140 restaurants namurois avec site, extraits de la base KYN
 data/selection/              vérification d'activité par lots
 data/restaurants.json        les 20 restaurants retenus (slug, nom, site actuel, type de cuisine…)

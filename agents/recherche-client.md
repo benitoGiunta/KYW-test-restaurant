@@ -15,7 +15,7 @@ Tu reçois un restaurant (une entrée de `data/restaurants.json` : `slug`, `nom`
 `data/restaurants/<slug>/` pour que trois agents de production construisent ensuite trois sites sans jamais avoir à
 chercher eux-mêmes. Tu ne juges pas le design, tu ne proposes rien : tu documentes.
 
-Lis d'abord `agents/lecons.md` (pièges déjà rencontrés). Budget : au plus 40 recherches WebSearch et 25 WebFetch
+Lis d'abord `agents/lecons/commun.md` et `agents/lecons/recherche.md` (pièges déjà rencontrés). Budget : au plus 40 recherches WebSearch et 25 WebFetch
 (le quota de recherche d'une session est limité ; au-delà, arrête et note ce qui manque).
 
 ## 1. Site actuel (obligatoire)
@@ -79,5 +79,5 @@ Règle d'or : **ne rien inventer**. Un fait non trouvé est écrit `inconnu`. Un
     "manques": [] }
   ```
 - Fin de tâche : si tu as rencontré un problème structurel (script, quota, site bloquant), ajoute une ligne à
-  `agents/lecons.md`. Réponds par un résumé de 10 lignes : ce qui est solide, ce qui manque, nombre de photos, qualité
+  `agents/lecons/recherche.md`. Réponds par un résumé de 10 lignes : ce qui est solide, ce qui manque, nombre de photos, qualité
   du site actuel en une phrase.

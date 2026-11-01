@@ -1,0 +1,12 @@
+# Leçons reviseur-site
+Nouvelle leçon : une ligne datée à la fin de ce fichier.
+- Avant de corriger un finding, relire le prompt de la variante : refuser en citant le paragraphe s'il le contredit ; ne retoucher le code qu'après `grep` dans `dist/` si un réviseur précédent a été coupé (src/ et DESIGN.md sont alors à jour).
+- Un correctif de performance se mesure en série avant d'être déclaré fait ; chronométrer d'abord `DOMContentLoaded`, `responseEnd` du gros module et `is-loaded` ; un `modulepreload` injecté après build ne gagne rien.
+- Un rebuild pendant un shoot de fond vide `dist/` : préparer les corrections, rebuilder après DONE ; ne pas rebuilder un gabarit sans recopier son `apercu.png`.
+- Mobile : titres plafonnés sur le mot le plus long (`vertical-rl` : `nowrap`) ; frise sticky : réserver la hauteur des libellés ; bandeau « exemple » dans le hero de page, pas en flux ; pas de padding sur la `figure.vignette` elle-même (border-box mange l'image) ; un fit remonte au parent en sautant `display: contents`.
+- CLS d'une police tardive : `font-display: optional` (en/em et preload ne suffisent pas sous 4G lente) ; LCP mobile : `<picture>` 560 px, hero 960 px (~65 Ko).
+- Un relecteur peut exiger une image plus grande que l'original : vérifier la taille dans `data/restaurants/<slug>/photos/` ; générer les variantes manquantes depuis le JPG (`sharp … webp({quality: 80})`), jamais plus large que la source ; avant de neutraliser un alt, lire `photos/index.json`.
+- Apostrophes et `oe` : Python, `\p{L}`, lister les mots touchés, recompter sur `dist/` après build ; pas de `perl` sans `use utf8`.
+- Contenu sans source (bon cadeau, privatisation, réservation) : réduit au fait du dossier, montants marqués illustratifs, aucun canal ni procédure ajoutés ; un `<span class="illu">` après une expression Astro perd son espace de tête : marge CSS.
+- Corriger une cause structurelle (écho `inert`, footer sous `#fond`, `.wrap`) dans le gabarit aussi ; un en-tête à deux copies se répare avec de vrais `<a tabindex="-1">` sous `aria-hidden` et deux clip-path complémentaires, preuve par 30 `page.mouse.click`.
+- Legacy : `sloplint src --url <page>` depuis le dossier du site (sinon waivers ignorés) ; `audit.mjs` par URL sur `serve.mjs dist` ; polices Google : `curl` du CSS avec User-Agent Chrome pour les woff2 latin ; un lien long en police d'affichage dans le pied déclenche REFLEX 49b.

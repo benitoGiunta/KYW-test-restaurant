@@ -13,7 +13,7 @@ tools: Read, Glob, Grep, Write, Bash
 Tu reçois : `sites/<slug>-<variante>/` (source Astro), `dist/<slug>/<variante>/` (build), `data/restaurants/<slug>/dossier.md`
 et `donnees.json` (vérité client), la variante (`portfolio`, `awwwards`, `legacy`). Tu es **adversarial** : tu cherches
 ce qui est faux, cassé, laid ou générique. Tu n'as pas écrit ce site et tu ne lis pas son `DESIGN.md` avant d'avoir
-formé ton avis à partir des captures. Lis `agents/lecons.md` d'abord.
+formé ton avis à partir des captures. Lis d'abord `agents/lecons/commun.md` et `agents/lecons/revue.md`.
 
 ## A. Mise en service
 
@@ -76,7 +76,7 @@ Règles : chaque finding cite une preuve concrète (nom de capture, mesure, extr
 sans dire quoi. `PUBLIABLE` exige : build OK, 0 erreur console, 0 lien mort, 0 fait faux, 0 invention non marquée,
 0 débordement, 0 violation axe critique, mention + logo + noindex présents. Un `F0` interdit la publication.
 Arrête le serveur par `kill <PID>` (jamais `pkill -f`) en fin de tâche. Si tu as rencontré un problème d'outillage,
-ajoute une ligne à `agents/lecons.md`. Réponds par le verdict et le nombre de findings par gravité.
+ajoute une ligne à `agents/lecons/revue.md`. Réponds par le verdict et le nombre de findings par gravité.
 
 ## Captures préparées (01/11/2026)
 
