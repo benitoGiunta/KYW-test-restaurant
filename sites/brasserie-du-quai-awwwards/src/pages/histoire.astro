@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import Quai from '../components/Quai.astro';
+import Photo from '../components/Photo.astro';
+import { histoire, equipe, site } from '../data/site';
+import { u } from '../lib/url';
+const details = ['hibou', 'machine', 'cave', 'bouteilles'] as const;
+---
+<Base title="Le quai" page="histoire" description="L’histoire de la Brasserie du Quai, au pied du pont du Luxembourg à Namur : la salle sur la Meuse, le banc d’écailler, Martin et Rémy en cuisine.">
+  <Quai lignes={['Le quai']} photo="facade" id="titre-histoire">
+    <p class="chapo">{histoire[0]}</p>
+  </Quai>
+
+  <section class="recit" aria-labelledby="titre-recit">
+    <div class="wrap recit__grille">
+      <div class="recit__texte">
+        <h2 id="titre-recit" class="titre-l">Une brasserie au sens propre</h2>
+        {histoire.slice(1).map((p) => <p>{p}</p>)}
+        <p><a class="lt" href={site.michelin.url} rel="noopener" target="_blank">{site.michelin.titre}<span class="sr-only"> (nouvel onglet)</span></a>.</p>
+      </div>
+      <div class="recit__photo">
+        <Photo cle="panorama" sizes="(min-width: 760px) 50vw, 100vw" widths={[480, 800, 1200]} />
+      </div>
+    </div>
+  </section>
+
+  <section class="equipe eau" aria-labelledby="titre-equipe">
+    <div class="wrap equipe__grille">
+      <div class="equipe__photo">
+        <Photo cle="equipe" sizes="(min-width: 760px) 45vw, 100vw" widths={[480, 800]} />
+      </div>
+      <div class="equipe__texte">
+        <h2 id="titre-equipe" class="titre-xl">L’équipe</h2>
+        <ul class="equipe__liste">
+          {equipe.map((m) => <li><h3 class="equipe__nom">{m.nom}</h3><p>{m.role}</p></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="details" aria-labelledby="titre-details">
+    <div class="wrap">
+      <h2 id="titre-details" class="titre-l">Dans la salle</h2>
+      <ul class="mur">
+        {details.map((d) => <li class="mur__item"><Photo cle={d} sizes="(min-width: 760px) 22vw, 50vw" widths={[320, 600]} /></li>)}
+      </ul>
+      <p class="details__suite"><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></p>
+    </div>
+  </section>
+</Base>

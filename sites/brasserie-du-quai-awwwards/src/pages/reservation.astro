@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import Quai from '../components/Quai.astro';
+import { site, saisons, heure, ecailler, fermeture } from '../data/site';
+---
+<Base title="Réserver" page="reservation" description="Réserver une table à la Brasserie du Quai, 9 rue du Quai à Namur : téléphone, réservation en ligne, horaires d’hiver et d’été, accès au bord de la Meuse.">
+  <Quai lignes={['Réserver']} id="titre-reservation">
+    <p class="chapo">Le plus simple est de nous appeler. Vous pouvez aussi réserver en ligne ou nous écrire.</p>
+    <p class="resa__tel"><a class="resa__numero" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+    <p class="actions">
+      <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler la brasserie</span></a>
+      <a class="nl nl--fort" href={site.reservationUrl} rel="noopener" target="_blank">Réserver en ligne<span class="sr-only"> (nouvel onglet)</span></a>
+    </p>
+  </Quai>
+
+  <section class="pratique" aria-labelledby="titre-pratique">
+    <div class="wrap pratique__grille">
+      <h2 id="titre-pratique" class="titre-l pratique__titre">Horaires et accès</h2>
+      <div class="pratique__bloc">
+        <h3 class="pratique__sous">Horaires</h3>
+        <dl class="horaires">
+          {saisons.map((s) => (
+            <div class="horaires__ligne">
+              <dt>{s.nom}</dt>
+              <dd>Midi : {heure(s.midi[0])} à {heure(s.midi[1])}</dd>
+              <dd>Soir : {heure(s.soir[0])} à {heure(s.soir[1])}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="pratique__note">{ecailler}</p>
+        <p class="pratique__note">{fermeture.texte} <span class="exemple">à confirmer</span></p>
+      </div>
+      <div class="pratique__bloc">
+        <h3 class="pratique__sous">Adresse</h3>
+        <address>
+          <p>{site.nom}<br />{site.adresseLisible}</p>
+        </address>
+        <p>{site.situation}. Grandes baies vitrées sur l’eau, terrasse chauffée à l’abri du vent.</p>
+        <p><a class="lt" href={site.carteUrl} rel="noopener" target="_blank">Ouvrir le plan<span class="sr-only"> (nouvel onglet)</span></a></p>
+      </div>
+      <div class="pratique__bloc">
+        <h3 class="pratique__sous">Écrire</h3>
+        <p><a class="lt" href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p>Pour un groupe ou une demande particulière, un e-mail nous laisse le temps de vous répondre précisément.</p>
+      </div>
+    </div>
+  </section>
+</Base>

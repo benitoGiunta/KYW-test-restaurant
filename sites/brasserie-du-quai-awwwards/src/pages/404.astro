@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import Quai from '../components/Quai.astro';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+---
+<Base title="Page introuvable" page="404" description="Cette page de la Brasserie du Quai n’existe pas ou a été déplacée. Remontez sur le quai : accueil, carte, réservation.">
+  <Quai lignes={['À l’eau']} id="titre-404">
+    <p class="chapo">Cette page est tombée à l’eau : elle n’existe pas ou a été déplacée. Remontez sur le quai.</p>
+    <p class="actions">
+      <a class="cta" href={u('/')}><span class="cta__txt">Revenir à l’accueil</span></a>
+      <a class="nl nl--fort" href={u('/carte/')}>Voir la carte</a>
+    </p>
+    <p class="chapo chapo--petit">Pour réserver, appelez le <a class="lt" href={site.telephoneHref}>{site.telephoneLisible}</a>.</p>
+  </Quai>
+</Base>

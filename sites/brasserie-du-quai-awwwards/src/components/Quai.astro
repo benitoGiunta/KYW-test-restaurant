@@ -1,0 +1,33 @@
+---
+// Le quai : en-tête de chaque page. Le titre se pose sur la ligne d'eau (filet de laiton), son double inversé
+// est dans l'eau en dessous (aria-hidden). Le slot reçoit le chapô et les actions, sous la ligne.
+// Phase 2 : le reflet ondule (filtre SVG piloté par src/motion/quai.ts) et la ligne monte au défilement.
+import Photo from './Photo.astro';
+import type { CleePhoto } from '../lib/photos';
+interface Props { lignes: string[]; photo?: CleePhoto; id?: string; variante?: 'accueil' | 'page' }
+const { lignes, photo, id = 'titre-page', variante = 'page' } = Astro.props;
+---
+<section class:list={['quai', `quai--${variante}`, { 'quai--photo': photo }]} aria-labelledby={id} data-quai>
+  <div class="quai__haut wrap">
+    <h1 id={id} class="quai__titre">{lignes.map((l, i) => <><span class="quai__ligne">{l}</span>{i < lignes.length - 1 && ' '}</>)}</h1>
+    {photo && (
+      <div class="quai__photo">
+        <Photo cle={photo} sizes="(min-width: 760px) 34vw, 100vw" widths={[480, 800, 1200]} prioritaire />
+      </div>
+    )}
+  </div>
+  <div class="quai__ligne-eau" aria-hidden="true"></div>
+  <div class="quai__bas wrap">
+    <div class="quai__reflet-cadre" aria-hidden="true">
+      <p class="quai__reflet">{lignes.map((l) => <span class="quai__ligne">{l}</span>)}</p>
+    </div>
+    {photo && (
+      <div class="quai__photo-reflet" aria-hidden="true">
+        <Photo cle={photo} sizes="(min-width: 760px) 34vw, 100vw" widths={[480, 800, 1200]} decorative prioritaire />
+      </div>
+    )}
+    <div class="quai__suite">
+      <slot />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Quai from '../components/Quai.astro';
+import Photo from '../components/Photo.astro';
+import { site, faits, classiques, ecailler, euros } from '../data/site';
+import { carte } from '../data/carte';
+import { u } from '../lib/url';
+const huitres = carte.find((c) => c.id === 'huitres')!.plats;
+---
+<Base page="accueil" description={site.description}>
+  <Quai lignes={['Brasserie', 'du Quai']} photo="baies" variante="accueil" id="titre-accueil">
+    <p class="chapo">Brasserie et banc d’écailler au pied du pont du Luxembourg, à Namur. La salle et la terrasse donnent sur la Meuse.</p>
+    <p class="actions">
+      <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+      <a class="nl nl--fort" href={u('/carte/')}>Voir la carte et les prix</a>
+    </p>
+  </Quai>
+
+  <section class="reperes eau" aria-labelledby="titre-reperes">
+    <div class="wrap reperes__grille">
+      <h2 id="titre-reperes" class="reperes__phrase">{site.situation}, une brasserie qui regarde l’eau.</h2>
+      <ul class="reperes__faits">
+        {faits.map((f) => (
+          <li><h3 class="reperes__titre">{f.titre}</h3><p>{f.texte}</p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="banc" aria-labelledby="titre-banc">
+    <div class="wrap banc__grille">
+      <div class="banc__photo">
+        <Photo cle="ecailler" sizes="(min-width: 760px) 40vw, 100vw" widths={[480, 800]} />
+      </div>
+      <div class="banc__texte">
+        <h2 id="titre-banc" class="titre-xl">Le banc d’écailler</h2>
+        <p class="chapo">{ecailler} Trois huîtres, trois calibres, à la demi-douzaine ou à la douzaine.</p>
+        <ul class="huitres">
+          {huitres.map((h) => (
+            <li class="huitres__ligne">
+              <span class="huitres__nom">{h.nom}</span>
+              <span class="huitres__prix">{h.prix!.map((p, i) => <span><small>{h.portions?.[i]}</small> {euros(p)}</span>)}</span>
+            </li>
+          ))}
+        </ul>
+        <p><a class="nl" href={u('/carte/#plateaux')}>Les plateaux, de 45 à 195 €</a></p>
+      </div>
+      <div class="banc__vignette">
+        <Photo cle="huitres" sizes="(min-width: 760px) 20vw, 50vw" widths={[400, 720]} />
+      </div>
+    </div>
+  </section>
+
+  <section class="classiques" aria-labelledby="titre-classiques">
+    <div class="wrap">
+      <h2 id="titre-classiques" class="titre-xl">Les classiques de la maison</h2>
+      <ol class="index">
+        {classiques.map((c) => (
+          <li class="index__ligne">
+            <span class="index__nom">{c.nom}</span>
+            <span class="index__prix">{c.prix}</span>
+            {c.photo && <span class="index__photo"><Photo cle={c.photo} sizes="8rem" widths={[240, 400]} decorative /></span>}
+          </li>
+        ))}
+      </ol>
+      <p class="classiques__suite">Frites cuites à la graisse de bœuf. Chaque semaine, des suggestions de saison complètent la carte. <a class="lt" href={u('/carte/')}>Toute la carte</a></p>
+    </div>
+  </section>
+
+  <section class="terrasse" aria-labelledby="titre-terrasse">
+    <figure class="terrasse__media">
+      <Photo cle="terrasse" sizes="100vw" widths={[800, 1200, 1500]} />
+      <figcaption class="wrap terrasse__legende">
+        <h2 id="titre-terrasse" class="titre-l">La terrasse sur la Meuse</h2>
+        <span>Chauffée, à l’abri du vent, ouverte jusque tard dans la saison.</span>
+      </figcaption>
+    </figure>
+  </section>
+</Base>

@@ -1,0 +1,46 @@
+---
+// Pied de page du site, dans l'eau : l'échelle de crue (idée volée au concept C) gradue la colonne de gauche.
+import { site, saisons, heure, ecailler, fermeture } from '../data/site';
+import { u, asset } from '../lib/url';
+const graduations = ['5', '4', '3', '2', '1'];
+---
+<footer class="pied">
+  <div class="pied__grille wrap">
+    <div class="pied__echelle" aria-hidden="true">
+      {graduations.map((g) => <span class="pied__grad"><span>{g}</span></span>)}
+    </div>
+    <div class="pied__marque">
+      <img src={asset('/logo.svg')} alt="La Brasserie du Quai, Namur" width="160" height="160" loading="lazy" decoding="async" />
+      <p class="pied__situation">{site.situation}.</p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Venir</h2>
+      <p>{site.adresseLisible}</p>
+      <p><a class="lt" href={site.carteUrl} rel="noopener" target="_blank">Ouvrir le plan<span class="sr-only"> (nouvel onglet)</span></a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Horaires</h2>
+      <ul class="pied__liste">
+        {saisons.map((s) => (
+          <li><span>{s.nom}</span> {heure(s.midi[0])} à {heure(s.midi[1])}, {heure(s.soir[0])} à {heure(s.soir[1])}</li>
+        ))}
+      </ul>
+      <p class="pied__note">{ecailler} {fermeture.texte}.</p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Joindre</h2>
+      <p><a class="lt" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+      <p><a class="lt" href={`mailto:${site.email}`}>{site.email}</a></p>
+      <ul class="pied__liste pied__reseaux">
+        {site.reseaux.map((r) => <li><a class="lt" href={r.url} rel="noopener" target="_blank">{r.nom}<span class="sr-only"> (nouvel onglet)</span></a></li>)}
+      </ul>
+    </div>
+    <nav class="pied__nav" aria-label="Pied de page">
+      <a class="nl" href={u('/')}>Accueil</a>
+      <a class="nl" href={u('/carte/')}>La carte</a>
+      <a class="nl" href={u('/histoire/')}>Le quai</a>
+      <a class="nl" href={u('/reservation/')}>Réserver</a>
+    </nav>
+    <p class="pied__colophon">Photos : La Brasserie du Quai. BCE {site.bce}. <a class="lt" href={site.michelin.url} rel="noopener" target="_blank">{site.michelin.titre}<span class="sr-only"> (nouvel onglet)</span></a>.</p>
+  </div>
+</footer>

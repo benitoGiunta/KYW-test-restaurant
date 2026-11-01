@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import Quai from '../components/Quai.astro';
+import Photo from '../components/Photo.astro';
+import { carte } from '../data/carte';
+import { ecailler, euros } from '../data/site';
+import type { CleePhoto } from '../lib/photos';
+const quai = carte.filter((c) => c.rive === 'quai');
+const eau = carte.filter((c) => c.rive === 'eau');
+const photoDe: Record<string, CleePhoto> = { 'les-entrees': 'tartare', poissons: 'sole', viandes: 'boeuf', huitres: 'huitres', plateaux: 'ecailler' };
+const prix = (p: number[] | null, portions?: string[]) =>
+  p === null ? 'prix du jour' : p.map((v, i) => (portions?.[i] ? `${portions[i]} ${euros(v)}` : euros(v))).join(' · ');
+---
+<Base title="La carte" page="carte" description="La carte de la Brasserie du Quai à Namur : entrées, poissons, viandes, banc d’écailler, huîtres et plateaux de fruits de mer, avec les prix.">
+  <Quai lignes={['La carte']} id="titre-carte">
+    <p class="chapo">Une carte de brasserie, des produits frais et, chaque semaine, des suggestions de saison. Les frites sont cuites à la graisse de bœuf.</p>
+    <nav class="sommaire" aria-label="Sommaire de la carte">
+      <ul>
+        {carte.map((c) => <li><a class="nl" href={`#${c.id}`}>{c.titre}</a></li>)}
+      </ul>
+    </nav>
+  </Quai>
+
+  <div class="rive rive--quai">
+    {quai.map((c) => (
+      <section class="cat wrap" id={c.id} aria-labelledby={`t-${c.id}`}>
+        <h2 class="cat__titre" id={`t-${c.id}`}>{c.titre}{c.placeholder && <span class="exemple">exemple</span>}</h2>
+        <ul class="plats">
+          {c.plats.map((p) => (
+            <li class="plat">
+              <span class="plat__nom">{p.nom}{p.detail && <span class="plat__detail">{p.detail}</span>}</span>
+              <span class="plat__prix">{p.placeholder ? 'à confirmer' : prix(p.prix, p.portions)}</span>
+            </li>
+          ))}
+        </ul>
+        {photoDe[c.id] && <div class="cat__photo"><Photo cle={photoDe[c.id]} sizes="(min-width: 760px) 28vw, 100vw" widths={[400, 720]} /></div>}
+      </section>
+    ))}
+  </div>
+
+  <div class="rive rive--eau eau">
+    <div class="wrap rive__entete">
+      <h2 class="titre-xl">Le banc d’écailler</h2>
+      <p class="chapo">{ecailler}</p>
+    </div>
+    {eau.map((c) => (
+      <section class="cat wrap" id={c.id} aria-labelledby={`t-${c.id}`}>
+        <h3 class="cat__titre" id={`t-${c.id}`}>{c.titre}</h3>
+        <ul class="plats">
+          {c.plats.map((p) => (
+            <li class="plat">
+              <span class="plat__nom">{p.nom}{p.detail && <span class="plat__detail">{p.detail}</span>}</span>
+              <span class="plat__prix">{prix(p.prix, p.portions)}</span>
+            </li>
+          ))}
+        </ul>
+        {photoDe[c.id] && <div class="cat__photo"><Photo cle={photoDe[c.id]} sizes="(min-width: 760px) 28vw, 100vw" widths={[400, 720]} /></div>}
+      </section>
+    ))}
+    <p class="wrap rive__note">Allergènes : notre personnel est à votre disposition. Les prix « du jour » vous sont donnés à table.</p>
+  </div>
+</Base>
