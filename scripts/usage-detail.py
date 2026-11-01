@@ -66,6 +66,10 @@ def lire(path):
             c = m.get('content')
             if premier is None:
                 t = texte(c)
+                if t.startswith('[Workflow harness'):
+                    # en-tête du harnais : la tâche calculée suit, chaque ligne indentée
+                    lignes = [l.strip() for l in t.splitlines()[1:] if l.startswith((' ', '\t'))]
+                    t = ' '.join(l for l in lignes if l)
                 if t.strip():
                     premier = t[:600]
             if isinstance(c, list):
