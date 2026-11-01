@@ -310,3 +310,29 @@ for nom, rang, phase in RESTOS:
     restos.append(row)
 json.dump(restos, open(os.path.join(OUT, 'restos.json'), 'w'), ensure_ascii=False, indent=0)
 for r in restos: print(r)
+
+# --- Phases : avant (restaurants 1-2), après (3-4, méthode sobre), après 2 (5, tests A B C), après 3 (6, tests D H) ---
+PHASE_DE = {1: 'Avant', 2: 'Avant', 3: 'Après', 4: 'Après', 5: 'Après 2', 6: 'Après 3'}
+DESC_PHASE = {'Avant': 'tout sur Fable puis Opus, agents longs', 'Après': 'méthode sobre : modèle par rôle, agents courts, captures Haiku, révision ciblée',
+              'Après 2': 'tests A B C : leçons et prompts allégés, revue 2 conditionnelle, legacy sur Sonnet',
+              'Après 3': 'tests D H : effort réduit, portfolio et révisions sur Sonnet'}
+phases = []
+for i, ph in enumerate(['Avant', 'Après', 'Après 2', 'Après 3']):
+    rs = [r for r in restos if PHASE_DE.get(r['rang']) == ph]
+    if not rs: continue
+    mes = [r for r in rs if r['source'] == 'mesuré']
+    moy = lambda k, src=rs: round(sum(r[k] for r in src) / len(src), 2) if src else None
+    row = dict(phase=ph, ordre=i, description=DESC_PHASE[ph], restaurants=', '.join(r['restaurant'] for r in rs), nb_restaurants=len(rs),
+               estime=any(r['source'] == 'estimé' for r in rs), cout=moy('cout'), cout_par_site=moy('cout_par_site'),
+               **{k: moy(k) for k in rs[0] if k.startswith(('site_', 'n_', 't_'))},
+               **{k: (round(sum(r[k] for r in mes) / len(mes)) if mes else None) for k in ('reponses', 'contexte_par_reponse', 'max_reponses', 'agents_plus_40', 'sorties_commandes', 'images', 'agents')},
+               cout_par_agent=moy('cout_par_agent', mes))
+    phases.append(row)
+base = phases[0]['cout_par_site']
+for p in phases:
+    p['baisse_vs_avant'] = round((1 - p['cout_par_site'] / base) * 100, 1)
+for a, b in zip(phases, phases[1:]):
+    b['baisse_vs_precedente'] = round((1 - b['cout_par_site'] / a['cout_par_site']) * 100, 1)
+phases[0]['baisse_vs_precedente'] = None
+json.dump(phases, open(os.path.join(OUT, 'phases.json'), 'w'), ensure_ascii=False, indent=0)
+for p in phases: print(p['phase'], p['restaurants'], p['cout'], p['cout_par_site'], p['baisse_vs_avant'], p['baisse_vs_precedente'], p['contexte_par_reponse'], p['n_ecriture'], p['n_relecture'], p['t_construction'], p['t_revue'], p['t_revision'], p['sorties_commandes'])
