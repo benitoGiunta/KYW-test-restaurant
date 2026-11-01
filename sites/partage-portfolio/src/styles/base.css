@@ -185,7 +185,9 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 .mots { font-size: clamp(4.4rem, 1rem + 13vw, 13rem); }
 .horaires .ferme { color: var(--c-muted); font-variant-numeric: normal; } /* tnum élargit aussi la virgule (« fermé , ») */
 .clair .horaires th, .clair .horaires .ferme { color: var(--c-clair-muted); }
-.acces { display: grid; gap: calc(var(--u) * 3); }
+.acces { display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3); }
+/* QA phase 3 : sous 360 px, le tableau des horaires (cellules en nowrap) élargissait la colonne à 332 px. */
+@media (max-width: 359px) { .horaires td:not(:first-child) { white-space: normal; } }
 @media (min-width: 1024px) { .acces { grid-template-columns: 7fr 5fr; } }
 .acces address { font-style: normal; }
 
@@ -216,6 +218,9 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 /* Pages intérieures */
 .entete { padding-block: calc(var(--u) * 6) calc(var(--u) * 3); display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--u) calc(var(--u) * 4); }
 .entete h1 { flex: 0 0 min-content; font-size: var(--t-xl); margin: 0; white-space: nowrap; }
+/* QA phase 3 : « Lunch et groupes » dépassait la gouttière à 390 px et l'écran sous 360 px. */
+@media (max-width: 599px) { .entete h1 { flex: 0 1 auto; white-space: normal; text-wrap: balance; } }
+@media (max-width: 359px) { .btn { max-width: 100%; overflow-wrap: anywhere; } }
 .entete .lead { flex: 1 1 18rem; max-width: 34ch; }
 .galerie { display: grid; gap: var(--u); grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 768px) { .galerie { grid-template-columns: repeat(4, 1fr); } }

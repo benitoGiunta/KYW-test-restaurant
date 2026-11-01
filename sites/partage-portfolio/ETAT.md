@@ -1,4 +1,4 @@
-# ETAT : partage-portfolio (fin de la phase 2 sur 3, construction)
+# ETAT : partage-portfolio (phase 3 sur 3 terminée : QA, site livré)
 
 Date : 01/11/2026. Phase 1 : variante-portfolio, construction-1. Phase 2 : variante-portfolio, construction-2.
 
@@ -29,12 +29,18 @@ Date : 01/11/2026. Phase 1 : variante-portfolio, construction-1. Phase 2 : varia
   transitions par clics réels sur les 5 liens de l'en-tête + logo + retour arrière, sans erreur.
 - Build OK : `scripts/q.sh pf-partage-build3 pnpm build:site sites/partage-portfolio` (7 pages).
 
-## Reste (phase 3)
-- Lire `QA-<étape>.md` de l'agent captures et corriger.
-- Contrôle (b) de la section « Leçons intégrées » du prompt : capture fenêtre du bas de chaque page en 1440
-  (bande du site, mention KYW, logo KYW visibles). Le contrôle (a) (clics réels sur l'en-tête) est passé en phase 2.
-- `RAPPORT.md` (placeholders, résultats), `pnpm index`, `gabarits/UTILISATION.md` (« ardoise | partage », non fait :
-  consigne de ne pas toucher à `gabarits/`).
+## Fait en phase 3 (QA)
+- Lu `QA-build.md` (captures) : 0 erreur console, axe 0, CLS 0, audit 0 FAIL ; shoot limité à accueil, carte, 404.
+- Contrôles ciblés (script Playwright, `.shots-partage-portfolio-qa3/`) sur les 6 pages en 1440 et 390 : console
+  propre, aucun débordement, bas de page (bande, mention KYW, logo KYW) visible et non couvert, `noindex`.
+- Corrigé dans `src/styles/base.css` : titre « Lunch et groupes » qui sortait de la gouttière (passe à la ligne sous
+  600 px) ; grille `.acces` élargie par le tableau des horaires à 320 px (`minmax(0, 1fr)`).
+- `RAPPORT.md` écrit (QA, placeholders, points ouverts). Build final OK (`scripts/q.sh pf-partage-qa3-build2`),
+  `pnpm index` sans changement.
+
+## Reste
+- Heures de service et e-mail à obtenir du restaurant ; `gabarits/UTILISATION.md` (« ardoise | partage ») à faire
+  par l'orchestrateur ; même défaut `.entete h1` / `.acces` à corriger dans `gabarits/ardoise`.
 
 ## Décisions et hypothèses (inchangées depuis la phase 1)
 - Heures 12:00-14:00 et 18:30-22:00 « à confirmer » ; mardi soir seulement ; lundi et dimanche fermés.
