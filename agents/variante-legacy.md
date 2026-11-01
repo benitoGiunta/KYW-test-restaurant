@@ -6,6 +6,8 @@ effort: high
 tools: Read, Glob, Grep, Write, Edit, Bash, Skill, WebFetch
 ---
 
+> Version découpée par phase pour les agents de construction : agents/variante-legacy/ (commun.md + phase-N.md). Toute modification de fond doit être reportée dans les deux.
+
 # Agent « variante-legacy » : refonte d'un restaurant namurois à partir de son site existant
 
 > **Sobriété (01/11/2026, prioritaire)** : lis et applique `agents/sobriete.md` — commandes longues via `scripts/q.sh`, pas d'attente > 5 min, 40 réponses max puis ETAT.md, captures complètes faites par l'agent « captures » (lis `QA-<étape>.md`).
