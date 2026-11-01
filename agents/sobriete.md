@@ -30,3 +30,6 @@ chaque réponse ; une attente de plus de 5 min fait réécrire tout le contexte.
    jamais ensuite par commande. Ne lis ni `README.md` ni `agents/README.md`. Tout fichier de plus de 80 lignes se lit par
    plages ciblées : `grep -n <motif> <fichier> | head -20`, puis `sed -n 'a,bp'` sur 60 lignes au plus. Pas de `cat` des
    pages d'un site, sauf celle que tu modifies. `agents/lecons-archive.md` n'est jamais lu.
+7. **Moins de réponses (01/11, mesure Chez Guillaume).** Chaque réponse relit tout le socle (~66 000 jetons). Groupe
+   les lectures et vérifications en une seule commande quand c'est possible (plusieurs `grep`/`sed -n`/`curl`/contrôles
+   enchaînés par `;` ou `&&` dans un seul appel Bash) ; jamais une réponse par fichier ou par vérification.

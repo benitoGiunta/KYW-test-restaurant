@@ -26,8 +26,9 @@ changer). Ne pose aucune question : décide, note tes hypothèses, livre.
 4. Garde-fou (règle H de `agents/README.md`) : avant de lancer le workflow et avant toute relance, lis l'utilisation des
    fenêtres de limite (`list_events` sur ta session, `kinds: ["rate_limit_event"]`) ; semaine ≥ 65 % → arrêt immédiat des lancements, commite l'état et rends compte. La fenêtre de 5 h n'est pas un critère : si elle coupe des agents, relance des agents neufs après sa réinitialisation (`send_later`).
 5. Mesure (règle de sobriété, 01/11/2026) : avant de rendre la main, lance
-   `python3 scripts/usage-detail.py <id local du transcript principal> data/usage/detail-<slug>.json` (l'id est le nom du
-   fichier `~/.claude/projects/*/<id>.jsonl` le plus récent), commite ce seul fichier, pousse, puis envoie « mise à jour
+   `python3 scripts/usage-detail.py <id local du transcript principal> data/usage/detail-<slug>.json` puis
+   `python3 scripts/usage-commandes.py <id local du transcript principal> data/usage/commandes-<slug>.json` (l'id est le nom du
+   fichier `~/.claude/projects/*/<id>.jsonl` le plus récent), commite ces deux fichiers, pousse, puis envoie « mise à jour
    detail-<slug> » à la session de reporting `session_01CZvTL6CxaNhZLTFNhY85LB` (send_message). Ne lis pas le fichier produit.
    Budget cible ~40 $ par restaurant ; signale tout agent au-delà de 60 réponses.
 6. Termine par un compte rendu : URLs publiées, verdicts de revue par variante, placeholders, leçons ajoutées.
