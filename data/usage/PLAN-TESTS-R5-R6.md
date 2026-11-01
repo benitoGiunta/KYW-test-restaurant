@@ -136,3 +136,19 @@ quelques milliers de jetons face à lui. Mesure : champ `contexte_premiere_repon
   d'une session et le réglage vaut pour tout le compte. Mesure : contexte de la première réponse ; cible sous 45 000 jetons.
 - **Test H, nouveau :** construction portfolio et révisions sur Sonnet 5.5 (extension du test C), l'awwwards restant sur
   Opus comme témoin. Garde-fou : défauts F0 et F1 de la revue 1 au plus égaux au restaurant 5.
+
+## Résultats du restaurant 6 (La Dolce Vita, Wépion, 01/11)
+
+Coût : 19,86 $, soit 6,62 $ par site : objectif de 7 à 8 $ atteint (−27 % sur le restaurant 5, −67,5 % depuis avant).
+
+| Test | Verdict | Résultat principal |
+|---|---|---|
+| H · portfolio et révisions sur Sonnet | réussi, adopté | construction portfolio 2,10 $ contre 6,58 $ ; révisions 1,65 $ contre 3,89 $ ; revue 1 portfolio sans F0 ni F1 (2 F1 au restaurant 5) ; aucun F0 ni F1 restant en fin de cycle |
+| D · effort réduit | neutre, conservé | awwwards sur Opus (D seul) 7,61 $ contre 7,60 $ malgré −36 % de réflexion ; legacy sur Sonnet 3,02 $ contre 3,71 $ |
+
+Inchangés, faute d'avoir été appliqués : socle fixe par agent (66 500 jetons, test G) et sorties de commandes
+(1,58 million de caractères ; le regroupement des lectures, commit 77e5691, vaudra à partir du restaurant 7).
+
+**Pistes pour le restaurant 7 :** l'awwwards, seule variante encore construite sur Opus, pèse 38 % du restaurant ; tester
+les phases 1 et 3 sur Sonnet, la phase 2 (animations) restant sur Opus. Mesurer l'effet du regroupement des lectures.
+Test G sur décision de Benito.
