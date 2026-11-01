@@ -8,6 +8,8 @@ import Saisons from '../components/Saisons.astro';
 import { resto, photo, ecailler } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const normandes = ecailler.huitres[0];
+// Signature : le nombre en Young Serif ocre, l'unité posée en exposant (une ligne de carte agrandie, pas un compteur).
+const [chiffre, unite] = normandes.six.split(/\s+/);
 ---
 <Base
   title="La Brasserie du Quai · brasserie et banc d’écailler sur la Meuse, Namur"
@@ -40,7 +42,7 @@ const normandes = ecailler.huitres[0];
 
   <section class="chiffre" aria-labelledby="chiffre-titre">
     <div class="container chiffre__in grained">
-      <p class="chiffre__fig figure">{normandes.six}</p>
+      <p class="chiffre__fig figure"><span class="visually-hidden">{normandes.six}</span><span aria-hidden="true">{chiffre}</span><span class="chiffre__unite" aria-hidden="true">{unite}</span></p>
       <div class="chiffre__texte">
         <h2 id="chiffre-titre">Six Normandes au banc d’écailler</h2>
         <ul class="rangs">

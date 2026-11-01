@@ -80,18 +80,41 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
         if (Number(el.dataset.jour) === jour) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); }
       });
       // Modules tiers du site d'origine (Zenchef, Brydge) chargés à la demande ; sans script, le lien direct suffit.
+      // États (interaction-and-states.md) : chargement dit en ligne, lien direct gardé sous le cadre, lenteur dite au bout de 10 s.
       document.querySelectorAll<HTMLElement>('[data-module]').forEach((box) => {
         const btn = box.querySelector<HTMLButtonElement>('[data-module-open]');
-        if (!btn) return;
+        const cadre = box.querySelector<HTMLElement>('[data-module-cadre]');
+        const etat = box.querySelector<HTMLElement>('[data-module-etat]');
+        if (!btn || !cadre) return;
         btn.hidden = false;
         btn.addEventListener('click', () => {
+          const lien = cadre.querySelector<HTMLAnchorElement>('a[href]');
           const f = document.createElement('iframe');
           f.src = box.dataset.module || '';
           f.title = box.dataset.titre || 'Module externe';
           f.loading = 'eager';
-          box.querySelector('[data-module-cadre]')?.replaceChildren(f);
-          btn.hidden = true;
-          f.focus();
+          box.setAttribute('aria-busy', 'true');
+          btn.disabled = true;
+          if (etat) etat.textContent = 'Chargement du module…';
+          const lent = window.setTimeout(() => {
+            if (etat) etat.textContent = 'Le module tarde à répondre : le lien direct ci-dessous mène au même service.';
+          }, 10000);
+          f.addEventListener('load', () => {
+            window.clearTimeout(lent);
+            box.removeAttribute('aria-busy');
+            btn.hidden = true;
+            if (etat) etat.textContent = ''; // succès = le module lui-même (interaction-and-states.md § Success)
+          }, { once: true });
+          cadre.replaceChildren(f);
+          if (lien) {
+            const repli = document.createElement('p');
+            repli.className = 'module__repli';
+            lien.className = 'lien';
+            lien.textContent = box.dataset.repli || 'Ouvrir le service dans un nouvel onglet';
+            lien.target = '_blank';
+            repli.append(lien);
+            cadre.after(repli);
+          }
         });
       });
     </script>

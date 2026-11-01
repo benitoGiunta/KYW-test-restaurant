@@ -40,7 +40,7 @@ Spore, `dealt 1/3, seed restaurant-namur-brasserie-seafood-a026·4879f0a6·2026-
 | Échelle | `--text-display` clamp(2.75 → 5.25 rem) · `--text-section` · `--text-title` · `--text-lead` · `--text-md` 1 rem |
 | Espace | `--space-*` 2 → 144 px · `--section-gap-s` 120 / 80 / 56 px · gouttière 64 / 24 / 16 px |
 | Surfaces | filets 1 px ; pilules sur contrôles ; `--radius-card` 14 px sur puits et photos ; grain seulement sur puits et bandes |
-| Motion | état seulement, une frame (Spore § Motion) ; aucun reveal en phase 1 |
+| Motion | caractère calme, état seulement, une frame (Spore § Motion : « nothing reveals, nothing grows, nothing loops ») ; **aucun reveal** (décidé en phase 2 : le site d'origine n'avait pas de chorégraphie au scroll) ; durées `--dur-micro` 120 ms (contrôles) et `--dur-short` 220 ms (menu) ; défilement doux seulement sur /la-carte/ et seulement sans `prefers-reduced-motion` ; en reduced-motion toutes les transitions tombent à 0,01 ms (`base.css`) |
 
 ## Composants
 
@@ -54,6 +54,9 @@ Spore, `dealt 1/3, seed restaurant-namur-brasserie-seafood-a026·4879f0a6·2026-
 | Réservation | lien Zenchef direct (câblage) ; module chargé dans son cadre à la demande ; pas de formulaire maison (le service existe déjà) | redesign.md § What a redesign keeps |
 | Pied de page | statement : une phrase en Young Serif « Au pied du pont du Luxembourg, sur les berges de la Meuse. », adresse, téléphone, courriel, réseaux, bon cadeau, TVA ; puis le pied KYW hérité | anatomy.md § book |
 | Photo | `<figure data-slot data-alt>` avec `srcset` WebP 640/1140/1600/max, `width`/`height`, hero `fetchpriority="high"`, autres lazy ; traitement chaud de `base.css` | patterns.md § A photograph in a slot |
+| États (phase 2) | survols sous `@media (hover: hover)` ; appui = descente de 1 px (`transform`) ; désactivé = opacité 0,55 + `not-allowed` + `disabled` ; chargement des modules Zenchef/Brydge : `aria-busy`, ligne `role="status"` « Chargement du module… », message de lenteur à 10 s, lien direct gardé sous le cadre (`data-repli`) ; succès = le module lui-même | interaction-and-states.md § The eight states |
+| Menu mobile | `<nav popover>` (Popover natif : Échap, clic extérieur, état étendu exposé), entrée opacité + 8 px en 220 ms par `@starting-style`, fond bloqué (`html:has(:popover-open)`), lien courant en ocre | microinteractions.md |
+| Signature (finition) | « 15 » en Young Serif ocre, « € » en exposant à 0,4 em, texte lisible par les lecteurs d'écran en `.visually-hidden` | Picks · Signature |
 | Barre collante | sous 40rem : « Réserver une table » + « Appeler », le primaire du hero masqué (leçon atelier-de-bossime : deux primaires empilés) | draw 333a6d |
 
 ## Liste de sur-utilisation

@@ -23,14 +23,14 @@ const current = (p: string) => (p === page ? 'page' : undefined);
       {nav.map((l) => <li><a href={`${base}${l.href}`} aria-current={current(l.page)}>{l.label}</a></li>)}
     </ul>
     <a class="btn btn--primary btn--nav" href={`${base}reservation/`} aria-current={current('reservation')}>Réserver</a>
-    <button class="nav__menu" type="button" popovertarget="menu-mobile" aria-label="Ouvrir le menu">Menu</button>
+    <button class="nav__menu" type="button" popovertarget="menu-mobile" aria-controls="menu-mobile">Menu</button>
   </nav>
-  <div id="menu-mobile" class="menu-mobile" popover>
+  <nav id="menu-mobile" class="menu-mobile" popover aria-label="Menu du site">
     <ul>
       <li><a href={base} aria-current={current('accueil')}>Accueil</a></li>
       {nav.map((l) => <li><a href={`${base}${l.href}`} aria-current={current(l.page)}>{l.label}</a></li>)}
       <li><a href={resto.telHref}>Appeler le {resto.tel}</a></li>
     </ul>
     <button class="btn btn--secondary" type="button" popovertarget="menu-mobile" popovertargetaction="hide">Fermer</button>
-  </div>
+  </nav>
 </header>
