@@ -21,6 +21,7 @@ const variantes = args?.variantes || ['portfolio', 'awwwards', 'legacy']
 const passesMax = args?.passesMax || 2
 const ROOT = '/home/user/KYW-test-restaurant'
 const prompts = { portfolio: 'variante-portfolio', awwwards: 'variante-awwwards', legacy: 'variante-legacy' }
+// Test D (01/11) : effort medium pour construction phases 1 et 3 et révisions ; low pour captures et publication.
 // Test C (01/11) : construction de la variante legacy sur Sonnet 5.5 ; portfolio et awwwards restent sur Opus.
 const MODELE_BUILD = { portfolio: 'opus', awwwards: 'opus', legacy: 'sonnet' }
 const PORTS = { portfolio: 4501, awwwards: 4502, legacy: 4503 }
