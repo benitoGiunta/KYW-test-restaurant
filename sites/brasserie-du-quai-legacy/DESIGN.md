@@ -52,7 +52,7 @@ Spore, `dealt 1/3, seed restaurant-namur-brasserie-seafood-a026·4879f0a6·2026-
 | L'écailler | huîtres en table 6 / 12 pièces (`data-label` pour le téléphone), produits de la mer en Rows à côté de la photo, plateaux en deux groupes sur bande grainée ; la semaine du banc en Schedule, mardi et mercredi en muted | layout.md § 5.16, leçon atelier-de-bossime (table restackée) |
 | Horaires | Schedule à deux saisons (`<dl>`, `<time>`), la saison en cours soulevée d'un cran avec une pastille « en ce moment » ; jour de fermeture en slot `.fill` | craft.md § 9, patterns.md § A fact the prompt did not give |
 | Réservation | lien Zenchef direct (câblage) ; module chargé dans son cadre à la demande ; pas de formulaire maison (le service existe déjà) | redesign.md § What a redesign keeps |
-| Pied de page | statement : une phrase en Young Serif « Au pied du pont du Luxembourg, sur les berges de la Meuse. », adresse, téléphone, courriel, réseaux, bon cadeau, TVA ; puis le pied KYW hérité | anatomy.md § book |
+| Pied de page | statement : l'adresse en Young Serif (« 9 rue du Quai, 5000 Namur » ; la devise « Au pied du pont du Luxembourg… » répétait le hero et le h2 de l'accueil, REVUE-1 F2-3), téléphone, courriel, itinéraire, réseaux, bon cadeau, TVA ; puis le pied KYW hérité | anatomy.md § book |
 | Photo | `<figure data-slot data-alt>` avec `srcset` WebP 640/1140/1600/max, `width`/`height`, hero `fetchpriority="high"`, autres lazy ; traitement chaud de `base.css` | patterns.md § A photograph in a slot |
 | États (phase 2) | survols sous `@media (hover: hover)` ; appui = descente de 1 px (`transform`) ; désactivé = opacité 0,55 + `not-allowed` + `disabled` ; chargement des modules Zenchef/Brydge : `aria-busy`, ligne `role="status"` « Chargement du module… », message de lenteur à 10 s, lien direct gardé sous le cadre (`data-repli`) ; succès = le module lui-même | interaction-and-states.md § The eight states |
 | Menu mobile | `<nav popover>` (Popover natif : Échap, clic extérieur, état étendu exposé), entrée opacité + 8 px en 220 ms par `@starting-style`, fond bloqué (`html:has(:popover-open)`), lien courant en ocre | microinteractions.md |
@@ -62,3 +62,8 @@ Spore, `dealt 1/3, seed restaurant-namur-brasserie-seafood-a026·4879f0a6·2026-
 ## Liste de sur-utilisation
 
 À cocher en phases 2 et 3 (audit `--before`, comps, sloplint `--stage hero`, sweep `--kept`, log).
+
+
+## Révision 1 (01/11/2026)
+- Polices auto-hébergées : sous-ensemble latin de Google Fonts (OFL) copié dans `src/assets/fonts/` (woff2, Instrument Sans variable 400-600 + italique, Young Serif), `@font-face` inline dans `Base.astro`, `font-display: swap`, préchargement de Young Serif. Plus aucune requête vers Google (REVUE-1 F2-2).
+- Pied de page : la phrase statement devient l'adresse (voir tableau) ; la phrase « Au bord de la Meuse, au pied du pont du Luxembourg. » du bloc Venir de l'accueil est retirée (F2-3).

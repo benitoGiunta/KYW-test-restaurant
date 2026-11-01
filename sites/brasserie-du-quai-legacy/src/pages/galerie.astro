@@ -17,9 +17,15 @@ import { galerie, photo } from '../data/site';
     {galerie.map((g, i) => {
       const p = photo(g.nom);
       const forme = p.h > p.w * 1.15 ? 'haute' : p.w > p.h * 1.3 ? 'large' : 'carree';
+      // REVUE-1 F1-1 : la première photo est l'élément LCP → chargée tout de suite, en priorité, et servie en 640 w
+      // sur mobile (320 px annoncés : 640 w au DPR 2). Les « larges » couvrent deux colonnes sur trois en grand écran.
+      const premiere = i === 0;
+      const sizes = forme === 'large'
+        ? `(min-width: 60rem) 66vw, (min-width: 40rem) 100vw, ${premiere ? '320px' : '100vw'}`
+        : '(min-width: 60rem) 33vw, (min-width: 40rem) 50vw, 100vw';
       return (
         <li class:list={['galerie__item', `galerie__item--${forme}`]}>
-          <Photo {...p} slot={`galerie-${i + 1}`} class="galerie__photo" sizes="(min-width: 60rem) 33vw, (min-width: 40rem) 50vw, 100vw" alt={g.legende} />
+          <Photo {...p} slot={`galerie-${i + 1}`} class="galerie__photo" sizes={sizes} priorite={premiere} alt={g.legende} />
           <p class="galerie__legende">{g.legende}</p>
         </li>
       );

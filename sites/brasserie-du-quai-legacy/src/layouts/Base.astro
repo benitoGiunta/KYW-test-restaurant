@@ -2,14 +2,41 @@
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import KywFooter from '@kyw/footer';
-import { resto } from '../data/site';
+import { resto, saisons } from '../data/site';
+// Polices auto-hébergées (sous-ensemble latin de Google Fonts, OFL) : plus de requête tierce (REVUE-1 F2-2).
+import youngSerif from '../assets/fonts/young-serif.woff2?url';
+import instrumentSans from '../assets/fonts/instrument-sans.woff2?url';
+import instrumentSansItalic from '../assets/fonts/instrument-sans-italic.woff2?url';
 interface Props { title: string; description: string; page: string }
 const { title, description, page } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const accueil = new URL(base, Astro.site).href;
 const ogImage = new URL(`${base}photos/07-salle-baies-vitrees-1140.webp`, Astro.site).href;
-// Données structurées : horaires de la saison en cours, jours non publiés donc non déclarés.
+// Horaires des deux saisons (REVUE-1 F2-1) : saison en cours puis suivante, dates calculées au build.
+// Jours de fermeture non publiés : pas de dayOfWeek (rien d'inventé).
+const maintenant = new Date();
+const an = maintenant.getFullYear();
+const mois = maintenant.getMonth();
+const debutHiver = mois >= 4 ? an : an - 1; // novembre de l'hiver en cours ou à venir
+const debutEte = mois <= 9 ? an : an + 1; // mai de l'été en cours ou à venir
+const periodes: Record<string, [string, string]> = {
+  hiver: [`${debutHiver}-11-01`, `${debutHiver + 1}-04-30`],
+  ete: [`${debutEte}-05-01`, `${debutEte}-10-31`],
+};
+const horaires = saisons.flatMap((s) =>
+  [s.midi, s.soir].map(([opens, closes]) => ({
+    '@type': 'OpeningHoursSpecification',
+    opens,
+    closes,
+    validFrom: periodes[s.id][0],
+    validThrough: periodes[s.id][1],
+  })),
+);
+const polices = `
+@font-face { font-family: "Young Serif"; font-style: normal; font-weight: 400; font-display: swap; src: url(${youngSerif}) format("woff2"); }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 400 600; font-display: swap; src: url(${instrumentSans}) format("woff2"); }
+@font-face { font-family: "Instrument Sans"; font-style: italic; font-weight: 400; font-display: swap; src: url(${instrumentSansItalic}) format("woff2"); }`;
 const ldJson = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Restaurant',
@@ -23,6 +50,7 @@ const ldJson = JSON.stringify({
   servesCuisine: ['Brasserie', 'Fruits de mer', 'Banc d’écailler'],
   priceRange: '€€',
   acceptsReservations: resto.zenchef,
+  openingHoursSpecification: horaires,
   sameAs: [resto.facebook, resto.instagram, resto.michelin],
 });
 ---
@@ -37,9 +65,8 @@ const ldJson = JSON.stringify({
     <meta name="theme-color" content="#140f0b" />
     <link rel="icon" href={`${base}photos/logo.svg`} type="image/svg+xml" />
     <script is:inline>document.documentElement.classList.add('js');</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+    <link rel="preload" href={youngSerif} as="font" type="font/woff2" crossorigin />
+    <style is:inline set:html={polices} />
     {page !== '404' && <link rel="canonical" href={canonical} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_BE" />
