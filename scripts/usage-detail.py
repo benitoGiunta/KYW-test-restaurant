@@ -104,6 +104,8 @@ def lire(path):
                             sortie=u.get('output_tokens', 0) or 0, dont_reflexion=d.get('thinking_tokens', 0) or 0)
                 for k, v in vals.items():
                     tot[k] += v; par_modele[m.get('model', '?')][k] += v
+                if n == 1:  # taille du contexte dès la première réponse : socle fixe (harnais, outils, consignes)
+                    tot['contexte_premiere_reponse'] = vals['entree'] + vals['ecriture_contexte_5m'] + vals['ecriture_contexte_1h'] + vals['relecture_contexte']
     return dict(fichier=os.path.relpath(path, HOME), principal=os.path.basename(path) == sid + '.jsonl',
                 premier_message=premier, appels=n, modeles=dict(modeles), **dict(tot),
                 par_modele={k: dict(v) for k, v in par_modele.items()}, outils=dict(outils),
