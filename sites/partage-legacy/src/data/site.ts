@@ -55,7 +55,8 @@ export const fermeture = 'Fermé le dimanche, le lundi et le mardi midi.';
 export interface Plat { nom: string; description: string | null; prix: string | null; placeholder?: boolean }
 export interface Rubrique { categorie: string; plats: Plat[] }
 const carte = donnees.carte as Rubrique[];
-const nettoie = (s: string) => s.replace(/\boe/g, 'œ').replace(/\bOe/g, 'Œ');
+// Ligature œ (oeuf, boeuf) et apostrophe typographique ; ne s'applique qu'aux noms et descriptions, jamais aux chemins.
+const nettoie = (s: string) => s.replace(/\b([bB]?)oe/g, '$1œ').replace(/\bOe/g, 'Œ').replace(/(\w)'(\w)/g, '$1’$2');
 const rub = (noms: string[]) => carte
   .filter((r) => noms.includes(r.categorie))
   .map((r) => ({ categorie: r.categorie.replace(/ \(prix verre, bouteille\)/, ''), plats: r.plats.map((p) => ({ ...p, nom: nettoie(p.nom), description: p.description ? nettoie(p.description) : null })) }));
@@ -95,9 +96,9 @@ export function photo(id: string) {
   return { src, srcset, width: p.w, height: p.h };
 }
 
-// Bon cadeau : formules illustratives (la page d'origine n'a pas été capturée).
+// Bon cadeau : idées de montant toutes illustratives (le dossier ne dit que « Bon cadeau en ligne »).
 export const bonsCadeaux = [
-  { nom: 'Le lunch pour deux', valeur: '76 €', detail: 'Deux lunchs à 38 €, un midi au choix.', placeholder: false },
+  { nom: 'Le lunch pour deux', valeur: '76 €', detail: 'Deux lunchs à 38 €.', placeholder: true },
   { nom: 'Une soirée à partager', valeur: '120 €', detail: 'Un montant pour la carte du soir, vins compris.', placeholder: true },
   { nom: 'Montant libre', valeur: 'À partir de 25 €', detail: 'À utiliser sur toute la carte.', placeholder: true },
 ];
