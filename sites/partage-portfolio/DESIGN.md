@@ -77,3 +77,13 @@ midi, carte à partager le soir) ; la suggestion du jour devient « à partager 
 
 Ce qui limite : peu de photos d'assiettes (3 aperçus au lieu des 8 attendus par le gabarit), heures de service non
 confirmées, outil de réservation inconnu (lien vers le site actuel), l'ardoise sombre contraste avec une salle très claire.
+
+## Révision 1 (REVUE-1, 01/11/2026)
+
+- Barre basse « Réserver / Appeler / Bon cadeau » : mobile et tablette seulement (< 1024 px). En desktop, l'en-tête porte
+  « Réserver » ; la barre faisait ~17 % de la hauteur et triplait « Réserver » (F2-6). `--barre: 0px` à partir de 1024 px.
+- Navigation mobile (< 768 px) : les cinq entrées deviennent quatre libellés courts (Carte, Lunch, Salle, Maison) sur
+  une seule ligne ; « Réserver » est porté par la barre basse (F2-5). En-tête inchangé en hauteur (57 px), donc les
+  onglets sticky gardent leur décalage.
+- Accueil : vins au verre rendus une seule fois sous les deux panneaux ; formules sans leur description (lien vers
+  `/formules/`) ; légende « Photos de la maison, pas toujours du plat exact » sous les onglets (F2-1, F2-4).

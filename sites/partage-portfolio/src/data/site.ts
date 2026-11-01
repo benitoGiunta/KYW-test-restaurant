@@ -47,7 +47,7 @@ export interface Restaurant {
   geo: { lat: number; lon: number };
   telephone: string;
   email: { valeur: string; placeholder: boolean };
-  reservation: { outil: string; url: string; note: string };
+  reservation: { outil: string; url: string };
   cadeau: { note: string; url: string };
   horairesNote: { texte: string; placeholder: boolean }; // heures de service à confirmer
   privatisation: { texte: string; placeholder: boolean };
@@ -83,9 +83,9 @@ export const site: Restaurant = {
   geo: { lat: 50.4626798, lon: 4.8651014 },
   telephone: '+32 81 81 00 98',
   email: { valeur: '', placeholder: true }, // inconnu : jamais affiché
-  reservation: { outil: 'restaurantpartage.be', url: 'https://restaurantpartage.be/#reservation', note: 'Pour un groupe de plus de six personnes, appelez-nous.' },
+  reservation: { outil: 'restaurantpartage.be', url: 'https://restaurantpartage.be/#reservation' }, // règle « groupe de plus de six » retirée (REVUE-1 F0-1 : absente du dossier)
   cadeau: { note: 'Le bon cadeau se commande en ligne, sur le site du restaurant.', url: 'https://restaurantpartage.be/bon-cadeau/' },
-  privatisation: { texte: 'La salle se privatise pour des groupes de 20 à 30 personnes : repas d’entreprise, anniversaire, famille.', placeholder: false },
+  privatisation: { texte: 'La salle se privatise pour des groupes de 20 à 30 personnes.', placeholder: false },
   horairesNote: { texte: 'Jours de fermeture confirmés ; heures de service indicatives, à confirmer.', placeholder: true },
   horaires: [
     { jour: 'lundi', creneaux: [], note: 'fermé' },
@@ -132,7 +132,7 @@ export const site: Restaurant = {
       exemple: false,
       note: "À picorer au centre de la table.",
       plats: [
-        { nom: "Croquettes de jambon ibérique (6 pièces)", description: "", prix: "16 €", placeholder: false, apercu: '/photos/apercu-jambon.webp' },
+        { nom: "Croquettes de jambon ibérique (6 pièces)", description: "", prix: "16 €", placeholder: false }, // pas d'aperçu : la seule photo montre du jambon tranché (REVUE-1 F2-1)
         { nom: "Œuf mimosa aux œufs de saumon", description: "", prix: "11 €", placeholder: false },
       ],
     },

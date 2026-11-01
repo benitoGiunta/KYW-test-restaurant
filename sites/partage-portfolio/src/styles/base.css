@@ -19,6 +19,7 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.5; p
 .petite-cap { font-family: var(--f-body); font-weight: 700; font-size: var(--t-xs); letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-muted); }
 .clair .petite-cap { color: var(--c-clair-muted); }
 .muted { color: var(--c-muted); }
+.legende { margin-top: calc(var(--u) * 1.5); font-size: var(--t-xs); letter-spacing: 0.04em; }
 .clair .muted { color: var(--c-clair-muted); }
 .num { font-variant-numeric: tabular-nums; }
 .lead { font-size: var(--t-m); max-width: 36ch; text-wrap: pretty; }
@@ -53,7 +54,7 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.5; p
 .nav a:hover { color: var(--c-accent); }
 @media (max-width: 767px) {
   .nav { gap: 0.6rem; font-size: 0.6875rem; letter-spacing: 0.04em; }
-  .nav a[data-mobile='cache'] { display: none; }
+  .nav a[data-mobile='cache'], .nav__long { display: none; }
 }
 
 /* Ardoise (accueil) */
@@ -197,6 +198,8 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 .barre a:first-child { border-left: 0; }
 .barre a:hover, .barre a:focus-visible { background: var(--c-bg); color: var(--c-fg); outline-offset: -4px; }
 @media (max-width: 767px) { .barre a { letter-spacing: 0.1em; } }
+/* Desktop : pas de barre basse (REVUE-1 F2-6) ; l'en-tête porte « Réserver », le pied de page le téléphone ; le bon cadeau reste sur l'accueil et /formules/. */
+@media (min-width: 1024px) { .barre { display: none; } }
 
 /* Boutons, liens, formulaire */
 .btn { display: inline-flex; align-items: center; gap: 0.5em; min-height: 44px; padding: 0.7em 1.3em; border: 1px solid currentColor; font-weight: 700; font-size: var(--t-s); letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.3s, color 0.3s, transform 0.15s; }

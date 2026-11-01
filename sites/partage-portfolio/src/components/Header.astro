@@ -2,13 +2,16 @@
 // En-tête « Ardoise » : barre d'état (marquee calculé côté client, repli statique), marque, navigation ; barre basse fixe.
 import { site, servicesTexte, telHref } from '../data/site';
 import { u } from '../lib/url';
+// Libellés : la partie entre crochets est masquée sous 768 px, pour que les cinq entrées tiennent sur une ligne
+// (REVUE-1 F2-5) ; « Réserver » est masqué en mobile, la barre basse le porte déjà.
 const liens = [
-  { href: u('/carte/'), label: 'La carte' },
-  { href: u('/formules/'), label: 'Lunch et groupes', mobile: 'cache' },
-  { href: u('/salle/'), label: 'La salle', mobile: 'cache' },
-  { href: u('/histoire/'), label: 'La maison' },
-  { href: u('/reservation/'), label: 'Réserver' },
+  { href: u('/carte/'), label: '[La ]carte' },
+  { href: u('/formules/'), label: 'Lunch[ et groupes]' },
+  { href: u('/salle/'), label: '[La ]salle' },
+  { href: u('/histoire/'), label: '[La ]maison' },
+  { href: u('/reservation/'), label: 'Réserver', mobile: 'cache' },
 ];
+const morceaux = (l: string) => l.split(/(\[[^\]]*\])/).filter(Boolean).map((m) => (m.startsWith('[') ? { t: m.slice(1, -1), long: true } : { t: m, long: false }));
 const ici = Astro.url.pathname.replace(/\/+$/, '');
 const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
 const statique = servicesTexte();
@@ -23,7 +26,7 @@ const statique = servicesTexte();
   <div class="wrap header__inner">
     <a class="header__brand" href={u('/')}>{site.nom}</a>
     <nav class="nav" aria-label="Navigation principale">
-      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)} data-mobile={l.mobile}>{l.label}</a>)}
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)} data-mobile={l.mobile}>{morceaux(l.label).map((m) => (m.long ? <span class="nav__long">{m.t}</span> : m.t))}</a>)}
     </nav>
   </div>
 </header>
