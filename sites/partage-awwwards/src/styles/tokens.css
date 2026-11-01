@@ -1,0 +1,81 @@
+/* Jetons de Partage (variante awwwards). Les NOMS sont le contrat de l'engine ; les valeurs viennent de
+   DESIGN.md : l'ardoise des lames murales, la chaux des briques, le chêne des tables, l'ocre de l'enseigne.
+   Les url() des polices portent la base (/partage/awwwards/) : Vite ne réécrit pas ces chemins vers public/. */
+
+@font-face {
+  font-family: 'Panchang';
+  src: url('/partage/awwwards/fonts/panchang-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Panchang';
+  src: url('/partage/awwwards/fonts/panchang-800-normal.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('/partage/awwwards/fonts/general-sans-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('/partage/awwwards/fonts/general-sans-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Couleur : par rôle */
+  --c-bg: #161513;          /* ground : ardoise des lames de l'enseigne murale */
+  --c-fg: #eeeae3;          /* ink : chaux des briques peintes (15,9:1) */
+  --c-muted: #a9a397;       /* muted : joint des briques (7,6:1 sur ardoise) */
+  --c-line: #34322e;        /* line : arête des lames */
+  --c-accent: #d99a1e;      /* accent : ocre de l'enseigne ; focus, sélection, traits */
+  --c-table: #cdb48e;       /* table : chêne du chemin de table ; texte ardoise dessus (9,6:1) */
+  --c-table-ink: #161513;
+  --c-table-muted: #3d3529; /* texte doux sur chêne (6,4:1) */
+  --c-curtain: #cdb48e;
+
+  /* Familles */
+  --f-display: 'Panchang', 'Arial Black', system-ui, sans-serif;
+  --f-body: 'General Sans', system-ui, sans-serif;
+
+  /* Échelle fluide (390 → 1440 px). Panchang est très large : le mega est calé sur « PARTAGE » en 12 colonnes. */
+  --t-mega: clamp(2.6rem, 0.4rem + 9.6vw, 10.5rem);
+  --t-xl: clamp(2rem, 0.9rem + 4.4vw, 5.2rem);
+  --t-l: clamp(1.35rem, 0.95rem + 1.7vw, 2.5rem);
+  --t-m: clamp(1.1rem, 1rem + 0.45vw, 1.4rem);
+  --t-body: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem;
+
+  /* Espace : quatre humeurs */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+  --serre: calc(var(--u) * 6);
+  --normal: calc(var(--u) * 12);
+  --aere: calc(var(--u) * 20);
+  --table: calc(var(--u) * 28);
+
+  /* Largeur du chemin de table : colonnes 6 et 7 de la grille */
+  --chemin: calc((100vw - 2 * var(--gutter)) / 12 * 2);
+
+  /* Forme : tout est taillé droit, seules les assiettes sont rondes */
+  --radius: 0px;
+
+  /* Couches */
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}

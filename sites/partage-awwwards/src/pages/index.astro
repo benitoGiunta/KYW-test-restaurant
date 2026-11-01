@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, lunch, specialites, euros } from '../data/site';
+---
+<Base page="accueil" description="Partage, le bistro de Charles Jeandrain dans le piétonnier de Namur : des plats posés au milieu de la table, à partager, et un lunch à 38 € le midi.">
+  <section class="hero table-grille" aria-labelledby="titre-accueil">
+    <h1 id="titre-accueil" class="hero__mot display">
+      <span class="sr-only">Partage, cuisine à partager à Namur</span>
+      <span class="hero__par" aria-hidden="true">Par</span>
+      <span class="hero__assiette" aria-hidden="true">
+        <span class="assiette"><Photo cle="jambon" sizes="(max-width: 760px) 52vw, 20vw" widths={[320, 480, 800]} prioritaire decorative /></span>
+      </span>
+      <span class="hero__tage" aria-hidden="true">tage</span>
+    </h1>
+    <div class="hero__texte">
+      <p class="chapo">Des plats posés au milieu de la table, et chacun se sert. Le bistro de Charles Jeandrain, dans le piétonnier de Namur.</p>
+    </div>
+    <p class="hero__chemin" aria-hidden="true">Au milieu</p>
+    <div class="hero__actions">
+      <a class="cta cta--plein" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+      <a class="cta" href={u('/carte/')}><span class="cta__txt">Voir la carte</span></a>
+      <p class="hero__note">Lunch à {euros(lunch.prix)} du mercredi au samedi midi. Fermé le dimanche et le lundi.</p>
+    </div>
+  </section>
+
+  <section class="statement table-grille" aria-label="Le mot du chef">
+    <blockquote>
+      <p>{site.citation.texte}</p>
+      <footer>{site.citation.auteur}, {site.citation.source}</footer>
+    </blockquote>
+  </section>
+
+  <section class="paire table-grille" aria-labelledby="titre-facon">
+    <figure class="paire__photo"><Photo cle="salleLarge" sizes="(max-width: 760px) 100vw, 40vw" /></figure>
+    <div class="paire__chemin chemin">
+      <strong>30</strong>
+      <span class="etiquette" style="color: var(--c-table-muted)">couverts environ</span>
+    </div>
+    <div class="paire__texte">
+      <h2 id="titre-facon" class="titre-l">On commande pour la table</h2>
+      <div class="texte">
+        <p>Ici, pas d’assiette chacun pour soi. On choisit à plusieurs, les plats arrivent au centre et passent de main en main : des croquettes, un poulpe rôti, un risotto, un filet pur à couper.</p>
+        <p>La cuisine reste celle d’un chef étoilé, en plus simple et plus gourmand : des produits locaux, des accents belges, méditerranéens ou asiatiques.</p>
+      </div>
+      <p><a class="lien" href={u('/carte/')}>Lire la carte et les prix</a></p>
+    </div>
+  </section>
+
+  <section class="index table-grille" aria-labelledby="titre-specialites">
+    <div class="index__tete">
+      <h2 id="titre-specialites" class="titre-l">Ce qu’on se passe</h2>
+      <p class="doux">Les plats dont on parle à Namur, cités par la carte et la presse.</p>
+    </div>
+    <ul class="index__liste">
+      {specialites.map((s) => (
+        <li class="index__ligne">
+          <h3 class="index__nom titre-m">{s.nom}</h3>
+          <span class="index__marque" aria-hidden="true"><span></span></span>
+          <p class="index__origine">{s.origine}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="lunch table-grille" aria-labelledby="titre-lunch">
+    <div class="lunch__titre">
+      <h2 id="titre-lunch" class="titre-l">Le lunch du midi</h2>
+      <p class="doux">{lunch.regle} Entrée, plat et dessert ; menu du {lunch.date}.</p>
+    </div>
+    <p class="lunch__prix chemin"><strong>{lunch.prix}&nbsp;€</strong><span>par personne</span></p>
+    <ul class="lunch__menu">
+      {lunch.services.map((s) => (
+        <li><span class="etiquette">{s.temps}</span><span>{s.plat}, <span class="doux">{s.detail}</span></span></li>
+      ))}
+      <li class="doux">{lunch.fromages}</li>
+    </ul>
+  </section>
+
+  <section class="mur table-grille" aria-labelledby="titre-salle">
+    <h2 id="titre-salle" class="sr-only">La salle</h2>
+    <figure class="mur__g"><Photo cle="claustraLogo" sizes="(max-width: 760px) 50vw, 30vw" /><figcaption>Le claustra et l’enseigne aux quatre lames.</figcaption></figure>
+    <figure class="mur__c chemin"><Photo cle="tableCitronnier" sizes="(max-width: 760px) 100vw, 16vw" /><figcaption>Une table dressée, prête pour la bande.</figcaption></figure>
+    <figure class="mur__d"><Photo cle="serviceBouteille" sizes="(max-width: 760px) 50vw, 30vw" /><figcaption>Le service, sans cérémonie.</figcaption></figure>
+    <div class="mur__fin"><a class="cta" href={u('/histoire/')}><span class="cta__txt">L’histoire de Partage</span></a></div>
+  </section>
+</Base>

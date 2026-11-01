@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, horaires, services } from '../data/site';
+const creneaux = (h: (typeof horaires)[number]) => {
+  const c = [h.midi && services.midi.lisible, h.soir && services.soir.lisible].filter(Boolean);
+  return c.length ? c.join(', ') : 'fermé';
+};
+---
+<Base title="Réserver" page="reservation" description="Réserver une table chez Partage, rue des Fossés Fleuris 18 à Namur : téléphone, réservation en ligne, horaires, parkings proches et privatisation pour les groupes.">
+  <section class="page-tete table-grille">
+    <h1 class="display"><span class="g">Réser</span><span class="fente" aria-hidden="true"></span><span class="d">ver</span></h1>
+    <div class="page-tete__g"><p class="chapo">Une table pour deux, pour la bande ou pour tout le bureau : appelez, ou réservez en ligne.</p></div>
+    <div class="page-tete__d"><p class="doux">Le lunch se commande pour la table entière. Pour un groupe de 20 à 30 personnes, demandez la privatisation.</p></div>
+  </section>
+
+  <section class="resa table-grille" aria-label="Réservation, horaires et accès">
+    <div class="resa__horaires">
+      <h2 class="titre-m">Horaires</h2>
+      <ul>
+        {horaires.map((h) => <li><span>{h.jour}</span><span class={creneaux(h) === 'fermé' ? 'ferme' : ''}>{creneaux(h)}</span></li>)}
+      </ul>
+      <p class="resa__note">Jours de fermeture confirmés : dimanche, lundi et mardi midi. Les heures de service sont à confirmer par téléphone.</p>
+    </div>
+    <div class="resa__chemin chemin">
+      <a class="resa__tel" href={site.telephoneHref}>{site.telephoneLisible}</a>
+      <a class="cta cta--chemin" href={site.telephoneHref}><span class="cta__txt">Appeler</span></a>
+      <a class="cta cta--chemin" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver en ligne</span></a>
+    </div>
+    <div class="resa__acces">
+      <h2 class="titre-m">Venir</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p class="doux">Dans le piétonnier, {site.adresse.repere}.</p>
+      <ul>
+        {site.parkings.map((p) => <li>{p.nom}, <span class="doux">{p.distance}</span></li>)}
+      </ul>
+      <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+  </section>
+
+  <section class="resa__plus table-grille" aria-label="Groupes et cadeaux">
+    <div>
+      <h2 class="titre-m">Groupes</h2>
+      <p class="doux texte">Partage se privatise pour des groupes {site.privatisation}. Appelez pour en parler.</p>
+    </div>
+    <div>
+      <h2 class="titre-m">Offrir un repas</h2>
+      <p class="doux texte">Le bon cadeau se commande sur le site du restaurant.</p>
+      <a class="lien" href={site.bonCadeauUrl} rel="noopener">Commander un bon cadeau</a>
+    </div>
+  </section>
+</Base>
