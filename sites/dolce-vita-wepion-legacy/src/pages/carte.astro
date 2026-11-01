@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Fin from '../components/Fin.astro';
+import { SITE, CARTE } from '../data/site';
+---
+<Base
+  title="La carte, La Dolce Vita Wépion"
+  description="Antipasti, pasta, pizze, scaloppine, secondi, dolci et gelati : toute la carte avec les prix, sur place ou à emporter."
+  current="carte/"
+>
+  <section class="phead" aria-labelledby="h1">
+    <div class="container">
+      <!-- Hallmark · reworded "La carte, du premier antipasto au dernier dolce." to "Du premier antipasto au dernier dolce." · 58 -->
+      <h1 id="h1">Du premier antipasto au dernier dolce.</h1>
+      <p class="lead">Tout est là, prix compris, pour la table comme pour l’emporter.</p>
+      <div class="actions"><a class="btn btn--primary" href={SITE.tel.href}>Réserver au {SITE.tel.aff}</a></div>
+      <nav class="chips" aria-label="Catégories de la carte">
+        <ul>
+          {CARTE.map((c) => (<li><a href={`#${c.id}`}>{c.titre}</a></li>))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  {CARTE.map((c, i) => (
+    <section class:list={['cat', { 'cat--alt': i % 2 === 1 }]} id={c.id} aria-labelledby={`${c.id}-t`}>
+      <div class="container cols">
+        <div class="cat__tete">
+          <h2 id={`${c.id}-t`}>{c.titre}</h2>
+          {c.tagline && <p class="cat__tag">{c.tagline}</p>}
+          {c.photo && <Fig id={c.photo} class="cat__fig" ratio="4 / 3" sizes="(min-width: 60rem) 30vw, 100vw" />}
+        </div>
+        <ul class="rows">
+          {c.plats.map((p) => (
+            <li data-placeholder={p.placeholder ? 'true' : undefined}>
+              <div class="rows__main">
+                <span class="rows__nom">{p.nom}{p.tags.map((t) => (<span class="chip">{t}</span>))}</span>
+                {p.description && <span class="rows__desc">{p.description}</span>}
+              </div>
+              {p.prix && <span class="rows__prix">{p.prix}</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+
+  <section class="notes" aria-label="À savoir">
+    <div class="container notes__in">
+      <p>{SITE.supplements}</p>
+      <p>{SITE.emporter}</p>
+      <p>{SITE.allergenes}</p>
+    </div>
+  </section>
+
+  <Fin />
+</Base>

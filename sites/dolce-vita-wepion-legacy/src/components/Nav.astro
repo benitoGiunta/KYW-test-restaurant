@@ -1,0 +1,20 @@
+---
+import { NAV, SITE, u } from '../data/site';
+const { current = '', over = false } = Astro.props;
+---
+<header class:list={['nav', { 'nav--over': over }]}>
+  <div class="container nav__in">
+    <a class="nav__brand" href={u()}>
+      <img src={u('logo-cream.png')} width="44" height="44" alt="" />
+      <span class="nav__txt"><span class="nav__name">{SITE.nom}</span><span class="nav__sub">{SITE.lieu}</span></span>
+    </a>
+    <nav aria-label="Navigation principale">
+      <ul class="nav__list">
+        {NAV.map((n) => (
+          <li><a href={u(n.href)} aria-current={current === n.href ? 'page' : undefined}>{n.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a class="btn btn--primary nav__cta" href={SITE.tel.href}>Réserver</a>
+  </div>
+</header>

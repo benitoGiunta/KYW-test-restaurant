@@ -1,0 +1,29 @@
+---
+// Pied « mast » : le nom en grand, puis adresse, contact, réseaux. Les horaires sont dits dans la section de fin.
+import { SITE, u } from '../data/site';
+---
+<footer class="mast">
+  <div class="container">
+    <p class="mast__nom" aria-hidden="true">{SITE.nom}</p>
+    <div class="mast__cols">
+      <div>
+        <p class="mast__t">{SITE.genre}, {SITE.lieu}</p>
+        <p class="mast__devise">{SITE.devise}</p>
+      </div>
+      <div>
+        <p class="mast__t">Adresse</p>
+        <p>{SITE.adresse.rue}<br />{SITE.adresse.ville}</p>
+      </div>
+      <div>
+        <p class="mast__t">Contact</p>
+        <p><a href={SITE.tel.href}>{SITE.tel.aff}</a><br /><a href={SITE.mobile.href}>{SITE.mobile.aff}</a><br /><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+      </div>
+      <div>
+        <p class="mast__t">Réseaux</p>
+        <p><a href={SITE.instagram} rel="noopener">Instagram {SITE.instagramNom}</a><br /><a href={SITE.facebook} rel="noopener">Facebook</a></p>
+      </div>
+    </div>
+    <p class="mast__al">{SITE.allergenes}</p>
+    <p class="mast__cr" data-credits>Photographies : La Dolce Vita (site du restaurant).</p>
+  </div>
+</footer>

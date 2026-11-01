@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Fin from '../components/Fin.astro';
+import { SITE, CARTE, AVIS, typo, u } from '../data/site';
+
+const ardoise = CARTE.find((c) => c.ardoise)!;
+const table = [
+  { id: 'antipasti', nom: 'Antipasti', txt: 'Charcuteries italiennes, burrata, scampis : la table s’ouvre en partageant.' },
+  { id: 'pasta', nom: 'Pasta', txt: 'Al dente, toujours. Des raviolis à la crème de truffe aux tagliatelle carbonara.' },
+  { id: 'pizze', nom: 'Pizze', txt: 'Une pâte travaillée avec soin, des ingrédients choisis pour leur qualité.' },
+  { id: 'secondi', nom: 'Secondi', txt: 'Scaloppine gratinées, tagliata, gambas : les plats qui tiennent parole.' },
+  { id: 'dolci', nom: 'Dolci', txt: 'Tiramisu della casa, moelleux, panna cotta : on garde une petite place.' },
+];
+---
+<Base
+  title="La Dolce Vita, restaurant italien et pizzeria à Wépion, Namur"
+  description="Cuisine italienne et pizzeria chaussée de Dinant à Wépion, depuis 2017. Réservation par téléphone."
+  over
+>
+  <section class="hero" aria-labelledby="h1">
+    <Fig id="01" priority sizes="100vw" pos="50% 58%" class="hero__fig" />
+    <div class="container hero__in">
+      <div class="plate">
+        <h1 id="h1">À Wépion, l’Italie prend son temps.</h1>
+        <p class="lead">Cuisine italienne et pizzeria, depuis 2017.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href={SITE.tel.href}>Réserver au {SITE.tel.aff}</a>
+          <a class="link" href={u('carte/')}>Voir la carte</a>
+        </div>
+      </div>
+      <p class="hero__cap">{SITE.adresse.rue}, Wépion</p>
+    </div>
+  </section>
+
+  <section class="sec maison" aria-labelledby="maison-t">
+    <div class="container cols">
+      <div class="maison__txt">
+        <h2 id="maison-t">Ici, on s’installe, on partage, on laisse la soirée s’étirer.</h2>
+        <p class="lead">Depuis 2017, La Dolce Vita vous accueille dans un univers où l’élégance italienne rencontre la chaleur d’une maison familiale.</p>
+        <p class="proverbe"><i lang="it">A tavola non si invecchia.</i><br />À table, on ne vieillit pas.</p>
+        <a class="link" href={u('la-dolce-vita/')}>Découvrir le restaurant</a>
+      </div>
+      <Fig id="04" class="maison__fig" ratio="4 / 5" pos="45% 50%" sizes="(min-width: 60rem) 45vw, 100vw" legende="La salle : mur olive, bois blond, lumière du soir." />
+    </div>
+  </section>
+
+  <section class="sec table" aria-labelledby="table-t">
+    <div class="container cols">
+      <div class="table__tete">
+        <h2 id="table-t">Des assiettes faites pour rester un peu plus longtemps à table.</h2>
+        <a class="btn btn--ghost" href={u('carte/')}>Voir toute la carte</a>
+      </div>
+      <ol class="index">
+        {table.map((t, i) => (
+          <li>
+            <a href={u(`carte/#${t.id}`)}>
+              <span class="index__n">{String(i + 1).padStart(2, '0')}</span>
+              <span class="index__nom">{t.nom}</span>
+              <span class="index__txt">{t.txt}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec geste" aria-labelledby="geste-t">
+    <div class="container cols">
+      <Fig id="14" class="geste__fig" ratio="3 / 4" sizes="(min-width: 60rem) 30vw, 80vw" pos="50% 40%" />
+      <div class="geste__txt">
+        <h2 id="geste-t">Les mains font le menu.</h2>
+        <p class="lead">Une pâte travaillée avec soin, des ingrédients sélectionnés pour leur qualité et ce savoir-faire qui fait toute la différence.</p>
+        <a class="link" href={u('carte/#pizze')}>Voir les pizzas</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ardoise" aria-labelledby="ardoise-t">
+    <div class="container">
+      <div class="well ardoise__well">
+        <div class="ardoise__tete">
+          <h2 id="ardoise-t">L’ardoise du moment</h2>
+          <p>{ardoise.tagline}</p>
+        </div>
+        <ul class="rows">
+          {ardoise.plats.map((p) => (
+            <li>
+              <div class="rows__main"><span class="rows__nom">{p.nom}</span>{p.description && <span class="rows__desc">{p.description}</span>}</div>
+              <span class="rows__prix">{p.prix}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec avis" aria-labelledby="avis-t">
+    <div class="container">
+      <h2 id="avis-t">Ils viennent pour dîner. Ils reviennent pour l’Italie.</h2>
+      <ul class="avis__liste">
+        {AVIS.map((a) => (
+          <li>
+            <blockquote><p>«&nbsp;{typo(a.texte)}&nbsp;»</p><footer>{a.qui}, avis Google</footer></blockquote>
+          </li>
+        ))}
+      </ul>
+      <p class="avis__note">Note affichée par le restaurant : 4,3 sur 5, plus de 500 avis Google.</p>
+    </div>
+  </section>
+
+  <section class="sec emporter" aria-labelledby="emp-t">
+    <div class="container">
+      <div class="well emporter__well">
+        <h2 id="emp-t">La Dolce Vita, aussi à la maison.</h2>
+        <div class="emporter__txt">
+          <p class="lead">{SITE.emporter}</p>
+          <p>{SITE.fidelite}</p>
+          <div class="actions"><a class="btn btn--primary" href={SITE.tel.href}>Nous appeler au {SITE.tel.aff}</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Fin photo="07" />
+</Base>

@@ -1,0 +1,21 @@
+---
+import { ph, u } from '../data/site';
+interface Props { id: string; sizes?: string; priority?: boolean; pos?: string; legende?: string; class?: string; ratio?: string }
+const { id, sizes = '(min-width: 60rem) 50vw, 100vw', priority = false, pos = '50% 50%', legende, class: cls = '', ratio } = Astro.props;
+const p = ph(id);
+---
+<figure class:list={['fig', cls]} style={ratio ? `--ratio:${ratio}` : undefined}>
+  <img
+    src={u(`photos/${p.file}.webp`)}
+    srcset={p.w > 800 ? `${u(`photos/${p.file}-800.webp`)} ${p.w2}w, ${u(`photos/${p.file}.webp`)} ${p.w}w` : undefined}
+    sizes={sizes}
+    width={p.w}
+    height={p.h}
+    alt={p.alt}
+    style={`object-position:${pos}`}
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : undefined}
+    decoding={priority ? 'sync' : 'async'}
+  />
+  {legende && <figcaption>{legende}</figcaption>}
+</figure>

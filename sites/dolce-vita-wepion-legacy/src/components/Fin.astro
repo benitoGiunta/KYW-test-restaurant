@@ -1,0 +1,36 @@
+---
+// Fin de page (anatomy § book) : horaires, adresse, réservation. Dits une seule fois par page.
+import { HORAIRES, SITE } from '../data/site';
+import Fig from './Fig.astro';
+const { photo = null } = Astro.props;
+---
+<section class="fin" id="horaires" aria-labelledby="fin-t">
+  <div class="container cols">
+    <div class="fin__tete">
+      <h2 id="fin-t">Horaires et adresse</h2>
+      <address class="fin__adr">
+        {SITE.adresse.rue}<br />{SITE.adresse.ville}<br />
+        <a href={SITE.itineraire} rel="noopener">Ouvrir l’itinéraire</a>
+      </address>
+      <p class="fin__resa">Réservation par téléphone<br /><a class="fin__tel" href={SITE.tel.href}>{SITE.tel.aff}</a></p>
+    </div>
+    <div class="fin__table">
+      <table class="sched">
+        <caption class="visually-hidden">Horaires d’ouverture, midi et soir</caption>
+        <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
+        <tbody>
+          {HORAIRES.map((j) => (
+            <tr data-jour={j.jour.toLowerCase()} class:list={{ 'is-ferme': j.ferme }}>
+              <th scope="row">{j.jour}</th>
+              <td data-label="Midi" class:list={{ muted: !j.midi }}>{j.midi ?? 'Fermé'}</td>
+              <td data-label="Soir" class:list={{ muted: !j.soir }}>{j.soir ?? 'Fermé'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {photo && (
+    <div class="container fin__photo"><Fig id={photo} sizes="(min-width: 90rem) 1312px, 100vw" pos="50% 60%" ratio="21 / 9" legende="La terrasse, devant la façade." /></div>
+  )}
+</section>

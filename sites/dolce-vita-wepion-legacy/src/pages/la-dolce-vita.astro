@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Fin from '../components/Fin.astro';
+import { SITE, u } from '../data/site';
+const images = [
+  { id: '05', cls: 'g1', pos: '50% 50%' },
+  { id: '08', cls: 'g2', pos: '50% 50%' },
+  { id: '10', cls: 'g3', pos: '50% 50%' },
+  { id: '06', cls: 'g4', pos: '50% 50%' },
+  { id: '09', cls: 'g5', pos: '50% 50%' },
+  { id: '13', cls: 'g6', pos: '50% 45%' },
+];
+---
+<Base
+  title="Le restaurant, La Dolce Vita Wépion"
+  description="Armando en cuisine, Antigone à l’atmosphère : l’histoire de La Dolce Vita, ouverte à Wépion depuis 2017."
+  current="la-dolce-vita/"
+>
+  <section class="phead phead--split" aria-labelledby="h1">
+    <div class="container cols">
+      <div class="phead__txt">
+        <h1 id="h1">Une histoire de passion et de partage.</h1>
+        <p class="lead">Depuis 2017, l’élégance italienne rencontre la chaleur d’une maison familiale.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href={u('carte/')}>Découvrir la carte</a>
+          <a class="link" href={SITE.tel.href}>Réserver une table</a>
+        </div>
+      </div>
+      <Fig id="03" priority class="phead__fig" ratio="4 / 3" sizes="(min-width: 60rem) 50vw, 100vw" pos="50% 50%" />
+    </div>
+  </section>
+
+  <section class="sec gens" aria-labelledby="gens-t">
+    <div class="container">
+      <h2 id="gens-t">Armando et Antigone.</h2>
+      <p class="lead">Derrière cette belle aventure, un couple uni par le goût de recevoir.</p>
+      <div class="gens__duo">
+        <article>
+          <h3>Armando</h3>
+          <p class="gens__role">En cuisine</p>
+          <p>Fort de ses années d’expérience auprès de belles tables italiennes à Bruxelles, Armando partage une cuisine généreuse et authentique, préparée avec passion et savoir-faire.</p>
+        </article>
+        <article>
+          <h3>Antigone</h3>
+          <p class="gens__role">Atmosphère, décoration, accueil</p>
+          <p>Antigone, quant à elle, imagine l’atmosphère du restaurant, soigne chaque détail de la décoration et veille à ce que chaque convive se sente attendu, accueilli… et un peu comme à la maison.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="geste pizzas" aria-labelledby="piz-t">
+    <Fig id="12" class="geste__fig" sizes="100vw" pos="50% 55%" />
+    <div class="container geste__in">
+      <div class="plate plate--s">
+        <h2 id="piz-t">Une pâte travaillée avec soin.</h2>
+        <p>Des ingrédients sélectionnés pour leur qualité et ce savoir-faire qui fait toute la différence. Certains de nos clients aiment même dire qu’elles sont parmi les meilleures de la région… mais ça, nous préférons vous laisser en juger par vous-même&nbsp;!</p>
+        <a class="link" href={u('carte/#pizze')}>Voir les pizzas</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec benv" aria-labelledby="benv-t">
+    <div class="container cols">
+      <div class="benv__tete">
+        <h2 id="benv-t">Benvenuti a La Dolce Vita.</h2>
+        <p class="lead">Prenez place, savourez… nous nous occupons du reste.</p>
+      </div>
+      <ul class="rows rows--lignes">
+        <li><span class="rows__nom">Bien manger.</span></li>
+        <li><span class="rows__nom">Bien recevoir.</span></li>
+        <li><span class="rows__nom">Faire de chaque repas un moment de plaisir et de partage.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec images" aria-labelledby="img-t">
+    <div class="container">
+      <h2 id="img-t">Le lieu, les assiettes, la lumière.</h2>
+      <div class="mosaique">
+        {images.map((g) => (<Fig id={g.id} class={g.cls} pos={g.pos} sizes="(min-width: 60rem) 33vw, 100vw" />))}
+      </div>
+    </div>
+  </section>
+
+  <Fin />
+</Base>

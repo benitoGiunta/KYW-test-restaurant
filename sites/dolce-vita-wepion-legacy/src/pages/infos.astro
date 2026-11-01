@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Fin from '../components/Fin.astro';
+import { SITE, u } from '../data/site';
+---
+<Base
+  title="Infos pratiques et réservation, La Dolce Vita Wépion"
+  description="Réserver par téléphone, adresse chaussée de Dinant à Wépion, horaires, plats à emporter."
+  current="infos/"
+>
+  <section class="phead phead--compteur" aria-labelledby="h1">
+    <div class="container">
+      <h1 id="h1">Une table, un coup de fil.</h1>
+      <p class="lead">Les réservations se prennent uniquement par téléphone.</p>
+      <p class="compteur"><a href={SITE.tel.href}>{SITE.tel.aff}</a></p>
+      <p class="compteur__2">ou le <a href={SITE.mobile.href}>{SITE.mobile.aff}</a></p>
+    </div>
+  </section>
+
+  <section class="sec quand" aria-labelledby="quand-t">
+    <div class="container cols">
+      <h2 id="quand-t">Réserver, mode d’emploi</h2>
+      <dl class="rows rows--dl">
+        <div>
+          <dt>Pourquoi par téléphone</dt>
+          <dd>C’est plus rapide, et cela nous permet de vous placer au mieux et de prévoir ce qu’il faut en cuisine.</dd>
+        </div>
+        <div>
+          <dt>Quand nous joindre</dt>
+          <!-- Hallmark · reworded "Pendant le service, de 12:00 à 14:00 et de 18:00 à 22:00. Fermé le mardi, le mercredi midi et le samedi midi." to "Pendant le service, aux horaires ci-dessous." · 69 -->
+          <dd>Pendant le service, aux horaires ci-dessous.</dd>
+        </div>
+        <div>
+          <dt>Ayez sous la main</dt>
+          <dd>La date, l’heure et le nombre de personnes. Pour les grandes tablées, appelez un peu à l’avance.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec emporter" aria-labelledby="emp-t">
+    <div class="container">
+      <div class="well emporter__well">
+        <h2 id="emp-t">À emporter</h2>
+        <div class="emporter__txt">
+          <p class="lead">{SITE.emporter}</p>
+          <p>{SITE.fidelite}</p>
+          <div class="actions"><a class="btn btn--ghost" href={u('carte/')}>Voir la carte</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec meuse" aria-labelledby="meuse-t">
+    <div class="container cols">
+      <Fig id="02" class="meuse__fig" ratio="3 / 2" sizes="(min-width: 60rem) 50vw, 100vw" legende="La façade, chaussée de Dinant." />
+      <div class="meuse__txt">
+        <h2 id="meuse-t">À Wépion, côté fraises et coteaux.</h2>
+        <p class="lead">Entre le fleuve et les coteaux, à dix minutes de Namur : déjà un peu en vacances.</p>
+      </div>
+    </div>
+  </section>
+
+  <Fin />
+</Base>
