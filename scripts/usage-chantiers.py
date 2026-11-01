@@ -115,7 +115,12 @@ for m, tok in R1.items():
 ROLE_T = {'recherche-client': 'Recherche client', 'captures': 'Captures', 'relecteur-site': 'Revue', 'reviseur-site': 'Révision',
           'publication': 'Publication', 'gardien-des-lecons': 'Leçons'}
 RESTOS_GEN = []
-for f in sorted(glob.glob('data/usage/detail-*.json')):
+def rang_de(f):
+    try:
+        p = [r for r in json.load(open(f))['lignes'] if r['principal']][0]
+        m = re.search(r'rang (\d+)', p['premier_message'] or ''); return int(m.group(1)) if m else 99
+    except Exception: return 99
+for f in sorted(glob.glob('data/usage/detail-*.json'), key=rang_de):
     if f.endswith(('detail-test-site.json', 'detail-atelier-de-bossime.json')): continue
     d = json.load(open(f)); slug = f.split('detail-')[1][:-5]
     try: nom = json.load(open(f'data/restaurants/{slug}/donnees.json')).get('nom') or slug
@@ -280,7 +285,7 @@ for r in lev: print(r)
 for a in lignes:
     a['contexte_par_reponse'] = round(a['jetons_relecture'] / a['appels']) if a['appels'] else None
 json.dump(lignes, open(os.path.join(OUT, 'agents.json'), 'w'), ensure_ascii=False, indent=0)
-RESTOS = [('Les Potes au Feu', 1, 'avant'), ("L'Atelier de Bossimé", 2, 'avant')] + [(n, 3 + i, 'après') for i, n in enumerate(RESTOS_GEN)]
+RESTOS = [('Les Potes au Feu', 1, 'avant'), ("L'Atelier de Bossimé", 2, 'avant')] + [(n, 3 + i, 'après') for i, n in enumerate(RESTOS_GEN)]  # RESTOS_GEN est trié par rang
 restos = []
 for nom, rang, phase in RESTOS:
     s = [a for a in lignes if a['groupe'] == nom]; est = any(a['source'] == 'estimé' for a in s)
