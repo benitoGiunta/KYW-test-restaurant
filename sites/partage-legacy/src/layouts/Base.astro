@@ -6,6 +6,7 @@ import { resto, horaires, base } from '../data/site';
 interface Props { title: string; description: string; page: string }
 const { title, description, page } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(`${base}photos/19-chef-cuisine-hero-1200.webp`, Astro.site).href;
 const jours = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const ld = JSON.stringify({
   '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, url: new URL(base, Astro.site).href,
@@ -33,6 +34,9 @@ const ld = JSON.stringify({
     <meta property="og:site_name" content="Partage" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Charles Jeandrain en cuisine, chez Partage à Namur" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
     <script is:inline>
       (function (d) {

@@ -1,3 +1,14 @@
+# ETAT · partage-legacy · fin de phase 3 (QA) · 01/11/2026
+
+## Phase 3 faite
+- Corrections QA-build : nom accessible du logo, page 404 (`src/pages/404.astro`), og:image + twitter:card, robots.txt, survol des liens texte, cibles du pied ≥ 24 px, en-tête des horaires visible (FAIL 73 levé).
+- Build OK (5 pages), `pnpm index` OK ; sloplint render `/` + `/carte/` : 0 FAIL, 12 REFLEX ouverts (liste dans RAPPORT.md).
+- RAPPORT.md écrit (QA, sloplint, placeholders, matériel).
+
+## Reste
+- REFLEX 44c / 79 (hero de /carte/), 59 (écart 56 px), 77 (horaires), 49b (adresse, à waiver) : lever ou waiver avec raison.
+- Hero review et finish review (sous-agent), 72 cases de DESIGN.md, entrée `theme.mjs log` + `git add -f .hallmark/log.json`.
+
 # ETAT · partage-legacy · fin de phase 1 (construction-1) · 01/11/2026
 
 ## Fait
