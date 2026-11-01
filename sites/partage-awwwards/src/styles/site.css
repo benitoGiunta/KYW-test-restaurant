@@ -94,7 +94,7 @@ html.frame-away .tete { translate: 0 -100%; }
 .hero__par { grid-column: 1 / 6; justify-self: end; padding-right: 0.06em; }
 .hero__tage { grid-column: 8 / 13; justify-self: start; padding-left: 0.04em; }
 .hero__assiette { grid-column: 6 / 8; grid-row: 1; align-self: stretch; display: grid; place-items: center; background: var(--c-table); padding-block: clamp(1rem, 3vh, 2rem); }
-.assiette { width: 112%; max-width: none; aspect-ratio: 1; border-radius: 50%; overflow: hidden; box-shadow: 0 1.2rem 2.5rem rgb(22 21 19 / 0.45); }
+.assiette { width: 100%; max-width: none; aspect-ratio: 1; border-radius: 50%; overflow: hidden; box-shadow: 0 1.2rem 2.5rem rgb(22 21 19 / 0.45); }
 .assiette img, .assiette picture { width: 100%; height: 100%; object-fit: cover; }
 .hero__texte { grid-column: 1 / 6; grid-row: 2; justify-self: end; text-align: right; padding-right: calc(var(--gutter) * 1.25); }
 .hero__texte .chapo { margin-left: auto; }
@@ -323,4 +323,64 @@ html.frame-away .tete { translate: 0 -100%; }
 @media (max-width: 1024px) and (min-width: 761px) {
   .plat__nom { font-size: var(--t-body); }
   .plat__prix { font-size: var(--t-body); }
+}
+
+/* ==========================================================================
+   Phase 2 : mouvement. Une variable, `--ecart` (module pilote src/motion/partage.ts), écrite sur l'élément
+   porteur. 0 = mot entier, 1 = coupure de repos (état sans JS et en mouvement réduit), > 1 = l'écart s'ouvre.
+   Uniquement des propriétés individuelles `translate` / `scale` : GSAP n'anime jamais ces éléments directement.
+   ========================================================================== */
+:root { --pas: calc((100vw - 2 * var(--gutter)) / 12); }
+.hero, .page-tete, .perdu, .pied__mot { --ecart: 1; }
+html.motion .hero, html.motion .page-tete, html.motion .perdu { --ecart: 0; } /* premier frame : le mot entier, avant la coupure */
+
+/* Hero : PAR et TAGE glissent l'un vers l'autre d'une colonne ; le chêne s'ouvre ; l'assiette monte dans l'écart. */
+.hero__par { translate: calc(var(--pas) * (1 - var(--ecart))) 0; }
+.hero__tage { translate: calc(var(--pas) * (var(--ecart) - 1)) 0; }
+.hero__assiette { background: none; position: relative; isolation: isolate; }
+.hero__assiette::before { content: ''; position: absolute; inset: 0; z-index: -1; background-color: var(--c-table); scale: min(1, var(--ecart)) 1; }
+.assiette { translate: 0 calc((1 - var(--ecart)) * 0.55em); scale: min(1.12, calc(0.45 + 0.55 * var(--ecart))); rotate: calc((var(--ecart) - 1) * 40deg); }
+.hero__chemin { scale: 1 min(1, var(--ecart)); transform-origin: top; }
+
+/* En-tête de page intérieure et 404 : la même coupure, en petit. */
+.page-tete h1 .g { translate: calc((var(--pas) + var(--gutter) * 1.25) * (1 - var(--ecart))) 0; }
+.page-tete h1 .d { translate: calc((var(--pas) + var(--gutter) * 1.25) * (var(--ecart) - 1)) 0; }
+.page-tete h1 .fente { scale: min(1, var(--ecart)) 1; }
+.perdu__mot span:first-child, .pied__mot span:first-child { translate: calc(var(--pas) * (1 - var(--ecart))) 0; }
+.perdu__mot span:last-child, .pied__mot span:last-child { translate: calc(var(--pas) * (var(--ecart) - 1)) 0; }
+.perdu__vide { scale: 1 min(1, var(--ecart)); transform-origin: top; }
+
+/* État de repos : un reflet de jour glisse sur le chêne (`--reflet` écrit par le ticker sur les bandes visibles). */
+.reflet, .hero__assiette.reflet::before {
+  background-image: linear-gradient(100deg, transparent 42%, rgb(255 248 232 / 0.2) 50%, transparent 58%);
+  background-size: 260% 100%; background-repeat: no-repeat; background-position: calc(var(--reflet, -300) * 1%) 0;
+}
+.hero__assiette.reflet { background-image: none; }
+
+/* Transition : deux demi-nappes de chêne qui se rejoignent au milieu et lisent PARTAGE en entier. */
+.curtain__g, .curtain__d { position: absolute; top: 0; bottom: 0; width: 50.2%; display: flex; align-items: center; background: var(--c-table); color: var(--c-table-ink); font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: calc(var(--pas) * 5 / 4.7); line-height: 1; letter-spacing: -0.02em; overflow: hidden; }
+.curtain__g { left: 0; justify-content: flex-end; }
+.curtain__d { right: 0; justify-content: flex-start; }
+.curtain__g span { padding-right: 0.02em; }
+
+/* Survol des lignes de la carte et de l'index : la pastille du chemin grossit, le nom glisse vers le milieu. */
+.index__marque span { transition: scale 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.index__nom, .plat__nom { transition: translate 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+@media (hover: hover) {
+  .index__ligne:hover .index__marque span { scale: 1.8; }
+  .index__ligne:hover .index__nom { translate: 0.25em 0; }
+  .plat:hover .plat__nom { translate: 0.25em 0; }
+}
+
+@media (max-width: 760px) {
+  /* Pile : PAR et TAGE glissent depuis le centre vers leurs bords ; le chêne s'ouvre en hauteur. */
+  .hero__par { translate: calc(22vw * (1 - var(--ecart))) 0; }
+  .hero__tage { translate: calc(22vw * (var(--ecart) - 1)) 0; }
+  .hero__assiette::before { scale: 1 min(1, var(--ecart)); }
+  .assiette { translate: 0 calc((1 - var(--ecart)) * 0.3em); }
+  .page-tete h1 .g { translate: calc(18vw * (1 - var(--ecart))) 0; }
+  .page-tete h1 .d { translate: calc(18vw * (var(--ecart) - 1)) 0; }
+  .perdu__mot span:first-child, .pied__mot span:first-child { translate: calc(18vw * (1 - var(--ecart))) 0; }
+  .perdu__mot span:last-child, .pied__mot span:last-child { translate: calc(18vw * (var(--ecart) - 1)) 0; }
+  .curtain__g, .curtain__d { font-size: calc((100vw - 2 * var(--gutter)) / 5.4); }
 }

