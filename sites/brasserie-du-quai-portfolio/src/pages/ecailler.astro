@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import { site, ecailler, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const huitres = photoDe('/photos/huitres.webp');
+const ecaillerPhoto = photoDe('/photos/chef-ecailler.webp');
+const [huitresCat, merCat, plateauxCat] = ecailler;
+---
+<Base title="Le banc d’écailler" description={`Le banc d’écailler de ${site.nom} à Namur, du jeudi au lundi : huîtres Normandes, Fines de Claire et Gillardeaux, crustacés et plateaux de 45 à 195 €.`} theme="sombre">
+  <section class="hero hero--page" data-hero aria-labelledby="t-ecailler">
+    <div class="hero__media" data-hero-media>
+      <img src={asset(huitres.src)} alt={huitres.alt} width={huitres.largeur} height={huitres.hauteur} fetchpriority="high" decoding="async" data-critical />
+    </div>
+    <div class="hero__bas">
+      <div class="wrap">
+        <span class="eyebrow mono" style="color: inherit">Le banc d’écailler, du jeudi au lundi inclus</span>
+        <h1 id="t-ecailler" style="font-size: var(--t-xl); max-width: 14ch" data-fit-off>Huîtres, crustacés et plateaux</h1>
+      </div>
+    </div>
+    <svg class="hero__sep" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path data-houle d="M0,40 L1440,40 L1440,80 L0,80 Z" /></svg>
+  </section>
+
+  <section class="sec sec--ciel" aria-labelledby="t-huitres">
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <p class="lead">Le banc d’écailler vous accueille du jeudi au lundi inclus. Les huîtres se commandent par six ou par douze.</p>
+        <h2 id="t-huitres" style="font-size: var(--t-l); font-weight: 500; margin-top: calc(var(--u) * 5)">Les huîtres</h2>
+      </div>
+      <div class="col-large">
+        <ol class="index">
+          {huitresCat.plats.map((p, i) => (
+            <li>
+              <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
+              <span class="index__nom">{p.nom}<span class="index__desc">{p.description}</span></span>
+              <span class="index__prix">{p.prix}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-labelledby="t-mer">
+    <Houle fill="eau" />
+    <div class="wrap paire paire--inv">
+      <figure class="media" data-reveal="clip" data-cursor="Voir">
+        <img src={asset(ecaillerPhoto.src)} alt={ecaillerPhoto.alt} width={ecaillerPhoto.largeur} height={ecaillerPhoto.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        <figcaption class="mono">Au poste de l’écailler · photo de la maison</figcaption>
+      </figure>
+      <div>
+        <span class="eyebrow mono">Les produits de la mer</span>
+        <h2 id="t-mer" style="font-size: var(--t-l); font-weight: 500">Langoustine, homard, tourteau, crevettes grises</h2>
+        <ol class="index" style="margin-top: calc(var(--u) * 3)" data-reveal="up">
+          {merCat.plats.map((p, i) => (
+            <li>
+              <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
+              <span class="index__nom">{p.nom}</span>
+              <span class="index__prix">{p.prix}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel sec--fin" aria-labelledby="t-plateaux">
+    <Houle fill="ciel" />
+    <div class="wrap">
+      <span class="eyebrow mono">Les plateaux</span>
+      <h2 id="t-plateaux" style="font-size: var(--t-xl); margin-bottom: calc(var(--u) * 5)" data-split="words">De l’assiette de l’écailler au Royal du Quai</h2>
+      <ul class="plateaux" style="list-style: none; padding: 0">
+        {plateauxCat.plats.map((p, i) => (
+          <li class="plateau" data-reveal="up" data-delay={String(i * 0.06)}>
+            <h3 style="font-size: var(--t-m); font-weight: 500">{p.nom}</h3>
+            <p class="muted">{p.description}</p>
+            <p class="plateau__prix">{p.prix}</p>
+          </li>
+        ))}
+      </ul>
+      <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a><a class="btn" href={u('/carte/')}>La carte de la brasserie</a></div>
+    </div>
+  </section>
+</Base>

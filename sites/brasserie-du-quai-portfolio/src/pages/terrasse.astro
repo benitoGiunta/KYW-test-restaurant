@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import { site, regles, photoDe, citationTerrasse, telHref, saisons } from '../data/site';
+import { u, asset } from '../lib/url';
+const eau = photoDe('/photos/terrasse-meuse.webp');
+const couverte = photoDe('/photos/terrasse-couverte.webp');
+const rive = photoDe('/photos/terrasse-meuse-portrait.webp');
+const facade = photoDe('/photos/facade-meuse.webp');
+---
+<Base title="La terrasse sur la Meuse" description={`La grande terrasse de ${site.nom} à Namur : au bord de la Meuse, chauffée et à l’abri du vent, ouverte jusque tard dans la saison.`} theme="sombre">
+  <section class="hero hero--page" data-hero aria-labelledby="t-terrasse">
+    <div class="hero__media" data-hero-media>
+      <img src={asset(eau.src)} alt={eau.alt} width={eau.largeur} height={eau.hauteur} fetchpriority="high" decoding="async" data-critical />
+    </div>
+    <div class="hero__bas">
+      <div class="wrap">
+        <span class="eyebrow mono" style="color: inherit">La terrasse</span>
+        <h1 id="t-terrasse" style="font-size: var(--t-xl); max-width: 14ch">Au bord de l’eau, à l’abri du vent</h1>
+      </div>
+    </div>
+    <svg class="hero__sep" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path data-houle d="M0,40 L1440,40 L1440,80 L0,80 Z" /></svg>
+  </section>
+
+  <section class="sec sec--ciel" aria-label="La terrasse">
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <p class="lead">La grande terrasse au bord de l’eau est chauffée et à l’abri du vent. Elle permet de profiter de l’endroit jusque tard dans la saison.</p>
+        <p class="muted" style="margin-top: calc(var(--u) * 2)">{citationTerrasse.texte}</p>
+      </div>
+      <div class="col-droite">
+        <span class="eyebrow mono">Bon à savoir</span>
+        <ul class="badges">
+          {regles.map((r) => <li class={`badge ${r.placeholder ? 'badge--illustratif' : 'is-ok'}`}>{r.texte}{r.placeholder ? ' (à confirmer)' : ''}</li>)}
+        </ul>
+        <dl class="horaires" style="margin-top: calc(var(--u) * 3)">
+          {saisons.map((s) => <><dt>{s.nom}</dt><dd>{s.texte}</dd></>)}
+        </dl>
+        <p style="margin-top: calc(var(--u) * 3)">Pour toute question, appelez le <a class="link" href={telHref()}>{site.telephone}</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-label="La terrasse couverte">
+    <Houle fill="eau" />
+    <div class="wrap paire">
+      <figure class="media media--portrait" data-reveal="clip" data-cursor="Voir">
+        <img src={asset(couverte.src)} alt={couverte.alt} width={couverte.largeur} height={couverte.hauteur} loading="lazy" decoding="async" />
+        <figcaption class="mono">La terrasse couverte et chauffée</figcaption>
+      </figure>
+      <figure class="media media--portrait" data-reveal="clip" data-cursor="Voir">
+        <img src={asset(rive.src)} alt={rive.alt} width={rive.largeur} height={rive.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        <figcaption class="mono">Le long du garde-corps, la Meuse</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel sec--fin" aria-label="La façade">
+    <Houle fill="ciel" />
+    <div class="wrap">
+      <figure class="media media--sous-eau" style="aspect-ratio: 21 / 9" data-reveal="clip" data-cursor="Voir">
+        <img src={asset(facade.src)} alt={facade.alt} width={facade.largeur} height={facade.hauteur} loading="lazy" decoding="async" data-parallax="0.1" />
+        <figcaption class="mono">La brasserie sur les berges, au crépuscule</figcaption>
+      </figure>
+      <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a><a class="btn" href={u('/')}>Retour à l’accueil</a></div>
+    </div>
+  </section>
+</Base>

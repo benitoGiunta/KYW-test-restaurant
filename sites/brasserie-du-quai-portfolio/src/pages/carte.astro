@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import { site, photoDe, carteSalle } from '../data/site';
+import { u, asset } from '../lib/url';
+const tartare = photoDe('/photos/plat-tartare-saumon.webp');
+const sole = photoDe('/photos/service-sole.webp');
+---
+<Base title="La carte" description={`La carte de ${site.nom} à Namur : entrées, poissons, viandes, vol-au-vent, croquettes de crevettes grises maison, frites à la graisse de bœuf.`}>
+  <section class="hero hero--texte" aria-labelledby="t-carte">
+    <div class="wrap hero__bas">
+      <span class="eyebrow mono">La carte</span>
+      <h1 id="t-carte" style="font-size: var(--t-xl)">Une brasserie authentique et variée</h1>
+      <p class="lead" style="margin-top: calc(var(--u) * 3)">Des produits frais, des croquettes et des fondus faits maison, des frites cuites à la graisse de bœuf. Chaque semaine, des suggestions de saison complètent la carte.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-labelledby="t-incontournables">
+    <Houle fill="eau" />
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <span class="eyebrow mono">Les incontournables</span>
+        <h2 id="t-incontournables" style="font-size: var(--t-l); font-weight: 500">Ce que l’on vient chercher au Quai</h2>
+      </div>
+      <ul class="badges col-large" style="margin-top: var(--u)">
+        {['Croquettes de crevettes grises maison', 'Sole meunière', 'Vol-au-vent « Royal », truffe et ris de veau', 'Américain et tartare préparés minute', 'Frites à la graisse de bœuf', 'Huîtres et plateaux de l’écailler'].map((t) => <li class="badge is-ok">{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel sec--fin" aria-label="Carte détaillée">
+    <Houle fill="ciel" />
+    <div class="wrap grid12">
+      <div class="col-large">
+        {carteSalle.map((cat) => (
+          <div class="carte-cat">
+            <div class="carte-cat__tete">
+              <h2>{cat.categorie}{cat.plats.every((p) => p.placeholder) ? <span class="badge badge--illustratif" style="margin-left: 0.75rem; vertical-align: middle">illustratif</span> : null}</h2>
+            </div>
+            <ol class="index" data-reveal="up">
+              {cat.plats.map((p, i) => (
+                <li>
+                  <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="index__nom">{p.nom}{p.description ? <span class="index__desc">{p.description}</span> : null}</span>
+                  <span class="index__prix">{p.prix ?? <span class="mono">{p.placeholder ? 'exemple' : ''}</span>}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))}
+        <p class="muted" style="margin-top: calc(var(--u) * 3); max-width: 60ch">Les desserts et les vins ne sont pas publiés par la maison : les desserts ci-dessus sont des exemples. Allergènes : notre personnel est à votre disposition.</p>
+        <div class="paire" style="margin-top: calc(var(--u) * 8)">
+          <figure class="media" data-reveal="clip" data-cursor="Voir">
+            <img src={asset(sole.src)} alt={sole.alt} width={sole.largeur} height={sole.hauteur} loading="lazy" decoding="async" />
+            <figcaption class="mono">Notre belle sole « meunière » · photo de la maison</figcaption>
+          </figure>
+          <figure class="media media--portrait" data-reveal="clip" data-cursor="Voir">
+            <img src={asset(tartare.src)} alt={tartare.alt} width={tartare.largeur} height={tartare.hauteur} loading="lazy" decoding="async" />
+            <figcaption class="mono">Tartare de saumon, crème au raifort</figcaption>
+          </figure>
+        </div>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+          <a class="btn" href={u('/ecailler/')}>Le banc d’écailler</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

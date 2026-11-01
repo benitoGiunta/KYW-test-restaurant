@@ -1,0 +1,48 @@
+---
+// Plan schématique du quai : la Meuse, les berges et le pont du Luxembourg sont cités par le site de la maison ;
+// tracé non à l'échelle (à retracer sur OpenStreetMap). Dessiné au scroll (setup.ts), pastilles qui ouvrent la légende.
+import { plan } from '../data/site';
+---
+<div class="plan" data-plan>
+  <div class="plan__boite">
+    <svg class="plan__svg" viewBox="0 0 1000 620" role="img" aria-labelledby="plan-titre">
+      <title id="plan-titre">Plan schématique : la Brasserie du Quai sur les berges de la Meuse, au pied du pont du Luxembourg, à Namur</title>
+      <!-- La Meuse : deux rives en diagonale, du sud-ouest (bas gauche) vers le nord-est (haut droite) ; la ville sur la rive gauche -->
+      <path data-trait d="M0,560 C220,520 420,430 560,330 C700,230 840,140 1000,90" />
+      <path data-trait d="M120,620 C330,580 520,500 660,400 C800,300 900,230 1000,200" />
+      <path data-trait class="plan__eau" d="M60,590 C275,550 470,465 610,365 C750,265 870,185 1000,145" />
+      <!-- Rue du Quai, le long de la rive gauche -->
+      <path data-trait d="M0,500 C200,465 380,380 520,280 C640,195 780,110 960,40" />
+      <!-- Pont du Luxembourg, en travers de la Meuse -->
+      <path data-trait d="M560,160 L760,330" />
+      <path data-trait d="M585,145 L785,315" />
+      <!-- Quartiers de la ville -->
+      <path data-trait d="M0,300 C120,290 240,250 360,190" />
+      <path data-trait d="M80,120 C180,140 260,120 330,60" />
+      <text class="plan__texte plan__texte--eau" x="300" y="560" transform="rotate(-24 300 560)">la Meuse</text>
+      <text class="plan__texte" x="720" y="230" transform="rotate(40 720 230)">pont du Luxembourg</text>
+      <text class="plan__texte" x="170" y="440" transform="rotate(-22 170 440)">Rue du Quai</text>
+      <text class="plan__texte" x="80" y="230">Namur, centre</text>
+      <text class="plan__texte" x="20" y="600">Schéma, pas à l’échelle</text>
+    </svg>
+    <div class="plan__pastilles">
+      {plan.map((p) => (
+        <button class="plan__pastille" type="button" data-pastille={String(p.numero)} aria-expanded="false" aria-controls={`legende-${p.numero}`} style={`left:${p.x}%;top:${p.y}%`} aria-label={`${p.numero}, ${p.nom}`}>
+          <span aria-hidden="true">{p.numero}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+  <div>
+    <span class="eyebrow mono">Le plan</span>
+    <h2 class="display" style="font-size: var(--t-l); font-weight: 500; margin-bottom: calc(var(--u) * 3)">Sur les berges, au pied du pont du Luxembourg</h2>
+    <ol class="plan__legende">
+      {plan.map((p) => (
+        <li id={`legende-${p.numero}`} data-legende={String(p.numero)}>
+          <span class="plan__legende-num mono">{String(p.numero).padStart(2, '0')}</span>
+          <div><strong>{p.nom}</strong><small>{p.detail}{p.placeholder ? ' (point illustratif)' : ''}</small></div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</div>
