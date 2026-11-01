@@ -86,7 +86,7 @@ export const equipe = [
 export const presse = [
   { media: 'La DH', date: '19 novembre 2024', titre: 'Une cuisine chaleureuse, moins guindée que celle d’Attablez-vous', url: 'https://www.dhnet.be/regions/namur/2024/11/19/le-chef-etoile-namurois-charles-jeandrain-ouvre-un-nouveau-restaurant-a-namur-une-cuisine-chaleureuse-moins-guindee-que-celle-dattablez-vous-TBUNVXXBUJBLXDLXOA2RDENOW4/' },
   { media: 'La Libre', date: '31 mai 2025', titre: 'On a testé Partage : bistro namurois à la cuisine gourmande', url: 'https://www.lalibre.be/lifestyle/magazine/2025/05/31/on-a-teste-partage-bistro-namurois-a-la-cuisine-gourmande-avec-des-touches-raffinees-ou-voyageuses-EQA32RRU65DRRCNS5PC3TU72OM/' },
-  { media: 'Le Vif Weekend', date: 'Le resto de la semaine', titre: 'Partage à Namur, où la sharing food retrouve ses lettres de noblesse', url: 'https://weekend.levif.be/culinaire/restaurants/adresses/le-resto-de-la-semaine-partage-a-namur-ou-la-sharing-food-retrouve-ses-lettres-de-noblesse/' },
+  { media: 'Le Vif Weekend', date: 'Date non relevée', titre: 'Le resto de la semaine : Partage à Namur', url: 'https://weekend.levif.be/culinaire/restaurants/adresses/le-resto-de-la-semaine-partage-a-namur-ou-la-sharing-food-retrouve-ses-lettres-de-noblesse/' },
   { media: 'Le Fooding', date: 'Fiche du guide', titre: 'Restaurant Partage', url: 'https://lefooding.com/en/restaurants/partage' },
 ] as const;
 
