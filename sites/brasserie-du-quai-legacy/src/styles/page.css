@@ -258,6 +258,9 @@ html:has(.menu-mobile:popover-open) { overflow: hidden; }
 .pied__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-columns); }
 .pied__bloc { margin: 0; font-style: normal; color: var(--color-ink-2); }
 .pied__bloc a { color: var(--color-ink-2); }
+/* QA phase 3 : liens isolés à 20 px de haut (cible < 24 px, WCAG 2.5.8). Padding sur la boîte inline :
+   le rectangle de la cible passe à 24 px sans toucher l'interligne (leçon les-potes-au-feu, pas d'inline-block). */
+.nav__banner a, .pied__bloc a, .venir__adresse p > a { padding-block: var(--space-3xs); }
 .pied__liens { list-style: none; padding: 0; display: grid; gap: var(--space-2xs); }
 .pied__legal { font-size: var(--text-xs); color: var(--color-muted); }
 
@@ -284,6 +287,12 @@ html:has(.menu-mobile:popover-open) { overflow: hidden; }
   .galerie { grid-template-columns: 1fr 1fr; }
   .plateaux__groupes { grid-template-columns: 1fr; }
   .pleine { aspect-ratio: 16 / 9; }
+  /* QA phase 3 : la grille repliée collait « Les heures de service » au courriel (gap = gap-columns, 16 px). */
+  .infos { row-gap: var(--space-2xl); }
+  /* Idem sur /la-carte/ : la note allergènes touchait le titre « Les entrées ». */
+  .carte { row-gap: var(--space-2xl); }
+  /* Idem à l'accueil : « Jour de fermeture » touchait le titre « 9 rue du Quai, Namur ». */
+  .venir__in { row-gap: var(--space-2xl); }
 }
 @media (max-width: 40rem) {
   .chiffre { padding-block: 0; }
