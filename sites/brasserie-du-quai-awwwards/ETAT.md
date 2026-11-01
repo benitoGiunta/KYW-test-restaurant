@@ -67,3 +67,11 @@
 - Jours de fermeture : « à confirmer » à l'écran ; JSON-LD sur lundi, jeudi, vendredi, samedi (horaires d'hiver).
 - Réservation : téléphone en CTA principal, lien externe vers la page Réservation du site actuel, mailto.
 - Navigation : « La carte », « Le quai » (page histoire), téléphone, « Réserver ».
+
+## Revue passe 1 (relecteur-site, 01/11/2026)
+
+- Fait : `REVUE-1.md` écrit (verdict A_CORRIGER : F0 0, F1 1, F2 5, F3 6). Texte comparé à `donnees.json`, liens testés (200),
+  menu mobile testé, captures histoire et réservation faites hors dépôt (le crawl n'avait shooté que accueil et carte).
+- Reste : le correcteur traite F1-01 (rôle de Pierre-Alexandre), F2-01 à F2-05, puis les F3 utiles ; vérification ciblée ensuite.
+- Pièges : `QA-revue1.md` et les planches n'existaient pas (relecteur a lu `.shots/` directement) ; `shoot.mjs --crawl` ne prend
+  qu'une page par type, donc histoire et réservation ne sont pas dans `.shots/` ; serveur de revue arrêté (kill du PID).
