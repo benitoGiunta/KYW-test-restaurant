@@ -19,14 +19,19 @@ Accueil (`shoot.mjs --nav`, téléphone bridé CPU 4x et 4G lente) :
 - Poids : page la plus lourde 485 Ko (JS 61 Ko gzippé, CSS 7 Ko, polices 83 Ko woff2, images 330 Ko), aucune image > 500 Ko, `dist/` 4,4 Mo.
 - Audit : 0 FAIL, 1 WARN « no sitemap » justifié (racine de QA : `sitemap-index.xml` existe sous `/partage/awwwards/` et il est lié dans `<head>`).
 
-Pages intérieures : voir la section « QA des pages intérieures » ci-dessous.
+Pages intérieures (shoot par page, build d'avant correction, puis carte re-photographiée sur le build final) :
+- carte : LCP mobile 1 108 ms, CLS 0, FPS 59/59, `idleMotion` true ; après correction (`.shots/carte-v2`) : `noHoverChange` vide, 0 violation axe, 0 erreur.
+- histoire : LCP mobile 1 120 ms, CLS 0, FPS 60 ; réservation : LCP mobile 1 080 ms, CLS 0, FPS 60 ; 404 : LCP mobile 1 092 ms, CLS 0. Leurs seuls défauts (lien « Ouvrir le plan » sans survol, contraste du mot du pied) viennent des composants partagés corrigés et vérifiés sur la carte. Les 5 « requêtes échouées » de la 404 sont le document 404 lui-même (attendu).
+- Partout : 0 erreur console, 0 débordement, `hiddenText` 0, `moving` false, focus visible. axe sur la 404 du build final : seule `landmark-no-duplicate-contentinfo` (modérée : pied du site et pied KYW).
 
 ## Corrections de la phase 3
 1. **Contraste axe sérieux** sur `.pied__mot` (PAR TAGE géant du pied, #34322e sur #161513, 1,42:1) et, par anticipation, sur `.perdu__mot` (404) : ce mot décoratif `aria-hidden` est rendu en `::before { content: attr(data-mot) }`, le ton sur ton est conservé. Vérifié : axe `color-contrast` = 0 violation sur l'accueil à 1440.
 2. **Prix du lunch coupé à 1440** (« 38 € » débordait de la bande de chêne de deux colonnes, l'euro était rogné) : `font-size: min(var(--t-xl), calc((100vw - 2 * var(--gutter)) / 6 / 3.9))` sur desktop, taille inchangée sur mobile. Vérifié par mesure : prix contenu dans la bande à 1440, 1280 et 1024, 32 px à 390.
-3. **Liens de texte `noHoverChange`** (« Lire la carte et les prix », « Ouvrir le plan ») : le soulignement de repos (1 px, couleur du texte) reste, et un trait ocre de 3 px se dessine de gauche à droite au survol et au focus (`background-size` 0 % → 100 %, 0,45 s). Vérifié : `background-size` passe de `0% 3px` à `100% 3px` au survol.
+3. **Téléphone du pied sans survol** (`.pied__tel`, carte) : trait de 1 px qui passe à 3 px au survol et au focus. Vérifié par shoot ciblé de la carte.
+4. **Liens de texte `noHoverChange`** (« Lire la carte et les prix », « Ouvrir le plan ») : le soulignement de repos (1 px, couleur du texte) reste, et un trait ocre de 3 px se dessine de gauche à droite au survol et au focus (`background-size` 0 % → 100 %, 0,45 s). Vérifié : `background-size` passe de `0% 3px` à `100% 3px` au survol.
 
 ## Points non résolus
+- [Repos] `idleMotion` false sur histoire, réservation et 404 : le reflet ne vit que sur les bandes de chêne visibles, absentes du premier écran de ces pages. Décision acceptée (pages calmes), à confirmer par le critique.
 - [Jury] Aucun score de critique indépendant (voir plus haut) : à faire par la revue suivante.
 - [Composition] Accueil à 1440 : grands vides à gauche de la section lunch (`d-05-scroll`) et au-dessus du pied (`d-07-scroll`), hérités du plan de grille (texte sur les colonnes 1 à 5 alignées à droite). À juger par le critique ; resserrer `--aere` si c'est lu comme un trou.
 
