@@ -51,7 +51,7 @@ import { resto, menus, brunchCarte } from '../data/site';
       <div class="duo__text">
         <h2 id="h-bar">Cocktails et mocktails maison</h2>
         <p class="lead">Les plats et les boissons sont préparés dans notre cuisine et notre bar. Une large sélection de boissons sans alcool, et un vin rouge et un vin blanc certifiés bio à la carte.</p>
-        <a class="btn btn--primary" href={resto.billetterie} rel="noopener">Réserver un spectacle</a>
+        <a class="btn" href={resto.billetterie} rel="noopener">Réserver un spectacle</a>
       </div>
     </div>
   </section>
@@ -59,8 +59,8 @@ import { resto, menus, brunchCarte } from '../data/site';
     (function () {
       var bar = document.querySelector('[data-tabs]'); if (!bar) return;
       var tabs = [].slice.call(bar.querySelectorAll('[role=tab]'));
-      function show(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); }
-      tabs.forEach(function (t) { t.addEventListener('click', function () { show(t); }); t.addEventListener('keydown', function (e) { var i = tabs.indexOf(t); if (e.key === 'ArrowRight') { tabs[(i + 1) % tabs.length].focus(); show(tabs[(i + 1) % tabs.length]); } if (e.key === 'ArrowLeft') { tabs[(i + tabs.length - 1) % tabs.length].focus(); show(tabs[(i + tabs.length - 1) % tabs.length]); } }); });
+      function show(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); }
+      tabs.forEach(function (t) { t.addEventListener('click', function () { show(t); }); t.addEventListener('keydown', function (e) { var i = tabs.indexOf(t), n = -1; if (e.key === 'ArrowRight') n = (i + 1) % tabs.length; else if (e.key === 'ArrowLeft') n = (i + tabs.length - 1) % tabs.length; else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = tabs.length - 1; if (n > -1) { e.preventDefault(); tabs[n].focus(); show(tabs[n]); } }); });
       if (location.hash === '#brunch') show(tabs[1]); else show(tabs[0]);
     })();
   </script>

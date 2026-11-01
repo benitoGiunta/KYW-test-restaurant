@@ -33,7 +33,7 @@ Papier crème `--color-paper oklch(97% 0.012 95)` avec grain et fibres SVG ; enc
 - **Pied** : lettre (titre « À bientôt chez Guillaume. », adresse, téléphone, mail, liens, réseaux, `data-credits`, mentions légales) puis KywFooter ; pas de « Tous droits réservés », pas de newsletter.
 - **Photo** : `<figure data-slot data-alt>` avec `width` et `height`, `object-position`, hero `fetchpriority="high"`, les autres `lazy` ; photos du client en WebP ; légende = un fait.
 - **Agenda** : Index (date, titre, type, action), « Complet » pour les soirées complètes, chaque ligne garde le lien de sa fiche d'origine.
-- **Nav, bouton, formulaire, reveal** : bouton carton en place ; nav pilule en place (menu `<details>` sous 60 rem) ; reveal et états fins en phase 2. Aucun formulaire (le site d'origine n'en a pas).
+- **Nav, bouton, formulaire, reveal** : bouton carton à huit états (hover sous `@media (hover: hover)`, `:active`, `:disabled`, `:focus-visible`) ; nav pilule, menu en Popover (`popover="auto"`, bouton « Menu », « Fermer le menu ») sous 75 rem, le seul seuil hors 60/40 rem (le pilule ne tient pas sur une ligne entre 960 et 1200 px) ; un seul reveal (opacité + 24 px, une fois, `.js` seulement) sur trois moments, la salle, la bande et la photo de clôture ; barre de billetterie masquée (`visibility`) tant que le premier bloc est à l'écran ; aucun formulaire (le site d'origine n'en a pas, la réservation est le lien de billetterie).
 
 ## Sur-utilisation
 
@@ -44,4 +44,26 @@ Papier crème `--color-paper oklch(97% 0.012 95)` avec grain et fibres SVG ; enc
 - [x] 5. Pied KYW, noindex et mention sur les 7 pages · preuve : grep de `dist/chez-guillaume/legacy/**/*.html`
 - [x] 6. sloplint statique sur `src` : 0 FAIL après correctif · preuve : `.logs/sloplint.log`
 - [ ] 7. Contraste, fold, rendu `--render` des 7 pages · à faire en phase 3
-- [ ] 8. Motion : un reveal, volet collant, barre de billetterie, focus et états · phase 2
+- [x] 8. Motion : un reveal, volet collant, barre de billetterie, focus et états · preuve : `page.css` fin de fichier (reveal, pose du billet), `Base.astro` (script), mesures du build
+
+### Phase 2 (construction-2)
+
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie · preuve : `grep "transition: all" src/styles` vide, transitions sur `translate`, `opacity`, `box-shadow`, `background`
+- [x] 6. `:focus-visible` partout, instantané, 3:1 · preuve : `base.css` (`:focus-visible`), `page.css` (`transition: none`, anneau clair sur `.band` et `.barre`)
+- [x] 7. Reduced motion sur chaque animation, contenu visible sans script · preuve : reveal et pose du billet sous `prefers-reduced-motion: no-preference`, règle globale `base.css` ; mesuré : opacité 1 en reduce et sans JS
+- [x] 17. Hero en `dvh`/`svh` · preuve : `.hero__stage` `clamp(460px, 72dvh, 680px)`
+- [x] 19. Sticky non superposés · preuve : nav `top: 12px` à `--z-sticky-nav`, volet à 128 px, barre en bas ; `scroll-padding-top` 96 px
+- [x] 20. Radios-onglets : sans objet, onglets `role="tablist"` + boutons, deux panneaux empilés sans JS (mesuré : display block, block)
+- [x] 21. Vidéo de fond : sans objet (aucune vidéo)
+- [x] 22. Reveal sous `.js` seulement · preuve : `.js [data-reveal]`
+- [x] 23. États d'input : sans objet (aucun champ)
+- [x] 24. Tooltip et auto-rotation : sans objet (aucun)
+- [x] 29. Aucun faux envoi : sans objet (aucun formulaire)
+- [x] 30. SVG décoratifs `aria-hidden` : aucun SVG en ligne ; logo en `<img alt>`
+- [x] 48. Hover : un signal, sur le conteneur interactif, pas de rebond (`--ease-spring` supprimé), pas de toast · preuve : `page.css`
+- [x] 49. `:active`, `:disabled`, contrôles 44 à 54 px · preuve : `.btn` 54, `.nav__cta` 48, liens du pied 44
+- [x] 56. Un primaire rempli par recette : le rouge plein est réservé à la billetterie (nav, billet, barre), les autres boutons sont calmes (F4 répondu au stamp)
+- [x] 58. Une recette de conteneur, pilule pour les contrôles ; un pattern de scroll (volet collant CSS) · preuve : stamp `answered F7`
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color`, `accent-color` · preuve : `base.css`
+- [x] 72. Responsive : seuils 60/40 rem (+ 75 rem pour la nav), `hover: hover`, tables restackées à 48 rem, `dvh`, safe-area (`viewport-fit=cover`, gouttière, barre) ; aucun débordement à 320/375/390/768/1024/1280/1440 (script `scrollWidth` et sloplint 34)
+- [x] hero-review : `ship` (auto-notation `self`, pas de sous-agent en session d'agent) · 2 findings (44c, 49b) · 2 resolved

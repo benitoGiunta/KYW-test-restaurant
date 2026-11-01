@@ -13,7 +13,7 @@ const ogImage = new URL(`${base}photos/scene-humoriste.webp`, Astro.site).href;
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="robots" content="noindex" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -41,7 +41,7 @@ const ogImage = new URL(`${base}photos/scene-humoriste.webp`, Astro.site).href;
     <main id="contenu">
       <slot />
     </main>
-    <div class="barre">
+    <div class="barre" data-barre>
       <div class="barre__in">
         <p>Repas et spectacle du mercredi au samedi, brunch le dimanche.</p>
         <a class="btn btn--primary" href={resto.billetterie} rel="noopener">Réserver un spectacle</a>
@@ -50,6 +50,22 @@ const ogImage = new URL(`${base}photos/scene-humoriste.webp`, Astro.site).href;
     <Footer accueil={accueil} />
     <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
 document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+    <script is:inline>
+      (function () {
+        var d = document, els = [].slice.call(d.querySelectorAll('[data-reveal]'));
+        if ('IntersectionObserver' in window) {
+          var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting || e.boundingClientRect.top < 0) { e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+          els.forEach(function (el) { io.observe(el); });
+          var first = d.querySelector('main > *'), barre = d.querySelector('[data-barre]');
+          if (first && barre) { new IntersectionObserver(function (es) { var e = es[0]; d.body.classList.toggle('is-barre', !e.isIntersecting && e.boundingClientRect.bottom < 0); }).observe(first); }
+        } else { els.forEach(function (el) { el.classList.add('is-in'); }); d.body.classList.add('is-barre'); }
+        var m = d.getElementById('menu');
+        if (m && m.hidePopover) {
+          m.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) m.hidePopover(); });
+          window.matchMedia('(min-width: 75.0625rem)').addEventListener('change', function (q) { if (q.matches && m.matches(':popover-open')) m.hidePopover(); });
+        }
+      })();
+    </script>
     <script is:inline>
       var j = new Date().getDay();
       document.querySelectorAll('[data-jour]').forEach(function (el) { if (Number(el.dataset.jour) === j) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); } });

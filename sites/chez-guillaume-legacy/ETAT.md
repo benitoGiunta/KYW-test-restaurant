@@ -1,22 +1,24 @@
-# ETAT · chez-guillaume-legacy · construction-1 (phase 1 sur 3)
+# ETAT · chez-guillaume-legacy · construction-2 (phase 2 sur 3)
 
-## Fait
-- Audit (`AUDIT.md`, `.hallmark/before.txt`), deal Hum 3/3, draw 4e5b8c, scaffold, stamp, comp (2 comps, c1 choisie), `DESIGN.md` (Picks, Approche, Tokens, Composants, case à cocher), entrée dans `.hallmark/log.json`.
-- Paquet Astro : `Base`, `Nav` (pilule), `Footer` (lettre), `Fig`, `src/data/site.ts` (toutes les données), 7 pages : `/`, `/agenda/`, `/restaurant/`, `/privatisation/`, `/bon-cadeau/`, `/faq/`, `404`.
-- Build passe (`scripts/q.sh build pnpm build:site sites/chez-guillaume-legacy`), `dist/chez-guillaume/legacy/` ; KywFooter, noindex et mention sur les 7 pages (grep). sloplint statique sur `src` : 0 FAIL (reste WARN 23, F4, F7 répondus au stamp).
-- 8 photos du client en WebP dans `public/photos/`, logo `public/logo.svg` (marque rouge `#cd3b08`).
+## Fait (phase 1, inchangé)
+Audit, deal Hum 3/3, draw 4e5b8c, stamp, comp, DESIGN.md, 7 pages, 8 photos du client, logo, données dans `src/data/site.ts`.
 
-## Reste
-- Phase 2 : motion (un reveal, volet collant du Feature Stack à valider, barre de billetterie), états des contrôles (:active, :disabled), nav mobile, `comp.md` (trois questions de reproduction), vérifier `dvh` et mesures 1440/1280/1024/390.
-- Phase 3 : sloplint `--render` sur les 7 pages (installer les captures par `--url`), contraste du rouge sur crème et du texte clair sur rouge (calcul à faire), fold, jugées gates § 5, RAPPORT.md, `pnpm index`.
-- À vérifier visuellement : le grain « fibre » du papier (stries horizontales marquées en comp), clip-path déchiré du hero et du pied (bord de photo à droite), `.close__photo` et `.stack` à 1024 et 390, hauteur de la photo « La salle » (portrait 1000 px étiré en pleine largeur, flou possible).
+## Fait (phase 2)
+- Nav : pilule, menu en Popover natif sous 75 rem (bouton « Menu », « Fermer le menu », se ferme au clic sur un lien et au passage en desktop). 75 rem et non 60 : la pilule déborde entre 960 et 1200 px.
+- Boutons : huit états, hover sous `(hover: hover)`, `:active`, `:disabled`, rebond supprimé (`--ease-spring` retiré). Rouge plein réservé à la billetterie (nav, billet, barre) ; « Voir l'agenda », « Réserver un spectacle » (accueil, restaurant) deviennent calmes ; « La carte du mois » devient un lien `.link--arrow`.
+- Motion calme : un reveal (opacité + 24 px, une fois, `.js` et `no-preference` seulement) sur les trois moments, la salle, la bande, la photo de clôture ; le billet se pose au chargement (700 ms) ; barre de billetterie masquée (`visibility`) tant que le premier bloc est à l'écran. Contenu visible sans JS et en reduced motion (mesuré).
+- Onglets du restaurant : tabindex itinérant, Home/End, `preventDefault`. Volet collant du Feature Stack validé (haut à 128 px) ; statique si hauteur < 40 rem.
+- Hero : `dvh` (`clamp(460px, 72dvh, 680px)`), marge de 24 px de la scène à 1440 (sloplint 44c) ; adresse du pied sur une ligne (49b) ; cibles 44 px dans le pied ; safe-area (`viewport-fit=cover`).
+- Hero review : sloplint `--render --stage hero` 0 FAIL, 0 REFLEX, reste NOTE 58 (répondue au stamp), WARN 23 et F7 (déjà répondus). Revue du hero `ship` en auto-notation (`self`, pas de sous-agent en session d'agent). `comp.md` : trois questions de reproduction, stamp complet.
+- Mesures : aucun débordement horizontal à 320, 375, 390, 768, 1024, 1100, 1201, 1280, 1440 ; pied KYW, noindex et mention sur les 7 pages du build (`dist/chez-guillaume/legacy/`), build `scripts/q.sh` passe.
+
+## Reste (phase 3 et captures)
+- sloplint `--render` sur les 7 pages, contraste (rouge `#cd3b08` sur crème, texte clair sur rouge, bande et barre), fold mesuré, gates § 5, RAPPORT.md, `pnpm index`.
+- À regarder sur les captures : grain « fibre » du papier (stries horizontales visibles), clip-path déchiré, photo « La salle » (source 1000 px étirée en pleine largeur à 1440, flou possible), `.close__photo` à 1024 et 390, menu Popover sur les pages intérieures, hover de la barre.
+- Pas de shoot complet fait (agent « captures »). Aucun `dist/` d'un autre site touché.
 
 ## Décisions et hypothèses
-- Thème Hum (papier crème, bords déchirés) avec l'accent poire remplacé par le rouge du logo, lu dans `photos/12-logo.svg`.
-- Macrostructure tirée : Feature Stack, routes conservées ; hero Stage avec billetterie dans le billet ; action = barre collante « Réserver un spectacle » (billetterie `https://chezguillaume.be/events/`).
-- Horaires de la FAQ retenus (lun-sam 18 h 00 à minuit, dim 10 h 00 à 18 h 00), à confirmer (ELLE 2025 disait mer-sam 10 h 00 à minuit).
-- Agenda = relevé du 1er novembre 2026 (28 dates, fiches d'origine liées) ; vieillit : à rafraîchir ou à mentionner. Heures données seulement pour les trois spectacles du hero.
-- Nav : « Spectacles » et « Programme » fusionnés dans le bouton Réserver (même destination `/events/`) ; « Agenda » pointe vers la page `/agenda/` du site (l'original : `/#agenda`) ; « Contact » = `#contact` du pied.
-- Reworded : accroche du hero raccourcie (gate 58), « On y rit, on y mange, on y vit » devient le titre des trois moments ; FAQ condensée (12 questions sur ~34, humour gardé quand court, tirets retirés, « 18h-00h » devenu « 18 h 00 à minuit ») ; pas de coordonnées GPS ni schema.org (non géocodé, rien d'inventé).
-- Non repris : dessins au trait de l'original (aucun fichier source), calendrier mensuel en tableau (remplacé par l'Index), affiches des spectacles, Lottie, fiche « Contact » séparée.
-- Pièges : `build-site.mjs` ne vérifie que `index.html` (grep fait sur les autres routes) ; aucun placeholder fictif ajouté ; `gabarits/` non touché.
+- Pas de formulaire : le site d'origine n'en a pas, la réservation est le lien de billetterie `https://chezguillaume.be/events/` conservé. Gates 23 et 29 sans objet.
+- Barre de billetterie : apparaît quand le premier bloc de `main` a quitté l'écran ; visible d'emblée sans JS.
+- Accueil : toujours quatre rouges pleins possibles à l'écran (nav, pastilles du billet, barre) : même recette, même destination.
+- Pièges : l'overlay « dev toolbar » d'Astro apparaît en bas des captures de dev, ce n'est pas le site ; `nowrap` sur un lien d'adresse dans une grille élargit la piste (corrigé en deux segments) ; un lien `inline-flex` ne coupe pas ses enfants.
