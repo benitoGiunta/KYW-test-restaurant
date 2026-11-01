@@ -1,0 +1,32 @@
+---
+// La salle : page claire, pleine de photos (les seules du site avec les aperçus), mots géants.
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { asset, u } from '../lib/url';
+const premiere = photoDe('/photos/service-bouteille.webp');
+const galerie = ['/photos/salle-vue-large.webp', '/photos/salle-table-duo.webp', '/photos/table-citronnier.webp', '/photos/salle-signe.webp', '/photos/salle-claustra-logo.webp', '/photos/salle-suspensions.webp', '/photos/verres-table.webp', '/photos/salle-etagere.webp'].map(photoDe);
+---
+<Base title="La salle" theme="clair" preloadImage={{ href: premiere.src }} description={`La salle de Partage à ${site.adresse.commune} : briques crème, chêne blond, claustras ajourés et une trentaine de couverts dans le piétonnier.`}>
+  <div class="clair" style="padding-bottom: calc(var(--u) * 6)">
+    <section class="entete wrap">
+      <h1 class="cap">La salle</h1>
+      <p class="lead muted">Une salle claire d’une trentaine de couverts : briques peintes, chêne blond, claustras ajourés, un citronnier. Elle se privatise pour 20 à 30 personnes.</p>
+    </section>
+    <figure class="wrap" style="margin: 0 auto; overflow: clip; aspect-ratio: 16 / 9">
+      <img src={asset(premiere.src)} alt={premiere.alt} width={premiere.largeur} height={premiere.hauteur} fetchpriority="high" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block" />
+    </figure>
+    <ul class="mots cap wrap" data-mots aria-label="Salle, cuisine, partage">
+      {site.motsSalle.map((m) => <li>{m}</li>)}
+    </ul>
+    <section class="wrap section" aria-label="En images">
+      <div class="galerie">
+        {galerie.map((p, i) => (
+          <figure data-reveal="clip" data-delay={String((i % 4) * 0.08)}>
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a></div>
+    </section>
+  </div>
+</Base>
