@@ -17,7 +17,7 @@ const graduations = ['5', '4', '3', '2', '1'];
     <div class="pied__col">
       <h2 class="pied__titre">Venir</h2>
       <p>{site.adresseLisible}</p>
-      <p><a class="lt" href={site.carteUrl} rel="noopener" target="_blank">Ouvrir le plan<span class="sr-only"> (nouvel onglet)</span></a></p>
+      <p><a class="lt lt--bloc" href={site.carteUrl} rel="noopener" target="_blank">Ouvrir le plan<span class="sr-only"> (nouvel onglet)</span></a></p>
     </div>
     <div class="pied__col">
       <h2 class="pied__titre">Horaires</h2>
@@ -26,14 +26,14 @@ const graduations = ['5', '4', '3', '2', '1'];
           <li><span>{s.nom}</span> {heure(s.midi[0])} à {heure(s.midi[1])}, {heure(s.soir[0])} à {heure(s.soir[1])}</li>
         ))}
       </ul>
-      <p class="pied__note">Huîtres et plateaux du jeudi au lundi. {fermeture.texte}.</p>
+      <p class="pied__note">Huîtres et plateaux du jeudi au lundi. {fermeture.texte} : à confirmer.</p>
     </div>
     <div class="pied__col">
       <h2 class="pied__titre">Joindre</h2>
-      <p><a class="lt" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
-      <p><a class="lt" href={`mailto:${site.email}`}>{site.email}</a></p>
+      <p><a class="lt lt--bloc" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+      <p><a class="lt lt--bloc" href={`mailto:${site.email}`}>{site.email}</a></p>
       <ul class="pied__liste pied__reseaux">
-        {site.reseaux.map((r) => <li><a class="lt" href={r.url} rel="noopener" target="_blank">{r.nom}<span class="sr-only"> (nouvel onglet)</span></a></li>)}
+        {site.reseaux.map((r) => <li><a class="lt lt--bloc" href={r.url} rel="noopener" target="_blank">{r.nom}<span class="sr-only"> (nouvel onglet)</span></a></li>)}
       </ul>
     </div>
     <nav class="pied__nav" aria-label="Pied de page">
@@ -42,6 +42,9 @@ const graduations = ['5', '4', '3', '2', '1'];
       <a class="nl" href={u('/histoire/')}>Le quai</a>
       <a class="nl" href={u('/reservation/')}>Réserver</a>
     </nav>
-    <p class="pied__colophon">Photos : La Brasserie du Quai. BCE {site.bce}. <a class="lt" href={site.michelin.url} rel="noopener" target="_blank">{site.michelin.titre}<span class="sr-only"> (nouvel onglet)</span></a>.</p>
+    <div class="pied__colophon">
+      <p>Photos : La Brasserie du Quai. BCE {site.bce}.</p>
+      <p><a class="lt lt--bloc" href={site.michelin.url} rel="noopener" target="_blank">{site.michelin.titre}<span class="sr-only"> (nouvel onglet)</span></a></p>
+    </div>
   </div>
 </footer>

@@ -145,7 +145,7 @@ CARTE
 [note]          frites à la graisse de bœuf, suggestions de la semaine, allergènes
 
 HISTOIRE
-[quai]          « LE QUAI » sur la ligne, photo façade sur la Meuse
+[quai]          « LE QUAI » sur la ligne, photo terrasse sur la Meuse (06, portrait ; REVISION-1 F2-03 : la façade 17 était sombre et hors sujet)
 [paire]         texte 100 mots | photo panorama de la salle
 [portrait]      Martin et Rémy (photo réelle), Pierre-Alexandre (salle)
 [mur]           détails : hibou, machine à écrire, cave, bar

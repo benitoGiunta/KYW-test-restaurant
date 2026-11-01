@@ -1,7 +1,7 @@
 // Contenu de La Brasserie du Quai (variante awwwards). Source : data/restaurants/brasserie-du-quai/donnees.json
 // et dossier.md (site actuel brasserieduquai.be, relevé du 01/11/2026).
 // Hypothèses (listées dans DESIGN.md et ETAT.md) :
-//  1. Jours de fermeture inconnus : affichés « à confirmer » ; JSON-LD limité à lundi, jeudi, vendredi, samedi.
+//  1. Jours de fermeture inconnus : affichés « à confirmer » ; JSON-LD sans openingHoursSpecification tant qu’ils ne sont pas confirmés.
 //  2. Lien de réservation = page Réservation du site actuel (module Zenchef probable).
 //  3. Année d'ouverture inconnue : jamais écrite. Nom de famille de Pierre-Alexandre non affiché.
 //  4. Notes Google/Tripadvisor et Gault&Millau non affichés ; seule la sélection Michelin 2026 est citée.
@@ -14,7 +14,7 @@ export const site = {
   baseline: 'Brasserie et écailler sur la Meuse, Namur',
   description:
     'Brasserie et banc d’écailler au pied du pont du Luxembourg, à Namur : baies vitrées et terrasse chauffée sur la Meuse, huîtres du jeudi au lundi.',
-  typeCuisine: ['Brasserie', 'Fruits de mer', 'Cuisine belge'],
+  typeCuisine: ['Brasserie', 'Fruits de mer'],
   adresse: { rue: 'Rue du Quai', numero: '9', cp: '5000', commune: 'Namur', pays: 'BE' },
   adresseLisible: `9 rue du Quai, 5000${nb}Namur`,
   situation: 'Au pied du pont du Luxembourg, sur les berges de la Meuse',
@@ -39,9 +39,7 @@ export const saisons = [
   { nom: 'De mai à octobre', midi: ['12:00', '14:30'], soir: ['18:00', '22:00'] },
 ] as const;
 export const ecailler = 'Le banc d’écailler vous accueille du jeudi au lundi inclus.';
-export const fermeture = { texte: 'Jours de fermeture hebdomadaire : à confirmer', placeholder: true };
-/** JSON-LD : jours cités « à confirmer » dans donnees.json (hypothèse 1). */
-export const joursLd = ['Monday', 'Thursday', 'Friday', 'Saturday'];
+export const fermeture = { texte: 'Jours de fermeture hebdomadaire', placeholder: true };
 
 /** « 12:00 » → « 12 h », « 14:30 » → « 14 h 30 » (espaces insécables). */
 export const heure = (h: string) => {
@@ -64,13 +62,13 @@ export const classiques = [
   { nom: 'Bisque de homard en cappuccino', prix: `19${nb}€`, photo: null },
   { nom: 'Notre belle sole « meunière »', prix: 'prix du jour', photo: 'sole' },
   { nom: 'Américain préparé haché minute', prix: `26${nb}€`, photo: null },
-  { nom: 'Vol-au-vent « Royal », truffe et ris de veau', prix: `34${nb}€`, photo: 'volaille' },
-  { nom: 'Le Plateau du Quai (2 pers.)', prix: `165${nb}€`, photo: 'huitres' },
+  { nom: 'Vol-au-vent « Royal », truffe et ris de veau', prix: `34${nb}€`, photo: null },
+  { nom: 'Le Plateau du Quai (2 pers.)', prix: `165${nb}€`, photo: null },
 ] as const;
 
 export const equipe = [
   { nom: 'Martin et Rémy', role: 'En cuisine depuis juillet 2026, après la retraite du chef de longue date.' },
-  { nom: 'Pierre-Alexandre', role: 'En salle, avec son équipe.' },
+  { nom: 'Pierre-Alexandre', role: 'Avec son équipe.' },
 ];
 
 export const histoire = [

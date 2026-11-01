@@ -42,7 +42,7 @@ export const photos = {
   table: { src: table, alt: 'Une table dressée, serviettes blanches et verres à pied, la cave en arrière-plan.' },
   hibou: { src: hibou, alt: 'Une lampe en forme de hibou blanc aux yeux orange, posée dans une niche sombre.' },
   machine: { src: machine, alt: 'Une machine à écrire ancienne exposée dans une niche, au-dessus d’une rangée de verres.' },
-  facade: { src: facade, alt: 'La brasserie au bord de la Meuse au crépuscule, parasols verts sur la berge.' },
+  facade: { src: facade, alt: 'L’immeuble de la brasserie au bord de la Meuse, pelouse et berge sous un ciel couvert.' },
   banquetteLongue: { src: banquetteLongue, alt: 'La longue banquette de la salle et ses tables dressées.' },
   equipe: { src: equipe, alt: 'Martin et Rémy, les deux cuisiniers, accoudés au passe de la cuisine.' },
   boeuf: { src: boeuf, alt: 'Des tranches de bœuf rosé sur une garniture, une assiette blanche sur table de bois.' },
