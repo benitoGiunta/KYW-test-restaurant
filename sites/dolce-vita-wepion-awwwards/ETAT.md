@@ -21,3 +21,7 @@
 ## Passe de revue 1 (relecteur-site, 01/11/2026)
 - Fait : REVUE-1.md (A_CORRIGER : F0 0, F1 2, F2 5, F3 5). Captures de l'agent captures en échec (`shootFailed`) : mesures par script maison, planches dans `.shots-dolce-vita-wepion-awwwards-revue1/self/`.
 - Reste (réviseur) : F1-1 aria-label du SplitText sur `.devise__it`, F1-2 bandes défilantes mobiles focalisables, puis F2.
+
+## Passe de revue 2 (relecteur-site, 01/11/2026)
+- Fait : REVUE-2.md (PUBLIABLE : F0 0, F1 0, F2 0, F3 3). Toutes les corrections de REVISION-1 vérifiées sur dist/ (axe, mesures, captures). QA-revue2.md absent (shootFailed) : script maison.
+- Reste : F3-2 (double `contentinfo`, paquet `kyw-footer`), à signaler hors site.
