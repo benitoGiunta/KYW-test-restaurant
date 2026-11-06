@@ -8,3 +8,4 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 - Les descriptions de technologies et de mécaniques d'un site sont à vérifier dans le HTML (les faux positifs abondent) ; ne rien affirmer sans preuve ; avis Google et abonnés `null` sauf affichage par le site.
 - 2026-11-01 : site WordPress/Elementor avec agenda : la page restaurant donne la carte en texte HTML (strip des balises) ; l'adresse de restaurants.json est le siège BCE, le site donne une autre adresse (Rue Lelièvre 4).
 - 2026-11-01 : site Next.js sur mesure (carte en texte HTML dans /carte/, strip des balises) ; la note de restaurants.json annonçait une réservation en ligne alors que le site n'accepte que le téléphone ; les posters vidéo (hero-poster.jpg) peuvent montrer autre chose que la vidéo.
+- 2026-11-06 : site WordPress (Poush) avec carte en PDF (pdftotext -layout, colonnes mélangées : reclasser les plats à la main) ; TripAdvisor/Facebook inaccessibles, Rankeat donne note Google et GPS.
