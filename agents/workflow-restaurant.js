@@ -25,6 +25,10 @@ const prompts = { portfolio: 'variante-portfolio', awwwards: 'variante-awwwards'
 // Test C (01/11) : construction de la variante legacy sur Sonnet 5.5 ; portfolio et awwwards restent sur Opus.
 // Test H (01/11) : construction portfolio et révisions sur Sonnet 5.5 ; awwwards reste sur Opus (témoin).
 const MODELE_BUILD = { portfolio: 'sonnet', awwwards: 'opus', legacy: 'sonnet' }
+// Test I (06/11) : awwwards phases 1 (structure) et 3 (QA) sur Sonnet, phase 2 (animations) sur Opus.
+// Garde-fou : si la revue 1 awwwards du restaurant 7 relève plus de F0+F1 qu'au restaurant 6 (2), ou s'il reste un F0/F1 en fin de cycle, remettre AWWWARDS_PAR_PHASE à null.
+const AWWWARDS_PAR_PHASE = { 1: 'sonnet', 2: 'opus', 3: 'sonnet' }
+const modeleBuild = (v, n) => (v === 'awwwards' && AWWWARDS_PAR_PHASE ? AWWWARDS_PAR_PHASE[n] : MODELE_BUILD[v])
 const MODELE_REVISION = 'sonnet'
 const PORTS = { portfolio: 4501, awwwards: 4502, legacy: 4503 }
 
@@ -53,10 +57,10 @@ const resultats = await pipeline(
   async (v) => {
     const role = prompts[v]
     const site = `${ROOT}/sites/${slug}-${v}/`
-    const a = await agent(`${socle(role, v, 'construction-1', promptPhase(v, 1))} PHASE 1 sur 3 de la construction de la variante « ${v} » (${site}) : concept, DESIGN.md, contenu (site.ts / données), toutes les pages et leur mise en page statique, build qui passe (scripts/q.sh). PAS d'animations avancées ni de QA en navigateur dans cette phase. Termine par ETAT.md (fait / reste / décisions) dans ${site}.`, { label: `build1:${v}:${slug}`, phase: 'Construction', schema: SCHEMA_BUILD, effort: 'medium', model: MODELE_BUILD[v] })
-    const b = await agent(`${socle(role, v, 'construction-2', promptPhase(v, 2))} PHASE 2 sur 3 de la variante « ${v} » (${site}) : lis ${site}ETAT.md et DESIGN.md (un agent précédent a fait la phase 1 ; ne refais pas ce qui est fait). Fais : motion, signature, interactions, états, mobile, reduced-motion, finitions, puis build qui passe (scripts/q.sh). Pas de shoot complet : un agent « captures » le fera après toi. Mets ETAT.md à jour.`, { label: `build2:${v}:${slug}`, phase: 'Construction', schema: SCHEMA_BUILD, effort: 'high', model: MODELE_BUILD[v] })
+    const a = await agent(`${socle(role, v, 'construction-1', promptPhase(v, 1))} PHASE 1 sur 3 de la construction de la variante « ${v} » (${site}) : concept, DESIGN.md, contenu (site.ts / données), toutes les pages et leur mise en page statique, build qui passe (scripts/q.sh). PAS d'animations avancées ni de QA en navigateur dans cette phase. Termine par ETAT.md (fait / reste / décisions) dans ${site}.`, { label: `build1:${v}:${slug}`, phase: 'Construction', schema: SCHEMA_BUILD, effort: 'medium', model: modeleBuild(v, 1) })
+    const b = await agent(`${socle(role, v, 'construction-2', promptPhase(v, 2))} PHASE 2 sur 3 de la variante « ${v} » (${site}) : lis ${site}ETAT.md et DESIGN.md (un agent précédent a fait la phase 1 ; ne refais pas ce qui est fait). Fais : motion, signature, interactions, états, mobile, reduced-motion, finitions, puis build qui passe (scripts/q.sh). Pas de shoot complet : un agent « captures » le fera après toi. Mets ETAT.md à jour.`, { label: `build2:${v}:${slug}`, phase: 'Construction', schema: SCHEMA_BUILD, effort: 'high', model: modeleBuild(v, 2) })
     const qa1 = await captures(v, 'build')
-    const c = await agent(`${socle(role, v, 'construction-3', promptPhase(v, 3))} PHASE 3 sur 3 de la variante « ${v} » (${site}) : QA. Lis ${site}ETAT.md puis ${site}QA-build.md (captures et audit déjà faits par l'agent « captures » : lis les planches indiquées, n'en refais pas de complètes). Corrige ce qui est cassé, rebuild (scripts/q.sh), vérifie chaque correction par capture ciblée d'une page. Écris RAPPORT.md (QA, placeholders) et mets ETAT.md à jour. Build final qui passe.`, { label: `build3:${v}:${slug}`, phase: 'Construction', schema: SCHEMA_BUILD, effort: 'medium', model: MODELE_BUILD[v] })
+    const c = await agent(`${socle(role, v, 'construction-3', promptPhase(v, 3))} PHASE 3 sur 3 de la variante « ${v} » (${site}) : QA. Lis ${site}ETAT.md puis ${site}QA-build.md (captures et audit déjà faits par l'agent « captures » : lis les planches indiquées, n'en refais pas de complètes). Corrige ce qui est cassé, rebuild (scripts/q.sh), vérifie chaque correction par capture ciblée d'une page. Écris RAPPORT.md (QA, placeholders) et mets ETAT.md à jour. Build final qui passe.`, { label: `build3:${v}:${slug}`, phase: 'Construction', schema: SCHEMA_BUILD, effort: 'medium', model: modeleBuild(v, 3) })
     return { v, build: c || b || a, qa1 }
   },
   async (etat) => {
