@@ -152,3 +152,18 @@ Inchangés, faute d'avoir été appliqués : socle fixe par agent (66 500 jetons
 **Pistes pour le restaurant 7 :** l'awwwards, seule variante encore construite sur Opus, pèse 38 % du restaurant ; tester
 les phases 1 et 3 sur Sonnet, la phase 2 (animations) restant sur Opus. Mesurer l'effet du regroupement des lectures.
 Test G sur décision de Benito.
+
+## Restaurants 7, 8 et 9 : configuration figée et dernier test (décision de Benito, 06/11)
+
+- **Configuration :** celle du restaurant 6 (tests A, B, C, D, H), plus le regroupement des lectures (sobriete.md § 7,
+  commit 77e5691), plus un dernier test :
+  - **Test I, awwwards :** construction phases 1 (structure) et 3 (QA) sur Sonnet, phase 2 (animations) sur Opus.
+    Référence : awwwards du restaurant 6, 7,61 $ de construction. Seuil : sous 4,50 $. Garde-fou : pas plus de F0 et F1
+    en revue 1 que l'awwwards du restaurant 6, et aucun F0 ni F1 restant en fin de cycle. Si le garde-fou est franchi au
+    restaurant 7, l'awwwards revient entièrement sur Opus pour les restaurants 8 et 9.
+- **Lancement :** restaurants 7, 8 puis 9, l'un après l'autre, trois variantes chacun, soit 9 sites.
+- **Arrêt :** dès que les 9 sites sont publiés, ou dès que la consommation hebdomadaire du compte atteint 25 %, au premier
+  des deux. Contrôle avant chaque lancement et pendant les workflows ; à 25 %, arrêt propre (commit, push, ETAT, mesure).
+- **Mesure :** chaque session restaurant dépose detail-<slug>.json et commandes-<slug>.json et prévient la session de
+  reporting ; verdict du test I au restaurant 7, puis suivi de dérive (alerte au-delà de 20 % d'écart).
+- **Test G (connecteurs) :** non décidé, non appliqué.
