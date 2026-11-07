@@ -44,3 +44,8 @@
 
 ## Phase 3 (QA) terminée
 - Pages carte, maison, chambres, reservation capturées (1440 et 390) : saines. Meta description de /reservation/ raccourcie (148 car.). Build final passe. RAPPORT.md écrit. Rien ne reste hors points ouverts du RAPPORT.
+
+## Passe 2 de relecture (relecteur-site, 07/11/2026)
+- Fait : REVUE-2.md (verdict A_CORRIGER : 0 F0, 1 F1, 2 F2, 7 F3). Corrections F1-1, F1-2, F2-1, F2-3, F2-4, F2-5 vérifiées ; F2-2 partielle.
+- Reste : F1-3 (h1 du hero coupé dès 1536 px, `base.css:79`), F2-6 (défilement horizontal de l'accueil à 768 et 820 px, `.dressage__scene`), F2-2bis (13 surtitres), F3-1 à F3-7.
+- Pièges : mesurer le h1 par `Range` et non par `scrollWidth` ; tester 768 et 820 px ; `scripts/q.sh` pour toute boucle de largeurs (> 120 s : arrière-plan).
