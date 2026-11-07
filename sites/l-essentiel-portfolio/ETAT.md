@@ -41,3 +41,6 @@
 ## Pièges
 - `gabarits/comptoir/` non modifié (protégé). `UTILISATION.md` mis à jour. Leçon ajoutée à `agents/lecons/construction.md`.
 - Les originaux des photos (`data/restaurants/l-essentiel/photos/`) ont des plats en bandeaux 1490 x 435 : ne jamais les servir en plein cadre.
+
+## Phase 3 (QA) terminée
+- Pages carte, maison, chambres, reservation capturées (1440 et 390) : saines. Meta description de /reservation/ raccourcie (148 car.). Build final passe. RAPPORT.md écrit. Rien ne reste hors points ouverts du RAPPORT.
