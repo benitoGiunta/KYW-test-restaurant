@@ -1,0 +1,104 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, assiettes, menus, retrait, histoire, fin } from '../data/site';
+const d = site.distinctions;
+const aperc = [assiettes[0].plats.length, assiettes[1].plats.length];
+const prixDeux = menus[0].prix;
+---
+<Base page="accueil">
+  <section class="hero wrap" aria-labelledby="h1">
+    <p class="hero__lieu">Temploux, Namur&nbsp;· Une étoile au guide Michelin</p>
+    <h1 id="h1" class="display hero__titre">L’Essentiel</h1>
+    <div class="hero__texte">
+      <p class="hero__accroche">{site.accroche}</p>
+      <div class="hero__actions">
+        <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+        <a class="cta cta--vide" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
+      </div>
+    </div>
+    <figure class="hero__media"><Photo cle="facade" widths={[640, 960, 1400]} sizes="(min-width: 64rem) 62vw, 100vw" prioritaire /></figure>
+  </section>
+
+  <section class="nuit retrait" aria-labelledby="h-retrait">
+    <div class="wrap marge">
+      <h2 id="h-retrait" class="marge__titre">Le retrait</h2>
+      <div class="marge__corps">
+        <p class="retrait__phrase" aria-label={`Nous retirons ${retrait.biffes.join(', ')}. Il reste ${retrait.reste.join(', ')}.`}>
+          <span aria-hidden="true">Nous retirons {retrait.biffes.map((b) => <Fragment><s class="biffe">{b}</s>{' '}</Fragment>)}</span>
+          <span class="retrait__reste" aria-hidden="true">Il reste {retrait.reste.join(', ').replace(/, ([^,]*)$/, ' et $1')}.</span>
+        </p>
+        <p class="retrait__note nuit__doux">{site.baseline.texte}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="faits wrap" aria-label="Distinctions">
+    <ul class="faits__liste">
+      <li class="fait">
+        <span class="fait__val">1&nbsp;étoile</span>
+        <span class="fait__lib">Guide Michelin, fiche de Temploux</span>
+        <a class="lien-util fait__src" href={d.michelin.url} rel="noopener">Voir la fiche</a>
+      </li>
+      <li class="fait">
+        <span class="fait__val">{d.gaultmillau.note}</span>
+        <span class="fait__lib">{d.gaultmillau.edition}, {d.gaultmillau.rang}</span>
+        <a class="lien-util fait__src" href={d.gaultmillau.url} rel="noopener">{d.gaultmillau.source}</a>
+      </li>
+      <li class="fait">
+        <span class="fait__val">{d.google.note}</span>
+        <span class="fait__lib">Note Google, {d.google.nombre}</span>
+        <span class="fait__src fait__src--txt">Relevé indicatif : {d.google.reserve}</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="assiettes wrap" aria-labelledby="h-assiettes">
+    <div class="marge">
+      <h2 id="h-assiettes" class="marge__titre">La carte</h2>
+      <div class="marge__corps">
+        <p class="titre-section">Deux assiettes, {prixDeux}.</p>
+        <p class="assiettes__chapeau">Une première et une deuxième assiette, à choisir à la carte&nbsp;: {aperc[0]} propositions, puis {aperc[1]}. Les menus Affaire, Plaisir et Balade se servent pour la table entière.</p>
+      </div>
+    </div>
+    <div class="diptyque">
+      {assiettes.map((a) => (
+        <div class="diptyque__col">
+          <h3 class="diptyque__titre">{a.titre}</h3>
+          <ul class="liste-plats">
+            {a.plats.map((p) => <li>{p.nom.split(',')[0]}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <ul class="bandes" aria-label="Plats de la maison">
+      <li><Photo cle="entree" widths={[480, 800, 1200]} sizes="(min-width: 48rem) 33vw, 80vw" /></li>
+      <li><Photo cle="poisson" widths={[480, 800, 1200]} sizes="(min-width: 48rem) 33vw, 80vw" /></li>
+      <li><Photo cle="biche" widths={[480, 800, 1200]} sizes="(min-width: 48rem) 33vw, 80vw" /></li>
+    </ul>
+    <p class="assiettes__lien"><a class="cta cta--vide" href={u('/carte/')}><span class="cta__txt">Voir toute la carte</span></a></p>
+  </section>
+
+  <section class="salle wrap" aria-labelledby="h-salle">
+    <div class="marge">
+      <h2 id="h-salle" class="marge__titre">La maison</h2>
+      <div class="marge__corps">
+        <p id="h-salle-t" class="titre-section">Une tannerie du XVIIe siècle, plusieurs salles.</p>
+      </div>
+    </div>
+    <div class="paire">
+      <figure class="paire__a"><Photo cle="chaises" widths={[480, 800, 1200]} sizes="(min-width: 64rem) 30vw, 90vw" /></figure>
+      <div class="paire__texte">
+        <p>{histoire.lieu}</p>
+        <p>{histoire.terrasse}</p>
+        <p><a class="lien" href={u('/histoire/')}>Découvrir la maison</a></p>
+      </div>
+      <figure class="paire__b"><Photo cle="brique" widths={[640, 1000, 1600]} sizes="(min-width: 64rem) 52vw, 100vw" /></figure>
+    </div>
+  </section>
+
+  <section class="plein" aria-label="La salle aux tulipes">
+    <Photo cle="tulipes" widths={[800, 1400, 2000]} sizes="100vw" />
+  </section>
+</Base>

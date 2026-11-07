@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, assiettes, menus, fin, regles } from '../data/site';
+---
+<Base title="La carte" page="carte" description="La carte de L’Essentiel à Temploux : deux assiettes à 90 €, menus Affaire (50 €), Plaisir (72 €) et Balade (90 €), chariot de fromages affinés.">
+  <section class="page-tete wrap" aria-labelledby="h1">
+    <h1 id="h1" class="display page-tete__titre">La carte</h1>
+    <p class="page-tete__chapeau">Deux assiettes à choisir, ou un menu pour la table entière. Carte relevée à l’automne 2026, en saison du gibier.</p>
+  </section>
+
+  {assiettes.map((a) => (
+    <section class="carte-bloc wrap" aria-labelledby={`h-${a.id}`}>
+      <div class="marge">
+        <h2 id={`h-${a.id}`} class="marge__titre">{a.titre}</h2>
+        <ul class="index marge__corps">
+          {a.plats.map((p) => (
+            <li class="index__ligne">
+              <span class="index__nom">{p.nom}{p.supplement && <span class="index__supp">{p.supplement}</span>}</span>
+              {p.photo ? <span class="index__vig"><Photo cle={p.photo} widths={[240, 480]} sizes="8rem" decorative /></span> : <span class="index__vig index__vig--vide" aria-hidden="true"></span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+
+  <section class="carte-bloc wrap" aria-labelledby="h-fin">
+    <div class="marge">
+      <h2 id="h-fin" class="marge__titre">Fromages et dessert</h2>
+      <ul class="index marge__corps">
+        <li class="index__ligne index__ligne--prix"><span class="index__nom">{fin.fromage.nom}</span><span class="prix">{fin.fromage.prix}</span></li>
+        <li class="index__ligne index__ligne--prix">
+          <span class="index__nom">{fin.dessert.nom}<span class="index__supp">{fin.dessert.note}</span></span>
+          <span class="prix">{fin.dessert.prix}</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="nuit menus" aria-labelledby="h-menus">
+    <div class="wrap marge">
+      <h2 id="h-menus" class="marge__titre">Les menus</h2>
+      <div class="marge__corps">
+        <dl class="menus__liste">
+          {menus.map((m) => (
+            <div class="menu">
+              <dt class="menu__nom">{m.nom}</dt>
+              <dd class="menu__detail">{m.detail}</dd>
+              <dd class="menu__prix prix">{m.prix}</dd>
+            </div>
+          ))}
+        </dl>
+        <ul class="regles">
+          {regles.map((r) => <li>{r}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="plein plein--bande" aria-label="Une table dressée"><Photo cle="dressee" widths={[800, 1400, 1417]} sizes="100vw" /></section>
+
+  <section class="cloture wrap" aria-labelledby="h-cloture">
+    <p id="h-cloture" class="titre-section">Une table vous attend.</p>
+    <div class="hero__actions">
+      <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+      <a class="cta cta--vide" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
+    </div>
+  </section>
+</Base>
