@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+---
+<Base title="À propos" description="Le Royal Namur est une brasserie de la Place du Théâtre, face au Théâtre de Namur : terrasse, cuisine de brasserie généreuse, ouverte tous les jours." page="a-propos">
+  <section class="page-tete wrap">
+    <h1 class="display page-titre">Face au Théâtre</h1>
+    <p class="page-chapo">{site.baseline}.</p>
+  </section>
+  <section class="wrap duo-sec">
+    <div class="duo">
+      <div class="duo__face duo__face--a">
+        <p class="face__lib">La place</p>
+        <p class="duo__grand">Brasserie de la Place du Théâtre, au numéro {site.adresse.numero}.</p>
+        <p>Située sur la Place du Théâtre de Namur, la brasserie reçoit dans un cadre élégant et chaleureux. La cuisine de brasserie s’y savoure avec générosité : déjeuner d’affaires, dîner entre amis ou pause avant ou après un spectacle.</p>
+        <p>La terrasse fait face au Théâtre. La cuisine est ouverte tous les jours, à midi et le soir.</p>
+      </div>
+      <div class="duo__face duo__face--b">
+        <figure class="cadre"><Photo cle="cocktails" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 46vw" /></figure>
+        <p class="legende">La carte du Royal et deux cocktails, la façade du Théâtre derrière.</p>
+      </div>
+    </div>
+  </section>
+  <section class="nuit" aria-labelledby="reperes">
+    <div class="wrap">
+      <h2 id="reperes" class="titre-section titre-section--nuit">Repères</h2>
+      <dl class="reperes">
+        <div><dt>Note Google</dt><dd>{site.avis.google.note}<small>/5, {site.avis.google.nombre} avis</small></dd></div>
+        <div><dt>Note TripAdvisor</dt><dd>{site.avis.tripadvisor.note}<small>/5, {site.avis.tripadvisor.nombre} avis</small></dd></div>
+        <div><dt>Cuisine ouverte</dt><dd>7<small> jours sur 7</small></dd></div>
+      </dl>
+      <p class="nuit__doux">Notes relevées sur des agrégateurs d’avis en novembre 2026, sans extrait cité. L’histoire de la maison et son équipe ne sont pas documentées : cette maquette n’invente rien.</p>
+    </div>
+  </section>
+  <section class="final wrap">
+    <h2 class="display final__titre">Venez voir la place.</h2>
+    <p class="hero__actions"><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></p>
+  </section>
+</Base>

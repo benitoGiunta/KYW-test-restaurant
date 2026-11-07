@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, carte, nomCategorie, prix } from '../data/site';
+const cartePhotos = { 'Entrées': 'plats', 'Plats brasserie': 'vins', 'Moules jumbo (1,350 kg)': 'moules', 'Bières au fût': 'bieres', 'Cocktails et apéritifs (extraits)': 'cocktails' } as const;
+const rubs = carte.map((c) => ({ ...c, ph: (cartePhotos as Record<string, string | undefined>)[c.categorie] as 'plats' | undefined }));
+---
+<Base title="La carte" description="La carte du Royal Namur : entrées, plats de brasserie, moules jumbo, coin du boucher, vins du patron et bières au fût, avec les prix de la carte d’août 2026." page="carte">
+  <section class="page-tete wrap">
+    <h1 class="display page-titre">La carte</h1>
+    <p class="page-chapo">Carte d’août 2026, prix en euros. Chaque plat en face de son prix.</p>
+  </section>
+  <nav class="wrap rubriques" aria-label="Rubriques de la carte">
+    <ul>{carte.map((c, i) => <li><a class="lien-util" href={`#c${i}`}>{nomCategorie(c.categorie)}</a></li>)}</ul>
+  </nav>
+  {rubs.map((c, i) => {
+    const ph = c.ph;
+    return (
+      <section class={`rubrique wrap${i % 2 ? ' rubrique--b' : ''}`} id={`c${i}`} aria-labelledby={`t${i}`}>
+        <div class="rubrique__tete">
+          <h2 id={`t${i}`} class="titre-section">{nomCategorie(c.categorie)}</h2>
+          {c.categorie.includes('(') && <p class="rubrique__prec">{c.categorie.match(/\((.*)\)/)![1]}</p>}
+          {ph && <figure class="cadre cadre--rubrique"><Photo cle={ph} widths={[480, 800]} sizes="(max-width: 48rem) 80vw, 26vw" /></figure>}
+        </div>
+        <div class="rubrique__corps">
+          <ul class="index">
+            {c.plats.map((p) => (
+              <li><span class="index__nom">{p.nom}{p.description && <small>{p.description}</small>}</span><span class="index__prix">{prix(p.prix)}</span></li>
+            ))}
+          </ul>
+          {c.note && <p class="rubrique__note">{c.note}</p>}
+        </div>
+      </section>
+    );
+  })}
+  <section class="final wrap">
+    <p class="page-chapo">La carte complète des vins et des boissons est celle du restaurant : ici, un extrait.</p>
+    <p class="hero__actions"><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></p>
+  </section>
+</Base>

@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, services, jours } from '../data/site';
+---
+<Base title="Réserver" description="Réservez une table au Royal Namur, Place du Théâtre 13 : réservation en ligne, par téléphone au 081 22 01 33 ou par e-mail. Cuisine ouverte 7 jours sur 7." page="reservation">
+  <section class="page-tete wrap">
+    <h1 class="display page-titre">Réserver</h1>
+    <p class="page-chapo">Une table en ligne, au téléphone ou par e-mail.</p>
+  </section>
+  <section class="wrap duo-sec">
+    <div class="duo">
+      <div class="duo__face duo__face--a">
+        <h2 class="titre-section">Votre table</h2>
+        <p class="hero__actions hero__actions--col">
+          <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver en ligne</span></a>
+          <a class="cta cta--vide" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
+        </p>
+        <p>La réservation en ligne s’ouvre sur le service Zenchef du restaurant, dans un nouvel onglet.</p>
+        <form class="mail" action={`mailto:${site.email}`} method="post" enctype="text/plain">
+          <h3 class="mail__titre">Ou par e-mail</h3>
+          <label>Votre nom<input type="text" name="nom" autocomplete="name" /></label>
+          <label>Date souhaitée<input type="text" name="date" placeholder="par exemple jeudi soir" /></label>
+          <label>Nombre de personnes<input type="text" name="personnes" inputmode="numeric" /></label>
+          <button class="cta cta--vide" type="submit"><span class="cta__txt">Ouvrir mon e-mail</span></button>
+        </form>
+      </div>
+      <div class="duo__face duo__face--b">
+        <h2 class="titre-section">La place</h2>
+        <address class="reserv__adresse">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
+        <h3 class="mail__titre">Cuisine</h3>
+        <ul class="pied__horaires pied__horaires--page">
+          {jours.map((j) => <li><span>{j}</span><span>{services[0].libelle} et {services[1].libelle}</span></li>)}
+        </ul>
+        <p class="nuit__doux nuit__doux--clair">La carte indique une ouverture de 11&nbsp;h à 23&nbsp;h ; la cuisine, elle, sert de 12&nbsp;h à 14&nbsp;h&nbsp;30 et de 18&nbsp;h à 22&nbsp;h. La terrasse se trouve face au Théâtre de Namur. Pour les autres questions pratiques (parking, groupes), écrivez à <a class="lien" href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      </div>
+    </div>
+  </section>
+</Base>

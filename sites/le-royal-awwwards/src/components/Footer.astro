@@ -1,0 +1,32 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site, services } from '../data/site';
+---
+<footer class="pied">
+  <div class="wrap pied__corps">
+    <p class="pied__mot" aria-hidden="true">Face à face.</p>
+    <div class="pied__col">
+      <h2 class="pied__titre">Venir</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}<br /><span class="pied__doux">Terrasse en face du Théâtre</span></address>
+      <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Cuisine</h2>
+      <ul class="pied__horaires">
+        <li><span>Tous les jours</span><span>{services[0].libelle}</span></li>
+        <li><span>Tous les jours</span><span>{services[1].libelle}</span></li>
+      </ul>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Contact</h2>
+      <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a><br /><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
+      <ul class="pied__reseaux">
+        {site.reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+    <div class="pied__cta"><a class="cta cta--salle" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></div>
+    <p class="pied__colophon">{site.credit}. Polices : Melodrama (Indian Type Foundry, Fontshare) et Host Grotesk (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />
