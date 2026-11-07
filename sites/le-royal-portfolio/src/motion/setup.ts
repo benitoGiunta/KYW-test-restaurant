@@ -96,7 +96,7 @@ function suggestion() {
   const reduced = prefersReducedMotion();
   let tl: gsap.core.Timeline | null = null;
   const ecrire = (d: (typeof data)[number], estAujourdhui: boolean) => {
-    label.textContent = estAujourdhui ? `Aujourd'hui, ${d.jour}` : d.jour[0].toUpperCase() + d.jour.slice(1);
+    label.textContent = d.jour[0].toUpperCase() + d.jour.slice(1);
     texte.innerHTML = d.texte.split(' ').map((m) => `<span class="mot">${m}</span>`).join(' ');
     prix.textContent = d.prix || '';
     marque.textContent = d.note || '';

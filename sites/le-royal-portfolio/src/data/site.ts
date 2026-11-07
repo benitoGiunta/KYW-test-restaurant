@@ -91,12 +91,12 @@ export const site: Restaurant = {
   nomLignes: ['Le Royal', 'Namur'],
   baseline: "L'élégance d'une brasserie au cœur de Namur",
   description:
-    'Le Royal Namur, brasserie belge Place du Théâtre : la carte, les moules jumbo, la terrasse face au Théâtre, les horaires de la cuisine (7 jours sur 7) et la réservation en ligne.',
+    'Le Royal Namur, brasserie belge Place du Théâtre : la carte, les moules jumbo, la terrasse, les horaires de cuisine (7 jours sur 7) et la réservation en ligne.',
   url: 'https://www.leroyalnamur.be',
   typeCuisine: 'Brasserie belge contemporaine',
   adresse: { rue: 'Place du Théâtre', numero: '13', cp: '5000', commune: 'Namur', pays: 'BE' },
   acces: [
-    { texte: 'Sur la Place du Théâtre, la terrasse fait face au Théâtre de Namur.', placeholder: false },
+    { texte: 'Au numéro 13 de la Place du Théâtre, à Namur.', placeholder: false },
     { texte: "La carte annonce une ouverture de 11h à 23h ; la cuisine sert de 12h à 14h30 et de 18h à 22h.", placeholder: false },
   ],
   geo: { lat: 50.4639, lon: 4.8681 },
@@ -129,7 +129,7 @@ export const site: Restaurant = {
   ],
   histoire: [
     "Située sur la Place du Théâtre de Namur, la Brasserie Le Royal vous accueille dans un cadre élégant et chaleureux où la cuisine de brasserie se savoure avec générosité.",
-    'Déjeuner d\'affaires, dîner entre amis ou pause avant ou après un spectacle : la terrasse fait face au Théâtre de Namur.',
+    'Façade en brique, terrasse sous parasols noirs : la brasserie tient la place.',
     'La cuisine est ouverte sept jours sur sept, à midi et le soir. Moules jumbo, boulettes maison, Royal Burger, vol-au-vent de poularde et pièces du boucher font la carte ; le vin du patron se sert au verre, au quart, à la demi ou à la bouteille.',
   ],
   notes: [

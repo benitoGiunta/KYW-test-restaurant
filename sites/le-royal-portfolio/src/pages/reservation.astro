@@ -2,6 +2,7 @@
 // Réserver et contact : page claire, formulaire de démonstration (ouvre Zenchef), horaires, adresse.
 import Base from '../layouts/Base.astro';
 import { site, adresseLigne, telHref, creneauService } from '../data/site';
+const hm = (t: string) => t.replace(':', 'h');
 const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`;
 ---
 <Base title="Réserver" theme="clair" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}.`}>
@@ -43,8 +44,8 @@ const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.g
                 <tr data-jour-ligne-tab={h.jour}>
                   <td>{h.jour}</td>
                   {h.creneaux.length ? (<>
-                    <td class={midi ? undefined : 'ferme'}>{midi ? `${midi.ouverture} à ${midi.fermeture}` : ''}</td>
-                    <td class={soir ? undefined : 'ferme'}>{soir ? `${soir.ouverture} à ${soir.fermeture}` : ''}</td>
+                    <td class={midi ? undefined : 'ferme'}>{midi ? `${hm(midi.ouverture)} à ${hm(midi.fermeture)}` : ''}</td>
+                    <td class={soir ? undefined : 'ferme'}>{soir ? `${hm(soir.ouverture)} à ${hm(soir.fermeture)}` : ''}</td>
                   </>) : <td class="ferme" colspan="2">{h.note || 'fermé'}</td>}
                 </tr>
               );
@@ -53,7 +54,7 @@ const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.g
         </table>
         <p class="petite-cap" style="margin-top: calc(var(--u) * 3)">Adresse</p>
         <address style="font-style: normal"><strong>{site.nom}</strong><br />{adresseLigne()}</address>
-        {site.acces.map((a) => <p style="margin-top: var(--u)">{a.texte}</p>)}
+        {site.acces.slice(0, 1).map((a) => <p style="margin-top: var(--u)">{a.texte}</p>)}
         <p style="margin-top: var(--u)"><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
         <p style="margin-top: var(--u)"><a class="link" href={carte} rel="noopener">Voir sur la carte</a></p>
       </div>

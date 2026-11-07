@@ -5,6 +5,7 @@ import Base from '../layouts/Base.astro';
 import Ardoise from '../components/Ardoise.astro';
 import { site, photoDe, adresseLigne, horaireTexte, creneauService } from '../data/site';
 import { u, asset } from '../lib/url';
+const hm = (t: string) => t.replace(':', 'h');
 const salle = photoDe('/photos/terrasse-960.webp');
 const facade = photoDe('/photos/facade-800.webp');
 const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`;
@@ -81,7 +82,7 @@ const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.g
         <h2 class="cap" id="maison-titre">Une brasserie sur la place</h2>
         <p>{site.histoire[0]}</p>
         <p style="margin-top: var(--u)">{site.histoire[1]}</p>
-        <a class="lien" href={u('/histoire/')}>Toute l'histoire <span aria-hidden="true">→</span></a>
+        <a class="lien" href={u('/histoire/')}>La maison <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -100,8 +101,8 @@ const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.g
                 <tr data-jour-ligne-tab={h.jour}>
                   <td>{h.jour}</td>
                   {h.creneaux.length ? (<>
-                    <td class={midi ? undefined : 'ferme'}>{midi ? `${midi.ouverture} à ${midi.fermeture}` : ''}</td>
-                    <td class={soir ? undefined : 'ferme'}>{soir ? `${soir.ouverture} à ${soir.fermeture}` : ''}</td>
+                    <td class={midi ? undefined : 'ferme'}>{midi ? `${hm(midi.ouverture)} à ${hm(midi.fermeture)}` : ''}</td>
+                    <td class={soir ? undefined : 'ferme'}>{soir ? `${hm(soir.ouverture)} à ${hm(soir.fermeture)}` : ''}</td>
                   </>) : <td class="ferme" colspan="2">{h.note || 'fermé'}</td>}
                 </tr>
               );

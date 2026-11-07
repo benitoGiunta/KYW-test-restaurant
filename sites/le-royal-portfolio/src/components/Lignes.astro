@@ -18,7 +18,7 @@ const { cat, ecrit = true } = Astro.props;
           {p.apercu && <img class="ligne__vignette" src={asset(p.apercu)} alt="" width="56" height="56" loading="lazy" decoding="async" />}
           <span class="ligne__texte">
             <span class="ligne__nom">{p.nom}</span>
-            {p.badges?.map((b) => <span class="badge">{b}</span>)}
+            {p.badges?.filter((b) => !p.nom.toLowerCase().includes(b)).map((b) => <span class="badge">{b}</span>)}
             {p.placeholder && <span class="ex">exemple</span>}
             {p.description && <span class="ligne__desc">{p.description}</span>}
           </span>
