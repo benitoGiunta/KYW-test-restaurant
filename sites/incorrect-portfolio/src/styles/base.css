@@ -148,16 +148,16 @@ main { padding-top: 56px; }
 
 /* Ça s'empile : scène épinglée (sticky), 350svh */
 .empile { height: 350svh; padding: 0; }
-.empile__scene { position: sticky; top: 56px; height: calc(100svh - 56px); display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); align-items: center; padding: calc(var(--dent) + var(--gutter)) var(--gutter) var(--gutter); }
-.empile__liste { list-style: none; padding: 0; display: grid; gap: 0.2em; }
-.empile__liste li { display: grid; grid-template-columns: 2.2em 1fr; align-items: baseline; gap: 0.4em; font-family: var(--f-display); font-stretch: 125%; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; font-size: min(var(--t-xl), 4.8svh); line-height: 1; opacity: 0.62; transition: opacity 0.25s; }
+.empile__scene { position: sticky; top: 56px; height: calc(100svh - 56px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gutter); align-items: center; padding: calc(var(--dent) + var(--gutter)) var(--gutter) var(--gutter); }
+.empile__liste { container-type: inline-size; min-width: 0; list-style: none; padding: 0; display: grid; gap: 0.2em; }
+.empile__liste li { display: grid; grid-template-columns: 2.2em 1fr; align-items: baseline; gap: 0.4em; font-family: var(--f-display); font-stretch: 125%; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; font-size: min(var(--t-xl), 4.8svh, 8cqi); line-height: 1; opacity: 0.62; transition: opacity 0.25s; }
 .empile__liste li.is-on, html:not(.motion) .empile__liste li { opacity: 1; }
 .empile__liste small { display: block; grid-column: 2; font-family: var(--f-body); font-stretch: 100%; font-weight: 700; text-transform: none; letter-spacing: 0; font-size: 1.25rem; line-height: 1.3; }
 .empile__liste .num { color: var(--creme); opacity: 0.9; }
-.empile__pile { display: grid; justify-items: center; gap: var(--gutter); }
+.empile__pile { container-type: inline-size; min-width: 0; display: grid; justify-items: center; gap: var(--gutter); }
 .empile__pile .plat { width: min(100%, 30rem, 40svh * 1.24); }
 .empile__prix { text-align: center; }
-.empile__prix strong { display: inline-block; padding: 0.08em 0.12em 0.02em; font-family: var(--f-display); font-stretch: 125%; font-weight: 900; letter-spacing: -0.03em; line-height: 0.88; font-size: min(var(--t-prix), 14svh, 9vw); white-space: nowrap; color: var(--ink); background: var(--jaune); border: var(--filet) solid var(--ink); box-shadow: var(--ombre) var(--ombre) 0 0 var(--ink); font-variant-numeric: tabular-nums; }
+.empile__prix strong { display: inline-block; padding: 0.08em 0.12em 0.02em; font-family: var(--f-display); font-stretch: 125%; font-weight: 900; letter-spacing: -0.03em; line-height: 0.88; font-size: min(var(--t-prix), 14svh, 9vw, 16cqi); white-space: nowrap; color: var(--ink); background: var(--jaune); border: var(--filet) solid var(--ink); box-shadow: var(--ombre) var(--ombre) 0 0 var(--ink); font-variant-numeric: tabular-nums; }
 .empile__prix span { display: block; margin-top: 0.5em; font-size: max(1.2rem, var(--t-m)); font-weight: 700; max-width: 26ch; margin-inline: auto; }
 @media (max-width: 767px) {
   .empile__scene { grid-template-columns: 1fr; align-content: start; gap: var(--u); }
@@ -203,8 +203,10 @@ main { padding-top: 56px; }
 .etapes ol { list-style: none; padding: 0; display: grid; gap: var(--gutter); counter-reset: etape; }
 .etapes ol[data-cercles] { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 1023px) { .etapes ol[data-cercles] { grid-template-columns: minmax(0, 1fr); } }
-.etapes li { min-width: 0; counter-increment: etape; display: grid; grid-template-columns: 3.25rem 1fr; gap: var(--gutter); align-items: start; padding: var(--gutter); background: var(--creme); color: var(--ink); border: var(--filet) solid var(--ink); box-shadow: var(--ombre) var(--ombre) 0 0 var(--ink); }
-.etapes li strong { display: block; font-family: var(--f-display); font-stretch: 125%; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; font-size: var(--t-l); line-height: 0.95; margin-bottom: 0.3em; }
+/* Accueil : l'ol vit dans une demi-colonne, une seule colonne de cartes */
+.etapes > div > ol[data-cercles] { grid-template-columns: minmax(0, 1fr); }
+.etapes li { container-type: inline-size; min-width: 0; counter-increment: etape; display: grid; grid-template-columns: 3.25rem minmax(0, 1fr); gap: var(--gutter); align-items: start; padding: var(--gutter); background: var(--creme); color: var(--ink); border: var(--filet) solid var(--ink); box-shadow: var(--ombre) var(--ombre) 0 0 var(--ink); }
+.etapes li strong { display: block; font-family: var(--f-display); font-stretch: 125%; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; font-size: min(var(--t-l), 8cqi); overflow-wrap: break-word; line-height: 0.95; margin-bottom: 0.3em; }
 .cercle { position: relative; display: grid; place-items: center; width: 3.25rem; aspect-ratio: 1; border-radius: 50%; border: var(--filet) solid var(--ink); font-weight: 900; font-size: 1.25rem; overflow: clip; isolation: isolate; }
 .cercle::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 50%; background: var(--jaune); transform: scale(var(--rempli, 1)); }
 html.motion .cercle::before { --rempli: 0; }
@@ -300,3 +302,9 @@ html.motion .cercle::before { --rempli: 0; }
 
 /* Le R inversé du logo INCORЯECT (la lettre Я est absente d'Archivo) : un R en miroir, purement décoratif. */
 .rinv { display: inline-block; transform: scaleX(-1); }
+
+/* Revision 2 : adresse et plan de réservation, titres de catégories sous 400 px */
+.visite > * { container-type: inline-size; min-width: 0; }
+.visite__adresse { font-size: min(var(--t-xl), 10cqi); }
+.visite .cadre .display--xl { font-size: min(var(--t-xl), 10.5cqi); }
+@media (max-width: 400px) { h3.display--xl { font-size: clamp(1.6rem, 8vw, 2.2rem); } }
