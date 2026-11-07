@@ -1,0 +1,40 @@
+---
+// Menus : le menu des fêtes patronales (avec et sans boissons) et les moules jumbo de l'ardoise, en prix géants ; réservation et carte.
+import Base from '../layouts/Base.astro';
+import { site, telHref } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="Menus" description={`Les menus du Royal Namur : menu des fêtes patronales à 50 € ou 65 € avec boissons, moules jumbo à 20 € le mardi et le jeudi.`}>
+  <section class="entete wrap">
+    <h1 class="cap">Menus</h1>
+    <p class="lead muted">Le menu des fêtes patronales en trois services, avec ou sans boissons, et les moules jumbo de l'ardoise du mardi et du jeudi.</p>
+  </section>
+  <section class="wrap" aria-label="Les formules">
+    <div class="formules">
+      {site.menus.map((m, i) => (
+        <article class="formule" data-reveal={i > 0 ? "fade" : undefined} data-delay={i > 0 ? String(i * 0.1) : undefined}>
+          <p class="formule__prix num" data-prix-ecrit>{m.prix}</p>
+          <h2 class="formule__nom">{m.nom}</h2>
+          <p class="formule__quand">{m.quand}</p>
+          <p class="formule__desc">{m.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="section clair" aria-labelledby="resa-titre" style="margin-top: calc(var(--u) * 6)">
+    <div class="wrap acces">
+      <div>
+        <p class="petite-cap">Avant ou après le spectacle</p>
+        <h2 class="cap cat__titre" id="resa-titre">Réserver votre table</h2>
+        <p style="margin-top: var(--u)">{site.reservation.note} Réservation en ligne via {site.reservation.outil}, ou par téléphone au {site.telephone}.</p>
+        <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver</a><a class="btn" href={telHref()}>Appeler le {site.telephone}</a></div>
+      </div>
+      <div>
+        <p class="petite-cap">À la carte</p>
+        <h2 class="cap cat__titre">La carte complète</h2>
+        <p style="margin-top: var(--u)">Entrées, salades, pâtes fraîches, poissons, moules jumbo, coin du boucher, vins du patron, bières au fût et cocktails.</p>
+        <div class="actions"><a class="btn" href={u('/carte/')}>La carte</a></div>
+      </div>
+    </div>
+  </section>
+</Base>

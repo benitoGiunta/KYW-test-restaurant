@@ -1,0 +1,32 @@
+---
+// La terrasse : page claire, la photo de la terrasse face au Théâtre, mots géants, galerie de tables (seules photos du site avec les aperçus).
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { asset, u } from '../lib/url';
+const premiere = photoDe('/photos/terrasse-960.webp');
+const galerie = ['/photos/moules.webp', '/photos/cocktails.webp', '/photos/chouffe.webp', '/photos/planche.webp', '/photos/plats.webp', '/photos/vins.webp', '/photos/facade.webp'].map(photoDe);
+---
+<Base title="La terrasse" theme="clair" preloadImage={{ href: premiere.src }} description={`La terrasse du Royal Namur, Place du Théâtre : parasols noirs face au Théâtre de Namur, moules jumbo, bières, cocktails et planches à partager.`}>
+  <div class="clair" style="padding-bottom: calc(var(--u) * 6)">
+    <section class="entete wrap">
+      <h1 class="cap">La terrasse</h1>
+      <p class="lead muted">Sur la Place du Théâtre, face au Théâtre de Namur : un déjeuner d'affaires, un dîner entre amis ou une pause avant ou après un spectacle.</p>
+    </section>
+    <figure class="wrap terrasse__photo">
+      <img src={asset(premiere.src)} alt={premiere.alt} width={premiere.largeur} height={premiere.hauteur} fetchpriority="high" decoding="async" />
+    </figure>
+    <ul class="mots cap wrap" data-mots aria-label="Terrasse, Théâtre, Brasserie">
+      {site.motsSalle.map((m) => <li>{m}</li>)}
+    </ul>
+    <section class="wrap section" aria-label="En images">
+      <div class="galerie">
+        {galerie.map((p, i) => (
+          <figure data-reveal="clip" data-delay={String((i % 4) * 0.08)}>
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a></div>
+    </section>
+  </div>
+</Base>

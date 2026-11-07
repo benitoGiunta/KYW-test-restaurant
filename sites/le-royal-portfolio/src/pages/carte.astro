@@ -1,0 +1,26 @@
+---
+// La carte complète : les deux services déployés l'un sous l'autre, avec ancres.
+import Base from '../layouts/Base.astro';
+import Lignes from '../components/Lignes.astro';
+import { site, carteDe } from '../data/site';
+---
+<Base title="La carte" description={`La carte du Royal Namur : entrées, salades, pâtes fraîches, moules jumbo, coin du boucher, vins du patron, bières au fût et cocktails, lue comme une ardoise.`}>
+  <section class="entete wrap">
+    <h1 class="cap">La carte</h1>
+    <p class="lead muted">Une seule carte, midi et soir, tous les jours : de l'entrée au coin du boucher, puis les vins du patron, les bières au fût et les cocktails. Prix de la carte d'août 2026.</p>
+  </section>
+  <div class="col-carte">
+    <div>
+      <nav aria-label="Services" class="actions" style="margin-top: 0">
+        <a class="btn" href="#table">À table</a>
+        <a class="btn" href="#bar">Au bar</a>
+      </nav>
+      <h2 class="cap cat__titre" id="table" style="margin-top: calc(var(--u) * 5)">Table <span class="muted" style="font-size: var(--t-s); font-family: var(--f-body); letter-spacing: 0.1em">midi et soir, 7 jours sur 7</span></h2>
+      {carteDe('table').map((c) => <Lignes cat={c} />)}
+      <h2 class="cap cat__titre" id="bar" style="margin-top: calc(var(--u) * 8)">Bar <span class="muted" style="font-size: var(--t-s); font-family: var(--f-body); letter-spacing: 0.1em">vins, bières, cocktails</span></h2>
+      {carteDe('bar').map((c) => <Lignes cat={c} />)}
+    </div>
+  </div>
+  <div class="apercu" data-apercu aria-hidden="true"><img alt="" width="560" height="700" /></div>
+  <div style="height: calc(var(--u) * 6)"></div>
+</Base>
