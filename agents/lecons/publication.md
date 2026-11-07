@@ -6,3 +6,4 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 - Publication : ne jamais `git add -A` (arbre souvent sale : `data/suivi.html`, `dist/suivi/index.html`, `pnpm-lock.yaml`, `QA-revue*.md`) ; ajouter les chemins du site et `dist/<slug>/` seulement ; `scripts/index.mjs` réécrit les deux fichiers de suivi (horodatage) : les committer seuls, après `git diff --stat`.
 - Le superviseur doit ajouter `Agent` aux outils de `variante-awwwards` si une critique indépendante est voulue ; sinon auto-notation marquée.
 - Un `dist/` déjà commité et identique au build de contrôle ne demande pas de commit « Publie ».
+- 2026-11-07 L'Essentiel : publication des trois variantes OK (portfolio REVUE-3, awwwards REVUE-2, legacy REVUE-1 sans F0/F1). Les dist étaient déjà commités et identiques au build ; seul le suivi a changé. Le legacy n'a pas été revu après REVISION-1 (F2 corrigés non revérifiés).
