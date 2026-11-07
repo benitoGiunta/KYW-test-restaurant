@@ -27,6 +27,7 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f3ecdc" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <script is:inline>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -44,7 +45,7 @@ const jsonLd = {
     <a class="skip" href="#contenu">Aller au contenu</a>
     <Nav page={page} />
     <main id="contenu"><slot /></main>
-    <Footer />
+    <Footer court={page === 'accueil'} />
     <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
     document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
     <script>import '../scripts/ui.ts';</script>
