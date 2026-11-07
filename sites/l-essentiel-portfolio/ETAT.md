@@ -49,3 +49,8 @@
 - Fait : REVUE-2.md (verdict A_CORRIGER : 0 F0, 1 F1, 2 F2, 7 F3). Corrections F1-1, F1-2, F2-1, F2-3, F2-4, F2-5 vérifiées ; F2-2 partielle.
 - Reste : F1-3 (h1 du hero coupé dès 1536 px, `base.css:79`), F2-6 (défilement horizontal de l'accueil à 768 et 820 px, `.dressage__scene`), F2-2bis (13 surtitres), F3-1 à F3-7.
 - Pièges : mesurer le h1 par `Range` et non par `scrollWidth` ; tester 768 et 820 px ; `scripts/q.sh` pour toute boucle de largeurs (> 120 s : arrière-plan).
+
+## Passe 3 (relecteur-site, 07/11/2026)
+Fait : REVUE-3.md écrit (verdict A_CORRIGER : 0 F0, 0 F1, 1 F2, F3 inchangés + F3-8). Les trois corrections de REVISION-2 sont confirmées (h1 entier de 390 à 2560, 0 débordement à 768/820, surtitres retirés).
+Reste : F2-7 (avis Google : date « 7 novembre 2026 » en dur et source, `src/data/site.ts:212`, mettre `placeholder: true` ou retirer la date) ; F3 au choix.
+Pièges : QA-revue3 ne couvre que 3 pages ; axe complet et débordement refaits par script maison sur 35 cas.
