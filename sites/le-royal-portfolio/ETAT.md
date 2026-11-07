@@ -1,3 +1,11 @@
+# ETAT, le-royal, portfolio, phase 3 (QA) terminée
+
+- Fait : QA ciblée 7 pages x 1440/390/360/320, 3 corrections (404 mobile, en-tête et horaires sous 380 px), build final OK, RAPPORT.md écrit, leçon ajoutée.
+- Reste : `gabarits/UTILISATION.md` (ligne `ardoise | le-royal`, protégé), LCP/loader non mesurés, `pnpm index`, push.
+- Piège : n'ajouter au commit que `sites/le-royal-portfolio/` et `dist/le-royal/portfolio/`.
+
+---
+
 # ETAT, le-royal, portfolio, phase 2 (motion, signature, états) terminée
 
 ## Phase 2 : fait
