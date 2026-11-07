@@ -1,0 +1,40 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site, horaires, horairesNote } from '../data/site';
+import { retourne } from '../lib/retourne';
+const groupes = [
+  { jours: 'Mardi à vendredi', h: horaires[1].creneaux.join(', ') },
+  { jours: 'Samedi', h: horaires[5].creneaux.join(' et ') },
+  { jours: 'Dimanche et lundi', h: 'Fermé' },
+];
+---
+<section class="pied" aria-label="Contact et horaires">
+  <div class="wrap pied__corps">
+    <p class="pied__mot display" aria-hidden="true" data-split="chars" set:html={retourne('à l’endroit ?')} />
+    <div class="pied__col">
+      <h2 class="pied__titre">Venir</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Horaires</h2>
+      <ul class="pied__horaires">
+        {groupes.map((g) => <li><span>{g.jours}</span><span>{g.h}</span></li>)}
+      </ul>
+      <p class="pied__doux">{horairesNote}</p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Contact</h2>
+      <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+      <ul class="pied__reseaux">
+        {site.reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+    <div class="pied__cta">
+      <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver en ligne</span></a>
+    </div>
+    <p class="pied__colophon">{site.credit}. Police : Archivo (Omnibus-Type) et Martian Mono (Evil Martians), via Google Fonts. Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />

@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+import { retourne } from '../lib/retourne';
+---
+<Base page="404" title="Page introuvable" description="Cette page est incorrecte : l’adresse est de travers. Revenez à l’accueil d’INCORЯECT, pizzeria rock-n-roll à Namur.">
+  <section class="perdu wrap" aria-labelledby="titre-404">
+    <h1 id="titre-404" class="perdu__titre display" set:html={retourne('Erreur 404')} />
+    <p class="perdu__texte">Cette page est incorrecte. On a vérifié : c’est l’adresse qui est de travers, pas la pizza.</p>
+    <div class="perdu__actions">
+      <a class="cta" href={u('/')}><span class="cta__txt">Revenir à l’endroit</span></a>
+      <a class="lien-gros" href={u('/carte/')}>Voir la carte</a>
+    </div>
+  </section>
+</Base>

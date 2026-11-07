@@ -1,0 +1,18 @@
+---
+import { u } from '../lib/url';
+import { site } from '../data/site';
+import { retourne } from '../lib/retourne';
+interface Props { page?: string }
+const { page = '' } = Astro.props;
+const liens = [
+  { href: '/carte/', texte: 'Carte', id: 'carte' },
+  { href: '/histoire/', texte: 'Histoire', id: 'histoire' },
+];
+---
+<header class="entete">
+  <a class="entete__nom" href={u('/')} aria-label="INCORRECT, accueil" aria-current={page === 'accueil' ? 'page' : undefined}><span class="display" aria-hidden="true" set:html={retourne('incorrect')} /></a>
+  <nav class="entete__nav" aria-label="Navigation principale">
+    {liens.map((l) => <a class="lien-nav" href={u(l.href)} aria-current={page === l.id ? 'page' : undefined}>{l.texte}</a>)}
+    <a class="cta cta--petit" href={u('/reservation/')} aria-current={page === 'reservation' ? 'page' : undefined}><span class="cta__txt">Réserver</span></a>
+  </nav>
+</header>

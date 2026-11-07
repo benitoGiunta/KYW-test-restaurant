@@ -1,0 +1,16 @@
+---
+import { euro } from '../lib/retourne';
+import type { Plat } from '../data/site';
+interface Props { plats: Plat[]; taille?: 'grand' | 'moyen'; titre?: string }
+const { plats, taille = 'grand' } = Astro.props;
+const prix = (p: Plat) => (Array.isArray(p.prix) ? p.prix.map((n) => n.toFixed(2).replace('.', ',')).join(' / ') + ' €' : (p.des ? 'dès ' : '') + euro(p.prix));
+---
+<ul class={`index index--${taille}`}>
+  {plats.map((p) => (
+    <li class="rang">
+      <h3 class="rang__nom display">{p.nom}</h3>
+      <span class="rang__prix">{prix(p)}</span>
+      {(p.note || p.description) && <p class="rang__desc">{p.note && <em class="rang__note">{p.note}.</em>} {p.description}</p>}
+    </li>
+  ))}
+</ul>

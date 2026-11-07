@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { retourne } from '../lib/retourne';
+import { site, equipe, presse } from '../data/site';
+---
+<Base page="histoire" title="Histoire" description="L’histoire d’INCORЯECT : Alexandre Hocquet, ancien boulanger, en cuisine, Estelle en salle. Pâte au levain reposée 48 heures, farine Bodson, rue Haute Marcelle à Namur.">
+  <section class="entete-page wrap" aria-labelledby="titre-histoire">
+    <h1 id="titre-histoire" class="entete-page__titre display" data-split="lines" set:html={retourne('Histoire')} />
+    <p class="histoire__lead">Incorrect est la pizzeria rock-n-roll d’Alex et Estelle, rue Haute Marcelle, à Namur. Estelle reçoit en salle. Alexandre Hocquet tient la cuisine : ancien boulanger, il a gardé le levain. La musique va du rock au metal et au rap américain, sous les briques et sur le parquet. Les assiettes sont en céramique de Céramifoux.</p>
+  </section>
+
+  <section class="equipe wrap" aria-labelledby="titre-equipe">
+    <h2 id="titre-equipe" class="sr-only">L’équipe</h2>
+    <ul class="equipe__liste">
+      {equipe.map((e) => (
+        <li class="membre">
+          <span class="membre__lettre display" aria-hidden="true">{e.initiale}</span>
+          <div>
+            <h3 class="membre__nom">{e.nom}</h3>
+            <p class="membre__role">{e.role}</p>
+            <p>{e.texte}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="plein" aria-label="Le four">
+    <figure class="plein__fig" data-parallax>
+      <Photo cle="four" widths={[800, 1280, 1687]} sizes="100vw" />
+      <figcaption class="wrap plein__legende"><span>Sortie de four.</span><span>{site.credit}</span></figcaption>
+    </figure>
+  </section>
+
+  <section class="mur levain" aria-labelledby="titre-levain">
+    <div class="wrap levain__corps">
+      <h2 id="titre-levain" class="levain__titre display" set:html={retourne('Deux jours de patience')} />
+      <div class="levain__texte">
+        <p>Le levain vient du métier d’avant. La pâte repose 48 heures avant d’aller au four, et la farine sort des moulins Bodson, en Belgique.</p>
+        <p>La cuisine est très végétale : lactofermentation, pickles, kimchi maison, crème de betterave. Le beurre au kimchi accompagne le pain, la sauce ranch accompagne les croûtes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="presse wrap" aria-labelledby="titre-presse">
+    <h2 id="titre-presse" class="presse__titre display" set:html={retourne('Ce qu’on en a écrit')} />
+    <ul class="presse__liste">
+      {presse.map((p) => (
+        <li><a class="presse__lien" href={p.url} rel="noopener"><span class="presse__media">{p.media}</span><span class="presse__texte">{p.titre}</span><span class="presse__date">{p.date}</span></a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="reserve-bande wrap" aria-label="Réserver">
+    <p class="reserve-bande__texte">Venez voir de quoi il s’agit.</p>
+    <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver</span></a>
+  </section>
+</Base>

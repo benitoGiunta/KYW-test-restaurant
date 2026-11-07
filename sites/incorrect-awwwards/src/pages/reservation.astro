@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+import { retourne } from '../lib/retourne';
+import { site, horaires, horairesNote, pratique } from '../data/site';
+---
+<Base page="reservation" title="Réservation" description="Réserver une table chez INCORЯECT à Namur : réservation en ligne, téléphone 081 13 85 61, adresse rue Haute Marcelle 35, horaires et infos pratiques.">
+  <section class="entete-page wrap" aria-labelledby="titre-resa">
+    <h1 id="titre-resa" class="entete-page__titre display" data-split="lines" set:html={retourne('Réservation')} />
+  </section>
+
+  <section class="resa wrap" aria-label="Réserver et venir">
+    <div class="resa__agir">
+      <h2 class="resa__sous">Réserver</h2>
+      <p>La réservation se fait en ligne, sur la plateforme du restaurant, ou par téléphone.</p>
+      <div class="resa__actions">
+        <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver en ligne</span></a>
+        <a class="lien-gros" href={site.telephoneHref}>Appeler le {site.telephoneLisible}</a>
+      </div>
+      <h2 class="resa__sous">Adresse</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="resa__horaires">
+      <h2 class="resa__sous">Horaires</h2>
+      <dl class="horaires">
+        {horaires.map((h) => (
+          <div class="horaires__ligne"><dt>{h.jour}</dt><dd>{h.creneaux.length ? h.creneaux.join(' et ') : 'Fermé'}</dd></div>
+        ))}
+      </dl>
+      <p class="resa__note">{horairesNote}</p>
+    </div>
+  </section>
+
+  <section class="mur pratique" aria-labelledby="titre-pratique">
+    <div class="wrap">
+      <h2 id="titre-pratique" class="pratique__titre display" set:html={retourne('Avant de venir')} />
+      <ul class="pratique__liste">
+        {pratique.map((p) => <li><h3>{p.titre}</h3><p>{p.texte}</p></li>)}
+      </ul>
+      <p class="resa__note">Informations relevées dans des guides en ligne : à confirmer au moment de réserver. La carte est <a class="lien" href={u('/carte/')}>ici</a>, de 14,50 à 24,50 € la pizza.</p>
+    </div>
+  </section>
+</Base>

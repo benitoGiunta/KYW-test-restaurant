@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Liste from '../components/Liste.astro';
+import { u } from '../lib/url';
+import { retourne, euro } from '../lib/retourne';
+import { site, menu, enAttendant, pizzasClassiques, pizzasDeNous } from '../data/site';
+const autres = menu.filter((c) => !['En attendant', 'Les pizzas classiques', 'Les pizzas de nous'].includes(c.categorie));
+const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
+const prix = (p: any) => (Array.isArray(p.prix) ? p.prix.map((n: number) => n.toFixed(2).replace('.', ',')).join(' / ') + ' €' : (p.des ? 'dès ' : '') + euro(p.prix));
+const nettoie = (s: string) => s.replace(/ \(accompagnements\)/, '');
+---
+<Base page="carte" title="La carte" description="La carte d’INCORЯECT à Namur : pizzas classiques et « de nous », en attendant, croûtes à tremper, desserts, cocktails, bières craft et vins. Prix en euros.">
+  <section class="entete-page wrap" aria-labelledby="titre-carte">
+    <h1 id="titre-carte" class="entete-page__titre display" data-split="lines" set:html={retourne('La carte')} />
+    <p class="entete-page__chapo">Relevée sur la carte papier du restaurant. Les plats et les prix peuvent changer : vérifiez sur place avant de commander.</p>
+    <nav class="carte__index" aria-label="Sections de la carte">
+      <a class="lien-util" href="#attendant">En attendant</a>
+      <a class="lien-util" href="#classiques">Pizzas classiques</a>
+      <a class="lien-util" href="#denous">Pizzas de nous</a>
+      <a class="lien-util" href="#autour">Autour des pizzas</a>
+    </nav>
+  </section>
+
+  <section class="carte-bloc wrap" id="attendant" aria-labelledby="t-attendant">
+    <h2 id="t-attendant" class="carte-bloc__titre display" set:html={retourne('En attendant')} />
+    <Liste plats={enAttendant} taille="moyen" />
+  </section>
+
+  <section class="carte-bloc wrap" id="classiques" aria-labelledby="t-classiques">
+    <h2 id="t-classiques" class="carte-bloc__titre display" set:html={retourne('Les classiques')} />
+    <Liste plats={pizzasClassiques} />
+  </section>
+
+  <section class="carte-photo wrap" aria-label="Table dressée">
+    <div class="carte-photo__img" data-parallax><Photo cle="table" widths={[640, 1000, 1400]} sizes="(min-width: 900px) 60vw, 100vw" /></div>
+    <p class="carte-photo__legende">{site.credit}</p>
+  </section>
+
+  <section class="carte-bloc wrap" id="denous" aria-labelledby="t-denous">
+    <h2 id="t-denous" class="carte-bloc__titre display" set:html={retourne('Les pizzas de nous')} />
+    <Liste plats={pizzasDeNous} />
+  </section>
+
+  <section class="mur autour" id="autour" aria-labelledby="t-autour">
+    <div class="wrap">
+      <h2 id="t-autour" class="autour__titre display" set:html={retourne('Autour des pizzas')} />
+      <div class="autour__mur">
+        {autres.map((c) => (
+          <section class="bloc" aria-labelledby={`b-${slug(c.categorie)}`}>
+            <h3 id={`b-${slug(c.categorie)}`} class="bloc__titre">{nettoie(c.categorie)}</h3>
+            <dl class="bloc__liste">
+              {c.plats.map((p) => (
+                <div class="ligne">
+                  <dt>{p.nom}</dt>
+                  <dd class="ligne__prix">{prix(p)}</dd>
+                  {p.description && <dd class="ligne__desc">{p.description}</dd>}
+                </div>
+              ))}
+            </dl>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="reserve-bande wrap" aria-label="Réserver">
+    <p class="reserve-bande__texte">Une table pour ce soir ?</p>
+    <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver</span></a>
+  </section>
+</Base>

@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Liste from '../components/Liste.astro';
+import { u } from '../lib/url';
+import { retourne } from '../lib/retourne';
+import { site, trio, pizzasDeNous } from '../data/site';
+const deNousMin = Math.min(...pizzasDeNous.map((p) => p.prix as number));
+const deNousMax = Math.max(...pizzasDeNous.map((p) => p.prix as number));
+const f = (n: number) => n.toFixed(2).replace('.', ',');
+---
+<Base page="accueil" title="Pizzeria rock-n-roll à Namur" description="INCORЯECT, pizzeria rock-n-roll d’Alex et Estelle à Namur : pâte au levain reposée 48 heures, Dwight Schrute, Ananas Montana, bières craft. Réservez en ligne.">
+  <section class="hero wrap" aria-labelledby="titre-accueil">
+    <h1 id="titre-accueil" class="hero__mot display" data-hero set:html={retourne('incorrect')} />
+    <div class="hero__texte">
+      <p class="hero__baseline">{site.baseline}, à Namur.</p>
+      <p class="hero__faits">Pizza au levain · {site.adresse.rue} {site.adresse.numero} · Du mardi au samedi</p>
+      <div class="hero__actions">
+        <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver en ligne</span></a>
+        <a class="lien-gros" href={site.telephoneHref}>Appeler le {site.telephoneLisible}</a>
+      </div>
+    </div>
+    <div class="hero__media" data-parallax>
+      <Photo cle="four" widths={[640, 960, 1400]} sizes="(min-width: 900px) 50vw, 100vw" prioritaire />
+    </div>
+  </section>
+
+  <section class="mur manifeste" aria-label="Ce que vous trouverez ici">
+    <div class="wrap manifeste__corps">
+      <p class="manifeste__texte" data-split="lines">Une pâte au levain qui repose quarante-huit heures. Dessus, du kimchi maison, de la betterave, de la porchetta. À côté, des bières craft et du rock.</p>
+    </div>
+  </section>
+
+  <section class="plein" aria-label="La salle">
+    <figure class="plein__fig" data-parallax>
+      <Photo cle="salle" widths={[800, 1280, 1687]} sizes="100vw" />
+      <figcaption class="wrap plein__legende"><span>Briques, parquet, cuisine ouverte.</span><span>{site.credit}</span></figcaption>
+    </figure>
+  </section>
+
+  <section class="pate wrap" aria-labelledby="titre-pate">
+    <h2 id="titre-pate" class="pate__titre display" data-split="lines" set:html={retourne('La pâte d’abord')} />
+    <dl class="chiffres">
+      <div class="chiffre"><dt>Repos de la pâte</dt><dd class="display">48&nbsp;h</dd><p>Pâte au levain, laissée au repos deux jours avant le four.</p></div>
+      <div class="chiffre"><dt>Farine</dt><dd class="display">Bodson</dd><p>Des moulins belges, pour des bords bien colorés.</p></div>
+      <div class="chiffre"><dt>Pizzas « de nous »</dt><dd class="display">{f(deNousMin)} à {f(deNousMax)}&nbsp;€</dd><p>Quatre créations de la maison, au-delà des classiques.</p></div>
+    </dl>
+  </section>
+
+  <section class="trio wrap" aria-labelledby="titre-trio">
+    <div class="trio__photo" data-parallax><Photo cle="table" widths={[640, 960, 1200]} sizes="(min-width: 900px) 42vw, 100vw" /></div>
+    <div class="trio__liste">
+      <h2 id="titre-trio" class="trio__titre display" data-split="lines" set:html={retourne('Les trois qu’on cite')} />
+      <Liste plats={trio} taille="moyen" />
+      <p class="trio__suite"><a class="lien" href={u('/carte/')}>Voir toute la carte</a></p>
+    </div>
+  </section>
+</Base>
