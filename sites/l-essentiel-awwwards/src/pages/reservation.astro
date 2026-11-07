@@ -3,16 +3,15 @@ import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import { site, services, fermetures, regles } from '../data/site';
 ---
-<Base title="Réservation" page="reservation" description="Réserver à L’Essentiel, Rue Roger Clément 32 à Temploux : par téléphone, par e-mail ou sur le calendrier en ligne. Ouvert du mercredi au samedi.">
+<Base title="Réservation" page="reservation" description="Réserver à L’Essentiel, Rue Roger Clément 32 à Temploux : par téléphone ou sur le calendrier en ligne. Ouvert du mercredi au samedi.">
   <section class="page-tete wrap" aria-labelledby="h1">
     <h1 id="h1" class="display page-tete__titre">Réserver</h1>
     <p class="page-tete__chapeau" data-split="lines" data-intro data-delay="0.15">Le restaurant est ouvert du mercredi au samedi, à midi et le soir. Réservation sur le calendrier du restaurant (de 1 à 10 couverts) ou par téléphone.</p>
   </section>
 
-  <section class="actions wrap" aria-label="Réserver">
+  <section class="actions wrap" aria-label="Moyens de réserver">
     <a class="gros" href={site.reservationUrl} rel="noopener"><span class="gros__lib">Calendrier en ligne</span><span class="gros__val">Choisir midi ou soir</span></a>
     <a class="gros" href={site.telephoneHref}><span class="gros__lib">Téléphone</span><span class="gros__val">{site.telephoneLisible}</span></a>
-    <a class="gros" href={`mailto:${site.email}`}><span class="gros__lib">E-mail</span><span class="gros__val">{site.email}</span></a>
   </section>
 
   <section class="wrap infos" aria-label="Informations pratiques">
@@ -21,6 +20,7 @@ import { site, services, fermetures, regles } from '../data/site';
       <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
       <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
       <p>Une terrasse donne sur les jardins.</p>
+      <p><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
     </div>
     <div class="infos__col">
       <h2 class="marge__titre" data-reveal="fade">Horaires</h2>

@@ -70,7 +70,7 @@ export const assiettes: Assiette[] = [
     id: 'premiere',
     titre: 'Première assiette',
     plats: [
-      { nom: 'Émincé de noix de Saint-Jacques, choux chinois, épinards et shiitakés, gel de soja pimenté et dashi', photo: 'entree' },
+      { nom: 'Émincé de noix de Saint-Jacques, choux chinois, épinards et shiitakés, gel de soja pimenté et dashi' },
       { nom: 'Carpaccio de dos de faon, betterave, tartare de langoustine, granité de foie gras et jus de viande perlé' },
       { nom: 'Croquettes de petits gris et pied de porc, lentilles vertes, jambonneau et jus de volaille émulsionné', photo: 'petitGris' },
       { nom: 'Légumes de saison tiédis, gelée de butternut, paleta et jus de cuisson' },
@@ -81,10 +81,10 @@ export const assiettes: Assiette[] = [
     id: 'deuxieme',
     titre: 'Deuxième assiette',
     plats: [
-      { nom: 'Filet de sole, condiment d’huître et lardon, poireau, laitue de mer, huile de ciboulette', photo: 'poisson' },
+      { nom: 'Filet de sole, condiment d’huître et lardon, poireau, laitue de mer, huile de ciboulette' },
       { nom: 'Turbot grillé, artichaut poivrade, sucrine et palet de bintje croustillant, sauce choron' },
       { nom: 'Homard bleu cuit dans sa carapace puis roulé au beurre, ris de veau meunière, épinard, fèves des marais et béarnaise des pinces', supplement: 'Supplément selon le cours du marché' },
-      { nom: 'Mignon de biche du Pays, trompettes, choux de Bruxelles, airelles et coing, pomme Dauphine et sauce poivrade', photo: 'biche' },
+      { nom: 'Mignon de biche du Pays, trompettes, choux de Bruxelles, airelles et coing, pomme Dauphine et sauce poivrade' },
       { nom: 'Suprême de poule faisane rôti sur le coffre, chicon, champignons des bois et potimarron, croquettes des cuisses et jus façon brabançonne' },
     ],
   },
@@ -127,13 +127,13 @@ export const equipe = {
 
 export const histoire = {
   lieu: 'L’Essentiel s’installe dans une ancienne tannerie du XVIIe siècle, à Temploux. Maison de caractère, elle compte plusieurs salles, chacune avec son ambiance : table longue aux persiennes, mur de brique, arche et marbre noir.',
-  accueil: 'Bénédicte et son équipe reçoivent dans ces salles. Le site du restaurant n’en dit pas davantage : l’année d’ouverture et le parcours de la maison ne sont pas publiés.',
+  accueil: 'Bénédicte et son équipe reçoivent dans ces salles.',
   terrasse: 'La terrasse donne sur les jardins.',
   cuisine: 'La cuisine suit la saison : gibier du Pays à l’automne, poissons nobles, ris de veau, et un chariot de fromages affinés.',
 };
 
 /** Le retrait : ce que la maison enlève (mots biffés, microcopie du concept) et ce qui reste (faits du dossier). */
 export const retrait = {
-  biffes: ['le décor', 'l’effet', 'le détour', 'le bruit', 'la mode'],
+  biffes: ['le décor', 'l’effet', 'le détour', 'le bruit'],
   reste: ['la table', 'le produit', 'la saison'],
 };
