@@ -28,3 +28,6 @@ Gabarit affiche adapté, contenu réel, palette, Plat.astro (Dwight Schrute en 5
 
 ## Révision 1 (07/11/2026)
 F1-1 et F2-1 à F2-7 corrigés, voir REVISION-1.md. Reste : F3 (formats d'heures, JSON-LD horaires, données de carte).
+
+## Revue 2 (07/11/2026)
+REVUE-2.md : A_CORRIGER (0 F0, 2 F1, 1 F2, 6 F3). Reste : N-1 étapes de la home à 1024 et 1440 (cartes trop étroites, texte hors carte), N-2 « Ça s'empile » à 768 (prix et plat coupés), N-3 `reservation/` à 1024 (« MARCELL/E »), F3 (formats d'heures, JSON-LD horaires, données carte). Piège : `overflow-x: clip` cache ces débordements, mesurer `li.scrollWidth` et `right` des enfants.
