@@ -55,6 +55,6 @@ export const fetes = {
 export const photos = {
   facade: { src: 'facade', w: [800, 1200], width: 1200, height: 896, alt: 'Façade en brique de la brasserie Le Royal, place du Théâtre à Namur, sous un ciel bleu' },
   planche: { src: 'planche', w: [640, 960], width: 960, height: 1280, alt: 'Planche de charcuterie et deux verres qui trinquent sur la terrasse, la façade de la brasserie en arrière-plan' },
-  terrasse: { src: 'terrasse', w: [640, 960, 1200], width: 1200, height: 1600, alt: 'Terrasse sous parasols noirs face au Théâtre de Namur, avec l’ardoise des moules jumbo du mardi et du jeudi à 20 €' },
+  terrasse: { src: 'terrasse', w: [640, 800, 1200], width: 1200, height: 1600, alt: 'Terrasse sous parasols noirs face au Théâtre de Namur, avec l’ardoise des moules jumbo du mardi et du jeudi à 20 €' },
   moules: { src: 'moules', w: [640, 960], width: 960, height: 1280, alt: 'Table de terrasse avec moules, frites, spaghetti et verres de vin' },
 };
