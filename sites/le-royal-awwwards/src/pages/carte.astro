@@ -17,13 +17,14 @@ const rubs = carte.map((c) => ({ ...c, ph: (cartePhotos as Record<string, string
   {rubs.map((c, i) => {
     const ph = c.ph;
     return (
-      <section class={`rubrique wrap${i % 2 ? ' rubrique--b' : ''}`} id={`c${i}`} aria-labelledby={`t${i}`}>
-        <div class="rubrique__tete">
-          <h2 id={`t${i}`} class="titre-section">{nomCategorie(c.categorie)}</h2>
+      <section class={`rubrique wrap${i % 2 ? ' rubrique--b' : ''}`} id={`c${i}`} aria-labelledby={`t${i}`} data-duo>
+        <div class="rubrique__tete" data-face="a">
+          <h2 id={`t${i}`} class="titre-section" data-split="words">{nomCategorie(c.categorie)}</h2>
           {c.categorie.includes('(') && <p class="rubrique__prec">{c.categorie.match(/\((.*)\)/)![1]}</p>}
-          {ph && <figure class="cadre cadre--rubrique"><Photo cle={ph} widths={[480, 800]} sizes="(max-width: 48rem) 80vw, 26vw" /></figure>}
+          {ph && <figure class="cadre cadre--rubrique" data-reveal="clip"><Photo cle={ph} widths={[480, 800]} sizes="(max-width: 48rem) 80vw, 26vw" /></figure>}
         </div>
-        <div class="rubrique__corps">
+        <span class="axe" aria-hidden="true"><span class="axe__point"></span></span>
+        <div class="rubrique__corps" data-face="b">
           <ul class="index">
             {c.plats.map((p) => (
               <li><span class="index__nom">{p.nom}{p.description && <small>{p.description}</small>}</span><span class="index__prix">{prix(p.prix)}</span></li>

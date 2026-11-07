@@ -5,9 +5,9 @@ import { u } from '../lib/url';
 import { site, services, platsAccueil, moules, prix, fetes } from '../data/site';
 ---
 <Base description={site.description} page="accueil">
-  <section class="hero wrap" aria-labelledby="titre">
-    <div class="hero__texte">
-      <p class="hero__lieu">Place du Théâtre {site.adresse.numero}, Namur</p>
+  <section class="hero wrap" aria-labelledby="titre" data-duo="haut">
+    <div class="hero__texte" data-face="a">
+      <p class="hero__lieu" data-split="words" data-intro>Place du Théâtre {site.adresse.numero}, Namur</p>
       <h1 id="titre" class="display hero__titre">Le Royal <span class="nw">Namur</span></h1>
       <p class="hero__accroche">{site.baseline}. Brasserie face au Théâtre, cuisine ouverte tous les jours.</p>
       <p class="hero__actions">
@@ -15,7 +15,8 @@ import { site, services, platsAccueil, moules, prix, fetes } from '../data/site'
         <a class="cta cta--vide" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
       </p>
     </div>
-    <figure class="hero__media">
+    <span class="axe" aria-hidden="true"><span class="axe__point"></span></span>
+    <figure class="hero__media" data-face="b">
       <Photo cle="terrasse" prioritaire widths={[480, 800, 960]} sizes="(max-width: 48rem) 100vw, 40vw" />
       <figcaption>La terrasse, face au Théâtre de Namur.</figcaption>
     </figure>
@@ -28,18 +29,19 @@ import { site, services, platsAccueil, moules, prix, fetes } from '../data/site'
   </section>
 
   <section class="duo-sec wrap" aria-labelledby="face">
-    <h2 id="face" class="display enonce">Un côté brasserie, un côté théâtre, une place entre les deux.</h2>
-    <div class="duo">
-      <article class="duo__face duo__face--a">
+    <h2 id="face" class="display enonce" data-split="words">Un côté brasserie, un côté théâtre, une place entre les deux.</h2>
+    <div class="duo" data-duo>
+      <article class="duo__face duo__face--a" data-face="a">
         <p class="face__lib">Côté brasserie</p>
-        <figure class="cadre"><Photo cle="facade" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 46vw" /></figure>
+        <figure class="cadre" data-reveal="clip"><Photo cle="facade" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 46vw" /></figure>
         <p>La façade en brique est au numéro {site.adresse.numero}. Déjeuner d’affaires, dîner entre amis, verre de fin d’après-midi : la salle et la terrasse servent une cuisine de brasserie généreuse.</p>
       </article>
-      <article class="duo__face duo__face--b">
+      <span class="axe" aria-hidden="true"><span class="axe__point"></span></span>
+      <article class="duo__face duo__face--b" data-face="b">
         <p class="face__lib">Côté théâtre</p>
-        <p class="duo__grand">Avant le spectacle, après le spectacle, ou sans spectacle du tout.</p>
+        <p class="duo__grand" data-split="lines">Avant le spectacle, après le spectacle, ou sans spectacle du tout.</p>
         <p>De la terrasse, on regarde le Théâtre de Namur. Le Royal accueille la pause qui l’encadre : une planche à partager, un verre, un vrai repas.</p>
-        <figure class="cadre cadre--petit"><Photo cle="planche" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 24vw" /></figure>
+        <figure class="cadre cadre--petit" data-reveal="clip"><Photo cle="planche" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 24vw" /></figure>
       </article>
     </div>
   </section>
@@ -48,19 +50,19 @@ import { site, services, platsAccueil, moules, prix, fetes } from '../data/site'
     <div class="wrap nuit__grille">
       <div class="nuit__texte">
         <p class="nuit__lib">L’ardoise de la terrasse</p>
-        <h2 id="ardoise" class="display nuit__titre">Moules jumbo à 20 € les mardis et jeudis.</h2>
+        <h2 id="ardoise" class="display nuit__titre" data-split="words">Moules jumbo à <span class="nw">20&nbsp;€</span> les mardis et <span class="nw">jeudis.</span></h2>
         <p class="nuit__doux">Annonce relevée sur l’ardoise de la terrasse (conditions à confirmer au restaurant). À la carte, les moules jumbo de 1,350&nbsp;kg se servent en cinq recettes.</p>
-        <ul class="index index--nuit">
+        <ul class="index index--nuit" data-reveal="up">
           {moules.map((m) => <li><span class="index__nom">{m.nom}</span><span class="index__prix">{prix(m.prix)}</span></li>)}
         </ul>
       </div>
-      <figure class="nuit__media"><Photo cle="moules" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 40vw" /></figure>
+      <figure class="nuit__media" data-reveal="clip"><Photo cle="moules" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 40vw" /></figure>
     </div>
   </section>
 
   <section class="plats wrap" aria-labelledby="plats">
-    <h2 id="plats" class="titre-section">À la table du Royal</h2>
-    <ul class="index">
+    <h2 id="plats" class="titre-section" data-split="words">À la table du Royal</h2>
+    <ul class="index" data-reveal="up">
       {platsAccueil.map((p) => (
         <li><span class="index__nom">{p.nom}{p.description && <small>{p.description}</small>}</span><span class="index__prix">{prix(p.prix)}</span></li>
       ))}
@@ -69,12 +71,13 @@ import { site, services, platsAccueil, moules, prix, fetes } from '../data/site'
   </section>
 
   <section class="fetes wrap" aria-labelledby="fetes">
-    <div class="duo">
-      <div class="duo__face duo__face--a">
-        <h2 id="fetes" class="titre-section">Menu des fêtes patronales</h2>
+    <div class="duo" data-duo data-amp="24">
+      <div class="duo__face duo__face--a" data-face="a">
+        <h2 id="fetes" class="titre-section" data-split="words">Menu des fêtes patronales</h2>
         <p>Trois services, entrée, plat et dessert, proposés en novembre 2026.</p>
       </div>
-      <div class="duo__face duo__face--b">
+      <span class="axe" aria-hidden="true"><span class="axe__point"></span></span>
+      <div class="duo__face duo__face--b" data-face="b">
         <p class="fetes__ligne"><span>Sans boissons</span><span class="fetes__prix">{fetes.sans}&nbsp;€</span></p>
         <p class="fetes__ligne"><span>Avec boissons</span><span class="fetes__prix">{fetes.avec}&nbsp;€</span></p>
         <p class="nuit__doux">Apéritif maison et mises en bouche, trois verres, café ou thé pour la formule avec boissons.</p>
@@ -83,7 +86,7 @@ import { site, services, platsAccueil, moules, prix, fetes } from '../data/site'
   </section>
 
   <section class="final wrap" aria-labelledby="final">
-    <h2 id="final" class="display final__titre">À table, face au Théâtre.</h2>
+    <h2 id="final" class="display final__titre" data-split="words">À table, face au Théâtre.</h2>
     <p class="hero__actions">
       <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
       <a class="cta cta--vide" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
