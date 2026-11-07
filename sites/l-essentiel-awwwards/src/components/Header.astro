@@ -1,5 +1,6 @@
 ---
 import { u } from '../lib/url';
+import { site } from '../data/site';
 const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
@@ -12,8 +13,21 @@ const liens = [
   <a class="tete__marque" href={base} aria-current={path === base ? 'page' : undefined}>L’Essentiel</a>
   <nav class="tete__nav" aria-label="Navigation principale">
     <ul>
-      {liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      {liens.map((l) => <li class="tete__lien"><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
       <li><a class="cta cta--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="cta__txt">Réserver</span></a></li>
+      <li class="tete__bouton"><button class="menu-btn" type="button" aria-expanded="false" aria-controls="volet" data-volet-ouvrir>Menu</button></li>
     </ul>
   </nav>
 </header>
+<dialog id="volet" class="volet" aria-label="Menu">
+  <div class="volet__tete">
+    <span class="tete__marque" aria-hidden="true">L’Essentiel</span>
+    <button class="menu-btn" type="button" data-volet-fermer>Fermer</button>
+  </div>
+  <ul class="volet__liens">
+    <li><a class="volet__lien" href={base} aria-current={path === base ? 'page' : undefined} autofocus>Accueil</a></li>
+    {liens.map((l) => <li><a class="volet__lien" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+    <li><a class="volet__lien" href={u('/reservation/')} aria-current={courant('/reservation/')}>Réservation</a></li>
+  </ul>
+  <p class="volet__pied"><a class="cta cta--nuit" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a></p>
+</dialog>

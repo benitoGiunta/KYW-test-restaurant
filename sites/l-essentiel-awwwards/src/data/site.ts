@@ -55,6 +55,12 @@ export const fermetures = [
   `à partir du 19 décembre 2027 (fin non précisée)`,
 ] as const;
 
+/** Mêmes fermetures en dates ISO (incluses) pour le statut calculé du hero ; fin inconnue = null. */
+export const fermeturesPlages: [string, string | null][] = [
+  ['2026-12-20', '2027-01-05'], ['2027-02-21', '2027-03-10'], ['2027-05-02', '2027-05-11'],
+  ['2027-07-17', '2027-08-03'], ['2027-09-12', '2027-09-21'], ['2027-11-07', '2027-11-11'], ['2027-12-19', null],
+];
+
 export type Plat = { nom: string; supplement?: string; photo?: 'petitGris' | 'poisson' | 'biche' | 'entree' | 'dessert'; placeholder?: boolean };
 export type Assiette = { id: string; titre: string; plats: Plat[] };
 
