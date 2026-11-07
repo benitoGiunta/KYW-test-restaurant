@@ -19,3 +19,8 @@
 - sloplint règle 34 ne lit pas `base.css` importé : `html`/`body` en `overflow-x: clip` aussi dans un `<style is:global>` de `Base.astro` (doublon voulu). `q.sh` n’affiche que 20 lignes : relire `.logs/*.log` par `grep` pour ne pas manquer un FAIL en tête.
 - Les comps `c1.html`/`c2.html` rendent le même PNG ; le fichier c1 est en miroir du build (voir comp.md).
 - Aucune donnée inventée en phase 2 : les textes de formulaire sont des formats, des aides ou des faits du dossier (jours fermés, plus de six couverts : menu uniquement).
+
+# Fin de la phase 3 (QA)
+- Fait : sweep sloplint rendu sur 6 routes, 0 FAIL / 0 REFLEX ; corrections nav 1024, onglets 320, pages formulaire scindées, chambres, recrutement ; build, noindex/mention/footer, `pnpm index` ; RAPPORT.md.
+- Reste : revue finish par sous-agent, gates jugées, contraste `--color-error`, 72 cases de DESIGN.md non revérifiées, publication (commit/push).
+- Piège : QA-build.md absent (agent captures non passé) ; Chromium : lancer avec `executablePath: '/opt/pw-browsers/chromium'`.
