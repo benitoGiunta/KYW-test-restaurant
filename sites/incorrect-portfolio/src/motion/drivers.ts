@@ -27,9 +27,10 @@ export function registerDrivers() {
 function ouvert() {
   const pastilles = q('[data-ouvert]');
   if (!pastilles.length) return;
-  const now = new Date();
-  const jour = (now.getDay() + 6) % 7; // 0 = lundi
-  const minutes = now.getHours() * 60 + now.getMinutes();
+  // Heure de Namur, quel que soit le fuseau du visiteur.
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map((p) => [p.type, p.value]));
+  const jour = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(parts.weekday); // 0 = lundi
+  const minutes = parseInt(parts.hour, 10) * 60 + parseInt(parts.minute, 10);
   const toMin = (h: string) => parseInt(h.slice(0, 2), 10) * 60 + parseInt(h.slice(3, 5), 10);
   const noms = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
   pastilles.forEach((p) => {
@@ -55,7 +56,7 @@ function ouvert() {
 function aujourdhui() {
   const cartes = q('[data-horaires-cartes] [data-jour]');
   if (!cartes.length) return;
-  const jour = (new Date().getDay() + 6) % 7;
+  const jour = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', weekday: 'short' }).format(new Date()));
   cartes.forEach((c) => {
     const ok = Number(c.dataset.jour) === jour;
     c.classList.toggle('is-aujourdhui', ok);
@@ -77,24 +78,41 @@ function entete() {
   return () => { off(); h.classList.remove('is-hidden'); };
 }
 
-/* Menu mobile : bouton aria-expanded, affiche jaune plein écran. */
+/* Menu mobile : bouton aria-expanded, affiche jaune plein écran. Focus : premier lien à l'ouverture, retour au bouton
+   à la fermeture (Échap ou bouton), Tab et Maj+Tab bouclent dans le menu ; un lien suivi ferme le menu. */
 function menuMobile() {
   const b = document.querySelector<HTMLButtonElement>('[data-burger]');
   const m = document.querySelector<HTMLElement>('[data-menu]');
   const h = document.querySelector<HTMLElement>('[data-header]');
   if (!b || !m || !h) return;
-  const set = (open: boolean) => {
+  const liens = () => [...m.querySelectorAll<HTMLElement>('a[href]')];
+  const set = (open: boolean, rendreFocus = false) => {
     b.setAttribute('aria-expanded', String(open));
     b.textContent = open ? 'Fermer' : 'Menu';
     m.classList.toggle('is-open', open);
     h.classList.toggle('is-open', open);
     document.documentElement.classList.toggle('lenis-stopped', open);
+    if (open) liens()[0]?.focus({ preventScroll: true });
+    else if (rendreFocus) b.focus({ preventScroll: true });
   };
-  const toggle = () => set(b.getAttribute('aria-expanded') !== 'true');
-  const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') set(false); };
+  const ouvert = () => b.getAttribute('aria-expanded') === 'true';
+  const toggle = () => set(!ouvert(), true);
+  const clavier = (e: KeyboardEvent) => {
+    if (!ouvert()) return;
+    if (e.key === 'Escape') { set(false, true); return; }
+    if (e.key !== 'Tab') return;
+    const cycle = [b, ...liens()];
+    const i = cycle.indexOf(document.activeElement as HTMLElement);
+    const suivant = cycle[(i + (e.shiftKey ? -1 : 1) + cycle.length) % cycle.length];
+    if (i === -1 || (e.shiftKey && i === 0) || (!e.shiftKey && i === cycle.length - 1)) { e.preventDefault(); suivant.focus(); }
+  };
+  const ferme = () => set(false);
+  const redim = () => { if (innerWidth > 767 && ouvert()) set(false); };
   b.addEventListener('click', toggle);
-  document.addEventListener('keydown', esc);
-  return () => { b.removeEventListener('click', toggle); document.removeEventListener('keydown', esc); set(false); };
+  m.addEventListener('click', (e) => { if ((e.target as HTMLElement).closest('a')) ferme(); });
+  document.addEventListener('keydown', clavier);
+  window.addEventListener('resize', redim);
+  return () => { b.removeEventListener('click', toggle); document.removeEventListener('keydown', clavier); window.removeEventListener('resize', redim); set(false); };
 }
 
 /* Cartes qui claquent (bento, horaires, équipe, avis) : scale 1.06 → 1, y 24 → 0, stagger 0.06, en entrant. */
@@ -140,8 +158,9 @@ function empile() {
     tl.fromTo(c, { yPercent: -60, rotate: i % 2 ? 8 : -8, autoAlpha: 0, transformOrigin: '50% 50%' }, { yPercent: 0, rotate: 0, autoAlpha: 1, duration: 1, ease: ease.spring }, i * 0.9);
   });
   if (split) tl.from(split.chars, { yPercent: 110, autoAlpha: 0, duration: 0.6, stagger: 0.05, ease: ease.spring }, couches.length * 0.9 - 0.2);
+  if (prix) tl.fromTo(prix, { rotate: -7, scale: 1.18 }, { rotate: -2, scale: 1, duration: 0.5, ease: ease.spring }, couches.length * 0.9 + 0.25);
   tl.to({}, { duration: 0.4 });
-  return () => { split?.revert(); items.forEach((i) => i.classList.remove('is-on')); };
+  return () => { split?.revert(); if (prix) gsap.set(prix, { clearProps: 'transform' }); items.forEach((i) => i.classList.remove('is-on')); };
 }
 
 /* Galerie inclinée : pan horizontal épinglé (desktop), scroll-snap natif (mobile, CSS). */
