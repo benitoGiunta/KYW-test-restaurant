@@ -8,11 +8,23 @@ const liens = [
   { href: '/carte/', texte: 'Carte', id: 'carte' },
   { href: '/histoire/', texte: 'Histoire', id: 'histoire' },
 ];
+const menu = [{ href: '/', texte: 'Accueil', id: 'accueil' }, ...liens, { href: '/reservation/', texte: 'Réservation', id: 'reservation' }];
 ---
 <header class="entete">
   <a class="entete__nom" href={u('/')} aria-label="INCORRECT, accueil" aria-current={page === 'accueil' ? 'page' : undefined}><span class="display" aria-hidden="true" set:html={retourne('incorrect')} /></a>
   <nav class="entete__nav" aria-label="Navigation principale">
-    {liens.map((l) => <a class="lien-nav" href={u(l.href)} aria-current={page === l.id ? 'page' : undefined}>{l.texte}</a>)}
+    {liens.map((l) => <a class="lien-nav entete__lien" href={u(l.href)} aria-current={page === l.id ? 'page' : undefined}>{l.texte}</a>)}
     <a class="cta cta--petit" href={u('/reservation/')} aria-current={page === 'reservation' ? 'page' : undefined}><span class="cta__txt">Réserver</span></a>
+    <button class="entete__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button>
   </nav>
+  <dialog id="menu" class="menu" aria-label="Menu">
+    <div class="menu__haut">
+      <span class="menu__marque display" aria-hidden="true" set:html={retourne('incorrect')} />
+      <button class="menu__fermer" type="button" data-menu-fermer>Fermer</button>
+    </div>
+    <ul class="menu__liste">
+      {menu.map((l, i) => <li><a class="menu__lien display" href={u(l.href)} aria-current={page === l.id ? 'page' : undefined} autofocus={i === 0 ? true : undefined}><span set:html={retourne(l.texte)} /></a></li>)}
+    </ul>
+    <p class="menu__pied"><a class="lien-gros" href={site.telephoneHref}>Appeler le {site.telephoneLisible}</a></p>
+  </dialog>
 </header>

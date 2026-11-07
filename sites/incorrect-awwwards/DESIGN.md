@@ -41,7 +41,7 @@ Le concept vit partout : titres de page (`LA CAЯTE`, `HISTOIЯE`), pied (`À L'
 2. Aucun exemple travaillé de concepts.md (braise, pavage, gril, cadre, solde, phrase unique). [x]
 3. Concept Card au format, verbe « retourner ». [x]
 4. Concept au pied (`Footer.astro`, `À L'ENDЯOIT ?`), carte (`carte.astro` h2), réservation, 404 (`404.astro`). [x]
-5. Moment signature et recette : le Я pivote (rotateY 180°), phase 2. [x planifié]
+5. Moment signature et recette : le Я pivote (rotateY 180°), fait en phase 2 (`src/motion/demitour.ts`). [x]
 6. Palette 6 rôles, références nommées. [x]
 7. Défauts à éviter : crème + serif + terracotta écarté (grotesque condensé, vert bouteille) ; pas d'acide sur noir (orange croûte, 5,3:1) ; ni dégradé violet, ni verre dépoli ; eyebrow absent des titres ; chiffres décoratifs absents ; polices hors liste de réflexes. [x]
 8. Test de généricité : ci-dessus. [x]
@@ -55,3 +55,40 @@ Le concept vit partout : titres de page (`LA CAЯTE`, `HISTOIЯE`), pied (`À L'
 16. Une famille de section au plus une fois par page. [x]
 17. Hero en 3 s : nom, cuisine, réserver, appeler. [x]
 18. Mobile 390 recomposé : mesuré sans débordement (scrollWidth 390), `.display` à gauche ≥ 16 px. [x]
+
+## Mouvement (phase 2, fait)
+- **Pilote** `src/motion/demitour.ts` : une variable, l'angle de chaque Я (`rotationY`) = tour (entrée, survol ; 0 = Я, 180 = R à l'endroit) + vitesse de défilement Lenis (± 50°) + pointeur et repos (h1 seulement). Entrée d'un titre : demi-tour aller-retour (0,7 s, `ease.inOut`, pause 0,35 s) ; survol ou focus d'un titre ou de la marque : le r reste à l'endroit ; `data-endroit` (404, « Revenir à l'endroit ») remet toute la page à l'endroit.
+- **Repos** : `startIdle()` après 1,4 s sans geste, le Я du h1 se balance de ± 26° (période 3,4 s) ; écrit seulement si visible (IntersectionObserver), rien en mouvement réduit.
+- **Transition** (`setup.ts`) : volet croûte puis volet vert bouteille portant un grand R qui fait son demi-tour ; aller 0,85 s, retour 0,95 s.
+- **Intro accueil** : titre et texte peints au premier rendu (LCP) ; le Я fait son demi-tour, la photo du four se pose (`scale` 1,1 vers 1, 1,6 s).
+- **Reveals** : `data-split="lines"` sur tous les titres d'affichage (sauf h1 de l'accueil et 404), `data-split="chars"` sur le mot du pied, `data-reveal="up"` sur chiffres et fiches (stagger 60 ms), parallaxe ± 7 % sur l'image dans son cadre (`Photo parallax`, marge `scale: 1.16`). Pas de loader, pas de GL, pas de curseur suiveur, un seul `data-magnetic` (CTA du hero).
+- **Menu mobile** (`menu.ts`, `Header.astro`) : sous 40 rem, Carte et Histoire passent dans un `<dialog>` plein écran ; « Réserver » reste visible (44 px).
+
+## Sur-utilisation de la skill (phase 2)
+19. Menu mobile : `<dialog>` modal (focus piégé, Échap natif), `aria-expanded` tenu par `menu.ts`, `autofocus` sur le premier lien, focus rendu au bouton. Mesure 390 : ouvert 390×800, focus « Accueil » ; Échap : fermé, `aria-expanded=false`, focus « Menu » ; lien du menu : fermé avant la transition, arrivée sur /histoire/. Sans JS : liens visibles (`html.js` conditionne le masquage). [x]
+20. Engine verbatim (`src/engine/`), `astro.ts`, `transition:persist="curtain"` (`Base.astro:75`), `transition:animate="none"` (`Base.astro:39`) ; pas de `#gl` ni de `#cursor` (décisions). [x]
+21. Une horloge : `grep addEventListener('scroll')|requestAnimationFrame` dans `src/motion`, `src/pages`, `src/components` = 0 ; pilote sur `gsap.ticker` (`demitour.ts:105`). [x]
+22. Code de page dans `onPage()` avec nettoyage (`demitour.ts:34`, `menu.ts:6`, `setup.ts:42`) : ticker retiré, observateur et écouteurs défaits, tweens tués. [x]
+23. Aucune CSS `transform` sur un élément animé par GSAP : `.r` et `.curtain__r` en `scale` individuel (GSAP l'absorbe et écrit `scale: none`, vérifié), CTA `:active` et `::before` en `translate`. [x]
+24. Module pilote avec `startIdle` (`demitour.ts:19`) et pointeur (`pointeur.lisse * 40`). [x]
+25. Loader : non (Concept Card), aucun `#loader` ni `role="status"`. [x]
+26. Transition du concept ≤ 1 s par sens : 0,85 s et 0,95 s (`setup.ts`). [x]
+27. Intro : premier frame = poster peint (h1 sans `data-intro`), le Я fait son demi-tour dans l'intro (`intro.add`), photo qui se pose. [x]
+28. Épinglages : aucun pin GSAP ; titres de catégorie et photo du trio en `position: sticky` CSS. [x, sans objet]
+29. Repli statique : sans `.motion`, rien n'est caché, Я immobile, marque qui se remet à l'endroit au survol par CSS (`html:not(.motion) .entete__nom:hover .r`). Mesure réduit sur /carte/ : `motion=false`, `lenis=false`, 0 élément caché. [x]
+30. Copies décoratives `aria-hidden` : marque du menu, R du rideau (rideau `aria-hidden`), mot du pied ; aucun titre dupliqué. [x]
+31. Une famille d'easing (`ease.inOut|out|soft`), durées du tableau Timing, stagger 50 à 60 ms. [x]
+32. Traitements par rôle : CTA (croûte qui monte), nav et liens (trait qui se dessine ou s'épaissit), utilitaires (couleur, soulignés au repos), plus le verbe (la marque et les titres se remettent à l'endroit). [x]
+33. Hover sous `@media (hover: hover)`, même état sur `:focus-visible`, visible en réduit (CSS seule) ; `:active` sur CTA et liens. [x]
+34. Liens texte soulignés au repos (`.lien`, `.lien-gros`, `.lien-util`). [x]
+35. `hover.noHoverChange` : phase 3 (`report.json`). [ ]
+36. Repos : `startIdle`, ± 26° sur le h1 ; `idleMotion` à confirmer en phase 3. [x code]
+37. Curseur natif visible, pas de suiveur ; au toucher, aucun survol requis (menu au bouton, pointeur ignoré si `isTouch`). [x]
+38. Aucun blur animé, aucun `box-shadow` au scroll, aucun `will-change`. [x]
+39. Réduit : ni Lenis, ni GL, ni scrub, ni loader (mesuré) ; `reduced.*` en phase 3. [x code]
+40. GL : sans objet, décision écrite (Concept Card), aucune ligne `// GL` dans l'engine. [x]
+41. Sans objet (pas de GL). [x]
+44. Skip link en premier (`Base.astro`), focus dans l'accent ; preuve clavier en phase 3. [x code]
+45. Contraste AA : phase 3. [ ]
+46. Texte réel partout (SplitText sur du texte, aucun canvas). [x]
+47. Cibles : « Réserver » et « Menu » 44 px à 320 à 390 (mesuré), CTA 52 px ; mesure complète en phase 3. [x code]

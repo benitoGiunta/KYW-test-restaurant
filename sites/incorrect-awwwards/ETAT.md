@@ -1,21 +1,26 @@
-# ETAT : incorrect awwwards, fin de la phase 1 (construction-1)
+# ETAT : incorrect awwwards, fin de la phase 2 (construction-2)
 
-## Fait
-- Concept « Le demi-tour » (le Я), DESIGN.md complet (brief, 3 concepts, Concept Card, système, checklist 1 à 18).
-- Scaffold, engine verbatim (sans GL), `tokens.css`, `engine.css`, `site.css`, `Base.astro` (head complet, JSON-LD Restaurant, noindex), `Header`, `Footer` (pied composé + `KywFooter`), `Liste`, `Photo`.
-- Contenu : `src/data/site.ts` et `carte.json` (généré depuis donnees.json : 11 catégories, tous les prix réels).
-- 5 pages : `/`, `/carte/`, `/histoire/`, `/reservation/`, `404`. Build passe (`dist/incorrect/awwwards/`). Mesures 1440, 1280, 1024, 390 : aucun débordement horizontal, h1 et CTA à l'intérieur de la gouttière.
-- Favicon Я, apple-touch-icon, og.png (rendu du hero).
+## Fait (phase 1)
+- Concept « Le demi-tour » (le Я), DESIGN.md, scaffold, engine verbatim sans GL, 5 pages, contenu réel, favicon, og.png.
 
-## Reste (phases 2 et 3)
-- Phase 2 : `motion/setup.ts` est vide. À faire : transition de page (volets de croûte, `setTransition`), signature du Я (pivot rotateY à l'entrée, au survol, repos), reveals `data-split` / `data-reveal` (déjà posés dans le HTML : `data-hero`, `data-split="lines|chars"`, `data-parallax`), parallaxe des images, éventuel aperçu photo au curseur sur la carte, révision du hover du CTA si besoin.
-- Vérifier en navigateur : contenu visible avec `.motion` (les `data-split` sont cachés tant que le reveal ne tourne pas), plein cadre et photo collante du trio (images lazy absentes d'une capture pleine page), LCP, contrastes.
-- Phase 3 : QA complète, RAPPORT.md, points 42 à 63 de la checklist, sloplint/jury en auto-notation.
+## Fait (phase 2)
+- `src/motion/demitour.ts` (pilote : entrée, survol et focus, vitesse de défilement, pointeur, repos `startIdle`), `src/motion/menu.ts` (menu `<dialog>`), `src/motion/setup.ts` (transition à deux volets et R, intro de la photo du hero).
+- Reveals `data-split` sur tous les titres d'affichage, `data-reveal` sur chiffres et fiches, parallaxe d'image dans son cadre (`Photo parallax`), `data-magnetic` sur le CTA du hero, `data-endroit` sur le CTA de la 404.
+- Hovers réécrits sous `@media (hover: hover)` + `:focus-visible` + `:active`, `::selection` dans l'accent, lien du pied KYW souligné au survol.
+- Menu mobile sous 40 rem ; hero mobile recalé (débordement de 20 px à 320 px corrigé, mot-poster réglé sur la largeur utile).
+- Vérifié en navigateur (port 4471) : 0 erreur console ou requête, transition aller-retour, menu (ouverture, Échap, retour du focus, navigation), réduit (rien de caché, pas de Lenis), `scrollWidth` 320/360/390 sur les 5 pages = largeur.
+- Build passe (`scripts/q.sh awwp2-build pnpm build:site sites/incorrect-awwwards`).
+
+## Reste (phase 3)
+- QA complète (agent captures) : `idleMotion`/`settledMs` (repos ± 26° sur le h1, à régler si `settledMs` null), `hover.*`, contrastes, cibles, LCP, clavier.
+- RAPPORT.md, points 35, 45 et 42 à 63 de la checklist, sloplint et jury en auto-notation.
+- Si le jury juge le Я trop serré contre le R voisin pendant la rotation : baisser `transformPerspective` ou l'amplitude du repos.
 
 ## Décisions
-- Pas de loader, pas de GL (voir DESIGN.md). Un seul r retourné par mot de titre (dernier r), jamais dans le corps.
-- Horaires du Fooding affichés avec « à confirmer » (sources divergentes). E-mail absent (personnel). Aucun avis, aucune note, aucun chiffre de places. Aucun placeholder : tout vient du dossier.
-- Le fond du site reste vert bouteille (identité du site actuel) avec des sections « mur » claires.
+- Pas de loader, pas de GL, pas de curseur suiveur. Un seul r retourné par mot de titre. Le Я du h1 se balance au repos ; les autres titres font un demi-tour à l'entrée seulement.
+- Horaires « à confirmer », aucun placeholder (inchangé).
 
 ## Pièges
-- `font.mjs --dir` : `$REPO` n'existe pas dans le shell, utiliser un chemin absolu (un `rm` de nettoyage a été refusé ; un dossier vide `/sites/incorrect-awwwards/public/fonts` reste à la racine du système de fichiers, sans effet).
+- GSAP absorbe la propriété CSS individuelle `scale: -1 1` du `.r` dans son `transform` et écrit `scale: none` en ligne : le Я reste correct, ne pas ajouter de `transform` CSS sur `.r`.
+- Un `<dialog>` modal reste dans la couche supérieure au-dessus du rideau : `menu.ts` le ferme au clic sur un lien, avant la transition.
+- Le port 4417 était pris par un autre agent : serveur propre sur 4471.

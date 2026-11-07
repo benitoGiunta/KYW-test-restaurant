@@ -23,28 +23,28 @@ const nettoie = (s: string) => s.replace(/ \(accompagnements\)/, '');
   </section>
 
   <section class="carte-bloc wrap" id="attendant" aria-labelledby="t-attendant">
-    <h2 id="t-attendant" class="carte-bloc__titre display" set:html={retourne('En attendant')} />
+    <h2 id="t-attendant" class="carte-bloc__titre display" data-split="lines" set:html={retourne('En attendant')} />
     <Liste plats={enAttendant} taille="moyen" />
   </section>
 
   <section class="carte-bloc wrap" id="classiques" aria-labelledby="t-classiques">
-    <h2 id="t-classiques" class="carte-bloc__titre display" set:html={retourne('Les classiques')} />
+    <h2 id="t-classiques" class="carte-bloc__titre display" data-split="lines" set:html={retourne('Les classiques')} />
     <Liste plats={pizzasClassiques} />
   </section>
 
   <section class="carte-photo wrap" aria-label="Table dressée">
-    <div class="carte-photo__img" data-parallax><Photo cle="table" widths={[640, 1000, 1400]} sizes="(min-width: 900px) 60vw, 100vw" /></div>
+    <div class="carte-photo__img"><Photo cle="table" widths={[640, 1000, 1400]} sizes="(min-width: 900px) 60vw, 100vw" parallax /></div>
     <p class="carte-photo__legende">{site.credit}</p>
   </section>
 
   <section class="carte-bloc wrap" id="denous" aria-labelledby="t-denous">
-    <h2 id="t-denous" class="carte-bloc__titre display" set:html={retourne('Les pizzas de nous')} />
+    <h2 id="t-denous" class="carte-bloc__titre display" data-split="lines" set:html={retourne('Les pizzas de nous')} />
     <Liste plats={pizzasDeNous} />
   </section>
 
   <section class="mur autour" id="autour" aria-labelledby="t-autour">
     <div class="wrap">
-      <h2 id="t-autour" class="autour__titre display" set:html={retourne('Autour des pizzas')} />
+      <h2 id="t-autour" class="autour__titre display" data-split="lines" set:html={retourne('Autour des pizzas')} />
       <div class="autour__mur">
         {autres.map((c) => (
           <section class="bloc" aria-labelledby={`b-${slug(c.categorie)}`}>

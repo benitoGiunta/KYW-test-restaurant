@@ -15,7 +15,7 @@ import { site, equipe, presse } from '../data/site';
     <h2 id="titre-equipe" class="sr-only">L’équipe</h2>
     <ul class="equipe__liste">
       {equipe.map((e) => (
-        <li class="membre">
+        <li class="membre" data-reveal="up">
           <span class="membre__lettre display" aria-hidden="true">{e.initiale}</span>
           <div>
             <h3 class="membre__nom">{e.nom}</h3>
@@ -28,7 +28,7 @@ import { site, equipe, presse } from '../data/site';
   </section>
 
   <section class="plein" aria-label="Le four">
-    <figure class="plein__fig" data-parallax>
+    <figure class="plein__fig">
       <Photo cle="four" widths={[800, 1280, 1687]} sizes="100vw" />
       <figcaption class="wrap plein__legende"><span>Sortie de four.</span><span>{site.credit}</span></figcaption>
     </figure>
@@ -36,7 +36,7 @@ import { site, equipe, presse } from '../data/site';
 
   <section class="mur levain" aria-labelledby="titre-levain">
     <div class="wrap levain__corps">
-      <h2 id="titre-levain" class="levain__titre display" set:html={retourne('Deux jours de patience')} />
+      <h2 id="titre-levain" class="levain__titre display" data-split="lines" set:html={retourne('Deux jours de patience')} />
       <div class="levain__texte">
         <p>Le levain vient du métier d’avant. La pâte repose 48 heures avant d’aller au four, et la farine sort des moulins Bodson, en Belgique.</p>
         <p>La cuisine est très végétale : lactofermentation, pickles, kimchi maison, crème de betterave. Le beurre au kimchi accompagne le pain, la sauce ranch accompagne les croûtes.</p>
@@ -45,7 +45,7 @@ import { site, equipe, presse } from '../data/site';
   </section>
 
   <section class="presse wrap" aria-labelledby="titre-presse">
-    <h2 id="titre-presse" class="presse__titre display" set:html={retourne('Ce qu’on en a écrit')} />
+    <h2 id="titre-presse" class="presse__titre display" data-split="lines" set:html={retourne('Ce qu’on en a écrit')} />
     <ul class="presse__liste">
       {presse.map((p) => (
         <li><a class="presse__lien" href={p.url} rel="noopener"><span class="presse__media">{p.media}</span><span class="presse__texte">{p.titre}</span><span class="presse__date">{p.date}</span></a></li>
