@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Field from '../components/Field.astro';
 import { resto } from '../data/site';
 const couverts = Array.from({ length: 10 }, (_, i) => i + 1);
 ---
@@ -13,22 +14,26 @@ const couverts = Array.from({ length: 10 }, (_, i) => i + 1);
         <p>Le calendrier des disponibilités se consulte sur le site de L’Essentiel.</p>
         <p class="actions"><a class="btn btn--ghost" href={resto.reservationOrigine} rel="noopener">Voir les disponibilités</a><a class="btn btn--ghost" href={resto.telHref}>{resto.tel}</a></p>
       </div>
-      <form class="form" method="post" action="" data-endpoint="" novalidate>
+      <form class="form" method="post" action="" data-endpoint="" data-fallback-tel={resto.tel} novalidate aria-labelledby="h-1">
         <div class="form__grid">
-          <label>Prénom<input name="prenom" autocomplete="given-name" required /></label>
-          <label>Nom<input name="name1" autocomplete="family-name" required /></label>
-          <label>Adresse e-mail<input name="email1" type="email" autocomplete="email" required /></label>
-          <label>Téléphone<input name="phone1" type="tel" autocomplete="tel" required /></label>
-          <label>Date<input name="date_booking1" type="date" required /></label>
-          <label>Nombre de couverts<select name="couverts" required>{couverts.map((n) => <option value={n}>{n}</option>)}</select></label>
+          <Field id="r-prenom" label="Prénom" name="prenom" autocomplete="given-name" placeholder="Prénom" required msg="Indiquez votre prénom." />
+          <Field id="r-nom" label="Nom" name="name1" autocomplete="family-name" placeholder="Nom" required msg="Indiquez votre nom." />
+          <Field id="r-email" label="Adresse e-mail" name="email1" type="email" autocomplete="email" inputmode="email" placeholder="nom@exemple.be" required msg="Indiquez votre adresse e-mail." />
+          <Field id="r-tel" label="Téléphone" name="phone1" type="tel" autocomplete="tel" inputmode="tel" placeholder="0470 12 34 56" required msg="Indiquez un numéro de téléphone." />
+          <Field id="r-date" label="Date" name="date_booking1" type="date" required help="Du mercredi au samedi." msg="Choisissez une date." />
+          <div class="field" data-field data-msg="Choisissez le nombre de couverts.">
+            <label for="r-couv">Nombre de couverts</label>
+            <select id="r-couv" name="couverts" required aria-describedby="r-couv-h"><option value="">Choisir</option>{couverts.map((n) => <option value={n}>{n}</option>)}</select>
+            <p class="field__help" id="r-couv-h" data-help="Au-delà de six couverts, menu uniquement.">Au-delà de six couverts, menu uniquement.</p>
+          </div>
           <fieldset class="form__wide"><legend>Service</legend>
-            <label class="choice"><input type="radio" name="rangetime1" value="midi" checked /> Midi</label>
-            <label class="choice"><input type="radio" name="rangetime1" value="soir" /> Soir</label>
+            <label class="choice"><input type="radio" name="rangetime1" value="midi" checked /> Midi, 12 h 00 à 14 h 00</label>
+            <label class="choice"><input type="radio" name="rangetime1" value="soir" /> Soir, 19 h 00 à 21 h 30</label>
           </fieldset>
-          <label class="form__wide">Message<textarea name="details1" rows="4"></textarea></label>
+          <Field id="r-msg" label="Message" name="details1" kind="textarea" rows={4} wide placeholder="Allergies, occasion, précisions" help="Allergies à signaler ici." />
         </div>
         <button class="btn" type="submit">Demander une réservation</button>
-        <p class="muted form__note" data-placeholder="true">Formulaire de maquette : l’envoi n’est pas branché. La réservation réelle passe par le calendrier du site ou le téléphone.</p>
+        <p class="form__status" role="status" aria-live="polite" data-status data-placeholder="true">Formulaire de maquette : l’envoi n’est pas branché. La réservation réelle passe par le calendrier du site ou le téléphone.</p>
       </form>
     </div>
   </section>

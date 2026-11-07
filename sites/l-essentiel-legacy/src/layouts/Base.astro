@@ -47,6 +47,11 @@ const jsonLd = {
     <Footer />
     <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
     document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+    <script>import '../scripts/ui.ts';</script>
     <KywFooter base={base} />
   </body>
 </html>
+<style is:global>
+  html { overflow-x: clip; }
+  body { overflow-x: clip; }
+</style>

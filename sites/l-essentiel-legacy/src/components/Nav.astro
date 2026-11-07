@@ -15,12 +15,30 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   <div class="top__banner">
     <div class="container top__banner-in">
       <a class="mark" href={base} aria-label="L’Essentiel, accueil">L’Essentiel<span class="mark__sub">Temploux</span></a>
-      <nav aria-label="Principale">
+      <nav aria-label="Principale" class="top__nav">
         <ul>
           {nav.map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>)}
         </ul>
       </nav>
-      <a class="btn" href={`${base}${navAction.href}`} aria-current={page === navAction.id ? 'page' : undefined}>{navAction.label}</a>
+      <div class="top__acts">
+        <a class="btn btn--ghost btn--nav" href={`${base}${navAction.href}`} aria-current={page === navAction.id ? 'page' : undefined}>{navAction.label}</a>
+        <button class="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" data-menu-open>Menu</button>
+      </div>
     </div>
   </div>
+  <dialog class="menu" id="menu" aria-label="Menu principal" data-menu>
+    <div class="menu__in">
+      <div class="menu__head">
+        <span class="mark">L’Essentiel</span>
+        <button class="menu-btn" type="button" data-menu-close>Fermer</button>
+      </div>
+      <ul class="menu__list">
+        {nav.map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>)}
+      </ul>
+      <div class="menu__foot">
+        <a class="btn" href={`${base}${navAction.href}`}>Réserver une table</a>
+        <a class="btn btn--ghost" href={resto.telHref}>Appeler le {resto.tel}</a>
+      </div>
+    </div>
+  </dialog>
 </header>

@@ -1,0 +1,11 @@
+---
+interface Props { id: string; label: string; name: string; type?: string; autocomplete?: string; inputmode?: string; placeholder?: string; required?: boolean; help?: string; wide?: boolean; rows?: number; kind?: 'input' | 'textarea'; msg?: string; min?: string; }
+const { id, label, name, type = 'text', autocomplete, inputmode, placeholder, required = false, help = '', wide = false, rows = 4, kind = 'input', msg = 'Ce champ est à remplir.', min } = Astro.props;
+---
+<div class:list={['field', { 'form__wide': wide }]} data-field data-msg={msg}>
+  <label for={id}>{label}{!required && <span class="field__opt"> (facultatif)</span>}</label>
+  {kind === 'textarea'
+    ? <textarea id={id} name={name} rows={rows} required={required} aria-describedby={`${id}-h`} autocomplete={autocomplete} placeholder={placeholder}></textarea>
+    : <input id={id} name={name} type={type} autocomplete={autocomplete} inputmode={inputmode} placeholder={placeholder} required={required} min={min} aria-describedby={`${id}-h`} />}
+  <p class="field__help" id={`${id}-h`} data-help={help}>{help}</p>
+</div>

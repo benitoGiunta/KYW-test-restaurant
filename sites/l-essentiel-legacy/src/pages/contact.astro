@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Horaires from '../components/Horaires.astro';
+import Field from '../components/Field.astro';
 import { resto } from '../data/site';
 ---
 <Base page="contact" title="Contact, L’Essentiel à Temploux" description="Adresse, téléphone, e-mail et horaires de L’Essentiel, rue Roger Clément 32 à Temploux.">
@@ -17,16 +18,16 @@ import { resto } from '../data/site';
         <h2 class="h-small">Horaires</h2>
         <Horaires compact />
       </div>
-      <form class="form" method="post" action="" data-endpoint="" novalidate>
+      <form class="form" method="post" action="" data-endpoint="" data-fallback-tel={resto.tel} novalidate aria-label="Écrire à L’Essentiel">
         <div class="form__grid">
-          <label>Prénom<input name="prenom" autocomplete="given-name" /></label>
-          <label>Nom<input name="nom" autocomplete="family-name" required /></label>
-          <label>Adresse e-mail<input name="email" type="email" autocomplete="email" required /></label>
-          <label>Téléphone<input name="phone" type="tel" autocomplete="tel" /></label>
-          <label class="form__wide">Message<textarea name="message" rows="6" required></textarea></label>
+          <Field id="c-prenom" label="Prénom" name="prenom" autocomplete="given-name" placeholder="Prénom" />
+          <Field id="c-nom" label="Nom" name="nom" autocomplete="family-name" placeholder="Nom" required msg="Indiquez votre nom." />
+          <Field id="c-email" label="Adresse e-mail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="nom@exemple.be" required msg="Indiquez votre adresse e-mail." />
+          <Field id="c-tel" label="Téléphone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="0470 12 34 56" />
+          <Field id="c-msg" label="Message" name="message" kind="textarea" rows={6} wide required placeholder="Votre message" msg="Écrivez votre message." />
         </div>
-        <button class="btn" type="submit">Envoyer</button>
-        <p class="muted form__note" data-placeholder="true">Formulaire de maquette : l’envoi n’est pas branché.</p>
+        <button class="btn" type="submit">Envoyer le message</button>
+        <p class="form__status" role="status" aria-live="polite" data-status data-placeholder="true">Formulaire de maquette : l’envoi n’est pas branché. Pour joindre le restaurant, écrivez à l’adresse e-mail du restaurant ou appelez.</p>
       </form>
     </div>
   </section>

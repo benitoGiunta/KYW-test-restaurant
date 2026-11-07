@@ -1,21 +1,21 @@
-# ETAT · l-essentiel · legacy · fin de la phase 1 (construction-1)
+# ETAT · l-essentiel · legacy · fin de la phase 2 (construction-2)
 
-## Fait
-- Audit (`AUDIT.md`, `.hallmark/before.*`), approche conservée, deal/draw/scaffold/stamp (Vellum parchment, draw 109d8c), comps c1/c2 (`comp.md`), `DESIGN.md`, entrée dans `.hallmark/log.json`.
-- Contenu dans `src/data/site.ts` (tout vient du dossier ; rien d’inventé). Photos converties en WebP dans `public/photos/`.
-- Pages : /, /les-chambres/, /carte-menus/, /reservation/, /contact/, /recrutement/, 404. Nav, Footer (index columns), Fig, Horaires. Switcher carte/menus avec script minimal.
-- `pnpm build:site` passe (`dist/l-essentiel/legacy/`), noindex, mention et pied KYW vérifiés sur les 7 pages. Rendu vérifié à la main sur l’accueil et la carte (1440 px), accueil 390 px mesuré sans débordement horizontal.
+## Fait (phase 2)
+- Nav : en-tête sticky, barre fine qui se rétracte (CSS pur), « Réserver » outlined, menu `<dialog>` modal sous 60rem (script `src/scripts/ui.ts`), repli sans script.
+- Boutons à états (repos, survol, focus, actif, désactivé), un seul primaire rempli par page.
+- Formulaires réservation et contact : composant `Field.astro`, validation blur puis input, jours fermés refusés, aide des couverts, message « Rien n’a été envoyé » ; `data-endpoint=""`.
+- Switcher carte/menus : masqué sans script, flèches avec script. Horaires : jour courant marqué (`aria-current="date"`).
+- Motion : thème still, donc aucun reveal (`waive` écrit dans DESIGN.md) ; le comptoir se pose en 420 ms ; reduced motion couvert. Fibre SVG sur bandes, formulaire, comptoir, en-tête.
+- Mobile : photo du hero ne déborde plus à 375 ; aucun débordement à 375, 768, 1024 sur 6 pages ; cibles tactiles (liens des pieds et adresses) à 44 px en `pointer: coarse`.
+- Hero review en auto-notation (`self`, aucun outil Agent) ; sloplint `--stage hero --render` : 0 FAIL, 0 REFLEX, 0 WARN. Questions de reproduction du comp : `comp.md`.
+- `pnpm build:site` passe ; noindex, mention et pied KYW vérifiés sur les 7 pages. Pas de shoot complet (agent « captures »).
 
-## Reste (phases 2 et 3)
-- Phase 2 : barre fine qui se rétracte, un reveal, états des boutons et des formulaires (`data-endpoint=""`), jour courant dans le Schedule, fibre (texture) sur les bandes paper-2, trois questions de reproduction du comp, mobile 375 réel.
-- Phase 3 : sloplint --render, gates § 5, revue, RAPPORT.md, case sloplint du DESIGN.md, `pnpm index`.
-- Pas de vérif visuelle des sections sous le fold ni des autres pages (images lazy non chargées sur la capture pleine page).
+## Reste (phase 3)
+- sloplint complet (`--render` sur chaque route), gates § 5, revue, `RAPPORT.md`, entrée du journal par `theme.mjs log`, `pnpm index`, publication.
+- Captures : l’agent « captures » doit défiler à la molette (aucun reveal, mais images lazy) ; les panneaux de la carte : cliquer l’onglet « La carte » pour voir le second.
+- Vérifier au rendu : contraste de `--color-error` sur le fond papier-2 du formulaire (annoncé ≥ 4,5:1, non mesuré), barre fine à 375 (téléphone, Facebook, Instagram en une ligne).
 
-## Décisions et hypothèses
-- Vellum parchment : blackletter jugé tenable car tannerie = métier ancien ; ultramarine = l’unique pigment, non issu de la marque (logo noir, accent orangé d’origine abandonné).
-- Logo : PNG 300 px à tracé clair inutilisable sur parchemin, mot-symbole en Grenze Gotisch ; à remplacer par un vectoriel du client.
-- Routes : /carte-menus/ (origine /carte-menus-2/), /recrutement/ (origine /actualites/). « Réserver une chambre » garde /contact-2/ du site d’origine.
-- Distinctions : 1 étoile Michelin (date discordante, non indiquée) et 16,5/20 Gault&Millau 2024 (DH, 27/11/2023) repris du dossier. À vérifier : chef Raphaël Adam non cité ; note Google non reprise ; photos de plats de 2018.
-- Texte « La terrasse » : seule donnée disponible « vue sur les jardins », reformulée « Elle ouvre sur les jardins ». Phrase d’accroche reprise sans les points de suspension (reworded, gate 63).
-- Placeholders : aucun fait fictif ; deux notes de formulaire `data-placeholder="true"` (envoi non branché).
-- Espaces insécables : `~` des données et pages remplacés par U+00A0 par script Python.
+## Pièges
+- sloplint règle 34 ne lit pas `base.css` importé : `html`/`body` en `overflow-x: clip` aussi dans un `<style is:global>` de `Base.astro` (doublon voulu). `q.sh` n’affiche que 20 lignes : relire `.logs/*.log` par `grep` pour ne pas manquer un FAIL en tête.
+- Les comps `c1.html`/`c2.html` rendent le même PNG ; le fichier c1 est en miroir du build (voir comp.md).
+- Aucune donnée inventée en phase 2 : les textes de formulaire sont des formats, des aides ou des faits du dossier (jours fermés, plus de six couverts : menu uniquement).
