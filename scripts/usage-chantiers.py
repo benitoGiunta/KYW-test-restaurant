@@ -312,12 +312,13 @@ json.dump(restos, open(os.path.join(OUT, 'restos.json'), 'w'), ensure_ascii=Fals
 for r in restos: print(r)
 
 # --- Phases : avant (restaurants 1-2), après (3-4, méthode sobre), après 2 (5, tests A B C), après 3 (6, tests D H) ---
-PHASE_DE = {1: 'Avant', 2: 'Avant', 3: 'Après', 4: 'Après', 5: 'Après 2', 6: 'Après 3'}
+PHASE_DE = {1: 'Avant', 2: 'Avant', 3: 'Après', 4: 'Après', 5: 'Après 2', 6: 'Après 3', 7: 'Après 4', 8: 'Après 4', 9: 'Après 4'}
 DESC_PHASE = {'Avant': 'tout sur Fable puis Opus, agents longs', 'Après': 'méthode sobre : modèle par rôle, agents courts, captures Haiku, révision ciblée',
               'Après 2': 'tests A B C : leçons et prompts allégés, revue 2 conditionnelle, legacy sur Sonnet',
-              'Après 3': 'tests D H : effort réduit, portfolio et révisions sur Sonnet'}
+              'Après 3': 'tests D H : effort réduit, portfolio et révisions sur Sonnet',
+              'Après 4': 'configuration figée et test I : awwwards sur Sonnet sauf les animations, lectures regroupées'}
 phases = []
-for i, ph in enumerate(['Avant', 'Après', 'Après 2', 'Après 3']):
+for i, ph in enumerate(['Avant', 'Après', 'Après 2', 'Après 3', 'Après 4']):
     rs = [r for r in restos if PHASE_DE.get(r['rang']) == ph]
     if not rs: continue
     mes = [r for r in rs if r['source'] == 'mesuré']

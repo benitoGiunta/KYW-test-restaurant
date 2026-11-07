@@ -167,3 +167,17 @@ Test G sur décision de Benito.
 - **Mesure :** chaque session restaurant dépose detail-<slug>.json et commandes-<slug>.json et prévient la session de
   reporting ; verdict du test I au restaurant 7, puis suivi de dérive (alerte au-delà de 20 % d'écart).
 - **Test G (connecteurs) :** non décidé, non appliqué.
+
+## Résultats de la série 7 à 9 (07/11)
+
+| Restaurant | Coût | Par site | Portfolio | Awwwards | Legacy |
+|---|---:|---:|---:|---:|---:|
+| 7 · Le Royal | 16,80 $ | 5,60 $ | 4,86 $ | 5,83 $ | 4,27 $ |
+| 8 · Incorrect | 17,11 $ | 5,70 $ | 6,06 $ | 5,66 $ | 3,49 $ |
+| 9 · L'Essentiel | 18,12 $ | 6,04 $ | 5,84 $ | 5,59 $ | 4,63 $ |
+
+- **Test I réussi :** construction awwwards 4,49 $ au restaurant 7 contre 7,61 $ au restaurant 6 ; 1 F1 en revue 1 contre 2.
+- **Série :** 52,03 $ pour 9 sites, 5,78 $ par site en moyenne (−12,7 % sur après 3, −71,6 % depuis avant), écart de
+  moins de 8 % entre les trois restaurants. Les 9 sites finissent sans F0 ni F1.
+- **Sans effet :** le regroupement des lectures (sorties de commandes 1,6 à 1,7 million de caractères par restaurant)
+  et le socle par agent (environ 67 000 jetons). Le test G (connecteurs) reste le seul levier non essayé sur le socle.
