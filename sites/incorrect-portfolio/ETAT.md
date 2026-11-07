@@ -31,3 +31,6 @@ F1-1 et F2-1 à F2-7 corrigés, voir REVISION-1.md. Reste : F3 (formats d'heures
 
 ## Revue 2 (07/11/2026)
 REVUE-2.md : A_CORRIGER (0 F0, 2 F1, 1 F2, 6 F3). Reste : N-1 étapes de la home à 1024 et 1440 (cartes trop étroites, texte hors carte), N-2 « Ça s'empile » à 768 (prix et plat coupés), N-3 `reservation/` à 1024 (« MARCELL/E »), F3 (formats d'heures, JSON-LD horaires, données carte). Piège : `overflow-x: clip` cache ces débordements, mesurer `li.scrollWidth` et `right` des enfants.
+
+## Revue 3 (07/11/2026)
+REVUE-3.md : A_CORRIGER (0 F0, 0 F1, 1 F2, 4 F3). N-1, N-2, N-3, F3-6 confirmés corrigés. Reste : F2-1 descripteurs « maison, grillé » / « bien rose » sans source (`src/data/site.ts:102-103`), puis F3-1, 3, 4, 5. Aucun QA-revue3.md déposé par l'agent captures.
