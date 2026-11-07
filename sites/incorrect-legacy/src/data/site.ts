@@ -30,10 +30,12 @@ export const fournisseurs = [
   { quoi: 'Café', qui: 'Wild Speciality Coffee Roaster' },
 ];
 
-export function prix(p: string): string {
-  const s = p.replace(/,00/g, '');
+export function prix(p: string, decimales = false): string {
+  const s = decimales ? p : p.replace(/,00/g, '');
   return s + NB + '€';
 }
+const brut = (p: string) => p.replace(/,00/g, '');
+const apos = (t: string | null) => (t ? t.replace(/'/g, '\u2019') : t);
 
 type Plat = { nom: string; description: string | null; prix: string };
 export type Ligne = { nom: string; note: string | null; desc: string | null; prix: string };
@@ -42,13 +44,19 @@ function ligne(p: Plat): Ligne {
   let nom = p.nom, note: string | null = null, desc = p.description, pr = p.prix;
   const m = nom.match(/^(.*?)\s*\((.*)\)$/);
   if (m) { nom = m[1]; note = m[2]; }
-  if (desc && /^\d[\d,\s/]*$/.test(desc)) { pr = desc.replace(/,00/g, ''); desc = null; }
-  return { nom, note, desc, prix: prix(pr) };
+  if (desc && /^\d[\d,\s/]*$/.test(desc)) { pr = desc; desc = null; }
+  return { nom: apos(nom) as string, note: apos(note), desc: apos(desc), prix: pr };
+}
+
+// Une liste de prix garde la même règle partout : deux décimales dès qu'une valeur en a (F2-2).
+function groupe(ls: Ligne[]): Ligne[] {
+  const dec = ls.some((l) => /,\d*[1-9]/.test(l.prix));
+  return ls.map((l) => ({ ...l, prix: prix(l.prix, dec) }));
 }
 
 const cat = (n: string) => {
   const c = (donnees.carte as any[]).find((x) => x.categorie.startsWith(n));
-  return { titre: c.categorie as string, lignes: (c.plats as Plat[]).map(ligne) };
+  return { titre: c.categorie as string, lignes: groupe((c.plats as Plat[]).map(ligne)) };
 };
 
 export const onglets = [
