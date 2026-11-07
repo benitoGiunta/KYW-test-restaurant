@@ -1,4 +1,7 @@
-# ETAT : incorrect-portfolio (phase 2 sur 3 faite : motion, interactions, mobile, finitions)
+# ETAT : incorrect-portfolio (phase 3 sur 3 faite : QA terminée)
+
+## Phase 3
+Contraste corrigé (encre sur rouge, `--rouge-texte`), axe 0 violation vérifié, build OK. Voir RAPPORT.md. Reste : report gabarit et UTILISATION.md (protégés).
 
 ## Fait en phase 1 (inchangé)
 Gabarit affiche adapté, contenu réel, palette, Plat.astro (Dwight Schrute en 5 couches), 8 recadrages, 6 pages, noindex, KywFooter, mention maquette.
