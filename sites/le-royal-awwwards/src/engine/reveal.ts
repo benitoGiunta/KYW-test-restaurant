@@ -24,6 +24,7 @@ function splitTween(el: HTMLElement, isIntro: boolean) {
   SplitText.create(el, {
     type: type === 'lines' ? 'lines' : type === 'chars' ? 'lines,words,chars' : 'lines,words', // chars dans des mots insécables (lecons.md)
     mask: 'lines',
+    aria: 'none', // pas d'aria-label sur des <p> (axe aria-prohibited-attr)
     autoSplit: true,
     linesClass: 'split-line',
     onSplit(self) {
