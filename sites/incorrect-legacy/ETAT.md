@@ -1,4 +1,4 @@
-# ETAT · incorrect · variante legacy · fin de la phase 2 (construction-2)
+# ETAT · incorrect · variante legacy · fin de la phase 3 (construction-3)
 
 ## Fait (phase 1 + 2)
 - Phase 1 : AUDIT, DESIGN, comp, thème Overprint, one-page (Hero, Maison, Pâte, Carte à onglets, Venir, Pied, KywFooter), 404, photos clientes.
@@ -20,3 +20,7 @@
 ## Pièges
 - Astro dev affiche une barre d'outils en bas des captures (pas dans le site). Le « Réalisé par » du KYW footer mesure 24 px (composant partagé, non touché).
 - Un `}` en trop dans `page.css` donne un HTTP 500 en dev : sloplint `--render` l'affiche comme « page did not render », pas comme une erreur CSS.
+
+## Phase 3
+- Contraste teal corrigé (accent 67 %), build et index passés, RAPPORT.md écrit.
+- Reste : sloplint --render final, finish review, log theme.mjs, 72 cases DESIGN.md, sitemap/robots non voulus.
