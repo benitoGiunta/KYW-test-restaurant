@@ -1,0 +1,123 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto, menus } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="accueil" title="L’Essentiel, restaurant à Temploux, près de Namur" description="Cuisine créative et de saison dans une tannerie du XVIIe siècle, à Temploux. Du mercredi au samedi, midi et soir. Chambres d’hôtes à 800 mètres.">
+  <section class="hero hero--counter" aria-labelledby="h-hero">
+    <div class="container hero__grid">
+      <Fig p="tulipes" class="hero__fig" eager sizes="(min-width: 60rem) 58vw, 100vw" pos="30% center" caption="La salle, longue table et persiennes." />
+      <div class="hero__counter">
+        <h1 id="h-hero">À table dans une tannerie</h1>
+        <p class="lead">Cuisine créative et de saison, à Temploux, près de Namur.</p>
+        <div class="actions">
+          <a class="btn" href={`${base}reservation/`}>Réserver une table</a>
+          <a class="btn btn--ghost" href={resto.telHref}>Appeler le {resto.tel}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-lieu">
+    <div class="container bento">
+      <div class="tile tile--text t-a">
+        <h2 id="h-lieu">Un lieu, des ambiances</h2>
+        {/* Hallmark · reworded "C’est dans une tannerie du XVIIe siècle que s’expriment la chaleur de l’accueil et l’envie de partager les plaisirs de la table …" to "… table." · 63 */}
+        <p class="lead">C’est dans une tannerie du XVIIe siècle que s’expriment la chaleur de l’accueil et l’envie de partager les plaisirs de la table.</p>
+        <p>Bénédicte et son équipe vous reçoivent dans plusieurs salles, chacune avec son ambiance.</p>
+      </div>
+      <Fig p="brique" class="t-b" pos="center 60%" caption="La salle à manger, mur de brique et poutre." />
+      <Fig p="rideaux" class="t-c" caption="La salle claire, aux rideaux blancs." />
+      <Fig p="briqueChaises" class="t-d" pos="center 40%" caption="Chaises en bois et cuir contre la brique." />
+      <div class="tile tile--text tile--rule t-e">
+        <h3>La terrasse</h3>
+        <p>Elle ouvre sur les jardins.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--band" aria-labelledby="h-dist">
+    <div class="container">
+      <h2 id="h-dist">Distinctions</h2>
+      <ul class="figs">
+        <li>
+          <span class="fig-n">1 étoile</span>
+          <p>Au guide Michelin, fiche de Temploux.</p>
+          <a class="link" href={resto.michelin} rel="noopener">Voir la fiche Michelin</a>
+        </li>
+        <li>
+          <span class="fig-n">16,5/20</span>
+          <p>Gault&amp;Millau 2024, troisième de la province de Namur.</p>
+          <a class="link" href={resto.presseGM} rel="noopener">Lire l’article de La DH</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-carte">
+    <div class="container">
+      <div class="head head--split">
+        <h2 id="h-carte">Carte et menus</h2>
+        <p class="lead">Chaque menu est servi pour la table entière. La carte suit la saison du gibier.</p>
+      </div>
+      <ul class="rows">
+        {menus.map((m) => (
+          <li class="row">
+            <h3>{m.nom}</h3>
+            <div class="row__body">
+              <p>{m.detail}</p>
+              {m.plus && <p class="muted">{m.plus.split('|').map((l) => <span class="ln">{l}</span>)}</p>}
+            </div>
+            <p class="price num">{m.prix}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="more"><a class="btn btn--ghost" href={`${base}carte-menus/`}>Voir la carte complète</a></p>
+    </div>
+  </section>
+
+  <section class="sec sec--tight" aria-labelledby="h-ch">
+    <div class="container split">
+      <div class="split__text">
+        <h2 id="h-ch">Quatre chambres, à 800 mètres</h2>
+        <p class="lead">L’ancienne maison à colombages abrite quatre chambres d’hôtes : Tilleul, Ardoise, Rouille et Réglisse.</p>
+        <p>Chambre double à 120 € pour deux personnes, suite à 150 €. Petit-déjeuner à 20 € par personne.</p>
+        <p><a class="btn btn--ghost" href={`${base}les-chambres/`}>Voir les chambres</a></p>
+      </div>
+      <Fig p="maison" class="split__fig" caption="La maison à colombages des chambres d’hôtes." />
+    </div>
+  </section>
+
+  <section class="sec sec--paper2" aria-labelledby="h-h">
+    <div class="container split split--info">
+      <div>
+        <h2 id="h-h">Horaires et adresse</h2>
+        <Horaires />
+      </div>
+      <div class="info">
+        <address>
+          <a href={resto.itineraire} rel="noopener">{resto.rue}<br />{resto.ville}</a>
+          <a href={resto.telHref}>{resto.tel}</a>
+          <a href={resto.emailHref}>{resto.email}</a>
+        </address>
+        <p>Prochaine fermeture : du 20 décembre 2026 au 5 janvier 2027 (service traiteur pour Noël). Les autres dates figurent en bas de page.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--close" aria-labelledby="h-res">
+    <div class="container split split--close">
+      <Fig p="tableDressee" class="split__fig split__fig--wide" pos="40% center" caption="Une table dressée, prête pour le service." />
+      <div class="split__text">
+        <h2 id="h-res">Réserver une table</h2>
+        <p class="lead">En ligne, midi ou soir, de un à dix couverts, ou par téléphone.</p>
+        <div class="actions">
+          <a class="btn" href={`${base}reservation/`}>Réserver en ligne</a>
+          <a class="btn btn--ghost" href={resto.telHref}>{resto.tel}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

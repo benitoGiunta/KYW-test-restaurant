@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { resto } from '../data/site';
+const couverts = Array.from({ length: 10 }, (_, i) => i + 1);
+---
+<Base page="reservation" title="Réserver une table, L’Essentiel à Temploux" description="Réservez une table à L’Essentiel, à Temploux : midi ou soir, de un à dix couverts, du mercredi au samedi.">
+  <section class="pagehead" aria-labelledby="h-1">
+    <div class="container split split--form">
+      <div class="split__text">
+        <h1 id="h-1">Réserver une table</h1>
+        <p class="lead">Du mercredi au samedi, midi ou soir, de un à dix couverts.</p>
+        <p>Chaque menu est servi pour la table entière. Au-delà de six couverts, menu uniquement. Allergies à signaler dans le message.</p>
+        <p>Le calendrier des disponibilités se consulte sur le site de L’Essentiel.</p>
+        <p class="actions"><a class="btn btn--ghost" href={resto.reservationOrigine} rel="noopener">Voir les disponibilités</a><a class="btn btn--ghost" href={resto.telHref}>{resto.tel}</a></p>
+      </div>
+      <form class="form" method="post" action="" data-endpoint="" novalidate>
+        <div class="form__grid">
+          <label>Prénom<input name="prenom" autocomplete="given-name" required /></label>
+          <label>Nom<input name="name1" autocomplete="family-name" required /></label>
+          <label>Adresse e-mail<input name="email1" type="email" autocomplete="email" required /></label>
+          <label>Téléphone<input name="phone1" type="tel" autocomplete="tel" required /></label>
+          <label>Date<input name="date_booking1" type="date" required /></label>
+          <label>Nombre de couverts<select name="couverts" required>{couverts.map((n) => <option value={n}>{n}</option>)}</select></label>
+          <fieldset class="form__wide"><legend>Service</legend>
+            <label class="choice"><input type="radio" name="rangetime1" value="midi" checked /> Midi</label>
+            <label class="choice"><input type="radio" name="rangetime1" value="soir" /> Soir</label>
+          </fieldset>
+          <label class="form__wide">Message<textarea name="details1" rows="4"></textarea></label>
+        </div>
+        <button class="btn" type="submit">Demander une réservation</button>
+        <p class="muted form__note" data-placeholder="true">Formulaire de maquette : l’envoi n’est pas branché. La réservation réelle passe par le calendrier du site ou le téléphone.</p>
+      </form>
+    </div>
+  </section>
+</Base>

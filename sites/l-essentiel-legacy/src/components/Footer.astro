@@ -1,0 +1,48 @@
+---
+import { resto, nav, navAction, horaires, fermetures } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<footer class="foot" id="infos">
+  <div class="container foot__in">
+    <div class="foot__head">
+      <p class="foot__mark">L’Essentiel</p>
+      <p class="foot__line">Rue Roger Clément 32, à Temploux, du mercredi au samedi.</p>
+    </div>
+    <div class="foot__cols">
+      <section aria-labelledby="f-site">
+        <h2 id="f-site">Le site</h2>
+        <ul>
+          {nav.map((n) => <li><a href={`${base}${n.href}`}>{n.label}</a></li>)}
+          <li><a href={`${base}${navAction.href}`}>Réservation</a></li>
+          <li><a href={resto.mentions} rel="noopener">Mentions légales</a></li>
+        </ul>
+      </section>
+      <section aria-labelledby="f-contact">
+        <h2 id="f-contact">Contact</h2>
+        <address>
+          <a href={resto.itineraire} rel="noopener">{resto.rue}<br />{resto.ville}</a>
+          <a href={resto.telHref}>{resto.tel}</a>
+          <a href={resto.emailHref}>{resto.email}</a>
+        </address>
+        <ul>
+          <li><a href={resto.facebook} rel="noopener">Facebook</a></li>
+          <li><a href={resto.instagram} rel="noopener">Instagram</a></li>
+        </ul>
+      </section>
+      <section aria-labelledby="f-horaires">
+        <h2 id="f-horaires">Horaires</h2>
+        <dl class="foot__h">
+          <div><dt>Mercredi au samedi</dt><dd>{horaires[2].h}</dd></div>
+          <div class="is-closed"><dt>Dimanche, lundi, mardi</dt><dd>Fermé</dd></div>
+        </dl>
+      </section>
+      <section aria-labelledby="f-ferm">
+        <h2 id="f-ferm">Fermetures annuelles</h2>
+        <ul class="foot__f">
+          {fermetures.map((f) => <li>{f.au ? `Du ${f.du} au ${f.au}` : `À partir du ${f.du}`}{f.note ? ` (${f.note})` : ''}</li>)}
+        </ul>
+      </section>
+    </div>
+    <p class="foot__credits" data-credits>Photographies : L’Essentiel, site lessentiel.be.</p>
+  </div>
+</footer>

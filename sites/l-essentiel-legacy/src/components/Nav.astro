@@ -1,0 +1,26 @@
+---
+import { resto, nav, navAction } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<header class="top" data-nav>
+  <div class="top__bar">
+    <div class="container top__bar-in">
+      <a href={resto.telHref}>{resto.tel}</a>
+      <a href={resto.facebook} rel="noopener">Facebook</a>
+      <a href={resto.instagram} rel="noopener">Instagram</a>
+    </div>
+  </div>
+  <div class="top__banner">
+    <div class="container top__banner-in">
+      <a class="mark" href={base} aria-label="L’Essentiel, accueil">L’Essentiel<span class="mark__sub">Temploux</span></a>
+      <nav aria-label="Principale">
+        <ul>
+          {nav.map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+      <a class="btn" href={`${base}${navAction.href}`} aria-current={page === navAction.id ? 'page' : undefined}>{navAction.label}</a>
+    </div>
+  </div>
+</header>

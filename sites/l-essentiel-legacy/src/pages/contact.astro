@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+---
+<Base page="contact" title="Contact, L’Essentiel à Temploux" description="Adresse, téléphone, e-mail et horaires de L’Essentiel, rue Roger Clément 32 à Temploux.">
+  <section class="pagehead" aria-labelledby="h-1">
+    <div class="container split split--form">
+      <div class="split__text">
+        <h1 id="h-1">Contact</h1>
+        <address class="addr">
+          <a href={resto.itineraire} rel="noopener">{resto.rue}<br />{resto.ville}</a>
+          <a href={resto.telHref}>{resto.tel}</a>
+          <a href={resto.emailHref}>{resto.email}</a>
+        </address>
+        <p><a class="btn btn--ghost" href={resto.itineraire} rel="noopener">Itinéraire</a></p>
+        <h2 class="h-small">Horaires</h2>
+        <Horaires compact />
+      </div>
+      <form class="form" method="post" action="" data-endpoint="" novalidate>
+        <div class="form__grid">
+          <label>Prénom<input name="prenom" autocomplete="given-name" /></label>
+          <label>Nom<input name="nom" autocomplete="family-name" required /></label>
+          <label>Adresse e-mail<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Téléphone<input name="phone" type="tel" autocomplete="tel" /></label>
+          <label class="form__wide">Message<textarea name="message" rows="6" required></textarea></label>
+        </div>
+        <button class="btn" type="submit">Envoyer</button>
+        <p class="muted form__note" data-placeholder="true">Formulaire de maquette : l’envoi n’est pas branché.</p>
+      </form>
+    </div>
+  </section>
+</Base>

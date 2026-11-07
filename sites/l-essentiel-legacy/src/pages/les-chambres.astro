@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { resto, chambres, equipements, tarifsChambres } from '../data/site';
+---
+<Base page="chambres" title="Chambres d’hôtes, L’Essentiel à Temploux" description="Quatre chambres d’hôtes dans une ancienne maison à colombages, à 800 mètres du restaurant : Tilleul, Ardoise, Rouille et Réglisse.">
+  <section class="pagehead" aria-labelledby="h-1">
+    <div class="container split">
+      <div class="split__text">
+        {/* Hallmark · reworded eyebrow "Lieu de séjour" + "Chambres d’hôtes" to h1 "Chambres d’hôtes" · 54 */}
+        <h1 id="h-1">Chambres d’hôtes</h1>
+        <p class="lead">Au cœur de Temploux, à 800 mètres du restaurant, L’Essentiel met à votre disposition ses chambres d’hôtes.</p>
+        <p>L’ancienne maison à colombages abrite quatre chambres spacieuses qui conjuguent style contemporain et traces du passé, dans le calme et le confort.</p>
+        <p>Prolongez la soirée passée au restaurant, découvrez Namur et ses environs, ou profitez d’un séjour hors du temps.</p>
+        <p class="actions"><a class="btn" href={resto.chambreContact} rel="noopener">Réserver une chambre</a><a class="btn btn--ghost" href={resto.telHref}>{resto.tel}</a></p>
+      </div>
+      <Fig p="maison" class="split__fig" eager caption="La maison à colombages." />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-4">
+    <div class="container">
+      <h2 id="h-4">Quatre chambres, quatre ambiances</h2>
+      <ul class="rows">
+        {chambres.map((c) => (
+          <li class="row">
+            <h3>{c.nom}</h3>
+            <div class="row__body"><p>{c.type}</p><p class="muted">{c.detail}</p></div>
+            <p class="price num">{c.prix}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--tight" aria-label="Photographies des chambres">
+    <div class="container bento bento--rooms">
+      <Fig p="chambre3" class="r-a" caption="Une tête de lit en bois ancien." />
+      <Fig p="chambre1" class="r-b" />
+      <Fig p="chambre4" class="r-c" caption="Poutre apparente et luminaire rond." />
+      <Fig p="chambre2" class="r-d" />
+    </div>
+  </section>
+
+  <section class="sec sec--paper2" aria-labelledby="h-eq">
+    <div class="container split split--info">
+      <div>
+        <h2 id="h-eq">Dans chaque chambre</h2>
+        <ul class="notes">{equipements.map((e) => <li>{e}</li>)}</ul>
+      </div>
+      <div>
+        <h2 id="h-t">Tarifs</h2>
+        <table class="tbl">
+          <thead><tr><th scope="col">Séjour</th><th scope="col" class="num">Prix</th></tr></thead>
+          <tbody>
+            {tarifsChambres.map((t) => <tr><th scope="row">{t.nom}<span class="muted">{t.detail}</span></th><td class="num">{t.prix}</td></tr>)}
+          </tbody>
+        </table>
+        <p class="actions"><a class="btn" href={resto.chambreContact} rel="noopener">Réserver une chambre</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

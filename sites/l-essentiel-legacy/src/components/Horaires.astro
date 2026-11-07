@@ -1,0 +1,13 @@
+---
+import { horaires } from '../data/site';
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+---
+<dl class:list={['sched', { 'sched--compact': compact }]}>
+  {horaires.map((j) => (
+    <div class:list={['sched__row', { 'is-closed': !j.h }]} data-jour={j.jour}>
+      <dt>{j.jour}</dt>
+      <dd>{j.h ?? 'Fermé'}</dd>
+    </div>
+  ))}
+</dl>

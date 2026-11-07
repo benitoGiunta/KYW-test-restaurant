@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { resto, menus, carte, fromageDessert, noteCarte, releveCarte } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="carte" title="Carte et menus, L’Essentiel à Temploux" description="Les deux assiettes à 90 €, les menus Affaire, Plaisir et Balade, les accords de vins et la carte de saison du gibier.">
+  <section class="pagehead" aria-labelledby="h-1">
+    <div class="container head head--split">
+      <h1 id="h-1">Carte et menus</h1>
+      <p class="lead">{releveCarte}</p>
+    </div>
+    <div class="container"><Fig p="biche" class="wide" sizes="100vw" eager caption="Plat de viande rouge, photographie du site actuel (2018)." /></div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-sw">
+    <div class="container">
+      <h2 id="h-sw" class="visually-hidden">Menus et carte</h2>
+      <div class="seg" role="tablist" aria-label="Menus ou carte" data-tabs>
+        <button role="tab" id="t-menus" aria-selected="true" aria-controls="p-menus">Les menus</button>
+        <button role="tab" id="t-carte" aria-selected="false" aria-controls="p-carte" tabindex="-1">La carte</button>
+      </div>
+      <div role="tabpanel" id="p-menus" aria-labelledby="t-menus" class="panel">
+        <ul class="rows">
+          {menus.map((m) => (
+            <li class="row">
+              <h3>{m.nom}</h3>
+              <div class="row__body">
+                <p>{m.detail}</p>
+                {m.plus && <p class="muted">{m.plus.split('|').map((l) => <span class="ln">{l}</span>)}</p>}
+              </div>
+              <p class="price num">{m.prix}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div role="tabpanel" id="p-carte" aria-labelledby="t-carte" class="panel">
+        <p class="panel__lead">Deux assiettes à 90 €, une première et une deuxième, à choisir à la carte.</p>
+        <div class="carte">
+          {carte.map((c) => (
+            <section>
+              <h3>{c.titre}</h3>
+              <ul>{c.plats.map((p) => <li>{p}</li>)}</ul>
+            </section>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--paper2" aria-labelledby="h-fd">
+    <div class="container head--rows">
+      <h2 id="h-fd">Fromages et dessert</h2>
+      <ul class="rows">
+        {fromageDessert.map((f) => (
+          <li class="row">
+            <h3>{f.nom}</h3>
+            <div class="row__body">{f.note && <p>{f.note}</p>}</div>
+            <p class="price num">{f.prix}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-n">
+    <div class="container split split--notes">
+      <div>
+        <h2 id="h-n">Avant de choisir</h2>
+        <ul class="notes">{noteCarte.map((n) => <li>{n}</li>)}</ul>
+        <div class="actions">
+          <a class="btn" href={`${base}reservation/`}>Réserver une table</a>
+          <a class="btn btn--ghost" href={resto.telHref}>{resto.tel}</a>
+        </div>
+      </div>
+      <div class="plates">
+        <Fig p="petitGris" caption="Petits gris, herbes et écume." sizes="(min-width: 60rem) 28vw, 100vw" />
+        <Fig p="poisson" caption="Poisson et fleur de bourrache." sizes="(min-width: 60rem) 28vw, 100vw" />
+        <Fig p="dessert" caption="Dessert aux sphères de pomme." sizes="(min-width: 60rem) 28vw, 100vw" />
+      </div>
+    </div>
+  </section>
+  <script is:inline>
+    document.querySelectorAll('[data-tabs]').forEach((tl) => {
+      const tabs = [...tl.querySelectorAll('[role=tab]')];
+      const show = (t) => tabs.forEach((x) => { const on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; });
+      tabs.forEach((t, i) => { t.addEventListener('click', () => show(t)); t.addEventListener('keydown', (e) => { const n = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (n) { const nt = tabs[(i + n + tabs.length) % tabs.length]; nt.focus(); show(nt); } }); });
+      show(tabs[0]);
+    });
+  </script>
+</Base>

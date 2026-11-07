@@ -1,0 +1,12 @@
+---
+import { photos } from '../data/site';
+interface Props { p: keyof typeof photos; caption?: string; class?: string; eager?: boolean; sizes?: string; pos?: string; alt?: string }
+const { p, caption, class: cls = '', eager = false, sizes = '(min-width: 60rem) 50vw, 100vw', pos = 'center', alt } = Astro.props;
+const ph = photos[p];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<figure class:list={['fig', cls]} data-slot={p} data-alt={ph.alt} style={`--ratio:${ph.w}/${ph.h};--pos:${pos}`}>
+  <img src={`${base}photos/${ph.src}`} width={ph.w} height={ph.h} alt={alt ?? ph.alt} sizes={sizes}
+    loading={eager ? 'eager' : 'lazy'} decoding={eager ? 'sync' : 'async'} fetchpriority={eager ? 'high' : undefined} />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
