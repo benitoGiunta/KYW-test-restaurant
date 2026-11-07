@@ -80,3 +80,6 @@
 46. Texte réel partout (SplitText découpe le DOM, aucun canvas).
 47. Cibles : « Réserver » d'en-tête 44 px (`.cta--petit` porté à 2,75 rem), CTA 48 px, liens de nav 44 px (mesuré à 320 et 390).
 9 bis. Finitions : `::selection` brique (`site.css` l. 8), favicon SVG + `favicon-32.png` + `apple-touch-icon.png` (180 px) générés depuis le SVG et liés dans `Base.astro`.
+
+## Phase 3 (preuves)
+42-43, 48-52 : `.shots/audit.txt` (0 FAIL), `.shots/*/report.json` (axe 0, LCP mobile 2316 ms, CLS 0, 60 fps). 53 : aucun tiret dans le texte rendu (script Python sur `dist/`). 54 : audit sans phrase répétée. 56 : aucun placeholder. 58 : `grep -L robots` vide. 59 : `KywFooter` sur 5 pages (build). 60 : 0 requête échouée. 61 à 63 : non prouvés (auto-notation, une passe, accessoire non retiré).
