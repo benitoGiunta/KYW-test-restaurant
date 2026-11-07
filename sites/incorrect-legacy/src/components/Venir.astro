@@ -1,0 +1,28 @@
+---
+import { resto, horaires, base } from '../data/site';
+---
+<section class="section venir" id="venir" aria-labelledby="t-venir">
+  <div class="container venir__in">
+    <figure class="venir__photo" data-slot="salle" data-alt="Salle avec tables en bois, murs de briques et cuisine ouverte en arrière-plan">
+      <img src={`${base}photos/salle-1600.webp`} srcset={`${base}photos/salle-800.webp 800w, ${base}photos/salle-1600.webp 1600w`} sizes="(min-width: 60rem) 45vw, 100vw" width="1687" height="1035" alt="La salle : tables en bois, murs de briques, cuisine ouverte au fond" loading="lazy" decoding="async" />
+      <figcaption>Tables en bois, briques et cuisine ouverte.</figcaption>
+    </figure>
+    <div class="venir__texte">
+      <h2 id="t-venir">Venir chez INCORЯECT</h2>
+      <p class="venir__adr"><span class="nw">{resto.adresse.rue},</span> <span class="nw">{resto.adresse.cp} {resto.adresse.ville}</span></p>
+      <dl class="horaires" data-placeholder="true">
+        {horaires.map((h) => (
+          <div class={`horaires__l${h.ferme ? ' is-ferme' : ''}`}>
+            <dt>{h.jours}</dt>
+            <dd>{h.ferme ? 'Fermé' : h.creneaux.map((c) => <time>{c}</time>)}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="fill">Horaires à confirmer, les sources se contredisent.</p>
+      <div class="actions">
+        <a class="btn btn--pass1" href={resto.reservation} rel="noopener">Réserver en ligne</a>
+        <a class="btn btn--paper" href={resto.telHref}>Appeler le {resto.tel}</a>
+      </div>
+    </div>
+  </div>
+</section>

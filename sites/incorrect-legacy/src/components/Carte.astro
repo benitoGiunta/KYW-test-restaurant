@@ -1,0 +1,63 @@
+---
+import { onglets, resto } from '../data/site';
+---
+<section class="section carte" id="carte" aria-labelledby="t-carte">
+  <div class="container">
+    <div class="carte__tete">
+      <h2 id="t-carte">La carte</h2>
+      <a class="btn btn--line" href={resto.carte} rel="noopener">Télécharger la carte en PDF</a>
+    </div>
+    <div class="tabs" data-tabs>
+      <div class="tabs__liste" role="tablist" aria-label="Rubriques de la carte">
+        {onglets.map((o, i) => (
+          <button class="tabs__b" role="tab" type="button" id={`tab-${o.id}`} aria-controls={`pan-${o.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{o.label}</button>
+        ))}
+      </div>
+      {onglets.map((o, i) => (
+        <div class="tabs__p" role="tabpanel" id={`pan-${o.id}`} aria-labelledby={`tab-${o.id}`} data-panel hidden={false} data-first={i === 0 ? '' : undefined}>
+          <div class="carte__groupes">
+            {o.groupes.map((g) => (
+              <section class="groupe" aria-label={g.titre}>
+                <h3>{g.titre}</h3>
+                <ul class="plats">
+                  {g.lignes.map((l) => (
+                    <li class="plat">
+                      <div class="plat__nom">
+                        <span class="plat__t">{l.nom}</span>
+                        {l.note && <span class="plat__note">{l.note}</span>}
+                        {l.desc && <span class="plat__d">{l.desc}</span>}
+                      </div>
+                      <span class="plat__p num">{l.prix}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+<script is:inline>
+  (function () {
+    var root = document.querySelector('[data-tabs]');
+    if (!root) return;
+    var tabs = [].slice.call(root.querySelectorAll('[role=tab]'));
+    var panels = [].slice.call(root.querySelectorAll('[data-panel]'));
+    function show(i, focus) {
+      tabs.forEach(function (t, k) { t.setAttribute('aria-selected', k === i ? 'true' : 'false'); t.tabIndex = k === i ? 0 : -1; });
+      panels.forEach(function (p, k) { p.hidden = k !== i; });
+      if (focus) tabs[i].focus();
+    }
+    root.classList.add('is-ready');
+    show(0, false);
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(i, false); });
+      t.addEventListener('keydown', function (e) {
+        var n = e.key === 'ArrowRight' ? (i + 1) % tabs.length : e.key === 'ArrowLeft' ? (i + tabs.length - 1) % tabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : -1;
+        if (n > -1) { e.preventDefault(); show(n, true); }
+      });
+    });
+  })();
+</script>
