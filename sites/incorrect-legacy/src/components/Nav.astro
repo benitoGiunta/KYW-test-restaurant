@@ -5,12 +5,38 @@ import { resto, base } from '../data/site';
 <header class="nav">
   <div class="container nav__in">
     <a class="nav__logo" href={base} aria-label="INCORЯECT, accueil"><Logo /></a>
-    <nav class="nav__liens" aria-label="Sections">
+    <nav class="menu" id="menu" popover aria-label="Sections">
       <a href={`${base}#maison`}>La maison</a>
       <a href={`${base}#pate`}>La pâte</a>
       <a href={`${base}#carte`}>La carte</a>
       <a href={`${base}#venir`}>Venir</a>
+      <a class="btn btn--pass1 menu__book" href={resto.reservation} rel="noopener">Réserver en ligne<span class="visually-hidden"> (Barestho)</span></a>
     </nav>
-    <a class="btn btn--pass1" href={resto.reservation} rel="noopener">Réserver en ligne</a>
+    <a class="btn btn--pass1 nav__book" href={resto.reservation} rel="noopener">Réserver en ligne<span class="visually-hidden"> (Barestho)</span></a>
+    <button class="nav__menu btn btn--line" type="button" popovertarget="menu" aria-controls="menu"><span class="nav__o">Menu</span><span class="nav__x">Fermer</span></button>
   </div>
 </header>
+<script is:inline>
+  (function () {
+    var menu = document.getElementById('menu');
+    if (!menu) return;
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('a') && menu.matches(':popover-open')) menu.hidePopover();
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+      var links = [].slice.call(menu.querySelectorAll('a[href*="#"]:not(.btn)'));
+      if (!links.length || !('IntersectionObserver' in window)) return;
+      var map = {};
+      links.forEach(function (a) { map[a.hash.slice(1)] = a; });
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          var a = map[e.target.id];
+          if (!a) return;
+          if (e.isIntersecting) { links.forEach(function (l) { l.removeAttribute('aria-current'); }); a.setAttribute('aria-current', 'true'); }
+          else if (a.getAttribute('aria-current')) a.removeAttribute('aria-current');
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      Object.keys(map).forEach(function (id) { var s = document.getElementById(id); if (s) io.observe(s); });
+    });
+  })();
+</script>

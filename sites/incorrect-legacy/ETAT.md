@@ -1,23 +1,22 @@
-# ETAT · incorrect · variante legacy · fin de la phase 1 (construction-1)
+# ETAT · incorrect · variante legacy · fin de la phase 2 (construction-2)
 
-## Fait
-- AUDIT.md, DESIGN.md (Picks, thème, composants, checklist), comp.md, deux comps (`.hallmark/comps/`), entrée du journal `.hallmark/log.json`.
-- Thème Overprint (newsprint), stamp et critique en tête de `src/styles/page.css`, tokens et base du scaffold.
-- One-page conservée : Nav, Hero (Stage), Maison, Pâte (3 chiffres), Carte (Switcher 4 rubriques, tout depuis `donnees.json`), Venir (photo salle, adresse, horaires, réservation, téléphone), Pied colophon, KywFooter ; `404`.
-- Photos clientes en WebP 800 et 1600 (`public/photos/`), logo en masque. Build OK (`dist/incorrect/legacy/`), noindex et KywFooter présents sur les 2 pages.
+## Fait (phase 1 + 2)
+- Phase 1 : AUDIT, DESIGN, comp, thème Overprint, one-page (Hero, Maison, Pâte, Carte à onglets, Venir, Pied, KywFooter), 404, photos clientes.
+- Phase 2 : nav edge-aligned avec menu Popover sous 60rem (fermeture au clic, lien actif par `aria-current`), états des boutons et onglets (survol sous `hover: hover`, actif, désactivé, focus), motion « still » (aucun reveal, aucune transition), reduced motion (smooth scroll conditionnel), hero en `svh` avec photo 1:1, correction de la passe teal du hero (bande grise), phrase d'accroche corrigée (« rue Haute Marcelle 35 à Namur »), horaires fermés lisibles sur l'encre (FAIL 40), `nowrap` sur les boutons, grilles `minmax(0, 1fr)`, finitions. Base.astro importe `page.css` par `<style is:global>@import` (sinon sloplint 34 faux FAIL).
+- Mesuré : aucun débordement horizontal de 320 à 1920 ; menu mobile, onglets au clavier, scroll-spy, sans script (panneaux visibles, menu natif). sloplint hero : 0 FAIL, 8 WARN (23 volontaire, 28a faux positif sur images sous le pli, 49 résolu depuis). Build `scripts/q.sh build` OK, noindex + KywFooter + mention sur `index.html` et `404.html`.
+- Hero review : **self** (pas d'outil Agent). Comp : trois questions ci-dessous.
 
-## Reste (phases 2 et 3)
-- Motion : un reveal, état d'ouverture, menu mobile (liens de nav au téléphone : simple ligne sous le logo pour l'instant), états des boutons à vérifier, `prefers-reduced-motion`.
-- QA navigateur : captures 1440 et 375, débordements (titre du hero, plats à prix long), hauteur du hero à 1280×800, contraste du texte sur passe teal, sloplint `--render` avec `--url`, axe.
-- Les trois questions de reproduction du comp, RAPPORT.md, § Sweep du Picks, `pnpm index`, commit de `dist/`.
+## Reproduction du comp (1280x800)
+- Masse : comp photo 5:4 sur 6 colonnes, build 1:1 (environ +25 % de surface), titre identique (4 lignes). Intervalle : comp titre puis lead à 8 px, build 24 px avec actions (le comp n'avait pas de boutons ni de nav). Entrée : comp sans nav, build avec nav 72 px ; photo toujours à droite en duotone teal. Plus grand écart : le recadrage carré de la photo (REFLEX 79 : 169 px de vide sous le hero à 1440 avec le 5:4) ; gardé, le titre et l'action restent lus d'abord.
+
+## Reste (phase 3)
+- Passe complète sloplint `--render` par route (sur `dist/` servi), axe, QA 1440 et 375 par l'agent « captures », contraste du texte sur passe teal, RAPPORT.md, § Sweep du Picks, `pnpm index`, commit de `dist/` final.
+- Compléter la case 8 de DESIGN.md § Sur-utilisation.
 
 ## Décisions et hypothèses
-- Overprint choisi (Darkroom et Midnight écartés, raisons au DESIGN.md). Draw : Index et recherche refusés, Switcher midi/soir refusé (carte par rubriques), photo salle déplacée dans Venir (pas deux photos de suite).
-- Prix de `donnees.json` (carte PDF récente), pas ceux du HTML sauvegardé (anciens). Horaires : sources contradictoires, affichage Fooding avec ligne « à confirmer » (`.fill`, `data-placeholder`). Pas d'`openingHoursSpecification`.
-- Fournisseurs et « à la maison » repris du texte du site d'origine ; aucun avis, note, e-mail ni chiffre inventé. Les chiffres 48 h, 22,50 € et 14,50 € viennent du site, de la carte et du Fooding.
-- Lien carte PDF : URL du CDN Webflow d'origine (`carte.pdf` local non servi). Téléphone `tel:+3281138561` (même numéro que 081/13.85.61).
-- Fonts par Google Fonts (Build hint), pas d'auto-hébergement.
+- Motion : still, pas de reveal (le thème Overprint l'interdit, prime sur « un reveal par page »). Pas d'état « ouvert » (horaires à confirmer). Pas de formulaire (réservation = lien Barestho de l'original).
+- Nav renommée « edge-aligned » (le log avait « ruled bar », dont la forme est la même mais hors liste) ; `.hallmark/log.json` mis à jour.
 
 ## Pièges
-- sloplint WARN 23 sur `.hero__photo::before` : passe teal du thème, volontaire.
-- `build-site.mjs` ne contrôle que `index.html` : le pied KYW de `404.html` vérifié à la main (présent).
+- Astro dev affiche une barre d'outils en bas des captures (pas dans le site). Le « Réalisé par » du KYW footer mesure 24 px (composant partagé, non touché).
+- Un `}` en trop dans `page.css` donne un HTTP 500 en dev : sloplint `--render` l'affiche comme « page did not render », pas comme une erreur CSS.
