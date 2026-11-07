@@ -1,3 +1,23 @@
+# ETAT, le-royal, portfolio, phase 2 (motion, signature, états) terminée
+
+## Phase 2 : fait
+- Signature : trait de craie jaune sous le nom (SVG `pathLength`, se trace après le loader, visible d'emblée sans JS / reduced motion) ; petit trait de craie sous chaque titre de catégorie, tracé quand la liste s'écrit ; filet jaune qui se trace au survol / focus d'une ligne.
+- Marquee d'état : le défilement de 50 % laissait un trou à droite (texte de 894 px, fenêtre 1440) : `etat()` clone le texte pour que chaque moitié couvre la fenêtre (4 copies à 1440, mesuré à 4 instants) ; pause au survol / focus ; reste statique en reduced motion.
+- Onglets TABLE | BAR : les listes du panneau masqué n'étaient jamais écrites (`once` consommé pendant `hidden`) : triggers sans `once`, `ecrirePanneau()` écrit à l'ouverture de l'onglet ce qui est déjà à l'écran ; vérifié (4 listes BAR `est-ecrit` après défilement).
+- Mots géants mobile : « BRASSERIE » dépassait (436 > 390) : `font-size: 16vw` sous 768 px, dérives réduites (0/40, 0/-30, 15/0) ; mesuré 311 ≤ 320 et 374 ≤ 390 sur tout le défilement.
+- Galerie terrasse (7 figures) sans trou : 1 grande (2×2), 4 à côté, 2 bandeaux ; mobile 1 bandeau, 2×2, 2 bandeaux (aire des figures = aire de la grille moins les gouttières, 1440 et 390).
+- Formulaire : états `:user-invalid` (brique + liseré), survol, zone `role=status` « Zenchef s'ouvre dans un nouvel onglet… » ; tableau d'horaires : en-têtes MIDI / SOIR alignés sur les colonnes, mention « · aujourd'hui » (repère sans couleur).
+- États tactiles `:active` (barre basse, boutons, flèches, lignes), `tap-highlight` neutre ; barre basse déplacée après le pied dans le DOM (`Barre.astro`) : l'ordre de tabulation suit la lecture (vérifié : saut > en-tête > contenu > barre) ; `.footer, .kyw-footer` en `z-index: var(--z-content)`.
+- Contrôles (scripts du scratchpad `lr-p2-*.mjs`, totaux seulement) : 0 erreur console, 0 `scrollWidth` > fenêtre à 1440 / 390 / 360 / 320 sur 6 pages, 0 contenu resté `visibility: hidden` après défilement, clics réels des liens d'en-tête OK sur 6 pages (elementFromPoint = le lien), reduced motion : 0 élément caché, 0 ligne clippée, marquee statique, trait de craie tracé, bas d'accueil (1440) : mention Maquette KYW + logo KYW visibles, états mobiles de la suggestion (157 à 185 px, pas de débordement).
+- sloplint (atmospheric, lancé depuis le dossier du site avec le script de `.claude/skills/hallmark/scripts/`) : 24 FAIL / 18 WARN, quasi tous hérités du gabarit (stamp Hallmark, `.petite-cap` uppercase tracké, littéraux `rgb()` du gabarit, `transition: width` du trait d'onglet) ; ceux ajoutés par la phase 2 (48 sur `--c-voile`, 39a `:disabled`) sont corrigés.
+
+## Phase 2 : reste pour la phase 3 (captures puis revue)
+- Shoot / audit complets (agent « captures »), LCP et loader (non mesurés ici), planche mobile des 6 pages.
+- Non fait : `RAPPORT.md`, ligne `ardoise | le-royal` dans `gabarits/UTILISATION.md` (protégé : à ajouter à la main), `pnpm index`, push. `dist/le-royal/portfolio/` est reconstruit (build OK).
+- Piège : un agent legacy travaille en parallèle (`dist/le-royal/legacy/` modifié) : n'ajouter au commit que `sites/le-royal-portfolio/` et `dist/le-royal/portfolio/`.
+
+---
+
 # ETAT, le-royal, portfolio, phase 1 (construction)
 
 ## Fait

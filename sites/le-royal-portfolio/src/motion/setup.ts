@@ -56,20 +56,28 @@ function etat() {
   if (!root) return;
   const horaires = JSON.parse(root.dataset.horaires || '[]') as Horaire[];
   const texte = root.querySelector<HTMLElement>('[data-etat-texte]');
-  const copie = root.querySelector<HTMLElement>('[data-etat-copie]');
   const piste = root.querySelector<HTMLElement>('[data-etat-piste]');
+  const copies = () => [...root.querySelectorAll<HTMLElement>('[data-etat-copie]')];
   const maj = () => {
     const s = etatOuverture(horaires);
     const base = texte?.textContent?.split(' · ')[0] || '';
     const ligne = `${s.texte} · ${root.dataset.statique || base}`;
     root.dataset.statique = root.dataset.statique || base;
     if (texte) texte.textContent = ligne;
-    if (copie) copie.textContent = ligne;
+    copies().forEach((c) => { c.textContent = ligne; });
     root.dataset.ouvert = s.ouvert ? 'oui' : 'non';
   };
   maj();
   const id = setInterval(maj, 60_000);
-  if (!prefersReducedMotion() && piste) piste.dataset.anime = '';
+  // Le défilement translate de 50 % : chaque moitié doit couvrir la fenêtre, sinon un trou apparaît à droite.
+  const remplir = () => {
+    if (!piste || !texte) return;
+    const k = Math.max(1, Math.ceil(innerWidth / Math.max(texte.getBoundingClientRect().width + 96, 1)));
+    const voulu = 2 * k - 1;
+    while (copies().length < voulu) { const c = texte.cloneNode(true) as HTMLElement; c.removeAttribute('data-etat-texte'); c.setAttribute('data-etat-copie', ''); c.setAttribute('aria-hidden', 'true'); piste.appendChild(c); }
+    maj();
+  };
+  if (!prefersReducedMotion() && piste) { remplir(); piste.dataset.anime = ''; }
   return () => clearInterval(id);
 }
 
@@ -134,8 +142,8 @@ function onglets() {
   const choisir = (idx: number, anime = true) => {
     tabs.forEach((t, k) => { t.setAttribute('aria-selected', String(k === idx)); t.tabIndex = k === idx ? 0 : -1; panneaux[k].hidden = k !== idx; });
     poser(tabs[idx], anime);
-    const lignes = panneaux[idx].querySelectorAll<HTMLElement>('[data-ecrit]');
-    lignes.forEach((l) => ScrollTrigger.refresh());
+    ScrollTrigger.refresh();
+    if (anime && !prefersReducedMotion()) ecrirePanneau(panneaux[idx]);
   };
   const defaut = tabs.findIndex((t) => t.dataset.groupe === 'table');
   choisir(defaut < 0 ? 0 : defaut, false);
@@ -150,20 +158,29 @@ function onglets() {
   return () => { tabs.forEach((t, k) => t.removeEventListener('click', handlers[k])); root.removeEventListener('keydown', clavier); removeEventListener('resize', resize); };
 }
 
-/** Les lignes s'écrivent de haut en bas (clip-path gauche → droite, stagger 0,04). CSS : .motion [data-ecrit] .ligne clip fermé. */
+/** Les lignes s'écrivent de haut en bas (clip-path gauche → droite, stagger 0,04). CSS : .motion [data-ecrit] .ligne clip fermé.
+ *  Une liste d'un panneau masqué (onglet BAR) s'écrit à l'ouverture de l'onglet, pas au chargement. */
+function ecrireListe(l: HTMLElement) {
+  if (l.classList.contains('est-ecrit')) return;
+  l.classList.add('est-ecrit');
+  const lignes = l.querySelectorAll<HTMLElement>('.ligne');
+  gsap.fromTo(lignes, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 0.7, ease: ease.out, stagger: { each: 0.04, from: 'start' }, clearProps: 'clipPath' });
+}
+function ecrirePanneau(panneau: HTMLElement) {
+  panneau.querySelectorAll<HTMLElement>('[data-ecrit]').forEach((l) => {
+    const r = l.getBoundingClientRect();
+    if (r.top < innerHeight * 0.92) ecrireListe(l); // déjà à l'écran : s'écrit tout de suite
+  });
+}
 function lignesEcrites() {
   if (prefersReducedMotion()) return;
   const listes = document.querySelectorAll<HTMLElement>('[data-ecrit]');
-  listes.forEach((l) => {
-    const lignes = l.querySelectorAll<HTMLElement>('.ligne');
-    ScrollTrigger.create({
-      trigger: l, start: 'top 92%', once: true,
-      onEnter: () => {
-        l.classList.add('est-ecrit');
-        gsap.fromTo(lignes, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 0.7, ease: ease.out, stagger: 0.04, clearProps: 'clipPath' });
-      },
-    });
-  });
+  const triggers = [...listes].map((l) => ScrollTrigger.create({
+    trigger: l, start: 'top 92%',
+    onEnter: () => { if (!l.closest('[hidden]')) ecrireListe(l); }, // sans « once » : une liste du panneau masqué attend son tour
+  }));
+  // Filet : si un panneau est ouvert alors que ses listes sont déjà dépassées, l'écriture est rejouée par ecrirePanneau.
+  return () => triggers.forEach((t) => t.kill());
 }
 
 /** Aperçu photo qui suit le pointeur et s'incline selon la vitesse (desktop pointeur fin) ; aussi au focus.
@@ -219,7 +236,8 @@ function motsGeants() {
   mots.forEach((m, k) => {
     // Dérive bornée vers l'intérieur du .wrap : mot 1 (aligné à gauche) 0 → +60, mot 2 (à droite) 0 → −50,
     // mot 3 (retrait 0,5em) +35 → 0. Aucun mot ne passe au-delà de son bord d'alignement.
-    const [de, a] = ([[0, 60], [0, -50], [35, 0]] as const)[k % 3];
+    const petit = innerWidth < 768; // mobile : dérives réduites, « BRASSERIE » reste dans la fenêtre
+    const [de, a] = ((petit ? [[0, 40], [0, -30], [15, 0]] : [[0, 60], [0, -50], [35, 0]]) as const)[k % 3];
     gsap.fromTo(m, { x: de }, { x: a, ease: 'none', scrollTrigger: { trigger: m.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
 }
@@ -236,7 +254,14 @@ function formulaire() {
   if (!form) return;
   const date = form.querySelector<HTMLInputElement>('input[type="date"]');
   if (date) { const d = new Date(); date.min = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
-  const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+  const etat = form.querySelector<HTMLElement>('[data-form-etat]');
+  const go = (e: SubmitEvent) => {
+    e.preventDefault();
+    window.open(form.action, '_blank', 'noopener');
+    if (etat) etat.textContent = 'Zenchef s\'ouvre dans un nouvel onglet pour confirmer votre réservation.';
+  };
+  const invalide = () => { if (etat) etat.textContent = ''; };
   form.addEventListener('submit', go);
-  return () => form.removeEventListener('submit', go);
+  form.addEventListener('input', invalide);
+  return () => { form.removeEventListener('submit', go); form.removeEventListener('input', invalide); };
 }

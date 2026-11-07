@@ -169,7 +169,7 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 .horaires th, .horaires td { text-align: left; padding: 0.7rem 0; border-bottom: 1px solid var(--c-line); }
 .horaires th { font-size: var(--t-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); font-weight: 700; }
 .horaires td:first-child { text-transform: capitalize; font-weight: 700; }
-.horaires td:not(:first-child) { width: 1%; white-space: nowrap; padding-left: var(--u); }
+.horaires :is(th, td):not(:first-child) { width: 1%; white-space: nowrap; padding-left: var(--u); }
 .horaires td.ferme { white-space: normal; }
 .horaires tr[data-aujourdhui] td { color: var(--c-accent); }
 .clair .horaires tr[data-aujourdhui] td { color: var(--c-clair-fg); background: rgb(233 208 100 / 0.4); }
@@ -211,7 +211,10 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 .galerie { display: grid; gap: var(--u); grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 768px) { .galerie { grid-template-columns: repeat(4, 1fr); } }
 .galerie figure { margin: 0; overflow: clip; aspect-ratio: 4 / 5; }
-.galerie figure:nth-child(3n) { grid-row: span 2; aspect-ratio: auto; }
+/* 7 figures sans trou : 1 en grand (2 × 2), 4 à côté, 2 en bandeau (2 colonnes chacune). Mobile : 1 en bandeau, 4 en 2 × 2, 2 en bandeau. */
+.galerie figure:first-child { grid-column: span 2; aspect-ratio: 4 / 3; }
+.galerie figure:nth-child(n+6) { grid-column: span 2; aspect-ratio: 16 / 10; }
+@media (min-width: 768px) { .galerie figure:first-child { grid-row: span 2; aspect-ratio: auto; } }
 .galerie img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .equipe { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--u); grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
 .equipe li { border-top: 1px solid var(--c-line); padding-top: var(--u); }
@@ -247,3 +250,49 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 .terrasse__photo { margin: 0 auto; overflow: clip; aspect-ratio: 16 / 9; }
 .terrasse__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; display: block; }
 @media (max-width: 767px) { .terrasse__photo { aspect-ratio: 4 / 5; } }
+
+
+/* ---- Phase 2 : signature, états, finitions ---- */
+/* Trait de craie sous le nom : se trace après le loader (pathLength 1), visible d'emblée sans JS ou en reduced motion. */
+.craie { display: block; width: min(100%, 34rem); height: 14px; margin-top: calc(var(--u) * 1.5); color: var(--c-accent); overflow: visible; }
+.craie path { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.motion .craie path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.motion.is-loaded .craie path { stroke-dashoffset: 0; transition: stroke-dashoffset 1.2s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) 0.25s; }
+.craie + .ardoise__accroche { margin-top: calc(var(--u) * 1.5); }
+/* Titre de catégorie : petit trait de craie, tracé quand la liste s'écrit. */
+.cat__tete .cat__titre::after { content: ''; display: block; width: 2.5rem; height: 3px; margin-top: 0.5rem; background: var(--c-accent); transform-origin: left; }
+.motion .cat__tete .cat__titre::after { transform: scaleX(0); transition: transform 0.6s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) 0.1s; }
+.motion .cat:has(.lignes.est-ecrit) .cat__tete .cat__titre::after { transform: scaleX(1); }
+.clair .cat__tete .cat__titre::after { background: var(--c-clair-fg); }
+/* Marquee : pause au survol ; la barre ne bouge pas pour qui préfère moins de mouvement (voir engine.css). */
+.etat:hover .etat__piste, .etat:focus-within .etat__piste { animation-play-state: paused; }
+/* Ligne d'ardoise : filet de craie qui se trace au survol, retour tactile. */
+.ligne::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform 0.45s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)); pointer-events: none; }
+.ligne:hover::after, .ligne:focus-within::after { transform: scaleX(1); }
+.ligne__in[data-preview]:active { background: var(--c-voile); }
+a, button { -webkit-tap-highlight-color: transparent; }
+.btn:active, .jour__btn:active, .onglets__tab:active { transform: translateY(1px); }
+.barre a:active { background: var(--c-fg); color: var(--c-brique); }
+.ardoise__lien:active, .maison .lien:active, .link:active { color: var(--c-accent); }
+.clair .ardoise__lien:active, .clair .link:active { color: var(--c-clair-muted); }
+.jour__btn:focus-visible { outline-offset: 2px; }
+.jour__btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+/* Formulaire : états valide / invalide / envoi. */
+.form input:hover, .form select:hover, .form textarea:hover { box-shadow: inset 0 -3px 0 var(--c-accent); }
+.form input:user-invalid, .form select:user-invalid, .form textarea:user-invalid { border-color: var(--c-brique); box-shadow: inset 4px 0 0 var(--c-brique); }
+.form__etat { min-height: 1.5em; margin: 0; font-size: var(--t-s); font-weight: 700; color: var(--c-clair-fg); }
+/* Tableau des horaires : ligne du jour repérée aussi sans couleur. */
+.horaires tr[data-aujourdhui] td:first-child::after { content: ' · aujourd\'hui'; font-weight: 400; text-transform: none; letter-spacing: 0; }
+/* Mobile : « BRASSERIE » (retrait 0,5 em) tient dans la fenêtre dès 320 px (5,47 em de large). */
+@media (max-width: 767px) { .mots { font-size: 16vw; } }
+/* Mobile : le nom et les prix ne débordent pas ; la barre basse ne masque pas le pied. */
+@media (max-width: 767px) {
+  .ardoise { padding-block: calc(var(--u) * 3) calc(var(--u) * 4); }
+  .jour { margin-top: calc(var(--u) * 3); }
+  .onglets { gap: 1.25rem; }
+  .formule__prix { font-size: clamp(2.4rem, 14vw, 3.5rem); }
+  .entete h1 { white-space: normal; overflow-wrap: anywhere; }
+}
+
+/* Pied de page au-dessus du fond fixe (leçon gabarits à couche fixe). */
+.footer, .kyw-footer { position: relative; z-index: var(--z-content); }

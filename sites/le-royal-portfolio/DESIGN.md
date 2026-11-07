@@ -54,3 +54,9 @@ photo de la terrasse montre une vraie ardoise « moules jumbo à 20 € mardi et
 
 Limites : peu de photos de plats (aperçus sur 5 lignes seulement), aucune photo de salle, pas d'histoire ni d'équipe, typo
 de titrage différente du logo (serif condensé), carte des boissons partielle (extraits).
+
+## Phase 2 : motion et signature
+
+- Signature « ardoise » : les lignes s'écrivent à la craie (clip-path gauche à droite), la suggestion du jour s'efface puis se réécrit, un trait de craie jaune se trace sous le nom et sous chaque titre de catégorie, un filet se trace sous la ligne survolée ; l'aperçu photo suit le pointeur (desktop). Aucune animation ne cache le texte sans JS ; reduced motion : tout est statique et visible.
+- Barre d'état : texte calculé à l'heure du visiteur, défilement lent (40 s) rempli par clonage, pause au survol.
+- Mobile : loader masqué, nom en deux lignes (309 px max à 390), mots géants à 16 vw, galerie en 2 colonnes sans trou, barre basse fixe de 56 px.
