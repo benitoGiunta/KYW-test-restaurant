@@ -1,0 +1,61 @@
+---
+// Chambres d'hôtes : quatre chambres, tarifs du site actuel, photos en bandeaux (aucune n'est attribuée à une chambre précise).
+import Base from '../layouts/Base.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const maison = photoDe('/photos/maison-hotes.webp');
+const bandeaux = ['/photos/chambre-1.webp', '/photos/chambre-2.webp', '/photos/chambre-3.webp', '/photos/chambre-4.webp'].map(photoDe);
+---
+<Base title="Chambres d'hôtes" description={`Quatre chambres d'hôtes à 800 mètres de L'Essentiel, à Temploux : Tilleul, Ardoise, Rouille et Réglisse, dans une ancienne maison à colombages. Chambre double ${site.tarifsChambres[0].prix}.`}>
+  <section class="entete-page wrap">
+    <p class="petite-cap">Chambres d'hôtes</p>
+    <h1 data-split="lines" data-intro>Dormir sur place</h1>
+    <p class="lead">Quatre chambres dans une ancienne maison à colombages, à 800 mètres du restaurant.</p>
+  </section>
+
+  <section class="section--serree wrap" aria-label="La maison à colombages">
+    <figure class="galerie" style="display: block; margin: 0">
+      <img src={asset(maison.src)} alt={maison.alt} width={maison.largeur} height={maison.hauteur} fetchpriority="high" decoding="async" style="width: 100%; max-width: 46rem; height: auto" />
+      <figcaption class="muted" style="margin-top: 0.75em; font-size: var(--t-s)">{site.legendes[maison.src]}</figcaption>
+    </figure>
+  </section>
+
+  <section class="section wrap deux-colonnes" aria-labelledby="ch-titre">
+    <div>
+      <p class="petite-cap">Les chambres</p>
+      <h2 id="ch-titre" style="margin-top: 0.4em">Tilleul, Ardoise, Rouille, Réglisse</h2>
+      <p class="muted" style="margin-top: 1em; max-width: 30ch">Lit de 180 x 200, douche à l'italienne, peignoir, Wi-Fi.</p>
+    </div>
+    <ul class="menu-liste" style="list-style: none">
+      {site.chambres.map((c) => (
+        <li data-reveal="fade"><span class="num" aria-hidden="true"></span><span class="nom">{c.nom}<small>{c.detail}</small></span><span class="prix"></span></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section wrap deux-colonnes" aria-labelledby="tarifs-titre">
+    <div>
+      <p class="petite-cap">Tarifs</p>
+      <h2 id="tarifs-titre" style="margin-top: 0.4em">Par nuit</h2>
+      <p class="muted" style="margin-top: 1em; max-width: 30ch">Tarifs du site actuel du restaurant, à confirmer à la réservation.</p>
+    </div>
+    <ul class="menu-liste" style="list-style: none">
+      {site.tarifsChambres.map((t) => (
+        <li data-reveal="fade"><span class="num" aria-hidden="true"></span><span class="nom">{t.libelle}</span><span class="prix">{t.prix}</span></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section wrap galerie" aria-label="En images" style="padding-top: 0">
+    {bandeaux.map((p, i) => (
+      <figure class:list={[{ angle: i % 2 === 1 }]} data-reveal="fade">
+        <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+      </figure>
+    ))}
+  </section>
+
+  <section class="section--serree wrap" style="padding-bottom: calc(var(--u) * 14)">
+    <p class="lead" style="max-width: 46rem">Renseignements au <a class="lien" href={telHref()}>{site.telephone}</a>.</p>
+    <p style="margin-top: calc(var(--u) * 3)"><a class="filet" data-filet href={u('/reservation/')}><span>Réserver une table au restaurant</span><span class="fleche" aria-hidden="true">→</span></a></p>
+  </section>
+</Base>

@@ -1,0 +1,67 @@
+---
+// La maison : tannerie, salles, accueil, distinctions sourcées, galerie. Aucun portrait de chef ni avis cité : le dossier n'en prouve pas.
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const chaises = photoDe('/photos/salle-chaises.webp');
+const arche = photoDe('/photos/salle-arche.webp');
+const galerie = ['/photos/salle-rideaux.webp', '/photos/salle-tulipes.webp', '/photos/salle-brique.webp', '/photos/table-dressee.webp'].map(photoDe);
+---
+<Base title="La maison" preloadImage={{ href: '/photos/salle-chaises.webp', media: '(max-width: 767px)' }} description={`L'Essentiel, une ancienne tannerie du XVIIe siècle à ${site.adresse.commune} : plusieurs salles, une étoile au guide Michelin, Bénédicte et son équipe à l'accueil.`}>
+  <section class="entete-page wrap">
+    <p class="petite-cap">La maison</p>
+    <h1 data-split="lines" data-intro>Une ancienne tannerie</h1>
+    <p class="lead">{site.baseline}</p>
+  </section>
+
+  <section class="split" aria-label="La tannerie">
+    <figure class="split__media bord">
+      <img src={asset(chaises.src)} alt={chaises.alt} width={chaises.largeur} height={chaises.hauteur} fetchpriority="high" decoding="async" />
+    </figure>
+    <div class="split__aplat">
+      <p class="petite-cap">Temploux, XVIIe siècle</p>
+      <div class="texte"><p>{site.histoire[0]}</p><p>{site.histoire[2]}</p></div>
+    </div>
+  </section>
+
+  <section class="split split--inverse" aria-label="L'accueil">
+    <figure class="split__media" data-reveal="fade" style="margin-right: var(--lane)">
+      <img src={asset(arche.src)} alt={arche.alt} width={arche.largeur} height={arche.hauteur} loading="lazy" decoding="async" />
+    </figure>
+    <div class="split__aplat">
+      <p class="petite-cap">Plusieurs ambiances</p>
+      <div class="texte"><p>{site.histoire[1]}</p></div>
+      <a class="filet" data-filet href={u('/menu/')}><span>La carte du moment</span><span class="fleche" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="section wrap deux-colonnes" aria-labelledby="equipe-titre">
+    <div>
+      <p class="petite-cap">L'équipe</p>
+      <h2 id="equipe-titre" style="margin-top: 0.4em">À l'accueil</h2>
+    </div>
+    <ul class="equipe">
+      {site.equipe.map((m) => (
+        <li data-reveal="fade">
+          <span class="nom">{m.nom}{m.placeholder && <span class="illu">personne illustrative</span>}</span>
+          <span class="muted">{m.role}{m.rolePlaceholder && <span class="illu">rôle illustratif</span>}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="bande wrap" aria-label="Distinctions">
+    {site.distinctions.map((d) => (
+      <p>{d.url ? <a class="lien" href={d.url} rel="noopener">{d.texte}</a> : d.texte}{d.placeholder && <span class="illu">illustratif</span>}<span class="source">{d.source}</span></p>
+    ))}
+  </section>
+
+  <section class="section wrap galerie" aria-label="En images">
+    {galerie.map((p, i) => (
+      <figure class:list={[{ angle: i % 3 === 1 }]} data-reveal="fade">
+        <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        <figcaption>{site.legendes[p.src] ?? ''}</figcaption>
+      </figure>
+    ))}
+  </section>
+</Base>

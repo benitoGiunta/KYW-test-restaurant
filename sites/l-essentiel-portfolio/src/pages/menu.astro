@@ -1,0 +1,77 @@
+---
+// La carte : deux assiettes (première, deuxième), fromages et dessert. Descriptions vides : le dossier ne donne que les intitulés.
+import Base from '../layouts/Base.astro';
+import { site, photoDe, numeroService } from '../data/site';
+import { u, asset } from '../lib/url';
+const [premiere, deuxieme, fin] = site.carte;
+// Photos de plats : seules celles dont le dossier prouve le lien avec une ligne (petits gris, dessert) ou le plat du dressage (biche).
+const photos: Record<string, ReturnType<typeof photoDe>> = {
+  'p2': photoDe('/photos/plat-petit-gris.webp'),
+  'd3': photoDe('/photos/plat-biche.webp'),
+  'f1': photoDe('/photos/plat-dessert.webp'),
+};
+---
+<Base title="La carte" description={`La carte de L'Essentiel à Temploux (Namur) : deux assiettes à ${site.menus[0].prix}, fromages affinés ${fin.plats[0].prix}, dessert ${fin.plats[1].prix}. Saison du gibier.`}>
+  <section class="entete-page wrap">
+    <p class="petite-cap">La carte</p>
+    <h1 data-split="lines" data-intro>Deux assiettes</h1>
+    <p class="lead">{site.menus[0].prix} pour une première et une deuxième assiette, à choisir à la carte. Carte relevée en saison du gibier.</p>
+  </section>
+
+  {[['p', premiere], ['d', deuxieme]].map(([k, cat]) => (
+    <section class="section--serree wrap" aria-labelledby={`cat-${k}`}>
+      <h2 id={`cat-${k}`} class="petite-cap" style="font-weight: 400; letter-spacing: 0.18em; font-size: var(--t-xs); margin-bottom: 1.4em">{cat.categorie}</h2>
+      <ol class="menu-liste menu-grand">
+        {cat.plats.map((p, i) => (
+          <li data-reveal="fade">
+            <span class="num">{numeroService(cat.plats, i)}</span>
+            <span class="nom">{p.nom}{p.description && <small>{p.description}</small>}</span>
+            <span class="prix">{p.prix ?? ''}</span>
+            {photos[`${k}${i}`] && (
+              <figure class="assiette-photo">
+                <img src={asset(photos[`${k}${i}`].src)} alt={photos[`${k}${i}`].alt} width={photos[`${k}${i}`].largeur} height={photos[`${k}${i}`].hauteur} loading="lazy" decoding="async" />
+              </figure>
+            )}
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
+
+  <section class="section wrap deux-colonnes" aria-labelledby="fin-titre">
+    <div>
+      <p class="petite-cap">{fin.categorie}</p>
+      <h2 id="fin-titre" style="margin-top: 0.4em">Pour finir</h2>
+    </div>
+    <ul class="menu-liste" style="list-style: none">
+      {fin.plats.map((p, i) => (
+        <li data-reveal="fade">
+          <span class="num" aria-hidden="true"></span>
+          <span class="nom">{p.nom}{p.description && <small>{p.description}</small>}</span>
+          <span class="prix">{p.prix ?? ''}</span>
+          {photos[`f${i}`] && (
+            <figure class="assiette-photo">
+              <img src={asset(photos[`f${i}`].src)} alt={photos[`f${i}`].alt} width={photos[`f${i}`].largeur} height={photos[`f${i}`].hauteur} loading="lazy" decoding="async" />
+            </figure>
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section wrap deux-colonnes" aria-labelledby="regles-titre">
+    <div>
+      <p class="petite-cap">À votre table</p>
+      <h2 id="regles-titre" style="margin-top: 0.4em">Les règles de la carte</h2>
+    </div>
+    <ul class="menu-liste" style="list-style: none">
+      {site.carteNotes.map((n) => (
+        <li data-reveal="fade"><span class="num" aria-hidden="true"></span><span class="nom">{n}</span><span class="prix"></span></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section--serree wrap" style="padding-bottom: calc(var(--u) * 14)">
+    <p style="max-width: 46rem"><a class="filet" data-filet href={u('/carte/')}><span>Les menus Affaire, Plaisir et Balade</span><span class="fleche" aria-hidden="true">→</span></a></p>
+  </section>
+</Base>

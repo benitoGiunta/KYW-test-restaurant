@@ -1,0 +1,154 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe, numeroService, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/facade-enseigne.webp');
+const maison = photoDe('/photos/salle-chaises.webp');
+const salleA = photoDe('/photos/salle-tulipes.webp');
+const salleB = photoDe('/photos/salle-arche.webp');
+const chambre = photoDe('/photos/chambre-3.webp');
+const premiere = site.carte[0];
+const deuxieme = site.carte[1];
+const comps = site.dressage.composants;
+// Trait : du bord du médaillon vers l'ancre de la légende (coordonnées en % de la scène carrée).
+const trait = (c: (typeof comps)[number]) => {
+  const ax = c.cote === 'gauche' ? 20 : 80;
+  const dx = ax - c.x, dy = c.ly - c.y, n = Math.hypot(dx, dy) || 1;
+  const r = c.d / 2 + 1;
+  return `M${(c.x + (dx / n) * r).toFixed(2)} ${(c.y + (dy / n) * r).toFixed(2)} L${ax} ${c.ly}`;
+};
+---
+<Base>
+  <section class="hero" aria-label="Accueil">
+    <figure class="hero__media" data-hero-media>
+      <img src={asset(hero.src)} srcset={`${asset('/photos/facade-enseigne-900.webp')} 720w, ${asset(hero.src)} 1200w`} sizes="(max-width: 1023px) 100vw, 50vw" alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" />
+    </figure>
+    <div class="hero__texte">
+      <p class="petite-cap">Table gastronomique, {site.adresse.commune}</p>
+      <h1 class="hero__titre" data-split="lines" data-intro>{site.nom}</h1>
+      <p class="hero__sous">Une étoile au guide Michelin, dans une ancienne tannerie du XVIIe siècle. {site.adresse.rue} {site.adresse.numero}, Namur.</p>
+      <a class="filet" data-filet href={u('/menu/')}><span>La carte : deux assiettes, {site.menus[0].prix}</span><span class="fleche" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="section phrase wrap" aria-label="Notre cuisine">
+    <p class="phrase__texte" data-split="lines">{site.phrase.avant} <em>{site.phrase.accent}</em>{site.phrase.apres}</p>
+  </section>
+
+  <section class="dressage" data-dressage aria-labelledby="dressage-titre">
+    <div class="dressage__scene" data-dressage-scene>
+      <div class="dressage__entete">
+        <p class="petite-cap">Le dressage</p>
+        <h2 id="dressage-titre">{site.dressage.plat}</h2>
+        <p class="muted">{site.dressage.service}</p>
+      </div>
+      <div class="stage">
+        <div class="assiette" aria-hidden="true"><div class="assiette__fond"></div></div>
+        {comps.map((c, i) => (
+          <figure class="dressage__comp" data-composant={String(i)} data-cote={c.cote} style={`left:${c.x}%;top:${c.y}%;width:${c.d}%`}>
+            <img src={asset(c.src)} alt="" width="300" height="300" loading="lazy" decoding="async" />
+          </figure>
+        ))}
+        <svg class="dressage__traits" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          {comps.map((c, i) => <path data-trait={String(i)} d={trait(c)} />)}
+        </svg>
+        {comps.map((c, i) => (
+          <p class="dressage__legende" data-legende={String(i)} data-cote={c.cote} style={`top:${c.ly}%`} aria-hidden="true">
+            {c.nom}{c.placeholder && <span class="illu">composant illustratif</span>}
+          </p>
+        ))}
+      </div>
+      <ol class="dressage__liste" aria-label="Composants du plat">
+        {comps.map((c, i) => (
+          <li data-liste-item={String(i)}>
+            <button type="button">{c.nom}{c.placeholder && <span class="illu">illustratif</span>}</button>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="menu-titre">
+    <p class="petite-cap">La carte</p>
+    <h2 id="menu-titre" style="margin: 0.4em 0 1.6em">Deux assiettes, {site.menus[0].prix}</h2>
+    <p class="petite-cap" style="margin-bottom: 1em">{premiere.categorie}</p>
+    <ol class="menu-liste">
+      {premiere.plats.map((p, i) => (
+        <li data-reveal="fade">
+          <span class="num">{numeroService(premiere.plats, i)}</span>
+          <span class="nom">{p.nom}</span>
+          <span class="prix"></span>
+        </li>
+      ))}
+    </ol>
+    <p class="petite-cap" style="margin: calc(var(--u) * 5) 0 1em">{deuxieme.categorie}</p>
+    <ol class="menu-liste">
+      {deuxieme.plats.map((p, i) => (
+        <li data-reveal="fade">
+          <span class="num">{numeroService(deuxieme.plats, i)}</span>
+          <span class="nom">{p.nom}{p.description && <small>{p.description}</small>}</span>
+          <span class="prix"></span>
+        </li>
+      ))}
+    </ol>
+    <div class="menu-note muted">
+      <p>Carte relevée en saison du gibier. {site.carteNotes[2]}</p>
+    </div>
+    <p style="margin-top: calc(var(--u) * 3); max-width: 46rem"><a class="filet" data-filet href={u('/carte/')}><span>Les menus Affaire, Plaisir et Balade</span><span class="fleche" aria-hidden="true">→</span></a></p>
+  </section>
+
+  <section class="split" aria-labelledby="maison-titre">
+    <figure class="split__media bord" data-reveal="fade">
+      <img src={asset(maison.src)} alt={maison.alt} width={maison.largeur} height={maison.hauteur} loading="lazy" decoding="async" />
+    </figure>
+    <div class="split__aplat">
+      <p class="petite-cap">La maison</p>
+      <h2 id="maison-titre" data-split="lines">Une tannerie du XVIIe siècle</h2>
+      <p class="texte">{site.histoire[0]}</p>
+      <a class="filet" data-filet href={u('/maison/')}><span>Les salles et l'accueil</span><span class="fleche" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="section wrap quinconce" aria-label="La salle">
+    <figure class="quinconce__a" data-reveal="fade">
+      <img src={asset(salleA.src)} alt={salleA.alt} width={salleA.largeur} height={salleA.hauteur} loading="lazy" decoding="async" />
+      <figcaption>{site.legendes[salleA.src]}</figcaption>
+    </figure>
+    <figure class="quinconce__b angle" data-reveal="fade" data-delay="0.2">
+      <img src={asset(salleB.src)} alt={salleB.alt} width={salleB.largeur} height={salleB.hauteur} loading="lazy" decoding="async" />
+      <figcaption>L'arche</figcaption>
+    </figure>
+  </section>
+
+  <section class="bande wrap" aria-label="Distinctions">
+    {site.distinctions.map((d) => (
+      <p>{d.url ? <a class="lien" href={d.url} rel="noopener">{d.texte}</a> : d.texte}{d.placeholder && <span class="illu">illustratif</span>}<span class="source">{d.source}</span></p>
+    ))}
+  </section>
+
+  <section class="section wrap deux-colonnes" aria-labelledby="chambres-titre">
+    <div>
+      <p class="petite-cap">Chambres d'hôtes</p>
+      <h2 id="chambres-titre" style="margin-top: 0.4em">Dormir à 800 mètres</h2>
+    </div>
+    <div class="stack" style="max-width: 46rem">
+      <figure class="bandeau" data-reveal="fade">
+        <img src={asset(chambre.src)} alt={chambre.alt} width={chambre.largeur} height={chambre.hauteur} loading="lazy" decoding="async" />
+      </figure>
+      <p class="lead">Quatre chambres, Tilleul, Ardoise, Rouille et Réglisse, dans une ancienne maison à colombages, à 800 mètres du restaurant.</p>
+      <a class="filet" data-filet href={u('/chambres/')}><span>Voir les chambres et les tarifs</span><span class="fleche" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="section wrap deux-colonnes" aria-labelledby="resa-titre">
+    <div>
+      <p class="petite-cap">Réserver</p>
+      <h2 id="resa-titre" style="margin-top: 0.4em">Une table, une ambiance</h2>
+    </div>
+    <div class="stack" style="max-width: 46rem">
+      <p class="lead">Du mercredi au samedi, midi et soir. Réservation sur le site du restaurant, ou par téléphone au <a class="lien" href={telHref()}>{site.telephone}</a>.</p>
+      <p class="muted">{site.groupes}</p>
+      <a class="filet" data-filet href={u('/reservation/')}><span>Réserver une table</span><span class="fleche" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</Base>

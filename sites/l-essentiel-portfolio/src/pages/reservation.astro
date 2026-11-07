@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+---
+<Base title="Réserver" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, par téléphone au ${site.telephone}. Groupes et privatisation du samedi par téléphone.`}>
+  <section class="entete-page wrap">
+    <p class="petite-cap">Réserver</p>
+    <h1 data-split="lines" data-intro>Une table</h1>
+    <p class="lead">Sur {site.reservation.outil}, ou au <a class="lien" href={telHref()}>{site.telephone}</a>.</p>
+  </section>
+
+  <section class="section--serree wrap" aria-labelledby="demande-titre">
+    <h2 id="demande-titre" class="petite-cap" style="font-weight: 400; letter-spacing: 0.18em; font-size: var(--t-xs)">Votre demande</h2>
+    <p class="muted" style="margin: 0.8em 0 calc(var(--u) * 4); max-width: 46rem">Formulaire de démonstration sans envoi : la validation ouvre le calendrier de réservation du restaurant, où la réservation se termine.</p>
+    <form class="form-ligne" data-reservation action={site.reservation.url} method="get">
+      <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+      <label>Date <input type="date" name="date" lang="fr-BE" data-min-aujourdhui required aria-describedby="date-aide" /><small id="date-aide" class="muted">jj/mm/aaaa</small></label>
+      <label>Heure <input type="time" name="heure" required /></label>
+      <label>Couverts <input type="number" name="couverts" min="1" max="10" value="2" required /></label>
+      <label class="large">Message <textarea name="message" rows="2"></textarea></label>
+      <div class="actions">
+        <button class="btn" type="submit">Continuer sur le site du restaurant</button>
+        <a class="btn btn--ghost" href={telHref()}>Appeler</a>
+      </div>
+    </form>
+    <p class="muted" style="margin-top: calc(var(--u) * 3); max-width: 46rem">{site.groupes}</p>
+  </section>
+
+  <section class="section wrap deux-colonnes" aria-labelledby="horaires-titre">
+    <div>
+      <p class="petite-cap">Services</p>
+      <h2 id="horaires-titre" style="margin-top: 0.4em">Du mercredi au samedi</h2>
+      <p class="muted" style="margin-top: 1em; max-width: 30ch">Fermé le dimanche, le lundi et le mardi.</p>
+    </div>
+    <div class="stack">
+      <dl class="horaires" data-reveal="fade">
+        {site.horaires.filter((h) => h.creneaux.length).map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+      <p style="margin-top: calc(var(--u) * 3)">{adresseLigne()}<br /><a class="lien" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire sur OpenStreetMap</a></p>
+    </div>
+  </section>
+
+  <section class="section wrap deux-colonnes" id="fermetures" aria-labelledby="fermetures-titre">
+    <div>
+      <p class="petite-cap">Fermetures annuelles</p>
+      <h2 id="fermetures-titre" style="margin-top: 0.4em">Dates à retenir</h2>
+    </div>
+    <ul class="menu-liste" style="list-style: none">
+      {site.fermetures.map((f) => <li data-reveal="fade"><span class="num" aria-hidden="true"></span><span class="nom">{f}</span><span class="prix"></span></li>)}
+    </ul>
+  </section>
+</Base>
+
+<script>
+  import { onPage } from '../engine';
+  // Formulaire sans backend : à la validation, on ouvre l'outil de réservation réel (les champs ne sont pas transmis).
+  onPage(() => {
+    const form = document.querySelector<HTMLFormElement>('[data-reservation]');
+    if (!form) return; // tourne sur chaque page : vérifier la présence
+    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    form.addEventListener('submit', go);
+    return () => form.removeEventListener('submit', go);
+  });
+</script>

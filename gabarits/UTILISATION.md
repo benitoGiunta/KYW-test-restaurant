@@ -7,3 +7,4 @@ Un gabarit par ligne, les restaurants qui l ont reçu en variante portfolio (pou
 | quatre-mains | les-potes-au-feu |
 | verger | atelier-de-bossime |
 | forno | dolce-vita-wepion |
+| comptoir | l-essentiel |

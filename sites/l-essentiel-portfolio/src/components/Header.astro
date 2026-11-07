@@ -1,0 +1,27 @@
+---
+// En-tête « Comptoir » : navigation en petites capitales 200 à droite, marque horizontale en mobile seulement
+// (en desktop, la marque est le logo vertical fixé en bas à gauche, dans la voie --lane). Pastille Réserver fixe.
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const liens = [
+  { href: u('/menu/'), label: 'La carte' },
+  { href: u('/carte/'), label: 'Menus' },
+  { href: u('/maison/'), label: 'La maison' },
+  { href: u('/chambres/'), label: 'Chambres' },
+  { href: u('/reservation/'), label: 'Réserver' },
+];
+const ici = Astro.url.pathname.replace(/\/+$/, '');
+const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+---
+<header class="header">
+  <div class="header__inner">
+    <a class="header__brand" href={u('/')} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
+    <nav class="nav" aria-label="Navigation principale">
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+    </nav>
+  </div>
+</header>
+<a class="logo-vertical" href={u('/')} aria-label={`${site.nom}, retour à l'accueil`}><span aria-hidden="true">{site.nom}</span></a>
+<div class="pastille" data-pastille>
+  <a class="pastille__resa" href={u('/reservation/')} data-magnetic="0.2">Réserver</a>
+</div>
