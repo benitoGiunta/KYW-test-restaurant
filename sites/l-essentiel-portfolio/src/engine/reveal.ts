@@ -25,6 +25,7 @@ function splitTween(el: HTMLElement, isIntro: boolean) {
     type: type === 'lines' ? 'lines' : `lines,${type}`,
     mask: 'lines',
     autoSplit: true,
+    aria: 'none',
     linesClass: 'split-line',
     onSplit(self) {
       gsap.set(el, { visibility: 'visible' });

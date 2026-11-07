@@ -154,7 +154,7 @@ export const site: Restaurant = {
   ],
   histoire: [
     "L'Essentiel occupe une ancienne tannerie du XVIIe siècle, à Temploux, dans la commune de Namur. La brique, la pierre et la poutre sont restées ; les salles, plusieurs, ont chacune leur ambiance.",
-    "À table, Bénédicte et son équipe vous accueillent. La salle claire aux rideaux blancs, la salle de brique, l'arche aux persiennes : choisissez l'ambiance de votre soirée en réservant.",
+    "À table, Bénédicte et son équipe vous accueillent. La salle claire aux rideaux blancs, la salle de brique, l'arche aux persiennes.",
     "La cuisine est française, créative et de saison : le gibier du Pays à l'automne, les poissons nobles, le ris de veau, et un chariot de fromages affinés qui se découvre en fin de repas.",
   ],
   equipe: [{ nom: 'Bénédicte', role: "Accueil et salle, avec son équipe", placeholder: false }],
@@ -172,7 +172,7 @@ export const site: Restaurant = {
   ],
   avis: [],
   photos: [
-    photo('/photos/facade-enseigne.webp', "Façade en brique et enseigne manuscrite dorée « l'essentiel » sur un panneau noir", 1200, 1500),
+    photo('/photos/facade-enseigne.webp', "Façade en brique et enseigne manuscrite dorée « l'essentiel » sur un panneau noir", 1200, 1440),
     photo('/photos/salle-tulipes.webp', 'Table longue dressée, tulipes blanches au premier plan et persiennes noires', 1600, 1067),
     photo('/photos/salle-brique.webp', 'Salle à manger de brique et de poutres, tables rondes dressées, chaises cannées', 1600, 1067),
     photo('/photos/salle-rideaux.webp', 'Salle claire, tables rondes dressées et rideaux blancs', 1600, 1067),
@@ -212,7 +212,7 @@ export const site: Restaurant = {
     { texte: nb('4,8/5 sur plus de 1 000 avis Google'), source: 'Google, note relevée le 7 novembre 2026', placeholder: false },
   ],
   phrase: { avant: 'Une cuisine créative et de saison, où le produit est', accent: 'travaillé au plus juste de sa nature', apres: '.' },
-  groupes: "Chaque menu est servi pour la table entière ; au-delà de six couverts, menu uniquement. Pour un groupe, appelez le restaurant.",
+  groupes: "Chaque menu est servi pour la table entière ; au-delà de six couverts, menu uniquement.",
   legendes: {
     '/photos/salle-rideaux.webp': 'La salle claire',
     '/photos/salle-tulipes.webp': 'La table longue',

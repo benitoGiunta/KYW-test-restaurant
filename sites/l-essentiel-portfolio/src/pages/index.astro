@@ -18,7 +18,7 @@ const trait = (c: (typeof comps)[number]) => {
   return `M${(c.x + (dx / n) * r).toFixed(2)} ${(c.y + (dy / n) * r).toFixed(2)} L${ax} ${c.ly}`;
 };
 ---
-<Base>
+<Base preloadImage={{ href: '/photos/facade-enseigne.webp', media: '(min-width: 768px)' }}>
   <section class="hero" aria-label="Accueil">
     <figure class="hero__media" data-hero-media>
       <img src={asset(hero.src)} srcset={`${asset('/photos/facade-enseigne-900.webp')} 720w, ${asset(hero.src)} 1200w`} sizes="(max-width: 1023px) 100vw, 50vw" alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" />
@@ -38,7 +38,6 @@ const trait = (c: (typeof comps)[number]) => {
   <section class="dressage" data-dressage aria-labelledby="dressage-titre">
     <div class="dressage__scene" data-dressage-scene>
       <div class="dressage__entete">
-        <p class="petite-cap">Le dressage</p>
         <h2 id="dressage-titre">{site.dressage.plat}</h2>
         <p class="muted">{site.dressage.service}</p>
       </div>
@@ -70,7 +69,6 @@ const trait = (c: (typeof comps)[number]) => {
   </section>
 
   <section class="section wrap" aria-labelledby="menu-titre">
-    <p class="petite-cap">La carte</p>
     <h2 id="menu-titre" style="margin: 0.4em 0 1.6em">Deux assiettes, {site.menus[0].prix}</h2>
     <p class="petite-cap" style="margin-bottom: 1em">{premiere.categorie}</p>
     <ol class="menu-liste">
@@ -103,7 +101,6 @@ const trait = (c: (typeof comps)[number]) => {
       <img src={asset(maison.src)} alt={maison.alt} width={maison.largeur} height={maison.hauteur} loading="lazy" decoding="async" />
     </figure>
     <div class="split__aplat">
-      <p class="petite-cap">La maison</p>
       <h2 id="maison-titre" data-split="lines">Une tannerie du XVIIe siècle</h2>
       <p class="texte">{site.histoire[0]}</p>
       <a class="filet" data-filet href={u('/maison/')}><span>Les salles et l'accueil</span><span class="fleche" aria-hidden="true">→</span></a>
@@ -129,7 +126,6 @@ const trait = (c: (typeof comps)[number]) => {
 
   <section class="section wrap deux-colonnes" aria-labelledby="chambres-titre">
     <div>
-      <p class="petite-cap">Chambres d'hôtes</p>
       <h2 id="chambres-titre" style="margin-top: 0.4em">Dormir à 800 mètres</h2>
     </div>
     <div class="stack" style="max-width: 46rem">
@@ -143,8 +139,7 @@ const trait = (c: (typeof comps)[number]) => {
 
   <section class="section wrap deux-colonnes" aria-labelledby="resa-titre">
     <div>
-      <p class="petite-cap">Réserver</p>
-      <h2 id="resa-titre" style="margin-top: 0.4em">Une table, une ambiance</h2>
+      <h2 id="resa-titre" style="margin-top: 0.4em">Du mercredi au samedi, midi et soir</h2>
     </div>
     <div class="stack" style="max-width: 46rem">
       <p class="lead">Du mercredi au samedi, midi et soir. Réservation sur le site du restaurant, ou par téléphone au <a class="lien" href={telHref()}>{site.telephone}</a>.</p>
