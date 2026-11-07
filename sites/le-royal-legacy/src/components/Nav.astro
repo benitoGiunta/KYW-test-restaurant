@@ -11,7 +11,7 @@ const liens = [
 <header class="nav">
   <div class="container nav__in">
     <a class="nav__logo" href={u()} aria-label="Le Royal Brasserie, accueil">
-      <img src={u('photos/logo.webp')} width="521" height="377" alt="Le Royal Brasserie" />
+      <img src={u('photos/logo.webp')} width="521" height="377" alt="" />
     </a>
     <nav class="nav__liens" aria-label="Navigation principale">
       <ul>
@@ -19,5 +19,58 @@ const liens = [
       </ul>
     </nav>
     <a class="btn btn--accent nav__cta" href={resto.zenchef} rel="noopener">Réserver</a>
+    <button class="nav__menu" type="button" aria-haspopup="dialog" aria-controls="menu" hidden>Menu</button>
   </div>
 </header>
+<dialog class="menu" id="menu" aria-label="Menu">
+  <div class="menu__in">
+    <button class="menu__fermer" type="button" aria-label="Fermer le menu">Fermer</button>
+    <ul class="menu__liens">
+      {liens.map((l) => <li><a href={l.href} autofocus={l.href === "#carte" ? true : undefined}>{l.t}</a></li>)}
+    </ul>
+    <div class="actions">
+      <a class="btn btn--accent" href={resto.zenchef} rel="noopener">Réserver une table</a>
+      <a class="lien" href={resto.tel}>Appeler le {resto.telAffiche}</a>
+    </div>
+  </div>
+</dialog>
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    var bouton = document.querySelector('.nav__menu');
+    var dlg = document.getElementById('menu');
+    if (bouton && dlg && typeof dlg.showModal === 'function') {
+      bouton.hidden = false;
+      bouton.addEventListener('click', function () { dlg.showModal(); });
+      dlg.querySelector('.menu__fermer').addEventListener('click', function () { dlg.close(); });
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+      dlg.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { dlg.close(); }); });
+      window.matchMedia('(min-width: 60.0625rem)').addEventListener('change', function (m) { if (m.matches && dlg.open) dlg.close(); });
+    } else {
+      root.classList.add('no-menu');
+    }
+
+    /* lien actif : la section qui occupe la bande haute de l'écran (le DOM de main est lu après son parsing) */
+    var suivi = function () {
+    var liens = Array.prototype.slice.call(document.querySelectorAll('.nav__liens a, .menu__liens a'));
+    var cibles = [];
+    liens.forEach(function (a) {
+      var el = document.getElementById(a.getAttribute('href').slice(1));
+      if (el && cibles.indexOf(el) < 0) cibles.push(el);
+    });
+    if (!('IntersectionObserver' in window) || !cibles.length) return;
+    var marquer = function (id) {
+      liens.forEach(function (a) {
+        if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      });
+    };
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) marquer(e.target.id); });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    cibles.forEach(function (c) { io.observe(c); });
+    window.addEventListener('scroll', function () { if (window.scrollY < 80) marquer(''); }, { passive: true });
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', suivi); else suivi();
+  })();
+</script>

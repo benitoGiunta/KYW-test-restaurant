@@ -19,7 +19,7 @@ const ld = JSON.stringify({
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="robots" content="noindex" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -44,5 +44,22 @@ const ld = JSON.stringify({
     </main>
     <Pied />
     <KywFooter base={base} />
+    <script is:inline>
+      (function () {
+        if (!('IntersectionObserver' in window)) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var cibles = document.querySelectorAll('.propos__texte, .propos__visuel, .carte__corps, .moules__visuel, .moules__texte, .fetes__tete, .fetes__prix, .fetes__plats, .venir__cols');
+        var io = new IntersectionObserver(function (es) {
+          es.forEach(function (e) {
+            if (e.isIntersecting || e.boundingClientRect.top < 0) { e.target.setAttribute('data-reveal', 'in'); io.unobserve(e.target); }
+          });
+        }, { rootMargin: '0px 0px -6% 0px' });
+        cibles.forEach(function (el) {
+          if (el.getBoundingClientRect().top < window.innerHeight) return;
+          el.setAttribute('data-reveal', '');
+          io.observe(el);
+        });
+      })();
+    </script>
   </body>
 </html>

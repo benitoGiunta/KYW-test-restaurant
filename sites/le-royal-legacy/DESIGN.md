@@ -48,14 +48,14 @@ Système verrouillé de la variante. `src/styles/tokens.css` est la source de v�
 - **Horaires** : trois colonnes, `<dl>` de deux créneaux (midi, soir) avec `<time>`, dits une fois (la mention « tous les jours » remplace sept lignes identiques) ; fin de page avec adresse et réservation. Jour courant : sans objet (horaires identiques).
 - **Pied** : statement « Rendez-vous Place du Théâtre. », puis colophon (couronne du client, adresse, contacts, réseaux), `data-credits`, puis `KywFooter`. Les horaires ne sont pas répétés (déjà dits au-dessus).
 - **Photo** : `<div data-slot data-alt>` avec `<img srcset sizes width height>`, hero `fetchpriority="high"`, autres lazy, légende = un fait d'après `photos/index.json`.
-- **Bouton** : pilule pleine brique, 48 px, texte Archivo Narrow 600 ; lien : souligné 2 px encre, brique au survol. Nav, formulaire, reveal : phase 2.
+- **Bouton** : pilule pleine brique, 48 px, texte Archivo Narrow 600 ; lien : souligné 2 px encre, brique au survol. Pas de formulaire : la réservation reste le lien Zenchef de l'original. États : hover seulement avec pointeur fin, `:active` (enfoncement de 1 px, fond encre), `:disabled` en opacité 0,5 et curseur interdit.
 
 ## Controls
 - Primary : fond brique · pilule · 48 px
 - Secondary : texte souligné encre · même hauteur de zone tactile
 
 ## Motion
-- Character : still pour la phase 1 ; phase 2 : un reveal au plus ; en reduced motion tout est posé d'emblée.
+- Character : still. Un seul reveal (opacité et 1 rem de translation, 420 ms `--ease-out`) sur les blocs sous le premier écran ; le hero ne bouge pas (signature = la façade, posée). Menu téléphone : fondu de 220 ms. En reduced motion tout est posé d'emblée.
 
 ## Exports
 `tokens.css` dans ce projet.
@@ -68,5 +68,23 @@ Système verrouillé de la variante. `src/styles/tokens.css` est la source de v�
 - [x] 5. `sloplint src --genre editorial` : 0 FAIL, 0 WARN · preuve : `.logs/sloplint.log`
 - [x] 6. Meta robots noindex, mention KYW via `KywFooter` sur `/` et `/404` · preuve : grep de `dist/le-royal/legacy/{index,404}.html`
 - [x] 7. Aucun tiret cadratin ou demi-cadratin dans `src/` et `dist/index.html` · preuve : contrôle Python
-- [ ] 8. Phase 2 : nav (menu téléphone, barre de réservation collante), reveal, états des contrôles, `:active` complet, jour/horaire ouvert · reste à faire
-- [ ] 9. Phase 3 : sloplint `--render`, journal `$LOG`, `RAPPORT.md`, revue · reste à faire
+- [x] 8. Nav : slab, une ligne 72 px (64 px au téléphone), Réserver dans la barre, menu `<dialog>` sous 60 rem (Échap, clic sur le fond, lien = fermeture, premier focus sur le premier lien), lien actif par IntersectionObserver, skip link · preuve : `src/components/Nav.astro`, `page.css` § Nav et § Menu téléphone, test Playwright (menu ouvert, fermé par lien et Échap)
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : `grep 'transition: all' dist/` = 0 ; transitions listées sur `transform`, `opacity`, couleurs
+- [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : `base.css:6` (anneau brique 2 px), `page.css` (anneau or sur fonds bruns) ; test : anneau solide à la tabulation
+- [x] 7. Fallback reduced motion sur chaque animation, contenu visible sans script (27, 62) · preuve : `page.css` fin de fichier (`prefers-reduced-motion`), `base.css` règle globale ; test `javaScriptEnabled: false` : panneaux visibles, 0 `data-reveal`
+- [x] 17. Hero en `dvh` (6a) · preuve : `page.css` `.hero { min-height: clamp(34rem, calc(100dvh - 4.5rem), 54rem) }` ; aucun `100vh` ni `100vw`
+- [x] 19. Sticky non superposés (56) · preuve : nav `--z-sticky-nav` seule en `top: 0` ; en-tête de la carte collé sous la nav (`top: calc(4.5rem + …)`, 4 rem au téléphone), `scroll-padding-top: 96px`
+- [x] 20. Radios-onglets gardés (53) · preuve : sans objet, le Switcher est en `role="tablist"` et les deux panneaux s'affichent sans script (`html:not(.js) .tabs { display: none }`)
+- [x] 21. Vidéo de fond (28a, 28b) · preuve : sans objet, aucune vidéo
+- [x] 22. Reveal sous `.js` seulement (62) · preuve : `Base.astro` (script de fin de page : `data-reveal` posé sur ce qui est sous le premier écran, révélé à l'entrée ; rien en reduced motion), `page.css` `.js [data-reveal]`
+- [x] 23. États d'input (39a) · preuve : sans objet, pas de formulaire : la réservation est le lien Zenchef de l'original (conservé), et `tel:`
+- [x] 24. Tooltip et auto-rotation (17, 18) · preuve : sans objet (ni tooltip ni boucle)
+- [x] 29. Aucun faux envoi (70) · preuve : aucun formulaire, aucun message de confirmation
+- [x] 30. SVG décoratifs `aria-hidden` (33) · preuve : aucun SVG dans les pages (logo et couronne en `<img>`, `alt=""` pour la couronne et le logo de nav lié par `aria-label`)
+- [x] 48. Hover : un signal, conteneur, pas sur non-interactif, pas de rebond, pas de toast (11, 12, 16) · preuve : `@media (hover: hover)` sur boutons, liens, onglets, liens de nav ; aucune ligne de carte en hover ; courbes `--ease-out`
+- [x] 49. `:active`, `:disabled`, contrôles 44 à 52 px (26b, 39b) · preuve : `.btn:active`, `.tab:active`, `.nav__menu:active`, `.menu__fermer:active`, `.btn:disabled` ; mesure : Réserver 45 px, Menu 45 px au téléphone, 48 px ailleurs ; `(pointer: coarse)` donne 44 px aux liens
+- [x] 56. Un primaire rempli (F4) · preuve : une seule recette (`.btn--accent`) ; le bouton de la nav et celui du hero ne sont jamais côte à côte
+- [x] 58. Une recette de conteneur, pilule limitée aux contrôles (F7) ; un pattern de scroll (F8) · preuve : pilule sur `.btn`, `.tab`, `.nav__menu`, `.menu__fermer` seulement ; un seul reveal, aucune chorégraphie de scroll (l'original n'en avait pas)
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : `base.css:3-5`
+- [x] 72. Responsive (breakpoints rem, capacités, safe-area) · preuve : 60 rem et 40 rem, `hover: hover` et `pointer: coarse`, `viewport-fit=cover` et `env(safe-area-inset-*)` dans le menu ; mesure à 375, 820 et 1280 : `scrollWidth` = largeur de fenêtre
+- [ ] 9. Phase 3 : sloplint `--render` complet, journal `$LOG`, `RAPPORT.md`, revue · reste à faire
