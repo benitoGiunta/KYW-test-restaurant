@@ -34,12 +34,12 @@ const trio = photoDe('/photos/salle-table.webp');
   <Affiche tone="jaune" prev="creme" label="equipe-titre">
     <div class="wrap">
       <h2 id="equipe-titre" class="display display--mega affiche__titre" data-split="chars">Le duo</h2>
-      <div class="equipe" data-claque>
+      <div class={site.equipe.some((m) => m.photo) ? 'equipe' : 'equipe equipe--texte'} data-claque>
         {site.equipe.map((m) => (
           <figure>
             {m.photo
               ? <img src={asset(m.photo)} alt={`${m.nom}, ${m.role.toLowerCase()}`} width="600" height="800" loading="lazy" decoding="async" />
-              : <div class="silhouette" aria-hidden="true">{m.nom[0]}</div>}
+              : null}
             <figcaption><strong>{m.nom}</strong><span>{m.role}{m.placeholder && ' (exemple)'}</span></figcaption>
           </figure>
         ))}

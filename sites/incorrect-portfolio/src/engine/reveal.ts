@@ -24,9 +24,11 @@ function splitTween(el: HTMLElement, isIntro: boolean) {
   SplitText.create(el, {
     type: type === 'lines' ? 'lines' : type === 'chars' ? 'lines,words,chars' : 'lines,words', // chars dans des mots insécables (pas de césure au milieu d'un mot)
     mask: 'lines',
+    aria: 'none',
     autoSplit: true,
     linesClass: 'split-line',
     onSplit(self) {
+      el.classList.add('is-split');
       gsap.set(el, { visibility: 'visible' });
       if (s.done) return;
       const targets = type === 'lines' ? self.lines : type === 'words' ? self.words : self.chars;

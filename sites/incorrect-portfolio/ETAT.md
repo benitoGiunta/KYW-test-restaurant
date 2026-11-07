@@ -25,3 +25,6 @@ Gabarit affiche adapté, contenu réel, palette, Plat.astro (Dwight Schrute en 5
 - `scrollWidth` ne voit pas un hero élargi par un marquee (overflow-x: clip) : mesurer les positions.
 - Les polygones décoratifs et cartes inclinées dépassent de la fenêtre par construction (clip), ce n'est pas un défaut.
 - Le shoot d'une page > 120 s : lancer en arrière-plan.
+
+## Révision 1 (07/11/2026)
+F1-1 et F2-1 à F2-7 corrigés, voir REVISION-1.md. Reste : F3 (formats d'heures, JSON-LD horaires, données de carte).

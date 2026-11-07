@@ -149,7 +149,7 @@ function empile() {
   const items = q('[data-empile-item]', section);
   const prix = section.querySelector<HTMLElement>('[data-empile-prix]');
   if (prefersReducedMotion() || !couches.length) { items.forEach((i) => i.classList.add('is-on')); return; }
-  const split = prix ? SplitText.create(prix, { type: 'chars' }) : null;
+  const split = prix ? SplitText.create(prix, { type: 'chars', aria: 'none' }) : null;
   const tl = gsap.timeline({
     scrollTrigger: { trigger: section, start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true,
       onUpdate: (st) => { const n = Math.floor(st.progress * (couches.length + 0.4)); items.forEach((it, i) => it.classList.toggle('is-on', i < n)); } },

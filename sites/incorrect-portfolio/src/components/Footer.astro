@@ -8,7 +8,7 @@ const { prev = 'vert' } = Astro.props;
 const dents = 40;
 const pts = Array.from({ length: dents + 1 }, (_, i) => `${(i / dents) * 100},0 ${((i + 0.5) / dents) * 100},18`).join(' ');
 ---
-<footer class="footer" data-tone="ink" data-footer>
+<div class="footer" role="region" aria-label="Coordonnées" data-tone="ink" data-footer>
   <svg class="affiche__dents" viewBox="0 0 100 18" preserveAspectRatio="none" aria-hidden="true" focusable="false">
     <polygon points={`0,0 ${pts} 100,0`} fill={`var(--${prev})`} />
   </svg>
@@ -35,5 +35,5 @@ const pts = Array.from({ length: dents + 1 }, (_, i) => `${(i / dents) * 100},0 
       <p><a class="link" href={site.url} rel="noopener">Site actuel</a></p>
     </div>
   </div>
-</footer>
+</div>
 <KywFooter base={import.meta.env.BASE_URL} note="Maquette KYW, certaines données sont illustratives (marquées « exemple » ou « illustratif »)." />

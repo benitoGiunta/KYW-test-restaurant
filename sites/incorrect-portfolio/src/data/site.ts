@@ -118,7 +118,7 @@ export const site: Restaurant = {
   ],
   etapes: {
     surPlace: [
-      { titre: 'Réservez', texte: 'En ligne via Barestho, ou par téléphone au 081 13 85 61.' },
+      { titre: 'Réservez', texte: 'En ligne via Barestho.' },
       { titre: 'Installez-vous', texte: 'Briques, parquet et tables en bois, avec la cuisine ouverte en face.' },
       { titre: 'Mangez avec les doigts', texte: 'Des pizzas au levain, des dips pour finir les croûtes, une bière craft à côté.' },
     ],
