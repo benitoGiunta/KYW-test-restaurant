@@ -63,8 +63,8 @@ export const presse = [
 ] as const;
 
 export const pratique = [
-  { titre: 'Terrasse', texte: 'Une terrasse accueille les beaux jours.' },
-  { titre: 'Animaux', texte: 'Les chiens sont acceptés.' },
+  { titre: 'Terrasse', texte: 'Terrasse.' },
+  { titre: 'Animaux', texte: 'Les animaux sont acceptés.' },
   { titre: 'À emporter', texte: 'Les pizzas se prennent aussi à emporter.' },
   { titre: 'Climatisation', texte: 'La salle est climatisée.' },
 ] as const;
