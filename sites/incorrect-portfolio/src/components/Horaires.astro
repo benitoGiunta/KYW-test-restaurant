@@ -1,0 +1,15 @@
+---
+// Sept cartes de jours : jour en petites capitales, heures en display, étiquette « aujourd'hui » tournée de -8°
+// posée par le driver « aujourdhui » (data-jour = 0 lundi … 6 dimanche). Mobile : liste, aujourd'hui en premier.
+import { site, jourCourt } from '../data/site';
+---
+<dl class="horaires" data-claque data-horaires-cartes>
+  {site.horaires.map((h, i) => (
+    <div class:list={['horaires__jour', !h.creneaux.length && 'is-ferme']} data-jour={i}>
+      <dt><span class="sr-only">{h.jour}</span><span aria-hidden="true">{jourCourt(h.jour)}</span><span class="aujourdhui" hidden data-aujourdhui>Aujourd'hui</span></dt>
+      {h.creneaux.length
+        ? h.creneaux.map((c) => <dd>{c.ouverture.replace(':', 'h')}<span class="fleche"> → </span>{c.fermeture.replace(':', 'h')}</dd>)
+        : <dd class="note">{h.note ?? 'fermé'}</dd>}
+    </div>
+  ))}
+</dl>

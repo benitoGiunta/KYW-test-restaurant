@@ -1,0 +1,65 @@
+/* JETONS DU GABARIT « AFFICHE » : les noms sont le contrat du moteur, les valeurs viennent de DESIGN.md. */
+
+/* @font-face d'Archivo : dans Base.astro (chemin préfixé par la base, même fichier que le preload). */
+
+:root {
+  /* Les cinq aplats */
+  --rouge: #ff4b2b;
+  --jaune: #d9f24a;
+  --vert: #123b2a;
+  --creme: #f1ecdd;
+  --betterave: #c21e56;
+  --ink: #0a1511;
+
+  /* Rôles (contrat du moteur). Chaque affiche les redéfinit via [data-tone]. */
+  --c-bg: var(--creme);
+  --c-fg: var(--ink);
+  --c-muted: #4f564f; /* 7:1 sur crème */
+  --c-line: var(--ink);
+  --c-accent: var(--rouge);
+  --c-focus: var(--ink);
+  --c-curtain: var(--rouge);
+
+  /* Familles */
+  --f-display: 'Archivo', 'Arial Black', Impact, sans-serif;
+  --f-body: 'Archivo', Arial, Helvetica, sans-serif;
+
+  /* Échelle fluide : grands sauts entre display et texte */
+  --t-mega: clamp(3.2rem, 0.8rem + 10.6vw, 11.5rem);
+  --t-prix: clamp(5rem, 2rem + 18vw, 13rem);
+  --t-xl: clamp(2.2rem, 1.2rem + 4.6vw, 5.6rem);
+  --t-l: clamp(1.5rem, 1.15rem + 1.6vw, 2.5rem);
+  --t-m: clamp(1.2rem, 1.05rem + 0.7vw, 1.6rem);
+  --t-body: 1.0625rem; /* 17 px */
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem; /* 13 px, UI en capitales 700 */
+
+  /* Espace : marge fixe de 24 px, jamais plus */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: 24px;
+  --cols: 12;
+
+  /* Forme */
+  --radius: 0px;
+  --filet: 2px;
+  --ombre: 8px;
+
+  /* Dents (bord dentelé) */
+  --dent: 18px;
+
+  /* Couches */
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-menu: 60;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}
+
+/* Tons d'affiche : encre et focus suivent le fond, en un seul endroit. */
+[data-tone='rouge'] { --c-bg: var(--rouge); --c-fg: var(--ink); --c-focus: var(--jaune); --c-muted: var(--ink); }
+[data-tone='jaune'] { --c-bg: var(--jaune); --c-fg: var(--ink); --c-focus: var(--ink); --c-muted: #2c3a05; }
+[data-tone='vert'] { --c-bg: var(--vert); --c-fg: var(--creme); --c-focus: var(--jaune); --c-muted: var(--creme); }
+[data-tone='creme'] { --c-bg: var(--creme); --c-fg: var(--ink); --c-focus: var(--ink); --c-muted: #4f564f; }
+[data-tone='ink'] { --c-bg: var(--ink); --c-fg: var(--creme); --c-focus: var(--jaune); --c-muted: #c6cdc2; }

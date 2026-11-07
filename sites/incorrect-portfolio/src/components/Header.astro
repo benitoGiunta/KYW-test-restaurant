@@ -1,0 +1,30 @@
+---
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const liens = [
+  { href: u('/carte/'), label: 'La carte' },
+  { href: u('/histoire/'), label: 'Alex et Estelle' },
+  { href: u('/a-emporter/'), label: 'À emporter' },
+];
+const ici = Astro.url.pathname.replace(/\/+$/, '');
+const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+// Repli sans JavaScript de la pastille ; le driver « ouvert » (drivers.ts) calcule l'état réel.
+const horairesJson = JSON.stringify(site.horaires.map((h) => h.creneaux));
+---
+<header class="header" data-header>
+  <div class="header__inner">
+    <a class="header__brand" href={u('/')} aria-label="Incorrect, accueil" aria-current={courant(u('/'))}>Incor<span class="rinv">r</span>ect</a>
+    <p class="pastille" data-ouvert data-horaires={horairesJson}>{site.horairesResume}</p>
+    <nav class="nav" aria-label="Navigation principale">
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+      <a class="nav__cta" href={u('/reservation/')} aria-current={courant(u('/reservation/'))}>Réserver</a>
+    </nav>
+    <button class="header__burger" type="button" aria-expanded="false" aria-controls="menu" data-burger>Menu</button>
+  </div>
+</header>
+<nav class="menu" id="menu" aria-label="Navigation mobile" data-menu>
+  <a href={u('/')} aria-current={courant(u('/'))}>Accueil</a>
+  {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+  <a href={u('/reservation/')} aria-current={courant(u('/reservation/'))}>Réserver</a>
+  <p class="pastille pastille--menu" data-ouvert data-horaires={horairesJson}>{site.horairesResume}</p>
+</nav>

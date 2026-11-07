@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Affiche from '../components/Affiche.astro';
+import Bento from '../components/Bento.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const tons: ('rouge' | 'jaune' | 'vert')[][] = [['rouge', 'jaune', 'vert'], ['vert', 'rouge', 'jaune'], ['jaune', 'vert', 'rouge']];
+const carteComplete = site.carte;
+---
+<Base title="La carte" description={`La carte d’Incorrect à ${site.adresse.commune} : pizzas au levain classiques et « de nous », dips, desserts, cocktails, bières craft et vins.`} fin="rouge">
+  <Affiche tone="jaune" plein label="titre">
+    <div class="wrap">
+      <h1 id="titre" class="display display--mega affiche__titre" data-split="chars" data-intro>La carte</h1>
+      <p class="lead">Pizzas au levain, apéros, dips pour finir les croûtes, desserts, cocktails, bières craft et vins. La carte du restaurant, prix compris ; elle n’est pas datée, la maison fera foi.</p>
+    </div>
+  </Affiche>
+
+  <Affiche tone="creme" prev="jaune" label="plats-titre">
+    <div class="wrap stack" style="--u: calc(var(--gutter) * 2)">
+      <h2 id="plats-titre" class="sr-only">Les plats</h2>
+      {site.carte.map((c, i) => (
+        <div>
+          <h3 class="display display--xl affiche__chapeau" data-split="words">{c.categorie}</h3>
+          <Bento plats={c.plats} tones={tons[i % tons.length]} />
+        </div>
+      ))}
+    </div>
+  </Affiche>
+
+  <Affiche tone="vert" prev="creme" label="faits-titre">
+    <div class="wrap">
+      <h2 id="faits-titre" class="display display--mega affiche__titre" data-split="chars">Ce qu’il y a dedans</h2>
+      <div class="formules" data-claque>
+        {site.faits.map((f) => (
+          <article class="formule">
+            <div>
+              <h3>{f.nom}</h3>
+              <p style="margin-top: var(--u)">{f.description} <span class="exemple">({f.source})</span></p>
+            </div>
+            <p class="formule__prix">{f.valeur}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </Affiche>
+
+  <Affiche tone="rouge" prev="vert" label="resa-titre">
+    <div class="wrap">
+      <h2 id="resa-titre" class="display display--mega affiche__titre" data-split="chars">À table ?</h2>
+      <div class="actions">
+        <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+        <a class="btn" href={u('/a-emporter/')}>À emporter</a>
+      </div>
+    </div>
+  </Affiche>
+</Base>

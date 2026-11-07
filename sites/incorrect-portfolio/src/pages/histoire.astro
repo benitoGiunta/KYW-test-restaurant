@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import Affiche from '../components/Affiche.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const coulisses = ['/photos/salle-passe.webp', '/photos/pizza-gants.webp', '/photos/table-verres.webp'].map(photoDe);
+const trio = photoDe('/photos/salle-table.webp');
+---
+<Base title="Alex et Estelle" description={`L'histoire d'Incorrect : Alexandre Hocquet en cuisine, Estelle en salle, une pizzeria rock-n-roll rue Haute Marcelle à ${site.adresse.commune}.`} fin="creme">
+  <Affiche tone="vert" plein label="titre">
+    <div class="wrap">
+      <h1 id="titre" class="display display--mega affiche__titre" data-split="chars" data-intro>Alex et Estelle</h1>
+      <p class="lead">Lui à la pâte, elle à la salle, du rock dans les enceintes.</p>
+    </div>
+  </Affiche>
+
+  <Affiche tone="creme" prev="vert" label="recit-titre">
+    <div class="wrap chapitres">
+      <div class="texte">
+        <h2 id="recit-titre" class="ui affiche__chapeau">L'histoire</h2>
+        {site.histoire.map((p) => <p data-split="lines">{p}</p>)}
+      </div>
+      <div class="stack" style="--u: var(--gutter)">
+        <figure class="cadre" data-reveal="scale" style="transform: rotate(2deg)">
+          <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="lazy" decoding="async" />
+        </figure>
+        <ul class="valeurs" data-reveal="up">
+          {site.valeurs.map((v) => <li>{v}</li>)}
+        </ul>
+      </div>
+    </div>
+  </Affiche>
+
+  <Affiche tone="jaune" prev="creme" label="equipe-titre">
+    <div class="wrap">
+      <h2 id="equipe-titre" class="display display--mega affiche__titre" data-split="chars">Le duo</h2>
+      <div class="equipe" data-claque>
+        {site.equipe.map((m) => (
+          <figure>
+            {m.photo
+              ? <img src={asset(m.photo)} alt={`${m.nom}, ${m.role.toLowerCase()}`} width="600" height="800" loading="lazy" decoding="async" />
+              : <div class="silhouette" aria-hidden="true">{m.nom[0]}</div>}
+            <figcaption><strong>{m.nom}</strong><span>{m.role}{m.placeholder && ' (exemple)'}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </Affiche>
+
+  <Affiche tone="rouge" prev="jaune" label="avis-titre">
+    <div class="wrap">
+      <h2 id="avis-titre" class="display display--xl affiche__titre" data-split="words">On en parle</h2>
+      <div class="avis" data-claque>
+        {site.avis.map((a) => (
+          <blockquote>
+            <p>« {a.texte} »</p>
+            <cite>{a.auteur}<span>{a.source}{a.placeholder && ' (exemple)'}</span></cite>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </Affiche>
+
+  <Affiche tone="creme" prev="rouge" label="coulisses-titre">
+    <div class="wrap">
+      <h2 id="coulisses-titre" class="display display--xl affiche__titre" data-split="words">À l’œil</h2>
+      <div class="coulisses">
+        {coulisses.map((p, i) => (
+          <figure class="cadre" style={`--r: ${[-3, 2, -2][i]}deg`} data-reveal="scale" data-delay={String(i * 0.1)}>
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+      <div class="section__pied">
+        <p class="lead">Briques, parquet, four et bières craft : le mieux reste de venir.</p>
+        <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+      </div>
+    </div>
+  </Affiche>
+</Base>
