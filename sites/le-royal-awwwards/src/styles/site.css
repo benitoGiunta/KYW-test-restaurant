@@ -15,7 +15,7 @@ a { color: inherit; }
 .titre-section { font-family: var(--f-display); font-weight: 500; font-size: var(--t-l); line-height: 1; letter-spacing: -0.02em; text-wrap: balance; }
 .titre-section--nuit { color: var(--c-salle-accent); margin-bottom: var(--serre); }
 .face__lib, .nuit__lib, .hero__lieu { font-size: var(--t-s); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; color: var(--c-accent); }
-.lien { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; transition: text-decoration-thickness 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), text-underline-offset 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
+.lien { display: inline-block; padding-block: 0.55rem; text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; transition: text-decoration-thickness 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), text-underline-offset 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
 .lien:focus-visible, .lien:active { text-decoration-thickness: 3px; text-underline-offset: 0.12em; }
 .lien-util { text-decoration: none; padding-block: 0.4rem; display: inline-block; transition: color 0.25s; }
 .lien-util:focus-visible, .lien-util:active { color: var(--c-accent); }
@@ -26,8 +26,8 @@ a { color: inherit; }
 /* En-tête */
 .tete { position: sticky; top: 0; z-index: var(--z-header); display: flex; align-items: center; justify-content: space-between; gap: var(--u); padding: 0.75rem var(--gutter); background: var(--c-bg); border-bottom: 1px solid var(--c-line); }
 .tete__marque { display: inline-flex; align-items: baseline; gap: 0.6rem; text-decoration: none; padding-block: 0.4rem; }
-.tete__n { font-family: var(--f-display); font-weight: 700; color: var(--c-accent); font-size: 1.5rem; line-height: 1; }
-.tete__nom { font-family: var(--f-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1; }
+.tete__n { transition: translate 0.3s, color 0.3s; font-family: var(--f-display); font-weight: 700; color: var(--c-accent); font-size: 1.5rem; line-height: 1; }
+.tete__nom { transition: color 0.3s; font-family: var(--f-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1; }
 .tete__nav ul { display: flex; align-items: center; gap: clamp(0.75rem, 2.5vw, 2rem); }
 .nl { position: relative; text-decoration: none; font-size: var(--t-s); font-weight: 500; padding-block: 0.7rem; display: inline-block; }
 .nl::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.4rem; height: 2px; background: var(--c-accent); transform: scaleX(0); transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -152,7 +152,7 @@ html:not(.motion) .axe__point { top: calc(50% - 2.25rem); }
 .pied__doux { color: var(--c-salle-muted); font-size: var(--t-s); }
 .pied__horaires li { display: flex; justify-content: space-between; gap: 1rem; padding-block: 0.35rem; border-bottom: 1px solid #39424b; }
 .pied__horaires--page li { border-color: var(--c-line); flex-wrap: wrap; }
-.pied__tel { font-family: var(--f-display); font-weight: 700; font-size: var(--t-m); text-decoration: none; white-space: nowrap; }
+.pied__tel { display: inline-block; transition: translate 0.3s cubic-bezier(0.16, 1, 0.3, 1); font-family: var(--f-display); font-weight: 700; font-size: var(--t-m); text-decoration: none; white-space: nowrap; }
 .pied__reseaux { display: flex; gap: 1.25rem; }
 .pied__cta { grid-column: 1 / -1; }
 .pied__colophon { grid-column: 1 / -1; font-size: var(--t-xs); color: var(--c-salle-muted); max-width: 70ch; }
@@ -185,6 +185,9 @@ html:not(.motion) .axe__point { top: calc(50% - 2.25rem); }
   .lien-util:hover { color: var(--c-accent); }
   .pied .lien-util:hover { color: var(--c-salle-accent); }
   .kyw-footer__link:hover { text-decoration: underline; }
+  .tete__marque:hover .tete__n { translate: 0 -0.12rem; color: var(--c-fg); }
+  .tete__marque:hover .tete__nom { color: var(--c-accent); }
+  .pied__tel:hover { translate: 0.35rem 0; text-decoration: underline; text-underline-offset: 0.2em; }
   .nl:hover::after { transform: scaleX(1); }
   .cta:hover::before { transform: none; }
   .cta:hover { border-color: var(--c-fg); }

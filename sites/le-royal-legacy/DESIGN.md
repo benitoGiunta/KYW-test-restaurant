@@ -12,7 +12,7 @@
 - **Sections** · Hero (Stage) · À propos (Split 6/5) · Carte (Rows avec Switcher à manger/à boire) · Moules jumbo et ardoise (Split inversé une fois) · Menu des fêtes (bande brune, prix 50 € et 65 €) · Une table au Royal (trois colonnes : horaires, contact, réservation) · Pied
 - **Material** · real : adresse, téléphone, horaires 12 h 00 à 14 h 30 et 18 h 00 à 22 h 00 tous les jours, carte d'août 2026 avec prix, menu des fêtes, 4 photos du client · absent : avis, note Google, histoire, équipe, desserts de la carte, presse
 - **Comp** · 2 built, no key · c1 chosen (`.hallmark/comps/c1.html`, voir `comp.md`)
-- **Sweep** · phase 3
+- **Sweep** · 0 FAIL, 0 REFLEX ouvert (waive 8, 59, 77, 79), 1 WARN kept (site d'origine non relu), 5 NOTE ; render tourné sur `/` et `/404.html`
 
 # Design : Le Royal Namur (variante legacy)
 
@@ -87,4 +87,4 @@ Système verrouillé de la variante. `src/styles/tokens.css` est la source de v�
 - [x] 58. Une recette de conteneur, pilule limitée aux contrôles (F7) ; un pattern de scroll (F8) · preuve : pilule sur `.btn`, `.tab`, `.nav__menu`, `.menu__fermer` seulement ; un seul reveal, aucune chorégraphie de scroll (l'original n'en avait pas)
 - [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : `base.css:3-5`
 - [x] 72. Responsive (breakpoints rem, capacités, safe-area) · preuve : 60 rem et 40 rem, `hover: hover` et `pointer: coarse`, `viewport-fit=cover` et `env(safe-area-inset-*)` dans le menu ; mesure à 375, 820 et 1280 : `scrollWidth` = largeur de fenêtre
-- [ ] 9. Phase 3 : sloplint `--render` complet, journal `$LOG`, `RAPPORT.md`, revue · reste à faire
+- [x] 9. Phase 3 : sloplint `--render` (0 FAIL, 0 REFLEX ouvert, 4 waivers), journal `$LOG`, `RAPPORT.md`, revue auto-notée `self` · preuve : `.logs/sloplint.log`, `RAPPORT.md`

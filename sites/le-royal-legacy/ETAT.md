@@ -1,4 +1,7 @@
-# ETAT le-royal · legacy · phase 2 (construction-2) terminée
+# ETAT le-royal · legacy · phase 3 (construction-3) terminée
+
+Phase 3 : QA corrigée (og:image, twitter:card, marge du pied, 404 pleine hauteur, waivers 59/77/79), sloplint 0 FAIL 0 REFLEX, journal enrichi, RAPPORT.md écrit, build et index passés. Rien ne reste, hors confirmations de faits (horaires, n° de rue) et photo de salle.
+
 
 ## Fait (phases 1 et 2)
 - Phase 1 : audit, design, comp c1 (Stage), contenu complet, page `/` et `/404`, photos du client.
