@@ -1,3 +1,11 @@
+# ETAT, le-royal, portfolio, revue 2 (relecteur-site) terminée
+
+- Fait : REVUE-2.md écrit, verdict PUBLIABLE (0 F0, 0 F1, 1 F2, F3 listés). Corrections de REVISION-1 vérifiées : F1-1, F2-1, F2-3, F3-1, F3-3 confirmées ; F2-2 et F2-4 partielles (accueil et /histoire/ partagent deux paragraphes, F2-5).
+- Reste (facultatif) : F2-5, F3-2 (« 28 , 90 »), F3-13 (espace insécable avant « € »), F3 de la passe 1 non traités ; `pnpm index`, push.
+- Pièges : crawl du QA limité à 3 pages (scripts maison pour les 4 autres) ; barre fixe rouge visible au milieu des captures pleine page (artefact).
+
+---
+
 # ETAT, le-royal, portfolio, revue 1 (relecteur-site) terminée
 
 - Fait : REVUE-1.md écrit (verdict A_CORRIGER : 0 F0, 1 F1, 4 F2, 12 F3). Texte confronté au dossier (0 faux, 0 invention), 7 pages contrôlées à 1440 et 390 px (console, axe, débordement, contraste, liens).
