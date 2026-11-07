@@ -1,3 +1,11 @@
+# ETAT, le-royal, portfolio, revue 1 (relecteur-site) terminée
+
+- Fait : REVUE-1.md écrit (verdict A_CORRIGER : 0 F0, 1 F1, 4 F2, 12 F3). Texte confronté au dossier (0 faux, 0 invention), 7 pages contrôlées à 1440 et 390 px (console, axe, débordement, contraste, liens).
+- Reste (réviseur) : F1-1 « maison maison » (badges, `site.ts:72`, `Lignes.astro:21`), F2-1 à F2-4 ; F3 au choix. Ne pas casser les trois points de « Ce qui est bien ».
+- Pièges : la 404 du crawl est la page brute du serveur ; ne pas corriger les faux positifs listés dans REVUE-1.md.
+
+---
+
 # ETAT, le-royal, portfolio, phase 3 (QA) terminée
 
 - Fait : QA ciblée 7 pages x 1440/390/360/320, 3 corrections (404 mobile, en-tête et horaires sous 380 px), build final OK, RAPPORT.md écrit, leçon ajoutée.
