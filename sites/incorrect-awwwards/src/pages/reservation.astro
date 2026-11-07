@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { u } from '../lib/url';
 import { retourne } from '../lib/retourne';
-import { site, horaires, horairesNote, pratique } from '../data/site';
+import { site, horaires, pratique } from '../data/site';
 ---
 <Base page="reservation" title="Réservation" description="Réserver une table chez INCORЯECT à Namur : réservation en ligne, téléphone 081 13 85 61, adresse rue Haute Marcelle 35, horaires et infos pratiques.">
   <section class="entete-page wrap" aria-labelledby="titre-resa">
@@ -24,11 +24,11 @@ import { site, horaires, horairesNote, pratique } from '../data/site';
     <div class="resa__horaires">
       <h2 class="resa__sous">Horaires</h2>
       <dl class="horaires">
-        {horaires.map((h) => (
-          <div class="horaires__ligne"><dt>{h.jour}</dt><dd>{h.creneaux.length ? h.creneaux.join(' et ') : 'Fermé'}</dd></div>
-        ))}
+        <div class="horaires__ligne"><dt>Mardi à vendredi</dt><dd>{horaires[1].creneaux.join(' et ')}</dd></div>
+        <div class="horaires__ligne"><dt>Samedi</dt><dd>{horaires[5].creneaux.join(' et ')}</dd></div>
+        <div class="horaires__ligne"><dt>Dimanche et lundi</dt><dd>Fermé</dd></div>
       </dl>
-      <p class="resa__note">{horairesNote}</p>
+      <p class="resa__note">Les guides consultés divergent : confirmez avant de venir.</p>
     </div>
   </section>
 
