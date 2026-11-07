@@ -13,7 +13,7 @@ export const site = {
   baseline: { texte: 'Dépouiller pour garder l’essentiel.', placeholder: true },
   accroche: 'Cuisine française créative et de saison, servie dans une ancienne tannerie du XVIIe siècle.',
   description:
-    'L’Essentiel à Temploux (Namur) : restaurant gastronomique, une étoile au guide Michelin, cuisine française créative et de saison dans une ancienne tannerie du XVIIe siècle.',
+    'L’Essentiel à Temploux (Namur) : table étoilée Michelin, cuisine française créative et de saison dans une ancienne tannerie du XVIIe siècle.',
   typeCuisine: 'Cuisine française créative et de saison',
   adresse: { rue: 'Rue Roger Clément', numero: '32', cp: '5020', commune: 'Temploux (Namur)', localite: 'Temploux', pays: 'BE' },
   geo: { lat: 50.4751615, lon: 4.7385286 },
