@@ -27,3 +27,6 @@ Phase 3 : QA corrigée (og:image, twitter:card, marge du pied, 404 pleine hauteu
 - `[hidden] { display: none !important }` (base.css) : un bouton révélé par script doit retirer l'attribut `hidden`, pas seulement changer `display`.
 - sloplint 48 refuse un `oklch(...)` hors tokens (même en `::backdrop`) : `color-mix(in oklab, var(--color-ink) 60%, transparent)`.
 - `page.html` du site d'origine gitignoré ; serveur de dev (port 4321) arrêté par `kill` du PID noté.
+
+## Revue 2 (relecteur-site, 2026-11-07)
+`REVUE-2.md` écrite : PUBLIABLE (0 F0, 0 F1, 1 F2, 6 F3). Les 4 corrections de REVISION-1 sont confirmées (CLS 0 sous throttle, façade 1200 x 896 sans étirement, 3 woff2 préchargés, terrasse <= 287 Ko). Reste facultatif : F2-1 `<footer class="pied">` en doublon de `kyw-footer` (axe `landmark-no-duplicate-contentinfo`), F3 (coordonnées répétées, apostrophes droites, heading-order « En-cas », graisse Archivo Narrow 400, halo de la photo, espace sous le héros). Serveur 4561 (PID 10112) arrêté.
