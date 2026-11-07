@@ -1,10 +1,7 @@
-# ETAT : l-essentiel-awwwards, construction-3 (phase 3, QA)
-
+# ETAT : l-essentiel-awwwards, relecteur-site passe 2
 ## Fait
-- Phases 1 et 2 (voir DESIGN.md). Phase 3 : audit + shoot des 4 pages (QA-build.md absent), corrections : survol du logo et du téléphone du pied, descriptions meta < 160, build final OK, audit 0 FAIL / 1 WARN (sitemap de la racine QA, justifié). RAPPORT.md écrit.
-
-## Reste
-- Critique jury indépendant et passe 2 (pas d'outil Agent), `texteStatut` à plusieurs instants, doublon « Réserver » mobile, « XVIIe » en exposant, og.png, accessoire à retirer.
-
+- REVUE-2.md écrite (A_CORRIGER : 0 F0, 0 F1, 2 F2, 5 F3). F1-1, F1-2, F1-3, F2-1, F2-2, F2-4, F2-5 vérifiés corrigés ; F2-3 partiel.
+## Reste (réviseur)
+- F2-A chef sans réserve (`site.ts:125`), F2-B « Nous retirons… » non ancré (`site.ts:137`), puis F3-1 à F3-5.
 ## Pièges
-- skipLinkFirst false = faux positif (texte français). Serveur QA arrêté, `.qa-root` et `.shots` non commités.
+- QA-revue2.md : accueil, carte, 404 brute seulement ; histoire et réservation mesurées par script maison. Serveur 4627 tué (PID 21890).
