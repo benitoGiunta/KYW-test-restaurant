@@ -7,7 +7,7 @@ import { u, asset } from '../lib/url';
 const visuels = [photoDe('/photos/salle-brique.webp'), photoDe('/photos/salle-rideaux.webp'), photoDe('/photos/salle-chaises.webp'), photoDe('/photos/salle-table-ronde.webp')];
 const [deux, affaire, plaisir, balade] = site.menus;
 const ordre = [affaire, plaisir, balade, deux];
-const moments = ['Le midi, en semaine', 'Le soir comme le midi', 'Le soir comme le midi', 'À la carte'];
+const moments = ['Le midi, en semaine', 'Le soir comme le midi', 'Le soir comme le midi', ''];
 const liens = [u('/reservation/'), u('/reservation/'), u('/reservation/'), u('/menu/')];
 const libelles = ['Réserver le midi', 'Réserver une table', 'Réserver une table', 'Voir la carte'];
 ---
@@ -23,7 +23,7 @@ const libelles = ['Réserver le midi', 'Réserver une table', 'Réserver une tab
         <img src={asset(visuels[i].src)} alt={visuels[i].alt} width={visuels[i].largeur} height={visuels[i].hauteur} loading="lazy" decoding="async" />
       </figure>
       <div class="split__aplat">
-        <p class="petite-cap">{moments[i]}</p>
+        {moments[i] && <p class="petite-cap">{moments[i]}</p>}
         <h2 id={`formule-${i}`} data-split="lines">{m.nom}</h2>
         <p class="lead" style="font-weight: 400">{m.prix}{m.placeholder && <span class="illu">illustratif</span>}</p>
         <p class="texte">{m.description}</p>
@@ -34,7 +34,6 @@ const libelles = ['Réserver le midi', 'Réserver une table', 'Réserver une tab
 
   <section class="section wrap deux-colonnes" aria-labelledby="accords-titre">
     <div>
-      <p class="petite-cap">Accords</p>
       <h2 id="accords-titre" style="margin-top: 0.4em">Au verre, à table</h2>
       <p class="muted" style="margin-top: 1em; max-width: 30ch">Prix de l'accord, en plus du menu.</p>
     </div>
