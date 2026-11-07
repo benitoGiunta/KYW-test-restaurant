@@ -1,0 +1,29 @@
+---
+import { fetes, euro, resto } from '../data/site';
+const colonnes = [
+  { nom: 'Entrées', l: fetes.entrees },
+  { nom: 'Plats', l: fetes.plats },
+  { nom: 'Desserts', l: fetes.desserts },
+];
+---
+<section class="section band fetes" id="fetes" aria-labelledby="t-fetes">
+  <div class="container">
+    <div class="fetes__tete">
+      <h2 id="t-fetes">Menu des fêtes patronales</h2>
+      <p class="lead">Trois services, au choix dans chaque colonne.</p>
+    </div>
+    <div class="fetes__prix">
+      <p class="prix"><span class="prix__v num">{euro(fetes.sans)}</span><span class="prix__l">sans boissons</span></p>
+      <p class="prix"><span class="prix__v num">{euro(fetes.avec)}</span><span class="prix__l">avec boissons : {fetes.detailAvec.charAt(0).toLowerCase() + fetes.detailAvec.slice(1).replace(/\.$/, '')}</span></p>
+    </div>
+    <div class="fetes__plats">
+      {colonnes.map((c) => (
+        <div class="fetes__col">
+          <h3>{c.nom}</h3>
+          <ul>{c.l.map((x) => <li>{x}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+    <p class="fetes__lien"><a class="lien" href={resto.feteUrl} rel="noopener">Ouvrir le menu en PDF</a></p>
+  </div>
+</section>

@@ -1,0 +1,23 @@
+---
+import { resto, u } from '../data/site';
+const liens = [
+  { href: '#carte', t: 'La carte' },
+  { href: '#propos', t: 'À propos' },
+  { href: '#reservation', t: 'Réservations' },
+  { href: '#contact', t: 'Contact' },
+];
+---
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="nav">
+  <div class="container nav__in">
+    <a class="nav__logo" href={u()} aria-label="Le Royal Brasserie, accueil">
+      <img src={u('photos/logo.webp')} width="521" height="377" alt="Le Royal Brasserie" />
+    </a>
+    <nav class="nav__liens" aria-label="Navigation principale">
+      <ul>
+        {liens.map((l) => <li><a href={l.href}>{l.t}</a></li>)}
+      </ul>
+    </nav>
+    <a class="btn btn--accent nav__cta" href={resto.zenchef} rel="noopener">Réserver</a>
+  </div>
+</header>

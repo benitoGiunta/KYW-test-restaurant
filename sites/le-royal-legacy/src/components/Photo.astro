@@ -1,0 +1,10 @@
+---
+import { u } from '../data/site';
+interface Props { p: { src: string; w: number[]; width: number; height: number; alt: string }; sizes: string; eager?: boolean; pos?: string; class?: string }
+const { p, sizes, eager = false, pos = '50% 50%', class: cls = '' } = Astro.props;
+const srcset = p.w.map((w) => `${u(`photos/${p.src}-${w}.webp`)} ${w}w`).join(', ');
+const src = u(`photos/${p.src}-${p.w[p.w.length - 1]}.webp`);
+---
+<div class={`slot ${cls}`} data-slot={p.src} data-alt={p.alt} style={`--pos:${pos};--ratio:${p.width}/${p.height}`}>
+  <img src={src} srcset={srcset} sizes={sizes} width={p.width} height={p.height} alt={p.alt} style={`object-position:${pos}`} loading={eager ? 'eager' : 'lazy'} decoding={eager ? 'auto' : 'async'} fetchpriority={eager ? 'high' : 'auto'} />
+</div>

@@ -1,0 +1,48 @@
+---
+import Nav from '../components/Nav.astro';
+import Pied from '../components/Pied.astro';
+import KywFooter from '@kyw/footer';
+import { resto, service, base } from '../data/site';
+interface Props { title: string; description: string }
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ld = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, url: new URL(base, Astro.site).href,
+  telephone: '+32 81 22 01 33', servesCuisine: ['Brasserie belge'],
+  address: { '@type': 'PostalAddress', streetAddress: resto.adresse.rue, postalCode: resto.adresse.cp, addressLocality: resto.adresse.ville, addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: resto.geo.lat, longitude: resto.geo.lon },
+  sameAs: [resto.facebook, resto.instagram],
+  openingHoursSpecification: service.map((s) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: s.de, closes: s.a })),
+});
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content={resto.nom} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@600&display=swap" rel="stylesheet" />
+    <style is:global>@import "../styles/page.css";</style>
+    <script type="application/ld+json" set:html={ld} />
+  </head>
+  <body>
+    <Nav />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Pied />
+    <KywFooter base={base} />
+  </body>
+</html>

@@ -1,0 +1,38 @@
+---
+import { resto, service } from '../data/site';
+---
+<section class="section venir" aria-labelledby="t-venir">
+  <div class="container">
+    <h2 id="t-venir">Une table au Royal</h2>
+    <div class="venir__cols">
+      <div class="venir__col" id="horaires">
+        <h3>Horaires</h3>
+        <p>Cuisine ouverte 7 jours sur 7.</p>
+        <dl class="creneaux">
+          {service.map((s) => (
+            <div class="creneau">
+              <dt>{s.nom}</dt>
+              <dd class="num"><time datetime={s.de}>{s.affiche[0]}</time> à <time datetime={s.a}>{s.affiche[1]}</time></dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div class="venir__col" id="contact">
+        <h3>Adresse et contact</h3>
+        <address>
+          {resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.ville}
+        </address>
+        <p><a class="lien" href={resto.maps} rel="noopener">Voir sur la carte</a></p>
+        <p><a class="lien nw" href={resto.tel}>{resto.telAffiche}</a></p>
+        <p><a class="lien" href={`mailto:${resto.mail}`}>{resto.mail}</a></p>
+      </div>
+      <div class="venir__col" id="reservation">
+        <h3>Réservations</h3>
+        <p>En ligne ou par téléphone au <span class="nw">{resto.telAffiche}</span>.</p>
+        <div class="actions">
+          <a class="btn btn--accent" href={resto.zenchef} rel="noopener">Réserver en ligne</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
