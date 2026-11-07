@@ -1,4 +1,4 @@
-# ETAT : L'Essentiel, portfolio (gabarit comptoir), fin de la phase 1 (construction-1)
+# ETAT : L'Essentiel, portfolio (gabarit comptoir), fin de la phase 2 (construction-2)
 
 ## Fait
 - Gabarit choisi : comptoir (matrice et raisons dans DESIGN.md) ; copie dans `sites/l-essentiel-portfolio/`, `package.json` renommé.
@@ -12,13 +12,20 @@
 - Build : `node scripts/build-site.mjs sites/l-essentiel-portfolio` passe (7 pages, dist 2,2 Mo, noindex, kyw-signature et mention
   « Maquette KYW » vérifiés sur chaque page, aucun asset manquant, aucun tiret cadratin).
 
-## Reste (phases 2 et 3)
-- Phase 2 : motion (le moteur et `motion/setup.ts` du gabarit sont intacts : vérifier que le dressage, le hero et le loader marchent avec
-  ces données), mesures de débordement 320/360/390/1024/1280/1440, nav à 5 liens + pastille en desktop et en mobile, hauteur de la scène
-  de dressage, `.assiette-photo` à 36 rem, `.bandeau` en mobile.
-- Phase 3 : QA navigateur, shoot, axe, contraste (laiton `#9a7a35` sur blanc 3,9:1 : filets et focus seulement), liens, clic réel sur chaque
-  lien d'en-tête, bas de page en fenêtre 1440 (leçon intégrée), OG, RAPPORT.md, `pnpm index`, commit de `dist/`.
-- Vérifier le texte du loader (`Loader.astro`) et tout libellé fixe du moteur qui citerait encore l'ancien restaurant (grep « Potes » vide dans `src/` et `dist/` : OK).
+## Fait en phase 2 (construction-2)
+- Motion : moteur et `motion/setup.ts` du gabarit intacts et vérifiés avec ces données (loader, hero fondu desktop, filets, dressage 220 %, 0 à 5 médaillons posés au scrub, scène 900/900 en 1440, aucune erreur console sur 7 pages x 7 largeurs).
+- Signature : anneau laiton (`[data-anneau]`, `pathLength=100`) qui se ferme autour de l'assiette pendant tout le scrub ; survol ou focus d'un médaillon, d'une légende ou d'un item de liste met en avant les trois (`.is-avant`, légende soulignée laiton).
+- Interactions : pastille Réserver masquée sur le pied de page (desktop, IntersectionObserver) et absente de `/reservation/` (`.pastille--ici`) ; filet laiton sur la ligne de carte survolée ; état actif des boutons ; `scroll-padding-top`.
+- États du formulaire : `:user-invalid` (trait de 2 px rouge brique `#a3321f` + libellé), survol laiton, `:disabled`, message `role=status` après validation (ouverture du calendrier ou lien si fenêtre bloquée).
+- Mobile : défaut corrigé, la nav à 5 liens débordait de 82 px (442 > 360) : le lien « Réserver » est masqué sous 768 px (la barre basse le porte), 4 liens tiennent à 320. Formulaire : colonnes `minmax(0,1fr)`, 1 colonne sous 480 px (date et heure débordaient à 320-360). Dressage mobile : la barre basse recouvrait la liste (liste à 828 px, barre à 783) ; stage 38 svh, liste en 2 colonnes, marge basse 5 rem, liste finit à 764 px.
+- Reduced motion (1440) : tout visible (5 médaillons, 0 élément masqué, anneau complet, hero opacité 1, loader masqué).
+- Contrôles réels : clic Playwright sur chacun des 5 liens d'en-tête en 1440 (elementFromPoint = `<a>`, URL change) ; fenêtre du bas de page 1440 : bande KYW, mention « Maquette KYW » et logo visibles, pastille masquée ; soumission du formulaire ouvre le popup et affiche le statut.
+- Build passe (`scripts/build-site.mjs`, 7 pages). Aucun shoot complet (agent captures).
+
+## Reste (phase 3)
+- QA navigateur, shoot, axe, contraste (laiton `#9a7a35` sur blanc 3,9:1 : filets et focus seulement ; le rouge `#a3321f` d'erreur fait environ 6,9:1), OG, RAPPORT.md, `pnpm index`, commit de `dist/`.
+- Non fait volontairement : curseur suiveur (`data-cursor`) non utilisé, Comptoir vise un seul geste animé. Liste du dressage en mobile : « illustratif » passe à la ligne à côté du nom (acceptable, à juger sur capture).
+- Vérifier sur la capture mobile 390 que la scène épinglée tient avec la barre basse (mesure : OK à 390 x 844 ; non mesuré en 667 de haut).
 
 ## Décisions et hypothèses
 - Chef : « Raphaël Adam » ne vient que de Rankeat (fiche signalée générée par IA) : non nommé. Aucun portrait, aucune biographie.

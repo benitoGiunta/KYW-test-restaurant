@@ -23,6 +23,7 @@ import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
         <a class="btn btn--ghost" href={telHref()}>Appeler</a>
       </div>
     </form>
+    <p class="resa-statut" role="status" aria-live="polite" data-resa-statut></p>
     <p class="muted" style="margin-top: calc(var(--u) * 3); max-width: 46rem">{site.groupes}</p>
   </section>
 
@@ -57,7 +58,19 @@ import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
   onPage(() => {
     const form = document.querySelector<HTMLFormElement>('[data-reservation]');
     if (!form) return; // tourne sur chaque page : vérifier la présence
-    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    const statut = document.querySelector<HTMLElement>('[data-resa-statut]');
+    const go = (e: SubmitEvent) => {
+      e.preventDefault();
+      const w = window.open(form.action, '_blank'); // avec « noopener » en option, open() renvoie toujours null
+      if (w) w.opener = null;
+      if (!statut) return;
+      statut.textContent = '';
+      if (w) { statut.textContent = 'Le calendrier de réservation du restaurant s\'ouvre dans un nouvel onglet.'; return; }
+      // Fenêtre bloquée par le navigateur : le lien prend le relais.
+      const a = document.createElement('a');
+      a.className = 'lien'; a.href = form.action; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Ouvrir le calendrier du restaurant';
+      statut.append('Votre navigateur a bloqué l\'ouverture. ', a);
+    };
     form.addEventListener('submit', go);
     return () => form.removeEventListener('submit', go);
   });

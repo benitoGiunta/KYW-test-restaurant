@@ -153,7 +153,7 @@ strong { font-weight: 400; }
   .split__aplat { padding: calc(var(--u) * 5) var(--marge); }
 }
 
-/* Quinconce : deux photos décalées, traits diagonaux d'angle céladon */
+/* Quinconce : deux photos décalées, traits diagonaux d'angle laiton */
 .quinconce { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: calc(var(--u) * 2); align-items: start; }
 .quinconce__a { grid-column: 1 / 8; margin: 0; }
 .quinconce__b { grid-column: 9 / 13; margin: calc(var(--u) * 16) 0 0; }
@@ -273,3 +273,50 @@ label small { display: block; margin-top: 0.25em; font-size: var(--t-xs); }
 .bandeau img { width: 100%; height: 100%; object-fit: cover; }
 .menu-grand .assiette-photo { width: min(100%, 36rem); }
 .menu-grand .assiette-photo img { width: 100%; height: auto; }
+
+/* Phase 2 : états, signature, finitions */
+html { scroll-padding-top: 5rem; }
+/* Dressage : anneau laiton qui se ferme avec le scrub ; légende et liste répondent au survol des médaillons */
+.dressage__anneau { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.dressage__anneau circle { fill: none; stroke: var(--c-accent); stroke-width: 0.3; stroke-linecap: butt; }
+.motion .dressage__anneau circle { stroke-dasharray: 100; stroke-dashoffset: 100; }
+.dressage__comp { cursor: default; }
+.dressage__legende { transition: color 0.3s; text-decoration: underline 1px transparent; text-underline-offset: 0.25em; }
+.dressage__legende.is-avant { text-decoration-color: var(--c-accent); }
+.dressage__liste li.is-avant button { color: var(--c-fg); }
+.dressage__liste li.is-avant button::before { background: var(--c-accent); }
+/* Pastille : s'efface sur le pied de page (desktop) et sur la page Réserver elle-même */
+.pastille { transition: opacity 0.3s, visibility 0s; }
+@media (min-width: 768px) { .pastille.is-masquee { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s, visibility 0s 0.3s; } }
+.pastille--ici { display: none; }
+body:has(.pastille--ici) { padding-bottom: 0; }
+.pastille a:active, .btn:active { transform: translateY(1px); }
+/* Formulaire : champ invalide après saisie, lisible sans la couleur seule (trait épais) */
+.form-ligne input:user-invalid, .form-ligne textarea:user-invalid { border-bottom: 2px solid #a3321f; }
+.form-ligne label:has(:user-invalid) { color: #a3321f; }
+.form-ligne input:hover, .form-ligne textarea:hover { border-bottom-color: var(--c-accent); }
+.form-ligne input::placeholder { color: var(--c-muted); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.resa-statut { margin-top: calc(var(--u) * 2); max-width: 46rem; min-height: 1.5em; }
+/* Lignes de carte : un filet laiton marque la ligne survolée (lecture au doigt ou au curseur) */
+.menu-liste li { transition: border-color 0.3s; }
+@media (hover: hover) { .menu-liste li:hover { border-top-color: var(--c-accent); } .menu-liste li:hover + li { border-top-color: var(--c-accent); } }
+/* Impression : sans pastille ni logo fixe */
+@media print { .pastille, .logo-vertical, #loader, #curtain { display: none !important; } }
+/* Mobile : la barre basse porte déjà « Réserver », l'en-tête garde quatre liens (cinq débordaient de 82 px à 360) */
+@media (max-width: 767px) { .nav a[data-resa] { display: none; } }
+/* Formulaire : colonnes bornées (les champs date et heure ont une largeur minimale native) */
+.form-ligne { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.form-ligne input, .form-ligne textarea { min-width: 0; width: 100%; }
+@media (max-width: 767px) { .form-ligne { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 479px) { .form-ligne { grid-template-columns: minmax(0, 1fr); } .form-ligne .actions .btn { width: 100%; } }
+/* Le calque des traits ne doit pas capter le pointeur : les médaillons dessous répondent au survol */
+.dressage__traits { pointer-events: none; }
+/* Mobile : la barre basse (≈ 61 px) recouvre le bas de la scène épinglée : stage réduit, liste sur deux colonnes, marge basse de 5 rem */
+@media (max-width: 767px) {
+  .stage { width: min(80vw, 38svh); }
+  .dressage__scene { padding-bottom: 5rem; gap: 1rem; }
+  .dressage__liste { display: grid; grid-template-columns: repeat(2, minmax(0, auto)); justify-content: center; justify-items: start; gap: 0 1.25rem; }
+}
+/* 320 à 359 px : quatre liens en 288 px (déborde de 32 px sinon) */
+@media (max-width: 359px) { .nav { gap: 0.3rem; } .nav a { font-size: 0.62rem; letter-spacing: 0.04em; } }

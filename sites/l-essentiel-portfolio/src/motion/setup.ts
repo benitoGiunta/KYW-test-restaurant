@@ -1,4 +1,4 @@
-// Motion « Comptoir » : rien ne bouge sans raison. Loader blanc à barre céladon, rideau blanc bordé d'un filet,
+// Motion « Comptoir » : rien ne bouge sans raison. Loader blanc à barre laiton, rideau blanc bordé d'un filet,
 // intro du hero en fondu lent, filets qui se dessinent, et un seul geste scrubbé : le dressage.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -29,6 +29,7 @@ export function setupMotion() {
     cleanups.push(filets());
     cleanups.push(dressage());
     cleanups.push(dateMinimum());
+    cleanups.push(pastille());
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -78,18 +79,29 @@ function dressage() {
     tl.to({}, { duration: 0.25 }, t + 1.3);
   });
   tl.to({}, { duration: 0.4 }); // le plat reste posé avant de défiler
+  // Anneau laiton : se ferme autour de l'assiette pendant toute la scène (la progression du dressage, sans compteur).
+  const anneau = root.querySelector<SVGCircleElement>('[data-anneau]');
+  if (anneau) tl.fromTo(anneau, { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: tl.duration(), ease: 'none' }, 0);
   // Liste texte : le focus ou le survol d'un composant le met en avant sur l'assiette.
   const items = [...root.querySelectorAll<HTMLElement>('[data-liste-item]')];
-  const mettre = (i: string | null) => comps.forEach((c) => c.classList.toggle('is-avant', c.dataset.composant === i));
+  const legendes = [...root.querySelectorAll<HTMLElement>('[data-legende]')];
+  const mettre = (i: string | null) => {
+    comps.forEach((c) => c.classList.toggle('is-avant', c.dataset.composant === i));
+    legendes.forEach((l) => l.classList.toggle('is-avant', l.dataset.legende === i));
+    items.forEach((it) => it.classList.toggle('is-avant', it.dataset.listeItem === i));
+  };
   const handlers: [HTMLElement, string, () => void][] = [];
-  items.forEach((it) => {
-    const on = () => mettre(it.dataset.listeItem!);
+  // La liste texte et les médaillons eux-mêmes se répondent : survol ou focus d'un côté, mise en avant des trois.
+  const lie = (el: HTMLElement, i: string) => {
+    const on = () => mettre(i);
     const off = () => mettre(null);
-    for (const [ev, fn] of [['focusin', on], ['mouseenter', on], ['focusout', off], ['mouseleave', off]] as const) {
-      it.addEventListener(ev, fn);
-      handlers.push([it, ev, fn]);
+    for (const [ev, fn] of [['focusin', on], ['pointerenter', on], ['focusout', off], ['pointerleave', off]] as const) {
+      el.addEventListener(ev, fn);
+      handlers.push([el, ev, fn]);
     }
-  });
+  };
+  items.forEach((it) => lie(it, it.dataset.listeItem!));
+  comps.forEach((c) => lie(c, c.dataset.composant!));
   return () => { handlers.forEach(([el, ev, fn]) => el.removeEventListener(ev, fn)); };
 }
 
@@ -100,4 +112,14 @@ function dateMinimum() {
   const d = new Date();
   input.min = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   return () => {};
+}
+
+/** Pastille Réserver : s'efface quand le pied de page entre dans la fenêtre (desktop), elle n'a plus rien à dire. */
+function pastille() {
+  const el = document.querySelector<HTMLElement>('[data-pastille]');
+  const pied = document.querySelector<HTMLElement>('.footer');
+  if (!el || !pied || !('IntersectionObserver' in window)) return () => {};
+  const io = new IntersectionObserver(([e]) => el.classList.toggle('is-masquee', e.isIntersecting), { threshold: 0.15 });
+  io.observe(pied);
+  return () => { io.disconnect(); el.classList.remove('is-masquee'); };
 }

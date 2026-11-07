@@ -8,7 +8,7 @@ const liens = [
   { href: u('/carte/'), label: 'Menus' },
   { href: u('/maison/'), label: 'La maison' },
   { href: u('/chambres/'), label: 'Chambres' },
-  { href: u('/reservation/'), label: 'Réserver' },
+  { href: u('/reservation/'), label: 'Réserver', resa: true },
 ];
 const ici = Astro.url.pathname.replace(/\/+$/, '');
 const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
@@ -17,11 +17,11 @@ const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : u
   <div class="header__inner">
     <a class="header__brand" href={u('/')} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
     <nav class="nav" aria-label="Navigation principale">
-      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)} data-resa={l.resa ? '' : undefined}>{l.label}</a>)}
     </nav>
   </div>
 </header>
 <a class="logo-vertical" href={u('/')} aria-label={`${site.nom}, retour à l'accueil`}><span aria-hidden="true">{site.nom}</span></a>
-<div class="pastille" data-pastille>
+<div class:list={['pastille', { 'pastille--ici': ici === u('/reservation/').replace(/\/+$/, '') }]} data-pastille>
   <a class="pastille__resa" href={u('/reservation/')} data-magnetic="0.2">Réserver</a>
 </div>
