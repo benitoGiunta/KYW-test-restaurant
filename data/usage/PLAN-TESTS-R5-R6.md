@@ -181,3 +181,16 @@ Test G sur décision de Benito.
   moins de 8 % entre les trois restaurants. Les 9 sites finissent sans F0 ni F1.
 - **Sans effet :** le regroupement des lectures (sorties de commandes 1,6 à 1,7 million de caractères par restaurant)
   et le socle par agent (environ 67 000 jetons). Le test G (connecteurs) reste le seul levier non essayé sur le socle.
+
+## Conformité de la configuration des restaurants 7 à 9 (contrôle du 08/11)
+
+Script : `scripts/usage-conformite.py` (modèles réels par agent, revues, consignes lues), puis `scripts/usage-configurations.py`
+(jeux `chantiers/configurations.json` et `chantiers/conformite.json`, onglet « Configurations et conformité » du tableau de bord).
+
+- Workflow 5f3c8e3 et `agents/sobriete.md` 77e5691 en place aux trois lancements ; 3 sessions filles successives, sans coupure.
+- Modèles : 90 agents sur 90 conformes (awwwards phases 1 et 3 sur Sonnet, phase 2 sur Opus ; portfolio, legacy, revues, révisions sur Sonnet ; captures et publication sur Haiku). Aucun écart non plus de R3 à R6 (204 agents au total).
+- Test B : 9 sites sur 9 conformes (6 revues 2, toutes après un F0 ou un F1 en revue 1). 0 F0 ou F1 ouvert en fin de cycle.
+- Leçons par rôle et prompts par phase : appliqués. Agents ≤ 40 réponses sauf un par restaurant (max 41, 51, 40).
+- Regroupement des lectures : consigne présente, sans effet mesurable (0,9 commande par réponse, 1,6 à 1,7 M de caractères de sorties).
+- Effort de raisonnement : non vérifiable dans les transcripts.
+- Compteur interne des sessions : 18,87 $, 19,02 $, 20,51 $ (11 à 13 % au-dessus de la mesure agent par agent, derniers tours compris).
