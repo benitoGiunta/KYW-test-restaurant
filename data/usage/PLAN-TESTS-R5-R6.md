@@ -166,7 +166,7 @@ Test G sur décision de Benito.
   des deux. Contrôle avant chaque lancement et pendant les workflows ; à 25 %, arrêt propre (commit, push, ETAT, mesure).
 - **Mesure :** chaque session restaurant dépose detail-<slug>.json et commandes-<slug>.json et prévient la session de
   reporting ; verdict du test I au restaurant 7, puis suivi de dérive (alerte au-delà de 20 % d'écart).
-- **Test G (connecteurs) :** non décidé, non appliqué.
+- **Test G (connecteurs) :** abandonné (décision de Benito, 09/11).
 
 ## Résultats de la série 7 à 9 (07/11)
 
@@ -180,7 +180,7 @@ Test G sur décision de Benito.
 - **Série :** 52,03 $ pour 9 sites, 5,78 $ par site en moyenne (−12,7 % sur après 3, −71,6 % depuis avant), écart de
   moins de 8 % entre les trois restaurants. Les 9 sites finissent sans F0 ni F1.
 - **Sans effet :** le regroupement des lectures (sorties de commandes 1,6 à 1,7 million de caractères par restaurant)
-  et le socle par agent (environ 67 000 jetons). Le test G (connecteurs) reste le seul levier non essayé sur le socle.
+  et le socle par agent (environ 67 000 jetons). Le test G (connecteurs) est abandonné (décision de Benito, 09/11) : le socle est traité comme un coût fixe.
 
 ## Conformité de la configuration des restaurants 7 à 9 (contrôle du 08/11)
 
@@ -194,3 +194,8 @@ Script : `scripts/usage-conformite.py` (modèles réels par agent, revues, consi
 - Regroupement des lectures : consigne présente, sans effet mesurable (0,9 commande par réponse, 1,6 à 1,7 M de caractères de sorties).
 - Effort de raisonnement : non vérifiable dans les transcripts.
 - Compteur interne des sessions : 18,87 $, 19,02 $, 20,51 $ (11 à 13 % au-dessus de la mesure agent par agent, derniers tours compris).
+
+## Décision du 09/11
+
+- **Test G (connecteurs) abandonné** par Benito. Le socle d'environ 67 700 jetons par agent est désormais un coût fixe ;
+  les seuls leviers restants portent sur le nombre d'agents et de réponses par site (revues, révisions, passes).
