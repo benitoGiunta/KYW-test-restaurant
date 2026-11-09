@@ -43,3 +43,8 @@
 ## Pièges
 - Un numéro posé en `::before` avec `content: attr(data-n)` échappe à axe et reste hors lecteur d'écran (décor).
 - `body:has(.hero) .header` : seul moyen CSS d'ôter le mode difference sans toucher à Base.astro.
+
+---
+# Phase 3/3 (09/11/2026) : QA
+- Fait : 29 photos orphelines retirées (git rm), rebuild OK, galerie mobile vérifiée, RAPPORT.md écrit. Serveur 4533 arrêté.
+- Reste : publication (`pnpm index`, commit dist, push), photos 11/12 à réduire si besoin.
