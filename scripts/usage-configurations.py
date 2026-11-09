@@ -20,7 +20,7 @@ CFG = [
 ]
 NOM = {'partage': 'Partage', 'brasserie-du-quai': 'La Brasserie du Quai', 'chez-guillaume': 'Chez Guillaume', 'dolce-vita-wepion': 'La Dolce Vita',
        'le-royal': 'Le Royal', 'incorrect': 'Incorrect', 'l-essentiel': 'L’Essentiel'}
-PH = {3: 'Après', 4: 'Après', 5: 'Après 2', 6: 'Après 3', 7: 'Après 4', 8: 'Après 4', 9: 'Après 4'}
+PH = {3: 'Après', 4: 'Après', 5: 'Après 2', 6: 'Après 3', 7: 'Après 4', 8: 'Après 4', 9: 'Après 4', **{r: 'Après 4' for r in range(10, 21)}}
 conf = json.load(open(CONF)); conformite = []
 for c in conf:
     rv = c['revues']; b = [r['conforme_b'] for r in rv if r['conforme_b'] is not None]
