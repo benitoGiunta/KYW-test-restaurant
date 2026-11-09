@@ -1,12 +1,11 @@
-# ETAT : ferme-blanche-d-asie awwwards, fin de la phase 3 (construction-3)
+# ETAT : ferme-blanche-d-asie awwwards, relecteur-site passe 2
 
 ## Fait
-- QA sur les captures de l'agent captures, correction du hover de la marque (`site.css`), rebuild OK, captures ciblées accueil et réservation, audit 0 FAIL / 5 WARN justifiés.
-- RAPPORT.md, DESIGN.md (checklist phase 3), leçon ajoutée, `pnpm index`, commit.
+- REVUE-2.md écrite : verdict PUBLIABLE (0 F0, 0 F1, 0 F2, 5 F3). Toutes les corrections de REVISION-1 vérifiées (axe 15 cas à 0, carte 0 écart de prix, plus de mailto hors pied).
 
 ## Reste
-- Passe jury avec un critique indépendant (non faite : pas d'outil Agent), puis corrections de sa liste.
-- Points ouverts de la phase 1 (photo de l'énoncé, CTA à 1024x768), données douteuses à faire confirmer.
+- F3 facultatifs (horaires répétés, surtitres, role du scroller `.plateaux`, « beaux jours », note RAPPORT.md sur la correction de la carte).
+- Points ouverts de la phase 1 : passe jury indépendante, données douteuses à faire confirmer.
 
 ## Pièges
-- Capture « carte » faite sous le nom `ferme-blanche-d-asie-item` ; la 404 du crawl est la réponse brute du serveur (vérifier `dist/404.html`).
+- Le QA ne lance axe qu'à 1440 px et sa « 404 » est la réponse brute de serve.mjs.
