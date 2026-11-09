@@ -1,8 +1,10 @@
 /* Hallmark · shape: Photographic (kept, five routes) · genre: atmospheric · theme: Spore (deal 1/3, seed restaurant-namur-chinese-asian-4b50·171af1b4·2026-11-09·r0) · redesign: full
- * hero: Poster (kept: full-bleed room photograph on the home) · nav: floating pill (draw: search-led bar, swapped: five routes, no search to offer) · footer: mast · imagery: client photographs, watermark cropped · signature: the 29 € set as a figure on a grained well · spore: head-torch (the old yellow, kept as ochre)
+ * hero: Poster (kept: full-bleed room photograph on the home) · nav: slab 64px sticky (phase 2 swap: the floating pill was already used by chez-guillaume, rule 42) · footer: mast · imagery: client photographs, watermark cropped · signature: the 29 € set as a figure on a grained well · spore: head-torch (the old yellow, kept as ochre)
  * axes: dark/roman-serif/warm · posture: committed · contrast: pass · fold: pass · job: book · draw: 03eb15 (shape Letter swapped for Photographic: a document column cannot carry five routes) · comp: 2 built, no key · c1 chosen · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, the daylit client photographs do not sit in a cellar, so they stay in rounded frames on the dark ground with a sepia tone and never carry the type directly */
 /* Hallmark · waive 8 · hero, offer, room, carte, salles, avis, horaires · the original sequence (hero, welcome, menu, contact) is kept, the composition is new */
+/* Hallmark · waive 44c · inner pages (menu, photos, reserve, contact) · short page heads by design, the content (menu, gallery, booking) starts on the first screen and the hero rule targets the home */
+/* Hallmark · waive 83 · photos page · the page is the gallery of the client's own room and garden photographs, imagery is its content, not decoration */
 @import url("./tokens.css");
 @import url("./base.css");
 
@@ -149,10 +151,11 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-md)); }
 .pied { margin-top: var(--section-gap); padding-block: var(--space-3xl) var(--space-2xl); border-top: var(--rule-hair) solid var(--color-rule); display: grid; gap: var(--space-xl); }
 .pied__mast { font-family: var(--font-display); font-size: clamp(2.5rem, 8.5vw, 9rem); line-height: 0.95; letter-spacing: var(--tracking-display); overflow-wrap: break-word; min-width: 0; }
 .pied__mast .nav__logo { display: block; width: 56px; height: 56px; margin-bottom: var(--space-lg); }
-.pied__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-xl) var(--gap-columns); }
+.pied__grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr) minmax(0, .9fr) minmax(0, 1.6fr); gap: var(--space-xl) var(--gap-columns); }
 .pied ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-xs); }
-.pied a { text-decoration-color: var(--color-rule); overflow-wrap: anywhere; }
+.pied a { display: inline-block; padding-block: var(--space-3xs); text-decoration-color: var(--color-rule); overflow-wrap: anywhere; }
 .pied a:hover { text-decoration-color: var(--color-accent); }
+.pied a[href^="mailto"], .nav__brand { white-space: nowrap; }
 .pied p, .pied address { font-style: normal; color: var(--color-ink-2); }
 .pied__credits { color: var(--color-muted); font-size: var(--text-sm); max-width: 70ch; }
 
@@ -212,3 +215,4 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-md)); }
 .nav__brand, .pied a, .phone { transition: color var(--dur-micro) var(--ease-out), text-decoration-color var(--dur-micro) var(--ease-out); }
 .hero__photo { background: var(--color-paper-2); color: var(--color-ink); }
 @media (prefers-reduced-motion: reduce) { .nav > .nav__in > nav:popover-open { transition: none; } }
+.nw { white-space: nowrap; }

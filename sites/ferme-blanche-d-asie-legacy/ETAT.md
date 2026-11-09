@@ -1,4 +1,4 @@
-# ETAT · ferme-blanche-d-asie · legacy · construction-2 (09/11/2026)
+# ETAT · ferme-blanche-d-asie · legacy · construction-3 (09/11/2026)
 
 ## Fait (phases 1 et 2)
 - Phase 1 : audit, deal Spore, comps, 6 pages, données réelles, photos recadrées sous le filigrane (voir `DESIGN.md`).
@@ -18,3 +18,8 @@
 - Nav : « Réserver » mène à `/reserve` (le numéro reste sur chaque page) ; aucun formulaire (original sans formulaire).
 - Menu mobile sans repli JS : `popover` natif ; `@supports not selector(:popover-open)` remet les liens en ligne.
 - Pièges : `sites/ferme-blanche-d-asie-awwwards` modifié par un autre agent et `pnpm-lock.yaml` : non commités ici. Avis, droits photos (filigrane « Find Your Place ») à valider avec le client.
+
+## Phase 3 (QA) : terminée
+- Corrigé : cibles tactiles du pied, retours à la ligne (e-mail, marque, Facebook), stamp CSS (slab). 404/robots/sitemap = faux positifs.
+- sloplint : 0 FAIL, 0 REFLEX ouvert (5 waivers). Build et `pnpm index` passés. Voir `RAPPORT.md`.
+- Restant : finish review sous-agent non lancée ; DESIGN.md checklist 72 cases non revérifiée ; entrée `$LOG` à ajouter ; publication.
