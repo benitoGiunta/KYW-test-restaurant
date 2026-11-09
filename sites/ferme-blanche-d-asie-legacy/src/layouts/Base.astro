@@ -2,7 +2,7 @@
 import Nav from '../components/Nav.astro';
 import Pied from '../components/Pied.astro';
 import KywFooter from '@kyw/footer';
-import { resto, semaine, base } from '../data/site';
+import { resto, base } from '../data/site';
 interface Props { title: string; description: string; page?: string }
 const { title, description, page = '' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -13,6 +13,15 @@ const ld = JSON.stringify({
   telephone: '+32 81 44 64 89', servesCuisine: ['Asiatique', 'Chinoise'],
   address: { '@type': 'PostalAddress', streetAddress: resto.adresse.rue, postalCode: resto.adresse.cp, addressLocality: 'Malonne', addressCountry: 'BE' },
   geo: { '@type': 'GeoCoordinates', latitude: resto.geo.lat, longitude: resto.geo.lon },
+  email: resto.mail,
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '12:00', closes: '14:30' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '18:00', closes: '23:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '12:00', closes: '14:30' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '18:00', closes: '00:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '12:00', closes: '15:30' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '18:00', closes: '23:00' },
+  ],
   sameAs: [resto.facebook],
 });
 ---

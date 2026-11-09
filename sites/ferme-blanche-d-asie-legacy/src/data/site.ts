@@ -35,7 +35,7 @@ export const semaine = [
   { jour: 'Vendredi', i: 5, midi: ['12:00', '14:30'], soir: ['18:00', '23:00'] },
   { jour: 'Samedi', i: 6, midi: ['12:00', '14:30'], soir: ['18:00', '00:00'] },
   { jour: 'Dimanche', i: 0, midi: ['12:00', '15:30'], soir: ['18:00', '23:00'] },
-].map((j) => ({ ...j, midiAff: `${h(j.midi[0])} à ${h(j.midi[1])}`, soirAff: `${h(j.soir[0])} à ${h(j.soir[1])}` }));
+].map((j) => ({ ...j, midiAff: `${h(j.midi[0])} à ${h(j.midi[1])}`, soirAff: j.soir[1] === '00:00' ? `${h(j.soir[0])} à minuit` : `${h(j.soir[0])} à ${h(j.soir[1])}` }));
 
 // Typographie : apostrophes et espaces de la carte, sans changer un mot (sauf coquille évidente, signalée).
 const fix = (s: string) =>
@@ -43,6 +43,8 @@ const fix = (s: string) =>
     .replace(/\b([dl]) (?=[aeiouyhéèêàâ])/gi, '$1’')
     .replace(/\( /g, '(').replace(/ \)/g, ')').replace(/ ,/g, ',')
     .replace(/\bBoeuf\b/g, 'Bœuf').replace(/\bboeuf\b/g, 'bœuf').replace(/\boeuf\b/g, 'œuf').replace(/\bOeuf\b/g, 'Œuf')
+    // coquilles de la source (F2-3) : virgule avant « ) », majuscule de « Contient », « Tofu sautés au beurre ail »
+    .replace(/,\)/g, ')').replace(/\(Contient /g, '(contient ').replace(/Tofu sautés au beurre ail/, 'Tofu sauté au beurre d’ail')
     .replace(/(\d),(\d\d)€/g, '$1,$2 €')
     // Hallmark · reworded "Potage crème nid d" to "Potage crème nid d’hirondelle" · coquille du site (nom tronqué), le menu de Noël écrit « nid d’hirondelle »
     .replace(/nid d$/, 'nid d’hirondelle');
@@ -109,7 +111,7 @@ export const photos = {
   table: { f: 'table-ronde', alt: 'Table ronde à plateau tournant dans une salle à poutres', w: 1400, h: 850 },
 } as const;
 export type PhotoKey = keyof typeof photos;
-export const credits = 'Photographies des salles et du jardin : Find Your Place (filigrane recadré). Logo : La Ferme Blanche d’Asie.';
+export const credits = 'Photographies des salles et du jardin : Find Your Place. Logo : La Ferme Blanche d’Asie.';
 
 // Extraits d’avis repris mot pour mot, avec leur source (à vérifier avec le client).
 export const avis = (donnees.extraits_avis as { texte: string; source: string }[]).filter((a) =>
