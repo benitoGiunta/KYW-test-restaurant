@@ -1,22 +1,24 @@
-# ETAT : ferme-blanche-d-asie awwwards, fin de la phase 1 (construction-1)
+# ETAT : ferme-blanche-d-asie awwwards, fin de la phase 2 (construction-2)
 
-## Fait
-- DESIGN.md : brief, trois concepts notés, Concept Card, système (palette, typo, grille, mouvement planifié, wireframes), checklist 1 à 18.
-- Scaffold Astro 5 : engine copié de le-royal-awwwards (env, scroll, reveal, loader, interactions, transition, astro, index), tokens.css, engine.css, Base.astro (head complet, JSON-LD Restaurant, robots noindex, KywFooter), Header, Footer (pied composé), Photo.
-- Contenu réel : `src/data/site.ts`, `src/data/carte.json` (56 plats, numéros, apostrophes rétablies), `src/lib/photos.ts` (10 photos recadrées sous le filigrane).
-- Pages : `/`, `/carte/`, `/a-propos/`, `/reservation/`, 404. Mises en page statiques, sans `data-reveal` ni `data-split` (rien de caché).
-- Polices Zodiak 700 + Hanken Grotesk, favicon SVG/PNG, `og.png` (capture du hero).
-- Build : `pnpm build:site sites/ferme-blanche-d-asie-awwwards` passe, `dist/ferme-blanche-d-asie/awwwards/` écrit. Mesures hero 1440, 1280, 1024, 390 sans débordement, `scrollWidth` des pages intérieures contrôlé à 320, 390, 1440.
+## Fait (phase 1)
+- DESIGN.md, scaffold Astro 5, engine, contenu réel, 5 pages, polices, favicon, og.png (voir DESIGN.md).
 
-## Reste (phases 2 et 3)
-- Phase 2 : animations. Pilote `--rot` (anneau du hero, ronds de catégorie, au scroll + repos), transition (rideau disque déjà en place dans `src/motion/setup.ts`), `data-split` des titres et `data-reveal`, hovers (CTA qui tourne d'un quart, ronds qui se remplissent), curseur facultatif, reduced motion.
-- Phase 3 : QA navigateur (shoot, audit, axe, clavier), RAPPORT.md, checklist 19 et suivantes, `pnpm index`, leçons.
-- À vérifier en QA : image `enonce__photo` (lazy, hors flottaison) ; CTA du hero à 1024×768 sous la flottaison ; contraste du texte du cercle SVG ; hauteur de `.plat` sur 320 px.
+## Fait (phase 2)
+- Pilote `src/motion/plateau.ts` (`--rot` : repos 3 degrés/s + défilement par crans + pointeur + intro), porteurs `[data-rot]` visibles seulement.
+- Intro par page (plateau, anneau, disque), `data-split="lines"` sur les h2, `data-reveal="clip"` sur les photos, `up` sur les avis.
+- Transition : disque rouge depuis le point de clic + anneau d'or qui tourne d'un quart, 0,6 s par sens (`src/motion/setup.ts`).
+- Hovers : CTA quart de tour (`conic-gradient` + `@property --a`), liens soulignés au repos avec trait d'accent, ronds remplis en un tour ; focus et `:active`.
+- Menu mobile `<dialog>` (`src/motion/menu.ts`, classe `.panneau`), « Réserver » 44 px conservé.
+- Débordement corrigé : le carré de l'anneau tourné élargissait la page (1489 px à 1440) : `overflow: clip` sur `.plateau` et `.orbite`.
+- Mesures (serveur 4427, arrêté) : 0 erreur console ni requête échouée ; `scrollWidth` = largeur à 320, 360, 390, 1440 ; 0 texte caché après défilement et en réduit ; menu (focus, Échap, retour) OK.
+- Build : `scripts/q.sh build pnpm build:site sites/ferme-blanche-d-asie-awwwards` passe.
+
+## Reste (phase 3)
+- Shoot complet (agent captures) : vérifier `idleMotion` true et `settledMs` non null (repos ramené à 3 degrés/s), `noHoverChange`, contraste axe, cibles.
+- RAPPORT.md, checklist 35, 36, 45, `pnpm index`, leçons.
+- Déjà notés en phase 1 : `enonce__photo` hors flottaison ; CTA du hero à 1024×768 sous la flottaison ; données douteuses (plat n° 2, fourchettes de prix).
 
 ## Décisions et pièges
-- Concept A « plateau tournant » retenu ; ni loader ni GL (justifié dans DESIGN.md).
-- Aucun contenu fictif, donc aucun `placeholder`. Histoire/équipe absentes : page `/a-propos/` renommée « La maison » (salles, pratique).
-- Donnée douteuse laissée telle quelle : plat n° 2 « Potage crème nid d » (nom tronqué du site client) ; les fourchettes de prix du dossier (entrées jusqu'à 20 €, plats dès 7,80 €) ne correspondent pas à carte.json (entrées max 11,90 €, plats dès 5,50 €) : prix non résumés en fourchettes sur le site. À reporter dans RAPPORT.md.
-- Avis : citations Resto.be et Trouve Ton Resto telles quelles ; notes « à confirmer » indiquées.
-- Photos recadrées à 855 px de haut pour retirer le filigrane « Find Your Place » (sharp, `src/assets/photos/`). Logo 200 px non utilisé.
-- `scripts/q.sh` obligatoire ; serveur de mesure (port 4417) arrêté.
+- Ni loader, ni GL, ni curseur suiveur (écrit dans DESIGN.md).
+- La propriété `rotate` (pas `transform`) porte `--rot` ; GSAP n'anime que l'opacité du `<text>` de l'anneau et le `scale` du disque.
+- `.menu` existe déjà sur la carte (menus à prix fixe) : le dialog s'appelle `.panneau`.

@@ -1,23 +1,17 @@
-/* La Ferme Blanche d'Asie : le plateau tournant. Phase 1 : mise en page statique complète. */
+/* La Ferme Blanche d'Asie : le plateau tournant. Phase 1 : mise en page ; phase 2 : interactions (fin de fichier). */
 .wrap { width: 100%; max-width: 100rem; margin-inline: auto; padding-inline: var(--gutter); min-width: 0; }
 .nw { white-space: nowrap; }
 .display { font-family: var(--f-display); font-weight: 700; line-height: 0.95; letter-spacing: -0.03em; text-wrap: balance; }
-.lien { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.25em; display: inline-block; padding-block: 2px; }
-.lien:hover { text-decoration-color: var(--c-accent); color: var(--c-accent); }
-.lien-util { font-size: var(--t-s); letter-spacing: 0.02em; display: inline-block; padding-block: 0.6em; border-bottom: 1px solid var(--c-line); }
-.lien-util:hover { border-color: var(--c-accent); color: var(--c-accent); }
+.lien { display: inline-block; padding-block: 2px 4px; }
+.lien-util { font-size: var(--t-s); letter-spacing: 0.02em; display: inline-block; padding-block: 0.6em; }
 figure { margin: 0; }
 figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6em; letter-spacing: 0.01em; }
 .clair { background: var(--c-clair); color: var(--c-clair-fg); --c-fg: var(--c-clair-fg); --c-muted: var(--c-clair-muted); --c-line: var(--c-clair-line); --c-accent: var(--c-accent-texte); }
 .clair ::selection { background: var(--c-clair-fg); color: var(--c-clair); }
 
 /* Boutons : or plein (primaire), contour (secondaire). Verbe : le fond tourne d'un quart au survol (phase 2 : rotation). */
-.cta { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: 0.7em 1.5em; border: 1.5px solid var(--c-fg); border-radius: 999px; font-size: var(--t-s); font-weight: 700; letter-spacing: 0.02em; transition: background-color .35s, color .35s, border-color .35s; }
-.cta--or { background: var(--c-accent); border-color: var(--c-accent); color: #1c1410; }
-.cta--or:hover { background: var(--c-fg); border-color: var(--c-fg); color: var(--c-bg); }
-.cta--vide:hover { background: var(--c-fg); color: var(--c-bg); }
-.clair .cta--or { background: var(--c-clair-fg); border-color: var(--c-clair-fg); color: var(--c-clair); }
-.cta--petit { min-height: 2.5rem; padding: 0.4em 1.1em; }
+.cta { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: 0.7em 1.5em; border: 1.5px solid var(--c-fg); border-radius: 999px; font-size: var(--t-s); font-weight: 700; letter-spacing: 0.02em; position: relative; isolation: isolate; overflow: hidden; }
+.cta--petit { min-height: 2.75rem; padding: 0.4em 1.1em; }
 
 /* En-tête */
 .tete { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: var(--gutter); max-width: 100rem; margin-inline: auto; position: relative; z-index: var(--z-header); }
@@ -25,9 +19,10 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6em; l
 .tete__sceau { width: 1.6rem; height: 1.6rem; border-radius: 50%; border: 3px solid var(--c-accent); position: relative; flex: none; }
 .tete__sceau::after { content: ''; position: absolute; inset: 0.28rem; border-radius: 50%; background: var(--c-fg); }
 .tete__nav ul { display: flex; align-items: center; gap: clamp(0.75rem, 2.5vw, 2rem); list-style: none; padding: 0; }
-.nl { white-space: nowrap; display: inline-block; padding-block: 0.7em; font-size: var(--t-s); letter-spacing: 0.02em; border-bottom: 1px solid transparent; }
-.nl:hover, .nl[aria-current='page'] { border-bottom-color: var(--c-accent); }
-@media (max-width: 40rem) { .tete__desk { display: none; } .tete__nom { font-size: 0.9rem; } }
+.nl { white-space: nowrap; display: inline-block; padding-block: 0.7em; font-size: var(--t-s); letter-spacing: 0.02em; }
+
+.tete__mob { display: none; }
+@media (max-width: 40rem) { .tete__desk { display: none; } .tete__mob { display: block; } .tete__nom { font-size: 0.9rem; } }
 @media (max-width: 26rem) { .tete__nom { display: none; } }
 
 /* Hero : affiche, titre à gauche, plateau à droite */
@@ -41,7 +36,7 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6em; l
 .plateau { position: relative; aspect-ratio: 1; width: 100%; max-height: 78svh; margin-inline: auto; }
 .plateau__disque { position: absolute; inset: 11%; border-radius: 50%; overflow: hidden; border: 2px solid var(--c-accent); }
 .plateau__disque picture, .plateau__disque img { width: 100%; height: 100%; object-fit: cover; }
-.plateau__anneau { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(var(--rot, 0deg)); }
+.plateau__anneau { position: absolute; inset: 0; width: 100%; height: 100%; rotate: var(--rot, 0deg); }
 .plateau__anneau text { font-family: var(--f-body); font-size: 4.4px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; fill: var(--c-accent); }
 @media (max-width: 56rem) {
   .hero { row-gap: var(--normal); }
@@ -70,10 +65,8 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6em; l
 .carte-sec__titre { font-size: var(--t-xl); margin-bottom: var(--normal); max-width: 12em; }
 .plateaux { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); }
 .plateaux__a { display: grid; grid-template-rows: auto auto 1fr; gap: 0.5em; justify-items: start; padding: 0.5rem 0; }
-.plateaux__rond { display: grid; place-items: center; width: min(100%, 11rem); aspect-ratio: 1; border-radius: 50%; border: 1.5px solid var(--c-accent); margin-bottom: 0.75rem; transition: background-color .35s, color .35s; }
-.plateaux__n { font-family: var(--f-display); font-weight: 700; font-size: var(--t-xl); line-height: 1; color: var(--c-accent); transition: color .35s; }
-.plateaux__a:hover .plateaux__rond { background: var(--c-accent); }
-.plateaux__a:hover .plateaux__n { color: var(--c-bg); }
+.plateaux__rond { display: grid; place-items: center; width: min(100%, 11rem); aspect-ratio: 1; border-radius: 50%; border: 1.5px solid var(--c-accent); margin-bottom: 0.75rem; }
+.plateaux__n { font-family: var(--f-display); font-weight: 700; font-size: var(--t-xl); line-height: 1; color: var(--c-accent); transition: color .35s var(--e-out); position: relative; }
 .plateaux__nom { font-family: var(--f-display); font-weight: 700; font-size: var(--t-m); line-height: 1.1; }
 .plateaux__note { color: var(--c-muted); font-size: var(--t-s); }
 .carte-sec__lien { margin-top: var(--normal); }
@@ -201,3 +194,78 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6em; l
 .pied__cta { grid-column: 1 / -1; }
 .pied__colophon { grid-column: 1 / -1; color: var(--c-muted); font-size: var(--t-xs); padding-top: var(--serre); border-top: 1px solid var(--c-line); }
 @media (max-width: 56rem) { .pied__col { grid-column: 1 / -1; } }
+
+/* ===== Phase 2 : interactions, signature, menu, finitions ===== */
+/* Une famille d'easing : celle de l'engine (ease.out = expo.out). Durées : 0,35 s survol, 0,6 s transition. */
+:root { --e-out: cubic-bezier(0.16, 1, 0.3, 1); --e-inout: cubic-bezier(0.65, 0, 0.35, 1); --c-sol: var(--c-bg); }
+.clair, .pied, .rayon--clair { --c-sol: var(--c-clair); }
+@property --a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.split-line { padding-top: 0.16em; margin-top: -0.16em; } /* capitales accentuées (À l'orée) sous le masque */
+
+/* Rôle 1, CTA : le plateau tourne d'un quart autour du coin bas gauche et remplit le bouton. */
+.cta { --cta-fond: transparent; --cta-encre: var(--c-fg); --cta-rempli: var(--c-fg); --cta-encre-rempli: var(--c-sol);
+  background: conic-gradient(from 0deg at 0% 100%, var(--cta-rempli) var(--a), var(--cta-fond) 0); color: var(--cta-encre);
+  transition: --a .45s var(--e-inout), color .3s var(--e-out) .05s, border-color .3s; }
+.cta--or { border-color: var(--c-accent); --cta-fond: var(--c-accent); --cta-encre: #1c1410; --cta-rempli: var(--c-fg); --cta-encre-rempli: var(--c-bg); background-color: transparent; }
+.clair .cta--or, .pied .cta--or { --cta-fond: var(--c-clair-fg); --cta-encre: var(--c-clair); --cta-rempli: var(--c-accent-texte); --cta-encre-rempli: var(--c-clair); border-color: var(--c-clair-fg); }
+.cta[aria-current='page'] { --a: 90deg; color: var(--cta-encre-rempli); }
+@media (hover: hover) { .cta:hover { --a: 90deg; color: var(--cta-encre-rempli); border-color: var(--cta-rempli); } }
+.cta:focus-visible { --a: 90deg; color: var(--cta-encre-rempli); }
+.cta:active { scale: 0.97; }
+
+/* Rôle 2, liens texte et nav : soulignés au repos (liens texte), le trait d'accent fait le tour de gauche à droite. */
+.lien, .lien-util, .nl, .pied__tel {
+  background-image: linear-gradient(var(--c-accent), var(--c-accent)), linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat; background-position: 0 100%, 0 100%;
+  background-size: var(--l, 0%) 2px, 100% 1px; transition: background-size .35s var(--e-out); }
+.lien-util { background-size: var(--l, 0%) 2px, 100% 1px; background-image: linear-gradient(var(--c-accent), var(--c-accent)), linear-gradient(var(--c-line), var(--c-line)); }
+.nl { background-size: var(--l, 0%) 2px, 0% 1px; }
+.nl[aria-current='page'] { --l: 100%; }
+@media (hover: hover) { .lien:hover, .lien-util:hover, .nl:hover, .pied__tel:hover { --l: 100%; } }
+.lien:focus-visible, .lien-util:focus-visible, .nl:focus-visible, .pied__tel:focus-visible { --l: 100%; }
+.lien:active, .lien-util:active, .nl:active { opacity: 0.75; }
+.kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
+
+/* Rôle 3, ronds de catégorie : le rond se remplit d'or en faisant un tour complet. */
+.plateaux__rond { background: conic-gradient(var(--c-accent) var(--a), transparent 0); transition: --a .6s var(--e-inout); }
+@media (hover: hover) { .plateaux__a:hover .plateaux__rond { --a: 360deg; } .plateaux__a:hover .plateaux__n { color: var(--c-sol); } .plateaux__a:hover .orbite::before { --point: var(--c-sol); } }
+.plateaux__a:focus-visible .plateaux__rond { --a: 360deg; }
+.plateaux__a:focus-visible .plateaux__n { color: var(--c-sol); }
+.plateaux__a:active .plateaux__rond { scale: 0.97; }
+
+/* Signature : le point d'orbite tourne avec le plateau (--rot écrit par src/motion/plateau.ts). */
+.orbite { position: relative; overflow: clip; }
+.plateau { overflow: clip; } /* le carré de l'anneau tourné dépasse en diagonale ; le cercle, jamais */
+.orbite::before { content: ''; position: absolute; inset: -1px; border-radius: 50%; rotate: var(--rot, 0deg); pointer-events: none;
+  background: radial-gradient(circle at 50% 0.42rem, var(--point, var(--c-accent)) 0 0.24rem, transparent 0.28rem); }
+.tete__sceau::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; rotate: var(--rot, 0deg);
+  background: radial-gradient(circle at 50% 1.5px, var(--c-curtain) 0 2.5px, transparent 3px); z-index: 1; }
+
+/* Rideau de transition : disque rouge et anneau d'or (GSAP possède leurs transforms, aucune transform CSS ici). */
+.curtain__anneau { position: absolute; left: 50%; top: 50%; width: min(70vmin, 36rem); height: auto; margin: calc(min(70vmin, 36rem) / -2) 0 0 calc(min(70vmin, 36rem) / -2); opacity: 0; }
+.curtain__anneau circle, .panneau__svg circle { fill: none; stroke: var(--c-accent); stroke-width: 0.6; }
+.curtain__anneau .curtain__cran, .panneau__svg .panneau__cran { fill: var(--c-accent); stroke: none; }
+
+/* Menu mobile (.panneau, pour ne pas croiser .menu de la carte) : dialog plein écran, plateau en fond. */
+.tete__menu { min-height: 2.75rem; padding: 0.4em 0.9em; font-size: var(--t-s); font-weight: 700; letter-spacing: 0.02em; border: 1.5px solid var(--c-fg); border-radius: 999px; transition: background-color .3s, color .3s; }
+@media (hover: hover) { .tete__menu:hover { background: var(--c-fg); color: var(--c-bg); } }
+.tete__menu:focus-visible { background: var(--c-fg); color: var(--c-bg); }
+.panneau { position: fixed; inset: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: var(--gutter); border: 0; background: var(--c-bg); color: var(--c-fg); overflow: hidden auto; }
+.panneau[open] { display: grid; grid-template-rows: auto 1fr auto; gap: var(--normal); }
+.panneau::backdrop { background: var(--c-bg); }
+.panneau__haut { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.panneau__marque { font-family: var(--f-display); font-weight: 700; font-size: 1rem; }
+.panneau__fermer { min-height: 2.75rem; padding: 0.4em 0.9em; font-size: var(--t-s); font-weight: 700; border: 1.5px solid var(--c-fg); border-radius: 999px; }
+.panneau__anneau { position: absolute; right: -30vw; bottom: 8svh; width: 95vw; pointer-events: none; opacity: 0.55; z-index: 0; }
+.panneau__svg { width: 100%; height: auto; rotate: var(--rot, 0deg); }
+.panneau__liste { list-style: none; padding: 0; align-self: center; display: grid; gap: 0.2em; position: relative; z-index: 1; }
+.panneau__lien { display: block; overflow: hidden; font-size: clamp(2.6rem, 12vw, 4rem); line-height: 1.05; padding-block: 0.05em; }
+.panneau__lien > span { display: inline-block; background-image: linear-gradient(var(--c-accent), var(--c-accent)); background-repeat: no-repeat; background-position: 0 92%; background-size: var(--l, 0%) 3px; transition: background-size .35s var(--e-out); }
+.panneau__lien[aria-current='page'] > span, .panneau__lien:focus-visible > span { --l: 100%; }
+@media (hover: hover) { .panneau__lien:hover > span { --l: 100%; } }
+.panneau__pied { position: relative; z-index: 1; }
+.panneau__pied .cta { width: 100%; }
+
+/* Mouvement réduit et sans JS : tout est peint, rien ne tourne, le dessin reste (anneau, points en position de repos). */
+html:not(.motion) .orbite::before, html:not(.motion) .tete__sceau::before { rotate: 0deg; }
+@media (prefers-reduced-motion: reduce) { .cta, .plateaux__rond, .lien, .lien-util, .nl { transition-duration: 0.01ms; } }

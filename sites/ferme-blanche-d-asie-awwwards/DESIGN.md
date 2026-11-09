@@ -74,3 +74,42 @@ PIED (ivoire) [Servez-vous.] [Venir][Horaires][Contact] [CTA]
 16. Une famille de section au plus une fois par page : accueil (poster, données, statement, index de ronds, mur, média+texte, citations, pied). [x]
 17. Hero en 3 secondes : mesures à 1440×900 et 1280×720, CTA dans la fenêtre (y 767 et 665). Tablette 1024×768 : CTA sous la ligne de flottaison (y 818), accepté. [x]
 18. Mobile 390 recomposé : `site.css` blocs `max-width: 56rem` et `48rem`, strips snap. [x]
+
+## Mouvement réalisé (phase 2)
+- **Pilote** `src/motion/plateau.ts` : une variable, l'angle du plateau = repos (3 degrés par seconde) + défilement (un tour par page, crans de 15 degrés rattrapés en ralentissant) + pointeur (penche de 12 degrés au plus ; au toucher, vitesse de défilement) + intro (un tiers de tour). Écrite en `--rot` sur les seuls porteurs visibles `[data-rot]` (IntersectionObserver) : anneau du hero, sceau de l'en-tête, ronds de catégorie (accueil, carte, sens alterné), rond 404 (rapport 3), anneau du menu. Les ronds symétriques portent un point d'orbite (`.orbite::before`) pour que la rotation se voie sans faire tourner les chiffres.
+- **Intro** (chaque page) : le plateau arrive d'un tiers de tour, le texte de l'anneau s'allume, le disque se pose (`scale` 0,9 vers 1, sans opacité : photo LCP peinte d'emblée) ; h1 jamais caché ; `hero__lieu` et `page-lieu` en `data-reveal="fade" data-intro`.
+- **Reveals** : `data-split="lines"` sur les h2 d'affichage, `data-reveal="clip"` sur les photos hors flottaison, `up` sur les avis ; aucun reveal sur un bloc qui contient un lien.
+- **Transition** : rideau rouge en disque qui s'ouvre depuis le point de clic (Entrée : centre) pendant qu'un anneau d'or tourne d'un quart, 0,6 s par sens.
+- **Hovers, trois rôles** : CTA, le fond tourne d'un quart autour du coin bas gauche (`conic-gradient` + `@property --a`, 0,45 s) ; liens texte et nav, soulignés au repos (1 px), un trait d'accent de 2 px fait le tour de gauche à droite ; ronds de catégorie, le rond se remplit d'or en un tour complet (0,6 s). Tous sous `(hover: hover)`, mêmes états sur `:focus-visible`, `:active` en `scale: .97` ou opacité.
+- **Menu mobile** (< 40 rem) : bouton « Menu » `aria-expanded`, `<dialog>` modal plein écran (`.panneau`, pour ne pas croiser `.menu` de la carte), premier lien `autofocus`, Échap ferme, focus rendu au bouton, un clic de lien ferme avant le rideau. « Réserver » reste dans l'en-tête (44 px).
+- **Curseur** : pas de follower (décision : le plateau suffit, aucun libellé utile) ; curseur natif seul.
+- **Mouvement réduit** : pilote non démarré (`--rot` vide, points en position de repos), ni Lenis ni scrub, reveals inactifs (engine), transition en fondu court, transitions CSS à 0,01 ms (états de survol visibles instantanément).
+
+## Sur-utilisation de la skill (phase 2)
+19. Menu mobile accessible : `src/components/Header.astro` (dialog `#menu`, `aria-expanded`, `autofocus`), `src/motion/menu.ts` ; mesuré : ouvert 390×844 plein écran, focus « Accueil », Échap ferme, focus rendu à « Menu », `aria-expanded` false. [x]
+20. Engine verbatim (copie le-royal), `src/engine/astro.ts`, `transition:persist` sur `#curtain` (`Base.astro:74`), `transition:animate="none"` sur `<html>` (`Base.astro:37`) ; ni `#gl` ni `#cursor` (sans objet, décisions écrites). [x]
+21. Une horloge : `gsap.ticker` dans `plateau.ts` ; grep `addEventListener('scroll'|requestAnimationFrame` hors engine : aucun résultat. [x]
+22. Code de page dans `onPage()` avec nettoyage : `plateau.ts` (`io.disconnect`), `menu.ts` (listeners retirés, dialog fermé). [x]
+23. Aucune transform CSS sur élément GSAP : l'anneau tourne par la propriété `rotate: var(--rot)` et GSAP n'anime que l'opacité de son `<text>` ; `.plateau__disque`, `.curtain__panel`, `.curtain__anneau`, `.panneau__anneau` sans transform CSS (grep `transform` dans site.css : seulement `text-transform`). [x]
+24. Module pilote avec `startIdle` et pointeur : `src/motion/plateau.ts`, appelé une fois par `setup.ts`. [x]
+25. Loader : non (décision phase 1, restaurant de quartier, réservation d'abord) ; aucun composant ni `role="status"`. [x]
+26. Transition du concept 0,6 s par sens (`setup.ts`) ; mesurée : clic accueil vers carte, rideau masqué et h1 « La carte » en moins de 0,7 s. [x]
+27. Intro : plateau d'un tiers de tour, anneau qui s'allume, disque qui se pose ; premier frame = hero complet (h1, accroche, CTA, photo peints). [x]
+28. Épinglages : aucun (sans objet). [x]
+29. Repli statique : `html:not(.motion)` remet les points d'orbite à 0 degré ; anneau, ronds, photos peints ; mesuré en réduit : 0 élément caché. [x]
+30. Copies décoratives : anneau SVG et « Servez-vous. » `aria-hidden`, aucun titre dupliqué. [x]
+31. Une famille d'easing (expo de l'engine ; `--e-out`, `--e-inout` en CSS), stagger engine 80 ms (lignes), menu 50 ms. [x]
+32. Trois traitements par rôle, tous du verbe « tourner » : quart de tour (CTA), tour complet (ronds), trait qui fait le tour (liens). [x]
+33. Hover sous `(hover: hover)`, mêmes états sur `:focus-visible`, visibles en réduit (transition 0,01 ms). [x]
+34. Liens texte soulignés au repos (`.lien`, `.lien-util`, `.pied__tel` : trait 1 px). [x]
+35. `noHoverChange` : à lire au report.json de la phase 3 ; lien KYW souligné au survol (`site.css`). [ ] phase 3
+36. Repos : `idleMotion` attendu true ; diff mesurée 0,77 % (1440) et 0,93 % (390) en 1,2 s à 4 degrés par seconde, ramené à 3 pour rester sous le seuil `settled`. [ ] report.json en phase 3
+37. Curseur natif visible, aucun contenu au survol seul, menu au toucher. [x]
+38. Pas de blur animé ni de `box-shadow`, aucun `will-change` posé. [x]
+39. Réduit : `lenis` absent, `--rot` vide, 0 élément caché (mesuré). [x]
+40. GL : sans objet, décision écrite (Concept Card), engine sans lignes `// GL`. [x]
+41. Sans objet. [x]
+44. Skip link en premier (`Base.astro`), anneau de focus en accent (or sur laque, rouge sur ivoire). [x]
+45. Contraste : CTA or texte laque 9:1, rempli ivoire texte laque ; CTA sur ivoire laque/ivoire 14,6:1, rempli rouge `#a8281d` texte ivoire 6,3:1. À confirmer par axe en phase 3. [ ]
+46. Texte réel partout, aucun canvas. [x]
+47. Cibles : « Réserver » d'en-tête 44 px, « Menu » 44 px (mesurés à 390), CTA 48 px. [x]

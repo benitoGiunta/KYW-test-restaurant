@@ -5,7 +5,7 @@ import { site, carte, menus, nbPlats, eur, eur0 } from '../data/site';
 ---
 <Base title="La carte" description={`La carte de La Ferme Blanche d’Asie à Malonne : ${nbPlats} plats numérotés, potages, entrées, plats, menu découverte à 29 € et menus de fêtes.`} page="carte">
   <section class="wrap page-tete" aria-labelledby="titre">
-    <p class="page-lieu">Carte numérotée, prix en euros</p>
+    <p class="page-lieu" data-reveal="fade" data-intro>Carte numérotée, prix en euros</p>
     <h1 id="titre" class="display page-titre">La carte</h1>
     <p class="page-chapo">{nbPlats} plats, numérotés comme sur la tablette. Les plats à emporter bénéficient de -10 %, commande au <a class="lien" href={site.telephoneHref}>{site.telephoneLisible}</a>.</p>
     <ul class="ancres" aria-label="Aller à un plateau">
@@ -17,8 +17,8 @@ import { site, carte, menus, nbPlats, eur, eur0 } from '../data/site';
   {carte.map((c, i) => (
     <section id={`c${i}`} class={`rayon wrap ${i % 2 ? 'rayon--clair' : ''}`} aria-labelledby={`t${i}`}>
       <header class="rayon__tete">
-        <span class="rayon__rond" aria-hidden="true">{c.plats.length}</span>
-        <h2 id={`t${i}`} class="display rayon__titre">{c.categorie}</h2>
+        <span class="rayon__rond orbite" data-rot data-sens={i % 2 ? '-1' : '1'} aria-hidden="true">{c.plats.length}</span>
+        <h2 id={`t${i}`} class="display rayon__titre" data-split="lines">{c.categorie}</h2>
       </header>
       <ol class={`plats ${c.plats.length > 8 ? 'plats--deux' : ''}`}>
         {c.plats.map((p) => (
@@ -34,8 +34,8 @@ import { site, carte, menus, nbPlats, eur, eur0 } from '../data/site';
 
   <section id="menus" class="rayon rayon--menus wrap" aria-labelledby="tm">
     <header class="rayon__tete">
-      <span class="rayon__rond" aria-hidden="true">{menus.length}</span>
-      <h2 id="tm" class="display rayon__titre">Les menus</h2>
+      <span class="rayon__rond orbite" data-rot aria-hidden="true">{menus.length}</span>
+      <h2 id="tm" class="display rayon__titre" data-split="lines">Les menus</h2>
     </header>
     <div class="menus">
       {menus.map((m) => (
