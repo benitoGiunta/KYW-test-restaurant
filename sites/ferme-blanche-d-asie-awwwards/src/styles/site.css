@@ -18,6 +18,10 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6em; l
 .tete__marque { display: inline-flex; align-items: center; gap: 0.7em; font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; min-height: 2.75rem; white-space: nowrap; }
 .tete__sceau { width: 1.6rem; height: 1.6rem; border-radius: 50%; border: 3px solid var(--c-accent); position: relative; flex: none; }
 .tete__sceau::after { content: ''; position: absolute; inset: 0.28rem; border-radius: 50%; background: var(--c-fg); }
+.tete__sceau { transition: rotate .45s var(--e-inout); }
+.tete__sceau::after { transition: inset .3s var(--e-out), background-color .3s; }
+@media (hover: hover) { .tete__marque:hover .tete__sceau { rotate: 90deg; } .tete__marque:hover .tete__sceau::after { inset: 0.12rem; background: var(--c-accent); } }
+.tete__marque:focus-visible .tete__sceau { rotate: 90deg; }
 .tete__nav ul { display: flex; align-items: center; gap: clamp(0.75rem, 2.5vw, 2rem); list-style: none; padding: 0; }
 .nl { white-space: nowrap; display: inline-block; padding-block: 0.7em; font-size: var(--t-s); letter-spacing: 0.02em; }
 

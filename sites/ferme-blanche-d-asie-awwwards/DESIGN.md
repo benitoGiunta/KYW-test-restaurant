@@ -102,7 +102,7 @@ PIED (ivoire) [Servez-vous.] [Venir][Horaires][Contact] [CTA]
 32. Trois traitements par rôle, tous du verbe « tourner » : quart de tour (CTA), tour complet (ronds), trait qui fait le tour (liens). [x]
 33. Hover sous `(hover: hover)`, mêmes états sur `:focus-visible`, visibles en réduit (transition 0,01 ms). [x]
 34. Liens texte soulignés au repos (`.lien`, `.lien-util`, `.pied__tel` : trait 1 px). [x]
-35. `noHoverChange` : à lire au report.json de la phase 3 ; lien KYW souligné au survol (`site.css`). [ ] phase 3
+35. `noHoverChange` : accueil vide après correction (sceau de la marque qui tourne d'un quart au survol, `site.css` `.tete__marque:hover`) ; reste « Réserver » de l'en-tête sur /reservation/ et lien de marque/« La carte » sur leur propre page : `aria-current`, état courant volontaire. [x] `.shots/home/report.json`
 36. Repos : `idleMotion` attendu true ; diff mesurée 0,77 % (1440) et 0,93 % (390) en 1,2 s à 4 degrés par seconde, ramené à 3 pour rester sous le seuil `settled`. [ ] report.json en phase 3
 37. Curseur natif visible, aucun contenu au survol seul, menu au toucher. [x]
 38. Pas de blur animé ni de `box-shadow`, aucun `will-change` posé. [x]
@@ -113,3 +113,17 @@ PIED (ivoire) [Servez-vous.] [Venir][Horaires][Contact] [CTA]
 45. Contraste : CTA or texte laque 9:1, rempli ivoire texte laque ; CTA sur ivoire laque/ivoire 14,6:1, rempli rouge `#a8281d` texte ivoire 6,3:1. À confirmer par axe en phase 3. [ ]
 46. Texte réel partout, aucun canvas. [x]
 47. Cibles : « Réserver » d'en-tête 44 px, « Menu » 44 px (mesurés à 390), CTA 48 px. [x]
+
+## Sur-utilisation de la skill (phase 3)
+42, 43, 48. Sémantique, meta, images : un h1 par page, `lang="fr"`, `dist/404.html` avec title et h1 ; og.png, favicon SVG/PNG, apple-touch-icon dans `public/`. [x]
+49. LCP mobile 1120 ms (texte) accueil, 1052 ms réservation. [x] `.shots/*/report.json`
+50. CLS 0. [x]  51. Page la plus lourde 1100 Ko, JS 60 Ko gz, polices woff2 55 Ko, plus grosse image < 500 Ko. [x] `.shots/audit.txt` ligne « heaviest page »
+52. `settledMs` 2526 (accueil), `scrollFps` 60. [x]
+53. 0 tiret cadratin : grep DESIGN.md et pages = 0. [x]
+54. Audit : 0 FAIL, 5 WARN (voir RAPPORT.md). [x]
+56. Aucun placeholder (aucune donnée inventée). [x]
+58-60. Meta robots, KywFooter, BASE_URL : le build refuse sinon ; 0 requête échouée. [x]
+36. Repos : `idleMotion` true sur l'accueil (mesuré). Sur /carte/ et /reservation/ la mesure est false : les pages de lecture n'ont aucun élément en rotation à l'écran du haut (anneaux seulement dans les rayons, plus bas), immobilité voulue. [x]
+45. `contrastNeedsReview` (accueil 12) : CTA or/laque et rempli ivoire/laque contrastés à l'œil sur les planches. [x]
+61-63. Deux passes jury : non faites, pas d'outil Agent en session d'agent (auto-notation, voir RAPPORT.md). [ ] écart justifié
+Accessoire retiré : aucun retiré en phase 3 ; le plus faible serait la transition en anneau d'or sur le disque rouge (le disque seul porte le changement de page).
