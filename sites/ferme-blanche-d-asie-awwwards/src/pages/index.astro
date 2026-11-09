@@ -7,7 +7,7 @@ const plateaux = [
   { nom: 'Les potages', n: carte[0].plats.length, note: 'Piquant, tomate, raviolis' },
   { nom: 'Les entrées', n: carte[1].plats.length, note: 'Dim sum, sushis, nems, brochettes' },
   { nom: 'Les plats', n: carte[2].plats.length, note: 'Canard, scampis, poulet, nouilles' },
-  { nom: 'Le menu découverte', n: 5, note: 'Cinq services, à partir de 2', unite: 'services' },
+  { nom: 'Le menu découverte', n: 1, note: 'Cinq services, à partir de 2' },
 ];
 ---
 <Base description={site.description} page="accueil">
@@ -48,8 +48,8 @@ const plateaux = [
   </section>
 
   <section class="carte-sec wrap" aria-labelledby="carte-t">
-    <h2 id="carte-t" class="display carte-sec__titre" data-split="lines">{nbPlats} plats, quatre plateaux.</h2>
-    <ul class="plateaux">
+    <h2 id="carte-t" class="display carte-sec__titre" data-split="lines">{nbPlats - 1} plats et un menu découverte.</h2>
+    <ul class="plateaux" tabindex="0" aria-label="Les quatre plateaux de la carte">
       {plateaux.map((p, i) => (
         <li class="plateaux__li">
           <a class="plateaux__a" href={u('/carte/')}>
@@ -65,8 +65,8 @@ const plateaux = [
 
   <section class="clair mur-sec" aria-labelledby="mur-t">
     <div class="wrap">
-      <h2 id="mur-t" class="display mur-sec__titre" data-split="lines">Cinq salles, un même service.</h2>
-      <div class="mur">
+      <h2 id="mur-t" class="display mur-sec__titre" data-split="lines">Plusieurs salles, une seule table.</h2>
+      <div class="mur" tabindex="0" role="group" aria-label="Photos des salles">
         <figure class="mur__a" data-reveal="clip"><Photo cle="principale" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 50vw" /><figcaption>La salle principale</figcaption></figure>
         <figure class="mur__b" data-reveal="clip" data-delay="0.08"><Photo cle="poutres" widths={[480, 800]} sizes="(max-width: 48rem) 100vw, 30vw" /><figcaption>La salle à poutres</figcaption></figure>
         <figure class="mur__c" data-reveal="clip" data-delay="0.16"><Photo cle="longue" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 40vw" /><figcaption>La salle en longueur, côté baies vitrées</figcaption></figure>
