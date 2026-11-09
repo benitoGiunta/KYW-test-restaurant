@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, services, carte, nbPlats, menus, avis, notes, eur0 } from '../data/site';
+const plateaux = [
+  { nom: 'Les potages', n: carte[0].plats.length, note: 'Piquant, tomate, raviolis' },
+  { nom: 'Les entrées', n: carte[1].plats.length, note: 'Dim sum, sushis, nems, brochettes' },
+  { nom: 'Les plats', n: carte[2].plats.length, note: 'Canard, scampis, poulet, nouilles' },
+  { nom: 'Le menu découverte', n: 5, note: 'Cinq services, à partir de 2', unite: 'services' },
+];
+---
+<Base description={site.description} page="accueil">
+  <section class="hero wrap" aria-labelledby="titre">
+    <div class="hero__texte">
+      <p class="hero__lieu">Malonne, Namur</p>
+      <h1 id="titre" class="display hero__titre">La Ferme <span class="nw">Blanche</span> <span class="nw">d’Asie</span></h1>
+      <p class="hero__accroche">Restaurant asiatique : dim sum, canard laqué, scampis et un menu découverte à {eur0(menus[0].prix)}. Ouvert tous les jours, midi et soir.</p>
+      <p class="hero__actions">
+        <a class="cta cta--or" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+        <a class="cta cta--vide" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
+      </p>
+    </div>
+    <figure class="plateau hero__media">
+      <svg class="plateau__anneau" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+        <defs><path id="cercle" d="M50,50 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" /></defs>
+        <text><textPath href="#cercle" textLength="287" lengthAdjust="spacing">Ouvert 7 jours sur 7 · Carte de 1 à 200 · Parking privé · </textPath></text>
+      </svg>
+      <div class="plateau__disque"><Photo cle="ronde" prioritaire widths={[480, 800, 960]} sizes="(max-width: 48rem) 80vw, 38vw" /></div>
+      <figcaption class="sr-only">La salle à table ronde et plateau tournant.</figcaption>
+    </figure>
+  </section>
+
+  <section class="bande wrap" aria-label="Horaires du restaurant">
+    <p class="bande__t">Tous les jours</p>
+    {services.map((s) => <p><strong>{s.jours}</strong><br />{s.midi}, {s.soir}</p>)}
+  </section>
+
+  <section class="clair enonce-sec" aria-labelledby="enonce">
+    <div class="wrap enonce-grille">
+      <h2 id="enonce" class="display enonce">On pose les plats au centre, chacun se sert.</h2>
+      <div class="enonce__texte">
+        <p>Dans la salle à table ronde, le plateau tourne : le canard laqué, les scampis et les nems passent de main en main. Une cuisine asiatique et chinoise faite pour partager, à des prix qui restent abordables selon les clients.</p>
+        <p>La commande se fait sur tablette, à votre rythme, signalent des clients : on prend son temps, ou pas. <a class="lien" href={u('/a-propos/')}>Découvrir la maison</a></p>
+      </div>
+      <figure class="enonce__photo"><Photo cle="table" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 44vw" /><figcaption>{site.credit}</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="carte-sec wrap" aria-labelledby="carte-t">
+    <h2 id="carte-t" class="display carte-sec__titre">{nbPlats} plats, quatre plateaux.</h2>
+    <ul class="plateaux">
+      {plateaux.map((p) => (
+        <li class="plateaux__li">
+          <a class="plateaux__a" href={u('/carte/')}>
+            <span class="plateaux__rond" aria-hidden="true"><span class="plateaux__n">{p.n}</span></span>
+            <span class="plateaux__nom">{p.nom}</span>
+            <span class="plateaux__note">{p.note}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="carte-sec__lien"><a class="cta cta--vide" href={u('/carte/')}><span class="cta__txt">Lire toute la carte</span></a></p>
+  </section>
+
+  <section class="clair mur-sec" aria-labelledby="mur-t">
+    <div class="wrap">
+      <h2 id="mur-t" class="display mur-sec__titre">Cinq salles, un même service.</h2>
+      <div class="mur">
+        <figure class="mur__a"><Photo cle="principale" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 50vw" /><figcaption>La salle principale</figcaption></figure>
+        <figure class="mur__b"><Photo cle="poutres" widths={[480, 800]} sizes="(max-width: 48rem) 100vw, 30vw" /><figcaption>La salle à poutres</figcaption></figure>
+        <figure class="mur__c"><Photo cle="longue" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 40vw" /><figcaption>La salle en longueur, côté baies vitrées</figcaption></figure>
+      </div>
+      <p class="mur-sec__texte">Une salle V.I.P. de 26 personnes et une grande salle privée d’environ 300 personnes complètent la maison pour les fêtes et les réceptions.</p>
+    </div>
+  </section>
+
+  <section class="ferme wrap" aria-labelledby="ferme-t">
+    <figure class="ferme__photo"><Photo cle="jardin" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 60vw" /><figcaption>Le bâtiment blanc et son kiosque, vus du jardin.</figcaption></figure>
+    <div class="ferme__texte">
+      <h2 id="ferme-t" class="display ferme__titre">À l’orée de Malonne, une ferme blanche.</h2>
+      <p>{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}. Terrasse sous parasols, jardin, parking privé, salle climatisée.</p>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+  </section>
+
+  <section class="avis-sec wrap" aria-labelledby="avis-t">
+    <h2 id="avis-t" class="avis-sec__titre">Ce que disent les clients</h2>
+    <div class="avis-liste">
+      {avis.map((a) => <figure class="avis"><blockquote><p>« {a.texte} »</p></blockquote><figcaption>{a.source}</figcaption></figure>)}
+    </div>
+    <p class="avis-sec__notes">{notes.resto} · {notes.ttr}</p>
+  </section>
+</Base>
