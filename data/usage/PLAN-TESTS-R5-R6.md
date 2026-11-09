@@ -199,3 +199,12 @@ Script : `scripts/usage-conformite.py` (modèles réels par agent, revues, consi
 
 - **Test G (connecteurs) abandonné** par Benito. Le socle d'environ 67 700 jetons par agent est désormais un coût fixe ;
   les seuls leviers restants portent sur le nombre d'agents et de réponses par site (revues, révisions, passes).
+
+## Série 10 à 14 (lancée le 09/11, arrêt à 45 % hebdo ou 15 sites) : suivi
+
+| Restaurant | Coût | Par site | Portfolio | Awwwards | Legacy | Écart à la moyenne 7 à 9 |
+|---|---:|---:|---:|---:|---:|---:|
+| 10 · La Ferme Blanche d'Asie | 15,97 $ | 5,32 $ | 3,55 $ | 6,27 $ | 4,13 $ | −7,9 % |
+
+- Restaurant 10 conforme : 26 agents sur le bon modèle, test B 3/3 (revue 2 sur l'awwwards seule), 0 F0 ou F1 en fin de cycle,
+  max 44 réponses, socle 67 900 jetons. Classé dans la phase Après 4 (désormais 5,67 $ par site sur 4 restaurants).
