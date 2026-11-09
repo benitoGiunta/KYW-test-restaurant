@@ -27,7 +27,7 @@ const { rouleau } = site;
           const ph = null as null | { src: string; alt: string };
           return (
             <li class={`plat${ph ? ' plat--photo' : ''}`} data-plat data-n={String(i + 1).padStart(2, '0')}>
-              <span class="plat__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              {p.numero && <span class="plat__num" aria-hidden="true">{String(p.numero).padStart(2, '0')}</span>}
               {ph && (
                 <svg class="plat__photo" viewBox="0 0 400 500" role="img" aria-label={ph.alt}>
                   <mask id={`${id}-m${i}`} maskUnits="userSpaceOnUse">
@@ -40,7 +40,7 @@ const { rouleau } = site;
                 <path data-pinceau d="M2 7 C 50 1, 120 12, 198 5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
               </svg>
               <h3 class="plat__nom">{p.nom}</h3>
-              <p class="plat__mots">{p.mots}{p.numero && <span class="plat__carte"> · n° {p.numero}</span>}</p>
+              <p class="plat__mots">{p.mots}{p.numero && <span class="plat__carte">{p.mots ? ' · ' : ''}n° {p.numero}</span>}</p>
               <p class="plat__prix">{p.prix}</p>
             </li>
           );

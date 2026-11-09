@@ -95,7 +95,7 @@ export const site: Restaurant = {
         'Entrée : scampis sautés aux tomates',
         'Assortiment de plateaux : calamars au curry jaune, dorade royale au beurre à l’ail, bœuf aux oignons, canard sirop d’érable, poulet basilic',
       ],
-      note: 'Dessert au choix : le détail n’est pas lisible sur l’affiche d’origine, à compléter par le restaurant.',
+      note: 'Dessert au choix.',
       placeholder: false,
     },
     {
@@ -155,8 +155,8 @@ export const site: Restaurant = {
     plats: [
       { nom: 'Menu découverte', mots: 'cinq services, dès deux personnes', prix: '29 €' },
       { nom: 'Canard laqué', mots: 'servi avec crêpes', prix: '17,50 €', numero: 81 },
-      { nom: 'Casserole de fruits de mer', mots: 'fruits de mer, casserole', prix: '20,00 €', numero: 48 },
-      { nom: 'Plat royal', mots: 'spécialité de la carte', prix: '19,90 €', numero: 49 },
+      { nom: 'Casserole de fruits de mer', mots: '', prix: '20,00 €', numero: 48 },
+      { nom: 'Plat royal', mots: '', prix: '19,90 €', numero: 49 },
       { nom: 'Scampis à l’ail', mots: 'scampis, ail', prix: '16,90 €', numero: 57 },
       { nom: 'Bœuf aux oignons', mots: 'bœuf, oignons', prix: '15,90 €', numero: 88 },
       { nom: 'Canard aux fruits frais', mots: 'canard, fruits frais', prix: '16,50 €', numero: 80 },
