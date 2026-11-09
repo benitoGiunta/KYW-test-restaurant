@@ -1,20 +1,20 @@
-# ETAT · ferme-blanche-d-asie · legacy · construction-1 (09/11/2026)
+# ETAT · ferme-blanche-d-asie · legacy · construction-2 (09/11/2026)
 
-## Fait
-- Audit (`AUDIT.md`, `.hallmark/before.txt`), deal Spore 1/3 (colourway head-torch, ocre = jaune d’origine), draw 03eb15 (shape Letter échangée contre Photographic), scaffold, stamp, comps c1/c2 (`comp.md`, c1 retenue), `DESIGN.md` (Picks, Approche, Thème, Composants, Sur-utilisation 1 à 6).
-- Données : `src/data/site.ts` (+ `donnees.json`) : carte de 56 plats nettoyée (apostrophes, « Bœuf », nom tronqué « nid d’hirondelle » commenté `reworded`), horaires, menus de fêtes transcrits, avis Resto.be mot pour mot.
-- Pages (6) : `/` (hero Poster, offre 29 €, salle plein cadre, carte, salles privées, avis, horaires), `/menu` (onglets, menus de fêtes), `/reserve`, `/photos`, `/contact`, `404`. KywFooter, noindex et mention présents sur les 6 pages (grep).
-- Photos : 10 WebP recadrés sous le filigrane (800 et 1400) ; `parking-*` produit mais non utilisé.
-- Build : `pnpm build:site sites/ferme-blanche-d-asie-legacy` passe (exit 0), `sloplint src/styles/page.css` 0 FAIL, 0 WARN réel.
+## Fait (phases 1 et 2)
+- Phase 1 : audit, deal Spore, comps, 6 pages, données réelles, photos recadrées sous le filigrane (voir `DESIGN.md`).
+- Phase 2 : nav **slab** 64 px sticky (remplace la pilule flottante, déjà utilisée par chez-guillaume : règle 42), `<nav popover>` unique (liste au bureau, panneau sous 60rem, bouton Menu/Fermer), lien d'évitement ; « Réserver » (secondaire) vers `/reserve`, `tel:` conservé ailleurs.
+- Contrôles : huit états des boutons et onglets, survol sous `(hover: hover)`, `:active`, `:disabled`, 44 px (48 au pointeur grossier), onglets au clavier (flèches, Début, Fin, hash), panneau focusable.
+- Jour courant en Europe/Brussels. Reveal : `waive 62` (thème still, aucun ajouté). Reduced motion : règle globale + menu.
+- Responsive : `scrollWidth` = fenêtre sur 5 pages à 320, 375, 1024, 1440 ; hero tient en 375x812, 320x568 ; chiffre 29 € recalé (plus de débordement de colonne) ; pied en une colonne sous 40rem ; chip « Aujourd'hui » sous le jour.
+- Hero review `self` : ship (1 finding résolu), voir `comp.md` (questions de reproduction incluses). sloplint rendu hero : 0 FAIL, 0 REFLEX (WARN 49 « label long sans nowrap » = faux positif, `.btn` est `nowrap`).
+- Build : `pnpm build:site` passe ; noindex, mention et pied KYW vérifiés par grep sur les 6 pages de `dist/`.
 
-## Reste (phases 2 et 3)
-- Phase 2 : nav mobile (menu `popover`, pour l’instant deux rangées statiques sous 60rem), un reveal CSS/IntersectionObserver au plus, états des contrôles, QA navigateur (375, 1440, 1920), contrôles 44 px, `--render --kept` sloplint (faux FAIL 34 possible : doubler `overflow-x: clip` ; waiver 59 probable).
-- Phase 3 : sweep, jugées gates § 5, RAPPORT.md, `preflight.json`, `index` (`pnpm index`), publication.
+## Reste (phase 3 et captures)
+- Agent captures : shoot complet (desktop, 375, reduced motion), `QA-build.md`, axe.
+- Phase 3 : sweep, jugées § 5 (`gates.md`), RAPPORT.md, `preflight.json`, `pnpm index`, publication.
+- Entrée de `$LOG` pour ce restaurant absente du journal partagé (`jq` n'y trouve aucun `ferme-blanche`) : à vérifier / `log` en phase 3 avec nav = slab.
 
 ## Décisions et hypothèses
-- Réservation : téléphone ou sur place seulement (comme l’original) ; aucun formulaire inventé.
-- « -10 % » affiché « −10 % » (signe moins) ; plat « Potage crème nid d » complété en « nid d’hirondelle » (écrit ainsi dans le menu de Noël).
-- Avis : deux extraits de Resto.be et Trouve Ton Resto repris mot pour mot, sans note ni nombre d’avis (non affichés par le site client) ; à faire valider.
-- Photo `10-table-ronde` légendée neutre : rien ne prouve que ce soit la salle V.I.P. Filigrane « Find Your Place » recadré mais crédité en pied : droits des photos à vérifier avec le client.
-- Aucun fait fictif ; aucun `.fill` ni `data-placeholder` (horaires, tél. et adresse sont réels).
-- Pièges : `sites/ferme-blanche-d-asie-awwwards` non suivi par git (autre agent) : ne pas l’ajouter ; `pnpm-lock.yaml` modifié hors de ce chantier : non commité.
+- Nav : « Réserver » mène à `/reserve` (le numéro reste sur chaque page) ; aucun formulaire (original sans formulaire).
+- Menu mobile sans repli JS : `popover` natif ; `@supports not selector(:popover-open)` remet les liens en ligne.
+- Pièges : `sites/ferme-blanche-d-asie-awwwards` modifié par un autre agent et `pnpm-lock.yaml` : non commités ici. Avis, droits photos (filigrane « Find Your Place ») à valider avec le client.

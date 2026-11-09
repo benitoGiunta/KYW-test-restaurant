@@ -3,15 +3,16 @@ import { resto, u } from '../data/site';
 const { page = '' } = Astro.props;
 const liens = [['', 'Accueil', 'accueil'], ['menu', 'Menu', 'menu'], ['reserve', 'Réservation', 'reserve'], ['photos', 'Photos', 'photos'], ['contact', 'Contact', 'contact']];
 ---
-<a class="visually-hidden" href="#contenu">Aller au contenu</a>
-<div class="navwrap">
-  <header class="nav" style={`--logo:url(${u('logo.png')})`}>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="nav" style={`--logo:url(${u('logo.png')})`}>
+  <div class="nav__in container">
     <a class="nav__brand" href={u()} aria-label={`${resto.court}, accueil`}><span class="nav__logo" aria-hidden="true"></span><span>{resto.court}</span></a>
-    <nav aria-label="Navigation principale">
+    <nav id="menu-principal" popover="auto" aria-label="Navigation principale">
       <ul class="nav__links">
         {liens.map(([h, t, k]) => <li><a href={u(h)} aria-current={page === k ? 'page' : undefined}>{t}</a></li>)}
       </ul>
     </nav>
-    <a class="btn btn--primary" href={resto.tel}>{resto.telAffiche}</a>
-  </header>
-</div>
+    <a class="btn btn--secondary nav__cta" href={u('reserve')}>Réserver</a>
+    <button class="nav__toggle btn btn--secondary" type="button" popovertarget="menu-principal" aria-controls="menu-principal" aria-expanded="false"><span data-t>Menu</span></button>
+  </div>
+</header>

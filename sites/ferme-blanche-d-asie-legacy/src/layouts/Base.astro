@@ -52,14 +52,21 @@ const ld = JSON.stringify({
     <KywFooter base={base} />
     <script is:inline>
       (function () {
-        var j = document.querySelectorAll('.jour[data-i]'), d = new Date().getDay();
-        j.forEach(function (el) { if (+el.getAttribute('data-i') === d) { el.setAttribute('data-today', ''); var dt = el.querySelector('dt'); var c = document.createElement('span'); c.className = 'chip'; c.textContent = 'Aujourd’hui'; dt.appendChild(c); } });
+        /* menu mobile : état du bouton (le popover fonctionne sans script) */
+        var m = document.getElementById('menu-principal'), tg = document.querySelector('.nav__toggle');
+        if (m && tg) m.addEventListener('toggle', function (e) { var o = e.newState === 'open'; tg.setAttribute('aria-expanded', o); tg.querySelector('[data-t]').textContent = o ? 'Fermer' : 'Menu'; });
+        /* jour courant : fuseau Europe/Brussels, pas celui du visiteur */
+        var w = new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'Europe/Brussels' }).format(new Date());
+        var d = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(w);
+        document.querySelectorAll('.jour[data-i]').forEach(function (el) { if (+el.getAttribute('data-i') === d) { el.setAttribute('data-today', ''); var dt = el.querySelector('dt'); var c = document.createElement('span'); c.className = 'chip'; c.textContent = 'Aujourd’hui'; dt.appendChild(c); } });
+        /* onglets de la carte */
         var tl = document.querySelector('.tabs__list'); if (!tl) return;
-        var tabs = tl.querySelectorAll('[role=tab]'), panels = document.querySelectorAll('.panel');
-        function sel(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); }
+        var tabs = tl.querySelectorAll('[role=tab]');
+        function sel(t, focus) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; var p = document.getElementById(x.getAttribute('aria-controls')); p.hidden = !on; p.tabIndex = 0; }); if (focus) t.focus(); }
         tabs.forEach(function (t, i) { t.addEventListener('click', function () { sel(t); });
-          t.addEventListener('keydown', function (e) { var k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!k) return; var n = tabs[(i + k + tabs.length) % tabs.length]; n.focus(); sel(n); e.preventDefault(); }); });
-        sel(tabs[0]);
+          t.addEventListener('keydown', function (e) { var n = e.key === 'ArrowRight' ? tabs[(i + 1) % tabs.length] : e.key === 'ArrowLeft' ? tabs[(i - 1 + tabs.length) % tabs.length] : e.key === 'Home' ? tabs[0] : e.key === 'End' ? tabs[tabs.length - 1] : null; if (!n) return; sel(n, true); e.preventDefault(); }); });
+        var h = location.hash.replace('#', ''), t0 = h && document.getElementById('tab-' + h);
+        sel(t0 || tabs[0]);
       })();
     </script>
   </body>
