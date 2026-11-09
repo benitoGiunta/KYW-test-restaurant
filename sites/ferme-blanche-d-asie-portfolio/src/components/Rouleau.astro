@@ -19,13 +19,14 @@ const { rouleau } = site;
       <p class="chapeau">{numero}</p>
       <TitreV texte={rouleau.titre} id={`${id}-titre`} />
       <p class="rouleau__note">{rouleau.note}</p>
+      <p class="rouleau__compteur" aria-hidden="true"><span data-rouleau-n>01</span> / {String(rouleau.plats.length).padStart(2, '0')}</p>
     </div>
     <div class="rouleau__piste" data-rouleau-piste tabindex="0" role="group" aria-label="Rouleau de douze plats de la carte ; flèches gauche et droite pour le dérouler">
       <ol class="rouleau__bande" data-rouleau-bande>
         {rouleau.plats.map((p, i) => {
           const ph = null as null | { src: string; alt: string };
           return (
-            <li class={`plat${ph ? ' plat--photo' : ''}`} data-plat>
+            <li class={`plat${ph ? ' plat--photo' : ''}`} data-plat data-n={String(i + 1).padStart(2, '0')}>
               <span class="plat__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
               {ph && (
                 <svg class="plat__photo" viewBox="0 0 400 500" role="img" aria-label={ph.alt}>

@@ -117,10 +117,27 @@ function rouleau() {
   };
   piste.addEventListener('keydown', clavier);
 
+  // Plat actif : celui dont le bord gauche est le plus proche du quart gauche de la piste ; compteur « 05 / 12 ».
+  const plats = [...root.querySelectorAll<HTMLElement>('[data-plat]:not(.plat--fin)')];
+  const compteur = root.querySelector<HTMLElement>('[data-rouleau-n]');
+  let actif = -1;
+  const marquer = () => {
+    const pr = piste.getBoundingClientRect();
+    const cible = pr.left + pr.width * 0.25;
+    let meilleur = 0; let ecart = Infinity;
+    plats.forEach((p, i) => { const d = Math.abs(p.getBoundingClientRect().left - cible); if (d < ecart) { ecart = d; meilleur = i; } });
+    if (meilleur === actif) return;
+    actif = meilleur;
+    plats.forEach((p, i) => p.classList.toggle('is-actif', i === meilleur));
+    if (compteur) compteur.textContent = String(meilleur + 1).padStart(2, '0');
+  };
+  marquer();
+
   if (!epingle) {
     const suivre = () => {
       const max = piste.scrollWidth - piste.clientWidth;
       if (progres) progres.style.transform = `scaleX(${max > 0 ? piste.scrollLeft / max : 1})`;
+      marquer();
     };
     piste.addEventListener('scroll', suivre, { passive: true });
     suivre();
@@ -141,7 +158,7 @@ function rouleau() {
       scrub: 0.8,
       anticipatePin: 1,
       invalidateOnRefresh: true,
-      onUpdate: (st) => { if (progres) progres.style.transform = `scaleX(${st.progress})`; },
+      onUpdate: (st) => { if (progres) progres.style.transform = `scaleX(${st.progress})`; marquer(); },
     },
   });
   // Traits de pinceau : fermés au départ, tracés quand le plat entre (85 % de la largeur) dans la bande.
