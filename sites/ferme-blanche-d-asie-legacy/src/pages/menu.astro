@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Carte from '../components/Carte.astro';
+import { resto, carte, fetes, decouverte, nbPlats } from '../data/site';
+const onglets = [
+  ['potages', 'Les potages', carte.potages],
+  ['entrees', 'Les entrées', carte.entrees],
+  ['plats', 'Les plats', carte.plats],
+  ['decouverte', 'Menu découverte', carte.decouverte],
+] as const;
+---
+<Base title="La carte, La Ferme Blanche d’Asie à Malonne" description="La carte complète de La Ferme Blanche d’Asie : potages, entrées, plats, menu découverte à 29 €, menus de Noël et du réveillon." page="menu">
+  <section class="container pagehead">
+    <h1>La carte</h1>
+    <p class="lead">{nbPlats} plats numérotés. Les plats à emporter sont à −10 %, commande au {resto.telAffiche}.</p>
+  </section>
+
+  <section class="section container" aria-label="La carte par rubrique">
+    <div class="tabs__list" role="tablist" aria-label="Rubriques de la carte">
+      {onglets.map(([id, t]) => <button class="tab" role="tab" id={`tab-${id}`} aria-controls={`p-${id}`} aria-selected="false" type="button">{t}</button>)}
+    </div>
+    {onglets.map(([id, t, l]) => (
+      <div class="panel" role="tabpanel" id={`p-${id}`} aria-labelledby={`tab-${id}`}>
+        <h2>{t}</h2>
+        <Carte lignes={l} />
+        {id === 'potages' && <p class="notes">Allergènes indiqués pour chaque potage. Pour les autres plats, demandez au service.</p>}
+        {id === 'decouverte' && <p class="notes">{decouverte.prix} par personne, à partir de deux personnes.</p>}
+      </div>
+    ))}
+  </section>
+
+  <section class="section container" aria-labelledby="t-fetes">
+    <div class="head" style="margin-bottom: var(--space-2xl)">
+      <h2 id="t-fetes">Menus de fêtes</h2>
+      <p class="lead">Noël et réveillon du nouvel an, à réserver au {resto.telAffiche}.</p>
+    </div>
+    <div class="duo">
+      {fetes.map((f) => (
+        <article class="fete">
+          <h3>{f.nom}</h3>
+          <p class="figure">{f.prix}</p>
+          <dl class="dl">
+            {f.lignes.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+          </dl>
+          <p class="notes">{f.note}</p>
+          <div class="actions"><a class="btn btn--secondary" href={f.lien} rel="noopener">{f.lienTxt}</a></div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>

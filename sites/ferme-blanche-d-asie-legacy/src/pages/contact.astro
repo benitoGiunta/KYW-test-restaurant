@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+---
+<Base title="Contact, La Ferme Blanche d’Asie à Malonne" description="Adresse, téléphone, e-mail et horaires de La Ferme Blanche d’Asie, Allée de la Maison Blanche 20 à Malonne." page="contact">
+  <section class="container pagehead">
+    <h1>Contact</h1>
+    <p class="lead">Ouvert tous les jours, midi et soir.</p>
+  </section>
+
+  <section class="section container" aria-labelledby="t-coord">
+    <div class="band__grid">
+      <div class="head">
+        <h2 id="t-coord">Coordonnées</h2>
+        <dl class="dl">
+          <div><dt>Adresse</dt><dd>{resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.ville}</dd></div>
+          <div><dt>Téléphone</dt><dd><a href={resto.tel}>{resto.telAffiche}</a></dd></div>
+          <div><dt>E-mail</dt><dd><a href={`mailto:${resto.mail}`}>{resto.mail}</a></dd></div>
+          <div><dt>Facebook</dt><dd><a href={resto.facebook} rel="noopener">La Ferme Blanche d’Asie</a></dd></div>
+          <div><dt>Paiement</dt><dd>{resto.paiements}</dd></div>
+        </dl>
+        <div class="actions"><a class="btn btn--primary" href={resto.tel}>Appeler</a><a class="btn btn--secondary" href={resto.maps}>Itinéraire</a></div>
+      </div>
+      <Horaires />
+    </div>
+  </section>
+
+  <section class="section" aria-label="Le jardin">
+    <Photo k="jardin" slot="contact" cls="show" sizes="100vw" legende="Le jardin et son kiosque" />
+  </section>
+</Base>

@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Carte from '../components/Carte.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto, carte, decouverte, avis, nbPlats, u } from '../data/site';
+const [a1, a2] = avis;
+---
+<Base title="La Ferme Blanche d’Asie, restaurant asiatique à Malonne (Namur)" description="Restaurant asiatique à Malonne : carte de 56 plats, menu découverte à 29 €, salle V.I.P. et grande salle privée, parking privé. Ouvert tous les jours." page="accueil">
+  <section class="hero" aria-labelledby="titre">
+    <Photo k="ronde" slot="hero" cls="hero__photo" sizes="100vw" eager pos="50% 62%" />
+    <div class="container">
+      <div class="hero__plate">
+        <h1 id="titre">La Ferme Blanche d’Asie</h1>
+        <p class="lead">Cuisine asiatique à Malonne, ouverte tous les jours, midi et soir.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href={resto.tel}>Réserver au {resto.telAffiche}</a>
+          <a class="btn btn--secondary" href={u('menu')}>Voir la carte</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container" aria-labelledby="t-offre">
+    <div class="well grained offre">
+      <div class="offre__fig">
+        <span class="figure" aria-hidden="true">{decouverte.prix}</span>
+        <p class="lead">par personne, à partir de deux personnes</p>
+      </div>
+      <div class="offre__corps">
+        <h2 id="t-offre">Le menu découverte en cinq services, {decouverte.prix}</h2>
+        <ol class="rows">
+          {decouverte.plats.map((p) => <li>{p}</li>)}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-label="La salle principale">
+    <Photo k="principale" slot="salle" cls="show" sizes="100vw" legende="La salle principale" />
+  </section>
+
+  <section class="section container" aria-labelledby="t-carte">
+    <div class="cols">
+      <div class="head">
+        <h2 id="t-carte">La carte</h2>
+        <p class="lead">{nbPlats} plats numérotés. Les plats à emporter sont à −10 %, commande au {resto.telAffiche}.</p>
+        <div class="actions"><a class="btn btn--secondary" href={u('menu')}>Toute la carte</a></div>
+      </div>
+      <div>
+        <p class="label" style="margin-bottom: var(--space-sm)">Les potages</p>
+        <Carte lignes={carte.potages} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section container" aria-labelledby="t-salles">
+    <div class="split">
+      <div class="split__txt">
+        <h2 id="t-salles">Une salle rien que pour vous</h2>
+        <p class="lead">Mariage, anniversaire, réunion ou fête : la salle V.I.P. et la grande salle privée accueillent vos réceptions.</p>
+        <ul class="faits">
+          <li><span>Salle V.I.P., toilette privée et accès à la terrasse</span><strong>26 personnes</strong></li>
+          <li><span>Grande salle privée, environ</span><strong>300 personnes</strong></li>
+          <li><span>Salle climatisée, parking privé, service rapide</span></li>
+        </ul>
+        <div class="actions"><a class="btn btn--primary" href={u('reserve')}>Réserver une salle</a></div>
+      </div>
+      <Photo k="table" slot="salles" pos="40% 60%" />
+    </div>
+  </section>
+
+  <section class="section container" aria-label="Ce que disent les clients">
+    <figure class="avis">
+      <blockquote><p>{a1.texte}</p></blockquote>
+      <figcaption>{a1.source}, avis d’un client</figcaption>
+    </figure>
+    <figure class="avis2" style="margin-top: var(--space-xl)">
+      <p>{a2.texte}</p>
+      <figcaption class="label" style="margin-top: var(--space-sm)">{a2.source}, avis d’un client</figcaption>
+    </figure>
+  </section>
+
+  <section class="band grained" aria-labelledby="t-horaires">
+    <div class="container band__grid">
+      <div class="head">
+        <h2 id="t-horaires">Ouvert tous les jours</h2>
+        <address class="adresse">{resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.ville}</address>
+        <div class="actions">
+          <a class="btn btn--primary" href={resto.tel}>Réserver au {resto.telAffiche}</a>
+          <a class="btn btn--secondary" href={resto.maps}>Itinéraire</a>
+        </div>
+      </div>
+      <Horaires />
+    </div>
+  </section>
+</Base>

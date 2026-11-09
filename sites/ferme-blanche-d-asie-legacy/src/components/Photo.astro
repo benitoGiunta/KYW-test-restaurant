@@ -1,0 +1,10 @@
+---
+import { photos, u, type PhotoKey } from '../data/site';
+interface Props { k: PhotoKey; slot?: string; cls?: string; sizes?: string; eager?: boolean; legende?: string; pos?: string }
+const { k, slot = k, cls = '', sizes = '(min-width: 60rem) 60vw, 100vw', eager = false, legende, pos } = Astro.props;
+const p = photos[k];
+---
+<figure class={`ph ${cls}`} data-slot={slot} data-alt={p.alt} data-credits="Find Your Place">
+  <img src={u(`photos/${p.f}-1400.webp`)} srcset={`${u(`photos/${p.f}-800.webp`)} 800w, ${u(`photos/${p.f}-1400.webp`)} 1400w`} sizes={sizes} width={p.w} height={p.h} alt={p.alt} loading={eager ? undefined : 'lazy'} fetchpriority={eager ? 'high' : undefined} decoding={eager ? undefined : 'async'} style={pos ? `object-position:${pos}` : undefined} />
+  {legende && <figcaption data-keep>{legende}</figcaption>}
+</figure>

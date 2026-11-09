@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto, u } from '../data/site';
+---
+<Base title="Réservation, La Ferme Blanche d’Asie à Malonne" description="Réserver une table ou une salle à La Ferme Blanche d’Asie : par téléphone au 081 44 64 89 ou sur place, à Malonne." page="reserve">
+  <section class="container pagehead">
+    <h1>Réservation</h1>
+    <a class="phone" href={resto.tel}>{resto.telAffiche}</a>
+    <p class="lead">Par téléphone ou sur place. Pour réserver une salle, un acompte doit être versé.</p>
+  </section>
+
+  <section class="section container" aria-labelledby="t-salles">
+    <div class="split">
+      <div class="split__txt">
+        <h2 id="t-salles">Les salles privées</h2>
+        <ul class="faits">
+          <li><span>Salle V.I.P., toilette privée et accès à la terrasse</span><strong>26 personnes</strong></li>
+          <li><span>Grande salle privée, environ</span><strong>300 personnes</strong></li>
+          <li><span>Plats à emporter</span><strong>−10 %</strong></li>
+        </ul>
+        <div class="actions"><a class="btn btn--primary" href={resto.tel}>Appeler le {resto.telAffiche}</a></div>
+      </div>
+      <Photo k="salon" slot="reserve" pos="50% 50%" />
+    </div>
+  </section>
+
+  <section class="band grained" aria-labelledby="t-horaires">
+    <div class="container band__grid">
+      <div class="head">
+        <h2 id="t-horaires">Les horaires</h2>
+        <address class="adresse">{resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.ville}</address>
+        <div class="actions"><a class="btn btn--secondary" href={resto.maps}>Itinéraire</a></div>
+      </div>
+      <Horaires />
+    </div>
+  </section>
+</Base>

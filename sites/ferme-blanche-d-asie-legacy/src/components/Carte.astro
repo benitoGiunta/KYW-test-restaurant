@@ -1,0 +1,14 @@
+---
+import type { Ligne } from '../data/site';
+interface Props { lignes: Ligne[] }
+const { lignes } = Astro.props;
+---
+<ul class="carte">
+  {lignes.map((l) => (
+    <li class="plat">
+      <span class="plat__num">{l.num}</span>
+      <span class="plat__nom">{l.nom}{l.desc && <span class="plat__desc">{l.desc}</span>}</span>
+      <span class="price">{l.prix}</span>
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { photos } from '../data/site';
+const ordre = ['principale', 'jardin', 'ronde', 'longue', 'terrasse', 'poutres', 'kiosque', 'table', 'salon'] as const;
+const legendes: Record<string, string> = { principale: 'Salle principale', jardin: 'Le jardin et son kiosque', ronde: 'Salle à table ronde', longue: 'Salle en longueur', terrasse: 'Terrasse', poutres: 'Salle à poutres', kiosque: 'Le kiosque chinois', table: 'Table ronde à plateau tournant', salon: 'Coin salon' };
+---
+<Base title="Photos, La Ferme Blanche d’Asie à Malonne" description="Les salles, la terrasse et le jardin de La Ferme Blanche d’Asie à Malonne." page="photos">
+  <section class="container pagehead">
+    <h1>Photos</h1>
+    <p class="lead">Les salles, la terrasse et le jardin.</p>
+  </section>
+  <section class="section container" aria-label="Galerie">
+    <div class="galerie">
+      {ordre.map((k) => <Photo k={k} slot={`g-${k}`} sizes="(min-width: 60rem) 60vw, 100vw" legende={legendes[k]} />)}
+    </div>
+  </section>
+</Base>
