@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import TitreV from '../components/TitreV.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+
+const salles = site.salles.map((s) => ({ ...s, img: photoDe(s.photo) }));
+---
+<Base title="Les salles et les fêtes" description={`Salle V.I.P. de 26 personnes, grande salle privée d’environ 300 personnes, menu de Noël à 45 € et réveillon à 65 € à ${site.nom}, Malonne.`} preloads={[{ href: '/photos/salle-ronde-960.webp', media: '(max-width: 767px)' }, { href: '/photos/salle-ronde.webp', media: '(min-width: 768px)' }]}>
+  <HeroPage photo="/photos/salle-ronde.webp" photoMobile="/photos/salle-ronde-960.webp" titre="Les salles" phrase="Une salle V.I.P. pour 26 personnes, une grande salle privée pour environ 300." />
+
+  <section class="section section--v" aria-labelledby="privees-titre">
+    <div class="wrap">
+      <TitreV texte="Privées" id="privees-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">01</p>
+        <div class="diptyque">
+          {salles.map((s, i) => (
+            <figure data-reveal="clip" data-delay={String(i * 0.15)}>
+              <img src={asset(s.img.src)} alt={s.img.alt} width={s.img.largeur} height={s.img.hauteur} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+        <div class="histoire__texte" data-reveal="up">
+          {salles.map((s) => <p><strong>{s.nom}</strong> : {s.capacite.toLowerCase()}. {s.detail}</p>)}
+          <p>Réservation par téléphone ou sur place ; un acompte est demandé.</p>
+          <p class="lien-suite"><a class="link" href={telHref()}>Appeler le {site.telephone.replace('+32 ', '0')}</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--serre" aria-labelledby="fetes-titre">
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade">02</p>
+      <h2 class="titre-centre" id="fetes-titre" data-split="lines" style="text-align: center">Menus de fêtes</h2>
+      <div class="formules">
+        {site.menusFetes.map((m, i) => (
+          <article class="formule fete" data-reveal="up" data-delay={String(i * 0.1)}>
+            <h3>{m.nom}</h3>
+            <p class="formule__prix">{m.prix}</p>
+            <p>{m.description}</p>
+            <ul>{m.lignes.map((l) => <li>{l}</li>)}</ul>
+            {m.note && <p class="fete__note">{m.note}</p>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--serre" aria-labelledby="menu-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">03</p>
+      <h2 class="titre-centre" id="menu-titre" data-split="lines">Pour tous les jours</h2>
+      <p class="texte" data-reveal="up">Le menu découverte à {site.menuDecouverte.prix} par personne, cinq services dès deux personnes, reste à la carte toute l’année.</p>
+      <div class="actions actions--centre" data-reveal="up">
+        <a class="btn btn--plein" href={u('/reservation/')}>Réserver</a>
+        <a class="btn" href={u('/carte/')}>Voir la carte</a>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,104 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import TitreV from '../components/TitreV.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+
+// Aucune histoire, aucun fondateur ni année d'ouverture au dossier : la page présente le lieu, pas une légende inventée.
+const salle1 = ['/photos/salle-principale.webp', '/photos/salle-poutres.webp'].map(photoDe);
+const dehors = ['/photos/terrasse.webp', '/photos/facade-kiosque.webp'].map(photoDe);
+const cuisine = ['/photos/cocotte.webp', '/photos/wok.webp'].map(photoDe);
+---
+<Base title="La maison" description={`La maison ${site.nom} à Malonne : grande salle, salle à poutres, tables rondes à plateau tournant, terrasse, jardin avec kiosque et parking privé.`} preloads={[{ href: '/photos/facade-jardin-960.webp', media: '(max-width: 767px)' }, { href: '/photos/facade-jardin.webp', media: '(min-width: 768px)' }]}>
+  <HeroPage photo="/photos/facade-jardin.webp" photoMobile="/photos/facade-jardin-960.webp" titre="La maison" phrase="Un bâtiment blanc, un jardin avec son kiosque, des salles qui se suivent." />
+
+  <section class="section section--v" aria-labelledby="salles-titre">
+    <div class="wrap">
+      <TitreV texte="Les salles" id="salles-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">01</p>
+        <div class="diptyque">
+          {salle1.map((p, i) => (
+            <figure data-reveal="clip" data-delay={String(i * 0.15)}>
+              <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+        <div class="histoire__texte" data-reveal="up">
+          <p>La salle principale s’ouvre sous les lustres, avec ses tables dressées et ses chaises à motif ajouré. À côté, une salle à poutres sombres, plus intime, avec vue sur la terrasse.</p>
+          <p>Les tables rondes à plateau tournant se partagent à plusieurs : on fait tourner les plats, on se sert à son rythme. Un coin salon, avec canapés en cuir, accueille avant ou après le repas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--v section--serre" aria-labelledby="dehors-titre">
+    <div class="wrap">
+      <TitreV texte="Dehors" id="dehors-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">02</p>
+        <div class="diptyque">
+          {dehors.map((p, i) => (
+            <figure data-reveal="clip" data-delay={String(i * 0.15)}>
+              <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+        <div class="histoire__texte" data-reveal="up">
+          <p>{site.acces.terrasse} {site.acces.jardin} La salle est climatisée et le parking est privé.</p>
+          <p>{site.pratique.paiements} {site.pratique.langues}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--v section--serre" aria-labelledby="cuisine-titre">
+    <div class="wrap">
+      <TitreV texte="La cuisine" id="cuisine-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">03</p>
+        <div class="diptyque">
+          {cuisine.map((p, i) => (
+            <figure data-reveal="clip" data-delay={String(i * 0.15)}>
+              <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+        <div class="histoire__texte" data-reveal="up">
+          <p>Dim sum, sushis, nems, raviolis, canard laqué servi avec crêpes, casserole de fruits de mer : une carte de {site.nombreReferences} références, où chaque plat porte son numéro. {site.pratique.commande}</p>
+          <p class="lien-suite"><a class="link" href={u('/carte/')}>Lire la carte</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--serre" aria-labelledby="avis-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">04</p>
+      <h2 class="titre-centre" id="avis-titre" data-split="lines">Ce qu’en disent les clients</h2>
+    </div>
+    <ul class="wrap avis-liste" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
+      {site.avis.map((a) => (
+        <li><blockquote><p>« {a.texte} »</p><cite>{a.source}</cite></blockquote></li>
+      ))}
+    </ul>
+    <p class="wrap colonne muted" style="margin-top: calc(var(--u) * 2); font-size: var(--t-s); text-align: center" data-reveal="fade">
+      {site.notes.map((n, i) => <>{i > 0 && ' · '}{n.source} : {n.note} sur {n.nombre}{n.aConfirmer && ' (à confirmer)'}</>)}
+    </p>
+  </section>
+
+  <section class="section section--serre" aria-labelledby="valeurs-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">05</p>
+      <h2 class="titre-centre" id="valeurs-titre" data-split="lines">Bon à savoir</h2>
+      <ul style="list-style: none; padding: 0" class="stack" data-reveal="up">
+        {site.valeurs.map((v) => <li>{v}</li>)}
+      </ul>
+      <div class="actions actions--centre">
+        <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={u('/carte/')}>Voir la carte</a>
+      </div>
+    </div>
+  </section>
+</Base>

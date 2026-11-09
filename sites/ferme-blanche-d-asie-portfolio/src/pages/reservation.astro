@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import Plan from '../components/Plan.astro';
+import TitreV from '../components/TitreV.astro';
+import { site, adresseLigne, horairesGroupes, plageHoraire, telHref } from '../data/site';
+import { u } from '../lib/url';
+const plage = plageHoraire();
+const tel = site.telephone.replace('+32 ', '0');
+---
+<Base title="Réserver" description={`Réserver une table à ${site.nom}, Malonne : par téléphone au ${tel} ou sur place. Salles privées, menus de fêtes, plats à emporter à -10 %.`} preloads={[{ href: '/photos/salle-longue-960.webp', media: '(max-width: 767px)' }, { href: '/photos/salle-longue.webp', media: '(min-width: 768px)' }]}>
+  <HeroPage photo="/photos/salle-longue.webp" photoMobile="/photos/salle-longue-960.webp" titre="Réserver" phrase={`Par téléphone au ${tel}, ou sur place. Ouvert tous les jours, midi et soir.`} />
+
+  <section class="section" aria-labelledby="resa-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">01</p>
+      <h2 class="titre-centre" id="resa-titre" data-split="lines">Une table</h2>
+      <div class="actions actions--centre" data-reveal="up">
+        <a class="btn btn--plein" href={telHref()}>Appeler le {tel}</a>
+        <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire un e-mail</a>
+      </div>
+      <p class="muted" style="margin-top: 1.5rem; font-size: var(--t-s)" data-reveal="fade">Pas de réservation en ligne : le restaurant répond au téléphone et sur place. Pour les salles privées et les fêtes, un acompte est demandé.</p>
+    </div>
+  </section>
+
+  <section class="section section--serre" aria-labelledby="demande-titre">
+    <div class="wrap">
+      <div class="colonne" style="margin-bottom: calc(var(--u) * 3)">
+        <p class="chapeau" data-reveal="fade">02</p>
+        <h2 class="titre-centre" id="demande-titre" data-split="lines">Votre demande</h2>
+        <p class="muted" data-reveal="fade">Formulaire de démonstration sans envoi : la validation ouvre votre messagerie avec la demande préremplie, à confirmer par téléphone.</p>
+      </div>
+      <form class="form" data-reservation data-mail={site.email.valeur} data-reveal="up" action={`mailto:${site.email.valeur}`} method="get">
+        <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+        <div class="form__deux">
+          <label>Date <input type="date" name="date" required data-min-aujourdhui /></label>
+          <label>Heure <input type="time" name="heure" min={plage.min} max="23:59" step="900" required /></label>
+          <label>Couverts <input type="number" name="couverts" min="1" max="40" value="2" required /></label>
+        </div>
+        <label>Message <textarea name="message" rows="3"></textarea></label>
+        <div class="actions" style="margin-top: 0">
+          <button class="btn btn--plein" type="submit">Préparer l’e-mail</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section section--v section--serre" aria-labelledby="groupes-titre" id="groupes">
+    <div class="wrap">
+      <TitreV texte="Groupes" id="groupes-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">03</p>
+        <div class="formules" style="margin-inline: 0">
+          <article class="formule" data-reveal="up">
+            <h3>Salles privées</h3>
+            <p class="formule__prix">26 à 300 personnes</p>
+            <p>Salle V.I.P. ou grande salle privée, réservation par téléphone, acompte demandé.</p>
+            <a class="link" href={u('/salles/')}>Voir les salles</a>
+          </article>
+          <article class="formule" data-reveal="up" data-delay="0.1">
+            <h3>À emporter</h3>
+            <p class="formule__prix">{site.emporter.remise}</p>
+            <p>{site.emporter.texte}</p>
+            <a class="link" href={u('/carte/')}>Voir la carte</a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--v section--serre" aria-labelledby="venir-titre">
+    <div class="wrap">
+      <TitreV texte="Venir" id="venir-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">04</p>
+        <div class="venir">
+          <Plan />
+          <div class="infos" data-reveal="up">
+            <div>
+              <h3>Adresse</h3>
+              <address>{adresseLigne()}</address>
+              <ul>
+                <li>{site.acces.parking}</li>
+                <li>{site.acces.terrasse}</li>
+                <li>{site.pratique.paiements}</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Horaires</h3>
+              <dl class="horaires">
+                {horairesGroupes().map((h) => <><dt>{h.jours}</dt><dd>{h.texte}</dd></>)}
+              </dl>
+            </div>
+            <div class="actions" style="margin-top: 0">
+              <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { onPage } from '../engine';
+  // Formulaire sans backend : à la validation, ouvre la messagerie avec la demande préremplie (rien n'est transmis par le site).
+  onPage(() => {
+    const form = document.querySelector<HTMLFormElement>('[data-reservation]');
+    if (!form) return; // tourne sur chaque page : vérifier la présence
+    const go = (e: SubmitEvent) => {
+      e.preventDefault();
+      const d = new FormData(form);
+      const corps = `Nom : ${d.get('nom')}\nDate : ${d.get('date')}\nHeure : ${d.get('heure')}\nCouverts : ${d.get('couverts')}\n\n${d.get('message') ?? ''}`;
+      window.location.href = `mailto:${form.dataset.mail}?subject=${encodeURIComponent('Demande de réservation')}&body=${encodeURIComponent(corps)}`;
+    };
+    form.addEventListener('submit', go);
+    return () => form.removeEventListener('submit', go);
+  });
+</script>

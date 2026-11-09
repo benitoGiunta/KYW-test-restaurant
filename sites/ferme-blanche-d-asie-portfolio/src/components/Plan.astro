@@ -1,0 +1,25 @@
+---
+// Plan d'accès au trait : schéma du domaine d'après les photos du dossier (bâtiment, parking privé, terrasse, jardin et
+// kiosque) et l'adresse (Allée de la Maison Blanche). Les tracés se dessinent à l'entrée (setup.ts, [data-trace]).
+// Schéma, pas une carte à l'échelle : la légende le dit ; l'itinéraire réel passe par le lien OpenStreetMap.
+import { site } from '../data/site';
+---
+<figure class="plan">
+  <svg class="plan__svg" viewBox="0 0 420 320" role="img" aria-label={`Schéma du domaine : l’allée de la Maison Blanche, le parking privé, le bâtiment de ${site.nom}, la terrasse et le jardin avec son kiosque`}>
+    <path class="plan__meuse" data-trace d="M-10 262 C 70 250, 150 276, 250 258 S 380 236, 430 244" />
+    <path class="plan__meuse plan__meuse--fine" data-trace d="M-10 282 C 70 270, 150 296, 250 278 S 380 256, 430 264" />
+    <path class="plan__trait plan__trait--rue" data-trace d="M-10 214 C 60 208, 120 204, 190 196" />
+    <path class="plan__trait" data-trace d="M60 120 h 96 v 56 h -96 z" />
+    <path class="plan__trait" data-trace d="M190 110 h 150 v 44 h -150 z M190 154 v 48 h 70 v -48" />
+    <path class="plan__trait" data-trace d="M300 160 l 18 -14 l 18 14 l 0 18 l -18 12 l -18 -12 z" />
+    <path class="plan__trait" data-trace d="M60 80 c 30 -26 70 -26 96 0" />
+    <circle class="plan__ici" cx="226" cy="132" r="7" />
+    <text class="plan__texte" x="64" y="146">Parking privé</text>
+    <text class="plan__texte" x="258" y="100">Terrasse</text>
+    <text class="plan__texte" x="272" y="206">Jardin et kiosque</text>
+    <text class="plan__texte plan__texte--meuse" x="250" y="304">Malonne</text>
+    <text class="plan__texte plan__texte--ici" x="196" y="170">{site.nom}</text>
+    <text class="plan__texte plan__texte--petit" x="20" y="198">Allée de la Maison Blanche</text>
+  </svg>
+  <figcaption class="plan__legende">Schéma indicatif, sans échelle : bâtiment, parking privé, terrasse, jardin avec kiosque. Illustratif.</figcaption>
+</figure>

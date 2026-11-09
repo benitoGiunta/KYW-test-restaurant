@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+import Rouleau from '../components/Rouleau.astro';
+import Plan from '../components/Plan.astro';
+import TitreV from '../components/TitreV.astro';
+import { site, photoDe, horairesGroupes, adresseLigne, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+
+const hero = photoDe('/photos/salle-poutres.webp');
+const heroMobile = '/photos/salle-poutres-960.webp';
+const diptyque = ['/photos/salle-principale.webp', '/photos/table-ronde.webp'].map(photoDe);
+const salles = site.salles.map((s) => ({ ...s, img: photoDe(s.photo) }));
+const galerie = ['/photos/terrasse.webp', '/photos/facade-kiosque.webp', '/photos/coin-salon.webp', '/photos/salle-longue.webp'].map(photoDe);
+const citation = site.avis[0];
+---
+<Base preloads={[{ href: heroMobile, media: '(max-width: 767px)' }, { href: hero.src, media: '(min-width: 768px)' }]}>
+  <section class="hero" data-hero aria-label="Accueil">
+    <picture class="hero__photo">
+      <source media="(max-width: 767px)" srcset={asset(heroMobile)} width="960" height="541" />
+      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-hero-photo data-critical />
+    </picture>
+    <div class="hero__voile" data-vapeur aria-hidden="true"></div>
+    <div class="hero__contenu wrap">
+      <svg class="hero__trace" viewBox="0 0 12 200" preserveAspectRatio="none" aria-hidden="true"><path data-trace-hero d="M6 2 C 1 50, 11 120, 6 198" /></svg>
+      <h1 class="hero__nom"><span>La Ferme</span> <span>Blanche</span> <span>d’Asie</span></h1>
+      <p class="hero__phrase">{site.phraseHero}</p>
+      <a class="hero__lien" href="#rouleau" data-hero-lien>Dérouler la carte</a>
+    </div>
+  </section>
+
+  <section class="section concept" aria-labelledby="concept-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">01</p>
+      <h2 class="titre-centre" id="concept-titre" data-split="lines">{site.manifeste.titre}</h2>
+      <p class="texte-l" data-reveal="up" data-delay="0.1">{site.manifeste.texte}</p>
+      <blockquote class="citation" data-reveal="up" data-delay="0.2">
+        <p>« {citation.texte} »</p>
+        <cite>{citation.source}</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <Rouleau epingle={true} id="rouleau" numero="02" />
+  <p class="rouleau__vraie"><a class="link" href={u('/carte/')}>Voir la carte complète : {site.nombreReferences} références, menu découverte à {site.menuDecouverte.prix}</a></p>
+
+  <section class="section section--v" aria-labelledby="maison-titre">
+    <div class="wrap">
+      <TitreV texte="La maison" id="maison-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">03</p>
+        <div class="diptyque">
+          {diptyque.map((p, i) => (
+            <figure data-reveal="clip" data-delay={String(i * 0.15)}>
+              <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+        <div class="histoire__texte" data-reveal="up">
+          <p>Une grande salle sous les lustres, une salle à poutres, des tables rondes à plateau tournant, un coin salon : la maison déroule ses espaces les uns après les autres, dans un bâtiment blanc entouré d’un jardin.</p>
+          <p>{site.pratique.commande} {site.pratique.langues}</p>
+          <p class="lien-suite"><a class="link" href={u('/maison/')}>Visiter la maison</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--serre" aria-labelledby="salles-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">04</p>
+      <h2 class="titre-centre" id="salles-titre" data-split="lines">Les salles</h2>
+      <p class="texte" data-reveal="up">Pour un repas de famille, une réception ou une fête de fin d’année, la maison réserve des salles privées. Réservation par téléphone, acompte demandé.</p>
+    </div>
+    <div class="wrap portraits">
+      {salles.map((s, i) => (
+        <div class="portrait" data-reveal="scale" data-delay={String(i * 0.15)}>
+          <figure><img src={asset(s.img.src)} alt={s.img.alt} width={s.img.largeur} height={s.img.hauteur} loading="lazy" decoding="async" /></figure>
+          <p class="portrait__nom">{s.nom}</p>
+          <p class="portrait__role">{s.capacite}</p>
+        </div>
+      ))}
+    </div>
+    <p class="rouleau__vraie"><a class="link" href={u('/salles/')}>Salles et menus de fêtes</a></p>
+  </section>
+
+  <section class="section section--v" aria-labelledby="images-titre">
+    <div class="wrap">
+      <TitreV texte="En images" id="images-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">05</p>
+        <div class="quinconce">
+          {galerie.map((p, i) => (
+            <figure data-reveal="fade" data-delay={String((i % 2) * 0.1)}>
+              <div class="cadre"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" data-parallax="0.06" /></div>
+              <figcaption>{p.alt}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--v" aria-labelledby="venir-titre">
+    <div class="wrap">
+      <TitreV texte="Venir" id="venir-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">06</p>
+        <div class="venir">
+          <Plan />
+          <div class="infos" data-reveal="up">
+            <div>
+              <h3>Adresse</h3>
+              <address>{adresseLigne()}</address>
+              <ul>
+                <li>{site.acces.parking}</li>
+                <li>{site.acces.terrasse}</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Horaires</h3>
+              <dl class="horaires">
+                {horairesGroupes().map((h) => <><dt>{h.jours}</dt><dd>{h.texte}</dd></>)}
+              </dl>
+            </div>
+            <div class="actions" style="margin-top: 0">
+              <a class="btn btn--plein" href={telHref()}>Appeler le {site.telephone.replace('+32 ', '0')}</a>
+              <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

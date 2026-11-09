@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+
+// Carte réelle : 56 références transcrites du site actuel (carte.json). Le nombre annoncé est la constante `nombreReferences`.
+const { menuDecouverte: md } = site;
+---
+<Base title="La carte" description={`La carte de ${site.nom} à Malonne : potages, entrées, plats, menu découverte à ${md.prix} et plats à emporter à -10 %.`} preloads={[{ href: '/photos/salle-principale-960.webp', media: '(max-width: 767px)' }, { href: '/photos/salle-principale.webp', media: '(min-width: 768px)' }]}>
+  <HeroPage photo="/photos/salle-principale.webp" photoMobile="/photos/salle-principale-960.webp" titre="La carte" phrase={`${site.nombreReferences} références numérotées, des potages au canard laqué. Commande sur tablette à table.`} />
+
+  <section class="section" aria-labelledby="decouverte-titre">
+    <div class="wrap">
+      <div class="menu-reel">
+        <div class="menu-reel__entete">
+          <p class="chapeau" data-reveal="fade">01</p>
+          <h2 class="titre-centre" id="decouverte-titre" data-split="lines">{md.nom}</h2>
+          <p class="menu-reel__prix" data-reveal="fade">{md.prix} par personne</p>
+          <p class="menu-reel__sous" data-reveal="fade" data-delay="0.1">Cinq services, à partir de deux personnes. N° 200 de la carte.</p>
+        </div>
+        <ol class="menu-reel__lignes" style="list-style: none; padding: 0" data-reveal="up">
+          {md.lignes.map((l, i) => (
+            <li class="ligne"><span class="ligne__num">{String(i + 1).padStart(2, '0')}</span><span class="ligne__nom">{l}</span><span class="ligne__prix"></span></li>
+          ))}
+        </ol>
+        <nav class="carte-ancres" aria-label="Sections de la carte" data-reveal="fade">
+          {site.carte.map((c) => <a class="link" href={`#${c.id}`}>{c.categorie.replace(/^Les /, '')}</a>)}
+          <a class="link" href="#emporter">À emporter</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  {site.carte.map((c, k) => (
+    <section class="section section--serre" id={c.id} aria-labelledby={`${c.id}-titre`}>
+      <div class="wrap">
+        <div class="menu-reel">
+          <p class="chapeau" data-reveal="fade">{String(k + 2).padStart(2, '0')}</p>
+          <h2 class="titre-centre" id={`${c.id}-titre`} data-split="lines" style="text-align: center">{c.categorie}</h2>
+          <ul style="list-style: none; padding: 0; margin-top: calc(var(--u) * 2)" data-reveal="up">
+            {c.plats.map((p) => (
+              <li class="ligne ligne--carte">
+                <span class="ligne__num">{p.numero}</span>
+                <span class="ligne__nom">{p.nom}
+                  {p.description && <span class="ligne__desc">{p.description}</span>}
+                  {p.allergenes && <span class="ligne__allergenes">{p.allergenes}</span>}
+                </span>
+                <span class="ligne__prix">{p.prix}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section section--serre" id="emporter" aria-labelledby="emporter-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">05</p>
+      <h2 class="titre-centre" id="emporter-titre" data-split="lines">À emporter</h2>
+      <p class="texte" data-reveal="up">{site.emporter.texte}</p>
+      <p class="muted" style="font-size: var(--t-s); margin-top: 1.5rem" data-reveal="fade">{site.allergenes}</p>
+      <div class="actions actions--centre" data-reveal="up">
+        <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={u('/salles/')}>Menus de fêtes</a>
+      </div>
+    </div>
+  </section>
+</Base>
