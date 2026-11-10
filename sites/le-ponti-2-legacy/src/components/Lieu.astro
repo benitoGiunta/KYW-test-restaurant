@@ -1,0 +1,21 @@
+---
+import Horaires from './Horaires.astro';
+import Reserve from './Reserve.astro';
+import { resto } from '../data/site';
+---
+<section class="section lieu" aria-labelledby="h-lieu">
+  <div class="container lieu__grid">
+    <div class="lieu__txt">
+      <h2 id="h-lieu">Ouvert du mardi au dimanche, midi et soir</h2>
+      <address class="lieu__adr">
+        <p>{resto.adresse.rue}<br />{resto.adresse.ville}</p>
+        <p><a class="num" href={resto.tel.href}>{resto.tel.affiche}</a></p>
+        <p class="small">{resto.terrasse}</p>
+      </address>
+      <Reserve />
+    </div>
+    <div class="well lieu__well">
+      <Horaires />
+    </div>
+  </div>
+</section>

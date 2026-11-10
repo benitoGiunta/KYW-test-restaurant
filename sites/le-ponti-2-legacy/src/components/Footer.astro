@@ -1,0 +1,27 @@
+---
+import { resto, nav } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<section class="foot" aria-label="Coordonnées">
+  <div class="container">
+    <p class="foot__mast">Le Ponti 2<span> {resto.baseline}</span></p>
+    <div class="foot__cols">
+      <div>
+        <p class="foot__h">Adresse</p>
+        <p>{resto.adresse.rue}<br />{resto.adresse.ville}</p>
+        <p><a href={resto.itineraire} rel="noopener">Itinéraire</a></p>
+      </div>
+      <div>
+        <p class="foot__h">Contact</p>
+        <p><a class="num" href={resto.tel.href}>{resto.tel.affiche}</a><br /><a href={`mailto:${resto.email}`}>{resto.email}</a></p>
+        <p><a href={resto.facebook} rel="noopener">Facebook</a></p>
+      </div>
+      <div>
+        <p class="foot__h">Le site</p>
+        <p>{nav.map((n, i) => <><a href={`${base}${n.href}`}>{n.label}</a>{i < nav.length - 1 && <br />}</>)}</p>
+        <p><a href={resto.reservation} rel="noopener">Réserver une table</a></p>
+      </div>
+    </div>
+    <p class="foot__credits" data-credits>Photographies : Le Ponti 2. Site d’origine : <a href={resto.site} rel="noopener">leponti2.be</a>.</p>
+  </div>
+</section>

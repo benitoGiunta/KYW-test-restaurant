@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Reserve from '../components/Reserve.astro';
+import Lieu from '../components/Lieu.astro';
+import { resto, rubriques, stats, prix, menu3 } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const photos = { pizza: { src: 'pizza.webp', alt: 'Pizza à la roquette et aux copeaux de parmesan sur une assiette blanche', w: 1000, h: 750 }, escalope: { src: 'escalope.webp', alt: 'Escalope de veau gratinée sur une assiette bleue', w: 1000, h: 750 } };
+---
+<Base title="Le Ponti 2, restaurant italien et pizzeria à Jambes (Namur)" page="accueil">
+  <section class="hero" aria-labelledby="h-hero">
+    <Fig class="hero__field" src="pates-2000.webp" alt="Assiettes de pâtes à la tomate, au pesto et aux scampis sur une table avec verres et bouteille de vin" w={1448} h={1086} eager pos="50% 62%" slot="hero" />
+    <div class="container hero__base">
+      <h1 id="h-hero">Restaurant italien, esprit familial.</h1>
+      <div class="hero__side">
+        <p class="lead">Pizzas, pâtes et spécialités italiennes à Jambes, à Namur, pour un lunch ou un dîner en famille, entre amis ou à deux.</p>
+        <p class="actions">
+          <a class="btn" href={resto.reservation} rel="noopener">Réserver une table</a>
+          <a class="link" href={`${base}menu/`}>Découvrir la carte</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="facade" aria-label="La façade">
+    <Fig class="facade__fig" src="facade-large.webp" alt="Façade du restaurant de nuit, enseigne lumineuse « Le Ponti 2 Restaurant »" w={1600} h={750} ratio="32 / 13" pos="50% 40%" slot="facade" caption="Avenue du Bourgmestre Jean Materne, à Jambes." />
+  </section>
+
+  <section class="section carte" aria-labelledby="h-carte">
+    <div class="container">
+      <div class="carte__head">
+        <h2 id="h-carte">La carte, en neuf rubriques</h2>
+        <p class="lead">Vingt pizzas, treize pâtes, des escalopes de veau, des desserts maison.</p>
+      </div>
+      <ul class="cats">
+        {rubriques.map((r) => {
+          const s = stats(r);
+          const ph = r.photo ? photos[r.photo] : null;
+          return (
+            <li>
+              <a class="cat" href={`${base}menu/#${r.id}`}>
+                {ph ? <Fig class="cat__fig" {...ph} ratio="4 / 3" sizes="(min-width: 60rem) 28rem, 90vw" slot={`cat-${r.id}`} /> : <span class="cat__n" aria-hidden="true">{s.n}</span>}
+                <span class="cat__body">
+                  <h3>{r.nom}</h3>
+                  <span class="small">{r.lead}</span>
+                  <span class="cat__meta num">{s.n} plats{s.min !== null && (s.min === s.max ? `, ${s.min} €` : `, de ${s.min} € à ${s.max} €`)}</span>
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band menu3" aria-labelledby="h-menu3">
+    <div class="container menu3__grid">
+      <div class="menu3__head">
+        <h2 id="h-menu3">{menu3.nom}</h2>
+        <p class="menu3__prix num" aria-label={`${menu3.prix} par personne`}>{menu3.prix}</p>
+      </div>
+      <ol class="menu3__list">
+        {menu3.services.map((s) => <li><span class="small">{s.n}</span><p>{s.t}</p></li>)}
+      </ol>
+      <Reserve light />
+    </div>
+  </section>
+
+  <Lieu />
+</Base>

@@ -1,0 +1,15 @@
+---
+import { horaires, h } from '../data/site';
+---
+<dl class="sched" aria-label="Horaires d’ouverture">
+  {horaires.map((j) => (
+    <div class:list={['sched__row', { 'is-closed': j.ferme }]} data-jour={j.n}>
+      <dt>{j.jour}</dt>
+      <dd>
+        {j.ferme
+          ? <span>Fermé</span>
+          : <><time class="num" datetime={j.midi[0]}>{h(j.midi[0])}</time> à <time class="num" datetime={j.midi[1]}>{h(j.midi[1])}</time><span class="sched__sep" aria-hidden="true"></span><time class="num" datetime={j.soir[0]}>{h(j.soir[0])}</time> à <time class="num" datetime={j.soir[1]}>{h(j.soir[1])}</time></>}
+      </dd>
+    </div>
+  ))}
+</dl>

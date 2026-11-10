@@ -1,0 +1,17 @@
+---
+import { resto, nav } from '../data/site';
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<header class="nav">
+  <div class="container nav__bar">
+    <ul class="nav__links">
+      {nav.slice(1).map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>)}
+    </ul>
+    <a class="nav__brand" href={base} aria-label="Le Ponti 2, accueil">Le Ponti 2</a>
+    <div class="nav__act">
+      <a class="nav__tel num" href={resto.tel.href}>{resto.tel.affiche}</a>
+      <a class="btn" href={resto.reservation} rel="noopener">Réserver une table</a>
+    </div>
+  </div>
+</header>

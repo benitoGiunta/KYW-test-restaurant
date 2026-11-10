@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Horaires from '../components/Horaires.astro';
+import Reserve from '../components/Reserve.astro';
+import { resto } from '../data/site';
+---
+<Base title="Contact et horaires du Ponti 2, Jambes (Namur)" description="Adresse, téléphone, horaires et itinéraire du Ponti 2, restaurant italien avenue du Bourgmestre Jean Materne à Jambes, ouvert du mardi au dimanche." page="contact">
+  <section class="pagehead">
+    <div class="container pagehead__grid">
+      <h1>Nous trouver</h1>
+      <p class="lead">Au 87 de l’avenue du Bourgmestre Jean Materne, à Jambes.</p>
+    </div>
+  </section>
+
+  <section class="section contact" aria-labelledby="h-coord">
+    <div class="container contact__grid">
+      <div class="contact__txt">
+        <h2 id="h-coord">Coordonnées</h2>
+        <address class="lieu__adr">
+          <p>{resto.adresse.rue}<br />{resto.adresse.ville}</p>
+          <p><a class="num" href={resto.tel.href}>{resto.tel.affiche}</a><br /><a href={`mailto:${resto.email}`}>{resto.email}</a></p>
+          <p><a href={resto.itineraire} rel="noopener">Itinéraire</a><br /><a href={resto.facebook} rel="noopener">Facebook</a></p>
+          <p class="small">{resto.terrasse}</p>
+        </address>
+        <Reserve />
+      </div>
+      <Fig class="contact__fig" src="facade-portrait.webp" alt="Façade du restaurant de nuit, enseigne lumineuse « Le Ponti 2 Restaurant »" w={900} h={1200} ratio="4 / 5" pos="50% 30%" sizes="(min-width: 60rem) 24rem, 90vw" slot="contact" caption="La façade, de nuit." />
+    </div>
+  </section>
+
+  <section class="section contact-h" aria-labelledby="h-h">
+    <div class="container contact-h__grid">
+      <h2 id="h-h">Horaires</h2>
+      <div class="well"><Horaires /></div>
+    </div>
+  </section>
+</Base>

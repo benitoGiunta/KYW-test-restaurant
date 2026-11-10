@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Lieu from '../components/Lieu.astro';
+import { rubriques, platsDe, titre, prix, slug, menu3 } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const photos = { pizza: { src: 'pizza.webp', alt: 'Pizza à la roquette et aux copeaux de parmesan sur une assiette blanche', w: 1000, h: 750, caption: 'Pizza roquette et copeaux de parmesan.' }, escalope: { src: 'escalope.webp', alt: 'Escalope de veau gratinée sur une assiette bleue', w: 1000, h: 750, caption: 'Escalope de veau gratinée.' } };
+---
+<Base title="La carte du Ponti 2 : pizzas, pâtes, escalopes de veau, desserts" description="La carte complète du Ponti 2 à Jambes : entrées, pâtes, vingt pizzas, escalopes de veau, viandes, desserts maison, cocktails et digestifs, avec les prix." page="menu">
+  <section class="pagehead">
+    <div class="container pagehead__grid">
+      <h1>La carte</h1>
+      <p class="lead">Prix en euros. Le menu trois services à 40 € se trouve sous l’index.</p>
+    </div>
+  </section>
+
+  <nav class="index" aria-label="Rubriques de la carte">
+    <div class="container">
+      <ul>
+        {rubriques.map((r) => <li><a href={`#${r.id}`}>{r.nom}</a></li>)}
+      </ul>
+    </div>
+  </nav>
+
+  <section class="section menu3-page" aria-labelledby="h-m3">
+    <div class="container">
+      <div class="well menu3-page__well">
+        <div>
+          <h2 id="h-m3">{menu3.nom}</h2>
+          <p class="menu3__prix num">{menu3.prix}</p>
+        </div>
+        <ol class="menu3__list">
+          {menu3.services.map((s) => <li><span class="small">{s.n}</span><p>{s.t}</p></li>)}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section carte-complete" aria-label="La carte complète">
+  {rubriques.map((r) => {
+    const cats = platsDe(r);
+    const ph = r.photo ? photos[r.photo] : null;
+    return (
+      <article class="rub" id={r.id} aria-labelledby={`h-${r.id}`}>
+        <div class="container rub__grid">
+          <div class="rub__side">
+            <h2 id={`h-${r.id}`}>{r.nom}</h2>
+            {ph && <Fig class="rub__fig" {...ph} ratio="4 / 3" sizes="(min-width: 60rem) 22rem, 90vw" slot={`rub-${r.id}`} />}
+          </div>
+          <div class="rub__main">
+            {cats.map((c) => {
+              const t = titre(c.categorie);
+              return (
+                <div class="rub__cat">
+                  {(cats.length > 1 || t.note) && <h3 id={slug(c.categorie)}>{t.nom}{t.note && <span class="small rub__note"> {t.note}</span>}</h3>}
+                  <ul class="rows">
+                    {c.plats.map((p) => (
+                      <li class="row">
+                        <span class="row__nom">{p.nom}</span>
+                        <span class="row__prix num">{prix(p.prix)}</span>
+                        {p.description && <span class="row__desc">{p.description}</span>}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </article>
+    );
+  })}
+  </section>
+
+  <Lieu />
+</Base>

@@ -1,0 +1,11 @@
+---
+interface Props { src: string; alt: string; w: number; h: number; ratio?: string; eager?: boolean; pos?: string; caption?: string; class?: string; sizes?: string; slot?: string }
+const { src, alt, w, h, ratio, eager = false, pos = 'center', caption, class: cls = '', sizes = '100vw', slot: name = 'photo' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<figure class={`fig ${cls}`}>
+  <div class="fig__frame" data-slot={name} data-alt={alt} style={`${ratio ? `aspect-ratio:${ratio};` : ''}`}>
+    <img src={`${base}photos/${src}`} {alt} width={w} height={h} sizes={sizes} style={`object-position:${pos}`} loading={eager ? undefined : 'lazy'} fetchpriority={eager ? 'high' : undefined} decoding={eager ? undefined : 'async'} />
+  </div>
+  {caption && <figcaption class="small">{caption}</figcaption>}
+</figure>
