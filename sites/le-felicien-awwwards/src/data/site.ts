@@ -85,7 +85,7 @@ export function phraseBudget(budget: number) {
     const min = Math.min(...lignes.map((p) => p.prix));
     return `Avec ${eur(budget)}, rien encore : la première graduation de la carte est à ${eur(min)}.`;
   }
-  const n = dedans.length === lignes.length ? `Toute la carte, ${lignes.length}${N}lignes,` : `${dedans.length}${N}lignes de la carte sur ${lignes.length}`;
+  const n = dedans.length === lignes.length ? `toute la carte, ${lignes.length}${N}lignes,` : `${dedans.length}${N}lignes de la carte sur ${lignes.length}`;
   const repere = [...ancres].reverse().find((a) => a.prix <= budget);
   const fin = repere ? ` Repère : ${repere.label.charAt(0).toLowerCase()}${repere.label.slice(1)}, ${repere.court}.` : '';
   return `Avec ${eur(budget)}, ${n} ${dedans.length === lignes.length ? 'est' : 'sont'} à votre portée.${fin}`;
