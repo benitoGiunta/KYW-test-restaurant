@@ -12,7 +12,7 @@
 - **Sections** · Hero · Ardoises (Rows) · Grillades (Split 7/5) · Énoncé (fibre) · Terrasse (Split 4/8 + Rows de liens) · Horaires (Schedule) · Pied
 - **Material** · real : carte complète, adresse, téléphone, mailto, réseaux, 30 couverts, horaires du site (mardi 17 h à dimanche 17 h) · pictures : 16 photos du client · absent : avis, presse, GPS, équipe
 - **Comp** · hero réel seulement (voir comp.md)
-- **Sweep** · phase 3
+- **Sweep** · editorial, render 7 routes : 0 REFLEX ouvert, 2 FAIL `kept` (faux positifs : liens absolus du site d origine et champs Webador, consignés `dropped` au stamp), 5 WAIVED (71, 77 x3, 83), 10 NOTE (58) ; 44d et 72 corrigés
 
 ## Approche
 Macrostructure : Photographic (08). Empreinte `Heading plaque|Body bandes photo et rangs|Divider bord d'image + double filet|Button lien et plein|Image pleine|Reveal aucun`. Posture : multipage, toutes les routes gardées, hero Poster (accueil) et Banner (menu), calme, aucune chorégraphie. Dérogations : faux envoi du formulaire neutralisé par `data-endpoint=""` (70) ; la vitrine devient une galerie de plats du client ; champ anti-spam et bandeau cookies supprimés (`dropped`). Test miroir : un voisin bistrot aurait un menu et une photo ; ici la combinaison oxblood + gothique + coq orange + « demi-fous » est propre à Li Micougni.
@@ -56,3 +56,15 @@ Vellum oxblood reversed. Tokens lus dans `src/styles/tokens.css` : paper `oklch(
 - [x] 58. Une recette de conteneur, pilule limitée aux contrôles (F7) ; un pattern de scroll (F8) · preuve : rayon 2 px partout ; seul mouvement au scroll : le reveal unique
 - [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : `base.css:4,5,8`
 - [x] 72. Responsive (breakpoints rem, capacités, rangs restackés, `svh`, safe-area) · preuve : 60rem et 40rem, `(hover: hover)`, `(pointer: coarse)` en fin de `page.css`, `viewport-fit=cover` ; mesuré : 0 débordement de 320 à 1440 sur 7 pages, h1 sans coupure, aucun bouton replié
+
+## Checklist phase 3 (points restants)
+- [x] 1, 18 Tokens : `grep -v '^\s*--' page.css base.css | grep -c '#[0-9a-f]\{3,6\}\|rgb('` = 0
+- [x] 4 `overflow-x: clip` dans base.css, aucun `100vw` (0 occurrence)
+- [x] 9, 10, 28 Labels en police de corps, aucun tiret cadratin dans `src/` (grep vide) ; h1 d'accueil sans « Découvrez » (19)
+- [x] 12, 13, 34, 42, 46 Hero, une plaque, fold 1280/1440/1920 sans FAIL 44 (`sloplint --render`, 7 routes)
+- [x] 16 `sloplint --render` : 0 FAIL hors `kept`, 0 REFLEX ouvert, rendu tourné (35 captures)
+- [x] 27, 67 Aucun repli de bouton ni contenu caché à 375 (mesuré en phase 2, capture contact 375 revue)
+- [x] 35, 36, 37, 38, 39, 41 Voir stamp en tête de page.css (waive 8, 6b) ; thème Vellum, pas de glow
+- [x] 44, 52, 53 Mur de photos : vitrine 66 %, waive 83 motivé ; pas de compteur ni frame d'appareil
+- [x] 55 à 66, 68 à 71 Finish : guillemets et insécables, `balance`/`pretty`, horaires tabulaires, `lang`, `<title>` et description par page (build) ; `finish-review: self · 0 finding ouvert · gap : aucun relevé`
+- [ ] Non prouvé à l'oeil : gates jugées 9, 11, 16, 23, 29, 38iii, 44 (3 largeurs), 46b, 47c, 54, 58, 62 à 70, 77 à 85 : auto-notation `self`, aucun sous-agent disponible

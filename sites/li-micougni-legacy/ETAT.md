@@ -1,4 +1,4 @@
-# ETAT : li-micougni legacy (phase 2 sur 3 faite)
+# ETAT : li-micougni legacy (phase 3 sur 3 faite, terminé)
 
 ## Fait (phase 2)
 - Nav : pastille sticky (hauteur 0, top 16 px), « Réserver » en contour or (un seul plein par vue) ; menu mobile en `popover` natif sous 70rem (Menu/Fermer, Échap, focus rendu), CTA plein dans le menu sous 40rem.
@@ -24,3 +24,7 @@
 - Les `import` en tête du frontmatter Astro. astro.config copié de le-ponti-2-legacy.
 - `.contact__head > * { grid-column: 1 / -1 }` indispensable (sinon h1 à 0 px).
 - Serveur de dev : PID noté dans le scratchpad (`lm-legacy-p2.pid`), arrêté en fin de phase.
+
+## Phase 3 (QA)
+- Fait : sloplint --render 7 routes (0 REFLEX ouvert, FAIL `kept` faux positifs), corrections 44d, 72, 19, waivers 71/77/83, checklist DESIGN.md, log Hallmark (17/20), RAPPORT.md, build + pnpm index. Serveur arrêté.
+- Reste : QA-build.md absent (captures non faites par l'agent captures) ; gates jugées en auto-notation self ; comp c2 non construite ; rendu `/evenement-privee/` non revu à l'oeil.

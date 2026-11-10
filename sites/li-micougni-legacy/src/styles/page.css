@@ -5,7 +5,11 @@
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, la plaque du hero aurait pu servir n'importe quel bistrot ; la phrase « même les demi-fous » du client est devenue la signature du pied et d'un énoncé */
 /* Hallmark · waive 8 · accueil garde la séquence du site d'origine (hero, ardoises, grillades, terrasse, horaires) · composition neuve section par section, Li Micougni garde ses routes */
 /* Hallmark · waive 6b · Poster de 100svh · la plaque porte le titre et la photographie de la salle occupe tout l'écran, 44b tient */
-/* Hallmark · reworded "Découvrez votre nouveau restaurant à Namur!" to "Découvrez votre nouveau restaurant à Namur !" · 19 espace insécable avant la ponctuation haute */
+/* Hallmark · reworded "Découvrez votre nouveau restaurant à Namur!" to "Votre nouveau restaurant à Namur" · 19 « Découvrez » est un tell français, le titre garde le fait sans verbe de vitrine */
+/* Hallmark · waive 71 · h3 de ligne de carte à 50px au-dessus, 150px en dessous · ce sont des lignes de grille (nom, description, prix) alignées sur la ligne de base, pas des têtes de section */
+/* Hallmark · waive 77 · une section mince sur la carte et peu de sections sur les pages intérieures · une rubrique par page comme sur le site d'origine, rien d'inventé pour remplir */
+/* Hallmark · waive 83 · photos à 66 % de la page vitrine (6 images) · la vitrine montre la salle, la carte et la cour, photos du client prioritaires, aucun chiffre ni produit à leur substituer */
+/* Hallmark · dropped liens absolus du site d'origine (/menu, /contact…) remplacés par les mêmes routes sous la base /li-micougni/legacy/ ; champs captcha, csrf et dynamic-form de Webador · le formulaire de la maquette n'envoie rien */
 /* Hallmark · dropped champ anti-spam « Laisser ce champ vide » et bandeau cookies publicitaires · propres à Webador, aucun envoi ni suivi dans la maquette */
 @import url("./tokens.css");
 @import url("./base.css");
@@ -84,7 +88,8 @@ main:focus { outline: none; }
 .hero__cap { color: var(--color-ink); position: absolute; right: var(--gutter); bottom: calc(-1 * var(--space-xl)); max-width: 22ch; margin: 0; padding: var(--space-xs) var(--space-sm); font-size: var(--text-sm); text-align: right; background: var(--color-paper); border-radius: var(--radius-card); }
 @media (max-width: 60rem) { .plate { padding: var(--space-lg); } .hero__cap { display: none; } .hero { min-height: 92svh; } .banner { min-height: 0; } }
 
-.stage { padding-block: calc(var(--space-3xl) + var(--space-2xl)) var(--section-gap-s); }
+.stage { padding-block: calc(var(--space-3xl) + var(--space-xl)) var(--section-gap-s); }
+.stage:has(.form) { padding-bottom: var(--space-xl); }
 .stage--short { padding-bottom: var(--space-2xl); }
 .stage h1 { font-size: var(--text-display); line-height: 0.92; max-width: 11ch; }
 .stage .lead { margin-top: var(--space-lg); }
@@ -144,7 +149,7 @@ h2, .sec__title { line-height: 0.95; }
 .split--4-8 > :first-child { grid-column: 1 / 5; } .split--4-8 > :last-child { grid-column: 6 / 13; }
 .split--6-6 > :first-child { grid-column: 1 / 7; } .split--6-6 > :last-child { grid-column: 7 / 13; }
 .split--stage { align-items: center; }
-.split--stage .photo { min-height: 440px; }
+.split--stage .photo { min-height: 440px; max-height: 640px; aspect-ratio: 6 / 5 !important; }
 @media (max-width: 60rem) { .split > * { grid-column: 1 / -1 !important; } .split--stage .photo { min-height: 0; } }
 
 /* faits */
@@ -167,11 +172,11 @@ h2, .sec__title { line-height: 0.95; }
 .horaires__head { grid-column: 1 / 6; }
 .horaires__head .lead { margin-top: var(--space-md); }
 .sched { grid-column: 6 / 13; margin: 0; border-top: var(--rule-double) double var(--color-ink); }
-.sched__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--gap-columns); padding-block: var(--space-md); border-bottom: var(--rule-hair) solid var(--color-rule); }
+.sched__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--gap-columns); padding: var(--space-md) var(--space-xs); border-bottom: var(--rule-hair) solid var(--color-rule); }
 .sched dt { font-weight: 600; } .sched dd { margin: 0; font-variant-numeric: tabular-nums; }
 .sched__row.is-closed dt, .sched__row.is-closed dd { color: var(--color-muted); }
 .sched--small .sched__row { padding-block: var(--space-sm); }
-.sched__row.is-today { background: var(--color-accent-soft); box-shadow: -12px 0 0 var(--color-accent-soft), 12px 0 0 var(--color-accent-soft); }
+.sched__row.is-today { background: var(--color-accent-soft);  }
 .sched__today { display: block; font-size: var(--text-xs); font-weight: 600; color: var(--color-accent); }
 .lieu { grid-column: 6 / 13; font-style: normal; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-md) var(--gap-columns); }
 .lieu__rue { font-family: var(--font-outlier); font-size: var(--text-title); line-height: 1.2; }
