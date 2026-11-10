@@ -61,3 +61,4 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 - 2026-11-10 · huile-sur-le-feu portfolio : un composant partagé (Acces) se modifie pour toutes ses pages ; compter les eyebrows par page dans dist avec grep -o, pas grep -c (HTML sur une ligne).
 
 - Piège : un `style="grid-column: …"` en attribut écrase la règle mobile de la feuille ; utiliser des classes modificatrices déclarées dans le bloc desktop. Mesurer la largeur de `.paire__texte` à 390 px.
+- Mesure de débordement des titres : utiliser une tolérance de 2 px (arrondis sous-pixel), et couvrir 1024-1280 en plus des largeurs mobiles ; serve.mjs prend `--port N`, et Playwright se lance avec executablePath /opt/pw-browsers/chromium + --no-sandbox.
