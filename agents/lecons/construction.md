@@ -133,3 +133,4 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 - Un `<figure>` avec `aspect-ratio` ET `min-height` s'élargit au-delà de sa colonne (4/3 à 20 rem = 427 px à 375) : retirer le `min-height` sous 60 rem. sloplint `--render` le voit (FAIL 34), le statique non.
 - sloplint rejette un waiver dont la raison ne partage aucun mot avec la page (« waiver 59 REJECTED ») ; corriger la cause (marge basse du pied devant le KywFooter) plutôt que justifier. `scripts/q.sh` : pas de « / » dans le nom du journal.
 - Atelier interdit un contrôle rempli de couleur : le primaire reste hairline et se remplit d'encre au survol seulement. FAIL 15 : ne pas transitionner `outline-color` d'un champ, seulement `background-color`. Un tableau d'horaires se restack sous 40 rem avec `td::before { content: attr(data-l) }`.
+- 2026-11-10 : `aria-label` sur un lien à texte visible différent = axe label-content-name-mismatch ; retirer l'aria-label.

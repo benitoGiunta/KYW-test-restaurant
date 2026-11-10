@@ -1,4 +1,4 @@
-# ETAT — le-54 portfolio (phase 2/3, motion et finitions)
+# ETAT — le-54 portfolio (phase 3/3 terminée : QA faite, RAPPORT.md écrit)
 ## Fait (phase 1)
 - Gabarit Velours adapté, 7 pages, données `data/restaurants/le-54/`, palette bleu nuit / or, photos WebP, noindex, mention Maquette KYW et logo KYW (voir DESIGN.md).
 ## Fait (phase 2)
@@ -21,3 +21,5 @@
 ## Pièges
 - `.onglets::before` (voile) est peint sous `.onglets__photos` si les deux ont z-index -1 : défaut du gabarit Velours, corrigé ici seulement (gabarits/ intouché).
 - Le contrôle de débordement par `getBoundingClientRect` signale les photos de chapitre (pleine largeur voulue, clippées par `overflow-x: clip`) : faux positif, `scrollWidth` = viewport.
+## Phase 3 (QA) — fait
+- Axe header corrigé, débordement non reproduit, pages mobiles revues, build vert. Reste : `pnpm index` + `gabarits/UTILISATION.md` (publication).
