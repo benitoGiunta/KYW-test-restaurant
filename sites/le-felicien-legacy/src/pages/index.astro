@@ -54,7 +54,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   </section>
 
   <section class="band band--ink" aria-labelledby="h-midi">
-    <div class="container statement">
+    <div class="container statement" data-reveal>
       <h2 id="h-midi" style="overflow-wrap:break-word;min-width:0">Entrée et plat, 25&nbsp;€.</h2>
       <p class="lead">Du mardi au vendredi, uniquement le midi. Le plat seul : {suggestions.prixPlat}.</p>
       <a class="link link--on-ink" href={`${base}suggestions-de-la-semaine/`}>Voir les suggestions de la semaine</a>
@@ -86,7 +86,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
           <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
           <tbody>
             {horaires.map((j) => (
-              <tr data-jour={j.jour}><th scope="row">{j.nom}</th><td class="num">{j.midi}</td><td class="num">{j.soir}</td></tr>
+              <tr data-jour={j.jour}><th scope="row">{j.nom}</th><td class="num" data-label="Midi">{j.midi}</td><td class="num" data-label="Soir">{j.soir}</td></tr>
             ))}
           </tbody>
         </table>

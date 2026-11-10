@@ -59,15 +59,23 @@ const jsonLd = {
   <body data-page={page}>
     <a class="skip" href="#contenu">Aller au contenu</a>
     <Nav page={page} />
-    <main id="contenu">
+    <main id="contenu" tabindex="-1">
       <slot />
     </main>
     <Footer accueil={accueil} />
     <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
 document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
     <script is:inline>
-      var j = new Date().getDay();
-      document.querySelectorAll('[data-jour]').forEach(function (el) { if (Number(el.dataset.jour) === j) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); } });
+      (function () {
+        var map = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+        var j = new Date().getDay();
+        try { var w = new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'Europe/Brussels' }).format(new Date()); if (w in map) j = map[w]; } catch (e) {}
+        document.querySelectorAll('[data-jour]').forEach(function (el) { if (Number(el.dataset.jour) === j) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); } });
+        var els = document.querySelectorAll('[data-reveal]');
+        if (!els.length || !('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('is-in'); }); return; }
+        var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting || e.boundingClientRect.top < 0) { e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
+        els.forEach(function (e) { io.observe(e); });
+      })();
     </script>
     <KywFooter base={import.meta.env.BASE_URL} />
   </body>

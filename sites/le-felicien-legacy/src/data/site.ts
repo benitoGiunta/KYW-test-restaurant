@@ -28,9 +28,9 @@ export const nav = [
   { href: 'contact/', label: 'Contact et réservation', id: 'contact' },
 ];
 
-const midi = `12${NB}h${NB}–${NB}14${NB}h`;
-const soir = `18${NB}h${NB}–${NB}21${NB}h${NB}30`;
-const soirTard = `18${NB}h${NB}–${NB}22${NB}h`;
+const midi = `12${NB}h${NB}à${NB}14${NB}h`;
+const soir = `18${NB}h${NB}à${NB}21${NB}h${NB}30`;
+const soirTard = `18${NB}h${NB}à${NB}22${NB}h`;
 
 /** jour : numéro JS (0 = dimanche). Horaires de la cuisine, page Contact du site d’origine. */
 export const horaires = [

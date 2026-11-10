@@ -7,3 +7,7 @@ Comps du premier écran : `.hallmark/comps/c1.html` (+ `c1.png`) et `c2.html` (+
 - **Choix : c1.** Raison : c2 est le héros « texte à côté d'une image » le plus courant ; la photo de 2020 (2560 px) tient mieux en plein champ où le flou du comptoir sert de fond, et le tirage affecte Ledge.
 - **Inventaire des médiums** : hero = `raster` (assiette du site client, 2020) ; illustration de carte = `raster` (couverture du PDF, présentée comme illustration) ; salle = `raster` (photo libre Unsplash, légendée) ; logo = `raster/svg` fourni par le client ; horaires, carte, prix = `code`.
 - Stamp : `comp: 2 built, no key · c1 chosen`. Les trois questions de reproduction : phase 2.
+
+## Reproduction (phase 2)
+
+Masse, Intervalle, Entrée : voir DESIGN.md § Sur-utilisation (phase 2). `comp: 2 built, no key · c1 chosen · reproduced (checked at 1280x800)`.

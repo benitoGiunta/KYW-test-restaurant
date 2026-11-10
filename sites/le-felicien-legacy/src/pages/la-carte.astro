@@ -14,10 +14,10 @@ import { resto, groupes } from '../data/site';
     </div>
   </section>
 
-  <nav class="jump" aria-label="Sections de la carte">
+  <nav class="jump" aria-label="Sections de la carte" data-switch>
     <div class="container">
       <ul>
-        {groupes.map((g) => <li><a href={`#${g.id}`}>{g.nom}</a></li>)}
+        {groupes.map((g) => <li><a href={`#${g.id}`} id={`t-${g.id}`}>{g.nom}</a></li>)}
       </ul>
     </div>
   </nav>
@@ -49,4 +49,41 @@ import { resto, groupes } from '../data/site';
       </div>
     </section>
   ))}
+<script is:inline>
+  (function () {
+    var nav = document.querySelector('[data-switch]');
+    if (!nav) return;
+    var tabs = Array.prototype.slice.call(nav.querySelectorAll('a'));
+    var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('href').slice(1)); });
+    if (panels.some(function (p) { return !p; })) return;
+    nav.setAttribute('role', 'none');
+    var list = nav.querySelector('ul');
+    list.setAttribute('role', 'tablist'); list.setAttribute('aria-label', 'Sections de la carte');
+    tabs.forEach(function (t, i) {
+      t.parentNode.setAttribute('role', 'presentation');
+      t.setAttribute('role', 'tab'); t.setAttribute('aria-controls', panels[i].id);
+      panels[i].setAttribute('role', 'tabpanel'); panels[i].setAttribute('aria-labelledby', t.id);
+    });
+    function select(i, focus, push) {
+      tabs.forEach(function (t, k) {
+        var on = k === i;
+        t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; panels[k].hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+      tabs[i].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      if (push) history.replaceState(null, '', '#' + panels[i].id);
+    }
+    tabs.forEach(function (t, i) { t.addEventListener('click', function (e) { e.preventDefault(); select(i, false, true); }); });
+    list.addEventListener('keydown', function (e) {
+      var i = tabs.indexOf(document.activeElement), n = tabs.length;
+      if (i < 0) return;
+      var k = e.key === 'ArrowRight' ? (i + 1) % n : e.key === 'ArrowLeft' ? (i + n - 1) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1;
+      if (k < 0) return;
+      e.preventDefault(); select(k, true, true);
+    });
+    function fromHash() { var k = panels.map(function (p) { return '#' + p.id; }).indexOf(location.hash); select(k < 0 ? 0 : k, false, false); }
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
+  })();
+</script>
 </Base>
