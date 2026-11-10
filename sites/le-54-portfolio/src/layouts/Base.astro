@@ -54,7 +54,7 @@ const jsonLd = {
     addressCountry: site.adresse.pays,
   },
   geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon },
-  openingHoursSpecification: site.horaires.flatMap((h) =>
+  openingHoursSpecification: site.horaires.filter((h) => !h.aConfirmer).flatMap((h) =>
     h.creneaux.map((c) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: jours[h.jour], opens: c.ouverture, closes: c.fermeture })),
   ),
   acceptsReservations: site.reservation.url,

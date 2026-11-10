@@ -14,7 +14,7 @@ const { id, chiffre, photo, inverse = false, filet = false, lien, eager = false 
       <p class="chiffre" aria-hidden="true" data-parallax="0.12"><span data-compteur={String(chiffre.valeur)}>{chiffre.valeur}</span></p>
     </figure>
     <div class="chapitre__texte">
-      <h2 class="chapitre__titre petite-cap" id={`${id}-titre`}><span class="sr-only">{chiffre.valeur} </span>{chiffre.libelle}</h2>
+      <h2 class="chapitre__titre petite-cap" id={`${id}-titre`}><span class="sr-only">{chiffre.titre ? chiffre.titre : `${chiffre.valeur} `}</span>{chiffre.titre ? '' : chiffre.libelle}</h2>
       {chiffre.sousLibelle && <p class="chapitre__sous">{chiffre.sousLibelle}</p>}
       <div class="stack chapitre__corps"><slot /></div>
       {lien && <p class="chapitre__action"><a class="btn" href={lien.href}>{lien.label}</a></p>}

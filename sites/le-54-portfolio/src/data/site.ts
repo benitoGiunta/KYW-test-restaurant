@@ -14,7 +14,7 @@ export interface Avis { texte: string; auteur: string; source: string; date: str
 export interface Photo { src: string; alt: string; largeur: number; hauteur: number; placeholder: boolean }
 export interface Reseau { nom: string; url: string }
 /** Chiffre monumental d'un chapitre : seulement des nombres prouvés par le dossier (preuve citée). */
-export interface Chiffre { valeur: number; libelle: string; sousLibelle?: string; preuve: string; placeholder: false }
+export interface Chiffre { titre?: string; valeur: number; libelle: string; sousLibelle?: string; preuve: string; placeholder: false }
 export interface Distinction { nom: string; detail: string; url: string | null; placeholder: boolean }
 export interface Offre { nom: string; texte: string; textePlaceholder: boolean; photo: string }
 
@@ -123,7 +123,7 @@ export const site: Restaurant = {
     { nom: 'Véronique Collignon', role: 'Reprise de la maison avec son époux et son fils, en 2010', placeholder: false },
   ],
   citation: {
-    texte: `Pas une seule fois nous avons été déçu.`,
+    texte: `…pas une seule fois nous avons été déçu…`,
     auteur: 'Lorry K.',
     source: 'Avis publié sur Trouve Ton Resto',
     url: null,
@@ -135,7 +135,7 @@ export const site: Restaurant = {
     { texte: `Les mets y sont bons et frais.`, auteur: 'Ornella S.', source: 'Trouve Ton Resto', url: null, date: '', placeholder: false },
   ],
   chiffres: {
-    services: { valeur: 4, libelle: 'services', sousLibelle: 'un menu de saison en trois ou quatre services', preuve: 'dossier.md, carte du site client', placeholder: false },
+    services: { titre: '3 ou 4 services', valeur: 4, libelle: 'services', sousLibelle: 'un menu de saison en trois ou quatre services', preuve: 'dossier.md, carte du site client', placeholder: false },
     prix: { valeur: 48, libelle: 'euros', sousLibelle: `le menu en 3 services, 65${nb}€ en 4 services`, preuve: 'dossier.md, site client /lacarte', placeholder: false },
     famille: { valeur: 3, libelle: 'Collignon', sousLibelle: 'Michel, Véronique et Jonathan, une maison de famille', preuve: 'dossier.md, le54dave.be/a-propos', placeholder: false },
     ouverture: { valeur: 2010, libelle: 'reprise en famille', sousLibelle: 'la maison devient plus gastronomique', preuve: 'dossier.md, le54dave.be/a-propos', placeholder: false },
@@ -192,28 +192,33 @@ export function photoDe(src: string): Photo {
 /** Adresse sur une ligne. */
 export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adresse.numero}, ${r.adresse.cp} ${r.adresse.commune}`;
 
+/** « 18:30 » devient « 18 h 30 », « 21:00 » devient « 21 h ». */
+export const hfr = (t: string) => { const [h, m] = t.split(':'); return `${Number(h)}\u00a0h${m === '00' ? '' : `\u00a0${m}`}`; };
+
 /** Horaires lisibles : '12:00 à 14:00, 19:00 à 21:00' ou la note. */
 export const horaireTexte = (h: Horaire) =>
-  h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé';
+  h.creneaux.length ? h.creneaux.map((c) => `${hfr(c.ouverture)} à ${hfr(c.fermeture)}`).join(', ') : h.note || 'fermé';
 
 /** Les 3 lignes d'horaires de la carte de clôture : soirs, midis, fermetures (calculées, jamais écrites en dur). */
 export function horairesResume(r: Restaurant = site): { libelle: string; valeur: string }[] {
-  const tous = r.horaires.map((h) => h.jour);
-  const soirs = r.horaires.filter((h) => h.creneaux.some((c) => c.ouverture >= '17:00'));
-  const midis = r.horaires.filter((h) => h.creneaux.some((c) => c.ouverture < '15:00'));
+  const tous = r.horaires.filter((h) => !h.aConfirmer).map((h) => h.jour);
+  const sures = r.horaires.filter((h) => !h.aConfirmer);
+  const soirs = sures.filter((h) => h.creneaux.some((c) => c.ouverture >= '17:00'));
+  const midis = sures.filter((h) => h.creneaux.some((c) => c.ouverture < '15:00'));
   const fermes = r.horaires.filter((h) => !h.creneaux.length);
   const liste = (js: string[]) => js.length > 1 ? `${js.slice(0, -1).join(', ')} et ${js[js.length - 1]}` : js.join('');
   const plage = (hs: Horaire[]) => {
     const js = hs.map((h) => h.jour);
     if (js.length === tous.length) return 'tous les jours';
-    return js.length > tous.length / 2 ? `tous les jours sauf ${liste(tous.filter((j) => !js.includes(j)))}` : liste(js);
+    return liste(js);
   };
-  const heure = (hs: Horaire[], soir: boolean) => { const c = hs[0].creneaux.find((x) => (x.ouverture >= '17:00') === soir)!; return `${c.ouverture} à ${c.fermeture}`; };
+  const heure = (hs: Horaire[], soir: boolean) => { const c = hs[0].creneaux.find((x) => (x.ouverture >= '17:00') === soir)!; return `${hfr(c.ouverture)} à ${hfr(c.fermeture)}`; };
   const maj = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
   return [
     { libelle: 'Le soir', valeur: `${maj(plage(soirs))}, ${heure(soirs, true)}` },
     { libelle: 'Le midi', valeur: `${maj(plage(midis))}, ${heure(midis, false)}` },
     { libelle: maj(liste(fermes.map((h) => h.jour))), valeur: 'fermé' },
+    ...r.horaires.filter((h) => h.aConfirmer).map((h) => ({ libelle: maj(h.jour), valeur: 'à confirmer' })),
   ];
 }
 
