@@ -25,3 +25,8 @@
 
 ## Phase 3 (QA)
 - Prix passant sur 2 lignes à 390 corrigé (nbsp avant €), mesuré. RAPPORT.md écrit. Build final OK. Reste : pnpm index par la publication, logo client, LCP mobile hero.
+
+## Revue 2 (relecteur-site) : REVUE-2.md écrit, verdict A_CORRIGER (0 F0, 0 F1, 1 F2, 4 F3)
+- Fait : vérification de toutes les corrections de REVISION-1 (confirmées), mesures propres sur 6 pages x 2 largeurs, LCP 1,9 à 2,0 s.
+- Reste pour le réviseur : F2-A prix débordant de la pastille (`base.css:155`), F3-A region du pied (`Footer.astro`), F3-B « Buon appetito » coupé, F3-C carte orpheline, F3-D apostrophe `carte.astro:64`.
+- Serveur 4744 arrêté.
