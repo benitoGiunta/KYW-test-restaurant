@@ -1,18 +1,24 @@
-# ETAT : le-ponti-2 portfolio (phase 1 sur 3)
+# ETAT : le-ponti-2 portfolio (phase 2 sur 3 faite)
 
-## Fait
-- Gabarit guinguette copié et adapté ; DESIGN.md (matrice, décisions) ; `src/data/site.ts` + `carte.json` (99 lignes réelles).
-- Pages : accueil, carte, la maison (`/histoire/`), terrasse, réservation, 404 ; À emporter supprimée.
-- Palette bordeaux/or/canard (tokens.css + règles `.section--corail`, `.btn` hover en `--c-on-corail`), objets `pizza` et `pont`, favicon, og.jpg, photos recadrées.
-- Build OK : `pnpm build:site sites/le-ponti-2-portfolio` (6 pages) ; noindex et mention « Maquette KYW » présents.
+## Fait (phase 1)
+- Gabarit guinguette adapté, DESIGN.md, `site.ts` + `carte.json` (99 lignes), 6 pages, palette bordeaux/or/canard, objets `pizza` et `pont`, favicon, og.jpg.
 
-## Reste (phases 2 et 3)
-- QA navigateur : hero 1440/1280/390 (objets sur titre, CTA visibles), table (12 tirages, rail mobile), contraste bordeaux, `.hcarte`, marquee.
-- Vérifier : état ouvert/fermé (lundi fermé, midi et soir), formulaire, liens, `scrollWidth` 320/360/390, clics réels de l'en-tête, bas de page + footer KYW.
-- Motion : rien touché au moteur ; contrôler `data-avis` avec le mot « Ponti » et les cartes de la carte réelle.
-- `pnpm index`, `dist/` commité, RAPPORT.md, UTILISATION.md (guinguette : le-ponti-2 ajouté), logo client non intégré (logo.webp en public, inutilisé).
+## Fait (phase 2, mesuré à 1920/1440/1280/1024/390/360/320, 0 erreur console)
+- Bug de section « La table » : `.rail { display: flex }` (ligne tardive) écrasait `.table__rail { display: none }` : le rail s'affichait aussi en desktop (section 1552 px, titre sous les photos). Corrigé par `.table .table__rail` ; le titre « La table du Ponti » est maintenant libre entre deux rangées de 6 tirages (positions `site.ts`), verre/citron/fourchette posés de part et d'autre.
+- Marquee : groupe `min-width: 100vw` (plus de trou à 1920) ; état ouvert/fermé lu en heure de Namur (`Intl`, fuseau Europe/Brussels), testé par `page.clock.install` (lundi fermé, midi, entre-deux, soir, dimanche).
+- Carte : pastilles de catégories (ancres, `aria-current` par IntersectionObserver, clic via `scrollToTarget` car l'option `anchors` de Lenis ne scrollait pas), ligne de plat survolée, défilement horizontal des pastilles sous 48rem ; prix long (« 12 € par personne ») sans débordement à 320.
+- Horaires : espaces insécables dans « 11:30 à 14:30 » (retour à la ligne seulement après la virgule).
+- Formulaire : états hover, `:user-invalid` (bordeaux), `:user-valid` (canard).
+- Vérifié : hero sans recouvrement objets/titre/CTA (1920 à 320) ; objets visibles et sans marquee animé en reduced-motion (tirages en grille statique, objets masqués) ; clics réels de l'en-tête (elementFromPoint = lien, URL change) ; bas de page 1440 (mention Maquette KYW + « Réalisé par Know Your Website ») ; `scrollWidth` = fenêtre sur 6 pages à 320/360/390.
+- Build OK (scripts/q.sh), `dist/le-ponti-2/portfolio/` rebuilt.
 
-## Décisions / hypothèses
-- `/histoire/` conservé comme route « La maison » (faits seulement). Titre du hero « À table, en famille », slogan = baseline réelle.
-- Adresse « Jambes (Namur) » en commune ; téléphone +32 81 30 40 75 ; e-mail du site affiché sur Réserver.
-- `gabarits/` non modifié. Aucun serveur lancé.
+## Reste (phase 3)
+- Shoot/audit complets par l'agent « captures » ; axe (contraste des pastilles actives, focus), sloplint, Lighthouse.
+- `pnpm index`, RAPPORT.md, UTILISATION.md (guinguette : le-ponti-2), logo client non intégré, test tactile du glisser sur mobile non fait (rail sans Draggable).
+- Interdit de refaire : table, marquee, pastilles (déjà vérifiés).
+
+## Pièges
+- `dist/le-ponti-2/awwwards/` et `sites/le-ponti-2-legacy/` appartiennent à d'autres agents : ne pas les ajouter au commit.
+- Faux positifs de mon script de débordement : lien d'évitement `A` hors écran, `.carte` en scale avant reveal.
+- « Ouvert, arrivée jusqu'à 14:30 » (libellé du gabarit) à confirmer comme formulation.
+- `gabarits/` non modifié (défaut rail/display à reporter : voir leçon).

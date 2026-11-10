@@ -37,8 +37,11 @@ function marquee() {
   const horaires = JSON.parse(root.dataset.horaires || '[]') as { j: string; c: { ouverture: string; fermeture: string }[] }[];
   const parJour = (j: string) => horaires.find((h) => h.j === j);
   const peindre = () => {
-    const d = new Date();
-    const hhmm = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    // Heure de Namur quel que soit le fuseau du visiteur.
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('fr-BE', { timeZone: 'Europe/Brussels', weekday: 'long', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map((p) => [p.type, p.value]));
+    const hhmm = `${parts.hour}:${parts.minute}`;
+    const idx = jours.indexOf(String(parts.weekday).toLowerCase());
+    const d = { getDay: () => idx };
     const auj = parJour(jours[d.getDay()]);
     let texte = 'Horaires du jour';
     let etat = '';

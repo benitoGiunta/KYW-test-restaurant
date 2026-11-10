@@ -105,7 +105,7 @@ export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adre
 
 /** Horaires lisibles : '12:00 à 14:00, 19:00 à 21:00' ou la note. */
 export const horaireTexte = (h: Horaire) =>
-  h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé';
+  h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture}\u00a0à\u00a0${c.fermeture}`).join(', ') : h.note || 'fermé';
 
 /** Téléphone pour href="tel:" (sans espaces). */
 export const telHref = (r: Restaurant = site) => `tel:${r.telephone.replace(/\s+/g, '')}`;
@@ -137,18 +137,18 @@ export const guinguette = {
   ] as Objet[],
   /** 12 recadrages carrés des quatre photos du restaurant (aucune photo libre) : légendes descriptives. */
   tirages: [
-    t('pizza-roquette', 'Pizza à la roquette et aux copeaux de parmesan', 4, 6, -7, 'Pizza roquette'),
-    t('facade-enseigne', 'Enseigne lumineuse Le Ponti 2 Restaurant, de nuit', 22, 2, 5, "L'enseigne"),
-    t('pates-assiette', 'Assiette de spaghettis à la tomate et au basilic', 42, 4, -3, 'Pâtes à la tomate'),
-    t('escalope-gratinee', 'Escalope gratinée sur une assiette bleue', 62, 3, 8, 'Escalope gratinée'),
-    t('pizza-comptoir', 'Pizza à la roquette posée sur le comptoir de cuisine', 80, 8, -5, 'Au comptoir'),
-    t('pates-table', 'Pâtes sur une table dressée, verres à pied en arrière-plan', 2, 44, 6, 'À table'),
-    t('escalope-salades', 'Salades et plats en préparation au passe', 20, 52, -9, 'Au passe'),
-    t('facade-rue', 'Façade du restaurant de nuit, vue depuis la rue', 40, 48, 4, 'La façade'),
-    t('pizza-fond', 'Plusieurs pizzas alignées sur le comptoir', 58, 54, -6, 'Une fournée'),
-    t('pates-vin', 'Panier de pain et bouteille de vin sur la table', 78, 50, 7, 'Pain et vin'),
-    t('escalope-table', 'Plats alignés sur une table, escalope au premier plan', 12, 26, 3, "L'escalope"),
-    t('facade-bas', 'Façade de nuit, enseigne et vitrines éclairées', 68, 28, -4, 'La soirée'),
+    t('pizza-roquette', 'Pizza à la roquette et aux copeaux de parmesan', 3, 1, -7, 'Pizza roquette'),
+    t('facade-enseigne', 'Enseigne lumineuse Le Ponti 2 Restaurant, de nuit', 19, 4, 5, "L'enseigne"),
+    t('pates-assiette', 'Assiette de spaghettis à la tomate et au basilic', 35, 0, -3, 'Pâtes à la tomate'),
+    t('escalope-gratinee', 'Escalope gratinée sur une assiette bleue', 51, 3, 8, 'Escalope gratinée'),
+    t('pizza-comptoir', 'Pizza à la roquette posée sur le comptoir de cuisine', 67, 1, -5, 'Au comptoir'),
+    t('pates-table', 'Pâtes sur une table dressée, verres à pied en arrière-plan', 7, 62, 6, 'À table'),
+    t('escalope-salades', 'Salades et plats en préparation au passe', 22, 65, -9, 'Au passe'),
+    t('facade-rue', 'Façade du restaurant de nuit, vue depuis la rue', 38, 61, 4, 'La façade'),
+    t('pizza-fond', 'Plusieurs pizzas alignées sur le comptoir', 54, 64, -6, 'Une fournée'),
+    t('pates-vin', 'Panier de pain et bouteille de vin sur la table', 69, 61, 7, 'Pain et vin'),
+    t('escalope-table', 'Plats alignés sur une table, escalope au premier plan', 82, 4, 3, "L'escalope"),
+    t('facade-bas', 'Façade de nuit, enseigne et vitrines éclairées', 83, 65, -4, 'La soirée'),
   ] as Tirage[],
   pictos: [
     { categorie: 'Entrées', picto: 'citron' },

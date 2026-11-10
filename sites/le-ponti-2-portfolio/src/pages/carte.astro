@@ -6,6 +6,8 @@ import { u, asset } from '../lib/url';
 const g = guinguette;
 const picto = (cat: string) => g.pictos.find((p) => cat.startsWith(p.categorie))?.picto ?? 'fourchette';
 const photos = ['pizza-roquette', 'pates-assiette', 'escalope-gratinee', 'pates-table'].map((n) => ({ src: `/photos/${n}.webp`, alt: g.tirages.find((t) => t.src.endsWith(n + '.webp'))!.alt, legende: g.tirages.find((t) => t.src.endsWith(n + '.webp'))!.legende }));
+const court = (c: string) => c.split(' (')[0];
+const slug = (c: string) => 'c-' + court(c).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
 ---
 <Base title="La carte" description={`La carte de ${site.nom} à Jambes : pizzas, pâtes, escalopes de veau, desserts maison, cocktails, et le menu 3 services à 40 €.`}>
@@ -21,11 +23,14 @@ const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
 
   <section class="section" style="padding-top:0">
     <div class="wrap">
+      <nav class="cats" aria-label="Catégories de la carte" data-cats>
+        {site.carte.map((c) => <a class="cats__lien" href={`#${slug(c.categorie)}`}>{court(c.categorie)}</a>)}
+      </nav>
       <div class="carte">
         <h2 class="sr-only">Le menu</h2>
         <div class="carte__grille">
           {site.carte.map((c) => (
-            <div>
+            <div id={slug(c.categorie)} data-cat>
               <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie.split(' (')[0]}</h3>
               {c.categorie.includes(' (') && <p class="cat__note">{c.categorie.slice(c.categorie.indexOf('(') + 1, -1)}</p>}
               <ul role="list">
@@ -69,3 +74,29 @@ const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
     </div>
   </section>
 </Base>
+
+<script>
+  import { onPage, scrollToTarget } from '../engine';
+  // Pastilles de catégories : la catégorie la plus haute dans la fenêtre porte aria-current.
+  onPage(() => {
+    const liens = [...document.querySelectorAll<HTMLAnchorElement>('[data-cats] a')];
+    const cibles = liens.map((l) => document.getElementById(l.getAttribute('href')!.slice(1))).filter((e): e is HTMLElement => !!e);
+    if (!liens.length || !('IntersectionObserver' in window)) return;
+    const vus = new Set<Element>();
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => (e.isIntersecting ? vus.add(e.target) : vus.delete(e.target)));
+      const premier = cibles.find((c) => vus.has(c));
+      liens.forEach((l) => (premier && l.getAttribute('href') === `#${premier.id}` ? l.setAttribute('aria-current', 'true') : l.removeAttribute('aria-current')));
+    }, { rootMargin: '-20% 0px -55% 0px' });
+    cibles.forEach((c) => io.observe(c));
+    const clic = (e: Event) => {
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('[data-cats] a');
+      const cible = a && document.getElementById(a.getAttribute('href')!.slice(1));
+      if (!a || !cible) return;
+      e.preventDefault();
+      scrollToTarget(Math.max(0, cible.getBoundingClientRect().top + scrollY - 100));
+    };
+    document.addEventListener('click', clic);
+    return () => { io.disconnect(); document.removeEventListener('click', clic); };
+  });
+</script>

@@ -26,7 +26,7 @@ h1, h2, h3, .display { font-family: var(--f-display); font-weight: 700; letter-s
 /* Marquee d'état */
 .marquee { overflow: clip; contain: layout paint; max-width: 100vw; background: var(--c-ink); color: var(--c-lin); font-size: var(--t-s); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
 .marquee__piste { display: flex; width: max-content; }
-.marquee__groupe { display: flex; flex: 0 0 auto; white-space: nowrap; padding-block: 0.55em; }
+.marquee__groupe { display: flex; flex: 0 0 auto; justify-content: space-around; min-width: 100vw; white-space: nowrap; padding-block: 0.55em; }
 .marquee__groupe span { flex: 0 0 auto; white-space: nowrap; }
 .marquee__groupe span::after { content: '·'; display: inline-block; margin-inline: 1.2em; color: var(--c-paille); }
 .marquee__etat { color: var(--c-paille); }
@@ -128,9 +128,18 @@ html.motion .badge svg { animation: tourne 14s linear infinite; }
 .badge text { font-family: var(--f-body); font-weight: 700; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; fill: currentColor; }
 /* La main reste petite au centre : `.badge svg` (absolu, 100 %) l'agrandissait à toute la pastille (REVISION-1, F2-6). */
 .badge .badge__main { position: relative; inset: auto; width: 2.2rem; height: 2.2rem; }
-.table__rail { display: none; }
+.table .table__rail { display: none; }
 
 /* Le menu : carte blanche */
+/* Pastilles de catégories de la carte */
+.cats { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-bottom: calc(var(--u) * 3); }
+.cats__lien { display: inline-flex; align-items: center; min-height: 44px; padding: 0 1.1em; border: 2px solid var(--c-ink); border-radius: var(--pill); font-weight: 700; font-size: var(--t-s); transition: background 0.25s, color 0.25s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.cats__lien:hover { background: var(--c-ink); color: var(--c-lin); transform: translateY(-2px) rotate(-1.5deg); }
+.cats__lien[aria-current='true'] { background: var(--c-corail); border-color: var(--c-corail); color: var(--c-on-corail); }
+.cats__lien:focus-visible { outline: 3px solid var(--c-canard); outline-offset: 3px; }
+[data-cat] { scroll-margin-top: 6rem; }
+.plat { border-radius: 10px; transition: background 0.2s; }
+@media (hover: hover) { .plat:hover { background: color-mix(in srgb, var(--c-paille) 22%, transparent); } }
 /* La carte part d'un scale > 1 (data-reveal="scale") : avant sa révélation elle débordait de 10 px en 390 px. */
 #menu { overflow-x: clip; }
 .carte { background: var(--c-blanc); border-radius: var(--radius); padding: calc(var(--u) * 4) calc(var(--u) * 4.5); box-shadow: 0 20px 50px rgb(31 26 23 / 0.1); }
@@ -138,11 +147,12 @@ html.motion .badge svg { animation: tourne 14s linear infinite; }
 .cat__titre { display: flex; align-items: center; gap: 0.6em; font-size: var(--t-m); margin-bottom: calc(var(--u) * 1.5); }
 .cat__titre svg { width: 2.2rem; height: 2.2rem; flex: 0 0 auto; color: var(--c-canard); }
 .cat__note { font-size: var(--t-s); color: var(--c-muted); margin: -0.6em 0 1em; }
-.plat { display: flex; align-items: baseline; gap: 0.5em; padding-block: 0.55em; }
+.plat { display: flex; align-items: baseline; gap: 0.5em; padding: 0.55em 0.5em; margin-inline: -0.5em; }
 .plat__nom { font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: var(--t-s); }
 .plat__desc { display: block; font-weight: 500; text-transform: none; letter-spacing: 0; font-size: var(--t-s); color: var(--c-muted); }
 .plat__points { flex: 1 1 auto; min-width: 1.5rem; border-bottom: 2px dotted var(--c-line); translate: 0 -0.35em; }
 .plat__prix { flex: 0 0 auto; min-width: 2.6rem; padding: 0.15em 0.6em; border: 2px solid var(--c-corail); border-radius: var(--pill); font-weight: 700; font-size: var(--t-s); text-align: center; }
+@media (max-width: 29rem) { .plat__prix { flex: 0 1 auto; max-width: 42%; text-align: right; border-radius: 14px; line-height: 1.25; } }
 .vege { display: inline-block; margin-left: 0.5em; padding: 0.1em 0.5em; border-radius: var(--pill); background: var(--c-paille); color: var(--c-ink); font-size: var(--t-xs); letter-spacing: 0.06em; vertical-align: middle; }
 .carte__menus { display: grid; gap: calc(var(--u) * 2); grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); margin-top: calc(var(--u) * 4); }
 .formule { padding: calc(var(--u) * 2.5); border: 2px solid var(--c-ink); border-radius: var(--radius); }
@@ -217,6 +227,10 @@ html.motion .avis__mot { --flou: 14px; }
 .form label.large { grid-column: 1 / -1; }
 .form input, .form select, .form textarea { font: inherit; padding: 0.7em 1em; border: 2px solid var(--c-ink); border-radius: 16px; background: var(--c-blanc); color: var(--c-ink); }
 .form input:focus-visible, .form textarea:focus-visible { outline: 3px solid var(--c-canard); outline-offset: 2px; }
+.form input, .form textarea { transition: border-color 0.2s, box-shadow 0.2s; }
+.form input:hover, .form textarea:hover { border-color: var(--c-corail); }
+.form input:user-invalid, .form textarea:user-invalid { border-color: var(--c-corail); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-corail) 25%, transparent); }
+.form input:user-valid { border-color: var(--c-canard); }
 .form .actions { grid-column: 1 / -1; margin-top: 0; }
 
 /* Page 404 */
@@ -264,9 +278,11 @@ html.motion .avis__mot { --flou: 14px; }
   .maison__grille { grid-template-columns: 1fr; }
   .maison__texte { padding: calc(var(--u) * 2.5) calc(var(--u) * 2); }
   .table { min-height: 0; }
+  .cats { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; margin-inline: calc(-1 * var(--gutter)); padding: 0.4rem var(--gutter); scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+  .cats__lien { flex: 0 0 auto; white-space: nowrap; }
   .table__scene { display: none; }
   .table__titre { position: static; translate: none; margin-bottom: calc(var(--u) * 3); }
-  .table__rail { display: flex; }
+  .table .table__rail { display: flex; }
   .table__rail .tirage { --w: 14rem; rotate: var(--r); cursor: default; }
   .badge { position: relative; right: auto; bottom: auto; width: 6.5rem; height: 6.5rem; margin: calc(var(--u) * 2) auto 0; }
   .carte { padding: calc(var(--u) * 3) calc(var(--u) * 2); }
