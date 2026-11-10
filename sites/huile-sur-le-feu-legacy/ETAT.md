@@ -31,3 +31,7 @@
 ## Phase 3 (QA)
 - Corrigé : contraste `.schedule__today`, cibles tactiles 44 px (pointer: coarse), balises og/twitter. Build passe. RAPPORT.md écrit.
 - Non fait : sloplint final, finish review, jury, log theme.mjs (voir RAPPORT.md).
+
+## Revue 1 (relecteur-site, 10/11/2026)
+- Verdict A_CORRIGER : 0 F0, 0 F1, 5 F2, 7 F3 (voir REVUE-1.md). À traiter : og:image, JSON-LD horaires, cibles 24 px hors tactile, repère `region` du pied, photo dupliquée sur la boutique ; puis F3 (CLS 0,055, espaces avant « : », alt du hero, canonical 404, tuile vide).
+- Pièges : ne pas transformer le pied du site en `<footer>` (doublon contentinfo avec kyw-footer).
