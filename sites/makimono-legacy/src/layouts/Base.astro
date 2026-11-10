@@ -3,7 +3,6 @@ import KywFooter from '@kyw/footer';
 import Nav from '../components/Nav.astro';
 import Pied from '../components/Pied.astro';
 import { resto, base, horaires } from '../data/site';
-import '../styles/page.css';
 interface Props { title: string; description: string }
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -37,6 +36,7 @@ const ld = JSON.stringify({
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Ultra&family=Chivo:wght@400;500;700&display=swap" rel="stylesheet" />
     <script type="application/ld+json" set:html={ld} />
+    <style is:global>@import "../styles/page.css";</style>
   </head>
   <body>
     <a class="skip" href="#contenu">Aller au contenu</a>
@@ -48,25 +48,71 @@ const ld = JSON.stringify({
     <KywFooter base={base} />
     <script is:inline>
       (function () {
+        var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var root = document.documentElement;
         var tl = document.querySelector('[data-onglets]');
-        if (!tl) return;
-        var tabs = Array.prototype.slice.call(tl.querySelectorAll('[role=tab]'));
-        function sel(t, focus) {
-          tabs.forEach(function (x) {
-            var on = x === t;
-            x.setAttribute('aria-selected', on ? 'true' : 'false'); x.tabIndex = on ? 0 : -1;
-            document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+        if (tl) {
+          var tabs = Array.prototype.slice.call(tl.querySelectorAll('[role=tab]'));
+          var sel = function (t, focus, anim) {
+            tabs.forEach(function (x) {
+              var on = x === t, p = document.getElementById(x.getAttribute('aria-controls'));
+              x.setAttribute('aria-selected', on ? 'true' : 'false'); x.tabIndex = on ? 0 : -1;
+              p.hidden = !on;
+              if (on && anim && !rm) { p.classList.remove('entre'); void p.offsetWidth; p.classList.add('entre'); p.addEventListener('animationend', function () { p.classList.remove('entre'); }, { once: true }); }
+            });
+            if (focus) t.focus();
+          };
+          tabs.forEach(function (t, i) {
+            t.addEventListener('click', function () { sel(t, false, true); });
+            t.addEventListener('keydown', function (e) {
+              var n = e.key === 'ArrowRight' ? (i + 1) % tabs.length : e.key === 'ArrowLeft' ? (i + tabs.length - 1) % tabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : -1;
+              if (n > -1) { e.preventDefault(); sel(tabs[n], true, true); }
+            });
           });
-          if (focus) t.focus();
+          sel(tabs[0], false, false);
         }
-        tabs.forEach(function (t, i) {
-          t.addEventListener('click', function () { sel(t, false); });
-          t.addEventListener('keydown', function (e) {
-            var n = e.key === 'ArrowRight' ? (i + 1) % tabs.length : e.key === 'ArrowLeft' ? (i + tabs.length - 1) % tabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : -1;
-            if (n > -1) { e.preventDefault(); sel(tabs[n], true); }
-          });
-        });
-        sel(tabs[0], false);
+        /* Menu mobile : un clic sur un lien referme le popover (un <a> n'a pas de popovertarget) */
+        var pop = document.getElementById('menu-mobile');
+        if (pop && pop.hidePopover) pop.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) pop.hidePopover(); });
+        /* Jour courant dans les horaires (Europe/Brussels) */
+        try {
+          var jour = new Intl.DateTimeFormat('fr-BE', { weekday: 'long', timeZone: 'Europe/Brussels' }).format(new Date()).toLowerCase();
+          var ligne = document.querySelector('.sched__jour[data-jour="' + jour + '"]');
+          if (ligne) {
+            ligne.setAttribute('aria-current', 'date');
+            var dd = ligne.querySelector('dd'), tag = document.createElement('span');
+            tag.className = 'auj'; tag.textContent = 'Aujourd’hui'; dd.appendChild(tag);
+          }
+        } catch (e) {}
+        /* Lien de nav actif : la dernière section dépassée sous la nav */
+        var liens = Array.prototype.slice.call(document.querySelectorAll('.nav a[href*="#"]'));
+        var cibles = Array.prototype.slice.call(document.querySelectorAll('main section[id], #evenement'));
+        if (liens.length && cibles.length && document.querySelector('.hero')) {
+          var maj = function () {
+            var cur = null;
+            cibles.forEach(function (c) { if (c.getBoundingClientRect().top <= 120) cur = c; });
+            if (cur && cur.id === 'livraison' && document.getElementById('evenement').getBoundingClientRect().top <= 120) cur = document.getElementById('evenement');
+            liens.forEach(function (a) {
+              if (cur && a.hash === '#' + cur.id) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+            });
+          };
+          var tick = false;
+          window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(function () { tick = false; maj(); }); } }, { passive: true });
+          maj();
+        }
+        /* Un seul reveal : blocs de structure, une fois, sans effet si mouvement réduit ou sans observateur */
+        var rev = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+        if (rev.length && 'IntersectionObserver' in window && !rm) {
+          try {
+            var io = new IntersectionObserver(function (es) {
+              es.forEach(function (e) {
+                if (e.isIntersecting || e.boundingClientRect.top < 0) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+              });
+            }, { rootMargin: '0px 0px -8% 0px' });
+            rev.forEach(function (el) { io.observe(el); });
+            root.classList.add('reveal-on');
+          } catch (e) { root.classList.remove('reveal-on'); }
+        }
       })();
     </script>
   </body>

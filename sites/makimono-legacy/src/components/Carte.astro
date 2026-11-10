@@ -12,7 +12,7 @@ const coupe = (d: string) => { const [a, ...r] = d.split(' · '); return /pièce
       {panneaux.map((p, i) => <button type="button" role="tab" id={`onglet-${p.id}`} aria-controls={`panneau-${p.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{p.titre}</button>)}
     </div>
     {panneaux.map((p) => (
-      <div class="panneau" role="tabpanel" id={`panneau-${p.id}`} aria-labelledby={`onglet-${p.id}`}>
+      <div class="panneau" role="tabpanel" tabindex="0" id={`panneau-${p.id}`} aria-labelledby={`onglet-${p.id}`}>
         {p.categories.map((k) => (
           <div class="rubrique">
             <div class="rubrique__tete">

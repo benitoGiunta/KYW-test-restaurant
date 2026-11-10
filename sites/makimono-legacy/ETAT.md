@@ -1,26 +1,25 @@
-# ETAT : makimono-legacy (fin de la phase 1 sur 3)
+# ETAT : makimono-legacy (fin de la phase 2 sur 3)
 
-## Fait
-- Audit (`AUDIT.md`, `.hallmark/before.txt`), approche conservée (Photographic, one-page, Poster), deal Halftone 1/3, draw 8e190a, scaffold, stamp, comp (2 comps, c1 choisie), `DESIGN.md`, `comp.md`.
-- Contenu : `src/data/site.ts` + `carte.json` (copie de la carte transcrite par la recherche, lue seule depuis le portfolio ; apostrophes typographiques par `ap()`).
-- Pages : `/` (Hero, Carte, Photos, Composer, Boxes, Livraison et événement, Horaires et adresse, Pied) et `/404`. Photos WebP (1600 et 800) dans `public/photos/`.
-- Switcher de la carte (script inline minimal dans `Base.astro`, sans lui tout est visible), nav mobile par `popover`.
-- Build : `pnpm build:site sites/makimono-legacy` passe (2 pages) ; sloplint `--render --url` sur page.css : 0 FAIL, 0 REFLEX. KywFooter et noindex présents sur `/` et `/404`.
+## Fait (phase 1)
+Audit, approche, deal Halftone, comp c1, DESIGN.md, contenu réel (`site.ts`, `carte.json`), page `/` et `/404`, photos WebP, build.
 
-## Reste (phase 2 et 3)
-- Phase 2 : un reveal (IntersectionObserver, visible par défaut, `prefers-reduced-motion`), lien de nav actif, jour courant dans les horaires, finitions des états de contrôle (focus visible mesuré), vérification 375 et 1920, hauteur des tuiles du bento, trame de points.
-- Phase 3 : `sloplint --kept` sur les mêmes cibles que `--before` (WARN « not compared » en attente), RAPPORT.md, revue des gates jugées (§ 5), entrée finale du journal, QA navigateur.
+## Fait (phase 2)
+- Hero review : sloplint `--stage hero` 0 FAIL ; pas d'outil Agent en session : revue notée `self`. `hero-review: ship (self) · 2 findings · 2 resolved` : (1) bande crème vide sous le hero à 1920x1080 (plafond 900 px) → `max(34rem, 100dvh - 75px)` ; (2) à 375 le premier écran n'avait que la photo → image à 38dvh, titre et bouton plein visibles dans les 812 px.
+- Comp : reproduction écrite dans `comp.md` (Masse, Intervalle, Entrée, écart gardé).
+- Nav : « Commander » passe en contour (`btn--ligne`) pour n'avoir qu'un bouton plein par écran ; lien actif (`aria-current="location"`, scrollspy sur toutes les sections, Composer et Boxes sans lien actif) ; liens de nav préfixés par la base sur la 404 ; menu mobile `popover` refermé au clic d'un lien (script, un `<a>` n'accepte pas `popovertarget`) ; gap réduit sous 40 rem (tient à 320) ; logo `alt=""` (le lien porte l'aria-label), burger sans aria-label (libellé visible « Menu »).
+- Carte : onglets visibles seulement sous `.js` (sans script tout est affiché), `tabindex="0"` sur les panneaux, signature de phase 2 : au changement d'onglet le filet de chaque rubrique se trace (scaleX) et les lignes montent (opacité, 8 px) ; clavier flèches, Début, Fin vérifiés.
+- Horaires : jour courant (Europe/Brussels) en `aria-current="date"` + étiquette « Aujourd’hui » ; tint de fond et nom en vermillon.
+- Reveal unique (11 blocs de structure : tuiles, puits, boxes, photo ; aucun lien dedans) sous `.js.reveal-on`, posé par le script seulement sans mouvement réduit ; scroll doux sous `no-preference`.
+- Survols sous `@media (hover: hover)`, `:active` sur chaque contrôle, liens du pied à 44 px avec focus crème, `::selection` du pied.
+- sloplint `--render --url` : 0 FAIL, 0 REFLEX, 2 WARN 28a (faux positifs : images sous le pli en `loading="lazy"`), 1 NOTE 58. Playwright 1920 à 320 : aucun débordement horizontal. Build passe (2 pages), noindex et `kyw-signature` présents sur `/` et `/404`.
+- `Base.astro` charge `page.css` par `<style is:global>@import</style>` (sloplint ne suit pas l'import JS).
 
-## Décisions et hypothèses
-- Pas de réservation de table connue : l'action « book » devient « Commander en ligne » (`https://makimono.be/online_order/fr/order/`, lien du site d'origine). Autres outils (Deliverect, Ordering Club, Uber Eats) non repris faute de choix.
-- Hero Poster gardé malgré le draw (Index) : l'original ouvre sur la photo. Titre « Des uramaki créatifs, faits avec amour » = traduction de la baseline anglaise, qui devient le mot du pied (reworded noté).
-- Téléphone du site (+32 483 03 88 47) gardé ; celui de restaurants.json (+32 495 90 82 74) non repris, à confirmer. `wtai:` converti en `tel:`.
-- Carte : « Korean Futo » 10,50 ou 11,00 € à confirmer ; la mention interne est retirée du texte affiché, le prix affiché reste « 10,50 à 11,00 € » tel que transcrit. Edamame et Wakame (4,50 € chacun) : alignement à confirmer.
-- Dropped (au stamp) : #blog, #team, lightbox et liens images/portfolio/N.jpg (photos montrées en figures), modale de recrutement #promotie (image absente, texte en commentaire). Photos du client non utilisées : 01, 02, 03, 07, 08, 10, 11, 16.
-- Aucune donnée fictive, aucun `.fill`. Pas de note ni d'avis affichés (46a). E-mail `contact.makimono@gmail.com` du site actuel, pas l'ancien Miss Maki.
+## Reste (phase 3)
+- `sloplint --kept` sur les mêmes cibles que `--before`, RAPPORT.md, gates jugées (§ 5), entrée finale du journal `.hallmark/log.json`, QA navigateur par l'agent captures (reveal : captures pleine page sans défilement montrent les blocs vides).
+- Vérifier la trame de points (événement, pied) sur captures et la hauteur des tuiles du bento (g2 sur deux rangées, 720 px).
 
-## Pièges
-- `capture.mjs` écrit toujours `screen-home-desktop.png` : renommer entre deux comps.
-- sloplint sur un fichier `dist/` local sous `base` rend sans CSS (chemins absolus) : servir `dist` (`serve.mjs --port`) et passer `--url http://127.0.0.1:<port>/makimono/legacy/`.
-- Waiver sloplint : trois champs (gate · garde · raison), sinon REJECTED.
-- Les figures n'ont pas `data-slot` (la règle de base.css masque alors la légende).
+## Hypothèses et pièges
+- Hypothèses de phase 1 inchangées (pas de réservation de table, action = commande en ligne, téléphone du site, prix Futo à confirmer, aucune donnée fictive).
+- Pas de formulaire : états d'input et faux envoi sans objet.
+- Le « Réalisé par » du KywFooter mesure 24 px (composant partagé, non modifié).
+- Pièges : `planche.py` ne gère pas `--colonnes` en options (les valeurs sont lues comme des images) ; un `page.screenshot` à chemin relatif écrit depuis le cwd (fichier perdu à la racine).
