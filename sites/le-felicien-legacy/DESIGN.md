@@ -55,3 +55,26 @@ Solstice, tokens lus dans `src/styles/tokens.css` : papier `oklch(94% 0.03 80)`,
 **Nav** : masthead (logo centré, deux liens à gauche, un lien et « Réserver une table » en contour à droite), 80 px au bureau, 64 px au téléphone (Menu à gauche, Réserver à droite), sticky.
 **Hero review** : `self` (pas d'outil Agent), quatre captures lues, sloplint hero 0 FAIL, 0 WARN, 1 NOTE (58, 90 mots à 1440 sous le héros) : ship · 0 findings. Stamp : `hero-review: ship · 0 findings · 0 resolved (self)`.
 **Reproduction de la comp (c1, vérifié à 1280x800)** : Masse : photo en champ plein, titre sur le tiers bas, voile brun, identique. Intervalle : titre, phrase, boutons à 24 px (16 px au téléphone), comme la comp. Entrée : le titre repose à gauche sur la base, la photo se pose en 1,6 s. Plus grand écart : la comp n'avait ni barre collante (80 px) ni lien « Voir la carte » : le héros est plus bas de 80 px et porte un second lien. Stamp : `comp: 2 built, no key · c1 chosen · reproduced (checked at 1280x800)`.
+
+## Sur-utilisation (phase 3)
+
+- [x] 1. Tokens `:root` (48) · preuve : `grep "#[0-9a-f]{3,6}\|rgb(" page.css base.css` = 0 hors stamp (le seul match est « c61636 » dans le commentaire)
+- [x] 3, 40, 41. Pas d'italique en titre, pas de mot accentué, mono costume : aucun · preuve : sloplint 0 FAIL
+- [x] 4, 5. `overflow-x: clip` (base.css), `minmax(0, 1fr)` partout · preuve : sans débordement horizontal 1440 et 375 (QA-build.md)
+- [x] 8, 26. Rien d'inventé, aucune image cassée · preuve : 0 requête en échec, crédits dans le pied, placeholders listés au RAPPORT.md
+- [x] 9, 10, 11. Aucun eyebrow, « A · B · C », dégradé, emoji · preuve : sloplint 0 FAIL
+- [x] 12, 13. Hero titre, phrase, actions à 1280x800 · preuve : `.hallmark/shots/…-hero-1280x800.png`
+- [x] 14, 36, 42. Conteneur 1440, écarts ≥ 120 px, titres ≥ 40 px · preuve : sloplint, gaps 120 à 354 px ; le seul écart de 59 px est le pied KYW imposé (waive 59)
+- [x] 15. Stamp, critique, waivers en tête de `page.css` · preuve : lignes 1 à 10 (waive 8, 59, 77)
+- [x] 16. sloplint `--render` : 0 FAIL, 0 REFLEX, 6 WAIVED, 2 WARN, rendu tourné sur 4 URL
+- [x] 18, 25. Pas de `#000`/`#fff`, contraste · preuve : tokens OKLCH ; axe 0 violation sur accueil et carte ; 4 « à vérifier » axe sur le texte du héros (sur photo), estimation par pixels ≈ 8:1 au centre du voile, non mesurée au pire pixel
+- [x] 27, 28. Aucun lien qui replie ; tells français, tiret cadratin, « Tous droits réservés » : 0 (`grep` src) · titres jugés un à un, aucun « exceptionnel / unique / Découvrir »
+- [x] 31 à 35. Display du thème (Yeseva One), 2 familles + outlier, hero sans centrage multiple, forme distincte des derniers logs · preuve : tokens.css:17, log (Letter + Index)
+- [x] 37, 38, 39. `--space-*`, accent rare, pas de glow · preuve : sloplint
+- [x] 43 à 46. Aération, pas d'illustration vide, pas de faux produit, clôture horaires + adresse + réservation · preuve : bande « Ouvert 7 jours sur 7 » puis pied
+- [x] 47, 50, 51, 52, 53, 54. Chrome nommé, pas d'icônes, pas de décoration textuelle, un fait une fois, ≤ 1 frame, pas de dégradé de texte · preuve : sloplint 0 FAIL
+- [x] 55, 57, 59, 60, 61, 62. Finish : guillemets, tabulaires (`num`), insécable avant « : ; ! ? » corrigé en phase 3 (« Le plat seul : 18 € » ne se coupe plus), soulignement fin
+- [x] 64, 65, 66, 67. `lang`, `<title>`, description (F23 answered), rien de caché à 375 · preuve : QA-build.md (axe 0 sauf 404 brut de serve.mjs, faux positif : `404.html` porte lang et title)
+- [x] 68 à 71. Type, OKLCH, ombre, imagery (hero `loading=eager`, `fetchpriority`, scrim) · preuve : tokens.css, `Fig.astro`
+
+**Finish review** : `self` (pas d'outil Agent), captures 1440 et 375 lues ; un lot : bande du midi en deux colonnes (thin section 77), insécables. Stamp : `finish-review: self · 2 findings · 2 resolved 0 unresolved · gap: la bande du midi était étroite sur la page (41 %), corrigée`.

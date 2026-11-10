@@ -1,10 +1,5 @@
-# ETAT · le-felicien · legacy · construction-2 (10/11/2026)
+# ETAT · le-felicien · legacy · construction-3 (10/11/2026)
 
-**Fait (phase 1)** : audit, deal/draw (Solstice, vert client), DESIGN.md, comp c1, données, 5 pages, pied statement, noindex, JSON-LD.
-**Fait (phase 2)** : nav masthead collante (Popover sous 72rem, bouton « Réserver » en contour, lien actif), carte en Switcher d'onglets (liens ancre sans script, rôles et flèches par script, hash), un reveal (bande du midi), signature (l'assiette se pose), boutons `:active`/hover en `@media (hover: hover)`, focus or sur fonds sombres, horaires restackés sous 40rem + « aujourd'hui » (fuseau Europe/Brussels), gouttière safe-area, hero 320x568 tenu, reduced motion, tirets des horaires remplacés par « à » (gate 19), hero review (auto-notation `self` : ship), sloplint src 0/0/0, build OK (`scripts/q.sh build`), pied et noindex vérifiés sur les 5 routes. DESIGN.md § Sur-utilisation (phase 2) coché.
-
-**Reste (phase 3 / agent captures)** : shoot complet 1280, 375, reduced motion ; sloplint `--render` par route (`--url`) ; contraste mesuré ; RAPPORT.md ; gates § 5 ; vérifier visuellement le menu Popover, l'onglet courant de la carte et la bande du midi (reveal) sur captures.
-
-**Décisions** : pas de formulaire (la réservation du site d'origine est le lien Tablebooker, conservé, pas d'iframe) ; seuil du menu à 72rem (liens + bouton trop larges avant 1152 px) ; « Réserver » de la nav en contour pour garder un seul primaire plein ; Solstice dit « pas de reveal » : un seul gardé, discret (phase 2 l'exige) ; lignes de carte sans hover (gate 11) ; disclosure des horaires non faite (tableau court, toujours visible).
-**Hypothèses** : « aujourd'hui » suit le jour civil de Bruxelles, sans statut ouvert/fermé (pas de données de service exactes).
-**Pièges** : un `translate` + `opacity` sur `.mast__nav` reste inoffensif au bureau (`display: contents`) ; sticky de la liste d'onglets décalé de `--bar-h` (la bordure de l'en-tête compte dans `--bar-h`) ; un `tabindex` sur un panneau focalisé par le hash affiche l'anneau : retiré ; serveur de dev arrêté (PID 13564).
+**Fait** : QA lue (QA-build.md) ; sloplint --render 0 FAIL, 0 REFLEX ; waivers 59 et 77 ; bande du midi en deux colonnes ; insécables avant « : ? » ; log `.hallmark/log.json` ; DESIGN.md phase 3 ; RAPPORT.md ; build et `pnpm index` passés, noindex et pied sur 5 routes.
+**Reste** : rien de bloquant. Photos réelles (salle, assiette récente) à fournir.
+**Pièges** : « focus invisible » et 404 sans titre du rapport captures sont des faux positifs ; waiver = 3 champs.

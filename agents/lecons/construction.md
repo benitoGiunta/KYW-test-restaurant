@@ -100,3 +100,7 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 
 ## 2026-11-10 · le-felicien · variante awwwards
 Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de page commun répétait les horaires déjà présents sur l'accueil et la réservation. Correction appliquée : le pied détecte la page (Astro.url.pathname) et renvoie vers elle. À faire par le prochain agent : concevoir pied et sections pour ne pas dupliquer le même texte. Un `input range` à opacité 0 reste signalé `invisibleFocus` : faux positif si le conteneur porte le contour.
+
+## 2026-11-10 · le-felicien · variante legacy
+- Waiver sloplint : `/* Hallmark · waive <gate> · <preuve> · <raison> */` exige trois champs séparés par « · » ; deux champs = « malformed » et le REFLEX reste ouvert.
+- Remplacement en masse de l'espace avant « : ? » par `&nbsp;` : limiter aux balises de texte (le JS et les ternaires cassent).
