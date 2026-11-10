@@ -65,7 +65,6 @@ const [a, b] = ["L'Huile", 'sur le Feu'];
         <ol class="index index--huiles" style="margin-top: calc(var(--u) * 3)" data-reveal="up">
           {huiles.slice(0, 4).map((h, i) => (
             <li>
-              <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
               <span class="index__nom">{h.libelle}{h.plat ? <span class="index__desc">{h.plat}</span> : null}</span>
               <span class="index__prix"><i class="goutte" style={`--ton: ${tonHuile[h.huile]}`} aria-hidden="true"></i></span>
             </li>
@@ -80,7 +79,6 @@ const [a, b] = ["L'Huile", 'sur le Feu'];
     <Houle fill="ciel" />
     <div class="wrap grid12">
       <div class="col-texte">
-        <span class="eyebrow mono" data-reveal="fade">La carte</span>
         <h2 id="t-carte" style="font-size: var(--t-xl)" data-split="words">Le menu Gourmet, {menu.prix}</h2>
         <p class="muted" style="margin-top: calc(var(--u) * 2)">Entrée, plat, dessert, chacun avec son huile d'olive.</p>
       </div>
@@ -88,7 +86,6 @@ const [a, b] = ["L'Huile", 'sur le Feu'];
         <ol class="index" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
           {[['Entrée', "Toast aux champignons, huile d'olive à la truffe"], ['Plat', "Filet de sébaste, fregola sarda, ratatouille, huile d'olive au persil plat"], ['Dessert', "Tatin aux pommes, glace fleur de lait, huile d'olive à la mandarine"]].map(([k, v], i) => (
             <li>
-              <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
               <span class="index__nom">{k}<span class="index__desc">{v}</span></span>
               <span class="index__prix"></span>
             </li>
@@ -108,7 +105,7 @@ const [a, b] = ["L'Huile", 'sur le Feu'];
       <img src={asset(boutique.src)} alt="" width={boutique.largeur} height={boutique.hauteur} loading="lazy" decoding="async" data-parallax="0.12" />
     </figure>
     <div class="wrap">
-      <p class="citation" data-split="chars">{phraseBoutique}</p>
+      <p class="citation" role="text" data-split="chars">{phraseBoutique}</p>
       <p class="mono"><a class="link" href={u('/boutique/')} style="color: inherit">La boutique Oliviers & Co</a></p>
     </div>
   </section>
@@ -117,7 +114,6 @@ const [a, b] = ["L'Huile", 'sur le Feu'];
     <Houle fill="ciel" />
     <div class="wrap grid12">
       <div class="col-texte">
-        <span class="eyebrow mono">Infos pratiques</span>
         <h2 id="t-regles" style="font-size: var(--t-l); font-weight: 500" data-split="words">Ce qu'il faut savoir avant de venir</h2>
       </div>
       <ul class="badges col-large" style="margin-top: var(--u)">
@@ -137,7 +133,6 @@ const [a, b] = ["L'Huile", 'sur le Feu'];
     <Houle fill="ciel" />
     <div class="wrap resa">
       <div>
-        <span class="eyebrow mono">Réserver</span>
         <h2 id="t-resa" style="font-size: var(--t-xl)" data-split="words">Une table, du mardi au samedi</h2>
         <p class="muted" style="margin-top: calc(var(--u) * 2); max-width: 44ch">En ligne via {site.reservation.outil}, ou par téléphone.</p>
         <div class="actions"><a class="btn btn--plein btn--large" href={site.reservation.url} rel="noopener" data-magnetic="0.15">Réserver sur {site.reservation.outil}</a></div>

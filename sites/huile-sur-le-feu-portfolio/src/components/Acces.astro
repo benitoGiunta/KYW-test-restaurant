@@ -1,19 +1,12 @@
 ---
 // Accès : adresse, itinéraire et horaires du lieu. Pas de plan dessiné (aucun point de repère prouvé par le dossier).
-import { site, adresseLigne, horaireTexte, itineraireHref, telHref } from '../data/site';
+import { site, adresseLigne, itineraireHref, telHref } from '../data/site';
 ---
 <div class="plan">
   <div class="stack">
-    <span class="eyebrow mono">Venir</span>
     <h2 class="display" style="font-size: var(--t-l); font-weight: 500">Rue de Marchovelette, à deux pas du centre de Namur</h2>
     <address style="font-style: normal; margin-top: calc(var(--u) * 2)"><strong>{site.nom}</strong><br />{adresseLigne()}</address>
     <p><a class="link" href={telHref()}>{site.telephone}</a></p>
-    <p class="actions"><a class="btn" href={itineraireHref} rel="noopener">Voir sur la carte</a></p>
-  </div>
-  <div>
-    <span class="eyebrow mono">Horaires</span>
-    <dl class="horaires">
-      {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-    </dl>
+    <p class="actions"><a class="btn" href={itineraireHref} rel="noopener">Voir le plan</a></p>
   </div>
 </div>
