@@ -36,3 +36,8 @@
 - Fait : `REVUE-1.md` écrit (A_CORRIGER : 0 F0, 3 F1, 8 F2, 4 F3). QA-revue1.md et .shots absents : mesures par scripts maison (axe, contraste, grilles, pile, perf) sur 6 pages x 2 largeurs.
 - Reste (réviseur) : F1-1 horaires `repeat(4, 1fr)` (Jeudi coupé 1024-1440), F1-2 `ol data-cercles` 3 colonnes inline sur mobile (index.astro:104, commander.astro:24), F1-3 pile « Ça s'empile » tronquée à 1440x900 ; puis F2 (avis en citations, « par téléphone », note Korean Futo, « dès » sans explication, majuscules du PDF, titres coupés COMP/OSEZ, contraste des étapes éteintes).
 - Pièges : `overflow: clip` sur `.affiche` et `body` masque les débordements de grille (scrollWidth = fenêtre) ; remesurer `getBoundingClientRect().right` des enfants de grille et les éléments de la pile pendant l'épinglage.
+
+## Revue passe 2 (relecteur-site, 10/11/2026)
+- Fait : `REVUE-2.md` écrit (A_CORRIGER : 0 F0, 3 F1, 3 F2, 4 F3). Corrections vérifiées : F1-3, F2-1, F2-2, F2-3, F2-4, F2-7, F2-8 OK ; F1-1 partiel, F1-2 OK sauf 1024, F2-5 partiel, F2-6 non corrigé desktop.
+- Reste (réviseur) : heures des horaires qui dépassent de la carte (taille en `cqi`), bento `repeat(3, minmax(0,1fr))` à 1024-1280, h1 « COMPOSEZ » rogné dès 768 (`display--mot`), gestes à 1024, casse des ingrédients de /composer/, puis F3 (aria SplitText, double contentinfo, doublon /venir/, « Douze recettes »).
+- Pièges : mesurer le texte (`Range`) contre la carte, pas la carte contre la fenêtre ; balayer 1024 et 1280, pas seulement 1440 et 390.
