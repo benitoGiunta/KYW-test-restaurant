@@ -56,3 +56,7 @@
 - `REVUE-1.md` écrit : verdict A_CORRIGER, 0 F0, 1 F1 (aperçu photo qui ne suit plus le curseur : `overwrite: true` tue les `quickTo`, `src/motion/setup.ts:209` et `:211`), 4 F2, 7 F3. Rien n'a été corrigé (rôle relecteur).
 - Reste : révision ciblée de la liste F1/F2/F3, puis passe 2. Pas de rebuild fait pendant la revue (`dist/` du 10/11 00:29 relu tel quel).
 - Pièges : le QA ne couvre que 3 pages sur 7 et sa « 404 » est brute ; axe complet (hors shoot) montre `region` et `aria-prohibited-attr` sur `.etat` et `.ligne__in`.
+
+## Revue 2 (relecteur-site) : faite
+- REVUE-2.md : PUBLIABLE (0 F0, 0 F1, 0 F2, 9 F3 dont 2 nouveaux). Restent : F3 de texte (maison, bambins, accès, 12h00/12:00, formulaire GET), `pnpm index`, commit et push de `dist/`.
+- Piège : QA-revue2.md n'existait pas ; captures refaites par scripts maison. Aperçu au survol inactif tant que `data-preview` est absent.
