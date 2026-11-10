@@ -11,7 +11,7 @@
 - Sections : hero, offres (bande d'encre), spécialités (lignes), groupes, lieu, horaires.
 - Material : photographies du client, imprimées en une encre (niveaux de gris + multiply).
 - Comp : 2 construites, c1 choisie (`comp.md`).
-- Sweep : phase 3.
+- Sweep : 0 FAIL, 0 REFLEX, 21 WAIVED (8, 59, 44c, 77, 79 : reasons in page.css), WARN F19 (Archivo Narrow 600 = outlier, dismissed) and F20 (dismissed, two offers), NOTE 58 (carte dense by nature). Finish review : self (no sub-agent tool).
 - Échanges avec le draw (4e6e56) : Marquee Hero remplacé par Counter statique (l'original n'avait pas de bandeau) ; « prochains créneaux en boutons » remplacé par la bande d'offres (aucune donnée de créneaux) ; « salle en pleine page sans titre » écarté (une seule photo du lieu, 1158 px de large).
 
 # Système
@@ -56,7 +56,7 @@ Caractère calme. Un seul reveal (`[data-reveal]`, opacity + translateY 1rem, 42
 - [x] 3. Stamp en première ligne de page.css · preuve : src/styles/page.css:1
 - [x] 4. Comp avant build · preuve : .hallmark/comps/c1.png, c2.png
 - [x] 5. Aucun tiret cadratin, insécable avant € · preuve : contrôle Python sur src/
-- [ ] 6. Rendu navigateur (`--render`) · hero 0 FAIL 0 REFLEX ; pages carte et contact : 3 REFLEX chacune (44c, 77, 79, tests de hero appliqués à des en-têtes de page), à trancher en phase 3
+- [x] 6. Rendu navigateur (`--render`, 6 routes, 1280/1440/1920 + 375) · 0 FAIL, 0 REFLEX ouvert, 21 WAIVED (8, 59, 44c, 77, 79), 5 WARN · preuve : `.logs/sloplint.log`, `.hallmark/shots/`
 - [x] 2a. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : grep 0, page.css:31, 40-60, 95-101
 - [x] 6a. `:focus-visible` partout, 3:1 (26a, 15) · preuve : base.css:7, page.css:31, 49, 201
 - [x] 7. Fallback reduced motion sur chaque animation, contenu visible sans script (27, 62) · preuve : page.css:96, 101, base.css:26 ; contrôle Playwright (opacité 1 sans JS et en reduced)
@@ -75,3 +75,15 @@ Caractère calme. Un seul reveal (`[data-reveal]`, opacity + translateY 1rem, 42
 - [x] 58. Une recette de conteneur, pas de pilule ; un seul pattern de scroll (reveal) · preuve : `--radius-pill: 0`
 - [x] 63. `::selection`, `caret-color`, `scrollbar-color`, `accent-color` · preuve : base.css:3-6
 - [x] 72. Responsive : breakpoints 60 et 40 rem, `(hover: hover)`, `(pointer: coarse)`, `overflow-x: clip`, aucun débordement de 320 à 1440 sur 7 routes (mesuré) · preuve : page.css, journal c2-check
+
+## Checklist phase 3 (points restants, preuve)
+- [x] 1, 18. Couleurs via tokens · `grep -c "#[0-9a-f]\{3,6\}\|rgb(" page.css` = 0
+- [x] 3, 9, 10, 11. Pas d'italique (0 occurrence), pas d'eyebrow ni capitales trackées, pas de A · B · C, pas d'emoji ni de dégradé · lu au rendu des 6 routes
+- [x] 4, 5. `overflow-x: clip` (base.css), `minmax(0, 1fr)` partout · 0 débordement mesuré (QA-build)
+- [x] 8, 26. Rien d'inventé, aucune image cassée · requêtes en échec 0 (QA-build), données de donnees.json
+- [x] 12, 13, 14, 34. Hero accueil titre, phrase, actions à 1280x800 · sloplint hero 0 REFLEX
+- [x] 16. `sloplint --render` 6 routes : 0 FAIL, 0 REFLEX ouvert, render tourné
+- [x] 25, 27, 28. Contraste axe 0 violation, focus visible 0 manquant, aucun tiret cadratin (grep 0), aucun « Tous droits réservés » (grep 0)
+- [x] 31 à 54. Reflex : Anybody/Archivo, prose ≤ 60ch, 3 familles, 4 graisses dont 1 outlier (F19 dismissed), rien de caché, waivers 8/59/44c/77/79 en tête de page.css
+- [x] 55 à 67. Finish : tabulaires prix et horaires, `lang`, titre, description, rien de caché à 375, prix longs repliés sous 40 rem (row__prix--long)
+- [x] 68 à 71. Craft : tokens OKLCH, un axe primaire, photos du client en une encre

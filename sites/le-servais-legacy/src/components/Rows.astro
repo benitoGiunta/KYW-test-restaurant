@@ -6,7 +6,7 @@ const { items } = Astro.props;
   {items.map((p) => (
     <li class="row">
       <div class="row__texte"><strong class="row__nom">{p.nom}</strong>{p.desc ? <span class="row__desc">{p.desc}</span> : null}</div>
-      <span class="row__prix">{p.prix}</span>
+      <span class:list={["row__prix", { "row__prix--long": p.prix.length > 14 }]}>{p.prix}</span>
     </li>
   ))}
 </ul>

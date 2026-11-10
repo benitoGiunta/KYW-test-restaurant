@@ -5,6 +5,9 @@
 /* Hallmark · pre-emit critique: P pass H pass E pass S pass R pass V pass · weakest: the carte is dense by nature, handled by ruled Rows under a 4px bar */
 /* Hallmark · waive 8 · accueil, carte, groupes, événements, contact suivent la structure Wix d'origine · routes conservées (redesign.md § What a redesign keeps) */
 /* Hallmark · waive 59 · dernier écart de 60px avant le composant kyw-footer du Servais · marge propre du pied KYW, tous les autres écarts du Servais font 120px ou plus */
+/* Hallmark · waive 44c · carte, contact, événements, cadeau, groupes : l'accueil seul porte le hero d'un écran, ces en-têtes de page sont un titre et une phrase, la photo de la carte suit sa colonne · test de hero lu sur un en-tête de page, l'accueil passe sans reflex */
+/* Hallmark · waive 77 · section.pied : colophon d'encre pleine largeur de fond, grille 71 % de colonnes (adresse, contacts, routes, réseaux) · ce n'est pas une section mince, c'est le pied du site (gate 85) ; la bande 3 + 1 est une bande d'offre d'une ligne voulue entre deux photos */
+/* Hallmark · waive 79 · en-têtes de page contact, événements, cadeau : un titre, une phrase, puis la section de contenu · l'écart vient du padding de section normal, pas d'un vide ; la page contact porte la même rythmique que les autres routes */
 @import url("./tokens.css");
 @import url("./base.css");
 
@@ -115,6 +118,7 @@ html:has(.menu:popover-open) { overflow: hidden; }
 .row__nom { font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: var(--text-lg); line-height: 1.2; overflow-wrap: break-word; }
 .row__desc { color: var(--color-ink-2); max-width: 60ch; }
 .row__prix { font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: var(--text-md); text-align: right; align-self: start; white-space: nowrap; padding-top: var(--space-3xs); }
+@media (max-width: 40rem) { .row:has(.row__prix--long) { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-2xs); } .row__prix--long { text-align: left; white-space: normal; padding-top: 0; } }
 
 /* Spécialités */
 .specialites__grille { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); row-gap: var(--space-xl); }
@@ -184,7 +188,7 @@ html:has(.menu:popover-open) { overflow: hidden; }
 .evt { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); column-gap: var(--gap-columns); padding-block: var(--space-lg); border-bottom: var(--rule-hair) solid var(--color-rule); }
 .evt__date { display: flex; flex-direction: column; font-family: var(--font-outlier); font-weight: 600; font-size: var(--text-lg); }
 .evt__texte { min-width: 0; display: flex; flex-direction: column; gap: var(--space-xs); }
-.evt__texte h2 { font-size: var(--text-3xl); }
+.evt__texte h2 { font-size: var(--text-section); }
 @media (max-width: 48rem) { .evt { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-sm); } }
 
 .contacts { margin: var(--space-xl) 0 0; padding: 0; list-style: none; border-top: var(--rule-bar) solid var(--color-ink); max-width: 40rem; }
