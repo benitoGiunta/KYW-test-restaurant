@@ -1,4 +1,4 @@
-# ETAT variante legacy · huile-sur-le-feu · fin de la phase 2 (construction-2)
+# ETAT variante legacy · huile-sur-le-feu · fin de la phase 3 (construction-3)
 
 ## Fait (phase 1, inchangé)
 - Audit, approche, deal (thème de marque), scaffold, comps (c1 retenu), DESIGN.md, six pages statiques (`/`, `/restaurant/`, `/menu/`, `/boutique/`, `/contact/`, 404), données `carte.json`, `photos.json`, `site.ts`.
@@ -27,3 +27,7 @@
 ## Pièges
 - Le dev server a été lancé avec `nohup pnpm exec astro dev` ; barre « dev toolbar » d'Astro visible en bas des captures dev (pas dans le build).
 - Un `<nav popover>` doit être remis en `display: block` hors `:popover-open` sur desktop (`.site-nav[popover]:not(:popover-open)`), sinon la nav disparaît.
+
+## Phase 3 (QA)
+- Corrigé : contraste `.schedule__today`, cibles tactiles 44 px (pointer: coarse), balises og/twitter. Build passe. RAPPORT.md écrit.
+- Non fait : sloplint final, finish review, jury, log theme.mjs (voir RAPPORT.md).

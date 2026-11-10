@@ -259,3 +259,8 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 ## 2026-11-10 · huile-sur-le-feu · variante legacy (phase 2)
 - Un `<nav popover>` qui sert aussi de nav desktop : neutraliser le popover au bureau (`position: static; inset: auto; margin: 0; background: transparent`) et forcer `.site-nav[popover]:not(:popover-open) { display: block }` (l'UA le cache sinon) ; sous 60rem remettre `display: none` hors ouverture. Reveal posé par script (attribut `data-reveal` ajouté en JS, règle sous `.js [data-reveal]`) : sloplint 62 passe et rien ne reste masqué si le script échoue.
 - `sloplint src` ne suit pas l'`@import` de `page.css` : FAIL 34 (overflow-x: clip) sur `Base.astro` est un faux positif quand `base.css` porte la règle ; le prouver par `scrollWidth` en navigateur. Les commentaires JSX `{/* Hallmark · … */}` déclenchent le FAIL 63 (point médian) : écrire `Hallmark, reworded`.
+
+## 2026-11-10 · huile-sur-le-feu · variante legacy (phase 3)
+- Les liens de texte en ligne (`a.link`) font 21 px de haut à 375 : prévoir `min-height: 44px` sous `(pointer: coarse)` dès la phase 2 (pas seulement pied et rail).
+- Le 404 des captures `shoot.mjs` est celui du serveur statique : ses violations axe (title, lang) ne concernent pas le site.
+- Playwright maison : `chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--no-sandbox'] })`.
