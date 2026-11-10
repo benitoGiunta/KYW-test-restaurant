@@ -34,3 +34,9 @@
 - QA-revue1.md n'existait pas : captures par mes soins dans `.shots/lm-legacy-r1/` (accueil, menu, contact, vitrine, événement, à propos ; terrasse en cours à la clôture).
 - Reste à faire : lire `notre-terrasse-arriere` (planche + report.json), voir `a-propos-de-nous` à l'œil, capture ciblée de la 404, remesurer LCP vitrine en deux passes après correction F1-1.
 - Piège : `scripts/planche.py --colonnes 3 --largeur 720` lit 3 et 720 comme des images (ignorés, sans conséquence).
+
+## Revue 2 (relecteur-site, Sonnet) — terminée
+- REVUE-2.md écrit : A_CORRIGER, 0 F0, 0 F1, 2 F2, 6 F3. F1-1, F2-1, F2-4 confirmés corrigés ; F2-2 corrigé (résidu « nouvelles », F3-1) ; F2-3 corrigé sauf Événement privé (F2-2).
+- Nouveau défaut : À propos, photo du hero de 528 px dans une colonne de ~440 px (`page.css:152`, `min-height` + `aspect-ratio` forcé), rognée par la fenêtre de 990 à 1440 px (F2-1).
+- Reste (réviseur) : corriger F2-1 et F2-2, remesurer droite de la photo ≤ droite du conteneur de 990 à 1920 px, cibles Événement privé ; F3 au choix.
+- Pièges : `overflow-x: clip` cache le débordement (scrollWidth = fenêtre) : balayer les `getBoundingClientRect().right` sur 12 largeurs ; scripts maison dans `.shots-li-micougni-legacy-revue2/lm2-*.mjs`. Serveur 4781 arrêté.
