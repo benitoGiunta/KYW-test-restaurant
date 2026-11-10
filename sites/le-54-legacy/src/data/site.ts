@@ -65,8 +65,8 @@ export const legendes: Record<string, { alt: string; label: string }> = {
   'bols-truffe': { alt: 'Bols bleus garnis de purée et de copeaux', label: 'Bols bleus' },
   'plat-bol-noir': { alt: 'Plat dans un bol noir, sauce versée à table', label: 'Sauce versée à table' },
   'assiette-blanche': { alt: 'Petite assiette dressée sur une grande assiette blanche', label: 'Assiette blanche' },
-  'tartare': { alt: 'Tartare dressé sur une assiette blanche', label: 'Tartare' },
-  'soupe-homard': { alt: 'Velouté mousseux, pièce rouge et herbes', label: 'Velouté' },
+  'tartare': { alt: 'Tartare dressé sur une assiette blanche', label: 'Une assiette de la maison' },
+  'soupe-homard': { alt: 'Velouté mousseux, pièce rouge et herbes', label: 'Un plat de la maison' },
   'dessert-amandes': { alt: 'Dessert glacé aux amandes effilées', label: 'Dessert aux amandes' },
 };
 export const galerie = ['salle-noir-blanc', 'plat-langoustine', 'dressage-sauce', 'plat-saint-jacques', 'plat-betterave', 'geste-dressage', 'bols-truffe', 'soupe-homard', 'plat-bol-noir', 'tartare', 'plat-bol-bleu', 'dessert-amandes', 'assiette-blanche', 'salle-sombre'];

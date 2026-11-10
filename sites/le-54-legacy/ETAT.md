@@ -30,3 +30,4 @@
 - Correction : h2 d'accueil reformulé (tell français), vérifié par capture 1440 et build.
 - RAPPORT.md écrit, entrée de `.hallmark/log.json` ajoutée, `pnpm index` passé, serveur arrêté.
 - Reste : rien de bloquant ; placeholders listés dans RAPPORT.md § 5.
+Passe 1 : révision F2 terminée (REVISION-1.md), build OK, publiable.

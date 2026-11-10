@@ -19,6 +19,11 @@ const jsonLd = {
   servesCuisine: 'Cuisine gastronomique de saison et de marché',
   address: { '@type': 'PostalAddress', streetAddress: 'Rue de Longeau 54', postalCode: '5100', addressLocality: 'Dave (Namur)', addressCountry: 'BE' },
   geo: { '@type': 'GeoCoordinates', latitude: 50.41887, longitude: 4.88509 },
+  priceRange: '48 € - 65 €',
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Thursday', 'Friday', 'Sunday'], opens: '12:00', closes: '14:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '18:30', closes: '21:00' },
+  ],
   sameAs: [resto.facebook, resto.instagram],
 };
 ---
@@ -40,6 +45,7 @@ const jsonLd = {
     <link href="https://api.fontshare.com/v2/css?f[]=sentient@300,400&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400&display=swap" rel="stylesheet" />
     {page !== '404' && <link rel="canonical" href={canonical} />}
+    <meta name="twitter:card" content="summary_large_image" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_BE" />
     <meta property="og:site_name" content={resto.nom} />
