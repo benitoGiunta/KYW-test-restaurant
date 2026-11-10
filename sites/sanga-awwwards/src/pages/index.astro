@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { u } from '../lib/url';
+import { site, carte, bouillons, eur, livraison } from '../data/site';
+const ramen = carte.find((c) => c.cle === 'ramen')!;
+const prixMini = (cle: string) => Math.min(...carte.find((c) => c.cle === cle)!.plats.map((p) => p.prix));
+---
+<Base description={site.description} page="accueil">
+  <section class="strate hero strate--sans-sceau" aria-labelledby="titre-hero">
+    <div class="wrap">
+      <div class="grille hero__grille">
+        <div class="hero__texte">
+          <p class="kanji hero__kanji" aria-hidden="true" lang="ja"><span>山</span><span>河</span></p>
+          <div class="hero__corps">
+            <h1 class="display hero__nom" id="titre-hero">{site.nom}</h1>
+            <p class="hero__baseline">{site.baseline}, rue Saint-Loup.</p>
+            <div class="cta-rang">
+              <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+              <a class="cta cta--contour" href={u('/carte/')}><span class="cta__txt">Voir la carte</span></a>
+            </div>
+          </div>
+        </div>
+        <figure class="hero__photo">
+          <div class="crete-photo"><Photo cle="ramen" prioritaire widths={[480, 720]} sizes="(max-width: 52rem) 82vw, 38vw" /></div>
+          <figcaption class="hero__credit">{site.credit}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="strate strate--papier strate--crete" aria-labelledby="titre-enonce">
+    <div class="wrap">
+      <h2 class="display enonce" id="titre-enonce">Namur a ses deux rivières, sa citadelle et, depuis au moins 2018, ses ramen.</h2>
+      <div class="texte">
+        <p>Sanga s’écrit <span lang="ja">山河</span> : la montagne et la rivière. La maison se présente comme le premier restaurant de ramen de Namur et sert des nouilles japonaises, du ramen à l’udon, du soba aux donburi.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="strate strate--crete" aria-labelledby="titre-ramen">
+    <div class="wrap">
+      <div class="entete-section">
+        <h2 class="display display--xl" id="titre-ramen">Cinq ramen</h2>
+        <p class="texte doux">De {eur(ramen.plats[0].prix)} à {eur(ramen.plats[ramen.plats.length - 1].prix)}, dans un bouillon que vous choisissez.</p>
+      </div>
+      <div class="grille index__grille">
+        <ol class="index__liste">
+          {ramen.plats.map((p) => (
+            <li class="index__ligne">
+              <h3 class="index__nom">{p.nom}</h3>
+              <span class="index__prix prix">{eur(p.prix)}</span>
+              {p.description && <p class="index__desc">{p.description}</p>}
+            </li>
+          ))}
+        </ol>
+        <div class="bouillons">
+          <h3 class="display display--m">Le bouillon, au choix</h3>
+          <ul class="bouillons__liste">
+            {bouillons.map((b) => (
+              <li data-ton={b.ton}><span class="bouillons__goutte" aria-hidden="true"></span><span class="bouillons__nom">{b.nom}</span><span class="bouillons__sens">{b.sens}</span></li>
+            ))}
+          </ul>
+          <p><a class="lien" href={u('/carte/')}>Toute la carte</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="strate strate--papier strate--crete" aria-labelledby="titre-bols">
+    <div class="wrap">
+      <div class="grille paire__grille">
+        <figure class="paire__a">
+          <div class="crete-photo"><Photo cle="udon" widths={[480, 720]} sizes="(max-width: 52rem) 100vw, 40vw" /></div>
+          <figcaption class="credit">{site.credit}</figcaption>
+        </figure>
+        <div class="paire__b">
+          <div>
+            <h2 class="display display--xl" id="titre-bols">Nouilles ou riz</h2>
+            <div class="texte" style="margin-top: var(--serre)">
+              <p>Udon et soba dès {eur(prixMini('udon'))}, six donburi de {eur(16.5)} à {eur(18.8)} : un bol, une salade, une soupe miso.</p>
+              <p><a class="lien" href={u('/carte/#donburi')}>Voir les donburi</a></p>
+            </div>
+          </div>
+          <figure>
+            <div class="crete-photo"><Photo cle="teriyaki" widths={[480, 800]} sizes="(max-width: 52rem) 100vw, 32vw" /></div>
+            <figcaption class="credit">{site.credit}</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="strate strate--crete" aria-labelledby="titre-venir">
+    <div class="wrap">
+      <h2 class="display display--xl" id="titre-venir" style="margin-bottom: var(--normal)">Venir</h2>
+      <div class="grille donnees__grille">
+        <div class="donnees__a"><Horaires /></div>
+        <div class="donnees__b">
+          <div class="bloc">
+            <h3>Adresse</h3>
+            <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+            <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+          </div>
+          <div class="bloc">
+            <h3>Téléphone</h3>
+            <p><a class="tel-grand" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+          </div>
+          <div class="bloc">
+            <h3>Livraison</h3>
+            <p>Gratuite à Namur dès {eur(livraison.zones[0].minimum)} (5000 à 5004), dès {eur(livraison.zones[1].minimum)} pour 5100 et 5020. Sur place, à emporter ou en ligne.</p>
+            <p><a class="lien" href={site.commandeUrl} rel="noopener">Commander en ligne</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

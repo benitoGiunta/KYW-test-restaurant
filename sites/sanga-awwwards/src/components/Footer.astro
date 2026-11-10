@@ -1,0 +1,31 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+---
+<section class="pied" aria-label="Contact">
+  <div class="wrap pied__corps">
+    <p class="pied__kanji" aria-hidden="true" lang="ja">{site.kanji}</p>
+    <h2 class="pied__mot">À table.</h2>
+    <div class="pied__col">
+      <h3 class="pied__titre">Venir</h3>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h3 class="pied__titre">Appeler</h3>
+      <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+      <p><a class="lien" href={site.commandeUrl} rel="noopener">Commander en ligne</a></p>
+    </div>
+    <div class="pied__col">
+      <h3 class="pied__titre">Ailleurs</h3>
+      <ul class="pied__liens">
+        <li><a class="lien-util" href={u('/carte/')}>La carte</a></li>
+        <li><a class="lien-util" href={u('/a-propos/')}>La maison</a></li>
+        <li><a class="lien-util" href={u('/reservation/')}>Réserver</a></li>
+      </ul>
+    </div>
+    <p class="pied__colophon">{site.credit}. Polices : Shippori Mincho et Hanken Grotesk (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />

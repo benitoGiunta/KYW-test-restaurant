@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, bouillons, avis } from '../data/site';
+---
+<Base title="La maison" description="Sanga, 山河 : la montagne et la rivière. Le premier restaurant de ramen de Namur, ses trois bouillons (miso, shio, shoyu) et ce qu’en disent ses clients." page="maison">
+  <section class="strate titre-page strate--sans-sceau" aria-labelledby="titre-maison">
+    <div class="wrap">
+      <p class="kanji titre-page__kanji" aria-hidden="true" lang="ja">山河</p>
+      <h1 class="display display--mega" id="titre-maison">La maison</h1>
+      <p class="titre-page__chapo">Un nom de deux caractères, une ville entre deux rivières.</p>
+    </div>
+  </section>
+
+  <section class="strate strate--papier strate--crete" aria-labelledby="titre-nom">
+    <div class="wrap">
+      <div class="grille nom-grille">
+        <div class="nom-grille__a">
+          <h2 class="display display--xl" id="titre-nom">Le nom</h2>
+          <div class="signes" lang="ja" aria-hidden="true">
+            <div><p class="signe__glyphe">山</p></div>
+            <div><p class="signe__glyphe">河</p></div>
+          </div>
+          <div class="signes" aria-hidden="true" style="margin-top: 0.4rem">
+            <p class="signe__sens">montagne</p>
+            <p class="signe__sens">rivière</p>
+          </div>
+        </div>
+        <div class="nom-grille__b texte">
+          <p>Le logo de Sanga porte deux caractères, <span lang="ja">山</span> et <span lang="ja">河</span> : la montagne et la rivière. Namur est bâtie sur ce paysage, au confluent de la Sambre et de la Meuse, sous l’éperon de sa citadelle.</p>
+          <p>La maison se présente comme le premier restaurant de ramen de la ville. Un blog la décrivait déjà en avril 2018 comme « assez connue pour ses ramen ». On y mange sur place, à emporter ou chez soi : la carte est la même.</p>
+          <p class="doux petit">Date d’ouverture et fondateurs : non communiqués par la maison.</p>
+          <figure style="margin-top: var(--normal)">
+            <div class="crete-photo" style="aspect-ratio: 16 / 9; clip-path: var(--crete-fine)"><Photo cle="gyoza" widths={[480, 800, 1024]} sizes="(max-width: 52rem) 100vw, 46vw" /></div>
+            <figcaption class="credit petit doux" style="margin-top: 0.5rem">{site.credit}</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="strate strate--crete" aria-labelledby="titre-bouillon">
+    <div class="wrap">
+      <h2 class="display display--xl" id="titre-bouillon">Le bouillon</h2>
+      <div class="texte" style="margin-top: var(--serre)">
+        <p>Chaque ramen se choisit en trois goûts. Le prix ne change pas : seule la base du bouillon varie.</p>
+      </div>
+      <ul class="bouillons-grand">
+        {bouillons.map((b) => (
+          <li data-ton={b.ton}>
+            <h3 class="display display--l">{b.nom}</h3>
+            <p class="doux">{b.sens.charAt(0).toUpperCase() + b.sens.slice(1)}.</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="strate strate--papier strate--crete avis" aria-labelledby="titre-avis">
+    <div class="wrap">
+      <h2 class="display display--xl" id="titre-avis">Ce qu’on en dit</h2>
+      <ul class="avis__liste">
+        {avis.map((a) => (
+          <li><blockquote>« {a.texte} »<cite>{a.source}, {a.date}</cite></blockquote></li>
+        ))}
+      </ul>
+      <p class="doux petit" style="margin-top: var(--normal)">Note Google : {site.avisGoogle.note} sur 5, {site.avisGoogle.nombre} avis ({site.avisGoogle.source}, non revérifiée).</p>
+      <div class="cta-rang" style="margin-top: var(--normal)">
+        <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+        <a class="cta cta--contour" href={u('/carte/')}><span class="cta__txt">Voir la carte</span></a>
+      </div>
+    </div>
+  </section>
+</Base>

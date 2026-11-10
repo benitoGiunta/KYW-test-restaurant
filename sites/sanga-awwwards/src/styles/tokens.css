@@ -1,0 +1,55 @@
+/* Jetons de Sanga (variante awwwards « 山河 »). Les NOMS sont le contrat de l'engine ; les valeurs viennent de DESIGN.md :
+   l'indigo du bol à damier (photo 01), le washi du papier, le vermillon du sceau hanko, le roux de la table (photos 02 à 04).
+   Les url() des polices portent la base (/sanga/awwwards/). */
+@font-face { font-family: 'Shippori Mincho'; src: url('/sanga/awwwards/fonts/shippori-500-latin.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Shippori Mincho'; src: url('/sanga/awwwards/fonts/shippori-800-latin.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+/* Les deux caractères du logo, sous-ensemble de 1 Ko. */
+@font-face { font-family: 'Shippori Mincho'; src: url('/sanga/awwwards/fonts/shippori-800-kanji.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; unicode-range: U+5C71, U+6CB3; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('/sanga/awwwards/fonts/hanken-400_700-latin.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --c-bg: #101b33;            /* ground : indigo nuit, celui du damier du bol (ink 13,8:1) */
+  --c-fg: #ece6d8;            /* ink : washi */
+  --c-muted: #aab3c5;         /* muted : brume sur l'indigo (8,1:1) */
+  --c-line: #2a3a5c;          /* line : filet du fleuve, indigo clair (décoratif) */
+  --c-accent: #e8512f;        /* accent : vermillon du sceau hanko (4,6:1 sur ground, texte indigo dessus 4,6:1) */
+  --c-accent-texte: #e8512f;
+  --c-curtain: #1b2c50;       /* curtain : indigo de la rivière */
+  --c-papier: #ece6d8;        /* sections « papier » : fond washi, texte indigo */
+  --c-papier-fg: #101b33;
+  --c-papier-muted: #4b5468;  /* 6,1:1 sur washi */
+  --c-papier-line: #c9c2b0;
+  --c-papier-accent: #b3301a; /* vermillon cuit, 5,0:1 sur washi */
+  --c-bois: #7a3418;          /* roux de la table des photos */
+
+  --f-display: 'Shippori Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', 'Times New Roman', serif;
+  --f-body: 'Hanken Grotesk', system-ui, sans-serif;
+
+  --t-kanji: clamp(6rem, 2rem + 15vw, 19rem);
+  --t-mega: clamp(3.4rem, 1.4rem + 11vw, 13rem);
+  --t-xl: clamp(2.6rem, 1.3rem + 5.8vw, 7rem);
+  --t-l: clamp(1.85rem, 1.2rem + 2.8vw, 3.75rem);
+  --t-m: clamp(1.2rem, 1.02rem + 0.8vw, 1.65rem);
+  --t-body: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem;
+
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+  --serre: calc(var(--u) * 3);
+  --normal: calc(var(--u) * 8);
+  --aere: calc(var(--u) * 14);
+  --entracte: calc(var(--u) * 22);
+
+  /* Règle de forme unique : angles vifs (crêtes), jamais d'arrondi sauf le sceau (carré) et les boutons (0). */
+  --radius: 0px;
+  /* Profil de crête : trois sommets, celui du milieu plus haut (le caractère 山). Sert aux photos et aux strates. */
+  --crete: polygon(0 100%, 0 62%, 14% 34%, 26% 56%, 50% 0, 70% 48%, 83% 26%, 100% 58%, 100% 100%);
+  --crete-fine: polygon(0 100%, 0 70%, 14% 38%, 26% 62%, 50% 8%, 70% 54%, 83% 30%, 100% 64%, 100% 100%);
+
+  --z-gl: 0; --z-content: 1; --z-header: 50; --z-cursor: 80; --z-curtain: 90; --z-loader: 100;
+}
