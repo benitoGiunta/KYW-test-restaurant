@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Etapes from '../components/Etapes.astro';
+import { u } from '../lib/url';
+import { semaine, supplements, boissons } from '../data/site';
+---
+<Base page="carte" title="La carte" description="Le tableau de Pépite, cave à manger à Namur : menu 5 services à 58 euros, fromages en supplément, vins au verre de 5,50 à 12,50 euros.">
+  <section class="page-tete wrap">
+    <h1 class="titre-mega display">La carte</h1>
+    <p class="lead">Pas de menu figé : un tableau qui se réécrit. Voici celui de la semaine, {semaine.libelle.toLowerCase()}.</p>
+  </section>
+
+  <section class="sect sect--filon" aria-labelledby="t-menu">
+    <div class="wrap grid">
+      <header class="filon__tete">
+        <h2 id="t-menu" class="titre-l display">Menu 5 services</h2>
+        <p class="filon__prix filon__prix--tete"><span class="prix">{semaine.prixTexte}</span> à partager ou à l’assiette</p>
+      </header>
+      <div class="filon__corps"><Etapes /></div>
+    </div>
+  </section>
+
+  <section class="lin sect sect--index" aria-labelledby="t-plus">
+    <div class="wrap grid">
+      <figure class="index__photo"><Photo cle="couvert" widths={[480, 800, 1024]} sizes="(max-width: 48rem) 100vw, 40vw" /><figcaption class="legende">Photo : Pépite</figcaption></figure>
+      <div class="index__listes">
+        <h2 id="t-plus" class="titre-l display">En plus, et à boire</h2>
+        <ul class="index">
+          {supplements.map((s) => <li><span class="index__nom">{s.nom}<small>{s.description}</small></span><span class="prix">{s.prix}</span></li>)}
+          {boissons.map((s) => <li><span class="index__nom">{s.nom}<small>{s.description}</small></span><span class="prix">{s.prix}</span></li>)}
+        </ul>
+        <p class="note">La carte des vins et les prix des assiettes à la carte ne sont pas publiés sur ce site.</p>
+        <p><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver</span></a></p>
+      </div>
+    </div>
+  </section>
+</Base>

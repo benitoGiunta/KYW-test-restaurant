@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, horaires, fermes } from '../data/site';
+---
+<Base page="reservation" title="Réserver" description="Réserver une table chez Pépite, cave à manger à Namur : par téléphone, par e-mail ou sur le site de la maison. Horaires du jeudi au samedi, adresse et accès.">
+  <section class="page-tete wrap">
+    <h1 class="titre-mega display">Réserver</h1>
+    <p class="lead">La cave à manger ouvre à 19 h du jeudi au samedi. Pour une table, appelez ou écrivez.</p>
+  </section>
+
+  <section class="sect sect--resa" aria-labelledby="t-contact">
+    <div class="wrap grid">
+      <div class="resa__actions">
+        <h2 id="t-contact" class="titre-l display">Trois façons de venir à table</h2>
+        <p class="resa__cta"><a class="cta cta--grand" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a></p>
+        <p class="resa__cta"><a class="cta cta--vide" href={`mailto:${site.email}`}><span class="cta__txt">Écrire par e-mail</span></a></p>
+        <p class="resa__cta"><a class="cta cta--vide" href={site.siteClient} rel="noopener"><span class="cta__txt">Réserver sur le site de Pépite</span></a></p>
+        <p class="note">Le samedi midi et la privatisation de la cave se font sur demande.</p>
+      </div>
+      <div class="resa__infos lin-bloc">
+        <h2 class="pied__titre">Horaires</h2>
+        <ul class="horaires">
+          {horaires.map((h) => <li><span>{h.jour}</span><span>boutique {h.boutique}</span><span>cave {h.cave}</span></li>)}
+        </ul>
+        <p class="pied__doux">{fermes}</p>
+        <h2 class="pied__titre">Adresse</h2>
+        <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}<br /><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></address>
+        <h2 class="pied__titre">Accès et paiement</h2>
+        <p>Le stationnement est difficile dans la rue Notre-Dame ; des clients signalent le parking du Casino (à confirmer). Bancontact et cartes bancaires sont acceptés.</p>
+      </div>
+    </div>
+  </section>
+</Base>

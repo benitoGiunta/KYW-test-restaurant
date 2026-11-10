@@ -1,0 +1,59 @@
+# DESIGN.md : Pépite, cave à manger (variante awwwards, « Le filon »)
+
+## Brief
+- Sujet : Pépite, cave à manger, 44 rue Notre-Dame, Namur. Boutique de vins d'auteurs et assiettes à partager. Ouverte en 2017 par Catherine Mathieu. Jeudi à samedi.
+- Publics : habitués du soir (cave dès 19 h), clients de la boutique (dès 16 h, samedi dès 10 h 30), touristes et Namurois en quête d'une adresse à vins, groupes (privatisation).
+- Métier du site : réserver (téléphone, e-mail, site du client), venir (adresse, horaires), lire le tableau de la semaine.
+- Ressources : 8 photos du client (ambiance, bouteilles, couvert ; aucune photo de plat), identité cuivre et serif (site actuel). Contraintes : statique, `base` /pepite/awwwards/, pas de backend.
+- Hypothèses : voir `src/data/site.ts` (fondation 2017, téléphone 0476, aucun prix inventé, aucun placeholder).
+
+## Concepts (trois territoires)
+| | A. Le filon | B. Le tableau | C. La bougie |
+|---|---|---|---|
+| Territoire | nom (pépite, pépite d'or) et cave | métier : la carte réécrite chaque semaine | lieu : soirées sans gaz ni électricité |
+| Phrase | un fil de cuivre traverse la cave, chaque assiette est une pépite accrochée au fil | le site est un tableau qu'on efface et qu'on réécrit | la page n'est éclairée que par une flamme |
+| Règle de mise en page | un fil vertical, des losanges aux étapes | lignes de craie, tout en liste | un cercle de lumière autour du curseur |
+| Verbe | affleurer | effacer | vaciller |
+| Signature | le fil se trace au scroll, chaque pépite affleure (`motion.md` : trait SVG/`scaleY` lié au scroll + reveal par `clip-path`) | texte qui s'efface et se réécrit (SplitText) | masque radial suivant le curseur |
+| Ancre | « pépite » = nom ; menu de 5 assiettes | So Soir 2017 : « Ici pas de menu, mais un tableau » | Le Vif 2022 : menu 100 % sans gaz ni électricité |
+| Originalité / adéquation / faisabilité / portabilité (bas = mieux) | 4 / 5 / 5 / 2 | 3 / 5 / 4 / 3 | 4 / 4 / 3 / 3 |
+
+Test de l'échange : A tombe si l'on met un autre nom (la pépite est le nom du lieu et le cuivre son tabouret). B convient à toute ardoise de brasserie (le dépôt a déjà le gabarit « ardoise »). C : la bougie est un détail, pas une structure de carte. Choix : **A**, il tient jusqu'au pied, à la carte et à la 404. B ne fournit que le mot « tableau » (titre de la carte), C la 404 (bougie éteinte) et la section « Parfois, à la bougie ».
+
+## Concept Card
+- Idée : un fil de cuivre traverse la cave de Pépite ; chaque assiette du tableau de la semaine est une pépite accrochée au fil.
+- Métaphore : le filon : on creuse, on trouve, on partage ce qu'on a trouvé.
+- Signature (et recette) : le fil de cuivre se trace avec le scroll le long du tableau de la semaine et chaque losange affleure à son passage (phase 2 : `scaleY` du fil piloté par ScrollTrigger + reveal `clip-path` des noms, `motion.md`).
+- Émotion (3 premières secondes) : entrer dans une cave chaude, un nom immense en serif sur fond brun, une table aux bougies.
+- Verbe : affleurer (les choses montent à la surface, lentement, `ease.out`).
+- Capture : le « Pépite » géant à gauche, la table voûtée à droite, « cave à manger » en cuivre italique.
+- Ancre : « pépite » (nom), le cuivre du tabouret (photo 05), la cave voûtée (photo 01), le menu de 5 assiettes à 58 €.
+- Théâtre : loader non (restaurant : l'adresse et l'action doivent être lisibles en 3 s) ; GL non (aucune photo de plat, 8 photos modestes, le fil CSS/SVG suffit).
+
+## Système
+- Palette (références réelles : pierre de la cave, serviette de lin, tabouret en cuivre, lumière de bougie) : ground `#1b130f`, ink `#f1e6d6`, muted `#bba78f`, line `#43322a`, accent `#d2874a`, curtain `#0e0907` ; sections claires : lin `#efe4d3`, encre `#1b130f`, muted `#5b4a3e`, cuivre oxydé `#8c4a1c` (5,6:1). Défaut n° 1 (crème + serif contrasté + terracotta) évité : le fond principal est sombre, le lin n'est qu'un contrepoint (citation, bandeau), et le cuivre vient de la photo 05.
+- Typo : Boska (Fontshare, display, romain + italique : le logo du client est un serif à empattements évasés) ; DM Mono (Google, corps et UI : le site actuel utilise une mono pour le corps). 4 fichiers (boska 400, italique, DM Mono 400 et 500), 2 préchargés (Boska 400, DM Mono 400). Échelle `--t-mega` 16 rem … `--t-xs` 0,75 rem, sauts ×2. Display : interlettrage de -0,03 à -0,05em, interligne 0,88 à 1. Corps 15 à 17 px, mesure ≤ 62 car., prix `tabular-nums`, insécables et « » appliqués.
+- Grille : 12 colonnes, gouttière fluide, lignes fortes : le fil de cuivre (gauche des étapes) et la colonne 7 des pages intérieures ; 4 humeurs d'espacement (`serre`, `normal`, `aere`, `entracte`). Rayon 0 partout.
+- Mouvement (à planifier en phase 2) : easing `ease.out` pour affleurer, `ease.inOut` pour le rideau (pierre qui monte du sol, 0,7 s). Hover : CTA = fond cuivre qui se vide (texte intérieur qui glisse), nav = soulignement tracé, plats/images = léger zoom, liens texte = couleur. Repos : lueur de bougie qui vacille doucement sur le fil et la dernière pépite du pied.
+- Plan de composition (accueil) : 1 poster (titre + portrait) ; 2 statement sur lin (citation de la patronne) ; 3 narration sur fil (tableau) ; 4 paire asymétrique (bouteilles + vins) ; 5 filmstrip (servir, goûter, bougie) sur lin ; 6 données + CTA ; pied : dernière pépite et « À table. ». Carte : poster, fil, index sur lin. Histoire : poster-paire, statement, index presse. Réservation : actions + colonne de données. 404 : bougie éteinte. Mobile 390 : colonne unique, portrait décalé à droite, strip en `scroll-snap`, titres re-réglés (`16,5vw`).
+- Test de généricité : un modèle atterrirait-il sur « Hero + 3 cartes » ? Oui, donc changé : pas de cartes, le tableau est un fil, la carte est une liste d'index, la presse un index daté.
+
+## Sur-utilisation de la skill
+1. Trois concepts, trois territoires, notés, ancre, test de l'échange : tableau ci-dessus.
+2. Aucun exemple travaillé de concepts.md (ni braise, ni pavage, ni gril, ni cadre, ni solde, ni phrase unique) : le fil de cuivre n'y figure pas.
+3. Concept Card au format exact, verbe « affleurer » : ci-dessus.
+4. Concept présent au pied (`Footer.astro` : `.pied__pepite`, dernière pépite), à la carte (`Etapes.astro` dans `carte.astro`), à la réservation (index et fil dans la colonne, `.resa__infos` bordée) et à la 404 (`404.astro` : bougie éteinte).
+5. Moment signature : le fil se trace et les pépites affleurent (recette phase 2) ; état statique prêt (`.etapes`, `.etape::before` dans `site.css`).
+6. Palette 6 rôles plus lin, références réelles : ci-dessus (`tokens.css`).
+7. Les 8 défauts évités : crème+terracotta (justifié ci-dessus), pas d'acide sur noir, pas de dégradé violet, pas de verre dépoli (`grep backdrop` vide), pas d'eyebrow sur titre, pas de 01/02/03, ni Inter, Fraunces, Instrument Serif, Playfair.
+8. Test de généricité : ci-dessus.
+9. Détails 7 vers 8 : sélection (`::selection` inversée dans `engine.css`, version lin dans `.lin ::selection`), focus dans l'accent (`:focus-visible`), favicon de l'identité (`public/favicon.svg` : la pépite), OG composée (`public/og.png`, capture du hero), pied en composition finale, 404 dans le concept. Cases « sélection » et « focus » : réglées par code, preuve visuelle en phase 3.
+10. Polices : `public/fonts/` (4 fichiers), `@font-face` dans `tokens.css`, 2 préchargements dans `Base.astro`.
+11. Échelle fluide unique `--t-*` de `tokens.css`, grands sauts (16 rem contre 0,75 rem).
+12. Display réglé : `.display`, `.titre-mega`, `.hero__nom` (`site.css`).
+13. Corps et UI : DM Mono 15 à 17 px, UI 12 à 14 px.
+14. Typographie française : insécables dans `site.ts` et les pages, « » à espaces insécables, apostrophes courbes ; aucun tiret cadratin (contrôle Python vide).
+15. Grille 12 colonnes (`.grid`), lignes fortes (fil, colonne 7). Cadre quatre coins non retenu : le fil est la structure, l'en-tête (nom à gauche, nav à droite) et le pied suffisent.
+16. Une famille de section au plus une fois par page : accueil poster, statement, narration, paire, filmstrip, données (les familles `.lin` de la citation et du strip diffèrent).
+17. Hero en 3 s : nom, cuisine, adresse, CTA « Réserver » et téléphone visibles (mesure : CTA bas à 692 px à 1280×720, 764 à 1440×900).
+18. Mobile 390 recomposé : `@media (max-width: 48rem)` de `site.css` ; strip `overflow-x` + `scroll-snap` ; `scrollWidth` = 390 sur les 4 pages (mini-script).

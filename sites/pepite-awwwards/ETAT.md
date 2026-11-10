@@ -1,0 +1,5 @@
+# ETAT : pepite awwwards, construction-1
+Fait : concept (le filon) et DESIGN.md complet, scaffold (engine copié du site frère chez-guillaume-awwwards), polices (Boska, DM Mono), site.ts, photos recadrées, 5 pages statiques (accueil, carte, histoire, réservation, 404), pied, favicon, og.png, build OK (`dist/pepite/awwwards/`), mesures hero et débordements à 4 tailles OK.
+Reste (phase 2) : signature (fil qui se trace au scroll, pépites qui affleurent, `data-reveal`/`data-split`), hovers (CTA, nav), repos (lueur de bougie), rideau déjà branché (`motion/setup.ts`), curseur non retenu. Phase 3 : QA navigateur, contraste, LCP, Lighthouse, jury, points 19 et suivants de la checklist.
+Décisions : pas de loader ni de GL ; fond sombre dominant ; pied en `<section>` (KywFooter porte le `<footer>`) ; réservation par `tel:`, `mailto:` et lien vers le site du client.
+Pièges : images sous la flottaison vides en capture fullPage sans scroll (lazy) ; `og.png` est une capture de l'accueil (à refaire composée en phase 3) ; l'accueil n'a pas de `data-reveal` : ne pas oublier `.motion [data-reveal]{visibility:hidden}` en ajoutant des révélations.

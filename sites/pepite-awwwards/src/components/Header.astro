@@ -1,0 +1,18 @@
+---
+import { u } from '../lib/url';
+interface Props { page?: string }
+const { page } = Astro.props;
+const liens = [
+  { href: '/carte/', nom: 'La carte', id: 'carte' },
+  { href: '/histoire/', nom: 'L’histoire', id: 'histoire' },
+  { href: '/reservation/', nom: 'Réserver', id: 'reservation' },
+];
+---
+<header class="entete wrap">
+  <a class="entete__marque" href={u('/')} aria-label="Pépite, cave à manger, accueil"><span class="entete__nom">pépite</span><span class="entete__base">cave à manger</span></a>
+  <nav class="entete__nav" aria-label="Navigation principale">
+    <ul>
+      {liens.map((l) => <li><a class="lien-nav" href={u(l.href)} aria-current={page === l.id ? 'page' : undefined}>{l.nom}</a></li>)}
+    </ul>
+  </nav>
+</header>

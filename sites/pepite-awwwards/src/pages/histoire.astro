@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { histoire, citation, presse, site } from '../data/site';
+---
+<Base page="histoire" title="L’histoire" description="Pépite, cave à manger ouverte en 2017 par Catherine Mathieu au 44 rue Notre-Dame à Namur : l’histoire d’une boutique de vins et d’assiettes à partager.">
+  <section class="page-tete wrap grid">
+    <h1 class="titre-mega display">L’histoire</h1>
+    <figure class="histoire__photo"><Photo cle="vitrine" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 45vw" prioritaire /><figcaption class="legende">Photo : Pépite</figcaption></figure>
+    <div class="histoire__texte">
+      {histoire.map((p) => <p>{p}</p>)}
+    </div>
+  </section>
+
+  <section class="lin sect sect--citation" aria-label="Le mot de la fondatrice">
+    <div class="wrap">
+      <figure class="citation">
+        <blockquote class="citation__texte display">« {citation.texte} »</blockquote>
+        <figcaption class="citation__auteur">{citation.auteur}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sect sect--presse" aria-labelledby="t-presse">
+    <div class="wrap grid">
+      <h2 id="t-presse" class="titre-l display">La presse en parle</h2>
+      <ul class="index presse">
+        {presse.map((p) => <li><span class="index__nom">{p.titre}<small>{p.media}</small></span><span class="presse__date">{p.date}</span></li>)}
+      </ul>
+      <figure class="presse__photo"><Photo cle="tabouret" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 28vw" /><figcaption class="legende">Photo : Pépite</figcaption></figure>
+    </div>
+  </section>
+</Base>
