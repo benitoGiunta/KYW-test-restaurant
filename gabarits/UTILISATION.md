@@ -8,7 +8,7 @@ Un gabarit par ligne, les restaurants qui l ont reçu en variante portfolio (pou
 | verger | atelier-de-bossime |
 | forno | dolce-vita-wepion |
 | comptoir | l-essentiel |
-| encre | ferme-blanche-d-asie |
+| encre | ferme-blanche-d-asie, sanga |
 | ardoise | le-royal, partage, le-felicien |
 | braise | grill-des-amis |
 | affiche | makimono |

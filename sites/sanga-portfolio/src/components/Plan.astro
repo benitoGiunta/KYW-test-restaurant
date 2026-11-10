@@ -1,0 +1,19 @@
+---
+// Plan d'accès au trait : schéma de la rue Saint-Loup et du restaurant. Seule l'adresse est connue au dossier :
+// aucun repère voisin n'est nommé. Les tracés se dessinent à l'entrée (setup.ts, [data-trace]). Schéma sans échelle.
+import { site } from '../data/site';
+---
+<figure class="plan">
+  <svg class="plan__svg" viewBox="0 0 420 320" role="img" aria-label={`Schéma d'accès : ${site.nom}, ${site.adresse.rue} ${site.adresse.numero}`}>
+    <path class="plan__trait" data-trace d="M30 60 h 120 v 70 h -120 z" />
+    <path class="plan__trait" data-trace d="M200 40 h 90 v 90 h -90 z" />
+    <path class="plan__trait" data-trace d="M330 70 h 70 v 60 h -70 z" />
+    <path class="plan__trait" data-trace d="M40 230 h 100 v 60 h -100 z" />
+    <path class="plan__trait" data-trace d="M190 240 h 120 v 50 h -120 z" />
+    <path class="plan__trait plan__trait--rue" data-trace d="M-10 180 C 90 170, 150 190, 230 178 S 360 165, 430 175" />
+    <circle class="plan__ici" cx="260" cy="177" r="7" />
+    <text class="plan__texte plan__texte--ici" x="236" y="152">{site.nom}</text>
+    <text class="plan__texte plan__texte--petit" x="30" y="205">{site.adresse.rue}</text>
+  </svg>
+  <figcaption class="plan__legende">Schéma indicatif, sans échelle : {site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}.</figcaption>
+</figure>

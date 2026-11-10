@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import Plan from '../components/Plan.astro';
+import TitreV from '../components/TitreV.astro';
+import { site, adresseLigne, horairesGroupes, telHref } from '../data/site';
+import { u } from '../lib/url';
+const { livraison } = site;
+---
+<Base title="Commander" description={`Commander chez ${site.nom} à ${site.adresse.commune} : commande en ligne, à emporter ou livrée. Adresse, horaires, zones de livraison et moyens de paiement.`} preloads={[{ href: '/photos/ramen-deux-bols-960.webp', media: '(max-width: 767px)' }, { href: '/photos/ramen-deux-bols.webp', media: '(min-width: 768px)' }]}>
+  <HeroPage photo="/photos/ramen-deux-bols.webp" photoMobile="/photos/ramen-deux-bols-960.webp" titre="Commander" phrase="Commande en ligne, à emporter ou livrée à Namur." />
+
+  <section class="section" aria-labelledby="cmd-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">01</p>
+      <h2 class="titre-centre" id="cmd-titre" data-split="lines">Votre commande</h2>
+      <div class="actions actions--centre" data-reveal="up">
+        <a class="btn btn--plein" href={site.commande.url} rel="noopener">Commander en ligne</a>
+        <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+      </div>
+      <p class="muted" style="margin-top: 1.5rem; font-size: var(--t-s)" data-reveal="fade">La commande en ligne passe par la plateforme {site.commande.outil}. Ce site est une maquette : aucune commande n’y est prise.</p>
+    </div>
+  </section>
+
+  <section class="section section--v section--serre" aria-labelledby="livraison-titre">
+    <div class="wrap">
+      <TitreV texte="Livraison" id="livraison-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">02</p>
+        <div class="formules" style="margin-inline: 0">
+          {livraison.zones.map((z, i) => (
+            <article class="formule" data-reveal="up" data-delay={String(i * 0.1)}>
+              <h3>{z.codes.join(', ')}</h3>
+              <p class="formule__prix">Commande {z.prix}</p>
+              <p>{livraison.gratuite}</p>
+            </article>
+          ))}
+        </div>
+        <p class="muted" style="margin-top: 1.5rem; font-size: var(--t-s)" data-reveal="fade">{livraison.rayon}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--serre" aria-labelledby="paiement-titre">
+    <div class="wrap colonne">
+      <p class="chapeau" data-reveal="fade">03</p>
+      <h2 class="titre-centre" id="paiement-titre" data-split="lines">Paiement</h2>
+      <ul class="equipe-liste" style="list-style: none; padding: 0" data-reveal="up">
+        {site.paiement.map((p) => <li>{p}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--v section--serre" aria-labelledby="venir-titre">
+    <div class="wrap">
+      <TitreV texte="Venir" id="venir-titre" />
+      <div>
+        <p class="chapeau chapeau--gauche">04</p>
+        <div class="venir">
+          <Plan />
+          <div class="infos" data-reveal="up">
+            <div>
+              <h3>Adresse</h3>
+              <address>{adresseLigne()}</address>
+              <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+            </div>
+            <div>
+              <h3>Horaires</h3>
+              <dl class="horaires">
+                {horairesGroupes().map((h) => <><dt>{h.jours}</dt><dd>{h.texte}</dd></>)}
+              </dl>
+            </div>
+            <div class="actions" style="margin-top: 0">
+              <a class="btn" href={u('/carte/')}>Voir la carte</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

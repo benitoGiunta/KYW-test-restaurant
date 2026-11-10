@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+
+// Carte réelle du dossier : chaque catégorie est un chapitre numéroté ; les ramen se choisissent en trois bouillons.
+const sections = site.carte;
+---
+<Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : entrées, ramen au bouillon miso, shio ou shoyu, udon, soba, donburi, divers et boissons, avec les prix.`} preloads={[{ href: '/photos/teriyaki-don-960.webp', media: '(max-width: 767px)' }, { href: '/photos/teriyaki-don.webp', media: '(min-width: 768px)' }]}>
+  <HeroPage photo="/photos/teriyaki-don.webp" photoMobile="/photos/teriyaki-don-960.webp" titre="La carte" phrase="Ramen, udon, soba et donburi. Des entrées aux boissons." />
+
+  {sections.map((cat, k) => (
+    <section class={`section${k ? ' section--serre' : ''}`} aria-labelledby={`cat-${k}`}>
+      <div class="wrap">
+        <div class="menu-reel">
+          <div class="menu-reel__entete">
+            <p class="chapeau" data-reveal="fade">{String(k + 1).padStart(2, '0')}</p>
+            <h2 class="titre-centre" id={`cat-${k}`} data-split="lines">{cat.categorie}</h2>
+            {cat.categorie === 'Ramen' && (
+              <p class="menu-reel__sous" data-reveal="fade" data-delay="0.1">Chaque ramen se choisit en bouillon {site.bouillons.map((b) => b.nom.toLowerCase()).join(', ').replace(/, ([^,]*)$/, ' ou $1')}.</p>
+            )}
+          </div>
+          <ul class="menu-reel__lignes" style="list-style: none; padding: 0" data-reveal="up">
+            {cat.plats.map((p) => (
+              <li class="ligne ligne--sans"><span class="ligne__num" aria-hidden="true">·</span><span class="ligne__nom">{p.nom}{p.description && <span class="ligne__desc">{p.description}</span>}</span><span class="ligne__prix">{p.prix}</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section section--serre" aria-labelledby="fin-carte">
+    <div class="wrap colonne">
+      <h2 class="titre-centre" id="fin-carte" data-split="lines">À table ou chez vous</h2>
+      <div class="actions actions--centre" data-reveal="up">
+        <a class="btn btn--plein" href={u('/commander/')}>Commander</a>
+        <a class="btn" href={u('/maison/')}>La maison</a>
+      </div>
+    </div>
+  </section>
+</Base>
