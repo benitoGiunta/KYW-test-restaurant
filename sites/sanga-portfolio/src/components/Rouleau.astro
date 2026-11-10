@@ -19,7 +19,7 @@ const { rouleau } = site;
       <TitreV texte={rouleau.titre} id={`${id}-titre`} />
       <p class="rouleau__note">Douze plats de la carte, du bol simple au donburi.</p>
     </div>
-    <div class="rouleau__piste" data-rouleau-piste tabindex="0" role="group" aria-label="Rouleau de douze plats de la carte ; flèches gauche et droite pour le dérouler">
+    <div class="rouleau__piste" data-rouleau-piste data-cursor="Dérouler" tabindex="0" role="group" aria-label="Rouleau de douze plats de la carte ; flèches gauche et droite pour le dérouler">
       <ol class="rouleau__bande" data-rouleau-bande>
         {rouleau.plats.map((p, i) => {
           const ph = p.photo ? photoDe(p.photo) : null;
@@ -49,6 +49,13 @@ const { rouleau } = site;
           <Sceau taille="l" />
         </li>
       </ol>
+    </div>
+    <div class="rouleau__pied">
+      <div class="rouleau__ctrl" role="group" aria-label="Défilement du rouleau">
+        <button type="button" class="rouleau__btn" data-rouleau-prec aria-label="Plats précédents" disabled><span aria-hidden="true">←</span></button>
+        <button type="button" class="rouleau__btn" data-rouleau-suiv aria-label="Plats suivants"><span aria-hidden="true">→</span></button>
+      </div>
+      <p class="rouleau__compte" aria-hidden="true"><span data-rouleau-n>01</span> / {String(rouleau.plats.length).padStart(2, '0')}</p>
     </div>
     <div class="rouleau__barre" aria-hidden="true"><span data-rouleau-progres></span></div>
   </div>

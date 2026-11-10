@@ -53,3 +53,19 @@ réseaux, e-mail, réservation, repères du quartier, accès gare ou parking). A
 3. Commande, livraison et paiement mis en avant comme sur le site actuel.
 Limites : pas de photo de salle ni de façade ni de personnes (galerie de six plats seulement, photos de 600 à 1024 px
 pour la plupart), histoire inconnue (page Maison courte), plan sans repère, pas d'outil de réservation.
+
+## Motion, signature et interactions (phase 2)
+- Signature, le Rouleau : scène épinglée à `100svh` exactement (bande entièrement visible à 1280x720 et 1440x900), photo
+  plafonnée à 30 svh (26 svh si la fenêtre fait 800 px ou moins). Le plat au centre du champ passe de photo lavée
+  (`saturate(.45)`) à pleine couleur ; compteur « 08 / 12 » (le sceau final ne compte pas) ; deux boutons ronds précédent
+  et suivant (44 px, désactivés aux extrémités, `:active` pressé) en plus des flèches du clavier et de la molette.
+- Sceau : se pose avec une rotation de -10° vers 0 (le tampon), s'incline de 8° au survol, s'enfonce au clic, léger
+  aimant au pointeur fin (`data-magnetic`). Curseur « Dérouler » au-dessus du rouleau (pointeur fin seulement).
+- Hero : parallaxe de la photo (9 % en y, scrub), photo qui respire à l'intro, trait tracé, vapeur au repos.
+  En-tête sans `mix-blend-mode: difference` (illisible sur photo claire sous voile) : ivoire plein, voile resserré
+  plus sombre en haut (0,78 → 0,46) ; en-tête encre sur la 404.
+- États : survol, focus visible et clic de `.btn`, `.link`, boutons du rouleau, sceau ; plat survolé = photo en couleur,
+  zoom 1,05 de l'image dans le masque et prix vermillon.
+- Reduced motion : pas d'épinglage ni de parallaxe ni de vapeur ; le rouleau devient un défilement horizontal natif
+  (snap) avec les mêmes boutons, compteur et barre de progression ; transitions CSS neutralisées.
+- Mobile : plats à 80 vw, boutons et compteur sous le rouleau, en-tête lisible (ivoire) sur la photo.

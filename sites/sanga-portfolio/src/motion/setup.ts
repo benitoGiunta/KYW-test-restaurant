@@ -29,7 +29,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cs = [heroIntro(intro), vapeur(), traces(), allumage(), rouleau(), sceaux(), horloge(), dateMinimum()];
+    const cs = [heroIntro(intro), heroParallaxe(), vapeur(), traces(), allumage(), rouleau(), sceaux(), horloge(), dateMinimum()];
     return () => cs.forEach((c) => c());
   });
 }
@@ -54,6 +54,15 @@ function heroIntro(intro: gsap.core.Timeline) {
   }
   intro.add(() => tl.play(), 0);
   return () => { tl.kill(); };
+}
+
+/** Hero : la photo glisse plus lentement que la page (parallaxe d'encre, y seulement, scrub). */
+function heroParallaxe() {
+  const cadre = document.querySelector<HTMLElement>('.hero__photo');
+  const hero = cadre?.closest<HTMLElement>('.hero');
+  if (!cadre || !hero || reduced()) return noop;
+  gsap.to(cadre, { yPercent: 9, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+  return noop;
 }
 
 /** Idle : la vapeur du hero, dérive d'opacité du voile de ±3 % sur 6 s. */
@@ -107,6 +116,33 @@ function rouleau() {
   const progres = root.querySelector<HTMLElement>('[data-rouleau-progres]');
   const epingle = root.dataset.rouleau === 'epingle' && matchMedia('(min-width: 1024px)').matches && !reduced();
   const pas = () => Math.round(piste.clientWidth * 0.45);
+  const plats = [...root.querySelectorAll<HTMLElement>('[data-plat], .plat--fin')];
+  const prec = root.querySelector<HTMLButtonElement>('[data-rouleau-prec]');
+  const suiv = root.querySelector<HTMLButtonElement>('[data-rouleau-suiv]');
+  const compte = root.querySelector<HTMLElement>('[data-rouleau-n]');
+  // Plat au centre du champ : photo en pleine couleur, numéro dans le compteur, boutons désactivés aux extrémités.
+  const majEtat = (p: number) => {
+    const r = piste.getBoundingClientRect();
+    const centre = r.left + r.width / 2;
+    let best = 0; let dist = Infinity;
+    plats.forEach((el, i) => { const b = el.getBoundingClientRect(); const d = Math.abs(b.left + b.width / 2 - centre); if (d < dist) { dist = d; best = i; } });
+    if (p >= 0.985) best = plats.length - 1;
+    if (p <= 0.015) best = 0;
+    plats.forEach((el, i) => el.classList.toggle('is-actif', i === best));
+    if (compte) compte.textContent = String(Math.min(best, plats.length - 2) + 1).padStart(2, '0');
+    if (prec) prec.disabled = p <= 0.015;
+    if (suiv) suiv.disabled = p >= 0.985;
+  };
+  const aller = (sens: number) => {
+    const d = sens * pas();
+    if (root.classList.contains('is-epingle')) scrollToTarget(scrollState().y + d);
+    else piste.scrollBy({ left: d, behavior: reduced() ? 'auto' : 'smooth' });
+  };
+  const onPrec = () => aller(-1);
+  const onSuiv = () => aller(1);
+  prec?.addEventListener('click', onPrec);
+  suiv?.addEventListener('click', onSuiv);
+  const retire = () => { prec?.removeEventListener('click', onPrec); suiv?.removeEventListener('click', onSuiv); };
 
   const clavier = (e: KeyboardEvent) => {
     if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
@@ -120,14 +156,17 @@ function rouleau() {
   if (!epingle) {
     const suivre = () => {
       const max = piste.scrollWidth - piste.clientWidth;
-      if (progres) progres.style.transform = `scaleX(${max > 0 ? piste.scrollLeft / max : 1})`;
+      const p = max > 0 ? piste.scrollLeft / max : 1;
+      if (progres) progres.style.transform = `scaleX(${p})`;
+      majEtat(p);
     };
     piste.addEventListener('scroll', suivre, { passive: true });
     suivre();
-    return () => { piste.removeEventListener('keydown', clavier); piste.removeEventListener('scroll', suivre); };
+    return () => { retire(); piste.removeEventListener('keydown', clavier); piste.removeEventListener('scroll', suivre); };
   }
 
   root.classList.add('is-epingle');
+  majEtat(0);
   const scene = root.querySelector<HTMLElement>('[data-rouleau-scene]')!;
   const course = () => Math.max(0, bande.scrollWidth - piste.clientWidth);
   const glisse = gsap.to(bande, {
@@ -141,7 +180,7 @@ function rouleau() {
       scrub: 0.8,
       anticipatePin: 1,
       invalidateOnRefresh: true,
-      onUpdate: (st) => { if (progres) progres.style.transform = `scaleX(${st.progress})`; },
+      onUpdate: (st) => { if (progres) progres.style.transform = `scaleX(${st.progress})`; majEtat(st.progress); },
     },
   });
   // Traits de pinceau : fermés au départ, tracés quand le plat entre (85 % de la largeur) dans la bande.
@@ -161,13 +200,13 @@ function rouleau() {
   const fin = root.querySelector<HTMLElement>('.plat--fin');
   const disque = fin?.querySelector<HTMLElement>('.sceau__disque');
   if (fin && disque) {
-    gsap.set(disque, { scale: 1.3, autoAlpha: 0 });
+    gsap.set(disque, { scale: 1.3, rotate: -10, autoAlpha: 0 });
     ScrollTrigger.create({
       trigger: fin, containerAnimation: glisse, start: 'left 80%', once: true,
-      onEnter: () => { gsap.to(disque, { scale: 1, autoAlpha: 1, duration: 0.6, ease: 'power3.out', clearProps: 'transform,opacity' }); },
+      onEnter: () => { gsap.to(disque, { scale: 1, rotate: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out', clearProps: 'transform,opacity,visibility' }); },
     });
   }
-  return () => { piste.removeEventListener('keydown', clavier); root.classList.remove('is-epingle'); };
+  return () => { retire(); piste.removeEventListener('keydown', clavier); root.classList.remove('is-epingle'); };
 }
 
 /** Sceaux hors rouleau (pied de page) : se posent à l'entrée. */
@@ -175,7 +214,7 @@ function sceaux() {
   const disques = [...document.querySelectorAll<HTMLElement>('[data-sceau] .sceau__disque')].filter((d) => !d.closest('[data-rouleau]'));
   if (!disques.length || reduced()) return noop;
   disques.forEach((d) => {
-    gsap.fromTo(d, { scale: 1.3, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.7, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: d, start: 'top 92%', once: true } });
+    gsap.fromTo(d, { scale: 1.3, rotate: -10, autoAlpha: 0 }, { scale: 1, rotate: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out', clearProps: 'transform,opacity,visibility', scrollTrigger: { trigger: d, start: 'top 92%', once: true } });
   });
   return noop;
 }
