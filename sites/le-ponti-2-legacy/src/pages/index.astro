@@ -9,11 +9,11 @@ const photos = { pizza: { src: 'pizza.webp', alt: 'Pizza à la roquette et aux c
 ---
 <Base title="Le Ponti 2, restaurant italien et pizzeria à Jambes (Namur)" page="accueil">
   <section class="hero" aria-labelledby="h-hero">
-    <Fig class="hero__field" src="pates-2000.webp" alt="Assiettes de pâtes à la tomate, au pesto et aux scampis sur une table avec verres et bouteille de vin" w={1448} h={1086} eager pos="50% 62%" slot="hero" />
+    <Fig class="hero__field" src="pates-2000.webp" alt="Assiettes de pâtes à la tomate, au pesto et aux scampis sur une table avec verres et bouteille de vin" w={1448} h={1086} eager pos="50% 45%" slot="hero" />
     <div class="container hero__base">
       <h1 id="h-hero">Restaurant italien, esprit familial.</h1>
       <div class="hero__side">
-        <p class="lead">Pizzas, pâtes et spécialités italiennes à Jambes, à Namur, pour un lunch ou un dîner en famille, entre amis ou à deux.</p>
+        <p class="lead">Pizzas, pâtes et spécialités italiennes à Jambes, à Namur, le midi comme le soir, en famille, entre amis ou à deux.</p>
         <p class="actions">
           <a class="btn" href={resto.reservation} rel="noopener">Réserver une table</a>
           <a class="link" href={`${base}menu/`}>Découvrir la carte</a>
@@ -38,8 +38,8 @@ const photos = { pizza: { src: 'pizza.webp', alt: 'Pizza à la roquette et aux c
           const ph = r.photo ? photos[r.photo] : null;
           return (
             <li data-reveal style={`--i:${i % 3}`}>
-              <a class="cat" href={`${base}menu/#${r.id}`}>
-                {ph ? <Fig class="cat__fig" {...ph} ratio="4 / 3" sizes="(min-width: 60rem) 28rem, 90vw" slot={`cat-${r.id}`} /> : <span class="cat__n" aria-hidden="true">{s.n}</span>}
+              <a class={ph ? "cat" : "cat cat--txt"} href={`${base}menu/#${r.id}`}>
+                {ph ? <Fig class="cat__fig" {...ph} ratio="4 / 3" sizes="(min-width: 60rem) 28rem, 90vw" slot={`cat-${r.id}`} /> : null}
                 <span class="cat__body">
                   <h3>{r.nom}</h3>
                   <span class="small">{r.lead}</span>
