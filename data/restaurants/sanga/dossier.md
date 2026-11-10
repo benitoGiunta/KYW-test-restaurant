@@ -85,7 +85,7 @@ Non recherchée dans ce passage (budget sobriété) : inconnu.
 
 ## Ce qui manque
 - Histoire, date d'ouverture, équipe : inconnus
-- E-mail professionnel : liupu0904@gmail.com apparaît sur le site (personnel, non repris)
+- E-mail professionnel : Un Gmail apparaît sur le site (personnel, non repris)
 - Facebook, Instagram, TikTok : non trouvés
 - TripAdvisor note/nombre : inaccessible (403)
 - Note Google 4,6/892 reprise de data/restaurants.json (Rankeat 04/03/2026), non revérifiée
