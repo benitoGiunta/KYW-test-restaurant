@@ -51,3 +51,8 @@
 - `rm public/photos/*` est refusé par la sécurité : déplacer vers le scratchpad ou supprimer par nom.
 - Les prix du type « 10 € (2 pièces) / 16 € en plat » ont été scindés : prix principal à droite, reste dans la description.
 - Le dossier donne des liens Unsplash pour 493 et 425 d'après `credits.json` (fichier temporaire du scratchpad).
+
+## Revue passe 1 (relecteur-site, 10/11/2026) : faite
+- `REVUE-1.md` écrit : verdict A_CORRIGER, 0 F0, 1 F1 (aperçu photo qui ne suit plus le curseur : `overwrite: true` tue les `quickTo`, `src/motion/setup.ts:209` et `:211`), 4 F2, 7 F3. Rien n'a été corrigé (rôle relecteur).
+- Reste : révision ciblée de la liste F1/F2/F3, puis passe 2. Pas de rebuild fait pendant la revue (`dist/` du 10/11 00:29 relu tel quel).
+- Pièges : le QA ne couvre que 3 pages sur 7 et sa « 404 » est brute ; axe complet (hors shoot) montre `region` et `aria-prohibited-attr` sur `.etat` et `.ligne__in`.
