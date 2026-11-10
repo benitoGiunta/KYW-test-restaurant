@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, services, fermes } from '../data/site';
+---
+<Base page="reservation" title="Réserver" description="Réservez une table au Grill des amiS, rue Saint-Joseph 10 à Namur : par téléphone au 081 61 72 60 ou en ligne, midi et soir du jeudi au samedi et le lundi.">
+  <header class="wrap page-tete">
+    <h1 class="display">Réserver</h1>
+    <p>Une table pour le midi ou pour le soir : par téléphone ou en ligne.</p>
+  </header>
+  <section class="sec" aria-label="Réserver et venir">
+    <div class="wrap duo">
+      <div class="duo__a">
+        <h2 class="display">Par téléphone</h2>
+        <a class="rdv-tel" href={site.telephoneHref}>{site.telephoneLisible}</a>
+        <div class="rdv-actions">
+          <a class="cta cta--braise" href={site.telephoneHref}><span class="cta__txt">Appeler</span></a>
+          <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver en ligne</span></a>
+        </div>
+        <p class="petit" style="margin-top:1rem">La réservation en ligne se fait sur le site du restaurant.</p>
+      </div>
+      <div class="duo__b">
+        <h2 class="display">Les services</h2>
+        <ul class="liste-nue tnum">
+          {services.map((s) => <li><strong>{s.jours}</strong><br />Midi : {s.midi}<br />Soir : {s.soir}</li>)}
+          <li>{fermes}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="sec sec--os" aria-label="Avant de venir">
+    <div class="wrap duo">
+      <div class="duo__a">
+        <h2 class="display">Avant de venir</h2>
+        <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p style="margin-top:1rem"><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+        <ul class="liste-nue" style="margin-top:var(--serre)">
+          <li>La salle est climatisée et la terrasse se trouve devant le restaurant.</li>
+          <li>Le Menu Viandard, cinq viandes en trois services, se prend à partir de deux personnes, par table entière.</li>
+          <li>Pour un repas à la maison ou une fête, la maison propose un service traiteur et des barbecues livrés.</li>
+        </ul>
+      </div>
+      <figure class="duo__b"><Photo cle="table" sizes="(max-width: 56rem) 100vw, 40vw" widths={[480, 800]} /><figcaption>Une table dressée pour le soir.</figcaption></figure>
+    </div>
+  </section>
+</Base>

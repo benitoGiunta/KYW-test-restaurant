@@ -105,3 +105,8 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 - Waiver sloplint : `/* Hallmark · waive <gate> · <preuve> · <raison> */` exige trois champs séparés par « · » ; deux champs = « malformed » et le REFLEX reste ouvert.
 - Remplacement en masse de l'espace avant « : ? » par `&nbsp;` : limiter aux balises de texte (le JS et les ternaires cassent).
 - 2026-11-10 : jamais de `rm` avec glob après `cd` (refusé par la sécurité) ; supprimer par `find <chemin absolu> -type f -name '*.webp' -delete`.
+
+## 2026-11-10 · grill-des-amis · variante awwwards (phase 1)
+- Symptôme : une photo du client en paysage s'affichait couchée de 90° après import. Cause : le fichier source est stocké couché, sans balise EXIF d'orientation (`metadata().orientation` indéfini), donc `.rotate()` automatique ne change rien. Correction appliquée : `sharp(...).rotate(90)` à l'import après contrôle visuel de la planche. À faire par le prochain agent : regarder chaque photo importée en miniature avant de composer ; un sujet à l'envers ou couché n'est pas détecté par les métadonnées.
+- Symptôme : `scrollWidth` supérieur à la fenêtre sans aucun élément dont le rectangle dépasse (le texte géant déborde à l'encre). Correction appliquée : masquer chaque section tour à tour (`style.display='none'`) et relire `documentElement.scrollWidth` pour désigner la coupable ; puis dimensionner les titres par `(100vw - 2 gutter) / k` avec k = largeur du mot le plus large en em (insécable compris). Un mot géant lié par `&nbsp;` compte pour un seul mot.
+- Une capture `fullPage` sans défilement montre les images `loading=lazy` vides : faire défiler la page par pas d'une demi-fenêtre avant de capturer, sinon on corrige un défaut qui n'existe pas.

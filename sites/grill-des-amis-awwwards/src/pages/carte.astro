@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { carte } from '../data/site';
+import { euro } from '../lib/format';
+const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const interludes: Record<string, 'tranchee' | 'decoupe' | 'chambre' | 'cocktails'> = { 'Les plats': 'decoupe', 'À partager (grillades)': 'chambre', 'Cocktails': 'cocktails' };
+---
+<Base page="carte" title="La carte" description="La carte du Grill des amiS à Namur : entrées, plats, grillades au feu de bois, viandes maturées, sauces maison, apéros, cocktails et bières, avec les prix.">
+  <header class="wrap page-tete">
+    <h1 class="display">La carte</h1>
+    <p>Du feu de bois, des viandes maturées sur place et des sauces maison. Prix en euros, service midi et soir.</p>
+  </header>
+  <div class="interlude"><Photo cle="tranchee" sizes="100vw" widths={[800, 1200, 1800]} prioritaire /></div>
+  <nav class="carte-nav" aria-label="Rubriques de la carte">
+    <ul>{carte.map((c) => <li><a href={`#${slug(c.categorie)}`}>{c.categorie}</a></li>)}</ul>
+  </nav>
+  <div class="wrap">
+    {carte.map((c) => (
+      <>
+        {interludes[c.categorie] && <div class="interlude" style="margin-inline: calc(var(--gutter) * -1)"><Photo cle={interludes[c.categorie]} sizes="100vw" widths={[800, 1200, 1800]} /></div>}
+        <section class="cat" id={slug(c.categorie)} aria-labelledby={`h-${slug(c.categorie)}`}>
+          <h2 class="display cat__titre" id={`h-${slug(c.categorie)}`}>{c.categorie}</h2>
+          <ul class="cat__liste">
+            {c.plats.map((p) => (
+              <li class="plat">
+                <span class="plat__nom">{p.nom}</span>
+                <span class="plat__prix">{euro(p.prix)}{p.unite && <small>{p.unite}</small>}</span>
+                {p.description && <span class="plat__desc">{p.description}</span>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      </>
+    ))}
+    <p class="carte-note petit">Carte du restaurant, prix en euros. Les suggestions et les arrivages peuvent changer le détail des plats.</p>
+  </div>
+</Base>

@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { euro } from '../lib/format';
+import { site, gestes, pieces, prixDe, viandard, midi } from '../data/site';
+---
+<Base page="accueil" description="Au Grill des amiS à Namur, les grosses pièces de viande sont achetées brutes, découpées et maturées sur place, puis cuites au feu de bois.">
+  <section class="hero" aria-labelledby="titre-accueil">
+    <div class="wrap hero__grid">
+      <h1 class="display hero__titre" id="titre-accueil" data-intro><span>Le Grill</span><span>des <em>amiS</em></span></h1>
+      <p class="hero__intro">{site.baseline}. Des pièces entières, découpées et maturées ici, cuites au bois.</p>
+      <div class="hero__media">
+        <Photo cle="braise" sizes="(max-width: 56rem) 100vw, 33vw" widths={[480, 800, 1200]} prioritaire />
+      </div>
+      <div class="hero__cta">
+        <a class="cta cta--braise" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+        <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="titre-gestes">
+    <div class="wrap">
+      <h2 class="display sec__titre" id="titre-gestes">Du brut au feu</h2>
+      <p class="gestes__intro">Une pièce entre dans la maison crue et en sort dans votre assiette. Entre les deux, quatre gestes, tous faits ici.</p>
+      <ol class="liste-gestes" style="list-style:none;padding:0">
+        {gestes.map((g, i) => (
+          <li class="geste">
+            <h3 class="display geste__verbe"><span class="geste__rang">Geste {i + 1} sur {gestes.length}</span>{g.verbe}</h3>
+            <p class="geste__texte">{g.texte}</p>
+            {g.photo && <div class="geste__photo"><Photo cle={g.photo} sizes="(max-width: 56rem) 100vw, 25vw" widths={[480, 800]} /></div>}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec sec--os" aria-labelledby="titre-pieces">
+    <div class="wrap pieces__grid">
+      <h2 class="display pieces__titre" id="titre-pieces">Les pièces du boucher</h2>
+      <div class="pieces__photo"><Photo cle="entrecote" sizes="(max-width: 56rem) 100vw, 30vw" widths={[480, 800]} /></div>
+      <ul class="pieces__liste">
+        {pieces.map((p) => {
+          const plat = prixDe(p.nom);
+          return (
+            <li class="index__ligne">
+              <span class="index__nom display">{p.nom}</span>
+              <span class="index__prix">{euro(plat.prix)}</span>
+              <span class="index__note">{p.note}</span>
+            </li>
+          );
+        })}
+        <li class="pieces__suite"><a class="cta" href={u('/carte/')}><span class="cta__txt">Toute la carte</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--bordeaux" aria-labelledby="titre-viandard">
+    <div class="wrap viandard__grid">
+      <p class="display viandard__prix tnum" aria-hidden="true">{viandard.prix}<small>&nbsp;€ par personne</small></p>
+      <ul class="display viandard__faits">
+        <li>{viandard.viandes} viandes <span>choisies par le chef</span></li>
+        <li>{viandard.services} services <span>féculents et sauces en accompagnement</span></li>
+        <li>Dès {viandard.des} personnes <span>par table entière</span></li>
+      </ul>
+      <div class="viandard__texte">
+        <h2 class="display sec__titre" id="titre-viandard">Le Menu Viandard</h2>
+        <p>Une dégustation de cinq viandes, {euro(viandard.prix)} par personne, pour toute la table.</p>
+      </div>
+      <div class="viandard__cta"><a class="cta cta--braise" href={u('/reservation/')}><span class="cta__txt">Réserver pour le Viandard</span></a></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="titre-salle">
+    <div class="wrap salle__grid">
+      <div class="salle__a"><Photo cle="buches" sizes="(max-width: 56rem) 100vw, 40vw" widths={[480, 800, 1200]} /></div>
+      <div class="salle__t1"><h2 class="display" id="titre-salle">La salle</h2><p>Un mur de bûches empilées, des lampes rouges, une salle en enfilade avec sa baie vitrée. Le gril et les deux chambres de maturation se voient depuis les tables.</p></div>
+      <div class="salle__b"><Photo cle="salle" sizes="(max-width: 56rem) 100vw, 55vw" widths={[480, 800, 1200]} /></div>
+      <div class="salle__c"><Photo cle="terrasse" sizes="(max-width: 56rem) 100vw, 33vw" widths={[480, 800]} /></div>
+      <div class="salle__t2"><h2 class="display">La terrasse</h2><p>Quelques tables dehors, devant la porte, rue Saint-Joseph. L’intérieur est climatisé.</p></div>
+    </div>
+  </section>
+
+  <section class="sec sec--os" aria-labelledby="titre-midi">
+    <div class="wrap midi__grid">
+      <h2 class="display midi__titre" id="titre-midi">Le midi</h2>
+      {midi.map((m) => (
+        <div class="midi__item">
+          <p class="display midi__prix tnum">{m.prix}&nbsp;€</p>
+          <p class="display midi__nom">{m.nom}</p>
+          <p>{m.texte}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
