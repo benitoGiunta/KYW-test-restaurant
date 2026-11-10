@@ -28,3 +28,9 @@
 ## Phase 3 (QA)
 - Fait : sloplint --render 7 routes (0 REFLEX ouvert, FAIL `kept` faux positifs), corrections 44d, 72, 19, waivers 71/77/83, checklist DESIGN.md, log Hallmark (17/20), RAPPORT.md, build + pnpm index. Serveur arrêté.
 - Reste : QA-build.md absent (captures non faites par l'agent captures) ; gates jugées en auto-notation self ; comp c2 non construite ; rendu `/evenement-privee/` non revu à l'oeil.
+
+## Revue 1 (relecteur-site, Sonnet) — terminée sauf terrasse
+- REVUE-1.md écrit : A_CORRIGER, 0 F0, 1 F1 (mosaïque vitrine `page.css:189-190`), 4 F2, 6 F3.
+- QA-revue1.md n'existait pas : captures par mes soins dans `.shots/lm-legacy-r1/` (accueil, menu, contact, vitrine, événement, à propos ; terrasse en cours à la clôture).
+- Reste à faire : lire `notre-terrasse-arriere` (planche + report.json), voir `a-propos-de-nous` à l'œil, capture ciblée de la 404, remesurer LCP vitrine en deux passes après correction F1-1.
+- Piège : `scripts/planche.py --colonnes 3 --largeur 720` lit 3 et 720 comme des images (ignorés, sans conséquence).
