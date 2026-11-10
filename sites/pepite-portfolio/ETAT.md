@@ -15,3 +15,8 @@ Pièges : le contrôle de phase 2 en 1440 dure ~3 min (40 coups de molette par p
 # ETAT pepite-portfolio, phase 3 (QA)
 Fait : lecture QA-build (faux positifs 404/sitemap écartés), `--c-rouge` éclairci (#b8445a), rebuild OK, capture ciblée /vins/ OK, RAPPORT.md écrit, dist régénéré, index et commit.
 Reste : rien de bloquant (voir RAPPORT.md points ouverts).
+
+# ETAT pepite-portfolio, revue passe 1 (relecteur-site)
+Fait : REVUE-1.md écrit (verdict A_CORRIGER : 0 F0, 2 F1, 8 F2, 7 F3). Preuves : QA-revue1 réutilisé (dist 13:18, captures postérieures), 2 scripts maison (axe, console, débordement, mention/logo, 7 pages x 2 largeurs ; scène Histoire), lecture du texte rendu contre donnees.json.
+Reste : révision des F1 puis F2 (loader 23:00 et durée, citations, capitalize, numérotation, cadre patronne, URL Tablebooker réelle, photos agrandies, statut boutique, procédures déduites) ; passe 2 de revue.
+Pièges : la fermeture 23:00 est affichée par le loader (contrairement à la note de phase 1) ; l'URL Tablebooker du site actuel est exploitable (restaurantId=50470946) ; une capture pleine page montre de grands vides noirs (scènes épinglées) : juger par captures à la molette.
