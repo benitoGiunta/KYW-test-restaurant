@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import Ornements from '../components/Ornements.astro';
+import { site, guinguette, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const galerie = ['/photos/salle-tables.webp', '/photos/salle-fenetres.webp', '/photos/grill-charbon.webp', '/photos/polaroids.webp', '/photos/plat-bol-viande.webp', '/photos/ardoise-logo.webp'].map(photoDe);
+const salle = photoDe('/photos/salle.webp');
+const faits = [
+  { objet: 'citron', titre: 'Local et de saison', texte: 'Des produits locaux et de saison, et une carte qui évolue régulièrement.' },
+  { objet: 'flamme', titre: 'Au charbon de bois', texte: 'Les grillades sont cuites au charbon de bois, les sauces sont faites maison.' },
+  { objet: 'ardoise', titre: 'À partager', texte: 'Des ardoises de charcuteries, de fromages ou de produits de la mer, pour deux.' },
+  { objet: 'parasol', titre: 'En terrasse', texte: 'Une cour privée de 30 couverts, ouverte toute l’année.' },
+] as const;
+const histoire = site.histoire;
+---
+<Base title="La maison" description={`L'histoire de ${site.nom} à ${site.adresse.commune} : l'amitié de deux passionnés de l'horeca, des produits locaux et de saison, un nom wallon.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>La maison</h1>
+      <p class="lead">{site.baseline}</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--canard is-flottant" style="--x:86%;--y:0%;--r:-10deg;--taille:120px" aria-hidden="true"><Objet id="parasol" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap maison__grille">
+      <figure class="tirage" style="--w:100%; cursor: default; --r:-3deg">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="eager" decoding="async" />
+        <figcaption>La salle</figcaption>
+      </figure>
+      <div class="maison__texte">
+        <Ornements />
+        <h2 class="section__titre">Deux amis, <em>une table</em></h2>
+        <div class="prose">{histoire.map((p) => <p>{p}</p>)}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--blanc">
+    <div class="wrap">
+      <h2 class="section__titre">Ce qui fait <em>la maison</em></h2>
+      <div class="equipe">
+        {faits.map((f, i) => (
+          <article class="membre" data-reveal="up" data-delay={String(i * 0.08)}>
+            <div class="membre__sans" aria-hidden="true"><Objet id={f.objet} /></div>
+            <h3>{f.titre}</h3>
+            <p class="muted">{f.texte}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">La salle, <em>la cour</em></h2>
+      <div class="grille-photos">
+        {galerie.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-3, 4, -2, 3, -5, 2][i]}deg`} data-reveal="up" data-delay={String((i % 3) * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Venir à table</a></div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, adresseLigne, horaireTexte, telHref, itineraire } from '../data/site';
+---
+<Base title="Réserver et nous contacter" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : téléphone ${site.telephone} ou e-mail ${site.email}.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>Réserver</h1>
+      <p class="lead">Appelez-nous ou écrivez-nous : le jour, l'heure et le nombre de couverts suffisent.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:86%;--y:0%;--r:12deg;--taille:110px" aria-hidden="true"><Objet id="verre" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="actions" style="margin-top:0">
+        <a class="btn btn--plein" href={telHref()}>Appeler le {site.telephone}</a>
+        <a class="btn" href={`mailto:${site.email}`}>Écrire à {site.email}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--blanc">
+    <div class="wrap">
+      <h2 class="section__titre">Votre <em>demande</em></h2>
+      <p class="muted" style="margin-bottom: calc(var(--u) * 2.5)">Formulaire de démonstration sans envoi : la validation ouvre votre messagerie, avec le message déjà rédigé pour {site.email}.</p>
+      <form class="form" data-reservation data-reveal="up" action={`mailto:${site.email}`} method="get">
+        <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+        <label>Téléphone <input type="tel" name="tel" autocomplete="tel" /></label>
+        <label>Date <input type="date" name="date" required /></label>
+        <label>Heure <input type="time" name="heure" required /></label>
+        <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
+        <label class="large">Message <textarea name="message" rows="3"></textarea></label>
+        <div class="actions"><button class="btn btn--plein" type="submit">Ouvrir mon message</button></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="hcarte">
+        <p class="meta">Horaires et adresse</p>
+        <h2 class="section__titre" style="margin-bottom:0">Quand <em>venir</em></h2>
+        <dl class="horaires">
+          {site.horaires.map((h) => (
+            <>
+              <dt>{h.jour}</dt>
+              <span class="pts" aria-hidden="true"></span>
+              <dd class:list={{ ferme: !h.creneaux.length }}>{h.creneaux.length ? horaireTexte(h) : 'fermé'}</dd>
+            </>
+          ))}
+        </dl>
+        <p class="hcarte__ligne"><span>Adresse</span><span>{adresseLigne()}</span></p>
+        <p class="hcarte__ligne"><span>Téléphone</span><a class="link" href={telHref()}>{site.telephone}</a></p>
+        {site.horairesPlaceholder && <p class="hcarte__ligne"><span>Horaires</span><span>à confirmer<span class="illu">illustratif</span></span></p>}
+        <p class="hcarte__ligne"><span>Terrasse</span><span>cour privée, 30 couverts</span></p>
+        <div class="actions">
+          <a class="btn" href={itineraire()} rel="noopener">Itinéraire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { onPage } from '../engine';
+  onPage(() => {
+    const form = document.querySelector<HTMLFormElement>('[data-reservation]');
+    if (!form) return;
+    const go = (e: SubmitEvent) => {
+      e.preventDefault();
+      const f = new FormData(form);
+      const corps = `Nom : ${f.get('nom')}\nTéléphone : ${f.get('tel') || ''}\nDate : ${f.get('date')}\nHeure : ${f.get('heure')}\nCouverts : ${f.get('couverts')}\n\n${f.get('message') || ''}`;
+      window.location.href = `${form.getAttribute('action')}?subject=${encodeURIComponent('Demande de table')}&body=${encodeURIComponent(corps)}`;
+    };
+    form.addEventListener('submit', go);
+    return () => form.removeEventListener('submit', go);
+  });
+</script>
