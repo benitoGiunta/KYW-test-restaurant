@@ -17,6 +17,7 @@ const reperes = [
   { id: 'pratique', label: 'Pratique' },
 ];
 const horairesJson = JSON.stringify(site.horaires.map((h) => ({ jour: h.jour, creneaux: h.creneaux })));
+const derniere = site.cuisson.couches[site.cuisson.couches.length - 1];
 const [mot1, ...reste] = site.nom.split(' ');
 ---
 <Base start={900} reperes={reperes}>
@@ -59,7 +60,7 @@ const [mot1, ...reste] = site.nom.split(' ');
           <p class="note" style="margin-top: var(--u)">{site.cuisson.intro}</p>
           <ol class="cuisson__list">
             {site.cuisson.couches.map((c, i) => (
-              <li class="cuisson__item">
+              <li class="cuisson__item" data-deg={c.temp}>
                 <button type="button">
                   <span class="num">0{i + 1}</span>
                   <span>{c.nom}<span class="det">{c.detail}, {c.temp} °C</span></span>
@@ -73,6 +74,8 @@ const [mot1, ...reste] = site.nom.split(' ');
           {site.cuisson.couches.map((c) => (
             <img class={`couche couche--${c.id}`} src={asset(c.src)} alt="" width="1200" height="1200" loading={c.id === 'fond' ? 'eager' : 'lazy'} decoding="async" />
           ))}
+          <div class="vapeurs" aria-hidden="true"><i class="vapeur"></i><i class="vapeur"></i><i class="vapeur"></i></div>
+          <p class="cuisson__temp" aria-hidden="true"><span class="num"><span data-cuisson-deg>{derniere.temp}</span> °C</span> <span data-cuisson-nom>{derniere.nom}</span></p>
         </div>
       </div>
     </div>

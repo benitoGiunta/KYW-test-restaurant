@@ -137,7 +137,7 @@ export function initBraise() {
     if (!reduced) target = tempAt(scrollState().y);
     apply(shown);
     requestAnimationFrame(() => { buildKeys(); target = tempAt(reduced ? scrollY : scrollState().y); });
-    const offs = [initHeader(), initPastille(), initCuisson(reduced), initManifeste(reduced), initCarte(), initMarquee(reduced), initThermoAnchors(), initButtons()];
+    const offs = [initHeader(), initPastille(), initEtincelles(reduced), initCuisson(reduced), initManifeste(reduced), initCarte(), initMarquee(reduced), initThermoAnchors(), initButtons()];
     return () => offs.forEach((o) => o && o());
   });
 }
@@ -164,22 +164,57 @@ function initHeader() {
   });
 }
 
-/** Pastille ouvert / fermé depuis les horaires (data-horaires = JSON [{jour, creneaux}]). */
+/** Pastille ouvert / fermé depuis les horaires (data-horaires = JSON [{jour, creneaux}]), heure de Bruxelles. */
 function initPastille() {
   const el = document.querySelector<HTMLElement>('[data-pastille]');
   if (!el) return;
   try {
     const horaires = JSON.parse(el.dataset.horaires || '[]') as { jour: string; creneaux: { ouverture: string; fermeture: string }[] }[];
     const jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
-    const now = new Date();
-    const h = horaires.find((x) => x.jour === jours[now.getDay()]);
-    const mins = now.getHours() * 60 + now.getMinutes();
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('fr-BE', { timeZone: 'Europe/Brussels', weekday: 'long', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+    const today = jours.indexOf(String(parts.weekday).toLowerCase());
+    if (today < 0) return;
+    const mins = parseInt(parts.hour) * 60 + parseInt(parts.minute);
     const toMin = (s: string) => parseInt(s.slice(0, 2)) * 60 + parseInt(s.slice(3, 5));
-    const open = !!h && h.creneaux.some((c) => mins >= toMin(c.ouverture) - 30 && mins <= toMin(c.fermeture) + 90);
-    const next = h && h.creneaux.find((c) => mins < toMin(c.ouverture) - 30);
-    el.classList.toggle('is-open', open);
-    el.textContent = open ? 'Service en cours' : next ? `Ouvert ce soir dès ${next.ouverture.replace(':', ' h ')}` : h && h.creneaux.length ? 'Fermé pour aujourd’hui' : 'Fermé aujourd’hui';
+    const hr = (s: string) => { const [h, m] = s.split(':'); return m === '00' ? `${parseInt(h)} h` : `${parseInt(h)} h ${m}`; };
+    const du = (d: number) => horaires.find((x) => x.jour === jours[(d + 7) % 7]);
+    const h = du(today);
+    const enCours = !!h && h.creneaux.some((c) => { const o = toMin(c.ouverture); let f = toMin(c.fermeture); if (f <= o) f += 1440; return mins >= o && mins < f; });
+    const suivant = h && h.creneaux.find((c) => mins < toMin(c.ouverture));
+    el.classList.toggle('is-open', enCours);
+    if (enCours) { el.textContent = 'Service en cours'; return; }
+    if (suivant) { el.textContent = `Ouvert aujourd’hui dès ${hr(suivant.ouverture)}`; return; }
+    for (let k = 1; k <= 7; k++) {
+      const d = du(today + k);
+      if (d && d.creneaux.length) { el.textContent = `Fermé pour l’instant, prochain service ${k === 1 ? 'demain' : d.jour} dès ${hr(d.creneaux[0].ouverture)}`; return; }
+    }
+    el.textContent = 'Fermé aujourd’hui';
   } catch { /* on garde le texte rendu côté serveur */ }
+}
+
+/** Accueil : étincelles qui montent du feu, en pause hors du hero. */
+function initEtincelles(reduced: boolean) {
+  const hero = document.querySelector<HTMLElement>('.hero:not(.hero--page)');
+  const media = hero?.querySelector<HTMLElement>('.hero__media');
+  if (!hero || !media || reduced) return;
+  const box = document.createElement('div');
+  box.className = 'braises';
+  box.setAttribute('aria-hidden', 'true');
+  const n = isTouch() ? 9 : 22;
+  const tweens: gsap.core.Tween[] = [];
+  for (let i = 0; i < n; i++) {
+    const e = document.createElement('i');
+    e.style.setProperty('--l', `${(8 + Math.random() * 88).toFixed(1)}%`);
+    e.style.setProperty('--b', `${(Math.random() * 28).toFixed(1)}%`);
+    e.style.setProperty('--s', `${(2 + Math.random() * 3.5).toFixed(1)}px`);
+    box.appendChild(e);
+    tweens.push(gsap.fromTo(e, { y: 0, x: 0, opacity: 0, scale: 1 },
+      { y: () => -innerHeight * (0.35 + Math.random() * 0.5), x: () => (Math.random() - 0.5) * 180, opacity: 0, scale: 0.3, duration: () => 4 + Math.random() * 4, ease: 'power1.out', repeat: -1, delay: Math.random() * 6, repeatRefresh: true,
+        onStart() { gsap.set(e, { opacity: 0.9 }); }, onRepeat() { gsap.set(e, { opacity: 0.9 }); } }));
+  }
+  media.appendChild(box);
+  const st = ScrollTrigger.create({ trigger: hero, start: 'top bottom', end: 'bottom top', onToggle: (s) => tweens.forEach((t) => (s.isActive ? t.play() : t.pause())) });
+  return () => { st.kill(); tweens.forEach((t) => t.kill()); box.remove(); };
 }
 
 /** Scène de couches : sticky stage, timeline scrub ; sauce qui frémit ; liste 01-04 cliquable. */
@@ -191,7 +226,17 @@ function initCuisson(reduced: boolean) {
   const bar = sec.querySelector<HTMLElement>('.cuisson__bar i');
   const fond = sec.querySelector<HTMLElement>('.couche--fond');
   const buttons = [...sec.querySelectorAll<HTMLButtonElement>('.cuisson__item button')];
+  const degEl = sec.querySelector<HTMLElement>('[data-cuisson-deg]');
+  const nomEl = sec.querySelector<HTMLElement>('[data-cuisson-nom]');
+  const vapeurs = sec.querySelector<HTMLElement>('.vapeurs');
   const n = couches.length + 1;
+  let actif = -1;
+  const legende = (i: number) => {
+    if (i === actif || !degEl || !nomEl) return;
+    actif = i;
+    degEl.textContent = items[i].dataset.deg || '';
+    nomEl.textContent = items[i].querySelector('button > span:last-child')?.firstChild?.textContent || '';
+  };
   if (reduced) {
     items.forEach((i) => i.classList.add('is-lit'));
     buttons.forEach((b, i) => b.addEventListener('click', () => sec.scrollIntoView()));
@@ -202,16 +247,22 @@ function initCuisson(reduced: boolean) {
     scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: 1, invalidateOnRefresh: true,
       onUpdate: (st) => {
         if (bar) bar.style.transform = `scaleX(${st.progress})`;
-        items.forEach((it, i) => it.classList.toggle('is-lit', st.progress >= i / n + 0.02));
+        let k = 0;
+        items.forEach((it, i) => { const on = st.progress >= i / n + 0.02; it.classList.toggle('is-lit', on); if (on) k = i; });
+        legende(k);
       } },
   });
   tl.fromTo(fond, { scale: 0.92, autoAlpha: 0.6 }, { scale: 1, autoAlpha: 1, duration: 1, ease: ease.out }, 0);
   couches.forEach((c, i) => {
     tl.fromTo(c, { yPercent: -28, autoAlpha: 0, clipPath: 'inset(0% 0% 100% 0%)' }, { yPercent: 0, autoAlpha: 1, clipPath: 'inset(0% 0% 0% 0%)', duration: 1 }, i + 1);
   });
+  if (vapeurs) tl.fromTo(vapeurs, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, ease: 'none' }, 2.1);
   tl.to({}, { duration: 0.4 }); // respiration en fin de course
   const sauce = sec.querySelector<HTMLElement>('.couche--sauce');
   let fremit: gsap.core.Tween | undefined;
+  const vaps = [...sec.querySelectorAll<HTMLElement>('.vapeur')];
+  const montee = vaps.length ? gsap.fromTo(vaps, { yPercent: 0, opacity: 0 }, { yPercent: -110, xPercent: (i: number) => (i - 1) * 30, opacity: 0.8, duration: 3.2, ease: 'sine.out', stagger: 1, repeat: -1, paused: true }) : undefined;
+  if (montee) ScrollTrigger.create({ trigger: sec, start: 'top bottom', end: 'bottom top', onToggle: (st) => (st.isActive ? montee.play() : montee.pause()) });
   if (sauce) {
     fremit = gsap.to(sauce, { y: 2, duration: 0.9, yoyo: true, repeat: -1, ease: 'sine.inOut', paused: true });
     ScrollTrigger.create({ trigger: sec, start: 'top bottom', end: 'bottom top', onToggle: (st) => (st.isActive ? fremit!.play() : fremit!.pause()) });
@@ -220,7 +271,7 @@ function initCuisson(reduced: boolean) {
     const top = sec.getBoundingClientRect().top + scrollY;
     scrollToTarget(top + ((i + 1) / n + 0.02) * (sec.offsetHeight - innerHeight));
   }));
-  return () => { fremit?.kill(); };
+  return () => { fremit?.kill(); montee?.kill(); };
 }
 
 /** Manifeste : les mots passent de cendre à ivoire au scrub. */
@@ -240,11 +291,23 @@ function initCarte() {
   if (filtres) {
     const cats = [...document.querySelectorAll<HTMLElement>('.carte__cat[data-service]')];
     const btns = [...filtres.querySelectorAll<HTMLButtonElement>('button')];
-    const set = (f: string) => {
+    const etat = document.querySelector<HTMLElement>('[data-carte-etat]');
+    const set = (f: string, anime = true) => {
       btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filtre === f)));
-      cats.forEach((c) => { c.hidden = f !== 'tout' && c.dataset.service !== f; });
+      let vues = 0, plats = 0;
+      cats.forEach((c) => {
+        const montre = f === 'tout' || c.dataset.service === f;
+        const etait = !c.hidden;
+        c.hidden = !montre;
+        if (montre) { vues++; plats += c.querySelectorAll('.plat').length; }
+        if (montre && !etait && anime && !prefersReducedMotion()) gsap.fromTo(c, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: 'power3.out', clearProps: 'transform,opacity,visibility' });
+      });
+      if (etat) etat.textContent = `${plats} plats affichés dans ${vues} ${vues > 1 ? 'catégories' : 'catégorie'}.`;
+      try { history.replaceState(null, '', f === 'tout' ? location.pathname + location.search : `#${f}`); } catch { /* sans historique */ }
       requestAnimationFrame(() => ScrollTrigger.refresh());
     };
+    const depart = location.hash.slice(1);
+    if (btns.some((b) => b.dataset.filtre === depart)) set(depart, false);
     btns.forEach((b) => b.addEventListener('click', () => set(b.dataset.filtre || 'tout')));
   }
   const vignette = document.getElementById('vignette');
@@ -268,6 +331,14 @@ function initCarte() {
 function initMarquee(reduced: boolean) {
   const m = document.querySelector<HTMLElement>('.marquee');
   if (!m || reduced) return;
+  // Le texte doit couvrir au moins une fenêtre par moitié, sinon un trou apparaît à droite.
+  const clones: HTMLElement[] = [];
+  const moitie = m.scrollWidth / 2;
+  if (moitie > 0 && moitie < innerWidth) {
+    const base = [...m.children].slice(0, m.children.length / 2) as HTMLElement[];
+    const copies = Math.ceil(innerWidth / moitie);
+    for (let k = 0; k < 2 * copies - 2; k++) base.forEach((b) => { const c = b.cloneNode(true) as HTMLElement; c.setAttribute('aria-hidden', 'true'); m.appendChild(c); clones.push(c); });
+  }
   const w = () => m.scrollWidth / 2;
   let x = 0;
   const tick = (_t: number, dt: number) => {
@@ -278,7 +349,7 @@ function initMarquee(reduced: boolean) {
     m.style.transform = `translate3d(${x}px,0,0)`;
   };
   taches.add(tick);
-  return () => { taches.delete(tick); };
+  return () => { taches.delete(tick); clones.forEach((c) => c.remove()); };
 }
 
 /** Repères du thermomètre : ancres vers les chapitres (défilement doux). */

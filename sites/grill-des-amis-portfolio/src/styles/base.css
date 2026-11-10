@@ -336,3 +336,34 @@ address { font-style: normal; }
 .cuisson__item button:hover, .cuisson__item button:focus-visible { transform: translateX(0.5rem); }
 .kyw-footer__link { display: inline-flex; align-items: center; min-height: 24px; }
 @media (max-width: 767px) { #loader { display: none; } }
+
+/* Phase 2 : signature, états, mobile */
+.braises { position: absolute; inset: 0; z-index: 2; overflow: clip; pointer-events: none; }
+.braises i { position: absolute; left: var(--l); bottom: var(--b); width: var(--s); height: var(--s); border-radius: 50%; background: var(--c-accent); box-shadow: 0 0 8px 2px color-mix(in srgb, var(--c-accent) 70%, transparent); opacity: 0; will-change: transform, opacity; }
+.cuisson__scene .cuisson__temp { position: absolute; left: 0; bottom: 0; display: flex; align-items: baseline; gap: 0.6em; margin: 0; font-size: var(--t-s); color: var(--c-fg); }
+.cuisson__temp .num { font-family: var(--f-body); font-weight: 600; color: var(--c-accent); min-width: 4.4em; }
+.vapeurs { position: absolute; left: 14%; top: 30%; width: 36%; height: 26%; pointer-events: none; }
+.motion .vapeurs { opacity: 0; }
+html:not(.motion) .vapeurs { display: none; }
+.vapeur { position: absolute; left: calc(var(--k, 0) * 30%); bottom: 0; width: 34%; height: 80%; border-radius: 50%; background: radial-gradient(ellipse at 50% 60%, rgb(255 244 232 / 0.42), transparent 68%); filter: blur(7px); opacity: 0; }
+.vapeur:nth-child(2) { --k: 1; }
+.vapeur:nth-child(3) { --k: 2; }
+.form__etat { grid-column: 1 / -1; margin: 0; min-height: 1.4em; font-size: var(--t-s); color: var(--c-muted); }
+.form__etat.is-erreur { color: var(--c-accent); }
+.form input[aria-invalid='true'] { border-bottom-color: var(--c-accent); border-bottom-width: 2px; }
+.form__err { font-size: var(--t-xs); color: var(--c-accent); }
+.form__err[hidden] { display: none; }
+.form button[disabled] { opacity: 0.6; cursor: progress; }
+.carte__filtres button:focus-visible { outline-offset: 2px; }
+@media (max-width: 767px) {
+  .cuisson__stage { padding-top: 3.2rem; align-content: start; }
+  .cuisson__scene { width: min(58vw, 32svh); margin-bottom: 2.6rem; }
+  .cuisson .t-xl { font-size: clamp(1.7rem, 8vw, 2.4rem); }
+  .cuisson__grid { gap: calc(var(--u) * 1.2); }
+  .cuisson__list { margin-top: var(--u); }
+  .cuisson__item { padding-block: calc(var(--u) * 0.7); }
+  .cuisson .note { display: none; }
+  .cuisson__scene .cuisson__temp { left: 50%; transform: translateX(-50%); bottom: -1.9rem; white-space: nowrap; }
+  .carte__filtres { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+}
+@media (prefers-reduced-motion: reduce) { .braises, .vapeurs { display: none; } }
