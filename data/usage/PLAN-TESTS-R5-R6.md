@@ -205,6 +205,9 @@ Script : `scripts/usage-conformite.py` (modèles réels par agent, revues, consi
 | Restaurant | Coût | Par site | Portfolio | Awwwards | Legacy | Écart à la moyenne 7 à 9 |
 |---|---:|---:|---:|---:|---:|---:|
 | 10 · La Ferme Blanche d'Asie | 15,97 $ | 5,32 $ | 3,55 $ | 6,27 $ | 4,13 $ | −7,9 % |
+| 11 · Le Félicien | 18,23 $ | 6,08 $ | 4,73 $ | 6,32 $ | 4,99 $ | +5,1 % |
 
 - Restaurant 10 conforme : 26 agents sur le bon modèle, test B 3/3 (revue 2 sur l'awwwards seule), 0 F0 ou F1 en fin de cycle,
   max 44 réponses, socle 67 900 jetons. Classé dans la phase Après 4 (désormais 5,67 $ par site sur 4 restaurants).
+- Restaurant 11 conforme : 30 agents sur le bon modèle, test B 3/3 (un F0 ou F1 en revue 1 sur chaque variante, trois revues 2),
+  0 F0 ou F1 en fin de cycle, max 38 réponses, socle 68 100 jetons. Après 4 : 5,75 $ par site sur 5 restaurants.

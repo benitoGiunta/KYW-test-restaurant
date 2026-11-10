@@ -19,7 +19,7 @@ CFG = [
       agents='courts, 40 réponses', revue2='si F0 ou F1', lecons='par rôle, prompts par phase', effort='réduit', lectures='regroupées (consigne)', nouveaute='Test I, regroupement des lectures'),
 ]
 NOM = {'partage': 'Partage', 'brasserie-du-quai': 'La Brasserie du Quai', 'chez-guillaume': 'Chez Guillaume', 'dolce-vita-wepion': 'La Dolce Vita',
-       'le-royal': 'Le Royal', 'incorrect': 'Incorrect', 'l-essentiel': 'L’Essentiel', 'ferme-blanche-d-asie': 'La Ferme Blanche d’Asie'}
+       'le-royal': 'Le Royal', 'incorrect': 'Incorrect', 'l-essentiel': 'L’Essentiel', 'ferme-blanche-d-asie': 'La Ferme Blanche d’Asie', 'le-felicien': 'Le Félicien'}
 PH = {3: 'Après', 4: 'Après', 5: 'Après 2', 6: 'Après 3', 7: 'Après 4', 8: 'Après 4', 9: 'Après 4', **{r: 'Après 4' for r in range(10, 21)}}
 conf = json.load(open(CONF)); conformite = []
 for c in conf:
