@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { euro } from '../lib/format';
+import { carte } from '../data/carte';
+import { menus, huiles, site } from '../data/site';
+const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const nomHuile = (cle: string | null) => huiles.find((h) => h.cle === cle)?.nom ?? (cle === 'toscane' ? 'Huile d’olive de Toscane' : null);
+---
+<Base page="carte" title="La carte" description="La carte de L’Huile sur le Feu à Namur : pâtes fraîches, carpaccio, osso buco, desserts, gins et vins des Pouilles et de Sicile, chaque plat avec son huile.">
+  <section class="wrap titre-page grille" aria-labelledby="titre-carte">
+    <div class="titre-page__txt">
+      <h1 class="mega" id="titre-carte" data-intro>La <em>carte</em></h1>
+      <p class="hero__baseline" style="margin-top: var(--serre); max-width: 30rem">Pâtes fraîches maison, viandes, douceurs, et l’huile d’olive choisie pour chaque plat.</p>
+    </div>
+    <div class="titre-page__media cadre"><Photo cle="carpaccio" sizes="(max-width: 820px) 100vw, 33vw" prioritaire /></div>
+  </section>
+
+  <nav class="carte-nav" aria-label="Catégories de la carte">
+    <ul>
+      <li><a class="nl" href="#menus">Les menus</a></li>
+      {carte.map((c) => <li><a class="nl" href={`#${slug(c.categorie)}`}>{c.categorie}</a></li>)}
+    </ul>
+  </nav>
+
+  <section class="wrap cat" id="menus" aria-labelledby="t-menus">
+    <div class="grille">
+      <h2 class="cat__titre" id="t-menus">Les <em class="hu">menus</em></h2>
+      <div class="cat__plats donnees" style="border: 0; display: grid; gap: var(--normal)">
+        {menus.map((m) => (
+          <div class="menu-bloc" style="grid-column: auto">
+            <h3 class="t-m display">{m.nom}</h3>
+            <p class="menu-bloc__prix">{euro(m.prix)}<small>par personne</small></p>
+            <dl>
+              {m.detail.map((d) => (
+                <div data-huile={d.cle ?? undefined}>
+                  <dt>{d.etape}</dt>
+                  <dd>{d.texte}{d.huile && <span class="hu">{d.huile}</span>}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {carte.map((c) => (
+    <section class="wrap cat" id={slug(c.categorie)} aria-labelledby={`t-${slug(c.categorie)}`}>
+      <div class="grille">
+        <h2 class="cat__titre" id={`t-${slug(c.categorie)}`}>{c.categorie}</h2>
+        <ul class="cat__plats">
+          {c.plats.map((p) => (
+            <li class={`plat${p.huile ? '' : ' plat--sans'}`} data-huile={p.huile ?? undefined}>
+              <span class="plat__goutte" aria-hidden="true"><span class="goutte"></span></span>
+              <div>
+                <h3 class="plat__nom">{p.nom}</h3>
+                {p.description && <p class="plat__desc">{p.description}</p>}
+                {p.huile && <span class="plat__huile">Huile : {nomHuile(p.huile)}</span>}
+              </div>
+              <span class="plat__prix">{p.prix !== null ? euro(p.prix) : ''}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+  <div class="wrap sect"><p class="carte-note">La carte suit les saisons et les suggestions changent souvent, selon le site de la maison. Prix en euros, relevés sur {site.siteClient.replace('https://www.', '')}.</p></div>
+</Base>

@@ -1,0 +1,53 @@
+/* Jetons de L'Huile sur le Feu (variante awwwards « à chaque plat son huile »). Les NOMS sont le contrat de l'engine ;
+   les valeurs viennent de DESIGN.md : bordeaux de nuit du client, or de l'huile, murs ocre des photos 03 et 08.
+   Les url() des polices portent la base (/huile-sur-le-feu/awwwards/). */
+@font-face { font-family: 'Bodoni Moda'; src: url('/huile-sur-le-feu/awwwards/fonts/bodoni-moda-400_800-normal.woff2') format('woff2'); font-weight: 400 800; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Bodoni Moda'; src: url('/huile-sur-le-feu/awwwards/fonts/bodoni-moda-400_800-italic.woff2') format('woff2'); font-weight: 400 800; font-style: italic; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('/huile-sur-le-feu/awwwards/fonts/hanken-400_700-latin.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --c-bg: #1b0d10;            /* ground : bordeaux de nuit (ink 14,5:1) */
+  --c-fg: #f5e9c9;            /* ink : crème d'étiquette */
+  --c-muted: #c2aa86;         /* muted : 8:1 sur ground */
+  --c-line: #4b2c27;          /* line : décoratif */
+  --c-accent: #e8a924;        /* accent : or d'huile (9:1 sur ground) */
+  --c-accent-texte: #e8a924;
+  --c-curtain: #2b0e17;       /* curtain : bordeaux du site actuel, plus sombre */
+  --c-papier: #f0dfb2;        /* sections « mur ocre » */
+  --c-papier-fg: #2b0e17;     /* 12:1 sur papier */
+  --c-papier-muted: #5c4326;  /* 7:1 sur papier */
+  --c-papier-line: #cdb67e;
+  --c-papier-accent: #8a5a00; /* or cuit, 5,2:1 sur papier */
+
+  --f-display: 'Bodoni Moda', 'Didot', 'Bodoni 72', 'Times New Roman', serif;
+  --f-body: 'Hanken Grotesk', system-ui, sans-serif;
+
+  --t-mega: clamp(3.4rem, 1.2rem + 10.6vw, 14rem);
+  --t-xl: clamp(2.7rem, 1.4rem + 6vw, 7.4rem);
+  --t-l: clamp(1.9rem, 1.2rem + 3vw, 4rem);
+  --t-m: clamp(1.25rem, 1.05rem + 0.9vw, 1.8rem);
+  --t-body: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem;
+
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1.25rem, 0.7rem + 2vw, 3rem);
+  --cols: 12;
+  --serre: calc(var(--u) * 3);
+  --normal: calc(var(--u) * 8);
+  --aere: calc(var(--u) * 14);
+  --entracte: calc(var(--u) * 22);
+
+  /* Règle de forme unique : angles vifs partout, sauf la goutte (carré tourné, trois angles arrondis). */
+  --radius: 0px;
+  --z-gl: 0; --z-content: 1; --z-header: 50; --z-cursor: 80; --z-curtain: 90; --z-loader: 100;
+}
+
+/* Les huiles : l'accent prend la couleur de l'huile du plat (le filet, la goutte, le focus). */
+[data-huile='truffe'] { --c-accent: #d8c79c; --c-accent-texte: #d8c79c; }
+[data-huile='piment'] { --c-accent: #f0502f; --c-accent-texte: #f4735a; }
+[data-huile='mandarine'] { --c-accent: #f89a3c; --c-accent-texte: #f89a3c; }
+[data-huile='menthe'] { --c-accent: #a3cc6d; --c-accent-texte: #a3cc6d; }
+[data-huile='ail'] { --c-accent: #ece3c7; --c-accent-texte: #ece3c7; }
+[data-huile='persil'] { --c-accent: #86b653; --c-accent-texte: #86b653; }
+[data-huile='toscane'] { --c-accent: #e8a924; --c-accent-texte: #e8a924; }

@@ -238,3 +238,8 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 - 2026-11-10 · sanga · variante legacy (phase 3) : `sloplint --genre` n'accepte que editorial, modern-minimal, atmospheric, playful ; un waiver exige trois champs « · » (porte, preuve de garde, raison) sinon « malformed waiver ». `QA-build.md` peut manquer : faire des captures ciblées (Playwright avec `executablePath: '/opt/pw-browsers/chromium'`, `--no-sandbox`).
 - 2026-11-10 · sanga (toutes variantes) : un `<footer>` propre au site à côté du pied `kyw-footer` donne axe `landmark-no-duplicate-contentinfo` sur toutes les pages ; dès la construction, le pied du site est une `<section aria-label>` ou un `<div>`, jamais un second `<footer>`.
 - 2026-11-10 · sanga legacy : des ancres de navigation en `#carte` brut cassent sur la 404 et les sous-pages ; les écrire `${base}#…` dès le gabarit.
+
+## 2026-11-10 · huile-sur-le-feu · variante awwwards (phase 1)
+- Symptôme : le CTA du hero tombait à y = 870 (hors flottaison à 1280×720). Cause : média en `grid-row: 1` plus haut que le titre, donc la ligne 2 (texte et CTA) était repoussée sous lui. Correction appliquée : `.hero__media { grid-row: 1 / span 2 }` et `.hero__bas { align-self: start }`. À faire par le prochain agent : mesurer `getBoundingClientRect()` du CTA aux quatre viewports avant de rendre la main, et faire couvrir deux lignes au média.
+- Un titre de catégorie sticky en `--t-xl` dans 4 colonnes déborde sur la liste (« suggestions ») : utiliser `--t-l` dans une colonne étroite.
+- Copier `src/engine/*.ts`, `engine.css`, `public/kyw/` et `lib/url.ts` d'un site awwwards livré (sanga) a fonctionné sans modification ; seuls Base.astro (couleurs, polices, JSON-LD) et `motion/setup.ts` sont à adapter.

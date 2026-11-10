@@ -1,0 +1,13 @@
+---
+import { jours, services } from '../data/site';
+---
+<ul class="horaires" aria-label="Horaires d’ouverture">
+  {jours.map((j) => (
+    <li>
+      <span class="horaires__jour">{j.nom}</span>
+      {j.ferme
+        ? <span class="horaires__ferme">Fermé</span>
+        : <span class="horaires__plages">{services.map((s) => <span class="nw"><span class="sr-only">{s.nom} : </span>{s.libelle}</span>)}</span>}
+    </li>
+  ))}
+</ul>
