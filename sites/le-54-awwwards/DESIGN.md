@@ -103,3 +103,41 @@ Patron de la carte : **index** (une ligne par plat, nom en Zodiak, description e
 16. [x] Famille de section au plus une fois par page : accueil (poster, plein cadre, données, paire, mur, index, pied), carte (poster, données, index, index suppléments en `dl`, mur), histoire (poster, statement, paire), réservation (poster, trois colonnes, formulaire).
 17. [x] Hero en 3 s : nom (h1 « Le 54 »), plan, lead, CTA « Réserver une table » visibles au premier écran (mesure : CTA bas à 702 px à 1280×720, 789 à 1440×900, 777 à 390×844).
 18. [x] Mobile 390 recomposé : § Plan de composition ; `site.css` `@media (max-width: 48rem)` ; `scrollWidth` = 390 sur les 5 pages (mesure).
+
+## Mouvement construit (phase 2)
+- **Pilote** `src/motion/couverts.ts` : une variable `n` (couverts allumés) distribuée aux plans (`[data-plan]`), au registre du pied (`[data-registre]`) et à la phrase d'état (`[data-plan-etat]`, `aria-live`). Le champ « Nombre de couverts » de la réservation écrit `n` (aussi en mouvement réduit, sans délai).
+- **Signature « la salle se dresse »** : nappes (stagger 50 ms) puis 34 places (stagger 35 ms, `ease.soft`, 0,5 s), puis `n` places s'allument une à une (40 ms) ; dans l'intro si le plan est au premier écran, sinon au défilement (une fois). Fin du dressage vers 2,2 s.
+- **Repos** : « le maître d'hôtel cherche une place » : une place libre s'allume doucement (sinus sur 2,4 s) et un halo d'émail s'en écarte, puis une autre ; `gsap.ticker`, en pause hors écran (ScrollTrigger `onToggle`). **Pointeur** : la place la plus proche est désignée (contour d'émail) et devient la prochaine cherchée. Rien en mouvement réduit.
+- **Registre du pied** : les 34 ronds se posent au défilement (stagger 25 ms), suivent `n` (réservation : 6 couverts = 6 ronds allumés ; 404 : aucun).
+- **Transition** : voile d'émail qui monte (0,7 s) puis repart vers le haut (0,85 s), `ease.inOut` ; c'est la nappe qu'on tire. Pas de loader, pas de GL, pas de curseur suiveur (décisions de la phase 1, inchangées).
+- **Reveals** : `data-split="lines"` sur les h2 d'affichage, `chars` sur « À votre table. » (copie décorative `aria-hidden`), `data-reveal="up"` sur listes et chiffres sans lien, `clip` sur les photos du mur et la paire de l'accueil. h1 et accroches jamais animés (LCP) ; première photo des pages intérieures peinte au premier rendu.
+- **Menu mobile** (< 48 rem) : bouton « Menu » (`aria-expanded`), `<dialog>` modal plein écran (focus piégé et Échap natifs), la nappe du panneau se pose du haut (clip 0,6 s), lignes en stagger 60 ms, focus rendu au bouton, « Appeler » 52 px.
+- Mobile : idem desktop pour le plan (sans pointeur) ; aucune copy « survolez ».
+
+## Sur-utilisation de la skill (phase 2, preuves)
+19. [x] Menu mobile : `Header.astro:18` (`aria-expanded`, `aria-controls`), `menu.ts:13-26` (`showModal`, Échap natif, focus rendu). Mesure 390×844 : ouvert `aria-expanded=true`, focus « Accueil », 8 Tab restent dans `#menu`, Échap ferme et rend le focus à « Menu » (`.logs/aw2-check.log`).
+20. [x] Engine verbatim (copié en phase 1), `engine/astro.ts`, `transition:persist` sur `#curtain` (`Base.astro:74`), `transition:animate="none"` sur `<html>` (`Base.astro:37`) ; ni `#gl` ni `#cursor` (pas de GL, pas de suiveur : sans objet).
+21. [x] Une horloge : `grep addEventListener('scroll'|requestAnimationFrame` hors engine : aucun ; repos sur `gsap.ticker` (`couverts.ts:140`).
+22. [x] Code de page dans `onPage()` avec nettoyage : `couverts.ts:112` et `:151`, `menu.ts:37` et `:48`.
+23. [x] Aucune CSS `transform` sur élément GSAP : `grep transform: site.css` = seulement `text-transform` ; places et nappes SVG animées par `scale` GSAP ; images du mur par la propriété `scale` (non animées par GSAP, la figure l'est).
+24. [x] Pilote : `couverts.ts` (variable `n`, `veiller()` = repos, `pointermove` = influence du pointeur, `couverts.ts:100`) ; appelé une fois depuis `setup.ts:14`. Le repos est intégré au pilote (pas de `idle.ts` séparé : un seul consommateur).
+25. [x] Loader décidé : aucun (Concept Card), pas de `role="status"`.
+26. [x] Transition 0,7 s + 0,85 s, `ease.inOut` (`setup.ts`).
+27. [x] Intro : dressage du plan ajouté à `intro` (`couverts.ts:137`), `data-intro` sur la note du plan (accueil, 404), les chiffres (carte), l'équipe (histoire). Premier frame : titre, accroche, CTA et salle vide déjà peints.
+28. [x] Épinglages : aucun (pas de pin ni de scrub dans ce concept).
+29. [x] Repli statique : sans `.motion`, plan servi dressé avec 2 places allumées (`site.css:85`, `Plan.astro` `is-lit`), registre servi avec 2 ronds. Mesure réduit : `motion=false`, 34 places visibles, 2 allumées, 0 bloc caché, pas de halo, pas de Lenis.
+30. [x] Copie décorative « À votre table. » `aria-hidden` (`Footer.astro`), aucun titre dupliqué.
+31. [x] Une famille : `ease.soft` (poser), `ease.out` (reveals engine), `ease.inOut` (voile, menu) ; `--e-soft` CSS = power3.out (`tokens.css:43`) ; staggers 25, 35, 40, 50, 60 ms.
+32. [x] Trois traitements dans le verbe : trait qui se pose (liens texte, nav, marque, téléphone), aplat qui se vide (CTA), photo qui se pose (mur) ; utilitaires (réseaux) en couleur seule (`site.css:16-35`).
+33. [x] Survols sous `@media (hover: hover)` (`site.css:27`, `:73`), même état sur `:focus-visible` (`.lien`, `.trait`, `.cta`, `.panneau__lien`), `:active` (`.cta`, `.lien`, `.tete__menu`) ; les états restent en réduit (seules les durées tombent).
+34. [x] Liens texte soulignés au repos : `.lien` filet d'émail 1 px permanent (`site.css:20`).
+35. [ ] `hover.noHoverChange` : à lire en phase 3 (`report.json`). Lien actif : trait qui s'épaissit à 2 px au survol ; pied KYW souligné (`site.css:259`).
+36. [ ] `idleMotion` : repos construit (halo + place) ; à confirmer par `report.json` en phase 3.
+37. [x] Curseur natif jamais masqué, aucun suiveur ; rien ne dépend du survol au toucher (pointeur ignoré si `isTouch()`).
+38. [x] Ni `blur`, ni `box-shadow`, ni `will-change` (`grep` : aucun).
+39. [x] Réduit : ni Lenis, ni GL, ni loader, ni dressage ; mesure `caches=0` (preuve `report.json` en phase 3).
+40. [x] GL sans objet, décision écrite (Concept Card) ; lignes `// GL` retirées de l'engine (`engine/index.ts:8`).
+41. [x] Sans objet (pas de GL).
+44. [x] Skip link « Aller au contenu » premier élément du `<body>` ; anneau de focus d'émail (`engine.css`), champs (`site.css`).
+45. [ ] Contraste : à mesurer en phase 3 (halo et place en veille décoratifs, dans un SVG `role="img"`).
+47. [x] Cibles à 390 : marque 45 px, « Menu » 44 px, « Réserver » 44 px (`.cta--petit` 2,75 rem), « Appeler » du menu 52 px.

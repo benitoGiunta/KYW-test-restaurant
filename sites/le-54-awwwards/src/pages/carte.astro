@@ -11,7 +11,7 @@ import { formules, menuDuMoment, supplementsZarzuela, notesCarte, site } from '.
   </section>
 
   <section class="carte-formules wrap g12" aria-label="Formules">
-    <dl class="chiffres">
+    <dl class="chiffres" data-reveal="up" data-intro data-delay="0.15">
       {formules.map((f) => <div><dt>Menu en {f.nom}</dt><dd class="prix">{f.prix}&nbsp;€</dd></div>)}
     </dl>
   </section>
@@ -19,7 +19,7 @@ import { formules, menuDuMoment, supplementsZarzuela, notesCarte, site } from '.
   <section class="menu wrap" aria-label="Le menu du moment">
     <ul class="index">
       {menuDuMoment.map((p) => (
-        <li>
+        <li data-reveal="up">
           <h2 class="index__nom">{p.nom}</h2>
           <p class="index__desc">{p.description}{'supplement' in p && <span class="supp prix">Supplément : {p.supplement}&nbsp;€</span>}</p>
         </li>
@@ -28,8 +28,8 @@ import { formules, menuDuMoment, supplementsZarzuela, notesCarte, site } from '.
   </section>
 
   <section class="notes wrap g12" aria-labelledby="notes-titre">
-    <h2 class="notes__titre display d-l" id="notes-titre">Suppléments et précisions</h2>
-    <dl>
+    <h2 class="notes__titre display d-l" id="notes-titre" data-split="lines">Suppléments et précisions</h2>
+    <dl data-reveal="up">
       {supplementsZarzuela.map((s) => <div><dt>Zarzuela {s.nom}</dt><dd class="prix">+&nbsp;{s.prix}&nbsp;€</dd></div>)}
     </dl>
     <ul>

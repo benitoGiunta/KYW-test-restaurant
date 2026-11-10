@@ -11,7 +11,7 @@ import { site, formules } from '../data/site';
     <h1 class="display hero__titre" id="h1">Le 54</h1>
     <div class="hero__plan">
       <Plan lit={2} />
-      <p class="plan-note">Plan illustratif de la salle : {site.couverts} couverts, dix tables.</p>
+      <p class="plan-note" data-reveal="fade" data-intro data-delay="1.2">Plan illustratif de la salle : {site.couverts} couverts, dix tables.</p>
     </div>
     <div class="hero__bas">
       <p class="hero__lead">Table gastronomique de Dave, au bord de la Meuse. <em>Trente-quatre couverts</em>, un menu de saison en trois ou quatre services.</p>
@@ -29,8 +29,8 @@ import { site, formules } from '../data/site';
 
   <section class="nappe formule" aria-labelledby="formule-titre">
     <div class="wrap g12">
-      <h2 class="formule__titre display d-xl" id="formule-titre">Un menu de saison, trois ou quatre services.</h2>
-      <dl class="chiffres">
+      <h2 class="formule__titre display d-xl" id="formule-titre" data-split="lines">Un menu de saison, trois ou quatre services.</h2>
+      <dl class="chiffres" data-reveal="up">
         {formules.map((f) => <div><dt>Menu en {f.nom}</dt><dd class="prix">{f.prix}&nbsp;€</dd></div>)}
         <div><dt>couverts, pas davantage</dt><dd>{site.couverts}</dd></div>
         <div><dt>Reprise de la maison par la famille Collignon</dt><dd>{site.reprise}</dd></div>
@@ -39,12 +39,12 @@ import { site, formules } from '../data/site';
   </section>
 
   <section class="paire wrap g12" aria-labelledby="cuisine-titre">
-    <figure class="paire__media">
+    <figure class="paire__media" data-reveal="clip">
       <Photo cle="saintJacques" sizes="(min-width: 48rem) 58vw, 100vw" widths={[480, 800, 1200]} />
       <figcaption>Vue d’archives : noix de Saint-Jacques, bol bleu.</figcaption>
     </figure>
     <div class="paire__texte">
-      <h2 class="display d-l" id="cuisine-titre">Cuisine de saison, artisans d’ici.</h2>
+      <h2 class="display d-l" id="cuisine-titre" data-split="lines">Cuisine de saison, artisans d’ici.</h2>
       <p>Le chef Jonathan Collignon renouvelle sa carte au fil des saisons et met en avant les artisans locaux. Une cuisine raffinée, qui va à l’essentiel.</p>
       <p><a class="lien" href={u('/histoire/')}>Lire l’histoire de la maison</a></p>
     </div>
@@ -53,10 +53,10 @@ import { site, formules } from '../data/site';
   <Mur titre="Assiettes de la maison" cles={['bolBleu', 'langoustine', 'betterave', 'soupe', 'dessert']} note="Vues d’archives fournies par le restaurant : elles ne correspondent pas forcément au menu du moment." />
 
   <section class="surplace wrap g12" aria-labelledby="sur-titre">
-    <h2 class="surplace__titre display d-l" id="sur-titre">Sur place</h2>
+    <h2 class="surplace__titre display d-l" id="sur-titre" data-split="lines">Sur place</h2>
     <ul class="index">
-      {site.pratique.map((p) => <li><span class="index__nom">{p}</span></li>)}
-      <li><span class="index__nom">Allergies adaptées si elles sont signalées à la réservation</span></li>
+      {site.pratique.map((p) => <li data-reveal="up"><span class="index__nom">{p}</span></li>)}
+      <li data-reveal="up"><span class="index__nom">Allergies adaptées si elles sont signalées à la réservation</span></li>
     </ul>
   </section>
 </Base>

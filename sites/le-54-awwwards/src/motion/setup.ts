@@ -1,7 +1,9 @@
-// Motion globale du Le 54 (phase 1 : transition de page seulement). Un voile d'émail monte du bas comme une assiette
-// qu'on pose, puis repart vers le haut. Les moments du concept (couverts.ts) arrivent en phase 2.
+// Motion globale du Le 54. Transition : un voile d'émail monte du bas comme une nappe qu'on tire sur la table, puis
+// repart vers le haut (0,7 s et 0,85 s, ease.inOut). Le concept (plans, registre, repos) vit dans couverts.ts.
 import { gsap } from 'gsap';
 import { setTransition, ease } from '../engine';
+import { startCouverts } from './couverts';
+import { setupMenu } from './menu';
 
 export function setupMotion() {
   const panneau = (c: HTMLElement) => c.querySelector<HTMLElement>('.curtain__panel--a')!;
@@ -9,4 +11,6 @@ export function setupMotion() {
     leave: (c) => gsap.timeline().set(c, { autoAlpha: 1 }).fromTo(panneau(c), { yPercent: 101 }, { yPercent: 0, duration: 0.7, ease: ease.inOut }, 0),
     enter: (c) => gsap.timeline().to(panneau(c), { yPercent: -101, duration: 0.8, ease: ease.inOut }, 0.05).set(c, { autoAlpha: 0 }),
   });
+  startCouverts();
+  setupMenu();
 }

@@ -1,5 +1,6 @@
 ---
 import { u } from '../lib/url';
+import { site } from '../data/site';
 const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
@@ -7,13 +8,28 @@ const liens = [
   { href: '/carte/', label: 'La carte' },
   { href: '/histoire/', label: 'Histoire' },
 ];
+const menu = [{ href: '/', label: 'Accueil' }, ...liens, { href: '/reservation/', label: 'Réserver' }];
 ---
 <header class="tete">
-  <a class="tete__marque" href={base} aria-current={path === base ? 'page' : undefined}>Le 54</a>
+  <a class="tete__marque trait" href={base} aria-current={path === base ? 'page' : undefined}>Le 54</a>
   <nav class="tete__nav" aria-label="Navigation principale">
     <ul>
-      {liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      {liens.map((l) => <li class="tete__bureau"><a class="nl trait" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      <li class="tete__mob"><button class="tete__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button></li>
       <li><a class="cta cta--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="cta__txt">Réserver</span></a></li>
     </ul>
   </nav>
+  <dialog id="menu" class="panneau" aria-label="Menu">
+    <div class="panneau__haut">
+      <span class="panneau__marque">Le 54</span>
+      <button class="panneau__fermer" type="button" data-menu-fermer>Fermer</button>
+    </div>
+    <ul class="panneau__liste">
+      {menu.map((l, i) => <li><a class="panneau__lien display" href={u(l.href)} aria-current={courant(l.href)} autofocus={i === 0 ? true : undefined}><span>{l.label}</span></a></li>)}
+    </ul>
+    <div class="panneau__pied">
+      <p class="panneau__info">{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</p>
+      <a class="cta" href={site.telephone.href}><span class="cta__txt">Appeler le <span class="nw">{site.telephone.lisible}</span></span></a>
+    </div>
+  </dialog>
 </header>

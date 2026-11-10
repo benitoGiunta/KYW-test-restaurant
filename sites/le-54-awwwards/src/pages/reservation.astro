@@ -17,7 +17,7 @@ import { site, horaires, creneaux, dernieresCommandes } from '../data/site';
 
   <section class="resa wrap g12" aria-label="Horaires et accès">
     <div class="resa__bloc resa__horaires">
-      <h2>Horaires</h2>
+      <h2 data-split="lines">Horaires</h2>
       <dl class="horaires">
         {horaires.map((h) => (
           <div>
@@ -32,7 +32,7 @@ import { site, horaires, creneaux, dernieresCommandes } from '../data/site';
       <p class="plan-note">Dernières commandes à {dernieresCommandes.midi} le midi et à {dernieresCommandes.soir} le soir. Ouvert les jours fériés. Horaires d’après le site du restaurant.</p>
     </div>
     <div class="resa__bloc resa__sur">
-      <h2>Venir</h2>
+      <h2 data-split="lines">Venir</h2>
       <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
       <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
       <ul class="liste">
@@ -40,16 +40,18 @@ import { site, horaires, creneaux, dernieresCommandes } from '../data/site';
         <li>Allergies adaptées si elles sont signalées à la réservation</li>
       </ul>
     </div>
-    <div class="resa__bloc resa__plan">
-      <Plan lit={2} />
-      <p class="plan-note">Plan illustratif de la salle : {site.couverts} couverts, dix tables.</p>
-    </div>
 
     <div class="formu">
-      <h2 class="formu__titre display d-l">Écrire au restaurant</h2>
+      <div class="formu__gauche">
+        <h2 class="formu__titre display d-l" data-split="lines">Écrire au restaurant</h2>
+        <div class="resa__plan">
+          <Plan lit={2} titre="Plan illustratif de la salle : trente-quatre couverts. Les places s’allument selon le nombre de couverts indiqué." />
+          <p class="plan-note" data-plan-etat data-vide="Plan illustratif : indiquez un nombre de couverts, les places s’allument." aria-live="polite">Plan illustratif : indiquez un nombre de couverts, les places s’allument.</p>
+        </div>
+      </div>
       <form action={`mailto:${site.email}?subject=${encodeURIComponent('Demande de réservation')}`} method="post" enctype="text/plain">
         <div class="champ"><label for="nom">Votre nom</label><input id="nom" name="Nom" type="text" autocomplete="name" /></div>
-        <div class="champ"><label for="couverts">Nombre de couverts</label><input id="couverts" name="Couverts" type="number" min="1" max="34" inputmode="numeric" /></div>
+        <div class="champ"><label for="couverts">Nombre de couverts</label><input id="couverts" name="Couverts" type="number" min="1" max="34" inputmode="numeric" data-couverts /></div>
         <div class="champ"><label for="date">Date souhaitée</label><input id="date" name="Date" type="date" /></div>
         <div class="champ"><label for="allergies">Allergies à signaler</label><input id="allergies" name="Allergies" type="text" /></div>
         <div class="champ champ--large"><label for="message">Message</label><textarea id="message" name="Message" rows="3"></textarea></div>

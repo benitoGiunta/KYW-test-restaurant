@@ -7,8 +7,8 @@ const places = Array.from({ length: site.couverts }, (_, i) => i + 1);
 ---
 <section class="pied" aria-label="Contact et horaires">
   <div class="wrap pied__corps">
-    <div class="pied__registre" aria-hidden="true">{places.map(() => <i></i>)}</div>
-    <p class="pied__mot" aria-hidden="true">À votre table.</p>
+    <div class="pied__registre" data-registre aria-hidden="true">{places.map((p) => <i class={p <= 2 ? 'is-lit' : undefined}></i>)}</div>
+    <p class="pied__mot" aria-hidden="true" data-split="chars">À votre table.</p>
     <div class="pied__col">
       <h2 class="pied__titre">Venir</h2>
       <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}<br /><span class="pied__doux">Parking en face</span></address>
@@ -21,7 +21,7 @@ const places = Array.from({ length: site.couverts }, (_, i) => i + 1);
     </div>
     <div class="pied__col">
       <h2 class="pied__titre">Contact</h2>
-      <p><a class="pied__tel" href={site.telephone.href}><span class="nw">{site.telephone.lisible}</span></a><br /><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
+      <p><a class="pied__tel trait" href={site.telephone.href}><span class="nw">{site.telephone.lisible}</span></a><br /><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
       <ul class="pied__reseaux">
         {site.reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
       </ul>
