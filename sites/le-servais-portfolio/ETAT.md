@@ -30,3 +30,7 @@
 - Margarita à partager (25 €, ligne ambiguë du PDF) non reprise. Pas d'avis cité : un résumé d'avis Tripadvisor (1 avis, 4,0/5) est présenté comme résumé, sans guillemets.
 - Itinéraire OpenStreetMap par recherche d'adresse (pas de GPS). JSON-LD sans `geo`.
 - Aucun défaut du gabarit à reporter (gabarits/ non touché) ; le gabarit suppose des horaires sans fermeture après minuit : correctif fait dans le site, à reporter dans gabarits/journee si autorisé.
+
+## Phase 3 (QA), faite
+- Corrections : surcharge sombre du pied KYW retirée (contraste), pied passé en `position: relative; z-index: var(--z-content)` (masqué par #ciel). Vérifié par capture ciblée (carte, 1440) et axe 0 violation. Build OK, 7 pages. RAPPORT.md écrit.
+- Reste : `gabarits/UTILISATION.md` et correctif gabarits/journee (protégé), image astre mobile.
