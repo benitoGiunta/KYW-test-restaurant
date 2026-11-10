@@ -243,3 +243,8 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 - Symptôme : le CTA du hero tombait à y = 870 (hors flottaison à 1280×720). Cause : média en `grid-row: 1` plus haut que le titre, donc la ligne 2 (texte et CTA) était repoussée sous lui. Correction appliquée : `.hero__media { grid-row: 1 / span 2 }` et `.hero__bas { align-self: start }`. À faire par le prochain agent : mesurer `getBoundingClientRect()` du CTA aux quatre viewports avant de rendre la main, et faire couvrir deux lignes au média.
 - Un titre de catégorie sticky en `--t-xl` dans 4 colonnes déborde sur la liste (« suggestions ») : utiliser `--t-l` dans une colonne étroite.
 - Copier `src/engine/*.ts`, `engine.css`, `public/kyw/` et `lib/url.ts` d'un site awwwards livré (sanga) a fonctionné sans modification ; seuls Base.astro (couleurs, polices, JSON-LD) et `motion/setup.ts` sont à adapter.
+
+## 2026-11-10 · huile-sur-le-feu · variante legacy (phase 1)
+- Aucun des trois thèmes dealt ne portait un bordeaux de marque : `scaffold --brand` puis tokens écrits à la main depuis les couleurs lues dans le CSS du site (grep des hex) ; le logo négatif blanc impose une barre de nav sombre même sur un papier clair.
+- `base.css` cache les enfants d'un `[data-slot]` qui contient une image : mettre la légende hors du slot. Pour sloplint, aplatir `page.css` + tokens + base dans le scratchpad et remplacer `/<slug>/legacy/` par `` dans l'HTML ; le FAIL 76 `kyw-signature` et le REFLEX 72 sont ceux du paquet footer.
+- `sharp` s'importe depuis `node_modules/.pnpm/sharp@0.33.5/node_modules/sharp/lib/index.js` pour produire les variantes 800w du `srcset`.

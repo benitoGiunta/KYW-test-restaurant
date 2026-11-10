@@ -1,0 +1,14 @@
+---
+import { photos, u } from '../data/site';
+interface Props { k: string; sizes?: string; priority?: boolean; pos?: string; class?: string; alt?: string }
+const { k, sizes = '100vw', priority = false, pos = 'center', class: cls = '', alt } = Astro.props;
+const p = photos[k];
+const f = p.file.replace(/\.(webp|jpg)$/, '');
+const small = u(`photos/${f}-800.webp`);
+const full = u(`photos/${p.file}`);
+const txt = alt ?? p.sujet;
+---
+<div class:list={['ph', cls]} data-slot={`photo-${k}`} data-alt={txt} data-credits="L’Huile sur le Feu">
+  <img src={full} srcset={`${small} 800w, ${full} ${p.w}w`} sizes={sizes} width={p.w} height={p.h} alt={txt}
+    style={`object-position:${pos}`} loading={priority ? undefined : 'lazy'} fetchpriority={priority ? 'high' : undefined} decoding="async" />
+</div>

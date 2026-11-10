@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import PageHead from '../components/PageHead.astro';
+import Horaires from '../components/Horaires.astro';
+import { u } from '../data/site';
+const suite = [
+  { t: 'La carte', d: 'Entrées, pâtes fraîches, viandes et poissons', h: u('menu/') },
+  { t: 'La boutique', d: 'Nos huiles d’olive et le traiteur', h: u('boutique/') },
+  { t: 'Nous trouver', d: 'Rue de Marchovelette, au centre de Namur', h: u('contact/') },
+];
+---
+<Base title="Le restaurant · L’Huile sur le Feu, Namur" description="Une maison méditerranéenne au cœur de Namur, où l’huile d’olive n’est pas un condiment : c’est le point de départ.">
+  <PageHead titre="Le restaurant" texte="Une maison méditerranéenne au cœur de Namur, où l’huile d’olive est le point de départ." photo="16" pos="50% 40%" />
+
+  <section class="sect histoire" aria-labelledby="h-hist">
+    <div class="container grid12">
+      <h2 id="h-hist" class="histoire__h">Une histoire qui commence dans les Pouilles</h2>
+      <div class="histoire__txt">
+        <p class="lead">Giuseppe Santamaria a grandi dans les Pouilles, là où l’olivier fait partie du paysage autant que de la table.</p>
+        <p>Il en a gardé une idée simple de la cuisine : de bons produits, peu de gestes, et rien à cacher.</p>
+        <p>{/* Hallmark · reworded "21 ans plus tard, la maison n'a pas changé de cap" to "la maison n’a pas changé de cap" · date relative neutralisée */}En 2005 il ouvre L’Huile sur le Feu rue de Marchovelette, à deux pas du centre. Namur n’était pas un choix de hasard : une ville à taille humaine, où l’on prend encore le temps de s’asseoir à table. La maison n’a pas changé de cap.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect split" aria-labelledby="h-huile">
+    <div class="container grid12">
+      <Photo k="06" pos="50% 50%" class="split__ph" sizes="(min-width: 60rem) 58vw, 100vw" />
+      <div class="split__txt">
+        <h2 id="h-huile">L’huile, d’abord</h2>
+        <p>Le nom de la maison n’est pas une image. L’huile d’olive est le point de départ d’un plat, pas la touche finale : truffe blanche, piment, citron, mandarine, menthe, chaque assiette reçoit celle qui lui va.</p>
+        <p>Pour cela nous travaillons avec Oliviers &amp; Co, maison spécialisée dans les huiles d’olive vierges extra de la Méditerranée. Ce sont leurs crus que vous retrouvez à table, et sur les étagères de notre boutique, si vous voulez les emporter.</p>
+        <blockquote class="pull">Une bonne huile ne se remarque pas : elle fait remarquer le reste.</blockquote>
+        <p><a class="link" href={u('boutique/')}>Découvrir la boutique</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect index" aria-labelledby="h-suite">
+    <div class="container grid12">
+      <h2 id="h-suite" class="index__h">Continuer la visite</h2>
+      <ul class="index__list">
+        {suite.map((s) => <li><a href={s.h}><span class="index__t">{s.t}</span><span class="index__d">{s.d}</span></a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sect salle" aria-labelledby="h-salle">
+    <div class="container">
+      <h2 id="h-salle">En salle</h2>
+      <div class="salle__grid">
+        <Photo k="09" pos="50% 50%" class="salle__a" sizes="(min-width: 60rem) 58vw, 100vw" />
+        <Photo k="07" pos="50% 40%" class="salle__b" sizes="(min-width: 60rem) 40vw, 100vw" />
+      </div>
+    </div>
+  </section>
+
+  <Horaires />
+</Base>

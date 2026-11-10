@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Rows from '../components/Rows.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto, u, cat, photos } from '../data/site';
+const sugg = cat('Les suggestions du moment');
+---
+<Base title="L’Huile sur le Feu, restaurant méditerranéen à Namur" description="Cuisine méditerranéenne, pâtes fraîches maison et huiles d’olive d’exception, rue de Marchovelette à Namur. Réservez votre table.">
+  <section class="hero" aria-labelledby="h1">
+    <Photo k="04" priority pos="60% 40%" class="hero__ph" sizes="100vw" />
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="container hero__in">
+      <h1 id="h1">La Méditerranée dans votre assiette</h1>
+      {/* Hallmark · reworded "Une cuisine généreuse et authentique, sublimée par des huiles d'olive d'exception. Au cœur de Namur, on prend le temps de savourer." to "Pâtes fraîches maison et huiles d’olive d’exception, au cœur de Namur." · 58 */}
+      <p class="lead">Pâtes fraîches maison et huiles d’olive d’exception, au cœur de Namur.</p>
+      <p class="actions">
+        <a class="btn btn--flame" href={resto.reservation} rel="noopener">Réserver une table</a>
+        <a class="link link--deep" href={u('menu/')}>Découvrir la carte</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="sect teaser" aria-labelledby="h-carte">
+    <div class="container grid12">
+      <div class="teaser__head">
+        <h2 id="h-carte">Ce qui vous attend à table</h2>
+        <p class="lead">Des planches à partager, des pâtes fraîches, des viandes et des poissons, et pour finir des douceurs.</p>
+        <p><a class="link" href={u('menu/')}>Voir toute la carte</a></p>
+      </div>
+      <div class="teaser__rows">
+        <h3 class="rows__title">Les suggestions du moment</h3>
+        <Rows plats={sugg.plats} />
+      </div>
+    </div>
+  </section>
+
+  <section class="room" aria-label="La salle">
+    <figure>
+      <Photo k="03" pos="50% 40%" class="room__ph" sizes="100vw" />
+      <figcaption class="container">La salle aux murs ocre, avec son tableau noir.</figcaption>
+    </figure>
+  </section>
+
+  <section class="sect bento" aria-labelledby="h-maison">
+    <div class="container">
+      <h2 id="h-maison" class="visually-hidden">La maison</h2>
+      <div class="bento__grid">
+        <article class="tile tile--deep tile--7">
+          <h3>L’huile d’abord</h3>
+          <p>{/* Hallmark · reworded "truffe blanche, piment, citron, mandarine, menthe, chaque assiette" to "truffe blanche, piment, citron, mandarine, menthe : chaque assiette" · 19 */}L’huile d’olive est le point de départ d’un plat, pas la touche finale : truffe blanche, piment, citron, mandarine, menthe, chaque assiette reçoit celle qui lui va, choisie pour elle.</p>
+        </article>
+        <article class="tile tile--paper2 tile--5">
+          <h3>Pâtes fraîches maison</h3>
+          <ul class="plain">
+            <li>Demi-lunes</li><li>Ravioles</li><li>Lasagne</li><li>Orecchiette</li>
+          </ul>
+        </article>
+        <article class="tile tile--photo tile--5">
+          <Photo k="15" pos="50% 60%" class="tile__ph" sizes="(min-width: 60rem) 40vw, 100vw" />
+          <div class="tile__txt">
+            <h3>Boutique et traiteur</h3>
+            <p>À côté de la salle, une boutique où l’on retrouve les huiles qui signent nos plats.</p>
+            <p><a class="link" href={u('boutique/')}>Voir la boutique</a></p>
+          </div>
+        </article>
+        <article class="tile tile--7 tile--line">
+          <h3>Une histoire qui commence dans les Pouilles</h3>
+          <p>Giuseppe Santamaria a grandi dans les Pouilles, là où l’olivier fait partie du paysage autant que de la table.</p>
+          <p><a class="link" href={u('restaurant/')}>Découvrir la maison</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <Horaires />
+</Base>

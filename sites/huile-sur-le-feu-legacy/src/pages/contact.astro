@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+---
+<Base title="Contact et accès · L’Huile sur le Feu, Namur" description="Rue de Marchovelette 19, 5000 Namur. Téléphone +32 81 24 19 03. Ouvert du mardi au samedi, midi et soir.">
+  <PageHead titre="Nous trouver" texte="Rue de Marchovelette, au centre de Namur." photo="02" pos="50% 25%" />
+
+  <section class="sect coords" aria-labelledby="h-coord">
+    <div class="container grid12">
+      <h2 id="h-coord" class="coords__h">Contact</h2>
+      <dl class="coords__list">
+        <div><dt>Téléphone</dt><dd><a href={resto.telHref}>{resto.tel}</a></dd></div>
+        <div><dt>E-mail</dt><dd><a href={`mailto:${resto.email}`}>{resto.email}</a></dd></div>
+        <div><dt>Adresse</dt><dd>{resto.adresse.rue} {resto.adresse.numero}, {resto.adresse.cp} {resto.adresse.ville}<br /><a class="link" href={resto.itineraire} rel="noopener">Itinéraire</a></dd></div>
+        <div><dt>Nous suivre</dt><dd><a href={resto.facebook} rel="noopener">Facebook</a><br /><a href={resto.instagram} rel="noopener">Instagram</a></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <Horaires adresse={false} />
+</Base>

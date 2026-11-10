@@ -1,0 +1,24 @@
+---
+import { u, resto } from '../data/site';
+const path = Astro.url.pathname.replace(/\/$/, '');
+const liens = [
+  { t: 'Accueil', h: u(''), p: u('').replace(/\/$/, '') },
+  { t: 'Le restaurant', h: u('restaurant/'), p: u('restaurant') },
+  { t: 'La carte', h: u('menu/'), p: u('menu') },
+  { t: 'La boutique', h: u('boutique/'), p: u('boutique') },
+  { t: 'Contact', h: u('contact/'), p: u('contact') },
+];
+---
+<header class="site-head deep">
+  <div class="container site-head__in">
+    <a class="brand" href={u('')} aria-label="L’Huile sur le Feu, accueil">
+      <img src={u('photos/logo.svg')} width="156" height="46" alt="L’Huile sur le Feu" />
+    </a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <ul>
+        {liens.map((l) => <li><a href={l.h} aria-current={path === l.p ? 'page' : undefined}>{l.t}</a></li>)}
+      </ul>
+    </nav>
+    <a class="btn btn--flame" href={resto.reservation} rel="noopener">Réserver</a>
+  </div>
+</header>

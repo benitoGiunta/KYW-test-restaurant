@@ -1,0 +1,31 @@
+---
+import { jours, resto, u } from '../data/site';
+interface Props { adresse?: boolean }
+const { adresse = true } = Astro.props;
+---
+<section class="horaires" aria-labelledby="h-horaires">
+  <div class="container grid12">
+    <div class="horaires__head">
+      <h2 id="h-horaires">Horaires et réservation</h2>
+      <p class="lead">Du mardi au samedi, midi et soir. Fermé le dimanche et le lundi.</p>
+    </div>
+    <dl class="schedule">
+      {jours.map((j) => (
+        <div class:list={['schedule__row', { 'is-closed': !j.ouvert }]}>
+          <dt>{j.jour}</dt>
+          <dd>{j.ouvert ? <><span class="num">{j.midi}</span><span class="num">{j.soir}</span></> : <span>Fermé</span>}</dd>
+        </div>
+      ))}
+    </dl>
+    <div class="horaires__act">
+      {adresse && (
+        <p class="addr">{resto.adresse.rue} {resto.adresse.numero}<br />{resto.adresse.cp} {resto.adresse.ville}<br />
+          <a class="link" href={resto.itineraire} rel="noopener">Itinéraire</a></p>
+      )}
+      <p class="actions">
+        <a class="btn" href={resto.reservation} rel="noopener">Réserver une table</a>
+        <a class="link" href={resto.telHref}>{resto.tel}</a>
+      </p>
+    </div>
+  </div>
+</section>

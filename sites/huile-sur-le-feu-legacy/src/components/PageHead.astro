@@ -1,0 +1,14 @@
+---
+import Photo from './Photo.astro';
+interface Props { titre: string; texte: string; photo: string; pos?: string; ratio?: string }
+const { titre, texte, photo, pos = 'center', ratio = '4 / 3' } = Astro.props;
+---
+<section class="pagehead deep" aria-labelledby="h1">
+  <div class="container grid12">
+    <div class="pagehead__txt">
+      <h1 id="h1">{titre}</h1>
+      <p class="lead">{texte}</p>
+    </div>
+    <Photo k={photo} pos={pos} class="pagehead__ph" sizes="(min-width: 60rem) 40vw, 100vw" priority />
+  </div>
+</section>

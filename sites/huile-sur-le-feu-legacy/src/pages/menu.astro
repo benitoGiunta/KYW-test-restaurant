@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import PageHead from '../components/PageHead.astro';
+import Rows from '../components/Rows.astro';
+import Horaires from '../components/Horaires.astro';
+import { carte, menus, prix, slug, u } from '../data/site';
+const gourmet = menus.find((m) => m.nom === 'Menu Gourmet')!;
+const enfants = menus.find((m) => m.nom === 'Menu Enfants')!;
+// « Entrée : … Plat : … Dessert : … » découpé pour la lecture (texte inchangé).
+const services = gourmet.description.split(/(?<=\.)\s+/).map((s) => { const [k, ...r] = s.split(' : '); return { k, v: r.join(' : ').replace(/\.$/, '') }; });
+const photoApres = 'Entrées & salades';
+---
+<Base title="La carte et les menus · L’Huile sur le Feu, Namur" description="La carte de L’Huile sur le Feu : suggestions du moment, pâtes fraîches, viandes et poissons, douceurs, gins et vins. Menu Gourmet 49,90 €.">
+  <PageHead titre="La carte" texte="De bons produits, peu de gestes, et une huile d’olive choisie pour chaque plat. La carte suit les saisons." photo="10" pos="50% 50%" />
+
+  <section class="sect menus" aria-labelledby="h-menus">
+    <div class="container">
+      <h2 id="h-menus">Les menus</h2>
+      <div class="bento__grid">
+        <article class="tile tile--deep tile--7">
+          <h3>{gourmet.nom}</h3>
+          <p class="tile__price num">{prix(gourmet.prix)}</p>
+          <dl class="services">
+            {services.map((s) => <div><dt>{s.k}</dt><dd>{s.v}</dd></div>)}
+          </dl>
+        </article>
+        <article class="tile tile--paper2 tile--5">
+          <h3>{enfants.nom}</h3>
+          <p class="tile__price num">{prix(enfants.prix)}</p>
+          <p>{enfants.description.replace(/^3 services : /, 'Trois services : ').replace(/\.$/, '')}.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <nav class="catnav" aria-label="Catégories de la carte">
+    <div class="container"><ul>
+      {carte.map((c) => <li><a href={`#${slug(c.categorie)}`}>{c.categorie}</a></li>)}
+    </ul></div>
+  </nav>
+
+  {carte.map((c) => (
+    <>
+      <section class="sect cat" id={slug(c.categorie)} aria-labelledby={`h-${slug(c.categorie)}`}>
+        <div class="container grid12">
+          <h2 id={`h-${slug(c.categorie)}`} class="cat__h">{c.categorie}</h2>
+          <div class="cat__rows"><Rows plats={c.plats} /></div>
+        </div>
+      </section>
+      {c.categorie === photoApres && (
+        <section class="room room--short" aria-label="À table">
+          <Photo k="11" pos="50% 55%" class="room__ph" sizes="100vw" />
+        </section>
+      )}
+    </>
+  ))}
+
+  <Horaires />
+</Base>
