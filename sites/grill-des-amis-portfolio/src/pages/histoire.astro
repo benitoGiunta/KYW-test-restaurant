@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const passe = photoDe('/photos/decoupe-cote.webp');
+const poele = photoDe('/photos/decoupe-pince.webp');
+const trio = photoDe('/photos/chambre-maturation.webp');
+const profil = photoDe('/photos/patrons-tabliers.webp');
+const pain = photoDe('/photos/braise-feu.webp');
+const initiales = (n: string) => n.split(' ').map((x) => x[0]).join('');
+---
+<Base title="La maison d'Elise et Gaëtan" description={`La maison ${site.nom} à Namur : Gaëtan choisit, découpe et fait maturer les viandes sur place, cuites au feu de bois.`} start={420} reperes={[{ id: 'recit', label: 'La maison' }, { id: 'equipe', label: 'Les amis' }]}>
+  <section class="hero hero--page" data-temp="420">
+    <div class="hero__media" aria-hidden="true">
+      <img src={asset(passe.src)} alt="" width={passe.largeur} height={passe.hauteur} fetchpriority="high" data-critical />
+      <div class="hero__voile"></div>
+    </div>
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro>La maison</p>
+      <h1 class="hero__title" data-split="lines" data-intro data-delay="0.1">La maison des amis</h1>
+      <p class="hero__lead" style="margin-top: calc(var(--u) * 3)">Des grosses pièces achetées brutes, découpées et maturées sur place, puis cuites au bois : la viande, de la chambre au grill.</p>
+    </div>
+  </section>
+
+  <section class="section" id="recit" data-temp="300" data-temp-end="150">
+    <div class="wrap cols">
+      <div class="c1-7">
+        <figure class="fig" data-reveal="clip" style="aspect-ratio: 4 / 3"><img src={asset(poele.src)} alt={poele.alt} width={poele.largeur} height={poele.hauteur} loading="lazy" decoding="async" /></figure>
+        <figure class="duo" data-reveal="clip" data-delay="0.1" style="width: 55%; margin: calc(var(--u) * -8) 0 0 auto; aspect-ratio: 4 / 3"><img src={asset(profil.src)} alt={profil.alt} width={profil.largeur} height={profil.hauteur} loading="lazy" decoding="async" /><figcaption>{profil.legende}</figcaption></figure>
+      </div>
+      <div class="c9-12 prose" style="padding-top: 12vh">
+        <p class="chapeau">La viande</p>
+        {site.histoire.map((p) => <p data-reveal="up">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="equipe" data-temp="110" data-temp-end="60" aria-labelledby="t-equipe">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Table</p>
+        <h2 class="t-xl" id="t-equipe" data-split="lines">Ceux qui vous accueillent</h2>
+      </div>
+      <div class="equipe">
+        {site.equipe.map((m, i) => (
+          <article data-reveal="up" data-delay={String(i * 0.08)}>
+            {m.photo ? (
+              <figure class="fig"><img src={asset(m.photo)} alt={photoDe(m.photo).alt} width={photoDe(m.photo).largeur} height={photoDe(m.photo).hauteur} loading="lazy" decoding="async" /></figure>
+            ) : (
+              <div class="fig fig--vide" aria-hidden="true">{initiales(m.nom)}</div>
+            )}
+            <h3>{m.nom}</h3>
+            <p class="t-s muted">{m.role}{m.placeholder && ' (rôle à préciser)'}</p>
+            <p class="t-s">{m.phrase}</p>
+          </article>
+        ))}
+      </div>
+      <div class="salle__wall" style="margin-top: calc(var(--u) * 8)">
+        <figure class="s1"><div class="fig" data-parallax="0.1"><img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="lazy" decoding="async" /></div><figcaption>{trio.legende}</figcaption></figure>
+        <figure class="s2"><div class="fig" data-parallax="0.18"><img src={asset(pain.src)} alt={pain.alt} width={pain.largeur} height={pain.hauteur} loading="lazy" decoding="async" /></div><figcaption>{pain.legende}</figcaption></figure>
+      </div>
+      <div class="actions">
+        <a class="btn btn--solid" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={u('/carte/')}>Voir la carte</a>
+      </div>
+    </div>
+  </section>
+</Base>

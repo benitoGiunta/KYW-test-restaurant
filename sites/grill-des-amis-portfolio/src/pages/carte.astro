@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const plat = photoDe('/photos/plat-viande-vin.webp');
+const dessert = photoDe('/photos/viande-tranchee.webp');
+const temps = [520, 480, 420, 380, 330, 260, 200, 160, 130, 110];
+---
+<Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : entrées, plats, grillades au feu de bois, Menu Viandard, lunch et boissons.`} start={900} reperes={[{ id: 'entrees', label: 'Entrées' }, { id: 'feu', label: 'Au feu' }, { id: 'boissons', label: 'Boissons' }]}>
+  <section class="hero hero--page" data-temp="900">
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro>Dressage</p>
+      <h1 class="hero__title" data-split="lines" data-intro data-delay="0.1">La carte, de l'entrée au feu</h1>
+      <div class="hero__foot">
+        <p class="hero__lead">Des entrées, des plats, des grillades au feu de bois et des pièces à partager. Les sauces sont préparées sur place, les frites sont maison.</p>
+        <div class="carte__filtres" role="group" aria-label="Filtrer la carte" data-reveal="fade" data-intro data-delay="0.7">
+          <button type="button" data-filtre="tout" aria-pressed="true">Tout</button>
+          <button type="button" data-filtre="entrees" aria-pressed="false">Entrées</button>
+          <button type="button" data-filtre="feu" aria-pressed="false">Au feu</button>
+          <button type="button" data-filtre="boissons" aria-pressed="false">Boissons</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-temp="520" data-temp-end="150">
+    <div class="wrap">
+      {site.carte.map((cat, k) => (
+        <div class="carte__cat" id={cat.service} data-service={cat.service}>
+          <div class="cols">
+            <div class="c1-8">
+              <h2>{cat.categorie}</h2>
+              {cat.note && <p class="note">{cat.note}</p>}
+            </div>
+            <p class="c9-12 t-s muted num" style="align-self: end">{temps[k] ? `${temps[k]} °C` : ''}</p>
+          </div>
+          <ol class="plats" style="margin-top: calc(var(--u) * 2)">
+            {cat.plats.map((p, i) => (
+              <li class={`plat${p.photo ? ' plat--photo' : ''}`} data-photo={p.photo ? asset(p.photo) : undefined} data-reveal="fade" data-delay={String(i * 0.05)}>
+                <span class="plat__num">0{i + 1}</span>
+                {p.photo && <img class="plat__vignette" src={asset(p.photo)} alt="" width="200" height="200" loading="lazy" decoding="async" />}
+                <span><span class="plat__nom">{p.nom}{p.placeholder && <span class="tag tag--plat">exemple illustratif</span>}</span>{p.description && <span class="plat__desc muted">{p.description}</span>}</span>
+                <span class="plat__prix">{p.prix ?? ''}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+      <p class="note" style="margin-top: calc(var(--u) * 3)">Carte du 14 octobre 2026. Elle change avec les arrivages et les suggestions de la semaine.</p>
+    </div>
+  </section>
+
+  <section class="section" data-temp="110" data-temp-end="60" aria-labelledby="t-formules">
+    <div class="wrap">
+      <div class="section__head cols">
+        <div class="c1-8">
+          <p class="chapeau">Table</p>
+          <h2 class="t-xl" id="t-formules" data-split="lines">Trois façons de s'attabler, midi et soir</h2>
+        </div>
+      </div>
+      <div class="formules">
+        {site.menus.map((m, i) => (
+          <article class="formule" data-reveal="up" data-delay={String(i * 0.1)}>
+            <h3>{m.nom}</h3>
+            <p class="t-m num">{m.prix}</p>
+            <p class="note" style="margin-top: var(--u)">{m.description}</p>
+          </article>
+        ))}
+      </div>
+      <div class="salle__wall" style="margin-top: calc(var(--u) * 8)">
+        <figure class="s1"><div class="fig" data-parallax="0.1"><img src={asset(plat.src)} alt={plat.alt} width={plat.largeur} height={plat.hauteur} loading="lazy" decoding="async" /></div></figure>
+        <figure class="s2"><div class="fig" data-parallax="0.18"><img src={asset(dessert.src)} alt={dessert.alt} width={dessert.largeur} height={dessert.hauteur} loading="lazy" decoding="async" /></div><figcaption>{dessert.alt}</figcaption></figure>
+      </div>
+      <div class="actions">
+        <a class="btn btn--solid" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={u('/traiteur/')}>Traiteur et groupes</a>
+      </div>
+    </div>
+  </section>
+</Base>

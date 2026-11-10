@@ -1,0 +1,191 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe, horaireTexte, adresseLigne, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/grill-flammes.webp');
+const feu = site.carte.find((c) => c.categorie.startsWith('Les grillades'))!;
+const grillades = feu.plats.slice(0, 7);
+const viandard = site.menus[0];
+const patrons = photoDe('/photos/patrons-tabliers.webp');
+const chambre = photoDe('/photos/chambre-maturation.webp');
+const salle = ['/photos/salle-comptoir.webp', '/photos/salle-buches.webp', '/photos/terrasse.webp', '/photos/viande-tranchee.webp', '/photos/verres-lumiere.webp'].map(photoDe);
+const parallaxes = ['0.08', '0.2', '0.12', '0.06', '0.18'];
+const reperes = [
+  { id: 'cuisson', label: 'Cuisson' },
+  { id: 'carte', label: 'Carte' },
+  { id: 'salle', label: 'Salle' },
+  { id: 'pratique', label: 'Pratique' },
+];
+const horairesJson = JSON.stringify(site.horaires.map((h) => ({ jour: h.jour, creneaux: h.creneaux })));
+const [mot1, ...reste] = site.nom.split(' ');
+---
+<Base start={900} reperes={reperes}>
+  <section class="hero" data-temp="900" aria-labelledby="titre">
+    <div class="hero__media" aria-hidden="true">
+      <img src={asset(hero.src)} alt="" width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="sync" data-critical />
+      <div class="hero__voile"></div>
+    </div>
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro data-delay="0.9">Viandes maturées et grillades au feu de bois, Namur</p>
+      <h1 class="hero__title" id="titre" data-split="lines" data-intro data-delay="0.2"><span class="ligne">{mot1} {reste[0]}</span><span class="ligne">{reste.slice(1).join(' ')}</span></h1>
+      <div class="hero__foot">
+        <p class="hero__lead">Des grosses pièces découpées et maturées sur place, cuites au feu de bois, avec des sauces et des frites maison. Une soirée qui commence à la braise et finit à table.</p>
+        <div class="stack" data-reveal="fade" data-intro data-delay="1">
+          <p class="pastille" data-pastille data-horaires={horairesJson}>Service du soir dès 18 h</p>
+          <div class="actions" style="margin-top: var(--u)">
+            <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+            <a class="btn btn--quiet" href="#cuisson" data-ancre>Suivre la soirée</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section manifeste" data-temp="700">
+    <div class="wrap cols">
+      <div class="c1-8">
+        <p class="chapeau">Manifeste</p>
+        <p class="manifeste__txt">{site.manifeste.avant} <span class="mot">{site.manifeste.motCle}</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cuisson" id="cuisson" data-temp="520" data-temp-end="180" aria-labelledby="t-cuisson">
+    <div class="cuisson__stage">
+      <div class="wrap cuisson__grid">
+        <div>
+          <p class="chapeau">Cuisson</p>
+          <h2 class="t-xl" id="t-cuisson">{site.cuisson.plat}</h2>
+          <p class="note" style="margin-top: var(--u)">{site.cuisson.intro}</p>
+          <ol class="cuisson__list">
+            {site.cuisson.couches.map((c, i) => (
+              <li class="cuisson__item">
+                <button type="button">
+                  <span class="num">0{i + 1}</span>
+                  <span>{c.nom}<span class="det">{c.detail}, {c.temp} °C</span></span>
+                </button>
+              </li>
+            ))}
+          </ol>
+          <div class="cuisson__bar" aria-hidden="true"><i></i></div>
+        </div>
+        <div class="cuisson__scene" role="img" aria-label={`${site.cuisson.plat}, dressé en quatre couches`}>
+          {site.cuisson.couches.map((c) => (
+            <img class={`couche couche--${c.id}`} src={asset(c.src)} alt="" width="1200" height="1200" loading={c.id === 'fond' ? 'eager' : 'lazy'} decoding="async" />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="carte" data-temp="240" aria-labelledby="t-carte">
+    <div class="wrap">
+      <div class="section__head cols">
+        <div class="c1-8">
+          <p class="chapeau">Dressage</p>
+          <h2 class="t-xl" id="t-carte" data-split="lines">Au feu de bois</h2>
+        </div>
+        <p class="c9-12 note" data-reveal="fade">{feu.note} Une sélection ; le Menu Viandard, {viandard.prix}, réunit cinq viandes à partager.</p>
+      </div>
+      <ol class="plats">
+        {grillades.map((p, i) => (
+          <li class={`plat${p.photo ? ' plat--photo' : ''}`} data-photo={p.photo ? asset(p.photo) : undefined} data-reveal="fade" data-delay={String(i * 0.06)}>
+            <span class="plat__num">0{i + 1}</span>
+            {p.photo && <img class="plat__vignette" src={asset(p.photo)} alt="" width="200" height="200" loading="lazy" decoding="async" />}
+            <span><span class="plat__nom">{p.nom}</span>{p.description && <span class="plat__desc muted">{p.description}</span>}</span>
+            <span class="plat__prix">{p.prix ?? ''}</span>
+          </li>
+        ))}
+      </ol>
+      <p class="section__link"><a class="link link--arrow" href={u('/carte/')}>Toute la carte, entrées, plats et boissons</a> <span class="muted t-s">(lunch à 15,50 €, steak du midi à 17 €)</span></p>
+    </div>
+  </section>
+
+  <section class="section mains" data-temp="150" aria-labelledby="t-mains">
+    <div class="wrap mains__grid">
+      <figure class="duo mains__portrait" data-reveal="clip">
+        <img src={asset(patrons.src)} alt={patrons.alt} width={patrons.largeur} height={patrons.hauteur} loading="eager" fetchpriority="low" decoding="async" />
+        <figcaption>{patrons.legende}</figcaption>
+      </figure>
+      <div class="mains__txt">
+        <p class="chapeau">Les mains</p>
+        <h2 class="t-l" id="t-mains" data-split="lines">Elise et Gaëtan, la maison des amis</h2>
+        <div class="prose" data-reveal="up" style="margin-top: calc(var(--u) * 2)">
+          <p>{site.histoire[1]}</p>
+        </div>
+        <p class="section__link"><a class="link link--arrow" href={u('/histoire/')}>La maison et la viande</a></p>
+      </div>
+      <figure class="duo mains__portrait--b" data-reveal="clip" data-delay="0.15">
+        <img src={asset(chambre.src)} alt={chambre.alt} width={chambre.largeur} height={chambre.hauteur} loading="eager" fetchpriority="low" decoding="async" />
+        <figcaption>{chambre.legende}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="salle" data-temp="150" data-temp-end="130" aria-labelledby="t-salle">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Table</p>
+        <h2 class="t-xl" id="t-salle" data-split="lines">La salle, la terrasse, le feu</h2>
+      </div>
+      <div class="salle__wall">
+        {salle.map((p, i) => (
+          <figure class={`s${i + 1}`}>
+            <div class="fig" data-parallax={parallaxes[i]}>
+              <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            </div>
+            {p.legende && <figcaption>{p.legende}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="avis" data-temp="105" aria-label="Ils en parlent">
+    <div class="marquee">
+      {[0, 1].map((k) => site.avis.map((a) => (
+        <blockquote class="marquee__item" aria-hidden={k === 1 ? 'true' : undefined}>
+          <p>{a.texte}</p>
+          <cite>{a.auteur}, {a.source}</cite>
+        </blockquote>
+      )))}
+    </div>
+  </section>
+
+  <section class="section" id="pratique" data-temp="60" data-temp-end="20" aria-labelledby="t-pratique">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Nuit</p>
+        <h2 class="t-xl" id="t-pratique" data-split="lines">Venir, réserver, emporter</h2>
+      </div>
+      <div class="pratique__grid">
+        <div class="pratique__a stack" data-reveal="up">
+          <dl class="horaires">
+            {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+          </dl>
+          <p class="note">Ouvert le lundi, le jeudi, le vendredi et le samedi, à midi et le soir. Fermé les autres jours (à confirmer).</p>
+          <div class="actions">
+            <a class="btn btn--solid" href={u('/reservation/')}>Réserver</a>
+            <a class="btn" href={u('/traiteur/')}>Traiteur</a>
+          </div>
+        </div>
+        <div class="pratique__b stack" data-reveal="up" data-delay="0.1">
+          <div class="plan" aria-label="Plan schématique : le restaurant, rue Saint-Joseph, à Namur" role="img">
+            <svg viewBox="0 0 320 200" aria-hidden="true">
+              <path d="M0 150 C 80 120, 140 60, 320 40" fill="none" stroke="var(--c-line)" stroke-width="18" opacity="0.5" />
+              <path d="M0 165 C 80 135, 140 75, 320 55" fill="none" stroke="var(--c-line)" stroke-width="1" />
+              <path d="M40 0 L 190 200" fill="none" stroke="var(--c-line)" stroke-width="1" />
+              <path d="M0 95 L 320 125" fill="none" stroke="var(--c-line)" stroke-width="1" />
+              <text x="215" y="30" font-size="10" fill="var(--c-muted)" font-family="Literata, serif" font-style="italic">centre de Namur</text>
+              <text x="40" y="190" font-size="10" fill="var(--c-muted)" font-family="Literata, serif" font-style="italic">rue Saint-Joseph</text>
+            </svg>
+            <i class="plan__pin" aria-hidden="true"></i>
+            <span class="plan__lbl">Plan schématique</span>
+          </div>
+          <address>{adresseLigne()} · <a class="link" href={telHref()}>{site.telephone}</a></address>
+          <p><a class="link" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire sur OpenStreetMap</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

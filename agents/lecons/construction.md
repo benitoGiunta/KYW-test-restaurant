@@ -104,3 +104,4 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 ## 2026-11-10 · le-felicien · variante legacy
 - Waiver sloplint : `/* Hallmark · waive <gate> · <preuve> · <raison> */` exige trois champs séparés par « · » ; deux champs = « malformed » et le REFLEX reste ouvert.
 - Remplacement en masse de l'espace avant « : ? » par `&nbsp;` : limiter aux balises de texte (le JS et les ternaires cassent).
+- 2026-11-10 : jamais de `rm` avec glob après `cd` (refusé par la sécurité) ; supprimer par `find <chemin absolu> -type f -name '*.webp' -delete`.
