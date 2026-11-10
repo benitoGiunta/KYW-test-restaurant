@@ -6,7 +6,7 @@ import Ornements from '../components/Ornements.astro';
 import { site, guinguette as g } from '../data/site';
 import { u, asset } from '../lib/url';
 const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
-const photos = g.tirages.filter((t) => ['facade-enseigne', 'facade-bas', 'pates-table'].some((n) => t.src.endsWith(n + '.webp')));
+const photos = g.tirages.filter((t) => ['facade-enseigne', 'facade-rue'].some((n) => t.src.endsWith(n + '.webp')));
 ---
 <Base title="Terrasse" description={`La terrasse de ${site.nom} à Jambes (Namur), ouverte lorsque la météo le permet, pour les pizzas, les pâtes et les cocktails.`}>
   <section class="hero hero--page wrap" data-hero>
@@ -22,8 +22,8 @@ const photos = g.tirages.filter((t) => ['facade-enseigne', 'facade-bas', 'pates-
   <section class="section section--corail">
     <div class="wrap manifeste__inner">
       <Ornements />
-      <h2 style="font-size: var(--t-xl)">Dehors, <em class="ital">dès qu'il fait beau</em></h2>
-      <p class="lead">Un Spritz Ponti, une pizza, un plat de pâtes : la carte est la même, midi et soir, du mardi au dimanche.</p>
+      <h2 style="font-size: var(--t-xl)">Dehors, <em class="ital">dès qu’il fait beau</em></h2>
+      <p class="lead">Un Spritz Ponti, une pizza, un plat de pâtes : la terrasse ouvre lorsque la météo le permet.</p>
       <p class="muted" style="margin-top:calc(var(--u)*2);font-size:var(--t-s)">{g.terrasse.aConfirmer}</p>
     </div>
   </section>
@@ -32,9 +32,9 @@ const photos = g.tirages.filter((t) => ['facade-enseigne', 'facade-bas', 'pates-
     <div class="wrap">
       <div class="grille-photos">
         {photos.map((p, i) => (
-          <figure class="tirage" style={`--r:${[-4, 3, -2][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+          <figure class="tirage" style={`--r:${[-4, 3][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
             <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
-            <figcaption>{p.legende}</figcaption>
+            <figcaption>{p.legende} (photo de la façade)</figcaption>
           </figure>
         ))}
       </div>

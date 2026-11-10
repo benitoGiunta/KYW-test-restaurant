@@ -5,7 +5,7 @@ const ouverts = site.horaires.filter((h) => h.creneaux.length).map((h) => h.jour
 const base = [`Midi et soir, du ${ouverts[0]} au ${ouverts[ouverts.length - 1]}`, adresseLigne(), `Réservation en ligne via ${site.reservation.outil}`];
 const horaires = JSON.stringify(site.horaires.map((h) => ({ j: h.jour, c: h.creneaux })));
 ---
-<div class="marquee" data-marquee data-horaires={horaires} aria-label="État du restaurant">
+<div class="marquee" role="region" data-marquee data-horaires={horaires} aria-label="État du restaurant">
   <div class="marquee__piste">
     {[0, 1].map((k) => (
       <p class="marquee__groupe" aria-hidden={k === 1 ? 'true' : undefined}>

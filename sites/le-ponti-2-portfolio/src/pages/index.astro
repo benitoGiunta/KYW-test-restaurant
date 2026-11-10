@@ -39,12 +39,11 @@ const [m1, m2] = g.manifeste.titre;
   <section class="section" id="maison">
     <div class="wrap maison__grille">
       <figure class="tirage" style="--w:100%; cursor: default">
-        <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="eager" decoding="async" />
+        <img src={asset(trio.src)} srcset={`${asset('/photos/pates-800.webp')} 800w, ${asset(trio.src)} 1448w`} sizes="(max-width: 767px) 92vw, 50vw" alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="eager" fetchpriority="high" decoding="async" />
         <figcaption>Pâtes à table</figcaption>
       </figure>
       <div class="maison__texte" data-reveal="fade">
         <Ornements />
-        <p class="meta">La maison</p>
         <h2 class="section__titre">Une table <em>italienne</em></h2>
         <div class="prose">
           <p>{site.histoire[0]}</p>
@@ -91,8 +90,7 @@ const [m1, m2] = g.manifeste.titre;
   <!-- Le menu : carte blanche -->
   <section class="section" id="menu">
     <div class="wrap">
-      <p class="meta" style="text-align:center">Le menu</p>
-      <h2 class="section__titre" style="text-align:center">Ce qu'on <em>pose</em> sur la table</h2>
+      <h2 class="section__titre" style="text-align:center">Ce qu’on <em>pose</em> sur la table</h2>
       <div class="carte" data-reveal="scale">
         <div class="carte__grille">
           {accueil.map((c) => (
@@ -121,12 +119,10 @@ const [m1, m2] = g.manifeste.titre;
   <section class="section section--blanc avis" id="incontournables" data-avis>
     <p class="display avis__mot" aria-hidden="true" data-avis-mot>Ponti</p>
     <div class="wrap">
-      <p class="meta" style="text-align:center">À ne pas manquer</p>
-      <h2 class="sr-only">Les incontournables de la carte</h2>
+      <h2 class="section__titre" style="text-align:center">À ne pas <em>manquer</em></h2>
       <div class="avis__cartes">
         {g.incontournables.map((a) => (
           <blockquote class="carte-avis" data-carte-avis style={`--r:${a.r}deg`}>
-            <span class="carte-avis__etiq">{a.categorie}</span>
             <p><strong>{a.nom}</strong>, {a.description}.</p>
             <cite>{a.prix}</cite>
           </blockquote>
@@ -154,7 +150,6 @@ const [m1, m2] = g.manifeste.titre;
   <section class="section" id="horaires">
     <div class="wrap">
       <div class="hcarte" data-reveal="up">
-        <p class="meta">Horaires</p>
         <h2 class="section__titre" style="margin-bottom:0">Quand <em>venir</em></h2>
         <dl class="horaires">
           {site.horaires.map((h) => (

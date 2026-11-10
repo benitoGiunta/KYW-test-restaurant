@@ -7,8 +7,8 @@ import { u, asset } from '../lib/url';
 const g = guinguette;
 const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
 const trio = photoDe('/photos/pates.webp');
-const galerie = g.tirages.filter((t) => ['pizza-fond', 'facade-rue', 'escalope-table', 'pates-vin', 'pizza-comptoir', 'facade-enseigne'].some((n) => t.src.endsWith(n + '.webp')));
-const histoire = site.histoire;
+const galerie = g.tirages.filter((t) => ['facade-rue', 'escalope-table', 'pates-vin', 'facade-enseigne'].some((n) => t.src.endsWith(n + '.webp')));
+const histoire = site.histoire.slice(2);
 ---
 <Base title="La maison" description={`${site.nom} à Jambes (Namur) : restaurant italien et pizzeria, esprit familial, desserts faits maison, ouvert du mardi au dimanche.`}>
   <section class="hero hero--page wrap" data-hero>
@@ -24,7 +24,7 @@ const histoire = site.histoire;
   <section class="section" style="padding-top:0">
     <div class="wrap maison__grille">
       <figure class="tirage" style="--w:100%; cursor: default; --r:-3deg">
-        <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="eager" decoding="async" />
+        <img src={asset(trio.src)} srcset={`${asset('/photos/pates-800.webp')} 800w, ${asset(trio.src)} 1448w`} sizes="(max-width: 767px) 92vw, 50vw" alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="eager" fetchpriority="high" decoding="async" />
         <figcaption>Pâtes à table</figcaption>
       </figure>
       <div class="maison__texte">
@@ -40,7 +40,7 @@ const histoire = site.histoire;
       <h2 class="section__titre">Les plats, <em>la façade</em></h2>
       <div class="grille-photos">
         {galerie.map((p, i) => (
-          <figure class="tirage" style={`--r:${[-3, 4, -2, 3, -5, 2][i]}deg`} data-reveal="up" data-delay={String((i % 3) * 0.08)}>
+          <figure class="tirage" style={`--r:${[-3, 4, -2, 3][i]}deg`} data-reveal="up" data-delay={String((i % 3) * 0.08)}>
             <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
             <figcaption>{p.legende}</figcaption>
           </figure>

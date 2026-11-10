@@ -77,7 +77,7 @@ export const site: Restaurant = {
   ],
   // Histoire, fondateurs et année d'ouverture : inconnus au dossier. Seuls des faits prouvés sont écrits ici.
   histoire: [
-    'Le Ponti 2 est un restaurant italien et pizzeria installé avenue du Bourgmestre Jean Materne, à Jambes, dans l’agglomération de Namur. Son site le résume d’une phrase : restaurant italien, esprit familial.',
+    'Le Ponti 2 est un restaurant italien et pizzeria installé avenue du Bourgmestre Jean Materne, à Jambes, dans l’agglomération de Namur.',
     'La carte tient en grands classiques : vingt pizzas, treize sauces de pâtes, des escalopes de veau panées, gratinées ou en saltimbocca à la romana, quelques viandes et des salades repas.',
     'Les desserts sont faits maison : tiramisu aux fruits rouges, mousse au chocolat, sabayon minute servi chaud sur glace vanille. Côté verre, des cocktails signature, dont le Spritz Ponti, et des digestifs italiens.',
     'La maison est ouverte du mardi au dimanche, midi et soir, et ferme le lundi. Une terrasse accueille les clients lorsque la météo le permet.',
@@ -135,20 +135,16 @@ export const guinguette = {
     { id: 'bouteille', label: 'Bouteille dessinée au trait', x: 80, y: 60, r: 14, taille: 140, mobile: true, mx: 74 },
     { id: 'pont', label: 'Pont à trois arches dessiné au trait, comme sur le logo', x: 62, y: 80, r: -6, taille: 110, mobile: false },
   ] as Objet[],
-  /** 12 recadrages carrés des quatre photos du restaurant (aucune photo libre) : légendes descriptives. */
+  /** 8 recadrages carrés des quatre photos du restaurant (aucune photo libre) : légendes descriptives. */
   tirages: [
-    t('pizza-roquette', 'Pizza à la roquette et aux copeaux de parmesan', 3, 1, -7, 'Pizza roquette'),
-    t('facade-enseigne', 'Enseigne lumineuse Le Ponti 2 Restaurant, de nuit', 19, 4, 5, "L'enseigne"),
-    t('pates-assiette', 'Assiette de spaghettis à la tomate et au basilic', 35, 0, -3, 'Pâtes à la tomate'),
-    t('escalope-gratinee', 'Escalope gratinée sur une assiette bleue', 51, 3, 8, 'Escalope gratinée'),
-    t('pizza-comptoir', 'Pizza à la roquette posée sur le comptoir de cuisine', 67, 1, -5, 'Au comptoir'),
-    t('pates-table', 'Pâtes sur une table dressée, verres à pied en arrière-plan', 7, 62, 6, 'À table'),
-    t('escalope-salades', 'Salades et plats en préparation au passe', 22, 65, -9, 'Au passe'),
-    t('facade-rue', 'Façade du restaurant de nuit, vue depuis la rue', 38, 61, 4, 'La façade'),
-    t('pizza-fond', 'Plusieurs pizzas alignées sur le comptoir', 54, 64, -6, 'Une fournée'),
-    t('pates-vin', 'Panier de pain et bouteille de vin sur la table', 69, 61, 7, 'Pain et vin'),
-    t('escalope-table', 'Plats alignés sur une table, escalope au premier plan', 82, 4, 3, "L'escalope"),
-    t('facade-bas', 'Façade de nuit, enseigne et vitrines éclairées', 83, 65, -4, 'La soirée'),
+    t('pizza-roquette', 'Pizza à la roquette et aux copeaux de parmesan', 6, 1, -7, 'Pizza roquette'),
+    t('facade-enseigne', 'Enseigne lumineuse Le Ponti 2 Restaurant, de nuit', 28, 4, 5, 'L’enseigne'),
+    t('pates-assiette', 'Assiette de pâtes à la sauce tomate', 50, 0, -3, 'Pâtes à la tomate'),
+    t('escalope-gratinee', 'Escalope gratinée sur une assiette bleue', 72, 3, 8, 'Escalope gratinée'),
+    t('pates-table', 'Pâtes sur une table dressée, verres à pied en arrière-plan', 6, 62, 6, 'À table'),
+    t('facade-rue', 'Façade du restaurant de nuit, vue depuis la rue', 28, 61, 4, 'La façade'),
+    t('pates-vin', 'Panier de pain et bouteille de vin sur la table', 50, 63, 7, 'Pain et vin'),
+    t('escalope-table', 'Plats alignés sur une table, escalope au premier plan', 72, 62, 3, 'L’escalope'),
   ] as Tirage[],
   pictos: [
     { categorie: 'Entrées', picto: 'citron' },
@@ -185,7 +181,7 @@ export const guinguette = {
     aConfirmer: 'Nombre de places et jours d’ouverture de la terrasse : à confirmer auprès du restaurant.',
   },
   manifeste: {
-    titre: ['Simple, généreux', 'et familial'],
+    titre: ['Simple', 'et familial'],
     motItalique: 'familial',
     texte: 'Vingt pizzas, des pâtes, des escalopes de veau et des desserts faits maison : une cuisine italienne de quartier, dans un esprit familial.',
   },
