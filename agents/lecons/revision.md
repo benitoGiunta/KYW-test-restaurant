@@ -46,3 +46,4 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 - 10/11/2026 : une règle d'image `height:100%` ne s'applique pas à un `<img>` dans un `<picture>` inline (astro:assets) : donner `display:block;height:100%` au picture, sinon object-position est sans effet.
 - 10/11/2026 (revision) : une règle de hero ajoutée avant `.tirage img` perd la cascade (même spécificité, ordre) : préfixer par `.hero` ; un loader plafonné ne réduit `is-loaded` mobile bridé que de ~0,7 s, DCL (~3,4 s) domine.
 - 10/11/2026 : mosaïque CSS grid avec éléments sur deux rangées : ne jamais forcer `aspect-ratio` sur l'élément qui couvre plusieurs rangées (la largeur se déduit de la hauteur et déborde) ; vérifier par `getBoundingClientRect` de chaque cellule.
+- 10/11/2026 (revision) : un bouton mailto avec adresse complète déborde en mobile (`.bouton` est nowrap) ; libellé court ou `white-space: normal` et mesurer scrollWidth à 320, 360, 390 sur chaque page, pas seulement l'accueil.
