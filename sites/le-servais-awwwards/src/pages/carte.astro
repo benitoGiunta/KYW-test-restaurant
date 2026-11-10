@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { carte } from '../data/site';
+import type { CleePhoto } from '../lib/photos';
+const photoDe: Record<string, CleePhoto> = { 'petit-dejeuner': 'dejeuner', brasserie: 'spaghetti', cocktails: 'comptoir' };
+const nbPlats = carte.reduce((n, c) => n + c.plats.length, 0);
+---
+<Base page="carte" title="La carte" description="La carte du Servais à Namur : petits-déjeuners du week-end, sharing food, boulets liégeois, burgers, desserts et extraits de la carte du bar.">
+  <div class="ligne">
+    <section class="entete wrap" aria-labelledby="titre-carte">
+      <h1 id="titre-carte" class="display entete__titre">La carte</h1>
+      <p class="entete__chapeau">{nbPlats} lignes de la carte Cuisine et extraits de la carte du bar, dans l’ordre de la journée. Prix en euros, boissons et suppléments compris selon le menu du client.</p>
+      <nav class="sommaire" aria-label="Sections de la carte">
+        <ul>
+          {carte.map((c) => <li><a class="lien-util" href={`#${c.id}`}>{c.titre}</a></li>)}
+        </ul>
+      </nav>
+    </section>
+
+    {carte.map((c) => (
+      <section class="rayon wrap" id={c.id} aria-labelledby={`t-${c.id}`}>
+        <div class="rayon__tete">
+          {c.heure && <p class="rayon__heure display"><span class="station__point" aria-hidden="true"></span>{c.heure}</p>}
+          <h2 id={`t-${c.id}`} class="display rayon__titre">{c.titre}</h2>
+          {c.note && <p class="rayon__note">{c.note}</p>}
+          {photoDe[c.id] && <div class="rayon__photo"><Photo cle={photoDe[c.id]} widths={[480, 800]} sizes="(max-width: 48rem) 80vw, 28vw" /></div>}
+        </div>
+        <ul class="plats">
+          {c.plats.map((p) => (
+            <li class="plat">
+              <div class="plat__texte">
+                <h3 class="plat__nom">{p.nom}</h3>
+                {p.desc && <p class="plat__desc">{p.desc}</p>}
+              </div>
+              <p class="plat__prix">{p.prix}{p.aconfirmer && <span class="plat__conf"> (à confirmer)</span>}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>

@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, produits } from '../data/site';
+---
+<Base page="histoire" title="Histoire" description="Le Servais a ouvert début mai 2025 rue des Fossés Fleuris, au départ du téléphérique de Namur. Une cuisine ouverte non stop et des produits de Boninne et de Spy.">
+  <div class="ligne">
+    <section class="entete wrap" aria-labelledby="titre-histoire">
+      <h1 id="titre-histoire" class="display entete__titre">Histoire</h1>
+      <p class="entete__chapeau">Une adresse récente, un bar qui ne ferme pas sa cuisine entre deux services.</p>
+    </section>
+
+    <section class="recit wrap" aria-label="Le Servais en quelques faits">
+      <div class="recit__photo"><Photo cle="terrasse" widths={[480, 800, 1100]} sizes="(max-width: 48rem) 100vw, 38vw" /></div>
+      <div class="recit__texte">
+        <p>Le Servais a ouvert début mai 2025, rue des Fossés Fleuris, au départ du téléphérique de Namur. Namur Matin, sur la RTBF, le présentait le 15 mai 2025 comme un nouveau bar restaurant de la ville.</p>
+        <p>Le lieu ouvre à 9 h, tous les jours. On y sert des petits-déjeuners, des brunchs, des plats de brasserie et du finger food, avec une cuisine ouverte non stop. Les boulets sont maison, à base de porc et de bœuf, servis sauce liégeoise au sirop de Liège avec des frites à double cuisson.</p>
+        <p>Une partie de la carte vient de producteurs voisins : le fromage de Boninne, les Spycroc et Spycadelle fabriqués à Spy, la bière namuroise Houppe.</p>
+        <p class="recit__source"><a class="lien" href={site.presse.url} rel="noopener">Voir le reportage : {site.presse.titre}</a></p>
+      </div>
+    </section>
+  </div>
+
+  <section class="nuit" aria-labelledby="titre-voisins">
+    <div class="wrap nuit__corps">
+      <h2 id="titre-voisins" class="display titre-section nuit__titre">Les voisins de la carte</h2>
+      <ul class="produits">
+        {produits.map((p) => (
+          <li class="produit">
+            <span class="produit__nom">{p.produit}</span>
+            <span class="produit__maison">{p.maison}</span>
+            <span class="produit__lieu">{p.lieu}</span>
+            <span class="produit__prix">{p.prix}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="nuit__chapeau"><a class="cta cta--nuit" href={u('/carte/')}><span class="cta__txt">Toute la carte</span></a></p>
+    </div>
+  </section>
+</Base>

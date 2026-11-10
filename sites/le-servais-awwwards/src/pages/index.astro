@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, stations, produits, groupes } from '../data/site';
+---
+<Base page="accueil">
+  <div class="ligne">
+    <section class="hero wrap" aria-labelledby="titre-hero">
+      <p class="hero__lieu">Bar brasserie, {site.adresse.commune}</p>
+      <h1 id="titre-hero" class="display hero__titre">Le Servais</h1>
+      <div class="hero__photo">
+        <Photo cle="comptoir" widths={[640, 1000, 1600]} sizes="(max-width: 48rem) 100vw, 66vw" prioritaire />
+      </div>
+      <div class="hero__texte">
+        <p class="hero__accroche">Au départ du téléphérique de Namur, rue des Fossés Fleuris. Ouvert tous les jours dès 9 h, cuisine non stop.</p>
+        <p class="hero__actions">
+          <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+          <a class="cta cta--ligne" href={u('/carte/')}><span class="cta__txt">Voir la carte</span></a>
+        </p>
+        <p class="hero__etat">Tous les jours de 9 h à 1 h, jusqu’à 2 h le vendredi et le samedi.</p>
+      </div>
+    </section>
+
+    <section class="journee wrap" aria-labelledby="titre-journee">
+      <h2 id="titre-journee" class="display titre-section">Une journée, de station en station</h2>
+      <ol class="stations">
+        {stations.map((s, i) => (
+          <li class={`station ${s.photo ? '' : 'station--fin'} ${i % 2 ? 'station--inv' : ''}`}>
+            <p class="station__heure display"><span class="station__point" aria-hidden="true"></span>{s.heure}</p>
+            <div class="station__corps">
+              <h3 class="station__titre">{s.titre}</h3>
+              <p>{s.texte}</p>
+            </div>
+            {s.photo && <div class="station__photo"><Photo cle={s.photo} widths={[480, 800]} sizes="(max-width: 48rem) 80vw, 30vw" /></div>}
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
+
+  <section class="nuit" aria-labelledby="titre-produits">
+    <div class="wrap nuit__corps">
+      <h2 id="titre-produits" class="display titre-section nuit__titre">Les produits d’ici</h2>
+      <p class="nuit__chapeau">Cinq lignes de la carte portent le nom de celui qui produit. Fromage de Boninne, boucherie de Spy, bière namuroise.</p>
+      <ul class="produits">
+        {produits.map((p) => (
+          <li class="produit">
+            <span class="produit__nom">{p.produit}</span>
+            <span class="produit__maison">{p.maison}</span>
+            <span class="produit__lieu">{p.lieu}</span>
+            <span class="produit__prix">{p.prix}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="groupes wrap" aria-labelledby="titre-groupes">
+    <div class="groupes__photo">
+      <Photo cle="verriere" widths={[480, 800, 1200]} sizes="(max-width: 48rem) 100vw, 40vw" />
+      <p class="legende">Photo illustrative, origine à confirmer.</p>
+    </div>
+    <div class="groupes__texte">
+      <h2 id="titre-groupes" class="display titre-section">La Verrière, pour les groupes</h2>
+      <p>La Verrière reçoit {groupes.verriere.assis} convives assis, jusqu’à {groupes.verriere.debout} debout. Le bar entier se privatise à partir de {groupes.verriere.total} personnes.</p>
+      <p><a class="cta" href={u('/reservation/#groupes')}><span class="cta__txt">Groupes et privatisation</span></a></p>
+    </div>
+  </section>
+</Base>

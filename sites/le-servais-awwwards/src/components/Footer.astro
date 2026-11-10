@@ -1,0 +1,30 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+---
+<section class="pied" aria-label="Contact et horaires">
+  <div class="wrap pied__corps">
+    <p class="pied__mot display" data-split="words">Embarquement dès 9 h.</p>
+    <div class="pied__col">
+      <h2 class="pied__titre">Venir</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}<br /><span class="pied__doux">Au départ du téléphérique</span></address>
+      <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Ouvert</h2>
+      <p class="pied__horaire">Tous les jours dès 9 h<br />Fermeture à 1 h, à 2 h le vendredi et le samedi</p>
+      <p><a class="lien" href={u('/reservation/#horaires')}>Détail des horaires</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Contact</h2>
+      <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a><br /><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
+      <ul class="pied__reseaux">
+        {site.reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+    <div class="pied__cta"><a class="cta cta--nuit" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></div>
+    <p class="pied__colophon">{site.credit}. Polices : Big Shoulders Display et Hanken Grotesk (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />
