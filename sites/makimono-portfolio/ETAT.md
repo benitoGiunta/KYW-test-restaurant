@@ -31,3 +31,8 @@
 
 ## Phase 3
 - Contraste des cartes d'horaires corrigé (encre sur rose), 0 axe sur l'accueil ; clics d'en-tête et bas de page vérifiés ; voir RAPPORT.md. Reste : revue, `pnpm index`, push.
+
+## Revue passe 1 (relecteur-site, 10/11/2026)
+- Fait : `REVUE-1.md` écrit (A_CORRIGER : 0 F0, 3 F1, 8 F2, 4 F3). QA-revue1.md et .shots absents : mesures par scripts maison (axe, contraste, grilles, pile, perf) sur 6 pages x 2 largeurs.
+- Reste (réviseur) : F1-1 horaires `repeat(4, 1fr)` (Jeudi coupé 1024-1440), F1-2 `ol data-cercles` 3 colonnes inline sur mobile (index.astro:104, commander.astro:24), F1-3 pile « Ça s'empile » tronquée à 1440x900 ; puis F2 (avis en citations, « par téléphone », note Korean Futo, « dès » sans explication, majuscules du PDF, titres coupés COMP/OSEZ, contraste des étapes éteintes).
+- Pièges : `overflow: clip` sur `.affiche` et `body` masque les débordements de grille (scrollWidth = fenêtre) ; remesurer `getBoundingClientRect().right` des enfants de grille et les éléments de la pile pendant l'épinglage.
