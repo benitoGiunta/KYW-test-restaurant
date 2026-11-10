@@ -34,3 +34,8 @@
 - QA sur preuves : axe, cibles tactiles et survols corrigés (voir RAPPORT.md), build passe, audit 0 FAIL / 1 WARN justifié.
 ## Reste
 - Passe jury indépendante (critique neuf), relecture des contrastes à vérifier, confirmation client des données.
+
+## Relecture passe 1 (relecteur-site)
+- Fait : `REVUE-1.md` écrit (verdict A_CORRIGER : 0 F0, 1 F1 réservation inventée, 2 F2, 7 F3). QA-revue1.md absent, captures de l'accueil réutilisées, reste mesuré par scripts maison.
+- Reste : la révision traite F1-1 (page « Réserver » → « Venir », retirer « table ») puis F2-1, F2-2 (320 px) et F3 ; revue passe 2.
+- Pièges : `data-reveal="clip"` écrase le `clip-path` crête (404) ; la photo « 404 » du sommaire en défilement horizontal n'est pas un débordement.
