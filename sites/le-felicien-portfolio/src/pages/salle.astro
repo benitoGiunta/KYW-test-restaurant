@@ -1,0 +1,33 @@
+---
+// La salle : page claire. Une seule vraie photo du restaurant existe (2020) ; le reste est de l'illustration libre, marquée.
+import Base from '../layouts/Base.astro';
+import { site, photoDe, credits } from '../data/site';
+import { asset, u } from '../lib/url';
+const premiere = photoDe('/photos/salle-bar.webp');
+const galerie = ['/photos/pates-brasserie.webp', '/photos/galerie-ingredients.webp', '/photos/galerie-cafe.webp', '/photos/galerie-framboises.webp', '/photos/galerie-fraises.webp', '/photos/galerie-grains.webp'].map(photoDe);
+---
+<Base title="La salle" theme="clair" preloadImage={{ href: premiere.src }} description={`La brasserie Le Félicien à ${site.adresse.commune} : le bar, la salle et le premier étage pour banquets et réceptions, au Business Village Ecolys.`}>
+  <div class="clair" style="padding-bottom: calc(var(--u) * 6)">
+    <section class="entete wrap">
+      <h1 class="cap">La salle</h1>
+      <p class="lead muted">{site.capacite.texte} Le premier étage accueille banquets et réceptions. Les photos de cette page sont des illustrations libres, en attendant celles de la maison.</p>
+    </section>
+    <figure class="wrap" style="margin: 0 auto; overflow: clip; aspect-ratio: 16 / 9">
+      <img src={asset(premiere.src)} alt={premiere.alt} width={premiere.largeur} height={premiere.hauteur} fetchpriority="high" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block" />
+    </figure>
+    <ul class="mots cap wrap" data-mots aria-label="Brasserie, bar, banquets">
+      {site.motsSalle.map((m) => <li>{m}</li>)}
+    </ul>
+    <section class="wrap section" aria-label="En images">
+      <div class="galerie">
+        {galerie.map((p, i) => (
+          <figure data-reveal="clip" data-delay={String((i % 4) * 0.08)}>
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+      <p class="muted" style="margin-top: var(--u); font-size: var(--t-s)">Photos libres (licence Unsplash) : {credits.map((c) => c.auteur).join(', ')}. La photo de pâtes provient du site actuel du restaurant (2020).</p>
+      <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a></div>
+    </section>
+  </div>
+</Base>

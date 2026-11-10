@@ -1,0 +1,29 @@
+---
+// La carte complète : carte d'automne 2026 réelle, suggestions du midi et bar, déployés l'un sous l'autre avec ancres.
+import Base from '../layouts/Base.astro';
+import Lignes from '../components/Lignes.astro';
+import { site, carteDe } from '../data/site';
+---
+<Base title="La carte" description={`La carte d'automne 2026 du Félicien à ${site.adresse.commune} : entrées, croquettes, viandes, poissons, pâtes, veggie, desserts, suggestions du midi et bar.`}>
+  <section class="entete wrap">
+    <h1 class="cap">La carte</h1>
+    <p class="lead muted">Carte d'automne 2026, la même midi et soir. Du mardi au vendredi midi, les suggestions de la semaine ; au bar, cocktails, bières et softs. Corbeille de pain frais offerte à la demande.</p>
+  </section>
+  <div class="col-carte">
+    <div>
+      <nav aria-label="Rubriques" class="actions" style="margin-top: 0">
+        <a class="btn" href="#carte">La carte</a>
+        <a class="btn" href="#midi">Suggestions du midi</a>
+        <a class="btn" href="#bar">Le bar</a>
+      </nav>
+      <h2 class="cap cat__titre" id="carte" style="margin-top: calc(var(--u) * 5)">La carte <span class="muted" style="font-size: var(--t-s); font-family: var(--f-body); letter-spacing: 0.1em">midi et soir</span></h2>
+      {carteDe('carte').map((c) => <Lignes cat={c} />)}
+      <h2 class="cap cat__titre" id="midi" style="margin-top: calc(var(--u) * 8)">Midi <span class="muted" style="font-size: var(--t-s); font-family: var(--f-body); letter-spacing: 0.1em">mardi au vendredi</span></h2>
+      {carteDe('midi').map((c) => <Lignes cat={c} />)}
+      <h2 class="cap cat__titre" id="bar" style="margin-top: calc(var(--u) * 8)">Le bar</h2>
+      {carteDe('bar').map((c) => <Lignes cat={c} />)}
+    </div>
+  </div>
+  <div class="apercu" data-apercu aria-hidden="true"><img alt="" width="560" height="700" /></div>
+  <div style="height: calc(var(--u) * 6)"></div>
+</Base>

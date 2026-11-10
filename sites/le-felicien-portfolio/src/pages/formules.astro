@@ -1,0 +1,41 @@
+---
+// Formules et événements : suggestions du midi, menu enfant, banquets en prix géants ; premier étage et contacts.
+import Base from '../layouts/Base.astro';
+import { site, telHref } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="Formules et événements" description={`Les formules du Félicien : suggestions de la semaine du mardi au vendredi midi (25 €), menu bambins dès 10 €, banquets et réceptions au premier étage dès 27 €.`}>
+  <section class="entete wrap">
+    <h1 class="cap">Formules</h1>
+    <p class="lead muted">Le midi en semaine, les petits à table, et le premier étage pour les grandes occasions.</p>
+  </section>
+  <section class="wrap" aria-label="Les formules">
+    <div class="formules">
+      {site.menus.map((m, i) => (
+        <article class="formule" data-reveal={i > 0 ? "fade" : undefined} data-delay={i > 0 ? String(i * 0.1) : undefined}>
+          <p class="formule__prix num" data-prix-ecrit>{m.prix}</p>
+          <h2 class="formule__nom">{m.nom}</h2>
+          <p class="formule__quand">{m.quand}</p>
+          <p class="formule__desc">{m.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="section clair" id="evenements" aria-labelledby="evt-titre" style="margin-top: calc(var(--u) * 6)">
+    <div class="wrap acces">
+      <div>
+        <p class="petite-cap">Événements et banquets</p>
+        <h2 class="cap cat__titre" id="evt-titre">Le premier étage</h2>
+        <p style="margin-top: var(--u)">{site.evenements.texte}</p>
+        <p style="margin-top: var(--u)">Menus <span class="cercle num">{site.evenements.prixMenu}</span>.</p>
+        <div class="actions"><a class="btn btn--plein" href={`mailto:${site.emailEvenements}`}>Écrire à {site.emailEvenements}</a></div>
+      </div>
+      <div>
+        <p class="petite-cap">Réserver</p>
+        <h2 class="cap cat__titre">À table</h2>
+        <p style="margin-top: var(--u)">{site.reservation.note}</p>
+        <div class="actions"><a class="btn" href={telHref()}>Appeler le {site.telephone}</a><a class="btn" href={u('/reservation/')}>Réserver</a></div>
+      </div>
+    </div>
+  </section>
+</Base>

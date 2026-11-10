@@ -9,3 +9,4 @@ Un gabarit par ligne, les restaurants qui l ont reçu en variante portfolio (pou
 | forno | dolce-vita-wepion |
 | comptoir | l-essentiel |
 | encre | ferme-blanche-d-asie |
+| ardoise | le-royal, partage, le-felicien |

@@ -1,0 +1,46 @@
+---
+// La maison : histoire de la brasserie (faits du dossier), équipe de direction, presse. Aucun avis cité (aucun extrait citable au dossier).
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { asset, u } from '../lib/url';
+const illu = photoDe('/photos/illustration-carte.webp');
+const date = (iso: string) => new Date(iso + 'T12:00:00Z').toLocaleDateString('fr-BE', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Brussels' });
+---
+<Base title="La maison" preloadImage={{ href: illu.src }} description={`L'histoire du Félicien à ${site.adresse.commune} : une brasserie pour tous au Business Village Ecolys, rouverte le 22 janvier 2026, avec le chef Sébastien Deprost et le maître d'hôtel Sébastien Gilles.`}>
+  <section class="entete wrap">
+    <h1 class="cap">La maison</h1>
+    <p class="lead muted">{site.baseline}</p>
+  </section>
+  <section class="wrap maison">
+    <figure class="maison__media">
+      <img src={asset(illu.src)} alt={illu.alt} width={illu.largeur} height={illu.hauteur} fetchpriority="high" decoding="async" />
+      <figcaption class="muted" style="font-size: var(--t-s); margin-top: 0.5rem">Illustration de la couverture de la carte d'automne 2026.</figcaption>
+    </figure>
+    <div class="prose">
+      {site.histoire.map((p) => <p>{p}</p>)}
+    </div>
+  </section>
+  <section class="section" aria-labelledby="equipe-titre">
+    <div class="wrap">
+      <p class="petite-cap">L'équipe</p>
+      <h2 class="cap cat__titre" id="equipe-titre" data-split="words">En cuisine et en salle</h2>
+      <ul class="equipe" style="margin-top: calc(var(--u) * 3)">
+        {site.equipe.map((m) => (
+          <li><span class="nom">{m.nom}</span><span class="muted">{m.role}</span>{m.rolePlaceholder && <span class="illu">rôle illustratif</span>}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="presse-titre">
+    <div class="wrap">
+      <p class="petite-cap">Presse</p>
+      <h2 class="cap cat__titre" id="presse-titre">Ce qu'on en a écrit</h2>
+      <ul class="equipe" style="margin-top: calc(var(--u) * 2)">
+        {site.presse.map((p) => (
+          <li><a class="link" href={p.url} rel="noopener">{p.titre}</a><span class="muted">{p.media}, {date(p.date)}</span></li>
+        ))}
+      </ul>
+      <div class="actions"><a class="btn" href={u('/carte/')}>La carte</a><a class="btn btn--plein" href={u('/reservation/')}>Réserver</a></div>
+    </div>
+  </section>
+</Base>
