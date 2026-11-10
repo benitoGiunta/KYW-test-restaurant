@@ -1,25 +1,31 @@
-# ETAT.md · Li Micougni · awwwards · construction phase 1
+# ETAT.md · Li Micougni · awwwards · construction phase 2
 
-## Fait
-- Brief, 3 concepts, Concept Card, système (palette, typo, grille, plan), checklist 1 à 18 dans DESIGN.md.
-- Scaffold Astro 5 (engine copié de le-servais-awwwards, sans GL), `tokens.css`, `engine.css`, `site.css`, polices Young Serif et Schibsted Grotesk dans `public/fonts/`.
-- Contenu : `src/data/site.ts`, `src/data/carte.json` (50 lignes réelles du PDF transcrit), `src/lib/photos.ts` (16 photos du client + logo, redimensionnées à 1600 px).
-- Pages : `/`, `/carte/`, `/histoire/`, `/reservation/`, 404 ; composant `Demi.astro` (la coupe en deux moitiés), Header, Footer (pied composé + KywFooter).
-- Build OK (`scripts/q.sh build pnpm build:site sites/li-micougni-awwwards`), `dist/li-micougni/awwwards/` commité.
-- Mesures Playwright : h1, CTA et média du hero à 1440×900, 1280×720, 1024×768, 390×844 ; `scrollWidth` = largeur sur les 5 pages à 390 px.
+## Fait (phase 1)
+- Brief, concepts, Concept Card « Les demi-fous », système, plan, checklist 1 à 18 (DESIGN.md).
+- Scaffold Astro 5, engine sans GL, 5 pages, `Demi.astro`, Header, Footer + KywFooter, données réelles, photos du client.
 
-## Reste (phases 2 et 3)
-- Phase 2 : recollement scrub des moitiés (`--ecart` vers 0, `src/motion/`), repos (respiration de la faille), survols décrits dans DESIGN.md, reveals, transition de page déjà posée (`motion/setup.ts`). `data-reveal` à ne pas poser sur un bloc avec lien.
-- Phase 3 : QA navigateur (captures, axe, clavier, reduced motion, LCP), OG composée (`public/og.png` est provisoire : logo + grill), RAPPORT.md final, sloplint, vérifier la coupe à 55 % sur chaque titre (descendantes de « g » et « p » coupées ou non).
-- À contrôler : les images lazy sous le pli, le contraste du texte sur la photo si un texte y est posé (aucun pour l'instant).
+## Fait (phase 2)
+- Pilote `src/motion/recoller.ts` : `--ecart` par titre (avancée vers la lecture + intro du h1 + souffle de repos + pointeur), sur `gsap.ticker`, en pause hors écran, absent en mouvement réduit. Entrée de repos `src/motion/idle.ts`.
+- Ouverture du h1 posée en CSS sous `html.motion` (0,39 em), recollée à 0,07 em dans l'intro (1,1 s), puis à 0 au défilement ; nom du pied recollé en fin de page (Demi, `aria-hidden`).
+- Transition : rideau en deux moitiés (coupe à 55 %) qui se rejoignent puis se lèvent (`setup.ts`, `Base.astro` : `.curtain__h`, `.curtain__b`).
+- Survols : 3 traitements (remplissage en deux moitiés, trait en deux moitiés, titre-lien qui se recolle), sous `(hover: hover)` + `:focus-visible`, `:active` ; survol du lien KYW.
+- Menu mobile : `<dialog id="menu">` orange plein écran, bouton « Menu » `aria-expanded`, Tab bouclé, Échap, focus rendu, fermé au départ d'une transition ; en-tête mobile « Réserver » + « Menu » (44 px).
+- Reveals : `clip` sur photos hors premier écran (accueil, histoire `hist__b`, carte), `up` sur les lignes de plats de l'accueil, `data-split="lines"` sur `ardoises__intro` et `enonce__note`.
+- `#main, .pied { overflow-x: clip }` (la moitié basse décalée ne crée aucun défilement horizontal).
+- Mesures Playwright (script hors dépôt) : aucune erreur console bureau ni téléphone ; `scrollWidth` 390 sur les 5 pages ; menu 390×844, 0 sortie de focus sur 14 Tab ; réduit sans `.motion` ni Lenis, 0 bloc caché ; h1 0,670 em au chargement, 0,077 à 2,2 s, 0,0055 à scrollY 720.
+- DESIGN.md : § Mouvement réécrit, checklist 19 à 47 avec preuves. Build OK, `dist/li-micougni/awwwards/` à jour.
+
+## Reste (phase 3)
+- QA complète par l'agent captures : lire `hover.noHoverChange`, `desktop.idleMotion`, `settledMs` (le souffle de ±0,008 em pourrait le rendre null : si c'est le cas, couper le souffle du h1 seulement, pas celui des autres titres), `reduced.*`, contraste des CTA survolés, axe, clavier.
+- Juger le premier frame du hero (moitiés basses décalées de 0,39 em) ; si le jury le trouve illisible, baisser `OUVERTURE` (`recoller.ts`) et `html.motion h1` (`site.css`) ensemble.
+- OG composée (`public/og.png` provisoire), RAPPORT.md final, sloplint.
 
 ## Décisions
-- Concept A « Les demi-fous » ; pas de loader, pas de GL ; palette ardoise + orange du logo.
-- Horaires : affichés avec « à confirmer », aucun JSON-LD d'horaires ; adresse d'exploitation Rue des Brasseurs 110 ; aucune personne nommée (administrateurs de la BCE non cités).
-- Réservation : tel:, mailto: (formulaire `action="mailto:"`), lien vers le formulaire du client ; rien n'est envoyé par le site.
-- `Demi.astro` coupe chaque mot séparément (retour à la ligne naturel) ; la moitié basse est `aria-hidden`.
-- Aucun contenu `placeholder: true` : toute la carte, les coordonnées et les réseaux viennent de donnees.json.
+- Ni loader, ni GL, ni curseur suiveur, ni effet magnétique (Concept Card).
+- Plats et photos sans survol (ce ne sont pas des liens) : remplacé par le titre-lien qui se recolle.
+- Menu à `<dialog>` plutôt qu'un overlay maison : Échap et inertie du fond natifs, boucle Tab ajoutée (leçon le-servais).
 
 ## Pièges
-- Une règle `@media` posée avant la règle de base du même sélecteur ne s'applique pas (en-tête mobile) : placer les adaptations téléphone en fin de `site.css`.
-- Le serveur de mesure (python http.server, port 4400) est tué en fin de phase.
+- `--ecart` est en `em` : pas de `@property` possible (une valeur initiale en em est refusée) ; le survol passe par un multiplicateur `--k` (0 = recollé) avec `transition: translate` sur `.demi__b`, jamais sur les titres pilotés par le ticker.
+- Une variable posée en ligne par GSAP (`--ecart` des liens du menu) bat la feuille : le survol agit sur `--k`, pas sur `--ecart`.
+- Serveur de mesure : `python3 -m http.server 4400 --directory dist`, PID noté puis `kill`.

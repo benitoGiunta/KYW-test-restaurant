@@ -13,7 +13,7 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 400; }
 /* Signature : deux moitiés. --ecart = décalage (0 = recollé). */
 .demi { position: relative; display: inline-block; vertical-align: top; white-space: nowrap; --coupe: 55%; }
 .demi__h { display: block; clip-path: inset(-0.15em -0.3em calc(100% - var(--coupe) + 0.012em) -0.3em); }
-.demi__b { position: absolute; inset: 0; display: block; translate: var(--ecart) 0;
+.demi__b { position: absolute; inset: 0; display: block; translate: calc(var(--ecart) * var(--k, 1)) 0;
   clip-path: inset(calc(var(--coupe) + 0.012em) -0.3em -0.2em -0.3em); }
 .mega { font-size: min(calc((100vw - 2 * var(--gutter)) / 5.9), 34svh); line-height: 0.95; letter-spacing: -0.035em; margin-left: 0; text-wrap: nowrap; }
 @media (max-width: 47.99rem) { .mega { font-size: calc((100vw - 2 * var(--gutter)) / 4.75); line-height: 0.98; text-wrap: wrap; white-space: normal; } }
@@ -30,26 +30,18 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 400; }
 .entete__in { display: flex; align-items: center; justify-content: space-between; gap: var(--serre); max-width: 120rem; margin-inline: auto; padding: 0.35rem var(--gutter); min-height: 3.75rem; }
 .entete__marque { font-family: var(--f-display); font-size: 1.375rem; letter-spacing: -0.02em; padding-block: 0.6rem; white-space: nowrap; }
 .entete__nav { display: flex; align-items: center; gap: clamp(0.5rem, 3vw, 2rem); }
+.entete__mobile { display: none; align-items: center; gap: 0.5rem; }
 .nav-lien { font-size: var(--t-s); font-weight: 600; padding: 0.7rem 0.15rem; border-bottom: 2px solid transparent; transition: border-color 0.3s, color 0.3s; }
-.nav-lien:hover { border-bottom-color: var(--c-accent); color: var(--c-accent); }
 .nav-lien[aria-current='page'] { border-bottom-color: var(--c-fg); }
-.entete__nav .nav-lien:last-child { background: var(--c-accent); color: var(--c-orange-ink); padding: 0.7rem 1rem; border: 0; }
-.entete__nav .nav-lien:last-child:hover { background: var(--c-fg); color: var(--c-bg); }
 
 /* Boutons */
 .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 3.25rem; padding: 0.9rem 1.7rem; background: var(--c-accent); color: var(--c-orange-ink); font-weight: 700; font-size: var(--t-body); border: 2px solid var(--c-accent); transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
-.cta:hover { background: var(--c-fg); border-color: var(--c-fg); color: var(--c-bg); }
 .cta--ghost { background: transparent; color: var(--c-fg); border-color: var(--c-fg); }
-.cta--ghost:hover { background: var(--c-fg); color: var(--c-bg); }
 .orange .cta { background: var(--c-orange-ink); border-color: var(--c-orange-ink); color: var(--c-orange); }
-.orange .cta:hover { background: transparent; color: var(--c-orange-ink); }
 .orange .cta--ghost { background: transparent; color: var(--c-orange-ink); }
-.orange .cta--ghost:hover { background: var(--c-orange-ink); color: var(--c-orange); }
 .cta-row { display: flex; flex-wrap: wrap; gap: var(--u); }
 .lien { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.25em; padding-block: 0.3rem; display: inline-block; transition: color 0.3s; }
-.lien:hover { color: var(--c-accent); }
 .lien-util { padding-block: 0.5rem; display: inline-block; color: var(--c-muted); transition: color 0.3s; }
-.lien-util:hover { color: var(--c-fg); }
 .orange :focus-visible, .pied :focus-visible { outline-color: var(--c-accent); }
 .orange :focus-visible { outline-color: var(--c-orange-ink); }
 
@@ -169,7 +161,6 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 400; }
 .carte-index ul { display: flex; gap: 0.25rem var(--serre); overflow-x: auto; scroll-snap-type: x proximity; padding: 0.25rem var(--gutter); max-width: 120rem; margin-inline: auto; scrollbar-width: none; scroll-padding-inline: var(--gutter); }
 .carte-index li { scroll-snap-align: start; flex: none; }
 .carte-index a { display: inline-block; padding: 0.8rem 0.2rem; font-size: var(--t-s); font-weight: 600; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.3s, border-color 0.3s; }
-.carte-index a:hover { color: var(--c-accent); border-bottom-color: var(--c-accent); }
 .rubrique { padding-block: var(--normal); border-bottom: 1px solid var(--c-line); row-gap: var(--serre); scroll-margin-top: 6rem; }
 .rubrique__tete { grid-column: 1 / -1; align-self: start; }
 .rubrique__sous { display: block; margin-top: 0.6rem; font-family: var(--f-body); font-size: var(--t-s); color: var(--c-muted); letter-spacing: 0; }
@@ -245,11 +236,73 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: 400; }
 .perdu__txt { margin-top: var(--normal); max-width: 34rem; display: grid; gap: var(--serre); }
 .perdu__txt p { font-size: var(--t-m); font-family: var(--f-display); line-height: 1.2; }
 
+/* Phase 2 · mouvement. Le pilote (src/motion/recoller.ts) écrit --ecart sur chaque titre ; sous html.motion le h1
+   s’ouvre plus décalé (0,39 em) et se recolle à 0,07 em pendant l'intro. Le pied est recollé sans JS. */
+html.motion h1 { --ecart: 0.39em; }
+.pied__nom { --ecart: 0em; }
+#main, .pied { overflow-x: clip; }
+.curtain__h { bottom: auto; height: calc(55% + 1px); }
+.curtain__b { top: auto; height: 45%; }
+
+/* Interactions : trois traitements, tous « recoller ».
+   1. Remplissage en deux moitiés qui se rejoignent (CTA, boutons) : haute depuis la gauche, basse depuis la droite.
+   2. Trait en deux moitiés qui se rejoignent au centre (nav, index de la carte, liens utilitaires, liens texte, téléphones).
+   3. Titre-lien coupé qui se recolle (marque de l'en-tête, liens du menu). */
+.cta { position: relative; isolation: isolate; overflow: hidden; --remplir: var(--c-fg); --sur: var(--c-bg); transition: color 0.35s cubic-bezier(0.215, 0.61, 0.355, 1), border-color 0.35s; }
+.cta::before, .cta::after { content: ''; position: absolute; left: -1px; right: -1px; z-index: -1; background: var(--remplir); transition: translate 0.45s cubic-bezier(0.215, 0.61, 0.355, 1); }
+.cta::before { top: -1px; height: calc(55% + 1px); translate: -101% 0; }
+.cta::after { bottom: -1px; height: calc(45% + 2px); translate: 101% 0; transition-delay: 0.04s; }
+.cta--ghost { --remplir: var(--c-fg); --sur: var(--c-bg); }
+.orange .cta { --remplir: var(--c-orange); --sur: var(--c-orange-ink); }
+.orange .cta--ghost { --remplir: var(--c-orange-ink); --sur: var(--c-orange); }
+.cta--petit { min-height: 2.75rem; padding: 0.5rem 1rem; font-size: var(--t-s); }
+.cta:focus-visible { color: var(--sur); border-color: var(--remplir); }
+.cta:focus-visible::before, .cta:focus-visible::after { translate: 0 0; }
+.cta:active { scale: 0.97; }
+.cta[aria-current='page'] { box-shadow: inset 0 -3px 0 var(--c-bg); }
+
+.nav-lien, .carte-index a, .lien-util, .lien, .resa__tel, .pied__tel {
+  --trait: 2px;
+  background-image: linear-gradient(var(--c-accent), var(--c-accent)), linear-gradient(var(--c-accent), var(--c-accent));
+  background-repeat: no-repeat; background-position: left bottom, right bottom; background-size: 0% var(--trait), 0% var(--trait);
+  transition: background-size 0.4s cubic-bezier(0.215, 0.61, 0.355, 1), color 0.3s, text-decoration-color 0.3s;
+}
+.resa__tel { --trait: 0.12em; }
+.resa__tel, .pied__tel { background-image: linear-gradient(currentColor, currentColor), linear-gradient(currentColor, currentColor); }
+.nav-lien:focus-visible, .carte-index a:focus-visible, .lien-util:focus-visible, .lien:focus-visible, .resa__tel:focus-visible, .pied__tel:focus-visible { background-size: 50.5% var(--trait), 50.5% var(--trait); color: var(--c-accent); text-decoration-color: transparent; }
+.resa__tel:focus-visible, .pied__tel:focus-visible { color: inherit; }
+.nav-lien:active, .carte-index a:active, .lien-util:active, .lien:active { opacity: 0.7; }
+
+.entete__marque .demi__b { transition: translate 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+.entete__marque:focus-visible, .menu__lien:focus-visible { --k: 0; }
+.entete__marque[aria-current='page'] { --k: 1; }
+
+@media (hover: hover) {
+  .cta:hover { color: var(--sur); border-color: var(--remplir); }
+  .cta:hover::before, .cta:hover::after { translate: 0 0; }
+  .nav-lien:hover, .carte-index a:hover, .lien-util:hover, .lien:hover, .resa__tel:hover, .pied__tel:hover { background-size: 50.5% var(--trait), 50.5% var(--trait); color: var(--c-accent); text-decoration-color: transparent; }
+  .resa__tel:hover, .pied__tel:hover { color: inherit; }
+  .entete__marque:hover, .menu__lien:hover { --k: 0; }
+}
+/* Pied KYW : retour au survol sans toucher au paquet */
+.kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
+
+/* Menu plein écran (téléphone) : un <dialog> orange, liens coupés qui se recollent à l'ouverture */
+.menu { position: fixed; inset: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; overflow-y: auto; }
+.menu::backdrop { background: transparent; }
+.menu__in { min-height: 100%; display: grid; grid-template-rows: auto 1fr auto; gap: var(--normal); padding: 0.5rem var(--gutter) var(--normal); }
+.menu__fermer { justify-self: end; }
+.menu__liste { display: grid; gap: calc(var(--u) * 1.5); align-content: center; }
+.menu__lien { display: inline-block; font-family: var(--f-display); font-size: clamp(2.75rem, 15vw, 5rem); line-height: 1.05; letter-spacing: -0.03em; padding-block: 0.08em; }
+.menu__lien[aria-current='page'] { color: var(--c-orange-ink-soft); }
+.menu__pied { display: grid; gap: var(--u); font-size: var(--t-s); justify-items: start; }
+
 /* Téléphone : en-tête resserré (déclaré en dernier pour passer après les règles de base) */
 @media (max-width: 47.99rem) {
   .entete__marque { font-size: 1.05rem; }
   .entete__in { gap: 0.5rem; }
   .entete__nav { gap: 0.2rem; }
   .nav-lien { font-size: var(--t-xs); }
-  .entete__nav .nav-lien:last-child { padding: 0.7rem 0.7rem; margin-left: 0.2rem; }
+  .entete__nav { display: none; }
+  .entete__mobile { display: flex; }
 }

@@ -1,16 +1,36 @@
 ---
 import { u } from '../lib/url';
+import { restaurant as r } from '../data/site';
+import Demi from './Demi.astro';
 interface Props { page?: string }
 const { page = '' } = Astro.props;
 const lien = (cle: string) => (page === cle ? 'page' : undefined);
 ---
 <header class="entete">
   <div class="entete__in">
-    <a class="entete__marque" href={u('/')} aria-label="Li Micougni, accueil">Li Micougni</a>
+    <a class="entete__marque" href={u('/')} aria-label="Li Micougni, accueil" aria-current={lien('accueil')}><Demi t="Li Micougni" /></a>
     <nav class="entete__nav" aria-label="Navigation principale">
       <a class="nav-lien" href={u('/carte/')} aria-current={lien('carte')}>Carte</a>
       <a class="nav-lien" href={u('/histoire/')} aria-current={lien('histoire')}>Histoire</a>
-      <a class="nav-lien" href={u('/reservation/')} aria-current={lien('reservation')}>Réserver</a>
+      <a class="cta cta--petit" href={u('/reservation/')} aria-current={lien('reservation')}>Réserver</a>
     </nav>
+    <div class="entete__mobile">
+      <a class="cta cta--petit" href={u('/reservation/')}>Réserver</a>
+      <button class="entete__menu cta cta--ghost cta--petit" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    </div>
   </div>
 </header>
+<dialog id="menu" class="menu orange" aria-label="Menu">
+  <div class="menu__in">
+    <button class="menu__fermer cta cta--petit" type="button">Fermer</button>
+    <nav aria-label="Navigation du menu">
+      <ul class="menu__liste">
+        <li><a class="menu__lien" href={u('/')} aria-current={lien('accueil')}><Demi t="Accueil" /></a></li>
+        <li><a class="menu__lien" href={u('/carte/')} aria-current={lien('carte')}><Demi t="La carte" /></a></li>
+        <li><a class="menu__lien" href={u('/histoire/')} aria-current={lien('histoire')}><Demi t="Histoire" /></a></li>
+        <li><a class="menu__lien" href={u('/reservation/')} aria-current={lien('reservation')}><Demi t="Réserver" /></a></li>
+      </ul>
+    </nav>
+    <p class="menu__pied"><a class="cta" href={`tel:${r.telephone}`}>Appeler le {r.telephoneLisible}</a><span>{r.adresse.rue} {r.adresse.numero}, {r.adresse.cp} {r.adresse.commune}</span></p>
+  </div>
+</dialog>
