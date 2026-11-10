@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Reserve from '../components/Reserve.astro';
+import { galerie } from '../data/site';
+---
+<Base page="galerie" title="Photos du Le 54 : la salle et les assiettes, à Dave" description="Les photographies du Le 54 : la salle, les assiettes et le dressage, à Dave.">
+  <header class="pagehead container">
+    <h1>Photos</h1>
+    <p class="lead">La salle, les assiettes, le dressage.</p>
+  </header>
+  <section class="gallery container" aria-label="Galerie">
+    {galerie.map((k, i) => <Fig k={k} class="gallery__i" sizes="(min-width: 60rem) 33vw, (min-width: 36rem) 50vw, 100vw" label eager={i < 2} />)}
+  </section>
+  <Reserve />
+</Base>

@@ -1,0 +1,30 @@
+---
+import { resto, nav } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<footer class="foot">
+  <div class="container">
+    <p class="foot__mast" aria-hidden="true">Le 54<span> Dave</span></p>
+    <div class="foot__cols">
+      <div>
+        <h2 class="foot__h">Adresse</h2>
+        <p>{resto.rue}<br />{resto.ville}</p>
+        <p><a href={resto.carte} rel="noopener">Voir sur la carte</a></p>
+      </div>
+      <div>
+        <h2 class="foot__h">Contact</h2>
+        <p><a class="num" href={resto.tel1.href}>{resto.tel1.affiche}</a><br /><a class="num" href={resto.tel2.href}>{resto.tel2.affiche}</a><br /><a href={`mailto:${resto.email}`}>{resto.email}</a></p>
+      </div>
+      <div>
+        <h2 class="foot__h">Ouverture</h2>
+        <p>Fermé le mardi, le mercredi et le samedi midi.<br /><a href={`${base}reservations`}>Tous les horaires</a></p>
+      </div>
+      <div>
+        <h2 class="foot__h">Suivre</h2>
+        <p><a href={resto.facebook} rel="noopener">Facebook</a><br /><a href={resto.instagram} rel="noopener">Instagram</a></p>
+        <p><a href={`${base}galerie`}>Photos</a><br /><a href={`${base}lacarte`}>Menus</a></p>
+      </div>
+    </div>
+    <p class="foot__credits" data-credits>Photographies : Le 54. Site d’origine : <a href={resto.site} rel="noopener">le54dave.be</a>.</p>
+  </div>
+</footer>

@@ -1,0 +1,16 @@
+---
+import photos from '../data/photos.json';
+import { legendes } from '../data/site';
+interface Props { k: string; sizes?: string; eager?: boolean; ratio?: string; label?: boolean; class?: string }
+const { k, sizes = '100vw', eager = false, ratio, label = false, class: cls = '' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const ss = (photos as any)[k].sizes as { w: number; h: number; f: string }[];
+const big = ss[ss.length - 1];
+const lg = legendes[k];
+---
+<div class:list={['print', cls]}>
+  <figure class="fig" data-slot={k} data-alt={lg.alt} style={`aspect-ratio:${ratio ?? `${big.w} / ${big.h}`}`}>
+    <img src={`${base}photos/${big.f}`} srcset={ss.map((s) => `${base}photos/${s.f} ${s.w}w`).join(', ')} sizes={sizes} width={big.w} height={big.h} alt={lg.alt} loading={eager ? 'eager' : 'lazy'} decoding={eager ? 'sync' : 'async'} fetchpriority={eager ? 'high' : undefined} />
+  </figure>
+  {label && <p class="wall">{lg.label}</p>}
+</div>

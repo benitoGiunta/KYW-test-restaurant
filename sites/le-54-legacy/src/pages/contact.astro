@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import { resto, pratique } from '../data/site';
+---
+<Base page="contact" title="Contact du Le 54, Rue de Longeau 54 à Dave" description="Adresse, téléphones, e-mail et formulaire de contact du Le 54, Rue de Longeau 54, 5100 Dave (Namur).">
+  <header class="pagehead container">
+    <h1>Contact</h1>
+    <p class="lead">{resto.rue}, {resto.ville}</p>
+  </header>
+  <section class="contact container" aria-label="Coordonnées et formulaire">
+    <div class="contact__info">
+      <h2 class="contact__h">Coordonnées</h2>
+      <p>{resto.nom}<br />{resto.rue}<br />{resto.ville}<br /><span class="num">{resto.bce}</span></p>
+      <p><a class="num" href={resto.tel1.href}>{resto.tel1.affiche}</a><br /><a class="num" href={resto.tel2.href}>{resto.tel2.affiche}</a><br /><a href={`mailto:${resto.email}`}>{resto.email}</a></p>
+      <p><a class="link" href={resto.carte} rel="noopener">Voir sur la carte</a></p>
+      <ul class="contact__pr">{pratique.map((p) => <li>{p}</li>)}</ul>
+    </div>
+    <form class="form" method="post" action="" data-endpoint="" novalidate>
+      <h2 class="contact__h">Écrire au restaurant</h2>
+      <label class="field"><span>Nom et prénom <abbr title="obligatoire">*</abbr></span><input name="nom" type="text" autocomplete="name" required /></label>
+      <label class="field"><span>Email <abbr title="obligatoire">*</abbr></span><input name="email" type="email" autocomplete="email" required /></label>
+      <label class="field"><span>Téléphone</span><input name="telephone" type="tel" autocomplete="tel" /></label>
+      <label class="field"><span>Message <abbr title="obligatoire">*</abbr></span><textarea name="message" rows="5" required></textarea></label>
+      <p class="form__row"><button class="btn" type="submit">Envoyer</button></p>
+      <p class="form__status" role="status" data-status></p>
+    </form>
+  </section>
+  <script is:inline>
+    (function () {
+      var f = document.querySelector('.form[data-endpoint]');
+      if (!f) return;
+      f.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var s = f.querySelector('[data-status]');
+        if (!f.checkValidity()) { s.textContent = 'Merci de remplir les champs marqués d’un astérisque.'; f.reportValidity(); return; }
+        s.textContent = 'Maquette : l’envoi n’est pas encore branché. Le restaurant se joint au +32 81 58 04 40.';
+      });
+    })();
+  </script>
+</Base>

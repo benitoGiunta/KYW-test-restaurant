@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="reservations" title="Réserver une table au Le 54, à Dave" description="Réservez au Le 54 à Dave : deux numéros de téléphone, les horaires du midi et du soir, dernières commandes à 13:00 et 20:00.">
+  <header class="counter container">
+    <div>
+      <h1>Réserver une table</h1>
+      <p class="lead">Réservation souhaitée. Allergies et intolérances : à signaler dès la réservation.</p>
+    </div>
+    <div class="counter__acts">
+      <a class="btn btn--big num" href={resto.tel1.href}>{resto.tel1.affiche}</a>
+      <a class="btn btn--big num" href={resto.tel2.href}>{resto.tel2.affiche}</a>
+      <a class="link" href={`${base}contact`}>Écrire au restaurant</a>
+    </div>
+  </header>
+
+  <section class="band band--2" aria-labelledby="hr">
+    <div class="container visit">
+      <div class="visit__head">
+        <h2 id="hr">Horaires</h2>
+        <p class="lead">{resto.rue}<br />{resto.ville}</p>
+        <p><a class="link" href={resto.carte} rel="noopener">Voir sur la carte</a></p>
+      </div>
+      <Horaires />
+    </div>
+  </section>
+</Base>
