@@ -10,6 +10,7 @@ import { u, asset } from '../lib/url';
 const icones = ['tasse', 'assiette', 'couverts', 'verre', 'cloche', 'lune'];
 const m = Object.fromEntries(moments.map((x) => [x.id, x]));
 const matin = m['m-9h'], midi = m['m-11h30'], partage = m['m-16h'], apero = m['m-18h'], soir = m['m-20h'], nuit = m['m-23h'];
+const photoAstre = photoDe('/photos/bar-detail.webp');
 const photoMatin = photoDe(matin.photo!), photoPartage = photoDe(partage.photo!), photoApero = photoDe(apero.photo!), photoSoir = photoDe(soir.photo!);
 const medaillons = [
   { photo: photoDe('/photos/spaghetti-carre.webp'), titre: 'Spaghetti bolognaise', texte: 'Dans l’assiette « Le Servais »' },
@@ -19,6 +20,10 @@ const medaillons = [
 <Base theme="aube">
   <div data-accueil>
     <section class="hero" id="accueil" data-ciel="auto" aria-labelledby="titre">
+      <figure class="hero__astre" data-astre>
+        <span class="hero__orbite" data-astre-orbite aria-hidden="true"><span class="hero__soleil"></span></span>
+        <span class="hero__photo"><img src={asset(photoAstre.src)} alt={photoAstre.alt} width={photoAstre.largeur} height={photoAstre.hauteur} fetchpriority="high" decoding="async" data-astre-img /></span>
+      </figure>
       <div class="wrap">
         <div class="hero__haut">
           <Badge />

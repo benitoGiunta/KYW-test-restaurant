@@ -8,11 +8,21 @@
 - 12 recadrages WebP dans public/photos (script du scratchpad `servais-photos.mjs`), favicon, OG.
 - Build OK : `pnpm build:site sites/le-servais-portfolio` écrit `dist/le-servais/portfolio/` (7 pages). Mention « Maquette KYW… » et noindex présents.
 
-## Reste (phases 2 et 3)
-- **À supprimer à la main (refusé par le garde-fou)** : les anciennes photos des Potes au Feu encore dans `sites/le-servais-portfolio/public/photos/` (bar-cocktails, chef-*, cuisine-*, dessert-*, equipe-trio, plat-*, portrait-*, salle-*, service-*) ainsi que `logo.png` et `logo-pictogramme.svg` : elles sont servies dans `dist/` sans être référencées. Garder uniquement : bar-comptoir, bar-detail, terrasse, terrasse-large, spaghetti, spaghetti-carre, biere-main, petit-dejeuner, tasse-turquoise, jus-croissant, veranda, veranda-carre (.webp). Puis rebuild.
-- Phase 2 : QA navigateur (shoot, audit, clics réels de l'en-tête, bas de page en 1440), animations à vérifier avec le nouveau contenu (médaillons à 2 éléments, `.medaillons` grille inline, hero à 2 mots « Le / Servais » sur `t-mega`, nav de 5 liens en mobile, `photo--4x5` sur le comptoir paysage à 20h : recadrage), état ouvert testé par `page.clock.install`, contrastes de la nuit turquoise, voile du ciel `nuit` dans `journee.ts` (rgba changé), alt, `og.jpg`.
-- Option : police condensée majuscule (identité du site actuel), photos libres (cocktail, bar) marquées placeholder si le dossier visuel paraît répétitif.
-- Phase 3 : sloplint, RAPPORT.md, `pnpm index`, `gabarits/UTILISATION.md` (ajouter `journee | le-servais` : gabarits/ protégé, non fait en phase 1), commit de `dist/le-servais/`.
+## Phase 2 (construction-2), faite
+- Photos des Potes au Feu, logo.png et logo-pictogramme.svg supprimés de `public/photos/` (12 WebP restent, tous référencés) ; rebuild, dist 2,8 Mo.
+- Signature ajoutée : « astre » du hero (≥ 1200 px) : photo du bar en disque (`bar-detail`, `fetchpriority=high`, sans reveal) entourée d'une orbite où un petit soleil se place à l'heure réelle (9h gauche, 23h droite, `--angle` tweené 1,6 s, replacé chaque minute ; avant 9h et après 23h il reste aux extrémités) ; zoom de la photo au défilement (scrub, `--zoom`). Code : `astre()` dans `src/motion/journee.ts`, CSS dans `base.css` (bloc « Astre du hero »), markup dans `index.astro`. Masqué sous 1200 px (recouvrement avec l'accroche à 1100).
+- Motion existante du gabarit vérifiée avec le contenu réel : médaillons à 2 éléments, chips, frise, ciel, loader : OK. Reduced motion : pas de classe `motion`, aucun texte caché, loader absent, 0 erreur.
+- Mesures (1440, 1280, 1024, 390, 360, 320 ; 7 pages) : aucun débordement horizontal, 0 erreur console, 0 image cassée, 0 cible < 24 px. Le signalement « figure à r=400 » à 390 est le reveal `scale` en cours (clip-path), sans effet.
+- Clics réels de l'en-tête à 1440 (après loader) : les 5 liens changent d'URL, `elementFromPoint` renvoie le lien. Bas de page (accueil, carte, réservation) : mention « Maquette KYW… » et pied KYW visibles, un seul logo. Clavier : focus visible sur les 8 premières tabulations.
+- État ouvert testé par `page.clock` + Europe/Brussels : mer 10h ouvert jusqu'à 01:00 ; ven 0h30 ouvert jusqu'à 01:00 ; sam 1h30 ouvert jusqu'à 02:00 ; sam 3h et mer 8h « ouvre à 09:00 » ; jeu 23h30 ouvert. Invitation « moment présent » cachée hors 9h-23h.
+- audit.mjs accueil et groupes : 0 FAIL (WARN restants : faux positifs 404/robots/sitemap). Phrase répétée sur la carte corrigée (note du sharing).
+- Pas de shoot complet (agent « captures »). Planches de contrôle dans `.shots/servais2/` (non commité).
+
+## Reste (phase 3)
+- Sur mobile, le hero ne montre pas l'astre mais l'image est quand même téléchargée (display: none) : 149 Ko, option `<picture>` à revoir si le LCP mobile pose problème.
+- Option non faite : police condensée majuscule du site actuel ; photos libres (cocktail).
+- Lire `QA-construction-2.md` de l'agent captures (contrastes de la nuit turquoise, médaillons, `photo--4x5` du comptoir à 20h).
+- sloplint, RAPPORT.md, `pnpm index`, `gabarits/UTILISATION.md` (ajouter `journee | le-servais`, gabarits/ protégé), commit de `dist/le-servais/portfolio/`.
 
 ## Décisions et hypothèses
 - Journée plutôt que Nocturne (listé dans sa fiche) : photos de jour majoritaires, horaires 9h à 1h.

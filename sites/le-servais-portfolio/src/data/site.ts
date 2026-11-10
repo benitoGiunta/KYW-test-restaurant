@@ -216,7 +216,7 @@ export const rubriques: { id: string; titre: string; note?: string; lignes: Lign
     ],
   },
   {
-    id: 'sharing', titre: 'À partager', note: 'De 11h30 à 22h, jusqu’à minuit le vendredi et le samedi.',
+    id: 'sharing', titre: 'À partager', note: 'Du sharing food toute la journée.',
     lignes: [
       l('Olives', '4,50 €'), l('Boulette froide', '5 €', 'porc et bœuf maison, moutarde'),
       l('Fromage de Boninne', '6,50 €', 'produit à Boninne par Marie-Cécile Crevits'),

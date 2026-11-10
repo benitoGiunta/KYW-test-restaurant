@@ -79,6 +79,33 @@ export function initJournee() {
   onPage(medaillons);
   onPage(horairesFleches);
   onPage(invitation);
+  onPage(astre);
+}
+
+/** Astre du hero : le petit soleil de l'orbite se place à l'heure réelle (9h à gauche, 23h à droite, par le haut) ;
+ *  il y monte en 1,6 s au premier rendu sous motion, se replace chaque minute, et la photo dérive à peine au défilement. */
+function astre() {
+  const el = document.querySelector<HTMLElement>('[data-astre]');
+  const orbite = el?.querySelector<HTMLElement>('[data-astre-orbite]');
+  if (!el || !orbite) return;
+  const cible = () => {
+    const d = new Date();
+    const h = Math.min(23, Math.max(9, d.getHours() + d.getMinutes() / 60));
+    return -135 + ((h - 9) / 14) * 270;
+  };
+  const poser = (animer: boolean) => {
+    const a = cible();
+    if (animer && !prefersReducedMotion()) gsap.fromTo(orbite, { '--angle': '-135deg' }, { '--angle': `${a}deg`, duration: 1.6, ease: ease.out, delay: 0.5 });
+    else gsap.set(orbite, { '--angle': `${a}deg` });
+  };
+  poser(true);
+  const id = setInterval(() => poser(false), 60000);
+  let st: ScrollTrigger | undefined;
+  if (!prefersReducedMotion()) {
+    const img = el.querySelector<HTMLElement>('[data-astre-img]');
+    if (img) st = ScrollTrigger.create({ trigger: el, start: 'top 70%', end: 'bottom top', scrub: true, animation: gsap.fromTo(img, { '--zoom': 1.04 }, { '--zoom': 1.16, ease: 'none' }) });
+  }
+  return () => { clearInterval(id); st?.kill(); };
 }
 
 /** Horloge du hero : HH:MM en display, secondes en petit, anneau qui avance d'un cran par seconde (idle). */
