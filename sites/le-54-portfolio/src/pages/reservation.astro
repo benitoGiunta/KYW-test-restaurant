@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+const maj = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+---
+<Base title="Réservation" description={`Réserver une table au Le 54, ${site.adresse.commune} : par téléphone au ${site.telephone} ou ${site.telephone2}, ou par le formulaire de contact.`}>
+  <HeroPage titre="Réserver" sur="Une table, le soir ou le midi">
+    <p>{site.reservation.note}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={telHref()}>Appeler le {site.telephone}</a>
+      <a class="btn" href={telHref(site, 2)}>{site.telephone2}</a>
+      <a class="btn" href={site.reservation.url} rel="noopener">Formulaire de contact</a>
+    </div>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="services-titre">
+    <div class="wrap resa">
+      <div class="resa__horaires" data-reveal="fade">
+        <h2 class="petite-cap" id="services-titre">Services</h2>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{maj(horaireTexte(h))}{h.aConfirmer && <span class="illu">à confirmer</span>}</dd></>)}
+        </dl>
+        <p class="muted resa__note">Dernières commandes à 13:00 le midi et à 20:00 le soir. Ouvert les jours fériés. Plages horaires indicatives, à confirmer par le restaurant.</p>
+      </div>
+      <div class="resa__infos" data-reveal="fade">
+        <h2 class="petite-cap">Adresse</h2>
+        <address>{adresseLigne()}<br />Au bord de la Meuse<br /><a class="lien" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></address>
+        <p><a class="lien" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

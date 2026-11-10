@@ -1,0 +1,16 @@
+---
+// Hero des pages intérieures : chiffre cuivre en filigrane (si la page en a un), titre Boska capitales, chapô 500 px.
+import type { Chiffre } from '../data/site';
+interface Props { titre: string; chiffre?: Chiffre; sur?: string }
+const { titre, chiffre, sur } = Astro.props;
+---
+<section class="hero-page">
+  <div class="wrap hero-page__wrap">
+    {chiffre && <p class="chiffre chiffre--filigrane" aria-hidden="true"><span>{chiffre.valeur}</span></p>}
+    <div class="hero-page__texte">
+      {sur && <p class="petite-cap">{sur}</p>}
+      <h1 class="hero-page__titre">{chiffre && <span class="sr-only">{chiffre.valeur} </span>}{titre}</h1>
+      <div class="hero-page__chapo"><slot /></div>
+    </div>
+  </div>
+</section>

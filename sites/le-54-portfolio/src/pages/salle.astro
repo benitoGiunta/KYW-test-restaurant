@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const offres = site.maison.offres;
+---
+<Base title="La salle" description={`La salle du Le 54, à Dave près de Namur : 34 couverts au bord de la Meuse, terrasse, parking en face, accès PMR, chiens admis.`}>
+  <HeroPage titre="La salle" sur="Bord de Meuse, Dave">
+    <p>{site.maison.intro}</p>
+  </HeroPage>
+
+  <section class="section" aria-label="La salle, la cuisine, venir">
+    <div class="wrap offres">
+      {offres.map((o, i) => { const p = photoDe(o.photo); return (
+        <article class:list={['offre', { 'offre--inverse': i % 2 === 1 }]}>
+          <figure class="offre__photo" data-reveal="clip">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+          <div class="offre__texte">
+            <h2 class="offre__nom">{o.nom}</h2>
+            <p>{o.texte}{o.textePlaceholder && <span class="illu">texte illustratif</span>}</p>
+          </div>
+        </article>
+      ); })}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pratique-titre">
+    <div class="wrap resa">
+      <div class="resa__horaires" data-reveal="fade">
+        <h2 class="petite-cap" id="pratique-titre">Infos pratiques</h2>
+        <dl class="horaires">
+          {site.pratique.map((p) => <><dt>{p.libelle}</dt><dd>{p.valeur}{p.aConfirmer && <span class="illu">à confirmer</span>}</dd></>)}
+        </dl>
+      </div>
+      <div class="resa__infos" data-reveal="fade">
+        <h2 class="petite-cap">Une table ?</h2>
+        <p>Réservation souhaitée. Appelez le restaurant ou passez par le formulaire de contact.</p>
+        <p class="actions"><a class="btn btn--primary" href={u('/reservation/')}>Réserver</a><a class="btn" href={telHref()}>Appeler le {site.telephone}</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

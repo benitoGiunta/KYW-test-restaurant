@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const gestes = ['/photos/geste-dressage.webp', '/photos/dressage-sauce.webp'].map(photoDe);
+const gesteM = photoDe('/photos/geste-dressage-700.webp');
+---
+<Base title="La maison et son chef" description={`${site.equipe[0].nom} et ses parents Michel et Véronique : l'histoire de la maison de famille Le 54, à Dave près de Namur, depuis 2010.`} preloadImage={{ href: gesteM.src, media: '(max-width: 767px)' }}>
+  <HeroPage titre="La maison" chiffre={site.chiffres.famille} sur="Une maison de famille, un chef">
+    <p>{site.histoire[0]}</p>
+  </HeroPage>
+
+  <section class="section" aria-label="La cuisine en images">
+    <div class="wrap portraits">
+      {gestes.map((p, i) => (
+        <figure class="portrait">
+          <div class="portrait__photo" {...(i === 0 ? {} : { 'data-reveal': 'clip' })}>
+            {i === 0 ? (
+              <picture>
+                <source media="(max-width: 767px)" srcset={asset(gesteM.src)} />
+                <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} fetchpriority="high" decoding="async" />
+              </picture>
+            ) : (
+              <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            )}
+          </div>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--recit" aria-labelledby="recit-titre">
+    <div class="wrap recit">
+      <h2 class="petite-cap" id="recit-titre">Du bord de Meuse à votre table</h2>
+      <div class="recit__texte stack">
+        {site.histoire.slice(1).map((p) => <p data-reveal="fade">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="equipe-titre">
+    <div class="wrap equipe">
+      <h2 class="petite-cap" id="equipe-titre">La famille</h2>
+      <ul class="equipe__liste">
+        {site.equipe.map((m) => <li><strong>{m.nom}</strong><span class="equipe__role">{m.role}{m.rolePlaceholder && <span class="illu">rôle illustratif</span>}</span></li>)}
+      </ul>
+      <ul class="valeurs" aria-label="Ce qui compte">
+        {site.valeurs.map((v) => <li>{v}</li>)}
+      </ul>
+      <p class="actions"><a class="btn btn--primary" href={u('/reservation/')}>Réserver une table</a></p>
+    </div>
+  </section>
+</Base>

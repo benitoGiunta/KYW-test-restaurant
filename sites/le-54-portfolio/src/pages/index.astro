@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import Chapitre from '../components/Chapitre.astro';
+import { site, photoDe, horairesResume, adresseLigne, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/salle-nb-1800.webp');
+const heroM = photoDe('/photos/hero-salle-960.webp');
+const c = site.chiffres;
+const motsNom = site.nom.split(' ');
+const motsCitation = site.citation.texte.split(' ');
+const galerie = ['/photos/gal-sauce-nb.webp', '/photos/gal-bol-noir-nb.webp', '/photos/gal-betterave-nb.webp', '/photos/gal-bol-bleu-nb.webp', '/photos/gal-bols-nb.webp'].map(photoDe);
+const hauteurs = ['haute', 'basse', 'moyenne', 'haute', 'basse'];
+const offres = site.maison.offres;
+const resume = horairesResume();
+---
+<Base preloadImage={{ href: heroM.src, media: '(max-width: 767px)' }}>
+  <section class="hero" data-hero aria-label="Accueil">
+    <picture class="hero__photo">
+      <source media="(max-width: 767px)" srcset={asset(heroM.src)} />
+      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical />
+    </picture>
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="wrap hero__contenu">
+      <p class="petite-cap hero__sur">{adresseLigne()}</p>
+      <h1 class="hero__nom">{motsNom.map((m, i) => <><span class="hero__mot"><span class="hero__mot-in" data-hero-mot>{m}</span></span>{i < motsNom.length - 1 ? ' ' : ''}</>)}</h1>
+      <p class="hero__accroche">{site.baseline}</p>
+      <div class="actions">
+        <a class="btn btn--primary" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+        <a class="lien lien--fleche" href="#services">Découvrir la maison</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="guides" aria-label="Distinctions et avis">
+    <div class="wrap guides__inner" data-reveal="fade">
+      <p class="petite-cap guides__sur">Guides et avis</p>
+      <ul class="guides__liste">
+        {site.distinctions.map((d) => (
+          <li>{d.url ? <a class="guides__item" href={d.url} rel="noopener"><span class="guides__nom">{d.nom}</span><span class="guides__detail">{d.detail}</span></a> : <span class="guides__item"><span class="guides__nom">{d.nom}</span><span class="guides__detail">{d.detail}</span></span>}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Chapitre id="services" chiffre={c.services} photo={photoDe('/photos/plat-langoustine.webp')} lien={{ href: u('/menu/'), label: 'Lire le menu' }}>
+    <p>Une carte de saison et de marché, en trois ou quatre services. Au menu du moment : fin tranchée de veau, sauce tonnato, bœuf wagyu A5, cochon de lait ou zarzuela, puis un plaisir sucré.</p>
+    <p>Allergies et intolérances : la cuisine adapte le menu si vous les signalez à la réservation.</p>
+  </Chapitre>
+
+  <Chapitre id="prix" chiffre={c.prix} photo={photoDe('/photos/plat-saint-jacques.webp')} inverse filet lien={{ href: u('/carte/'), label: 'Les formules' }}>
+    <p>Le menu du moment en trois services est à {site.menus[0].prix}, en quatre services à {site.menus[1].prix}. Le bœuf wagyu A5 et la zarzuela Royale ou Impériale se commandent en supplément.</p>
+    <p>Une cuisine qui valorise les artisans et les produits locaux.</p>
+  </Chapitre>
+
+  <section class="citation" data-allume aria-labelledby="citation-source">
+    <div class="wrap citation__wrap">
+      <p class="petite-cap" id="citation-source">{site.citation.source}</p>
+      <blockquote class="citation__texte">
+        <p>{motsCitation.map((m, i) => <><span class="mot">{m}</span>{i < motsCitation.length - 1 ? ' ' : ''}</>)}</p>
+      </blockquote>
+      <p class="citation__lien">{site.citation.auteur}</p>
+    </div>
+  </section>
+
+  <Chapitre id="famille" chiffre={c.famille} photo={photoDe('/photos/geste-dressage.webp')} lien={{ href: u('/histoire/'), label: 'La maison et son chef' }}>
+    <p>Michel et Véronique Collignon reprennent la maison avec leur fils Jonathan en 2010 et lui donnent une dimension plus gastronomique.</p>
+    <p>{site.equipe[0].nom}, diplômé de l'École hôtelière provinciale de Namur, signe aujourd'hui une cuisine raffinée, savoureuse, qui va à l'essentiel.</p>
+  </Chapitre>
+
+  <section class="onglets" data-onglets aria-labelledby="onglets-titre">
+    <div class="onglets__photos" aria-hidden="true">
+      {offres.map((o, i) => { const p = photoDe(o.photo); return <img class:list={['onglets__photo', { 'is-active': i === 0 }]} data-onglet-photo src={asset(p.src)} alt="" width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />; })}
+    </div>
+    <div class="wrap onglets__contenu">
+      <h2 class="petite-cap" id="onglets-titre">La maison</h2>
+      <p class="onglets__intro">{site.maison.intro}</p>
+      <div class="onglets__liste" role="tablist" aria-label="La maison">
+        {offres.map((o, i) => (
+          <button class="onglet" role="tab" id={`onglet-${i}`} aria-controls={`panneau-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} type="button">
+            <span class="onglet__nom">{o.nom}</span><span class="onglet__barre" aria-hidden="true"></span>
+          </button>
+        ))}
+      </div>
+      {offres.map((o, i) => (
+        <div class="onglets__panneau" role="tabpanel" id={`panneau-${i}`} aria-labelledby={`onglet-${i}`} hidden={i !== 0}>
+          <p>{o.texte}{o.textePlaceholder && <span class="illu">texte illustratif</span>}</p>
+        </div>
+      ))}
+      <p class="onglets__action"><a class="btn" href={u('/salle/')}>Découvrir la salle</a></p>
+    </div>
+  </section>
+
+  <section class="galerie" aria-label="La cuisine en noir et blanc">
+    <div class="galerie__bande">
+      {galerie.map((p, i) => (
+        <figure class:list={['galerie__item', `galerie__item--${hauteurs[i]}`]} data-reveal="up" data-delay={String(i * 0.08)} data-cursor="Voir">
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="cloture" data-rideau aria-labelledby="cloture-titre">
+    <div class="rideau" aria-hidden="true"></div>
+    <div class="wrap cloture__bloc">
+      <p class="chiffre chiffre--centre" aria-hidden="true"><span data-compteur={String(c.ouverture.valeur)}>{c.ouverture.valeur}</span></p>
+      <h2 class="petite-cap" id="cloture-titre"><span class="sr-only">{c.ouverture.libelle} en {c.ouverture.valeur}</span><span aria-hidden="true">{c.ouverture.libelle}</span></h2>
+      <p class="cloture__sous">{c.ouverture.sousLibelle}.</p>
+      <address class="cloture__adresse">{adresseLigne()}</address>
+      <dl class="cloture__horaires">
+        {resume.map((r) => <div><dt>{r.libelle}</dt><dd>{r.valeur}</dd></div>)}
+      </dl>
+      <div class="actions actions--centre">
+        <a class="btn btn--primary" href={u('/reservation/')}>Réserver une table</a>
+        <a class="lien" href={telHref()}>{site.telephone}</a>
+      </div>
+    </div>
+  </section>
+</Base>

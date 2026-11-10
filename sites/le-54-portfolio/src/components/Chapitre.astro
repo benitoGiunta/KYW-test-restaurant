@@ -1,0 +1,23 @@
+---
+// Chapitre « Velours » : un rideau (pan vert sapin levé une fois), un chiffre monumental cuivre à cheval sur la photo,
+// un libellé en petites capitales, un texte en colonne de 500 px. `inverse` met la photo à droite.
+import type { Chiffre, Photo } from '../data/site';
+import { asset } from '../lib/url';
+interface Props { id: string; chiffre: Chiffre; photo: Photo; inverse?: boolean; filet?: boolean; lien?: { href: string; label: string }; eager?: boolean }
+const { id, chiffre, photo, inverse = false, filet = false, lien, eager = false } = Astro.props;
+---
+<section class:list={['chapitre', { 'chapitre--inverse': inverse, 'chapitre--filet': filet }]} id={id} data-rideau aria-labelledby={`${id}-titre`}>
+  <div class="rideau" aria-hidden="true"></div>
+  <div class="wrap chapitre__grille">
+    <figure class="chapitre__photo">
+      <img src={asset(photo.src)} alt={photo.alt} width={photo.largeur} height={photo.hauteur} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+      <p class="chiffre" aria-hidden="true" data-parallax="0.12"><span data-compteur={String(chiffre.valeur)}>{chiffre.valeur}</span></p>
+    </figure>
+    <div class="chapitre__texte">
+      <h2 class="chapitre__titre petite-cap" id={`${id}-titre`}><span class="sr-only">{chiffre.valeur} </span>{chiffre.libelle}</h2>
+      {chiffre.sousLibelle && <p class="chapitre__sous">{chiffre.sousLibelle}</p>}
+      <div class="stack chapitre__corps"><slot /></div>
+      {lien && <p class="chapitre__action"><a class="btn" href={lien.href}>{lien.label}</a></p>}
+    </div>
+  </div>
+</section>
