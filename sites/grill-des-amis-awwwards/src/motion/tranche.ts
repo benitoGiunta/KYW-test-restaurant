@@ -56,7 +56,7 @@ function introHero(intro: gsap.core.Timeline) {
   if (s) intro.fromTo(s, { color: '#efe6d8' }, { color: '#e8452c', duration: 0.6, ease: ease.inOut }, 0.55);
   if (lame) intro.fromTo(lame, { '--y': 0 }, { '--y': 1, duration: 0.9, ease: ease.inOut }, 0.1);
 
-  // Repos : respiration lente + écoulement à vitesse constante de la lame (revient par le haut), pointeur ± 1,5 %.
+  // Repos : écoulement à vitesse constante de la lame (revient par le haut), pointeur ± 1,5 %.
   let visible = true;
   const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0 });
   io.observe(hero);
@@ -65,7 +65,7 @@ function introHero(intro: gsap.core.Timeline) {
     if (!visible || !img || !lame) return;
     const t = idle.t - depart;
     if (t < 1.4) return; // l'intro garde la main
-    gsap.set(img, { scale: 1.05 + Math.sin(t * 0.45) * 0.02, xPercent: idle.x * -3, yPercent: idle.y * -3 });
+    gsap.set(img, { scale: 1.05, xPercent: idle.x * -3, yPercent: idle.y * -3 });
     lame.style.setProperty('--y', String(gsap.utils.wrap(0, 1, 1 + (t - 1.4) / 7)));
   };
   if (!prefersReducedMotion()) gsap.ticker.add(tick);

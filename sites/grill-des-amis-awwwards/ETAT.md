@@ -1,4 +1,4 @@
-# ETAT : Grill des amiS, variante awwwards (fin de la phase 2)
+# ETAT : Grill des amiS, variante awwwards (fin de la phase 3)
 
 ## Fait (phase 1)
 - DESIGN.md (concept « Du brut au feu »), scaffold, contenu réel (68 plats), 5 pages, head complet, photos, build. Voir DESIGN.md.
@@ -11,9 +11,11 @@
 - Contrôles Playwright (1440, 390, réduit) : aucune erreur console, `scrollWidth` = largeur sur les 5 pages, texte caché 0 après défilement, coupes toutes terminées, menu accessible, transition 1,14 s.
 - Build OK (`.logs/awwwards2-build.log`).
 
-## Reste (phase 3)
-- Shoot complet et audit (agent captures), lecture `report.json` : `idleMotion`/`idleAt`, `hover.noHoverChange`, `reduced.*`, contraste, cibles, LCP.
-- RAPPORT.md, DESIGN.md points 35, 36, 41 à 63, `og.png` à recomposer si voulu, `pnpm index`, commit final.
+## Fait (phase 3)
+- QA-build.md absent (shoot de l'agent captures échoué) : shoot ciblé des 4 pages + audit par moi. 0 FAIL, 2 WARN justifiés. Deux corrections vérifiées (repos du hero, survol du lien courant). RAPPORT.md écrit. Build final OK, `pnpm index`.
+
+## Reste
+- Critique jury indépendant (Agent indisponible ici), scores non chiffrés ; `og.png` non recomposée ; DESIGN.md points 42 à 63 non mis à jour (preuves dans RAPPORT.md).
 
 ## Décisions et pièges
 - Pas de loader, de GL, de curseur suiveur ni de magnétisme (contraire au verbe « trancher »). Pas d'aperçu au curseur des index : aucune photo par plat.
