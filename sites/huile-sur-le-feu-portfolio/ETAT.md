@@ -33,3 +33,8 @@
 
 ## Phase 3 (QA)
 - Titre accueil raccourci (58 car.), rebuild OK, RAPPORT.md écrit. Reste : rien de bloquant (points ouverts dans RAPPORT.md).
+
+## Revue 2 (relecteur-site, 10/11/2026)
+- Verdict A_CORRIGER : REVUE-2.md. Corrections de REVISION-1 toutes confirmées (F1-1, F2-1 à F2-6, F3-3). 0 F0, 0 F1, 1 F2 nouveau (frise d'horaires tronquée au bureau, `.maree__grille { min-width: 44rem }` dans une colonne de 437 px), 6 F3.
+- Reste à faire par le réviseur : F2-1 (frise), puis F3 (U+00A0, hovers carte, CLS mobile accueil à remesurer, hero, truffe blanche, `region`).
+- Piège : QA-revue2.md absent pendant la revue (shoot en cours) ; mesures par scripts maison.
