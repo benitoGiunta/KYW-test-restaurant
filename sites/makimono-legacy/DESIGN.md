@@ -14,7 +14,7 @@
 - **Sections** · Hero (Poster) · Carte (Switcher + Rows) · Photos (Bento) · Composer (deux puits) · Boxes (Rows à prix géants) · Livraison et événement (Split + puits à trame) · Horaires et adresse (Schedule) · Pied (statement)
 - **Material** · real : tout le contenu (donnees.json, dossier.md, page.html) · pictures : 8 des 16 photos du client + logo · absent : histoire, équipe, citations, nombre d'avis, outil de réservation de table
 - **Comp** · voir `comp.md`
-- **Sweep** · phase 3
+- **Sweep** · phase 3 : 0 FAIL, 0 REFLEX, kept links 23/23, 2 WARN 28a dismissed ; hero-review `self`, finish-review `self` (pas d'outil Agent)
 
 ## Approche
 - **Macrostructure** : 08 Photographic, one-page. Posture : Poster, calme (une seule bascule de carte, pas de scroll animé). Routes : `/` et `/404`.
@@ -58,3 +58,5 @@ Halftone cream and vermilion : `--color-paper` crème, `--color-ink` brun noir, 
 - [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : base.css:7-9 ; `.pied ::selection` ajouté
 - [x] 72. Responsive (breakpoints rem, capacités, tables restackées, `dvh`, safe-area) · preuve : Playwright à 1920, 1280, 960, 768, 375, 320 : aucun débordement, nav tient (navRight 304/320), horaires restackés sous 40 rem
 - [x] Phase 2 · nav : edge-aligned, 75 px, lien actif par `aria-current="location"`, menu mobile `popover` fermé au clic d'un lien (script) ; signature : le filet de chaque rubrique se trace (scaleX) et les lignes montent au changement d'onglet ; sloplint `--render --url` : 0 FAIL, 0 REFLEX, 2 WARN 28a (images sous le pli, faux positifs), 1 NOTE 58 (carte), hero-review : `self`, voir ETAT.md
+
+- [x] Phase 3 · QA : favicon data URI (erreur console 404 corrigée), 0 erreur console, 0 requête en échec · preuve : `.shots-makimono-legacy-qa/report.json`, RAPPORT.md

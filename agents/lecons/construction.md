@@ -198,3 +198,7 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 
 ## 2026-11-10 · makimono · variante awwwards (phase 3)
 - Symptôme : 14 WARN « sentence repeated » sur l'accueil et la réservation. Cause : horaires rendus à la fois dans la section pratique et dans le pied de page. Correction appliquée : pied condensé par jours consécutifs identiques (« lundi au samedi »). À faire par le prochain agent : ne jamais rendre deux fois la même liste de données ; `colorOnly` sur un lien dont le traitement est un changement de chasse ou de soulignement est un faux positif à lire à l'œil. Un `shoot.mjs` de page dépasse 120 s : arrière-plan.
+
+## 2026-11-10 · makimono · variante legacy (phase 3)
+- `sloplint --genre` n'accepte que editorial, modern-minimal, atmospheric, playful. `--kept` compare la cible du `--before` ; passer `.hallmark/site-actuel/index.html` en plus de `src` ajoute ses FAIL au total.
+- Une page sans favicon donne une erreur console 404 : `<link rel="icon">` en data URI dans le layout.

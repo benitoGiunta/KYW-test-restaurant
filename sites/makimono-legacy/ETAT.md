@@ -1,4 +1,4 @@
-# ETAT : makimono-legacy (fin de la phase 2 sur 3)
+# ETAT : makimono-legacy (phase 3 sur 3 terminée)
 
 ## Fait (phase 1)
 Audit, approche, deal Halftone, comp c1, DESIGN.md, contenu réel (`site.ts`, `carte.json`), page `/` et `/404`, photos WebP, build.
@@ -14,9 +14,11 @@ Audit, approche, deal Halftone, comp c1, DESIGN.md, contenu réel (`site.ts`, `c
 - sloplint `--render --url` : 0 FAIL, 0 REFLEX, 2 WARN 28a (faux positifs : images sous le pli en `loading="lazy"`), 1 NOTE 58. Playwright 1920 à 320 : aucun débordement horizontal. Build passe (2 pages), noindex et `kyw-signature` présents sur `/` et `/404`.
 - `Base.astro` charge `page.css` par `<style is:global>@import</style>` (sloplint ne suit pas l'import JS).
 
-## Reste (phase 3)
-- `sloplint --kept` sur les mêmes cibles que `--before`, RAPPORT.md, gates jugées (§ 5), entrée finale du journal `.hallmark/log.json`, QA navigateur par l'agent captures (reveal : captures pleine page sans défilement montrent les blocs vides).
-- Vérifier la trame de points (événement, pied) sur captures et la hauteur des tuiles du bento (g2 sur deux rangées, 720 px).
+## Fait (phase 3)
+- QA : favicon data URI dans `Base.astro` (erreur console 404 corrigée, vérifié sur capture ciblée). Faux positifs de la 404 écartés. sloplint 0 FAIL, 0 REFLEX, kept links 23/23. RAPPORT.md écrit. Build et index passés.
+
+## Reste
+- 17 contrastes « à vérifier » d'axe non tranchés ; reviews `self`. Prix Futo à confirmer.
 
 ## Hypothèses et pièges
 - Hypothèses de phase 1 inchangées (pas de réservation de table, action = commande en ligne, téléphone du site, prix Futo à confirmer, aucune donnée fictive).
