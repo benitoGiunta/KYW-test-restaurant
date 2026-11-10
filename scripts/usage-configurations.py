@@ -21,7 +21,7 @@ CFG = [
       agents='courts, 40 réponses', revue2='si F0 ou F1', lecons='par rôle, prompts par phase', effort='réduit', lectures='plafonnées par un hook', nouveaute='Hook de lecture : cat > 200 lignes et sed -n > 120 lignes refusés'),
 ]
 NOM = {'partage': 'Partage', 'brasserie-du-quai': 'La Brasserie du Quai', 'chez-guillaume': 'Chez Guillaume', 'dolce-vita-wepion': 'La Dolce Vita',
-       'le-royal': 'Le Royal', 'incorrect': 'Incorrect', 'l-essentiel': 'L’Essentiel', 'ferme-blanche-d-asie': 'La Ferme Blanche d’Asie', 'le-felicien': 'Le Félicien', 'grill-des-amis': 'Le Grill des amiS', 'le-54': 'Le 54', 'le-ponti-2': 'Le Ponti 2', 'le-servais': 'Le Servais', 'li-micougni': 'Li Micougni', 'makimono': 'Makimono', 'pepite': 'Pépite'}
+       'le-royal': 'Le Royal', 'incorrect': 'Incorrect', 'l-essentiel': 'L’Essentiel', 'ferme-blanche-d-asie': 'La Ferme Blanche d’Asie', 'le-felicien': 'Le Félicien', 'grill-des-amis': 'Le Grill des amiS', 'le-54': 'Le 54', 'le-ponti-2': 'Le Ponti 2', 'le-servais': 'Le Servais', 'li-micougni': 'Li Micougni', 'makimono': 'Makimono', 'pepite': 'Pépite', 'sanga': 'Sanga'}
 PH = {3: 'Après', 4: 'Après', 5: 'Après 2', 6: 'Après 3', 7: 'Après 4', 8: 'Après 4', 9: 'Après 4', **{r: 'Après 4' for r in range(10, 15)}, **{r: 'Après 5' for r in range(15, 21)}}
 conf = json.load(open(CONF)); conformite = []
 for c in conf:

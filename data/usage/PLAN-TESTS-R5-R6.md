@@ -242,6 +242,7 @@ Le socle par agent monte lentement (67 700 → 68 100 jetons), sans effet visibl
 | 16 · Li Micougni | 18,40 $ | 6,13 $ | 3,92 $ | 6,57 $ | 5,86 $ | 1,65 M | 0,83 M |
 | 17 · Makimono | 21,69 $ | 7,23 $ | 7,55 $ | 6,78 $ | 4,92 $ | 1,86 M | 0,80 M |
 | 18 · Pépite | 16,81 $ | 5,60 $ | 4,55 $ | 6,63 $ | 3,53 $ | 1,75 M | 0,89 M |
+| 19 · Sanga | 16,43 $ | 5,48 $ | 4,23 $ | 6,73 $ | 3,38 $ | 1,48 M | 0,75 M |
 
 - Restaurant 15 conforme : 28 agents sur le bon modèle, test B 3/3, 0 F0 ou F1 en fin, max 38 réponses.
 - Premier effet du hook : lectures par cat −20 % environ, mais report sur des lectures par plages (sed, head, cat | head) ;
@@ -255,3 +256,5 @@ Le socle par agent monte lentement (67 700 → 68 100 jetons), sans effet visibl
   relecteur passe 3 46 réponses). Après 5 sur 3 restaurants : 6,38 $ par site (+11 % sur Après 4) ; cat −11 %, sorties +2 %.
 - Restaurant 18 conforme : 30 agents sur le bon modèle, revues 2 sur les trois variantes (F1 en revue 1), 0 F0 ou F1 en fin,
   max 46 réponses. Après 5 sur 4 restaurants : 6,19 $ par site (+8 % sur Après 4, +2 % sans Makimono) ; cat −8 %, sorties +3 %.
+- Restaurant 19 conforme : 28 agents sur le bon modèle, revues 2 sur portfolio et awwwards, 0 F0 ou F1 en fin, max 33
+  réponses. Après 5 sur 5 restaurants : 6,04 $ par site (+5 % sur Après 4, 5,75 $ soit 0 % sans Makimono) ; cat −10 %, sorties 0 %.
