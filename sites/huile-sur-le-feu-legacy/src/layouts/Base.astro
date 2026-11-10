@@ -6,12 +6,15 @@ import Pied from '../components/Pied.astro';
 import { resto, base, u } from '../data/site';
 interface Props { title: string; description: string; pied?: boolean }
 const { title, description, pied = true } = Astro.props;
+const ogImage = new URL(u('og-flambage.jpg'), Astro.site).href;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ld = JSON.stringify({
   '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, url: resto.siteActuel,
   telephone: '+3281241903', email: resto.email, servesCuisine: ['Méditerranéenne', 'Italienne'],
   address: { '@type': 'PostalAddress', streetAddress: `${resto.adresse.rue} ${resto.adresse.numero}`, postalCode: resto.adresse.cp, addressLocality: resto.adresse.ville, addressCountry: 'BE' },
   geo: { '@type': 'GeoCoordinates', latitude: resto.geo.lat, longitude: resto.geo.lon },
+  acceptsReservations: resto.reservation,
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '12:00', closes: '14:30' }, { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '18:00', closes: '21:15' }],
   sameAs: [resto.facebook, resto.instagram],
 });
 ---
@@ -26,7 +29,12 @@ const ld = JSON.stringify({
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Flambage d’une poêle en cuisine ouverte" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={u('favicon.svg')} />
     <script>document.documentElement.classList.add('js')</script>
