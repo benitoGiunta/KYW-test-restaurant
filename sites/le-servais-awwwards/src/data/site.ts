@@ -60,7 +60,7 @@ export const carte = carteBrute as Categorie[];
 export const stations = [
   { heure: '9 h', titre: 'Le bar ouvre', texte: 'Tous les jours, dès 9 h. Le week-end, de 9 h 30 à 11 h 30, la carte du petit-déjeuner : pancakes, pain perdu à la pâte de croissant, granola, œufs.', photo: 'dejeuner' },
   { heure: '11 h 30', titre: 'La cuisine part', texte: 'Boulets liégeois sauce au sirop de Liège, frites maison à double cuisson, pavé de bœuf, burgers. Puis du sharing food pour la table entière. Cuisine non stop.', photo: 'spaghetti' },
-  { heure: '18 h', titre: '3 + 1 sur les cocktails', texte: 'Tous les jours de 18 h à 20 h, le quatrième cocktail est offert. Spritz, Moscow Mule, Negroni, Espresso Martini.', photo: 'terrasse' },
+  { heure: '18 h', titre: '3 + 1 sur les cocktails', texte: 'Tous les jours de 18 h à 20 h, 3 + 1 sur les cocktails : Spritz, Moscow Mule, Negroni, Espresso Martini.', photo: 'terrasse' },
   { heure: '1 h', titre: 'Terminus', texte: 'La cuisine ferme à 22 h, à minuit le vendredi et le samedi. Le bar ferme à 1 h, à 2 h le vendredi et le samedi.', photo: null },
 ] as const;
 
@@ -70,7 +70,7 @@ export const produits = [
   { produit: 'Saucisse sèche à la Chouffe', maison: 'Boucherie de l’Artisan', lieu: 'Spy', prix: '5,00 €' },
   { produit: 'Spycroc, Spycadelle à l’ail des ours', maison: 'Produits à Spy', lieu: 'Spy', prix: '7,50 €' },
   { produit: 'Croquettes à la Houppe', maison: 'Bière namuroise Houppe', lieu: 'Namur', prix: '11,00 €' },
-  { produit: 'Camembert au four', maison: 'Paquerette, chez Kaas', lieu: 'Carte du client', prix: '14,00 €' },
+  { produit: 'Camembert au four', maison: 'Paquerette, chez Kaas', lieu: null, prix: '14,00 €' },
 ] as const;
 
 export const groupes = {

@@ -4,12 +4,12 @@ import Photo from '../components/Photo.astro';
 import Cabine from '../components/Cabine.astro';
 import { site, jours, cuisine, groupes } from '../data/site';
 ---
-<Base page="reservation" title="Réserver" description="Réserver une table au Servais à Namur : module en ligne, téléphone ou e-mail. Horaires de la semaine, accès au départ du téléphérique et formules pour groupes.">
+<Base page="reservation" title="Réserver" description="Réserver une table au Servais à Namur : module en ligne ; téléphone et e-mail du bar. Horaires de la semaine, accès au départ du téléphérique et formules pour groupes.">
   <div class="ligne">
     <Cabine />
     <section class="entete wrap" aria-labelledby="titre-resa">
       <h1 id="titre-resa" class="display entete__titre">Réserver</h1>
-      <p class="entete__chapeau" data-split="lines" data-intro data-delay="0.2">Trois façons de prendre une table : en ligne, par téléphone ou par e-mail.</p>
+      <p class="entete__chapeau" data-split="lines" data-intro data-delay="0.2">Réservez en ligne ; le bar est joignable au {site.telephoneLisible} et à {site.email}.</p>
       <p class="hero__actions">
         <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver en ligne</span></a>
         <a class="cta cta--ligne" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
@@ -45,7 +45,7 @@ import { site, jours, cuisine, groupes } from '../data/site';
       </div>
       <div class="groupes__texte">
         <h2 id="titre-groupes" class="display titre-section" data-split="lines">Groupes et privatisation</h2>
-        <p>La Verrière accueille {groupes.verriere.assis} convives assis, jusqu’à {groupes.verriere.debout} debout, avec bar self-service, musique et projecteur. Le bar entier se privatise à partir de {groupes.verriere.total} personnes. Écrivez-nous à <a class="lien" href={`mailto:${site.email}`}>{site.email}</a> pour une date.</p>
+        <p>La Verrière accueille {groupes.verriere.assis} convives assis, jusqu’à {groupes.verriere.debout} debout, avec bar self-service, musique et projecteur. Le bar entier se privatise à partir de {groupes.verriere.total} personnes. Contact pour les groupes : <a class="lien" href={`mailto:${site.email}`}>{site.email}</a>.</p>
         <ul class="formules">
           {groupes.formules.map((f) => (
             <li class="formule"><span class="formule__nom">{f.nom}</span><span class="formule__prix">dès {f.prix} par personne</span><span class="formule__detail">{f.detail}</span></li>
