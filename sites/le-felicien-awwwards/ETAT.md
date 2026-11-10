@@ -29,3 +29,8 @@ Voir l'historique git : concept « L'échelle », système, scaffold, 5 pages st
 QA sur QA-build.md : horaires dupliqués pied/page corrigés, hover du logo, focus de l'input range. Reservation capturée. Build et audit : 0 FAIL. RAPPORT.md écrit.
 ## Reste
 Score jury indépendant (`/jury`), test tactile réel du curseur, `invisibleFocus` sur l'input = faux positif (opacité 0).
+
+## Revue 1 (relecteur-site, 10/11/2026)
+Fait : REVUE-1.md écrit (verdict A_CORRIGER : 0 F0, 1 F1, 4 F2, 4 F3). Contrôles faits : axe complet 5 pages x 1440/390, console, liens, 68 plats contre donnees.json, état d'ouverture à 5 instants, clavier du curseur, menu, reduced-motion.
+Reste : le réviseur traite F1-1 (accents coupés par les masques SplitText, `engine.css:68`), F2-1 à F2-4, puis revue 2.
+Pièges : QA-revue1 limité à 3 pages et sa « 404 » est la réponse brute de serve.mjs ; scripts maison dans le scratchpad `felaw-r1-*`.
