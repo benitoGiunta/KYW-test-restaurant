@@ -11,3 +11,7 @@ Correction de donnée : le contrôle d'heure affichait « 19h à 23h » (23:00 e
 Vérifié (mini-script Playwright, `.shots/pepite-p2/`) : 7 pages en 1440 et 390, 0 erreur console, 0 débordement horizontal, mention KYW et logo en bas de chaque page, clics réels sur chaque lien de l'en-tête (OK, la marque renvoie à l'accueil), reduced-motion (pas de lampe, aucun élément masqué, h1 visible), formulaire (lundi fermé, vendredi 20h, ouverture Tablebooker). Build OK (`scripts/q.sh`), `dist/pepite/portfolio/` régénéré.
 Reste (phase 3) : shoot et audit complets (axe, contrastes cuivre/rouge, LCP), tailles de sources faibles (cave 598 px en volet, atelier, salle-bokeh), alt à revoir, RAPPORT.md, `pnpm index`, commit de `dist/pepite/` final, leçons. Non vérifié : halo sur la mosaïque en capture (calques `data-lampe-item`), transitions de page (rideau) et loader en capture.
 Pièges : le contrôle de phase 2 en 1440 dure ~3 min (40 coups de molette par page) : lancer en arrière-plan. Les `@media (hover: hover)` ont été posés par script sur les règles d'une ligne seulement.
+
+# ETAT pepite-portfolio, phase 3 (QA)
+Fait : lecture QA-build (faux positifs 404/sitemap écartés), `--c-rouge` éclairci (#b8445a), rebuild OK, capture ciblée /vins/ OK, RAPPORT.md écrit, dist régénéré, index et commit.
+Reste : rien de bloquant (voir RAPPORT.md points ouverts).

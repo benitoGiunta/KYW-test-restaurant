@@ -214,3 +214,4 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 
 
 - 2026-11-10 · pepite · awwwards (phase 2) : un losange en `transform: rotate(45deg)` ne peut pas être animé en `scale` par GSAP sans conflit : le dessiner en `clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%)` (carré 1,1 rem) et laisser GSAP seul maître du transform. Une lueur qui court sur un filet de 1 px se clippe par `overflow-x: visible; overflow-y: clip` (la valeur `clip` n'impose pas `auto` à l'autre axe, contrairement à `hidden`). Un `data-reveal="clip"` posé sur la `<figure>` coupe aussi tout décor absolu qu'elle contient : mettre le reveal sur un cadre intérieur. `ss -ltnp` ne donne pas le PID du serveur ici : le retrouver par `/proc/*/cmdline`.
+- 2026-11-10 · pepite · portfolio (phase 3) : la 404 et le sitemap signalés par l'audit sont des faux positifs ; un token « rouge » décoratif sombre sur fond noir tombe à 2,3:1, viser ≥ 3,5:1.
