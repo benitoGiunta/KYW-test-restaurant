@@ -27,7 +27,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [heroIntro(intro), rideaux(), compteurs(), citation(), onglets()];
+    const cleanups = [heroIntro(intro), rideaux(), compteurs(), citation(), onglets(), signature()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -39,8 +39,15 @@ function heroIntro(intro: gsap.core.Timeline) {
   if (!mots.length || prefersReducedMotion() || isMobile()) return () => {};
   gsap.set(mots, { yPercent: 110 });
   const tl = gsap.timeline({ paused: true }).to(mots, { yPercent: 0, duration: 1.1, ease: ease.out, stagger: 0.08 });
+  // La photo de salle retombe de 1,12 à 1 pendant que le rideau du loader se lève ; l'accroche et les boutons suivent.
+  const photo = document.querySelector<HTMLElement>('.hero__photo img');
+  const suite = document.querySelectorAll<HTMLElement>('.hero__sur, .hero__accroche, .hero .actions');
+  if (photo) gsap.set(photo, { scale: 1.12 });
+  gsap.set(suite, { autoAlpha: 0, y: 18 });
+  if (photo) tl.to(photo, { scale: 1, duration: 2.2, ease: ease.out }, 0);
+  tl.to(suite, { autoAlpha: 1, y: 0, duration: 0.9, ease: ease.out, stagger: 0.12 }, 0.5);
   intro.add(() => tl.play(), 0.1);
-  return () => { tl.kill(); gsap.set(mots, { clearProps: 'transform' }); };
+  return () => { tl.kill(); gsap.set(mots, { clearProps: 'transform' }); if (photo) gsap.set(photo, { clearProps: 'transform' }); gsap.set(suite, { clearProps: 'all' }); };
 }
 
 /** Rideau : un pan bleu nuit par section [data-rideau], levé une fois quand la section arrive au tiers de l'écran.
@@ -57,6 +64,8 @@ function rideaux() {
       scrollTrigger: { trigger: section, start: 'top 66%', once: true },
       onComplete: () => { pan.style.visibility = 'hidden'; },
     });
+    const img = section.querySelector<HTMLElement>('.chapitre__photo img');
+    if (img) gsap.fromTo(img, { scale: 1.1 }, { scale: 1, duration: 1.6, ease: ease.out, scrollTrigger: { trigger: section, start: 'top 66%', once: true } });
   });
   return () => {};
 }
@@ -148,4 +157,20 @@ function onglets() {
   lance();
   if (!st.isActive) tween?.pause();
   return () => { tween?.kill(); st.kill(); handlers.forEach(([t, ev, fn]) => t.removeEventListener(ev, fn)); };
+}
+
+/** Signature « rideau » : filet or sous l'en-tête qui se tend avec le défilement (scrub), et monogramme du cercle rempli
+ *  dès que le hero est passé. Reduced motion : le filet est masqué (CSS), le monogramme change quand même d'état. */
+function signature() {
+  const header = document.querySelector<HTMLElement>('.header');
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  const triggers: ScrollTrigger[] = [];
+  if (header) {
+    triggers.push(ScrollTrigger.create({
+      start: 0, end: 'max',
+      onUpdate: (st) => header.style.setProperty('--progres', st.progress.toFixed(4)),
+    }));
+    if (hero) triggers.push(ScrollTrigger.create({ trigger: hero, start: 'bottom 90px', onToggle: (st) => header.classList.toggle('is-signe', st.isActive || st.progress === 1) }));
+  }
+  return () => { triggers.forEach((t) => t.kill()); header?.classList.remove('is-signe'); header?.style.removeProperty('--progres'); };
 }

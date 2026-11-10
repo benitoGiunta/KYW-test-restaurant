@@ -1,21 +1,23 @@
-# ETAT — le-54 portfolio (phase 1/3, construction)
-## Fait
-- Gabarit Velours copié dans `sites/le-54-portfolio/` ; choix argumenté dans DESIGN.md.
-- `src/data/site.ts` réécrit depuis `data/restaurants/le-54/` ; palette bleu nuit / or tirée du logo (tokens, base.css, Base.astro, favicon, og.jpg).
-- 7 pages construites et buildées (`pnpm build:site sites/le-54-portfolio` OK, `dist/le-54/portfolio/` : /, menu, carte (formules), histoire, salle, reservation, 404). noindex, mention Maquette KYW et logo KYW sur chaque page (contrôlé dans dist).
-- Photos : 16 WebP (≤ 1800 px) dans `public/photos/`, N&B pour la galerie.
-## Reste (phases 2 et 3)
-- QA navigateur (desktop, mobile 390, reduced motion, clavier), clics réels en-tête, bas de page en fenêtre.
-- Vérifier visuellement : hero très sombre, chiffre « 48 » et « 3 » sur photos, portraits `histoire` (3/4 grisaillé sur images paysage), cercle « 54 » de l'en-tête, citation courte, onglets (3 photos).
-- Motion : à ajuster seulement si défaut constaté (les rideaux/compteurs sont ceux du gabarit).
-- RAPPORT.md, commit de `dist/le-54/`, `pnpm index`.
-## Décisions / hypothèses
-- Lundi ouvert (site : fermé mardi, mercredi, samedi midi), marqué « à confirmer » ; plages 12-14 / 18:30-21 de Trouve Ton Resto, « à confirmer ».
-- Menus : 3 services 48 €, 4 services 65 € (G&M 62 €, noté), 2 services 30 € (G&M seul), tous deux marqués « à confirmer ».
-- 34 couverts (Trouve Ton Resto) affiché sans marque dans le texte de la salle, marqué « à confirmer » dans les infos pratiques : à harmoniser.
-- Clé `chiffres.chefs` renommée `famille` (3 Collignon) ; `privatisation` renommé `maison`.
-- Pas de formulaire de réservation en démonstration : téléphones + lien vers le formulaire du site actuel.
-- `gabarits/UTILISATION.md` non modifié (consigne : ne jamais toucher à gabarits/) : y ajouter `velours | le-54`.
-- `pnpm install --offline` échoue (pas de cache) mais le build passe avec les dépendances racine.
-## Placeholders
-Aucun `placeholder: true` ; éléments « à confirmer » listés ci-dessus.
+# ETAT — le-54 portfolio (phase 2/3, motion et finitions)
+## Fait (phase 1)
+- Gabarit Velours adapté, 7 pages, données `data/restaurants/le-54/`, palette bleu nuit / or, photos WebP, noindex, mention Maquette KYW et logo KYW (voir DESIGN.md).
+## Fait (phase 2)
+- Hero : photo éclaircie (brightness 1,45 desktop, 1,3 mobile) et voile allégé, voile latéral pour l'accroche ; intro desktop : zoom 1,12 → 1 de la photo, adresse / accroche / boutons en fondu décalé (mobile et reduced motion : peint au premier rendu).
+- Chapitres : photo qui retombe (1,1 → 1) avec le pan de rideau.
+- Signature : filet or sous l'en-tête qui se tend au défilement (`--progres`, `signature()` dans `src/motion/setup.ts`), monogramme « 54 » rempli en or après le hero.
+- Onglets « La maison » : voile latéral réel (le `::before` passait sous les photos : photos en z-index -2) ; texte lisible sur la photo de salle.
+- Galerie : bande focusable au clavier (`tabindex=0`, `role=group`), snap mandatory en mobile.
+- États : `:active` liens et onglets, `.btn[aria-disabled]`. Mobile : nom du hero 19 vw, boutons pleine largeur, horaires de clôture en colonne.
+- Pied de page : horaires en colonne (plus de césure, plus de « Mardi Et Mercredi »).
+- Contrôles (Playwright, scratchpad `p2-ctrl.mjs`) : aucun scrollWidth > viewport à 320/390/768/1024/1440 sur 7 pages ; 0 erreur console ; clics réels de l'en-tête OK (5 liens) ; bas de page en fenêtre : mention KYW et logo visibles ; menu mobile s'ouvre / Échap ferme ; aucune cible < 24 px ; reduced motion : pas de classe `motion`, aucun élément caché, aucun rideau, aucun loader.
+- Build vert (`pnpm build:site sites/le-54-portfolio`), `dist/le-54/portfolio/` régénéré.
+## Reste (phase 3)
+- Shoot complet + audit par l'agent « captures » ; relire QA-<étape>.md.
+- Vérifier : chiffres « 48 » et « 3 » à cheval sur les photos, portraits `histoire`, rotation des onglets (non mesurée), clavier complet, pages menu / carte / salle / réservation en mobile (non revues visuellement en phase 2, seulement mesurées).
+- RAPPORT.md, `pnpm index`, commit final.
+## Décisions / hypothèses (inchangées)
+- Horaires, menus 2 et 4 services, lundi, couverts : « à confirmer » (`.illu`). Aucun `placeholder: true`.
+- `gabarits/UTILISATION.md` non modifié (consigne) : y ajouter `velours | le-54`.
+## Pièges
+- `.onglets::before` (voile) est peint sous `.onglets__photos` si les deux ont z-index -1 : défaut du gabarit Velours, corrigé ici seulement (gabarits/ intouché).
+- Le contrôle de débordement par `getBoundingClientRect` signale les photos de chapitre (pleine largeur voulue, clippées par `overflow-x: clip`) : faux positif, `scrollWidth` = viewport.
