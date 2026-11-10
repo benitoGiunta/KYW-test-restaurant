@@ -12,7 +12,7 @@
 - **Sections** : Hero (Counter) · Ramen (Rows, tête 4 colonnes, trio de bouillons) · Plein (Showcase 21:9, deux bols vus de dessus) · Udon, soba et donburi (Rows sur deux colonnes) · Compléments (Band encre, Index sur trois colonnes) · Livraison (Figures : deux paliers 25 € et 35 €) · Horaires (Schedule + adresse) · Pied (mast).
 - **Material** : real : tout le dossier (carte, prix, horaires, zones, paiement, adresse, téléphone) · pictures : 3 photos du client sur 7 (hero ramen, deux bols de dessus, aucune photo de salle) · absent : avis et note (non vérifiés), histoire, équipe, réseaux, e-mail (Gmail personnel non repris), photo de salle ou de façade.
 - **Comp** : 2 built, no key · c1 chosen (`comp.md`).
-- **Sweep** : phase 3.
+- **Sweep** : `sloplint --render --kept` : 0 FAIL, 0 REFLEX (waive 59 + 8), 3 WARN (28a dismissed, 2 kept non comparables), 1 NOTE 58 ; avant 138 FAIL, 82 REFLEX.
 
 ## Approche conservée
 
@@ -61,3 +61,16 @@ Source : `src/styles/tokens.css` (Solstice). Papier `oklch(94% 0.03 80)`, encre 
 - [x] 58. Une recette de conteneur, un pattern de scroll (F7, F8) · preuve : `.well` seul ; aucun scroll animé
 - [x] 63. `::selection`, `caret-color`, `scrollbar-color`, `accent-color` (F16) · preuve : `base.css:10-12`
 - [x] 72. Responsive : breakpoints 60 rem et 40 rem, `(hover: hover)`, `(pointer: coarse)`, safe-area dans `--gutter`, 16 px au téléphone, `overflow-x: clip` html et body · preuve : `tokens.css:10`, `base.css:2`, `page.css` fin de fichier
+
+## Checklist phase 3 (points restants)
+
+- [x] Floor 1, 18 : aucune couleur en dur hors tokens · `grep -c "#hex\|rgb("` de page.css hors stamp = 0.
+- [x] 4, 5, 14 : `overflow-x: clip` (base.css), `minmax(0, 1fr)`, conteneur 1440 / gutter 64 · mesures phase 2 : 0 débordement à 1280, 768, 375.
+- [x] 8, 46a : rien d'inventé · RAPPORT.md § 5 ; aucun avis ni note.
+- [x] 9, 10, 11, 28 : labels en police de corps, casse de phrase ; aucun tiret cadratin dans `src` ; tells français absents (grep : Découvrir, incontournable, exceptionnel, savoureux, Cliquez = 0).
+- [x] 12, 13, 42 : hero titre + phrase + puits à 1280x800 ; h2 de 32 à 56 px · sloplint hero.
+- [x] 16, 25, 26 : 0 FAIL, 0 REFLEX ; focus ring 3:1 corrigé (`.band--ink :focus-visible` en or) ; images présentes.
+- [x] 31 à 54 : Yeseva + Archivo (2 familles + outlier), accent rare, pas de carte-tell ; 59 waived (dernier écart = bande KYW) ; 77 corrigé (Livraison : puits de 320 px) ; 75 corrigé (légal à 1,5) ; 58 NOTE : écran de carte (33 lignes de prix), assumé.
+- [x] 55 à 67 : tabulaires prix et horaires, `lang="fr"`, title et description, rien de caché à 375 · captures ciblées Livraison 1440 et 375.
+- [x] 68 à 71 : type, OKLCH, une ombre dure (`--shadow-card`), photos du client, hero LCP sans `lazy`.
+- Gates jugées (6b, 8, 32, 44, 58, 65, 77-85) : `self`, voir RAPPORT.md § 4.
