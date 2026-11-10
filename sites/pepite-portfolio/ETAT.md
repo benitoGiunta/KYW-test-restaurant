@@ -20,3 +20,8 @@ Reste : rien de bloquant (voir RAPPORT.md points ouverts).
 Fait : REVUE-1.md écrit (verdict A_CORRIGER : 0 F0, 2 F1, 8 F2, 7 F3). Preuves : QA-revue1 réutilisé (dist 13:18, captures postérieures), 2 scripts maison (axe, console, débordement, mention/logo, 7 pages x 2 largeurs ; scène Histoire), lecture du texte rendu contre donnees.json.
 Reste : révision des F1 puis F2 (loader 23:00 et durée, citations, capitalize, numérotation, cadre patronne, URL Tablebooker réelle, photos agrandies, statut boutique, procédures déduites) ; passe 2 de revue.
 Pièges : la fermeture 23:00 est affichée par le loader (contrairement à la note de phase 1) ; l'URL Tablebooker du site actuel est exploitable (restaurantId=50470946) ; une capture pleine page montre de grands vides noirs (scènes épinglées) : juger par captures à la molette.
+
+# ETAT pepite-portfolio, revue passe 2 (relecteur-site)
+Fait : REVUE-2.md écrit (verdict A_CORRIGER : 0 F0, 0 F1, 1 F2, 10 F3). Corrections de REVISION-1 vérifiées : F1-1, F1-2, F2-1 à F2-5, F2-7, F3-4 OK ; F2-6 et F2-8 partielles. QA-revue2 et captures réutilisés (postérieurs au dist) + 4 scripts maison.
+Reste : « la table peut s'ouvrir à midi » (site.ts:162) ; F3 (og.png 1,6 Mo, axe moderate, h1 Histoire, flèche Instagram, date du menu en dur).
+Pièges : le sélecteur `[data-statut-texte]` donne le statut (le JSON-LD contient aussi « Ouvert ») ; `loaderMs` mobile de report.json = durée du `load` sous 4G lente, loader masqué.
