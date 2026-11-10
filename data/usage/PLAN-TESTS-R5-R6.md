@@ -207,6 +207,7 @@ Script : `scripts/usage-conformite.py` (modèles réels par agent, revues, consi
 | 10 · La Ferme Blanche d'Asie | 15,97 $ | 5,32 $ | 3,55 $ | 6,27 $ | 4,13 $ | −7,9 % |
 | 11 · Le Félicien | 18,23 $ | 6,08 $ | 4,73 $ | 6,32 $ | 4,99 $ | +5,1 % |
 | 12 · Le Grill des amiS | 19,80 $ | 6,60 $ | 4,87 $ | 7,28 $ | 5,19 $ | +14,2 % |
+| 13 · Le 54 | 15,55 $ | 5,18 $ | 3,91 $ | 5,75 $ | 3,99 $ | −10,3 % |
 
 - Restaurant 10 conforme : 26 agents sur le bon modèle, test B 3/3 (revue 2 sur l'awwwards seule), 0 F0 ou F1 en fin de cycle,
   max 44 réponses, socle 67 900 jetons. Classé dans la phase Après 4 (désormais 5,67 $ par site sur 4 restaurants).
@@ -216,3 +217,5 @@ Script : `scripts/usage-conformite.py` (modèles réels par agent, revues, consi
   en fin de cycle, max 42 réponses. Le plus cher de la série (+14 %, sous le seuil d'alerte de 20 %) : trois revues 2 et
   une awwwards à 7,28 $. Après 4 : 5,89 $ par site sur 6 restaurants. Le contrôle reconnaît désormais les défauts F1
   notés sous un titre « ### F1 » avec un identifiant libre (R1-01…), format de la revue legacy du Grill des amiS.
+- Restaurant 13 conforme : 28 agents sur le bon modèle, test B 3/3 (revues 2 sur portfolio et awwwards), 0 F0 ou F1 en fin
+  de cycle, max 34 réponses. Le moins cher de la série. Après 4 : 5,79 $ par site sur 7 restaurants.
