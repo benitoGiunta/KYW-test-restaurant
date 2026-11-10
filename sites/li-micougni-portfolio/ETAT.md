@@ -1,4 +1,4 @@
-# ETAT — Li Micougni, portfolio (phase 2 sur 3 terminée)
+# ETAT — Li Micougni, portfolio (phase 3 sur 3 terminée)
 
 ## Fait (phase 1)
 - Gabarit guinguette adapté, données, photos, pages (accueil, carte, la maison, terrasse, réservation, 404), jetons orange du logo. Voir DESIGN.md.
@@ -25,3 +25,7 @@
 ## Pièges
 - Mesurer le débordement mobile par `innerWidth` en `isMobile: true` (le `scrollWidth` et `getBoundingClientRect` n'accusent pas toujours) ; la bissection se fait par une feuille `<style>` injectée via `page.route` avant chargement (redimensionner la fenêtre remet le viewport à 390 et masque le défaut).
 - Serveur de contrôle : port 4417, arrêté (PID noté dans le scratchpad `portfolio2-serve.pid`).
+
+## Fait (phase 3, QA)
+- Barre de nav mobile resserrée (Contact n'était plus coupé), vérifiée à 320 et 390 sur histoire, terrasse, réservation ; clics réels desktop et bas de page OK sur ces 3 pages. Build final OK. Voir RAPPORT.md.
+- Reste : `pnpm index` + commit dist/index.html à la publication ; UTILISATION.md (gabarits/ protégé).
