@@ -39,3 +39,8 @@
 - Fait : `REVUE-1.md` écrit (verdict A_CORRIGER : 0 F0, 1 F1 réservation inventée, 2 F2, 7 F3). QA-revue1.md absent, captures de l'accueil réutilisées, reste mesuré par scripts maison.
 - Reste : la révision traite F1-1 (page « Réserver » → « Venir », retirer « table ») puis F2-1, F2-2 (320 px) et F3 ; revue passe 2.
 - Pièges : `data-reveal="clip"` écrase le `clip-path` crête (404) ; la photo « 404 » du sommaire en défilement horizontal n'est pas un débordement.
+
+## Relecture passe 2 (relecteur-site)
+- Fait : `REVUE-2.md` écrit (A_CORRIGER : 0 F0, 0 F1, 1 F2 « Une table ? » en fin de carte, 3 F3). Toutes les corrections de REVISION-1 vérifiées (grep dist, axe, 6 largeurs, 404, survol).
+- Reste : retitrer `carte.astro:63`, sortir « (orthographe rectifiée) » des guillemets, option « Venir » dans la nav de bureau.
+- Pièges : QA-revue2.md absent (captures de l'accueil seulement), mesures par scripts maison.
