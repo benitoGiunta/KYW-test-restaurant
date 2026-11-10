@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Plats from '../components/Plats.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto, midi, viandard, carte, t } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const gril = carte.find((c) => c.categorie === 'Les grillades au feu de bois')!.plats;
+const choix = [midi[1], midi[0], gril.find((p) => p.nom.startsWith('L’Entrecôte du moment') || p.nom.startsWith("L'Entrecôte du moment"))!, gril.find((p) => p.nom.startsWith('La trilogie'))!, viandard];
+---
+<Base title="Le Grill des amiS, le spécialiste viandes à Namur" description="Grillades au feu de bois, viandes découpées et maturées sur place, rue Saint-Joseph à Namur. Réservez une table ou consultez la carte." page="accueil" hours={false}>
+  <section class="hero" aria-labelledby="h-hero">
+    <Fig class="hero__fig" src="grill-flammes" w={2000} h={1333} hero sizes="100vw" pos="50% 60%" alt="Pièce de viande saisie à la pince au-dessus du feu de bois" />
+    <div class="container hero__in">
+      <div class="hero__plate">
+        <h1 id="h-hero">Le spécialiste viandes à Namur</h1>
+        <p class="lead">Grosses pièces découpées, maturées sur place et grillées au feu de bois.</p>
+        <p class="hero__act">
+          <a class="btn btn--primary" href={resto.reserver} rel="noopener">Réserver</a>
+          <a class="btn" href={resto.telHref}>Téléphoner</a>
+        </p>
+        <p class="small hero__cap">Pièce saisie à la pince au-dessus du feu de bois.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-pieces">
+    <div class="container">
+      <div class="grid12 head">
+        <h2 id="h-pieces" class="head__t">Nous choisissons des pièces entières.</h2>
+        <p class="lead head__l">Tout se fait chez nous, à Namur, de l’achat à l’assiette.</p>
+      </div>
+      <ol class="trio">
+        <li>
+          <Fig src="decoupe-cote" w={1600} h={1067} sizes="(max-width: 60rem) 100vw, 33vw" alt="Découpe d’une côte à l’os avec une scie à main" />
+          <h3>Découpe sur place</h3>
+          <p>Nous achetons les grosses pièces brutes, la découpe respecte la fibre.</p>
+        </li>
+        <li>
+          <Fig src="maturation" w={1080} h={1350} sizes="(max-width: 60rem) 100vw, 33vw" alt="Deux armoires de maturation éclairées en bleu, pièces de viande visibles" pos="50% 50%" />
+          <h3>Deux chambres de maturation</h3>
+          <p>Le temps affine la texture, la maturation concentre les arômes.</p>
+        </li>
+        <li>
+          <Fig src="braise" w={1200} h={1800} sizes="(max-width: 60rem) 100vw, 33vw" alt="Viande sur la grille, flammes du feu de bois" />
+          <h3>Cuisson au feu de bois</h3>
+          <p>Chaque cuisson respecte la matière, bleu, saignant ou à point.</p>
+        </li>
+      </ol>
+      <p class="more"><a class="link" href={`${base}viandes/`}>Le spécial viandes</a></p>
+    </div>
+  </section>
+
+  <section class="sec well grained" aria-labelledby="h-carte">
+    <div class="container grid12 carte-ex">
+      <div class="carte-ex__head">
+        <h2 id="h-carte">À la carte</h2>
+        <p class="lead">Carte du 14 octobre 2026. Les suggestions changent selon l’arrivage.</p>
+        <p class="carte-ex__act"><a class="btn btn--primary" href={`${base}carte/`}>Voir la carte</a></p>
+      </div>
+      <div class="carte-ex__rows"><Plats plats={choix} /></div>
+    </div>
+  </section>
+
+  <section class="sec sec--tight" aria-label="La salle">
+    <div class="container">
+      <Fig class="wide" src="verres" w={1600} h={1065} sizes="(max-width: 90rem) 100vw, 1440px" pos="50% 45%" alt="Deux verres à vin et photophores rouges sur une table, lumière chaude" />
+      <p class="small cap">Verres à vin et photophores rouges sur une table de la salle.</p>
+    </div>
+  </section>
+
+  <section class="sec band well grained" aria-labelledby="h-resa">
+    <div class="container grid12 resa">
+      <div class="resa__txt">
+        <h2 id="h-resa">Réserver une table</h2>
+        <address class="addr lead"><a class="link nw" href={resto.plan} rel="noopener">{resto.rue}</a><br />{resto.ville}</address>
+        <p class="resa__act">
+          <a class="btn btn--primary" href={resto.reserver} rel="noopener">Réserver en ligne</a>
+          <a class="btn" href={resto.telHref}>{resto.tel}</a>
+        </p>
+      </div>
+      <div class="resa__sched"><Horaires /></div>
+    </div>
+  </section>
+</Base>

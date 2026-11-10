@@ -1,0 +1,14 @@
+---
+import { t, type Plat } from '../data/site';
+interface Props { plats: Plat[] }
+const { plats } = Astro.props;
+---
+<ul class="rows">
+  {plats.map((p) => (
+    <li class="row">
+      <p class="row__t">{t(p.nom)}</p>
+      {p.description && <p class="row__d">{t(p.description)}</p>}
+      <span class="row__p num">{t(p.prix)}</span>
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,73 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import KywFooter from '@kyw/footer';
+import { resto, horaires } from '../data/site';
+interface Props { title: string; description: string; page: string; hours?: boolean; image?: string }
+const { title, description, page, hours = true, image = 'grill-flammes' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(`${base}photos/${image}.webp`, Astro.site).href;
+const jours = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: resto.nom,
+  url: resto.site,
+  image: ogImage,
+  telephone: '+32 81 61 72 60',
+  servesCuisine: 'Grillades, viandes maturées',
+  address: { '@type': 'PostalAddress', streetAddress: 'Rue Saint-Joseph 10', postalCode: '5000', addressLocality: 'Namur', addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: 50.4662832, longitude: 4.8644955 },
+  openingHoursSpecification: horaires.filter((j) => j.ouvert).flatMap((j) => [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: `https://schema.org/${jours[j.jour]}`, opens: '12:00', closes: '14:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: `https://schema.org/${jours[j.jour]}`, opens: '18:00', closes: '21:30' },
+  ]),
+};
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0c0a09" />
+    <link rel="icon" href={`${base}photos/monogramme.webp`} type="image/webp" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@200;400&family=Barlow:wght@300;400&display=swap" rel="stylesheet" />
+    {page !== '404' && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content={resto.nom} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <style is:global>
+      @import "../styles/page.css";
+    </style>
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Nav page={page} />
+    <main id="contenu" tabindex="-1">
+      <slot />
+    </main>
+    <Footer hours={hours} />
+    <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
+document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+    <script is:inline>
+      (function () {
+        var map = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+        var j = new Date().getDay();
+        try { var w = new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'Europe/Brussels' }).format(new Date()); if (w in map) j = map[w]; } catch (e) {}
+        document.querySelectorAll('[data-jour]').forEach(function (el) { if (Number(el.dataset.jour) === j) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); } });
+      })();
+    </script>
+    <KywFooter base={import.meta.env.BASE_URL} />
+  </body>
+</html>

@@ -1,0 +1,25 @@
+---
+import { resto, nav, horaires, credits } from '../data/site';
+interface Props { hours?: boolean }
+const { hours = true } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const ouverts = horaires.filter((j) => j.ouvert);
+---
+<footer class="close" id="infos">
+  <div class="container close__in">
+    <p class="close__line">Pour le plaisir de nos amis.</p>
+    <p class="close__sign">Elise et Gaëtan</p>
+    <div class="close__cols">
+      <address class="addr">
+        <a class="link nw" href={resto.plan} rel="noopener">{resto.rue}</a><br />{resto.ville}
+      </address>
+      <p><a class="link nw" href={resto.telHref}>{resto.tel}</a></p>
+      {hours && <p class="small">Midi, de {ouverts[0].midi}. Soir, de {ouverts[0].soir}. Lundi, jeudi, vendredi et samedi.</p>}
+      <ul class="close__links">
+        {nav.map((n) => <li><a href={`${base}${n.href}`}>{n.label}</a></li>)}
+        <li><a href={resto.reserver} rel="noopener">Réserver</a></li>
+      </ul>
+    </div>
+    <p class="small close__credits" data-credits>{credits}</p>
+  </div>
+</footer>

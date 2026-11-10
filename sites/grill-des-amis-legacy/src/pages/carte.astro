@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Plats from '../components/Plats.astro';
+import { midi, parties, resto, t } from '../data/site';
+---
+<Base title="La carte, Le Grill des amiS à Namur" description="Entrées, plats, grillades au feu de bois, viandes à partager, bambins et boissons : la carte du Grill des amiS à Namur, du 14 octobre 2026." page="carte" image="entrecote">
+  <section class="pagehead" aria-labelledby="h-t">
+    <div class="container pagehead__in">
+      <div class="pagehead__txt">
+        <h1 id="h-t">La carte</h1>
+        <p class="lead">Carte du 14 octobre 2026, sauces et frites maison.</p>
+        <p class="pagehead__act"><a class="btn btn--primary" href={resto.reserver} rel="noopener">Réserver</a></p>
+      </div>
+      <Fig class="pagehead__fig" src="entrecote" w={1600} h={1349} hero sizes="(max-width: 60rem) 100vw, 55vw" alt="Pièce de viande grillée, sauce en petite casserole, purée et champignons sur plateau" />
+    </div>
+  </section>
+
+  <nav class="idx" aria-label="Parties de la carte">
+    <div class="container idx__in">
+      <ul>
+        <li><a href="#midi">Le midi</a></li>
+        {parties.map((p) => <li><a href={`#${p.id}`}>{t(p.titre)}</a></li>)}
+      </ul>
+    </div>
+  </nav>
+
+  <section class="sec part" id="midi" aria-labelledby="h-midi">
+    <div class="container grid12">
+      <h2 id="h-midi" class="part__t">Le midi</h2>
+      <div class="part__b"><Plats plats={midi} /></div>
+    </div>
+  </section>
+
+  {parties.map((p) => (
+    <>
+      {p.id === 'plats' && (
+        <section class="sec sec--tight" aria-label="Viande tranchée">
+          <div class="container"><Fig class="wide" src="viande-tranchee" w={1800} h={1200} sizes="(max-width: 90rem) 100vw, 1440px" pos="50% 50%" alt="Viande rouge tranchée sur un plat, purée orange" /></div>
+        </section>
+      )}
+      <section class:list={['sec part', p.id === 'grillades' && 'well grained']} id={p.id} aria-labelledby={`h-${p.id}`}>
+        <div class="container grid12">
+          <h2 id={`h-${p.id}`} class="part__t">{t(p.titre)}</h2>
+          <div class="part__b">
+            {p.blocs.map((b) => (
+              <>
+                {p.blocs.length > 1 && <h3 class="part__sub">{t(b.categorie)}</h3>}
+                <Plats plats={b.plats} />
+              </>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  ))}
+</Base>

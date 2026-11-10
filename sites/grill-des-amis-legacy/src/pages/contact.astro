@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+---
+<Base title="Contact, Le Grill des amiS à Namur" description="Téléphone, adresse et horaires du Grill des amiS, rue Saint-Joseph 10 à Namur." page="contact" hours={false} image="cocktails">
+  <section class="pagehead" aria-labelledby="h-t">
+    <div class="container pagehead__in">
+      <div class="pagehead__txt">
+        <h1 id="h-t">Contactez-nous</h1>
+        <p class="lead">Nous sommes ici, à Namur.</p>
+        <p class="pagehead__act"><a class="btn btn--primary" href={resto.telHref}>{resto.tel}</a></p>
+      </div>
+      <Fig class="pagehead__fig pagehead__fig--tall" src="cocktails" w={1080} h={1350} hero sizes="(max-width: 60rem) 100vw, 40vw" alt="Trois cocktails colorés sur un comptoir en lattes de bois" />
+    </div>
+  </section>
+
+  <section class="sec well grained" aria-labelledby="h-a">
+    <div class="container grid12 resa">
+      <div class="resa__txt">
+        <h2 id="h-a">Où nous trouver</h2>
+        <address class="addr lead"><a class="link nw" href={resto.plan} rel="noopener">{resto.rue}</a><br />{resto.ville}, Belgique</address>
+        <p class="resa__act"><a class="btn" href={resto.reserver} rel="noopener">Réserver en ligne</a></p>
+      </div>
+      <div class="resa__sched"><Horaires /></div>
+    </div>
+  </section>
+</Base>

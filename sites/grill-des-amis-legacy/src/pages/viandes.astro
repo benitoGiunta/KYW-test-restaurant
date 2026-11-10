@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { resto, viandard, t } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title="Spécial viandes, Le Grill des amiS à Namur" description="Sélection, découpe sur place, maturation dans deux chambres et grillades au feu de bois : le spécial viandes du Grill des amiS à Namur." page="viandes" image="braise">
+  <section class="pagehead" aria-labelledby="h-t">
+    <div class="container pagehead__in">
+      <div class="pagehead__txt">
+        <h1 id="h-t">Spécial viandes</h1>
+        <p class="lead">Sélection, découpe sur place, maturation, cuissons spécifiques.</p>
+        <p class="pagehead__act"><a class="btn btn--primary" href={`${base}carte/#grillades`}>Les grillades</a></p>
+      </div>
+      <Fig class="pagehead__fig pagehead__fig--tall" src="braise" w={1200} h={1800} hero sizes="(max-width: 60rem) 100vw, 40vw" alt="Viande sur la grille, flammes du feu de bois" />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-etapes">
+    <div class="container grid12">
+      <h2 id="h-etapes" class="part__t">De l’achat à l’assiette</h2>
+      <ol class="rows part__b rows--steps">
+        <li class="row"><h3 class="row__t">Sélection</h3><p class="row__d">Nous ne choisissons pas des portions, nous choisissons des pièces entières, achetées brutes auprès de fournisseurs sélectionnés pour la qualité et la régularité de leurs élevages.</p></li>
+        <li class="row"><h3 class="row__t">Découpe sur place</h3><p class="row__d">Gaëtan choisit la viande puis la découpe à Namur. La découpe respecte la fibre.</p></li>
+        <li class="row"><h3 class="row__t">Maturation</h3><p class="row__d">Deux chambres de maturation dans le restaurant : le temps affine la texture, la maturation concentre les arômes.</p></li>
+        <li class="row"><h3 class="row__t">Grillade</h3><p class="row__d">Des cuissons spécifiques pour les viandes maturées et la grillade, au feu de bois.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec sec--tight" aria-label="Préparation en cuisine">
+    <div class="container">
+      <Fig class="wide wide--tall" src="decoupe-pince" w={1600} h={1067} sizes="(max-width: 90rem) 100vw, 1440px" pos="50% 45%" alt="Mains qui préparent une tranche de viande à la pince, en gros plan" />
+      <p class="small cap">Une tranche préparée à la pince, en cuisine.</p>
+    </div>
+  </section>
+
+  <section class="sec well grained" aria-labelledby="h-vd">
+    <div class="container grid12 offer">
+      <div class="offer__txt">
+        <h2 id="h-vd">{t(viandard.nom)}</h2>
+        <p class="lead">{t(viandard.description)}</p>
+        <p class="offer__act"><a class="btn btn--primary" href={resto.reserver} rel="noopener">Réserver</a></p>
+      </div>
+      <p class="offer__price figure num">{t(viandard.prix)}</p>
+    </div>
+  </section>
+</Base>
