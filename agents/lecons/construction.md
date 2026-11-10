@@ -204,3 +204,6 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 - Une page sans favicon donne une erreur console 404 : `<link rel="icon">` en data URI dans le layout.
 - Piège : serve.mjs est dans .claude/skills/awwwards/scripts/ et meurt si on rebuild pendant qu'il tourne ; relancer après build (makimono, 10/11).
 - 2026-11-10 · pepite · awwwards (phase 1) : un titre display d'un seul mot long (« L’histoire », 10 caractères) à `--t-mega` déborde en mobile (scrollWidth 632 à 390 px) sans que `min-width: 0` n'y change rien : plafonner par `min(var(--t-mega), 16.5vw)` sur les titres de page ; copier engine, engine.css, url.ts, Photo.astro d'un site frère puis écrire tokens et pages a donné un build vert au premier essai ; le triptyque d'une photo client se recadre par `sharp.extract` (marges de 70 px pour exclure les coins arrondis).
+
+## 2026-11-10 · pepite · variante legacy (phase 1)
+- `grep '[—–]'` sur du HTML UTF-8 donne de faux positifs (« ’ » partage des octets avec ces tirets en locale C) : compter avec `python3` ou `grep -P` en UTF-8. Les lignes `waive` exigent trois champs (gate, garde, raison) séparés par « · », sinon sloplint les ignore.

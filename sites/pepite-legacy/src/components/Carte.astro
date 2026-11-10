@@ -1,0 +1,24 @@
+---
+import { menu } from '../data/site';
+---
+<section class="carte" id="carte" aria-labelledby="carte-t">
+  <div class="container carte__grid">
+    <div class="carte__tete">
+      <h2 id="carte-t">À partager cette semaine</h2>
+      <p class="carte__jours">Menu {menu.jours}</p>
+      <p class="carte__prix"><span class="figure">{menu.prix}</span><span>le menu cinq services</span></p>
+      <p>{menu.note}</p>
+      <p class="muted">{menu.verre}</p>
+    </div>
+    <ol class="rows">
+      {menu.plats.map((p) => (
+        <li class="row">
+          <span class="row__n num">{p.n}</span>
+          <h3>{p.titre}</h3>
+          {p.detail && <p>{p.detail}</p>}
+        </li>
+      ))}
+    </ol>
+    <p class="carte__pied">{menu.fromages}. {menu.avis}</p>
+  </div>
+</section>
