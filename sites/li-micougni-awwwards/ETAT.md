@@ -1,4 +1,4 @@
-# ETAT.md · Li Micougni · awwwards · construction phase 2
+# ETAT.md · Li Micougni · awwwards · construction phase 3 (QA)
 
 ## Fait (phase 1)
 - Brief, concepts, Concept Card « Les demi-fous », système, plan, checklist 1 à 18 (DESIGN.md).
@@ -29,3 +29,7 @@
 - `--ecart` est en `em` : pas de `@property` possible (une valeur initiale en em est refusée) ; le survol passe par un multiplicateur `--k` (0 = recollé) avec `transition: translate` sur `.demi__b`, jamais sur les titres pilotés par le ticker.
 - Une variable posée en ligne par GSAP (`--ecart` des liens du menu) bat la feuille : le survol agit sur `--k`, pas sur `--ecart`.
 - Serveur de mesure : `python3 -m http.server 4400 --directory dist`, PID noté puis `kill`.
+
+## Phase 3 (QA)
+- Fait : FAIL titres dupliqués corrigés (Demi en ::before), titre accueil raccourci, og.png composée, audit 0 FAIL, RAPPORT.md écrit.
+- Reste : passe jury indépendante (/jury), relecture contrastNeedsReview, shoot ciblé carte/réservation.
