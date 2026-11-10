@@ -15,10 +15,18 @@ export function etatOuverture(services: Service[], quand = new Date()) {
   const m = (hm: string) => { const [h, mm] = hm.split(':').map(Number); return h * 60 + mm; };
   const creneaux = services.find((s) => s.j.includes(jour))?.h ?? [];
   for (const [o, c] of creneaux) {
-    if (min >= m(o) && min < m(c)) return { ouvert: true, texte: `Ouvert, cuisine jusqu’à ${heure(c)}` };
+    if (min >= m(o) && min < m(c)) return { ouvert: true, texte: `Ouvert jusqu’à ${heure(c)}` };
     if (min < m(o)) return { ouvert: false, texte: `Fermé, la cuisine ouvre à ${heure(o)}` };
   }
-  return { ouvert: false, texte: `Fermé, demain dès 12${N}h` };
+  const jours = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const noms = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
+  const i0 = jours.indexOf(jour);
+  for (let d = 1; d <= 7; d++) {
+    const k = (i0 + d) % 7;
+    const h = services.find((s) => s.j.includes(jours[k]))?.h?.[0];
+    if (h) return { ouvert: false, texte: `Fermé, rouvre ${d === 1 ? 'demain' : noms[k]} à ${heure(h[0])}` };
+  }
+  return { ouvert: false, texte: 'Fermé' };
 }
 
 function initEtat() {

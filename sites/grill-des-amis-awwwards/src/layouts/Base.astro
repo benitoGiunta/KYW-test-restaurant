@@ -21,7 +21,6 @@ const jsonLd = {
   description: site.description,
   url: new URL(asset('/'), siteUrl).href,
   telephone: site.telephone,
-  priceRange: '€€',
   servesCuisine: site.typeCuisine,
   image: ogImage,
   address: { '@type': 'PostalAddress', streetAddress: `${site.adresse.rue} ${site.adresse.numero}`, postalCode: site.adresse.cp, addressLocality: site.adresse.commune, addressCountry: site.adresse.pays },
@@ -39,7 +38,7 @@ const jsonLd = {
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
-    <link rel="canonical" href={canonical} />
+    {page !== '404' && <link rel="canonical" href={canonical} />}
     <meta name="theme-color" content="#14100e" />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
     <link rel="icon" href={asset('/favicon-32.png')} type="image/png" sizes="32x32" />

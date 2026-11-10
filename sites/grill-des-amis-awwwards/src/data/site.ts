@@ -36,8 +36,8 @@ export const fermes = 'Mardi, mercredi, dimanche : fermé (à confirmer)';
 
 export const gestes = [
   { verbe: 'Acheter', texte: 'De grosses pièces, brutes, chez des fournisseurs choisis. L’entrecôte du moment suit l’arrivage de Rungis.', photo: null },
-  { verbe: 'Découper', texte: 'Gaëtan découpe sur place : côte à l’os, hampe, onglet. Ce qui part au gril est taillé dans la maison.', photo: 'decoupe' },
-  { verbe: 'Maturer', texte: 'Deux chambres de maturation éclairées en bleu, à vue de la salle. La côte de porc Duroc d’Olive y reste 14 jours.', photo: 'chambre' },
+  { verbe: 'Découper', texte: 'Gaëtan découpe sur place la côte à l’os. Ce qui part au gril est taillé dans la maison.', photo: 'decoupe' },
+  { verbe: 'Maturer', texte: 'Deux chambres de maturation éclairées en bleu. La côte de porc Duroc d’Olive y reste 14 jours.', photo: 'chambre' },
   { verbe: 'Griller', texte: 'Au feu de bois, à la pince, sur la grille. Les sauces sont préparées sur place, les frites sont maison.', photo: 'grill' },
 ] as const;
 
