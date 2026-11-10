@@ -5,11 +5,13 @@ import Pont from './Pont.astro';
 import { site, creneaux } from '../data/site';
 const { page = 'page' } = Astro.props;
 ---
-<footer class="pied">
+<section class="pied" aria-label="Coordonnées">
   <Pont id="pont-pied" />
   <div class="wrap">
     <p class="pied__mot" aria-hidden="true" data-split="lines">De l’autre côté,<span class="it">on vous attend.</span></p>
-    <div class="grille pied__grille">
+    {page === 'reservation'
+      ? <div class="pied__grille"></div>
+      : <div class="grille pied__grille">
       <div class="pied__col">
         <h2>Adresse</h2>
         <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
@@ -23,9 +25,9 @@ const { page = 'page' } = Astro.props;
         <h2>Contact</h2>
         <p><a class="pied__tel" href={site.telephone.href}><span class="nw">{site.telephone.lisible}</span></a><br /><a class="lien" href={`mailto:${site.email}`}>{site.email}</a><br /><a class="lien" href={site.reseaux[0].url} rel="noopener noreferrer">{site.reseaux[0].nom}</a></p>
       </div>
-      {page !== 'reservation' && <div class="pied__cta"><a class="cta" href={u('/reservation/')}>Réserver une table</a></div>}
-    </div>
+      <div class="pied__cta"><a class="cta" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>}
     <p class="pied__colophon">{site.credit}. Polices : Boska (Indian Type Foundry, Fontshare) et Hanken Grotesk (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
   </div>
-</footer>
+</section>
 <KywFooter base={import.meta.env.BASE_URL} />

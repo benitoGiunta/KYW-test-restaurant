@@ -57,6 +57,6 @@ export const menu = {
 export const histoire = [
   'Le Ponti 2 est un restaurant italien et une pizzeria de Jambes, à Namur, installé avenue du Bourgmestre Jean Materne. L’esprit est familial, la carte est franchement italienne.',
   'Elle compte vingt pizzas, treize pâtes, des escalopes de veau panées, gratinées ou en saltimbocca à la romana, et des desserts faits maison : tiramisu aux fruits rouges, mousse au chocolat, sabayon minute.',
-  'Au comptoir, des cocktails signature, dont le Spritz Ponti. Quand la météo le permet, la terrasse est ouverte.',
+  'La carte propose des cocktails signature, dont le Spritz Ponti. Quand la météo le permet, la terrasse est ouverte.',
 ];
 export const equipe: { nom: string; role: string; placeholder?: boolean }[] = [];
