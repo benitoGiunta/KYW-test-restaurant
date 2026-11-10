@@ -279,6 +279,7 @@ html.menu-ouvert { overflow: hidden; }
 .budget__input { position: absolute; inset: 0 0 1.6rem; width: 100%; height: auto; margin: 0; opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; background: transparent; }
 .budget__input::-webkit-slider-thumb { -webkit-appearance: none; width: 2px; height: 4rem; }
 .budget__input::-moz-range-thumb { width: 2px; height: 4rem; border: 0; }
+.budget__input:focus-visible { outline: 2px solid var(--focus); outline-offset: 6px; }
 .budget__piste:has(:focus-visible) { outline: 2px solid var(--focus); outline-offset: 6px; }
 .budget__piste:has(:focus-visible) .budget__pin b, .budget__piste:active .budget__pin b { background: var(--c-fg); color: var(--c-accent); }
 @media (hover: hover) { .budget__piste:hover .budget__pin b { background: var(--c-fg); color: var(--c-accent); } }
@@ -297,3 +298,8 @@ html.menu-ouvert { overflow: hidden; }
 @media (hover: hover) { .plat:hover .plat__prix { background: var(--c-accent); color: var(--c-fg); } }
 @media (max-width: 63.99rem) { .hero .echelle { height: 5.5rem; } }
 @media (min-width: 64rem) { .hero__legende { display: none; } }
+
+/* Logo : même état au survol et au focus (décalage d'un cran sur la règle). */
+.tete__logo { transition: translate 0.2s steps(3); }
+.tete a:focus-visible .tete__logo, .tete a:active .tete__logo { translate: 0 -3px; }
+@media (hover: hover) { .tete a:hover .tete__logo { translate: 0 -3px; } }

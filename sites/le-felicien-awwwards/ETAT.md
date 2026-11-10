@@ -1,4 +1,4 @@
-# ETAT · le-felicien · awwwards · construction-2 (phase 2 sur 3)
+# ETAT · le-felicien · awwwards · construction-3 (phase 3 sur 3, terminée)
 
 ## Fait (phase 1)
 Voir l'historique git : concept « L'échelle », système, scaffold, 5 pages statiques, favicon, OG, build.
@@ -24,3 +24,8 @@ Voir l'historique git : concept « L'échelle », système, scaffold, 5 pages st
 - Les lignes hors budget passent en `--c-muted` + prix biffé, jamais en opacité (axe).
 - Le `<dialog>` du menu se ferme au clic sur un lien avant la navigation (sinon il reste au-dessus du rideau).
 - L'état d'ouverture ne gère pas les veilles de jours fériés (22 h) : la note des horaires le dit.
+
+## Fait (phase 3)
+QA sur QA-build.md : horaires dupliqués pied/page corrigés, hover du logo, focus de l'input range. Reservation capturée. Build et audit : 0 FAIL. RAPPORT.md écrit.
+## Reste
+Score jury indépendant (`/jury`), test tactile réel du curseur, `invisibleFocus` sur l'input = faux positif (opacité 0).

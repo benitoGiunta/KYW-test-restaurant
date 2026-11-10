@@ -3,6 +3,7 @@ import KywFooter from '@kyw/footer';
 import Echelle from './Echelle.astro';
 import { u } from '../lib/url';
 import { site, services, horairesNote } from '../data/site';
+const horairesDeja = /(awwwards|reservation)\/?$/.test(Astro.url.pathname);
 ---
 <section class="pied" aria-label="Contact et horaires">
   <div class="wrap pied__corps">
@@ -15,10 +16,14 @@ import { site, services, horairesNote } from '../data/site';
     </div>
     <div class="pied__col">
       <h2 class="pied__titre">Ouvert 7 jours sur 7</h2>
-      <ul class="pied__horaires">
-        {services.map((s) => <li><span>{s.jours}</span><span>{s.midi}<br />{s.soir}</span></li>)}
-      </ul>
-      <p class="pied__note">{horairesNote}</p>
+      {horairesDeja
+        ? <p class="pied__note">Cuisine ouverte midi et soir, tous les jours : les horaires détaillés sont sur cette page.</p>
+        : <>
+            <ul class="pied__horaires">
+              {services.map((s) => <li><span>{s.jours}</span><span>{s.midi}<br />{s.soir}</span></li>)}
+            </ul>
+            <p class="pied__note">{horairesNote}</p>
+          </>}
     </div>
     <div class="pied__col">
       <h2 class="pied__titre">Contact</h2>
