@@ -20,3 +20,4 @@
 - Un espace en tête d'un `<span>` dans un `inline-flex` est supprimé : envelopper tout le libellé d'un bouton dans un `<span>`.
 - Le linter exige `.js` dans le sélecteur d'un état caché au repos : `.js.reveal-on [data-reveal]`.
 - Pas de formulaire, pas de switcher : rien à y ajouter, la réservation est le lien Barestho.
+- sloplint statique : 1 WARN F15 (trois écarts de colonnes : 24, 32, 64 px ; 24 px vient probablement de .nav__bar et .actions) à trancher en phase 3.
