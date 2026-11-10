@@ -8,7 +8,7 @@ export const site = {
   nom: 'Pépite, cave à manger',
   court: 'Pépite',
   baseline: 'Cave à manger',
-  description: 'Pépite, cave à manger au 44 rue Notre-Dame à Namur : assiettes à partager, vins d’auteurs élaborés dans le respect du vivant, boutique et soirées aux bougies.',
+  description: 'Pépite, cave à manger au 44 rue Notre-Dame à Namur : assiettes à partager, vins d’auteurs, boutique et soirées aux bougies.',
   typeCuisine: 'Assiettes à partager, vins d’auteurs',
   adresse: { rue: 'Rue Notre-Dame', numero: '44', cp: '5000', commune: 'Namur', pays: 'BE' },
   geo: { lat: 50.4601105, lon: 4.8665145 },

@@ -3,16 +3,16 @@ import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import Etapes from '../components/Etapes.astro';
 import { u } from '../lib/url';
-import { site, horaires, fermes, semaine, citation, boissons, colis } from '../data/site';
+import { site, horaires, semaine, citation, boissons, colis } from '../data/site';
 ---
-<Base page="accueil" description="Pépite, cave à manger au 44 rue Notre-Dame à Namur : assiettes à partager, vins d’auteurs élaborés dans le respect du vivant, boutique et soirées à la bougie, du jeudi au samedi.">
+<Base page="accueil" description="Pépite, cave à manger au 44 rue Notre-Dame à Namur : assiettes à partager, vins d’auteurs, boutique et soirées à la bougie, du jeudi au samedi.">
   <section class="hero wrap grid">
     <h1 class="hero__titre display"><span class="hero__nom" data-split="chars" data-intro>Pépite</span><span class="hero__sous" data-split="words" data-intro data-delay="0.35">cave à manger</span></h1>
     <figure class="hero__photo"><span class="fil" data-fil aria-hidden="true"><span class="fil__trait"><i class="fil__lueur"></i></span><i class="fil__pepite"></i></span><div class="hero__cadre" data-reveal="clip" data-intro data-delay="0.1"><Photo cle="cave" widths={[480, 598]} sizes="(max-width: 48rem) 70vw, 30vw" prioritaire /></div></figure>
-    <div class="hero__bas" data-reveal="up" data-intro data-delay="0.5">
+    <div class="hero__bas">
       <p class="lead">Une boutique de vins d’auteurs et des assiettes à partager, au 44 rue Notre-Dame, à Namur.</p>
-      <p class="hero__quand">Jeudi, vendredi, samedi. Cave à manger dès 19 h.</p>
-      <p class="hero__actions"><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver</span></a><a class="lien" href={site.telephoneHref}>Appeler le {site.telephoneLisible}</a></p>
+      <p class="hero__quand" data-reveal="up" data-intro data-delay="0.5">Jeudi, vendredi, samedi. Cave à manger dès 19 h.</p>
+      <p class="hero__actions" data-reveal="up" data-intro data-delay="0.65"><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver</span></a><a class="lien" href={site.telephoneHref}>Appeler le {site.telephoneLisible}</a></p>
     </div>
   </section>
 
@@ -69,7 +69,7 @@ import { site, horaires, fermes, semaine, citation, boissons, colis } from '../d
         <ul class="horaires">
           {horaires.map((h) => <li><span>{h.jour}</span><span>boutique {h.boutique}</span><span>cave {h.cave}</span></li>)}
         </ul>
-        <p class="pied__doux">{fermes}</p>
+        <p class="pied__doux">Fermé du dimanche au mercredi.</p>
       </div>
       <address class="pratique__adresse">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}<br /><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></address>
       <p class="pratique__cta"><a class="cta cta--grand" href={u('/reservation/')} data-magnetic="0.2"><span class="cta__txt">Réserver une table</span></a></p>

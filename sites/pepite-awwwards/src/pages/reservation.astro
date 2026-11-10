@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, horaires, fermes } from '../data/site';
+import { site, horaires } from '../data/site';
 ---
 <Base page="reservation" title="Réserver" description="Réserver une table chez Pépite, cave à manger à Namur : par téléphone, par e-mail ou sur le site de la maison. Horaires du jeudi au samedi, adresse et accès.">
   <section class="page-tete wrap">
@@ -22,7 +22,7 @@ import { site, horaires, fermes } from '../data/site';
         <ul class="horaires">
           {horaires.map((h) => <li><span>{h.jour}</span><span>boutique {h.boutique}</span><span>cave {h.cave}</span></li>)}
         </ul>
-        <p class="pied__doux">{fermes}</p>
+        <p class="pied__doux">Fermé du dimanche au mercredi.</p>
         <h2 class="pied__titre">Adresse</h2>
         <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}<br /><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></address>
         <h2 class="pied__titre">Accès et paiement</h2>
