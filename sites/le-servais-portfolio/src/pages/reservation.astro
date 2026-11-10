@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import Badge from '../components/Badge.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, adresseLigne, telHref, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const salle = photoDe('/photos/terrasse.webp');
+---
+<Base title="Réservation" theme="aube" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}, ou par téléphone au ${site.telephone}.`}>
+  <section class="section" data-ciel="aube">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p data-reveal="fade" data-intro style="margin-bottom: calc(var(--u) * 2)"><Badge /></p>
+        <h1 class="t-xl" data-split="lines" data-intro>Réserver</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">La réservation se fait en ligne. Pour un groupe, consultez la page <a class="link" href={u('/groupes/')}>groupes et privatisation</a>.</p>
+        <div class="actions" data-reveal="up" data-intro data-delay="0.3">
+          <a class="btn btn--solid" href={site.reservation.url} rel="noopener" data-magnetic="0.2">Réserver en ligne</a>
+          <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+        </div>
+      </div>
+      <div class="c8-12" data-reveal="up" data-intro data-delay="0.2">
+        <p class="chapeau">Horaires</p>
+        <Horaires />
+        <p class="note" style="margin-top: calc(var(--u) * 2)"><strong>Adresse</strong><br />{adresseLigne()}, au départ du téléphérique<br /><strong>Téléphone</strong><br />{site.telephone}<span class="tag">à confirmer</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="midi">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau">Votre demande</p>
+        <h2 class="t-l" data-split="words">Dites-nous quand</h2>
+        <p class="note" style="margin-block: var(--u) calc(var(--u) * 2)">Formulaire de démonstration sans envoi : la validation vous conduit vers la réservation en ligne.</p>
+        <form class="form" data-reservation data-reveal="up" action={site.reservation.url} method="get">
+          <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
+          <label>Date <input type="date" name="date" required /></label>
+          <label>Heure <input type="time" name="heure" required /></label>
+          <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
+          <label>Message <textarea name="message" rows="3"></textarea></label>
+          <div class="actions" style="margin-top: 0">
+            <button class="btn btn--solid" type="submit">Continuer vers la réservation en ligne</button>
+          </div>
+        </form>
+      </div>
+      <figure class="c8-12 photo photo--4x5" data-reveal="scale">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { onPage } from '../engine';
+  // Formulaire sans backend : à la validation, on ouvre l'outil de réservation réel (les champs ne sont pas transmis).
+  onPage(() => {
+    const form = document.querySelector<HTMLFormElement>('[data-reservation]');
+    if (!form) return; // tourne sur chaque page : vérifier la présence
+    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    form.addEventListener('submit', go);
+    return () => form.removeEventListener('submit', go);
+  });
+</script>

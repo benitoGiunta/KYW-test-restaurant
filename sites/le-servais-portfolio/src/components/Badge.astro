@@ -1,0 +1,15 @@
+---
+// Badge « ouvert jusqu'à 21:00 » / « ouvre à 19:00 » : calculé côté client à partir des horaires réels
+// (site.horaires), rendu d'abord avec la ligne du jour courant au build pour ne pas clignoter.
+// Au survol ou au focus : les horaires complets du jour.
+import { site, horaireTexte } from '../data/site';
+const { compact = false } = Astro.props as { compact?: boolean };
+const data = JSON.stringify(site.horaires.map((h) => ({ j: h.jour, c: h.creneaux, n: h.note || '' })));
+---
+<div class:list={['badge', { 'badge--compact': compact }]} data-badge data-horaires={data}>
+  <span class="badge__point" data-badge-point aria-hidden="true"></span>
+  <span class="badge__texte" data-badge-texte>Horaires du jour</span>
+  <span class="badge__bulle" data-badge-bulle role="tooltip">
+    {site.horaires.map((h) => <span><b>{h.jour}</b> {horaireTexte(h)}</span>)}
+  </span>
+</div>

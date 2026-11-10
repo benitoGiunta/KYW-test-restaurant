@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Lignes from '../components/Lignes.astro';
+import { site, rubriques, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const bande = photoDe('/photos/bar-comptoir.webp');
+const themes = ['aube', 'midi', 'ocre', 'midi', 'aube', 'ocre', 'corail', 'nuit', 'nuitProfonde'];
+---
+<Base title="La carte" theme="midi" description={`La carte du ${site.nom} à ${site.adresse.commune} : petit-déjeuner, plats à partager, brasserie, desserts, cocktails, bières pression et boissons chaudes.`}>
+  <section class="section" data-ciel="midi">
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro>La carte</p>
+      <h1 class="t-xl" data-split="lines" data-intro>Du matin au dernier verre</h1>
+      <p class="lead" style="margin-top: calc(var(--u) * 2)">Le menu Cuisine et un extrait du menu Bar, avec leurs prix. Les cocktails sont en 3+1 tous les jours de 18h à 20h.</p>
+      <ul class="chips" style="margin-top: calc(var(--u) * 3)" aria-label="Rubriques de la carte">
+        {rubriques.map((r) => <li><a class="chip" href={`#${r.id}`}><span class="chip__t">{r.titre}</span></a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  {rubriques.map((r, i) => (
+    <section class="section" id={r.id} data-ciel={themes[i]} aria-labelledby={`c-${r.id}`}>
+      <div class="wrap cols">
+        <div class="c1-5">
+          <h2 class="moment__titre" id={`c-${r.id}`} data-split="words">{r.titre}</h2>
+          {r.note && <p class="note">{r.note}</p>}
+        </div>
+        <Lignes lignes={r.lignes} class="c7-12" />
+      </div>
+    </section>
+  ))}
+
+  <section class="section" data-ciel="nuitProfonde">
+    <div class="wrap">
+      <figure class="photo photo--large" data-reveal="clip">
+        <img src={asset(bande.src)} alt={bande.alt} width={bande.largeur} height={bande.hauteur} loading="lazy" decoding="async" data-parallax="0.1" />
+      </figure>
+      <div class="actions">
+        <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+        <a class="btn" href={u('/groupes/')}>Groupes et privatisation</a>
+      </div>
+    </div>
+  </section>
+</Base>

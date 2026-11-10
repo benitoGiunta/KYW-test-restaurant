@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, privatisation, photoDe, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const veranda = photoDe('/photos/veranda.webp');
+const carre = photoDe('/photos/veranda-carre.webp');
+---
+<Base title="Groupes et privatisation" theme="ocre" description={`Groupes et privatisation au ${site.nom} à ${site.adresse.commune} : la Verrière de 12 à 30 convives assis, le bar entier dès 60 personnes, formules dès 10 € par personne.`}>
+  <section class="section" data-ciel="ocre">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>Groupes et privatisation</p>
+        <h1 class="t-xl" data-split="lines" data-intro>La Verrière, ou tout le bar</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">{privatisation.verriere} {privatisation.bar}</p>
+        <div class="actions" data-reveal="up" data-intro data-delay="0.3">
+          <a class="btn btn--solid" href={`mailto:${site.email.valeur}`} data-magnetic="0.2">Écrire à la maison</a>
+          <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+        </div>
+      </div>
+      <figure class="c8-12 photo photo--4x5">
+        <img src={asset(veranda.src)} alt={veranda.alt} width={veranda.largeur} height={veranda.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+        <figcaption class="note">Photo d’origine à confirmer<span class="tag">illustratif</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Les formules</p>
+        <h2 class="t-xl" data-split="words">Pour quatre moments</h2>
+      </div>
+      <div class="grid">
+        {site.menus.map((me, i) => (
+          <article class="carte" data-reveal="up" data-delay={String(i * 0.08)}>
+            <h3>{me.nom}</h3>
+            <p class="carte__prix num">{me.prix}</p>
+            <p class="t-s muted">{me.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="midi">
+    <div class="wrap cols">
+      <figure class="c1-6 photo photo--4x3" data-reveal="scale">
+        <img src={asset(carre.src)} alt={carre.alt} width={carre.largeur} height={carre.hauteur} loading="lazy" decoding="async" />
+      </figure>
+      <div class="c8-12">
+        <p class="chapeau">Carte cadeau</p>
+        <h2 class="t-l" data-split="words">Une carte cadeau en ligne</h2>
+        <p class="note" style="margin-top: var(--u)">Le site actuel de la maison propose une carte cadeau en ligne.</p>
+        <div class="actions"><a class="btn" href={site.url} rel="noopener">Voir sur leservais.be</a> <a class="btn" href={u('/reservation/')}>Réserver une table</a></div>
+      </div>
+    </div>
+  </section>
+</Base>

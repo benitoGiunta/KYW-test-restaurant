@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import Lignes from '../components/Lignes.astro';
+import { site, rubriques, moments, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const matin = moments.find((m) => m.id === 'm-9h')!;
+const pdj = rubriques.find((r) => r.id === 'petit-dejeuner')!;
+const hero = photoDe('/photos/petit-dejeuner.webp');
+const plats = [
+  { photo: photoDe('/photos/tasse-turquoise.webp'), titre: 'Café au lait', texte: 'Tasse turquoise sur marbre' },
+  { photo: photoDe('/photos/jus-croissant.webp'), titre: 'Jus et viennoiserie', texte: 'Le croissant est à 3 €' },
+];
+const terrasse = photoDe('/photos/terrasse-large.webp');
+---
+<Base title="Petit-déjeuner" theme="aube" description={`Le petit-déjeuner du week-end au ${site.nom} à ${site.adresse.commune} : pancakes, pain perdu, œufs et café, samedi et dimanche de 9h30 à 11h30.`}>
+  <section class="section" data-ciel="aube">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>Samedi et dimanche, de 9h30 à 11h30</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Le petit-déjeuner</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">{matin.accroche}</p>
+        <div class="actions" data-reveal="up" data-intro data-delay="0.3">
+          <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+          <a class="btn" href={u('/groupes/')}>Petit-déjeuner et brunch de groupe</a>
+        </div>
+      </div>
+      <figure class="c8-12 photo photo--4x5">
+        <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="ocre">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">À la table en marbre</p>
+        <h2 class="t-xl" data-split="words">Café, jus, croissant</h2>
+      </div>
+      <ul class="medaillons" data-medaillons tabindex="0" aria-label="Le petit-déjeuner en photos" style="grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 44rem">
+        {plats.map((md, i) => (
+          <li>
+            <div class="medaillon">
+              <div class="medaillon__photo"><img src={asset(md.photo.src)} alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
+              <svg class="medaillon__anneau" viewBox="0 0 200 200" aria-hidden="true">
+                <defs><path id={`barc-${i}`} d="M100,100 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
+                <text><textPath href={`#barc-${i}`}>{md.titre} · Le Servais · {md.titre} · Le Servais ·</textPath></text>
+              </svg>
+            </div>
+            <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="midi">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau">La carte du matin</p>
+        <h2 class="t-l" data-split="words">Petit-déjeuner</h2>
+        <Lignes lignes={pdj.lignes} style="margin-top: calc(var(--u) * 2)" />
+      </div>
+      <figure class="c8-12 photo photo--4x3" data-reveal="scale">
+        <img src={asset(terrasse.src)} alt={terrasse.alt} width={terrasse.largeur} height={terrasse.hauteur} loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,170 @@
+---
+import Base from '../layouts/Base.astro';
+import Badge from '../components/Badge.astro';
+import Icone from '../components/Icone.astro';
+import Horaires from '../components/Horaires.astro';
+import Lignes from '../components/Lignes.astro';
+import { site, moments, happyHour, photoDe, itineraire } from '../data/site';
+import { u, asset } from '../lib/url';
+
+const icones = ['tasse', 'assiette', 'couverts', 'verre', 'cloche', 'lune'];
+const m = Object.fromEntries(moments.map((x) => [x.id, x]));
+const matin = m['m-9h'], midi = m['m-11h30'], partage = m['m-16h'], apero = m['m-18h'], soir = m['m-20h'], nuit = m['m-23h'];
+const photoMatin = photoDe(matin.photo!), photoPartage = photoDe(partage.photo!), photoApero = photoDe(apero.photo!), photoSoir = photoDe(soir.photo!);
+const medaillons = [
+  { photo: photoDe('/photos/spaghetti-carre.webp'), titre: 'Spaghetti bolognaise', texte: 'Dans l’assiette « Le Servais »' },
+  { photo: photoDe('/photos/biere-main.webp'), titre: 'Duvel à la pression', texte: 'Avec les plats, au comptoir ou en terrasse' },
+];
+---
+<Base theme="aube">
+  <div data-accueil>
+    <section class="hero" id="accueil" data-ciel="auto" aria-labelledby="titre">
+      <div class="wrap">
+        <div class="hero__haut">
+          <Badge />
+          <p class="horloge" aria-label="Heure locale">
+            <svg class="horloge__ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="fond" cx="18" cy="18" r="15.9" /><circle class="cran" cx="18" cy="18" r="15.9" pathLength="100" data-horloge-ring /></svg>
+            <span class="horloge__hm num" data-horloge-hm>--:--</span>
+            <span class="horloge__s num" data-horloge-s aria-hidden="true"></span>
+          </p>
+        </div>
+        <h1 class="hero__nom t-mega" id="titre">Le<br />Servais</h1>
+        <p class="hero__baseline lead">Au départ du téléphérique, à Namur : un café dès 9h, des boulets liégeois à midi, des cocktails à 18h et un dernier verre jusqu’à 1h.</p>
+        <ul class="chips" data-reveal="up" data-intro data-delay="0.35" aria-label="Les moments de la journée">
+          {moments.map((x, i) => (
+            <li><a class="chip" href={`#${x.id}`} data-chip={x.id}><Icone nom={icones[i]} /><span class="chip__h">{x.heureTexte}</span><span class="chip__t">{x.titre}</span></a></li>
+          ))}
+        </ul>
+        <p class="maintenant" data-maintenant hidden>
+          <a class="maintenant__lien" href="#accueil" data-maintenant-lien><span class="maintenant__point" aria-hidden="true"></span><span data-maintenant-texte>Aller au moment présent</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" /></svg></a>
+        </p>
+      </div>
+    </section>
+
+    <section class="moment moment--split" id={matin.id} data-ciel={matin.theme} aria-labelledby="t-9h">
+      <div class="wrap cols">
+        <div class="c1-6">
+          <div class="moment__tete">
+            <p class="moment__heure num" data-split="chars">{matin.heureTexte}</p>
+            <h2 class="moment__titre" id="t-9h" data-split="words">{matin.titre}</h2>
+          </div>
+          <p class="moment__accroche" data-reveal="fade">{matin.accroche}</p>
+          <Lignes lignes={matin.lignes} />
+          <p class="actions"><a class="fleche" href={u('/petit-dejeuner/')}>Tout le petit-déjeuner <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a></p>
+        </div>
+        <figure class="c8-12 photo photo--4x5" data-reveal="clip">
+          <img src={asset(photoMatin.src)} alt={photoMatin.alt} width={photoMatin.largeur} height={photoMatin.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="moment" id={midi.id} data-ciel={midi.theme} aria-labelledby="t-11h30">
+      <div class="wrap">
+        <div class="moment__tete">
+          <p class="moment__heure num" data-split="chars">{midi.heureTexte}</p>
+          <h2 class="moment__titre" id="t-11h30" data-split="words">{midi.titre}</h2>
+        </div>
+        <div class="cols">
+          <p class="c1-6 moment__accroche">{midi.accroche}</p>
+          <ul class="c1-10 medaillons" data-medaillons tabindex="0" aria-label="Assiette et verre du déjeuner" style="grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 44rem">
+            {medaillons.map((md, i) => (
+              <li>
+                <div class="medaillon">
+                  <div class="medaillon__photo"><img src={asset(md.photo.src)} alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
+                  <svg class="medaillon__anneau" viewBox="0 0 200 200" aria-hidden="true">
+                    <defs><path id={`arc-${i}`} d="M100,100 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
+                    <text><textPath href={`#arc-${i}`} startOffset="0">{md.titre} · Le Servais · {md.titre} · Le Servais ·</textPath></text>
+                  </svg>
+                </div>
+                <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}</p>
+              </li>
+            ))}
+          </ul>
+          <div class="c1-6">
+            <Lignes lignes={midi.lignes} />
+            <div class="actions"><a class="btn" href={u('/carte/')}>Toute la carte</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="moment moment--split" id={partage.id} data-ciel={partage.theme} aria-labelledby="t-16h">
+      <div class="wrap cols">
+        <figure class="c1-5 photo photo--4x5" data-reveal="clip">
+          <img src={asset(photoPartage.src)} alt={photoPartage.alt} width={photoPartage.largeur} height={photoPartage.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        </figure>
+        <div class="c7-12">
+          <div class="moment__tete">
+            <p class="moment__heure num" data-split="chars">{partage.heureTexte}</p>
+            <h2 class="moment__titre" id="t-16h" data-split="words">{partage.titre}</h2>
+          </div>
+          <p class="moment__accroche" data-reveal="fade">{partage.accroche}</p>
+          <Lignes lignes={partage.lignes} />
+        </div>
+      </div>
+    </section>
+
+    <section class="moment" id={apero.id} data-ciel={apero.theme} aria-labelledby="t-18h">
+      <div class="wrap">
+        <div class="moment__tete">
+          <p class="moment__heure num" data-split="chars">{apero.heureTexte}</p>
+          <h2 class="moment__titre" id="t-18h" data-split="words">{apero.titre}, de 18h à 20h</h2>
+        </div>
+        <div class="cols" style="margin-bottom: calc(var(--u) * 3)">
+          <p class="c1-6 moment__accroche" style="margin-bottom: 0">{apero.accroche}</p>
+          <p class="c8-12" data-reveal="fade"><span class="happy"><Icone nom="verre" />{happyHour.texte}</span></p>
+        </div>
+        <ul class="bande lignes" data-reveal="up" tabindex="0" aria-label="Cocktails, défilables">
+          <li class="carte-apero carte-apero--photo"><img src={asset(photoApero.src)} alt={photoApero.alt} width={photoApero.largeur} height={photoApero.hauteur} loading="lazy" decoding="async" /></li>
+          {apero.lignes.map((x) => (
+            <li class="carte-apero">
+              <p class="carte-apero__nom">{x.nom}</p>
+              <p>{x.detail && <span class="t-s muted">{x.detail}<br /></span>}<span class="carte-apero__prix">{x.prix}</span></p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="moment moment--pair" id={soir.id} data-ciel={soir.theme} aria-labelledby="t-20h">
+      <div class="wrap cols">
+        <figure class="c1-5 photo photo--4x5" data-reveal="clip">
+          <img src={asset(photoSoir.src)} alt={photoSoir.alt} width={photoSoir.largeur} height={photoSoir.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        </figure>
+        <div class="c7-12">
+          <div class="moment__tete">
+            <p class="moment__heure num" data-split="chars">{soir.heureTexte}</p>
+            <h2 class="moment__titre" id="t-20h" data-split="words">{soir.titre}</h2>
+          </div>
+          <p class="moment__accroche" data-reveal="fade">{soir.accroche}</p>
+          <Lignes lignes={soir.lignes} />
+          <div class="actions" style="margin-top: calc(var(--u) * 2)">
+            <a class="btn btn--soleil" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+            <a class="btn" href={u('/carte/')}>La carte</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="moment" id={nuit.id} data-ciel={nuit.theme} aria-labelledby="t-23h">
+      <div class="wrap cols">
+        <div class="c1-6">
+          <div class="moment__tete">
+            <p class="moment__heure num" data-split="chars">{nuit.heureTexte}</p>
+            <h2 class="moment__titre" id="t-23h" data-split="words">{nuit.titre}</h2>
+          </div>
+          <p class="statement" data-split="lines">{nuit.accroche}</p>
+          <Lignes lignes={nuit.lignes} style="margin-top: calc(var(--u) * 4); max-width: 28rem" />
+        </div>
+        <div class="c8-12" data-reveal="up">
+          <p class="chapeau">Horaires de la semaine</p>
+          <Horaires />
+          <div class="actions">
+            <a class="btn btn--soleil" href={u('/reservation/')}>Réserver</a>
+            <a class="btn" href={itineraire()} rel="noopener">Itinéraire</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>

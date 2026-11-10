@@ -1,0 +1,33 @@
+---
+// Pied de page finale (nuit) : nom géant, adresse, contacts, réseaux ; puis le pied de page KYW obligatoire.
+import KywFooter from '@kyw/footer';
+import { site, adresseLigne, telHref } from '../data/site';
+import { u } from '../lib/url';
+---
+<footer class="footer" data-theme-footer>
+  <div class="wrap">
+    <p class="footer__nom" aria-hidden="true">{site.nom}</p>
+    <div class="footer__cols">
+      <div class="stack">
+        <p class="footer__titre">{site.nom}</p>
+        <address>{adresseLigne()}</address>
+        <p><a class="link" href={telHref()}>{site.telephone}</a><span class="tag">à confirmer</span></p>
+        <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
+      </div>
+      <div class="stack">
+        <p class="footer__titre">Le site</p>
+        <p><a class="link" href={u('/carte/')}>La carte</a></p>
+        <p><a class="link" href={u('/petit-dejeuner/')}>Le petit-déjeuner</a></p>
+        <p><a class="link" href={u('/groupes/')}>Groupes et privatisation</a></p>
+        <p><a class="link" href={u('/maison/')}>La maison</a></p>
+        <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+      </div>
+      <div class="stack">
+        <p class="footer__titre">Suivre</p>
+        {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
+        <p><a class="link" href={site.reservation.url} rel="noopener">Réservation en ligne</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

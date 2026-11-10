@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, presse, photoDe, adresseLigne } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/terrasse-large.webp');
+const salle = photoDe('/photos/bar-comptoir.webp');
+const producteurs = [
+  ['Fromage de Boninne', 'Produit à Boninne par Marie-Cécile Crevits.'],
+  ['Spycroc et Spycadelle', 'Produits à Spy ; la saucisse sèche est affinée par la Boucherie de l’Artisan, à Spy.'],
+  ['Croquettes à la Houppe', 'Préparées avec la Houppe, bière namuroise.'],
+  ['Camembert au four', 'Camembert Paquerette, de chez Kaas.'],
+];
+---
+<Base title="La maison" theme="ocre" description={`Le ${site.nom}, bar-brasserie ouvert à Namur début mai 2025, au départ du téléphérique : la maison, ses producteurs et ce qu'en dit la presse.`}>
+  <section class="section" data-ciel="ocre">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>Ouvert début mai 2025</p>
+        <h1 class="t-xl" data-split="lines" data-intro>La maison</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">{site.baseline} Le bar est au {adresseLigne()}, à l’entrée du téléphérique de Namur.</p>
+      </div>
+      <figure class="c8-12 photo photo--4x3">
+        <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap cols">
+      <div class="c1-6 prose">
+        <h2 class="t-l" data-split="words">Des produits de la région</h2>
+        <p data-reveal="up">La carte cite ses fournisseurs : un fromage de Boninne, des charcuteries de Spy, une bière namuroise dans les croquettes. Les boulets sont faits maison, avec de la viande de porc et de bœuf, et servis sauce liégeoise au sirop de Liège.</p>
+        <p data-reveal="up">Les frites sont maison, cuites deux fois à la graisse de bœuf.</p>
+      </div>
+      <ul class="c8-12 lignes" data-reveal="up">
+        {producteurs.map(([n, d]) => <li class="ligne"><span class="ligne__nom">{n}</span><span class="ligne__detail">{d}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="midi">
+    <div class="wrap cols">
+      <figure class="c1-6 photo photo--4x3" data-reveal="scale">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
+      </figure>
+      <div class="c8-12 prose">
+        <p class="chapeau">Dans la presse et les avis</p>
+        <p data-reveal="up"><a class="link" href={presse.url} rel="noopener">{presse.titre}</a>, {presse.media}, {presse.date}.</p>
+        <blockquote class="avis" data-reveal="fade">
+          <p>Un avis sur Tripadvisor, noté 4,0 sur 5, salue le petit-déjeuner, les plats à partager, les beaux espaces et les cocktails.</p>
+          <cite>Résumé de l’avis, Tripadvisor</cite>
+        </blockquote>
+        <div class="actions"><a class="btn btn--solid" href={u('/reservation/')}>Réserver une table</a></div>
+      </div>
+    </div>
+  </section>
+</Base>
