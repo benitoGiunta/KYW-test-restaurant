@@ -22,3 +22,8 @@
 - Le haut de la photo des flammes est naturellement noir : ce n'est pas un trou de mise en page.
 - Repos : si `settledMs` passe à null en phase 3, baisser l'opacité ou la vitesse de `.hero__lame` (tranche.ts, période 7 s).
 - Horaires, photo des patrons, `.pied__col` en `nth-of-type` : voir phase 1 (inchangé).
+
+## Relecture passe 1 (relecteur-site, 10/11/2026)
+- Fait : REVUE-1.md écrit, verdict A_CORRIGER (0 F0, 2 F1, 4 F2, 5 F3). QA-revue1.md absent : mesures maison sur `dist/` (serveur port 4471 arrêté).
+- À corriger en révision : F1-1 état d'ouverture faux (`menu.ts:21`), F1-2 deux phrases hors dossier (`site.ts:40`, `index.astro:78`), puis F2 (en-tête translucide, og.png, terrasse, cible du logo).
+- Piège : ne pas relancer de shoot complet, vérifier F1-1 sous `page.clock.install` (mardi 12 h, lundi 23 h, samedi 23 h).
