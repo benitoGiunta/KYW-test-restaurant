@@ -24,6 +24,9 @@ Vellum oxblood reversed. Tokens lus dans `src/styles/tokens.css` : paper `oklch(
 - **Carte** : Rows (nom col. 1 à 5, description, prix à droite en `tabular-nums`, couleur or), une `<article>` par rubrique dans une seule `<section>`, titre de rubrique en colonnes 1 à 4. Pas de tuiles, pas de carte dans carte. Sur téléphone : nom et prix sur la première ligne.
 - **Horaires** : Schedule en `<dl>`, lundi fermé en `--color-muted` non barré ; mercredi à samedi : slot `.fill` « heures à confirmer ». Dits une fois dans la section, une ligne courte dans le pied (adresse seulement) ; jour courant en phase 2.
 - **Pied** : letter close, 200 à 400 px : sentence-signature en Grenze, coordonnées, six liens, `data-credits`, puis KywFooter.
+- **Nav (phase 2)** : pastille sticky (hauteur 0, top 16 px), « Réserver » en contour or ; sous 70rem menu en `popover` natif (bouton Menu/Fermer, Échap, clic extérieur, focus rendu au bouton), CTA plein dans le menu sous 40rem.
+- **Mouvement (phase 2)** : caractère calm. Signature : la plaque du hero se déploie (clip-path 720 ms) puis titre et actions se fondent ; un seul reveal (fondu + 16 px) sous le pli ; jour courant des horaires (« Aujourd’hui »).
+- **Carte (phase 2)** : rail sticky d'ancres vers les 11 rubriques, rubrique courante en `aria-current`.
 - **Photo** : `<figure data-slot data-alt>`, `srcset`, `width`/`height`, hero `fetchpriority="high"`, le reste lazy, légende = un fait (sujet du dossier).
 
 ## Sur-utilisation
@@ -34,4 +37,22 @@ Vellum oxblood reversed. Tokens lus dans `src/styles/tokens.css` : paper `oklch(
 - [x] 5. Données réelles, fictif signalé (`.fill`, 2 par page au plus) · preuve : `src/data/site.ts`, `menu.astro`
 - [x] 6. Photos du client, WebP, `width`/`height` · preuve : `public/photos/`, `Fig.astro`
 - [x] 7. Noindex, mention KYW, signature sur les 8 pages · preuve : grep de `dist/li-micougni/legacy/`
-- [ ] 8. Render sloplint `--render` par page, comp c2, reproduction · phase 2 et 3
+- [ ] 8. Render sloplint `--render` par page, comp c2 · hero rendu fait en phase 2 (0 FAIL, 0 WARN), pages et jury en phase 3 ; c2 non construite (voir comp.md)
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : grep sur `src/`, seules `opacity`, `translate`, `clip-path`, couleurs sont animées (`page.css`, blocs plate-in, reveal, menu)
+- [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : `base.css:8` (2 px or), `.btn:focus-visible` 3 px, champs en anneau inset (`page.css` .field), `.row--link:has(a:focus-visible)`
+- [x] 7. Fallback reduced motion sur chaque animation ; contenu visible sans script (27, 62) · preuve : `page.css` fin de feuille `@media (prefers-reduced-motion)`, test Playwright : reveal 0 marqué en mouvement réduit, `.cat` opacité 1 sans JS
+- [x] 17. Hero en `svh` (6a) · preuve : `.hero { min-height: 100svh }`, `.banner { 62svh }`, aucun `vh` ni `100vw` (grep)
+- [x] 19. Sticky non superposés (56) · preuve : nav `top: 16px` (hauteur 0, z 300), rail de la carte `top: 94px` (z 200) ; mesuré à 390 : rail 94, pastille 16
+- [x] 20. Radios-onglets gardés (53) · preuve : sans objet, aucun radio-onglet ; la carte est une liste d'ancres avec rail (`nav.rail`), pas un tablist
+- [x] 21. Vidéo de fond (28a, 28b) · preuve : sans objet, aucune vidéo
+- [x] 22. Reveal sous `.js` seulement (62) · preuve : `.js [data-reveal]:not(.is-in)` ; `data-reveal` posé par le script, 11 blocs sous le pli sur l'accueil, 0 visible caché
+- [x] 23. États d'input (39a) · preuve : `page.css` .field (hover, focus anneau inset, `aria-invalid`, disabled par opacité + pointillé + fond), capture `lm-legacy-p2-form`
+- [x] 24. Tooltip et auto-rotation (17, 18) · preuve : sans objet, aucun tooltip ni rotation
+- [x] 29. Aucun faux envoi (70) · preuve : `contact.astro` : « Rien n’a été envoyé : ce formulaire n’est pas encore relié », orientation vers `tel:` et `mailto:`, jamais de succès
+- [x] 30. SVG décoratifs `aria-hidden` (33) · preuve : aucun `<svg>`/`<canvas>` dans `src/`
+- [x] 48. Hover : un signal, conteneur, pas sur non-interactif, pas de rebond, pas de toast (11, 12, 16) · preuve : survol des `.row` non liés supprimé, `row--link` fond seul, tout sous `(hover: hover)`, easing `--ease-out` sans rebond
+- [x] 49. `:active`, `:disabled`, contrôles 44 à 52 px (26b, 39b) · preuve : `.btn` 48, burger 44, rail 44, champs 48 ; `:active` sur btn, burger, rail, liens de nav et rangs liés
+- [x] 56. Un primaire rempli (F4) · preuve : « Réserver » de la pastille passé en contour or ; un seul plein par vue (plaque, ou envoi du formulaire)
+- [x] 58. Une recette de conteneur, pilule limitée aux contrôles (F7) ; un pattern de scroll (F8) · preuve : rayon 2 px partout ; seul mouvement au scroll : le reveal unique
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : `base.css:4,5,8`
+- [x] 72. Responsive (breakpoints rem, capacités, rangs restackés, `svh`, safe-area) · preuve : 60rem et 40rem, `(hover: hover)`, `(pointer: coarse)` en fin de `page.css`, `viewport-fit=cover` ; mesuré : 0 débordement de 320 à 1440 sur 7 pages, h1 sans coupure, aucun bouton replié

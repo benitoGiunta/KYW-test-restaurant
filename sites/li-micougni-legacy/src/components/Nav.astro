@@ -13,12 +13,13 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     <ul class="nav__links">
       {nav.map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.href.replace('/', '') ? 'page' : undefined}>{n.label}</a></li>)}
     </ul>
-    <a class="btn btn--primary nav__cta" href={`${base}contact/#reserver`}><span>Réserver</span></a>
-    <details class="nav__menu">
-      <summary>Menu</summary>
+    <a class="btn nav__cta" href={`${base}contact/#reserver`}><span>Réserver</span></a>
+    <button class="nav__burger" type="button" popovertarget="nav-menu" aria-expanded="false" aria-controls="nav-menu"><span class="nav__b-closed">Menu</span><span class="nav__b-open">Fermer</span></button>
+    <div class="menu" id="nav-menu" popover>
       <ul>
-        {nav.map((n) => <li><a href={`${base}${n.href}`}>{n.label}</a></li>)}
+        {nav.map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.href.replace('/', '') ? 'page' : undefined}>{n.label}</a></li>)}
       </ul>
-    </details>
+      <a class="btn btn--primary menu__cta" href={`${base}contact/#reserver`}><span>Réserver une table</span></a>
+    </div>
   </nav>
 </header>

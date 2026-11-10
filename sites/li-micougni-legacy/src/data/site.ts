@@ -22,10 +22,10 @@ export const nav = [
 ];
 // Horaires : seule phrase du site d'origine (FAQ) ; mercredi à samedi non publiés : slot .fill
 export const jours = [
-  { jour: 'Lundi', val: 'Fermé', ferme: true },
-  { jour: 'Mardi', val: `À partir de 17${N}h${N}00` },
-  { jour: `Du mercredi au samedi`, fill: `heures à confirmer` },
-  { jour: 'Dimanche', val: `Jusqu’à 17${N}h${N}00` },
+  { jour: 'Lundi', days: '1', val: 'Fermé', ferme: true },
+  { jour: 'Mardi', days: '2', val: `À partir de 17${N}h${N}00` },
+  { jour: `Du mercredi au samedi`, days: '3,4,5,6', fill: `heures à confirmer` },
+  { jour: 'Dimanche', days: '0', val: `Jusqu’à 17${N}h${N}00` },
 ];
 export type PhotoId = keyof typeof photos;
 export const alts: Record<string, string> = {

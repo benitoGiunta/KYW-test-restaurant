@@ -45,6 +45,44 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'Restaurant', name: 
     <Footer />
     <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
 document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+    <script>
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // menu mobile (popover natif) : état du bouton, fermeture au clic et au passage en bureau
+      const menu = document.getElementById('nav-menu');
+      const burger = document.querySelector('.nav__burger');
+      if (menu && burger) {
+        menu.addEventListener('toggle', () => burger.setAttribute('aria-expanded', String(menu.matches(':popover-open'))));
+        menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => menu.hidePopover()));
+        matchMedia('(min-width: 70.0625rem)').addEventListener('change', (e) => { if (e.matches && menu.matches(':popover-open')) menu.hidePopover(); });
+      }
+      // jour courant des horaires (fuseau de Namur)
+      const jour = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Brussels' })).getDay();
+      document.querySelectorAll('.sched__row[data-days]').forEach((r) => {
+        if (!r.dataset.days.split(',').includes(String(jour))) return;
+        r.classList.add('is-today'); r.setAttribute('aria-current', 'date');
+        const t = document.createElement('span'); t.className = 'sched__today'; t.textContent = 'Aujourd’hui';
+        r.querySelector('dt').append(t);
+      });
+      // rail de la carte : rubrique courante
+      const rail = document.querySelector('.rail');
+      if (rail && 'IntersectionObserver' in window) {
+        const links = [...rail.querySelectorAll('a')];
+        const spy = new IntersectionObserver((es) => es.forEach((e) => {
+          if (!e.isIntersecting) return;
+          links.forEach((l) => { const on = l.hash === '#' + e.target.id; if (on) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current'); if (on) { const box = l.closest('.rail__list'); box.scrollTo({ left: l.offsetLeft - 16, behavior: reduce ? 'auto' : 'smooth' }); } });
+        }), { rootMargin: '-35% 0px -55% 0px' });
+        document.querySelectorAll('.cat').forEach((c) => spy.observe(c));
+      }
+      // reveal unique : seuls les blocs sous le premier écran sont marqués, et seulement ici (sans script, tout reste visible)
+      if (!reduce && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        document.querySelectorAll('main .sec .container > *, main .stage .contact > *').forEach((el) => {
+          if (el.getBoundingClientRect().top < innerHeight) return;
+          el.setAttribute('data-reveal', ''); io.observe(el);
+        });
+        addEventListener('beforeprint', () => document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-in')));
+      }
+    </script>
     <KywFooter base={import.meta.env.BASE_URL} />
   </body>
 </html>

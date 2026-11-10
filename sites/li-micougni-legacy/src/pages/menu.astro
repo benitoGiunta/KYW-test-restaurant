@@ -6,6 +6,7 @@ import carte from '../data/carte.json';
 import { resto } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const N = ' ';
+const slug = (t: string) => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
 const cats = [
   ...carte,
   { titre: 'Sauces maison', plats: [
@@ -24,7 +25,7 @@ const cats = [
       <div class="plate">
         <h1 id="h-menu">Notre carte de lancement</h1>
         <p class="lead">Des planches à partager, des plats de la cuisine locale et des desserts faits maison.</p>
-        <p class="actions"><a class="btn btn--primary" href={`${base}${resto.carte.href}`} download><span>Télécharger la carte (PDF, 1,1{N}Mo)</span></a> <a class="btn" href={`${base}contact/#reserver`}><span>Réserver</span></a></p>
+        <p class="actions"><a class="btn btn--primary" href={`${base}${resto.carte.href}`} download><span>Télécharger le PDF</span></a> <a class="btn" href={`${base}contact/#reserver`}><span>Réserver</span></a></p>
       </div>
     </div>
   </section>
@@ -40,9 +41,14 @@ const cats = [
   </section>
 
   <section class="sec sec--s carte" aria-label="La carte">
+    <nav class="rail" aria-label="Rubriques de la carte">
+      <ul class="rail__list">
+        {cats.map((c) => <li><a href={`#${slug(c.titre)}`}>{c.titre}</a></li>)}
+      </ul>
+    </nav>
     <div class="container carte__list">
       {cats.map((c) => (
-        <article class="cat" id={c.titre.toLowerCase().replace(/[^a-zà-ÿ]+/g, '-')}>
+        <article class="cat" id={slug(c.titre)}>
           <h2>{c.titre}</h2>
           <ul class="rows">
             {c.plats.map((p) => (

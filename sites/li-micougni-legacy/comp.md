@@ -3,4 +3,9 @@
 - Choix : Poster, plaque en bas à gauche, car la photo de la salle (03-salle.jpg) est la chose la plus forte du dossier et l'original ouvrait sur une photo plein écran.
 - Pas de comp HTML séparée : la comp a été faite directement sur le hero réel (c1 = la page construite). c2 (type-led, sans photo) non construite, à faire en phase 2 si le temps le permet.
 - Inventaire des médiums : hero `raster` (03-salle.jpg), grill `raster`, ardoise `raster`, terrasse `raster`, galerie plats `raster`, logo `raster` (JPEG orange, tuile de 48 px dans la pastille), reste `code`. Aucune région `neither`.
-- Questions de reproduction : phase 2.
+- Questions de reproduction (phase 2), comp = hero réel, capture 1280x800 (`.hallmark/shots/localhost-4321-li-micougni-legacy-hero-1280x800.png`) :
+  - Masse : le poids est en bas à gauche, la plaque oxblood (640 px sur 1280, du tiers à l'angle bas) contre la salle claire à droite ; vu à 1280, 1440 et 375 (plaque pleine largeur) ; 1920 capturé par sloplint, non relu.
+  - Intervalle : filet double, titre, une phrase, deux boutons, rythme 24 px ; la plaque garde 64 px de marge basse sur la photo ; vérifié à l'oeil à 1280 et 1440.
+  - Entrée : l'oeil entre par le titre en gothique clair sur le bordeaux, puis le bouton or, puis la pastille ; le coq orange du logo est la seule couleur chaude hors photo.
+  - Plus grand écart : la comp (phase 1) était la page elle-même, donc écart nul ; écart constaté à la première capture : aucun ; seul changement : « Réserver » de la pastille passé en contour pour garder un seul plein par vue.
+- Stamp : `comp: 1 built, no key · c1 chosen · reproduced (checked at 1280x800, comp = page réelle, c2 non construite)`

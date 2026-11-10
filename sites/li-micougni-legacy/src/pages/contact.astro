@@ -16,17 +16,20 @@ import { resto, jours } from '../data/site';
         </address>
         <dl class="sched sched--small">
           {jours.map((j) => (
-            <div class:list={['sched__row', j.ferme && 'is-closed']}><dt>{j.jour}</dt><dd>{j.fill ? <span class="fill" data-fill="horaires">{j.fill}</span> : j.val}</dd></div>
+            <div class:list={['sched__row', j.ferme && 'is-closed']} data-days={j.days}><dt>{j.jour}</dt><dd>{j.fill ? <span class="fill" data-fill="horaires">{j.fill}</span> : j.val}</dd></div>
           ))}
         </dl>
       </div>
-      <form class="form" id="reserver" method="post" action="" data-endpoint="">
+      <form class="form" id="reserver" method="post" action="" data-endpoint="" novalidate>
         <h2>Réserver ou écrire</h2>
-        <div class="field"><label for="f-nom">Nom</label><input id="f-nom" name="nom" type="text" autocomplete="name" required /></div>
-        <div class="field"><label for="f-mail">Adresse e-mail</label><input id="f-mail" name="email" type="email" autocomplete="email" required /></div>
-        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="6" required></textarea></div>
-        <p class="actions"><button class="btn btn--primary" type="submit"><span>Envoyer le formulaire</span></button></p>
-        <p class="form__note">Formulaire de la maquette : il n’est pas encore relié à une adresse d’envoi.</p>
+        <div class="field"><label for="f-nom">Nom</label><input id="f-nom" name="nom" type="text" autocomplete="name" placeholder="Prénom et nom" required aria-describedby="f-nom-h" /><p class="field__help" id="f-nom-h" data-default="Pour vous répondre." data-error="Indiquez votre nom.">Pour vous répondre.</p></div>
+        <div class="field"><label for="f-mail">Adresse e-mail</label><input id="f-mail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="prenom@exemple.be" required aria-describedby="f-mail-h" /><p class="field__help" id="f-mail-h" data-default="Nous vous répondrons à cette adresse." data-error="Indiquez une adresse e-mail valide, comme prenom@exemple.be.">Nous vous répondrons à cette adresse.</p></div>
+        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="6" autocomplete="off" placeholder="Date, heure et nombre de couverts, ou votre question" required aria-describedby="f-msg-h"></textarea><p class="field__help" id="f-msg-h" data-default="Pour une réservation : date, heure et nombre de couverts." data-error="Écrivez votre message.">Pour une réservation : date, heure et nombre de couverts.</p></div>
+        <p class="actions"><button class="btn btn--primary" type="submit"><span>Envoyer le message</span></button></p>
+        <div class="form__status" role="status">
+          <p class="form__sent" id="f-sent" hidden>Rien n’a été envoyé&nbsp;: ce formulaire n’est pas encore relié. Pour réserver, appelez le <a class="num" href={resto.tel.href}>{resto.tel.affiche}</a> ou écrivez à <a href={`mailto:${resto.email}`}>{resto.email}</a>.</p>
+        </div>
+        <p class="form__note">Formulaire de la maquette&nbsp;: il n’est pas encore relié à une adresse d’envoi.</p>
       </form>
     </div>
   </section>
@@ -36,3 +39,32 @@ import { resto, jours } from '../data/site';
     </div>
   </section>
 </Base>
+<script>
+  const form = document.querySelector<HTMLFormElement>('#reserver');
+  if (form) {
+    const fields = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea')];
+    const touched = new WeakSet<Element>();
+    const check = (f: HTMLInputElement | HTMLTextAreaElement) => {
+      const help = document.getElementById(f.getAttribute('aria-describedby')!)!;
+      const bad = !f.value.trim() && f.required || !f.checkValidity();
+      f.setAttribute('aria-invalid', String(bad));
+      help.classList.toggle('is-error', bad);
+      help.textContent = bad ? help.dataset.error! : help.dataset.default!;
+      return !bad;
+    };
+    fields.forEach((f) => {
+      const help = document.getElementById(f.getAttribute('aria-describedby')!)!;
+      help.textContent = help.dataset.default!;
+      f.addEventListener('blur', () => { touched.add(f); check(f); });
+      f.addEventListener('input', () => { if (touched.has(f)) check(f); });
+    });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const sent = document.getElementById('f-sent')!;
+      sent.hidden = true;
+      const bad = fields.filter((f) => { touched.add(f); return !check(f); });
+      if (bad.length) { bad[0].focus(); return; }
+      sent.hidden = false;
+    });
+  }
+</script>
