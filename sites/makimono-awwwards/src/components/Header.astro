@@ -11,6 +11,8 @@ const liens = [
 ];
 ---
 <header class="rouleau-haut" data-header>
+  <span class="reflet" aria-hidden="true"></span>
+  <span class="rouleau-haut__spire" aria-hidden="true"></span>
   <a class="marque" href={u('/')} aria-label="Makimono, accueil">
     <Maki class="marque__maki" />
     <span class="marque__nom">Makimono</span>
@@ -21,4 +23,18 @@ const liens = [
     </ul>
     <a class="bouton bouton--petit nav__appel" href={`tel:${restaurant.telephone}`}>Appeler</a>
   </nav>
+  <button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button>
+  <dialog class="menu nori" id="menu" aria-label="Menu">
+    <div class="menu__haut">
+      <span class="menu__nom">Makimono</span>
+      <button class="menu-fermer" type="button" data-menu-fermer>Fermer</button>
+    </div>
+    <ul class="menu__liens">
+      {[{ href: u('/'), label: 'Accueil', id: 'accueil' }, ...liens].map((l) => <li><a href={l.href} aria-current={page === l.id ? 'page' : undefined}>{l.label}</a></li>)}
+    </ul>
+    <div class="menu__pied">
+      <a class="bouton bouton--plein" href={`tel:${restaurant.telephone}`}>Appeler le {restaurant.telephoneAffiche}</a>
+      <p>{restaurant.adresse.rue} {restaurant.adresse.numero}, {restaurant.adresse.cp} {restaurant.adresse.commune}</p>
+    </div>
+  </dialog>
 </header>

@@ -15,7 +15,7 @@ const a = restaurant.adresse;
   <section class="section section--serre" aria-labelledby="h-contact">
     <div class="wrap grille">
       <div class="reserver__cta">
-        <h2 class="titre-l" id="h-contact">Nous joindre</h2>
+        <h2 data-split="lines" class="titre-l" id="h-contact">Nous joindre</h2>
         <a class="tel-geant" href={`tel:${restaurant.telephone}`}>{restaurant.telephoneAffiche}</a>
         <div class="groupe-boutons">
           <a class="bouton bouton--plein" href={`tel:${restaurant.telephone}`}>Appeler</a>
@@ -30,7 +30,7 @@ const a = restaurant.adresse;
         </form>
       </div>
       <div class="reserver__cote">
-        <h2 class="titre-l" style="font-size: var(--t-m)">Les heures d’ouverture</h2>
+        <h2 data-split="lines" class="titre-l" style="font-size: var(--t-m)">Les heures d’ouverture</h2>
         <ul class="horaires" aria-label="Horaires">{horaires.map((h) => <li><span>{h.jour}</span><span class="tabulaire">{h.services.map((s) => `${hm(s.debut)} à ${hm(s.fin)}`).join(' · ')}</span></li>)}</ul>
       </div>
     </div>
@@ -38,9 +38,9 @@ const a = restaurant.adresse;
 
   <section class="nori section" aria-labelledby="h-venir">
     <div class="wrap grille">
-      <figure class="bloc-photo" style="grid-column: 1 / 6; margin: 0"><Photo nom="facade" sizes="(max-width: 820px) 100vw, 40vw" ratio="4 / 5" position="50% 40%" /></figure>
+      <figure data-reveal="clip" class="bloc-photo" style="grid-column: 1 / 6; margin: 0"><Photo nom="facade" sizes="(max-width: 820px) 100vw, 40vw" ratio="4 / 5" position="50% 40%" /></figure>
       <div style="grid-column: 7 / 13; display: grid; gap: var(--serre); align-content: start">
-        <h2 class="titre-l" id="h-venir">Venir</h2>
+        <h2 data-split="lines" class="titre-l" id="h-venir">Venir</h2>
         <address class="coord"><span>{restaurant.nom}</span><span>{a.rue} {a.numero}</span><span>{a.cp} {a.commune}</span></address>
         <p><a class="lien" href={restaurant.plan} rel="noopener" target="_blank">Ouvrir le plan (OpenStreetMap)</a></p>
         <p class="texte">La façade vitrée donne sur la rue Saint-Loup, avec quelques tables en terrasse. Paiement par {restaurant.paiement}.</p>
@@ -50,7 +50,7 @@ const a = restaurant.adresse;
 
   <section class="section" aria-labelledby="h-cmd">
     <div class="wrap grille">
-      <h2 class="titre-l" id="h-cmd" style="grid-column: 1 / 7">Commander chez soi</h2>
+      <h2 data-split="lines" class="titre-l" id="h-cmd" style="grid-column: 1 / 7">Commander chez soi</h2>
       <div style="grid-column: 8 / 13; display: grid; gap: var(--serre); align-content: start">
         <p class="texte">{restaurant.livraison} Choisissez votre mode de commande :</p>
         <ul class="liens-commande">{restaurant.commande.map((c) => <li><a href={c.url} rel="noopener" target="_blank"><span>{c.nom}</span><span aria-hidden="true">→</span></a></li>)}</ul>

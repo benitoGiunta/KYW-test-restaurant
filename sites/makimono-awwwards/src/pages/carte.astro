@@ -20,25 +20,25 @@ const liste = (o: string) => o.replace(/\s*\(€\)\s*$/, '');
 
   <div class="wrap">
     <section class="rubrique" id="rolls" aria-labelledby="h-rolls">
-      <div class="rubrique__tete"><h2 class="titre-l" id="h-rolls">Sushi rolls</h2><p>Huit pièces, sauf Futo, Dragon Eye, Tiger Fire et Aloha : cinq pièces. {rollsAuChoix} rolls se choisissent avec leur protéine, le prix suit la protéine.</p></div>
+      <div class="rubrique__tete"><h2 data-split="lines" class="titre-l" id="h-rolls">Sushi rolls</h2><p>Huit pièces, sauf Futo, Dragon Eye, Tiger Fire et Aloha : cinq pièces. {rollsAuChoix} rolls se choisissent avec leur protéine, le prix suit la protéine.</p></div>
       <ol class="index">{carte.rolls.map((r) => <Ligne roll={r} choix />)}</ol>
     </section>
 
     <section class="rubrique" id="nigiri" aria-labelledby="h-nigiri">
       <div class="carte-grille-photos">
-        <figure class="bloc-photo" style="grid-column: 1 / 6"><Photo nom="flambe" sizes="(max-width: 820px) 100vw, 40vw" ratio="4 / 3" /></figure>
+        <figure data-reveal="clip" class="bloc-photo" style="grid-column: 1 / 6"><Photo nom="flambe" sizes="(max-width: 820px) 100vw, 40vw" ratio="4 / 3" /></figure>
         <div style="grid-column: 7 / 13">
-          <div class="rubrique__tete"><h2 class="titre-l" id="h-nigiri">Nigiri</h2><p>Six pièces, flambées au chalumeau.</p></div>
+          <div class="rubrique__tete"><h2 data-split="lines" class="titre-l" id="h-nigiri">Nigiri</h2><p>Six pièces, flambées au chalumeau.</p></div>
           {carte.nigiri.map((n) => <div class="mini-ligne"><b>{n.nom}</b><span>{eur(n.prix!)}</span></div>)}
         </div>
       </div>
     </section>
 
     <section class="rubrique" id="composer" aria-labelledby="h-composer">
-      <div class="rubrique__tete"><h2 class="titre-l" id="h-composer">Create.Your.Roll</h2><p>Une base, une protéine, puis vos fillings, toppings et sauces. Chaque ingrédient s’ajoute au prix.</p></div>
+      <div class="rubrique__tete"><h2 data-split="lines" class="titre-l" id="h-composer">Create.Your.Roll</h2><p>Une base, une protéine, puis vos fillings, toppings et sauces. Chaque ingrédient s’ajoute au prix.</p></div>
       <ol class="sans-liste" style="padding:0">
         {carte.creerRoll.map((e) => (
-          <li class="etape"><h3>{e.titre}<span>{e.tarif ? fr(e.tarif).replace('/', ' par ') : ''}</span></h3>
+          <li class="etape" data-reveal="up"><h3>{e.titre}<span>{e.tarif ? fr(e.tarif).replace('/', ' par ') : ''}</span></h3>
             <ul class="options">{e.options.map((o) => <li class="tabulaire">{fr(liste(o))}</li>)}</ul></li>
         ))}
       </ol>
@@ -47,20 +47,20 @@ const liste = (o: string) => o.replace(/\s*\(€\)\s*$/, '');
     <section class="rubrique" id="poke" aria-labelledby="h-poke">
       <div class="carte-grille-photos">
         <div style="grid-column: 1 / 8">
-          <div class="rubrique__tete"><h2 class="titre-l" id="h-poke">Poké bowls</h2><p>Du riz vinaigré, des légumes, une protéine, des sauces.</p></div>
+          <div class="rubrique__tete"><h2 data-split="lines" class="titre-l" id="h-poke">Poké bowls</h2><p>Du riz vinaigré, des légumes, une protéine, des sauces.</p></div>
           <ol class="index">{carte.poke.map((p) => (
             <li class="ligne"><h3 class="ligne__nom">{p.nom}</h3><p class="ligne__desc">{p.ingredients.join(', ')}.</p><p class="ligne__prix">{eur(p.prix!)}</p></li>
           ))}</ol>
         </div>
-        <figure class="bloc-photo" style="grid-column: 9 / 13"><Photo nom="pokeGros" sizes="(max-width: 820px) 100vw, 30vw" ratio="3 / 4" /></figure>
+        <figure data-reveal="clip" class="bloc-photo" style="grid-column: 9 / 13"><Photo nom="pokeGros" sizes="(max-width: 820px) 100vw, 30vw" ratio="3 / 4" /></figure>
       </div>
     </section>
 
     <section class="rubrique" id="bowl" aria-labelledby="h-bowl">
-      <div class="rubrique__tete"><h2 class="titre-l" id="h-bowl">Create.Your.Bowl</h2><p>Riz vinaigré à 5,50{nbsp}€, puis la protéine, les fillings, les toppings et les sauces de votre choix.</p></div>
+      <div class="rubrique__tete"><h2 data-split="lines" class="titre-l" id="h-bowl">Create.Your.Bowl</h2><p>Riz vinaigré à 5,50{nbsp}€, puis la protéine, les fillings, les toppings et les sauces de votre choix.</p></div>
       <ol class="sans-liste" style="padding:0">
         {carte.creerBowl.map((e) => (
-          <li class="etape"><h3>{e.titre}<span>{e.tarif ? fr(e.tarif).replace('/', ' par ') : ''}</span></h3>
+          <li class="etape" data-reveal="up"><h3>{e.titre}<span>{e.tarif ? fr(e.tarif).replace('/', ' par ') : ''}</span></h3>
             <ul class="options">{e.options.map((o) => <li class="tabulaire">{fr(liste(o))}</li>)}</ul></li>
         ))}
       </ol>
@@ -69,18 +69,18 @@ const liste = (o: string) => o.replace(/\s*\(€\)\s*$/, '');
     <section class="rubrique" id="boxes" aria-labelledby="h-boxes">
       <div class="carte-grille-photos">
         <div style="grid-column: 1 / 7">
-          <div class="rubrique__tete"><h2 class="titre-l" id="h-boxes">Boxes</h2></div>
+          <div class="rubrique__tete"><h2 data-split="lines" class="titre-l" id="h-boxes">Boxes</h2></div>
           {boxes.map((b) => <div class="box" style="margin-bottom: var(--normal)"><h3>{b.nom}<span>{eur(b.prix)}</span></h3><p>{b.detail}</p></div>)}
         </div>
-        <figure class="bloc-photo" style="grid-column: 8 / 13"><Photo nom="creative" sizes="(max-width: 820px) 100vw, 40vw" ratio="4 / 3" /></figure>
+        <figure data-reveal="clip" class="bloc-photo" style="grid-column: 8 / 13"><Photo nom="creative" sizes="(max-width: 820px) 100vw, 40vw" ratio="4 / 3" /></figure>
       </div>
     </section>
 
     <section class="rubrique" id="accompagnements" aria-labelledby="h-acc">
       <div class="carte-grille-photos">
-        <figure class="bloc-photo" style="grid-column: 1 / 6"><Photo nom="accomp" sizes="(max-width: 820px) 100vw, 40vw" ratio="1 / 1" /></figure>
+        <figure data-reveal="clip" class="bloc-photo" style="grid-column: 1 / 6"><Photo nom="accomp" sizes="(max-width: 820px) 100vw, 40vw" ratio="1 / 1" /></figure>
         <div style="grid-column: 7 / 13">
-          <div class="rubrique__tete"><h2 class="titre-l" id="h-acc">Accompagnements</h2></div>
+          <div class="rubrique__tete"><h2 data-split="lines" class="titre-l" id="h-acc">Accompagnements</h2></div>
           {carte.accompagnements.map((n) => <div class="mini-ligne"><b>{n.nom}</b><span>{eur(n.prix!)}</span></div>)}
         </div>
       </div>
@@ -89,15 +89,15 @@ const liste = (o: string) => o.replace(/\s*\(€\)\s*$/, '');
     <section class="rubrique" id="desserts" aria-labelledby="h-des">
       <div class="carte-grille-photos">
         <div style="grid-column: 1 / 7">
-          <div class="rubrique__tete"><h2 class="titre-l" id="h-des">Desserts</h2></div>
+          <div class="rubrique__tete"><h2 data-split="lines" class="titre-l" id="h-des">Desserts</h2></div>
           {carte.desserts.map((n) => <div class="mini-ligne"><b>{n.nom}{n.note ? <small>{n.note}</small> : null}</b><span>{eur(n.prix!)}</span></div>)}
         </div>
-        <figure class="bloc-photo" style="grid-column: 8 / 13"><Photo nom="mochis" sizes="(max-width: 820px) 100vw, 40vw" ratio="4 / 3" /></figure>
+        <figure data-reveal="clip" class="bloc-photo" style="grid-column: 8 / 13"><Photo nom="mochis" sizes="(max-width: 820px) 100vw, 40vw" ratio="4 / 3" /></figure>
       </div>
     </section>
 
     <section class="rubrique" id="boissons" aria-labelledby="h-boissons">
-      <div class="rubrique__tete"><h2 class="titre-l" id="h-boissons">Boissons</h2></div>
+      <div class="rubrique__tete"><h2 data-split="lines" class="titre-l" id="h-boissons">Boissons</h2></div>
       <div class="trois-col">
         <div><h3 class="titre-m" style="font-stretch:112%;font-weight:750;font-size:var(--t-m)">Softs</h3>{carte.softs.map((n) => <div class="mini-ligne"><b>{n.nom}</b><span>{eur(n.prix!)}</span></div>)}</div>
         <div><h3 style="font-stretch:112%;font-weight:750;font-size:var(--t-m)">Alcools et cocktails</h3>{carte.alcools.map((n) => <div class="mini-ligne"><b>{n.nom}{n.note ? <small>{n.note}</small> : null}</b><span>{eur(n.prix!)}</span></div>)}</div>
