@@ -1,5 +1,8 @@
 ---
+// En-tête : nom à gauche, nav à droite. Au téléphone, bouton « Menu » qui ouvre un <dialog> plein écran :
+// les pages y sont accrochées au fil de cuivre, une pépite par lien (motion/menu.ts).
 import { u } from '../lib/url';
+import { site } from '../data/site';
 interface Props { page?: string }
 const { page } = Astro.props;
 const liens = [
@@ -7,12 +10,27 @@ const liens = [
   { href: '/histoire/', nom: 'L’histoire', id: 'histoire' },
   { href: '/reservation/', nom: 'Réserver', id: 'reservation' },
 ];
+const menu = [{ href: '/', nom: 'Accueil', id: 'accueil' }, ...liens];
 ---
 <header class="entete wrap">
-  <a class="entete__marque" href={u('/')} aria-label="Pépite, cave à manger, accueil"><span class="entete__nom">pépite</span><span class="entete__base">cave à manger</span></a>
+  <a class="entete__marque" href={u('/')} aria-current={page === 'accueil' ? 'page' : undefined}><span class="entete__nom">pépite</span><span class="entete__base">cave à manger</span></a>
   <nav class="entete__nav" aria-label="Navigation principale">
     <ul>
-      {liens.map((l) => <li><a class="lien-nav" href={u(l.href)} aria-current={page === l.id ? 'page' : undefined}>{l.nom}</a></li>)}
+      {liens.map((l) => <li class="entete__bureau"><a class="lien-nav" href={u(l.href)} aria-current={page === l.id ? 'page' : undefined}>{l.nom}</a></li>)}
+      <li class="entete__mob"><button class="entete__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button></li>
     </ul>
   </nav>
+  <dialog id="menu" class="panneau" aria-label="Menu">
+    <div class="panneau__haut">
+      <span class="panneau__marque">pépite</span>
+      <button class="panneau__fermer" type="button" data-menu-fermer>Fermer</button>
+    </div>
+    <ul class="panneau__liste">
+      {menu.map((l, i) => <li class="panneau__item"><span class="panneau__pepite" aria-hidden="true"></span><a class="panneau__lien display" href={u(l.href)} aria-current={page === l.id ? 'page' : undefined} autofocus={i === 0 ? true : undefined}><span>{l.nom}</span></a></li>)}
+    </ul>
+    <div class="panneau__pied">
+      <p class="panneau__info">{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</p>
+      <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
+    </div>
+  </dialog>
 </header>

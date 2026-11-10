@@ -7,9 +7,9 @@ import { site, horaires, fermes, semaine, citation, boissons, colis } from '../d
 ---
 <Base page="accueil" description="Pépite, cave à manger au 44 rue Notre-Dame à Namur : assiettes à partager, vins d’auteurs élaborés dans le respect du vivant, boutique et soirées à la bougie, du jeudi au samedi.">
   <section class="hero wrap grid">
-    <h1 class="hero__titre display"><span class="hero__nom">Pépite</span><span class="hero__sous">cave à manger</span></h1>
-    <figure class="hero__photo"><Photo cle="cave" widths={[480, 598]} sizes="(max-width: 48rem) 70vw, 30vw" prioritaire /></figure>
-    <div class="hero__bas">
+    <h1 class="hero__titre display"><span class="hero__nom" data-split="chars" data-intro>Pépite</span><span class="hero__sous" data-split="words" data-intro data-delay="0.35">cave à manger</span></h1>
+    <figure class="hero__photo"><span class="fil" data-fil aria-hidden="true"><span class="fil__trait"><i class="fil__lueur"></i></span><i class="fil__pepite"></i></span><div class="hero__cadre" data-reveal="clip" data-intro data-delay="0.1"><Photo cle="cave" widths={[480, 598]} sizes="(max-width: 48rem) 70vw, 30vw" prioritaire /></div></figure>
+    <div class="hero__bas" data-reveal="up" data-intro data-delay="0.5">
       <p class="lead">Une boutique de vins d’auteurs et des assiettes à partager, au 44 rue Notre-Dame, à Namur.</p>
       <p class="hero__quand">Jeudi, vendredi, samedi. Cave à manger dès 19 h.</p>
       <p class="hero__actions"><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver</span></a><a class="lien" href={site.telephoneHref}>Appeler le {site.telephoneLisible}</a></p>
@@ -19,7 +19,7 @@ import { site, horaires, fermes, semaine, citation, boissons, colis } from '../d
   <section class="lin sect sect--citation">
     <div class="wrap">
       <figure class="citation">
-        <blockquote class="citation__texte display">« {citation.texte} »</blockquote>
+        <blockquote class="citation__texte display" data-split="lines">« {citation.texte} »</blockquote>
         <figcaption class="citation__auteur">{citation.auteur}</figcaption>
       </figure>
     </div>
@@ -28,7 +28,7 @@ import { site, horaires, fermes, semaine, citation, boissons, colis } from '../d
   <section class="sect sect--filon" aria-labelledby="t-tableau">
     <div class="wrap grid">
       <header class="filon__tete">
-        <h2 id="t-tableau" class="titre-l display">Le tableau de la semaine</h2>
+        <h2 id="t-tableau" class="titre-l display" data-split="lines">Le tableau de la semaine</h2>
         <p class="filon__dates">{semaine.libelle}</p>
       </header>
       <div class="filon__corps">
@@ -40,9 +40,9 @@ import { site, horaires, fermes, semaine, citation, boissons, colis } from '../d
 
   <section class="sect sect--paire" aria-labelledby="t-vins">
     <div class="wrap grid">
-      <figure class="paire__photo"><Photo cle="bouteilles" widths={[800, 1200, 1600]} sizes="(max-width: 48rem) 100vw, 60vw" /><figcaption class="legende">Photo : Pépite</figcaption></figure>
+      <figure class="paire__photo" data-reveal="clip"><Photo cle="bouteilles" widths={[800, 1200, 1600]} sizes="(max-width: 48rem) 100vw, 60vw" /><figcaption class="legende">Photo : Pépite</figcaption></figure>
       <div class="paire__texte">
-        <h2 id="t-vins" class="titre-l display">Des vins qui ont un auteur</h2>
+        <h2 id="t-vins" class="titre-l display" data-split="lines">Des vins qui ont un auteur</h2>
         <p>Les vins de la cave sont élaborés dans le respect du vivant. On les choisit à la boutique ou au verre, à table, avec les assiettes.</p>
         <p class="paire__prix">{boissons[0].nom} <span class="prix">{boissons[0].prix}</span></p>
         <p class="paire__doux">{colis}</p>
@@ -52,19 +52,19 @@ import { site, horaires, fermes, semaine, citation, boissons, colis } from '../d
 
   <section class="lin sect sect--strip" aria-labelledby="t-bougie">
     <div class="wrap strip__tete">
-      <h2 id="t-bougie" class="titre-l display">Parfois, à la bougie</h2>
+      <h2 id="t-bougie" class="titre-l display" data-split="lines">Parfois, à la bougie</h2>
       <p>Des soirées sans gaz ni électricité ont eu lieu dans la cave, racontées par Le Vif en 2022.</p>
     </div>
     <ul class="strip">
-      <li><Photo cle="service" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 28vw" /></li>
-      <li><Photo cle="dessert" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 28vw" /></li>
-      <li><Photo cle="bougie" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 28vw" /></li>
+      <li data-reveal="clip" data-delay="0.00"><Photo cle="service" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 28vw" /></li>
+      <li data-reveal="clip" data-delay="0.08"><Photo cle="dessert" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 28vw" /></li>
+      <li data-reveal="clip" data-delay="0.16"><Photo cle="bougie" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 28vw" /></li>
     </ul>
   </section>
 
   <section class="sect sect--pratique" aria-labelledby="t-venir">
     <div class="wrap grid">
-      <h2 id="t-venir" class="titre-xl display">Venir <em>chez Pépite</em></h2>
+      <h2 id="t-venir" class="titre-xl display" data-split="lines">Venir <em>chez Pépite</em></h2>
       <div class="pratique__horaires">
         <ul class="horaires">
           {horaires.map((h) => <li><span>{h.jour}</span><span>boutique {h.boutique}</span><span>cave {h.cave}</span></li>)}
@@ -72,7 +72,7 @@ import { site, horaires, fermes, semaine, citation, boissons, colis } from '../d
         <p class="pied__doux">{fermes}</p>
       </div>
       <address class="pratique__adresse">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}<br /><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></address>
-      <p class="pratique__cta"><a class="cta cta--grand" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></p>
+      <p class="pratique__cta"><a class="cta cta--grand" href={u('/reservation/')} data-magnetic="0.2"><span class="cta__txt">Réserver une table</span></a></p>
     </div>
   </section>
 </Base>

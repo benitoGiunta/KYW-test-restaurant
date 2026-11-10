@@ -22,17 +22,44 @@ p { max-width: 62ch; }
 .lin ::selection { background: var(--c-lin-fg); color: var(--c-lin); }
 .sect { padding-block: var(--aere); }
 
-/* Liens et CTA : le texte intérieur porte le mouvement (phase 2) */
-.lien, .lien-util { border-bottom: 1px solid currentColor; padding-block: 0.25em; }
-.lien:hover, .lien-util:hover { color: var(--c-accent); }
-.lien-util { border-bottom-color: transparent; }
-.lien-util:hover { border-bottom-color: currentColor; }
-.cta { display: inline-flex; align-items: center; min-height: 3rem; padding: 0 1.6rem; background: var(--c-accent); color: var(--c-bg); font-size: var(--t-s); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; border: 1px solid var(--c-accent); transition: background 0.3s, color 0.3s; }
+/* Liens et CTA. Deux traitements, dans le verbe « affleurer » :
+   1. le tracé (liens texte, nav, utilitaires) : un fil de cuivre se trace sous le mot, de gauche à droite ;
+   2. le CTA : le cuivre se retire vers le bas et le libellé affleure par le bas (copie en text-shadow).
+   Survol sous (hover: hover), même état au focus clavier, :active présent. */
+.lien, .lien-util, .lien-nav, .pied__tel, .entete__nom {
+  background: linear-gradient(var(--c-accent) 0 0) left bottom / 0% 2px no-repeat, linear-gradient(var(--souligne, currentColor) 0 0) left bottom / 100% 1px no-repeat;
+  transition: background-size 0.6s var(--e-out), color 0.3s var(--e-out);
+}
+.lien, .lien-util { display: inline-block; padding-block: 0.3em; }
+.lien-util { --souligne: var(--c-line); }
+.lien-nav, .pied__tel, .entete__nom { --souligne: transparent; }
+.lien-nav[aria-current='page'], .entete__marque[aria-current='page'] .entete__nom { color: var(--c-accent); --souligne: var(--c-accent); }
+.lien:focus-visible, .lien-util:focus-visible, .lien-nav:focus-visible, .pied__tel:focus-visible, .entete__marque:focus-visible .entete__nom { color: var(--c-accent); background-size: 100% 2px, 100% 1px; }
+@media (hover: hover) {
+  .lien:hover, .lien-util:hover, .lien-nav:hover, .pied__tel:hover, .entete__marque:hover .entete__nom { color: var(--c-accent); background-size: 100% 2px, 100% 1px; }
+}
+.lien:active, .lien-util:active, .lien-nav:active, .pied__tel:active, .entete__marque:active .entete__nom { color: var(--c-fg); }
+.cta {
+  display: inline-flex; align-items: center; min-height: 3rem; padding: 0 1.6rem; overflow: hidden; white-space: nowrap;
+  background: linear-gradient(var(--c-accent) 0 0) left bottom / 100% 100% no-repeat; color: var(--c-bg);
+  font-size: var(--t-s); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; border: 1px solid var(--c-accent);
+  transition: background-size 0.7s var(--e-out), color 0.4s var(--e-out);
+}
+.cta__txt { display: inline-block; text-shadow: 0 3em currentColor; transition: translate 0.7s var(--e-out); }
 .lin .cta { color: var(--c-lin); }
-.cta:hover { background: transparent; color: var(--c-accent); }
-.cta--vide { background: transparent; color: var(--c-fg); border-color: var(--c-line); }
-.cta--vide:hover { border-color: var(--c-accent); color: var(--c-accent); }
+.cta--vide { background-size: 100% 0%; color: var(--c-fg); border-color: var(--c-line); }
+.cta:focus-visible { background-size: 100% 0%; color: var(--c-accent); }
+.cta--vide:focus-visible { background-size: 100% 100%; color: var(--c-bg); border-color: var(--c-accent); }
+.cta:focus-visible .cta__txt { translate: 0 -3em; }
+@media (hover: hover) {
+  .cta:hover { background-size: 100% 0%; color: var(--c-accent); }
+  .cta--vide:hover { background-size: 100% 100%; color: var(--c-bg); border-color: var(--c-accent); }
+  .cta:hover .cta__txt { translate: 0 -3em; }
+}
+.cta:active .cta__txt { opacity: 0.7; }
 .cta--grand { min-height: 4rem; padding: 0 2.2rem; font-size: var(--t-body); }
+.kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
+.split-line { padding-top: 0.16em; margin-top: -0.16em; }
 
 /* En-tête : nom à gauche, nav à droite (coins) */
 .entete { display: flex; justify-content: space-between; align-items: center; gap: var(--gutter); padding-block: calc(var(--u) * 1.5); position: relative; z-index: var(--z-header); }
@@ -40,15 +67,40 @@ p { max-width: 62ch; }
 .entete__nom { font-family: var(--f-display); font-size: 1.75rem; letter-spacing: -0.03em; }
 .entete__base { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.15rem; }
 .entete__nav ul { display: flex; gap: clamp(1rem, 3vw, 2.5rem); }
-.lien-nav { display: inline-block; padding-block: 0.8rem; font-size: var(--t-s); border-bottom: 1px solid transparent; }
-.lien-nav:hover, .lien-nav[aria-current='page'] { color: var(--c-accent); border-bottom-color: var(--c-accent); }
+.lien-nav { display: inline-block; padding-block: 0.8rem 0.3rem; margin-bottom: 0.5rem; font-size: var(--t-s); }
+.entete__mob { display: none; }
+.entete__menu { min-height: 2.75rem; padding: 0.4em 0.2em; font-size: var(--t-s); background: linear-gradient(var(--c-accent) 0 0) left calc(100% - 0.6em) / 100% 1px no-repeat; }
+.entete__menu:active { color: var(--c-accent); }
+
+/* Menu mobile : dialog plein écran ; les pages sont accrochées au fil, une pépite par lien. */
+.panneau { position: fixed; inset: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: var(--gutter); border: 0; background: var(--c-curtain); color: var(--c-fg); display: none; grid-template-rows: auto 1fr auto; gap: var(--normal); }
+.panneau[open] { display: grid; }
+.panneau::backdrop { background: var(--c-curtain); }
+.panneau__haut { display: flex; justify-content: space-between; align-items: center; }
+.panneau__marque { font-family: var(--f-display); font-size: 1.75rem; letter-spacing: -0.03em; }
+.panneau__fermer { min-height: 2.75rem; padding: 0.4em 0.2em; font-size: var(--t-s); background: linear-gradient(var(--c-accent) 0 0) left calc(100% - 0.6em) / 100% 1px no-repeat; }
+.panneau__liste { align-self: center; display: grid; gap: var(--serre); border-left: 1px solid var(--c-accent); margin-left: 0.55rem; padding-left: 1.8rem; }
+.panneau__item { position: relative; }
+.panneau__pepite { position: absolute; left: calc(-1.8rem - 0.55rem); top: 50%; margin-top: -0.55rem; width: 1.1rem; height: 1.1rem; background: var(--c-accent); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.panneau__lien { display: block; overflow: clip; font-size: clamp(2.6rem, 13vw, 4rem); line-height: 1.05; padding-block: 0.08em; }
+.panneau__lien > span { display: inline-block; }
+.panneau__lien[aria-current='page'] { color: var(--c-accent); font-style: italic; }
+.panneau__lien:active { color: var(--c-accent); }
+.panneau__pied { display: grid; gap: var(--serre); justify-items: start; }
+.panneau__info { font-size: var(--t-s); color: var(--c-muted); }
 
 /* Hero : poster (titre à gauche, photo portrait à droite) */
 .hero { padding-block: var(--serre) var(--aere); align-items: start; row-gap: var(--serre); }
 .hero__titre { grid-column: 1 / 9; grid-row: 1; display: block; }
 .hero__nom { display: block; font-size: var(--t-mega); letter-spacing: -0.05em; line-height: 0.88; padding-bottom: 0.08em; }
 .hero__sous { display: block; font-style: italic; font-size: var(--t-l); letter-spacing: -0.03em; color: var(--c-accent); margin-top: 0.1em; }
-.hero__photo { grid-column: 9 / 13; grid-row: 1 / 3; align-self: start; }
+.hero__photo { grid-column: 9 / 13; grid-row: 1 / 3; align-self: start; position: relative; }
+/* Le fil du hero : descend du haut de la page le long de la photo, une lueur court dessus (repos), une pépite au bout. */
+.fil { position: absolute; left: calc(var(--gutter) * -0.5 - 0.5px); top: calc(var(--serre) * -1); bottom: calc(var(--normal) * -0.5); width: 1px; pointer-events: none; }
+.fil__trait { position: absolute; inset: 0 0 1.1rem; background: var(--c-accent); overflow-x: visible; overflow-y: clip; }
+.fil__lueur { position: absolute; left: 50%; top: 0; width: 16px; margin-left: -8px; height: 34%; background: radial-gradient(closest-side, #ffe3bd, rgb(210 135 74 / 0.5) 45%, transparent); opacity: calc(0.6 + 0.4 * var(--proche, 0)); }
+html:not(.motion) .fil__lueur { top: 28%; }
+.fil__pepite { position: absolute; left: 50%; bottom: 0; width: 1.1rem; height: 1.1rem; margin-left: -0.55rem; background: var(--c-accent); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
 .hero__photo img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; max-height: 78svh; }
 .hero__bas { grid-column: 1 / 8; grid-row: 2; display: grid; gap: calc(var(--u) * 1.5); align-content: start; margin-top: var(--serre); }
 .hero__quand { font-size: var(--t-s); color: var(--c-muted); }
@@ -64,9 +116,11 @@ p { max-width: 62ch; }
 .filon__tete { grid-column: 1 / 5; align-self: start; display: grid; gap: var(--u); }
 .filon__corps { grid-column: 6 / 13; }
 .filon__dates { color: var(--c-muted); font-size: var(--t-s); }
-.etapes { border-left: 1px solid var(--c-accent); margin-left: 0.45rem; padding-left: calc(var(--gutter) + 1rem); display: grid; gap: var(--normal); }
+.etapes { position: relative; margin-left: 0.55rem; padding-left: calc(var(--gutter) + 1rem); }
+.etapes__fil { position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--c-accent); }
+.etapes__liste { display: grid; gap: var(--normal); }
 .etape { position: relative; }
-.etape::before { content: ''; position: absolute; left: calc((var(--gutter) + 1rem) * -1 - 0.4rem); top: 0.55em; width: 0.8rem; height: 0.8rem; background: var(--c-accent); transform: rotate(45deg); }
+.etape__pepite { position: absolute; left: calc((var(--gutter) + 1rem) * -1 - 0.55rem); top: 0.55em; width: 1.1rem; height: 1.1rem; background: var(--c-accent); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
 .etape__nom { font-family: var(--f-display); font-size: var(--t-xl); letter-spacing: -0.035em; line-height: 0.98; }
 .etape__desc { margin-top: 0.6rem; color: var(--c-muted); max-width: 44ch; }
 .filon__prix { margin-top: var(--normal); padding-left: calc(var(--gutter) + 1.5rem); }
@@ -131,12 +185,17 @@ p { max-width: 62ch; }
 .erreur__liens { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
 .bougie { position: relative; width: 2.2rem; height: 7rem; display: block; margin-bottom: var(--u); }
 .bougie__cire { position: absolute; inset: 1.4rem 0 0; background: var(--c-fg); }
+.bougie__fume { position: absolute; left: calc(50% - 0.5px); top: -2.2rem; width: 1px; height: 2.6rem; background: linear-gradient(transparent, var(--c-muted)); opacity: 0.5; transform-origin: 50% 100%; animation: fume 3.4s var(--e-out) infinite; }
+@keyframes fume { 0% { translate: 0 0.6rem; opacity: 0; } 35% { opacity: 0.55; } 100% { translate: 0.5rem -1.4rem; rotate: 8deg; opacity: 0; } }
 .bougie__fil { position: absolute; left: 50%; top: 0.5rem; width: 2px; height: 0.9rem; background: var(--c-muted); }
 
 /* Pied : le fil s'achève sur une dernière pépite */
 .pied { padding-block: var(--aere) var(--normal); border-top: 1px solid var(--c-line); }
 .pied__corps { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--normal); }
-.pied__pepite { grid-column: 1 / 13; width: 1.2rem; height: 1.2rem; background: var(--c-accent); transform: rotate(45deg); }
+.pied__pepite { grid-column: 1 / 13; position: relative; width: 1.5rem; height: 1.5rem; }
+.pied__pepite::before { content: ''; position: absolute; inset: 0; background: var(--c-accent); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+/* La dernière pépite s'allume à mesure qu'on creuse (--profondeur) et vacille comme une bougie (--vacille). */
+.pied__pepite::after { content: ''; position: absolute; inset: -2.5rem; background: radial-gradient(closest-side, rgb(255 210 160 / 0.55), rgb(210 135 74 / 0.18) 45%, transparent); opacity: calc(var(--profondeur, 1) * var(--vacille, 1)); pointer-events: none; }
 .pied__mot { grid-column: 1 / 13; font-family: var(--f-display); font-style: italic; font-size: var(--t-mega); letter-spacing: -0.05em; line-height: 0.9; color: var(--c-accent); padding-bottom: 0.1em; }
 .pied__col { grid-column: span 4; display: grid; gap: var(--u); align-content: start; min-width: 0; }
 .pied__titre { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.12em; color: var(--c-muted); font-weight: 500; }
@@ -161,8 +220,9 @@ p { max-width: 62ch; }
   .sect .grid, .sect--presse .grid { row-gap: var(--normal); }
   .strip__tete { display: grid; grid-template-columns: 1fr; gap: var(--serre); }
   .strip__tete h2, .strip__tete p { grid-column: 1; }
-  .etapes { padding-left: 1.6rem; gap: var(--serre); }
-  .etape::before { left: calc(-1.6rem - 0.4rem); }
+  .etapes { padding-left: 1.6rem; }
+  .etapes__liste { gap: var(--serre); }
+  .etape__pepite { left: calc(-1.6rem - 0.55rem); }
   .etape__nom { font-size: var(--t-l); }
   .filon__prix { padding-left: 2rem; margin-top: var(--serre); }
   .horaires li { grid-template-columns: 1fr 1fr; }
@@ -171,5 +231,10 @@ p { max-width: 62ch; }
   .pied__col { grid-column: 1 / -1; }
   .entete__base { display: none; }
   .entete__nav ul { gap: 1rem; }
+  .entete__bureau { display: none; }
+  .entete__mob { display: block; }
   .cta--grand { width: 100%; justify-content: center; padding-inline: 1rem; }
 }
+
+/* Rideau : la pierre monte du sol, bordée d'un fil de cuivre. */
+.curtain__panel::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--c-accent); }
