@@ -111,7 +111,7 @@ export const livraison = {
     { min: 25, codes: ['5000', '5001', '5002', '5003', '5004'] },
     { min: 35, codes: ['5020', '5100'] },
   ],
-  note: 'Livraison gratuite. Dans un rayon de 6 km autour de Namur, la livraison démarre dès 35 €.'.replace('35 €', `35${nb}€`),
+  note: 'Dans un rayon de 6 km autour de Namur, la livraison démarre dès 35 €.'.replace('35 €', `35${nb}€`),
   paiements: ['Bancontact', 'Maestro', 'Mastercard', 'Visa', 'Espèces à la livraison'],
 };
 
