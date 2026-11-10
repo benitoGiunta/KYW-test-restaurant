@@ -25,3 +25,8 @@ Audit, approche, deal Halftone, comp c1, DESIGN.md, contenu réel (`site.ts`, `c
 - Pas de formulaire : états d'input et faux envoi sans objet.
 - Le « Réalisé par » du KywFooter mesure 24 px (composant partagé, non modifié).
 - Pièges : `planche.py` ne gère pas `--colonnes` en options (les valeurs sont lues comme des images) ; un `page.screenshot` à chemin relatif écrit depuis le cwd (fichier perdu à la racine).
+
+## Revue 2 (relecteur-site, 10/11/2026)
+- REVUE-2.md écrite : A_CORRIGER (0 F0, 0 F1, 1 F2, 6 F3). Corrections F1-1, F1-2, F2-1 (casse), F2-2 de REVISION-1 toutes confirmées (carte confrontée à donnees.json, axe 0, 1 seul contentinfo).
+- Reste : F2-1 de REVUE-2 (titres « Create.Your.Bowl » et « Accompagnements » coupés en milieu de mot à 390 px et moins : réduire la taille des h3 ou clamp) ; F3 inchangés.
+- Piège : `QA-revue2.md` absent (shoot « browser closed »), captures desktop seulement ; les mots coupés ne se voient qu'en activant chaque onglet à 390 px.
