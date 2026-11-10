@@ -1,5 +1,5 @@
 # Revue portfolio · Pépite, cave à manger · passe 1
-Verdict : A_CORRIGER (0 F0, 2 F1, 7 F2, 7 F3)
+Verdict : A_CORRIGER (0 F0, 2 F1, 8 F2, 7 F3)
 Lecture en une ligne de l'idée du site (sans avoir lu DESIGN.md) : une cave à manger vue de nuit, noire, titres en contour cuivre, une flamme de bougie qui suit le curseur et éclaire la page, un compteur d'heure en guise de loader et un bouton « Réserver » toujours présent dans le coin.
 Scores /10 :
 - design 7,5 : hero en trois volets (cave, titre, vitrine) tenu, cuivre sur noir cohérent, contours lisibles à grande taille (`d-01-hero`) ; mosaïque de photos faibles agrandies (`d-02-scroll`) et cadre vide de la patronne.
