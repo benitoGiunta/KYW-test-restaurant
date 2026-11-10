@@ -243,6 +243,7 @@ Le socle par agent monte lentement (67 700 → 68 100 jetons), sans effet visibl
 | 17 · Makimono | 21,69 $ | 7,23 $ | 7,55 $ | 6,78 $ | 4,92 $ | 1,86 M | 0,80 M |
 | 18 · Pépite | 16,81 $ | 5,60 $ | 4,55 $ | 6,63 $ | 3,53 $ | 1,75 M | 0,89 M |
 | 19 · Sanga | 16,43 $ | 5,48 $ | 4,23 $ | 6,73 $ | 3,38 $ | 1,48 M | 0,75 M |
+| 20 · L'Huile sur le Feu | 19,65 $ | 6,55 $ | 5,31 $ | 7,63 $ | 4,40 $ | 1,60 M | — |
 
 - Restaurant 15 conforme : 28 agents sur le bon modèle, test B 3/3, 0 F0 ou F1 en fin, max 38 réponses.
 - Premier effet du hook : lectures par cat −20 % environ, mais report sur des lectures par plages (sed, head, cat | head) ;
@@ -258,3 +259,13 @@ Le socle par agent monte lentement (67 700 → 68 100 jetons), sans effet visibl
   max 46 réponses. Après 5 sur 4 restaurants : 6,19 $ par site (+8 % sur Après 4, +2 % sans Makimono) ; cat −8 %, sorties +3 %.
 - Restaurant 19 conforme : 28 agents sur le bon modèle, revues 2 sur portfolio et awwwards, 0 F0 ou F1 en fin, max 33
   réponses. Après 5 sur 5 restaurants : 6,04 $ par site (+5 % sur Après 4, 5,75 $ soit 0 % sans Makimono) ; cat −10 %, sorties 0 %.
+- Restaurant 20 conforme : 31 agents sur le bon modèle, revues 2 sur portfolio et awwwards, revue 3 de l'awwwards (publiable),
+  0 F0 ou F1 en fin, max 58 réponses (5 agents au-delà de 40). +14 % sur Après 4, sous le seuil d'alerte.
+
+**Bilan de la série 15 à 20 (phase Après 5) :** 18 sites, 110,32 $, 6,13 $ par site (+6,6 % sur Après 4 ; 5,91 $ soit +2,8 %
+sans Makimono). Lectures par cat −10 %, sorties de commandes et contexte par réponse inchangés. Un dépassement (Makimono, +25 %)
+et un site avec 2 F1 ouverts (portfolio Makimono). **Verdict : le hook de lecture ne fait pas économiser ; il peut être retiré
+sans perte.** Le levier restant est le nombre de passes de revue (revues 2 et 3), pas les lectures.
+
+**Bilan du projet (20 restaurants, 60 sites) :** restaurants 481,24 $ ; avec portfolio (261,82 $), préparation et pilotage :
+1 069,46 $ au tarif catalogue. Coût par site : 20,38 $ avant → 5,75 à 6,13 $ dans les deux dernières configurations (−70 %).
