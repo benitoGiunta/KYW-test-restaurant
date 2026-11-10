@@ -1,28 +1,31 @@
-# ETAT · Sanga · variante awwwards · construction-1 (phase 1)
+# ETAT · Sanga · variante awwwards · construction-2 (phase 2)
 
-## Fait
-- Brief, trois concepts notés, Concept Card, système (palette, typo, grille, plan de composition) : `DESIGN.md` (§ Sur-utilisation points 1 à 18).
-- Scaffold Astro 5 (`package.json`, `astro.config.mjs`, `tsconfig.json`), engine copié de le-royal-awwwards (`src/engine/*`, `engine.css`, sans GL), `Base.astro` (ClientRouter, JSON-LD Restaurant, OG, noindex, curtain), `Header`, `Footer` (+ `KywFooter`), `Horaires`, `Photo`.
-- Contenu : `src/data/site.ts` (coordonnées, horaires, carte complète de 6 catégories, bouillons, avis réels, livraison). Aucun e-mail ni réseau (inconnus), aucune équipe ni histoire inventée.
-- Pages : `/` (hero, énoncé, index des ramen, paire udon et teriyaki, venir), `/carte/` (sommaire + 6 biefs + photos en crête), `/a-propos/` (La maison : nom, bouillon, avis), `/reservation/` (tel, commande en ligne, horaires, adresse, livraison, paiement), 404 « Rien sur cette rive. ».
-- Polices (4 fichiers, 2 préchargés), favicon SVG + PNG, `og.png` composée.
-- Build : `scripts/q.sh sanga-build pnpm build:site sites/sanga-awwwards` passe (5 pages). Mesures 1440, 1280, 1024, 390 : pas de débordement (`scrollWidth` = largeur), aucun `.display` à moins de 16 px du bord, hero lisible et CTA visible au premier écran.
+## Fait (phase 1)
+- Concept 山河, système, scaffold Astro 5, engine sans GL, 5 pages, polices, favicon, OG : voir `DESIGN.md` points 1 à 18.
 
-## Reste (phases 2 et 3)
-- Phase 2 : mouvement. Signature « le fil de l'eau » (filet `scaleY` lié au scroll + sceau qui glisse), révélations `data-reveal`/`data-split` (aucun attribut posé pour l'instant : tout est visible), hover d'index avec aperçu photo, états de repos, transition (déjà posée : deux volets indigo, à régler).
-- Phase 3 : QA navigateur, audit axe, LCP, clavier, survol, sloplint, jury (auto-notation `self`), RAPPORT.md, points 42 à 63.
-- Vérifier le contraste du texte vermillon `#e8512f` sur indigo (4,6:1, limite AA) et le sceau de l'en-tête (kanji 1 rem sur vermillon).
-- `pnpm index` exécuté après le build (voir commit).
+## Fait (phase 2)
+- Signature « le fil de l'eau » : `src/motion/fleuve.ts` (module pilote, une variable : le niveau de l'eau en px, lu sur `scrollY` à 62 % de l'écran, gsap.ticker seul, pause hors écran). L'eau vermillon descend le fleuve (`.fleuve__eau`, `clip-path`), le sceau flotte à sa pointe et penche vers le pointeur, le sceau de chaque strate se remplit quand l'eau l'atteint (`.is-atteinte`). Repos : courant de tirets qui coulent (929 px changés en 1,5 s mesurés à 1440 × 900). Intro : l'eau descend de la source (1,8 s), la photo du hero se pose.
+- `src/motion/idle.ts` (entrée de repos de motion.md), `src/motion/menu.ts` (menu plein écran du téléphone), `src/motion/setup.ts` (crue + appels).
+- Révélations : `data-split="lines"` sur tous les h2 display, `data-split="chars" data-intro` sur le kanji des pages intérieures, `data-reveal="clip"` sur les photos (le niveau monte), `data-reveal="up"` sur les lignes de l'index et les listes de plats. Aucun reveal sur un bloc à lien. h1 et accroche du hero jamais cachés.
+- Survols : CTA et liens texte se remplissent du bas vers le haut, nav et sommaire en filet ; `:focus-visible` et `:active` partout ; lien du pied KYW souligné au survol.
+- Mobile 390 : bouton « Menu » (`aria-expanded`), overlay plein écran, focus piégé, Échap, focus rendu (mesuré). En-tête : marque, « Réserver », « Menu » à 44 px ; `scrollWidth` 390.
+- Hero bureau : kanji plafonné à 33 svh et photo à `100svh - 14rem` : CTA en bas à 881 px (1440 × 900) et 694 px (1280 × 720), dans l'écran.
+- Mouvement réduit mesuré : pas de `.motion`, pas de Lenis, fleuve animé masqué (fleuve statique des strates et sceaux pleins), 0 élément caché.
+- Build : `scripts/q.sh sanga-aw2-build pnpm build:site sites/sanga-awwwards` passe (5 pages) ; `DESIGN.md` points 19 à 41 cochés avec preuve, 36, 39, 47 partiels.
+
+## Reste (phase 3)
+- QA complète (agent captures) : `report.json` pour `idleMotion`, `hover.noHoverChange`, `reduced.*`, cibles, contraste ; points 35, 36, 39, 44, 45, 47 puis 42 à 63 ; RAPPORT.md ; jury en auto-notation `self`.
+- Vérifier le LCP des pages intérieures (kanji 山河 en `data-intro` : s'il est l'élément LCP et retarde trop, retirer `data-intro`/`data-split` du kanji).
+- Contraste du vermillon `#e8512f` sur indigo (4,6:1) et du sceau de l'en-tête (phase 1, toujours à vérifier).
+- `pnpm index` relancé après le build de phase 2.
 
 ## Décisions
-- Pas de loader, pas de GL (voir Concept Card). Pas de curseur suiveur.
-- Page « histoire » remplacée par `/a-propos/` titrée « La maison » : l'histoire réelle est inconnue, la page tient sur le nom, les bouillons et les avis réels.
-- Photos 05 (vue de dessus, fond blanc) et 06 (edamame) non utilisées : aspect banque d'images, origine à confirmer. Aucune photo de salle : la composition typographique (kanji, crêtes) porte l'ambiance.
-- Textes de plats nettoyés (doublons « Bouillon au choix », « des algues », fautes d'usage) ; à lister dans RAPPORT.md en phase 3. Libellés « Miso taste » remplacés par « Miso » (bouillon au choix en note de catégorie). Le sens des bouillons (pâte de soja fermentée, sel, sauce soja) est de la culture générale, pas une recette de la maison.
-- Les avis affichés viennent de `donnees.json` (extraits datés) ; la note Google 4,6 sur 892 est reprise de Rankeat (4 mars 2026), signalée « non revérifiée ».
-- Livraison : « gratuite » et seuils 25 et 35 € repris du site client.
-- Horaires rendus une seule fois par page (pas dans le pied) pour éviter les WARN de phrases répétées.
+- Pas de loader, pas de GL, pas de curseur suiveur (phase 1, maintenu).
+- Aperçu photo au curseur sur l'index abandonné (une seule photo de ramen, lignes sans destination).
+- L'immobilité au repos de la phase 1 est remplacée par le courant du fleuve (objet du concept).
+- CTA : remplissage du bas vers le haut (niveau qui monte) au lieu de gauche à droite.
+- Le fleuve animé vit dans `<main>` (`Base.astro`, `[data-fleuve]`) : il s'arrête à la crête du pied, qui reste la composition finale.
 
 ## Pièges
-- `--t-kanji` doit rester petit : à 34 vw le kanji de 2 caractères passait à la ligne (hauteur 882 px). Une pile verticale (`span` en `display: block`) est le parti pris du hero, horizontale sous 52 rem.
-- `<picture>` d'astro:assets ne remplit pas un cadre `clip-path` sans `picture { display: block; height: 100% }`.
+- `--t-kanji` doit rester petit : à 34 vw le kanji passait à la ligne. Le hero en bureau est plafonné en `svh` (kanji et photo) pour garder les CTA dans l'écran.
+- Le niveau de l'eau se lit par `scrollY + innerHeight × 0,62 - haut du fleuve` : mesures refaites à chaque `ScrollTrigger` refresh et au redimensionnement.

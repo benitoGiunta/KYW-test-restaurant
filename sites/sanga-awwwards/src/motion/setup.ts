@@ -1,7 +1,10 @@
-// Motion globale de Sanga. Phase 1 : transition de page seulement (deux volets indigo qui montent comme une crue
-// puis redescendent). Le fil de l'eau (signature) arrive en phase 2. Appelé une fois par l'engine.
+// Motion globale de Sanga, appelée une fois par l'engine (start(setupMotion) dans Base.astro).
+// Transition : la crue (deux volets indigo qui montent puis se retirent vers le haut, ≤ 1 s par sens).
+// Pilote : le fil de l'eau (fleuve.ts) ; menu du téléphone (menu.ts) ; entrée du hero (la photo se pose).
 import { gsap } from 'gsap';
-import { setTransition, ease } from '../engine';
+import { setTransition, ease, onPage, prefersReducedMotion } from '../engine';
+import { startFleuve } from './fleuve';
+import { startMenu } from './menu';
 
 export function setupMotion() {
   const volets = (c: HTMLElement) => c.querySelectorAll<HTMLElement>('.curtain__panel');
@@ -20,5 +23,12 @@ export function setupMotion() {
         .to(a, { yPercent: -101, duration: 0.8, ease: ease.inOut }, 0.11)
         .set(c, { autoAlpha: 0 });
     },
+  });
+  startFleuve();
+  startMenu();
+  // Entrée du hero : rien n'est caché (LCP), la photo se pose (léger recul) pendant que l'eau descend.
+  onPage(({ intro }) => {
+    const img = document.querySelector('.hero__photo img');
+    if (img && !prefersReducedMotion()) intro.fromTo(img, { scale: 1.08 }, { scale: 1, duration: 1.6, ease: ease.out, clearProps: 'transform' }, 0);
   });
 }

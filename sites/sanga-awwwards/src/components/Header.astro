@@ -8,6 +8,12 @@ const liens = [
   { href: '/carte/', label: 'La carte' },
   { href: '/a-propos/', label: 'La maison', sec: true },
 ];
+const menu = [
+  { href: '/', label: 'Accueil' },
+  { href: '/carte/', label: 'La carte' },
+  { href: '/a-propos/', label: 'La maison' },
+  { href: '/reservation/', label: 'Réserver' },
+];
 ---
 <header class="tete">
   <a class="tete__marque" href={base} aria-label="Sanga, accueil" aria-current={path === base ? 'page' : undefined}>
@@ -15,8 +21,19 @@ const liens = [
   </a>
   <nav class="tete__nav" aria-label="Navigation principale">
     <ul>
-      {liens.map((l) => <li class={l.sec ? 'tete__sec' : undefined}><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      {liens.map((l) => <li class={l.sec ? 'tete__sec' : 'tete__prem'}><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
       <li><a class="cta cta--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="cta__txt">Réserver</span></a></li>
     </ul>
   </nav>
+  <button class="tete__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  <div class="menu" id="menu" hidden>
+    <nav class="menu__nav" aria-label="Menu du téléphone">
+      <ul class="menu__liens">
+        {menu.map((l) => <li><a class="menu__lien" href={u(l.href)} aria-current={l.href === '/' ? (path === base ? 'page' : undefined) : courant(l.href)}><span class="menu__masque"><span class="menu__ligne">{l.label}</span></span></a></li>)}
+      </ul>
+      <p class="menu__tel"><a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a></p>
+    </nav>
+    <p class="menu__kanji" aria-hidden="true" lang="ja">{site.kanji}</p>
+    <button class="menu__fermer" type="button">Fermer</button>
+  </div>
 </header>
