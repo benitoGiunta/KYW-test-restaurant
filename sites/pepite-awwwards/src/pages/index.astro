@@ -5,9 +5,9 @@ import Etapes from '../components/Etapes.astro';
 import { u } from '../lib/url';
 import { site, horaires, semaine, citation, boissons, colis } from '../data/site';
 ---
-<Base page="accueil" description="Pépite, cave à manger au 44 rue Notre-Dame à Namur : assiettes à partager, vins d’auteurs, boutique et soirées à la bougie, du jeudi au samedi.">
+<Base page="accueil" description="Pépite, cave à manger au 44 rue Notre-Dame à Namur : assiettes à partager, vins d’auteurs, boutique, du jeudi au samedi ; la cave a aussi connu des soirées à la bougie.">
   <section class="hero wrap grid">
-    <h1 class="hero__titre display"><span class="hero__nom" data-split="chars" data-intro>Pépite</span><span class="hero__sous" data-split="words" data-intro data-delay="0.35">cave à manger</span></h1>
+    <h1 class="hero__titre display"><span class="sr-only">Pépite, cave à manger</span><span class="hero__nom" aria-hidden="true" data-split="chars" data-intro>Pépite</span><span class="hero__sous" aria-hidden="true" data-split="words" data-intro data-delay="0.35">cave à manger</span></h1>
     <figure class="hero__photo"><span class="fil" data-fil aria-hidden="true"><span class="fil__trait"><i class="fil__lueur"></i></span><i class="fil__pepite"></i></span><div class="hero__cadre" data-reveal="clip" data-intro data-delay="0.1"><Photo cle="cave" widths={[480, 598]} sizes="(max-width: 48rem) 70vw, 30vw" prioritaire /></div></figure>
     <div class="hero__bas">
       <p class="lead">Une boutique de vins d’auteurs et des assiettes à partager, au 44 rue Notre-Dame, à Namur.</p>
@@ -19,7 +19,7 @@ import { site, horaires, semaine, citation, boissons, colis } from '../data/site
   <section class="lin sect sect--citation">
     <div class="wrap">
       <figure class="citation">
-        <blockquote class="citation__texte display" data-split="lines">« {citation.texte} »</blockquote>
+        <blockquote class="citation__texte display" data-reveal="up">« {citation.texte} »</blockquote>
         <figcaption class="citation__auteur">{citation.auteur}</figcaption>
       </figure>
     </div>
@@ -52,27 +52,13 @@ import { site, horaires, semaine, citation, boissons, colis } from '../data/site
 
   <section class="lin sect sect--strip" aria-labelledby="t-bougie">
     <div class="wrap strip__tete">
-      <h2 id="t-bougie" class="titre-l display" data-split="lines">Parfois, à la bougie</h2>
+      <h2 id="t-bougie" class="titre-l display" data-split="lines">À la bougie, en 2022</h2>
       <p>Des soirées sans gaz ni électricité ont eu lieu dans la cave, racontées par Le Vif en 2022.</p>
     </div>
-    <ul class="strip">
+    <ul class="strip" tabindex="0" aria-label="Photos des soirées à la bougie">
       <li data-reveal="clip" data-delay="0.00"><Photo cle="service" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 28vw" /></li>
       <li data-reveal="clip" data-delay="0.08"><Photo cle="dessert" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 28vw" /></li>
       <li data-reveal="clip" data-delay="0.16"><Photo cle="bougie" widths={[480, 800]} sizes="(max-width: 48rem) 70vw, 28vw" /></li>
     </ul>
-  </section>
-
-  <section class="sect sect--pratique" aria-labelledby="t-venir">
-    <div class="wrap grid">
-      <h2 id="t-venir" class="titre-xl display" data-split="lines">Venir <em>chez Pépite</em></h2>
-      <div class="pratique__horaires">
-        <ul class="horaires">
-          {horaires.map((h) => <li><span>{h.jour}</span><span>boutique {h.boutique}</span><span>cave {h.cave}</span></li>)}
-        </ul>
-        <p class="pied__doux">Fermé du dimanche au mercredi.</p>
-      </div>
-      <address class="pratique__adresse">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}<br /><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></address>
-      <p class="pratique__cta"><a class="cta cta--grand" href={u('/reservation/')} data-magnetic="0.2"><span class="cta__txt">Réserver une table</span></a></p>
-    </div>
   </section>
 </Base>

@@ -8,7 +8,7 @@ export const site = {
   nom: 'Pépite, cave à manger',
   court: 'Pépite',
   baseline: 'Cave à manger',
-  description: 'Pépite, cave à manger au 44 rue Notre-Dame à Namur : assiettes à partager, vins d’auteurs, boutique et soirées aux bougies.',
+  description: 'Pépite, cave à manger au 44 rue Notre-Dame à Namur : assiettes à partager, vins d’auteurs, boutique.',
   typeCuisine: 'Assiettes à partager, vins d’auteurs',
   adresse: { rue: 'Rue Notre-Dame', numero: '44', cp: '5000', commune: 'Namur', pays: 'BE' },
   geo: { lat: 50.4601105, lon: 4.8665145 },
@@ -52,7 +52,7 @@ export const boissons = [
 export const histoire = [
   'Pépite ouvre en 2017 au 44 rue Notre-Dame, dans les murs de Cuisinémoi, l’ancien restaurant de Catherine Mathieu. Elle y installe une cave à manger : une boutique de vins et une salle où l’on choisit des assiettes à partager.',
   'Les vins sont des vins d’auteurs, élaborés dans le respect du vivant. La presse de l’époque l’a résumé d’une formule : ici, pas de menu, mais un tableau.',
-  'Depuis, la cave voûtée accueille aussi des soirées à la bougie, sans gaz ni électricité, que Le Vif a racontées en 2022.',
+  'Depuis, la cave voûtée a aussi accueilli des soirées à la bougie, sans gaz ni électricité, que Le Vif a racontées en 2022.',
 ];
 export const citation = {
   texte: 'Partager et Se Sentir Bien sont les mots qui ont résonné en moi lors de la création de ce lieu.',
