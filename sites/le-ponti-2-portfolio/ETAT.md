@@ -1,4 +1,4 @@
-# ETAT : le-ponti-2 portfolio (phase 2 sur 3 faite)
+# ETAT : le-ponti-2 portfolio (phase 3 sur 3 faite, terminé)
 
 ## Fait (phase 1)
 - Gabarit guinguette adapté, DESIGN.md, `site.ts` + `carte.json` (99 lignes), 6 pages, palette bordeaux/or/canard, objets `pizza` et `pont`, favicon, og.jpg.
@@ -22,3 +22,6 @@
 - Faux positifs de mon script de débordement : lien d'évitement `A` hors écran, `.carte` en scale avant reveal.
 - « Ouvert, arrivée jusqu'à 14:30 » (libellé du gabarit) à confirmer comme formulation.
 - `gabarits/` non modifié (défaut rail/display à reporter : voir leçon).
+
+## Phase 3 (QA)
+- Prix passant sur 2 lignes à 390 corrigé (nbsp avant €), mesuré. RAPPORT.md écrit. Build final OK. Reste : pnpm index par la publication, logo client, LCP mobile hero.
