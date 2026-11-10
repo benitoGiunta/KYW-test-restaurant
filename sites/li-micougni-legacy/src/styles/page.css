@@ -186,12 +186,12 @@ h2, .sec__title { line-height: 0.95; }
 /* galerie */
 .bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap-columns); }
 .bento .photo { aspect-ratio: 4 / 5; }
-.bento__lead { grid-column: 1 / 9; grid-row: span 2; aspect-ratio: 4 / 3 !important; min-height: 100%; }
-.bento__lead2 { grid-column: 5 / 13; grid-row: span 2; aspect-ratio: 4 / 3 !important; }
+.bento__lead { grid-column: 1 / 9; grid-row: span 2; aspect-ratio: auto !important; min-height: 0; }
+.bento__lead2 { grid-column: 5 / 13; grid-row: span 2; aspect-ratio: auto !important; }
 .bento__t { grid-column: span 4; }
 .bento__lead + .bento__t { grid-column: 9 / 13; }
 .wide { aspect-ratio: 21 / 9; }
-@media (max-width: 60rem) { .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); } .bento > .photo { grid-column: span 1 !important; grid-row: auto !important; aspect-ratio: 4 / 5 !important; } .bento > .bento__lead, .bento > .bento__lead2 { grid-column: 1 / -1 !important; aspect-ratio: 4 / 3 !important; } .wide { aspect-ratio: 4 / 3; } }
+@media (max-width: 60rem) { .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); } .bento > .photo { grid-column: span 1 !important; grid-row: auto !important; aspect-ratio: 4 / 5 !important; } .bento > .bento__lead, .bento > .bento__lead2 { grid-column: 1 / -1 !important; aspect-ratio: 4 / 3 !important; } .wide { aspect-ratio: 4 / 3; } .bento > .photo:nth-child(4), .bento > .photo:nth-child(6) { grid-column: 1 / -1 !important; aspect-ratio: 4 / 3 !important; } }
 
 /* contact + formulaire */
 .contact { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); row-gap: var(--space-2xl); align-items: start; }
@@ -244,6 +244,10 @@ h2, .sec__title { line-height: 0.95; }
 .rail a:active { transform: translateY(1px); }
 @media (hover: hover) { .rail a:hover { background: var(--color-accent-soft); } }
 .carte { padding-top: 0; }
+
+/* cibles minimales 24 px (WCAG 2.5.8) */
+.foot a, .link, .lieu a { display: inline-flex; align-items: center; min-height: 24px; }
+.foot__credits a { display: inline-block; min-height: 0; padding-block: 3px; }
 
 /* ---------- téléphone, tactile, mouvement réduit (en fin de feuille) ---------- */
 @media (pointer: coarse) {
