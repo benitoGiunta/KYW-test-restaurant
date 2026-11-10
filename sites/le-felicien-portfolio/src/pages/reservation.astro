@@ -4,17 +4,17 @@ import Base from '../layouts/Base.astro';
 import { site, adresseLigne, telHref, creneauService } from '../data/site';
 const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`;
 ---
-<Base title="Réserver" theme="clair" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}.`}>
+<Base title="Réserver" theme="clair" description={`Réserver une table chez ${site.nom} à ${site.adresse.commune} : en ligne via ${site.reservation.outil}. Contact : ${site.telephone}.`}>
   <div class="clair" style="padding-bottom: calc(var(--u) * 6)">
     <section class="entete wrap">
       <h1 class="cap">Réserver</h1>
-      <p class="lead muted">En ligne via {site.reservation.outil}, ou par téléphone. {site.reservation.note}</p>
+      <p class="lead muted">{site.reservation.note} Via {site.reservation.outil}.</p>
     </section>
     <section class="wrap acces">
       <div>
         <div class="actions" style="margin-top: 0">
           <a class="btn btn--plein" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
-          <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+          <a class="btn" href={telHref()}>Contact : {site.telephone}</a>
         </div>
         <p class="muted" style="margin: calc(var(--u) * 3) 0 var(--u); font-size: var(--t-s)">Formulaire de démonstration sans envoi : la validation vous conduit vers {site.reservation.outil}.</p>
         <form class="form" data-reservation action={site.reservation.url} method="get">

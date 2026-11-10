@@ -13,7 +13,7 @@ const ici = Astro.url.pathname.replace(/\/+$/, '');
 const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
 const statique = servicesTexte();
 ---
-<div class="etat" data-etat data-horaires={JSON.stringify(site.horaires)} aria-label="État d'ouverture">
+<div class="etat" data-etat data-horaires={JSON.stringify(site.horaires)} role="region" aria-label="État d'ouverture">
   <div class="etat__piste" data-etat-piste>
     <p data-etat-texte>{statique}</p>
     <p aria-hidden="true" data-etat-copie>{statique}</p>

@@ -27,3 +27,4 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 - 2026-11-09 · ferme-blanche-d-asie portfolio : `<footer>` du site en `<section aria-label>` suffit pour axe `landmark-no-duplicate-contentinfo` (kyw-footer porte le contentinfo) ; recompresser un WebP 1400 px à q60 donne ~250 Ko, passer à 1280 px q62 pour descendre sous 225 Ko.
 
 - Un correctif qui rend visible un élément masqué à 390 px (nom de l'en-tête) peut déborder à 360 px (+25 px mesurés). Mesure `scrollWidth` à 390 ET 360 px après la correction ; sous 24 rem, repasse en visually-hidden (le lien garde son `aria-label`). `is-loaded` n'apparaît pas toujours en mobile : un `waitForTimeout(2500)` suffit pour une mesure axe.
+- 2026-11-10 · le-felicien portfolio : un `gsap.to(el, { overwrite: true })` tue aussi les `quickTo` posés sur le même élément ; utiliser `overwrite: 'auto'`. Un h2 `display:none` (onglets) casse l'ordre des titres pour axe : le passer en visually-hidden.

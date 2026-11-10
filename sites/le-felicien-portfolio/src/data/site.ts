@@ -90,7 +90,7 @@ export const site: Restaurant = {
   telephone: '081 39 53 23',
   email: { valeur: 'info@lefelicien.be', placeholder: false },
   emailEvenements: 'evenement@lefelicien.be',
-  reservation: { outil: 'Tablebooker', url: 'https://reservations.lefelicien.be/', note: 'Réservation en ligne, 7 jours sur 7.' },
+  reservation: { outil: 'Tablebooker', url: 'https://reservations.lefelicien.be/', note: 'Réservation en ligne.' },
   evenements: { texte: 'Le premier étage accueille dîners, banquets et réceptions, combinables avec les salles du Business Village Ecolys.', prixMenu: 'dès 27 € hors boissons' },
   capacite: { texte: "Jusqu'à 300 couverts selon L'Avenir (2026), à confirmer par la maison.", placeholder: true },
   horaires: tous.map((jour) => ({ jour, creneaux: cren(jour === 'vendredi' || jour === 'samedi' ? '22:00' : '21:30') })),
@@ -116,7 +116,7 @@ export const site: Restaurant = {
       service: 'midi',
       exemple: false,
       prix: '25\u00a0€',
-      note: "Du mardi au vendredi midi : entrée et plat 25 €, plat seul 18 €. Renouvelées chaque semaine ; exemples de la semaine du 3 au 6 novembre. Le lundi midi, cuisine du marché décidée le jour même.",
+      note: "Du mardi au vendredi midi : renouvelées chaque semaine ; exemples d'une semaine d'automne 2026. Le lundi midi, cuisine du marché décidée le jour même.",
       plats: [
         { nom: 'Aumônière de fromage en feuille de brick', description: 'entrée', prix: null, placeholder: false },
         { nom: 'Filet de rouget', description: 'entrée', prix: null, placeholder: false },
@@ -183,9 +183,9 @@ export const site: Restaurant = {
       service: 'carte',
       exemple: false,
       plats: [
-        l("Rigatoni jambon fromage gratinés", "", "15 €", [], '/photos/apercu-pates.webp'),
-        l("Cannelloni de volaille à la truffe, gratinés", "", "20 €", [], '/photos/apercu-pates.webp'),
-        l("Linguine aux gambas rôties", "sauce Alfredo", "23 €", [], '/photos/apercu-pates.webp'),
+        l("Rigatoni jambon fromage gratinés", "", "15 €", []),
+        l("Cannelloni de volaille à la truffe, gratinés", "", "20 €", []),
+        l("Linguine aux gambas rôties", "sauce Alfredo", "23 €", []),
       ],
     },
     {
@@ -231,7 +231,7 @@ export const site: Restaurant = {
         l("Banana split", "", "12 €"),
         l("Glace brésilienne", "", "11 €"),
         l("Sorbet Colonel", "", "14 €"),
-        l("Café gourmand (4 variétés)", "", "14 €", [], '/photos/apercu-cafe.webp'),
+        l("Café gourmand (4 variétés)", "", "14 €", []),
       ],
     },
     {
@@ -287,7 +287,7 @@ export const site: Restaurant = {
   menus: [
     { nom: 'Suggestions de la semaine', prix: '25\u00a0€', quand: 'Du mardi au vendredi, le midi', description: "Entrée et plat 25 €, plat seul 18 €. Le lundi, cuisine du marché décidée le jour même.", placeholder: false },
     { nom: 'Pour les bambins', prix: 'dès 10\u00a0€', quand: 'Midi et soir', description: 'Boulettes sauce tomate ou liégeoise, vol-au-vent, brochette de bœuf ou rigatoni jambon fromage, avec frites ou pâtes.', placeholder: false },
-    { nom: 'Banquets et réceptions', prix: 'dès 27\u00a0€', quand: 'Au premier étage', description: 'Menus à partir de 27 € hors boissons, pour dîners, banquets et réceptions.', placeholder: false },
+    { nom: 'Banquets et réceptions', prix: 'dès 27\u00a0€', quand: 'Au premier étage', description: 'Pour dîners, banquets et réceptions.', placeholder: false },
   ],
   histoire: [
     "Lancé fin 2019 au cœur du Business Village Ecolys, Le Félicien est une brasserie pour tous : celle des employés du parc d'activités, des clients de l'hôtel voisin, des habitants de Suarlée et de Namur.",
