@@ -98,7 +98,7 @@ export const site: Restaurant = {
       p('L’Entrecôte du moment Terre et Mer', '40€', 'Scampi, ail, persil, beurre'), p('Brochettes d’agneau des Pyrénées', '34€'),
       p('La Côte de porc Duroc d’Olive maturée 14 jours', '30€'), p('Pluma de porc ibérique', '35€'), p('La trilogie du Chef, 400 g', '40€', 'Hampe, agneau, porc'),
       p('Le Surf and Turf', '32€', 'Volaille cuite basse température et gambas, jus de carcasse'), p('Le Menu Viandard', '69€', 'Cinq viandes choisies par le chef, voir plus bas'),
-    ], 'Cuites au feu de bois. Carte du 14 octobre 2026.'),
+    ], 'Carte du 14 octobre 2026.'),
     cat('À partager, en grillade', 'feu', [
       p('Le Châteaubriand', '32€/pers.', 'Sélection Rungis, à partir de 2 personnes'),
       p('L’Assiette Découverte', '85€ pour 2 pers.', 'Une entrecôte Prestige et une entrecôte maturée'),
@@ -138,7 +138,7 @@ export const site: Restaurant = {
   ],
   equipe: [
     { nom: 'Gaëtan', role: 'Chef : viandes, découpe, carte et vins', placeholder: false, phrase: 'La cuisine est un art, l’art est science et la science est patience.' },
-    { nom: 'Elise', role: 'La maison d’Elise et Gaëtan', placeholder: true, phrase: 'Co-signataire de la devise du restaurant ; son rôle exact reste à préciser.' },
+    { nom: 'Elise', role: 'La maison d’Elise et Gaëtan', placeholder: true, phrase: 'Signataire de la devise du restaurant.' },
   ],
   avis: [
     { texte: 'Une viande tendre, une cuisson juste et des frites maison comme on les aime. On y retourne entre amis.', auteur: 'Marc L.', source: 'avis illustratif', date: '2026-09-12', note: 5, placeholder: true },
@@ -160,7 +160,7 @@ export const site: Restaurant = {
     photo('/photos/chambre-maturation.webp', 'Pièces de viande suspendues dans la chambre de maturation du restaurant', 1080, 1350, 'Une des deux chambres de maturation'),
     photo('/photos/cocktail-pornstar.webp', 'Un Pornstar Martini servi avec sa demi-passion', 1800, 1200),
     photo('/photos/verres-lumiere.webp', 'Verres alignés sous une lumière chaude', 1800, 1198),
-    photo('/photos/patrons-tabliers.webp', 'Deux personnes en tablier devant le restaurant', 1200, 1800, 'Elise et Gaëtan (identité à confirmer)', true),
+    photo('/photos/patrons-tabliers.webp', 'Deux personnes en tablier devant le mur d’ardoise de la salle', 1200, 1800, 'Le restaurant, Namur', true),
     photo('/photos/table-plantes.webp', 'Une table dressée près des plantes, verre en premier plan', 1198, 1800),
     photo('/photos/cocktails-trois.webp', 'Trois cocktails alignés sur le comptoir', 1080, 1350, 'Trois cocktails avant le service'),
   ],
@@ -174,7 +174,6 @@ export const site: Restaurant = {
     plat: 'L’entrecôte du moment',
     intro: 'Le plat signature, couche par couche. Étapes et températures illustratives.',
     couches: [
-      { id: 'fond', nom: 'L’assiette', detail: 'Chaude, prête à recevoir', temp: 520, src: '/couches/fond.webp', placeholder: true },
       { id: 'piece', nom: 'L’entrecôte', detail: 'Maturée, saisie au feu de bois', temp: 420, src: '/couches/piece.webp', placeholder: true },
       { id: 'garniture', nom: 'Purée et légumes', detail: 'Chauds, juste poêlés', temp: 300, src: '/couches/garniture.webp', placeholder: true },
       { id: 'sauce', nom: 'La sauce maison', detail: 'Poivre, champignons ou truffe', temp: 180, src: '/couches/sauce.webp', placeholder: true },
@@ -184,7 +183,7 @@ export const site: Restaurant = {
     intro: 'Le feu de bois ne reste pas toujours à Namur : le Grill des amiS prépare aussi vos repas de groupe et livre ses barbecues chez vous.',
     formules: [
       { nom: 'Menus sur mesure', texte: 'Un menu en trois services avec buffets barbecue premium, écrit avec vous selon l’occasion et le nombre de convives.', placeholder: false },
-      { nom: 'Barbecues livrés', texte: 'Le service clé en main : les grillades sont livrées chez vous, prêtes à passer au feu.', placeholder: false },
+      { nom: 'Barbecues livrés', texte: 'Le service clé en main : les grillades sont livrées chez vous.', placeholder: false },
       { nom: 'Privatiser la salle', texte: 'Pour un anniversaire ou un repas d’équipe, la salle peut s’envisager en groupe : conditions et nombre de couverts à confirmer par téléphone.', placeholder: true },
     ],
   },

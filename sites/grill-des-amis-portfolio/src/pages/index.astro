@@ -20,22 +20,22 @@ const horairesJson = JSON.stringify(site.horaires.map((h) => ({ jour: h.jour, cr
 const derniere = site.cuisson.couches[site.cuisson.couches.length - 1];
 const [mot1, ...reste] = site.nom.split(' ');
 ---
-<Base start={900} reperes={reperes}>
+<Base start={900} reperes={reperes} horairesResume>
   <section class="hero" data-temp="900" aria-labelledby="titre">
     <div class="hero__media" aria-hidden="true">
       <img src={asset(hero.src)} alt="" width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="sync" data-critical />
       <div class="hero__voile"></div>
     </div>
     <div class="wrap">
-      <p class="chapeau" data-reveal="fade" data-intro data-delay="0.9">Viandes maturées et grillades au feu de bois, Namur</p>
+      <p class="chapeau" data-reveal="fade" data-intro data-delay="0.9">Viandes maturées, feu de bois, Namur</p>
       <h1 class="hero__title" id="titre" data-split="lines" data-intro data-delay="0.2"><span class="ligne">{mot1} {reste[0]}</span><span class="ligne">{reste.slice(1).join(' ')}</span></h1>
       <div class="hero__foot">
-        <p class="hero__lead">Des grosses pièces découpées et maturées sur place, cuites au feu de bois, avec des sauces et des frites maison. Une soirée qui commence à la braise et finit à table.</p>
+        <p class="hero__lead">Deux chambres de maturation, des sauces et des frites maison. Une soirée qui commence à la braise et finit à table.</p>
         <div class="stack" data-reveal="fade" data-intro data-delay="1">
           <p class="pastille" data-pastille data-horaires={horairesJson}>Service du soir dès 18 h</p>
           <div class="actions" style="margin-top: var(--u)">
             <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
-            <a class="btn btn--quiet" href="#cuisson" data-ancre>Suivre la soirée</a>
+            <a class="btn btn--quiet" href="#cuisson" data-ancre>Voir la cuisson</a>
           </div>
         </div>
       </div>
@@ -70,9 +70,9 @@ const [mot1, ...reste] = site.nom.split(' ');
           </ol>
           <div class="cuisson__bar" aria-hidden="true"><i></i></div>
         </div>
-        <div class="cuisson__scene" role="img" aria-label={`${site.cuisson.plat}, dressé en quatre couches`}>
-          {site.cuisson.couches.map((c) => (
-            <img class={`couche couche--${c.id}`} src={asset(c.src)} alt="" width="1200" height="1200" loading={c.id === 'fond' ? 'eager' : 'lazy'} decoding="async" />
+        <div class="cuisson__scene" role="img" aria-label={`${site.cuisson.plat}, dressé en {site.cuisson.couches.length} couches`}>
+          {site.cuisson.couches.map((c, i) => (
+            <img class={`couche couche--${c.id}`} src={asset(c.src)} alt="" width="1200" height="1200" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
           ))}
           <div class="vapeurs" aria-hidden="true"><i class="vapeur"></i><i class="vapeur"></i><i class="vapeur"></i></div>
           <p class="cuisson__temp" aria-hidden="true"><span class="num"><span data-cuisson-deg>{derniere.temp}</span> °C</span> <span data-cuisson-nom>{derniere.nom}</span></p>
@@ -85,15 +85,13 @@ const [mot1, ...reste] = site.nom.split(' ');
     <div class="wrap">
       <div class="section__head cols">
         <div class="c1-8">
-          <p class="chapeau">Dressage</p>
           <h2 class="t-xl" id="t-carte" data-split="lines">Au feu de bois</h2>
         </div>
-        <p class="c9-12 note" data-reveal="fade">{feu.note} Une sélection ; le Menu Viandard, {viandard.prix}, réunit cinq viandes à partager.</p>
+        <p class="c9-12 note" data-reveal="fade">{feu.note} Une sélection : le Menu Viandard, {viandard.prix}, réunit cinq viandes à partager.</p>
       </div>
       <ol class="plats">
         {grillades.map((p, i) => (
           <li class={`plat${p.photo ? ' plat--photo' : ''}`} data-photo={p.photo ? asset(p.photo) : undefined} data-reveal="fade" data-delay={String(i * 0.06)}>
-            <span class="plat__num">{String(i + 1).padStart(2, "0")}</span>
             {p.photo && <img class="plat__vignette" src={asset(p.photo)} alt="" width="200" height="200" loading="lazy" decoding="async" />}
             <span><span class="plat__nom">{p.nom}</span>{p.description && <span class="plat__desc muted">{p.description}</span>}</span>
             <span class="plat__prix">{p.prix ?? ''}</span>
@@ -128,7 +126,6 @@ const [mot1, ...reste] = site.nom.split(' ');
   <section class="section" id="salle" data-temp="150" data-temp-end="130" aria-labelledby="t-salle">
     <div class="wrap">
       <div class="section__head">
-        <p class="chapeau">Table</p>
         <h2 class="t-xl" id="t-salle" data-split="lines">La salle, la terrasse, le feu</h2>
       </div>
       <div class="salle__wall">

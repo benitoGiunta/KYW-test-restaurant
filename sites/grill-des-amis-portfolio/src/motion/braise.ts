@@ -221,10 +221,11 @@ function initEtincelles(reduced: boolean) {
 function initCuisson(reduced: boolean) {
   const sec = document.querySelector<HTMLElement>('.cuisson');
   if (!sec) return;
-  const couches = [...sec.querySelectorAll<HTMLElement>('.couche:not(.couche--fond)')];
+  const toutes = [...sec.querySelectorAll<HTMLElement>('.couche')];
+  const couches = toutes.slice(1);
   const items = [...sec.querySelectorAll<HTMLElement>('.cuisson__item')];
   const bar = sec.querySelector<HTMLElement>('.cuisson__bar i');
-  const fond = sec.querySelector<HTMLElement>('.couche--fond');
+  const fond = toutes[0]; // la pièce ouvre la séquence (plus d'assiette séparée)
   const buttons = [...sec.querySelectorAll<HTMLButtonElement>('.cuisson__item button')];
   const degEl = sec.querySelector<HTMLElement>('[data-cuisson-deg]');
   const nomEl = sec.querySelector<HTMLElement>('[data-cuisson-nom]');
@@ -278,7 +279,7 @@ function initCuisson(reduced: boolean) {
 function initManifeste(reduced: boolean) {
   const el = document.querySelector<HTMLElement>('.manifeste__txt');
   if (!el || reduced) return;
-  const split = SplitText.create(el, { type: 'words', wordsClass: 'w', autoSplit: true,
+  const split = SplitText.create(el, { type: 'words', wordsClass: 'w', autoSplit: true, aria: 'none',
     onSplit: (self) => gsap.to(self.words, { color: 'var(--c-fg)', stagger: 0.08, ease: 'none',
       scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 45%', scrub: true } }) });
   return () => split.revert();

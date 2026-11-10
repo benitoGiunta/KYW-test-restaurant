@@ -57,7 +57,7 @@ em { font-style: italic; }
 .header { position: fixed; inset: 0 0 auto 0; z-index: var(--z-header); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s; }
 .header.is-hidden { transform: translateY(-110%); opacity: 0; }
 .header__inner { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--u) * 2); padding-block: calc(var(--u) * 2); }
-.header__brand { font-family: var(--f-display); font-size: 1.5rem; letter-spacing: -0.01em; line-height: 1; }
+.header__brand { font-family: var(--f-display); font-size: 1.5rem; letter-spacing: -0.01em; line-height: 1; display: inline-flex; align-items: center; min-height: 24px; }
 .nav { display: flex; align-items: center; gap: calc(var(--u) * 3); font-size: var(--t-s); }
 .nav a { position: relative; padding: 0.4em 0; }
 .nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.1em; height: 1px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -145,7 +145,7 @@ em { font-style: italic; }
 .manifeste { min-height: 70vh; display: grid; align-content: center; }
 .manifeste__txt { font-family: var(--f-display); font-size: var(--t-l); font-weight: 400; line-height: 1.15; letter-spacing: -0.01em; max-width: 30ch; }
 .manifeste__txt .mot { color: var(--c-accent); font-weight: 700; }
-.motion .manifeste__txt .w { color: var(--c-line); }
+.motion .manifeste__txt .w { color: color-mix(in srgb, var(--c-fg) 55%, var(--c-bg)); }
 
 /* Cuisson : scène sticky, 250 vh. */
 .cuisson { height: 250svh; }
@@ -157,8 +157,8 @@ em { font-style: italic; }
 .cuisson__item { display: block; padding: calc(var(--u) * 1.2) 0; border-bottom: 1px solid var(--c-line); transition: color 0.4s; }
 .cuisson__item button { all: unset; cursor: pointer; display: grid; grid-template-columns: 2.5rem 1fr; gap: var(--u); width: 100%; text-align: left; color: var(--c-muted); transition: color 0.4s; }
 .cuisson__item button:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 4px; }
-.cuisson__item .num { font-family: var(--f-body); font-weight: 600; font-size: var(--t-s); color: var(--c-cuivre); }
-.cuisson__item .det { display: block; font-size: var(--t-s); opacity: 0.8; }
+.cuisson__item .num { font-family: var(--f-body); font-weight: 600; font-size: var(--t-s); color: inherit; }
+.cuisson__item .det { display: block; font-size: var(--t-s); }
 .cuisson__item.is-lit button, html:not(.motion) .cuisson__item button { color: var(--c-fg); }
 .cuisson__item.is-lit .num { color: var(--c-accent); }
 .cuisson__bar { position: relative; height: 1px; background: var(--c-line); margin-top: calc(var(--u) * 3); }
@@ -167,7 +167,7 @@ html:not(.motion) .cuisson__bar i { transform: none; }
 .cuisson__scene { position: relative; aspect-ratio: 1; width: min(100%, 70svh); margin-inline: auto; }
 .couche { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 .motion .couche { opacity: 0; }
-.motion .couche--fond { opacity: 1; }
+.motion .couche--piece { opacity: 1; }
 .cuisson__temp { position: absolute; left: 0; bottom: 0; font-size: var(--t-s); color: var(--c-muted); }
 @media (max-width: 767px) {
   .cuisson__grid { grid-template-columns: 1fr; align-content: start; gap: calc(var(--u) * 2); }
@@ -186,13 +186,12 @@ html:not(.motion) .cuisson__bar i { transform: none; }
 .carte__cat h2 { font-family: var(--f-display); font-size: var(--t-l); margin-bottom: var(--u); }
 .plats { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--c-line); }
 .plat {
-  position: relative; display: grid; grid-template-columns: 2.5rem 1fr auto; gap: var(--u) calc(var(--u) * 2); align-items: baseline;
+  position: relative; display: grid; grid-template-columns: 1fr auto; gap: var(--u) calc(var(--u) * 2); align-items: baseline;
   padding: calc(var(--u) * 1.6) var(--u); margin-inline: calc(-1 * var(--u)); border-bottom: 1px solid var(--c-line);
   transition: background 0.35s, color 0.35s;
 }
 .plat:hover, .plat:focus-within { background: var(--c-brun); color: #f4ede2; }
 .plat:hover .muted, .plat:focus-within .muted { color: #e2cfbe; }
-.plat__num { font-family: var(--f-body); font-weight: 600; font-size: var(--t-s); color: var(--c-cuivre); }
 .plat__nom { font-size: var(--t-m); line-height: 1.2; }
 .plat__desc { display: block; font-size: var(--t-s); margin-top: 0.2em; }
 .plat__prix { white-space: nowrap; font-variant-numeric: tabular-nums; text-underline-offset: 0.25em; }
@@ -205,7 +204,6 @@ html:not(.motion) .cuisson__bar i { transform: none; }
 @media (hover: none), (max-width: 767px) {
   #vignette { display: none; }
   .plat { grid-template-columns: 1fr auto; }
-  .plat__num { display: none; }
   .plat__vignette { display: block; grid-column: 1 / -1; width: 5rem; aspect-ratio: 1; object-fit: cover; order: -1; }
 }
 
