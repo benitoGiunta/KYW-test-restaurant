@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import { resto, suggestions as s } from '../data/site';
+---
+<Base page="suggestions" title="Suggestions de la semaine, Le Félicien à Suarlée (Namur)" description="Les suggestions du midi du Félicien, du mardi au vendredi : entrée et plat à 25 €, plat seul à 18 €.">
+  <section class="page-hero" aria-labelledby="h-sugg">
+    <div class="container page-hero__in">
+      <h1 id="h-sugg">Suggestions de la semaine.</h1>
+      <p class="lead">Du mardi au vendredi, uniquement le midi.</p>
+      <p class="page-hero__actions"><a class="btn btn--primary" href={resto.reservation} rel="noopener">Réserver une table</a></p>
+    </div>
+  </section>
+
+  <section class="sec sec--rule" aria-labelledby="h-menu">
+    <div class="container rows-block">
+      <div class="rows-block__head">
+        <h2 id="h-menu">Au choix, deux entrées et deux plats.</h2>
+      </div>
+      <div class="parts">
+        <div class="part">
+          <h3 class="part__title">Entrées</h3>
+          <ul class="rows">
+            {s.entrees.map((e, i) => (<>{i > 0 && <li class="row row--ou" aria-hidden="true"><span>ou</span></li>}<li class="row"><div class="row__main"><h4>{e}</h4></div></li></>))}
+          </ul>
+        </div>
+        <div class="part">
+          <h3 class="part__title">Plats</h3>
+          <ul class="rows">
+            {s.plats.map((e, i) => (<>{i > 0 && <li class="row row--ou" aria-hidden="true"><span>ou</span></li>}<li class="row"><div class="row__main"><h4>{e}</h4></div></li></>))}
+          </ul>
+        </div>
+        <div class="part">
+          <h3 class="part__title">Prix</h3>
+          <ul class="rows">
+            <li class="row"><h4>Entrée et plat</h4><span class="row__px num">{s.prixMenu}</span></li>
+            <li class="row"><h4>Plat seul</h4><span class="row__px num">{s.prixPlat}</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--paper" aria-labelledby="h-lundi">
+    <div class="container statement">
+      <h2 id="h-lundi">Le lundi midi, le chef cuisine au marché.</h2>
+      <p class="lead">Pas de suggestions ce jour-là : une cuisine plus spontanée, à partir des produits du marché choisis le jour même. L’équipe en salle vous renseigne.</p>
+    </div>
+  </section>
+</Base>

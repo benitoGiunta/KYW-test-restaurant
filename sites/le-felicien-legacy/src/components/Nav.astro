@@ -1,0 +1,20 @@
+---
+import { resto, nav } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<header class="mast">
+  <div class="container mast__in">
+    <ul class="mast__links mast__links--l">
+      {nav.slice(0, 2).map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>)}
+    </ul>
+    <a class="mast__logo" href={base} aria-label="Le Félicien, brasserie, accueil">
+      <img src={`${base}logo.svg`} width="220" height="110" alt="Le Félicien, brasserie" fetchpriority="high" />
+    </a>
+    <ul class="mast__links mast__links--r">
+      <li><a href={`${base}${nav[2].href}`} aria-current={page === nav[2].id ? 'page' : undefined}>{nav[2].label}</a></li>
+      <li><a class="btn btn--primary" href={resto.reservation} rel="noopener">Réserver une table</a></li>
+    </ul>
+  </div>
+</header>

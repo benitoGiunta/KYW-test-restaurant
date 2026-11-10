@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import { resto, horaires, horairesNote, evenements } from '../data/site';
+---
+<Base page="contact" title="Contact et réservation, Le Félicien à Suarlée (Namur)" description="Réserver une table au Félicien, avenue d’Ecolys à Suarlée : horaires de la cuisine, téléphone, e-mail et événements au premier étage.">
+  <section class="page-hero" aria-labelledby="h-contact">
+    <div class="container page-hero__in">
+      <h1 id="h-contact">Contact et réservation.</h1>
+      <p class="lead">Réservez en ligne, ou appelez-nous au {resto.tel}.</p>
+      <p class="page-hero__actions"><a class="btn btn--primary" href={resto.reservation} rel="noopener">Réserver une table</a></p>
+    </div>
+  </section>
+
+  <section class="sec sec--rule" aria-labelledby="h-horaires">
+    <div class="container rows-block">
+      <div class="rows-block__head">
+        <h2 id="h-horaires">Horaires de la cuisine.</h2>
+        <p class="small">{horairesNote}</p>
+      </div>
+      <table class="sched">
+        <caption class="visually-hidden">Horaires de la cuisine</caption>
+        <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
+        <tbody>
+          {horaires.map((j) => (
+            <tr data-jour={j.jour}><th scope="row">{j.nom}</th><td class="num">{j.midi}</td><td class="num">{j.soir}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec sec--rule" aria-labelledby="h-lieu">
+    <div class="container split">
+      <div class="split__text">
+        <h2 id="h-lieu">Au Business Village Ecolys.</h2>
+        <address class="addr lead"><a class="link nw" href={resto.carte} rel="noopener">{resto.rue}</a><br />{resto.ville}</address>
+        <p><a class="link nw" href={resto.telHref}>{resto.tel}</a><br /><a class="link" href={`mailto:${resto.email}`}>{resto.email}</a></p>
+      </div>
+      <div class="well" id="evenements">
+        <h3>Premier étage</h3>
+        <ul class="facts">
+          <li>Banquets, dîners et réceptions, menus à partir de {evenements.prix}, hors boissons</li>
+          <li><a class="link" href={`mailto:${resto.emailEvt}`}>{resto.emailEvt}</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>

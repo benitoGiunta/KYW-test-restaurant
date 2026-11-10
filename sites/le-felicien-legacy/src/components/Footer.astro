@@ -1,0 +1,25 @@
+---
+import { resto, nav, horaires } from '../data/site';
+interface Props { accueil?: boolean }
+const { accueil = false } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<footer class="close" id="infos">
+  <div class="container close__in">
+    <p class="close__line">Une brasserie pour tous.</p>
+    <div class="close__cols">
+      <address class="addr">
+        <a class="link nw" href={resto.carte} rel="noopener">{resto.rue}</a><br />{resto.ville}
+      </address>
+      <p><a class="link nw" href={resto.telHref}>{resto.tel}</a><br /><a class="link" href={`mailto:${resto.email}`}>{resto.email}</a></p>
+      {!accueil && <p class="small">Midi, tous les jours, {horaires[0].midi}. Soir, {horaires[0].soir}, vendredi et samedi {horaires[4].soir}.</p>}
+      <ul class="close__links">
+        {nav.map((n) => <li><a href={`${base}${n.href}`}>{n.label}</a></li>)}
+        <li><a href={resto.facebook} rel="noopener">Facebook</a></li>
+        <li><a href={resto.instagram} rel="noopener">Instagram</a></li>
+        <li><a href={resto.jobs} rel="noopener">Jobs</a></li>
+      </ul>
+    </div>
+    <p class="close__sign small" data-credits>Le Félicien, brasserie à Suarlée. Photographies : Le Félicien (assiette, 2020) ; photo libre d’illustration de Dogancan Ozturan (Unsplash).</p>
+  </div>
+</footer>

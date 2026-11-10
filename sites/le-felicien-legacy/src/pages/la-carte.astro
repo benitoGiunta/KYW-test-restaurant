@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import { resto, groupes } from '../data/site';
+---
+<Base page="carte" title="La carte d’automne, Le Félicien à Suarlée (Namur)" description="Toute la carte d’automne du Félicien : entrées, plats, pâtes, veggie, desserts et bar, avec les prix.">
+  <section class="page-hero" aria-labelledby="h-carte">
+    <div class="container page-hero__in">
+      <h1 id="h-carte">La carte d’automne.</h1>
+      <p class="lead">Un doute sur les allergènes ? Posez la question à l’équipe.</p>
+      <p class="page-hero__actions">
+        <a class="btn btn--primary" href={resto.reservation} rel="noopener">Réserver une table</a>
+        <a class="btn btn--quiet" href={resto.pdf} rel="noopener">Carte en PDF</a>
+      </p>
+    </div>
+  </section>
+
+  <nav class="jump" aria-label="Sections de la carte">
+    <div class="container">
+      <ul>
+        {groupes.map((g) => <li><a href={`#${g.id}`}>{g.nom}</a></li>)}
+      </ul>
+    </div>
+  </nav>
+
+  {groupes.map((g) => (
+    <section class="sec sec--rule carte-sec" id={g.id} aria-labelledby={`h-${g.id}`}>
+      <div class="container rows-block">
+        <div class="rows-block__head">
+          <h2 id={`h-${g.id}`}>{g.nom}</h2>
+        </div>
+        <div class="parts">
+          {g.parties.map((c) => (
+            <div class="part">
+              {c.sous && <h3 class="part__title">{c.sous[0].toUpperCase() + c.sous.slice(1)}</h3>}
+              <ul class="rows">
+                {c.plats.map((p) => (
+                  <li class="row">
+                    <div class="row__main">
+                      <h4>{p.nom}</h4>
+                      {p.desc && <p>{p.desc}</p>}
+                    </div>
+                    {p.prix && <span class="row__px">{p.prix}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+</Base>

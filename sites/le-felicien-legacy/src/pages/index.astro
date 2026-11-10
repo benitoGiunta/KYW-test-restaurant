@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { resto, horaires, horairesNote, classiques, suggestions, evenements, photos } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base accueil page="accueil" title="Le Félicien, brasserie à Suarlée (Namur) : la grande tradition de la brasserie" description="Brasserie ouverte 7 jours sur 7, midi et soir, avenue d’Ecolys à Suarlée : croquettes, boulets à la liégeoise, vol-au-vent maison et frites fraîches.">
+  <section class="hero" aria-labelledby="h-hero">
+    <Fig class="hero__photo" src={photos.hero.src} alt={photos.hero.alt} w={photos.hero.w} h={photos.hero.h} hero sizes="100vw" pos="50% 60%" />
+    <div class="container hero__in">
+      <div class="hero__text">
+        {/* Hallmark · reworded "recentrer Le Félicien sur une cuisine lisible, généreuse et maîtrisée, autour des grands classiques de la brasserie" to "La grande tradition de la brasserie." (58) */}
+        <h1 id="h-hero">La grande tradition de la brasserie.</h1>
+        <p class="lead">Ouverte 7 jours sur 7, midi et soir, à Suarlée.</p>
+        <p class="hero__actions">
+          <a class="btn btn--primary" href={resto.reservation} rel="noopener">Réserver une table</a>
+          <a class="btn btn--quiet" href={`${base}la-carte/`}>Voir la carte</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-lettre">
+    <div class="container split">
+      <div class="split__text">
+        <h2 id="h-lettre">Une cuisine lisible, généreuse et maîtrisée.</h2>
+        {/* Hallmark · reworded "Après quelques semaines de fermeture, la brasserie Le Félicien a rouvert ses portes le 22 janvier, portée par une nouvelle dynamique…" to a shorter letter (58) */}
+        <p>La brasserie a rouvert le 22 janvier. Le chef Sébastien Deprost et le maître d’hôtel Sébastien Gilles, forts de plus de trente années d’expérience, la dirigent, épaulés par Maximilien de Sauvage, à l’initiative de la relance.</p>
+        <p>Leur idée : recentrer la maison sur les grands classiques de la brasserie, avant d’introduire peu à peu des plats signatures.</p>
+      </div>
+      <div class="split__visual">
+        <Fig src={photos.carte.src} alt={photos.carte.alt} w={photos.carte.w} h={photos.carte.h} sizes="(max-width: 60rem) 80vw, 34vw" />
+        <p class="small cap">Illustration de la couverture de la carte d’automne.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--rule" aria-labelledby="h-classiques">
+    <div class="container rows-block">
+      <div class="rows-block__head">
+        <h2 id="h-classiques">Les classiques de la maison.</h2>
+        <p class="lead">Des frites fraîches, cuites à la graisse de bœuf.</p>
+        <a class="link" href={`${base}la-carte/`}>Toute la carte d’automne</a>
+      </div>
+      <ul class="rows">
+        {classiques.map((p) => (
+          <li class="row">
+            <h3>{p.nom}</h3>
+            <span class="row__px num">{p.prix}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--ink" aria-labelledby="h-midi">
+    <div class="container statement">
+      <h2 id="h-midi" style="overflow-wrap:break-word;min-width:0">Entrée et plat, 25&nbsp;€.</h2>
+      <p class="lead">Du mardi au vendredi, uniquement le midi. Le plat seul : {suggestions.prixPlat}.</p>
+      <a class="link link--on-ink" href={`${base}suggestions-de-la-semaine/`}>Voir les suggestions de la semaine</a>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-evt">
+    <div class="container split split--rev">
+      <div class="well">
+        <ul class="facts">
+          <li>Menus à partir de {evenements.prix}, hors boissons</li>
+          <li>Dîners, banquets, réceptions</li>
+          <li>À combiner avec les salles du Business Village Ecolys</li>
+        </ul>
+      </div>
+      <div class="split__text">
+        <h2 id="h-evt">Banquets et réceptions au premier étage.</h2>
+        <p><a class="link" href={`mailto:${resto.emailEvt}`}>Écrire à l’équipe événements</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--paper" aria-labelledby="h-ouvert" id="reserver">
+    <div class="container visit">
+      <div class="visit__text">
+        <h2 id="h-ouvert">Ouvert 7 jours sur 7.</h2>
+        <table class="sched">
+          <caption class="visually-hidden">Horaires de la cuisine</caption>
+          <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
+          <tbody>
+            {horaires.map((j) => (
+              <tr data-jour={j.jour}><th scope="row">{j.nom}</th><td class="num">{j.midi}</td><td class="num">{j.soir}</td></tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="small">{horairesNote}</p>
+      </div>
+      <div class="visit__side">
+        <Fig src={photos.salle.src} alt={photos.salle.alt} w={photos.salle.w} h={photos.salle.h} sizes="(max-width: 60rem) 100vw, 40vw" />
+        <p class="small cap">Photo libre d’illustration, à remplacer par une photo de la salle.</p>
+        <address class="addr"><a class="link nw" href={resto.carte} rel="noopener">{resto.rue}</a><br />{resto.ville}</address>
+        <p><a class="btn btn--primary" href={resto.reservation} rel="noopener">Réserver une table</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
