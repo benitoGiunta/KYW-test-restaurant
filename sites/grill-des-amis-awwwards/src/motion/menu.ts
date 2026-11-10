@@ -1,6 +1,6 @@
 // Menu mobile (<dialog> modal : focus piégé et Échap natifs) et état « ouvert maintenant » à l'heure de Bruxelles.
 import { gsap } from 'gsap';
-import { onPage, prefersReducedMotion } from '../engine';
+import { onPage, prefersReducedMotion, ease } from '../engine';
 
 type Service = { j: string[]; h: [string, string][] };
 const N = ' ';
@@ -49,8 +49,8 @@ function initMenu() {
     ouvrir.setAttribute('aria-expanded', 'true');
     document.documentElement.classList.add('menu-ouvert');
     if (anime) {
-      gsap.fromTo(menu, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 0.5, ease: 'steps(10)' });
-      gsap.fromTo(menu.querySelectorAll('.menu__lien'), { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.4, ease: 'steps(4)', stagger: 0.05, delay: 0.15 });
+      gsap.fromTo(menu, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 0.5, ease: ease.inOut });
+      gsap.fromTo(menu.querySelectorAll('.menu__lien'), { xPercent: -6, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, duration: 0.6, ease: ease.out, stagger: 0.05, delay: 0.2 });
     }
   };
   const close = () => { if (menu.open) menu.close(); };

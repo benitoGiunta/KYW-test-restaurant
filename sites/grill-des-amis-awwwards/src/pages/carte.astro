@@ -9,6 +9,7 @@ const interludes: Record<string, 'tranchee' | 'decoupe' | 'chambre' | 'cocktails
 <Base page="carte" title="La carte" description="La carte du Grill des amiS à Namur : entrées, plats, grillades au feu de bois, viandes maturées, sauces maison, apéros, cocktails et bières, avec les prix.">
   <header class="wrap page-tete">
     <h1 class="display">La carte</h1>
+    <span class="page-tete__lame" aria-hidden="true"></span>
     <p>Du feu de bois, des viandes maturées sur place et des sauces maison. Prix en euros, service midi et soir.</p>
   </header>
   <div class="interlude"><Photo cle="tranchee" sizes="100vw" widths={[800, 1200, 1800]} prioritaire /></div>
@@ -18,7 +19,7 @@ const interludes: Record<string, 'tranchee' | 'decoupe' | 'chambre' | 'cocktails
   <div class="wrap">
     {carte.map((c) => (
       <>
-        {interludes[c.categorie] && <div class="interlude" style="margin-inline: calc(var(--gutter) * -1)"><Photo cle={interludes[c.categorie]} sizes="100vw" widths={[800, 1200, 1800]} /></div>}
+        {interludes[c.categorie] && <div class="interlude" style="margin-inline: calc(var(--gutter) * -1)" data-tranche><Photo cle={interludes[c.categorie]} sizes="100vw" widths={[800, 1200, 1800]} /></div>}
         <section class="cat" id={slug(c.categorie)} aria-labelledby={`h-${slug(c.categorie)}`}>
           <h2 class="display cat__titre" id={`h-${slug(c.categorie)}`}>{c.categorie}</h2>
           <ul class="cat__liste">

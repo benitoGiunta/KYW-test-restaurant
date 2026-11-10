@@ -7,32 +7,33 @@ import { site, equipe, adn } from '../data/site';
 <Base page="histoire" title="La maison" description="La maison d’Elise et Gaëtan à Namur : un chef qui choisit et découpe ses viandes, deux chambres de maturation, des sauces et des frites faites sur place.">
   <header class="wrap page-tete">
     <h1 class="display">La maison</h1>
+    <span class="page-tete__lame" aria-hidden="true"></span>
     <p>Celle d’Elise et Gaëtan, rue Saint-Joseph à Namur.</p>
   </header>
   <section class="sec" aria-label="La maison">
     <div class="wrap duo">
       <div class="duo__a">
-        <h2 class="display">Un chef, des pièces entières</h2>
+        <h2 class="display" data-split="lines">Un chef, des pièces entières</h2>
         <p>Gaëtan choisit les viandes, les découpe et compose la carte. Il est aussi passionné de vin : les accords entre un plat et un verre font partie du service.</p>
         <p>Les pièces arrivent brutes, la maison les taille et les fait maturer dans ses deux chambres. Les sauces sont préparées sur place, les frites et les croquettes sont maison.</p>
       </div>
-      <figure class="duo__b"><Photo cle="equipe" sizes="(max-width: 56rem) 100vw, 45vw" widths={[480, 800, 1200]} /><figcaption>En salle, devant le mur d’ardoise.</figcaption></figure>
-      <blockquote class="citation">La cuisine est un art, l’art est science et la science est patience.<cite>Gaëtan Batteux, sur la carte du restaurant</cite></blockquote>
+      <figure class="duo__b" data-tranche><Photo cle="equipe" sizes="(max-width: 56rem) 100vw, 45vw" widths={[480, 800, 1200]} /><figcaption>En salle, devant le mur d’ardoise.</figcaption></figure>
+      <blockquote class="citation" data-split="lines">La cuisine est un art, l’art est science et la science est patience.<cite>Gaëtan Batteux, sur la carte du restaurant</cite></blockquote>
     </div>
   </section>
   <section class="sec sec--os" aria-labelledby="titre-adn">
     <div class="wrap duo">
-      <figure class="duo__a"><Photo cle="chambre" sizes="(max-width: 56rem) 100vw, 40vw" widths={[480, 800]} /><figcaption>Les chambres de maturation, éclairées en bleu.</figcaption></figure>
+      <figure class="duo__a" data-tranche><Photo cle="chambre" sizes="(max-width: 56rem) 100vw, 40vw" widths={[480, 800]} /><figcaption>Les chambres de maturation, éclairées en bleu.</figcaption></figure>
       <div class="duo__b">
-        <h2 class="display" id="titre-adn">Ce qui se fait ici</h2>
-        <ul class="adn">{adn.map((a) => <li>{a}</li>)}</ul>
+        <h2 class="display" id="titre-adn" data-split="lines">Ce qui se fait ici</h2>
+        <ul class="adn" data-reveal="up">{adn.map((a) => <li>{a}</li>)}</ul>
         <p style="margin-top:var(--serre)">{equipe[0].nom} et {equipe[1].nom} signent la devise de la maison : « {site.devise}. »</p>
       </div>
     </div>
   </section>
   <section class="sec" aria-labelledby="titre-traiteur">
     <div class="wrap duo">
-      <div class="duo__a"><h2 class="display" id="titre-traiteur">Traiteur et barbecues</h2></div>
+      <div class="duo__a"><h2 class="display" id="titre-traiteur" data-split="lines">Traiteur et barbecues</h2></div>
       <div class="duo__b"><p>La maison propose aussi un service traiteur : menus sur mesure, formules clé en main et barbecues premium livrés chez le client.</p><p style="margin-top:var(--serre)"><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></p></div>
     </div>
   </section>

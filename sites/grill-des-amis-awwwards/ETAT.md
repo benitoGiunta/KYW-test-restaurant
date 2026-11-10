@@ -1,22 +1,22 @@
-# ETAT : Grill des amiS, variante awwwards (fin de la phase 1)
+# ETAT : Grill des amiS, variante awwwards (fin de la phase 2)
 
-## Fait
-- DESIGN.md : brief, trois concepts notés (retenu : « Du brut au feu »), Concept Card, système (palette, typo, grille, mouvement planifié, plans de composition, mobile), test de généricité, checklist 1 à 18 cochée avec preuves.
-- Scaffold : package.json, astro.config.mjs, engine (copie du socle, sans GL), tokens.css, engine.css, site.css, lib/url.ts, lib/format.ts, lib/photos.ts, Photo.astro.
-- Contenu : `src/data/site.ts` + `carte.json` (68 plats réels, 10 rubriques, transcrits de donnees.json). Aucun plat fictif, aucun avis, e-mail ni réseau.
-- Pages statiques complètes : `/` (hero, quatre gestes, pièces du boucher, Viandard 69 €, salle et terrasse, midi, pied), `/carte/`, `/histoire/` (« La maison »), `/reservation/`, 404 « Pièce introuvable ».
-- Head complet (titre, description 144 à 165 car. corrigée, canonical, OG, JSON-LD Restaurant, favicon losange, og.png), noindex, pied KYW.
-- Photos : 14 photos du client en `src/assets/photos/` (≤ 1800 px, < 310 Ko) ; la photo 03 (salle) était couchée de 90° et a été redressée ; la 17 (cocktails) rognée du bandeau incrusté.
-- Build : `pnpm build:site sites/grill-des-amis-awwwards` passe, `dist/grill-des-amis/awwwards/` écrit. Mesures Playwright à 1440, 1280, 1024, 390 : h1, CTA et média du hero disjoints, aucun débordement horizontal sur les 5 pages à 390 et 1440.
+## Fait (phase 1)
+- DESIGN.md (concept « Du brut au feu »), scaffold, contenu réel (68 plats), 5 pages, head complet, photos, build. Voir DESIGN.md.
 
-## Reste (phases 2 et 3)
-- Phase 2 : la tranche (clip reveal pilotée par un driver unique dans « Du brut au feu », photo chambre bleue vers braise), `data-split`/`data-reveal` des titres et blocs, respiration du hero, aperçu curseur des index (carte), vignettes au toucher, hover `data-magnetic` éventuel, transition de page (lame bleue, déjà branchée dans `motion/setup.ts`), menu mobile à tester.
-- Phase 3 : QA navigateur complète (shoot, audit, axe, clavier, LCP), RAPPORT.md, DESIGN.md points 42 à 63, `pnpm index`, commit final.
-- À vérifier : `og.png` composée par `og.mjs` depuis le hero (reprendre après les animations) ; aucun test de focus clavier ni du `<dialog>` menu fait ; contrastes calculés à la main (tokens.css) mais non mesurés par axe.
+## Fait (phase 2)
+- Pilote `src/motion/tranche.ts` (feu des gestes, tranche des photos, intro et repos du hero, rubriques de la carte) + `src/motion/idle.ts` ; `setup.ts` (transition lame corrigée : la lame est sortie du panneau pour rester visible à l'arrivée) ; menu en `expo` (plus de `steps`).
+- Reveals déclaratifs : `data-split="lines"` sur les titres de section, la citation et le mot du pied ; `data-reveal="up"` sur blocs sans lien ; `data-tranche` sur 13 photos.
+- Hovers réécrits sous `@media (hover: hover)` + `:focus-visible` + `:active` ; lien KYW souligné au survol ; `::selection` braise.
+- En-tête à hauteur fixe `--tete-h` (4,5 rem), opaque sur la carte : la bande des rubriques colle dessous (avant : texte visible entre en-tête et bande).
+- Contrôles Playwright (1440, 390, réduit) : aucune erreur console, `scrollWidth` = largeur sur les 5 pages, texte caché 0 après défilement, coupes toutes terminées, menu accessible, transition 1,14 s.
+- Build OK (`.logs/awwwards2-build.log`).
+
+## Reste (phase 3)
+- Shoot complet et audit (agent captures), lecture `report.json` : `idleMotion`/`idleAt`, `hover.noHoverChange`, `reduced.*`, contraste, cibles, LCP.
+- RAPPORT.md, DESIGN.md points 35, 36, 41 à 63, `og.png` à recomposer si voulu, `pnpm index`, commit final.
 
 ## Décisions et pièges
-- Pas de loader ni de GL (voir Concept Card). Pas de `mailto:` : l'e-mail du client est inconnu ; réservation par `tel:` et lien externe `https://www.legrilldesamis.be/reserver`.
-- Horaires : lundi et jeudi au samedi, midi et soir ; mardi, mercredi, dimanche « fermé (à confirmer) » (données non confirmées). Les pieds des pages affichent les horaires sauf sur `/reservation/`.
-- Mots larges à surveiller au changement de police ou de corps : « ENTRE AMIS » (pied, k = 4,9), « INTROUVABLE » (404, k = 5,1), « RÉSERVER » et « LA MAISON » (k = 4), « DES AMIS » (hero mobile, k = 3,75) ; ces diviseurs sont dans site.css.
-- Photo des patrons (15) : légende « En salle, devant le mur d'ardoise » sans nom ; le site du client signe « Elise & Gaëtan » mais l'identité des personnes est à confirmer.
-- `.pied__col` se cible par `nth-of-type` (2 et 3) parce que `.pied__cta` est le premier `div` du pied : toute insertion de `div` casse la grille.
+- Pas de loader, de GL, de curseur suiveur ni de magnétisme (contraire au verbe « trancher »). Pas d'aperçu au curseur des index : aucune photo par plat.
+- Le haut de la photo des flammes est naturellement noir : ce n'est pas un trou de mise en page.
+- Repos : si `settledMs` passe à null en phase 3, baisser l'opacité ou la vitesse de `.hero__lame` (tranche.ts, période 7 s).
+- Horaires, photo des patrons, `.pied__col` en `nth-of-type` : voir phase 1 (inchangé).

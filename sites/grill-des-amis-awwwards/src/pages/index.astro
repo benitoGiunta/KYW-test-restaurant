@@ -8,10 +8,10 @@ import { site, gestes, pieces, prixDe, viandard, midi } from '../data/site';
 <Base page="accueil" description="Au Grill des amiS à Namur, les grosses pièces de viande sont achetées brutes, découpées et maturées sur place, puis cuites au feu de bois.">
   <section class="hero" aria-labelledby="titre-accueil">
     <div class="wrap hero__grid">
-      <h1 class="display hero__titre" id="titre-accueil" data-intro><span>Le Grill</span><span>des <em>amiS</em></span></h1>
+      <h1 class="display hero__titre" id="titre-accueil"><span>Le Grill</span><span>des <em>amiS</em></span></h1>
       <p class="hero__intro">{site.baseline}. Des pièces entières, découpées et maturées ici, cuites au bois.</p>
       <div class="hero__media">
-        <Photo cle="braise" sizes="(max-width: 56rem) 100vw, 33vw" widths={[480, 800, 1200]} prioritaire />
+        <Photo cle="braise" sizes="(max-width: 56rem) 100vw, 33vw" widths={[480, 800, 1200]} prioritaire /><span class="hero__lame" aria-hidden="true"></span>
       </div>
       <div class="hero__cta">
         <a class="cta cta--braise" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
@@ -20,26 +20,26 @@ import { site, gestes, pieces, prixDe, viandard, midi } from '../data/site';
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="titre-gestes">
+  <section class="sec gestes" aria-labelledby="titre-gestes" data-feu>
     <div class="wrap">
-      <h2 class="display sec__titre" id="titre-gestes">Du brut au feu</h2>
-      <p class="gestes__intro">Une pièce entre dans la maison crue et en sort dans votre assiette. Entre les deux, quatre gestes, tous faits ici.</p>
-      <ol class="liste-gestes" style="list-style:none;padding:0">
+      <h2 class="display sec__titre" id="titre-gestes" data-split="lines">Du brut au feu</h2>
+      <p class="gestes__intro" data-reveal="up">Une pièce entre dans la maison crue et en sort dans votre assiette. Entre les deux, quatre gestes, tous faits ici.</p>
+      <div class="gestes__corps"><span class="gestes__fil" aria-hidden="true"></span><ol class="liste-gestes" style="list-style:none;padding:0">
         {gestes.map((g, i) => (
           <li class="geste">
             <h3 class="display geste__verbe"><span class="geste__rang">Geste {i + 1} sur {gestes.length}</span>{g.verbe}</h3>
-            <p class="geste__texte">{g.texte}</p>
-            {g.photo && <div class="geste__photo"><Photo cle={g.photo} sizes="(max-width: 56rem) 100vw, 25vw" widths={[480, 800]} /></div>}
+            <p class="geste__texte" data-reveal="up">{g.texte}</p>
+            {g.photo && <div class="geste__photo" data-tranche><Photo cle={g.photo} sizes="(max-width: 56rem) 100vw, 25vw" widths={[480, 800]} /></div>}
           </li>
         ))}
-      </ol>
+      </ol></div>
     </div>
   </section>
 
   <section class="sec sec--os" aria-labelledby="titre-pieces">
     <div class="wrap pieces__grid">
-      <h2 class="display pieces__titre" id="titre-pieces">Les pièces du boucher</h2>
-      <div class="pieces__photo"><Photo cle="entrecote" sizes="(max-width: 56rem) 100vw, 30vw" widths={[480, 800]} /></div>
+      <h2 class="display pieces__titre" id="titre-pieces" data-split="lines">Les pièces du boucher</h2>
+      <div class="pieces__photo" data-tranche><Photo cle="entrecote" sizes="(max-width: 56rem) 100vw, 30vw" widths={[480, 800]} /></div>
       <ul class="pieces__liste">
         {pieces.map((p) => {
           const plat = prixDe(p.nom);
@@ -59,13 +59,13 @@ import { site, gestes, pieces, prixDe, viandard, midi } from '../data/site';
   <section class="sec sec--bordeaux" aria-labelledby="titre-viandard">
     <div class="wrap viandard__grid">
       <p class="display viandard__prix tnum" aria-hidden="true">{viandard.prix}<small>&nbsp;€ par personne</small></p>
-      <ul class="display viandard__faits">
+      <ul class="display viandard__faits" data-reveal="up">
         <li>{viandard.viandes} viandes <span>choisies par le chef</span></li>
         <li>{viandard.services} services <span>féculents et sauces en accompagnement</span></li>
         <li>Dès {viandard.des} personnes <span>par table entière</span></li>
       </ul>
       <div class="viandard__texte">
-        <h2 class="display sec__titre" id="titre-viandard">Le Menu Viandard</h2>
+        <h2 class="display sec__titre" id="titre-viandard" data-split="lines">Le Menu Viandard</h2>
         <p>Une dégustation de cinq viandes, {euro(viandard.prix)} par personne, pour toute la table.</p>
       </div>
       <div class="viandard__cta"><a class="cta cta--braise" href={u('/reservation/')}><span class="cta__txt">Réserver pour le Viandard</span></a></div>
@@ -74,19 +74,19 @@ import { site, gestes, pieces, prixDe, viandard, midi } from '../data/site';
 
   <section class="sec" aria-labelledby="titre-salle">
     <div class="wrap salle__grid">
-      <div class="salle__a"><Photo cle="buches" sizes="(max-width: 56rem) 100vw, 40vw" widths={[480, 800, 1200]} /></div>
-      <div class="salle__t1"><h2 class="display" id="titre-salle">La salle</h2><p>Un mur de bûches empilées, des lampes rouges, une salle en enfilade avec sa baie vitrée. Le gril et les deux chambres de maturation se voient depuis les tables.</p></div>
-      <div class="salle__b"><Photo cle="salle" sizes="(max-width: 56rem) 100vw, 55vw" widths={[480, 800, 1200]} /></div>
-      <div class="salle__c"><Photo cle="terrasse" sizes="(max-width: 56rem) 100vw, 33vw" widths={[480, 800]} /></div>
-      <div class="salle__t2"><h2 class="display">La terrasse</h2><p>Quelques tables dehors, devant la porte, rue Saint-Joseph. L’intérieur est climatisé.</p></div>
+      <div class="salle__a" data-tranche><Photo cle="buches" sizes="(max-width: 56rem) 100vw, 40vw" widths={[480, 800, 1200]} /></div>
+      <div class="salle__t1"><h2 class="display" id="titre-salle" data-split="lines">La salle</h2><p>Un mur de bûches empilées, des lampes rouges, une salle en enfilade avec sa baie vitrée. Le gril et les deux chambres de maturation se voient depuis les tables.</p></div>
+      <div class="salle__b" data-tranche data-delay="0.1"><Photo cle="salle" sizes="(max-width: 56rem) 100vw, 55vw" widths={[480, 800, 1200]} /></div>
+      <div class="salle__c" data-tranche><Photo cle="terrasse" sizes="(max-width: 56rem) 100vw, 33vw" widths={[480, 800]} /></div>
+      <div class="salle__t2"><h2 class="display" data-split="lines">La terrasse</h2><p>Quelques tables dehors, devant la porte, rue Saint-Joseph. L’intérieur est climatisé.</p></div>
     </div>
   </section>
 
   <section class="sec sec--os" aria-labelledby="titre-midi">
     <div class="wrap midi__grid">
-      <h2 class="display midi__titre" id="titre-midi">Le midi</h2>
-      {midi.map((m) => (
-        <div class="midi__item">
+      <h2 class="display midi__titre" id="titre-midi" data-split="lines">Le midi</h2>
+      {midi.map((m, i) => (
+        <div class="midi__item" data-reveal="up" data-delay={String(i * 0.08)}>
           <p class="display midi__prix tnum">{m.prix}&nbsp;€</p>
           <p class="display midi__nom">{m.nom}</p>
           <p>{m.texte}</p>
