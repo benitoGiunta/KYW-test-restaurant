@@ -1,0 +1,22 @@
+---
+import { resto, routes, u } from '../data/site';
+---
+<section class="pied" aria-label="Coordonnées du Servais" data-credits="Photographies : Le Servais">
+  <div class="container pied__grille">
+    <p class="pied__nom">Le Servais</p>
+    <address class="pied__bloc">
+      <span>{resto.adresse.rue}</span>
+      <span>{resto.adresse.cp} {resto.adresse.ville}</span>
+      <a class="lien" href={resto.tel}>{resto.telAffiche}</a>
+      <a class="lien" href={`mailto:${resto.mail}`}>{resto.mail}</a>
+    </address>
+    <ul class="pied__bloc pied__liens">
+      {routes.map((r) => <li><a class="lien" href={u(r.href)}>{r.label}</a></li>)}
+    </ul>
+    <ul class="pied__bloc pied__liens">
+      <li><a class="lien" href={resto.facebook} rel="noopener">Facebook</a></li>
+      <li><a class="lien" href={resto.instagram} rel="noopener">Instagram</a></li>
+      <li><a class="lien" href={resto.reservation} rel="noopener">Réservation en ligne</a></li>
+    </ul>
+  </div>
+</section>

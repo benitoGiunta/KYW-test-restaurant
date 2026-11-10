@@ -1,0 +1,11 @@
+---
+import { u } from '../data/site';
+// Photo du client. `pass` : encre qui l'imprime (accent = turquoise, accent-2 = orange). width/height = plus grande variante.
+interface Props { nom: string; largeurs: number[]; ratio: number; alt: string; sizes: string; pass?: 'accent' | 'accent-2'; priority?: boolean; slot?: string; position?: string; placeholder?: boolean; credit?: string }
+const { nom, largeurs, ratio, alt, sizes, pass = 'accent', priority = false, slot, position = '50% 50%', placeholder = false, credit = 'Photo : Le Servais' } = Astro.props;
+const max = Math.max(...largeurs);
+const srcset = largeurs.map((w) => `${u(`photos/${nom}-${w}.webp`)} ${w}w`).join(', ');
+---
+<figure class={`photo photo--${pass}`} data-slot={slot ?? nom} data-alt={alt} data-credits={credit} data-placeholder={placeholder ? 'true' : undefined} style={`--ratio:${ratio}`}>
+  <img src={u(`photos/${nom}-${max}.webp`)} srcset={srcset} sizes={sizes} width={max} height={Math.round(max / ratio)} alt={alt} style={`object-position:${position}`} loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} decoding="async" />
+</figure>

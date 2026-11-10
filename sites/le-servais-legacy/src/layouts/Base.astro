@@ -1,0 +1,54 @@
+---
+import Nav from '../components/Nav.astro';
+import Pied from '../components/Pied.astro';
+import KywFooter from '@kyw/footer';
+import { resto, jours, base } from '../data/site';
+interface Props { title: string; description: string; actif?: string }
+const { title, description, actif = '' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ff = (fam: string, file: string, w: string, extra = '') => `@font-face{font-family:'${fam}';font-style:normal;font-weight:${w};${extra}font-display:optional;src:url(${base}fonts/${file}) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}`;
+const fontFaces = [ff('Anybody', 'anybody-100_900-normal.woff2', '100 900', 'font-stretch:100% 150%;'), ff('Archivo', 'archivo-latin.woff2', '400 500'), ff('Archivo Narrow', 'archivo-narrow-600-latin.woff2', '600')].join('');
+const ld = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, url: new URL(base, Astro.site).href,
+  telephone: '+32 81 73 65 52', servesCuisine: ['Brasserie belge', 'Bar à cocktails'],
+  address: { '@type': 'PostalAddress', streetAddress: resto.adresse.rue, postalCode: resto.adresse.cp, addressLocality: resto.adresse.ville, addressCountry: 'BE' },
+  sameAs: [resto.facebook, resto.instagram],
+  openingHoursSpecification: jours.map((j) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: j.en, opens: j.de, closes: j.a })),
+});
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content={resto.nom} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(`${base}photos/comptoir-900.webp`, Astro.site).href} />
+    <meta property="og:image:alt" content="Le comptoir du bar du Servais, avec ses tuyaux apparents et ses suspensions" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href={`${base}photos/logo-192.webp`} type="image/webp" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    <link rel="preload" href={`${base}fonts/anybody-100_900-normal.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${base}fonts/archivo-latin.woff2`} as="font" type="font/woff2" crossorigin />
+    <style set:html={fontFaces}></style>
+    <style is:global>@import "../styles/page.css";</style>
+    <script type="application/ld+json" set:html={ld} />
+  </head>
+  <body>
+    <Nav actif={actif} />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Pied />
+    <KywFooter base={base} />
+    <script is:inline>window.hallmarkSlots = function (m) { for (var k in m) { var s = document.querySelector('[data-slot="' + k + '"]'); if (!s) continue; var v = m[k]; var im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach(function (o) { o.remove(); }); s.prepend(im); } };
+document.querySelectorAll('[data-slot] img').forEach(function (i) { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', function () { i.remove(); }, { once: true }); });</script>
+  </body>
+</html>

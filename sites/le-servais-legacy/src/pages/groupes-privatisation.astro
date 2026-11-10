@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Rows from '../components/Rows.astro';
+import { formules, resto } from '../data/site';
+---
+<Base title="Groupes et privatisation au Servais, Namur" description="Privatiser la Verrière ou le bar entier du Servais à Namur : formules petit-déjeuner, brunch, repas et apéro pour groupes." actif="groupes-privatisation/">
+  <section class="pagehead">
+    <div class="container pagehead__grille">
+      <div>
+        <h1>Groupes et privatisation</h1>
+        <p class="lead">La Verrière dès 12 convives, le bar entier dès 60.</p>
+        <div class="actions">
+          <a class="btn btn--accent" href={`mailto:${resto.mail}?subject=Groupe ou privatisation`}>Écrire au Servais</a>
+          <a class="lien" href={resto.tel}>{resto.telAffiche}</a>
+        </div>
+      </div>
+      <div class="pagehead__photo">
+        <Photo nom="veranda" largeurs={[500, 800]} ratio={800 / 1200} sizes="(min-width: 64rem) 300px, 60vw" pass="accent-2" placeholder alt="La Verrière : salle vitrée végétalisée, fauteuils orange et plantes (photo d’origine à confirmer)" credit="Photo d’illustration du site actuel, origine à confirmer" />
+        <figcaption>Photo d’illustration, à remplacer par celle de la Verrière.</figcaption>
+      </div>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="formules-t">
+    <div class="container">
+      <h2 id="formules-t">Les formules</h2>
+      <Rows items={formules.map((f) => ({ nom: f.nom, desc: f.desc, prix: f.prix }))} />
+      <p class="note">La Verrière comprend un bar self-service, de la musique et un projecteur.</p>
+    </div>
+  </section>
+</Base>

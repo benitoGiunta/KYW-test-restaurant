@@ -1,0 +1,24 @@
+---
+import Photo from './Photo.astro';
+import Rows from './Rows.astro';
+import { signature, resto, u } from '../data/site';
+---
+<section class="section specialites" aria-labelledby="spec-t">
+  <div class="container specialites__grille">
+    <div class="specialites__tete">
+      <h2 id="spec-t">Boulets, Spycroc et fromage de Boninne</h2>
+      <p class="lead">Du sharing food à la brasserie, des produits de Spy et de Boninne.</p>
+    </div>
+    <div class="specialites__rows">
+      <Rows items={signature} />
+      <div class="actions">
+        <a class="btn btn--accent" href={u('carte/')}>La carte complète</a>
+        <a class="lien" href={resto.carteCuisine} rel="noopener">Menu cuisine en PDF</a>
+        <a class="lien" href={resto.carteBar} rel="noopener">Menu bar en PDF</a>
+      </div>
+    </div>
+    <div class="specialites__photo">
+      <Photo nom="spaghetti" largeurs={[500, 800]} ratio={800 / 1200} sizes="(min-width: 64rem) 320px, 70vw" pass="accent-2" alt="Spaghetti à la sauce tomate dans une assiette au nom du Servais, un verre de Duvel à la main" position="50% 45%" />
+    </div>
+  </div>
+</section>

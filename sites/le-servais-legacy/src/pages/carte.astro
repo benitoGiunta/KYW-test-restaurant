@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Rows from '../components/Rows.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { groupes, resto } from '../data/site';
+---
+<Base title="La carte du Servais, cuisine et bar à Namur" description="La carte du Servais : petit-déjeuner, sharing food, brasserie, enfants, desserts, cocktails, bières pression et cafés." actif="carte/">
+  <section class="pagehead">
+    <div class="container pagehead__grille">
+      <div>
+        <h1>La carte</h1>
+        <p class="lead">Cuisine non stop et bar, deux cartes aussi en PDF.</p>
+        <div class="actions">
+          <a class="btn btn--accent" href={resto.carteCuisine} rel="noopener">Menu cuisine en PDF</a>
+          <a class="btn btn--ink" href={resto.carteBar} rel="noopener">Menu bar en PDF</a>
+        </div>
+      </div>
+      <div class="pagehead__photo">
+        <Photo nom="petit-dejeuner" largeurs={[500, 800]} ratio={800 / 1201} sizes="(min-width: 64rem) 300px, 60vw" pass="accent-2" alt="Un petit-déjeuner : café, jus d’orange et viennoiserie sur une table en marbre" />
+      </div>
+    </div>
+  </section>
+  <nav class="saut container" aria-label="Rubriques de la carte">
+    <ul>
+      {groupes.flatMap((g) => g.rubriques).map((r) => <li><a class="lien" href={`#${r.id}`}>{r.titre}</a></li>)}
+    </ul>
+  </nav>
+  {groupes.map((g) => (
+    <section class="section carte" aria-labelledby={`${g.id}-t`}>
+      <div class="container">
+        <h2 id={`${g.id}-t`}>{g.titre}</h2>
+        {g.rubriques.map((r) => (
+          <div class="rubrique" id={r.id}>
+            <div class="rubrique__tete">
+              <h3>{r.titre}</h3>
+              {r.note ? <p class="rubrique__note">{r.note}</p> : null}
+            </div>
+            <Rows items={r.items} />
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
+  <Horaires titre="Quand venir" />
+</Base>

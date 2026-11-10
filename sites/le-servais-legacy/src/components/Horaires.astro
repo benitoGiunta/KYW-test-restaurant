@@ -1,0 +1,32 @@
+---
+import { jours, h, cuisine, resto, u } from '../data/site';
+const { titre = 'Ouvert 7 jours sur 7', niveau = 2 } = Astro.props;
+const H = `h${niveau}`;
+---
+<section class="horaires" aria-labelledby="horaires-t">
+  <div class="container horaires__grille">
+    <div class="horaires__tete">
+      <Fragment set:html={`<${H} id="horaires-t">${titre}</${H}>`} />
+      <p class="lead">Dès 9{' '}h, la cuisine reste ouverte non stop.</p>
+    </div>
+    <dl class="schedule">
+      {jours.map((j) => (
+        <div class="schedule__ligne">
+          <dt>{j.jour}</dt>
+          <dd><time datetime={j.de}>{h(j.de)}</time> à <time datetime={j.a}>{h(j.a)}</time></dd>
+        </div>
+      ))}
+    </dl>
+    <div class="horaires__lieu">
+      <p class="horaires__cuisine">Cuisine : {cuisine.service}. {cuisine.petitDej}.</p>
+      <address>
+        <a class="lien" href={resto.maps} rel="noopener">{resto.adresse.rue}, {resto.adresse.cp} {resto.adresse.ville}</a>
+        <span>Au départ du téléphérique</span>
+      </address>
+      <div class="actions">
+        <a class="btn btn--accent" href={resto.reservation} rel="noopener">Réserver une table</a>
+        <a class="lien" href={resto.tel}>{resto.telAffiche}</a>
+      </div>
+    </div>
+  </div>
+</section>

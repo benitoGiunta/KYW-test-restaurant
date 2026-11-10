@@ -1,0 +1,12 @@
+---
+interface Props { items: { nom: string; desc?: string; prix: string }[] }
+const { items } = Astro.props;
+---
+<ul class="rows">
+  {items.map((p) => (
+    <li class="row">
+      <div class="row__texte"><strong class="row__nom">{p.nom}</strong>{p.desc ? <span class="row__desc">{p.desc}</span> : null}</div>
+      <span class="row__prix">{p.prix}</span>
+    </li>
+  ))}
+</ul>

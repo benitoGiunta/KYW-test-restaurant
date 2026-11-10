@@ -1,0 +1,21 @@
+---
+import { resto, routes, u } from '../data/site';
+const { actif = '' } = Astro.props;
+---
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="nav">
+  <div class="container nav__bar">
+    <a class="nav__marque" href={u()} aria-label="Le Servais, accueil">
+      <img src={u('photos/logo-192.webp')} width="44" height="44" alt="" />
+      <span>Le Servais</span>
+    </a>
+    <nav class="nav__liens" aria-label="Navigation principale">
+      <ul>
+        {routes.map((r) => (
+          <li class={r.href === 'carte-cadeau/' || r.href === 'groupes-privatisation/' ? 'nav__second' : undefined}><a href={u(r.href)} aria-current={actif === r.href ? 'page' : undefined}>{r.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a class="btn btn--accent nav__cta" href={resto.reservation} rel="noopener">Réserver</a>
+  </div>
+</header>
