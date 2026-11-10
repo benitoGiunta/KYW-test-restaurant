@@ -1,27 +1,28 @@
-# ETAT : Le Servais, variante awwwards (fin de la phase 1 sur 3)
+# ETAT : Le Servais, variante awwwards (fin de la phase 2 sur 3)
 
-## Fait
-- Brief, 3 concepts notés, Concept Card « La Ligne » (câble de téléphérique, stations = heures réelles), système complet et checklist 1 à 18 : `DESIGN.md`.
-- Scaffold Astro 5 + engine copié de le-royal-awwwards (inchangé), polices Big Shoulders Display + Hanken Grotesk (2 fichiers), tokens, layout (head complet, JSON-LD Restaurant sans geo ni avis), en-tête, pied (`KywFooter` en dernier).
-- Contenu réel : `src/data/site.ts` + `src/data/carte.json` (76 lignes tirées de donnees.json par script, prix en euros français).
-- 5 pages statiques : `/`, `/carte/`, `/histoire/`, `/reservation/`, 404 « Terminus ». Mise en page complète sans JS de motion.
-- Build OK : `scripts/q.sh build pnpm build:site sites/le-servais-awwwards` (5 pages, `dist/le-servais/awwwards/`).
-- Mesures Playwright : h1, CTA, photo du hero à 1440x900, 1280x720, 1024x768, 390x844 ; `.display` left >= gouttière ; `scrollWidth` = largeur à 320, 360, 390 sur les 5 pages.
+## Fait (phase 1)
+- Concept « La Ligne », système, 5 pages statiques, contenu réel, build : voir DESIGN.md et l'historique git.
 
-## Reste (phases 2 et 3)
-- Phase 2 : signature (cabine sur le câble, scrub de progression + balancement au repos), `data-split`/`data-reveal` sur titres et blocs (le pied porte déjà `data-split`), aperçu au curseur et vignettes tactiles de la carte, état « ouvert maintenant » calculé (Europe/Brussels), hover plats/images.
-- Phase 3 : OG composée (`public/og.png` manquant, référencé par `Base.astro`), QA navigateur complète (shoot, audit, axe, reduced motion, focus), RAPPORT.md, sloplint, `pnpm index`, leçons.
-- Les 5 photos sont des JPG sources ; vérifier le LCP du hero (`fetchpriority="high"` déjà posé) et le poids de `_astro/`.
+## Fait (phase 2)
+- Pilote `src/motion/ligne.ts` + entrée de repos `src/motion/idle.ts` + menu `src/motion/menu.ts`, appelés par `setup.ts`.
+- Signature : `src/components/Cabine.astro` dans chaque `.ligne` (5 pages) ; cabine collante sur le câble, pendule (vitesse, pointeur, repos), stations allumées, étiquette de station dans l'en-tête (bureau ≥ 64 rem).
+- Reveals déclaratifs : `data-split="lines"` sur les h2 et chapeaux, `data-reveal` sur photos et blocs sans lien, `data-intro` sur le lieu et l'état du hero et sur les chapeaux des pages intérieures (h1 jamais cachés).
+- Survols par rôle sous `(hover: hover)`, mêmes états sur `:focus-visible` et `:active` ; lien du pied KYW souligné au survol.
+- Menu mobile `<dialog>` (sous 48 rem) ; `cta--petit` à 44 px.
+- Build OK (`scripts/q.sh build pnpm build:site sites/le-servais-awwwards`).
+- Contrôle Playwright (script hors dépôt) : 0 erreur console ni requête échouée ; `scrollWidth` = largeur à 390 et 320 sur les 5 pages ; menu ouvert, boucle Tab, Échap, focus rendu ; réduit : 0 texte caché, aucune rotation, 5 pages. Captures ciblées : `.shots/aww2/` (non commitées).
+
+## Reste (phase 3)
+- OG composée (`public/og.png` toujours manquant, référencé par `Base.astro`).
+- QA complète (shoot, audit, axe, `hover.noHoverChange`, `idleAt`, `settledMs`, LCP), RAPPORT.md, sloplint, `pnpm index`, points 35, 36, 45 de DESIGN.md.
+- Vérifier le contraste de `.tete__station` (muted sur béton, 7,1:1 attendu) et l'étiquette « 9 h » du menu (carte) si le jury la juge arbitraire.
 
 ## Décisions et hypothèses
-- Pas de loader, pas de GL (justifié dans la Concept Card). Pas d'équipe, de chef, d'avis, de note Google : inconnus, absents.
-- Téléphone 081 73 65 52 (site, Namur Tourisme) ; l'autre numéro du dossier (+32492938796) est à confirmer.
-- Photo 05 (salle végétalisée) : origine douteuse (préfixe Wix 11062b), servie avec la légende « Photo illustrative, origine à confirmer » (`placeholder`). Aucun élément fictif de contenu autrement.
-- Margarita 25 € : prix ambigu dans le PDF, affiché « (à confirmer) ».
-- Les menus Bar (cocktails, bières, café) sont des extraits : la mention est portée par la note de rayon.
-- Aucun GPS : le plan est un lien de recherche OpenStreetMap sur l'adresse.
-- Page « Histoire » limitée aux faits du dossier (ouverture mai 2025, RTBF, producteurs).
+- Pas de loader, de GL, de follower. Pas d'aperçu au curseur sur la carte (aucune photo par plat).
+- Étiquettes du menu : Départ, 9 h (ouverture), Mai 2025 (ouverture du bar, dossier), À quai ; décoratives (`aria-hidden`).
+- Téléphone 081 73 65 52 ; photo 05 « illustrative » ; Margarita « à confirmer » (inchangé).
 
 ## Pièges
-- SplitText : le h1 en `calc(100vw / n)` doit tenir compte de la largeur réelle du mot de 8 lettres (3,8 em) : `scrollWidth` > largeur sans qu'aucun `getBoundingClientRect` ne dépasse (texte qui déborde de sa boîte).
-- Serveur de test : `node .claude/skills/awwwards/scripts/serve.mjs dist --port 4400` (arrêté, PID tué).
+- Une règle de base ajoutée en fin de `site.css` écrase la media query mobile placée plus haut (bouton Menu invisible) : la règle de bureau est écrite en `@media (min-width: 48.01rem)`.
+- Le `<dialog>` natif laisse sortir Tab vers l'interface du navigateur : boucle Tab dans `menu.ts`.
+- Serveur de test : `node .claude/skills/awwwards/scripts/serve.mjs dist --port 4421` depuis le dépôt (arrêté, PID tué).

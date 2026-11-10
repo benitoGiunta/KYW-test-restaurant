@@ -1,5 +1,6 @@
 ---
 import { u } from '../lib/url';
+import { site } from '../data/site';
 const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
@@ -7,15 +8,41 @@ const liens = [
   { href: '/carte/', label: 'La carte' },
   { href: '/histoire/', label: 'Histoire' },
 ];
+const stationsMenu = [
+  { href: '/', label: 'Accueil', heure: 'Départ' },
+  { href: '/carte/', label: 'La carte', heure: '9 h' },
+  { href: '/histoire/', label: 'Histoire', heure: 'Mai 2025' },
+  { href: '/reservation/', label: 'Réserver', heure: 'À quai' },
+];
 ---
 <header class="tete">
   <a class="tete__marque" href={base} aria-current={path === base ? 'page' : undefined}>
     <span class="tete__cabine" aria-hidden="true"></span><span class="tete__nom">Le Servais</span>
   </a>
+  <span class="tete__station" data-station aria-hidden="true"></span>
   <nav class="tete__nav" aria-label="Navigation principale">
     <ul>
-      {liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      {liens.map((l) => <li class="tete__lien"><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
       <li><a class="cta cta--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="cta__txt">Réserver</span></a></li>
+      <li class="tete__menu"><button class="menu-btn cta cta--ligne cta--petit" type="button" data-menu-ouvrir aria-expanded="false" aria-controls="menu-ligne">Menu</button></li>
     </ul>
   </nav>
 </header>
+<dialog id="menu-ligne" class="menu-ligne" aria-label="Menu">
+  <div class="menu-ligne__haut">
+    <span class="tete__nom">Le Servais</span>
+    <button class="menu-btn cta cta--ligne cta--petit" type="button" data-menu-fermer>Fermer</button>
+  </div>
+  <nav aria-label="Menu principal">
+    <ol class="menu-ligne__liste">
+      {stationsMenu.map((s) => (
+        <li class="menu-ligne__item">
+          <a class="menu-ligne__lien" href={u(s.href)} aria-current={s.href === '/' ? (path === base ? 'page' : undefined) : courant(s.href)}>
+            <span class="menu-ligne__point" aria-hidden="true"></span><span class="menu-ligne__nom display">{s.label}</span><span class="menu-ligne__heure" aria-hidden="true">{s.heure}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+  <p class="menu-ligne__pied menu-ligne__item"><a class="cta cta--nuit" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a></p>
+</dialog>

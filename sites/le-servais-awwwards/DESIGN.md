@@ -99,3 +99,42 @@ RÉSERVATION : [poster + CTA en ligne, appel] [3 colonnes horaires, cuisine, ven
 16. [x] Une famille de section au plus une fois par page (poster, index, données, paire, pied).
 17. [x] Hero en 3 s : nom, adresse, ouverture dès 9 h, deux CTA visibles à 1280 x 720 (CTA `bottom` 632).
 18. [x] Mobile 390 recomposé : titres sur largeur, une colonne, `scrollWidth` 390 sur les cinq pages (mesure Playwright à 320, 360, 390).
+
+## Mouvement réalisé (phase 2)
+
+- **Pilote** `src/motion/ligne.ts` : une variable, la position de la cabine sur le câble. Elle allume les stations passées (`.station__point.is-lit`, accueil et carte) et nomme la station dans l'en-tête (`[data-station]`, « Départ », « Station 11 h 30 », « Terminus » sur la 404). Vitesse du défilement, pointeur (`idle.x`) et horloge de repos donnent le balancement : pendule amorti sur `gsap.ticker`, en pause hors de `.ligne` (ScrollTrigger `onToggle`).
+- **Signature** : `Cabine.astro` dans chaque `.ligne`, collante à 42 svh (`position: sticky`), trois enveloppes (collage, arrivée GSAP, pendule par `style.rotate`). Intro : la cabine arrive à quai d'en haut (1,1 s, `ease.out`) puis prend l'élan.
+- **Repos** : la cabine se balance (±1,6 degré, sinus lent + pointeur) ; mesure : `rotate` passe de 0,93 à 1,61 degré en 0,7 s sans entrée.
+- **Pas d'aperçu au curseur sur la carte** : aucune photo par plat (cinq photos en tout, une par rayon déjà affichée) ; associer une photo à un plat serait inventé. Décision écrite.
+- **Pas de loader, pas de GL, pas de follower** (`#gl`, `#cursor` absents : rien à persister).
+- **Menu mobile** : `<dialog>` modal « la ligne en plein écran », une station par page, ouverture en porte (clip-path 0,6 s, stagger 50 ms), Échap, clic de fond, retour du focus, boucle Tab.
+
+## Sur-utilisation de la skill (phase 2)
+
+19. [x] Menu mobile : `Header.astro` (bouton `aria-expanded`, `aria-controls="menu-ligne"`), `menu.ts` (showModal, boucle Tab, `close` rend le focus) ; mesure Playwright 390 et 320 : ouvert, 0 Tab hors menu sur 9, Échap ferme, focus sur le bouton.
+20. [x] Engine verbatim (`src/engine/` inchangé), `astro.ts`, `transition:persist="curtain"` (`Base.astro:72`), `transition:animate="none"` (`Base.astro:35`) ; `#gl`, `#cursor` sans objet.
+21. [x] Une horloge : grep `addEventListener('scroll')|requestAnimationFrame` hors engine = 0 ; pendule et repos sur `gsap.ticker`.
+22. [x] `ligne.ts` et `menu.ts` entièrement dans `onPage()` avec nettoyage rendu.
+23. [x] Aucune CSS `transform` (grep `transform:` dans `site.css` = `text-transform` seulement) ; la cabine utilise `translate`/`rotate`.
+24. [x] Pilote `ligne.ts` + `idle.ts` (`startIdle`, pointeur, vitesse au toucher), appelés une fois par `setup.ts`.
+25. [x] Loader décidé : non (Concept Card).
+26. [x] Transition « départ de cabine » 0,7 s / 0,8 s (`setup.ts`).
+27. [x] Intro `data-intro` (lieu et état du hero, chapeaux des pages), h1 peints (LCP), cabine qui arrive à quai.
+28. [x] Aucun épinglage GSAP ; `position: sticky` seulement (cabine, têtes de rayon).
+29. [x] Repli réduit : cabine fixe à 11 rem (`html:not(.motion) .cabine__colle`), toutes les stations allumées ; capture `.shots/aww2/aww2-reduit-haut.png`.
+30. [x] Aucune copie décorative de texte ; cabine et étiquette `aria-hidden`.
+31. [x] Easing `ease.out`/`ease.inOut` de l'engine, CSS `cubic-bezier(0.22, 1, 0.36, 1)` (soft), stagger 50 ms.
+32. [x] Trois traitements : remplissage par le bas (CTA, bouton Menu), filet cuivre (nav, liens utilitaires, sommaire), soulignement qui s'épaissit (liens texte) ; marque : la cabine monte.
+33. [x] Survols sous `@media (hover: hover)`, mêmes états sur `:focus-visible` et `:active` (`site.css`, fin de fichier).
+34. [x] `.lien` souligné au repos.
+35. [ ] À prouver en phase 3 (`report.json`) ; lien courant : filet épaissi à 6 px au survol.
+36. [~] Repos mesuré (rotation qui change sans entrée), `idleAt` en phase 3.
+37. [x] Pas de follower, curseur natif ; rien ne dépend du survol.
+38. [x] Ni blur, ni `box-shadow` animé, ni `will-change`.
+39. [x] Réduit (Playwright, 5 pages) : classe `motion` absente, 0 texte caché, aucune rotation.
+40. [x] GL sans objet, décision écrite (Concept Card).
+41. Sans objet.
+44. [x] Skip link en premier (`Base.astro`), anneau cuivre ou cuivre clair sur nuit et dans le menu.
+45. [ ] Phase 3 (axe).
+46. [x] Tout le texte est du HTML.
+47. [x] Cibles : Réserver 44 px, Menu 44 px, Appeler 44 px (`.cta--petit` 2,75 rem), mesure à 390 et 320.

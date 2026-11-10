@@ -17,10 +17,10 @@ address { font-style: normal; }
 .legende { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.5rem; }
 
 .lien { display: inline-block; padding-block: 0.5rem; text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; transition: text-decoration-thickness 0.25s, text-underline-offset 0.25s; }
-.lien:hover, .lien:active { text-decoration-thickness: 3px; text-underline-offset: 0.12em; }
-.lien-util { display: inline-block; padding-block: 0.4rem; text-decoration: none; transition: color 0.25s; }
-.lien-util:hover, .lien-util:active { color: var(--c-accent-texte); }
-.pied .lien-util:hover { color: var(--c-nuit-accent); }
+.lien:active, .lien:focus-visible { text-decoration-thickness: 3px; text-underline-offset: 0.12em; }
+.lien-util { --filet: var(--c-accent); display: inline-block; padding-block: 0.4rem; text-decoration: none; background: linear-gradient(var(--filet), var(--filet)) left bottom / 0 2px no-repeat; transition: background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.lien-util:active, .lien-util:focus-visible { background-size: 100% 2px; }
+.pied .lien-util { --filet: var(--c-nuit-accent); }
 
 /* Boutons : la remplissage monte du bas (la cabine qui arrive), puis encre sur béton. */
 .cta { --fond: var(--c-accent); --monte: var(--c-fg); --texte: var(--c-fg); --texte-hover: var(--c-bg);
@@ -28,21 +28,21 @@ address { font-style: normal; }
   font-weight: 700; font-size: var(--t-s); letter-spacing: 0.06em; text-transform: uppercase; color: var(--texte);
   background: linear-gradient(var(--monte), var(--monte)) left bottom / 100% 0 no-repeat, var(--fond); border: 2px solid var(--c-fg);
   transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.35s; }
-.cta:hover, .cta:active, .cta:focus-visible { background-size: 100% 100%; color: var(--texte-hover); }
+.cta:active, .cta:focus-visible { background-size: 100% 100%; color: var(--texte-hover); }
 .cta--ligne { --fond: transparent; }
-.cta--petit { min-height: 2.5rem; padding: 0.4rem 1rem; }
+.cta--petit { min-height: 2.75rem; padding: 0.4rem 1rem; }
 .cta--nuit { --fond: var(--c-nuit-accent); --monte: var(--c-bg); --texte: var(--c-nuit); --texte-hover: var(--c-nuit); border-color: var(--c-nuit-accent); }
 .cta[aria-current='page'] { box-shadow: 0 4px 0 -1px var(--c-teal); }
 
 /* En-tête */
 .tete { position: sticky; top: 0; z-index: var(--z-header); display: flex; align-items: center; justify-content: space-between; gap: var(--u); padding: 0.6rem var(--gutter); background: var(--c-bg); border-bottom: 1px solid var(--c-line); }
 .tete__marque { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding-block: 0.4rem; }
-.tete__cabine { position: relative; width: 1rem; height: 0.75rem; background: var(--c-accent); border: 2px solid var(--c-fg); margin-top: 0.35rem; }
+.tete__cabine { transition: translate 0.35s cubic-bezier(0.22, 1, 0.36, 1); position: relative; width: 1rem; height: 0.75rem; background: var(--c-accent); border: 2px solid var(--c-fg); margin-top: 0.35rem; }
 .tete__cabine::before { content: ''; position: absolute; left: 50%; bottom: 100%; width: 2px; height: 0.45rem; background: var(--c-fg); translate: -50% 0; }
 .tete__nom { font-family: var(--f-display); font-weight: 800; font-size: 1.75rem; text-transform: uppercase; line-height: 1; letter-spacing: 0; }
 .tete__nav ul { display: flex; align-items: center; gap: clamp(0.75rem, 2vw, 2rem); }
 .nl { display: inline-block; padding-block: 0.6rem; text-decoration: none; font-weight: 600; font-size: var(--t-s); letter-spacing: 0.04em; text-transform: uppercase; background: linear-gradient(var(--c-accent), var(--c-accent)) left bottom / 0 3px no-repeat; transition: background-size 0.3s; }
-.nl:hover, .nl:focus-visible, .nl[aria-current='page'] { background-size: 100% 3px; }
+.nl:focus-visible, .nl:active, .nl[aria-current='page'] { background-size: 100% 3px; }
 
 /* La ligne : câble vertical dans la gouttière, aligné sur le bord du .wrap même au-delà de 96 rem. */
 .ligne { position: relative; }
@@ -173,6 +173,60 @@ address { font-style: normal; }
   .erreur__titre { font-size: calc((100vw - 2 * var(--gutter)) / 3.8); }
   .pied__mot { font-size: calc((100vw - 2 * var(--gutter)) / 5.8); }
   .tete__nav ul { gap: 0.6rem; }
+  .tete__lien { display: none; }
+  .tete__menu { display: block; }
+  .cabine__corps { width: 1.1rem; height: 1.6rem; }
+  .cabine__caisse { top: 0.6rem; height: 1rem; padding: 2px; }
+  .cabine__corps::before { height: 0.6rem; }
 }
 @media (max-width: 26rem) { .tete__marque .tete__cabine { display: none; } .nl { letter-spacing: 0; } .cta--petit { padding-inline: 0.7rem; } }
-@media (prefers-reduced-motion: reduce) { .cta, .nl, .lien { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .cta, .nl, .lien, .lien-util, .tete__cabine, .menu-ligne__nom, .station__point { transition: none; } }
+
+/* Survols (pointeur fin seulement) ; les mêmes états existent sur :focus-visible et :active plus haut. */
+@media (hover: hover) {
+  .lien:hover { text-decoration-thickness: 3px; text-underline-offset: 0.12em; }
+  .lien-util:hover { background-size: 100% 2px; }
+  .cta:hover { background-size: 100% 100%; color: var(--texte-hover); }
+  .nl:hover { background-size: 100% 3px; }
+  .nl[aria-current='page']:hover { background-size: 100% 6px; }
+  .tete__marque:hover .tete__cabine { translate: 0 -0.25rem; }
+  .menu-ligne__lien:hover .menu-ligne__nom { translate: 0.5rem 0; color: var(--c-nuit-accent); }
+  .menu-ligne__lien:hover .menu-ligne__point { background: var(--c-nuit-accent); }
+  .kyw-footer__link:hover { text-decoration: underline; }
+}
+.tete__marque:focus-visible .tete__cabine, .tete__marque:active .tete__cabine { translate: 0 -0.25rem; }
+.kyw-footer__link:focus-visible { text-decoration: underline; }
+
+/* Signature : la cabine sur le câble. Collante sur la ligne (elle suit le trajet), pendule autour du crochet. */
+.cabine { position: absolute; top: 0; bottom: 0; left: calc(max(calc(var(--gutter) / 2), calc((100% - 96rem) / 2 + var(--gutter) / 2)) + 1px); width: 0; z-index: 2; pointer-events: none; }
+.cabine__colle { position: sticky; top: 42svh; }
+html:not(.motion) .cabine__colle { position: absolute; top: 11rem; }
+.cabine__corps { position: absolute; left: 0; top: 0; width: 1.9rem; height: 2.5rem; translate: -50% 0; transform-origin: 50% 0; }
+.cabine__corps::before { content: ''; position: absolute; left: 50%; top: 0; width: 2px; height: 0.85rem; background: var(--c-fg); translate: -50% 0; }
+.cabine__corps::after { content: ''; position: absolute; left: 50%; top: -0.3rem; width: 0.6rem; height: 0.6rem; background: var(--c-fg); translate: -50% 0; }
+.cabine__caisse { position: absolute; left: 0; right: 0; top: 0.85rem; height: 1.6rem; display: flex; gap: 2px; padding: 3px; background: var(--c-accent); border: 2px solid var(--c-fg); }
+.cabine__vitre { flex: 1; background: var(--c-bg); }
+.ligne.is-ligne .station__point { background: var(--c-bg); transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+.ligne.is-ligne .station__point.is-lit { background: var(--c-accent); }
+
+/* Étiquette de station dans l'en-tête (raconte l'état du pilote, décorative). */
+.tete__station { flex: 1; text-align: center; font-size: var(--t-xs); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 64rem) { .tete__station { display: none; } }
+
+/* Menu mobile : la ligne en plein écran, une station par page. */
+@media (min-width: 48.01rem) { .tete__menu { display: none; } }
+.menu-ligne { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0.6rem var(--gutter) var(--normal); border: 0; background: var(--c-nuit); color: #e6ece9; display: none; overflow-y: auto; }
+.menu-ligne[open] { display: grid; grid-template-rows: auto 1fr auto; gap: var(--serre); }
+.menu-ligne::backdrop { background: transparent; }
+.menu-ligne :focus-visible { outline-color: var(--c-nuit-accent); }
+.menu-ligne__haut { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.menu-ligne__haut .cta { --texte: #e6ece9; --monte: #e6ece9; --texte-hover: var(--c-nuit); border-color: #e6ece9; }
+.menu-ligne > nav { align-self: center; }
+.menu-ligne__liste { position: relative; display: grid; align-content: center; gap: 0.75rem; padding-left: 1.75rem; }
+.menu-ligne__liste::before { content: ''; position: absolute; left: 0.45rem; top: 0; bottom: 0; width: 2px; background: var(--c-teal); }
+.menu-ligne__lien { position: relative; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-block: 0.35rem; text-decoration: none; }
+.menu-ligne__point { position: absolute; left: calc(1px - 1.75rem); top: 50%; translate: 0 -50%; width: 0.9rem; height: 0.9rem; background: var(--c-nuit); border: 2px solid var(--c-nuit-accent); }
+.menu-ligne__nom { font-size: clamp(2.75rem, 14vw, 4.5rem); line-height: 0.95; transition: translate 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.35s; }
+.menu-ligne__heure { font-size: var(--t-xs); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-nuit-muted); }
+.menu-ligne__lien[aria-current='page'] .menu-ligne__point, .menu-ligne__lien:active .menu-ligne__point, .menu-ligne__lien:focus-visible .menu-ligne__point { background: var(--c-nuit-accent); }
+.menu-ligne__lien:focus-visible .menu-ligne__nom, .menu-ligne__lien:active .menu-ligne__nom { translate: 0.5rem 0; color: var(--c-nuit-accent); }
