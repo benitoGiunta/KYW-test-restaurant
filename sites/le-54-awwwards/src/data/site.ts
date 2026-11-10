@@ -8,7 +8,7 @@
 export const site = {
   nom: 'Le 54',
   nomLong: 'Le 54, Dave',
-  typeCuisine: 'Cuisine gastronomique française inventive',
+  typeCuisine: 'Cuisine de saison et de marché',
   description: 'Le 54, table gastronomique de Dave, au bord de la Meuse à Namur : menu de saison en 3 ou 4 services, 34 couverts. Réservation souhaitée.',
   adresse: { rue: 'Rue de Longeau', numero: '54', cp: '5100', commune: 'Dave (Namur)', localite: 'Dave', pays: 'BE' },
   geo: { lat: 50.4188668, lon: 4.8850885 },
@@ -69,7 +69,7 @@ export const histoire = {
   paragraphes: [
     'En 2010, Michel et Véronique Collignon reprennent l’établissement avec leur fils Jonathan et lui donnent une dimension plus gastronomique.',
     'Jonathan Collignon est diplômé de l’École hôtelière provinciale de Namur. Il passe par Le Vivier d’Oies, chez le chef Godelet, puis fait un stage chez le chef Pauly, au Coq aux Champs. Autodidacte et créatif, il promeut les artisans locaux.',
-    'La carte suit les saisons et se renouvelle souvent. Trente-quatre couverts, au bord de la Meuse : la salle reste petite, le service aussi.',
+    'La carte suit les saisons et se renouvelle souvent. Trente-quatre couverts, au bord de la Meuse.',
   ],
 } as const;
 export const equipe = [

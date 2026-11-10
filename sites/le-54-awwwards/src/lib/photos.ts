@@ -24,10 +24,10 @@ export const photos = {
   sauce: { src: sauce, alt: 'Une sauce versée sur un plat de légumes, en salle.' },
   bolBleu: { src: bolBleu, alt: 'Un plat dans un bol bleu, posé sur une table de la salle.' },
   geste: { src: geste, alt: 'Deux mains dressent des feuilles et des pousses dans un bol noir.' },
-  bolsTruffe: { src: bolsTruffe, alt: 'Plusieurs bols bleus alignés, crème et roquette, prêts pour le service.' },
+  bolsTruffe: { src: bolsTruffe, alt: 'Plusieurs bols bleus alignés, purée et copeaux.' },
   bolNoir: { src: bolNoir, alt: 'Une sauce versée dans un bol noir, sur une table dressée.' },
   assietteBlanche: { src: assietteBlanche, alt: 'Grande assiette blanche, un petit dressage au centre, vue de dessus.' },
-  tartare: { src: tartare, alt: 'Tartare dressé en ligne sur une assiette blanche, avec des grains de caviar.' },
+  tartare: { src: tartare, alt: 'Tartare dressé sur une assiette blanche.' },
   soupe: { src: soupe, alt: 'Velouté mousseux et morceau de homard dans une assiette creuse blanche.' },
   dessert: { src: dessert, alt: 'Dessert aux amandes effilées dans un bol brun.' },
 } as const;
