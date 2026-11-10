@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Demi from '../components/Demi.astro';
+import { u } from '../lib/url';
+import { carte, eur, menus, restaurant as r } from '../data/site';
+import type { CleePhoto } from '../lib/photos';
+const photoDe: Record<string, CleePhoto> = { 'Les ardoises à partager': 'ardoise', 'Les entrées': 'saumon', 'Les plats': 'viande', 'Les pâtes': 'poisson', 'Les salades': 'service', 'Les grillades': 'grill', 'Desserts': 'veloute' };
+const slug = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const rubriques = carte.map((c) => {
+  const [titre, sous] = c.categorie.split(' (');
+  return { ...c, titre, sous: sous ? sous.replace(')', '') : null, id: slug(titre), photo: photoDe[titre] };
+});
+---
+<Base page="carte" title="La carte" description="La carte de Li Micougni à Namur : ardoises à partager, entrées, plats, pâtes, salades, grillades au charbon de bois et desserts maison, avec les prix.">
+  <section class="page-tete">
+    <div class="wrap">
+      <h1 class="titre-page"><Demi t="La carte" /></h1>
+      <p class="page-tete__lead">Locale, de saison, faite maison.</p>
+      <p class="page-tete__note">D’après la carte de septembre à janvier publiée par le restaurant. Elle évolue au fil des mois : appelez avant de venir si un plat vous tient à cœur.</p>
+    </div>
+  </section>
+  <nav class="carte-index" aria-label="Rubriques de la carte">
+    <ul>
+      {rubriques.map((c) => <li><a href={`#${c.id}`}>{c.titre}</a></li>)}
+      <li><a href="#menus">Menus</a></li>
+    </ul>
+  </nav>
+  <div class="wrap">
+    {rubriques.map((c) => (
+      <section class="rubrique grid" id={c.id} aria-labelledby={`h-${c.id}`}>
+        <div class="rubrique__tete">
+          <h2 id={`h-${c.id}`} class="titre-section"><Demi t={c.titre} />{c.sous && <span class="rubrique__sous">{c.sous}</span>}</h2>
+          {c.photo && <figure class="rubrique__photo"><Photo cle={c.photo} widths={[480, 800]} sizes="(min-width: 48rem) 22rem, 90vw" /></figure>}
+        </div>
+        <ul class="rubrique__plats">
+          {c.plats.map((p) => (
+            <li class="ligne">
+              <h3 class="ligne__nom">{p.nom}</h3>
+              {p.prix !== null && <span class="prix">{p.supplement ? '+ ' : ''}{eur(p.prix)}</span>}
+              {p.description && <p class="ligne__desc">{p.description}</p>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+  <section class="menus orange" id="menus" aria-labelledby="titre-menus">
+    <div class="wrap grid">
+      <h2 id="titre-menus" class="titre-section" style="grid-column: 1 / -1"><Demi t="Les menus" /></h2>
+      <div class="menus__liste">
+        {menus.map((m) => (
+          <article class="menu-fiche"><h3>{m.nom}</h3><p>{m.texte}</p>{m.prix !== null && <span class="prix">{eur(m.prix)}</span>}</article>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="page-tete">
+    <div class="wrap"><p class="cta-row"><a class="cta" href={u('/reservation/')}>Réserver une table</a><a class="cta cta--ghost" href={`tel:${r.telephone}`}>Appeler</a></p></div>
+  </section>
+</Base>

@@ -1,0 +1,16 @@
+---
+import { u } from '../lib/url';
+interface Props { page?: string }
+const { page = '' } = Astro.props;
+const lien = (cle: string) => (page === cle ? 'page' : undefined);
+---
+<header class="entete">
+  <div class="entete__in">
+    <a class="entete__marque" href={u('/')} aria-label="Li Micougni, accueil">Li Micougni</a>
+    <nav class="entete__nav" aria-label="Navigation principale">
+      <a class="nav-lien" href={u('/carte/')} aria-current={lien('carte')}>Carte</a>
+      <a class="nav-lien" href={u('/histoire/')} aria-current={lien('histoire')}>Histoire</a>
+      <a class="nav-lien" href={u('/reservation/')} aria-current={lien('reservation')}>Réserver</a>
+    </nav>
+  </div>
+</header>

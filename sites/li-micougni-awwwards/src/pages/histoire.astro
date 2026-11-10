@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Demi from '../components/Demi.astro';
+import { u } from '../lib/url';
+import { histoire, valeurs, restaurant as r } from '../data/site';
+---
+<Base page="histoire" title="Histoire" description="L’histoire de Li Micougni, restaurant namurois né de l’amitié de deux passionnés de l’horeca : un nom wallon, une cuisine de saison et le charbon de bois.">
+  <section class="page-tete">
+    <div class="wrap">
+      <h1 class="titre-page"><Demi t="Histoire" /></h1>
+      <p class="page-tete__lead">Deux amis, un nom wallon.</p>
+    </div>
+  </section>
+  <section class="hist wrap grid" aria-label="Histoire de la maison">
+    <div class="hist__texte">{histoire.map((p) => <p>{p}</p>)}</div>
+    <figure class="hist__a"><Photo cle="polaroids" widths={[480, 800, 1200]} sizes="(min-width: 48rem) 40vw, 100vw" /><figcaption class="legende">{r.credit}</figcaption></figure>
+    <figure class="hist__b"><Photo cle="tables" widths={[640, 960]} sizes="(min-width: 48rem) 50vw, 100vw" /></figure>
+  </section>
+  <section class="valeurs orange" aria-labelledby="titre-valeurs">
+    <div class="wrap grid">
+      <h2 id="titre-valeurs" class="valeurs__titre titre-section"><Demi t="Ce qui compte" /></h2>
+      <ul class="valeurs__liste">{valeurs.map((v) => <li>{v}</li>)}</ul>
+      <div class="valeurs__faits">
+        <p>Les escargots sont de Namur, au beurre persil ail. Les boulettes sauce tomate sont celles de Mamy Max, servies avec des frites.</p>
+        <p><a class="cta" href={u('/carte/')}>Voir la carte</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

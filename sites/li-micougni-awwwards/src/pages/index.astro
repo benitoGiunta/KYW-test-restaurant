@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Demi from '../components/Demi.astro';
+import { u } from '../lib/url';
+import { restaurant as r, rubrique, eur } from '../data/site';
+const ardoises = rubrique('Les ardoises').plats;
+const grillades = rubrique('Les grillades').plats.slice(0, 6);
+---
+<Base page="accueil" description="Restaurant au centre de Namur : produits locaux et de saison, ardoises à partager, grillades au charbon de bois et terrasse en cour privée. Réservez votre table.">
+  <section class="hero" aria-labelledby="titre-accueil">
+    <div class="wrap">
+      <h1 id="titre-accueil" class="mega"><Demi t="Li" /> <Demi t="Micougni" /></h1>
+      <div class="hero__grid grid">
+        <div class="hero__txt">
+          <p class="hero__lead">Produits locaux et de saison, grillades au charbon de bois. Au centre de Namur.</p>
+          <div class="cta-row">
+            <a class="cta" href={u('/reservation/')}>Réserver une table</a>
+            <a class="cta cta--ghost" href={`tel:${r.telephone}`}>Appeler</a>
+          </div>
+          <p class="hero__meta">{r.adresse.rue} {r.adresse.numero}, {r.adresse.cp} {r.adresse.commune}</p>
+        </div>
+        <figure class="hero__photo"><Photo cle="grill" widths={[640, 960, 1200]} sizes="(min-width: 48rem) 58vw, 100vw" prioritaire /></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="enonce orange" aria-label="Le nom">
+    <div class="wrap grid">
+      <p class="enonce__texte">Vous êtes tous les bienvenus, <Demi t="même les demi-fous." /></p>
+      <p class="enonce__note">Li Micougni est un nom wallon. La maison l’explique ainsi sur son site.</p>
+    </div>
+  </section>
+
+  <section class="ardoises" aria-labelledby="titre-ardoises">
+    <div class="wrap grid">
+      <h2 id="titre-ardoises" class="ardoises__titre titre-section"><Demi t="Les ardoises, pour deux" /></h2>
+      <p class="ardoises__intro">Charcuteries, fromages ou produits de la mer : les ardoises se posent au milieu de la table et se partagent à deux.</p>
+      <ul class="ardoises__liste">
+        {ardoises.map((p) => (
+          <li class="ligne"><h3 class="ligne__nom">{p.nom}</h3><span class="prix">{eur(p.prix!)}</span><p class="ligne__desc">{p.description}</p></li>
+        ))}
+      </ul>
+      <figure class="ardoises__a"><Photo cle="ardoise" widths={[640, 960, 1200]} sizes="(min-width: 48rem) 56vw, 100vw" /><figcaption class="legende">{r.credit}</figcaption></figure>
+      <figure class="ardoises__b"><Photo cle="ardoiseLogo" widths={[480, 800]} sizes="(min-width: 48rem) 30vw, 100vw" /><p class="legende"><a class="lien" href={u('/carte/')}>Voir toute la carte</a></p></figure>
+    </div>
+  </section>
+
+  <section class="grill" aria-labelledby="titre-grill">
+    <div class="wrap grid">
+      <h2 id="titre-grill" class="grill__titre titre-section"><Demi t="Au charbon de bois" /></h2>
+      <ul class="grill__liste">
+        {grillades.map((p) => (
+          <li class="ligne"><h3 class="ligne__nom">{p.nom}</h3><span class="prix">{eur(p.prix!)}</span><p class="ligne__desc">{p.description}</p></li>
+        ))}
+      </ul>
+      <p class="grill__note">Toutes les grillades sont cuites au charbon de bois, avec des sauces maison. <a class="lien" href={u('/carte/#les-grillades')}>La suite des grillades</a></p>
+      <figure class="grill__photo"><Photo cle="viande" widths={[480, 800, 1200]} sizes="(min-width: 48rem) 30vw, 100vw" /></figure>
+    </div>
+  </section>
+
+  <section class="lieux grid wrap" aria-labelledby="titre-lieux">
+    <h2 id="titre-lieux" class="lieux__titre titre-section"><Demi t="La salle, la cour" /></h2>
+    <figure class="lieux__a"><Photo cle="salle" widths={[640, 960, 1200, 1600]} sizes="(min-width: 48rem) 66vw, 100vw" /></figure>
+    <figure class="lieux__b"><Photo cle="terrasse" widths={[480, 800, 900]} sizes="(min-width: 48rem) 33vw, 100vw" /></figure>
+    <div class="lieux__txt"><span class="mini">Terrasse arrière</span><p>Une cour privée, {r.couvertsTerrasse} couverts, ouverte toute l’année.</p></div>
+    <figure class="lieux__c"><Photo cle="fenetres" widths={[480, 800]} sizes="(min-width: 48rem) 33vw, 100vw" /></figure>
+  </section>
+
+  <section class="resa orange" aria-labelledby="titre-resa">
+    <div class="wrap grid">
+      <h2 id="titre-resa" class="resa__titre titre-section"><Demi t="À table" /></h2>
+      <a class="resa__tel" href={`tel:${r.telephone}`}>{r.telephoneLisible}</a>
+      <p class="resa__cta"><a class="cta" href={u('/reservation/')}>Réserver une table</a></p>
+      <ul class="resa__heures" aria-label="Horaires, à confirmer">
+        {r.horaires.map((h) => <li><b>{h.jour}</b><span>{h.texte}</span></li>)}
+      </ul>
+      <p class="resa__pied">Horaires à confirmer : le restaurant n’en publie pas le détail.</p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import Demi from '../components/Demi.astro';
+import { restaurant as r } from '../data/site';
+const sujet = encodeURIComponent('Réservation Li Micougni');
+---
+<Base page="reservation" title="Réservation" description="Réserver une table chez Li Micougni à Namur : téléphone, e-mail ou formulaire du restaurant. Adresse, horaires, terrasse de 30 couverts et privatisation.">
+  <section class="page-tete">
+    <div class="wrap">
+      <h1 class="titre-page"><Demi t="Réserver" /></h1>
+      <p class="page-tete__lead">Le plus simple : un coup de fil.</p>
+      <p class="page-tete__note">La réservation se fait auprès du restaurant, par téléphone, par e-mail ou depuis son formulaire de contact. Ce site ne transmet aucune demande.</p>
+    </div>
+  </section>
+  <section class="canaux wrap grid" aria-label="Moyens de réserver">
+    <div class="canal canal--tel">
+      <h2>Par téléphone</h2>
+      <a class="resa__tel" href={`tel:${r.telephone}`}>{r.telephoneLisible}</a>
+      <p>Horaires à confirmer : le restaurant n’en publie pas le détail.</p>
+    </div>
+    <div class="canal canal--mail">
+      <h2>Par e-mail</h2>
+      <a class="lien" href={`mailto:${r.email}?subject=${sujet}`}>{r.email}</a>
+      <p>Indiquez la date, l’heure et le nombre de personnes.</p>
+    </div>
+    <div class="canal canal--form">
+      <h2>Préparer votre e-mail</h2>
+      <form class="formulaire" action={`mailto:${r.email}`} method="post" enctype="text/plain">
+        <div class="champ"><label for="nom">Votre nom</label><input id="nom" name="Nom" type="text" autocomplete="name" /></div>
+        <div class="champs-2">
+          <div class="champ"><label for="date">Date souhaitée</label><input id="date" name="Date" type="date" /></div>
+          <div class="champ"><label for="pers">Personnes</label><input id="pers" name="Personnes" type="number" min="1" max="30" inputmode="numeric" /></div>
+        </div>
+        <div class="champ"><label for="msg">Message</label><textarea id="msg" name="Message" rows="3"></textarea></div>
+        <p><button class="cta" type="submit">Ouvrir mon e-mail</button></p>
+      </form>
+    </div>
+    <div class="canal canal--ext">
+      <h2>Formulaire du restaurant</h2>
+      <p>Li Micougni a aussi un formulaire de contact sur son propre site.</p>
+      <p><a class="cta cta--ghost" href={r.reservationUrl} rel="noopener">Ouvrir le formulaire</a></p>
+    </div>
+  </section>
+  <section class="infos orange" aria-label="Venir et horaires">
+    <div class="wrap grid">
+      <div class="infos__col infos__col--h">
+        <h2>Horaires</h2>
+        <ul class="horaires">{r.horaires.map((h) => <li><b>{h.jour}</b><span>{h.texte}</span></li>)}</ul>
+        <p style="margin-top:1rem;font-size:var(--t-s)">À confirmer : le site du restaurant annonce une ouverture du mardi soir au dimanche 17 h, les annuaires donnent des horaires différents.</p>
+      </div>
+      <div class="infos__col infos__col--l">
+        <h2>Venir</h2>
+        <address>{r.adresse.rue} {r.adresse.numero}<br />{r.adresse.cp} {r.adresse.commune}</address>
+        <p>Au centre historique de Namur.</p>
+        <p><a class="lien" href={r.planUrl} rel="noopener">Ouvrir le plan</a></p>
+      </div>
+      <div class="infos__col infos__col--v">
+        <h2>Sur place</h2>
+        <p>Terrasse arrière dans une cour privée : {r.couvertsTerrasse} couverts, ouverte toute l’année.</p>
+        <p>Le lieu se privatise pour un anniversaire, une réunion ou un évènement, avec un menu adapté à votre budget.</p>
+      </div>
+    </div>
+  </section>
+</Base>

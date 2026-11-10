@@ -1,0 +1,10 @@
+---
+// Signature « demi-fous » : un titre en deux moitiés. La moitié haute est le vrai texte, la moitié basse une copie
+// décalée de --ecart, masquée aux lecteurs d'écran. Chaque mot est coupé séparément (retour à la ligne naturel).
+interface Props { t: string; class?: string }
+const { t, class: classe } = Astro.props;
+const mots = t.split(' ');
+---
+{mots.map((m, i) => (
+  <Fragment><span class:list={['demi', classe]}><span class="demi__h">{m}</span><span class="demi__b" aria-hidden="true">{m}</span></span>{i < mots.length - 1 ? ' ' : ''}</Fragment>
+))}
