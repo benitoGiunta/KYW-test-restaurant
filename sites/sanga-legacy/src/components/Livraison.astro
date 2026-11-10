@@ -1,0 +1,24 @@
+---
+import { livraison, resto, eur } from '../data/site';
+const nb = ' ';
+---
+<section class="section livraison" id="livraison" aria-labelledby="t-liv">
+  <div class="container livraison__grid">
+    <div class="livraison__tete">
+      <h2 id="t-liv">Livré chez vous, gratuitement</h2>
+      <p class="lead">{livraison.note}</p>
+      <p><a class="btn" href={resto.commander}>Commander en ligne</a></p>
+    </div>
+    <div class="livraison__corps">
+      <dl class="paliers">
+        {livraison.paliers.map((p) => (
+          <div class="palier">
+            <dt class="figure num">Dès {p.min}{nb}€</dt>
+            <dd>{p.codes.join(', ')}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="paiement"><span class="small">Paiement</span> {livraison.paiements.join(', ')}.</p>
+    </div>
+  </div>
+</section>

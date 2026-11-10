@@ -1,0 +1,28 @@
+---
+import { jours, creneaux, resto } from '../data/site';
+---
+<section class="section horaires" id="horaires" aria-labelledby="t-hor">
+  <div class="container horaires__grid">
+    <div class="horaires__tete">
+      <h2 id="t-hor">Du mardi au dimanche, midi et soir</h2>
+      <address class="adresse">
+        <a href={resto.maps}>{resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.ville}</a>
+      </address>
+      <p class="adresse__tel"><a href={resto.telHref} class="num">{resto.telAffiche}</a></p>
+      <p><a class="btn" href={resto.commander}>Commander en ligne</a></p>
+    </div>
+    <table class="well schedule">
+      <caption class="visually-hidden">Horaires d’ouverture</caption>
+      <tbody>
+        {jours.map((j, i) => (
+          <tr class:list={[{ ferme: i === 0 }]}>
+            <th scope="row">{j}</th>
+            {i === 0
+              ? <td colspan="2">Fermé</td>
+              : creneaux.map((c) => <td><time datetime={c.de} class="num">{c.de}</time> à <time datetime={c.a} class="num">{c.a}</time></td>)}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>

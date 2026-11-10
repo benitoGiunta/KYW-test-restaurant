@@ -1,0 +1,20 @@
+---
+import { eur, type Rubrique } from '../data/site';
+interface Props { r: Rubrique; titre?: boolean }
+const { r, titre = true } = Astro.props;
+---
+<div class="rubrique" id={r.id}>
+  <div class="rubrique__tete">
+    {titre && <h3>{r.titre}</h3>}
+    <a class="lien" href={r.lien}>Commander : {r.titre.toLowerCase()}</a>
+  </div>
+  <ul class="rows">
+    {r.plats.map((p) => (
+      <li class="row">
+        <span class="row__nom">{p.nom}</span>
+        <span class="row__prix num">{eur(p.prix)}</span>
+        {p.desc && <p class="row__desc">{p.desc}</p>}
+      </li>
+    ))}
+  </ul>
+</div>
