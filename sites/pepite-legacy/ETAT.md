@@ -1,19 +1,20 @@
-# ETAT · pepite-legacy · construction-1 (phase 1 sur 3)
+# ETAT · pepite-legacy · construction-2 (phase 2 sur 3)
 
-## Fait
-- Audit (AUDIT.md, `.hallmark/before.txt`), deal/draw/scaffold Spore cellar, stamp et critique en tête de `src/styles/page.css`, comps c1/c2 (c2 choisi, comp.md), DESIGN.md (Picks, Approche, Composants, Sur-utilisation).
-- Pages statiques : `/` (Hero Poster, Carte, Vins, Lieu, Presse, Horaires et réservation, Pied colophon) et `/404`. Données dans `src/data/site.ts`. Build OK (`dist/pepite/legacy/`), noindex, mention KYW et KywFooter présents sur les deux pages. `sloplint src` : 0 FAIL, 2 WARN (28a dismissed : l'image de Lieu n'est pas le LCP ; 49 corrigé).
-- Photos : bouteilles (hero), cave voûtée (Lieu) en WebP dans `public/photos/` (couvert, vitrine préparés, non utilisés).
+## Fait (phase 2)
+- Nav sticky masthead à `--z-sticky-nav` ; sous 60rem, menu `<nav popover>` unique + bouton « Menu/Fermer » (`aria-expanded`), fermeture au clic de lien et Escape ; skip link conservé ; `scroll-padding-top` = nav + 16 px.
+- Boutons : états repos, hover (sous `(hover: hover)`), focus-visible, active, disabled ; cibles 44 à 48 px ; `.lien` et pied à 44 px sur `(pointer: coarse)`.
+- Script unique (Base.astro) : menu, jour courant des horaires (`aria-current="date"`, fuseau Bruxelles, tag « Aujourd’hui »), un reveal (rangées de la carte, `.js [data-reveal]`).
+- Grain `.grained` sur Vins et Horaires (0,07). Responsive : breakpoints 60rem et 40rem, horaires restackés, boutons pleine largeur au téléphone, pied en liste `ul`.
+- Réservation : lien Tablebooker conservé, donc aucun formulaire (pas de faux envoi). Pas de switcher ni de disclosure (liste de 5 rangées, horaires dits une fois).
+- Hero-review `self` (ship), comp reproduite 1280x800 (comp.md). `sloplint --render --url` : 0 FAIL, 1 WARN (28a, waive), 1 NOTE (98 mots à y=3150, section Presse, repris tel quel du site d’origine). Build OK, `dist/pepite/legacy/` rebuild, noindex + mention KYW + KywFooter sur `/` et `/404`.
+- Mesures (Playwright, dev server tué) : pas de scroll horizontal à 375, 961, 1024, 1280, 1920 ; menu ouvre/ferme ; reveal 5/5 ; reduced-motion et sans JS : contenu à opacité 1 ; 0 erreur console.
 
-## Reste (phases 2 et 3)
-- Phase 2 : menu mobile (nav sur deux lignes en attendant), jour courant des horaires par script, un reveal CSS au plus, grain `--grain` sur les bandes (texture.md § 1), états des boutons, `sloplint --render --url` (0 FAIL, 0 REFLEX), captures 375/768/1440, contraste du texte sur le dégradé du hero.
-- Phase 3 : sweep, `--kept` contre `before.json`, hero-review et finish-review `self`, RAPPORT.md, `pnpm index`, push. Entrée du journal sans `fingerprint` (à compléter).
-- Option : une photo (couvert ou vitrine) si la page paraît trop typographique ; au plus un tiers sous le hero.
+## Reste (phase 3)
+- Sweep, `--kept` contre `before.json`, finish-review `self`, RAPPORT.md, `pnpm index`, push ; entrée du journal sans `fingerprint` (à compléter).
+- Captures par l’agent « captures » : 375/768/1440, vérifier le contraste du texte sur le dégradé du hero et la bande grain ; le reveal exige un défilement par paliers (rangées à opacité 0 tant qu’elles n’ont pas été vues).
+- Option : photo couvert ou vitrine (non utilisées) si la page paraît trop typographique ; la NOTE 58 (Presse, 98 mots) pourrait se réduire en passant à deux extraits.
 
-## Décisions et hypothèses
-- Hero Poster (swap du Ledge du draw) ; comp c2 (texte nu à droite) pour garder les étiquettes lisibles.
-- Menu 58 € du 12 au 14 novembre repris tel quel (date réelle du site d'origine, fréquence de renouvellement non affichée) ; aucun prix par plat inventé.
-- Réservation : lien Tablebooker (restaurantId 50470946) à la place de l'iframe ; le site cite aussi Zenchef (non repris, à confirmer). Téléphone 0476/620182 (celui du site) ; 081/22 91 81 non repris.
-- Fondation : « ouvert en 2017 » (presse) ; la version Mapstr 2023 est ignorée. Aucun avis ni note chiffrée affichés. Aucun `.fill` ni placeholder.
-- Extraits de presse repris mot pour mot, à faire valider. Events 2018, News 2017-2022 et scans de presse dropped.
-- Cuivre d'origine remplacé par le rose huître du thème ; le logo capturé n'est pas utilisé (à redessiner).
+## Pièges et hypothèses
+- Le lien « Réalisé par » du paquet KYW mesure 24 px de haut : paquet partagé, non touché.
+- `.hor` du jour courant dépend de la date du visiteur : en capture, le jour dépend du jour du shoot (aucune date en dur).
+- Hypothèses de phase 1 inchangées (menu 58 €, Tablebooker, aucun avis).
