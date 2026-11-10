@@ -1,0 +1,151 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import Maree from '../components/Maree.astro';
+import Acces from '../components/Acces.astro';
+import { site, photoDe, huiles, regles, univers, phraseBoutique } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('flambage-poele');
+const lustre = photoDe('lustre-huiles');
+const boutique = photoDe('boutique-flacons-oco');
+const menu = site.menus[0];
+const [a, b] = ["L'Huile", 'sur le Feu'];
+---
+<Base theme="photo">
+  <link slot="head" rel="preload" as="image" href={asset(hero.src)} fetchpriority="high" />
+  <section class="hero" data-hero aria-labelledby="titre-hero">
+    <div class="hero__media" data-hero-media>
+      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical />
+    </div>
+    <div class="hero__ctas">
+      <a class="btn" href={u('/reservation/')} data-magnetic="0.2">Réserver</a>
+      <a class="btn" href={u('/carte/')}>La carte</a>
+      <a class="btn" href={u('/boutique/')}>La boutique</a>
+    </div>
+    <div class="hero__bas">
+      <h1 class="nom" id="titre-hero">
+        <span class="nom__l1" data-fit><span class="nom__w" data-fit>{a}</span> <span class="nom__w" data-fit>{b}</span></span>
+      </h1>
+      <div class="wrap">
+        <ul class="hero__univers mono" data-hero-apres>
+          {univers.map((m) => <li>{m.mot}</li>)}
+        </ul>
+      </div>
+    </div>
+    <svg class="hero__sep" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path data-houle d="M0,40 L1440,40 L1440,80 L0,80 Z" /></svg>
+  </section>
+
+  <section class="sec sec--ciel hero__accroche" aria-label="Accroche">
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <p class="lead">{site.baseline}</p>
+        <p class="muted" style="margin-top: calc(var(--u) * 2); max-width: 48ch">Cuisine méditerranéenne d'inspiration italienne, des Pouilles à Namur. Ici, l'huile d'olive est le point de départ de chaque plat, pas la touche finale.</p>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+          <a class="btn" href={u('/carte/')}>Voir la carte</a>
+        </div>
+      </div>
+      <div class="col-droite">
+        <Maree />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-labelledby="t-huiles">
+    <Houle fill="eau" />
+    <div class="wrap paire">
+      <figure class="media media--bord" data-reveal="clip" data-cursor="Voir">
+        <img src={asset(lustre.src)} alt={lustre.alt} width={lustre.largeur} height={lustre.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        <figcaption class="mono">Le lustre de flacons d'huile · photo du restaurant</figcaption>
+      </figure>
+      <div>
+        <span class="eyebrow mono" data-reveal="fade">Les huiles</span>
+        <h2 id="t-huiles" style="font-size: var(--t-xl)" data-split="words">Chaque assiette reçoit son huile</h2>
+        <ol class="index" style="margin-top: calc(var(--u) * 3)" data-reveal="up">
+          {huiles.slice(0, 4).map((h, i) => (
+            <li>
+              <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
+              <span class="index__nom">{h.libelle}{h.plat ? <span class="index__desc">{h.plat}</span> : null}</span>
+              <span class="index__prix"></span>
+            </li>
+          ))}
+        </ol>
+        <p class="actions"><a class="link flèche" href={u('/huiles/')}>Toutes les huiles</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel" aria-labelledby="t-carte">
+    <Houle fill="ciel" />
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <span class="eyebrow mono" data-reveal="fade">La carte</span>
+        <h2 id="t-carte" style="font-size: var(--t-xl)" data-split="words">Le menu Gourmet, {menu.prix}</h2>
+        <p class="muted" style="margin-top: calc(var(--u) * 2)">Entrée, plat, dessert, chacun avec son huile d'olive.</p>
+      </div>
+      <div class="col-large">
+        <ol class="index" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
+          {[['Entrée', "Toast aux champignons, huile d'olive à la truffe"], ['Plat', "Filet de sébaste, fregola sarda, ratatouille, huile d'olive au persil plat"], ['Dessert', "Tatin aux pommes, glace fleur de lait, huile d'olive à la mandarine"]].map(([k, v], i) => (
+            <li>
+              <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
+              <span class="index__nom">{k}<span class="index__desc">{v}</span></span>
+              <span class="index__prix"></span>
+            </li>
+          ))}
+        </ol>
+        <div class="actions">
+          <a class="btn" href={u('/carte/')}>La carte complète</a>
+          <span class="badge badge--sable" style="align-self: center">pâtes fraîches maison</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--eau terrasse" aria-label="La boutique">
+    <Houle fill="eau" />
+    <figure class="media media--fond media--sous-eau" aria-hidden="true">
+      <img src={asset(boutique.src)} alt="" width={boutique.largeur} height={boutique.hauteur} loading="lazy" decoding="async" data-parallax="0.12" />
+    </figure>
+    <div class="wrap">
+      <p class="citation" data-split="chars">{phraseBoutique}</p>
+      <p class="mono"><a class="link" href={u('/boutique/')} style="color: inherit">La boutique Oliviers & Co</a></p>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel" aria-labelledby="t-regles">
+    <Houle fill="ciel" />
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <span class="eyebrow mono">Infos pratiques</span>
+        <h2 id="t-regles" style="font-size: var(--t-l); font-weight: 500" data-split="words">Ce qu'il faut savoir avant de venir</h2>
+      </div>
+      <ul class="badges col-large" style="margin-top: var(--u)">
+        {regles.map((r, i) => (
+          <li class={`badge ${r.placeholder ? 'badge--illustratif' : 'is-ok'}`} data-reveal="up" data-delay={String(i * 0.06)}>{r.texte}{r.placeholder ? ' (illustratif)' : ''}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-label="Accès">
+    <Houle fill="eau" />
+    <div class="wrap"><Acces /></div>
+  </section>
+
+  <section class="sec sec--ciel sec--fin" aria-labelledby="t-resa">
+    <Houle fill="ciel" />
+    <div class="wrap resa">
+      <div>
+        <span class="eyebrow mono">Réserver</span>
+        <h2 id="t-resa" style="font-size: var(--t-xl)" data-split="words">Une table, du mardi au samedi</h2>
+        <p class="muted" style="margin-top: calc(var(--u) * 2); max-width: 44ch">En ligne via {site.reservation.outil}, ou par téléphone.</p>
+        <div class="actions"><a class="btn btn--plein btn--large" href={site.reservation.url} rel="noopener" data-magnetic="0.15">Réserver sur {site.reservation.outil}</a></div>
+      </div>
+      <div class="stack" style="padding-top: calc(var(--u) * 4)">
+        <p class="mono muted">Téléphone</p>
+        <p class="resa__tel"><a href={`tel:${site.telephone.replace(/\s+/g, '')}`}>{site.telephone}</a></p>
+        <p><a class="link flèche" href={u('/reservation/')}>Toutes les façons de réserver</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

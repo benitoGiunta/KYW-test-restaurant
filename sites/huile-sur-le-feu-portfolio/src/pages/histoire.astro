@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const salle = photoDe('salle');
+const oliveraie = photoDe('oliveraie');
+const facade = photoDe('facade');
+const portrait = photoDe('portrait-homme');
+const branche = photoDe('branche-olivier');
+const etapes = [
+  { quand: 'Les Pouilles', quoi: "Giuseppe Santamaria y grandit, entre oliviers et table de famille." },
+  { quand: '2005', quoi: "Ouverture de la maison rue de Marchovelette, à Namur (date du site du restaurant ; les annuaires en donnent d'autres)." },
+  { quand: 'Aujourd’hui', quoi: "Une cuisine ouverte sur la salle, des pâtes fraîches maison et une boutique d'huiles Oliviers & Co dans le même lieu." },
+];
+---
+<Base title="La maison" description={`L'histoire de ${site.nom} à Namur : Giuseppe Santamaria, les Pouilles, l'huile d'olive comme point de départ de chaque plat.`}>
+  <section class="hero hero--texte" aria-labelledby="t-histoire">
+    <div class="wrap hero__bas">
+      <span class="eyebrow mono" data-reveal="fade" data-intro>La maison</span>
+      <h1 id="t-histoire" style="font-size: var(--t-xl)" data-split="words" data-intro>Des Pouilles à Namur, l'huile d'abord</h1>
+      <p class="lead" style="margin-top: calc(var(--u) * 3)">{site.histoire[0]}</p>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-label="La salle">
+    <Houle fill="eau" />
+    <div class="wrap paire">
+      <figure class="media media--bord" data-reveal="clip" data-cursor="Voir">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+      </figure>
+      <div class="prose">
+        <span class="eyebrow mono">La cuisine et la salle</span>
+        <p>{site.histoire[1]}</p>
+        <p>{site.histoire[2]}</p>
+        <p>{site.histoire[3]}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel" aria-labelledby="t-chrono">
+    <Houle fill="ciel" />
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <span class="eyebrow mono">Repères</span>
+        <h2 id="t-chrono" style="font-size: var(--t-l); font-weight: 500" data-split="words">Trois repères</h2>
+      </div>
+      <ol class="chrono col-large" data-reveal="up">
+        {etapes.map((e) => <li><span class="mono muted">{e.quand}</span><span>{e.quoi}</span></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec sec--eau" aria-labelledby="t-equipe">
+    <Houle fill="eau" />
+    <div class="wrap">
+      <span class="eyebrow mono">La maison</span>
+      <h2 id="t-equipe" style="font-size: var(--t-l); font-weight: 500; margin-bottom: calc(var(--u) * 4)" data-split="words">Celui qui a ouvert la porte</h2>
+      <ul class="equipe" style="list-style: none; padding: 0">
+        {site.equipe.map((m) => (
+          <li data-reveal="up">
+            <div class="media media--vide" aria-hidden="true">{m.nom[0]}</div>
+            <h3>{m.nom}</h3>
+            <p class="muted">{m.role}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--ciel" aria-labelledby="t-valeurs">
+    <Houle fill="ciel" />
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <span class="eyebrow mono">Ce qui nous anime</span>
+        <h2 id="t-valeurs" style="font-size: var(--t-l); font-weight: 500" data-split="words">Simple, fraîche, huilée</h2>
+        <ul class="badges" style="margin-top: calc(var(--u) * 3)">{site.valeurs.map((v) => <li class="badge is-ok">{v}</li>)}</ul>
+      </div>
+      <div class="col-droite">
+        {site.avis.map((a) => (
+          <blockquote class="avis" style="margin-bottom: calc(var(--u) * 3)" data-reveal="fade">
+            <p>« {a.texte} »</p>
+            <cite>{a.auteur}, {a.source}, {a.date.slice(0, 4)}</cite>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--eau sec--fin" aria-label="En images">
+    <Houle fill="eau" />
+    <div class="wrap">
+      <div class="galerie">
+        {[oliveraie, facade, portrait, branche].map((p) => (
+          <figure class="media" data-reveal="clip" data-cursor="Voir">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>

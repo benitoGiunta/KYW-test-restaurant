@@ -13,3 +13,4 @@ Un gabarit par ligne, les restaurants qui l ont reçu en variante portfolio (pou
 | braise | grill-des-amis |
 | affiche | makimono |
 | nocturne | pepite |
+| maree | huile-sur-le-feu |

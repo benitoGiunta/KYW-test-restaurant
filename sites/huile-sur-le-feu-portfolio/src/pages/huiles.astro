@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Houle from '../components/Houle.astro';
+import { site, huiles, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const fond = photoDe('detail-presse-huile');
+const plateau = photoDe('bruschette-assiette');
+---
+<Base title="Les huiles d'olive" description={`Chez ${site.nom}, chaque plat reçoit son huile d'olive : truffe blanche, persil plat, mandarine, piment, menthe, ail. Huiles Oliviers & Co.`} theme="sombre">
+  <section class="hero hero--page" data-hero aria-labelledby="t-huiles">
+    <div class="hero__media" data-hero-media>
+      <img src={asset(fond.src)} alt={fond.alt} width={fond.largeur} height={fond.hauteur} fetchpriority="high" decoding="async" data-critical />
+    </div>
+    <div class="hero__bas">
+      <div class="wrap">
+        <span class="eyebrow mono" style="color: inherit">Les huiles</span>
+        <h1 id="t-huiles" style="font-size: var(--t-xl); max-width: 14ch" data-fit-off>L'huile d'abord, le plat ensuite</h1>
+      </div>
+    </div>
+    <svg class="hero__sep" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path data-houle d="M0,40 L1440,40 L1440,80 L0,80 Z" /></svg>
+  </section>
+
+  <section class="sec sec--ciel" aria-label="Les huiles de la maison">
+    <div class="wrap grid12">
+      <div class="col-texte">
+        <p class="lead">Ici, l'huile d'olive est le point de départ d'un plat, pas la touche finale. Les huiles viennent d'Oliviers & Co.</p>
+      </div>
+      <div class="col-large">
+        <ol class="index" data-reveal="up">
+          {huiles.map((h, i) => (
+            <li>
+              <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
+              <span class="index__nom">{h.libelle}<span class="index__desc">{h.plat ?? "huile de la maison (association avec un plat à confirmer)"}</span></span>
+              <span class="index__prix"></span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--eau sec--fin" aria-label="À table">
+    <Houle fill="eau" />
+    <div class="wrap paire paire--inv">
+      <figure class="media" data-reveal="clip" data-cursor="Voir">
+        <img src={asset(plateau.src)} alt={plateau.alt} width={plateau.largeur} height={plateau.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        <figcaption class="mono">Bruschette et légumes grillés · photo du restaurant</figcaption>
+      </figure>
+      <div>
+        <span class="eyebrow mono">À table</span>
+        <h2 style="font-size: var(--t-l); font-weight: 500" data-split="words">Goûter, puis emporter le flacon</h2>
+        <p class="muted" style="margin-top: calc(var(--u) * 2)">Les huiles du restaurant se retrouvent sur les étagères de la boutique, dans le même lieu.</p>
+        <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver</a><a class="btn" href={u('/boutique/')}>La boutique</a></div>
+      </div>
+    </div>
+  </section>
+</Base>
