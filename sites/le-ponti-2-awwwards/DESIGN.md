@@ -52,3 +52,34 @@ Test de l'échange : A échoue chez un autre restaurant (le pont est le logo de 
 16. Une famille de section au plus par page : accueil (poster, énoncé, filmstrip, données, paire, pied).
 17. Hero en 3 s : nom, cuisine, CTA Réserver et Appeler dans le premier écran (rect : CTA à 710 px à 1440 x 900, 378 px à 390 x 844).
 18. Mobile 390 recomposé : `@media (max-width: 48rem)` de `site.css` ; strip `overflow-x` + `scroll-snap` pour les arches.
+
+### Phase 2 (mouvement, interactions)
+Décisions : pas de loader (composant `Loader.astro` supprimé, aucun `role="status"`), pas de GL, pas de follower de curseur (curseur natif seul). Pilote unique `src/motion/pont.ts` : variable « traversée » (progression de la page) + dérive de repos + pointeur.
+19. [x] Menu mobile : `Header.astro` (bouton « Menu » `aria-expanded`, `aria-controls="menu"`, `<dialog id="menu">` plein écran), `src/motion/menu.ts` (`showModal` : focus piégé et Échap natifs, `autofocus` sur le premier lien, focus rendu au bouton dans `onClose`). Mesure Playwright 390 px : ouvert, `aria-expanded=true`, focus « Accueil » ; après Échap fermé, focus sur le bouton.
+20. [x] Engine verbatim (`src/engine/`), `astro.ts`, `transition:persist="curtain"` (`Base.astro:73`), `transition:animate="none"` (`Base.astro:36`). Pas de `#gl` ni `#cursor` (décision).
+21. [x] Une horloge : `gsap.ticker` (`pont.ts` `tick`, `idle.ts`) ; grep `addEventListener('scroll')` et `requestAnimationFrame` dans `src/motion`, `src/components`, `src/pages` : aucun.
+22. [x] Code de page dans `onPage()` avec nettoyage (`pont.ts` : ticker retiré, IntersectionObserver déconnecté ; `menu.ts` : écouteurs retirés, dialog fermé).
+23. [x] Aucune CSS `transform` sur élément GSAP : figures `[data-arche]` (clip-path), `img` (GSAP seul), `.curtain__panel` (clip-path) ; les survols CSS utilisent `scale` sur des pseudo-éléments non animés par GSAP.
+24. [x] Module pilote avec `startIdle` (`pont.ts:63`) et pointeur (`idle.x` dévie la vitesse du tablier `pont.ts:33`, l'assiette du hero suit le pointeur `pont.ts:37`).
+25. [x] Loader décidé : aucun (restaurant, l'action est réserver ou lire la carte).
+26. [x] Transition du concept (`setup.ts`) : sortie 0,8 s, le bordeaux monte du bas avec un bord en arche (on s'engage sous le pont) ; entrée 0,8 s, le tablier se lève comme un pont-levis. `ease.inOut`.
+27. [x] Intro : accueil, le tablier du hero se trace de gauche à droite (`.hero__pont`, clip-path) et l'assiette se pose (scale 1,14 vers 1,06), titre, photo et CTA peints dès le premier frame ; pages intérieures, chapeau `data-intro data-reveal="fade"` (le h1 reste peint pour le LCP).
+28. [x] Épinglages : aucun pin ; photos collantes de la carte en `position: sticky` CSS. 404 épinglée par `data-state="0.5"` (le pont coupé à mi-chemin).
+29. [x] Repli statique : en mouvement réduit rien n'est caché (mesure : 0 élément `visibility: hidden` ou opacité 0 sur les 5 pages), arches ouvertes, pont immobile, filet de traversée seulement lié au défilement.
+30. [x] Copies décoratives : `.pied__mot` `aria-hidden`, aucun titre dupliqué.
+31. [x] Une famille d'easing (`ease.out`, `ease.inOut` de l'engine ; CSS `cubic-bezier(.87,0,.13,1)` équivalent expo.inOut pour les survols), durées : survols 0,45 à 0,6 s, lignes 1,2 s, arches 1,4 à 1,6 s, transitions 0,8 s ; stagger 60 ms (arches, liens du menu), 80 ms (lignes de l'engine).
+32. [x] Trois traitements dans le verbe « franchir » (`site.css` § PHASE 2) : CTA (la couche franchit le bouton, entre à gauche, sort à droite), liens et nav (le trait franchit le mot), arches et sommaire (le contour doré se double à l'intérieur de l'arche).
+33. [x] Survols sous `@media (hover: hover)`, mêmes états sur `:focus-visible`, `:active` présent ; en réduit les transitions passent à 0,01 ms mais l'état reste visible.
+34. [x] Liens texte soulignés au repos (`.lien` : filet doré 1 px, `background-size: 100% 1px`).
+35. [ ] Phase 3 (`report.json`).
+36. [x] `idleMotion` : le tablier du hero glisse (14 unités/s, environ 17 px/s à 1440) ; mesure : 56 843 octets de capture différents en 1,5 s à 1440×900 ; pont du hero dans le premier écran (823 à 879 px à 1440×900, 661 à 717 à 1280×720, 510 à 550 à 390×844). À confirmer par `report.json` en phase 3.
+37. [x] Curseur natif visible, rien ne dépend du survol au toucher (la carte et les arches sont des liens directs).
+38. [x] Pas de blur animé, pas de `box-shadow` au scroll, aucun `will-change`.
+39. [x] Réduit : `idle` à zéro, ticker du pont non ajouté, reveals ignorés par l'engine, transition en fondu court de l'engine ; confirmation `report.json` en phase 3.
+40. [x] GL sans objet, décision écrite (Concept Card, Théâtre).
+41. Sans objet (pas de GL).
+44. [x] Skip link premier élément du `body` (`Base.astro`), anneau de focus or ; sur la bande turquoise, anneau en encre (`.menu :focus-visible`).
+45. [ ] Phase 3.
+46. [x] Texte réel partout (SplitText sur `enonce`, `adresse`, groupes de la carte, `pied__mot`), aucun canvas.
+47. [x] Cibles : liens de nav, bouton Menu, CTA d'en-tête à 2,75 rem (44 px) ; CTA à 3 rem ; `.lien` en `inline-block` + `padding-block`. Mesure complète en phase 3.
+Finitions : `::selection` or sur encre, favicon SVG + `favicon-32.png` + `apple-touch-icon.png` (180 px, issus du SVG d'arches), pied de page avec pont qui glisse.

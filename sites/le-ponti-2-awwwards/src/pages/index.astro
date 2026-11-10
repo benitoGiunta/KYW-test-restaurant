@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
+import Pont from '../components/Pont.astro';
 import { u, prix } from '../lib/url';
 import { site, familles, creneaux, jours, menu } from '../data/site';
 const trois = [
@@ -21,10 +22,11 @@ const trois = [
       <p class="hero__heures petit">Du mardi au dimanche, midi et soir. Le lundi, le pont est levé.</p>
     </div>
     <figure class="arche hero__media"><Photo cle="pates" sizes="(min-width: 64rem) 36vw, 90vw" largeurs={[480, 800, 1100]} prioritaire position="40% 55%" /></figure>
+    <div class="hero__pont"><Pont id="pont-hero" /></div>
   </section>
 
   <section class="enonce" aria-labelledby="enonce">
-    <div class="wrap grille"><h2 class="enonce__texte" id="enonce">{familles.pizzas.n} pizzas, {familles.pates.n} pâtes, des escalopes de veau : trois arches pour <span class="it">traverser la carte.</span></h2></div>
+    <div class="wrap grille"><h2 class="enonce__texte" id="enonce" data-split="lines">{familles.pizzas.n} pizzas, {familles.pates.n} pâtes, des escalopes de veau : trois arches pour <span class="it">traverser la carte.</span></h2></div>
   </section>
 
   <section class="wrap arches" aria-labelledby="arches-t">
@@ -33,11 +35,11 @@ const trois = [
       <p class="util">Trois arches, une carte</p>
       <a class="lien" href={u('/carte/')}>Voir toute la carte</a>
     </div>
-    <ul class="arches__rang">
+    <ul class="arches__rang" data-arches>
       {trois.map((t) => (
         <li class="arches__item">
           <a href={u(`/carte/#${t.cle === 'escalopes' ? 'escalopes-de-veau-panees' : t.cle}`)} aria-label={`${t.titre}, ${t.prix}`}>
-            <figure class="arche"><Photo cle={t.photo} sizes="(min-width: 48rem) 30vw, 72vw" largeurs={[400, 700, 1000]} /></figure>
+            <figure class="arche" data-arche><Photo cle={t.photo} sizes="(min-width: 48rem) 30vw, 72vw" largeurs={[400, 700, 1000]} /></figure>
             <h3>{t.titre}</h3>
             <p>{t.texte}</p>
             <span class="arches__prix lien">{t.prix}</span>
@@ -54,16 +56,16 @@ const trois = [
         <p class="display" aria-label={`${menu.prix} euros`}>{menu.prix}<span aria-hidden="true">&nbsp;€</span></p>
         <p>Une entrée, un plat, un dessert : le pont en entier.</p>
       </div>
-      <ul class="menu__liste" id="menu-t" aria-label="Composition du menu">
+      <ul class="menu__liste" id="menu-t" data-reveal="up" aria-label="Composition du menu">
         {menu.services.map((s) => <li><h3>{s.titre}</h3><p>{s.texte}</p></li>)}
       </ul>
     </div>
   </section>
 
   <section class="wrap grille adresse" aria-labelledby="adresse-t">
-    <figure class="arche adresse__media"><Photo cle="facade" sizes="(min-width: 48rem) 36vw, 80vw" largeurs={[480, 800, 1100]} position="50% 35%" /></figure>
+    <figure class="arche adresse__media" data-arche><Photo cle="facade" sizes="(min-width: 48rem) 36vw, 80vw" largeurs={[480, 800, 1100]} position="50% 35%" /></figure>
     <div class="adresse__texte">
-      <h2 id="adresse-t">À Jambes, <span class="it">sous l’enseigne.</span></h2>
+      <h2 id="adresse-t" data-split="lines">À Jambes, <span class="it">sous l’enseigne.</span></h2>
       <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
       <ul class="heures" aria-label="Horaires">
         {jours.map((j) => j.ferme
@@ -71,7 +73,7 @@ const trois = [
           : <li><span>{j.jour}</span><span>{creneaux.midi} · {creneaux.soir}</span></li>)}
       </ul>
       <p class="petit">Terrasse lorsque la météo le permet.</p>
-      <p style="margin-top:1.5rem"><a class="lien" href={site.planUrl} rel="noopener noreferrer">Ouvrir le plan</a></p>
+      <p class="adresse__plan"><a class="lien" href={site.planUrl} rel="noopener noreferrer">Ouvrir le plan</a></p>
     </div>
   </section>
 </Base>

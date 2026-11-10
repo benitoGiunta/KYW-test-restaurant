@@ -11,7 +11,7 @@ let inv = 0;
 <Base page="carte" title="La carte" description="La carte du Ponti 2 à Jambes : entrées, pâtes, vingt pizzas, escalopes de veau, desserts maison et cocktails, avec les prix. Menu trois services à 40 €.">
   <section class="wrap page-tete">
     <h1>La carte</h1>
-    <p>Quatre rives pour traverser : des entrées au comptoir, avec tous les prix.</p>
+    <p data-reveal="fade" data-intro data-delay="0.2">Quatre rives pour traverser : des entrées au comptoir, avec tous les prix.</p>
   </section>
   <nav class="wrap sommaire" aria-label="Sections de la carte">
     {groupes.map((g) => <a href={`#${g.id}`}>{g.titre}<small>{g.categories.length > 1 ? `${g.categories.length} rubriques` : '1 rubrique'}</small></a>)}
@@ -20,14 +20,14 @@ let inv = 0;
   {groupes.map((g) => (
     <section class="groupe" id={g.id} aria-labelledby={`t-${g.id}`}>
       <div class="wrap">
-        <div class="groupe__tete"><h2 id={`t-${g.id}`}>{g.titre}</h2><p>{g.accroche}</p></div>
+        <div class="groupe__tete"><h2 id={`t-${g.id}`} data-split="lines">{g.titre}</h2><p>{g.accroche}</p></div>
         {g.categories.map((c) => {
           const cle = photoDe[c.id];
           const inverse = cle ? inv++ % 2 === 1 : false;
           const deux = !cle && c.lignes.length > 6;
           return (
             <div class:list={['cat', 'grille', cle && 'cat--photo', inverse && 'inverse', deux && 'cat--deux']} id={c.id}>
-              {cle && <figure class="arche cat__media"><Photo cle={cle} sizes="(min-width: 48rem) 30vw, 70vw" largeurs={[400, 700, 1000]} /></figure>}
+              {cle && <figure class="arche cat__media" data-arche><Photo cle={cle} sizes="(min-width: 48rem) 30vw, 70vw" largeurs={[400, 700, 1000]} /></figure>}
               <div class="cat__corps" style={cle ? undefined : 'grid-column: 1 / -1'}>
                 <div class="cat__titre"><h3>{c.titre}</h3>{c.note && <p class="petit">{c.note}</p>}</div>
                 <ul class="lignes">

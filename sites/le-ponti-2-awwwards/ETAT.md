@@ -1,19 +1,23 @@
-# ETAT · le-ponti-2 · awwwards · fin de phase 1
+# ETAT · le-ponti-2 · awwwards · fin de phase 2
 
 ## Fait
-- Concept « Le pont à trois arches », DESIGN.md (brief, concepts notés, Concept Card, système, checklist 1 à 18).
-- Scaffold Astro, engine verbatim (sans GL, sans loader), Base, Header, Footer (KywFooter), Pont, Photo, Marque.
-- Contenu : `src/data/site.ts`, `src/data/carte.ts` (99 lignes générées depuis donnees.json, textes inchangés).
-- Pages : `/`, `/carte/`, `/a-propos/`, `/reservation/`, 404. Favicon, og.png composé, photos dans `src/assets/photos/`.
-- Build OK (`pnpm build:site sites/le-ponti-2-awwwards`) ; mesures Playwright à 1440, 1280, 1024, 390 : aucun débordement horizontal, hero et CTA dans le premier écran.
+- Phase 1 : concept « Le pont à trois arches », DESIGN.md, scaffold, 5 pages, contenu réel, favicon, OG (voir historique git).
+- Phase 2 :
+  - Pilote `src/motion/pont.ts` (traversée = progression ; filet doré + arche sous l'en-tête ; tablier des ponts qui glisse au repos, accéléré par le défilement, dévié par le pointeur ; assiette du hero qui suit le pointeur ; signature `[data-arche]` : chaque photo s'ouvre en arche qui monte du sol, 60 ms entre arches d'une rangée).
+  - `src/motion/idle.ts` (copié de le-royal), `src/motion/menu.ts` (dialog plein écran bordeaux, ouverture en arche), `src/motion/setup.ts` (transition : arche qui monte / pont-levis, 0,8 s par sens).
+  - `Header.astro` : bouton Menu sous 48 rem, nav à liens `.nav__lien`, filet `[data-traversee]`. Pont du hero dans la section hero (premier écran à 1440×900, 1280×720, 390×844).
+  - Reveals : `data-split="lines"` (énoncé, adresse, groupes de la carte, mot du pied), `data-reveal` (menu, chapeaux des pages intérieures en intro).
+  - Survols « franchir » (CTA, liens, arches), `:focus-visible` et `:active`, `::selection`, favicons PNG 32 et 180, `Loader.astro` supprimé.
+  - Build OK (`scripts/q.sh build pnpm build:site sites/le-ponti-2-awwwards`). Contrôles Playwright : 0 erreur console, aucun débordement à 320/360/390 sur les 5 pages, repos mesuré, menu (focus, Échap, retour), réduit : 0 texte caché.
+- DESIGN.md : checklist 19 à 47 cochée avec preuve (35, 45 et la confirmation de 36, 39, 47 en phase 3).
 
-## Reste
-- Phase 2 : motion (arches qui s'ouvrent, rideau en arche, `setupMotion` vide, reveals `data-*`, hovers, repos du pont), pas de `data-split` posé.
-- Phase 3 : QA navigateur, captures mobiles de la carte et des autres pages (seules l'accueil desktop et les mesures ont été vues), axe, audit, RAPPORT.md, OG revérifiée, `pnpm index`.
-- La photo de façade (lazy) apparaissait vide sur une capture pleine page sans défilement : faux défaut connu, à revérifier après défilement.
-- Aucun commit de `dist/index.html` fait (pnpm index en fin de phase 3).
+## Reste (phase 3)
+- Shoot complet (agent captures), lecture de `report.json` : `hover.noHoverChange`, `idleMotion`/`idleAt`, `reduced.*`, `smallTargets`, contraste, axe, LCP.
+- Vérifier sur capture : l'arche de la traversée à x = 0 sous l'en-tête au chargement (voulu, point de départ), le motif du pont plus serré au téléphone (viewBox étiré, voulu : colonnade).
+- RAPPORT.md, OG revérifiée, `pnpm index`, commit de `dist/index.html`.
 
-## Décisions
-- Pas de loader, pas de GL (restaurant). Pas d'équipe ni d'histoire inventée : page « La maison » = faits du dossier. Lundi « le pont est levé » = copy du concept, vrai (fermé le lundi).
-- Facebook seul réseau. Photos 03 (texte incrusté) et logos non utilisés ; marque d'en-tête redessinée en SVG d'après le logo.
-- Contexte à confirmer : « Jambes » est de l'autre rive de la Meuse (non affirmé dans le site).
+## Décisions et pièges
+- Pas de loader, pas de GL, pas de follower de curseur.
+- Le h1 des pages n'a ni `data-split` ni `data-intro` (LCP) ; l'intro de l'accueil trace le pont du hero.
+- 404 : `data-state="0.5"` (pont coupé à mi-chemin).
+- Le menu plein écran se ferme au clic sur un lien (sinon le dialog modal passe au-dessus du rideau).

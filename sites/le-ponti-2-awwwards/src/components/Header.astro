@@ -1,16 +1,40 @@
 ---
 import { u } from '../lib/url';
+import { site } from '../data/site';
 import Marque from './Marque.astro';
 const { page = 'page' } = Astro.props;
 const cur = (p: string) => (page === p ? 'page' : undefined);
 ---
 <header class="entete">
   <div class="wrap entete__in">
-    <a class="marque" href={u('/')} aria-label="Le Ponti 2, accueil"><Marque /></a>
+    <a class="marque" href={u('/')}><Marque /></a>
     <nav class="nav" aria-label="Navigation principale">
-      <a href={u('/carte/')} aria-current={cur('carte')}>Carte</a>
-      <a href={u('/a-propos/')} aria-current={cur('apropos')}>La maison</a>
+      <a class="nav__lien" href={u('/carte/')} aria-current={cur('carte')}>Carte</a>
+      <a class="nav__lien" href={u('/a-propos/')} aria-current={cur('apropos')}>La maison</a>
       <a class="cta" href={u('/reservation/')} aria-current={cur('reservation')}>Réserver</a>
+      <button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button>
     </nav>
   </div>
+  <div class="traversee" data-traversee aria-hidden="true">
+    <span class="traversee__fil"></span>
+    <svg class="traversee__arche" viewBox="0 0 28 12" focusable="false"><path d="M2 12V8C2 2 26 2 26 8V12" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
+  </div>
 </header>
+<dialog id="menu" class="menu-plein" aria-label="Menu">
+  <div class="menu-plein__haut">
+    <span class="marque"><Marque /></span>
+    <button class="menu-bouton" type="button" data-menu-fermer>Fermer</button>
+  </div>
+  <nav class="menu-plein__nav" aria-label="Menu du site">
+    <ul>
+      <li><a class="menu__lien" autofocus href={u('/')} aria-current={cur('accueil')}>Accueil</a></li>
+      <li><a class="menu__lien" href={u('/carte/')} aria-current={cur('carte')}>La carte</a></li>
+      <li><a class="menu__lien" href={u('/a-propos/')} aria-current={cur('apropos')}>La maison</a></li>
+      <li><a class="menu__lien" href={u('/reservation/')} aria-current={cur('reservation')}>Réserver</a></li>
+    </ul>
+  </nav>
+  <div class="menu-plein__pied">
+    <a class="cta" href={site.telephone.href}>Appeler le <span class="nw">{site.telephone.lisible}</span></a>
+    <p class="petit">Du mardi au dimanche, midi et soir. Le lundi, le pont est levé.</p>
+  </div>
+</dialog>

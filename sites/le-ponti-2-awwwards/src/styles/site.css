@@ -18,14 +18,8 @@ h3 { font-size: var(--t-l); line-height: 1.02; letter-spacing: -0.02em; }
 .corps { max-width: 34rem; text-wrap: pretty; }
 .corps p + p { margin-top: 1em; }
 .util { font-size: var(--t-xs); letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; }
-.lien { border-bottom: 1px solid var(--c-accent); padding-bottom: 1px; transition: color .3s; }
-.lien:hover { color: var(--c-accent); }
 
 /* Boutons */
-.cta { display: inline-flex; align-items: center; gap: 0.7em; min-height: 3rem; padding: 0.7em 1.5em; border: 1px solid var(--c-accent); background: var(--c-accent); color: var(--c-on-plate); font-weight: 700; font-size: var(--t-s); letter-spacing: 0.06em; text-transform: uppercase; border-radius: 999px; transition: background .3s, color .3s; }
-.cta:hover { background: transparent; color: var(--c-accent); }
-.cta--fantome { background: transparent; color: var(--c-fg); border-color: var(--c-line); }
-.cta--fantome:hover { border-color: var(--c-accent); color: var(--c-accent); }
 
 /* Arche : seul gabarit de média arrondi */
 .arche { position: relative; overflow: clip; border-radius: var(--arche); background: var(--c-deep); margin: 0; }
@@ -38,10 +32,6 @@ h3 { font-size: var(--t-l); line-height: 1.02; letter-spacing: -0.02em; }
 .marque { display: inline-flex; align-items: center; gap: 0.6em; min-height: 2.75rem; font-family: var(--f-display); font-size: 1.5rem; letter-spacing: -0.02em; }
 .marque svg { width: 2.6rem; height: auto; color: var(--c-accent); }
 .nav { display: flex; align-items: center; gap: clamp(0.9rem, 2.2vw, 2.25rem); font-size: var(--t-s); }
-.nav a:not(.cta) { display: inline-flex; align-items: center; min-height: 2.75rem; position: relative; }
-.nav a[aria-current='page']:not(.cta) { color: var(--c-accent); }
-.nav a:not(.cta)::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.45rem; height: 1px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform .35s; }
-.nav a:not(.cta):hover::after, .nav a[aria-current='page']::after { transform: scaleX(1); }
 .nav .cta { min-height: 2.5rem; padding: 0.4em 1.1em; }
 main { padding-top: 4.25rem; }
 
@@ -114,8 +104,7 @@ main { padding-top: 4.25rem; }
 
 /* Carte */
 .sommaire { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); padding-bottom: calc(var(--u) * 5); }
-.sommaire a { display: flex; flex-direction: column; justify-content: end; align-items: center; text-align: center; min-height: 9rem; padding: 1rem 0.5rem; border: 1px solid var(--c-line); border-radius: var(--arche); font-family: var(--f-display); font-size: var(--t-m); line-height: 1.05; transition: border-color .3s, color .3s; }
-.sommaire a:hover { border-color: var(--c-accent); color: var(--c-accent); }
+.sommaire a { display: flex; flex-direction: column; justify-content: end; align-items: center; text-align: center; min-height: 9rem; padding: 1rem 0.5rem; border: 1px solid var(--c-line); border-radius: var(--arche); font-family: var(--f-display); font-size: var(--t-m); line-height: 1.05; position: relative; }
 .sommaire small { font-family: var(--f-body); font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.3rem; }
 .groupe { padding-block: calc(var(--u) * 6); border-top: 1px solid var(--c-line); scroll-margin-top: 4.5rem; }
 .groupe:nth-of-type(even) { background: var(--c-deep); }
@@ -176,7 +165,6 @@ main { padding-top: 4.25rem; }
 /* Mobile : recomposé */
 @media (max-width: 48rem) {
   .marque { font-size: 1.2rem; } .marque svg { width: 2rem; }
-  .nav { gap: 0.9rem; } .nav .cta { padding-inline: 0.8em; }
   .hero { padding-top: calc(var(--u) * 2); row-gap: calc(var(--u) * 3); }
   .hero__texte, .hero__media { grid-column: 1 / -1; grid-row: auto; }
   .hero__titre { font-size: calc((100vw - 2 * var(--gutter)) / 3.95); }
@@ -201,4 +189,97 @@ main { padding-top: 4.25rem; }
   .maison__bande { aspect-ratio: 4 / 3; }
   .resa__porte, .resa__infos { grid-column: 1 / -1; }
   .resa__porte { min-height: 22rem; }
+}
+
+/* ===================== PHASE 2 : interactions, états, finitions ===================== */
+/* Verbe « franchir » : tout retour de survol traverse d'un bord à l'autre (entre par la gauche, sort par la droite).
+   Trois traitements : CTA (le remplissage franchit le bouton), liens (le trait franchit le mot), arches (le contour
+   doré se double à l'intérieur de l'arche). Survol sous (hover: hover), même état au clavier. */
+::selection { background: var(--c-accent); color: var(--c-on-plate); }
+.split-line { padding-top: 0.16em; margin-top: -0.16em; }
+.menu :focus-visible { outline-color: var(--c-on-plate); }
+.adresse__plan { margin-top: 1.5rem; }
+
+/* 1. CTA : la couche franchit le bouton */
+.cta { position: relative; isolation: isolate; overflow: clip; display: inline-flex; align-items: center; justify-content: center; gap: 0.7em; min-height: 3rem; padding: 0.7em 1.5em; border: 1px solid var(--c-accent); background: var(--c-accent); color: var(--c-on-plate); font-weight: 700; font-size: var(--t-s); letter-spacing: 0.06em; text-transform: uppercase; border-radius: 999px; transition: color .45s cubic-bezier(.87, 0, .13, 1); }
+.cta::before { content: ''; position: absolute; inset: -1px; z-index: -1; background: var(--c-bg); scale: 0 1; transform-origin: right; transition: scale .5s cubic-bezier(.87, 0, .13, 1); }
+.cta--fantome { background: transparent; color: var(--c-fg); border-color: var(--c-line); }
+.cta--fantome::before { background: var(--c-accent); }
+.menu .cta::before, .carte-menu .cta::before { background: var(--c-fg); }
+.cta:active { scale: 0.97; }
+@media (hover: hover) {
+  .cta:hover::before { scale: 1 1; transform-origin: left; }
+  .cta:hover { color: var(--c-accent); }
+  .cta--fantome:hover { color: var(--c-on-plate); border-color: var(--c-accent); }
+  .menu .cta:hover, .carte-menu .cta:hover { color: var(--c-on-plate); }
+}
+.cta:focus-visible::before { scale: 1 1; transform-origin: left; }
+.cta:focus-visible { color: var(--c-accent); }
+.cta--fantome:focus-visible { color: var(--c-on-plate); }
+
+/* 2. Liens : soulignés au repos, le trait doré franchit le mot */
+.lien { display: inline-block; padding-block: 2px; background: linear-gradient(var(--c-accent), var(--c-accent)) 0 100% / 100% 1px no-repeat, linear-gradient(var(--c-fg), var(--c-fg)) 100% 100% / 0 2px no-repeat; transition: background-size .5s cubic-bezier(.87, 0, .13, 1), color .3s; }
+.lien:active { color: var(--c-accent); }
+@media (hover: hover) { .lien:hover, a:hover .lien { background-size: 100% 1px, 100% 2px; background-position: 0 100%, 0 100%; } }
+.lien:focus-visible, a:focus-visible .lien { background-size: 100% 1px, 100% 2px; background-position: 0 100%, 0 100%; }
+.nav__lien { display: inline-flex; align-items: center; min-height: 2.75rem; position: relative; }
+.nav__lien[aria-current='page'] { color: var(--c-accent); }
+.nav__lien::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.45rem; height: 1px; background: var(--c-accent); scale: 0 1; transform-origin: right; transition: scale .45s cubic-bezier(.87, 0, .13, 1); }
+.nav__lien[aria-current='page']::after { scale: 1 1; }
+@media (hover: hover) { .nav__lien:hover::after { scale: 1 1; transform-origin: left; } }
+.nav__lien:focus-visible::after { scale: 1 1; transform-origin: left; }
+.nav__lien:active { color: var(--c-accent); }
+.nav .cta { min-height: 2.75rem; padding: 0.4em 1.1em; }
+.kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
+
+/* 3. Arches : le contour doré se double à l'intérieur */
+.arches__item a { display: block; }
+.arches__item .arche::after, .sommaire a::after { content: ''; position: absolute; inset: 0; border: 1px solid var(--c-accent); border-radius: var(--arche); opacity: 0; scale: 1.04; transition: opacity .4s, scale .6s cubic-bezier(.87, 0, .13, 1); pointer-events: none; }
+.arches__item h3 { transition: color .4s; }
+@media (hover: hover) {
+  .arches__item a:hover .arche::after, .sommaire a:hover::after { opacity: 1; scale: 0.94; }
+  .arches__item a:hover h3, .sommaire a:hover { color: var(--c-accent); }
+}
+.arches__item a:focus-visible .arche::after, .sommaire a:focus-visible::after { opacity: 1; scale: 0.94; }
+.arches__item a:focus-visible h3 { color: var(--c-accent); }
+.arches__item a:active .arche::after, .sommaire a:active::after { scale: 0.9; }
+.sommaire::after { content: none; }
+.sommaire a::after { inset: 0.4rem; }
+
+/* La traversée : filet doré sous l'en-tête, l'arche avance avec la page */
+.entete { isolation: isolate; }
+.traversee { position: absolute; left: 0; right: 0; top: 100%; margin-top: -1px; height: 0.75rem; pointer-events: none; overflow: clip; }
+.traversee__fil { position: absolute; left: 0; top: 0; width: 100%; height: 1px; background: var(--c-accent); scale: 0 1; transform-origin: left; }
+.traversee__arche { position: absolute; left: 0; top: 0; width: 1.75rem; height: 0.75rem; color: var(--c-accent); }
+html:not(.js) .traversee { display: none; }
+
+/* Pont du hero (intro : le tablier se trace) */
+.hero { padding-bottom: 0; row-gap: calc(var(--u) * 1.5); }
+.hero__media { max-height: calc(100svh - 4.25rem - 3.5rem - var(--u) * 6); }
+.hero__pont { grid-column: 1 / -1; grid-row: 2; }
+.hero__pont .pont { margin: 0; height: 3.5rem; }
+.hero + .enonce { border-top: 0; }
+
+/* Bouton Menu (mobile) et menu plein écran */
+.menu-bouton { display: none; align-items: center; min-height: 2.75rem; min-width: 2.75rem; padding: 0 1rem; border: 1px solid var(--c-line); border-radius: 999px; font-size: var(--t-s); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; transition: border-color .3s; }
+@media (hover: hover) { .menu-bouton:hover { border-color: var(--c-accent); } }
+.menu-bouton:active { scale: 0.97; }
+.menu-plein { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0 var(--gutter) var(--gutter); border: 0; background: var(--c-curtain); color: var(--c-fg); display: none; flex-direction: column; overflow-y: auto; }
+.menu-plein[open] { display: flex; }
+.menu-plein::backdrop { background: var(--c-bg); }
+.menu-plein__haut { display: flex; justify-content: space-between; align-items: center; min-height: 4.25rem; border-bottom: 1px solid var(--c-line); }
+.menu-plein__nav { flex: 1; display: grid; align-content: center; padding-block: 2rem; }
+.menu-plein__nav li { overflow: clip; border-bottom: 1px solid var(--c-line); }
+.menu__lien { display: block; padding-block: 0.6rem; font-family: var(--f-display); font-size: clamp(2.5rem, 12vw, 4rem); line-height: 1.05; letter-spacing: -0.03em; }
+.menu__lien[aria-current='page'] { color: var(--c-accent); font-style: italic; }
+.menu__lien:active { color: var(--c-accent); }
+.menu-plein__pied { display: grid; gap: 1rem; justify-items: start; }
+.menu-plein__pied .cta::before { background: var(--c-fg); }
+
+@media (max-width: 48rem) {
+  .nav { gap: 0.6rem; }
+  .nav__lien { display: none; }
+  .menu-bouton { display: inline-flex; }
+  .nav .cta { min-height: 2.75rem; padding-inline: 1em; }
+  .hero__pont .pont { height: 2.5rem; }
 }
