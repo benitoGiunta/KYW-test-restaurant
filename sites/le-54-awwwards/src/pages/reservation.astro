@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import Plan from '../components/Plan.astro';
+import { site, horaires, creneaux, dernieresCommandes } from '../data/site';
+---
+<Base page="reservation" title="Réserver" description="Réserver une table au restaurant Le 54, rue de Longeau à Dave : téléphone, e-mail, horaires, parking en face, terrasse et accès PMR.">
+  <section class="entete wrap g12" aria-labelledby="h1">
+    <h1 class="display entete__titre" id="h1">Réserver</h1>
+    <p class="entete__lead">La réservation est souhaitée : la salle compte trente-quatre couverts.</p>
+    <div class="entete__bas actions">
+      <a class="cta" href={site.telephone.href}><span class="cta__txt">Appeler le <span class="nw">{site.telephone.lisible}</span></span></a>
+      <a class="cta cta--ghost" href={site.telephone2.href}><span class="cta__txt">Ou le <span class="nw">{site.telephone2.lisible}</span></span></a>
+      <a class="cta cta--ghost" href={`mailto:${site.email}`}><span class="cta__txt">Écrire un e-mail</span></a>
+      <a class="cta cta--ghost" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Page de contact du restaurant</span></a>
+    </div>
+  </section>
+
+  <section class="resa wrap g12" aria-label="Horaires et accès">
+    <div class="resa__bloc resa__horaires">
+      <h2>Horaires</h2>
+      <dl class="horaires">
+        {horaires.map((h) => (
+          <div>
+            <dt>{h.jour}</dt>
+            <dd class={h.midi || h.soir ? '' : 'ferme'}>
+              {h.midi || h.soir ? [h.midi && `midi, ${creneaux.midi}`, h.soir && `soir, ${creneaux.soir}`].filter(Boolean).join(' · ') : 'Fermé'}
+              {'aConfirmer' in h && ' (à confirmer)'}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <p class="plan-note">Dernières commandes à {dernieresCommandes.midi} le midi et à {dernieresCommandes.soir} le soir. Ouvert les jours fériés. Horaires d’après le site du restaurant.</p>
+    </div>
+    <div class="resa__bloc resa__sur">
+      <h2>Venir</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
+      <ul class="liste">
+        {site.pratique.map((p) => <li>{p}</li>)}
+        <li>Allergies adaptées si elles sont signalées à la réservation</li>
+      </ul>
+    </div>
+    <div class="resa__bloc resa__plan">
+      <Plan lit={2} />
+      <p class="plan-note">Plan illustratif de la salle : {site.couverts} couverts, dix tables.</p>
+    </div>
+
+    <div class="formu">
+      <h2 class="formu__titre display d-l">Écrire au restaurant</h2>
+      <form action={`mailto:${site.email}?subject=${encodeURIComponent('Demande de réservation')}`} method="post" enctype="text/plain">
+        <div class="champ"><label for="nom">Votre nom</label><input id="nom" name="Nom" type="text" autocomplete="name" /></div>
+        <div class="champ"><label for="couverts">Nombre de couverts</label><input id="couverts" name="Couverts" type="number" min="1" max="34" inputmode="numeric" /></div>
+        <div class="champ"><label for="date">Date souhaitée</label><input id="date" name="Date" type="date" /></div>
+        <div class="champ"><label for="allergies">Allergies à signaler</label><input id="allergies" name="Allergies" type="text" /></div>
+        <div class="champ champ--large"><label for="message">Message</label><textarea id="message" name="Message" rows="3"></textarea></div>
+        <button class="cta" type="submit"><span class="cta__txt">Ouvrir mon e-mail</span></button>
+        <p class="formu__aide">Ce bouton ouvre votre messagerie avec le message prérempli : rien n’est envoyé depuis cette page.</p>
+      </form>
+    </div>
+  </section>
+</Base>

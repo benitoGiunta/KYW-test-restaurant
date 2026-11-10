@@ -1,0 +1,26 @@
+---
+// Plan illustratif de la salle : 34 couverts = 7 tables de quatre et 3 tables de deux (disposition inventée, nombre réel).
+// `lit` : nombre de places allumées en accent (statique ici ; piloté par couverts.ts en phase 2).
+interface Props { lit?: number; classe?: string; titre?: string; mini?: boolean }
+const { lit = 0, classe = '', titre = 'Plan illustratif de la salle : trente-quatre couverts répartis sur dix tables.', mini = false } = Astro.props;
+const colX = [55, 135, 215, 295];
+const rowY = [55, 130, 205];
+// idx de case (rangée par rangée) → nombre de places ; absent = passage
+const cases: Record<number, number> = { 0: 4, 1: 4, 2: 4, 3: 4, 4: 4, 5: 4, 6: 2, 8: 4, 9: 2, 10: 2 };
+let n = 0;
+const tables = Object.entries(cases).map(([idx, places]) => {
+  const i = Number(idx);
+  const cx = colX[i % 4], cy = rowY[Math.floor(i / 4)];
+  const offs = places === 4 ? [[-17, -22], [17, -22], [-17, 22], [17, 22]] : [[0, -21], [0, 21]];
+  return { cx, cy, places, ronds: offs.map(([dx, dy]) => ({ x: cx + dx, y: cy + dy, n: ++n })) };
+});
+---
+<svg class={`plan ${classe}`} data-plan data-total={n} viewBox="0 0 350 260" role="img" aria-label={titre} xmlns="http://www.w3.org/2000/svg">
+  {!mini && <rect class="plan__salle" x="5" y="5" width="340" height="250" fill="none" />}
+  {tables.map((t) => (
+    <g class="plan__table">
+      <rect class="plan__nappe" x={t.cx - (t.places === 4 ? 13 : 9)} y={t.cy - 10} width={t.places === 4 ? 26 : 18} height="20" />
+      {t.ronds.map((r) => <circle class={`plan__place${r.n <= lit ? ' is-lit' : ''}`} data-n={r.n} cx={r.x} cy={r.y} r="7" />)}
+    </g>
+  ))}
+</svg>

@@ -1,0 +1,12 @@
+---
+import Photo from './Photo.astro';
+import type { CleePhoto } from '../lib/photos';
+interface Props { cles: [CleePhoto, CleePhoto, CleePhoto, CleePhoto, CleePhoto]; titre: string; note?: string }
+const { cles, titre, note } = Astro.props;
+const tailles = ['(min-width: 48rem) 34vw, 100vw', '(min-width: 48rem) 42vw, 100vw', '(min-width: 48rem) 26vw, 100vw', '(min-width: 48rem) 34vw, 100vw', '(min-width: 48rem) 34vw, 100vw'];
+---
+<section class="mur wrap g12" aria-labelledby="mur-titre">
+  <h2 class="mur__titre display d-l" id="mur-titre">{titre}</h2>
+  {cles.map((c, i) => <figure class={`m${i + 1}`}><Photo cle={c} sizes={tailles[i]} widths={[480, 800, 1200]} /></figure>)}
+  {note && <p class="mur__note">{note}</p>}
+</section>

@@ -1,0 +1,33 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site, creneaux } from '../data/site';
+const { page = 'page' } = Astro.props;
+const places = Array.from({ length: site.couverts }, (_, i) => i + 1);
+---
+<section class="pied" aria-label="Contact et horaires">
+  <div class="wrap pied__corps">
+    <div class="pied__registre" aria-hidden="true">{places.map(() => <i></i>)}</div>
+    <p class="pied__mot" aria-hidden="true">À votre table.</p>
+    <div class="pied__col">
+      <h2 class="pied__titre">Venir</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}<br /><span class="pied__doux">Parking en face</span></address>
+      <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Service</h2>
+      <p>Midi, {creneaux.midi}<br />Soir, {creneaux.soir}<br /><span class="pied__doux">Fermé le mardi et le mercredi</span></p>
+      {page !== 'reservation' && <p><a class="lien" href={u('/reservation/')}>Tous les horaires</a></p>}
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Contact</h2>
+      <p><a class="pied__tel" href={site.telephone.href}><span class="nw">{site.telephone.lisible}</span></a><br /><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
+      <ul class="pied__reseaux">
+        {site.reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+    <div class="pied__cta"><a class="cta cta--grand" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></div>
+    <p class="pied__colophon">{site.credit}. Polices : Zodiak (Indian Type Foundry, Fontshare) et Hanken Grotesk (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />

@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Mur from '../components/Mur.astro';
+import { u } from '../lib/url';
+import { formules, menuDuMoment, supplementsZarzuela, notesCarte, site } from '../data/site';
+---
+<Base page="carte" title="La carte" description="La carte du restaurant Le 54 à Dave : le menu du moment en 3 services à 48 € ou 4 services à 65 €, wagyu A5 et zarzuela en supplément.">
+  <section class="entete wrap g12" aria-labelledby="h1">
+    <h1 class="display entete__titre" id="h1">La carte</h1>
+    <p class="entete__lead">Le menu du moment, à choisir en trois ou en quatre services.</p>
+  </section>
+
+  <section class="carte-formules wrap g12" aria-label="Formules">
+    <dl class="chiffres">
+      {formules.map((f) => <div><dt>Menu en {f.nom}</dt><dd class="prix">{f.prix}&nbsp;€</dd></div>)}
+    </dl>
+  </section>
+
+  <section class="menu wrap" aria-label="Le menu du moment">
+    <ul class="index">
+      {menuDuMoment.map((p) => (
+        <li>
+          <h2 class="index__nom">{p.nom}</h2>
+          <p class="index__desc">{p.description}{'supplement' in p && <span class="supp prix">Supplément : {p.supplement}&nbsp;€</span>}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="notes wrap g12" aria-labelledby="notes-titre">
+    <h2 class="notes__titre display d-l" id="notes-titre">Suppléments et précisions</h2>
+    <dl>
+      {supplementsZarzuela.map((s) => <div><dt>Zarzuela {s.nom}</dt><dd class="prix">+&nbsp;{s.prix}&nbsp;€</dd></div>)}
+    </dl>
+    <ul>
+      {notesCarte.map((n) => <li>{n}</li>)}
+      <li><a class="lien" href={u('/reservation/')}>Réserver une table</a></li>
+    </ul>
+  </section>
+
+  <Mur titre="À l’assiette" cles={['saintJacques', 'tartare', 'bolsTruffe', 'bolNoir', 'assietteBlanche']} note="Vues d’archives fournies par le restaurant. Le menu change avec les saisons." />
+</Base>
