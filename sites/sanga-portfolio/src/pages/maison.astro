@@ -8,14 +8,13 @@ import { u, asset } from '../lib/url';
 const diptyque = ['/photos/ramen-chashu-gyoza.webp', '/photos/udon-tempura.webp'].map(photoDe);
 const dateFr = (d: string) => new Date(d + 'T12:00:00Z').toLocaleDateString('fr-BE', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
-<Base title="La maison" description={`${site.nom} à ${site.adresse.commune} : le premier restaurant de ramen de la ville, ses bouillons miso, shio et shoyu, ses udon, soba et donburi.`} preloads={[{ href: '/photos/gyoza-960.webp', media: '(max-width: 767px)' }, { href: '/photos/gyoza.webp', media: '(min-width: 768px)' }]}>
+<Base title="La maison" description={`${site.nom} à ${site.adresse.commune} : ambiance chaleureuse, ramen, udon, soba et donburi, sur place, à emporter ou livrés.`} preloads={[{ href: '/photos/gyoza-960.webp', media: '(max-width: 767px)' }, { href: '/photos/gyoza.webp', media: '(min-width: 768px)' }]}>
   <HeroPage photo="/photos/gyoza.webp" photoMobile="/photos/gyoza-960.webp" titre="La maison" phrase="Le premier restaurant de ramen à Namur, selon son site." />
 
   <section class="section section--v" aria-labelledby="bol-titre">
     <div class="wrap">
       <TitreV texte="Le bol" id="bol-titre" />
       <div>
-        <p class="chapeau chapeau--gauche">01</p>
         <div class="diptyque">
           {diptyque.map((p, i) => (
             <figure data-reveal="clip" data-delay={String(i * 0.15)}>
@@ -25,7 +24,7 @@ const dateFr = (d: string) => new Date(d + 'T12:00:00Z').toLocaleDateString('fr-
         </div>
         <div class="histoire__texte" data-reveal="up">
           <p>{site.nom} sert des soupes de nouilles japonaises dans une ambiance chaleureuse, rue Saint-Loup, à Namur.</p>
-          <p>La carte compte cinq ramen, de {site.prixRamen.min} à {site.prixRamen.max} : ramen simple, au poulet, au canard, chashu et negikara.</p>
+          <p>Au menu du bol : ramen simple, au poulet, au canard, chashu et negikara.</p>
         </div>
       </div>
     </div>
@@ -33,7 +32,6 @@ const dateFr = (d: string) => new Date(d + 'T12:00:00Z').toLocaleDateString('fr-
 
   <section class="section section--serre" aria-labelledby="bouillons-titre">
     <div class="wrap">
-      <p class="chapeau" data-reveal="fade" style="text-align: center">02</p>
       <h2 class="titre-centre" id="bouillons-titre" data-split="lines" style="text-align: center">Trois bouillons au choix</h2>
       <div class="formules">
         {site.bouillons.map((b, i) => (
@@ -48,9 +46,8 @@ const dateFr = (d: string) => new Date(d + 'T12:00:00Z').toLocaleDateString('fr-
 
   <section class="section section--serre" aria-labelledby="riz-titre">
     <div class="wrap colonne">
-      <p class="chapeau" data-reveal="fade">03</p>
       <h2 class="titre-centre" id="riz-titre" data-split="lines">Nouilles et riz</h2>
-      <p class="texte" data-reveal="up">Udon et soba, dont un soba végétarien à 12,50 €, et six donburi : du chashu-don à 16,50 € au yakiniku-don à 18,80 €, servis avec salade et miso ou soupe. En entrée, des gyoza grillés et de l’edamame à 6,00 € chacun.</p>
+      <p class="texte" data-reveal="up">Udon et soba, dont un soba végétarien à 12,50 €, et six donburi : du chashu-don à 16,50 € au yakiniku-don à 18,80 €, servis avec salade et miso ou soupe. En entrée, des gyoza grillés et de l’edamame à 6,00 € chacun.</p>
       <div class="actions actions--centre" data-reveal="up">
         <a class="btn btn--plein" href={u('/carte/')}>Voir la carte</a>
       </div>
@@ -59,12 +56,11 @@ const dateFr = (d: string) => new Date(d + 'T12:00:00Z').toLocaleDateString('fr-
 
   <section class="section section--serre" aria-labelledby="avis-titre">
     <div class="wrap">
-      <p class="chapeau" data-reveal="fade" style="text-align: center">04</p>
       <h2 class="titre-centre" id="avis-titre" data-split="lines" style="text-align: center">Ce qu’en disent les clients</h2>
       <div class="formules">
         {site.avis.map((a, i) => (
           <article class="formule" data-reveal="up" data-delay={String(i * 0.1)}>
-            <p>« {a.texte} »</p>
+            <p>« {a.texte} »</p>
             <p class="formule__prix">{a.auteur}</p>
             <p>{a.source}, {dateFr(a.date)}</p>
           </article>

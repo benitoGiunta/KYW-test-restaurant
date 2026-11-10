@@ -7,7 +7,7 @@ import { u } from '../lib/url';
 // Carte réelle du dossier : chaque catégorie est un chapitre numéroté ; les ramen se choisissent en trois bouillons.
 const sections = site.carte;
 ---
-<Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : entrées, ramen au bouillon miso, shio ou shoyu, udon, soba, donburi, divers et boissons, avec les prix.`} preloads={[{ href: '/photos/teriyaki-don-960.webp', media: '(max-width: 767px)' }, { href: '/photos/teriyaki-don.webp', media: '(min-width: 768px)' }]}>
+<Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : entrées, ramen au bouillon miso, shio ou shoyu, udon, soba, donburi, divers et boissons, avec les prix.`} preloads={[{ href: '/photos/teriyaki-don-960.webp', media: '(max-width: 767px)' }, { href: '/photos/teriyaki-don.webp', media: '(min-width: 768px)' }]}>
   <HeroPage photo="/photos/teriyaki-don.webp" photoMobile="/photos/teriyaki-don-960.webp" titre="La carte" phrase="Ramen, udon, soba et donburi. Des entrées aux boissons." />
 
   {sections.map((cat, k) => (
@@ -15,7 +15,6 @@ const sections = site.carte;
       <div class="wrap">
         <div class="menu-reel">
           <div class="menu-reel__entete">
-            <p class="chapeau" data-reveal="fade">{String(k + 1).padStart(2, '0')}</p>
             <h2 class="titre-centre" id={`cat-${k}`} data-split="lines">{cat.categorie}</h2>
             {cat.categorie === 'Ramen' && (
               <p class="menu-reel__sous" data-reveal="fade" data-delay="0.1">Chaque ramen se choisit en bouillon {site.bouillons.map((b) => b.nom.toLowerCase()).join(', ').replace(/, ([^,]*)$/, ' ou $1')}.</p>

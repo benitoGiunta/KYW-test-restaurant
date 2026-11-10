@@ -58,8 +58,8 @@ em { font-style: italic; }
 }
 
 /* En-tête : posé sur la page, encre sur ivoire et ivoire sur la photo (difference). Trait qui glisse au survol. */
-.header { position: absolute; inset: 0 0 auto 0; z-index: var(--z-header); color: var(--c-bg); }
-body:has(.page-404) .header { color: var(--c-fg); }
+.header { text-shadow: 0 0 0.9rem rgba(25, 23, 26, 0.55), 0 1px 2px rgba(25, 23, 26, 0.4); position: absolute; inset: 0 0 auto 0; z-index: var(--z-header); color: var(--c-bg); }
+body:has(.page-404) .header { color: var(--c-fg); text-shadow: none; }
 .header__inner { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem; padding: 1.1rem var(--gutter); }
 .header__brand { font-family: var(--f-display); font-weight: 500; font-size: 1.125rem; letter-spacing: 0.04em; padding-block: 0.2em; position: relative; }
 .header__heure { font-size: var(--t-xs); letter-spacing: 0.16em; text-transform: uppercase; display: flex; gap: 0.6em; font-variant-numeric: tabular-nums; }
@@ -78,7 +78,7 @@ body:has(.page-404) .header { color: var(--c-fg); }
 .hero { position: relative; min-height: 100svh; display: grid; place-items: center; color: var(--c-bg); isolation: isolate; overflow: clip; padding-block: 6rem 4rem; }
 .hero__photo { position: absolute; inset: 0 0 -9% 0; z-index: -2; }
 .hero__photo img { width: 100%; height: 100%; object-fit: cover; transform-origin: center; }
-.hero__voile { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(25, 23, 26, 0.78) 0%, rgba(25, 23, 26, 0.46) 22%, rgba(25, 23, 26, 0.48) 58%, rgba(25, 23, 26, 0.84) 100%); opacity: 1; }
+.hero__voile { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(25, 23, 26, 0.74) 0%, rgba(25, 23, 26, 0.12) 24%, rgba(25, 23, 26, 0.1) 66%, rgba(25, 23, 26, 0.78) 100%), radial-gradient(ellipse 46% 52% at 50% 50%, rgba(25, 23, 26, 0.6) 0%, rgba(25, 23, 26, 0.36) 60%, rgba(25, 23, 26, 0.12) 100%); opacity: 1; }
 .hero__contenu { display: grid; justify-items: center; text-align: center; gap: 1.5rem; }
 @media (min-width: 768px) {
   .hero__contenu { grid-template-columns: auto auto minmax(0, 30ch); grid-template-areas: 'trace nom phrase' 'trace nom lien'; align-items: center; justify-content: center; column-gap: clamp(1.5rem, 4vw, 4rem); row-gap: 1rem; text-align: left; justify-items: start; }
@@ -138,6 +138,9 @@ body:has(.page-404) .header { color: var(--c-fg); }
 .rouleau__bande { display: flex; align-items: end; gap: clamp(2rem, 5vw, 5rem); width: max-content; list-style: none; padding: 0 var(--gutter); margin: 0; }
 .plat { flex: 0 0 auto; width: 17rem; scroll-snap-align: start; display: grid; gap: 0.4rem; align-content: end; position: relative; padding-top: 1.5rem; }
 .plat--photo { width: 23rem; }
+.plat__grand { font-family: var(--f-display); font-size: clamp(6rem, 12svh, 9rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px var(--c-fg); opacity: 0.35; margin-bottom: 0.6rem; transition: opacity 0.6s, -webkit-text-stroke-color 0.6s; }
+.plat:hover .plat__grand, .plat.is-actif .plat__grand { opacity: 0.8; -webkit-text-stroke-color: var(--c-accent); }
+.plat:not(.plat--photo) .plat__num { display: none; }
 .plat__num { font-family: var(--f-display); font-size: var(--t-xs); letter-spacing: 0.2em; color: var(--c-accent); position: absolute; top: 0; left: 0; }
 .plat__photo { width: 100%; height: auto; max-height: min(30svh, 22rem); margin-bottom: 0.6rem; }
 .plat__photo image { transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1); transform-box: fill-box; transform-origin: center; }
@@ -231,7 +234,7 @@ body:has(.page-404) .header { color: var(--c-fg); }
 .plan__texte { font-family: var(--f-body); font-size: 12px; fill: var(--c-muted); font-style: italic; }
 .plan__texte--meuse { letter-spacing: 0.2em; text-transform: uppercase; font-style: normal; font-size: 10px; }
 .plan__texte--ici { fill: var(--c-fg); font-family: var(--f-display); font-style: normal; font-size: 13px; }
-.plan__texte--petit { font-size: 9px; }
+.plan__texte--petit { font-size: 13px; }
 .plan__legende { margin-top: 0.8rem; font-size: var(--t-xs); color: var(--c-muted); }
 .infos { display: grid; gap: calc(var(--u) * 2.5); }
 .infos h3 { font-family: var(--f-display); font-weight: 500; font-size: var(--t-s); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.5rem; }
