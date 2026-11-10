@@ -12,3 +12,4 @@ Un gabarit par ligne, les restaurants qui l ont reçu en variante portfolio (pou
 | ardoise | le-royal, partage, le-felicien |
 | braise | grill-des-amis |
 | affiche | makimono |
+| nocturne | pepite |
