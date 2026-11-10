@@ -65,3 +65,8 @@ Darkroom, colourway rouge : fond noir chaud (`--color-paper` oklch 12,5 % 0,008 
 - **Nav mobile** : `<button popovertarget>` et `<nav popover>` sous 60rem, ouverture par transition `opacity` + `translate` (`@starting-style`), Échap et clic extérieur ferment, le focus revient au bouton, `aria-expanded` suivi par l'événement `toggle`, fermeture automatique si la fenêtre repasse au bureau. « Réserver » reste dans la barre (contour, 44 px).
 - **Mouvement** : caractère still. Un seul geste, le réglage lent de la photo du hero (`scale` 1,06 à 1 en 1,8 s), désactivé en mouvement réduit. Défilement doux seulement hors mouvement réduit.
 - **États** : jour courant des horaires par surface, filet rouge et mot « aujourd’hui » (pas la couleur seule) ; index de la carte avec entrée courante `aria-current="true"` (IntersectionObserver, sans effet si le script manque).
+
+## Passe 3 (QA)
+- 16 · sloplint `--render` sur 7 URL : 0 FAIL, 0 REFLEX (`.logs/gda-sloplint4.log`).
+- 25 · contraste mesuré, tous les couples ≥ 4,5:1 (RAPPORT.md § 4).
+- 12, 42, 44 · pli : hero des pages intérieures ≤ 900 px à 1440, texte et photo à 96 px.
