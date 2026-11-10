@@ -194,10 +194,11 @@ export const horaireTexte = (h: Horaire) =>
   h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé';
 
 /** Jours consécutifs aux mêmes horaires regroupés (« lundi au mercredi ») : un créneau écrit une fois par groupe. */
+const maj = (t: string) => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase().replace(/^(.)/, (c) => c);
 export const horairesGroupes = (r: Restaurant = site) => {
   const g: { jours: string; texte: string }[] = [];
   let debut = '', fin = '', texte = '', n = 0;
-  const pousser = () => { if (debut) g.push({ jours: n === 1 ? debut : `${debut} ${n === 2 ? 'et' : 'au'} ${fin}`, texte }); };
+  const pousser = () => { if (debut) g.push({ jours: maj(n === 1 ? debut : `${debut} ${n === 2 ? 'et' : 'au'} ${fin.toLowerCase()}`), texte }); };
   for (const h of r.horaires) {
     const t = horaireTexte(h);
     if (debut && t === texte) { fin = h.jour; n++; continue; }

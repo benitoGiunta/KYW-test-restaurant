@@ -1,4 +1,8 @@
-# ETAT : sanga-portfolio, fin de la phase 2 (motion, signature, interactions)
+# ETAT : sanga-portfolio, fin de la phase 3 (QA faite, build OK, RAPPORT.md écrit)
+
+Phase 3 : planches lues, une correction (horaires « Mardi au dimanche »), rebuild OK. Reste : `pnpm index`, commit, push (publication).
+
+## Historique phase 2
 
 ## Fait (phase 2)
 - Rouleau : scène épinglée à 100 svh pile (bande entière visible à 1280x720 et 1440x900, mesuré), plat actif en
