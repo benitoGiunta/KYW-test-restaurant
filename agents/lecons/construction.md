@@ -207,3 +207,4 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 
 ## 2026-11-10 · pepite · variante legacy (phase 1)
 - `grep '[—–]'` sur du HTML UTF-8 donne de faux positifs (« ’ » partage des octets avec ces tirets en locale C) : compter avec `python3` ou `grep -P` en UTF-8. Les lignes `waive` exigent trois champs (gate, garde, raison) séparés par « · », sinon sloplint les ignore.
+- 2026-11-10 · pepite · portfolio (phase 2) : un gabarit à volets photo (nocturne) laisse la nav blanche sur une photo claire (vitrine) : voile dégradé en `.header::before` plus volet assombri ; `--t-mega` mobile à 15 vw rogne un mot de 6 capitales Panchang : 11,4 vw. Un contrôle de formulaire qui affiche une heure de fermeture illustrative viole la règle « jamais affichée » : n'exposer que l'ouverture. Réécrire les `:hover` en `@media (hover: hover)` par script sur les seules règles d'une ligne.

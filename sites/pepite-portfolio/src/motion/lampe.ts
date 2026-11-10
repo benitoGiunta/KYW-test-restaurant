@@ -7,6 +7,7 @@ import { isTouch, prefersReducedMotion } from '../engine';
 
 const R = 260;
 const AMBRE = '226, 154, 98';
+const CHAUD = '255, 214, 160'; // coeur de la flamme, plus clair que le cuivre
 let actif = false;
 let items = new Set<HTMLElement>();
 let visibles = new Set<HTMLElement>();
@@ -92,7 +93,12 @@ export function initLampe() {
     const dx = cible.x - pos.x, dy = cible.y - pos.y;
     const dp = presenceCible - presence;
     t += delta / 1000;
-    const respire = 1 + Math.sin(t * (Math.PI * 2) / 5) * 0.023; // ± 6 px sur 260
+    // Flamme de bougie : trois sinus incommensurables (courant d'air irrégulier) autour du souffle lent de 5 s,
+    // plus une dérive du coeur ; amplitude ± 3 % du rayon et ± 7 % d'intensité, jamais de clignotement franc.
+    const souffle = Math.sin(t * (Math.PI * 2) / 5) * 0.023;
+    const vacille = Math.sin(t * 7.3) * 0.5 + Math.sin(t * 11.9 + 1.7) * 0.3 + Math.sin(t * 3.1 + 0.4) * 0.2;
+    const respire = 1 + souffle + vacille * 0.012;
+    const lueur = 1 + vacille * 0.07;
     const a = allume.v * presence;
     if (Math.abs(dx) < 0.05 && Math.abs(dy) < 0.05 && Math.abs(dp) < 0.002 && !dirty && a === 0) return;
     pos.x += dx * k; pos.y += dy * k; presence += dp * k;
@@ -111,8 +117,9 @@ export function initLampe() {
     if (a <= 0.001) return;
     const r = R * respire;
     const grad = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, r);
-    grad.addColorStop(0, `rgba(${AMBRE}, ${0.55 * a})`);
-    grad.addColorStop(0.45, `rgba(${AMBRE}, ${0.2 * a})`);
+    grad.addColorStop(0, `rgba(${CHAUD}, ${Math.min(1, 0.5 * a * lueur)})`);
+    grad.addColorStop(0.12, `rgba(${AMBRE}, ${Math.min(1, 0.55 * a * lueur)})`);
+    grad.addColorStop(0.45, `rgba(${AMBRE}, ${0.2 * a * lueur})`);
     grad.addColorStop(1, `rgba(${AMBRE}, 0)`);
     ctx.fillStyle = grad;
     ctx.fillRect(pos.x - r, pos.y - r, r * 2, r * 2);

@@ -31,6 +31,7 @@ const creneaux = JSON.stringify(site.horaires.map((h) => ({ jour: h.jour, crenea
       <div class="actions" style="margin-top: 0">
         <button class="btn btn--ambre" type="submit">Ouvrir {site.reservation.outil}</button>
       </div>
+      <p class="form__retour" role="status" aria-live="polite" data-retour></p>
     </form>
   </section>
 
@@ -65,22 +66,34 @@ const creneaux = JSON.stringify(site.horaires.map((h) => ({ jour: h.jour, crenea
     const aide = form.querySelector<HTMLElement>('#heure-aide')!;
     const h = (s: string) => s.replace(':00', 'h').replace(':', 'h');
     const verifier = () => {
+      aide.classList.remove('is-erreur');
       heure.setCustomValidity('');
       aide.textContent = '';
       if (!date.value) return;
       const [a, mo, j] = date.value.split('-').map(Number);
       const jour = jours[new Date(Date.UTC(a, mo - 1, j)).getUTCDay()];
       const cr = horaires.find((x) => x.jour === jour)?.creneaux ?? [];
-      if (!cr.length) { const msg = `Le restaurant est fermé le ${jour}.`; aide.textContent = msg; date.setCustomValidity(msg); return; }
+      if (!cr.length) { const msg = `Le restaurant est fermé le ${jour}.`; aide.textContent = msg; date.setCustomValidity(msg); aide.classList.add('is-erreur'); return; }
       date.setCustomValidity('');
-      aide.textContent = `Le ${jour} : ${cr.map((c) => `${h(c.ouverture)} à ${h(c.fermeture)}`).join(' ou ')}.`;
-      if (heure.value && !cr.some((c) => heure.value >= c.ouverture && heure.value <= c.fermeture)) {
-        heure.setCustomValidity(`Choisissez une heure d'arrivée ${cr.map((c) => `entre ${h(c.ouverture)} et ${h(c.fermeture)}`).join(' ou ')}.`);
+      aide.textContent = `Le ${jour} : cave à manger dès ${cr.map((c) => h(c.ouverture)).join(' ou dès ')}.`;
+      if (heure.value && !cr.some((c) => heure.value >= c.ouverture)) {
+        aide.classList.add('is-erreur');
+        heure.setCustomValidity(`Choisissez une heure d'arrivée dès ${cr.map((c) => h(c.ouverture)).join(' ou dès ')}.`);
       }
     };
-    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    const retour = form.querySelector<HTMLElement>('[data-retour]')!;
+    const bouton = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    let minuterie = 0;
+    const go = (e: SubmitEvent) => {
+      e.preventDefault();
+      if (bouton.getAttribute('aria-disabled') === 'true') return;
+      window.open(form.action, '_blank', 'noopener');
+      bouton.setAttribute('aria-disabled', 'true');
+      retour.textContent = 'La page de réservation s\u2019ouvre dans un nouvel onglet.';
+      minuterie = window.setTimeout(() => { bouton.removeAttribute('aria-disabled'); retour.textContent = ''; }, 5000);
+    };
     date.addEventListener('input', verifier); heure.addEventListener('input', verifier);
     form.addEventListener('submit', go);
-    return () => { form.removeEventListener('submit', go); date.removeEventListener('input', verifier); heure.removeEventListener('input', verifier); };
+    return () => { clearTimeout(minuterie); form.removeEventListener('submit', go); date.removeEventListener('input', verifier); heure.removeEventListener('input', verifier); };
   });
 </script>

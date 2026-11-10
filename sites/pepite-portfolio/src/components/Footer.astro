@@ -3,6 +3,14 @@
 import KywFooter from '@kyw/footer';
 import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
 import { u } from '../lib/url';
+// Jours consécutifs au texte identique regroupés (« lundi au mercredi ») : le pied ne répète pas la liste de la page.
+const groupes: { jours: string[]; texte: string }[] = [];
+for (const h of site.horaires) {
+  const t = horaireTexte(h);
+  const g = groupes.at(-1);
+  if (g && g.texte === t) g.jours.push(h.jour); else groupes.push({ jours: [h.jour], texte: t });
+}
+const etiquette = (j: string[]) => (j.length === 1 ? j[0] : j.length === 2 ? `${j[0]} et ${j[1]}` : `${j[0]} au ${j.at(-1)}`);
 ---
 <footer class="footer">
   <p class="footer__nom tube" aria-hidden="true">{site.nom}</p>
@@ -16,7 +24,7 @@ import { u } from '../lib/url';
     <div>
       <p class="meta">Horaires</p>
       <dl class="horaires">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        {groupes.map((g) => <><dt>{etiquette(g.jours)}</dt><dd>{g.texte}</dd></>)}
       </dl>
     </div>
     <div class="stack">
