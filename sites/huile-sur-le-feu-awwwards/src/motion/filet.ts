@@ -55,9 +55,9 @@ function repos() {
   const phase = (idle.t % 6) / 6;
   const n = Math.floor(idle.t / 6);
   const gonfle = phase < 0.9 ? gsap.parseEase('sine.inOut')(phase / 0.9) : 1 - (phase - 0.9) / 0.1;
-  gsap.set(souffle, { scale: 1 + 0.22 * gonfle, x: idle.x * 8, y: idle.y * 4 + gonfle * 3 });
+  gsap.set(souffle, { scale: 1 + 0.9 * gonfle, x: idle.x * 8, y: idle.y * 4 + gonfle * 6 });
   if (n !== cycle) {
-    if (cycle >= 0 && chute) gsap.fromTo(chute, { y: 0, autoAlpha: 1, scale: 1 }, { y: 56, autoAlpha: 0, scale: 0.6, duration: 0.9, ease: ease.inOut });
+    if (cycle >= 0 && chute) gsap.fromTo(chute, { y: 0, autoAlpha: 1, scale: 1 }, { y: 90, autoAlpha: 0, scale: 0.8, duration: 0.9, ease: ease.inOut });
     cycle = n;
   }
 }

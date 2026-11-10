@@ -264,3 +264,9 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 - Les liens de texte en ligne (`a.link`) font 21 px de haut à 375 : prévoir `min-height: 44px` sous `(pointer: coarse)` dès la phase 2 (pas seulement pied et rail).
 - Le 404 des captures `shoot.mjs` est celui du serveur statique : ses violations axe (title, lang) ne concernent pas le site.
 - Playwright maison : `chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--no-sandbox'] })`.
+
+## 2026-11-10 · huile-sur-le-feu · variante awwwards (phase 3)
+- `shoot.mjs` teste `skipLinkFirst` avec `/skip|#main|#content/i` sur le texte du lien : un lien « Aller au contenu » donne un faux négatif. Le dire dans RAPPORT.md ou prévoir un texte contenant « skip » en `aria-label` n'aide pas (il lit `innerText`).
+- `idleMotion` se mesure en différence de pixels (seuil 0,05 %) : une goutte de 11 px qui gonfle de 22 % ne suffit pas ; viser un mouvement d'au moins ~300 px² ou un élément plus grand.
+- `shoot.mjs` complet dure 5 à 6 min bridé : le lancer avec `nohup` + `q.sh` et lire `report.json` après, jamais en avant-plan (timeout 120 s). `timeout` autour du shoot le tue sans report.
+- Ne jamais lancer le serveur en `&` dans la même commande que le shoot : la commande reste attachée et passe en arrière-plan.
