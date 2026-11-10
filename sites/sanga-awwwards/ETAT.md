@@ -1,4 +1,4 @@
-# ETAT · Sanga · variante awwwards · construction-2 (phase 2)
+# ETAT · Sanga · variante awwwards · construction-3 (phase 3)
 
 ## Fait (phase 1)
 - Concept 山河, système, scaffold Astro 5, engine sans GL, 5 pages, polices, favicon, OG : voir `DESIGN.md` points 1 à 18.
@@ -29,3 +29,8 @@
 ## Pièges
 - `--t-kanji` doit rester petit : à 34 vw le kanji passait à la ligne. Le hero en bureau est plafonné en `svh` (kanji et photo) pour garder les CTA dans l'écran.
 - Le niveau de l'eau se lit par `scrollY + innerHeight × 0,62 - haut du fleuve` : mesures refaites à chaque `ScrollTrigger` refresh et au redimensionnement.
+
+## Fait (phase 3)
+- QA sur preuves : axe, cibles tactiles et survols corrigés (voir RAPPORT.md), build passe, audit 0 FAIL / 1 WARN justifié.
+## Reste
+- Passe jury indépendante (critique neuf), relecture des contrastes à vérifier, confirmation client des données.

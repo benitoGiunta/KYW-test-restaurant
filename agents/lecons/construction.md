@@ -233,3 +233,5 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 - Pas d'outil Agent en session d'agent : la hero review se fait en auto-notation (`hero-review: self`), en lisant `review-hero.md` sur les quatre captures `--stage hero`.
 - Menu mobile Popover : bouton `popovertarget` suivi dans le DOM du `<nav popover>` (ordre de tabulation correct), `@starting-style` + `allow-discrete` pour la transition, un petit script ferme le panneau au clic sur un lien d'ancre ; ne pas mettre le bouton après l'action de la barre sans le garder adjacent.
 - 2026-11-10 · sanga · portfolio (phase 3) : `text-transform: capitalize` sur des jours groupés donne « Mardi Au Dimanche » ; capitaliser en code. Un shoot de page unique dépasse 120 s : utiliser un mini-script Playwright et lire le DOM.
+
+- (sanga-awwwards, phase 3) `shoot.mjs` calcule `skipLinkFirst` sur « skip|#main|#content » : un lien « Aller au contenu » donne false à tort. Un `aria-label` qui ne reprend pas tout le texte visible (kanji compris) déclenche `label-content-name-mismatch` : le retirer. Une page de 15 captures dépasse 120 s : lancer en tâche de fond.
