@@ -30,3 +30,7 @@
 - Fait : REVUE-1.md écrit (A_CORRIGER : 0 F0, 2 F1, 4 F2, 4 F3), captures et QA-revue1 réutilisées sans nouveau shoot, aucun serveur lancé.
 - Reste (réviseur) : F1-1 (phrase horaires inventée/fausse le samedi), F1-2 (bandeau vins vide), puis F2-1 à F2-4 et F3.
 - Hypothèse : liens externes non testés (pas de réseau) ; URL identiques à `site-actuel/page.html`.
+
+# Revue 2 (relecteur-site, passe 2)
+- Fait : REVUE-2.md (PUBLIABLE : 0 F0, 0 F1, 2 F2, 5 F3) ; F1-1, F1-2, F2-1 à F2-3 vérifiés ; F2-4 partiel (vide sous le portrait). Serveur 4751 tué.
+- Reste (optionnel) : Pied.astro `<footer>` en `<div>` (axe moderate), alignement du portrait, F3.
