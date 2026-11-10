@@ -25,7 +25,7 @@ const coupe = (d: string) => { const [a, ...r] = d.split(' · '); return /pièce
                 return (
                   <li class="ligne">
                     <span class="ligne__nom">{pl.nom}</span>
-                    <span class="ligne__desc">{pieces && <span class="ligne__pieces">{pieces}. </span>}{ing}</span>
+                    <span class="ligne__desc">{pieces && <span class="ligne__pieces">{pieces}. </span>}{ing}{pl.choix && <span class="ligne__choix">Au choix : {pl.choix.map((o, j) => <>{j > 0 && ' · '}<span class="ligne__opt">{o.nom} <span class="num">{o.prix}</span></span></>)}</span>}</span>
                     <span class="ligne__prix num">{pl.prix}</span>
                   </li>
                 );

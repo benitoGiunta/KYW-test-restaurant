@@ -7,7 +7,7 @@ import carteJson from './carte.json';
 export const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 export const NB = ' ';
 
-export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean }
+export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean; choix?: Option[] }
 export interface Categorie { categorie: string; note: string; plats: Plat[] }
 export interface Option { nom: string; prix: string | null }
 export interface Groupe { titre: string; note: string; options: Option[] }
@@ -46,7 +46,7 @@ export const horaires = [
 
 const c = carteJson as { carte: any[]; roll: Groupe[]; bowl: Groupe[] };
 const ap = (t: string) => t.replace(/(\p{L})'(\p{L})/gu, '$1’$2');
-const cat = (i: number): Categorie => ({ categorie: c.carte[i].categorie, note: ap(c.carte[i].note), plats: c.carte[i].plats.map((x: Plat) => ({ ...x, nom: ap(x.nom), description: ap(x.description).replace(/\s*Prix 11\.00[^)]*\)?\.?$/, '').replace(/\s*\(à confirmer\)\.?$/, '') })) });
+const cat = (i: number): Categorie => ({ categorie: c.carte[i].categorie, note: ap(c.carte[i].note) + (i === 0 ? '. Chaque roll « dès » existe au choix de la protéine : la protéine de la recette se remplace, et le prix dépend d’elle (liste sous chaque roll).' : ''), plats: c.carte[i].plats.map((x: Plat) => ({ ...x, nom: ap(x.nom), description: ap(x.description).replace(/\s*Prix 11\.00[^)]*\)?\.?$/, '').replace(/\s*\(à confirmer\)\.?$/, '') })) });
 export const panneaux: { id: string; titre: string; categories: Categorie[] }[] = [
   { id: 'rolls', titre: 'Rolls', categories: [cat(0)] },
   { id: 'nigiri', titre: 'Nigiri et poké', categories: [cat(1), cat(2)] },
