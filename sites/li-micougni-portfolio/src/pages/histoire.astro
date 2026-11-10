@@ -8,12 +8,6 @@ const g = guinguette;
 const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
 const galerie = ['/photos/salle-tables.webp', '/photos/salle-fenetres.webp', '/photos/grill-charbon.webp', '/photos/polaroids.webp', '/photos/plat-bol-viande.webp', '/photos/ardoise-logo.webp'].map(photoDe);
 const salle = photoDe('/photos/salle.webp');
-const faits = [
-  { objet: 'citron', titre: 'Local et de saison', texte: 'Des produits locaux et de saison, et une carte qui évolue régulièrement.' },
-  { objet: 'flamme', titre: 'Au charbon de bois', texte: 'Les grillades sont cuites au charbon de bois, les sauces sont faites maison.' },
-  { objet: 'ardoise', titre: 'À partager', texte: 'Des ardoises de charcuteries, de fromages ou de produits de la mer, pour deux.' },
-  { objet: 'parasol', titre: 'En terrasse', texte: 'Une cour privée de 30 couverts, ouverte toute l’année.' },
-] as const;
 const histoire = site.histoire;
 ---
 <Base title="La maison" description={`L'histoire de ${site.nom} à ${site.adresse.commune} : l'amitié de deux passionnés de l'horeca, des produits locaux et de saison, un nom wallon.`}>
@@ -37,21 +31,6 @@ const histoire = site.histoire;
         <Ornements />
         <h2 class="section__titre">Deux amis, <em>une table</em></h2>
         <div class="prose">{histoire.map((p) => <p>{p}</p>)}</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--blanc">
-    <div class="wrap">
-      <h2 class="section__titre">Ce qui fait <em>la maison</em></h2>
-      <div class="equipe">
-        {faits.map((f, i) => (
-          <article class="membre" data-reveal="up" data-delay={String(i * 0.08)}>
-            <div class="membre__sans" aria-hidden="true"><Objet id={f.objet} /></div>
-            <h3>{f.titre}</h3>
-            <p class="muted">{f.texte}</p>
-          </article>
-        ))}
       </div>
     </div>
   </section>

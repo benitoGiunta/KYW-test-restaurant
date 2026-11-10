@@ -6,6 +6,7 @@ import { site, guinguette, photoDe, horaireTexte, adresseLigne, itineraire } fro
 import { u, asset } from '../lib/url';
 const g = guinguette;
 const salle = photoDe('/photos/salle.webp');
+const grill = photoDe('/photos/grill-charbon.webp');
 const aLaUne = ['Les ardoises', 'Les entrées', 'Les grillades', 'Desserts'];
 const carteAccueil = aLaUne.map((n) => site.carte.find((c) => c.categorie.startsWith(n))!);
 const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
@@ -18,11 +19,15 @@ const [m1, m2] = g.manifeste.titre;
     <div class="hero__inner" data-hero-texte>
       <h1 class="hero__titre"><span>{g.heroTitre[0]}</span><span class="l2">{g.heroTitre[1]}</span></h1>
       <p class="hero__slogan">{g.slogan.texte}{g.slogan.placeholder && <span class="illu">exemple</span>}</p>
-      <p class="hero__adresse">{site.nom} · {adresseLigne()}</p>
+      <p class="hero__adresse">{adresseLigne()}</p>
       <div class="actions">
         <a class="btn btn--plein" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
         <a class="btn" href={u('/carte/')}>Voir la carte</a>
       </div>
+      <figure class="tirage hero__photo">
+        <img src={petite(grill.src)} alt={grill.alt} width="640" height="640" loading="eager" decoding="async" data-critical />
+        <figcaption>Le grill, dans la cour</figcaption>
+      </figure>
     </div>
     <div class="hero__zone" data-hero-zone>
       {g.objets.map((o, i) => (
@@ -42,7 +47,6 @@ const [m1, m2] = g.manifeste.titre;
       </figure>
       <div class="maison__texte">
         <Ornements />
-        <p class="meta">La maison</p>
         <h2 class="section__titre">Deux amis, <em>une table</em></h2>
         <div class="prose">
           <p>{site.histoire[0]}</p>
@@ -90,7 +94,6 @@ const [m1, m2] = g.manifeste.titre;
   <!-- Le menu : carte blanche -->
   <section class="section" id="menu">
     <div class="wrap">
-      <p class="meta" style="text-align:center">Le menu</p>
       <h2 class="section__titre" style="text-align:center">Ce qu'on <em>pose</em> sur la table</h2>
       <div class="carte" data-reveal="scale">
         <div class="carte__grille">
@@ -119,12 +122,10 @@ const [m1, m2] = g.manifeste.titre;
   <section class="section section--blanc avis" id="avis" data-avis>
     <p class="display avis__mot" aria-hidden="true" data-avis-mot>{g.motFaits}</p>
     <div class="wrap">
-      <p class="meta" style="text-align:center">La maison en quatre cartes</p>
       <h2 class="sr-only">La maison en quatre cartes</h2>
       <div class="avis__cartes">
         {g.faits.map((f) => (
           <div class="carte-avis" data-carte-avis style={`--r:${f.r}deg`}>
-            <span class="carte-avis__etiq">{f.etiquette}</span>
             <p>{f.texte}</p>
           </div>
         ))}
@@ -151,7 +152,6 @@ const [m1, m2] = g.manifeste.titre;
   <section class="section" id="horaires">
     <div class="wrap">
       <div class="hcarte">
-        <p class="meta">Horaires</p>
         <h2 class="section__titre" style="margin-bottom:0">Quand <em>venir</em></h2>
         <dl class="horaires">
           {site.horaires.map((h) => (
