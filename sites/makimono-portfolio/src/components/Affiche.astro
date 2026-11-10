@@ -1,0 +1,16 @@
+---
+// Une affiche : section d'une seule couleur (data-tone), collée par-dessus la précédente avec un bord dentelé.
+// `prev` est le ton de l'affiche du dessus : les dents reprennent sa couleur, comme une affiche déchirée.
+interface Props { tone: 'rouge' | 'jaune' | 'vert' | 'creme' | 'ink'; prev?: Props['tone']; plein?: boolean; id?: string; class?: string; label?: string }
+const { tone, prev, plein = false, id, class: cls = '', label } = Astro.props;
+const dents = 40;
+const pts = Array.from({ length: dents + 1 }, (_, i) => `${(i / dents) * 100},0 ${((i + 0.5) / dents) * 100},18`).join(' ');
+---
+<section id={id} class:list={['affiche', plein && 'affiche--plein', cls]} data-tone={tone} aria-labelledby={label}>
+  {prev && (
+    <svg class="affiche__dents" viewBox="0 0 100 18" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <polygon points={`0,0 ${pts} 100,0`} fill={`var(--${prev})`} />
+    </svg>
+  )}
+  <slot />
+</section>

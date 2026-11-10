@@ -1,0 +1,23 @@
+---
+// Grille bento de plats sur aplats : nom en capitales, prix énorme, description en capitales, badges.
+import type { Plat } from '../data/site';
+interface Props { plats: Plat[]; tones?: ('rouge' | 'jaune' | 'vert' | 'creme')[] }
+const { plats, tones = ['rouge', 'jaune', 'vert', 'jaune', 'vert', 'rouge'] } = Astro.props;
+---
+<ul class="bento" role="list" data-claque>
+  {plats.map((p, i) => (
+    <li class="bento__carte" data-tone={tones[i % tones.length]}>
+      <div>
+        <h3>{p.nom}</h3>
+        <p>{p.description}</p>
+      </div>
+      <div class="bento__bas">
+        <span class="bento__prix">{p.prix ?? 'menu'}</span>
+        <span class="badges">
+          {p.badges?.map((b) => <span class="badge">{b}</span>)}
+          {p.placeholder && <span class="badge badge--exemple">exemple</span>}
+        </span>
+      </div>
+    </li>
+  ))}
+</ul>

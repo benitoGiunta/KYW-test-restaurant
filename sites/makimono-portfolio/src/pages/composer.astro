@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import Affiche from '../components/Affiche.astro';
+import Plat from '../components/Plat.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const { roll, bowl } = site.composer;
+const NB = ' ';
+---
+<Base title="Composer" description={`Create.Your.Roll et Create.Your.Bowl chez ${site.nom} à ${site.adresse.commune} : choisissez la base, la protéine, les fillings, les toppings et les sauces.`} fin="vert">
+  <Affiche tone="rouge" plein label="titre">
+    <div class="wrap hero__grille">
+      <div>
+        <h1 id="titre" class="display display--mega affiche__titre" data-split="chars" data-intro>Composez</h1>
+        <p class="hero__baseline">Create.Your.Roll et Create.Your.Bowl : cinq choix, un prix qui s’additionne.</p>
+      </div>
+      <div class="hero__plat" data-reveal="up" data-intro data-delay="0.2" data-levite>
+        <Plat title="Un roll composé, dessiné en cinq couches" />
+      </div>
+    </div>
+  </Affiche>
+
+  <Affiche tone="creme" prev="rouge" label="roll-titre">
+    <div class="wrap stack" style="--u: calc(var(--gutter) * 2)">
+      <h2 id="roll-titre" class="display display--xl affiche__titre" data-split="words">Create.Your.Roll</h2>
+      <p class="lead">Base, protéine, fillings à 0,80{NB}€ pièce, toppings à 0,50{NB}€, sauces à 0,50{NB}€. Les prix de chaque choix s’additionnent.</p>
+      <div class="groupes">
+        {roll.map((g, i) => (
+          <section class="groupe" data-reveal="up">
+            <h3><span class="num">{String(i + 1).padStart(2, '0')}</span> {g.titre}{g.note && <small>{g.note}</small>}</h3>
+            <ul role="list">
+              {g.options.map((o) => <li><span>{o.nom}</span>{o.prix && <b>{o.prix}</b>}</li>)}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </div>
+  </Affiche>
+
+  <Affiche tone="jaune" prev="creme" label="bowl-titre">
+    <div class="wrap stack" style="--u: calc(var(--gutter) * 2)">
+      <h2 id="bowl-titre" class="display display--xl affiche__titre" data-split="words">Create.Your.Bowl</h2>
+      <p class="lead">Riz vinaigré à 5,50{NB}€, puis une protéine, des fillings à 1,50{NB}€, des toppings à 0,80{NB}€ et des sauces à 0,80{NB}€.</p>
+      <div class="groupes">
+        {bowl.map((g, i) => (
+          <section class="groupe" data-reveal="up">
+            <h3><span class="num">{String(i + 1).padStart(2, '0')}</span> {g.titre}{g.note && <small>{g.note}</small>}</h3>
+            <ul role="list">
+              {g.options.map((o) => <li><span>{o.nom}</span>{o.prix && <b>{o.prix}</b>}</li>)}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </div>
+  </Affiche>
+
+  <Affiche tone="vert" prev="jaune" label="cta-titre">
+    <div class="wrap">
+      <h2 id="cta-titre" class="display display--mega affiche__titre" data-split="chars">Pas d’idée ?</h2>
+      <p class="lead" style="margin-bottom: var(--gutter)">La Creative Box de 16 pièces, imaginée par le chef avec ces mêmes ingrédients, est à {site.menus[1].prix}.</p>
+      <div class="actions">
+        <a class="btn btn--primary" href={u('/commander/')}>Commander</a>
+        <a class="btn" href={u('/carte/')}>La carte</a>
+      </div>
+    </div>
+  </Affiche>
+</Base>

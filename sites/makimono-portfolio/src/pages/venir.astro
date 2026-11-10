@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Affiche from '../components/Affiche.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, adresseLigne, telHref, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const facade = photoDe('/photos/facade.webp');
+const salle = photoDe('/photos/salle-fenetres.webp');
+---
+<Base title="Venir" description={`Venir chez ${site.nom} : ${adresseLigne()}. Horaires, téléphone, e-mail et commande en ligne.`} fin="vert">
+  <Affiche tone="vert" plein label="titre">
+    <div class="wrap">
+      <h1 id="titre" class="display display--mega affiche__titre" data-split="chars" data-intro>Venir</h1>
+      <p class="hero__baseline">{adresseLigne()}. Midi et soir, sur place ou à emporter.</p>
+      <div class="actions hero__actions" data-reveal="up" data-intro data-delay="0.5">
+        <a class="btn btn--primary" href={telHref()}>{site.telephone}</a>
+        <a class="btn" href={`mailto:${site.email.valeur}`}>Écrire</a>
+        <a class="btn" href={u('/commander/')}>Commander</a>
+      </div>
+    </div>
+  </Affiche>
+
+  <Affiche tone="creme" prev="vert" label="salle-titre">
+    <div class="wrap colonnes">
+      <div>
+        <h2 id="salle-titre" class="display display--xl affiche__titre" data-split="words">La salle</h2>
+        <p class="muted">Tables en bois, grandes fenêtres, terrasse sur la rue. {site.adresse.repere}.</p>
+        <p class="muted" style="margin-top: var(--u)">Pas d’outil de réservation en ligne : pour une table, appelez le <a class="link" href={telHref()}>{site.telephone}</a>.</p>
+      </div>
+      <figure class="cadre" data-reveal="scale" style="transform: rotate(-2deg)">
+        <img src={asset(facade.src)} alt={facade.alt} width={facade.largeur} height={facade.hauteur} loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </Affiche>
+
+  <Affiche tone="jaune" prev="creme" label="horaires-titre">
+    <div class="wrap">
+      <h2 id="horaires-titre" class="display display--mega affiche__titre" data-split="chars">Horaires</h2>
+      <Horaires />
+    </div>
+  </Affiche>
+
+  <Affiche tone="vert" prev="jaune" label="visite-titre">
+    <div class="wrap visite">
+      <div>
+        <h2 id="visite-titre" class="ui affiche__chapeau">Adresse</h2>
+        <address class="visite__adresse" data-split="lines">{site.adresse.rue} {site.adresse.numero},<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <ul class="visite__liste" data-reveal="up">
+          <li><a class="link" href={telHref()}>{site.telephone}</a></li>
+          <li><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></li>
+          <li><a class="link" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(adresseLigne())}`} rel="noopener">Itinéraire</a></li>
+          {site.reseaux.map((r) => <li><a class="link" href={r.url} rel="noopener">{r.nom}</a></li>)}
+        </ul>
+      </div>
+      <figure class="cadre" data-reveal="scale">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </Affiche>
+</Base>

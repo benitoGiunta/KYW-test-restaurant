@@ -1,0 +1,172 @@
+---
+import Base from '../layouts/Base.astro';
+import Affiche from '../components/Affiche.astro';
+import Plat from '../components/Plat.astro';
+import Bento from '../components/Bento.astro';
+import Horaires from '../components/Horaires.astro';
+import Disque from '../components/Disque.astro';
+import { site, adresseLigne, telHref, photoDe, bentoAccueil } from '../data/site';
+import { u, asset } from '../lib/url';
+const marquee = ['Create.Your.Roll', 'Poké bowls', 'Nigiri flambés', ...site.menus.map((m) => `${m.nom} ${m.prix}`), 'Made with love'];
+const galerie = site.galerie.map((src, i) => ({ ...photoDe(src), num: String(i + 1).padStart(2, '0'), r: [-4, 3, -2, 4, -3, 2, -4, 3][i % 8] }));
+---
+<Base fin="vert">
+  <!-- 1. HERO AFFICHE (rouge) -->
+  <Affiche tone="rouge" class="hero" label="titre">
+    <div class="hero__grille">
+      <div>
+        <h1 id="titre" class="display hero__nom" data-split="chars" data-intro>
+          <span class="display--contour">{site.nomLignes[0]}</span>
+          <span>{site.nomLignes[1]}</span>
+        </h1>
+        <p class="hero__baseline">{site.baseline}</p>
+        <div class="actions hero__actions" data-reveal="up" data-intro data-delay="0.5">
+          <a class="btn btn--primary" href={u('/commander/')}>Commander</a>
+          <a class="btn" href={u('/carte/')}>La carte</a>
+        </div>
+      </div>
+      <div class="hero__plat" data-reveal="up" data-intro data-delay="0.2" data-levite>
+        <Plat title={`${site.signature.nom}, le plat signature dessiné en cinq couches`} />
+      </div>
+    </div>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__piste" data-marquee>
+        {marquee.map((m) => <span>{m}</span>)}
+        {marquee.map((m) => <span>{m}</span>)}
+      </div>
+    </div>
+  </Affiche>
+
+  <!-- 2. DÉFINITION (crème) -->
+  <Affiche tone="creme" prev="rouge" label="definition-titre">
+    <div class="wrap">
+      <h2 id="definition-titre" class="sr-only">Définition</h2>
+      <p class="definition" data-split="lines">
+        <span class="definition__mot">{site.definition.mot}</span> <span class="definition__pro">{site.definition.prononciation}</span> <span class="definition__nature">{site.definition.nature}</span>
+      </p>
+      <ol class="definition" data-reveal="up">
+        {site.definition.sens.map((s) => <li>{s}</li>)}
+      </ol>
+      {site.definition.placeholder && <p class="exemple" style="margin-top: var(--gutter)">Définition illustrative, à écrire avec le restaurant</p>}
+    </div>
+  </Affiche>
+
+  <!-- 3. ÇA S'EMPILE (vert, scène épinglée) -->
+  <Affiche tone="vert" prev="creme" class="empile" id="signature" label="empile-titre">
+    <div class="empile__scene" data-empile>
+      <div>
+        <h2 id="empile-titre" class="display display--l affiche__chapeau">Ça s'empile</h2>
+        <ol class="empile__liste">
+          {site.signature.couches.map((c) => (
+            <li data-empile-item><span class="num">{c.numero}</span><span>{c.nom}</span><small>{c.detail}</small></li>
+          ))}
+        </ol>
+      </div>
+      <div class="empile__pile">
+        <Plat title={`${site.signature.nom}, assemblé couche par couche`} />
+        <p class="empile__prix">
+          <strong data-empile-prix>{site.signature.prix}</strong>
+          <span>{site.signature.prixLabel}</span>
+        </p>
+      </div>
+    </div>
+  </Affiche>
+
+  <!-- 4. CARTE BENTO (crème) -->
+  <Affiche tone="creme" prev="vert" label="carte-titre">
+    <div class="wrap">
+      <h2 id="carte-titre" class="display display--mega affiche__titre" data-split="chars">La carte</h2>
+      <Bento plats={bentoAccueil()} />
+      <div class="section__pied">
+        <p class="lead">Douze recettes signatures et plus, des poké bowls, des nigiri flambés. Ou composez le vôtre.</p>
+        <a class="btn btn--primary" href={u('/carte/')}>Toute la carte</a>
+      </div>
+    </div>
+  </Affiche>
+
+  <!-- 5. HORAIRES (jaune) -->
+  <Affiche tone="jaune" prev="creme" label="horaires-titre">
+    <div class="wrap">
+      <h2 id="horaires-titre" class="display display--mega affiche__titre" data-split="chars">Horaires</h2>
+      <Horaires />
+      <div class="section__pied">
+        <p class="lead">Midi et soir du lundi au samedi, le dimanche soir seulement.</p>
+        <a class="btn" href={u('/venir/')}>Nous trouver</a>
+      </div>
+    </div>
+  </Affiche>
+
+  <!-- 6. EN TROIS GESTES (rouge) -->
+  <Affiche tone="rouge" prev="jaune" label="marche-titre">
+    <div class="wrap">
+      <h2 id="marche-titre" class="display display--xl affiche__titre" data-split="words">En trois gestes</h2>
+      <div class="etapes">
+        <ol data-cercles style="grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr)">
+          {site.etapes.map((e) => <li><span class="cercle" aria-hidden="true"></span><div><strong>{e.titre}</strong><p>{e.texte}</p></div></li>)}
+        </ol>
+      </div>
+    </div>
+  </Affiche>
+
+  <!-- 7. GALERIE INCLINÉE (crème, bande épinglée) -->
+  <Affiche tone="creme" prev="rouge" class="galerie" label="galerie-titre">
+    <div class="wrap"><h2 id="galerie-titre" class="display display--xl" data-split="words">Du chalumeau au tobiko</h2></div>
+    <div data-galerie>
+      <div class="galerie__piste" data-galerie-piste>
+        {galerie.map((g) => (
+          <figure class="galerie__carte" style={`--r: ${g.r}deg`}>
+            <img src={asset(g.src)} alt={g.alt} width={g.largeur} height={g.hauteur} loading="lazy" decoding="async" />
+            <figcaption><span class="galerie__num">{g.num}</span><span>{g.alt}</span></figcaption>
+          </figure>
+        ))}
+        <div class="galerie__fin">
+          <Disque href={u('/commander/')} texte="Commander · Commander · Commander · " coeur="→" label="Commander" />
+        </div>
+      </div>
+    </div>
+  </Affiche>
+
+  <!-- 7bis. AVIS (jaune) -->
+  <Affiche tone="jaune" prev="creme" label="avis-titre">
+    <div class="wrap">
+      <h2 id="avis-titre" class="display display--xl affiche__titre" data-split="words">On en parle</h2>
+      <p class="lead" style="margin-bottom: var(--gutter)">{site.noteGoogle.note} sur 5, {site.noteGoogle.nombre} avis. <span class="exemple">{site.noteGoogle.source}</span></p>
+      <div class="avis" data-claque>
+        {site.avis.map((a) => (
+          <blockquote>
+            <p>« {a.texte} »</p>
+            <cite>{a.auteur}<span>{a.source}</span></cite>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </Affiche>
+
+  <!-- 8. VISITE (vert) -->
+  <Affiche tone="vert" prev="jaune" label="visite-titre">
+    <div class="wrap visite">
+      <div>
+        <h2 id="visite-titre" class="ui affiche__chapeau">Venir</h2>
+        <address class="visite__adresse" data-split="lines">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <ul class="visite__liste" data-reveal="up">
+          <li><a class="link" href={telHref()}>{site.telephone}</a></li>
+          <li>{site.adresse.repere}</li>
+          <li><a class="link" href={u('/commander/')}>Commander en ligne</a></li>
+          {site.reseaux.map((r) => <li><a class="link" href={r.url} rel="noopener">{r.nom}</a></li>)}
+        </ul>
+      </div>
+      <svg class="plan" viewBox="0 0 600 420" role="img" aria-label={`Plan schématique : ${adresseLigne()}`} data-reveal="scale">
+        <rect width="600" height="420" fill="var(--creme)" />
+        <path d="M-10 200 L 610 170" stroke="var(--ink)" stroke-width="44" />
+        <path d="M-10 200 L 610 170" stroke="var(--creme)" stroke-width="3" stroke-dasharray="14 10" />
+        <path d="M300 -10 L 340 430" stroke="var(--ink)" stroke-width="30" />
+        <path d="M60 40 h130 v90 h-130z M390 40 h140 v80 h-140z M60 250 h150 v110 h-150z M400 250 h130 v110 h-130z" fill="var(--jaune)" stroke="var(--ink)" stroke-width="3" />
+        <circle cx="236" cy="226" r="20" fill="var(--rouge)" stroke="var(--ink)" stroke-width="4" />
+        <g font-family="Archivo, Arial, sans-serif" font-weight="900" font-size="22" fill="var(--ink)">
+          <text x="30" y="207" fill="var(--creme)">RUE SAINT-LOUP</text>
+          <text x="262" y="232">ICI</text>
+        </g>
+      </svg>
+    </div>
+  </Affiche>
+</Base>
