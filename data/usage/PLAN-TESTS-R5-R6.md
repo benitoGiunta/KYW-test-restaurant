@@ -232,3 +232,14 @@ Le socle par agent monte lentement (67 700 → 68 100 jetons), sans effet visibl
   Test Site signale des agents « au-delà de 60 réponses » : la mesure agent par agent (une réponse = un identifiant de message)
   donne au plus 44 réponses par agent et 37 pour la session principale ; l'écart vient sans doute d'un comptage par ligne de
   transcript (une réponse y occupe plusieurs lignes). Sorties de commandes hors q.sh : ~90 %, inchangé.
+
+## Série 15 à 20 : phase Après 5 (hook de lecture, commit e3d24cd), arrêt à 50 % hebdo
+
+| Restaurant | Coût | Par site | Portfolio | Awwwards | Legacy | Sorties de commandes | dont cat |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Moyenne Après 4 (7 à 14) | 17,25 $ | 5,75 $ | | | | 1,67 M | ≈ 0,9 M |
+| 15 · Le Servais | 17,34 $ | 5,78 $ | 5,34 $ | 5,71 $ | 4,24 $ | 1,60 M | 0,72 M |
+
+- Restaurant 15 conforme : 28 agents sur le bon modèle, test B 3/3, 0 F0 ou F1 en fin, max 38 réponses.
+- Premier effet du hook : lectures par cat −20 % environ, mais report sur des lectures par plages (sed, head, cat | head) ;
+  total des sorties −4 %, contexte relu par réponse inchangé (103 k), coût par site identique. À confirmer sur 16 à 20.
