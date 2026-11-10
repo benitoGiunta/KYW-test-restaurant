@@ -27,7 +27,7 @@ import { site, adresseLigne, horaireTexte, telHref, itineraire } from '../data/s
     <div class="wrap">
       <h2 class="section__titre">Votre <em>demande</em></h2>
       <p class="muted" style="margin-bottom: calc(var(--u) * 2.5)">Formulaire de démonstration sans envoi : la validation ouvre votre messagerie, avec le message déjà rédigé pour {site.email}.</p>
-      <form class="form" data-reservation data-reveal="up" action={`mailto:${site.email}`} method="get">
+      <form class="form" data-reservation action={`mailto:${site.email}`} method="get">
         <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
         <label>Téléphone <input type="tel" name="tel" autocomplete="tel" /></label>
         <label>Date <input type="date" name="date" required /></label>
@@ -35,6 +35,7 @@ import { site, adresseLigne, horaireTexte, telHref, itineraire } from '../data/s
         <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
         <label class="large">Message <textarea name="message" rows="3"></textarea></label>
         <div class="actions"><button class="btn btn--plein" type="submit">Ouvrir mon message</button></div>
+        <p class="form__statut" role="status" aria-live="polite" data-statut></p>
       </form>
     </div>
   </section>
@@ -72,11 +73,16 @@ import { site, adresseLigne, horaireTexte, telHref, itineraire } from '../data/s
     if (!form) return;
     const go = (e: SubmitEvent) => {
       e.preventDefault();
+      const statut = form.querySelector<HTMLElement>('[data-statut]');
+      if (!form.checkValidity()) { form.reportValidity(); if (statut) statut.textContent = 'Merci de compléter les champs signalés.'; return; }
+      if (statut) statut.textContent = 'Votre messagerie s’ouvre avec le message prêt à envoyer.';
       const f = new FormData(form);
       const corps = `Nom : ${f.get('nom')}\nTéléphone : ${f.get('tel') || ''}\nDate : ${f.get('date')}\nHeure : ${f.get('heure')}\nCouverts : ${f.get('couverts')}\n\n${f.get('message') || ''}`;
       window.location.href = `${form.getAttribute('action')}?subject=${encodeURIComponent('Demande de table')}&body=${encodeURIComponent(corps)}`;
     };
+    const inval = () => { const st = form.querySelector<HTMLElement>('[data-statut]'); if (st) st.textContent = 'Merci de compléter les champs signalés.'; };
     form.addEventListener('submit', go);
-    return () => form.removeEventListener('submit', go);
+    form.addEventListener('invalid', inval, true);
+    return () => { form.removeEventListener('submit', go); form.removeEventListener('invalid', inval, true); };
   });
 </script>

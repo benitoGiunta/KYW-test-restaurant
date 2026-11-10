@@ -24,7 +24,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [marquee(), heroObjets(intro), table(), avis()];
+    const cleanups = [marquee(), heroObjets(intro), table(), avis(), etincelles(), remiseTable()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -37,9 +37,12 @@ function marquee() {
   const horaires = JSON.parse(root.dataset.horaires || '[]') as { j: string; c: { ouverture: string; fermeture: string }[] }[];
   const parJour = (j: string) => horaires.find((h) => h.j === j);
   const peindre = () => {
-    const d = new Date();
-    const hhmm = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-    const auj = parJour(jours[d.getDay()]);
+    const bxl = new Intl.DateTimeFormat('fr-BE', { timeZone: 'Europe/Brussels', weekday: 'long', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+    const part = (t: string) => bxl.find((x) => x.type === t)?.value ?? '';
+    const hhmm = `${part('hour')}:${part('minute')}`;
+    const idxJour = jours.indexOf(part('weekday').toLowerCase());
+    const d = { getDay: () => idxJour };
+    const auj = parJour(jours[idxJour]);
     let texte = 'Horaires du jour';
     let etat = '';
     const ouvert = auj?.c.find((c) => c.ouverture <= hhmm && hhmm < c.fermeture);
@@ -146,8 +149,48 @@ function avis() {
   if (!root || prefersReducedMotion()) return () => {};
   const mot = root.querySelector<HTMLElement>('[data-avis-mot]');
   const cartes = root.querySelectorAll<HTMLElement>('[data-carte-avis]');
-  const vars = { flou: 14 };
-  const st = gsap.to(vars, { flou: 0, ease: 'none', onUpdate: () => mot?.style.setProperty('--flou', `${vars.flou.toFixed(1)}px`), scrollTrigger: { trigger: root, start: 'top 85%', end: 'center center', scrub: 0.6 } });
+  const vars = { flou: 14, chaud: 0 };
+  const st = gsap.to(vars, { flou: 0, chaud: 1, ease: 'none', onUpdate: () => { mot?.style.setProperty('--flou', `${vars.flou.toFixed(1)}px`); mot?.style.setProperty('--chaud', vars.chaud.toFixed(3)); }, scrollTrigger: { trigger: root, start: 'top 85%', end: 'center center', scrub: 0.6 } });
   const tw = gsap.from(cartes, { y: 120, rotation: (i) => (i % 2 ? 10 : -10), autoAlpha: 0, duration: 1, ease: ease.out, stagger: 0.1, scrollTrigger: { trigger: root, start: 'top 70%', once: true } });
   return () => { st.kill(); tw.kill(); };
+}
+
+/** Signature de la maison : la flamme du grill crache des étincelles quand on l'attrape (hero, desktop). */
+function etincelles() {
+  if (prefersReducedMotion()) return () => {};
+  const flammes = [...document.querySelectorAll<HTMLElement>('[data-obj]')].filter((o) => o.querySelector('.flamme__coeur'));
+  const poser = (el: HTMLElement) => {
+    for (let i = 0; i < 7; i++) {
+      const e = document.createElement('span');
+      e.className = 'etincelle';
+      e.setAttribute('aria-hidden', 'true');
+      el.appendChild(e);
+      gsap.fromTo(e, { x: gsap.utils.random(-14, 14), y: 0, scale: gsap.utils.random(0.6, 1.3), autoAlpha: 1 }, {
+        x: `+=${gsap.utils.random(-34, 34)}`, y: -gsap.utils.random(50, 120), autoAlpha: 0, duration: gsap.utils.random(0.7, 1.3), ease: 'power2.out', onComplete: () => e.remove(),
+      });
+    }
+  };
+  const offs = flammes.map((f) => {
+    const h = () => poser(f);
+    f.addEventListener('pointerdown', h);
+    const k = (e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') poser(f); };
+    f.addEventListener('keydown', k);
+    return () => { f.removeEventListener('pointerdown', h); f.removeEventListener('keydown', k); };
+  });
+  return () => offs.forEach((o) => o());
+}
+
+/** « Remettre la table » : les tirages et objets reviennent à leur place d'origine (x, y de Draggable remis à 0). */
+function remiseTable() {
+  const btn = document.querySelector<HTMLButtonElement>('[data-table-reset]');
+  const scene = document.querySelector<HTMLElement>('[data-table-scene]');
+  if (!btn || !scene) return () => {};
+  const go = () => {
+    const items = [...scene.querySelectorAll<HTMLElement>('[data-tirage], [data-obj]')];
+    gsap.to(items, { x: 0, y: 0, duration: prefersReducedMotion() ? 0 : 0.9, ease: 'back.out(1.4)', stagger: prefersReducedMotion() ? 0 : { each: 0.04, from: 'random' }, overwrite: 'auto', onComplete: () => items.forEach((i) => (Draggable.get(i) as Draggable | undefined)?.update()) });
+    btn.textContent = 'Table remise';
+    window.setTimeout(() => { btn.textContent = 'Remettre la table'; }, 1800);
+  };
+  btn.addEventListener('click', go);
+  return () => btn.removeEventListener('click', go);
 }

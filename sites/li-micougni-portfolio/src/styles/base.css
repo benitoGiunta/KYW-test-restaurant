@@ -150,7 +150,7 @@ html.motion .badge svg { animation: tourne 14s linear infinite; }
 
 /* Avis : mot géant + cartes */
 .avis { overflow: clip; }
-.avis__mot { position: absolute; left: 50%; top: 50%; translate: -50% -50%; font-size: var(--t-mega); color: var(--c-corail-ink); opacity: 0.55; filter: blur(var(--flou, 0px)); pointer-events: none; white-space: nowrap; line-height: 1; }
+.avis__mot { --chaud: 0; position: absolute; left: 50%; top: 50%; translate: -50% -50%; font-size: var(--t-mega); color: color-mix(in oklab, var(--c-canard) calc((1 - var(--chaud)) * 100%), var(--c-corail-ink)); text-shadow: 0 0 calc(var(--chaud) * 46px) rgb(210 118 53 / calc(var(--chaud) * 0.6)); opacity: 0.55; filter: blur(var(--flou, 0px)); pointer-events: none; white-space: nowrap; line-height: 1; }
 html.motion .avis__mot { --flou: 14px; }
 .avis__cartes { position: relative; z-index: 1; display: grid; gap: calc(var(--u) * 3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); align-items: start; }
 .carte-avis { display: grid; gap: 0.8em; padding: calc(var(--u) * 2.5); background: rgb(255 253 248 / 0.86); backdrop-filter: blur(6px); border-radius: var(--radius); box-shadow: 0 16px 36px rgb(31 26 23 / 0.14); rotate: var(--r); transition: rotate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
@@ -193,7 +193,7 @@ html.motion .avis__mot { --flou: 14px; }
 .grille-photos .tirage { width: 100%; cursor: default; rotate: var(--r, 0deg); transition: rotate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .grille-photos .tirage:hover { rotate: 0deg; }
 /* Un tirage incliné sur toute la largeur déborde de 1 px en 390 px : la grille garde une gouttière intérieure en mobile. */
-@media (max-width: 767px) { .grille-photos { padding-inline: 0.5rem; } }
+@media (max-width: 767px) { .grille-photos { padding-inline: 1.25rem; overflow-x: clip; } } /* tirages inclinés : la boîte tournée dépassait de 14 px (viewport mobile élargi à 404) */
 
 /* Hero de page intérieure */
 .hero--page { min-height: 0; padding-block: calc(var(--u) * 8) calc(var(--u) * 6); }
@@ -286,3 +286,24 @@ html:not(.motion) .table__titre { position: static; translate: none; padding-top
 html:not(.motion) .carte-avis, html:not(.motion) .grille-photos .tirage { rotate: 0deg; }
 html:not(.motion) .avis__mot { opacity: 0.25; }
 html:not(.motion) .section--canard .btn { transition: none; }
+
+/* Phase 2 : signature (flamme, braise), remise de la table, formulaire, mobile, reduced motion */
+.flamme__coeur, .flamme__corps { transform-box: fill-box; transform-origin: 50% 100%; }
+html.motion .obj .flamme__coeur { animation: vacille 1.7s ease-in-out infinite; }
+html.motion .obj .flamme__corps { animation: vacille-corps 2.6s ease-in-out infinite; }
+html.motion .obj:hover .flamme__coeur, html.motion .obj.is-drag .flamme__coeur { animation-duration: 0.45s; }
+@keyframes vacille { 0%, 100% { transform: scale(1, 1); } 30% { transform: scale(0.88, 1.14); } 60% { transform: scale(1.06, 0.9); } }
+@keyframes vacille-corps { 0%, 100% { transform: scale(1, 1) skewX(0deg); } 40% { transform: scale(0.97, 1.04) skewX(-2deg); } 70% { transform: scale(1.02, 0.98) skewX(2deg); } }
+.etincelle { position: absolute; left: 50%; top: 24%; width: 7px; height: 7px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--c-corail); pointer-events: none; opacity: 0; z-index: 2; }
+.table__reset { position: absolute; left: var(--gutter); bottom: calc(var(--u) * 3); z-index: 4; min-height: 44px; background: var(--c-lin); }
+.table__reset:hover { background: var(--c-lin); }
+.form input:user-invalid, .form textarea:user-invalid { border-color: var(--c-corail-ink); background: color-mix(in oklab, var(--c-blanc) 90%, var(--c-corail)); }
+.form input:user-valid { border-color: var(--c-canard); }
+.form__statut { grid-column: 1 / -1; margin: 0; min-height: 1.5em; font-weight: 700; color: var(--c-canard); }
+.form__statut:empty { min-height: 0; }
+@media (max-width: 767px) { .table__reset { display: none; } .etincelle { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .flamme__coeur, .flamme__corps, .badge svg, .obj__svg, .marquee__piste { animation: none !important; }
+  .avis__mot { --chaud: 1; filter: none; }
+  .btn:hover { transform: none; }
+}
