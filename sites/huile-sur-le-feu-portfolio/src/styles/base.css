@@ -65,7 +65,7 @@ h2, h3 { text-wrap: balance; }
 .btn__illu { font-family: var(--f-mono); font-size: 0.6rem; letter-spacing: 0.04em; text-transform: uppercase; border: 1px dashed currentColor; padding: 0.15em 0.4em; }
 .hero__ctas .btn:hover { background: var(--c-fg); border-color: var(--c-fg); color: var(--c-bg); }
 .hero__bas { grid-row: 2; position: relative; z-index: 2; padding-bottom: calc(var(--u) * 7); color: var(--c-bg); }
-.nom { display: grid; width: 100%; font-family: var(--f-display); font-weight: 700; line-height: 0.9; letter-spacing: -0.02em; }
+.nom { display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; min-width: 0; font-family: var(--f-display); font-weight: 700; line-height: 0.9; letter-spacing: -0.02em; }
 .nom > span { display: block; white-space: nowrap; font-size: 13.6vw; } /* révision 1 : taille CSS ≈ taille du fit (CLS) */
 .nom .nom__w { display: inline; }
 @media (max-width: 767px) { .nom > .nom__l1 { display: contents; } .nom .nom__w { display: block; white-space: nowrap; font-size: 24vw; } .nom .nom__w + .nom__w { font-size: 30vw; } }
@@ -265,3 +265,30 @@ h2, h3 { text-wrap: balance; }
 @media (prefers-reduced-motion: reduce) {
   .media img, .nav a::after, .header__brand::after, .plan__pastille span { transition: none; }
 }
+
+/* Phase 2 : flambage (lueur qui vacille sur la photo), voile d'en-tête, filet de flamme sur la houle, gouttes, états du formulaire. */
+[data-theme='photo'] .hero__media::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 34%; background: linear-gradient(to bottom, rgb(251 247 238 / 0.66), rgb(251 247 238 / 0)); }
+.hero__feu { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: soft-light; background: radial-gradient(ellipse 36% 44% at 68% 36%, rgb(255 150 40 / 0.85), transparent 72%), linear-gradient(rgb(224 140 40 / 0.3), rgb(224 140 40 / 0.3)); animation: feu 3.6s ease-in-out infinite alternate; }
+@keyframes feu { 0% { opacity: 0.6; } 30% { opacity: 0.95; } 58% { opacity: 0.7; } 100% { opacity: 1; } }
+.hero__filet { fill: none !important; stroke: var(--c-accent); stroke-width: 2.5; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.goutte { display: inline-block; width: 0.85rem; height: 0.85rem; background: var(--ton, var(--c-sable)); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); box-shadow: inset -0.12rem -0.12rem 0.2rem rgb(63 20 32 / 0.22); transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.index--huiles .index__nom { transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+@media (hover: hover) {
+  .index--huiles li:hover .goutte { transform: rotate(-45deg) scale(1.7) translate(-0.1rem, 0.1rem); }
+  .index--huiles li:hover .index__nom { transform: translateX(0.5rem); }
+}
+.form input:user-invalid, .form textarea:user-invalid { border-color: var(--c-accent); box-shadow: 0 0 0 1px var(--c-accent); }
+.form input:focus-visible, .form textarea:focus-visible { outline-offset: 1px; }
+.form__etat { min-height: 1.6em; color: var(--c-fg); }
+.form__etat.is-ok::before { content: ''; display: inline-block; width: 0.6em; height: 0.6em; margin-right: 0.6em; background: var(--c-accent); border-radius: 50%; }
+@media (prefers-reduced-motion: reduce) {
+  .hero__feu { animation: none; opacity: 0.8; }
+  .goutte, .index--huiles .index__nom, .btn { transition: none; }
+  .index--huiles li:hover .goutte, .index--huiles li:hover .index__nom, .btn:hover { transform: rotate(-45deg); }
+  .index--huiles li:hover .index__nom, .btn:hover { transform: none; }
+}
+[data-theme='sombre'] .hero__media::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 38%; background: linear-gradient(to bottom, rgb(42 13 22 / 0.72), rgb(42 13 22 / 0)); }
+@media (max-width: 599px) { .form .deux { grid-template-columns: 1fr; } .resa > * { min-width: 0; } .btn--large { max-width: 100%; white-space: normal; justify-content: center; text-align: center; line-height: 1.2; } .form input, .form textarea { width: 100%; min-width: 0; box-sizing: border-box; } }
+.terrasse .media--sous-eau::before { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to right, rgb(42 13 22 / 0.68), rgb(42 13 22 / 0.3) 42%, rgb(42 13 22 / 0) 68%); pointer-events: none; }
+.terrasse .citation { text-shadow: 0 1px 14px rgb(20 6 10 / 0.55); }
+@media (max-width: 767px) { .terrasse .media--sous-eau::before { background: linear-gradient(to top, rgb(42 13 22 / 0.8), rgb(42 13 22 / 0.35) 70%, rgb(42 13 22 / 0.15)); } }

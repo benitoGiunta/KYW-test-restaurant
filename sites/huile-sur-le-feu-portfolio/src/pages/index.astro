@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Houle from '../components/Houle.astro';
 import Maree from '../components/Maree.astro';
 import Acces from '../components/Acces.astro';
-import { site, photoDe, huiles, regles, univers, phraseBoutique } from '../data/site';
+import { site, photoDe, huiles, regles, univers, phraseBoutique, tonHuile } from '../data/site';
 import { u, asset } from '../lib/url';
 const hero = photoDe('flambage-poele');
 const lustre = photoDe('lustre-huiles');
@@ -16,6 +16,7 @@ const [a, b] = ["L'Huile", 'sur le Feu'];
   <section class="hero" data-hero aria-labelledby="titre-hero">
     <div class="hero__media" data-hero-media>
       <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical />
+      <span class="hero__feu" aria-hidden="true"></span>
     </div>
     <div class="hero__ctas">
       <a class="btn" href={u('/reservation/')} data-magnetic="0.2">Réserver</a>
@@ -32,7 +33,7 @@ const [a, b] = ["L'Huile", 'sur le Feu'];
         </ul>
       </div>
     </div>
-    <svg class="hero__sep" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path data-houle d="M0,40 L1440,40 L1440,80 L0,80 Z" /></svg>
+    <svg class="hero__sep" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path data-houle d="M0,40 L1440,40 L1440,80 L0,80 Z" /><path class="hero__filet" data-houle-ligne d="M0,40 L1440,40" /></svg>
   </section>
 
   <section class="sec sec--ciel hero__accroche" aria-label="Accroche">
@@ -61,12 +62,12 @@ const [a, b] = ["L'Huile", 'sur le Feu'];
       <div>
         <span class="eyebrow mono" data-reveal="fade">Les huiles</span>
         <h2 id="t-huiles" style="font-size: var(--t-xl)" data-split="words">Chaque assiette reçoit son huile</h2>
-        <ol class="index" style="margin-top: calc(var(--u) * 3)" data-reveal="up">
+        <ol class="index index--huiles" style="margin-top: calc(var(--u) * 3)" data-reveal="up">
           {huiles.slice(0, 4).map((h, i) => (
             <li>
               <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
               <span class="index__nom">{h.libelle}{h.plat ? <span class="index__desc">{h.plat}</span> : null}</span>
-              <span class="index__prix"></span>
+              <span class="index__prix"><i class="goutte" style={`--ton: ${tonHuile[h.huile]}`} aria-hidden="true"></i></span>
             </li>
           ))}
         </ol>

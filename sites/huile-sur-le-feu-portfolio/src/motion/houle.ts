@@ -9,6 +9,7 @@ const amp = { v: 6 };
 let repos = 6, max = 28;
 let phase = 0;
 let paths: { el: SVGPathElement; visible: boolean }[] = [];
+let lignes: SVGPathElement[] = [];
 let io: IntersectionObserver | null = null;
 let last = 0;
 let ticking = false;
@@ -26,12 +27,18 @@ export function houleD(a: number, p = 0) {
   return d + ` L${W},${H} L0,${H} Z`;
 }
 
+/** Crête seule (sans fermeture) pour le filet de flamme posé sur la houle du hero. */
+export function houleLigne(a: number, p = 0) {
+  return houleD(a, p).replace(/ L1440,80 L0,80 Z$/, '');
+}
+
 function tick(time: number) {
   if (isMobile() && time - last < 1 / 30) return; // 30 fps en mobile
   last = time;
   phase = (time * 1.05) % (Math.PI * 2); // respiration lente : une période toutes les 6 s
   const d = houleD(amp.v, phase);
   for (const p of paths) if (p.visible) p.el.setAttribute('d', d);
+  if (lignes.length) { const l = houleLigne(amp.v, phase); for (const el of lignes) el.setAttribute('d', l); }
 }
 
 /** Enregistre les houles de la page (appelé dans onPage) ; renvoie le nettoyage. */
@@ -39,7 +46,10 @@ export function registerHoules(root: ParentNode = document) {
   const els = [...root.querySelectorAll<SVGPathElement>('path[data-houle]')];
   const statique = houleD(6, 0);
   els.forEach((el) => el.setAttribute('d', statique));
+  const lignesEls = [...root.querySelectorAll<SVGPathElement>('path[data-houle-ligne]')];
+  lignesEls.forEach((el) => el.setAttribute('d', houleLigne(6, 0)));
   if (prefersReducedMotion() || !els.length) return () => {};
+  lignes = lignesEls;
   const mobile = isMobile();
   repos = mobile ? 3 : 6;
   max = mobile ? 14 : 28;
@@ -62,6 +72,7 @@ export function registerHoules(root: ParentNode = document) {
     io?.disconnect();
     io = null;
     paths = [];
+    lignes = [];
     if (ticking) { gsap.ticker.remove(tick); ticking = false; }
   };
 }

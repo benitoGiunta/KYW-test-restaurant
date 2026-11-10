@@ -35,3 +35,12 @@ Illustratif (`placeholder: true`, affiché « illustratif ») : parking, privati
 ## Adéquation estimée (phase 1, avant QA) : 82 %
 1. Positionnement méditerranéen, tons chauds et page dédiée aux huiles. 2. Carte longue et services lisibles. 3. Boutique et histoire traitées avec les seules données prouvées.
 Limites : date d'ouverture contestée (2005 selon le site), photos peut-être générées, pas de note ni d'avis vérifiés, aucune photo de l'équipe, nappe d'huile encore bleutée à vérifier visuellement en phase 2.
+
+## Phase 2 : motion, signature, états
+- Signature « la flamme sur l'huile » : la lueur du flambage vacille sur la photo du hero (`.hero__feu`, soft-light, 3,6 s, CSS seul) et un filet de flamme (#BD4413, 2,5 px) court sur la crête de la houle du hero (`path[data-houle-ligne]`, piloté par le même ticker que la houle : respiration au repos, amplitude x4 à la vélocité de scroll). Un seul usage de l'accent par écran.
+- Loader « huile versée » 0 → 50 cl, rideau à crêtes et nom bord à bord hérités du gabarit, conservés. Mobile : pas de loader ni d'intro (LCP).
+- Corrigé : le nom du hero débordait de 42 px à droite (« Feu » rogné) car la piste de grille s'élargissait au contenu `nowrap` ; `grid-template-columns: minmax(0, 1fr)` sur `.nom` (desktop et mobile).
+- Voile d'en-tête sur les photos : ivoire sur l'accueil (nav ink lisible sur le ciel turquoise), bordeaux sur les pages à thème sombre (huiles : nav ivoire sur fond jaune).
+- Gouttes d'huile sur les listes de huiles (teinte illustrative de l'ingrédient, `tonHuile`) : au survol (souris seulement) la goutte grossit et la ligne se décale de 0,5 rem.
+- Formulaire /reservation/ : champs invalides cerclés de flamme (`:user-invalid`), message de statut `role="status"` à l'envoi (Barestho s'ouvre dans un nouvel onglet).
+- Reduced motion : lueur figée à 80 %, houle et filet statiques, survols sans mouvement, révélations désactivées par le moteur.

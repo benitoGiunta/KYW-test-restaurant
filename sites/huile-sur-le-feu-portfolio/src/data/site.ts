@@ -523,3 +523,9 @@ export const services: Service[] = site.horaires.flatMap((h) =>
 
 /** Citation de la boutique : phrase de la maison tirée du dossier (huile du plat = étagère), pas un propos prêté à un client. */
 export const phraseBoutique = "L'huile qui parfume votre assiette se retrouve sur l'étagère.";
+
+/** Teinte décorative de la goutte (illustrative : couleur de l'ingrédient, pas une donnée du restaurant). */
+export const tonHuile: Record<string, string> = {
+  'Truffe blanche': '#e3d3a0', 'Persil plat': '#8d9c3c', 'Mandarine': '#e08a1e',
+  'Piment': '#b8381c', 'Menthe': '#6fae8c', 'Ail': '#eadfb8',
+};
