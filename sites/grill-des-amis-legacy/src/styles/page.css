@@ -1,11 +1,13 @@
 /* Hallmark · shape: Photographic (kept: the original opened on a full-screen room photograph, then the house story, the menu, the hours) · genre: atmospheric · theme: Darkroom (deal 1/3, seed restaurant-namur-steakhouse-grill-694e·8a7750ac·2026-11-10·r0) · redesign: full
  * hero: Poster (kept: full-bleed photograph, the plate low and left on the darkest part) · nav: slab (draw 5306cc: a heavy full-width bar, logo left, links, one action) · footer: letter close (draw 5306cc: a sign-off, Elise et Gaëtan, then address and links) · imagery: photographs, 14 client, 0 library, colour kept · signature: the grill photograph held full-bleed under a hairline poster head, tongs over the fire · darkroom: red
- * axes: dark/display-condensed/chromatic-red · posture: restrained · contrast: pass (to measure, phase 3) · fold: pass (to measure, phase 3) · draw: 5306cc · job: book · comp: 2 built, no key · c1 chosen · v2.0.0 */
+ * axes: dark/display-condensed/chromatic-red · posture: restrained · contrast: pass (to measure, phase 3) · fold: pass (to measure, phase 3) · draw: 5306cc · job: book · comp: 2 built, no key · c1 chosen · reproduced (checked at 1280x800) · hero-review: ship (self, no sub-agent tool) · 1 finding · 1 resolved · motion: still (hero settle only, no reveal) · v2.0.0 */
 /* Hallmark · pre-emit critique: P pass H pass E pass S pass R pass V pass (self) · weakest: the client photographs are warm colour while Darkroom prints black and white, so the red of the glasses and the fire carries the page instead of grey; the logo is a client asset set on the slab as is */
 /* Hallmark · waive 8 · hero, three pieces, carte, room, booking keeps the original's order (room, story, menu, hours) in a new composition · the client's sequence is kept on purpose */
 /* Hallmark · note 58 (Floor, not waivable, kept as a NOTE) · carte lists 75 dishes with prices · a menu is the content, every row a name and a price */
 /* Hallmark · waive 59 · the 59px gap is the KYW footer strip that closes every page (packages/kyw-footer, imposed by the agency, not editable) · all page sections keep 120px or more */
 /* Hallmark · waive 83 · client photographs are the only imagery and they are the room, the fire and the meat · a restaurant of one product has nothing else to show, photographs stay under 45% of each page below the hero */
+/* Hallmark · waive 77 · carte « Le midi » (deux lignes), a-propos « Venez partager notre passion », traiteur « De la conception au service », réserver et contact (quatre sections) · chaque section mince est soit l'ancre d'un index (le midi), soit la dernière phrase et le bouton avant le pied, soit une page utilitaire du site d'origine (une adresse, un numéro) · le contenu du client n'a pas plus de matière, rien n'est gonflé pour remplir */
+/* Hallmark · waive 71 · a-propos, h3.row__t des rangées « Ce que nous croyons » (33 px dessus, 58 px dessous) · le titre et sa phrase forment une rangée à deux colonnes alignée sur la ligne de base, le filet de 1 px entre rangées porte la séparation · lecture en colonnes, pas en pile */
 /* Hallmark · answered F23 · meta description written on every page */
 /* Hallmark · dropped nav "actualités" and "événements" · the Wix blog and events carry no real content in the research file (dossier.md), nothing to rebuild */
 /* Hallmark · dropped nav "Se connecter" and the cart icon · Wix member and store features, unused by the restaurant */
@@ -46,7 +48,7 @@ p { font-size: 1.0625rem; }
 .well { background: var(--color-paper-2); }
 .grained { position: relative; isolation: isolate; }
 .grained::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: var(--grain); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 9 -4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0 / 200px 200px; }
-::selection { background: color-mix(in oklab, var(--color-accent) 35%, transparent); }
+::selection { background: color-mix(in oklab, var(--color-accent) 45%, var(--color-paper)); color: var(--color-ink); }
 h1, h2 { text-transform: uppercase; }
 h3 { font-weight: 400; text-transform: uppercase; }
 .fig { margin: 0; }
@@ -56,24 +58,32 @@ h3 { font-weight: 400; text-transform: uppercase; }
 .btn--primary { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-ink); }
 @media (hover: hover) { .btn:hover { background: var(--color-ink); color: var(--color-paper); } .btn--primary:hover { background: var(--color-accent-deep); border-color: var(--color-accent-deep); color: var(--color-ink); } }
 .btn:active { translate: 0 1px; }
+.btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; pointer-events: none; border-style: dashed; }
+.btn--sm { min-height: 44px; padding-inline: var(--space-md); font-size: var(--text-md); }
 
 /* Nav : slab */
 .slab { position: sticky; top: 0; z-index: var(--z-sticky-nav); background: var(--color-paper-2); border-bottom: var(--rule-hair) solid var(--color-rule); }
 .slab__in { display: flex; align-items: center; gap: var(--space-lg); min-height: calc(var(--bar-h) - 1px); }
 .slab__brand { display: inline-flex; margin-right: auto; padding-block: var(--space-xs); }
 .slab__brand img { height: 2.5rem; width: auto; }
-.slab__links ul, .slab__menu ul { list-style: none; margin: 0; padding: 0; }
+.slab__links ul, .slab__panel ul { list-style: none; margin: 0; padding: 0; }
 .slab__links ul { display: flex; gap: var(--space-xl); }
-.slab__links a, .slab__menu a { display: inline-block; padding-block: var(--space-sm); color: var(--color-ink-2); text-decoration: none; font-size: var(--text-md); white-space: nowrap; }
+.slab__links a, .slab__panel a { display: inline-block; padding-block: var(--space-sm); color: var(--color-ink-2); text-decoration: none; font-size: var(--text-md); white-space: nowrap; }
 .slab a[aria-current="page"] { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-accent); text-underline-offset: 0.35em; }
-@media (hover: hover) { .slab__links a:hover, .slab__menu a:hover { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-accent); text-underline-offset: 0.35em; } }
-.slab__menu { display: none; position: relative; }
-.slab__menu summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 48px; padding: 0 var(--space-md); border: var(--rule-hair) solid var(--color-rule); font: 400 var(--text-lg)/1 var(--font-display); text-transform: uppercase; }
-.slab__menu summary::-webkit-details-marker { display: none; }
-.slab__menu ul { position: absolute; right: 0; top: calc(100% + var(--space-sm)); min-width: 15rem; padding: var(--space-md) var(--space-lg); background: var(--color-paper-3); border: var(--rule-hair) solid var(--color-rule); }
-.slab__menu li + li { border-top: var(--rule-hair) solid var(--color-rule); }
-.slab__menu a { display: block; padding-block: var(--space-md); }
-@media (max-width: 60rem) { .slab__links { display: none; } .slab__menu { display: block; } .slab__book { min-height: 44px; padding-inline: var(--space-md); } }
+@media (hover: hover) { .slab__links a:hover, .slab__panel a:hover { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-accent); text-underline-offset: 0.35em; } }
+.slab__toggle { display: none; min-height: 44px; padding: 0 var(--space-md); border: var(--rule-hair) solid var(--color-rule); border-radius: 0; background: transparent; color: var(--color-ink); cursor: pointer; font: 400 var(--text-lg)/1 var(--font-display); text-transform: uppercase; transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out); }
+.slab__toggle[aria-expanded="true"] { background: var(--color-paper-3); border-color: var(--color-ink-2); }
+@media (hover: hover) { .slab__toggle:hover { border-color: var(--color-ink-2); } }
+.slab__toggle:active { translate: 0 1px; }
+.slab__panel { position: fixed; inset: var(--bar-h) 0 auto 0; width: 100%; max-height: calc(100dvh - var(--bar-h)); overflow-y: auto; margin: 0; border: 0; border-bottom: var(--rule-hair) solid var(--color-rule); padding: var(--space-sm) var(--gutter) var(--space-lg); background: var(--color-paper-3); color: var(--color-ink); opacity: 0; translate: 0 -0.5rem; transition: opacity var(--dur-short) var(--ease-out), translate var(--dur-short) var(--ease-out), display var(--dur-short) allow-discrete, overlay var(--dur-short) allow-discrete; }
+.slab__panel:popover-open { opacity: 1; translate: 0 0; }
+@starting-style { .slab__panel:popover-open { opacity: 0; translate: 0 -0.5rem; } }
+.slab__panel::backdrop { background: transparent; }
+.slab__panel li + li { border-top: var(--rule-hair) solid var(--color-rule); }
+.slab__panel a { display: block; padding-block: var(--space-md); }
+@media (max-width: 60rem) { .slab__links { display: none; } .slab__toggle { display: inline-flex; align-items: center; } .slab__book { padding-inline: var(--space-md); } }
+@media (min-width: 60.0625rem) { .slab__panel:popover-open { display: none; } }
 @media (max-width: 24rem) { .slab__brand img { height: 2rem; } .slab__in { gap: var(--space-sm); } }
 
 /* Hero : Poster */
@@ -85,7 +95,7 @@ h3 { font-weight: 400; text-transform: uppercase; }
 .hero h1 { font-size: clamp(3rem, min(10vw, 15dvh), 8rem); max-width: 18ch; line-height: 0.95; }
 .hero .lead { max-width: 34ch; }
 .hero__act, .pagehead__act, .resa__act, .offer__act, .carte-ex__act { margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-md); }
-.hero__cap { margin: 0; }
+.hero__cap { margin: 0; color: var(--color-ink-2); }
 @media (max-width: 40rem) { .hero__in { padding-block: var(--space-2xl); } .hero__plate { gap: var(--space-md); } }
 
 /* Têtes de section */
@@ -184,3 +194,19 @@ ol.rows--steps, ul.rows { counter-reset: none; }
 .close__credits { margin: 0; }
 @media (max-width: 60rem) { .close__cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 @media (max-width: 40rem) { .close__cols { grid-template-columns: minmax(0, 1fr); } }
+
+/* Phase 2 : mouvement (Darkroom, caractère still : aucun reveal, un seul mouvement de signature) */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .hero__fig > img { animation: settle 1800ms var(--ease-out) both; }
+}
+@keyframes settle { from { scale: 1.06; } to { scale: 1; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .hero__fig > img, .slab__panel { animation: none; transition: none; } }
+
+/* États : jour courant (surface, filet rouge et mot, pas la couleur seule), entrée de l'index de la carte */
+.sched__row { position: relative; }
+.sched__row.is-now { box-shadow: inset 2px 0 0 var(--color-accent); }
+.sched__row.is-now dt::after { content: " · aujourd’hui"; font: 400 var(--text-xs)/1 var(--font-body); text-transform: none; letter-spacing: 0.02em; color: var(--color-ink-2); white-space: nowrap; }
+.idx a[aria-current="true"] { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-accent); text-underline-offset: 0.35em; }
+html:has(body[data-page="carte"]) { scroll-padding-top: calc(var(--bar-h) + 7rem); }
+@media (pointer: coarse) { .idx a, .close__links a, .link { min-height: 44px; } }

@@ -15,12 +15,21 @@ const cur = (h: string) => (page === h.replace('/', '') ? 'page' : undefined);
         {nav.map((n) => <li><a href={`${base}${n.href}`} aria-current={cur(n.href)}>{n.label}</a></li>)}
       </ul>
     </nav>
-    <a class="btn btn--primary slab__book" href={resto.reserver} rel="noopener">Réserver</a>
-    <details class="slab__menu">
-      <summary>Menu</summary>
+    <a class="btn btn--sm slab__book" href={resto.reserver} rel="noopener">Réserver</a>
+    <button class="slab__toggle" type="button" popovertarget="menu" aria-controls="menu" aria-expanded="false">Menu</button>
+    <nav id="menu" class="slab__panel" popover aria-label="Menu">
       <ul>
         {nav.map((n) => <li><a href={`${base}${n.href}`} aria-current={cur(n.href)}>{n.label}</a></li>)}
       </ul>
-    </details>
+    </nav>
   </div>
 </header>
+<script is:inline>
+  (function () {
+    var p = document.getElementById('menu'), b = document.querySelector('.slab__toggle');
+    if (!p || !b || !p.showPopover) return;
+    p.addEventListener('toggle', function (e) { b.setAttribute('aria-expanded', e.newState === 'open' ? 'true' : 'false'); });
+    var mq = window.matchMedia('(min-width: 60.0625rem)');
+    mq.addEventListener('change', function (e) { if (e.matches && p.matches(':popover-open')) p.hidePopover(); });
+  })();
+</script>
