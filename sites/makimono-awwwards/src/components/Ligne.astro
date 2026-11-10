@@ -1,0 +1,18 @@
+---
+import { eur, fr, nbsp } from '../data/site';
+interface Roll { nom: string; pieces: number; ingredients: string[]; prix: number | null; des: boolean; proteines: Record<string, number> | null; aConfirmer: boolean }
+interface Props { roll: Roll; choix?: boolean }
+const { roll, choix = false } = Astro.props;
+const compo = roll.ingredients.join(', ');
+---
+<li class="ligne">
+  <h3 class="ligne__nom">{roll.nom}</h3>
+  <p class="ligne__desc">{roll.pieces}{nbsp}pièces. {compo}.{roll.aConfirmer ? ' Prix à confirmer.' : ''}</p>
+  <p class="ligne__prix">{roll.des ? <small>dès</small> : null}{roll.prix !== null ? eur(roll.prix) : ''}</p>
+  {choix && roll.proteines && (
+    <details class="choix">
+      <summary>Choisir la protéine</summary>
+      <ul>{Object.entries(roll.proteines).map(([n, p]) => <li><span>{n}</span><span class="tabulaire">{eur(p)}</span></li>)}</ul>
+    </details>
+  )}
+</li>

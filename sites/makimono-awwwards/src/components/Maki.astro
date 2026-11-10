@@ -1,0 +1,16 @@
+---
+// Coupe d'un maki : riz, spirale de nori (le rouleau vu par la tranche), cœur rose. Décoratif.
+interface Props { class?: string; spire?: string }
+const { class: cls = '', spire = '#111a17' } = Astro.props;
+const pts: string[] = [];
+for (let i = 0; i <= 150; i++) {
+  const th = (i / 150) * Math.PI * 6;
+  const r = 7 + (th / (Math.PI * 6)) * 31;
+  pts.push(`${i === 0 ? 'M' : 'L'}${(50 + r * Math.cos(th - Math.PI / 2)).toFixed(2)} ${(50 + r * Math.sin(th - Math.PI / 2)).toFixed(2)}`);
+}
+---
+<svg class={cls} viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+  <circle cx="50" cy="50" r="48" fill="#eef0e8" stroke="#111a17" stroke-width="1.5" />
+  <path d={pts.join(' ')} fill="none" stroke={spire} stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="50" cy="50" r="5" fill="#f4a6b4" />
+</svg>

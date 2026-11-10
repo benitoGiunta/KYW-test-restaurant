@@ -1,0 +1,30 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { restaurant, horaires, hm } from '../data/site';
+const a = restaurant.adresse;
+---
+<footer class="pied nori" data-layer="content">
+  <div class="rouleau-bas" aria-hidden="true"></div>
+  <div class="wrap pied__grille">
+    <p class="pied__fin display">À table.</p>
+    <a class="pied__tel" href={`tel:${restaurant.telephone}`}>{restaurant.telephoneAffiche}</a>
+    <address class="pied__adresse">
+      <span>{restaurant.nom}</span>
+      <span>{a.rue} {a.numero}</span>
+      <span>{a.cp} {a.commune}</span>
+      <a href={`mailto:${restaurant.email}`}>{restaurant.email}</a>
+    </address>
+    <ul class="pied__horaires" aria-label="Horaires">
+      {horaires.map((h) => <li><span>{h.jour}</span><span class="tabulaire">{h.services.map((s) => `${hm(s.debut)} à ${hm(s.fin)}`).join(' · ')}</span></li>)}
+    </ul>
+    <ul class="pied__liens" aria-label="Liens">
+      <li><a href={u('/carte/')}>Carte</a></li>
+      <li><a href={u('/a-propos/')}>La maison</a></li>
+      <li><a href={u('/reservation/')}>Réserver et venir</a></li>
+      {restaurant.reseaux.map((r) => <li><a href={r.url} rel="noopener" target="_blank">{r.nom}</a></li>)}
+    </ul>
+    <p class="pied__credit">Photos : Makimono.</p>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

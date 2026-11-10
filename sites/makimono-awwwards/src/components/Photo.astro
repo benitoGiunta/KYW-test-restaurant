@@ -1,0 +1,10 @@
+---
+import { Image } from 'astro:assets';
+import { photos, type CleePhoto } from '../lib/photos';
+interface Props { nom: CleePhoto; sizes: string; class?: string; eager?: boolean; widths?: number[]; ratio?: string; position?: string; alt?: string }
+const { nom, sizes, class: cls = '', eager = false, widths = [480, 800, 1200], ratio, position, alt } = Astro.props;
+const p = photos[nom];
+const style = [ratio ? `aspect-ratio:${ratio}` : '', position ? `object-position:${position}` : ''].filter(Boolean).join(';') || undefined;
+---
+<Image src={p.src} alt={alt ?? p.alt} widths={widths} sizes={sizes} format="webp" quality={72} class={cls} style={style}
+  loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} decoding="async" />

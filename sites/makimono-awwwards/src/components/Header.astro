@@ -1,0 +1,24 @@
+---
+import { u } from '../lib/url';
+import Maki from './Maki.astro';
+import { restaurant } from '../data/site';
+interface Props { page?: string }
+const { page = "" } = Astro.props;
+const liens = [
+  { href: u('/carte/'), label: 'Carte', id: 'carte' },
+  { href: u('/a-propos/'), label: 'La maison', id: 'a-propos' },
+  { href: u('/reservation/'), label: 'Réserver', id: 'reservation' },
+];
+---
+<header class="rouleau-haut" data-header>
+  <a class="marque" href={u('/')} aria-label="Makimono, accueil">
+    <Maki class="marque__maki" />
+    <span class="marque__nom">Makimono</span>
+  </a>
+  <nav class="nav" aria-label="Principale">
+    <ul>
+      {liens.map((l) => <li><a href={l.href} aria-current={page === l.id ? 'page' : undefined}>{l.label}</a></li>)}
+    </ul>
+    <a class="bouton bouton--petit nav__appel" href={`tel:${restaurant.telephone}`}>Appeler</a>
+  </nav>
+</header>

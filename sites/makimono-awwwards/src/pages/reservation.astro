@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { restaurant, horaires, hm } from '../data/site';
+const a = restaurant.adresse;
+---
+<Base page="reservation" title="Réserver et venir" description="Réserver une table chez Makimono, Rue Saint-Loup 14 à Namur : téléphone, e-mail, horaires du midi et du soir, plan et commande en ligne.">
+  <section class="page-tete">
+    <div class="wrap">
+      <h1 class="display page-tete__titre">Réserver</h1>
+      <p class="lede page-tete__intro">Une table, un groupe, une question sur un plat : appelez ou écrivez. Pour manger chez vous, la commande se fait en ligne.</p>
+    </div>
+  </section>
+
+  <section class="section section--serre" aria-labelledby="h-contact">
+    <div class="wrap grille">
+      <div class="reserver__cta">
+        <h2 class="titre-l" id="h-contact">Nous joindre</h2>
+        <a class="tel-geant" href={`tel:${restaurant.telephone}`}>{restaurant.telephoneAffiche}</a>
+        <div class="groupe-boutons">
+          <a class="bouton bouton--plein" href={`tel:${restaurant.telephone}`}>Appeler</a>
+          <a class="bouton" href={`mailto:${restaurant.email}`}>Écrire à {restaurant.email}</a>
+        </div>
+        <form class="formulaire" action={`mailto:${restaurant.email}`} method="post" enctype="text/plain">
+          <label>Votre nom<input name="nom" autocomplete="name" /></label>
+          <label>Date, heure et nombre de personnes<input name="demande" /></label>
+          <label>Un mot pour le chef (allergies, régime)<textarea name="message" rows="3"></textarea></label>
+          <div><button class="bouton" type="submit">Ouvrir mon e-mail</button></div>
+          <p class="note">Ce formulaire ouvre votre messagerie : rien n’est envoyé tant que vous n’avez pas validé le message.</p>
+        </form>
+      </div>
+      <div class="reserver__cote">
+        <h2 class="titre-l" style="font-size: var(--t-m)">Les heures d’ouverture</h2>
+        <ul class="horaires" aria-label="Horaires">{horaires.map((h) => <li><span>{h.jour}</span><span class="tabulaire">{h.services.map((s) => `${hm(s.debut)} à ${hm(s.fin)}`).join(' · ')}</span></li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="nori section" aria-labelledby="h-venir">
+    <div class="wrap grille">
+      <figure class="bloc-photo" style="grid-column: 1 / 6; margin: 0"><Photo nom="facade" sizes="(max-width: 820px) 100vw, 40vw" ratio="4 / 5" position="50% 40%" /></figure>
+      <div style="grid-column: 7 / 13; display: grid; gap: var(--serre); align-content: start">
+        <h2 class="titre-l" id="h-venir">Venir</h2>
+        <address class="coord"><span>{restaurant.nom}</span><span>{a.rue} {a.numero}</span><span>{a.cp} {a.commune}</span></address>
+        <p><a class="lien" href={restaurant.plan} rel="noopener" target="_blank">Ouvrir le plan (OpenStreetMap)</a></p>
+        <p class="texte">La façade vitrée donne sur la rue Saint-Loup, avec quelques tables en terrasse. Paiement par {restaurant.paiement}.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-cmd">
+    <div class="wrap grille">
+      <h2 class="titre-l" id="h-cmd" style="grid-column: 1 / 7">Commander chez soi</h2>
+      <div style="grid-column: 8 / 13; display: grid; gap: var(--serre); align-content: start">
+        <p class="texte">{restaurant.livraison} Choisissez votre mode de commande :</p>
+        <ul class="liens-commande">{restaurant.commande.map((c) => <li><a href={c.url} rel="noopener" target="_blank"><span>{c.nom}</span><span aria-hidden="true">→</span></a></li>)}</ul>
+        <p class="note">Les liens mènent aux services de commande de Makimono, hors de cette maquette.</p>
+      </div>
+    </div>
+  </section>
+</Base>
