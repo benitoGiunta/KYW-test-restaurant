@@ -1,0 +1,16 @@
+---
+import { u } from '../lib/url';
+import Marque from './Marque.astro';
+const { page = 'page' } = Astro.props;
+const cur = (p: string) => (page === p ? 'page' : undefined);
+---
+<header class="entete">
+  <div class="wrap entete__in">
+    <a class="marque" href={u('/')} aria-label="Le Ponti 2, accueil"><Marque /></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href={u('/carte/')} aria-current={cur('carte')}>Carte</a>
+      <a href={u('/a-propos/')} aria-current={cur('apropos')}>La maison</a>
+      <a class="cta" href={u('/reservation/')} aria-current={cur('reservation')}>Réserver</a>
+    </nav>
+  </div>
+</header>

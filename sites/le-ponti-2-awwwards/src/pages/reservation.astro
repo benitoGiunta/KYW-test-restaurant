@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, creneaux, jours, menu } from '../data/site';
+import { prix, u } from '../lib/url';
+---
+<Base page="reservation" title="Réserver une table" description="Réserver une table au Ponti 2 à Jambes : réservation en ligne, téléphone 081 30 40 75, adresse, horaires du mardi au dimanche, midi et soir.">
+  <section class="wrap page-tete">
+    <h1>Réserver</h1>
+    <p>Une table, midi ou soir, du mardi au dimanche.</p>
+  </section>
+  <div class="wrap grille resa">
+    <div class="resa__porte">
+      <p class="util">Passer à table</p>
+      <a class="resa__tel" href={site.telephone.href}><span class="nw">{site.telephone.lisible}</span></a>
+      <a class="cta" href={site.telephone.href}>Appeler</a>
+      <a class="cta cta--fantome" href={site.reservationUrl} rel="noopener noreferrer">Réserver en ligne</a>
+      <a class="lien petit" href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
+    <div class="resa__infos">
+      <section aria-labelledby="h-hor">
+        <h2 id="h-hor">Horaires</h2>
+        <ul class="heures">
+          {jours.map((j) => j.ferme
+            ? <li class="ferme"><span>{j.jour}</span><span>Fermé, le pont est levé</span></li>
+            : <li><span>{j.jour}</span><span>{creneaux.midi} · {creneaux.soir}</span></li>)}
+        </ul>
+      </section>
+      <section aria-labelledby="h-acc">
+        <h2 id="h-acc">Venir</h2>
+        <address style="font-style:normal">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p style="margin-top:.8rem">Une terrasse accueille les convives lorsque la météo le permet.</p>
+        <p style="margin-top:.8rem"><a class="lien" href={site.planUrl} rel="noopener noreferrer">Ouvrir le plan</a></p>
+      </section>
+      <section aria-labelledby="h-menu">
+        <h2 id="h-menu">À table</h2>
+        <p class="corps">{menu.nom} à {prix(menu.prix)}, ou la carte complète : pizzas, pâtes, escalopes de veau, desserts maison. <a class="lien" href={u('/carte/')}>Voir la carte</a></p>
+      </section>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,10 @@
+---
+import { Image } from 'astro:assets';
+import { photos, type CleePhoto } from '../lib/photos';
+interface Props { cle: CleePhoto; sizes: string; largeurs?: number[]; prioritaire?: boolean; position?: string; alt?: string }
+const { cle, sizes, largeurs = [480, 800, 1200], prioritaire = false, position, alt } = Astro.props;
+const p = photos[cle];
+---
+<Image src={p.src} alt={alt ?? p.alt} widths={largeurs} sizes={sizes} format="webp" quality={78}
+  loading={prioritaire ? 'eager' : 'lazy'} fetchpriority={prioritaire ? 'high' : 'auto'} decoding="async"
+  style={position ? `object-position:${position}` : undefined} />
