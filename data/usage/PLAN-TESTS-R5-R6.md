@@ -269,3 +269,15 @@ sans perte.** Le levier restant est le nombre de passes de revue (revues 2 et 3)
 
 **Bilan du projet (20 restaurants, 60 sites) :** restaurants 481,24 $ ; avec portfolio (261,82 $), préparation et pilotage :
 1 069,46 $ au tarif catalogue. Coût par site : 20,38 $ avant → 5,75 à 6,13 $ dans les deux dernières configurations (−70 %).
+
+Compte rendu de Test Site (10/11 17 h 30) : 18 sites publiés, consommation hebdomadaire 23 % → 38 % (seuil de 50 % non atteint),
+refus du hook 9, 12, 16, ~14, 5 et non comptés selon les restaurants. Comparaison par phase ajoutée (configurations.json) :
+
+| Phase | Par site | Contexte par réponse | Sorties de commandes | Part des cat | Agents > 40 rép. / resto | F0+F1 revue 1 / resto |
+|---|---:|---:|---:|---:|---:|---:|
+| Après 4 (7 à 14) | 5,75 $ | 100 k | 1,67 M | 52,9 % | 0,5 | 3,2 |
+| Après 5 (15 à 20) | 6,13 $ | 103 k | 1,66 M | 47,8 % | 1,7 | 4,0 |
+
+Le constat de Test Site se vérifie : l'essentiel du volume cat vient de fichiers de moins de 200 lignes, que le hook laisse passer.
+Les « 106 réponses » citées pour build2:portfolio de Makimono et la construction portfolio de L'Huile sur le Feu sont, dans la
+mesure par identifiant de message, 53 et 58 réponses (même écart de comptage que pour la série 10 à 14).

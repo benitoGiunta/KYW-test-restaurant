@@ -31,6 +31,15 @@ for c in conf:
         revue2_lancees=sum(r['revue2'] for r in rv), revue2_utiles=sum(r['revue2'] and (r['f0f1_revue1'] or 0) > 0 for r in rv),
         test_b=(f"{sum(b)}/{len(b)}" if b else 'non prévu'), f0f1_revue1=sum(r['f0f1_revue1'] or 0 for r in rv), f0f1_fin=sum(r['f0f1_fin'] or 0 for r in rv),
         reponses_max=c['reponses_max'], agents_plus_40=c['agents_plus_40'], bash_par_reponse=c['bash_par_reponse'], socle=c['socle'], sorties_commandes=c['sorties_commandes']))
+SLUG = {v: k for k, v in NOM.items()}
+def part_cat(ph):
+    """Part des sorties de commandes venant de `cat` (lecture complète), sur les restaurants de la phase qui ont commandes-*.json."""
+    tot = cat = 0
+    for c in conformite:
+        f = os.path.join(os.path.dirname(CONF), f"commandes-{SLUG.get(c['restaurant'], '')}.json")
+        if c['phase'] != ph or not os.path.exists(f): continue
+        d = json.load(open(f)); tot += d['total']; cat += sum(x['caracteres'] for x in d['familles'] if x['famille'] == 'cat')
+    return round(cat / tot * 100, 1) if tot else None
 lignes = []
 for i, k in enumerate([k for k in CFG if k['phase'] in phases]):
     p = phases[k['phase']]; cs = [c for c in conformite if c['phase'] == k['phase']]
@@ -41,6 +50,9 @@ for i, k in enumerate([k for k in CFG if k['phase'] in phases]):
         ecarts_modeles=sum(c['ecarts_modeles'] for c in cs) if mesure else None,
         f0f1_fin=sum(c['f0f1_fin'] for c in cs) if mesure else None,
         socle=round(sum(c['socle'] for c in cs if c['socle']) / max(1, len([c for c in cs if c['socle']]))) if any(c['socle'] for c in cs) else None,
+        part_cat=part_cat(k['phase']),
+        f0f1_revue1_par_resto=round(sum(c['f0f1_revue1'] for c in cs) / len(cs), 1) if mesure else None,
+        agents_plus_40_par_resto=round(sum(c['agents_plus_40'] for c in cs) / len(cs), 1) if mesure else None,
         conformite=('non mesurée' if not mesure else 'conforme' if all(c['ecarts_modeles'] == 0 for c in cs) else 'écarts')))
 json.dump(lignes, open(os.path.join(OUT, 'configurations.json'), 'w'), ensure_ascii=False, indent=1)
 json.dump(conformite, open(os.path.join(OUT, 'conformite.json'), 'w'), ensure_ascii=False, indent=1)
