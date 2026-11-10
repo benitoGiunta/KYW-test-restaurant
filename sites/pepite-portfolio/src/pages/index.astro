@@ -6,7 +6,8 @@ const voletG = photoDe('/photos/cave-voutee-table.webp');
 const voletD = photoDe('/photos/vitrine-logo.webp');
 const nb = photoDe('/photos/cave-table-detail.webp');
 const s = serviceSoir(site);
-const statut = JSON.stringify(site.horaires.map((h) => ({ jour: h.jour, creneaux: h.creneaux })));
+const nums = (pl: { description?: string }[]) => { let n = 0; return pl.map((p) => (p.description === 'Supplément' ? '+' : String(++n).padStart(2, '0'))); };
+const statut = JSON.stringify(site.horaires.map((h) => ({ jour: h.jour, creneaux: h.creneaux, boutique: h.boutique })));
 const mosaique = site.mosaique.map((m) => photoDe(m.src));
 const menu = site.carte[0];
 const avisUn = site.avis[0];
@@ -71,7 +72,7 @@ const bandes = [
     <ol class="index" data-reveal="fade">
       {menu.plats.slice(0, 6).map((p, i) => (
         <li class="index__item">
-          <span class="index__num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="index__num">{nums(menu.plats.slice(0, 6))[i]}</span>
           <span class="index__nom">{p.nom}{p.placeholder && <span class="illu">illustratif</span>}</span>
           <span class="index__prix">{p.prix ?? ''}</span>
           {p.description && <span class="index__desc">{p.description}</span>}

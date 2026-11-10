@@ -41,11 +41,7 @@ const roleIllu = site.equipe.some((m) => m.rolePlaceholder);
         const p = m.photo ? photoDe(m.photo) : null;
         return (
           <li class="membre" data-reveal="up" data-delay={String(i * 0.08)}>
-            {p ? (
-              <figure><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>
-            ) : (
-              <figure class="membre__initiale" aria-hidden="true"><span class="tube">{m.nom.charAt(0)}</span></figure>
-            )}
+            {p && <figure><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>}
             <p class="membre__nom">{m.nom}{m.placeholder && <span class="illu">illustratif</span>}</p>
             <p class="membre__role">{m.role}{m.rolePlaceholder && <span class="illu">illustratif</span>}</p>
           </li>

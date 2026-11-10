@@ -8,16 +8,12 @@ import { initLampe, enregistrerFigures, allumer, lampeActive } from './lampe';
 export function setupMotion() {
   const loader = document.getElementById('loader');
   const de = loader?.dataset.de || '19:00';
-  const a = loader?.dataset.a || '21:00';
-  const mn = (h: string) => parseInt(h.slice(0, 2)) * 60 + parseInt(h.slice(3));
-  setLoaderFormat((p) => {
-    const m = mn(de) + Math.round(((mn(a) - mn(de)) * p) / 100);
-    return `${String(Math.floor(m / 60) % 24).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
-  });
+  // L'heure de fermeture n'est pas connue : l'horloge reste sur l'ouverture, seule la barre avance.
+  setLoaderFormat(() => de);
   setLoaderExit((root) =>
     gsap.timeline()
-      .to(root.querySelectorAll('[data-loader-out]'), { opacity: 0, duration: 0.25, ease: 'steps(3)', stagger: 0.08 })
-      .to(root, { yPercent: -102, duration: isMobile() ? 0.6 : 0.9, ease: ease.inOut }, '-=0.05'),
+      .to(root.querySelectorAll('[data-loader-out]'), { opacity: 0, duration: 0.2, ease: 'steps(3)', stagger: 0.05 })
+      .to(root, { yPercent: -102, duration: isMobile() ? 0.5 : 0.7, ease: ease.inOut }, '-=0.05'),
   );
   setTransition({
     leave: (c) => gsap.timeline()
@@ -61,7 +57,7 @@ function heroIntro(intro: gsap.core.Timeline) {
 /** Badge d'ouverture calculé à l'heure de Bruxelles depuis site.horaires (data-statut = JSON).
  *  « Ouvert » seulement entre l'ouverture et la dernière arrivée (incluse) d'un créneau réel ; sinon le prochain service
  *  exact : plus tard aujourd'hui (midi ou soir), demain, ou le jour nommé. La logique pure est `statutTexte` (testable). */
-export function statutTexte(horaires: { jour: string; creneaux: { ouverture: string; fermeture: string }[] }[], jourIdx: number, m: number) {
+export function statutTexte(horaires: { jour: string; creneaux: { ouverture: string; fermeture: string }[]; boutique?: string }[], jourIdx: number, m: number) {
   const jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
   const h = (s: string) => s.replace(':00', 'h').replace(':', 'h');
   const mn = (s: string) => parseInt(s.slice(0, 2)) * 60 + parseInt(s.slice(3));
@@ -70,6 +66,8 @@ export function statutTexte(horaires: { jour: string; creneaux: { ouverture: str
   const encours = auj.find((c) => m >= mn(c.ouverture) && m <= mn(c.fermeture));
   if (encours) return { ouvert: true, texte: `Cave à manger ouverte ${moment(encours)}` };
   const plusTard = auj.find((c) => m < mn(c.ouverture));
+  const bout = horaires.find((x) => x.jour === jours[jourIdx])?.boutique;
+  if (plusTard && bout && m >= mn(bout)) return { ouvert: false, texte: `Boutique ouverte, cave à manger dès ${h(plusTard.ouverture)}` };
   if (plusTard) return { ouvert: false, texte: `Fermé pour l'instant, ouverture ${moment(plusTard)} à ${h(plusTard.ouverture)}` };
   const debut = auj.length ? 'Fermé, ' : "Fermé aujourd'hui, ";
   for (let i = 1; i <= 7; i++) {

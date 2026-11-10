@@ -5,7 +5,7 @@
 export type Jour = 'lundi' | 'mardi' | 'mercredi' | 'jeudi' | 'vendredi' | 'samedi' | 'dimanche';
 
 export interface Creneau { ouverture: string; fermeture: string } // 'HH:MM'
-export interface Horaire { jour: Jour; creneaux: Creneau[]; note?: string; libelle?: string } // creneaux vide = fermé ; libelle = texte affiché (remplace les heures)
+export interface Horaire { jour: Jour; creneaux: Creneau[]; boutique?: string; note?: string; libelle?: string } // creneaux vide = fermé ; libelle = texte affiché (remplace les heures)
 export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean }
 export interface Categorie { categorie: string; plats: Plat[] }
 export interface Menu { nom: string; prix: string; /* '' = pas de prix affiché */ description: string; placeholder: boolean }
@@ -51,7 +51,7 @@ export interface Restaurant {
 
 const photo = (src: string, alt: string, largeur: number, hauteur: number): Photo => ({ src, alt, largeur, hauteur, placeholder: false });
 
-const SOIR: Creneau[] = [{ ouverture: '19:00', fermeture: '23:00' }]; // fermeture illustrative : sert au statut et au loader, jamais affichée
+const SOIR: Creneau[] = [{ ouverture: '19:00', fermeture: '23:00' }]; // fermeture illustrative (non prouvée) : sert seulement au statut « ouvert », jamais affichée
 const LIB_SEMAINE = 'Boutique dès 16h, cave à manger dès 19h';
 
 export const site: Restaurant = {
@@ -65,14 +65,14 @@ export const site: Restaurant = {
   geo: { lat: 50.4601105, lon: 4.8665145 },
   telephone: '+32 476 62 01 82',
   email: { valeur: 'catherine.mathieu@me.com', placeholder: false }, // affiché sur le site actuel
-  reservation: { outil: 'Tablebooker', url: 'https://reservations.tablebooker.com/' },
+  reservation: { outil: 'Tablebooker', url: 'https://reservations.tablebooker.com?modal=0&lang=fr&source=website&restaurantId=50470946&theme=light' },
   horaires: [
     { jour: 'lundi', creneaux: [], note: 'fermé' },
     { jour: 'mardi', creneaux: [], note: 'fermé' },
     { jour: 'mercredi', creneaux: [], note: 'fermé' },
-    { jour: 'jeudi', creneaux: SOIR, libelle: LIB_SEMAINE },
-    { jour: 'vendredi', creneaux: SOIR, libelle: LIB_SEMAINE },
-    { jour: 'samedi', creneaux: SOIR, libelle: 'Boutique dès 10h30, cave à manger dès 19h ; samedi midi sur demande' },
+    { jour: 'jeudi', creneaux: SOIR, boutique: '16:00', libelle: LIB_SEMAINE },
+    { jour: 'vendredi', creneaux: SOIR, boutique: '16:00', libelle: LIB_SEMAINE },
+    { jour: 'samedi', creneaux: SOIR, boutique: '10:30', libelle: 'Boutique dès 10h30, cave à manger dès 19h ; samedi midi sur demande' },
     { jour: 'dimanche', creneaux: [], note: 'fermé' },
   ],
   reseaux: [
@@ -95,7 +95,7 @@ export const site: Restaurant = {
   menus: [
     { nom: 'Menu 5 services', prix: '58 €', description: "Du 12 au 14 novembre 2026. À déguster tel quel ou à l'assiette : entrées à partager, plat et dessert individuels.", placeholder: false },
     { nom: 'Vin au verre', prix: '5,50 à 12,50 €', description: "Des vins d'auteurs, élaborés dans le respect du vivant.", placeholder: false },
-    { nom: 'Gin Djîn par Sang Hoon Degeimbre', prix: '45 €', description: 'Bouteille de 500 ml, à la boutique.', placeholder: false },
+    { nom: 'Gin Djîn par Sang Hoon Degeimbre', prix: '45 €', description: 'Bouteille de 500 ml.', placeholder: false },
     { nom: 'Colis cadeaux', prix: '', description: 'Sélections de vins « Chou, Chouchou & Chou Chéri », à offrir.', placeholder: false },
   ],
   histoire: [
@@ -107,8 +107,8 @@ export const site: Restaurant = {
   equipe: [{ nom: 'Catherine Mathieu', role: 'Fondatrice, patronne', placeholder: false }],
   avis: [
     { texte: 'Menu simple, pas hyper travaillé mais avec d\'excellents produits et maîtrisé. Vins au top, patronne qui aime ses quilles et en parle volontiers. Chouette endroit.', auteur: '@bigdrich', source: 'Mapstr', date: '2026-04-19', placeholder: false },
-    { texte: 'Superbe endroit où les plats innovants sont à partager. La carte des vins propose des flacons atypiques.', auteur: '@stephane.verstraeten', source: 'Mapstr', date: '2019-08-23', placeholder: false },
-    { texte: 'Adresse super sympa. Vins très très bons et de superbes découvertes. Les plats à partager étaient tous aussi bons les uns que les autres.', auteur: '@margauxvdv', source: 'Mapstr', date: '2019-05-27', placeholder: false },
+    { texte: 'Superbe endroit où les plats innovants sont à partager. Le saumon est une merveille. La carte des vins propose des flacons atypiques.', auteur: '@stephane.verstraeten', source: 'Mapstr', date: '2019-08-23', placeholder: false },
+    { texte: 'Adresse super sympa. On y a fait un repas d\'équipe. Vins très très bons et de superbes découvertes. Les plats à partager étaient tous aussi bons les uns que les autres', auteur: '@margauxvdv', source: 'Mapstr', date: '2019-05-27', placeholder: false },
   ],
   photos: [
     photo('/photos/cave-voutee-table.webp', 'Cave voûtée en pierre, longue table de bois dressée, bougies et verres', 598, 899),
@@ -134,7 +134,7 @@ export const site: Restaurant = {
     carte: "Le menu à 5 services se déguste tel quel ou à l'assiette. Le plat existe en version végétale.",
     bar: "Des vins d'auteurs, élaborés dans le respect du vivant, au verre de 5,50 à 12,50 €.",
     soirees: 'Samedi midi, privatisation, soirées aux bougies : la cave se réserve sur demande.',
-    demande: 'Une date, un nombre de convives, une envie : appelez ou envoyez un SMS au 0476 62 01 82.',
+    demande: 'Une date, un nombre de convives, une envie : appelez ou envoyez un SMS au +32 476 62 01 82.',
     complementAdresse: 'Stationnement difficile dans la rue : prévoyez le parking du Casino.',
   },
   regles: [
@@ -160,12 +160,12 @@ export const site: Restaurant = {
   ],
   soirees: [
     { nom: 'Samedi midi', description: 'Le samedi, la boutique ouvre dès 10h30 et la table peut s\'ouvrir à midi.', quand: 'sur demande', placeholder: false },
-    { nom: 'Privatisation', description: 'La cave voûtée se privatise. On en parle de vive voix.', quand: 'sur demande', placeholder: false },
-    { nom: 'Soirées aux bougies', description: 'Un menu sans gaz ni électricité, à la bougie, relayé par Le Vif en 2022. Dates à demander à la maison.', quand: 'en soirée', placeholder: false },
+    { nom: 'Privatisation', description: 'La cave voûtée se privatise.', quand: 'sur demande', placeholder: false },
+    { nom: 'Soirées aux bougies', description: 'Un menu sans gaz ni électricité, à la bougie, relayé par Le Vif en 2022.', quand: 'sur demande', placeholder: false },
   ],
   mosaique: [
-    'cave-voutee-table', 'bouteilles-gauche', 'bougie-table', 'service-bouteille', 'vitrine-logo', 'dessert-assiette',
-    'bouteilles-droite', 'tabouret-cuivre', 'cave-table-detail', 'couvert-table', 'salle-bokeh', 'atelier-ecriture',
+    'bouteilles-vins', 'cave-voutee-table', 'bougie-table', 'bouteilles-gauche', 'vitrine-logo', 'service-bouteille',
+    'tabouret-cuivre', 'bouteilles-droite', 'couvert-table', 'cave-table-detail', 'salle-bokeh', 'dessert-assiette',
   ].map((n) => ({ src: `/photos/${n}.webp`, placeholder: false })),
 };
 

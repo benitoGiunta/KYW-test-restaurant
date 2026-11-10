@@ -10,7 +10,8 @@ for (const h of site.horaires) {
   const g = groupes.at(-1);
   if (g && g.texte === t) g.jours.push(h.jour); else groupes.push({ jours: [h.jour], texte: t });
 }
-const etiquette = (j: string[]) => (j.length === 1 ? j[0] : j.length === 2 ? `${j[0]} et ${j[1]}` : `${j[0]} au ${j.at(-1)}`);
+const maj = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+const etiquette = (j: string[]) => maj(j.length === 1 ? j[0] : j.length === 2 ? `${j[0]} et ${j[1]}` : `${j[0]} au ${j.at(-1)}`);
 ---
 <footer class="footer">
   <p class="footer__nom tube" aria-hidden="true">{site.nom}</p>
