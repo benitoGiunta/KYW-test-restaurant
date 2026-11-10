@@ -33,11 +33,11 @@ const photos = { pizza: { src: 'pizza.webp', alt: 'Pizza à la roquette et aux c
         <p class="lead">Vingt pizzas, treize pâtes, des escalopes de veau, des desserts maison.</p>
       </div>
       <ul class="cats">
-        {rubriques.map((r) => {
+        {rubriques.map((r, i) => {
           const s = stats(r);
           const ph = r.photo ? photos[r.photo] : null;
           return (
-            <li>
+            <li data-reveal style={`--i:${i % 3}`}>
               <a class="cat" href={`${base}menu/#${r.id}`}>
                 {ph ? <Fig class="cat__fig" {...ph} ratio="4 / 3" sizes="(min-width: 60rem) 28rem, 90vw" slot={`cat-${r.id}`} /> : <span class="cat__n" aria-hidden="true">{s.n}</span>}
                 <span class="cat__body">

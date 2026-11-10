@@ -2,16 +2,33 @@
 import { resto, nav } from '../data/site';
 const { page } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const liens = nav.slice(1);
 ---
-<header class="nav">
+<header class="nav" data-nav>
   <div class="container nav__bar">
     <ul class="nav__links">
-      {nav.slice(1).map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>)}
+      {liens.map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>)}
     </ul>
     <a class="nav__brand" href={base} aria-label="Le Ponti 2, accueil">Le Ponti 2</a>
     <div class="nav__act">
       <a class="nav__tel num" href={resto.tel.href}>{resto.tel.affiche}</a>
-      <a class="btn" href={resto.reservation} rel="noopener">Réserver une table</a>
+      <a class="btn" href={resto.reservation} rel="noopener"><span>Réserver<span class="nav__long"> une table</span></span></a>
+      <button class="nav__toggle" type="button" aria-haspopup="dialog" aria-controls="menu-mobile" aria-expanded="false"><span class="nav__bars" aria-hidden="true"></span>Menu</button>
     </div>
   </div>
+  <dialog class="menu" id="menu-mobile" aria-label="Menu du site">
+    <div class="menu__in">
+      <div class="menu__head">
+        <span class="menu__brand" aria-hidden="true">Le Ponti 2</span>
+        <button class="menu__close" type="button" data-close>Fermer</button>
+      </div>
+      <ul class="menu__links">
+        {nav.map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>)}
+      </ul>
+      <p class="actions">
+        <a class="btn" href={resto.reservation} rel="noopener">Réserver une table</a>
+        <a class="link num" href={resto.tel.href}>Appeler le {resto.tel.affiche}</a>
+      </p>
+    </div>
+  </dialog>
 </header>
