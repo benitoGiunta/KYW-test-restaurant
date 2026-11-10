@@ -166,3 +166,6 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 - Un titre coupé en deux moitiés (clip-path sur deux copies, l'une `aria-hidden`) se mesure par `Range` sur la moitié haute : la moitié basse décalée de `--ecart` dépasse de 0,07 em à droite, d'où diviseur 5,9 (bureau) et 4,75 (téléphone, deux lignes) pour « Li Micougni » en Young Serif.
 - Une photo en portrait recadrée en paysage (`object-fit: cover`) demande un `object-position` vérifié à l'œil (grill : 62 % de hauteur pour montrer les flammes, pas la hotte).
 - Un strip `overflow-x` avec `scroll-snap-align: start` colle le premier élément au bord : ajouter `scroll-padding-inline: var(--gutter)`.
+
+## 2026-11-10 · li-micougni · variante legacy (phase 1)
+- Astro : un `import` placé après un `const` dans le frontmatter d'une page échoue avec « Unterminated regular expression » (position fausse) ; mettre tous les `import` en tête. Vellum oxblood reversed : surcharger le bloc de couleurs de `tokens.css` après le scaffold (paper, ink, accent or, accent-ink sombre) et `color-scheme: dark`. Horaires inconnus : un seul slot `.fill` pour mercredi à samedi plutôt que quatre.

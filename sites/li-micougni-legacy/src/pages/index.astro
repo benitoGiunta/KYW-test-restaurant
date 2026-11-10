@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Horaires from '../components/Horaires.astro';
+import carte from '../data/carte.json';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const ardoises = carte[0].plats;
+const grillades = carte.find((c) => c.titre === 'Les grillades')!.plats.filter((p) => ['Onglet de bœuf', 'Entrecôte de bœuf 350 g', 'Magret de canard'].includes(p.nom));
+---
+<Base title="Li Micougni, restaurant à Namur : ardoises à partager et grillades au charbon" page="home">
+  <section class="hero" aria-labelledby="h-hero">
+    <Fig id="salle" class="hero__photo" sizes="100vw" pos="50% 60%" priority />
+    <div class="container hero__inner">
+      <div class="plate">
+        <h1 id="h-hero">Découvrez votre nouveau restaurant à Namur&nbsp;!</h1>
+        <p class="lead">La carte privilégie les produits locaux de saison et évolue régulièrement.</p>
+        <p class="actions"><a class="btn btn--primary" href={`${base}contact/#reserver`}><span>Réserver une table</span></a> <a class="btn" href={`${base}menu/`}><span>Voir la carte</span></a></p>
+      </div>
+      <p class="hero__cap">Rue des Brasseurs 110, au centre de Namur.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--l" aria-labelledby="h-ardoises">
+    <div class="container rows-layout">
+      <div class="rows-layout__head">
+        <h2 id="h-ardoises">Les ardoises à partager</h2>
+        <p class="lead">Se commandent pour deux.</p>
+      </div>
+      <ul class="rows">
+        {ardoises.map((p) => (
+          <li class="row">
+            <h3>{p.nom}</h3>
+            <p class="row__desc">{p.desc}</p>
+            <p class="row__prix num">{p.prix}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--m" aria-labelledby="h-grill">
+    <div class="container split split--7-5">
+      <div class="split__text">
+        <h2 id="h-grill">Les grillades, au charbon de bois</h2>
+        <ul class="rows rows--tight">
+          {grillades.map((g) => (
+            <li class="row row--2"><h3>{g.nom}</h3><p class="row__prix num">{g.prix}</p></li>
+          ))}
+        </ul>
+        <p>Sauces maison : béarnaise, poivre, champignon, Sambre &amp; Meuse, orange, tartare, aïoli.</p>
+        <p><a class="link" href={`${base}menu/`}>Toute la carte</a></p>
+      </div>
+      <div>
+        <Fig id="grill" ratio="4 / 5" sizes="(min-width: 60rem) 36vw, 100vw" pos="50% 55%" />
+        <p class="caption">Le grill au charbon de bois, dans la cour.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--band fibre" aria-labelledby="h-mot">
+    <div class="container">
+      <p class="statement" id="h-mot">Li Micougni est né de l’amitié de deux passionnés de l’horeca.</p>
+      <p class="statement__link"><a class="link" href={`${base}a-propos-de-nous/`}>Notre histoire</a></p>
+    </div>
+  </section>
+
+  <section class="sec sec--l" aria-labelledby="h-cour">
+    <div class="container split split--4-8">
+      <Fig id="terrasse" ratio="3 / 4" sizes="(min-width: 60rem) 30vw, 100vw" pos="50% 70%" />
+      <div class="split__text">
+        <h2 id="h-cour">Une terrasse dans la cour</h2>
+        <ul class="rows">
+          <li class="row row--link"><h3><a href={`${base}notre-terrasse-arriere/`}>Terrasse arrière</a></h3><p class="row__desc">Une cour privée, 30 couverts, ouverte toute l’année.</p></li>
+          <li class="row row--link"><h3><a href={`${base}menu/#menu-semaine`}>Menu de la semaine</a></h3><p class="row__desc">Une entrée, un plat et un dessert en suggestion, hors carte.</p></li>
+          <li class="row row--link"><h3><a href={`${base}evenement-privee/`}>Évènements privés</a></h3><p class="row__desc">Anniversaires, réunions, un menu adapté au budget.</p></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Horaires />
+</Base>

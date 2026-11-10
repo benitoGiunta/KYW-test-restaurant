@@ -1,0 +1,24 @@
+---
+import { resto, nav } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<header class="nav">
+  <nav class="nav__pill" aria-label="Navigation principale">
+    <a class="nav__brand" href={base} aria-label="Li Micougni, accueil">
+      <img src={`${base}photos/logo-96.png`} srcset={`${base}photos/logo-96.png 1x, ${base}photos/logo-360.webp 3x`} width="48" height="48" alt="" />
+      <span class="nav__name">Li Micougni</span>
+    </a>
+    <ul class="nav__links">
+      {nav.map((n) => <li><a href={`${base}${n.href}`} aria-current={page === n.href.replace('/', '') ? 'page' : undefined}>{n.label}</a></li>)}
+    </ul>
+    <a class="btn btn--primary nav__cta" href={`${base}contact/#reserver`}><span>Réserver</span></a>
+    <details class="nav__menu">
+      <summary>Menu</summary>
+      <ul>
+        {nav.map((n) => <li><a href={`${base}${n.href}`}>{n.label}</a></li>)}
+      </ul>
+    </details>
+  </nav>
+</header>

@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Horaires from '../components/Horaires.astro';
+import carte from '../data/carte.json';
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const N = ' ';
+const cats = [
+  ...carte,
+  { titre: 'Sauces maison', plats: [
+    { nom: 'Les sauces', desc: 'béarnaise, poivre, champignon, Sambre & Meuse, orange, tartare, aïoli', prix: null },
+    { nom: 'Sauce truffée', desc: null, prix: `+2${N}€` },
+  ] },
+  { titre: 'Menu enfant', plats: [
+    { nom: 'Le menu enfant', desc: 'croquette fromage et boulette sauce tomate, ou boulette sauce tomate et boule de glace au choix', prix: `18${N}€` },
+  ] },
+];
+---
+<Base title="La carte de Li Micougni : ardoises, entrées, plats, grillades, desserts" description="La carte de lancement de Li Micougni à Namur : ardoises à partager, plats de la cuisine locale, grillades au charbon de bois et desserts faits maison." page="menu">
+  <section class="banner" aria-labelledby="h-menu">
+    <Fig id="ardoise" class="hero__photo" sizes="100vw" pos="50% 55%" priority />
+    <div class="container hero__inner">
+      <div class="plate">
+        <h1 id="h-menu">Notre carte de lancement</h1>
+        <p class="lead">Des planches à partager, des plats de la cuisine locale et des desserts faits maison.</p>
+        <p class="actions"><a class="btn btn--primary" href={`${base}${resto.carte.href}`} download><span>Télécharger la carte (PDF, 1,1{N}Mo)</span></a> <a class="btn" href={`${base}contact/#reserver`}><span>Réserver</span></a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--s" id="menu-semaine" aria-labelledby="h-semaine">
+    <div class="container split split--5-7">
+      <h2 id="h-semaine">Menu de la semaine</h2>
+      <div>
+        <p class="lead">Une entrée, un plat et un dessert en suggestion, hors carte, à composer en deux ou trois services.</p>
+        <p>Le menu suit les produits de saison. Prix&nbsp;: <span class="fill" data-fill="prix">prix à confirmer</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--s carte" aria-label="La carte">
+    <div class="container carte__list">
+      {cats.map((c) => (
+        <article class="cat" id={c.titre.toLowerCase().replace(/[^a-zà-ÿ]+/g, '-')}>
+          <h2>{c.titre}</h2>
+          <ul class="rows">
+            {c.plats.map((p) => (
+              <li class="row">
+                <h3>{p.nom}</h3>
+                {p.desc && <p class="row__desc">{p.desc}</p>}
+                {p.prix && <p class="row__prix num">{p.prix}</p>}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <Horaires />
+</Base>

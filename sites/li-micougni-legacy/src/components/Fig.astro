@@ -1,0 +1,15 @@
+---
+import photos from '../data/photos.json';
+import { alts } from '../data/site';
+interface Props { id: keyof typeof photos; sizes?: string; pos?: string; priority?: boolean; class?: string; alt?: string; ratio?: string }
+const { id, sizes = '(min-width: 60rem) 50vw, 100vw', pos = '50% 50%', priority = false, class: cls = '', alt, ratio } = Astro.props;
+const p = (photos as any)[id];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const ws = Object.keys(p.sizes).map(Number).sort((a, b) => a - b);
+const big = ws[ws.length - 1];
+const srcset = ws.map((w) => `${base}photos/${id}-${w}.webp ${w}w`).join(', ');
+const text = alt ?? alts[id as string];
+---
+<figure class:list={['photo', cls]} data-slot={id} data-alt={text} data-credits="Li Micougni" style={ratio ? `aspect-ratio:${ratio}` : undefined}>
+  <img src={`${base}photos/${id}-${big}.webp`} srcset={srcset} sizes={sizes} width={big} height={p.sizes[big].h} alt={text} style={`object-position:${pos}`} loading={priority ? 'eager' : 'lazy'} decoding="async" fetchpriority={priority ? 'high' : undefined} />
+</figure>

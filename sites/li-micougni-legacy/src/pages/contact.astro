@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { resto, jours } from '../data/site';
+---
+<Base title="Contacter ou réserver chez Li Micougni, Rue des Brasseurs à Namur" description="Réservez une table ou organisez un évènement privé chez Li Micougni, Rue des Brasseurs 110 à Namur." page="contact">
+  <section class="stage" aria-labelledby="h-contact">
+    <div class="container contact">
+      <div class="contact__head">
+        <h1 id="h-contact">Contactez-nous</h1>
+        <p class="lead">Pour réserver une table ou organiser un évènement privé.</p>
+        <address class="lieu">
+          <p class="lieu__rue">{resto.adresse.rue}<br />{resto.adresse.ville}</p>
+          <p><a class="num" href={resto.tel.href}>{resto.tel.affiche}</a><br /><a href={`mailto:${resto.email}`}>{resto.email}</a></p>
+          <p><a href={resto.itineraire} rel="noopener">Itinéraire</a> <a href={resto.instagram} rel="noopener">Instagram</a> <a href={resto.facebook} rel="noopener">Facebook</a></p>
+        </address>
+        <dl class="sched sched--small">
+          {jours.map((j) => (
+            <div class:list={['sched__row', j.ferme && 'is-closed']}><dt>{j.jour}</dt><dd>{j.fill ? <span class="fill" data-fill="horaires">{j.fill}</span> : j.val}</dd></div>
+          ))}
+        </dl>
+      </div>
+      <form class="form" id="reserver" method="post" action="" data-endpoint="">
+        <h2>Réserver ou écrire</h2>
+        <div class="field"><label for="f-nom">Nom</label><input id="f-nom" name="nom" type="text" autocomplete="name" required /></div>
+        <div class="field"><label for="f-mail">Adresse e-mail</label><input id="f-mail" name="email" type="email" autocomplete="email" required /></div>
+        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="6" required></textarea></div>
+        <p class="actions"><button class="btn btn--primary" type="submit"><span>Envoyer le formulaire</span></button></p>
+        <p class="form__note">Formulaire de la maquette : il n’est pas encore relié à une adresse d’envoi.</p>
+      </form>
+    </div>
+  </section>
+  <section class="sec sec--m" aria-label="La salle">
+    <div class="container">
+      <Fig id="salle-fenetres" class="wide" ratio="21 / 9" sizes="100vw" pos="50% 55%" />
+    </div>
+  </section>
+</Base>
