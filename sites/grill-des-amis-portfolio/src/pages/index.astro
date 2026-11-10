@@ -62,7 +62,7 @@ const [mot1, ...reste] = site.nom.split(' ');
             {site.cuisson.couches.map((c, i) => (
               <li class="cuisson__item" data-deg={c.temp}>
                 <button type="button">
-                  <span class="num">0{i + 1}</span>
+                  <span class="num">{String(i + 1).padStart(2, "0")}</span>
                   <span>{c.nom}<span class="det">{c.detail}, {c.temp} °C</span></span>
                 </button>
               </li>
@@ -93,7 +93,7 @@ const [mot1, ...reste] = site.nom.split(' ');
       <ol class="plats">
         {grillades.map((p, i) => (
           <li class={`plat${p.photo ? ' plat--photo' : ''}`} data-photo={p.photo ? asset(p.photo) : undefined} data-reveal="fade" data-delay={String(i * 0.06)}>
-            <span class="plat__num">0{i + 1}</span>
+            <span class="plat__num">{String(i + 1).padStart(2, "0")}</span>
             {p.photo && <img class="plat__vignette" src={asset(p.photo)} alt="" width="200" height="200" loading="lazy" decoding="async" />}
             <span><span class="plat__nom">{p.nom}</span>{p.description && <span class="plat__desc muted">{p.description}</span>}</span>
             <span class="plat__prix">{p.prix ?? ''}</span>

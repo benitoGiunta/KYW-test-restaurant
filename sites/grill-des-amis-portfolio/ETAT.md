@@ -1,4 +1,4 @@
-# ETAT, Le Grill des amiS, portfolio (construction, phase 2 sur 3 terminée)
+# ETAT, Le Grill des amiS, portfolio (construction, phase 3 sur 3 terminée (QA))
 
 ## Fait (phase 1)
 - Gabarit Braise adapté, contenu complet de `src/data/site.ts`, 6 pages, photos WebP, OG, favicon (détails dans DESIGN.md).
@@ -25,3 +25,7 @@
 - `data-temp` est réservé aux sections (températures du driver) : pour une donnée d'étape, utiliser `data-deg`.
 - Le piège « lien vers la page courante = URL inchangée » fausse un test de clic sur l'en-tête.
 - La scène de cuisson reste faite de photos détourées (couteau et casserole débordent l'assiette) : limite de qualité connue.
+
+## Fait (phase 3)
+- QA lue (QA-build.md, planche home, 3 captures carte) : un défaut corrigé (numéros « 010 » -> « 10 », carte et accueil), vérifié après rebuild. RAPPORT.md écrit. Build final OK.
+- Reste : rien de bloquant ; voir RAPPORT.md (points ouverts).
