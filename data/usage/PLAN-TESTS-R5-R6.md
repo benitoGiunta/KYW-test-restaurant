@@ -240,6 +240,7 @@ Le socle par agent monte lentement (67 700 → 68 100 jetons), sans effet visibl
 | Moyenne Après 4 (7 à 14) | 17,25 $ | 5,75 $ | | | | 1,67 M | ≈ 0,9 M |
 | 15 · Le Servais | 17,34 $ | 5,78 $ | 5,34 $ | 5,71 $ | 4,24 $ | 1,60 M | 0,72 M |
 | 16 · Li Micougni | 18,40 $ | 6,13 $ | 3,92 $ | 6,57 $ | 5,86 $ | 1,65 M | 0,83 M |
+| 17 · Makimono | 21,69 $ | 7,23 $ | 7,55 $ | 6,78 $ | 4,92 $ | 1,86 M | 0,80 M |
 
 - Restaurant 15 conforme : 28 agents sur le bon modèle, test B 3/3, 0 F0 ou F1 en fin, max 38 réponses.
 - Premier effet du hook : lectures par cat −20 % environ, mais report sur des lectures par plages (sed, head, cat | head) ;
@@ -247,3 +248,7 @@ Le socle par agent monte lentement (67 700 → 68 100 jetons), sans effet visibl
 - Restaurant 16 conforme : 28 agents sur le bon modèle, test B 3/3 (revues 2 sur awwwards et legacy), 0 F0 ou F1 en fin,
   max 46 réponses. Après 5 sur 2 restaurants : 5,96 $ par site (+3,7 % sur Après 4), cat −12 %, sorties −3 %, contexte +3 %.
   Tendance : le hook ne fait pas économiser.
+- **Restaurant 17 : ALERTE coût (+25 % sur la moyenne Après 4) et qualité.** 33 agents (sur le bon modèle), revues 2 sur les
+  trois variantes, puis revue 3 du portfolio qui laisse 2 F1 ouverts (horaires rognés à toutes les largeurs, bento /carte/ à
+  1024 px). Premier site depuis le restaurant 3 qui finit avec des F1 ouverts. Portfolio à 7,55 $ (constructeur 53 réponses,
+  relecteur passe 3 46 réponses). Après 5 sur 3 restaurants : 6,38 $ par site (+11 % sur Après 4) ; cat −11 %, sorties +2 %.
