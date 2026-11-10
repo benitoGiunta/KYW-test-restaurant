@@ -1,4 +1,4 @@
-# ETAT : makimono-portfolio (fin de la phase 2 sur 3)
+# ETAT : makimono-portfolio (fin de la phase 3 sur 3, QA faite)
 
 ## Fait en phase 1
 - Gabarit affiche, contenu complet (carte.json, site.ts), 16 photos, pages `/`, `/carte/`, `/composer/`, `/commander/`, `/venir/`, `404`, KywFooter, noindex, mention maquette.
@@ -28,3 +28,6 @@
 
 ## Décisions et hypothèses (inchangées)
 - Téléphone +32 483 03 88 47 (site actuel) ; `restaurants.json` donne +32 495 90 82 74, à confirmer. Korean Futo « 10,50 à 11,00 € » (menu contradictoire). Placeholders : définition du nom, exemple de roll à 10,10 €. Avis : trois extraits Google via Restaurant Guru, note 4,6 sur 532 à confirmer. Pas de réservation en ligne.
+
+## Phase 3
+- Contraste des cartes d'horaires corrigé (encre sur rose), 0 axe sur l'accueil ; clics d'en-tête et bas de page vérifiés ; voir RAPPORT.md. Reste : revue, `pnpm index`, push.

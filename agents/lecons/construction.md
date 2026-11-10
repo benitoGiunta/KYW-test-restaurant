@@ -202,3 +202,4 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 ## 2026-11-10 · makimono · variante legacy (phase 3)
 - `sloplint --genre` n'accepte que editorial, modern-minimal, atmospheric, playful. `--kept` compare la cible du `--before` ; passer `.hallmark/site-actuel/index.html` en plus de `src` ajoute ses FAIL au total.
 - Une page sans favicon donne une erreur console 404 : `<link rel="icon">` en data URI dans le layout.
+- Piège : serve.mjs est dans .claude/skills/awwwards/scripts/ et meurt si on rebuild pendant qu'il tourne ; relancer après build (makimono, 10/11).
