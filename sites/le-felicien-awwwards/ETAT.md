@@ -34,3 +34,7 @@ Score jury indépendant (`/jury`), test tactile réel du curseur, `invisibleFocu
 Fait : REVUE-1.md écrit (verdict A_CORRIGER : 0 F0, 1 F1, 4 F2, 4 F3). Contrôles faits : axe complet 5 pages x 1440/390, console, liens, 68 plats contre donnees.json, état d'ouverture à 5 instants, clavier du curseur, menu, reduced-motion.
 Reste : le réviseur traite F1-1 (accents coupés par les masques SplitText, `engine.css:68`), F2-1 à F2-4, puis revue 2.
 Pièges : QA-revue1 limité à 3 pages et sa « 404 » est la réponse brute de serve.mjs ; scripts maison dans le scratchpad `felaw-r1-*`.
+
+## Revue 2 (relecteur-site, 10/11/2026)
+Fait : REVUE-2.md écrit (verdict PUBLIABLE : 0 F0, 0 F1, 0 F2, 4 F3 hérités). Les 5 corrections de REVISION-1 vérifiées (axe 10 cas, accents sur tous les h2, 404, grep dist). Reste : F3 optionnels (21 h 30, sitemap, hover couleur seule, étiquette du hero mobile).
+Pièges : QA-revue2 limité à 3 pages (accueil, carte, 404 brute) ; scripts maison `felaw-r2-*` dans le scratchpad ; la capture d'élément d'un h1 à line-height 0,84 coupe l'accent (artefact, vérifier par clip de page).
