@@ -101,7 +101,7 @@ const galerie = site.galerie.map((src, i) => ({ ...photoDe(src), num: String(i +
     <div class="wrap">
       <h2 id="marche-titre" class="display display--xl affiche__titre" data-split="words">En trois gestes</h2>
       <div class="etapes">
-        <ol data-cercles style="grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr)">
+        <ol data-cercles class="etapes__trois">
           {site.etapes.map((e) => <li><span class="cercle" aria-hidden="true"></span><div><strong>{e.titre}</strong><p>{e.texte}</p></div></li>)}
         </ol>
       </div>
@@ -134,7 +134,7 @@ const galerie = site.galerie.map((src, i) => ({ ...photoDe(src), num: String(i +
       <div class="avis" data-claque>
         {site.avis.map((a) => (
           <blockquote>
-            <p>« {a.texte} »</p>
+            <p>{a.note ? a.texte : `« ${a.texte} »`}</p>
             <cite>{a.auteur}<span>{a.source}</span></cite>
           </blockquote>
         ))}

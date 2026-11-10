@@ -15,7 +15,7 @@ export interface Categorie { categorie: string; format: 'bento' | 'liste'; note:
 export interface Option { nom: string; prix: string | null }
 export interface Groupe { titre: string; note: string; options: Option[] }
 export interface Menu { nom: string; prix: string; description: string; placeholder: boolean }
-export interface Avis { texte: string; auteur: string; source: string; date: string; placeholder: boolean }
+export interface Avis { note?: boolean; texte: string; auteur: string; source: string; date: string; placeholder: boolean }
 export interface Photo { src: string; alt: string; largeur: number; hauteur: number; placeholder: boolean }
 export interface Reseau { nom: string; url: string }
 export interface Couche { numero: string; nom: string; detail: string }
@@ -118,14 +118,14 @@ export const site: Restaurant = {
   ],
   etapes: [
     { titre: 'Composez', texte: 'Un roll signature de la carte, ou le vôtre : base, protéine, fillings, toppings, sauces.' },
-    { titre: 'Commandez', texte: 'Sur place, en ligne pour le retrait ou la livraison, ou par téléphone.' },
+    { titre: 'Commandez', texte: 'Sur place, ou en ligne pour le retrait ou la livraison.' },
     { titre: 'Dégustez', texte: 'Rapide et frais, à table rue Saint-Loup ou chez vous.' },
   ],
   traiteur: { titre: 'Traiteur et événements', texte: 'Makimono prépare vos événements et livre dans un rayon de 30 km. Écrivez-nous pour en parler.' },
   avis: [
     { texte: 'Exceptionnel.', auteur: 'Aaron L.', source: 'Avis Google, via Restaurant Guru', date: '2026', placeholder: false },
-    { texte: `Nourriture 5 sur 5, service 5 sur 5, ambiance 4 sur 5. Commande à emporter, dîner, 20 à 30${NB}€ par personne.`, auteur: 'Ezéchiel W.', source: 'Avis Google, via Restaurant Guru', date: '2026', placeholder: false },
-    { texte: `Nourriture 4 sur 5, service 4 sur 5, ambiance 4 sur 5. Sur place, déjeuner, 20 à 30${NB}€ par personne.`, auteur: 'Geys_70', source: 'Avis Google, via Restaurant Guru', date: '2026', placeholder: false },
+    { note: true, texte: `Nourriture 5 sur 5, service 5 sur 5, ambiance 4 sur 5. Commande à emporter, dîner, 20 à 30${NB}€ par personne.`, auteur: 'Ezéchiel W.', source: 'Avis Google, via Restaurant Guru', date: '2026', placeholder: false },
+    { note: true, texte: `Nourriture 4 sur 5, service 4 sur 5, ambiance 4 sur 5. Sur place, déjeuner, 20 à 30${NB}€ par personne.`, auteur: 'Geys_ 70', source: 'Avis Google, via Restaurant Guru', date: '2026', placeholder: false },
   ],
   noteGoogle: { note: '4,6', nombre: '532', source: 'Google, d’après Restaurant Guru (à confirmer)' },
   photos: [

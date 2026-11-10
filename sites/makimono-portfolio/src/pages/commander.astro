@@ -9,7 +9,7 @@ const boxes = site.menus.map((m) => ({ nom: m.nom, description: m.description, p
 <Base title="Commander" description={`Commander chez ${site.nom} à ${site.adresse.commune} : en ligne pour le retrait ou la livraison, Fast Box, Creative Box, traiteur et événements dans un rayon de 30 km.`} fin="vert">
   <Affiche tone="jaune" plein label="titre">
     <div class="wrap">
-      <h1 id="titre" class="display display--mega affiche__titre" data-split="chars" data-intro>Commander</h1>
+      <h1 id="titre" class="display display--mega display--mot affiche__titre" data-split="chars" data-intro>Commander</h1>
       <p class="lead">Retrait ou livraison : les rolls et les bowls de la carte, chez vous.</p>
       <div class="actions hero__actions" data-reveal="up" data-intro data-delay="0.5">
         {site.commande.map((c, i) => <a class:list={['btn', i === 0 && 'btn--primary']} href={c.url} rel="noopener">{c.nom}</a>)}
@@ -21,7 +21,7 @@ const boxes = site.menus.map((m) => ({ nom: m.nom, description: m.description, p
     <div class="wrap">
       <h2 id="etapes-titre" class="display display--xl affiche__titre" data-split="words">En trois gestes</h2>
       <div class="etapes">
-        <ol data-cercles style="grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr)">
+        <ol data-cercles class="etapes__trois">
           {site.etapes.map((e) => <li><span class="cercle" aria-hidden="true"></span><div><strong>{e.titre}</strong><p>{e.texte}</p></div></li>)}
         </ol>
       </div>
