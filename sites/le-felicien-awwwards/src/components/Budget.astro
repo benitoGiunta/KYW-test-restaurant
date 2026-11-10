@@ -1,0 +1,17 @@
+---
+// Signature « L'échelle » : un vrai <input type="range"> (clavier, lecteur d'écran, toucher) posé sur la règle.
+// L'épingle jaune suit la valeur par crans (motion/echelle.ts) ; sans script, le curseur reste utilisable.
+import Echelle from './Echelle.astro';
+import { ECHELLE_MAX, eur, phraseBudget } from '../data/site';
+interface Props { id: string; valeur?: number; legende: string; cible: string }
+const { id, valeur = 25, legende, cible } = Astro.props;
+---
+<div class="budget" data-budget data-cible={cible} style={`--prix:${valeur}`}>
+  <label class="budget__label" for={id}>{legende}</label>
+  <div class="budget__piste">
+    <Echelle classe="budget__regle" />
+    <span class="budget__pin" aria-hidden="true"><b data-budget-chiffre>{eur(valeur)}</b></span>
+    <input class="budget__input" id={id} type="range" min="0" max={ECHELLE_MAX} step="1" value={valeur} aria-valuetext={`${valeur} euros`} aria-describedby={`${id}-phrase`} />
+  </div>
+  <p class="budget__phrase" id={`${id}-phrase`} aria-live="polite" data-budget-phrase>{phraseBudget(valeur)}</p>
+</div>

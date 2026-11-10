@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Echelle from '../components/Echelle.astro';
 import Photo from '../components/Photo.astro';
+import Budget from '../components/Budget.astro';
 import { u } from '../lib/url';
 import { site, ancres, pourTous, classiques, services, horairesNote } from '../data/site';
 ---
@@ -21,7 +22,7 @@ import { site, ancres, pourTous, classiques, services, horairesNote } from '../d
         <figcaption>Photo d’archive de 2020, illustrative. Photos : Le Félicien.</figcaption>
       </figure>
       <div class="hero__regle">
-        <Echelle pins={ancres.map((a) => ({ prix: a.prix, label: a.label }))} />
+        <Echelle pins={ancres.map((a) => ({ prix: a.prix, label: a.label }))} lecture />
         <ul class="hero__legende">{ancres.map((a) => <li><b>{a.court}</b> {a.label}</li>)}</ul>
       </div>
     </div>
@@ -29,10 +30,11 @@ import { site, ancres, pourTous, classiques, services, horairesNote } from '../d
 
   <section class="pourtous" aria-labelledby="t-pourtous">
     <div class="wrap">
-      <h2 id="t-pourtous" class="display titre-l">À chacun son budget</h2>
+      <h2 id="t-pourtous" class="display titre-l" data-split="lines">À chacun son budget</h2>
+      <Budget id="budget-accueil" legende="Placez votre budget sur la règle" cible=".rang" />
       <ol class="rangs">
         {pourTous.map((r) => (
-          <li class="rang">
+          <li class="rang" data-prix={r.min}>
             <h3 class="rang__titre display">{r.titre}</h3>
             <p class="rang__phrase">{r.phrase}</p>
             <p class="rang__prix">{r.texte}</p>
@@ -47,13 +49,13 @@ import { site, ancres, pourTous, classiques, services, horairesNote } from '../d
   <section class="classiques" aria-labelledby="t-classiques">
     <div class="wrap classiques__grille">
       <div class="classiques__texte">
-        <h2 id="t-classiques" class="display titre-xl">Les grands classiques, sans détour.</h2>
+        <h2 id="t-classiques" class="display titre-xl" data-split="lines">Les grands classiques, sans détour.</h2>
         <p>Croquettes, boulets à la liégeoise, vol-au-vent maison : une cuisine lisible et généreuse. Les frites sont fraîches, cuites à la graisse de bœuf.</p>
-        <ul class="liste-prix">
+        <ul class="liste-prix" data-reveal="up">
           {classiques.map((c) => <li><span class="liste-prix__nom">{c.nom}<span class="liste-prix__note">{c.note}</span></span><span class="liste-prix__prix">{c.prix}</span></li>)}
         </ul>
       </div>
-      <figure class="classiques__media">
+      <figure class="classiques__media" data-reveal="clip">
         <Photo cle="couverture" widths={[480, 800, 1200]} sizes="(min-width: 60rem) 34vw, 92vw" />
         <figcaption>Illustration de la couverture de la carte d’automne 2026.</figcaption>
       </figure>
@@ -62,9 +64,9 @@ import { site, ancres, pourTous, classiques, services, horairesNote } from '../d
 
   <section class="heures" aria-labelledby="t-heures">
     <div class="wrap">
-      <h2 id="t-heures" class="display titre-l">Deux services, tous les jours.</h2>
+      <h2 id="t-heures" class="display titre-l" data-split="lines">Deux services, tous les jours.</h2>
       <div class="heures__grille">
-        <ul class="heures__liste">
+        <ul class="heures__liste" data-reveal="up">
           {services.map((s) => <li><span class="heures__jours">{s.jours}</span><span class="heures__h">{s.midi}<br />{s.soir}</span></li>)}
         </ul>
         <p class="heures__note">{horairesNote}</p>
@@ -74,7 +76,7 @@ import { site, ancres, pourTous, classiques, services, horairesNote } from '../d
 
   <section class="groupes" aria-labelledby="t-groupes">
     <div class="wrap groupes__grille">
-      <h2 id="t-groupes" class="display titre-xl">Au premier étage, la table s’allonge.</h2>
+      <h2 id="t-groupes" class="display titre-xl" data-split="lines">Au premier étage, la table s’allonge.</h2>
       <div class="groupes__texte">
         <p>Dîners, banquets et réceptions : les menus démarrent à 27&nbsp;€ hors boissons et se combinent avec les salles du Business Village Ecolys.</p>
         <p><a class="cta cta--or" href={`mailto:${site.emailEvenements}`}><span class="cta__txt">Écrire à l’équipe événements</span></a></p>

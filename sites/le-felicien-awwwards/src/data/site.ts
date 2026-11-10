@@ -76,3 +76,17 @@ export const carte = carteJson as Bloc[];
 export const groupes = [...new Set(carte.map((b) => b.groupe))];
 export const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 export const eur = (n: number) => `${String(n).replace('.', ',')}${N}€`;
+
+// Curseur de budget (signature) : phrase calculée depuis la carte réelle, même texte au serveur et au client.
+export const lignes = carte.flatMap((b) => b.plats);
+export function phraseBudget(budget: number) {
+  const dedans = lignes.filter((p) => p.prix <= budget);
+  if (!dedans.length) {
+    const min = Math.min(...lignes.map((p) => p.prix));
+    return `Avec ${eur(budget)}, rien encore : la première graduation de la carte est à ${eur(min)}.`;
+  }
+  const n = dedans.length === lignes.length ? `Toute la carte, ${lignes.length}${N}lignes,` : `${dedans.length}${N}lignes de la carte sur ${lignes.length}`;
+  const repere = [...ancres].reverse().find((a) => a.prix <= budget);
+  const fin = repere ? ` Repère : ${repere.label.charAt(0).toLowerCase()}${repere.label.slice(1)}, ${repere.court}.` : '';
+  return `Avec ${eur(budget)}, ${n} ${dedans.length === lignes.length ? 'est' : 'sont'} à votre portée.${fin}`;
+}

@@ -2,18 +2,19 @@
 // La règle : 0 à 40 €, un trait par euro, un trait long tous les 5 €, un chiffre tous les 10 €.
 // Décorative (aria-hidden) : l'information est toujours dans le texte voisin.
 import { ECHELLE_MAX, eur } from '../data/site';
-interface Props { pins?: { prix: number; texte?: string; label?: string }[]; plage?: [number, number]; points?: number[]; classe?: string; chiffres?: boolean }
-const { pins = [], plage, points = [], classe = '', chiffres = true } = Astro.props;
+interface Props { pins?: { prix: number; texte?: string; label?: string }[]; plage?: [number, number]; points?: number[]; classe?: string; chiffres?: boolean; lecture?: boolean }
+const { pins = [], plage, points = [], classe = '', chiffres = true, lecture = false } = Astro.props;
 const pc = (n: number) => `${(n / ECHELLE_MAX) * 100}%`;
 ---
 <div class:list={['echelle', classe]} aria-hidden="true" style={`--max:${ECHELLE_MAX}`}>
   {plage && <span class="echelle__plage" style={`left:${pc(plage[0])};width:max(${pc(plage[1] - plage[0])}, 3px)`}></span>}
-  {points.map((p) => <span class="echelle__point" style={`left:${pc(p)}`}></span>)}
+  {points.map((p) => <span class="echelle__point" data-prix={p} style={`left:${pc(p)}`}></span>)}
   {pins.map((p) => (
     <span class:list={['echelle__pin', p.prix > 34 && 'echelle__pin--droite']} style={`left:${pc(p.prix)}`}>
       <b>{p.texte ?? eur(p.prix)}</b>{p.label && <span class="echelle__label">{p.label}</span>}
     </span>
   ))}
   <span class="echelle__traits"></span>
+  {lecture && <span class="echelle__lecture"><i>0</i></span>}
   {chiffres && <span class="echelle__chiffres">{[0, 10, 20, 30, 40].map((n) => <span style={`left:${pc(n)}`}>{n}</span>)}</span>}
 </div>

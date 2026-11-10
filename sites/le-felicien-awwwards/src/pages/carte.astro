@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Echelle from '../components/Echelle.astro';
+import Budget from '../components/Budget.astro';
 import { u } from '../lib/url';
 import { carte, groupes, slug, eur, site } from '../data/site';
 const par = groupes.map((g) => ({ g, blocs: carte.filter((b) => b.groupe === g) }));
@@ -11,6 +12,7 @@ const par = groupes.map((g) => ({ g, blocs: carte.filter((b) => b.groupe === g) 
       <h1 id="titre" class="display titre-mega entete__titre">La carte</h1>
       <p class="entete__texte">Carte d’automne 2026, édition du 2&nbsp;novembre. Chaque rubrique porte sa règle : un point par plat, placé à son prix, de 0 à 40&nbsp;€.</p>
       <p class="entete__midi"><b>Suggestions de la semaine</b>, du mardi au vendredi midi : entrée et plat 25&nbsp;€, plat seul 18&nbsp;€. Le lundi midi, cuisine du marché décidée le jour même.</p>
+      <Budget id="budget-carte" valeur={40} legende="Votre budget par ligne" cible=".plat" />
       <nav class="entete__nav" aria-label="Rubriques de la carte">
         <ul>{groupes.map((g) => <li><a class="nl" href={`#${slug(g)}`}>{g}</a></li>)}</ul>
       </nav>
@@ -20,14 +22,14 @@ const par = groupes.map((g) => ({ g, blocs: carte.filter((b) => b.groupe === g) 
   {par.map(({ g, blocs }) => (
     <section class="rubrique" id={slug(g)} aria-labelledby={`t-${slug(g)}`}>
       <div class="wrap">
-        <h2 id={`t-${slug(g)}`} class="display titre-xl rubrique__titre">{g}</h2>
+        <h2 id={`t-${slug(g)}`} class="display titre-xl rubrique__titre" data-split="lines">{g}</h2>
         {blocs.map((b) => (
           <div class="bloc">
             {blocs.length > 1 && <h3 class="bloc__titre display">{b.titre}</h3>}
             <Echelle classe="bloc__regle" points={b.plats.map((p) => p.prix)} chiffres={false} />
             <ul class="plats">
               {b.plats.map((p) => (
-                <li class="plat">
+                <li class="plat" data-prix={p.prix}>
                   <span class="plat__nom">{p.nom}</span>
                   <span class="plat__prix">{eur(p.prix)}</span>
                   {(p.description || p.detail) && <span class="plat__desc">{[p.description, p.detail].filter(Boolean).join(' · ')}</span>}

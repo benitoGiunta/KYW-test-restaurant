@@ -15,20 +15,20 @@ section { padding-block: var(--normal); }
 .tete__marque { display: block; padding-block: 0.2rem; }
 .tete ul { display: flex; align-items: center; gap: clamp(0.9rem, 0.3rem + 2vw, 2rem); list-style: none; padding: 0; }
 .nl { display: inline-block; padding-block: 0.75rem; font-weight: 600; font-size: var(--t-s); background: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 6px) left bottom / 0% 6px no-repeat; transition: background-size 0.4s steps(8); }
-.nl:hover, .nl[aria-current] { background-size: 100% 6px; }
+.nl:focus-visible, .nl[aria-current] { background-size: 100% 6px; }
 
 /* Boutons et liens */
 .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: 0.7rem 1.3rem; border: 1.5px solid currentColor; font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; background: linear-gradient(var(--c-fg), var(--c-fg)) no-repeat left / 0% 100%; transition: background-size 0.4s steps(8), color 0.4s steps(8); }
-.cta:hover { background-size: 100% 100%; color: var(--c-bg); }
+.cta:focus-visible { background-size: 100% 100%; color: var(--c-bg); }
 .cta--or { background-color: var(--c-accent); border-color: var(--c-accent); color: var(--c-fg); }
-.cta--or:hover { color: var(--c-accent); border-color: var(--c-fg); }
-.cta--petit { min-height: 2.5rem; padding: 0.4rem 0.9rem; font-size: 1.1rem; }
+.cta--or:focus-visible { color: var(--c-accent); border-color: var(--c-fg); }
+.cta--petit { min-height: 2.75rem; padding: 0.4rem 0.9rem; font-size: 1.1rem; }
 .cta[aria-current] { outline: 2px solid var(--c-fg); outline-offset: 2px; }
-.sombre .cta:hover, .heures .cta:hover, .groupes .cta:hover, .pied .cta:hover { color: var(--c-curtain); }
+.sombre .cta:focus-visible, .heures .cta:focus-visible, .groupes .cta:focus-visible, .pied .cta:focus-visible { color: var(--c-curtain); }
 .groupes .cta, .pied .cta, .heures .cta { background-image: linear-gradient(var(--c-sombre-fg), var(--c-sombre-fg)); }
-.groupes .cta--or:hover, .pied .cta--or:hover { color: var(--c-accent); background-image: linear-gradient(var(--c-fg), var(--c-fg)); border-color: var(--c-sombre-fg); }
+.groupes .cta--or:focus-visible, .pied .cta--or:focus-visible { color: var(--c-accent); background-image: linear-gradient(var(--c-fg), var(--c-fg)); border-color: var(--c-sombre-fg); }
 .lien { display: inline-block; padding-block: 0.7rem; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.25em; font-weight: 600; transition: text-underline-offset 0.3s, text-decoration-color 0.3s; }
-.lien:hover { text-underline-offset: 0.45em; text-decoration-thickness: 2px; }
+.lien:focus-visible { text-underline-offset: 0.45em; text-decoration-thickness: 2px; }
 
 /* La règle */
 .echelle { position: relative; height: 9.5rem; color: var(--c-fg); }
@@ -192,3 +192,108 @@ address { font-style: normal; }
 }
 @media (max-width: 40rem) { .tete .nl { font-size: var(--t-xs); } .tete ul { gap: 0.6rem; } .cta { width: 100%; } .cta--petit { width: auto; } .heures__h { text-align: left; } }
 @media (max-width: 40rem) { .hero__titre { font-size: calc((100vw - 2 * var(--gutter)) / 4.05); } }
+
+/* Survol réservé aux pointeurs fins ; le même état est porté par :focus-visible ci-dessus. */
+@media (hover: hover) {
+  .nl:hover { background-size: 100% 6px; }
+  .cta:hover { background-size: 100% 100%; color: var(--c-bg); }
+  .cta--or:hover { color: var(--c-accent); border-color: var(--c-fg); }
+  .sombre .cta:hover, .heures .cta:hover, .groupes .cta:hover, .pied .cta:hover { color: var(--c-curtain); }
+  .groupes .cta--or:hover, .pied .cta--or:hover { color: var(--c-accent); background-image: linear-gradient(var(--c-fg), var(--c-fg)); border-color: var(--c-sombre-fg); }
+  .lien:hover { text-underline-offset: 0.45em; text-decoration-thickness: 2px; }
+}
+
+/* ---- Phase 2 : états, signature, menu, repos, rideau ---- */
+:root { --focus: var(--c-accent-texte); }
+.heures, .groupes, .pied, .menu, .sombre { --focus: var(--c-accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 0; }
+::selection { background: var(--c-accent); color: var(--c-fg); }
+.cta:active { translate: 0 1px; }
+.nl:active { background-size: 100% 3px; }
+.lien:active { text-underline-offset: 0.15em; }
+.kyw-footer__link:focus-visible { text-decoration: underline; }
+@media (hover: hover) { .kyw-footer__link:hover { text-decoration: underline; } }
+
+/* Utilitaire (téléphone du pied) : inversion par crans */
+.pied__tel { padding-inline: 0.3em; margin-inline: -0.3em; transition: background-color 0.3s steps(4), color 0.3s steps(4); }
+.pied__tel:focus-visible, .pied__tel:active { background: var(--c-sombre-fg); color: var(--c-sombre); }
+@media (hover: hover) { .pied__tel:hover { background: var(--c-sombre-fg); color: var(--c-sombre); } }
+
+/* En-tête : état d'ouverture et bouton Menu */
+.tete__marque { margin-right: auto; }
+.etat { display: inline-flex; align-items: center; gap: 0.5em; font-size: var(--t-xs); font-weight: 600; color: var(--c-muted); white-space: nowrap; }
+.etat::before { content: ''; width: 0.6rem; height: 0.6rem; border: 1.5px solid currentColor; }
+.etat.est-ouvert::before { background: var(--c-accent); border-color: var(--c-fg); }
+.etat[hidden], .tete__etat[hidden] { display: none; }
+.menu-bouton { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.4rem 0.9rem; border: 1.5px solid currentColor; font-family: var(--f-display); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; transition: background-color 0.3s steps(4), color 0.3s steps(4); }
+.menu-bouton:focus-visible, .menu-bouton:active { background: currentColor; }
+.menu-bouton:focus-visible { background: var(--c-fg); color: var(--c-bg); }
+.menu .menu-bouton:focus-visible { background: var(--c-sombre-fg); color: var(--c-sombre); }
+@media (hover: hover) { .menu-bouton:hover { background: var(--c-fg); color: var(--c-bg); } .menu .menu-bouton:hover { background: var(--c-sombre-fg); color: var(--c-sombre); } }
+.tete__bouton { display: none; }
+@media (max-width: 63.99rem) { .tete__etat { display: none; } }
+@media (max-width: 47.99rem) { .tete__lien { display: none; } .tete__bouton { display: block; } }
+
+/* Menu plein écran (<dialog>) */
+.menu { position: fixed; inset: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: var(--u) var(--gutter) var(--gutter); border: 0; background: var(--c-sombre); color: var(--c-sombre-fg); overscroll-behavior: contain; }
+.menu[open] { display: flex; flex-direction: column; gap: var(--serre); }
+.menu::backdrop { background: var(--c-sombre); }
+.menu__haut { display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 3.4rem; }
+.menu .etat { color: var(--c-sombre-muted); }
+.menu .etat.est-ouvert::before { border-color: var(--c-sombre-fg); }
+.menu__nav ul { list-style: none; padding: 0; border-top: 2px solid var(--c-sombre-fg); }
+.menu__lien { display: block; padding-block: 0.6rem 0.4rem; font-size: clamp(2.6rem, 14vw, 4.5rem); line-height: 1; border-bottom: 1px solid var(--c-sombre-line); }
+.menu__lien[aria-current] { color: var(--c-accent); }
+.menu__lien:focus-visible { outline-offset: -2px; }
+.menu .echelle { color: var(--c-sombre-fg); }
+.menu__regle { height: 2.6rem; margin-top: auto; }
+.menu__regle .echelle__traits { height: 1.2rem; }
+.menu .cta { width: 100%; min-height: 3.2rem; }
+.menu__adresse { color: var(--c-sombre-muted); font-size: var(--t-s); }
+html.menu-ouvert { overflow: hidden; }
+
+/* Rideau : la règle jaune traverse le vert */
+.curtain__regle { position: absolute; left: var(--gutter); right: var(--gutter); top: calc(50% - 1rem); height: 2rem; color: var(--c-accent); border-bottom: 2px solid currentColor; clip-path: inset(0 100% 0 0);
+  background:
+    linear-gradient(90deg, currentColor 2px, transparent 2px) 0 100% / 25% 100% repeat-x,
+    linear-gradient(90deg, currentColor 1px, transparent 1px) 0 100% / 12.5% 65% repeat-x,
+    linear-gradient(90deg, currentColor 1px, transparent 1px) 0 100% / 2.5% 35% repeat-x; }
+
+/* Repos : trait de lecture de la règle du hero (affiché seulement quand le pilote tourne) */
+.hero__regle { cursor: crosshair; }
+.echelle__lecture { position: absolute; left: 0; bottom: 0; height: 100%; width: 2px; margin-left: -1px; background: var(--c-accent-texte); display: none; pointer-events: none; }
+.motion .echelle__lecture.est-actif { display: block; }
+.echelle__lecture i { position: absolute; top: 0; left: 6px; padding: 0.15em 0.4em 0.1em; background: var(--c-fg); color: var(--c-bg); font-style: normal; font-family: var(--f-display); font-weight: 700; font-size: 1rem; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.echelle__lecture.a-droite i { left: auto; right: 6px; }
+.echelle__pin { z-index: 1; }
+
+/* Signature : curseur de budget */
+.budget { display: grid; gap: var(--u); max-width: 64rem; margin-top: var(--serre); }
+.budget__label { font-weight: 700; font-size: var(--t-s); text-transform: uppercase; letter-spacing: 0.06em; }
+.budget__piste { position: relative; padding-top: 3rem; }
+.budget__regle { height: 2.6rem; }
+.budget__regle .echelle__traits { height: 1.5rem; }
+.budget__pin { position: absolute; top: 0; bottom: 1.6rem; left: calc(var(--prix) / 40 * 100%); width: 0; pointer-events: none; }
+.budget__pin b { position: absolute; top: 0; left: 0; translate: calc(var(--prix) / 40 * -100%) 0; padding: 0.15em 0.5em 0.1em; background: var(--c-accent); color: var(--c-fg); font-family: var(--f-display); font-weight: 800; font-size: 1.6rem; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; transition: background-color 0.3s steps(3), color 0.3s steps(3); }
+.budget__pin::after { content: ''; position: absolute; left: -1.5px; top: 1.9rem; bottom: 0; width: 3px; background: currentColor; }
+.budget__input { position: absolute; inset: 0 0 1.6rem; width: 100%; height: auto; margin: 0; opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; background: transparent; }
+.budget__input::-webkit-slider-thumb { -webkit-appearance: none; width: 2px; height: 4rem; }
+.budget__input::-moz-range-thumb { width: 2px; height: 4rem; border: 0; }
+.budget__piste:has(:focus-visible) { outline: 2px solid var(--focus); outline-offset: 6px; }
+.budget__piste:has(:focus-visible) .budget__pin b, .budget__piste:active .budget__pin b { background: var(--c-fg); color: var(--c-accent); }
+@media (hover: hover) { .budget__piste:hover .budget__pin b { background: var(--c-fg); color: var(--c-accent); } }
+.budget__phrase { font-size: var(--t-m); line-height: 1.3; font-weight: 500; max-width: 42rem; min-height: 2.6em; }
+.entete .budget { margin-top: 0; }
+.rang, .plat { transition: color 0.3s steps(3); }
+.rang.est-hors, .plat.est-hors { color: var(--c-muted); }
+.rang.est-hors .rang__prix, .plat.est-hors .plat__prix { text-decoration: line-through; text-decoration-thickness: 2px; }
+.rang.est-hors .echelle__plage { background: var(--c-line); }
+.echelle__point.est-hors { background: transparent; }
+
+/* Carte : le curseur de rubrique se place au prix du plat survolé */
+.echelle__curseur { position: absolute; bottom: 0; left: calc(var(--p, 0) / 40 * 100%); width: 3px; height: 100%; margin-left: -1.5px; background: var(--c-fg); opacity: 0; transition: opacity 0.2s steps(2); pointer-events: none; }
+.echelle__curseur.est-visible { opacity: 1; }
+.plat__prix { padding-inline: 0.2em; margin-inline-end: -0.2em; transition: background-color 0.2s steps(2); }
+@media (hover: hover) { .plat:hover .plat__prix { background: var(--c-accent); color: var(--c-fg); } }
+@media (max-width: 63.99rem) { .hero .echelle { height: 5.5rem; } }
+@media (min-width: 64rem) { .hero__legende { display: none; } }

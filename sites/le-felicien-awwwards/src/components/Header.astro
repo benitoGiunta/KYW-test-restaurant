@@ -1,18 +1,40 @@
 ---
+import Echelle from './Echelle.astro';
 import { u, asset } from '../lib/url';
+import { site, services } from '../data/site';
 const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
+const horaires = JSON.stringify(services.map((s) => ({ j: s.schema, h: [[s.o1, s.c1], [s.o2, s.c2]] })));
 ---
-<header class="tete">
-  <a class="tete__marque" href={base} aria-label="Le Félicien, brasserie, accueil" aria-current={path === base ? 'page' : undefined}>
+<header class="tete" data-services={horaires}>
+  <a class="tete__marque" href={base} aria-label="Le Félicien, accueil" aria-current={path === base ? 'page' : undefined}>
     <span class="tete__logo" style={`--logo:url(${asset('/05-logo.svg')})`} aria-hidden="true"></span>
   </a>
+  <p class="tete__etat etat" data-etat hidden></p>
   <nav class="tete__nav" aria-label="Navigation principale">
     <ul>
-      <li><a class="nl" href={u('/carte/')} aria-current={courant('/carte/')}>La carte</a></li>
-      <li><a class="nl" href={u('/histoire/')} aria-current={courant('/histoire/')}>La maison</a></li>
+      <li class="tete__lien"><a class="nl" href={u('/carte/')} aria-current={courant('/carte/')}>La carte</a></li>
+      <li class="tete__lien"><a class="nl" href={u('/histoire/')} aria-current={courant('/histoire/')}>La maison</a></li>
       <li><a class="cta cta--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="cta__txt">Réserver</span></a></li>
+      <li class="tete__bouton"><button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button></li>
     </ul>
   </nav>
 </header>
+<dialog id="menu" class="menu" aria-label="Menu">
+  <div class="menu__haut">
+    <p class="etat" data-etat hidden></p>
+    <button class="menu-bouton" type="button" data-menu-fermer>Fermer</button>
+  </div>
+  <nav class="menu__nav" aria-label="Menu du site">
+    <ul>
+      <li><a class="menu__lien display" href={base} aria-current={path === base ? 'page' : undefined}>Accueil</a></li>
+      <li><a class="menu__lien display" href={u('/carte/')} aria-current={courant('/carte/')}>La carte</a></li>
+      <li><a class="menu__lien display" href={u('/histoire/')} aria-current={courant('/histoire/')}>La maison</a></li>
+      <li><a class="menu__lien display" href={u('/reservation/')} aria-current={courant('/reservation/')}>Réserver</a></li>
+    </ul>
+  </nav>
+  <Echelle classe="menu__regle" />
+  <p class="menu__contact"><a class="cta cta--or" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a></p>
+  <address class="menu__adresse">{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</address>
+</dialog>

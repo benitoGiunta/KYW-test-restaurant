@@ -47,7 +47,7 @@ Test de l'échange : B marche pour n'importe quelle table ouverte (portabilité 
 2. [x] Aucun exemple travaillé de concepts.md (ni braise, pavage, gril, cadre, solde courant, phrase unique).
 3. [x] Concept Card au format exact, verbe « jauger » défini : § Concept Card.
 4. [x] Concept au pied (`Footer.astro` : règle + « Venez comme vous êtes. »), à la carte (`carte.astro` : `Echelle` par bloc), à la réservation (horaires en colonnes, même règle de filets), à la 404 (`404.astro` : épingle hors échelle).
-5. [x] Moment signature et recette : curseur de budget (motion.md scrub/snap), à construire en phase 2 ; le marquage (épingles, `Echelle.astro`) est en place.
+5. [x] Moment signature et recette : curseur de budget construit en phase 2 (`components/Budget.astro`, `motion/echelle.ts` `initBudget`), sur l'accueil et sur la carte.
 6. [x] Palette 6 rôles, références nommées : § Système, `tokens.css`.
 7. [x] Aucun des 8 « defaults to avoid » (ni crème serif terracotta, ni acide sur noir, ni dégradé violet, ni verre dépoli, ni eyebrow sur chaque titre, ni 01/02/03, ni Inter/Fraunces/Instrument/Playfair).
 8. [x] Test de généricité fait : § Système.
@@ -61,3 +61,34 @@ Test de l'échange : B marche pour n'importe quelle table ouverte (portabilité 
 16. [x] Une famille de section au plus une fois par page (accueil : poster, index, paire, données, énoncé, pied).
 17. [x] Hero en 3 s : nom, « une brasserie pour tous », Suarlée Namur, CTA « Réserver » et « Appeler » visibles à 1440×900 (cta à y = 795 avant agrandissement du titre, recontrôle en phase 2).
 18. [x] Mobile 390 recomposé : titre à 24 vw, colonnes uniques, légende sous la règle, CTA pleine largeur ; `scrollWidth` 390 sur les 5 pages.
+
+### Phase 2 (construction-2)
+Signature livrée : un vrai `<input type="range">` 0 à 40 € posé sur la règle (clavier, toucher, lecteur d'écran, utilisable sans script) ; l'épingle jaune rejoint la valeur en passant chaque cran (`steps(n)`, n = nombre d'euros parcourus) ; la phrase est calculée depuis la carte réelle (`phraseBudget()` dans `site.ts`, même texte au serveur et au client, annoncée par `aria-live`) ; au-delà du budget, les rangs (accueil) ou les plats (carte) passent en vert de gris avec prix biffé (pas d'opacité : contraste AA conservé). Sur la carte, survoler un plat place le curseur de sa rubrique à son prix. Le hero porte un trait de lecture qui parcourt la règle en 18 s, cran par cran, et que le pointeur reprend.
+
+19. [x] Menu mobile : `Header.astro:20` bouton « Menu » `aria-expanded`, `Header.astro:24` `<dialog>` plein écran (focus piégé et Échap natifs de `showModal`), `menu.ts:61` focus rendu au bouton ; contrôlé par script Playwright à 390 px (ouvert `true/true`, 9 Tab restent dans le menu, Échap ferme, focus sur « Menu »).
+20. [x] Engine verbatim (copié en phase 1, sans lignes GL), `engine/astro.ts`, `Base.astro:74` `transition:persist` sur `#curtain` (pas de `#gl` ni de `#cursor` : sans objet), `Base.astro:37` `transition:animate="none"`.
+21. [x] Une horloge : `echelle.ts:49` `gsap.ticker.add` ; grep de `addEventListener('scroll'` et `requestAnimationFrame` dans `src/motion`, `src/components`, `src/pages` : aucun résultat.
+22. [x] Code de page dans `onPage()` avec nettoyage : `echelle.ts:145`, `menu.ts:86` (listeners, ticker, IntersectionObserver, minuteur et curseurs retirés au retour).
+23. [x] Aucune CSS `transform` sur élément animé : les épingles (CSS `translateX`) ne reçoivent que `clipPath`, leur `<b>` reçoit `y` ; le trait de lecture, les liens du menu et le `<dialog>` n'ont pas de `transform` CSS ; le curseur de budget passe par `--prix` (aucun tween de transform).
+24. [x] Module pilote `motion/echelle.ts` : variable unique le prix (0 à 40 €, au cran), `startIdle()` (l. 16), influence du pointeur sur la règle du hero (l. 45), appelé une fois depuis `motion/setup.ts`.
+25. [x] Loader : non, décision écrite (Concept Card § Théâtre) ; aucun composant ni `role="status"`.
+26. [x] Transition du concept : rideau vert tiré par `ease.inOut`, règle jaune tracée en `steps(40)` ; sortie 0,67 s, entrée 0,6 s (`setup.ts:15-23`). Capture en cours de transition vérifiée (rideau + règle à mi-course).
+27. [~] Intro : la règle du hero se trace en 40 crans, chiffres puis épingles tombent (timeline `intro`, `initTrace`) ; titre et accroche du hero laissés peints pour le LCP (leçon construction). Premier frame à juger par l'agent captures.
+28. [x] Épinglages : aucun (sans objet).
+29. [x] Repli statique : sans `.motion`, le trait de lecture est masqué (`site.css:265`), la règle est entière, le curseur de budget saute sans tween ; contrôle Playwright `reducedMotion: reduce` : 0 bloc caché, Lenis absent.
+30. [x] Copies décoratives : le mot du pied et les règles sont `aria-hidden`, aucun titre dupliqué.
+31. [x] Easing : `ease.out`/`ease.inOut` de l'engine plus `steps()` pour tout ce qui s'accroche ; staggers 50 à 80 ms (épingles 80, liens du menu 50, points 40 ms au plus bas sur 68 points).
+32. [x] Trois traitements dans le verbe « jauger » : remplissage par crans (CTA, bouton Menu, téléphone en inversion), soulignement gradué (nav) et soulignement qui s'éloigne (liens texte), épingle qui se place au prix (plats, curseur de budget).
+33. [x] Survol sous `@media (hover: hover)` (`site.css:197` et suivantes), même état sur `:focus-visible` ; en mouvement réduit, l'état change sans durée (engine.css).
+34. [x] Liens texte soulignés au repos (`.lien`).
+35. [ ] À prouver par `report.json` (phase 3).
+36. [~] Repos : trait de lecture, cran de 1 € toutes les 0,45 s plus étiquette « n € » (≈ 1 500 px changés en 1,5 s à 1440) ; `idleMotion` à lire en phase 3.
+37. [x] Curseur natif visible (pas de follower) ; aucune information au seul survol (curseur de rubrique décoratif, budget au clavier et au toucher).
+38. [x] Aucun `blur` animé, aucun `box-shadow`, pas de `will-change`.
+39. [x] Réduit : ni Lenis, ni GL, ni scrub, ni loader (contrôle Playwright) ; champs `reduced.*` en phase 3.
+40. [x] GL : sans objet, décision écrite (Concept Card), lignes `// GL` retirées de l'engine.
+41. [x] Sans objet.
+44. [x] Skip link en premier (`Base.astro:73`) ; anneau de focus 2 px `--focus` (jaune assombri sur papier, jaune sur vert : `site.css:207-209`), piste du curseur entourée au focus (`site.css:282`).
+45. [~] Contraste : aucune opacité sur texte, lignes hors budget en `--c-muted` (6,1:1) ; à prouver par axe en phase 3.
+46. [x] Texte réel partout, aucun canvas.
+47. [x] Cibles : « Réserver » de l'en-tête 91 × 44 px, « Menu » 67 × 44 px à 390 (mesure Playwright) ; CTA du hero 48 px.
