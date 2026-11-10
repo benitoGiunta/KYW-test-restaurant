@@ -50,27 +50,45 @@ function etatOuverture(horaires: Horaire[], now = new Date()) {
   return { ouvert: false, texte: 'Fermé' };
 }
 
-/** Barre d'état : texte calculé à l'heure du visiteur, défilement lent (idle du site), statique en reduced motion. */
+/** Barre d'état : texte calculé à l'heure du visiteur, défilement lent (idle du site), statique en reduced motion.
+ *  La piste porte 2n copies du texte (n copies par moitié, n = fenêtre / largeur d'une copie) : aucun trou à droite. */
 function etat() {
   const root = document.querySelector<HTMLElement>('[data-etat]');
   if (!root) return;
   const horaires = JSON.parse(root.dataset.horaires || '[]') as Horaire[];
   const texte = root.querySelector<HTMLElement>('[data-etat-texte]');
-  const copie = root.querySelector<HTMLElement>('[data-etat-copie]');
   const piste = root.querySelector<HTMLElement>('[data-etat-piste]');
+  const statique = texte?.textContent?.split(' · ')[0] || '';
+  const reduced = prefersReducedMotion();
+  const remplir = () => {
+    if (!piste || !texte || reduced) return;
+    piste.querySelectorAll('[data-etat-clone]').forEach((c) => c.remove());
+    const l = texte.getBoundingClientRect().width;
+    if (!l) return;
+    const n = Math.max(1, Math.ceil(innerWidth / l));
+    const total = 2 * n - 1; // + la copie d'origine « data-etat-copie » = 2n paragraphes en tout
+    const copie = piste.querySelector<HTMLElement>('[data-etat-copie]');
+    for (let k = 0; k < total - 1; k++) {
+      const c = (copie || texte).cloneNode(true) as HTMLElement;
+      c.removeAttribute('data-etat-copie'); c.setAttribute('data-etat-clone', ''); c.setAttribute('aria-hidden', 'true');
+      piste.appendChild(c);
+    }
+  };
   const maj = () => {
     const s = etatOuverture(horaires);
-    const base = texte?.textContent?.split(' · ')[0] || '';
-    const ligne = `${s.texte} · ${root.dataset.statique || base}`;
-    root.dataset.statique = root.dataset.statique || base;
-    if (texte) texte.textContent = ligne;
-    if (copie) copie.textContent = ligne;
+    const ligne = `${s.texte} · ${statique}`;
+    piste?.querySelectorAll<HTMLElement>('p').forEach((p) => { p.textContent = ligne; });
     root.dataset.ouvert = s.ouvert ? 'oui' : 'non';
   };
   maj();
-  const id = setInterval(maj, 60_000);
-  if (!prefersReducedMotion() && piste) piste.dataset.anime = '';
-  return () => clearInterval(id);
+  remplir();
+  document.fonts?.ready.then(remplir);
+  const id = setInterval(() => { maj(); remplir(); }, 60_000);
+  let t = 0;
+  const resize = () => { clearTimeout(t); t = window.setTimeout(remplir, 150); };
+  addEventListener('resize', resize);
+  if (!reduced && piste) piste.dataset.anime = '';
+  return () => { clearInterval(id); clearTimeout(t); removeEventListener('resize', resize); };
 }
 
 /** Suggestion du jour : ouvre sur le jour réel ; flèches ; effacement (clip-path gauche → droite) puis réécriture mot à mot. */
@@ -133,8 +151,13 @@ function onglets() {
   const choisir = (idx: number, anime = true) => {
     tabs.forEach((t, k) => { t.setAttribute('aria-selected', String(k === idx)); t.tabIndex = k === idx ? 0 : -1; panneaux[k].hidden = k !== idx; });
     poser(tabs[idx], anime);
-    const lignes = panneaux[idx].querySelectorAll<HTMLElement>('[data-ecrit]');
-    lignes.forEach((l) => ScrollTrigger.refresh());
+    if (anime && !prefersReducedMotion()) {
+      // Rejoue l'écriture des lignes du panneau ouvert : celles déjà dans la fenêtre s'écrivent, les autres attendent leur déclencheur.
+      const listes = [...panneaux[idx].querySelectorAll<HTMLElement>('[data-ecrit]')];
+      listes.forEach((l) => l.classList.remove('est-ecrit'));
+      ScrollTrigger.refresh();
+      listes.forEach((l) => { if (l.getBoundingClientRect().top < innerHeight * 0.92) ecrireListe(l); });
+    }
   };
   const defaut = tabs.findIndex((t) => t.dataset.service === 'carte');
   choisir(defaut < 0 ? 0 : defaut, false);
@@ -149,20 +172,23 @@ function onglets() {
   return () => { tabs.forEach((t, k) => t.removeEventListener('click', handlers[k])); root.removeEventListener('keydown', clavier); removeEventListener('resize', resize); };
 }
 
-/** Les lignes s'écrivent de haut en bas (clip-path gauche → droite, stagger 0,04). CSS : .motion [data-ecrit] .ligne clip fermé. */
+/** Écrit une liste : lignes de gauche à droite (clip-path), stagger 0,04. Idempotent ; sans effet dans un panneau fermé. */
+function ecrireListe(l: HTMLElement) {
+  if (l.classList.contains('est-ecrit') || l.closest('[hidden]')) return;
+  l.classList.add('est-ecrit');
+  gsap.fromTo(l.querySelectorAll('.ligne'), { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 0.7, ease: ease.out, stagger: 0.04, clearProps: 'clipPath' });
+}
+
+/** Les lignes s'écrivent de haut en bas. CSS : .motion [data-ecrit] .ligne clip fermé. Pas de `once` : un panneau
+ *  fermé consommerait le déclencheur sans rien écrire ; l'écriture est idempotente et rejouée à l'ouverture d'un onglet. */
 function lignesEcrites() {
   if (prefersReducedMotion()) return;
   const listes = document.querySelectorAll<HTMLElement>('[data-ecrit]');
-  listes.forEach((l) => {
-    const lignes = l.querySelectorAll<HTMLElement>('.ligne');
-    ScrollTrigger.create({
-      trigger: l, start: 'top 92%', once: true,
-      onEnter: () => {
-        l.classList.add('est-ecrit');
-        gsap.fromTo(lignes, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 0.7, ease: ease.out, stagger: 0.04, clearProps: 'clipPath' });
-      },
-    });
-  });
+  const triggers = [...listes].map((l) => ScrollTrigger.create({
+    trigger: l, start: 'top 92%',
+    onEnter: () => ecrireListe(l), onLeave: () => ecrireListe(l), onEnterBack: () => ecrireListe(l),
+  }));
+  return () => triggers.forEach((t) => t.kill());
 }
 
 /** Aperçu photo qui suit le pointeur et s'incline selon la vitesse (desktop pointeur fin) ; aussi au focus.
@@ -205,8 +231,8 @@ function prixEcrits() {
   if (prefersReducedMotion()) return;
   document.querySelectorAll<HTMLElement>('[data-prix-ecrit]').forEach((el) => {
     const t = el.textContent || '';
-    el.innerHTML = [...t].map((c) => `<span style="display:inline-block">${c === ' ' ? '&nbsp;' : c}</span>`).join('');
-    gsap.from(el.children, { yPercent: 70, autoAlpha: 0, duration: 0.7, ease: ease.out, stagger: 0.05, scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+    el.innerHTML = `<span class="sr-only">${t}</span><span aria-hidden="true">${[...t].map((c) => `<span style="display:inline-block">${c === ' ' ? '&nbsp;' : c}</span>`).join('')}</span>`;
+    gsap.from(el.lastElementChild!.children, { yPercent: 70, autoAlpha: 0, duration: 0.7, ease: ease.out, stagger: 0.05, scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
   });
 }
 

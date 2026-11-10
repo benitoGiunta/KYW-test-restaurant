@@ -149,7 +149,7 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 .salle__media { margin: 0; aspect-ratio: 1; overflow: clip; }
 .salle__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .mots { list-style: none; margin: calc(var(--u) * 3) auto 0; padding: 0; font-size: var(--t-mega); line-height: 0.86; }
-@media (max-width: 767px) { .mots { font-size: 14vw; } }
+@media (max-width: 767px) { .mots { font-size: min(var(--t-mega), calc((100vw - 2 * var(--gutter)) / 6.8)); } }
 .mots li:nth-child(2) { text-align: right; }
 .mots li:nth-child(3) { padding-left: 0.5em; }
 .mots li { will-change: transform; }
@@ -173,7 +173,6 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 .horaires td.ferme { white-space: normal; }
 .horaires tr[data-aujourdhui] td { color: var(--c-accent); }
 .clair .horaires tr[data-aujourdhui] td { color: var(--c-clair-fg); background: rgb(233 208 100 / 0.4); }
-.mots { font-size: clamp(4.4rem, 1rem + 13vw, 13rem); }
 .horaires .ferme { color: var(--c-muted); font-variant-numeric: normal; } /* tnum élargit aussi la virgule (« fermé , ») */
 .clair .horaires th, .clair .horaires .ferme { color: var(--c-clair-muted); }
 .acces { display: grid; gap: calc(var(--u) * 3); }
@@ -182,7 +181,7 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 
 /* Barre de réservation fixe */
 .barre { position: fixed; inset: auto 0 0; z-index: var(--z-barre); height: var(--barre); display: grid; grid-template-columns: repeat(3, 1fr); background: var(--c-fg); color: var(--c-bg); border-top: 1px solid var(--c-bg); }
-.barre a { display: grid; place-items: center; height: 100%; font-weight: 700; font-size: var(--t-xs); letter-spacing: 0.18em; text-transform: uppercase; border-left: 1px solid rgb(42 46 45 / 0.25); transition: background 0.3s, color 0.3s; }
+.barre a { display: grid; place-items: center; height: 100%; font-weight: 700; font-size: var(--t-xs); letter-spacing: 0.18em; text-transform: uppercase; border-left: 1px solid color-mix(in srgb, var(--c-bg) 30%, transparent); transition: background 0.3s, color 0.3s; }
 .barre a:first-child { border-left: 0; }
 .barre a:hover, .barre a:focus-visible { background: var(--c-bg); color: var(--c-fg); outline-offset: -4px; }
 @media (max-width: 767px) { .barre a { letter-spacing: 0.1em; } }
@@ -225,6 +224,7 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 .bandeau { padding: 0.6rem 0; background: var(--c-accent); color: var(--c-bg); font-size: var(--t-s); font-weight: 700; text-align: center; }
 
 /* Pied de page */
+.footer, .kyw-footer { position: relative; z-index: var(--z-content); }
 .footer { border-top: 1px solid var(--c-line); padding-block: calc(var(--u) * 4); font-size: var(--t-s); }
 .footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--u) calc(var(--u) * 3); }
 .footer__nom { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; font-size: var(--t-m); }
@@ -246,3 +246,53 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 
 .footer__logo { display: block; width: 8rem; height: auto; }
 figure figcaption.ex { margin-top: 0.4rem; }
+
+/* Barre d'état sans animation (reduced motion, sans JS) : une seule copie, tronquée proprement. */
+html:not(.motion) .etat__piste { width: 100%; }
+html:not(.motion) .etat__piste p:not(:first-child) { display: none; }
+html:not(.motion) .etat { height: auto; min-height: var(--etat); }
+html:not(.motion) .etat__piste { height: auto; padding: 0.45rem var(--gutter); }
+html:not(.motion) .etat__piste p:first-child { flex: 0 1 100%; min-width: 0; white-space: normal; padding-right: 0; line-height: 1.4; }
+html:not(.motion) .etat__piste p::after { content: none; }
+.etat__piste:hover { animation-play-state: paused; }
+
+/* Interactions fines : survol et appui (pointeur fin seulement), états au clavier déjà portés par :focus-visible. */
+@media (hover: hover) and (pointer: fine) {
+  .motion .ligne__nom { display: inline-block; transition: transform 0.4s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)); }
+  .motion .ligne__in:hover .ligne__nom, .motion .ligne__in:focus-visible .ligne__nom { transform: translateX(0.5rem); }
+  .ligne__in:hover .ligne__prix { color: var(--c-accent); }
+}
+.onglets__tab { transition: color 0.3s; }
+.onglets__tab:active, .jour__btn:active, .btn:active, .barre a:active { opacity: 0.75; }
+.btn:focus-visible { outline-offset: 3px; }
+.jour__btn:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+.jour__btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+.form input:hover, .form select:hover, .form textarea:hover { border-color: var(--c-clair-muted); }
+.form input:focus-visible, .form select:focus-visible, .form textarea:focus-visible { outline: 2px solid var(--c-clair-fg); outline-offset: 2px; background: color-mix(in srgb, var(--c-clair-fg) 5%, transparent); }
+.form input:user-invalid, .form select:user-invalid { border-color: #9b2c1e; border-width: 2px; }
+.form button[type='submit'] { cursor: pointer; }
+.form textarea { resize: vertical; }
+.apercu img { background: var(--c-line); }
+.salle__media img, .maison__media img, .galerie img { transition: transform 0.9s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)); }
+@media (hover: hover) and (pointer: fine) {
+  .motion .salle__media:hover img, .motion .maison__media:hover img, .motion .galerie figure:hover img { transform: scale(1.03); }
+}
+
+/* Mobile : onglets compacts (sous-titres portés par le titre du panneau), colonne unique bornée, nom et en-tête calés sur 320 px. */
+.acces { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1024px) { .acces { grid-template-columns: 7fr 5fr; } }
+@media (max-width: 767px) {
+  .onglets { gap: 1rem; }
+  .onglets__tab small { display: none; }
+  .ardoise__nom { font-size: min(var(--t-mega), calc((100vw - 2 * var(--gutter)) / 4.7)); }
+}
+@media (max-width: 400px) {
+  .horaires { font-size: 0.8125rem; }
+  .horaires td:not(:first-child) { padding-left: 0.5rem; }
+}
+@media (max-width: 359px) {
+  .header__brand { font-size: 1rem; }
+  .nav { gap: 0.45rem; font-size: 0.625rem; letter-spacing: 0.02em; }
+  .header__inner { gap: 0.5rem; }
+}
+.jour__ligne .ex { white-space: normal; margin-left: 0; }
