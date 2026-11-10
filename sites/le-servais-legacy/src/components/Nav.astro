@@ -17,5 +17,20 @@ const { actif = '' } = Astro.props;
       </ul>
     </nav>
     <a class="btn btn--accent nav__cta" href={resto.reservation} rel="noopener">Réserver</a>
+    <button class="nav__menu" type="button" popovertarget="menu" aria-controls="menu">Menu</button>
+  </div>
+  <div class="menu" id="menu" popover>
+    <div class="container menu__haut">
+      <span class="menu__titre">Le Servais</span>
+      <button class="nav__menu" type="button" popovertarget="menu" popovertargetaction="hide">Fermer</button>
+    </div>
+    <nav class="container menu__liens" aria-label="Menu mobile">
+      <ul>
+        {routes.map((r) => (
+          <li><a href={u(r.href)} aria-current={actif === r.href ? 'page' : undefined}>{r.label}</a></li>
+        ))}
+      </ul>
+      <a class="btn btn--accent" href={resto.reservation} rel="noopener">Réserver une table</a>
+    </nav>
   </div>
 </header>

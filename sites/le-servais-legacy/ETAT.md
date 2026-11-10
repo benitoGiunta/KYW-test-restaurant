@@ -1,22 +1,22 @@
-# ETAT · Le Servais, variante legacy · fin de phase 1 (construction-1)
+# ETAT · Le Servais, variante legacy · fin de phase 2 (construction-2)
 
-## Fait
-- Concept et DESIGN.md (Overprint, deal 1/3, draw 4e6e56), AUDIT.md, comp.md (2 comps, c1 choisie).
-- Paquet Astro complet, build OK : `dist/le-servais/legacy/` (7 pages : accueil, carte, groupes-privatisation, evenements, carte-cadeau, contact, 404). KywFooter, noindex et mention présents sur chaque page.
-- Données : `src/data/site.ts` (carte entière formatée depuis donnees.json, horaires, formules, spécialités).
-- Photos du client en WebP (comptoir, terrasse, spaghetti, petit-déjeuner, Verrière), logo disque LS.
-- sloplint `src --genre playful` : 0 FAIL, 0 WARN (sans `--render`).
+## Fait (phase 2)
+- Nav slab (forme différente des 3 derniers logs), menu `popover` plein écran sous 60 rem, Réserver dans la barre ; testé à 390 (ouverture, Échap).
+- Un reveal (`.js.reveal-on [data-reveal]`), signature « repérage » du carré orange, reduced motion et sans script vérifiés (opacité 1).
+- Horaires : jour courant + statut ouvert/fermé (Europe/Brussels, après minuit géré) sur accueil, carte et contact.
+- Boutons huit états (hauteur 48 px), `::selection`, `accent-color`, favicon SVG, `theme-color`.
+- Hero : h1 5 vw (SERVAIS ne se coupe plus), hero en `svh`, photo 5/4, carré orange ramené sur la photo. sloplint `--render --stage hero` : 0 FAIL, 0 REFLEX. `sloplint src` : propre.
+- Revue hero : sous-agent indisponible, auto-notation `self`, 2 findings résolus (stamp dans page.css).
+- Aucun débordement horizontal mesuré à 1440, 1280, 1024, 390, 320 sur les 7 routes. Build OK (`dist/le-servais/legacy/`), KywFooter, noindex et mention sur les 7 pages.
+- Formulaire et switcher : sans objet (réservation externe, carte à liens de saut).
 
-## Reste (phases 2 et 3)
-- Phase 2 : menu popover mobile (nav actuelle : liens masqués sous 48 rem), un reveal, jour courant et état « ouvert » dans Horaires, formulaire de contact éventuel, marquee si voulu, favicon dédié, test des trois questions de reproduction, QA navigateur 1440, 1280, 1024, 390, 320, `sloplint --render`.
-- Phase 3 : sweep, waive 59 à revérifier au rendu, RAPPORT.md, entrée de journal finale.
+## Reste (phase 3)
+- sloplint `--render` des pages carte et contact : 3 REFLEX chacune (44c, 77 « pied 71 % de large », 79) issues de tests de hero sur en-têtes de page ; corriger ou `waive` avec raison. NOTE 58 : section Horaires à 96 mots.
+- Sweep, waive 59 à revérifier au rendu, RAPPORT.md, entrée de journal finale, captures complètes (agent captures).
 
-## Décisions et hypothèses
-- Téléphone : 081 73 65 52 (site, Namur Tourisme) ; restaurants.json donne +32 492 93 87 96 : à confirmer.
-- « Margarita 25 € » : prix ambigu du PDF, marqué « prix à confirmer ».
-- Photo de la Verrière (`05-salle-veranda`) : origine à confirmer, utilisée seulement sur la page Groupes avec `data-placeholder="true"` et légende « photo d'illustration ».
-- Événements : Chalet du Servais « du 27 novembre au 31 décembre » et recrutement relevés sur les affiches de la capture du site (année non affichée) ; Halloween (passé) écarté ; événements d'exemple Wix écartés.
-- Carte cadeau : lien vers la page d'origine leservais.be/carte-cadeau ; montants et validité en slot `.fill` (un seul slot).
-- Aucun avis, note, équipe ou date d'ouverture publiés (Tripadvisor 4,0 sur 1 avis ignoré : un seul avis).
-- Gabarits/ non touchés. `.hallmark/` de ce site et `$LOG` sont gitignorés : `git add -f`.
-- Pas d'animation, pas de QA navigateur (hors captures des comps).
+## Pièges et hypothèses
+- Téléphone 081 73 65 52 vs +32 492 93 87 96 : à confirmer. « Margarita 25 € » à confirmer. Verrière : origine à confirmer. (inchangé)
+- Le statut ouvert/fermé suppose 9 h 00 à 1 h 00 (2 h 00 vendredi et samedi) tous les jours, d'après donnees.json.
+- Le menu popover exige un navigateur récent ; sans, les liens restent dans la barre (repli `@supports not selector(:popover-open)`).
+- Une capture pleine page sans défilement montre les blocs `data-reveal` vides (attendu).
+- Serveur de dev arrêté en fin de phase.

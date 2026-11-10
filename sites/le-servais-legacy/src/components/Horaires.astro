@@ -4,14 +4,15 @@ const { titre = 'Ouvert 7 jours sur 7', niveau = 2 } = Astro.props;
 const H = `h${niveau}`;
 ---
 <section class="horaires" aria-labelledby="horaires-t">
-  <div class="container horaires__grille">
+  <div class="container horaires__grille" data-reveal>
     <div class="horaires__tete">
       <Fragment set:html={`<${H} id="horaires-t">${titre}</${H}>`} />
       <p class="lead">Dès 9{' '}h, la cuisine reste ouverte non stop.</p>
+      <p class="horaires__statut" data-statut hidden></p>
     </div>
     <dl class="schedule">
-      {jours.map((j) => (
-        <div class="schedule__ligne">
+      {jours.map((j, i) => (
+        <div class="schedule__ligne" data-i={i} data-de={j.de} data-a={j.a}>
           <dt>{j.jour}</dt>
           <dd><time datetime={j.de}>{h(j.de)}</time> à <time datetime={j.a}>{h(j.a)}</time></dd>
         </div>

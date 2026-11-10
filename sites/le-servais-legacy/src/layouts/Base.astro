@@ -33,7 +33,9 @@ const ld = JSON.stringify({
     <meta property="og:image" content={new URL(`${base}photos/comptoir-900.webp`, Astro.site).href} />
     <meta property="og:image:alt" content="Le comptoir du bar du Servais, avec ses tuyaux apparents et ses suspensions" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
     <link rel="icon" href={`${base}photos/logo-192.webp`} type="image/webp" />
+    <meta name="theme-color" content="#1c1b19" />
     <script is:inline>document.documentElement.classList.add('js')</script>
     <link rel="preload" href={`${base}fonts/anybody-100_900-normal.woff2`} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={`${base}fonts/archivo-latin.woff2`} as="font" type="font/woff2" crossorigin />
@@ -50,5 +52,38 @@ const ld = JSON.stringify({
     <KywFooter base={base} />
     <script is:inline>window.hallmarkSlots = function (m) { for (var k in m) { var s = document.querySelector('[data-slot="' + k + '"]'); if (!s) continue; var v = m[k]; var im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach(function (o) { o.remove(); }); s.prepend(im); } };
 document.querySelectorAll('[data-slot] img').forEach(function (i) { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', function () { i.remove(); }, { once: true }); });</script>
+<script is:inline>
+(function () {
+  var d = document, r = d.documentElement;
+  try {
+    var els = d.querySelectorAll('[data-reveal]');
+    if ('IntersectionObserver' in window && els.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, { threshold: 0.06 });
+      els.forEach(function (e) { io.observe(e); });
+      r.classList.add('reveal-on');
+    }
+  } catch (x) {}
+  try {
+    var st = d.querySelector('[data-statut]'), rows = d.querySelectorAll('.schedule__ligne');
+    if (st && rows.length === 7) {
+      var o = {};
+      new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).forEach(function (p) { o[p.type] = p.value; });
+      var di = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(o.weekday), now = +o.hour * 60 + +o.minute;
+      var mn = function (t) { var a = t.split(':'); return +a[0] * 60 + +a[1]; };
+      var hm = function (t) { var a = t.split(':'); return +a[0] + ' h ' + a[1]; };
+      var cur = rows[di], prev = rows[(di + 6) % 7], fin = null;
+      if (now < mn(prev.dataset.a)) fin = prev.dataset.a; else if (now >= mn(cur.dataset.de)) fin = cur.dataset.a;
+      cur.setAttribute('aria-current', 'date');
+      st.textContent = fin ? 'Ouvert maintenant, jusqu’à ' + hm(fin) + '.' : 'Fermé pour le moment, ouverture à ' + hm(cur.dataset.de) + '.';
+      st.dataset.etat = fin ? 'ouvert' : 'ferme';
+      st.hidden = false;
+    }
+  } catch (x) {}
+  try {
+    var m = d.getElementById('menu');
+    if (m && m.hidePopover) window.matchMedia('(min-width: 60rem)').addEventListener('change', function (e) { if (e.matches && m.matches(':popover-open')) m.hidePopover(); });
+  } catch (x) {}
+})();
+</script>
   </body>
 </html>
