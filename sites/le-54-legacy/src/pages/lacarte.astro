@@ -5,7 +5,7 @@ import Reserve from '../components/Reserve.astro';
 import { menu, menus, notesCarte } from '../data/site';
 ---
 <Base page="lacarte" title="Menus du Le 54 : trois ou quatre services, à Dave" description="Le menu du moment du Le 54 : veau tonnato, bœuf wagyu A5, cochon de lait ou zarzuela, plaisir sucré. Trois services à 48 €, quatre à 65 €.">
-  <header class="pagehead container">
+  <header class="pagehead container" data-reveal>
     <h1>Menus</h1>
     <p class="lead">Le menu du moment, en trois ou quatre services.</p>
   </header>
@@ -19,8 +19,8 @@ import { menu, menus, notesCarte } from '../data/site';
   <section class="menupage container" aria-labelledby="mp">
     <h2 id="mp" class="visually-hidden">Le menu du moment</h2>
     <ul class="rows rows--menu">
-      {menu.map((m) => (
-        <li class="row">
+      {menu.map((m, i) => (
+        <li class="row" data-reveal style={`--i:${Math.min(i, 5)}`}>
           <h3 class="row__t">{m.titre}</h3>
           <div class="row__l">
             {m.ligne && <p>{m.ligne}{m.prix && <span class="num row__p"> {m.prix}</span>}</p>}
@@ -34,7 +34,7 @@ import { menu, menus, notesCarte } from '../data/site';
     <p class="menupage__note">{notesCarte.allergies}</p>
   </section>
 
-  <section class="showcase" aria-label="Photographie : plat">
+  <section class="showcase" aria-label="Photographie : plat" data-reveal>
     <Fig k="soupe-homard" class="showcase__pic" sizes="100vw" ratio="21 / 9" label />
   </section>
 

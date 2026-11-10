@@ -1,7 +1,7 @@
 ---
 import { horaires, dernieresCommandes } from '../data/site';
 ---
-<div class="sched">
+<div class="sched" data-reveal style="--i:1">
   <table class="sched__t">
     <caption class="visually-hidden">Horaires d’ouverture</caption>
     <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
@@ -9,8 +9,8 @@ import { horaires, dernieresCommandes } from '../data/site';
       {horaires.map((j) => (
         <tr data-jour={j.jour} class:list={{ 'is-closed': !j.midi && !j.soir }}>
           <th scope="row">{j.nom}{j.aConfirmer && <span class="sched__note" data-placeholder="true"> (à confirmer)</span>}</th>
-          <td class="num">{j.midi ?? <span class="muted">Fermé</span>}</td>
-          <td class="num">{j.soir ?? <span class="muted">Fermé</span>}</td>
+          <td class="num" data-l="Midi">{j.midi ?? <span class="muted">Fermé</span>}</td>
+          <td class="num" data-l="Soir">{j.soir ?? <span class="muted">Fermé</span>}</td>
         </tr>
       ))}
     </tbody>

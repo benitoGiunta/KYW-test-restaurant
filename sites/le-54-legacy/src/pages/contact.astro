@@ -15,13 +15,14 @@ import { resto, pratique } from '../data/site';
       <p><a class="link" href={resto.carte} rel="noopener">Voir sur la carte</a></p>
       <ul class="contact__pr">{pratique.map((p) => <li>{p}</li>)}</ul>
     </div>
-    <form class="form" method="post" action="" data-endpoint="" novalidate>
-      <h2 class="contact__h">Écrire au restaurant</h2>
-      <label class="field"><span>Nom et prénom <abbr title="obligatoire">*</abbr></span><input name="nom" type="text" autocomplete="name" required /></label>
-      <label class="field"><span>Email <abbr title="obligatoire">*</abbr></span><input name="email" type="email" autocomplete="email" required /></label>
-      <label class="field"><span>Téléphone</span><input name="telephone" type="tel" autocomplete="tel" /></label>
-      <label class="field"><span>Message <abbr title="obligatoire">*</abbr></span><textarea name="message" rows="5" required></textarea></label>
-      <p class="form__row"><button class="btn" type="submit">Envoyer</button></p>
+    <form class="form" method="post" action="" data-endpoint="" novalidate aria-labelledby="form-t">
+      <h2 class="contact__h" id="form-t">Écrire au restaurant</h2>
+      <p class="form__req">Les champs marqués d’un astérisque sont obligatoires.</p>
+      <div class="field"><label for="f-nom">Nom et prénom <abbr title="obligatoire">*</abbr></label><input id="f-nom" name="nom" type="text" autocomplete="name" required aria-describedby="f-nom-h" /><p class="field__help" id="f-nom-h" data-help data-hint="Comme sur la réservation, par exemple Anne Dupont."></p></div>
+      <div class="field"><label for="f-email">Email <abbr title="obligatoire">*</abbr></label><input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="nom@exemple.be" required aria-describedby="f-email-h" /><p class="field__help" id="f-email-h" data-help data-hint="Pour vous répondre."></p></div>
+      <div class="field"><label for="f-tel">Téléphone</label><input id="f-tel" name="telephone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+32 81 00 00 00" aria-describedby="f-tel-h" /><p class="field__help" id="f-tel-h" data-help data-hint="Facultatif."></p></div>
+      <div class="field"><label for="f-msg">Message <abbr title="obligatoire">*</abbr></label><textarea id="f-msg" name="message" rows="5" required aria-describedby="f-msg-h"></textarea><p class="field__help" id="f-msg-h" data-help data-hint="Date, nombre de couverts, allergies."></p></div>
+      <p class="form__row"><button class="btn" type="submit">Envoyer le message</button></p>
       <p class="form__status" role="status" data-status></p>
     </form>
   </section>
@@ -29,11 +30,26 @@ import { resto, pratique } from '../data/site';
     (function () {
       var f = document.querySelector('.form[data-endpoint]');
       if (!f) return;
+      var status = f.querySelector('[data-status]');
+      var msgs = { valueMissing: 'Ce champ est obligatoire.', typeMismatch: 'Écrivez l’adresse sous la forme nom@exemple.be.', tooShort: 'Ce message est trop court.' };
+      function check(inp) {
+        var help = document.getElementById(inp.getAttribute('aria-describedby'));
+        var ok = inp.checkValidity();
+        if (ok) { inp.removeAttribute('aria-invalid'); help.textContent = help.dataset.hint; help.classList.remove('is-error'); }
+        else { var k = inp.validity.valueMissing ? 'valueMissing' : inp.validity.typeMismatch ? 'typeMismatch' : 'tooShort'; inp.setAttribute('aria-invalid', 'true'); help.textContent = msgs[k]; help.classList.add('is-error'); }
+        return ok;
+      }
+      f.querySelectorAll('[data-help]').forEach(function (h) { h.textContent = h.dataset.hint; });
+      f.querySelectorAll('input, textarea').forEach(function (inp) {
+        inp.addEventListener('blur', function () { if (inp.value || inp.hasAttribute('aria-invalid')) check(inp); });
+        inp.addEventListener('input', function () { if (inp.hasAttribute('aria-invalid')) check(inp); });
+      });
       f.addEventListener('submit', function (e) {
         e.preventDefault();
-        var s = f.querySelector('[data-status]');
-        if (!f.checkValidity()) { s.textContent = 'Merci de remplir les champs marqués d’un astérisque.'; f.reportValidity(); return; }
-        s.textContent = 'Maquette : l’envoi n’est pas encore branché. Le restaurant se joint au +32 81 58 04 40.';
+        var first = null;
+        f.querySelectorAll('input, textarea').forEach(function (inp) { if (!check(inp) && !first) first = inp; });
+        if (first) { status.textContent = 'Un ou plusieurs champs sont à corriger.'; first.focus(); return; }
+        status.textContent = 'Rien n’a été envoyé\u00a0: ce formulaire n’est pas encore relié. Le restaurant se joint au +32 81 58 04 40.';
       });
     })();
   </script>

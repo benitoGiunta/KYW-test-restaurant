@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   <section class="hero" aria-labelledby="h1">
     <Fig k="salle-noir-blanc" class="hero__pic" sizes="100vw" eager ratio="auto" />
     <div class="container hero__in">
-      <div class="plate">
+      <div class="plate" data-reveal>
         <h1 id="h1">Le 54, table de Dave</h1>
         <p class="lead">Cuisine de saison et de marché, à deux pas de Namur.</p>
         <p class="plate__acts"><a class="btn" href={`${base}reservations`}>Réserver une table</a><a class="link" href={`${base}lacarte`}>Voir le menu</a></p>
@@ -19,15 +19,15 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   </section>
 
   <section class="statement container" aria-labelledby="st">
-    <h2 id="st" class="statement__t">Une cuisine raffinée et savoureuse, qui va à l’essentiel.</h2>
-    <div class="statement__side">
+    <h2 id="st" class="statement__t" data-reveal>Une cuisine raffinée et savoureuse, qui va à l’essentiel.</h2>
+    <div class="statement__side" data-reveal style="--i:2">
       <p class="dropcap">Michel et Véronique Collignon reprennent l’établissement avec leur fils Jonathan en 2010 et lui confèrent une dimension plus gastronomique. Le chef Jonathan Collignon propose une carte de saison fréquemment renouvelée.</p>
       <p><a class="link" href={`${base}a-propos`}>Le chef et la maison</a></p>
     </div>
   </section>
 
   <section class="menurows container" aria-labelledby="mn">
-    <div class="menurows__head">
+    <div class="menurows__head" data-reveal>
       <h2 id="mn">Le menu du moment</h2>
       <p class="lead">
         {menus.map((m, i) => <>{i > 0 && ' ou '}<span class="num">{m.nom}&nbsp;: {m.prix}</span></>)}
@@ -35,8 +35,8 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       <p><a class="link" href={`${base}lacarte`}>Toute la carte</a></p>
     </div>
     <ul class="rows">
-      {menu.map((m) => (
-        <li class="row">
+      {menu.map((m, i) => (
+        <li class="row" data-reveal style={`--i:${Math.min(i, 5)}`}>
           <h3 class="row__t">{m.titre}</h3>
           {(m.ligne || m.prix) && <p class="row__l">{m.ligne}{m.prix && <span class="num row__p"> {m.prix}</span>}</p>}
         </li>
@@ -44,13 +44,13 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     </ul>
   </section>
 
-  <section class="showcase" aria-label="Photographie : tartare">
+  <section class="showcase" aria-label="Photographie : tartare" data-reveal>
     <Fig k="tartare" class="showcase__pic" sizes="100vw" ratio="21 / 9" label />
   </section>
 
   <section class="band band--2" aria-labelledby="hr">
     <div class="container visit">
-      <div class="visit__head">
+      <div class="visit__head" data-reveal>
         <h2 id="hr">Horaires et adresse</h2>
         <p class="lead">{resto.rue}<br />{resto.ville}</p>
         <p><a class="link" href={resto.carte} rel="noopener">Voir sur la carte</a></p>

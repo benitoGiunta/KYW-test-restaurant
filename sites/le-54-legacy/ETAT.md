@@ -1,31 +1,26 @@
-# ETAT · le-54 · variante legacy · phase 1 (construction-1)
+# ETAT · le-54 · variante legacy · phase 2 (construction-2) terminée
 
-## Fait
-- AUDIT.md (sloplint `--before` : 21 FAIL, 28 REFLEX d'origine), comp.md (c1 Poster choisi), DESIGN.md (Picks, Approche, Tokens, Composants, Sur-utilisation points 1 à 5), entrée dans `.hallmark/log.json` (12 sur 20).
-- Thème Atelier (dealt 1/3) ; scaffold `tokens.css`, `base.css`, stamp et critique en tête de `src/styles/page.css`.
-- 7 pages statiques : `/` (accueil), `/a-propos/`, `/lacarte/`, `/reservations/`, `/galerie/`, `/contact/`, `404`. Routes d'origine toutes gardées.
-- Composants : Nav (popover mobile), Fig, Horaires, Reserve, Footer (mast) ; données dans `src/data/site.ts` et `src/data/photos.json` (14 photos WebP 800 et 1600 px dans `public/photos/`, logo dans `public/logo.png`).
-- Build OK : `scripts/q.sh build pnpm build:site sites/le-54-legacy` → `dist/le-54/legacy/` ; KywFooter, noindex et mention présents sur les 7 pages ; aucun tiret cadratin ; sloplint statique sur `src` : 0 FAIL, 0 REFLEX.
+## Fait (phases 1 et 2)
+- Phase 1 : AUDIT.md, comp.md, DESIGN.md, thème Atelier, 7 pages, composants Nav, Fig, Horaires, Reserve, Footer, 14 photos du client.
+- Phase 2 : reveal unique (`data-reveal`, `.js`, IntersectionObserver, visible sans script et sous `reduce`), signature d'entrée (salle qui se pose, plaque qui se révèle), nav sticky `--z-sticky-nav` et menu `popover` animé avec `aria-expanded`, formulaire de contact en huit états (labels, aide `min-height: 1lh`, `aria-invalid`, validation blur puis input, message honnête « Rien n'a été envoyé »), boutons `:hover` en `(hover: hover)`, `:active`, `:disabled`, `:focus-visible` sans transition, `.btn--big` 52 px, horaires restackés sous 40 rem, safe-area dans la gouttière, `.foot` allongé (gap de 60 px avec le KywFooter, REFLEX 59).
+- Corrections de rendu : photos de showcase qui débordaient de 68 px à 375 (`min-height` + `aspect-ratio`) ; `.pagehead` et titres du contact au rang de section.
+- Mesures (Playwright, serveur de dev) : 0 débordement sur 7 pages x 5 largeurs (320 à 1920) ; boutons 44 à 60 px sans retour à la ligne ; menu mobile ouvert puis fermé par Échap (`aria-expanded` suit) ; formulaire : erreurs, focus, message honnête ; reveal : 12 éléments, 12 visibles sans script et sous `reduce`, 0 non révélé après défilement.
+- sloplint `--render --url` sur les 6 pages : 0 FAIL, 0 REFLEX, 0 WARN (waiver 77 pour les sections minces de fin de page) ; hero review `--stage hero` : 0 FAIL.
+- Hero review : pas d'outil Agent en session, donc auto-notation `self` sur la planche des quatre captures : `ship`, 0 finding. Comp reproduite (voir comp.md).
+- Build OK : `scripts/q.sh build pnpm build:site sites/le-54-legacy` ; KywFooter, noindex et mention sur les 7 pages ; aucun tiret cadratin.
 
-## Reste
-- Phase 2 : mouvement (un seul pattern, CSS pur), états de contrôles à vérifier en navigateur, WebGL « air » d'Atelier non fait (air fixe laissé en papier uni), reveal éventuel, mobile 375 et 1920, polices Fontshare/Google à valider (le rendu hors ligne retombe en Georgia / sans-serif).
-- Phase 3 : sloplint `--render` sur les 7 URL, jugées gates § 5, finish review (auto-notation `self`), RAPPORT.md, `pnpm index`, push.
-- Photos sous le hero : un seul showcase sur l'accueil ; l'accueil peut accueillir un second visuel (portrait `dressage-sauce`) si la revue le réclame. Sur /lacarte le showcase est le velouté.
-- WARN statique 25 (mesure 32ch des colonnes du pied) à trancher en phase 3.
+## Reste (phase 3)
+- Captures complètes par l'agent « captures » puis revue des gates § 5, finish review (`self`), RAPPORT.md, `pnpm index`, commit et push.
+- WebGL « air » d'Atelier non fait : décision de rester sans (papier uni, caractère calm). Polices Fontshare/Google : hors ligne, repli Georgia / sans-serif, à recapturer si la capture montre un repli.
+- Le reveal laisse les blocs sous le pli transparents tant qu'on n'a pas défilé : une capture pleine page sans défilement les montrera vides (faux défaut), défiler par pas d'une demi-fenêtre.
+- Mardi marqué « jour courant » par un script de six lignes (`aria-current="date"`) : à vérifier un autre jour.
 
 ## Décisions et hypothèses
-- Macrostructure Photographic et hero Poster gardés (le draw proposait Bento et Index) ; nav haute à la place de la barre latérale de 300 px ; slider automatique remplacé par une photo fixe (gate 18).
-- Libellé « Réservations » retiré de la nav haute au profit du bouton « Réserver » (même destination `/reservations/`) ; le lien « Réservations » reste dans le menu mobile.
-- Accent slate d'Atelier = bleu du logo mesuré (pas de `--brand`) ; l'or du logo n'est pas un jeton.
-- Menu : seuls 3 services 48 € et 4 services 65 € (site actuel) ; le menu 2 services à 30 € et le 62 € de Gault&Millau ne sont pas affichés (à confirmer).
-- Horaires : plages 12:00 à 14:00 et 18:30 à 21:00 viennent de Trouve Ton Resto (à confirmer) ; lundi ouvert d'après le texte du site (« fermé mardi, mercredi et samedi midi »), marqué « (à confirmer) » car la-carte.be le dit fermé (`data-placeholder="true"`). Date relative « depuis près de dix ans » supprimée (gate 63).
-- Gault&Millau écrit en texte (13,5/20 selon le site du restaurant) ; la pastille image du site n'est pas reprise. resto.be 9,2/10 sur 251 avis repris du dossier. Aucun extrait d'avis (tronqués).
-- Photo des boîtes de caviar exclue (produit, pas forcément le restaurant) ; légendes et alt tirés du champ `sujet`, mentions « à confirmer » neutralisées.
-- Le formulaire de /contact garde ses quatre champs et n'envoie rien : `data-endpoint=""`, message « Maquette ».
-- Numéro BCE « BE 437 634 306 » repris tel quel du site.
-- Lien « Voir sur la carte » : OpenStreetMap sur les coordonnées du dossier (le site d'origine avait une carte Leaflet).
+- Aucun bouton rempli (Atelier : « no colour-filled control »), donc F4 respecté sans primaire plein ; le survol remplit d'encre.
+- Placeholders du formulaire : formats seulement (`nom@exemple.be`, `+32 81 00 00 00`), pas des données du restaurant.
+- Phase 1 conservée : lundi « à confirmer », horaires de Trouve Ton Resto, menus 3 et 4 services, pas d'extrait d'avis.
 
 ## Pièges
-- `sites/_test-legacy/` n'existe pas : `astro.config.mjs` et `tsconfig.json` copiés de `sites/chez-guillaume-legacy/`.
-- `capture.mjs` écrit toujours `screen-home-desktop.png` : un `--out` par capture, sinon écrasement.
-- Les images `loading="lazy"` d'une capture pleine page restent vides (fond papier) : ne pas les prendre pour un défaut.
+- sloplint : un waiver est rejeté si sa raison ne partage aucun mot avec la page ; mieux vaut corriger (REFLEX 59 réglé par la marge basse du pied).
+- `scripts/q.sh` : le nom de journal ne doit pas contenir de « / ».
+- Serveur de dev arrêté (PID noté puis `kill`).

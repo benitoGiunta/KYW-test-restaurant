@@ -5,14 +5,14 @@ const { titre = 'Réserver une table' } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 <section class="reserve" aria-labelledby="reserve-t">
-  <div class="container reserve__in">
+  <div class="container reserve__in" data-reveal>
     <div class="reserve__head">
       <h2 id="reserve-t">{titre}</h2>
       <p class="lead">Réservation souhaitée. Allergies : à signaler dès la réservation.</p>
     </div>
     <div class="reserve__acts">
-      <a class="btn btn--big num" href={resto.tel1.href}>{resto.tel1.affiche}</a>
-      <a class="btn btn--big num" href={resto.tel2.href}>{resto.tel2.affiche}</a>
+      <a class="btn btn--big num" href={resto.tel1.href} aria-label={`Appeler le restaurant au ${resto.tel1.affiche}`}>{resto.tel1.affiche}</a>
+      <a class="btn btn--big num" href={resto.tel2.href} aria-label={`Appeler le restaurant au ${resto.tel2.affiche}`}>{resto.tel2.affiche}</a>
       <a class="link" href={`${base}contact`}>Écrire au restaurant</a>
     </div>
   </div>

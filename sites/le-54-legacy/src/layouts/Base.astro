@@ -62,13 +62,22 @@ const jsonLd = {
     <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
 document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
     <script is:inline>
-      var j = new Date().getDay();
-      document.querySelectorAll('[data-jour]').forEach(function (el) { if (Number(el.dataset.jour) === j) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); } });
-      var m = document.getElementById('menu');
-      if (m && m.hidePopover) {
-        m.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) m.hidePopover(); });
-        window.matchMedia('(min-width: 52.0625rem)').addEventListener('change', function (q) { if (q.matches && m.matches(':popover-open')) m.hidePopover(); });
-      }
+      (function () {
+        var d = document, j = new Date().getDay();
+        d.querySelectorAll('[data-jour]').forEach(function (el) { if (Number(el.dataset.jour) === j) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); } });
+        var m = d.getElementById('menu'), b = d.querySelector('.nav__burger');
+        if (m && m.hidePopover) {
+          m.addEventListener('toggle', function (e) { if (b) b.setAttribute('aria-expanded', e.newState === 'open' ? 'true' : 'false'); });
+          m.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) m.hidePopover(); });
+          window.matchMedia('(min-width: 52.0625rem)').addEventListener('change', function (q) { if (q.matches && m.matches(':popover-open')) m.hidePopover(); });
+        }
+        var els = d.querySelectorAll('[data-reveal]');
+        function all() { els.forEach(function (el) { el.classList.add('is-in'); }); }
+        if (!('IntersectionObserver' in window)) { all(); return; }
+        var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+        els.forEach(function (el) { io.observe(el); });
+        window.addEventListener('beforeprint', all);
+      })();
     </script>
     <KywFooter base={import.meta.env.BASE_URL} />
   </body>

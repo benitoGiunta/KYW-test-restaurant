@@ -11,14 +11,14 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       {nav.map((l) => <a href={`${base}${l.href}`} aria-current={page === l.href ? 'page' : undefined}>{l.label}</a>)}
     </nav>
     <a class="btn nav__cta" href={`${base}reservations`}>Réserver</a>
-    <button class="nav__burger btn" popovertarget="menu" type="button" aria-label="Ouvrir le menu">Menu</button>
+    <button class="nav__burger btn" popovertarget="menu" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">Menu</button>
   </div>
-  <div id="menu" popover class="nav__pop">
+  <nav id="menu" popover class="nav__pop" aria-label="Menu mobile">
     <p class="nav__pop-t">Le 54, Dave</p>
     <a href={base}>Accueil</a>
     {nav.map((l) => <a href={`${base}${l.href}`}>{l.label}</a>)}
     <a href={`${base}reservations`}>Réservations</a>
     <a class="nav__pop-tel" href={resto.tel1.href}>{resto.tel1.affiche}</a>
     <button class="btn" popovertarget="menu" popovertargetaction="hide" type="button">Fermer</button>
-  </div>
+  </nav>
 </header>
