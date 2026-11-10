@@ -1,0 +1,40 @@
+# Revue awwwards · L’Huile sur le Feu · passe 1
+Verdict : A_CORRIGER (0 F0, 1 F1, 3 F2, 3 F3)
+
+Lecture en une ligne de l’idée du site (sans avoir lu DESIGN.md) : un site sombre bordeaux et or où une goutte d’huile descend le long de la page et donne sa couleur à chaque plat, avec un titre en Bodoni roman et italique ; l’huile d’olive est présentée comme le point de départ de chaque assiette.
+
+Base de preuves : dist (16:21) postérieur à `src/`, captures du QA (16:29-16:32) postérieures au dist, donc réutilisées (accueil et carte). Pages hors QA (histoire, réservation, 404.html réelle) : script maison unique sur serveur propre (port 4761, PID 13172, arrêté), 5 pages x 2 largeurs, axe-core de `node_modules` à 3 positions de défilement, contraste nœud par nœud (canvas 1x1, opacité cumulée) sur 4 pages x 2 largeurs après défilement par 300 px, mesures de grille/colonnes à 320, 360, 390, 412, 768, 1024 et 1440, planches PIL des pages manquantes.
+
+Scores /10
+- Design : 8. Palette bordeaux/or tenue, typo expressive, photos du client bien cadrées (`planche.png` accueil, carte) ; retenue à 8 par les titres coupés et les colonnes de 165 px sur mobile (F1).
+- Usabilité : 7. Réservation et téléphone visibles dès le hero, menu mobile fonctionnel (`aria-expanded=true`, 4 liens), 8 Tab avec contour partout ; mais sommaire de la carte coupé sans indice (F2) et formulaire de réservation étroit sur mobile (F1).
+- Créativité : 8. La goutte qui descend et change de couleur selon l’huile, 404 « Le flacon est vide » : une idée propre à ce restaurant, pas un gabarit.
+- Contenu : 8. 51 plats et leurs prix identiques à `donnees.json` (0 écart, 0 plat ajouté), menus, horaires, adresse, téléphone, URL Barestho/Facebook/Instagram exacts, 0 invention, 0 tiret cadratin, ponctuation française correcte ; retenue par des répétitions de phrases entre accueil et histoire (F3) et des pages courtes (histoire : 4 phrases).
+- Technique : 8. Build OK, 0 erreur console, 0 requête en échec, 0 lien mort (4 internes testés en 200), 0 débordement, 0 violation axe (3 positions x 10 cas), 0 contraste sous le seuil (4 pages x 2 largeurs), LCP mobile 2332 / 2496 ms (QA, CPU x4 + 4G) ; retenue par l’OG vide (F2) et le F1.
+
+## Findings
+
+### F1 majeur
+- **F1-1 · Colonne de texte de 165 px et titres coupés sur mobile et tablette (histoire, réservation)**
+  - Fichiers : `src/pages/histoire.astro:28, 37, 38` et `src/pages/reservation.astro:37, 51` ; règle écrasée : `src/styles/site.css:256` (`.paire__a, .paire__b, .paire__texte { grid-column: 1 / -1 }` sous la media query mobile).
+  - Cause : le `style="grid-column: 1 / 7"` (et `8 / 12`, `8 / 13`) posé en attribut l’emporte sur la feuille de style, donc la grille de 12 colonnes reste active à 390 px.
+  - Preuve (mesures) : `.paire__texte` = 130 px à 320, 150 à 360, **165 à 390**, 176 à 412, 344 à 768 (attendu : pleine largeur). Titre « Venir rue de Marchovelette » : `split-line-mask` scrollWidth 265 px pour 165 px de large, « Marchovelette » est coupé en « Marchov » (capture `h2-venir-390.png`, planche `planche-resa.png`) ; coupé aussi à 320, 412 et **768** (395 pour 344). Titre « La maison de Giuseppe Santamaria » : « Santamaria » 226 px dans 165 px, « Giuseppe » 175 dans 165 (390), coupé à 320, 390 et 412. À 390 px, sur la réservation : champs de formulaire de 165 px, bouton « Ouvrir mon e-mail » sur deux lignes (165 x 66), photo de façade de 134 px collée à côté du formulaire ; sur l’histoire, les deux photos du bas se réduisent à des vignettes. Ni axe ni `scrollWidth` ne le voient (scrollWidth de page = fenêtre).
+  - Correction attendue : retirer les `style="grid-column: …"` et les remplacer par des classes (`.paire__texte--g { grid-column: 1 / 7 }`, `.paire__a--g`, `.paire__b--g`) déclarées dans `site.css` uniquement dans le bloc desktop (`min-width: 821px`), ou déplacer la règle mobile avec `!important`. Contrôle : à 320, 390, 412 et 768, `.paire__texte` pleine largeur et aucun `.split-line-mask` avec scrollWidth > clientWidth sur tous les h1/h2.
+
+### F2 mineur
+- **F2-1 · Sommaire de la carte coupé, sans indice de défilement** (`src/pages/carte.astro:19-23`, `site.css:115-118`). `ul` en `overflow-x: auto` : à 1440 px « Vins rosés » est hors fenêtre (« Vin » tronqué, `d-01-hero.png` de la carte) ; à 390 px 9 liens sur 14 sont hors fenêtre. Le défilement est possible (liens focalisables, axe OK) mais rien ne le signale. Correction : dégradé de bord (masque CSS) ou `flex-wrap: wrap` à partir de 1024 px, et `scroll-padding` pour la fin de liste.
+- **F2-2 · Image de partage vide** : `dist/huile-sur-le-feu/awwwards/og.png` (1200 x 630, 3,6 Ko) est un aplat unique RGB (27, 13, 16) : aucune image, aucun nom. Référencée par `og:image` et le JSON-LD (`image`). Correction : composer l’OG (nom, baseline, photo de flambage) comme prévu dans `ETAT.md`/RAPPORT « points non résolus ».
+- **F2-3 · Répétitions de contenu** : « chaque assiette reçoit l’huile choisie pour elle » figure sur l’accueil (`index.astro:30`) et dans l’histoire (`site.ts` `histoire[2]`) ; « Les huiles viennent d’Oliviers & Co et se retrouvent … boutique » sur l’accueil (`index.astro:48`), `histoire[3]` et la fiche de l’histoire (« Partenaire huile », `histoire.astro:31`) ; « grandi dans les Pouilles » trois fois sur la page histoire (récit, fiche, et titre « Des Pouilles à Namur »). Correction : supprimer la ligne « Partenaire huile » et la mention « grandi dans les Pouilles » de la fiche, ou les remplacer par un fait nouveau du dossier.
+
+### F3 finition
+- **F3-1 · Horaires en double sur la réservation** : les deux flacons « Midi 12 h à 14 h 30 / Soir 18 h à 21 h 15 » puis le tableau complet des mêmes horaires (`reservation.astro:21-33`). Garder l’un des deux.
+- **F3-2 · En-tête translucide** : au passage sur une photo claire, l’en-tête prend deux teintes (moitié gauche brune au-dessus de la photo, moitié droite sombre sur le papier ; `d-04-scroll.png` accueil). Lisible (contraste mesuré OK) mais disparate : fond plus opaque ou `backdrop-filter`.
+- **F3-3 · LCP mobile de la carte à 2496 ms** (QA, CPU x4 + 4G), à 4 ms du seuil de 2,5 s ; `Photo` du héros de la carte (carpaccio) : vérifier `fetchpriority="high"` et la largeur `sizes`. Le WARN « pas de robots.txt » du QA est un faux positif connu (maquette `noindex`).
+
+## Vérifié sans écart (pour mémoire)
+Faits : nom, adresse (Rue de Marchovelette 19, 5000 Namur), +32 81 24 19 03, info@lhuilesurlefeu.be, horaires mardi-samedi 12:00-14:30 / 18:00-21:15, Menu Gourmet 49,90 € et Menu Enfants 25 € avec leur composition, huile citée par plat (les 6 accords de la page d’accueil correspondent aux descriptions de `donnees.json`), 51 plats et prix (le seul « écart » du script était un doublon de nom : deux « Carpaccio de bœuf » à 21 et 24 €, tous deux présents). Alts : tirés du champ `sujet` de `photos/index.json`, aucune personne nommée, portrait 05 non utilisé. Méta : titre et description uniques par page, `lang="fr"`, un seul `h1`, canonical, OG, favicon, JSON-LD `Restaurant` avec adresse, géo et `openingHoursSpecification`, `noindex` partout (conforme au prompt § 3.3), mention « Maquette KYW, certaines données sont illustratives » et un seul `.kyw-footer__logo` par page, 404.html réelle avec title, lang et h1. Mouvement réduit : 0 texte à opacité < 0,05. Poids : aucun fichier image ou police > 150 Ko sur l’accueil, 2 polices préchargées. Accents du pied « À table. » intacts (artefact de capture d’élément écarté par capture de fenêtre).
+
+## Ce qui est bien (à ne pas casser à la révision)
+1. La goutte d’huile : filet qui descend, couleur d’accent par huile, état « vide » sur la 404 ; l’idée est propre au restaurant et cohérente d’une page à l’autre.
+2. Contenu rigoureusement fidèle au dossier : 51 plats, prix, menus, horaires et liens exacts, rien d’inventé (aucun avis, aucune distinction), date d’ouverture présentée « selon le site ».
+3. Accessibilité et robustesse mesurées : 0 axe, 0 contraste sous seuil, contours de focus partout, menu mobile fonctionnel, mouvement réduit propre, LCP mobile ≤ 2,5 s.
