@@ -146,3 +146,4 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 
 - 2026-11-10 · le-ponti-2 · portfolio (phase 3) : une pastille de prix « 18,50 € » passe sur 2 lignes à 390 px si l'espace avant « € » est sécable ; \u00a0 à l'affichage et mesurer la hauteur des pastilles.
 - 2026-11-10 · le-ponti-2 · awwwards (phase 3) : le QA-build « reduced: hiddenText, moving » liste des noms de champs, pas des échecs : lire les valeurs par jq (`.reduced`). axe label-content-name-mismatch : lien à texte visible + aria-label différent, retirer l'aria-label.
+- 2026-11-10 · le-ponti-2 · variante legacy (phase 3) : un regroupement de catégories (Pizzas + Suppléments, Viandes + sauces) fausse comptes et prix mini : exclure suppléments et accompagnements des stats ; Playwright exige `executablePath: '/opt/pw-browsers/chromium'` ; une capture pleine page sans défilement montre les reveal vides.

@@ -1,4 +1,4 @@
-# ETAT : le-ponti-2 legacy (phase 2 sur 3 faite)
+# ETAT : le-ponti-2 legacy (phase 3 sur 3 faite, QA)
 
 ## Fait (phase 1)
 - Audit, DESIGN.md, comp.md, deal Solstice, draw 781aef, contenu réel (src/data), pages /, /menu/, /contact/, 404, photos du client.
@@ -21,3 +21,8 @@
 - Le linter exige `.js` dans le sélecteur d'un état caché au repos : `.js.reveal-on [data-reveal]`.
 - Pas de formulaire, pas de switcher : rien à y ajouter, la réservation est le lien Barestho.
 - sloplint statique : 1 WARN F15 (trois écarts de colonnes : 24, 32, 64 px ; 24 px vient probablement de .nav__bar et .actions) à trancher en phase 3.
+
+## Fait (phase 3)
+- QA ciblée (QA-build.md absent) : 5 largeurs x 3 pages sans erreur ni débordement ; stats de rubrique corrigées (suppléments, sauces, accompagnements exclus) ; build vert, noindex et signature KYW sur chaque page ; RAPPORT.md écrit.
+## Reste
+- Revue finish, jury, entrée de `.hallmark/log.json`, WARN F15 non tranché, sloplint `--render` non relancé.

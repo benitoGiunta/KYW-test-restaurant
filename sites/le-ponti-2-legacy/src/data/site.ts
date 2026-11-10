@@ -30,7 +30,8 @@ export const rubriques: Rubrique[] = [
 ];
 export const platsDe = (r: Rubrique) => r.cats.map((n) => carte.find((c) => c.categorie === n)!).filter(Boolean);
 export function stats(r: Rubrique) {
-  const plats = platsDe(r).flatMap((c) => c.plats);
+  // Suppléments, sauces et accompagnements ne sont ni des plats ni des prix de plat.
+  const plats = platsDe(r).filter((c) => !/^Suppl/i.test(c.categorie)).flatMap((c) => c.plats).filter((p) => !/^(Sauce |Spaghetti, penne|Légumes chauds)/i.test(p.nom));
   const v = plats.map((p) => premier(p.prix)).filter((n): n is number => n !== null);
   return { n: plats.length, min: v.length ? Math.min(...v) : null, max: v.length ? Math.max(...v) : null };
 }
