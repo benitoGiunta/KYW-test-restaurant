@@ -14,7 +14,8 @@ const liens = [
     <a class="brand" href={u('')} aria-label="L’Huile sur le Feu, accueil">
       <img src={u('photos/logo.svg')} width="156" height="46" alt="L’Huile sur le Feu" />
     </a>
-    <nav class="site-nav" aria-label="Navigation principale">
+    <button class="menu-btn" type="button" popovertarget="menu-principal" aria-controls="menu-principal" aria-expanded="false">Menu</button>
+    <nav class="site-nav" id="menu-principal" popover aria-label="Navigation principale">
       <ul>
         {liens.map((l) => <li><a href={l.h} aria-current={path === l.p ? 'page' : undefined}>{l.t}</a></li>)}
       </ul>
@@ -22,3 +23,11 @@ const liens = [
     <a class="btn btn--flame" href={resto.reservation} rel="noopener">Réserver</a>
   </div>
 </header>
+<script is:inline>
+(() => {
+  const nav = document.getElementById('menu-principal'), btn = document.querySelector('.menu-btn');
+  if (!nav || !btn) return;
+  nav.addEventListener('toggle', (e) => btn.setAttribute('aria-expanded', e.newState === 'open' ? 'true' : 'false'));
+  nav.addEventListener('click', (e) => { if (e.target.closest('a') && nav.matches(':popover-open')) nav.hidePopover(); });
+})();
+</script>

@@ -1,17 +1,29 @@
-# ETAT variante legacy · huile-sur-le-feu · fin de la phase 1 (construction-1)
+# ETAT variante legacy · huile-sur-le-feu · fin de la phase 2 (construction-2)
 
-## Fait
-- Audit (`AUDIT.md`, `.hallmark/before.txt`), approche conservée, deal (0/3, thème de marque), draw 47923d, scaffold `--brand`, stamp en tête de `src/styles/page.css`, comps c1/c2 (`comp.md`, c1 retenu), `DESIGN.md` (Picks, Approche, Thème, Composants, Sur-utilisation 1 à 5 cochés).
-- Six pages statiques : `/`, `/restaurant/`, `/menu/`, `/boutique/`, `/contact/`, 404. Composants : Nav, Photo, PageHead, Rows, Horaires, Pied ; données `src/data/site.ts`, `carte.json`, `photos.json`. Build passe (`dist/huile-sur-le-feu/legacy/`), grep : KywFooter, noindex et mention sur les six pages, 0 tiret, 0 apostrophe droite.
-- Sloplint (page d'accueil aplatie, rendu) : restent le FAIL 76 (asset du kyw-footer absent de la copie plate) et le REFLEX 72 du paquet kyw-footer (jamais modifié) ; 49a corrigé (nowrap), F4 répondu.
+## Fait (phase 1, inchangé)
+- Audit, approche, deal (thème de marque), scaffold, comps (c1 retenu), DESIGN.md, six pages statiques (`/`, `/restaurant/`, `/menu/`, `/boutique/`, `/contact/`, 404), données `carte.json`, `photos.json`, `site.ts`.
 
-## Reste (phases 2 et 3)
-- Phase 2 : menu mobile (popover), jour courant dans Horaires, un reveal CSS, états des contrôles (disabled, loading), `--stage hero` et hero review, capture des six pages à 375 et 1440, vérifier que la tuile « histoire » et la tuile « huile » du Bento ne sont pas trop vides (min-height 16 rem), `text-wrap: balance` des titres, contraste du lien `.link--deep`.
-- Phase 3 : sloplint final, jury, RAPPORT.md, Picks « Sweep », `pnpm index`.
+## Fait (phase 2)
+- Nav : edge-aligned sur barre bordeaux, bouton « Menu » + panneau Popover sous 60rem (`Nav.astro`, `page.css` § Nav), « Réserver » toujours dans la barre, logo 44 px de haut, skip link conservé.
+- États : `.btn` (hover sous `(hover: hover)`, focus-visible, active, disabled), `.menu-btn`, liens, rail de catégories ; aucun formulaire (réservation = lien Barestho conservé), donc ni validation ni faux envoi.
+- Horaires : jour courant par script (`aria-current="date"`, mention « Aujourd’hui »). Carte : catégorie courante marquée au scroll (`menu.astro`).
+- Mouvement calme : « le feu prend » au chargement du hero (photo qui se pose + halo, une fois), un reveal (tuiles, photos, rangées d'index) sous `.js [data-reveal]`, tout coupé en `prefers-reduced-motion`.
+- Responsive : 60rem, 40rem, 22rem ; 6 pages sans débordement à 375 et 320 ; cibles tactiles ≥ 44 px (hors lien « Réalisé par » du pied KYW, jamais modifié) ; `(pointer: coarse)` pour pied et rail.
+- Hero review en auto-notation (`hero-review: self · fix · 1 finding · 1 resolved` : plafond 60rem), comp reproduite (`comp.md`), checklist DESIGN.md cochée (2, 6, 7, 17 à 24, 29, 30, 34, 48, 49, 56, 58, 63, 72).
+- Build `scripts/q.sh build pnpm build:site sites/huile-sur-le-feu-legacy` passe ; grep sur les six HTML : noindex, kyw-signature, mention, 0 tiret.
+- Sloplint `--stage hero --url` : 0 FAIL réel, ANSWERED F4, NOTE 58 (94 mots à 1440 sous y = 500, sous le plafond de 80 : à regarder en phase 3). FAIL 34 sur `Base.astro` = faux positif de scan `src` (voir DESIGN.md case 34).
+
+## Reste (phase 3)
+- QA captures (agent « captures ») : six pages à 375, 1440 ; vérifier le fondu du rail de catégories et le panneau du menu ouvert sur /menu.
+- Sloplint final (page entière, `dist` aplati comme en phase 1 : FAIL 76 et REFLEX 72 du paquet footer), jury, `RAPPORT.md`, Picks « Sweep », `pnpm index`, commit de `dist/index.html`.
+- Option : la tuile « huile » du Bento ne contient que du texte sur fond bordeaux (4 lignes à 375) ; juger sur captures desktop.
 
 ## Décisions et hypothèses
-- Thème : marque (bordeaux, olive, flamme lus dans le CSS du site) sur papier crème ; aucun des trois thèmes dealt ne portait le bordeaux. Polices Marcellus (marque) + Hanken Grotesk ; Bebas Neue et Homemade Apple abandonnées (capitales espacées).
-- Abandonnés (`dropped`) : sélecteur EN/IT/NL, bannière de cookies, /privacy, /cookies, widget Barestho en page (lien conservé), carte Google Maps de /contact (lien Itinéraire conservé).
-- Reworded : sous-titre du hero (58), tiret cadratin de la tuile huile (19), « 21 ans plus tard » retiré (date relative).
-- Données à vérifier avec le client : 2005 (Yelp indique 2002, Kompass 2007), authenticité des photos (03, 04, 06, 08 à 11, 13 à 16 au rendu très lisse, IA possible), doublons de plats de la carte (formats entrée/plat), horaires, partenariat Oliviers & Co. Portrait 05 non utilisé (non identifié). Aucun placeholder, aucun slot `.fill`, aucune note ni avis.
-- Piège : un `[data-slot]` avec image masque ses frères (base.css) : les légendes sont hors du slot.
+- Pas de switcher midi/soir ni de formulaire : la carte ne distingue pas les services et la réservation est externe (hypothèse conservée de la phase 1).
+- Le reveal ne touche ni le hero ni les rangées de carte (lecture directe) ; les éléments déjà visibles au chargement sont montrés sans transition.
+- Pas d'outil Agent : hero review notée `self`.
+- Données à vérifier avec le client (inchangé) : 2005 (Yelp 2002, Kompass 2007), authenticité des photos, doublons de plats, horaires, partenariat Oliviers & Co.
+
+## Pièges
+- Le dev server a été lancé avec `nohup pnpm exec astro dev` ; barre « dev toolbar » d'Astro visible en bas des captures dev (pas dans le build).
+- Un `<nav popover>` doit être remis en `display: block` hors `:popover-open` sur desktop (`.site-nav[popover]:not(:popover-open)`), sinon la nav disparaît.

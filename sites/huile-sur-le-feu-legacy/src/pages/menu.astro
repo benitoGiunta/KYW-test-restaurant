@@ -57,4 +57,18 @@ const photoApres = 'Entrées & salades';
   ))}
 
   <Horaires />
+<script is:inline>
+(() => {
+  const liens = [...document.querySelectorAll('.catnav a')];
+  if (!liens.length || !('IntersectionObserver' in window)) return;
+  const par = new Map(liens.map((a) => [a.getAttribute('href').slice(1), a]));
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    liens.forEach((a) => a.removeAttribute('aria-current'));
+    const a = par.get(e.target.id); a.setAttribute('aria-current', 'true');
+    const ul = a.closest('ul'); if (ul && ul.scrollWidth > ul.clientWidth) ul.scrollTo({ left: Math.max(0, a.offsetLeft - 24), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }), { rootMargin: '-20% 0px -70% 0px' });
+  par.forEach((_, id) => { const t = document.getElementById(id); if (t) io.observe(t); });
+})();
+</script>
 </Base>

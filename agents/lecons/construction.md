@@ -255,3 +255,7 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 - Cause : l'engine ne joue `data-intro` qu'avec `data-split` ou `data-reveal` (reveal.ts) ; l'attribut seul ne fait rien.
 - Correction appliquée : `data-split="lines" data-intro` sur chaque h1, `data-reveal="clip" data-intro data-delay` sur le média du hero.
 - À faire par le prochain agent : en phase 1, poser `data-intro` toujours avec `data-split` ou `data-reveal` ; grep `data-intro>` (attribut seul) avant de clore.
+
+## 2026-11-10 · huile-sur-le-feu · variante legacy (phase 2)
+- Un `<nav popover>` qui sert aussi de nav desktop : neutraliser le popover au bureau (`position: static; inset: auto; margin: 0; background: transparent`) et forcer `.site-nav[popover]:not(:popover-open) { display: block }` (l'UA le cache sinon) ; sous 60rem remettre `display: none` hors ouverture. Reveal posé par script (attribut `data-reveal` ajouté en JS, règle sous `.js [data-reveal]`) : sloplint 62 passe et rien ne reste masqué si le script échoue.
+- `sloplint src` ne suit pas l'`@import` de `page.css` : FAIL 34 (overflow-x: clip) sur `Base.astro` est un faux positif quand `base.css` porte la règle ; le prouver par `scrollWidth` en navigateur. Les commentaires JSX `{/* Hallmark · … */}` déclenchent le FAIL 63 (point médian) : écrire `Hallmark, reworded`.

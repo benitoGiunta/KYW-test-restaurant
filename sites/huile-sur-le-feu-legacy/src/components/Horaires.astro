@@ -10,8 +10,8 @@ const { adresse = true } = Astro.props;
       <p class="lead">Du mardi au samedi, midi et soir. Fermé le dimanche et le lundi.</p>
     </div>
     <dl class="schedule">
-      {jours.map((j) => (
-        <div class:list={['schedule__row', { 'is-closed': !j.ouvert }]}>
+      {jours.map((j, i) => (
+        <div class:list={['schedule__row', { 'is-closed': !j.ouvert }]} data-dow={(i + 1) % 7}>
           <dt>{j.jour}</dt>
           <dd>{j.ouvert ? <><span class="num">{j.midi}</span><span class="num">{j.soir}</span></> : <span>Fermé</span>}</dd>
         </div>
@@ -29,3 +29,15 @@ const { adresse = true } = Astro.props;
     </div>
   </div>
 </section>
+<script is:inline>
+(() => {
+  const l = new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'Europe/Brussels' }).format(new Date());
+  const d = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(l);
+  const row = document.querySelector('.schedule__row[data-dow="' + d + '"]');
+  if (!row) return;
+  row.classList.add('is-today');
+  row.setAttribute('aria-current', 'date');
+  const m = document.createElement('span'); m.className = 'schedule__today'; m.textContent = 'Aujourd’hui';
+  row.querySelector('dt').append(m);
+})();
+</script>
