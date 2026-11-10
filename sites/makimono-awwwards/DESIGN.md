@@ -143,3 +143,6 @@ Mobile 390 px : titres re-réglés par `--t-mega`, tout en une colonne, `.sommai
 45. [~] Contraste : survol du bouton plein sur riz corrigé (texte riz sur `#b02a52`, 5,9:1, au lieu de nori sur rose foncé) ; mesure complète en phase 3.
 46. [x] Texte réel partout, aucun canvas.
 47. [x] Cibles : bouton « Menu » 77 x 44, « Appeler » 48 px (`.bouton` 3 rem), liens de nav 44 px ; mesure complète en phase 3.
+
+## Phase 3 : preuves QA
+42. Sémantique : audit 0 FAIL, un h1 par page (audit.txt). 43. Titre, description, canonical, JSON-LD : `grep -c ld+json dist/makimono/awwwards/index.html` = 1 ; sitemap-index.xml présent. 48 à 52. LCP mobile 1044 à 1548 ms, CLS <= 0,012, JS 60 Ko gz, page 971 Ko (audit.txt « heaviest »), `settledMs` 3,8 à 4,2 s, 60 fps. 53. 0 tiret cadratin (script Python sur dist et src). 54. repeats corrigés (WARN restants justifiés, RAPPORT.md). 56. 0 placeholder. 57. crédit « Photos : Makimono » en pied. 58. `grep -L robots` vide. 59. `KywFooter` : un `kyw-signature`, mention rendue. 60. 0 requête échouée sous la base. 35, 36, 45 : `idleMotion` true, reflet de repos sans `settledMs` nul. 61 à 63 : une passe en auto-notation (non indépendant), accessoire retiré : curseur suiveur.

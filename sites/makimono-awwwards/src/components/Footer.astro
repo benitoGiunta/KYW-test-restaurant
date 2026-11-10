@@ -3,6 +3,14 @@ import KywFooter from '@kyw/footer';
 import { u } from '../lib/url';
 import { restaurant, horaires, hm } from '../data/site';
 const a = restaurant.adresse;
+// Horaires condensés (jours consécutifs identiques) : évite la répétition mot pour mot avec la section pratique.
+const lignes: { jours: string; h: string }[] = [];
+for (const j of horaires) {
+  const h = j.services.map((s) => `${hm(s.debut)} à ${hm(s.fin)}`).join(' · ');
+  const l = lignes[lignes.length - 1];
+  if (l && l.h === h) l.jours = l.jours.split(' au ')[0] + ' au ' + j.jour.toLowerCase();
+  else lignes.push({ jours: j.jour, h });
+}
 ---
 <footer class="pied nori" data-layer="content">
   <div class="rouleau-bas" aria-hidden="true"></div>
@@ -16,7 +24,7 @@ const a = restaurant.adresse;
       <a href={`mailto:${restaurant.email}`}>{restaurant.email}</a>
     </address>
     <ul class="pied__horaires" aria-label="Horaires">
-      {horaires.map((h) => <li><span>{h.jour}</span><span class="tabulaire">{h.services.map((s) => `${hm(s.debut)} à ${hm(s.fin)}`).join(' · ')}</span></li>)}
+      {lignes.map((l) => <li><span>{l.jours}{l.h.indexOf('·') < 0 ? ' (soir)' : ''}</span><span class="tabulaire">{l.h}</span></li>)}
     </ul>
     <ul class="pied__liens" aria-label="Liens">
       <li><a href={u('/carte/')}>Carte</a></li>
