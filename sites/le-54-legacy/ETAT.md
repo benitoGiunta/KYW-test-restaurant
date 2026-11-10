@@ -1,4 +1,4 @@
-# ETAT · le-54 · variante legacy · phase 2 (construction-2) terminée
+# ETAT · le-54 · variante legacy · phase 3 (QA) terminée
 
 ## Fait (phases 1 et 2)
 - Phase 1 : AUDIT.md, comp.md, DESIGN.md, thème Atelier, 7 pages, composants Nav, Fig, Horaires, Reserve, Footer, 14 photos du client.
@@ -24,3 +24,9 @@
 - sloplint : un waiver est rejeté si sa raison ne partage aucun mot avec la page ; mieux vaut corriger (REFLEX 59 réglé par la marge basse du pied).
 - `scripts/q.sh` : le nom de journal ne doit pas contenir de « / ».
 - Serveur de dev arrêté (PID noté puis `kill`).
+
+## Phase 3 (QA) fait
+- QA-build.md absent : contrôles ciblés refaits (sloplint 0 FAIL 0 REFLEX ; 7 routes x 375/1440 sans débordement ni image cassée ; noindex, footer, mention OK).
+- Correction : h2 d'accueil reformulé (tell français), vérifié par capture 1440 et build.
+- RAPPORT.md écrit, entrée de `.hallmark/log.json` ajoutée, `pnpm index` passé, serveur arrêté.
+- Reste : rien de bloquant ; placeholders listés dans RAPPORT.md § 5.
