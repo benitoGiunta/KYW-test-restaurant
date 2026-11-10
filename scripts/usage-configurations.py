@@ -17,10 +17,12 @@ CFG = [
       agents='courts, 40 réponses', revue2='si F0 ou F1', lecons='par rôle, prompts par phase', effort='réduit', lectures='libres', nouveaute='Tests D, H'),
  dict(phase='Après 4', portfolio='Sonnet', awwwards='Sonnet, animations Opus', legacy='Sonnet', revue='Sonnet', revision='Sonnet', captures='Haiku',
       agents='courts, 40 réponses', revue2='si F0 ou F1', lecons='par rôle, prompts par phase', effort='réduit', lectures='regroupées (consigne)', nouveaute='Test I, regroupement des lectures'),
+ dict(phase='Après 5', portfolio='Sonnet', awwwards='Sonnet, animations Opus', legacy='Sonnet', revue='Sonnet', revision='Sonnet', captures='Haiku',
+      agents='courts, 40 réponses', revue2='si F0 ou F1', lecons='par rôle, prompts par phase', effort='réduit', lectures='plafonnées par un hook', nouveaute='Hook de lecture : cat > 200 lignes et sed -n > 120 lignes refusés'),
 ]
 NOM = {'partage': 'Partage', 'brasserie-du-quai': 'La Brasserie du Quai', 'chez-guillaume': 'Chez Guillaume', 'dolce-vita-wepion': 'La Dolce Vita',
        'le-royal': 'Le Royal', 'incorrect': 'Incorrect', 'l-essentiel': 'L’Essentiel', 'ferme-blanche-d-asie': 'La Ferme Blanche d’Asie', 'le-felicien': 'Le Félicien', 'grill-des-amis': 'Le Grill des amiS', 'le-54': 'Le 54', 'le-ponti-2': 'Le Ponti 2'}
-PH = {3: 'Après', 4: 'Après', 5: 'Après 2', 6: 'Après 3', 7: 'Après 4', 8: 'Après 4', 9: 'Après 4', **{r: 'Après 4' for r in range(10, 21)}}
+PH = {3: 'Après', 4: 'Après', 5: 'Après 2', 6: 'Après 3', 7: 'Après 4', 8: 'Après 4', 9: 'Après 4', **{r: 'Après 4' for r in range(10, 15)}, **{r: 'Après 5' for r in range(15, 21)}}
 conf = json.load(open(CONF)); conformite = []
 for c in conf:
     rv = c['revues']; b = [r['conforme_b'] for r in rv if r['conforme_b'] is not None]
@@ -30,7 +32,7 @@ for c in conf:
         test_b=(f"{sum(b)}/{len(b)}" if b else 'non prévu'), f0f1_revue1=sum(r['f0f1_revue1'] or 0 for r in rv), f0f1_fin=sum(r['f0f1_fin'] or 0 for r in rv),
         reponses_max=c['reponses_max'], agents_plus_40=c['agents_plus_40'], bash_par_reponse=c['bash_par_reponse'], socle=c['socle'], sorties_commandes=c['sorties_commandes']))
 lignes = []
-for i, k in enumerate(CFG):
+for i, k in enumerate([k for k in CFG if k['phase'] in phases]):
     p = phases[k['phase']]; cs = [c for c in conformite if c['phase'] == k['phase']]
     mesure = bool(cs)
     lignes.append(dict(k, ordre=i, restaurants=p['restaurants'], cout_par_site=p['cout_par_site'], site_portfolio=p['site_portfolio'], site_awwwards=p['site_awwwards'],
