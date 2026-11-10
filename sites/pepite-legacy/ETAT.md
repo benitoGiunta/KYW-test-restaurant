@@ -1,4 +1,11 @@
-# ETAT · pepite-legacy · construction-2 (phase 2 sur 3)
+# ETAT · pepite-legacy · construction-3 (phase 3 sur 3, QA)
+
+## Fait (phase 3)
+- QA lue, twitter:card ajouté, liens du pied à 33 px, rebuild OK, RAPPORT.md écrit, serveur tué.
+## Reste
+- Sweep sloplint --kept, finish-review self, entrée log avec fingerprint, 72 cases DESIGN.md, push.
+
+# Phase 2 (archive)
 
 ## Fait (phase 2)
 - Nav sticky masthead à `--z-sticky-nav` ; sous 60rem, menu `<nav popover>` unique + bouton « Menu/Fermer » (`aria-expanded`), fermeture au clic de lien et Escape ; skip link conservé ; `scroll-padding-top` = nav + 16 px.
