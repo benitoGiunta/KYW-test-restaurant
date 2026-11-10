@@ -5,7 +5,7 @@ import Demi from '../components/Demi.astro';
 import { u } from '../lib/url';
 import { carte, eur, menus, restaurant as r } from '../data/site';
 import type { CleePhoto } from '../lib/photos';
-const photoDe: Record<string, CleePhoto> = { 'Les ardoises à partager': 'ardoise', 'Les entrées': 'saumon', 'Les plats': 'viande', 'Les pâtes': 'poisson', 'Les salades': 'service', 'Les grillades': 'grill', 'Desserts': 'veloute' };
+const photoDe: Record<string, CleePhoto> = { 'Les ardoises à partager': 'ardoise', 'Les entrées': 'saumon', 'Les plats': 'viande', 'Les salades': 'service', 'Les grillades': 'grill' };
 const slug = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const rubriques = carte.map((c) => {
   const [titre, sous] = c.categorie.split(' (');
@@ -17,7 +17,7 @@ const rubriques = carte.map((c) => {
     <div class="wrap">
       <h1 class="titre-page"><Demi t="La carte" /></h1>
       <p class="page-tete__lead">Locale, de saison, faite maison.</p>
-      <p class="page-tete__note">D’après la carte de septembre à janvier publiée par le restaurant. Elle évolue au fil des mois : appelez avant de venir si un plat vous tient à cœur.</p>
+      <p class="page-tete__note">D’après la carte de septembre à janvier publiée par le restaurant. Elle évolue au fil des mois.</p>
     </div>
   </section>
   <nav class="carte-index" aria-label="Rubriques de la carte">

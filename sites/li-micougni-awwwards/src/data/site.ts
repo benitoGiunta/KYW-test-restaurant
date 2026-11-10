@@ -54,8 +54,8 @@ export const menus = [
 
 export const histoire = [
   'Li Micougni est né de l’amitié de deux passionnés de l’horeca. Ils ont ouvert en 2026, au centre de Namur, une maison où l’on vient pour se retrouver.',
-  'Le nom est wallon : les demi-fous y sont les bienvenus, comme tout le monde. La cuisine suit les saisons et les producteurs d’ici, les sauces sont faites maison, les grillades passent par le charbon de bois.',
-  'La carte change au fil des mois. Les boulettes de Mamy Max, elles, restent.',
+  'Le nom est wallon : les demi-fous y sont les bienvenus, comme tout le monde. La cuisine suit les saisons et des produits locaux, les sauces sont faites maison, les grillades passent par le charbon de bois.',
+  'La carte change au fil des mois. Les boulettes de Mamy Max, servies avec des frites, sont l’un des plats de la maison.',
 ];
 
 export const valeurs = ['Produits locaux et de saison', 'Fait maison', 'Carte évolutive', 'Convivialité et partage'];
