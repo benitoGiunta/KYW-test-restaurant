@@ -1,4 +1,4 @@
-# ETAT : huile-sur-le-feu-portfolio (phase 2 sur 3 terminée)
+# ETAT : huile-sur-le-feu-portfolio (phase 3 sur 3 terminée)
 
 ## Fait (phase 1)
 - Gabarit « Marée » adapté : données, tokens, loader « huile versée », 16 photos WebP, favicon/OG, 7 pages, KywFooter seul `contentinfo`, noindex, mention Maquette KYW. DESIGN.md (matrice, décisions). `gabarits/UTILISATION.md` à jour.
@@ -30,3 +30,6 @@
 - Un script de clics réels sur toutes les pages dépasse 2 min : tâche de fond, pas de rebuild pendant son exécution.
 - Hypothèse : teintes des gouttes (`tonHuile`) décoratives et non datées, pas des données du restaurant.
 - Fichiers non commités d'autres agents dans le dépôt (`pnpm-lock.yaml`, `sites/huile-sur-le-feu-legacy/`) : ne pas les ajouter.
+
+## Phase 3 (QA)
+- Titre accueil raccourci (58 car.), rebuild OK, RAPPORT.md écrit. Reste : rien de bloquant (points ouverts dans RAPPORT.md).
