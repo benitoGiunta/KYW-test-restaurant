@@ -24,6 +24,11 @@ const jsonLd = {
     { '@type': 'OpeningHoursSpecification', dayOfWeek: `https://schema.org/${jours[j.jour]}`, opens: '18:00', closes: '21:30' },
   ]),
 };
+const fontFiles = ['sofia-200', 'sofia-400', 'barlow-300', 'barlow-400'];
+const ff = (fam, w, f) => `@font-face{font-family:"${fam}";font-weight:${w};font-style:normal;font-display:swap;src:url(${base}fonts/${f}.woff2) format("woff2")}`;
+const fontCss = [ff('Sofia Sans Extra Condensed', 200, 'sofia-200'), ff('Sofia Sans Extra Condensed', 400, 'sofia-400'), ff('Barlow', 300, 'barlow-300'), ff('Barlow', 400, 'barlow-400'),
+  '@font-face{font-family:"Sofia repli";src:local("Arial Narrow"),local("Arial");size-adjust:70%;ascent-override:129%;descent-override:43%;line-gap-override:0%}',
+  '@font-face{font-family:"Barlow repli";src:local("Arial");size-adjust:96%;ascent-override:104%;descent-override:21%;line-gap-override:0%}'].join('');
 ---
 <!doctype html>
 <html lang="fr">
@@ -36,9 +41,8 @@ const jsonLd = {
     <meta name="theme-color" content="#0c0a09" />
     <link rel="icon" href={`${base}photos/monogramme.webp`} type="image/webp" />
     <script is:inline>document.documentElement.classList.add('js');</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@200;400&family=Barlow:wght@300;400&display=swap" rel="stylesheet" />
+    {fontFiles.map((f) => <link rel="preload" href={`${base}fonts/${f}.woff2`} as="font" type="font/woff2" crossorigin />)}
+    <style is:inline set:html={fontCss} />
     {page !== '404' && <link rel="canonical" href={canonical} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_BE" />

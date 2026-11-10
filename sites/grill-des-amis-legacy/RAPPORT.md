@@ -30,9 +30,9 @@ Voir `AUDIT.md` et `DESIGN.md` (72 cases). Passe 3 : contraste mesuré, pli et v
 | Élément | Où | Valeur | À remplacer par |
 |---|---|---|---|
 | Réservation | boutons Réserver | lien Wix d'origine et `tel:` | module de réservation du client |
-| Horaires, mardi fermé | contact, réserver | repris du site d'origine | confirmation du client |
+| Horaires, mardi, mercredi et dimanche fermés | accueil, contact, réserver | déduit (le site d'origine ne donne que les quatre jours ouverts), affiché « Fermé (à confirmer) » | confirmation du client |
 | Carte du 14 octobre 2026 | carte | données de la phase 1 | carte à jour |
-| Avis | accueil | repris du site d'origine | à vérifier |
+| Avis | aucun | non repris : aucun avis affiché, faute de source dans le dossier | sans objet |
 
 ## 6. Demande de matériel
 Photo qui améliorerait le plus : une photo de la façade ou de la terrasse en soirée, 3:2, 2400 px, pour l'en-tête de la page contact. Logo en SVG fond transparent (le logo actuel est petit sur la dalle, 2,5 rem).
