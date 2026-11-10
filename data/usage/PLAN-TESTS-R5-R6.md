@@ -227,3 +227,8 @@ Script : `scripts/usage-conformite.py` (modèles réels par agent, revues, consi
 5,73 $ par site (série 7 à 9 : 5,78 $). Écart entre restaurants de −10 % à +14 %, aucune alerte. 142 agents, aucun écart de
 modèle, test B 15/15, aucun F0 ou F1 ouvert. Configuration « Après 4 » sur 8 restaurants : 5,75 $ par site, −71,8 % depuis avant.
 Le socle par agent monte lentement (67 700 → 68 100 jetons), sans effet visible sur le coût.
+- Compte rendu de Test Site (10/11 5 h 45) : consommation hebdomadaire 12 % → 23 % pour les 15 sites (≈ 0,7 point par site,
+  ≈ 2,2 points par restaurant). Seul ajout à la configuration : interdiction des photos filigranées par un tiers (3f8e5d0).
+  Test Site signale des agents « au-delà de 60 réponses » : la mesure agent par agent (une réponse = un identifiant de message)
+  donne au plus 44 réponses par agent et 37 pour la session principale ; l'écart vient sans doute d'un comptage par ligne de
+  transcript (une réponse y occupe plusieurs lignes). Sorties de commandes hors q.sh : ~90 %, inchangé.
