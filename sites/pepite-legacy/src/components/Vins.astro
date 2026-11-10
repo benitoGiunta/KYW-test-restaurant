@@ -1,16 +1,23 @@
 ---
-import { resto, selections } from '../data/site';
+import { resto, selections, base } from '../data/site';
 ---
 <section class="vins grained" id="vins" aria-labelledby="vins-t">
   <div class="container vins__in">
+    <div class="vins__txt">
     <h2 id="vins-t">Des vins vivants, vibrants, qui ont une âme</h2>
     <p class="lead">Des vins d’auteurs, élaborés dans le respect du vivant : fluides, digestes, d’une grande buvabilité.</p>
-    <ul class="vins__sel" aria-label="Les sélections de Pépite">
+    <h3 class="vins__sel-t" id="vins-sel">Les sélections de Pépite</h3>
+    <ul class="vins__sel" aria-labelledby="vins-sel">
       {selections.map((s) => <li>{s}</li>)}
     </ul>
     <p class="vins__bas">
       <a class="btn btn--ligne" href={resto.commander}>Commander en ligne</a>
       <span>Gin Djîn par Sang Hoon Degeimbre : <span class="num">45 €</span> les 50 cl.</span>
     </p>
+    </div>
+    <figure class="vins__photo">
+      <img src={`${base}photos/couvert.webp`} width="1024" height="683" loading="lazy" decoding="async"
+        alt="Couvert et serviette sur table en bois, poivre et sel" />
+    </figure>
   </div>
 </section>

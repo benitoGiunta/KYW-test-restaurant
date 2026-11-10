@@ -7,7 +7,7 @@ export const resto = {
   adresse: { rue: 'Rue Notre-Dame', numero: '44', cp: '5000', ville: 'Namur' },
   geo: { lat: 50.4601105, lon: 4.8665145 },
   tel: '0476/620182',
-  telHref: 'tel:0476/620182',
+  telHref: 'tel:+32476620182',
   email: 'catherine.mathieu@me.com',
   siteActuel: 'https://pepite-caveamanger.be',
   facebook: 'https://www.facebook.com/Pépite-cave-à-manger-248386248950963/',

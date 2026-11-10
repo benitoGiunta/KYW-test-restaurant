@@ -100,18 +100,22 @@
 .carte__pied { grid-column: 5 / 13; color: var(--color-ink-2); font-size: var(--text-sm); max-width: 70ch; }
 
 .vins { background: var(--color-paper-3); }
-.vins__in { display: grid; gap: var(--space-xl); }
+.vins__in { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); row-gap: var(--space-xl); align-items: center; }
+.vins__txt { grid-column: 1 / 9; display: grid; gap: var(--space-xl); }
+.vins__photo { grid-column: 9 / 13; margin: 0; }
+.vins__photo img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--radius-card); filter: sepia(0.28) saturate(0.94) contrast(1.06) brightness(0.96); }
+.vins__sel-t { margin: 0 0 calc(-1 * var(--space-md)); font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; letter-spacing: 0.04em; color: var(--color-muted); }
 .vins h2 { max-width: 22ch; font-size: var(--text-display-s); }
 .vins__sel { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--color-rule); }
-.vins__sel li { font-family: var(--font-display); font-size: var(--text-section); padding: var(--space-xl) var(--space-lg) var(--space-xl) 0; border-bottom: 1px solid var(--color-rule); overflow-wrap: break-word; min-width: 0; }
-.vins__sel li + li { padding-left: var(--space-lg); border-left: 1px solid var(--color-rule); }
+.vins__sel li { font-family: var(--font-display); font-size: clamp(1.5rem, 2.2vw, 2rem); padding: var(--space-lg) var(--space-md) var(--space-lg) 0; border-bottom: 1px solid var(--color-rule); overflow-wrap: break-word; min-width: 0; }
+.vins__sel li + li { padding-left: var(--space-md); border-left: 1px solid var(--color-rule); }
 .vins__bas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-lg) var(--space-xl); color: var(--color-ink-2); }
 
-.lieu__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); align-items: center; row-gap: var(--space-xl); }
-.lieu__photo { grid-column: 1 / 6; margin: 0; }
+.lieu__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); align-items: start; row-gap: var(--space-xl); }
+.lieu__photo { grid-column: 1 / 5; margin: 0; }
 .lieu__photo img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: var(--radius-card); box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-ink) 8%, transparent); filter: sepia(0.28) saturate(0.94) contrast(1.06) brightness(0.96); }
 .lieu__photo figcaption { margin-top: var(--space-sm); font-size: var(--text-sm); color: var(--color-muted); }
-.lieu__txt { grid-column: 7 / 13; display: grid; gap: var(--space-lg); }
+.lieu__txt { grid-column: 6 / 13; display: grid; gap: var(--space-lg); }
 .lieu blockquote { margin: 0; padding-left: var(--space-lg); border-left: 1px solid var(--color-accent); display: grid; gap: var(--space-sm); font-size: var(--text-lead); line-height: 1.5; }
 .lieu blockquote footer { font-size: var(--text-sm); color: var(--color-muted); }
 
@@ -150,6 +154,8 @@
 @media (max-width: 60rem) {
   .carte__tete, .carte .rows, .carte__pied, .lieu__photo, .lieu__txt, .presse__grid > div, .presse .rows, .venir__tete, .horaires, .pied__mark, .pied address, .pied__liens { grid-column: 1 / -1; }
   .lieu__photo { max-width: 26rem; }
+  .vins__txt, .vins__photo { grid-column: 1 / -1; }
+  .vins__photo { max-width: 26rem; }
   .vins__sel { grid-template-columns: 1fr; }
   .vins__sel li + li { padding-left: 0; border-left: 0; }
   .hor { grid-template-columns: 7rem minmax(0, 1fr); }
