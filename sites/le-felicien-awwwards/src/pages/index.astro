@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import Echelle from '../components/Echelle.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, ancres, pourTous, classiques, services, horairesNote } from '../data/site';
+---
+<Base page="accueil" description="Le Félicien, brasserie à Suarlée (Namur) : croquettes, boulets à la liégeoise, vol-au-vent, frites fraîches. Ouvert midi et soir, 7 jours sur 7.">
+  <section class="hero" aria-labelledby="titre">
+    <div class="wrap hero__grille">
+      <h1 id="titre" class="hero__titre display">Le Félicien</h1>
+      <div class="hero__texte">
+        <p class="hero__phrase">Une brasserie pour tous. À Suarlée, près de Namur, la cuisine ouvre midi et soir, sept jours sur sept, et la carte va de 3,2&nbsp;€ à 38&nbsp;€.</p>
+        <p class="hero__actions">
+          <a class="cta cta--or" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+          <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
+        </p>
+      </div>
+      <figure class="hero__media">
+        <Photo cle="plat" widths={[480, 800, 1200]} sizes="(min-width: 60rem) 38vw, 92vw" prioritaire />
+        <figcaption>Photo d’archive de 2020, illustrative. Photos : Le Félicien.</figcaption>
+      </figure>
+      <div class="hero__regle">
+        <Echelle pins={ancres.map((a) => ({ prix: a.prix, label: a.label }))} />
+        <ul class="hero__legende">{ancres.map((a) => <li><b>{a.court}</b> {a.label}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="pourtous" aria-labelledby="t-pourtous">
+    <div class="wrap">
+      <h2 id="t-pourtous" class="display titre-l">À chacun son budget</h2>
+      <ol class="rangs">
+        {pourTous.map((r) => (
+          <li class="rang">
+            <h3 class="rang__titre display">{r.titre}</h3>
+            <p class="rang__phrase">{r.phrase}</p>
+            <p class="rang__prix">{r.texte}</p>
+            <Echelle classe="rang__regle" plage={[r.min, r.max]} chiffres={false} />
+          </li>
+        ))}
+      </ol>
+      <p class="pourtous__lien"><a class="lien" href={u('/carte/')}>Voir toute la carte d’automne</a></p>
+    </div>
+  </section>
+
+  <section class="classiques" aria-labelledby="t-classiques">
+    <div class="wrap classiques__grille">
+      <div class="classiques__texte">
+        <h2 id="t-classiques" class="display titre-xl">Les grands classiques, sans détour.</h2>
+        <p>Croquettes, boulets à la liégeoise, vol-au-vent maison : une cuisine lisible et généreuse. Les frites sont fraîches, cuites à la graisse de bœuf.</p>
+        <ul class="liste-prix">
+          {classiques.map((c) => <li><span class="liste-prix__nom">{c.nom}<span class="liste-prix__note">{c.note}</span></span><span class="liste-prix__prix">{c.prix}</span></li>)}
+        </ul>
+      </div>
+      <figure class="classiques__media">
+        <Photo cle="couverture" widths={[480, 800, 1200]} sizes="(min-width: 60rem) 34vw, 92vw" />
+        <figcaption>Illustration de la couverture de la carte d’automne 2026.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="heures" aria-labelledby="t-heures">
+    <div class="wrap">
+      <h2 id="t-heures" class="display titre-l">Deux services, tous les jours.</h2>
+      <div class="heures__grille">
+        <ul class="heures__liste">
+          {services.map((s) => <li><span class="heures__jours">{s.jours}</span><span class="heures__h">{s.midi}<br />{s.soir}</span></li>)}
+        </ul>
+        <p class="heures__note">{horairesNote}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="groupes" aria-labelledby="t-groupes">
+    <div class="wrap groupes__grille">
+      <h2 id="t-groupes" class="display titre-xl">Au premier étage, la table s’allonge.</h2>
+      <div class="groupes__texte">
+        <p>Dîners, banquets et réceptions : les menus démarrent à 27&nbsp;€ hors boissons et se combinent avec les salles du Business Village Ecolys.</p>
+        <p><a class="cta cta--or" href={`mailto:${site.emailEvenements}`}><span class="cta__txt">Écrire à l’équipe événements</span></a></p>
+      </div>
+    </div>
+  </section>
+</Base>

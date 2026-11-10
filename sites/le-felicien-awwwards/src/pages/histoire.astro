@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+import { histoire, equipe } from '../data/site';
+---
+<Base page="histoire" title="La maison" description="L’histoire du Félicien, brasserie du Business Village Ecolys à Suarlée : ouverte fin 2019, rouverte le 22 janvier 2026.">
+  <section class="entete" aria-labelledby="titre">
+    <div class="wrap entete__grille">
+      <h1 id="titre" class="display titre-mega entete__titre">La maison</h1>
+      <p class="entete__texte">Le Félicien est une brasserie au cœur du Business Village Ecolys, à Suarlée. Elle a ouvert fin 2019, puis rouvert le jeudi 22&nbsp;janvier 2026 avec une nouvelle direction, un chef et un maître d’hôtel qui comptent plus de trente années d’expérience. Sa phrase : une brasserie pour tous.</p>
+    </div>
+  </section>
+
+  <section class="dates" aria-labelledby="t-dates">
+    <div class="wrap">
+      <h2 id="t-dates" class="display titre-l">Trois reperes</h2>
+      <ol class="reperes">
+        {histoire.map((h) => <li><span class="reperes__quand display">{h.quand}</span><span class="reperes__texte">{h.texte}</span></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="equipe" aria-labelledby="t-equipe">
+    <div class="wrap">
+      <h2 id="t-equipe" class="display titre-l">Qui tient la maison</h2>
+      <ul class="equipe__liste">
+        {equipe.map((e) => <li><span class="equipe__nom display">{e.nom}</span><span class="equipe__role">{e.role}</span></li>)}
+      </ul>
+      <p class="equipe__valeurs">La maison tient à trois choses : les grands classiques de la brasserie, la saison pour la carte, et une corbeille de pain frais offerte à la demande.</p>
+      <p><a class="cta cta--or" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,18 @@
+---
+import { u, asset } from '../lib/url';
+const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
+const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
+---
+<header class="tete">
+  <a class="tete__marque" href={base} aria-label="Le Félicien, brasserie, accueil" aria-current={path === base ? 'page' : undefined}>
+    <span class="tete__logo" style={`--logo:url(${asset('/05-logo.svg')})`} aria-hidden="true"></span>
+  </a>
+  <nav class="tete__nav" aria-label="Navigation principale">
+    <ul>
+      <li><a class="nl" href={u('/carte/')} aria-current={courant('/carte/')}>La carte</a></li>
+      <li><a class="nl" href={u('/histoire/')} aria-current={courant('/histoire/')}>La maison</a></li>
+      <li><a class="cta cta--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="cta__txt">Réserver</span></a></li>
+    </ul>
+  </nav>
+</header>
