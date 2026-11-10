@@ -21,7 +21,7 @@ export const site = {
   commandeUrl: 'https://www.sanganamur.be',
   planUrl: 'https://www.google.com/maps/search/?api=1&query=Rue+Saint-Loup+8%2C+5000+Namur',
   reseaux: [] as { nom: string; url: string }[],
-  credit: 'Photos : Sanga',
+  credit: 'Photos du restaurant, origine à confirmer',
   avisGoogle: { note: '4,6', nombre: '892', source: 'Rankeat, 4 mars 2026' },
 };
 
@@ -66,7 +66,7 @@ export const carte: Categorie[] = [
     { nom: 'Udon tempura scampi', description: 'Sauce bouillon de poisson, 3 pièces.', prix: 15.8, photo: 'udon' },
     { nom: 'Udon au canard', description: 'Grand bol de soupe aux nouilles udon, canard rosé, algues et oignons verts.', prix: 17.8 },
   ] },
-  { cle: 'donburi', titre: 'Donburi', note: 'Bol de riz garni, servi avec une salade et une soupe miso.', plats: [
+  { cle: 'donburi', titre: 'Donburi', note: 'Bol de riz garni, servi avec une salade et une soupe (miso pour le chashu-don).', plats: [
     { nom: 'Chashu-don', description: 'Chashu dans une sauce.', prix: 16.5 },
     { nom: 'Karaage-don', description: 'Poulet frit dans une sauce.', prix: 16.8 },
     { nom: 'Katsudon', description: 'Porc pané aux œufs.', prix: 16.8 },
@@ -88,8 +88,8 @@ export const carte: Categorie[] = [
 
 /** Avis réels repris de data/restaurants/sanga/donnees.json (extraits, source et date). */
 export const avis = [
-  { texte: 'Un vrai régal ! Autant à emporter que sur place !', source: 'client Takeaway.com', date: '1er novembre 2026' },
-  { texte: 'Excellent et délai respecté.', source: 'client Takeaway.com', date: '16 août 2026' },
+  { texte: 'Un vrai régal ! Autant à emporter que sur place ! (orthographe rectifiée)', source: 'client Takeaway.com', date: '1er novembre 2026' },
+  { texte: 'Excellent et délai respecté […]', source: 'client Takeaway.com', date: '16 août 2026' },
   { texte: 'Ce fut vraiment une bonne surprise !', source: 'blog Une fille sans chichis', date: 'avril 2018' },
 ];
 
