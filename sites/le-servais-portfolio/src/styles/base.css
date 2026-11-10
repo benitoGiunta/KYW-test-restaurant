@@ -148,13 +148,25 @@ address { font-style: normal; }
 
 /* Astre du hero (desktop) : la photo du bar en disque, entourée d'une orbite où un petit soleil marque l'heure réelle. */
 .hero__astre { display: none; margin: 0; }
-@media (min-width: 1200px) {
-  .hero__astre { display: block; position: absolute; top: 0; bottom: 0; margin-block: auto; right: calc(var(--frise) + var(--gutter) * 2.2); width: min(29vw, 26rem); height: min(29vw, 26rem); }
+@media (min-width: 768px) {
+  .hero__astre { display: block; position: absolute; top: 0; bottom: 0; margin-block: auto; right: calc(var(--frise) + var(--gutter) * 2.2); width: min(24vw, 13rem); height: min(24vw, 13rem); }
+  .hero__baseline { max-width: min(26rem, 52vw); }
   .hero__photo { position: absolute; inset: 0; border-radius: 50%; overflow: clip; box-shadow: 0 0 0 0.5rem var(--voile); }
   .hero__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; transform: scale(var(--zoom, 1.04)); }
   .hero__orbite { position: absolute; inset: -1.9rem; border-radius: 50%; border: 1px solid var(--ligne); transform: rotate(var(--angle, 0deg)); pointer-events: none; }
   .hero__soleil { position: absolute; left: 50%; top: 0; width: 1.3rem; height: 1.3rem; border-radius: 50%; background: var(--disque); box-shadow: 0 0 0 3px var(--ciel-haut); transform: translate(-50%, -50%); }
 }
+@media (min-width: 1200px) {
+  .hero__astre { width: min(29vw, 26rem); height: min(29vw, 26rem); }
+  .hero__baseline { max-width: none; }
+}
+
+/* Formules de groupes : liste à prix alignés (révision 1). */
+.formules { list-style: none; padding: 0; max-width: 44rem; }
+.formule { display: grid; grid-template-columns: 1fr auto; column-gap: calc(var(--u) * 2); align-items: baseline; padding-block: calc(var(--u) * 1.6); border-bottom: 1px solid var(--ligne); }
+.formule__nom { font-family: var(--f-display); font-weight: 800; font-size: var(--t-m); letter-spacing: -0.02em; line-height: 1.1; }
+.formule__prix { font-family: var(--f-display); font-weight: 800; font-size: var(--t-m); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.formule__desc { grid-column: 1 / -1; margin-top: 0.3em; }
 
 /* Photos : 16 px, légendes discrètes. */
 .photo { overflow: clip; border-radius: var(--radius-photo); }

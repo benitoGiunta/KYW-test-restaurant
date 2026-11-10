@@ -71,7 +71,7 @@ export const site: Restaurant = {
     { nom: 'Apéro, groupes', prix: 'dès 18 € par personne', description: 'Finger food et boissons, de 12 à 120 personnes.', placeholder: false },
   ],
   photos: [
-    photo('/photos/bar-comptoir.webp', 'Le comptoir du bar : bois patiné, plateau blanc, tuyaux apparents au plafond et suspensions rondes', 1800, 1200),
+    photo('/photos/bar-comptoir.webp', 'Le comptoir du bar : bois patiné, plateau blanc, tuyaux apparents au plafond et suspensions rondes', 1500, 1000),
     photo('/photos/bar-detail.webp', 'Derrière le comptoir : étagères de bouteilles, plantes et barmaid au fond de la salle industrielle', 1000, 1000),
     photo('/photos/terrasse.webp', 'Des clients attablés avec leurs verres devant la façade en pierre, à la terrasse', 1158, 1600),
     photo('/photos/terrasse-large.webp', 'Groupe d’amis autour de petites tables rondes, bières et verres de vin, devant la porte noire de la façade', 1158, 760),
@@ -81,8 +81,7 @@ export const site: Restaurant = {
     photo('/photos/petit-dejeuner.webp', 'Petit-déjeuner sur une table en marbre cerclée de laiton : tasse turquoise, jus d’orange, viennoiserie', 1066, 1600),
     photo('/photos/tasse-turquoise.webp', 'Une tasse et sa soucoupe turquoise de café au lait sur un guéridon en marbre', 900, 760),
     photo('/photos/jus-croissant.webp', 'Jus d’orange pressé et viennoiserie coupée au couteau sur la table en marbre', 900, 900),
-    photo('/photos/veranda.webp', 'La Verrière : fauteuils en cuir orange, plantes suspendues et structure métallique, verrière au fond', 1200, 1800, true),
-    photo('/photos/veranda-carre.webp', 'La Verrière : deux fauteuils orange autour d’une petite table, plantes et étagères en métal', 1200, 900, true),
+    photo('/photos/veranda.webp', 'La Verrière : fauteuils en cuir orange, plantes suspendues et structure métallique, verrière au fond', 900, 1350, true),
   ],
   valeurs: ['Produits locaux cités sur la carte', 'Boulets maison, frites à double cuisson', 'Ouvert 7 jours sur 7'],
 };
@@ -163,7 +162,7 @@ export const moments: Moment[] = [
   },
   {
     id: 'm-18h', heure: 18, heureTexte: '18h', titre: 'Le 3+1', theme: 'corail',
-    accroche: 'Tous les jours de 18h à 20h, le 3+1 sur les cocktails. Le bar se remplit avant la salle.',
+    accroche: 'Tous les jours de 18h à 20h, le 3+1 sur les cocktails.',
     accrochePlaceholder: false, placeholder: false, photo: '/photos/bar-detail.webp',
     lignes: [
       l('Aperol Spritz', '11 €'),

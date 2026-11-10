@@ -11,7 +11,7 @@ let exit: ((root: HTMLElement) => gsap.core.Timeline) | null = null;
 /** Replace the exit choreography (the loader → hero handoff). Return a timeline. */
 export const setLoaderExit = (fn: (root: HTMLElement) => gsap.core.Timeline) => { exit = fn; };
 
-const MIN = 1.1; // seconds: long enough to read as a designed moment
+const MIN = 0.6; // seconds: long enough to read as a designed moment
 const MAX = 2.6; // seconds: a longer loader is a usability problem
 
 function criticalAssets(): Promise<unknown>[] {
@@ -41,7 +41,7 @@ export async function runLoader(): Promise<void> {
       const elapsed = (performance.now() - start) / 1000;
       const timeCap = Math.min(100, (elapsed / MIN) * 100); // never faster than MIN
       const goal = elapsed > MAX ? 100 : Math.min(target.v, timeCap);
-      shown.v += (goal - shown.v) * 0.12;
+      shown.v += (goal - shown.v) * 0.18;
       if (goal === 100 && shown.v > 99.5) shown.v = 100;
       if (count) count.textContent = format(shown.v);
       if (bar) bar.style.transform = `scaleX(${shown.v / 100})`;
@@ -53,8 +53,8 @@ export async function runLoader(): Promise<void> {
   // Exit. Author per project with setLoaderExit(): it is the first handoff every visitor sees.
   if (exit) { await exit(root); return finish(root); }
   await gsap.timeline()
-    .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -110, duration: 0.7, ease: ease.inOut, stagger: 0.05 })
-    .to(root, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1, ease: ease.inOut }, '-=0.35');
+    .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -110, duration: 0.55, ease: ease.inOut, stagger: 0.05 })
+    .to(root, { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.8, ease: ease.inOut }, '-=0.3');
   finish(root);
 }
 
