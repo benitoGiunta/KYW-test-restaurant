@@ -56,7 +56,7 @@ import { resto, groupes } from '../data/site';
     var tabs = Array.prototype.slice.call(nav.querySelectorAll('a'));
     var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('href').slice(1)); });
     if (panels.some(function (p) { return !p; })) return;
-    nav.setAttribute('role', 'none');
+    nav.setAttribute('role', 'none'); nav.removeAttribute('aria-label');
     var list = nav.querySelector('ul');
     list.setAttribute('role', 'tablist'); list.setAttribute('aria-label', 'Sections de la carte');
     tabs.forEach(function (t, i) {
@@ -70,7 +70,7 @@ import { resto, groupes } from '../data/site';
         t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; panels[k].hidden = !on;
       });
       if (focus) tabs[i].focus();
-      tabs[i].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      if (focus || push) tabs[i].scrollIntoView({ block: 'nearest', inline: 'nearest' });
       if (push) history.replaceState(null, '', '#' + panels[i].id);
     }
     tabs.forEach(function (t, i) { t.addEventListener('click', function (e) { e.preventDefault(); select(i, false, true); }); });
