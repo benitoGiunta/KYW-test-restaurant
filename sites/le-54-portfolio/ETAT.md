@@ -27,3 +27,8 @@
 - Faits : corrections F1-1, F1-2, F2-1, F2-2, F2-3, F2-5, F3-1, F3-2 vérifiées (axe, texte, JSON-LD, grep dist, 134 liens).
 - Reste (au choix) : répétitions d'horaires, `geste-dressage` 3 fois sur /histoire/, point médian devant les plats, légendes /menu/, h1 404.
 - Pièges : axe `color-contrast` sur /carte/ = reveal en cours (attendre 2,5 s) ; `requestfailed` d'une image = défilement rapide du script.
+
+## Publication (agent publication, 2026-11-10)
+- Publiée sur `dist/le-54/portfolio/` : build de contrôle OK, `dist/` identique au commit précédent, index régénéré.
+- Production : `https://kyw-test-restaurant.vercel.app/le-54/portfolio/` en 200, pied KYW présent, lien dans l index.
+- Reste : rien pour la publication. Verdicts : portfolio PUBLIABLE (REVUE-2) ; awwwards A_CORRIGER sans F0/F1 (REVUE-2) ; legacy A_CORRIGER sans F0/F1 (REVUE-1, F2 non revérifiés).

@@ -25,3 +25,8 @@
 
 ## Phase 3 (fait)
 - Audit 0 FAIL / 1 WARN justifié ; réservation dédupliquée ; OG recomposé ; build, `pnpm index` faits. RAPPORT.md écrit. Manque : critique jury indépendant (pas d'outil Agent), relecture des contrastNeedsReview.
+
+## Publication (agent publication, 2026-11-10)
+- Publiée sur `dist/le-54/awwwards/` : build de contrôle OK, `dist/` identique au commit précédent, index régénéré.
+- Production : `https://kyw-test-restaurant.vercel.app/le-54/awwwards/` en 200, pied KYW présent, lien dans l index.
+- Reste : rien pour la publication. Verdicts : portfolio PUBLIABLE (REVUE-2) ; awwwards A_CORRIGER sans F0/F1 (REVUE-2) ; legacy A_CORRIGER sans F0/F1 (REVUE-1, F2 non revérifiés).
