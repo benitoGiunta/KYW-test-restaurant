@@ -208,6 +208,7 @@ Script : `scripts/usage-conformite.py` (modèles réels par agent, revues, consi
 | 11 · Le Félicien | 18,23 $ | 6,08 $ | 4,73 $ | 6,32 $ | 4,99 $ | +5,1 % |
 | 12 · Le Grill des amiS | 19,80 $ | 6,60 $ | 4,87 $ | 7,28 $ | 5,19 $ | +14,2 % |
 | 13 · Le 54 | 15,55 $ | 5,18 $ | 3,91 $ | 5,75 $ | 3,99 $ | −10,3 % |
+| 14 · Le Ponti 2 | 16,39 $ | 5,46 $ | 4,69 $ | 5,34 $ | 4,35 $ | −5,5 % |
 
 - Restaurant 10 conforme : 26 agents sur le bon modèle, test B 3/3 (revue 2 sur l'awwwards seule), 0 F0 ou F1 en fin de cycle,
   max 44 réponses, socle 67 900 jetons. Classé dans la phase Après 4 (désormais 5,67 $ par site sur 4 restaurants).
@@ -219,3 +220,10 @@ Script : `scripts/usage-conformite.py` (modèles réels par agent, revues, consi
   notés sous un titre « ### F1 » avec un identifiant libre (R1-01…), format de la revue legacy du Grill des amiS.
 - Restaurant 13 conforme : 28 agents sur le bon modèle, test B 3/3 (revues 2 sur portfolio et awwwards), 0 F0 ou F1 en fin
   de cycle, max 34 réponses. Le moins cher de la série. Après 4 : 5,79 $ par site sur 7 restaurants.
+- Restaurant 14 conforme : 28 agents sur le bon modèle, test B 3/3 (revues 2 sur portfolio et legacy), 0 F0 ou F1 en fin
+  de cycle, max 38 réponses.
+
+**Bilan de la série 10 à 14 (09/11 22 h 24 → 10/11 5 h 45) :** 15 sites sur 15, 85,94 $, soit 17,19 $ par restaurant et
+5,73 $ par site (série 7 à 9 : 5,78 $). Écart entre restaurants de −10 % à +14 %, aucune alerte. 142 agents, aucun écart de
+modèle, test B 15/15, aucun F0 ou F1 ouvert. Configuration « Après 4 » sur 8 restaurants : 5,75 $ par site, −71,8 % depuis avant.
+Le socle par agent monte lentement (67 700 → 68 100 jetons), sans effet visible sur le coût.
