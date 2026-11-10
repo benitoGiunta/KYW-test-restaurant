@@ -1,0 +1,41 @@
+# Revue legacy · Le Grill des amiS · passe 1
+Verdict : A_CORRIGER
+Lecture en une ligne de l'idée du site (sans avoir lu DESIGN.md) : une affiche de steakhouse sombre (photo plein cadre du grill à la pince, titres condensés en capitales, bouton rouge, carte en lignes prix à droite), sobre et fidèle à l'ordre du site Wix d'origine.
+
+Scores /10 :
+- Design 7 : hero accueil net (`home-d-f0`), carte lisible en lignes tarifées (`carte-d-f1`), mais pages intérieures à photo flottante et vide latéral (`pl-inner-d.png`) et accueil assez creux au milieu (`home-d-f2`).
+- Usabilité 8 : menu popover mobile ouvert/fermé à Échap OK, 14 Tab avec contour 2 px visible, lien d'évitement présent, 0 cible < 24 px, index sticky de la carte, jour courant surligné (« Mardi · aujourd'hui »).
+- Créativité 6 : tient à une seule idée (photo + capitales condensées) ; trois photos égales en grille sur l'accueil, aucun mouvement sauf le hero, rien de mémorable après le pli.
+- Contenu 7 : prix et noms de la carte corrects (68 plats + 3 formules recoupés par script avec `donnees.json`, 0 écart), textes repris du site client ; mais jours fermés présentés comme certains et plusieurs répétitions.
+- Technique 8 : 0 erreur console, 0 requête en échec, 0 lien mort, 0 débordement (8 pages x 1440 et 390), 0 violation axe sérieuse, contraste mesuré nœud par nœud 0 écart sur accueil/carte/contact ; CLS à 0,065-0,068.
+
+Méthode et limites : `QA-revue1.md` absent (l'agent captures n'a rien déposé) ; shoot complet non relancé. Script maison sur 8 pages x 2 largeurs (axe-core complet, console, requêtes, débordement, méta, JSON-LD), contraste canvas 1x1 sur chaque nœud texte (accueil, carte, contact x 2 largeurs), planches de défilement, menu mobile, reduced-motion, 14 Tab, LCP/CLS sous CPU x4 + 4G lente en deux passes. Non mesuré : hover par rôle (la variante est « still » selon son rapport), sloplint non relancé (genre inconnu, résultat du réalisateur : 0 FAIL). Build non relancé : `dist/` (02:23) est postérieur à `src/` (02:15).
+
+## Findings
+
+### F1 (majeur)
+- **R1-01 · T-invente · jours fermés présentés comme certains.** Accueil, `contact/`, `reserver/` : « Mardi / Mercredi / Dimanche : Fermé » sans réserve ; `dossier.md` : « déduit, à confirmer » et `donnees.json` : « fermé (à confirmer) ». Seule trace du doute : un commentaire de `src/data/site.ts:34`. Le `RAPPORT.md` § 5 écrit au contraire « repris du site d'origine » (faux, le site d'origine ne mentionne que les quatre jours ouverts). Correction : afficher « Fermé (à confirmer) » ou « Horaires illustratifs » sur ces trois lignes, ou ne lister que les jours ouverts avec « Fermé les autres jours (à confirmer) » ; corriger le RAPPORT.
+
+### F2 (mineur)
+- **R1-02 · CLS au-dessus du seuil.** Accueil : 0,068 à 1440 px, 0,065 à 390 px sous CPU x4 + 4G (deux passes identiques) ; carte 0,05 à la limite. Source nommée par `layout-shift` : `div.container.hero__in` passe de y=206 à y=327 à 752 ms, c'est-à-dire le texte du hero qui bouge à l'arrivée des polices (`Base.astro:39-41`, Google Fonts `display=swap`, sans préchargement ni police de repli ajustée). Correction : auto-héberger Sofia Sans Extra Condensed et Barlow en woff2 avec `<link rel="preload">` et `size-adjust` sur le repli, ou réserver la hauteur du hero ; viser CLS < 0,05.
+- **R1-03 · axe `landmark-no-duplicate-contentinfo` (moderate) sur les 8 pages.** Deux `<footer>` de premier niveau : `footer.close#infos` (`Footer.astro`) et `footer.kyw-footer` (paquet). Correction : donner au pied du site un autre rôle (`<div>`/`section` avec `aria-label`) ou ne laisser que le pied KYW en `contentinfo` ; ne pas toucher au composant `packages/kyw-footer`.
+- **R1-04 · composition des pages intérieures (viandes, à propos, réserver, contact).** À 1440 px la photo est un portrait étroit (≈ 310 px) posé au centre de l'en-tête, avec ≈ 750 px de noir vide à sa droite (`pl-inner-d.png`, 4 premières vignettes) ; l'en-tête paraît inachevé, alors que traiteur et carte remplissent leur zone. Correction : photo en pleine largeur de colonne (3/2 recadré) ou deuxième colonne alignée à droite, comme `traiteur`.
+- **R1-05 · accueil, creux après la section « pièces entières ».** Un lien nu « Le spécial viandes » (texte de 16 px souligné, `home-d-f2`) suivi d'environ 240 px de noir avant « À la carte » ; il se confond avec une légende et sert de 10e arrêt clavier. Correction : en faire un bouton `btn` comme « Voir la carte » et réduire l'écart.
+
+### F3 (finition)
+- **R1-06 · répétitions.** Les horaires complets sont écrits quatre fois (accueil, contact, réserver, + ligne résumée à propos et adresse dans chaque pied) ; le paragraphe du Menu Viandard et la phrase « le temps affine la texture, la maturation concentre les arômes » sont identiques sur l'accueil et `viandes/` ; la clôture « Pour le plaisir de nos amis. Elise et Gaëtan » termine les 8 pages, 404 comprise. Correction : garder une version par page utile, enlever la signature de la 404.
+- **R1-07 · devise tronquée.** « Pour le plaisir de nos amis » attribué à Elise et Gaëtan : le dossier donne « Cuisine et Grillades pour le plaisir de nos clients, nos amis ». Reprendre la formule complète ou la marquer comme adaptation.
+- **R1-08 · photos 12 et 17 gardent le logo incrusté du client** (armoires de maturation sur l'accueil, cocktails sur `contact/`), alors que le dossier dit ne retenir que celles sans incrustation (`home-d-f1`, `contact-d-f0`). À remplacer ou assumer ; la photo de cocktails comme visuel de la page contact est hors sujet (le RAPPORT demande déjà une façade).
+- **R1-09 · carte : intertitres redondants.** « ENTRÉES » puis « LES ENTRÉES », « À PARTAGER (ENTRÉES) » avec parenthèses brutes tirées des données, et un vide d'environ 200 px entre « LE MIDI » (2 lignes) et « ENTRÉES » (`carte-d-f1`). Sur mobile l'index sticky passe sur deux lignes (≈ 70 px) (`pl-inner-m.png`, 6e vignette). Correction : un seul intertitre par groupe, libellés sans parenthèses, index sur une ligne défilante.
+- **R1-10 · alt et légende identiques** sur la photo du hero (alt « Pièce de viande saisie à la pince au-dessus du feu de bois » + légende presque identique) : lecteur d'écran en double. Mettre `alt=""` ou une légende différente.
+- **R1-11 · nom écrit « Le Grill des amis »** (`traiteur/` : « Le Grill des amis se déplace chez vous ») au lieu de « amiS » du logo ; filler de client conservé : « passion » (`a-propos/` : « Venez partager notre passion », « de passion et d'amitié »). Harmoniser la graphie ; le mot « passion » vient du site Wix, à garder seulement s'il est cité.
+- **R1-12 · RAPPORT.md incohérent** : § 5 annonce un bloc « Avis » sur l'accueil qui n'existe pas (aucun avis affiché, ce qui est correct vis-à-vis du dossier) ; § 4 compte 8 pages avec mention, ce que la mesure confirme (8/8).
+
+## Vérifié sans écart
+Build : `dist/` à jour. `<title>` et description uniques par page, OG image, favicon, canonical, `lang="fr"`, un seul `h1`, `noindex` (8/8), mention « Maquette KYW, certaines données sont illustratives » (8/8), logo KYW unique (`kyw-signature`, webp 11 Ko), JSON-LD `Restaurant` avec adresse, GPS, téléphone et `openingHoursSpecification` des 4 jours ouverts, 404 conçue (`404.html` : titre, `lang`, h1, deux liens), liens internes tous en `/grill-des-amis/legacy/…`, lien de réservation Wix et `tel:+3281617260` conformes au dossier, aucun tiret cadratin, aucun tutoiement, apostrophes typographiques, aucun avis ni réseau inventé, poids : photos ≤ 273 Ko, JS 2 Ko.
+Faux positif écarté : « 404 sans titre ni lang » du QA-build (réponse brute de `serve.mjs`) ; `contrast incomplete` d'axe (49/69) levé par la mesure canvas (0 écart).
+
+## Ce qui est bien (à ne pas casser à la révision)
+1. Le hero de l'accueil : photo du grill à la pince, titre en capitales condensées, deux actions claires, légende de la photo ; LCP mobile 0,9 s sous throttling (home) et 1,4 s (carte).
+2. La carte : 68 plats et 3 formules exacts, prix alignés à droite, index sticky avec soulignement actif, jour du moment surligné dans les horaires.
+3. Le pied et la mention KYW : bandeau clair, un seul logo discret, mention présente partout, mobile conservé (menu popover propre, signature du site gardée).
