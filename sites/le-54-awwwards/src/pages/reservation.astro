@@ -18,12 +18,13 @@ import { site, horaires, creneaux, dernieresCommandes } from '../data/site';
   <section class="resa wrap g12" aria-label="Horaires et accès">
     <div class="resa__bloc resa__horaires">
       <h2 data-split="lines">Horaires</h2>
+      <p class="plan-note">Midi, {creneaux.midi}. Soir, {creneaux.soir}.</p>
       <dl class="horaires">
         {horaires.map((h) => (
           <div>
             <dt>{h.jour}</dt>
             <dd class={h.midi || h.soir ? '' : 'ferme'}>
-              {h.midi || h.soir ? [h.midi && `midi, ${creneaux.midi}`, h.soir && `soir, ${creneaux.soir}`].filter(Boolean).join(' · ') : 'Fermé'}
+              {h.midi || h.soir ? h.midi && h.soir ? 'Midi et soir' : h.midi ? 'Midi' : 'Soir' : 'Fermé'}
               {'aConfirmer' in h && ' (à confirmer)'}
             </dd>
           </div>

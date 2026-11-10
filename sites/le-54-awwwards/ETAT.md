@@ -1,4 +1,4 @@
-# ETAT · Le 54 · awwwards · fin de la phase 2 (construction-2)
+# ETAT · Le 54 · awwwards · fin de la phase 3 (construction-3)
 
 ## Fait (phase 1)
 - DESIGN.md (concept « Trente-quatre couverts », système), 5 pages statiques, engine sans GL ni loader, favicon, OG provisoire, polices, RAPPORT.md.
@@ -22,3 +22,6 @@
 - État de départ du dressage posé en CSS (`.motion .plan__place { opacity: 0 }`) : si le pilote échoue, le plan reste vide ; sans `.motion` (réduit, sans JS) il est servi dressé.
 - Le pilote éteint les plans au départ (motion) puis rallume `n` à la fin du dressage ; sur la 404 `n = 0` (registre éteint aussi).
 - Repos sur toucher : pas d'entrée de vélocité (la place cherchée tourne seule).
+
+## Phase 3 (fait)
+- Audit 0 FAIL / 1 WARN justifié ; réservation dédupliquée ; OG recomposé ; build, `pnpm index` faits. RAPPORT.md écrit. Manque : critique jury indépendant (pas d'outil Agent), relecture des contrastNeedsReview.
