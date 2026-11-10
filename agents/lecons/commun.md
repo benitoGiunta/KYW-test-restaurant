@@ -29,3 +29,4 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier ou de celui du rôle 
 - `.claude/settings.json` est refusé en mode Auto ; `rm` relatif après `cd` aussi : copier par `tar --exclude=… -cf - . | tar -xf - -C <dest>`.
 - Rebuild pendant un shoot de fond = `dist/` vidé sous le serveur : attendre DONE. Pas d'outil Agent en session d'agent : toute critique jury/sloplint est une auto-notation marquée `self`. Mesurer LCP et loader en série (± 300 ms, deux passes).
 - Arbre sale : `git pull --rebase --autostash` ; HEAD détachée : `git checkout -B <branche>` avant tout commit.
+- 10/11/2026 : un hook refuse `cat` de plus de 200 lignes et `sed -n` de plus de 120 lignes (scripts/hooks/garde-lecture.py) ; lire par plages ciblées, ne pas contourner.

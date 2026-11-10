@@ -33,3 +33,8 @@ chaque réponse ; une attente de plus de 5 min fait réécrire tout le contexte.
 7. **Moins de réponses (01/11, mesure Chez Guillaume).** Chaque réponse relit tout le socle (~66 000 jetons). Groupe
    les lectures et vérifications en une seule commande quand c'est possible (plusieurs `grep`/`sed -n`/`curl`/contrôles
    enchaînés par `;` ou `&&` dans un seul appel Bash) ; jamais une réponse par fichier ou par vérification.
+
+8. **Contrôle automatique (10/11/2026).** Un hook (`.claude/settings.json` → `scripts/hooks/garde-lecture.py`) refuse
+   `cat` d'un fichier de plus de 200 lignes et `sed -n 'a,bp'` sur plus de 120 lignes. En cas de refus, lis la plage
+   utile (`grep -n … | head -20`, puis `sed -n` sur 60 lignes au plus, ou Read avec offset/limit) ; ne cherche pas à
+   contourner le contrôle.
