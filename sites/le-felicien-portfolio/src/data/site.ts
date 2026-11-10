@@ -78,7 +78,7 @@ export const site: Restaurant = {
   nomLignes: ['Le', 'Félicien'],
   baseline: 'Une brasserie pour tous, au cœur du Business Village Ecolys, ouverte 7 jours sur 7.',
   description:
-    "Le Félicien, brasserie à Suarlée (Namur) : croquettes, boulets à la liégeoise, vol-au-vent et frites fraîches, la carte d'automne 2026, les horaires et la réservation en ligne.",
+    "Le Félicien, brasserie à Suarlée (Namur) : croquettes, boulets à la liégeoise, vol-au-vent, carte d'automne 2026, horaires et réservation en ligne.",
   url: 'https://www.lefelicien.be',
   typeCuisine: 'Brasserie classique, cuisine belge',
   adresse: { rue: "Avenue d'Ecolys", numero: '2 bte 3', cp: '5020', commune: 'Suarlée (Namur)', pays: 'BE' },
@@ -285,7 +285,7 @@ export const site: Restaurant = {
     },
   ],
   menus: [
-    { nom: 'Suggestions de la semaine', prix: '25\u00a0€', quand: 'Du mardi au vendredi, le midi', description: "Entrée et plat 25 €, plat seul 18 €. Le lundi midi, cuisine du marché décidée le jour même.", placeholder: false },
+    { nom: 'Suggestions de la semaine', prix: '25\u00a0€', quand: 'Du mardi au vendredi, le midi', description: "Entrée et plat 25 €, plat seul 18 €. Le lundi, cuisine du marché décidée le jour même.", placeholder: false },
     { nom: 'Pour les bambins', prix: 'dès 10\u00a0€', quand: 'Midi et soir', description: 'Boulettes sauce tomate ou liégeoise, vol-au-vent, brochette de bœuf ou rigatoni jambon fromage, avec frites ou pâtes.', placeholder: false },
     { nom: 'Banquets et réceptions', prix: 'dès 27\u00a0€', quand: 'Au premier étage', description: 'Menus à partir de 27 € hors boissons, pour dîners, banquets et réceptions.', placeholder: false },
   ],

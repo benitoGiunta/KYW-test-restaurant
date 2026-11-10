@@ -1,4 +1,9 @@
-# ETAT, Le Félicien portfolio (gabarit Ardoise), fin de la phase 2 (la phase 1 est décrite plus bas)
+# ETAT, Le Félicien portfolio (gabarit Ardoise), fin de la phase 3 (QA faite)
+
+## Phase 3 : faite
+- Descriptions raccourcies (accueil, histoire), doublon « Le lundi midi » retiré, rebuild exit 0, capture ciblée histoire ok, RAPPORT.md écrit. Reste : `pnpm index`, commit et push de `dist/` à la publication.
+
+## Phase 2 (la phase 1 est décrite plus bas)
 
 ## Phase 2 (motion, interactions, mobile, reduced motion) : faite
 - Marquee d'état : copies clonées jusqu'à couvrir la fenêtre (2n paragraphes, recalcul au resize et après les polices), pause au survol ; en reduced motion ou sans JS : une seule copie qui passe à la ligne (plus de texte tronqué).
