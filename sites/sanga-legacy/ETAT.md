@@ -1,20 +1,22 @@
-# ETAT · Sanga, variante legacy · fin de la phase 1 (construction-1)
+# ETAT · Sanga, variante legacy · fin de la phase 2 (construction-2)
 
-## Fait
-- Audit (`AUDIT.md`, `.hallmark/before.txt`), approche conservée, deal/draw/scaffold/stamp (Solstice, seed `restaurant-namur-japanese-ramen-b876·839c6a6f·2026-11-10·r0`, draw 1c8dc9), deux comps (`comp.md`, c1 choisi), `DESIGN.md` (Picks, Approche, Composants, Sur-utilisation), entrée du journal `.hallmark/log.json`.
-- Pages : `/` (hero Counter, Ramen, photo large, Udon et donburi, Compléments sur bande d'encre, Livraison, Horaires, pied mast) et `404`. Données dans `src/data/site.ts` (carte complète de 33 lignes, horaires, livraison, paiement), reformulations notées en tête de fichier.
-- Build : `pnpm build:site sites/sanga-legacy` passe, `dist/sanga/legacy/` écrit ; noindex, mention KYW et `kyw-signature` présents sur `index.html` et `404.html`. Sloplint (CSS aplati + HTML) : 0 FAIL, 0 WARN.
-- Photos : 02 (hero), 05 (webp 1600, bande large) utilisées ; 01, 03, 04 copiées dans `public/photos/` (`udon.jpg`, `gyoza.jpg`, `donburi.jpg`) mais encore non placées.
+## Fait (phases 1 et 2)
+- Phase 1 : audit, deal/draw (Solstice), comps, DESIGN.md, pages `/` et `404`, carte complète, build.
+- Phase 2 : menu mobile Popover (sous 60 rem, avec lien d'appel), états des boutons et liens (hover sous `(hover: hover)`, focus-visible, `:active`, `:disabled`), cibles tactiles 44 px sous `(pointer: coarse)`, jour courant dans les horaires (`aria-current="date"`), safe-area dans `--gutter`, `scroll-padding-top` calé sur la barre, `scroll-behavior: smooth` hors mouvement réduit, `accent-color`, nav sur fond plein.
+- Hero : `figure` à marge 0 (bug : marge de 40 px par défaut), photo en `svh` (min(100svh - 15rem, 42rem)), hero centré (`min-height: 100svh - 72px`), adresse sur une ligne (clamp, `nowrap`). Sloplint `--render --stage hero` : 0 FAIL, 0 REFLEX. Hero review : `self` (pas d'outil Agent), ship. Reproduction de la comp écrite dans `comp.md`.
+- Motion : aucun reveal (Solstice : « No reveal »), choix assumé et noté dans DESIGN.md § Composants. Pas de formulaire ni de switcher (pas d'outil de réservation, carte en séquence).
+- Mesures Playwright (1280, 768, 375) : 0 débordement horizontal, menu ouvert au toucher et au clavier, fermé par Échap et clic sur un lien, sans JavaScript hero et photo visibles. Build : `pnpm build:site sites/sanga-legacy` passe ; noindex, `kyw-signature`, mention KYW présents sur `index.html` et `404.html`.
 
-## Reste (phases 2 et 3)
-- Phase 2 : menu mobile (nav masquée sous 60 rem : seuls Sanga et Commander restent), états des contrôles, jour courant dans le tableau d'horaires, un reveal au plus, hero review et rendu (`sloplint --render --url`), mesure du premier écran à 1280 x 800 et 375, 98 mots par écran, placement des photos 04 (donburi) et 01 (udon) si l'équilibre le demande, vérification visuelle de la bande large 21:9 (crop de la photo 05).
-- Phase 3 : sweep, jugées gates.md § 5, `RAPPORT.md`, correction du Reflex 65 (« crème + Yeseva + accent d'hue 24 » levé sur le CSS bâti, pas sur le CSS aplati) : déplacer l'accent avant toute dérogation, `waive 65` est rejeté ; mettre à jour `agents/lecons`.
-- Aucun `.fill` ni `data-placeholder` : rien d'inventé, aucun fait indispensable absent.
+## Reste (phase 3)
+- Sweep, jugées gates.md § 5, `RAPPORT.md`, Reflex 65 (« crème + Yeseva + accent d'hue 24 ») : déplacer l'accent avant toute dérogation (`waive 65` rejeté).
+- NOTE 58 : 115 à 117 mots sur un écran à 1440 vers y = 2150 (probablement Udon et donburi ou Compléments) : à couper ou à structurer.
+- WARN 28a sur `Plein.astro` (image `lazy` sous le pli, faux positif sur le LCP) : laisser ou commenter ; vérifier la bande 21:9 (crop de la photo 05) en capture.
+- Photos 01 (udon), 03, 04 (donburi) copiées mais non placées ; placer si l'équilibre le demande.
+- Captures complètes et audit : agent « captures » ; `pnpm index` et push à la publication.
 
-## Décisions et hypothèses
-- Macrostructure d'origine gardée (Catalogue, une page) ; le Marquee Hero du draw n'est pas pris comme forme, seulement Counter et mast. Nav « search-led » du draw écartée (pas de recherche utile) ; recherche, compte, panier supprimés (lignes `dropped` dans `page.css` et `Nav.astro`).
-- Sans outil de réservation : l'action est « Commander » (Order & Eat, URL de redirection du site) et le téléphone ; aucun faux formulaire.
-- Horaires dits une fois, en fin de page ; la section horaires et adresse ne suit pas le hero (écart au draw, raison : gate 69).
-- Non repris : e-mail (Gmail personnel), note Google 4,6 et nombre d'avis (non revérifiés), avis Takeaway (à citer mot pour mot avec attribution si la phase 2 veut une preuve : « Un vrai régal ! Autant a emporter que sur place ! », Takeaway, 01/11/2026, à vérifier), réseaux sociaux.
-- Fautes du site corrigées à la copie (Biéres, vegitarian, Ouef, Pouple non repris) ; « Iki » classé en boissons sans catégorie de bière (nature non prouvée).
-- Pièges : voir `agents/lecons/construction.md` (flatten CSS pour sloplint, `waive 65`, figcaption hors du slot).
+## Décisions et pièges
+- Pas de réservation : « Commander » (Order & Eat) et `tel:` ; aucun faux formulaire.
+- Le hover de ligne de carte du thème (« a row lights ») est refusé : gate 11 (pas de hover sur un non-interactif).
+- Piège : `figure` garde sa marge navigateur de 40 px ; sloplint le voit comme un écart texte/photo (44c) ; reset `.photo { margin: 0 }`.
+- Piège : `.hallmark/shots/localhost-4321-*` sont régénérés à chaque appel de sloplint `--render` ; sloplint attend ~2 s après un changement de CSS (HMR) avant de rendre.
+- Aucun `.fill` ni `data-placeholder`. Serveur de dev arrêté.

@@ -31,7 +31,11 @@ Source : `src/styles/tokens.css` (Solstice). Papier `oklch(94% 0.03 80)`, encre 
 - **Horaires** : Schedule en `<table>` à `<time>` : lundi « Fermé » en `--color-muted`, jamais barré ; dits une fois, en fin de page ; jour courant : phase 2 (étape de surface, sans icône d'horloge).
 - **Pied** : forme mast (le nom en grand sur encre, accueil « Irashaimase ! Bienvenue ! » repris du site, cinq liens, mention légale et crédit des photos), puis `<KywFooter />` ; ni « Tous droits réservés » ni newsletter.
 - **Photo** : `<figure><div data-slot data-alt><img></div><figcaption></figcaption></figure>`, `width` et `height`, hero `fetchpriority="high"`, la photo large en `lazy`, légende = le sujet réel du fichier (`photos/index.json`).
-- **Nav, bouton, formulaire, reveal** : phase 2 (menu mobile, états, un reveal au plus).
+- **Nav** : edge-aligned, 72 px, sticky à `--z-sticky-nav`, trois ancres en casse de phrase non trackées, « Commander » en action (`page.css`, bloc Nav) ; sous 60 rem les ancres passent dans un menu Popover API (`<button popovertarget="menu">Menu</button>` + `<nav popover>`), panneau sous la barre, ouverture 220 ms `--ease-out`, fermeture à 68 % en `--ease-in`, Échap et clic extérieur natifs, un lien d'ancre referme le panneau (script de `Nav.astro`) ; skip link `.skip` ; `scroll-padding-top` = 72 px + 24 px.
+- **Bouton** : une recette de primaire rempli (pilule vermillon 48 px, nav 44 px) ; secondaire = lien souligné or (`.lien`) ou bouton Menu outlined ; états : repos, hover (sous `(hover: hover)` seulement), focus-visible (anneau encre 3 px, instantané), `:active` (1 px de descente), `:disabled` et `aria-disabled` par trois canaux (fond, bordure pointillée, curseur) ; `transition` listée (couleurs, `transform`) ; `(pointer: coarse)` : cibles de 44 px.
+- **Formulaire et switcher de carte** : aucun. Pas d'outil de réservation (Commander mène à Order & Eat, `tel:` conservé) et la carte est une page de rubriques en séquence, pas un switcher : rien à inventer.
+- **Horaires** : jour courant (`aria-current="date"`, fuseau de Namur, script de `Horaires.astro`) : fond `paper-3`, repère vermillon de 4 px et mot « aujourd’hui » ; pas de « ouvert maintenant » (statut non prouvé) ; sans script le tableau reste complet.
+- **Motion** : caractère *quiet* de Solstice (`calm`, échelle 1,0) : aucun reveal, aucun compteur, aucune boucle ; seuls mouvements : le menu, les couleurs au survol, la descente de 1 px à l'appui ; `prefers-reduced-motion` (`base.css`) ramène tout à 0,01 ms et coupe `scroll-behavior: smooth`. Raison : le thème dit « No reveal » et la page est une carte à lire.
 
 ## Sur-utilisation
 
@@ -41,5 +45,19 @@ Source : `src/styles/tokens.css` (Solstice). Papier `oklch(94% 0.03 80)`, encre 
 - [x] 4. Comp avant build, deux variantes sur un axe · preuve : `.hallmark/comps/c1.html`, `c2.html`, `comp.md`
 - [x] 5. Floor sans FAIL sur le CSS aplati et la page · preuve : sloplint, 0 FAIL, 1 WARN (écarts de gouttière, corrigé ensuite) ; les FAIL restants du build concernent `packages/kyw-footer`, jamais modifié
 - [x] 6. Aucun tiret cadratin, apostrophes typographiques, insécables avant « : ; ! ? € » · preuve : `src/data/site.ts`, contrôle ci-dessous
-- [ ] 7. Hero review et rendu (`--render`) · à faire en phase 2 et 3
-- [ ] 8. Motion, menu mobile, états des contrôles · phase 2
+- [x] 7. Hero review et rendu (`--render --stage hero --url`) · preuve : `.logs/c2-sloplint-hero4.log` (0 FAIL, 0 REFLEX, 1 WARN faux positif sur `Plein.astro`, image sous le pli, 1 NOTE 58 reportée en phase 3) ; hero-review : self · ship · 2 findings · 2 resolved (REFLEX 44c écart texte/photo et dépassement du pli, REFLEX 79 vide sous le hero, corrigés : `figure` à marge 0, photo en `svh`, hero centré) ; pas de sous-agent possible en session d'agent, auto-notation marquée `self`
+- [x] 8. Motion, menu mobile, états des contrôles · preuve : `page.css` blocs Controls, Nav, Menu mobile ; mesure Playwright (menu ouvert au toucher et au clavier, fermé par Échap et par clic sur un lien, 0 débordement à 375, 768, 1280)
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : grep `transition: all` vide ; `page.css` (couleurs, `transform`, `opacity`)
+- [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : `base.css:11`, `page.css` `.btn:focus-visible`, `.pied :focus-visible`
+- [x] 17. Hero en `svh` (6a) · preuve : `page.css` `.hero` (`min-height: calc(100svh - 72px)`), aucun `vh` ni `100vw`
+- [x] 7b. Fallback reduced motion et contenu visible sans script (27, 62) · preuve : `base.css` (bloc `prefers-reduced-motion`), mesure sans JavaScript : h1 et photo visibles, aucun contenu caché au repos
+- [x] 19. Sticky non superposés (56) · preuve : un seul sticky (`.nav`, `--z-sticky-nav`)
+- [x] 20, 21, 22, 24. Radios-onglets, vidéo de fond, reveal, tooltip et auto-rotation : sans objet (aucun) · preuve : grep
+- [x] 23, 29. États d'input, aucun faux envoi : sans objet, aucun formulaire
+- [x] 30. SVG décoratifs : aucun `<svg>` · preuve : grep
+- [x] 48. Hover : un signal, conteneur, pas sur non-interactif, pas de rebond, pas de toast (11, 12, 16) · preuve : hover seulement sur liens et boutons, sous `(hover: hover)` ; la ligne de carte ne réagit pas (conflit avec « a row lights on hover » du thème, la gate 11 gagne)
+- [x] 49. `:active`, `:disabled`, contrôles de 44 à 52 px (26b, 39b) · preuve : `page.css` `.btn`, `.nav__menu` (44 px)
+- [x] 56. Un primaire rempli (F4) · preuve : une recette (`.btn`), jamais deux remplis côte à côte
+- [x] 58. Une recette de conteneur, un pattern de scroll (F7, F8) · preuve : `.well` seul ; aucun scroll animé
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color`, `accent-color` (F16) · preuve : `base.css:10-12`
+- [x] 72. Responsive : breakpoints 60 rem et 40 rem, `(hover: hover)`, `(pointer: coarse)`, safe-area dans `--gutter`, 16 px au téléphone, `overflow-x: clip` html et body · preuve : `tokens.css:10`, `base.css:2`, `page.css` fin de fichier

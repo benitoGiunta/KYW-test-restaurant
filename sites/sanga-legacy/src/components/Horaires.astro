@@ -6,7 +6,7 @@ import { jours, creneaux, resto } from '../data/site';
     <div class="horaires__tete">
       <h2 id="t-hor">Du mardi au dimanche, midi et soir</h2>
       <address class="adresse">
-        <a href={resto.maps}>{resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.ville}</a>
+        <a href={resto.maps}>{resto.adresse.rue}, {resto.adresse.cp} {resto.adresse.ville}</a>
       </address>
       <p class="adresse__tel"><a href={resto.telHref} class="num">{resto.telAffiche}</a></p>
       <p><a class="btn" href={resto.commander}>Commander en ligne</a></p>
@@ -26,3 +26,10 @@ import { jours, creneaux, resto } from '../data/site';
     </table>
   </div>
 </section>
+<script>
+  // Jour courant (fuseau de Namur) : aria-current sur la ligne, sans icône ni texte « ouvert maintenant » (statut non prouvé).
+  const tr = document.querySelectorAll('.schedule tbody tr');
+  const jour = new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'Europe/Brussels' }).format(new Date());
+  const idx = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(jour);
+  if (idx >= 0 && tr[idx]) tr[idx].setAttribute('aria-current', 'date');
+</script>

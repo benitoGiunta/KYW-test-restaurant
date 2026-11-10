@@ -13,5 +13,19 @@ import { resto, base } from '../data/site';
       <a href="#horaires">Horaires</a>
     </nav>
     <a class="btn nav__cta" href={resto.commander}>Commander</a>
+    <button class="nav__menu" type="button" popovertarget="menu">Menu</button>
+    <nav class="menu" id="menu" popover aria-label="Menu">
+      <a href="#carte">Carte</a>
+      <a href="#livraison">Livraison</a>
+      <a href="#horaires">Horaires</a>
+      <a class="menu__tel num" href={resto.telHref}>Appeler le {resto.telAffiche}</a>
+    </nav>
   </div>
 </header>
+<script>
+  // Menu mobile (Popover API : Échap et clic extérieur gratuits) ; un lien d'ancre referme le panneau.
+  const menu = document.getElementById('menu');
+  menu?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) menu.hidePopover?.();
+  });
+</script>
