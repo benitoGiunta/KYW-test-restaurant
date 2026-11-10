@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
-import { euro } from '../lib/format';
+import { euro, montant } from '../lib/format';
 import { carte } from '../data/carte';
 import { menus, huiles, site } from '../data/site';
 const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -10,10 +10,10 @@ const nomHuile = (cle: string | null) => huiles.find((h) => h.cle === cle)?.nom 
 <Base page="carte" title="La carte" description="La carte de L’Huile sur le Feu à Namur : pâtes fraîches, carpaccio, osso buco, desserts, gins et vins des Pouilles et de Sicile, chaque plat avec son huile.">
   <section class="wrap titre-page grille" aria-labelledby="titre-carte">
     <div class="titre-page__txt">
-      <h1 class="mega" id="titre-carte" data-intro>La <em>carte</em></h1>
+      <h1 class="mega" id="titre-carte" data-split="lines" data-intro>La <em>carte</em></h1>
       <p class="hero__baseline" style="margin-top: var(--serre); max-width: 30rem">Pâtes fraîches maison, viandes, douceurs, et l’huile d’olive choisie pour chaque plat.</p>
     </div>
-    <div class="titre-page__media cadre"><Photo cle="carpaccio" sizes="(max-width: 820px) 100vw, 33vw" prioritaire /></div>
+    <div class="titre-page__media cadre" data-reveal="clip" data-intro data-delay="0.15"><Photo cle="carpaccio" sizes="(max-width: 820px) 100vw, 33vw" prioritaire /></div>
   </section>
 
   <nav class="carte-nav" aria-label="Catégories de la carte">
@@ -30,10 +30,10 @@ const nomHuile = (cle: string | null) => huiles.find((h) => h.cle === cle)?.nom 
         {menus.map((m) => (
           <div class="menu-bloc" style="grid-column: auto">
             <h3 class="t-m display">{m.nom}</h3>
-            <p class="menu-bloc__prix">{euro(m.prix)}<small>par personne</small></p>
+            <p class="menu-bloc__prix">{montant(m.prix)}<span class="eu">&nbsp;€</span><small>par personne</small></p>
             <dl>
               {m.detail.map((d) => (
-                <div data-huile={d.cle ?? undefined}>
+                <div data-huile={d.cle ?? undefined} data-huile-nom={d.cle ? nomHuile(d.cle) : undefined}>
                   <dt>{d.etape}</dt>
                   <dd>{d.texte}{d.huile && <span class="hu">{d.huile}</span>}</dd>
                 </div>
@@ -51,7 +51,7 @@ const nomHuile = (cle: string | null) => huiles.find((h) => h.cle === cle)?.nom 
         <h2 class="cat__titre" id={`t-${slug(c.categorie)}`}>{c.categorie}</h2>
         <ul class="cat__plats">
           {c.plats.map((p) => (
-            <li class={`plat${p.huile ? '' : ' plat--sans'}`} data-huile={p.huile ?? undefined}>
+            <li class={`plat${p.huile ? '' : ' plat--sans'}`} data-huile={p.huile ?? undefined} data-huile-nom={p.huile ? nomHuile(p.huile) : undefined}>
               <span class="plat__goutte" aria-hidden="true"><span class="goutte"></span></span>
               <div>
                 <h3 class="plat__nom">{p.nom}</h3>

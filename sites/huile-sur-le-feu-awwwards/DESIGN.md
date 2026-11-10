@@ -86,3 +86,30 @@ Accueil bureau           Accueil 390 px
 16. Famille de section au plus une fois par page : § Plan de composition.
 17. Hero en 3 s : nom, cuisine, Réserver visible (mesure au § ETAT.md).
 18. Mobile 390 recomposé : `site.css` fin de feuille (bloc téléphone).
+
+### Phase 2 (mouvement et interactions)
+Décisions : pas de suiveur de curseur (curseur natif seul, `#cursor` absent), pas de `#gl` (pas de GL) ; menu plein écran ajouté sous 820 px (la nav en deuxième ligne de la phase 1 est remplacée, l'en-tête tient sur une ligne). Repos : la goutte au bout du filet gonfle 6 s puis lâche une perle et penche vers le pointeur (immobile en mouvement réduit).
+19. [x] Menu mobile : `src/motion/menu.ts` (aria-expanded l. 31, Échap l. 19, piège Tab l. 20 à 24, focus rendu au bouton), overlay `.menu` plein écran (`site.css` « Menu plein écran ») ; vérifié à 390 px : aria-expanded true puis false, focus sur « Fermer », 9 Tab restent dans le menu, Échap rend le focus au bouton.
+20. [x] Engine verbatim (phase 1), `engine/astro.ts`, `transition:persist` sur `#curtain` (`Base.astro` l. 73), `transition:animate="none"` sur `<html>` (l. 36) ; `#gl` et `#cursor` sans objet (absents).
+21. [x] Une horloge : grep `addEventListener('scroll'` et `requestAnimationFrame` dans `src/motion`, `src/pages`, `src/components` : aucun ; repos et filet sur `gsap.ticker` (`filet.ts` l. 100, `idle.ts`).
+22. [x] Code de page dans `onPage()` avec nettoyage : `filet.ts` (`startFilet`, retour qui tue triggers, ticker, resize), `menu.ts` (listeners retirés).
+23. [x] Aucune CSS `transform` sur élément GSAP : fil (`scaleY` par GSAP, CSS `transform-origin` seul), pointe, souffle (CSS `translate` individuel), réceptacle du pied `.pied__recoit`, menu (clip-path) ; la goutte tourne par `rotate:` et n'est jamais animée par GSAP.
+24. [x] Module pilote `src/motion/filet.ts` : progression de lecture et huile en vue distribuées au filet, à `--c-huile` (filet, goutte de la marque, rideau, goutte du pied), à `.is-versee` et au nom d'huile ; `startIdle()` (`idle.ts`) et pointeur (penche de la goutte).
+25. [x] Loader décidé : aucun (Concept Card), pas de composant ni `role="status"`.
+26. [x] Transition du concept : le rideau se verse de haut en bas, voile d'huile puis bordeaux (`setup.ts`), 0,77 s à l'aller, 0,8 s au retour.
+27. [x] Intro `data-intro` + `data-split="lines"` sur chaque h1 (5 pages), média du hero en `clip` (délai 0,15), bas du hero en `up` (0,45).
+28. [x] Épinglages : aucun pin ; un seul scrub (`filet.ts` l. 94, effacement du filet au pied).
+29. [x] Repli statique : `html:not(.motion) .filet__pointe` masqué, filet entier immobile, images du mur à l'échelle 1 ; vérifié en `reducedMotion: reduce` : pas de `.motion`, pas de `.lenis`, 0 élément masqué.
+30. [x] Copies décoratives : aucune ; le nom d'huile au bout du filet est dans un conteneur `aria-hidden`.
+31. [x] Une famille d'easing (`ease.*` de l'engine, `cubic-bezier(0.33, 1, 0.68, 1)` = power3.out en CSS), hover 0,3 à 0,4 s, rideau 0,65 à 0,7 s, stagger 50 ms (menu).
+32. [x] Trois traitements dans le verbe « verser » : remplissage qui monte (CTA), trait qui se verse (nav, liens, utilitaires, téléphone), goutte qui se remplit et image qui recule (plats, huiles, marque, mur) : `site.css` « Survols ».
+33. [x] `:hover` sous `@media (hover: hover)` (`site.css` l. 216), mêmes états sur `:focus-visible`, `:active` présent ; états visibles en réduit (transitions à 0,01 ms).
+34. [x] Liens texte `.lien` soulignés au repos.
+36. [ ] À prouver en phase 3 (`desktop.idleMotion`) ; le code bouge la goutte au repos.
+37. [x] Curseur natif seul ; aucune information ne dépend du survol.
+38. [x] Ni blur animé, ni `box-shadow`, ni `will-change`.
+39. [ ] À prouver en phase 3 (`reduced.*`) ; le code : pas de Lenis, pas de scrub, pas de loader.
+40. [x] GL sans objet, décision écrite (Concept Card) ; lignes `// GL` retirées en phase 1.
+41. Sans objet.
+44. [ ] Skip link en premier (`Base.astro`), focus dans l'accent ; preuve clavier en phase 3.
+47. [x] Cibles : nav et bouton Menu 44 px, CTA 48 px, `.cta--petit` 44 px, liens utilitaires 32 px.

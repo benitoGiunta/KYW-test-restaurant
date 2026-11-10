@@ -249,3 +249,9 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 - `base.css` cache les enfants d'un `[data-slot]` qui contient une image : mettre la légende hors du slot. Pour sloplint, aplatir `page.css` + tokens + base dans le scratchpad et remplacer `/<slug>/legacy/` par `` dans l'HTML ; le FAIL 76 `kyw-signature` et le REFLEX 72 sont ceux du paquet footer.
 - `sharp` s'importe depuis `node_modules/.pnpm/sharp@0.33.5/node_modules/sharp/lib/index.js` pour produire les variantes 800w du `srcset`.
 - 2026-11-10 · huile-sur-le-feu · portfolio (phase 2) : un nom bord à bord dans une grille CSS (`.nom` en `display: grid` avec des `span` `nowrap`) élargit sa piste au contenu : `clientWidth` du parent dépasse le viewport (1482 pour 1440) et le fit rogne la dernière lettre ; `grid-template-columns: minmax(0, 1fr)` règle desktop et mobile. Un script de clics réels sur 6 pages x 5 liens dure plus de 2 min : le lancer en tâche de fond et ne pas rebuilder pendant son exécution (dist/ vidé sous le serveur).
+
+## 2026-11-10 · huile-sur-le-feu · variante awwwards
+- Symptôme : en phase 2, les h1 portaient `data-intro` seul et n'avaient aucune entrée (texte statique au premier frame).
+- Cause : l'engine ne joue `data-intro` qu'avec `data-split` ou `data-reveal` (reveal.ts) ; l'attribut seul ne fait rien.
+- Correction appliquée : `data-split="lines" data-intro` sur chaque h1, `data-reveal="clip" data-intro data-delay` sur le média du hero.
+- À faire par le prochain agent : en phase 1, poser `data-intro` toujours avec `data-split` ou `data-reveal` ; grep `data-intro>` (attribut seul) avant de clore.

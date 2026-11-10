@@ -20,4 +20,22 @@ const liens = [
     </ul>
   </nav>
   <a class="cta cta--petit tete__appel" href={site.telephoneHref}><span class="cta__txt">Appeler</span></a>
+  <button class="tete__menu nl" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button>
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden data-menu>
+    <div class="menu__haut">
+      <span class="tete__nom" aria-hidden="true">{site.nom}</span>
+      <button class="tete__menu nl" type="button" data-menu-fermer>Fermer</button>
+    </div>
+    <nav class="menu__nav" aria-label="Navigation (menu)">
+      <ul>
+        <li data-menu-item><a href={base} aria-current={path === base ? 'page' : undefined}>Accueil</a></li>
+        {liens.map((l) => <li data-menu-item><a href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="menu__bas" data-menu-item>
+      <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver une table</span></a>
+      <a class="cta cta--contour" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+      <p class="petit">{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</p>
+    </div>
+  </div>
 </header>
