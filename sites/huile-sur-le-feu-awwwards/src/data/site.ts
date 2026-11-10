@@ -62,7 +62,7 @@ export const menus = [
 export const histoire = [
   'Giuseppe Santamaria a grandi dans les Pouilles, là où l’olivier fait partie du paysage autant que de la table.',
   'Il ouvre L’Huile sur le Feu rue de Marchovelette, à deux pas du centre de Namur (en 2005, selon le site de la maison).',
-  'Ici, l’huile d’olive n’est pas la touche finale : c’est le point de départ d’un plat. Truffe blanche, piment, mandarine, menthe : chaque assiette reçoit celle qu’on a choisie pour elle.',
+  'Ici, l’huile d’olive n’est pas la touche finale : c’est le point de départ d’un plat.',
   'Les huiles viennent d’Oliviers & Co et se retrouvent sur les étagères de la boutique, dans la même maison.',
 ] as const;
 
