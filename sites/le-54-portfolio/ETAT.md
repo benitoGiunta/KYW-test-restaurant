@@ -23,3 +23,7 @@
 - Le contrôle de débordement par `getBoundingClientRect` signale les photos de chapitre (pleine largeur voulue, clippées par `overflow-x: clip`) : faux positif, `scrollWidth` = viewport.
 ## Phase 3 (QA) — fait
 - Axe header corrigé, débordement non reproduit, pages mobiles revues, build vert. Reste : `pnpm index` + `gabarits/UTILISATION.md` (publication).
+## Revue 2 (relecteur-site) : PUBLIABLE (F0 0, F1 0, F2 2, F3 4) ; voir REVUE-2.md
+- Faits : corrections F1-1, F1-2, F2-1, F2-2, F2-3, F2-5, F3-1, F3-2 vérifiées (axe, texte, JSON-LD, grep dist, 134 liens).
+- Reste (au choix) : répétitions d'horaires, `geste-dressage` 3 fois sur /histoire/, point médian devant les plats, légendes /menu/, h1 404.
+- Pièges : axe `color-contrast` sur /carte/ = reveal en cours (attendre 2,5 s) ; `requestfailed` d'une image = défilement rapide du script.
