@@ -1,0 +1,31 @@
+---
+import { resto, horaires } from '../data/site';
+const { rue, numero, cp, ville } = resto.adresse;
+---
+<section class="section contact" id="contact" aria-labelledby="titre-contact">
+  <div class="container contact__in">
+    <div class="contact__horaires">
+      <h2 id="titre-contact">Horaires et adresse</h2>
+      <dl class="sched">
+        {horaires.map((j) => (
+          <div class={`sched__jour${j.midi ? '' : ' sched__jour--ferme'}`}>
+            <dt>{j.jour}</dt>
+            <dd>
+              {j.midi ? <time>{j.midi.libelle}</time> : <span class="ferme">midi fermé</span>}
+              <span class="et"> et </span>
+              <time>{j.soir.libelle}</time>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+    <div class="contact__adresse">
+      <address>
+        <p class="gros">{rue} {numero}<br />{cp} {ville}</p>
+        <p><a class="lien" href={resto.itineraire}>Itinéraire sur la carte</a></p>
+        <p><a class="lien" href={resto.tel}>{resto.telAffiche}</a></p>
+        <p><a class="lien" href={`mailto:${resto.email}`}>{resto.email}</a></p>
+      </address>
+    </div>
+  </div>
+</section>

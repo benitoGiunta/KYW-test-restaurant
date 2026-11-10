@@ -1,0 +1,31 @@
+---
+import { composer } from '../data/site';
+const puits = [composer.roll, composer.bowl];
+---
+<section class="section composer" id="composer" aria-labelledby="titre-composer">
+  <div class="container">
+    <div class="tete">
+      <h2 id="titre-composer">Composez votre roll</h2>
+      <p class="lead">Une base, une protéine, des fillings, des toppings et des sauces : à vous de choisir, au prix de chaque ingrédient.</p>
+    </div>
+    <div class="puits">
+      {puits.map((w) => (
+        <div class="puits__un">
+          <h3>{w.nom}</h3>
+          <dl>
+            {w.groupes.map((g) => (
+              <div class="groupe">
+                <dt>{g.titre}{g.note && <small> ({g.note})</small>}</dt>
+                <dd>
+                  <ul>
+                    {g.options.map((o) => <li><span>{o.nom}</span> <span class="num">{o.prix}</span></li>)}
+                  </ul>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

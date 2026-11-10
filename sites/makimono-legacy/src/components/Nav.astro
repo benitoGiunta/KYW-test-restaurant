@@ -1,0 +1,20 @@
+---
+import { resto, liens, photos, base } from '../data/site';
+---
+<header class="nav">
+  <div class="container nav__in">
+    <a class="nav__logo" href={base} aria-label="Makimono, accueil">
+      <img src={photos.logo.src} width="46" height="50" alt="Makimono" decoding="async" />
+    </a>
+    <nav class="nav__liens" aria-label="Principale">
+      <ul>{liens.map((l) => <li><a href={l.href}>{l.texte}</a></li>)}</ul>
+    </nav>
+    <a class="btn nav__cta" href={resto.commande}>Commander</a>
+    <button class="nav__burger" type="button" popovertarget="menu-mobile" aria-label="Ouvrir le menu">Menu</button>
+  </div>
+  <div id="menu-mobile" popover class="nav__pop">
+    <button class="nav__fermer" type="button" popovertarget="menu-mobile" popovertargetaction="hide">Fermer</button>
+    <ul>{liens.map((l) => <li><a href={l.href} popovertarget="menu-mobile" popovertargetaction="hide">{l.texte}</a></li>)}</ul>
+    <a class="btn" href={resto.commande}>Commander en ligne</a>
+  </div>
+</header>

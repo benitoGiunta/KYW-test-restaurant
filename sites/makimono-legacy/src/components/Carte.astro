@@ -1,0 +1,40 @@
+---
+import { panneaux, resto } from '../data/site';
+const coupe = (d: string) => { const [a, ...r] = d.split(' · '); return /pièces?$/.test(a) ? { pieces: a, ing: r.join(', ') } : { pieces: '', ing: d }; };
+---
+<section class="section carte" id="carte" aria-labelledby="titre-carte">
+  <div class="container">
+    <div class="tete">
+      <h2 id="titre-carte">La carte</h2>
+      <p class="lead">Rolls, nigiri, poké bowls et de quoi boire, aux prix de la carte 2026.</p>
+    </div>
+    <div class="onglets" role="tablist" aria-label="Rubriques de la carte" data-onglets>
+      {panneaux.map((p, i) => <button type="button" role="tab" id={`onglet-${p.id}`} aria-controls={`panneau-${p.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{p.titre}</button>)}
+    </div>
+    {panneaux.map((p) => (
+      <div class="panneau" role="tabpanel" id={`panneau-${p.id}`} aria-labelledby={`onglet-${p.id}`}>
+        {p.categories.map((k) => (
+          <div class="rubrique">
+            <div class="rubrique__tete">
+              <h3>{k.categorie}</h3>
+              {k.note && <p class="note">{k.note}</p>}
+            </div>
+            <ul class="lignes">
+              {k.plats.map((pl) => {
+                const { pieces, ing } = coupe(pl.description);
+                return (
+                  <li class="ligne">
+                    <span class="ligne__nom">{pl.nom}</span>
+                    <span class="ligne__desc">{pieces && <span class="ligne__pieces">{pieces}. </span>}{ing}</span>
+                    <span class="ligne__prix num">{pl.prix}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
+    ))}
+    <p class="pdf"><a class="lien" href={resto.carteComplete}>La carte complète en PDF</a></p>
+  </div>
+</section>

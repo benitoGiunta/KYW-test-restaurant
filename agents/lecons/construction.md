@@ -187,3 +187,6 @@ Symptôme : audit WARN « phrase répétée » sur horaires. Cause : pied de pag
 - Un `fullPage` screenshot ne charge pas les images `loading="lazy"` sous la flottaison (zones noires trompeuses) : faire défiler la page par paliers de 500 px avant la capture.
 - `font.mjs google "Archivo" "wdth,wght@62..125,100..900"` donne un seul woff2 variable (90 Ko) ; il faut écrire à la main `font-stretch: 62% 125%` dans le `@font-face`.
 - Copier `src/engine/*.ts`, `engine.css` et `public/kyw/` d'un site awwwards déjà livré (le-royal) évite de recopier engine.md ; adapter seulement `Base.astro`, `setup.ts`, tokens.
+
+## 2026-11-10 · makimono · variante legacy (phase 1)
+- `capture.mjs` écrit toujours `screen-home-desktop.png` : renommer le fichier entre deux comps, sinon la seconde écrase la première. `sloplint` sur un `dist/` local rend sans CSS (chemins absolus sous `base`) : servir `dist` par `serve.mjs --port <n>` et passer `--url`. Un `data-slot` sur un `<figure>` masque sa `<figcaption>` (règle de base.css) : réserver `data-slot` aux vrais emplacements. Une transcription de carte peut porter des notes internes (« à confirmer ») dans la description : les retirer à l'affichage et les lister dans ETAT.md.

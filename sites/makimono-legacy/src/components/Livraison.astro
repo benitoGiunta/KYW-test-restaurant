@@ -1,0 +1,24 @@
+---
+import { resto, photos } from '../data/site';
+const f = photos.terrasse;
+---
+<section class="section livraison" id="livraison" aria-labelledby="titre-livraison">
+  <div class="container livraison__in">
+    <div class="livraison__texte">
+      <h2 id="titre-livraison">Commandez, on vous livre</h2>
+      <p class="lead">Commandez en ligne et faites-vous livrer, ou passez chercher votre commande.</p>
+      <p><a class="btn" href={resto.commande}>Commander en ligne</a></p>
+      <div class="evenement" id="evenement">
+        {/* Hallmark · reworded "Vous organisez une fête ?  👀" to "Vous organisez une fête ?" · 30a names the emoji */}
+        <h3>Vous organisez une fête ?</h3>
+        <p>Laissez-nous nous charger de la nourriture lors de votre événement, quelle que soit sa taille.</p>
+        <p>Nous livrons dans un rayon de 30 km autour de notre restaurant.</p>
+        <p>Contactez-nous pour plus d’informations : <a class="lien" href={`mailto:${resto.email}`}>{resto.email}</a></p>
+      </div>
+    </div>
+    <figure class="livraison__photo">
+      <img src={f.src} srcset={`${f.src800} 800w, ${f.src} 1422w`} sizes="(min-width: 60rem) 40vw, 100vw" width={f.w} height={f.h} alt={f.alt} loading="lazy" decoding="async" />
+      <figcaption>Rolls, gyoza et tempura, servis sur la terrasse.</figcaption>
+    </figure>
+  </div>
+</section>
