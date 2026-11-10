@@ -7,7 +7,7 @@
 - Build final : OK (scripts/q.sh), `dist/le-ponti-2/portfolio/`.
 
 ## Placeholders
-- Deux occurrences `placeholder: true` dans `src/data/site.ts` (voir grep) ; aucun avis, récompense ou chiffre inventé. La section avis est remplacée.
+- Aucune donnée `placeholder: true` (les deux occurrences du grep sont des commentaires) ; aucun avis, récompense ou chiffre inventé ; section avis remplacée.
 - Logo client non intégré (nom en police display) ; « Ouvert, arrivée jusqu'à 14:30 » à valider.
 
 ## Points ouverts
