@@ -27,3 +27,8 @@
 - Fait : REVUE-1.md écrit, verdict A_CORRIGER (0 F0, 2 F1, 4 F2, 5 F3). QA-revue1.md absent : mesures maison sur `dist/` (serveur port 4471 arrêté).
 - À corriger en révision : F1-1 état d'ouverture faux (`menu.ts:21`), F1-2 deux phrases hors dossier (`site.ts:40`, `index.astro:78`), puis F2 (en-tête translucide, og.png, terrasse, cible du logo).
 - Piège : ne pas relancer de shoot complet, vérifier F1-1 sous `page.clock.install` (mardi 12 h, lundi 23 h, samedi 23 h).
+
+## Relecture passe 2 (relecteur-site, 10/11/2026)
+- Fait : REVUE-2.md écrit, verdict PUBLIABLE (0 F0, 0 F1, 0 F2, 3 F3). Les 11 corrections de REVISION-1 vérifiées (10 confirmées, F2-2 partielle : og.png sans photo ni polices du site ; F3-4 sans effet mais sans gravité). Serveur port 4768 arrêté.
+- Reste (facultatif) : og.png avec Anton, Newsreader et photo de braise ; alt de la terrasse (« autour des tables »).
+- Piège : « Fermé, rouvre demain » un mercredi est juste (jeudi ouvert).
