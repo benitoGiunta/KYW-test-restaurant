@@ -1,4 +1,4 @@
-# ETAT : Le Servais, variante awwwards (fin de la phase 2 sur 3)
+# ETAT : Le Servais, variante awwwards (fin de la phase 3 sur 3)
 
 ## Fait (phase 1)
 - Concept « La Ligne », système, 5 pages statiques, contenu réel, build : voir DESIGN.md et l'historique git.
@@ -12,10 +12,9 @@
 - Build OK (`scripts/q.sh build pnpm build:site sites/le-servais-awwwards`).
 - Contrôle Playwright (script hors dépôt) : 0 erreur console ni requête échouée ; `scrollWidth` = largeur à 390 et 320 sur les 5 pages ; menu ouvert, boucle Tab, Échap, focus rendu ; réduit : 0 texte caché, aucune rotation, 5 pages. Captures ciblées : `.shots/aww2/` (non commitées).
 
-## Reste (phase 3)
-- OG composée (`public/og.png` toujours manquant, référencé par `Base.astro`).
-- QA complète (shoot, audit, axe, `hover.noHoverChange`, `idleAt`, `settledMs`, LCP), RAPPORT.md, sloplint, `pnpm index`, points 35, 36, 45 de DESIGN.md.
-- Vérifier le contraste de `.tete__station` (muted sur béton, 7,1:1 attendu) et l'étiquette « 9 h » du menu (carte) si le jury la juge arbitraire.
+## Fait (phase 3)
+- QA sur preuves de QA-build.md : audit 0 FAIL ; og.png composée ; survol du téléphone du pied ; notes de carte répétées reformulées ; build final OK ; RAPPORT.md écrit.
+- Reste : critique jury indépendant (`/jury`), placeholders du client, sloplint non relancé.
 
 ## Décisions et hypothèses
 - Pas de loader, de GL, de follower. Pas d'aperçu au curseur sur la carte (aucune photo par plat).

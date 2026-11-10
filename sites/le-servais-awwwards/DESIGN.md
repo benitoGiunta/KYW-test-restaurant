@@ -138,3 +138,7 @@ RÉSERVATION : [poster + CTA en ligne, appel] [3 colonnes horaires, cuisine, ven
 45. [ ] Phase 3 (axe).
 46. [x] Tout le texte est du HTML.
 47. [x] Cibles : Réserver 44 px, Menu 44 px, Appeler 44 px (`.cta--petit` 2,75 rem), mesure à 390 et 320.
+
+## Phase 3 (QA)
+- 49 LCP mobile 1116 ms (h1), 50 CLS 0, 51 JS 60 Ko gz, page 1084 Ko, images < 500 Ko, 52 settledMs 2619 et 60 fps, 58 meta robots partout (grep vide), 59 pied KYW partout, 60 0 requête en échec.
+- Immobilité au repos : pendule de la cabine de 1,6 degré, volontairement discret.
