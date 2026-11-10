@@ -28,7 +28,12 @@ def defauts(path):
     if i >= 0:
         j = t.find('\n## ', i + 5); t = t[i:j if j > 0 else None]
     # un défaut ouvert = un identifiant F0-n / F1-n en tête de ligne (pas une simple référence dans le texte)
-    return len(set(re.findall(r'(?m)^\s*(?:[-*]\s*)?\**F([01])-(\d+)', t)))
+    ids = set(re.findall(r'(?m)^\s*(?:[-*]\s*)?\**F([01])-(\d+)', t))
+    # autre format : identifiants libres (R1-01…) listés sous un titre « ### F0 » ou « ### F1 »
+    puces = 0
+    for m in re.finditer(r'(?ms)^###\s*F[01]\b[^\n]*\n(.*?)(?=^##|\Z)', t):
+        puces += len(re.findall(r'(?m)^(?:-\s+\**|\*\*)\S', m.group(1)))
+    return max(len(ids), puces)
 lignes = []
 for f in glob.glob('data/usage/detail-*.json'):
     slug = f.split('detail-')[1][:-5]
