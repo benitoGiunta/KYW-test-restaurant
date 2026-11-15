@@ -19,11 +19,11 @@ export const resto = {
 // Horaires (page contact du site d'origine, identiques Michelin, Rankeat, Le Fooding).
 // `jour` suit Date.getDay() (0 = dimanche) pour marquer le jour courant.
 export const horaires = [
-  { nom: 'Lundi', jour: 1, services: ['19:00 à 21:00'] },
-  { nom: 'Mardi', jour: 2, services: ['19:00 à 21:00'] },
-  { nom: 'Mercredi', jour: 3, services: ['12:00 à 14:00', '19:00 à 21:00'] },
-  { nom: 'Jeudi', jour: 4, services: ['19:00 à 21:00'] },
-  { nom: 'Vendredi', jour: 5, services: ['12:00 à 14:00', '19:00 à 21:00'] },
+  { nom: 'Lundi', jour: 1, services: ['19 h à 21 h'] },
+  { nom: 'Mardi', jour: 2, services: ['19 h à 21 h'] },
+  { nom: 'Mercredi', jour: 3, services: ['12 h à 14 h', '19 h à 21 h'] },
+  { nom: 'Jeudi', jour: 4, services: ['19 h à 21 h'] },
+  { nom: 'Vendredi', jour: 5, services: ['12 h à 14 h', '19 h à 21 h'] },
   { nom: 'Samedi', jour: 6, services: [], note: 'privatisation possible' },
   { nom: 'Dimanche', jour: 0, services: [] },
 ];
@@ -39,7 +39,7 @@ export const menuSoir = {
     { nom: 'Mises en bouche', horsService: true },
     { nom: 'Légumes racines / Champignons / Noix' },
     { nom: 'Saint-Jacques / Butternut / Passion' },
-    { nom: 'Bœuf confit / Carottes / Cromesquis de pdt' },
+    { nom: 'Bœuf confit / Carottes / Cromesquis de pommes de terre' },
     { nom: 'Soufflé au caramel / Chaï / Poire' },
     { nom: 'Mignardise', horsService: true },
   ] as { nom: string; horsService?: boolean }[],

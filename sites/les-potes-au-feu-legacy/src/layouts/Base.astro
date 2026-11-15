@@ -114,7 +114,7 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
           const ok = f.checkValidity();
           const help = document.getElementById(`${f.id}-aide`);
           f.toggleAttribute('aria-invalid', !ok);
-          if (help) help.textContent = ok ? '' : (f.dataset.erreur || 'Ce champ est à compléter.');
+          if (help) help.textContent = ok ? '' : ((f.validity.valueMissing && f.dataset.erreurVide) || f.dataset.erreur || 'Ce champ est à compléter.');
           return ok;
         };
         fields.forEach((f) => {
