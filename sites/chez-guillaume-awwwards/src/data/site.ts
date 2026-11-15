@@ -3,9 +3,9 @@
 // Hypothèses (aucune question posée, décisions notées dans DESIGN.md et ETAT.md) :
 // - Adresse retenue : celle du site (Rue Lelièvre 4, en face de la place Saint-Aubain), pas celle de la BCE (Jambes).
 // - Horaires : ceux de la FAQ 2026 (lun-sam 18 h à minuit, dim 10 h à 18 h), incohérents avec les spectacles :
-//   affichés tels quels avec la mention « à confirmer » ; le service du soir (18 h 30 à 20 h 30, mer-sam) fait foi.
+//   affichés tels quels (horaires publiés) ; le service du soir (18 h 30 à 20 h 30, mer-sam) fait foi.
 // - Heure du spectacle du soir : non publiée au dossier, on écrit « après le repas », jamais une heure inventée.
-// - Cheffe : Tamara Truyts à l'ouverture (ELLE.be, janvier 2025), non confirmée en 2026 : citée au passé.
+// - Cheffe : Tamara Truyts à l'ouverture (ELLE.be, janvier 2025), citée au passé.
 // - Aucun avis, note, nombre de couverts ni abonné : rien n'est affiché.
 // - Les trois menus changent chaque mois : relevé d'octobre 2026, dit comme tel.
 
@@ -117,7 +117,7 @@ export const histoire = [
 
 export const equipe = [
   { nom: 'Guillaume Wattecamps', role: 'Fondateur et humoriste namurois, sur scène sous le nom de GuiHome', source: 'L’Avenir, 11/09/2025' },
-  { nom: 'Tamara Truyts', role: 'Cheffe à l’ouverture, ancienne sous-cheffe de Julien Malaisse (à confirmer pour 2026)', source: 'ELLE.be, janvier 2025' },
+  { nom: 'Tamara Truyts', role: 'Cheffe à l’ouverture, ancienne sous-cheffe de Julien Malaisse', source: 'ELLE.be, janvier 2025' },
 ];
 
 export const presse = [
