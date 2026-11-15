@@ -18,7 +18,6 @@ const soir = site.horaires.find((h) => h.jour === 'mercredi')!.creneaux[1];
 // REVISION-2 F3-01 : le découpage en mots du moteur (SplitText) coupe aux U+00A0 ; le dernier mot, sa ponctuation et
 // le guillemet fermant forment un groupe insécable (`.insec`, white-space: nowrap).
 const finInsecable = (t: string) => { const i = t.lastIndexOf(' '); return i < 0 ? ['', t] : [t.slice(0, i), t.slice(i + 1)]; };
-const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `${francois.prenom}` : 'À quatre mains');
 ---
 <Base>
   <section class="hero" data-voix="deux" aria-labelledby="accueil-h1">
@@ -124,12 +123,11 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
                 {(p.description || p.placeholder) && <span class="index__desc muted" style="display: block">{[p.description, p.placeholder ? 'illustratif' : ''].filter(Boolean).join(', ')}</span>}
                 <span class="index__vignette"><img src={asset(p.image.src)} alt="" width={p.image.largeur} height={p.image.hauteur} loading="lazy" decoding="async" /></span>
               </span>
-              <span class="index__tag" aria-label={`Plat de ${initiale(p.voix)}`}>{p.voix ?? 'DF'}</span>
             </a>
           </li>
         ))}
       </ol>
-      {plats.some((p) => p.voixPlaceholder) && <p class="mono muted index__note" data-reveal="fade">D&nbsp;: {damien.prenom}, F&nbsp;: {francois.prenom}. Attribution des plats aux chefs&nbsp;: illustrative. Fromage en supplément (+7 € à la place du dessert, +15 € avant).</p>}
+      <p class="mono muted index__note" data-reveal="fade">Fromage en supplément (+7 € à la place du dessert, +15 € avant).</p>
       <div class="actions">
         <a class="btn btn--papier" href={u('/carte/')}><span class="roll"><span>Toute la carte</span><span aria-hidden="true">Toute la carte</span></span></a>
       </div>
@@ -139,7 +137,7 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
         <div class="stage__cadre">
           {plats.map((p) => <img src={asset(p.image.src)} alt={p.image.alt} width={p.image.largeur} height={p.image.hauteur} loading="lazy" decoding="async" data-stage={p.id} />)}
         </div>
-        <p class="stage__legende mono"><span data-stage-legende>{legende(plats[0])}</span><span class="muted">D = {damien.prenom}, F = {francois.prenom}</span></p>
+        <p class="stage__legende mono"><span data-stage-legende>{legende(plats[0])}</span></p>
       </div>
     </div>
   </section>
@@ -155,7 +153,7 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
     </div>
   </section>
 
-  <section class="dip section section--avis" data-voix="deux" aria-label="Ce qu'on en dit">
+  <section class="dip section section--avis" data-voix="deux" aria-label="Ce qu’on en dit">
     <div class="dip__g">
       {site.avis.slice(0, 1).map((a) => (
         <blockquote class="citation">
@@ -169,7 +167,7 @@ const initiale = (v?: string) => (v === 'D' ? `${damien.prenom}` : v === 'F' ? `
         <div class="note" data-reveal="up">
           <p class="note__chiffre"><span>{site.noteGoogle.note}</span><span class="note__sur">/{site.noteGoogle.sur}</span></p>
           <p class="t-m">{site.noteGoogle.nombre} avis Google</p>
-          <p class="mono muted">{site.noteGoogle.source}{site.noteGoogle.aConfirmer ? ', à confirmer' : ''}. Aucun avis client n'est cité sur cette maquette.</p>
+          <p class="mono muted">{site.noteGoogle.source}. Aucun avis client n’est cité sur cette maquette.</p>
         </div>
       )}
     </div>

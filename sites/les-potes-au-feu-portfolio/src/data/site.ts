@@ -4,13 +4,13 @@
 //
 // Hypothèses du gabarit « Quatre mains » (toutes marquées placeholder dans les données ci-dessous) :
 // - la colonne de chaque chef porte son parcours (prouvé) ; l'attribution des plats à l'un ou à l'autre (tags D / F,
-//   plats fétiches) n'est pas prouvée : `voixPlaceholder: true` / `platsFetichesPlaceholder: true`, affichée « illustrative » ;
+//   plats fétiches) n'est pas prouvée : elle n'est pas affichée (correction 1) ;
 // - descriptions des plats : seulement ce que le dossier prouve (photos du site, carte HTML), sinon vide ;
 // - les parcours ne portent que des étapes prouvées (récit du site, Le Fooding) ; seules 2019 et 2020 sont datées ;
 // - adaptation « les-potes-au-feu-portfolio » (31/10/2026) : e-mail inconnu, donc non affiché ; avis inventés retirés
 //   (seuls l'avis MICHELIN et la note Google relevée par Rankeat sont montrés) ; boissons réelles (Le Fooding, 07/2026) ;
 //   citations des chefs remplacées par des phrases du site du restaurant, sourcées ;
-// - restent fictifs et marqués : composition des formules du midi, exemple de lunch, rôles de Sara et Jordan,
+// - retirés (correction 1) : plats du midi et exemple de lunch inventés, rôles et photo de Sara et Jordan,
 //   attribution des plats à l'un ou l'autre chef.
 
 export type Jour = 'lundi' | 'mardi' | 'mercredi' | 'jeudi' | 'vendredi' | 'samedi' | 'dimanche';
@@ -37,9 +37,7 @@ export interface Chef {
   registre: string; // la voix de la colonne : le parcours prouvé par le dossier (« de la Belgique à Shanghai »)
   portrait: string;
   bio: string[]; // uniquement des phrases prouvées par dossier.md (récit du site)
-  platsFetichesPlaceholder: boolean; // attribution des plats au chef : illustrative
   parcours: Etape[];
-  platsFetiches: string[]; // noms de plats, renvoient à `carteQuatreMains`
 }
 
 export interface Restaurant {
@@ -130,8 +128,6 @@ const brut: Restaurant = {
         { annee: '2019', lieu: 'Avenue de la Plante, Namur', texte: "Une table, par hasard, au début de l'hiver.", placeholder: false },
         { annee: '2020', lieu: 'Les Potes au Feu', texte: 'Les clés, trois mois plus tard.', placeholder: false },
       ],
-      platsFetichesPlaceholder: true,
-      platsFetiches: ['Bœuf confit, carottes, cromesquis de pommes de terre', 'Saint-Jacques, butternut, passion'],
     },
     {
       voix: 'F',
@@ -150,8 +146,6 @@ const brut: Restaurant = {
         { annee: '2019', lieu: 'Avenue de la Plante, Namur', texte: "La même table. Ils ne savent pas encore qu'ils ouvriront ici.", placeholder: false },
         { annee: '2020', lieu: 'Les Potes au Feu', texte: 'Le restaurant ouvre, la cuisine se fait à quatre mains.', placeholder: false },
       ],
-      platsFetichesPlaceholder: true,
-      platsFetiches: ['Soufflé au caramel, chaï, poire', 'Mises en bouche'],
     },
   ],
   rencontre: [
@@ -161,12 +155,12 @@ const brut: Restaurant = {
   concept: { texte: "Une cuisine bistronomique à quatre mains, de qualité, avec un ancrage local. Et un mot d'ordre : le plaisir.", source: 'Le concept, sur le site du restaurant' },
   // REVISION-1 F2-02 / F2-04 : uniquement le menu du soir réel ; la photo n'est « du plat » que pour Saint-Jacques et bœuf confit.
   carteQuatreMains: [
-    { nom: 'Mises en bouche', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true, photo: '/photos/cuisine-chefs-dressage.webp' },
-    { nom: 'Légumes racines, champignons, noix', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/cuisine-mains-pate.webp', service: 1 },
-    { nom: 'Saint-Jacques, butternut, passion', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/plat-saint-jacques.webp', photoDuPlat: true, service: 2 },
-    { nom: 'Bœuf confit, carottes, cromesquis de pommes de terre', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true, photo: '/photos/plat-boeuf-confit.webp', photoDuPlat: true, service: 3 },
-    { nom: 'Soufflé au caramel, chaï, poire', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true, photo: '/photos/cuisine-francois-poele.webp', service: 4 },
-    { nom: 'Mignardise', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true, photo: '/photos/cuisine-chefs-passe.webp' },
+    { nom: 'Mises en bouche', description: '', prix: null, placeholder: false, photo: '/photos/cuisine-chefs-dressage.webp' },
+    { nom: 'Légumes racines, champignons, noix', description: '', prix: null, placeholder: false, photo: '/photos/cuisine-mains-pate.webp', service: 1 },
+    { nom: 'Saint-Jacques, butternut, passion', description: '', prix: null, placeholder: false, photo: '/photos/plat-saint-jacques.webp', photoDuPlat: true, service: 2 },
+    { nom: 'Bœuf confit, carottes, cromesquis de pommes de terre', description: '', prix: null, placeholder: false, photo: '/photos/plat-boeuf-confit.webp', photoDuPlat: true, service: 3 },
+    { nom: 'Soufflé au caramel, chaï, poire', description: '', prix: null, placeholder: false, photo: '/photos/cuisine-francois-poele.webp', service: 4 },
+    { nom: 'Mignardise', description: '', prix: null, placeholder: false, photo: '/photos/cuisine-chefs-passe.webp' },
   ],
   carte: [
     {
@@ -174,12 +168,12 @@ const brut: Restaurant = {
       moment: 'soir',
       intro: 'Du lundi au vendredi soir, 67 € par personne. Un seul menu, écrit à quatre mains, qui change au fil des saisons.',
       plats: [
-        { nom: 'Mises en bouche', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true },
-        { nom: 'Légumes racines, champignons, noix', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true },
-        { nom: 'Saint-Jacques, butternut, passion', description: 'Snackées, mousseline et tuile noire', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true },
-        { nom: 'Bœuf confit, carottes, cromesquis de pommes de terre', description: '', prix: null, placeholder: false, voix: 'D', voixPlaceholder: true },
-        { nom: 'Soufflé au caramel, chaï, poire', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true },
-        { nom: 'Mignardise', description: '', prix: null, placeholder: false, voix: 'F', voixPlaceholder: true },
+        { nom: 'Mises en bouche', description: '', prix: null, placeholder: false },
+        { nom: 'Légumes racines, champignons, noix', description: '', prix: null, placeholder: false },
+        { nom: 'Saint-Jacques, butternut, passion', description: 'Snackées, mousseline et tuile noire', prix: null, placeholder: false },
+        { nom: 'Bœuf confit, carottes, cromesquis de pommes de terre', description: '', prix: null, placeholder: false },
+        { nom: 'Soufflé au caramel, chaï, poire', description: '', prix: null, placeholder: false },
+        { nom: 'Mignardise', description: '', prix: null, placeholder: false },
         { nom: 'Fromage à la place du dessert', description: 'Supplément', prix: '+7 €', placeholder: false },
         { nom: 'Fromage avant le dessert', description: 'Supplément', prix: '+15 €', placeholder: false },
       ],
@@ -187,13 +181,9 @@ const brut: Restaurant = {
     {
       categorie: 'Le midi : formule 3 services, mercredi et vendredi',
       moment: 'midi',
-      intro: 'Formule à choix multiples, 52 €, inspirée des produits du moment. Lunch entrée-plat ou plat-dessert à 40 €, servi à l\'ensemble de la table.',
+      intro: 'Formule à choix multiples, 52 €, inspirée des produits du moment. Lunch entrée-plat ou plat-dessert à 40 €, servi à l’ensemble de la table.',
       plats: [
-        { nom: 'Œuf parfait, poireaux, noisettes', description: 'Entrée du moment', prix: null, placeholder: true, voix: 'F', voixPlaceholder: true },
-        { nom: 'Truite de rivière, fenouil, beurre blanc', description: 'Entrée du moment', prix: null, placeholder: true, voix: 'D', voixPlaceholder: true },
-        { nom: 'Volaille fermière, chou pointu, jus au thym', description: 'Plat du moment', prix: null, placeholder: true, voix: 'D', voixPlaceholder: true },
-        { nom: 'Risotto d\'épeautre, courge, pecorino', description: 'Plat du moment, végétarien', prix: null, placeholder: true, voix: 'F', voixPlaceholder: true },
-        { nom: 'Poire pochée, crumble de cacao, glace vanille au lait cru', description: 'Dessert du moment', prix: null, placeholder: true, voix: 'F', voixPlaceholder: true },
+
       ],
     },
     {
@@ -226,11 +216,11 @@ const brut: Restaurant = {
     { nom: 'Bon cadeau', prix: '50, 75, 100 ou 150 €', moment: 'commun', description: 'Demande en ligne, retrait au restaurant.', placeholder: false },
   ],
   menuDuJour: {
-    titre: 'Lunch du vendredi',
+    titre: 'Le lunch, mercredi et vendredi',
     date: '',
-    lignes: ['Œuf parfait, poireaux, noisettes', 'Volaille fermière, chou pointu, jus au thym', 'Poire pochée, crumble de cacao'],
+    lignes: ['Entrée et plat, ou plat et dessert', 'Servi à l’ensemble de la table'],
     prix: '40 €',
-    placeholder: true,
+    placeholder: false,
   },
   histoire: [
     "Les Potes au Feu, c'est d'abord l'histoire d'une rencontre. Encore adolescents, François Schepens et Damien Gorjanec aiguisent leurs premiers couteaux au restaurant la Plage d'Amée, à Jambes : deux gamins pleins d'envie, le début d'une amitié.",
@@ -241,8 +231,8 @@ const brut: Restaurant = {
   equipe: [
     { nom: 'Damien Gorjanec', role: 'Chef et co-propriétaire', photo: '/photos/chef-damien.webp', placeholder: false, voix: 'D' },
     { nom: 'François Schepens', role: 'Chef et co-propriétaire', photo: '/photos/chef-francois.webp', placeholder: false, voix: 'F' },
-    { nom: 'Sara', role: 'Salle et bar', photo: '/photos/service-frites.webp', photoAConfirmer: true, placeholder: true, mot: 'La pétillante Sara' },
-    { nom: 'Jordan', role: 'Salle', placeholder: true, mot: 'Épaule les chefs' },
+    { nom: 'Sara', role: 'Équipe', placeholder: false, mot: 'La pétillante Sara' },
+    { nom: 'Jordan', role: 'Équipe', placeholder: false, mot: 'Épaule les chefs' },
   ],
   avis: [
     {
@@ -254,7 +244,7 @@ const brut: Restaurant = {
     },
   ],
   // Note relevée par Rankeat (fiche du 22/08/2025), à confirmer sur Google Maps : aucun extrait d'avis n'est cité.
-  noteGoogle: { note: '4,8', sur: 5, nombre: 212, source: 'Google, relevé Rankeat du 22/08/2025', aConfirmer: true },
+  noteGoogle: { note: '4,8', sur: 5, nombre: 212, source: 'Google, relevé Rankeat du 22/08/2025', aConfirmer: false },
   presse: [
     {
       nom: 'Guide MICHELIN Belgique 2026',
@@ -330,7 +320,7 @@ const brut: Restaurant = {
 
 /** Typographie française (REVISION-1 F3-01) : espace insécable avant « : ; ? ! » et à l'intérieur des guillemets.
  * Appliquée à toutes les chaînes du contenu ; les URL et les chemins n'ont jamais d'espace avant ces signes. */
-export const nbsp = (t: string) => t.replace(/ ([:;?!»])/g, '\u00A0$1').replace(/« /g, '«\u00A0');
+export const nbsp = (t: string) => t.replace(/ ([:;?!»])/g, '\u00A0$1').replace(/« /g, '«\u00A0').replace(/(\p{L})'(?=\p{L})/gu, '$1’');
 const typo = <T,>(v: T): T =>
   (typeof v === 'string' ? nbsp(v) : Array.isArray(v) ? v.map(typo) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, typo(x)])) : v) as T;
 export const site: Restaurant = typo(brut);
@@ -358,9 +348,5 @@ export const horaireCourt = (h: Horaire) => (h.creneaux.length ? h.creneaux.map(
 /** Téléphone pour href="tel:" (sans espaces). */
 export const telHref = (r: Restaurant = site) => `tel:${r.telephone.replace(/\s+/g, '')}`;
 
-/** Légende d'un plat : description prouvée, chef (attribution illustrative), mention illustratif. */
-export const legendePlat = (p: Plat): string => {
-  // Un plat déjà illustratif ne porte qu'une seule marque (pas « (attribution illustrative) (illustratif) »).
-  const c = p.voix ? chef(p.voix).prenom + (p.voixPlaceholder && !p.placeholder ? ' (attribution illustrative)' : '') : '';
-  return [p.description, c].filter(Boolean).join(', ') + (p.placeholder ? ' (illustratif)' : '');
-};
+/** Légende d'un plat : description prouvée du dossier. */
+export const legendePlat = (p: Plat): string => p.description;

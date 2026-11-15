@@ -40,7 +40,7 @@ const communs = site.carte.filter((c) => c.moment === 'commun');
       <div class="ardoise" data-reveal="up">
         <span class="mono muted">Vu par le Guide MICHELIN 2026</span>
         <p class="t-m">Cerises noires et griottes, crumble de cacao, glace vanille au lait cru.</p>
-        <p class="muted">Association citée par l'inspecteur dans son avis du 4&nbsp;mai 2026. Menu végétarien sur demande, allergies à signaler à la réservation.</p>
+        <p class="muted">Association citée par l’inspecteur dans son avis du 4&nbsp;mai 2026. Menu végétarien sur demande, allergies à signaler à la réservation.</p>
       </div>
     </div>
   </section>
@@ -48,7 +48,7 @@ const communs = site.carte.filter((c) => c.moment === 'commun');
   <section class="dip section dip--plein" data-voix="droite" aria-labelledby="midi-titre">
     <div class="dip__g">
       <div class="ardoise" data-reveal="up">
-        <span class="mono muted">{site.menuDuJour.titre}{site.menuDuJour.placeholder ? ', exemple' : ''}</span>
+        <span class="mono muted">{site.menuDuJour.titre}</span>
         <ul>
           {site.menuDuJour.lignes.map((l) => <li>{l}</li>)}
         </ul>
@@ -58,17 +58,7 @@ const communs = site.carte.filter((c) => c.moment === 'commun');
     <div class="dip__d">
       <span class="mono muted eyebrow" data-reveal="fade">{site.menus[1].prix} ou {site.menus[2].prix}</span>
       <h2 class="titre" id="midi-titre" data-split="lines">{midi.categorie}</h2>
-      <ul class="plats" style="margin-top: calc(var(--u) * 4)">
-        {midi.plats.map((p, i) => (
-          <li data-reveal="up" data-delay={String(i * 0.04)}>
-            <div>
-              <h3>{p.nom}</h3>
-              <p class="muted">{legendePlat(p)}</p>
-            </div>
-            {p.prix && <span class="prix">{p.prix}</span>}
-          </li>
-        ))}
-      </ul>
+      <p class="mesure" style="margin-top: calc(var(--u) * 4)" data-reveal="up">{midi.intro}</p>
     </div>
   </section>
 

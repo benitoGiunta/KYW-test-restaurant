@@ -42,7 +42,6 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
       <h2 class="titre" id="damien-titre" data-split="lines">{damien.prenom} {damien.nom}</h2>
       <div class="stack mesure" style="margin-top: calc(var(--u) * 3)">
         {damien.bio.map((p) => <p data-reveal="up">{p}</p>)}
-        <p class="mono muted" data-reveal="fade">Plats fétiches{damien.platsFetichesPlaceholder ? ' (attribution illustrative)' : ''}&nbsp;: {damien.platsFetiches.join(' ; ')}</p>
       </div>
     </div>
     <div class="dip__d escalier--d">
@@ -73,7 +72,6 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
       <h2 class="titre" id="francois-titre" data-split="lines">{francois.prenom} {francois.nom}</h2>
       <div class="stack mesure" style="margin-top: calc(var(--u) * 3)">
         {francois.bio.map((p) => <p data-reveal="up">{p}</p>)}
-        <p class="mono muted" data-reveal="fade">Plats fétiches{francois.platsFetichesPlaceholder ? ' (attribution illustrative)' : ''}&nbsp;: {francois.platsFetiches.join(' ; ')}</p>
       </div>
     </div>
   </section>
@@ -101,14 +99,6 @@ const plat = (nom: string) => site.carteQuatreMains.find((p) => p.nom === nom);
       <figure class="col-6 photo photo--4x5" data-reveal="clip">
         <img src={asset(ensemble.src)} alt={ensemble.alt} width={ensemble.largeur} height={ensemble.hauteur} loading="lazy" decoding="async" />
       </figure>
-      <div class="col-6">
-        <h3 class="mono muted">Les plats de {damien.prenom}{damien.platsFetichesPlaceholder ? ', attribution illustrative' : ''}</h3>
-        <ul class="plats">{damien.platsFetiches.map((n) => <li><div><h4 style="font-weight: 700">{n}</h4>{plat(n)?.description && <p class="muted">{plat(n)!.description}{plat(n)!.placeholder ? ' (illustratif)' : ''}</p>}</div></li>)}</ul>
-      </div>
-      <div class="col-6">
-        <h3 class="mono muted">Les plats de {francois.prenom}{francois.platsFetichesPlaceholder ? ', attribution illustrative' : ''}</h3>
-        <ul class="plats">{francois.platsFetiches.map((n) => <li><div><h4 style="font-weight: 700">{n}</h4>{plat(n)?.description && <p class="muted">{plat(n)!.description}{plat(n)!.placeholder ? ' (illustratif)' : ''}</p>}</div></li>)}</ul>
-      </div>
     </div>
   </section>
 </Base>

@@ -9,9 +9,11 @@ const video = site.video ? { ...site.video, image: photoDe(site.video.poster) } 
 const dateFr = (d: string) => new Date(d + 'T12:00:00').toLocaleDateString('fr-BE', { month: 'long', year: 'numeric' });
 const salle = photoDe('/photos/salle-banquette.webp');
 // REVISION-1 F3-06 : la photo du hero ne revient pas en tête des coulisses.
-const galerie = site.galerie.filter((src) => src !== salle.src).map(photoDe);
+const galerieBrute = site.galerie.filter((src) => src !== salle.src).map(photoDe);
+// Revue portfolio-02 : nombre pair, pour que les deux colonnes de la mosaïque finissent à la même hauteur.
+const galerie = galerieBrute.length % 2 ? galerieBrute.slice(0, -1) : galerieBrute;
 ---
-<Base title="Notre histoire" description={`L'histoire des Potes au Feu à Namur : la rencontre de deux chefs à la Plage d'Amée, l'ouverture avenue de la Plante en 2020, l'équipe et les coulisses.`}>
+<Base title="Notre histoire" description={`L’histoire des Potes au Feu à Namur : la rencontre de deux chefs à la Plage d’Amée, l’ouverture avenue de la Plante en 2020, l’équipe et les coulisses.`}>
   <section class="hero dip" data-voix="deux" aria-labelledby="histoire-h1">
     <div class="dip__g hero__texte">
       <span class="mono muted" data-reveal="fade" data-intro>Depuis 2020, avenue de la Plante</span>
@@ -53,7 +55,7 @@ const galerie = site.galerie.filter((src) => src !== salle.src).map(photoDe);
 
   <section class="commune section" data-voix="commune" data-rejoint aria-labelledby="equipe-titre">
     <div class="wrap">
-      <h2 class="titre" id="equipe-titre" data-split="lines">L'équipe</h2>
+      <h2 class="titre" id="equipe-titre" data-split="lines">L’équipe</h2>
       <p class="muted mesure" style="margin-block: var(--u) calc(var(--u) * 4)" data-reveal="fade">{site.histoire[3]}</p>
       <div class="grille">
         {equipe.map((m, i) => (
@@ -62,8 +64,7 @@ const galerie = site.galerie.filter((src) => src !== salle.src).map(photoDe);
               ? <figure class="photo photo--4x5"><img src={asset(m.image.src)} alt={m.image.alt} width={m.image.largeur} height={m.image.hauteur} loading="lazy" decoding="async" /></figure>
               : <div class={`tuile photo--4x5 ${i % 2 ? 'tuile--d' : ''}`} aria-hidden="true"><span>{m.nom.charAt(0)}</span></div>}
             <h3>{m.nom}</h3>
-            <p class="muted">{m.role}{m.placeholder ? ' (rôle illustratif)' : ''}</p>
-            {m.photoAConfirmer && <p class="mono muted">Personne sur la photo&nbsp;: à confirmer</p>}
+            <p class="muted">{m.role}</p>
             {m.mot && <p class="mono muted">{m.mot}</p>}
           </article>
         ))}
@@ -94,7 +95,7 @@ const galerie = site.galerie.filter((src) => src !== salle.src).map(photoDe);
   <section class="commune section" data-voix="commune" data-rejoint aria-labelledby="presse-titre">
     <div class="wrap grille">
       <div class="col-6">
-        <span class="mono muted eyebrow" data-reveal="fade">Ce qu'on en dit</span>
+        <span class="mono muted eyebrow" data-reveal="fade">Ce qu’on en dit</span>
         <h2 class="titre" id="presse-titre" data-split="lines">Guides et presse</h2>
         <ul class="presse">
           {site.presse.map((p) => (
@@ -106,7 +107,7 @@ const galerie = site.galerie.filter((src) => src !== salle.src).map(photoDe);
           ))}
           {site.noteGoogle && (
             <li data-reveal="up">
-              <p class="mono muted">{site.noteGoogle.source}{site.noteGoogle.aConfirmer ? ', à confirmer' : ''}</p>
+              <p class="mono muted">{site.noteGoogle.source}</p>
               <p><strong>{site.noteGoogle.note} sur {site.noteGoogle.sur}</strong>, {site.noteGoogle.nombre} avis Google.</p>
             </li>
           )}
