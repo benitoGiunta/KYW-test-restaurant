@@ -74,3 +74,4 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 - 2026-11-15 : correcteur-site, un brouillon « (attribution illustrative) » s'élimine à la source (champs `voix*`, `platsFetiches*`), pas en retirant le texte ; l'apostrophe typographique se règle une fois dans la fonction `nbsp` des données.
 - 2026-11-15 · chez-guillaume portfolio : shoot --crawl dépasse 120 s (passe en fond) ; attendre la fin avant de lancer autre chose ; le scan brouillon rendait 0 car les drapeaux placeholder étaient tous à false.
 - 2026-11-15 · incorrect legacy (correcteur-site) : un texte d'adresse vectorisé dans le logo client ne se réduit pas par CSS ; recadrer le viewBox d'une copie (ex. logo-tete.svg, sans la ligne basse) et la passer par une prop du composant Logo, sans toucher au logo complet.
+- 2026-11-15 : le scan brouillon ne voit pas les alt ; grep aussi photos.json et les taglines générées (site.ts).

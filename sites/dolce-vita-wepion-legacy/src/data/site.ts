@@ -89,7 +89,7 @@ export const CARTE = (carteBrute as any[]).map((c) => {
     id,
     titre,
     ardoise: titre === 'Suggestions',
-    tagline: titre === 'Suggestions' ? 'Écrites à la craie, changées au rythme du marché.' : TAGLINES[titre] ?? null,
+    tagline: titre === 'Suggestions' ? 'Les suggestions de la maison.' : TAGLINES[titre] ?? null,
     photo: PHOTO_CAT[titre] ?? null,
     plats: c.plats.map((p: any) => ({
       nom: typo(p.nom.trim()),
