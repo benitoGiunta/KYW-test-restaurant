@@ -75,11 +75,11 @@ export const site: Restaurant = {
   horaires: [
     { jour: 'lundi', creneaux: [{ ouverture: '18:00', fermeture: '00:00' }], note: 'lundi « face à la crise »' },
     { jour: 'mardi', creneaux: [{ ouverture: '18:00', fermeture: '00:00' }] },
-    { jour: 'mercredi', creneaux: [{ ouverture: '18:00', fermeture: '00:00' }], note: 'repas 18:30 à 20:30' },
-    { jour: 'jeudi', creneaux: [{ ouverture: '18:00', fermeture: '00:00' }], note: 'repas 18:30 à 20:30' },
-    { jour: 'vendredi', creneaux: [{ ouverture: '18:00', fermeture: '00:00' }], note: 'repas 18:30 à 20:30' },
-    { jour: 'samedi', creneaux: [{ ouverture: '18:00', fermeture: '00:00' }], note: 'repas 18:30 à 20:30' },
-    { jour: 'dimanche', creneaux: [{ ouverture: '10:00', fermeture: '18:00' }], note: 'brunch 11:30 à 14:00, spectacle 15:00' },
+    { jour: 'mercredi', creneaux: [{ ouverture: '18:00', fermeture: '00:00' }], note: 'repas 18h30 à 20h30' },
+    { jour: 'jeudi', creneaux: [{ ouverture: '18:00', fermeture: '00:00' }], note: 'repas 18h30 à 20h30' },
+    { jour: 'vendredi', creneaux: [{ ouverture: '18:00', fermeture: '00:00' }], note: 'repas 18h30 à 20h30' },
+    { jour: 'samedi', creneaux: [{ ouverture: '18:00', fermeture: '00:00' }], note: 'repas 18h30 à 20h30' },
+    { jour: 'dimanche', creneaux: [{ ouverture: '10:00', fermeture: '18:00' }], note: 'brunch 11h30 à 14h, spectacle 15h' },
   ],
   reseaux: [
     { nom: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61558313910793' },
@@ -230,10 +230,11 @@ export function photoDe(src: string): Photo {
 /** Adresse sur une ligne. */
 export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adresse.numero}, ${r.adresse.cp} ${r.adresse.commune}`;
 
+const hFr = (t: string) => (t === '00:00' ? 'minuit' : t.replace(':', 'h'));
 /** Horaires lisibles : '12:00 à 14:00, 19:00 à 21:00' ou la note. */
 export const horaireTexte = (h: Horaire) =>
   h.creneaux.length
-    ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') + (h.note ? ` (${h.note})` : '')
+    ? h.creneaux.map((c) => `${hFr(c.ouverture)} à ${hFr(c.fermeture)}`).join(', ') + (h.note ? ` (${h.note})` : '')
     : h.note || 'fermé';
 
 /** Téléphone pour href="tel:" (sans espaces). */

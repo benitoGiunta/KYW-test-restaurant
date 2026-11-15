@@ -72,3 +72,4 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 - 2026-11-15 · partage portfolio (correcteur) : un widget « suggestion du jour » dont l'attribution aux jours est inventée se retire en le rendant sans date ; vérifier data-jour dans dist.
 - 2026-11-15 : serve.mjs prend `--port N` (pas d'argument positionnel) ; Chromium Playwright : chercher `chrome` sous /opt/pw-browsers/chromium-*/chrome-linux64/.
 - 2026-11-15 : correcteur-site, un brouillon « (attribution illustrative) » s'élimine à la source (champs `voix*`, `platsFetiches*`), pas en retirant le texte ; l'apostrophe typographique se règle une fois dans la fonction `nbsp` des données.
+- 2026-11-15 · chez-guillaume portfolio : shoot --crawl dépasse 120 s (passe en fond) ; attendre la fin avant de lancer autre chose ; le scan brouillon rendait 0 car les drapeaux placeholder étaient tous à false.
