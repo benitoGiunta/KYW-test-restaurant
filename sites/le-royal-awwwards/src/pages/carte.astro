@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import { u } from '../lib/url';
 import { site, carte, nomCategorie, prix } from '../data/site';
-const cartePhotos = { 'Entrées': 'plats', 'Plats brasserie': 'vins', 'Moules jumbo (1,350 kg)': 'moules', 'Bières au fût': 'bieres', 'Cocktails et apéritifs (extraits)': 'cocktails' } as const;
+const cartePhotos = { 'Entrées': 'plats', 'Plats brasserie': 'vins', 'Moules jumbo (1,350 kg)': 'moules', 'Bières au fût': 'bieres', 'Cocktails et apéritifs': 'cocktails' } as const;
 const rubs = carte.map((c) => ({ ...c, ph: (cartePhotos as Record<string, string | undefined>)[c.categorie] as 'plats' | undefined }));
 ---
 <Base title="La carte" description="La carte du Royal Namur : entrées, plats de brasserie, moules jumbo, coin du boucher, vins du patron et bières au fût, avec les prix de la carte d’août 2026." page="carte">
@@ -36,7 +36,7 @@ const rubs = carte.map((c) => ({ ...c, ph: (cartePhotos as Record<string, string
     );
   })}
   <section class="final wrap">
-    <p class="page-chapo">La carte complète des vins et des boissons est celle du restaurant : ici, un extrait.</p>
+    <p class="page-chapo">Pour la carte des vins et des boissons à jour, rendez-vous au restaurant, place du Théâtre.</p>
     <p class="hero__actions"><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></p>
   </section>
 </Base>

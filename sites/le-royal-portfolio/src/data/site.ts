@@ -81,7 +81,7 @@ const carte: Categorie[] = (carteBrute as { categorie: string; groupe: Groupe; n
   categorie: c.categorie,
   groupe: c.groupe,
   exemple: false,
-  note: c.categorie.startsWith('Moules jumbo') ? `${c.note ? c.note + ' ' : ''}Le mardi et le jeudi, l'ardoise de la terrasse annonce les moules jumbo à 20 € (conditions à confirmer).` : c.note,
+  note: c.categorie.startsWith('Moules jumbo') ? `${c.note ? c.note + ' ' : ''}Le mardi et le jeudi, l'ardoise de la terrasse annonce les moules jumbo à 20 € (ardoise de la terrasse).` : c.note,
   plats: c.plats.map((p) => ({ nom: p.nom, description: p.description, prix: p.prix, placeholder: false, apercu: apercus[p.nom], badges: badges[p.nom] })),
 }));
 
@@ -114,9 +114,9 @@ export const site: Restaurant = {
   // Chaque jour met en avant un plat réel de la carte (prix de la carte d'août 2026) ; mardi et jeudi : l'ardoise de la terrasse.
   suggestions: [
     { jour: 'lundi', texte: 'Spécialité de la carte : boulettes maison, sauce au choix', prix: '21,90 €', note: 'à la carte tous les jours' },
-    { jour: 'mardi', texte: "À l'ardoise de la terrasse : moules jumbo", prix: '20 €', note: 'conditions à confirmer' },
+    { jour: 'mardi', texte: "À l'ardoise de la terrasse : moules jumbo", prix: '20 €', note: 'ardoise de la terrasse' },
     { jour: 'mercredi', texte: 'Spécialité de la carte : Royal Burger maison', prix: '22,90 €', note: 'à la carte tous les jours' },
-    { jour: 'jeudi', texte: "À l'ardoise de la terrasse : moules jumbo", prix: '20 €', note: 'conditions à confirmer' },
+    { jour: 'jeudi', texte: "À l'ardoise de la terrasse : moules jumbo", prix: '20 €', note: 'ardoise de la terrasse' },
     { jour: 'vendredi', texte: 'Spécialité de la carte : vol-au-vent maison de poularde', prix: '22,90 €', note: 'à la carte tous les jours' },
     { jour: 'samedi', texte: 'Spécialité de la carte : brochette de bœuf géante, trois sauces', prix: '28,90 €', note: 'à la carte tous les jours' },
     { jour: 'dimanche', texte: "Spécialité de la carte : tartare de bœuf à l'italienne", prix: '23,90 €', note: 'à la carte tous les jours' },
@@ -125,7 +125,7 @@ export const site: Restaurant = {
   menus: [
     { nom: 'Fêtes patronales, 3 services', prix: '50 €', quand: 'Sans boissons', description: 'Entrées : terrine de chevreuil au foie gras, saumon gravlax ou tarte fine au potimarron. Plats : civet de biche, suprême de pintade aux pleurotes, filet de lieu ou risotto aux champignons des bois. Desserts : tarte fine aux pommes ou crémeux au chocolat.', placeholder: false },
     { nom: 'Fêtes patronales, avec boissons', prix: '65 €', quand: 'Le même menu, boissons comprises', description: 'Apéritif maison et mises en bouche, trois verres de vin, trois softs ou trois pils, puis café ou thé.', placeholder: false },
-    { nom: 'Moules jumbo', prix: '20 €', quand: "Mardi et jeudi, d'après l'ardoise de la terrasse", description: 'Moules jumbo de 1,350 kg ; les recettes et leurs prix habituels sont sur la carte. Conditions exactes à confirmer.', placeholder: false },
+    { nom: 'Moules jumbo', prix: '20 €', quand: "Mardi et jeudi, d'après l'ardoise de la terrasse", description: 'Moules jumbo de 1,350 kg ; les recettes et leurs prix habituels sont sur la carte.', placeholder: false },
   ],
   histoire: [
     "Située sur la Place du Théâtre de Namur, la Brasserie Le Royal vous accueille dans un cadre élégant et chaleureux où la cuisine de brasserie se savoure avec générosité.",
