@@ -1,5 +1,5 @@
 ---
-import { resto, horaires, base } from '../data/site';
+import { resto, base } from '../data/site';
 ---
 <section class="section venir" id="venir" aria-labelledby="t-venir">
   <div class="container venir__in">
@@ -10,15 +10,7 @@ import { resto, horaires, base } from '../data/site';
     <div class="venir__texte">
       <h2 id="t-venir">Venir chez INCORЯECT</h2>
       <p class="venir__adr"><span class="nw">{resto.adresse.rue},</span> <span class="nw">{resto.adresse.cp} {resto.adresse.ville}</span></p>
-      <dl class="horaires" data-placeholder="true">
-        {horaires.map((h) => (
-          <div class={`horaires__l${h.ferme ? ' is-ferme' : ''}`}>
-            <dt>{h.jours}</dt>
-            <dd>{h.ferme ? 'Fermé' : h.creneaux.map((c) => <time>{c}</time>)}</dd>
-          </div>
-        ))}
-      </dl>
-      <p class="fill">Horaires à confirmer, les sources se contredisent.</p>
+      <p class="fill">Pour les horaires du jour, appelez-nous ou réservez en ligne.</p>
       <div class="actions">
         <a class="btn btn--pass1" href={resto.reservation} rel="noopener">Réserver en ligne<span class="visually-hidden"> (Barestho)</span></a>
         <a class="btn btn--paper" href={resto.telHref}>Appeler le {resto.tel}</a>

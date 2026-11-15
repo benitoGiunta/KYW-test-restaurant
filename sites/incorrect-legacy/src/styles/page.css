@@ -190,3 +190,12 @@ figcaption { font-size: var(--text-sm); color: var(--color-muted); padding-top: 
   .pied__liens a, .menu > a:not(.btn) { min-height: 44px; display: inline-flex; align-items: center; }
   .tabs__b, .btn { min-height: 48px; }
 }
+
+/* correction legacy-02 : dernier groupe impair de la carte en pleine largeur, ses plats sur deux colonnes (bureau seulement) */
+@media (min-width: 60.01rem) {
+  .carte__groupes > .groupe:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .carte__groupes > .groupe:last-child:nth-child(odd) .plats { columns: 2; column-gap: var(--gap-columns); }
+  .carte__groupes > .groupe:last-child:nth-child(odd) .plat { break-inside: avoid; }
+}
+/* correction legacy-03 : en-tête collant sans la ligne d'adresse (logo-tete.svg, même marque, viewBox 469 x 110) */
+.nav__logo .logo { aspect-ratio: 469 / 110; }

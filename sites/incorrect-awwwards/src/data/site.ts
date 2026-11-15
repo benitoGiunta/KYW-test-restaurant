@@ -35,7 +35,6 @@ export const horaires = [
   { jour: 'Samedi', creneaux: ['12 h à 14 h', '18 h 30 à 21 h 30'] },
   { jour: 'Dimanche', creneaux: [] as string[] },
 ];
-export const horairesNote = 'Horaires à confirmer : les sources consultées ne concordent pas.';
 export const jourSchema = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 export type Plat = { nom: string; prix: number | number[]; note?: string; description?: string; des?: boolean; placeholder?: boolean };
@@ -63,7 +62,6 @@ export const presse = [
 ] as const;
 
 export const pratique = [
-  { titre: 'Terrasse', texte: 'Terrasse.' },
   { titre: 'Animaux', texte: 'Les animaux sont acceptés.' },
   { titre: 'À emporter', texte: 'Les pizzas se prennent aussi à emporter.' },
   { titre: 'Climatisation', texte: 'La salle est climatisée.' },

@@ -81,7 +81,7 @@ export const site: Restaurant = {
     j('dimanche', [], 'fermé'),
   ],
   horairesResume: 'Mardi au samedi, 18 h 30 à 21 h 30 ; samedi midi aussi',
-  horairesNote: 'Horaires à confirmer : les sources divergent, la maison fera foi.',
+  horairesNote: '',
   reseaux: [
     { nom: 'Instagram', url: 'https://www.instagram.com/incorrect.namur/' },
     { nom: 'Facebook', url: 'https://www.facebook.com/p/Incorrectnamur-61557438170846/' },
@@ -91,10 +91,10 @@ export const site: Restaurant = {
     prononciation: '[ɛ̃.kɔ.ʁɛkt]',
     nature: 'adj.',
     sens: [
-      'Qui s’écarte de la règle. Exemple : une pizza au kimchi maison, à l’ananas frais et à la mayo bbq.',
+      'Qui s’écarte de la règle.',
       'Par extension : la pizzeria rock-n-roll d’Alex et Estelle, à Namur, où la pâte lève au levain et repose 48 heures avant de passer au four. Voir aussi : le goût, la qualité et l’audace.',
     ],
-    placeholder: true,
+    placeholder: false,
   },
   signature: {
     nom: 'Dwight Schrute',
@@ -124,10 +124,10 @@ export const site: Restaurant = {
     ],
     aEmporter: [
       { titre: 'Choisissez', texte: 'Parmi les pizzas de la carte.' },
-      { titre: 'Appelez', texte: 'Au 081 13 85 61, pour convenir de l’heure.' },
+      { titre: 'Appelez', texte: 'Au 081 13 85 61.' },
       { titre: 'Passez la porte', texte: 'Rue Haute Marcelle 35, et repartez avec la boîte.' },
     ],
-    aEmporterPlaceholder: true,
+    aEmporterPlaceholder: false,
   },
   histoire: [
     'Incorrect se présente comme la pizzeria rock-n-roll d’Alex et Estelle, à Namur. Estelle accueille et fait sourire en salle ; Alexandre Hocquet est en cuisine.',

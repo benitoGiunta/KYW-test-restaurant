@@ -1,0 +1,7 @@
+# CORRECTION-1 · incorrect / legacy
+
+id | catégorie | décision | changement | preuve
+--- | --- | --- | --- | ---
+legacy-01 | brouillon (« Horaires à confirmer, les sources se contredisent. ») | corrige | Le bloc horaires contradictoires (source de la mention) est retiré de la section Venir ; la phrase « à confirmer » est remplacée par « Pour les horaires du jour, appelez-nous ou réservez en ligne. » ; les `openingHoursSpecification` du JSON-LD (horaires non prouvés) sont retirés ; la donnée reste dans `src/data/site.ts`. | scan-brouillon `incorrect/legacy` : 0 libellé ; `grep` de `confirmer`, `contredisent`, `openingHours`, `data-placeholder` dans `dist/incorrect/legacy/` : 0 occurrence.
+legacy-02 | disposition (colonne droite vide en fin de carte) | corrige | Règle CSS de bureau (min-width 60.01rem) en fin de `page.css` : dernier groupe impair de la carte en pleine largeur, ses plats sur deux colonnes. | Capture `carte.png` : « Suppléments » occupe les deux colonnes ; mesure getBoundingClientRect (groupe 1312 px de large à 1440).
+legacy-03 | lisibilité (adresse de 5 px dans le logo collant) | corrige | Le texte d'adresse fait partie du tracé vectoriel du logo client. Création de `public/logo-tete.svg` (même tracé, viewBox recadré à 469 x 110, sans la ligne d'adresse), utilisé uniquement dans l'en-tête via une prop `fichier` de `Logo.astro` ; le pied et le logo complet restent inchangés. | Capture `logo-d.png` et `logo-m.png` : marque nette, sans fragments d'adresse ; mesure scrollWidth = clientWidth à 1440 et 390.
