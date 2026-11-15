@@ -14,11 +14,11 @@ const nomMois = (m: string) => { const d = dateFr(m + '-01'); return `${d.mois} 
       <ol class="agenda">
         {mois.map((m) => (
           <>
-            <li class="mois"><h2 style="font-size:inherit;max-width:none">{nomMois(m)}</h2></li>
+            <li class="mois" data-mois={m}><h2 style="font-size:inherit;max-width:none">{nomMois(m)}</h2></li>
             {agenda.filter((a) => a.d.startsWith(m)).map((a) => {
               const d = dateFr(a.d);
               return (
-                <li class={a.complet ? 'is-full' : undefined}>
+                <li data-d={a.d} class={a.complet ? 'is-full' : undefined}>
                   <div class="row">
                     <span class="when">{d.court} {d.jour} {d.mois}{a.heure && <small> à {a.heure}</small>}</span>
                     <span class="what">{a.titre}</span>

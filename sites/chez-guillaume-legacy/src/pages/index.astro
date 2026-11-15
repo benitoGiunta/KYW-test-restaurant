@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Fig from '../components/Fig.astro';
 import { resto, horaires, agenda, prochains, dateFr, urlEvenement, typeLibelle } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-const aVenir = agenda.slice(1, 9);
+const aVenir = agenda.slice(1, 14);
 ---
 <Base page="accueil" accueil={true} title="Chez Guillaume, restaurant et comedy club à Namur" description="Chez Guillaume, restaurant et comedy club au cœur de Namur : repas avant le spectacle du mercredi au samedi, brunch stand-up le dimanche.">
   <section class="hero" aria-labelledby="h-hero">
@@ -82,11 +82,11 @@ const aVenir = agenda.slice(1, 9);
         <h2 id="h-agenda">Agenda</h2>
         <p class="lead">Chaque date mène à sa fiche et à la billetterie.</p>
       </div>
-      <ol class="agenda">
+      <ol class="agenda" data-max={8}>
         {aVenir.map((a) => {
           const d = dateFr(a.d);
           return (
-            <li class={a.complet ? 'is-full' : undefined}>
+            <li data-d={a.d} class={a.complet ? 'is-full' : undefined}>
               <div class="row">
                 <span class="when">{d.court} {d.jour} {d.mois}{a.heure && <small> à {a.heure}</small>}</span>
                 <span class="what">{a.titre}</span>

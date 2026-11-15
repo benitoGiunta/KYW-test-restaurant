@@ -88,6 +88,16 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
       var j = new Date().getDay();
       document.querySelectorAll('[data-jour]').forEach(function (el) { if (Number(el.dataset.jour) === j) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); } });
     </script>
+    <script is:inline>
+      (function () {
+        var t = new Date(); var iso = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+        document.querySelectorAll('ol.agenda').forEach(function (ol) {
+          var max = Number(ol.dataset.max) || 999, n = 0;
+          ol.querySelectorAll('li[data-d]').forEach(function (li) { if (li.dataset.d < iso || n >= max) li.hidden = true; else n++; });
+          ol.querySelectorAll('li[data-mois]').forEach(function (m) { if (!ol.querySelector('li[data-d^="' + m.dataset.mois + '"]:not([hidden])')) m.hidden = true; });
+        });
+      })();
+    </script>
     <KywFooter base={import.meta.env.BASE_URL} />
   </body>
 </html>

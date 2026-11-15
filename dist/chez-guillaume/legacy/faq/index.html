@@ -19,4 +19,13 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
     </script> <script>
       var j = new Date().getDay();
       document.querySelectorAll('[data-jour]').forEach(function (el) { if (Number(el.dataset.jour) === j) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); } });
+    </script> <script>
+      (function () {
+        var t = new Date(); var iso = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+        document.querySelectorAll('ol.agenda').forEach(function (ol) {
+          var max = Number(ol.dataset.max) || 999, n = 0;
+          ol.querySelectorAll('li[data-d]').forEach(function (li) { if (li.dataset.d < iso || n >= max) li.hidden = true; else n++; });
+          ol.querySelectorAll('li[data-mois]').forEach(function (m) { if (!ol.querySelector('li[data-d^="' + m.dataset.mois + '"]:not([hidden])')) m.hidden = true; });
+        });
+      })();
     </script> <footer class="kyw-footer" aria-label="Réalisation"> <p class="kyw-footer__note">Maquette KYW, certaines données sont illustratives.</p> <a class="kyw-footer__link" href="https://kyngroup.be" rel="noopener" aria-label="Site réalisé par KYW, Know Your Website"> <span>Réalisé par</span> <img class="kyw-footer__logo" src="/chez-guillaume/legacy/kyw/kyw-signature-720.webp" width="720" height="144" alt="KYW, Know Your Website" loading="lazy" decoding="async"> </a> </footer> </body></html>
