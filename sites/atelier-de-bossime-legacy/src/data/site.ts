@@ -113,8 +113,8 @@ export const boissons = [
   { nom: 'Apéritif au verre', prix: `16${n}€` },
   { nom: 'Vin au verre', prix: `12${n}€` },
   { nom: 'Bière artisanale', prix: `6${n}€` },
-  // Libellé du site d'origine « Eau l : 12 € » : le volume n'est pas lisible (à confirmer, voir RAPPORT.md).
-  { nom: 'Eau', prix: `12${n}€`, note: 'volume à confirmer', placeholder: true },
+  // Libellé du site d'origine « Eau l : 12 € » : le volume n'est pas lisible (prix gardé, sans volume).
+  { nom: 'Eau', prix: `12${n}€` },
   { nom: 'Café ou thé', prix: `4${n}€` },
   { nom: 'Carte des vins', prix: `de 44 à 160${n}€` },
 ];

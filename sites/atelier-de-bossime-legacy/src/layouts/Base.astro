@@ -130,7 +130,13 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
           e.preventDefault();
           const bad = fields.filter((f) => !check(f));
           if (bad.length) { bad[0].focus(); if (status) status.textContent = 'Il manque une information : voyez le champ signalé.'; return; }
-          if (!form.dataset.endpoint && status) status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié. Appelez le +32 478 13 71 25 ou écrivez à info@bossime.be.';
+          if (form.dataset.mailto) {
+            const d = new FormData(form);
+            const l = (k: string) => String(d.get(k) || '').trim();
+            const corps = [l('civilite') && l('civilite'), `${l('prenom')} ${l('nom')}`.trim(), l('email'), l('telephone'), '', l('message')].filter((x, i) => x || i === 4).join('\n');
+            if (status) status.textContent = 'Votre messagerie s’ouvre avec le message prêt à partir.';
+            window.location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(l('objet') || 'Message depuis le site')}&body=${encodeURIComponent(corps)}`;
+          }
         });
       });
     </script>

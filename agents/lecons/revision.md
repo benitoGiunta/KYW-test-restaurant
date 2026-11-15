@@ -65,3 +65,5 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 - 2026-11-15 : un « fait absent » rendu en slot .fill (jour de fermeture) compte comme brouillon pour le scan ; le retirer plutôt que l'étiqueter (brasserie-du-quai/legacy).
 - 15/11/2026 (correcteur-site) : un « à confirmer » dont la valeur n'a aucune source (jours de fermeture) se retire à la source (donnée + pied + réservation) ; garder l'étiquette ferait repasser le scan.
 - 15/11/2026 (correcteur-site) : un « à confirmer » vient souvent d'un drapeau de données (aConfirmer, placeholder) lu à plusieurs endroits (ligne de temps, badge JS, schéma) ; retirer le drapeau à la source, puis grepper le script de badge et le scan dist.
+- 2026-11-15 · atelier-de-bossime legacy : le scan des brouillons ne rend que les clés non vides (`{}` = 0) ; un formulaire sans backend se relie par mailto: généré en JS plutôt que d'afficher « pas encore relié ».
+- 2026-11-15 · atelier-de-bossime awwwards : un guillemet suspendu (text-indent négatif) dans un titre découpé en lignes (data-split) est rogné par le masque de la ligne ; préférer un padding-left court sans retrait négatif.

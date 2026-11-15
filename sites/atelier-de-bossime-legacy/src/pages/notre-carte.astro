@@ -26,8 +26,8 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
               <th scope="row">{f.nom}<span class="when">{f.quand}</span></th>
               <td data-label="Comprend">{f.texte}</td>
               <td class="num price" data-label="Prix">{f.prix.map((p) => <span>{p}</span>)}</td>
-              <td data-label="Accord">{f.accord ?? <span class="closed">sans accord</span>}</td>
-              <td class="num" data-label="Accord sans alcool">{f.sansAlcool ?? <span class="closed">non</span>}</td>
+              <td data-label="Accord">{f.accord ?? <span class="closed">Pas d’accord proposé</span>}</td>
+              <td class="num" data-label="Accord sans alcool">{f.sansAlcool ?? <span class="closed">Sans objet</span>}</td>
             </tr>
           ))}
         </tbody>
@@ -48,7 +48,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
           <thead><tr><th scope="col">Boisson</th><th scope="col" class="num">Prix</th></tr></thead>
           <tbody>
             {boissons.map((b) => (
-              <tr><th scope="row">{b.nom}{b.note && <span class="closed" data-placeholder="true">, {b.note}<span class="illu">(illustratif)</span></span>}</th><td class="num">{b.prix}</td></tr>
+              <tr><th scope="row">{b.nom}</th><td class="num">{b.prix}</td></tr>
             ))}
           </tbody>
         </table>
@@ -67,7 +67,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       position="50% 50%"
       alt="Volaille et carottes nappées de sauce dans une assiette creuse grise"
     />
-    <p class="container caption">Volaille, carottes, sauce nappée<span class="illu">(légende illustrative)</span></p>
+    <p class="container caption">Volaille, carottes, sauce nappée</p>
   </section>
 
   <section class="section--l" aria-labelledby="groupes-titre">
