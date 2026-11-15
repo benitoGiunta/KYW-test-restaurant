@@ -3,9 +3,7 @@
 //  - rôles de Sara et de Jordan inconnus : le site n'affiche que ce que dit le client (« épaulés par la pétillante Sara et Jordan »)
 //  - l'assiette du service 1 (mises en bouche, légumes racines) n'est pas photographiée : assiette dessinée avec le navet du logo
 //  - l'assiette du service 4 montre la rosace de pommes (photo réelle d'un dessert antérieur), légendée comme telle
-//  - les prix de boissons viennent du Fooding (juillet 2026), à confirmer par le client (`aConfirmer: true`)
 //  - aucune adresse e-mail publique : le site n'en invente pas (téléphone et Zenchef seulement)
-//  - la formule midi à 52 € vient du site du client et du Fooding (juillet 2026), mais `donnees.json` la classe « à confirmer » : affichée avec la pastille « à confirmer »
 //  - la date d'ouverture exacte est inconnue (société créée le 14/01/2020) : le site dit « début 2020 »
 
 export interface Creneau { ouverture: string; fermeture: string }
@@ -75,7 +73,7 @@ export const services: Service[] = [
 
 export const formules: Formule[] = [
   {
-    id: 'degustation', nom: 'Menu dégustation', prix: '67 €', quand: 'Du lundi au vendredi soir, quatre services, servi à toute la table.',
+    id: 'degustation', nom: 'Menu dégustation', prix: '67 €', quand: 'Du lundi au vendredi soir, quatre services, le même menu pour toute la table.',
     note: 'Un menu unique, de saison. Menu végétarien sur demande ; allergies et intolérances à signaler lors de la réservation.',
     lignes: [
       { nom: 'Mises en bouche' },
@@ -89,20 +87,20 @@ export const formules: Formule[] = [
     ],
   },
   {
-    id: 'midi', nom: 'Le midi', prix: '40 ou 52 €', prixNote: '52 € à confirmer', quand: 'Mercredi et vendredi, de 12 h à 14 h.',
+    id: 'midi', nom: 'Le midi', prix: '40 ou 52 €', quand: 'Mercredi et vendredi, de 12 h à 14 h.',
     note: 'Deux façons de déjeuner : la formule à choix multiples, ou le lunch servi à l’ensemble de la table. Composition du jour par téléphone.',
     lignes: [
-      { nom: 'Formule trois services', description: 'à choix multiples, inspirée des produits du moment', prix: '52 €', aConfirmer: true },
+      { nom: 'Formule trois services', description: 'à choix multiples, inspirée des produits du moment', prix: '52 €' },
       { nom: 'Lunch entrée et plat, ou plat et dessert', description: 'selon les envies des chefs, servi à l’ensemble de la table', prix: '40 €' },
     ],
   },
   {
-    id: 'bar', nom: 'Au bar', prixNote: 'trois exemples, prix à confirmer', quand: 'Avant, pendant, après.',
-    note: 'Trois exemples relevés par Le Fooding en juillet 2026 ; la carte complète des vins et cocktails se demande à table.',
+    id: 'bar', nom: 'Au bar', quand: 'Avant, pendant, après.',
+    note: 'Quelques verres, pour patienter ou prolonger ; la carte complète des vins et cocktails se demande à table.',
     lignes: [
-      { nom: 'Amaretto sour maison', description: 'le verre', prix: '13 €', aConfirmer: true },
-      { nom: 'Anjou, domaine Olivier', description: 'le verre', prix: '9 €', aConfirmer: true },
-      { nom: 'Syrah, Stéphane Ogier', description: 'la bouteille', prix: '50 €', aConfirmer: true },
+      { nom: 'Amaretto sour maison', description: 'le verre', prix: '13 €' },
+      { nom: 'Anjou, domaine Olivier', description: 'le verre', prix: '9 €' },
+      { nom: 'Syrah, Stéphane Ogier', description: 'la bouteille', prix: '50 €' },
     ],
   },
   {
@@ -130,7 +128,7 @@ export const equipe: Membre[] = [
 
 export const faits: { chiffre: string; unite: string; label: string; aConfirmer?: boolean }[] = [
   { chiffre: '4', unite: 'services', label: 'Un menu unique, de saison, le soir du lundi au vendredi.' },
-  { chiffre: '67', unite: '€', label: 'Le menu dégustation du soir. Le midi : lunch à 40 €, ou formule à 52 €', aConfirmer: true },
+  { chiffre: '67', unite: '€', label: 'Le menu dégustation du soir. Le midi : lunch à 40 €, ou formule à 52 €' },
   { chiffre: '2', unite: 'chefs', label: 'Damien et François cuisinent et servent eux-mêmes.' },
   { chiffre: '2020', unite: '', label: 'Les clés de l’avenue de la Plante, début 2020, au bord de la Meuse.' },
 ];
