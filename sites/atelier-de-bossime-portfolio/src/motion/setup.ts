@@ -17,8 +17,8 @@ export function setupMotion() {
   });
   setLoaderExit((root) =>
     gsap.timeline()
-      .to(root.querySelectorAll('[data-loader-out], .loader__branche'), { y: -24, autoAlpha: 0, duration: 0.3, ease: ease.inOut, stagger: 0.04 })
-      .to(root, { yPercent: -110, duration: 0.6, ease: ease.inOut }, '-=0.2'),
+      .to(root.querySelectorAll('[data-loader-out], .loader__branche'), { y: -24, autoAlpha: 0, duration: 0.2, ease: ease.inOut, stagger: 0.02 })
+      .to(root, { yPercent: -110, duration: 0.4, ease: ease.inOut }, '-=0.15'),
   );
   // Rideau : pousse depuis le bas, se replie vers le haut.
   setTransition({

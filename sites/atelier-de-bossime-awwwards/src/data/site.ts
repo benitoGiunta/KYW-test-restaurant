@@ -123,7 +123,7 @@ export const carte: Rubrique[] = [
       { nom: "L’apéritif au verre", prix: 16, photo: 'cocktailSour' },
       { nom: 'Le vin au verre', prix: 12 },
       { nom: 'La bière artisanale', prix: 6 },
-      { nom: "L’eau", prix: 12 },
+      { nom: "L’eau", detail: 'À la bouteille.', prix: 12 },
       { nom: 'Le café ou le thé', prix: 4 },
       { nom: 'La carte des vins', detail: 'Des bouteilles de 44 à 160 €.', prix: [44, 160] },
     ],

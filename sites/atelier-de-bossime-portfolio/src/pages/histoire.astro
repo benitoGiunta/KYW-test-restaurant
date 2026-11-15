@@ -29,9 +29,9 @@ const ferme = photoDe('/photos/salle-service-soir.webp');
     <div class="wrap equipe" style="margin-top: calc(var(--u) * 4)">
       {site.equipe.map((m, i) => { const p = m.photo ? photoDe(m.photo) : null; return (
         <article class="membre" data-reveal="up" data-delay={String(i * 0.1)}>
-          {p ? <figure class="vignette"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure> : <span class="vignette vignette--typo"><span class="vignette__nom">{m.nom}</span><span class="meta">photo à fournir</span></span>}
+          {p ? <figure class="vignette"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure> : null}
           <h3>{m.nom}</h3>
-          <p class="meta">{m.role}{m.placeholder && <span class="exemple">rôle à confirmer</span>}{m.photoPlaceholder && <span class="exemple">portrait à confirmer</span>}</p>
+          <p class="meta">{m.role}</p>
         </article>
       ); })}
     </div>

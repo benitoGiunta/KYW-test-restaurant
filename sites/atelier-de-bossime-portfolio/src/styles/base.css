@@ -154,7 +154,8 @@ html[data-mois='9'] [data-secteur-mois='9'], html[data-mois='10'] [data-secteur-
 .plat__desc { display: block; margin-top: 0.2em; color: var(--c-muted); font-size: var(--t-s); }
 .plat__prix { white-space: nowrap; font-family: var(--f-cond); font-weight: 600; letter-spacing: 0.04em; color: var(--c-ink); }
 .menu-prix { display: flex; justify-content: space-between; align-items: baseline; gap: var(--u); margin-top: calc(var(--u) * 2); font-family: var(--f-cond); font-weight: 300; font-size: var(--t-l); text-transform: uppercase; letter-spacing: 0.04em; color: var(--c-ink); }
-.menu-prix strong { font-weight: 600; }
+.menu-prix strong { font-weight: 600; white-space: nowrap; }
+.menu-prix span { text-wrap: balance; }
 .formules { display: grid; gap: calc(var(--u) * 2); margin-top: calc(var(--u) * 3); }
 .formule { padding: calc(var(--u) * 2); border: 1px solid var(--c-line); display: grid; gap: 0.4em; }
 .formule h3 { font-size: var(--t-m); }
@@ -293,7 +294,7 @@ html[data-mois='9'] [data-secteur-mois='9'], html[data-mois='10'] [data-secteur-
 .logo__e { position: relative; display: inline-block; }
 .logo__accents { position: absolute; left: 50%; bottom: 0.74em; width: 0.62em; height: auto; transform: translateX(-50%); overflow: visible; }
 .logo__accents path { fill: none; stroke: var(--c-accent); stroke-width: 2.6; stroke-linecap: round; }
-.logo__sous { font-family: var(--f-cond); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.6rem; color: var(--c-fg); margin-top: 0.3em; }
+.logo__sous { font-family: var(--f-cond); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.6875rem; color: var(--c-fg); margin-top: 0.3em; }
 .header__brand:hover .logo__mot, .header__brand:focus-visible .logo__mot { color: var(--c-terre); }
 
 /* Distinctions : étiquettes empilées */
@@ -329,7 +330,7 @@ html[data-mois='9'] [data-secteur-mois='9'], html[data-mois='10'] [data-secteur-
 }
 @media (max-width: 640px) {
   .logo__mot { font-size: 1.35rem; }
-  .logo__sous { font-size: 0.55rem; }
+  .logo__sous { font-size: 0.6875rem; }
   .chiffres { grid-template-columns: minmax(0, 1fr); }
 }
 /* Horaires groupés (« lundi au vendredi ») : la liste centrée ne dépasse jamais la colonne en mobile */
@@ -341,7 +342,7 @@ html[data-mois='9'] [data-secteur-mois='9'], html[data-mois='10'] [data-secteur-
 /* Roue : 12 vignettes (une par mois, ses deux produits), largeur en cqw : la corde entre deux mois (0,52 × diamètre) reste
    plus grande que la diagonale d'une vignette à toutes les tailles du disque. Le nom encré = de saison au mois du haut. */
 /* Taille fixe et centrage par marges (avant transform) : un translate(-50 %) dans la chaîne tournerait avec le disque. */
-.vig { width: 15cqw; height: 11cqw; margin: -5.5cqw 0 0 -7.5cqw; padding: 4px; gap: 2px; align-content: center; font-size: max(9px, 1.8cqw); letter-spacing: 0.03em; hyphens: auto;
+.vig { width: 16cqw; height: 12cqw; margin: -6cqw 0 0 -8cqw; padding: 4px; gap: 2px; align-content: center; font-size: max(11px, 2cqw); letter-spacing: 0.03em; hyphens: auto;
   transform: rotate(var(--a)) translateY(-46cqw) rotate(calc(-1 * var(--a) - var(--rot) - var(--derive))); } /* 46cqw : dans le bord du disque, sans toucher le titre au-dessus ni les noms de mois */
 .vig__nom { display: block; padding: 1px 2px; transition: background 0.3s, color 0.3s; }
 .vig__nom.is-top { background: var(--c-ink); color: var(--c-bg); }

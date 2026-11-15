@@ -91,14 +91,14 @@ export const site: Restaurant = {
         { nom: 'Apéritif au verre', description: '', prix: '16 €', placeholder: false },
         { nom: 'Vin au verre', description: '', prix: '12 €', placeholder: false },
         { nom: 'Bière artisanale', description: '', prix: '6 €', placeholder: false },
-        { nom: 'Eau', description: 'volume à confirmer', prix: '12 €', placeholder: false },
+        { nom: 'Eau', description: '', prix: '12 €', placeholder: false },
         { nom: 'Café ou thé', description: '', prix: '4 €', placeholder: false },
         { nom: 'Carte des vins', description: 'bouteilles', prix: '44 à 160 €', placeholder: false },
       ],
     },
   ],
   menus: [
-    { nom: 'Lunch 2 ou 3 services', prix: '42 € / 52 €', description: 'Du lundi au vendredi midi. Servi en une heure sur demande.', placeholder: false },
+    { nom: 'Lunch 2 ou 3 services', prix: '42 € / 52 €', description: 'Du lundi au vendredi midi. Servi en une heure sur demande.', placeholder: false },
     { nom: 'Menus en Moments', prix: '68 à 130 €', description: '3, 4, 5 ou 7 Moments, le midi et le soir. Le 7 Moments se réserve deux jours à l’avance.', placeholder: false },
     {
       nom: 'Soirées de l’agenda gourmand',
@@ -107,7 +107,7 @@ export const site: Restaurant = {
         'La dernière en date : soirée NeZ ZeN (3e édition), jeudi 22 octobre 2026, avec la parfumerie namuroise NeZ ZeN. Trois mises en bouche, menu 4 services, accords mets et boissons avec ou sans alcool, tout compris.',
       placeholder: false,
     },
-    { nom: 'Chèques-cadeaux', prix: 'montant libre', description: 'Proposés par la maison : modalités à demander au restaurant.', placeholder: true },
+    { nom: 'Chèques-cadeaux', prix: 'À offrir', description: 'La maison propose des chèques-cadeaux.', placeholder: false },
   ],
   histoire: [
     'En 2011, Ludovic Vanackere a vingt ans quand il ouvre Bossimé dans un coin de la ferme familiale, à Loyers : huit tables au départ, au milieu de l’exploitation.',
@@ -116,7 +116,6 @@ export const site: Restaurant = {
     'Autour du restaurant, le projet Bossimé a grandi : une centaine d’hectares, une quarantaine de personnes, une brasserie à La Confluence, à Namur, des plats en bocaux (L’Avenir, janvier 2024).',
   ],
   equipe: [
-    { nom: 'Ludovic Vanackere', role: 'Chef et fondateur', photo: '/photos/portrait-chef.webp', photoPlaceholder: true, placeholder: false },
     { nom: 'La brigade', role: 'Cuisine ouverte sur la salle', photo: '/photos/duo-cuisine.webp', placeholder: false },
     { nom: 'La salle', role: 'Accueil et service sous la charpente', photo: '/photos/service-table-grenier.webp', placeholder: false },
     { nom: 'Le bar', role: 'Cocktails et boissons maison', photo: '/photos/bouteilles-etiquetees.webp', placeholder: false },
@@ -173,11 +172,14 @@ export function photoDe(src: string): Photo {
 /** Adresse sur une ligne. */
 export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adresse.numero}, ${r.adresse.cp} ${r.adresse.commune}`;
 
-/** Horaires lisibles : '12:00 à 16:00, 19:00 à 23:30' ou la note. */
-export const horaireTexte = (h: Horaire) =>
-  h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé';
+/** '12:00' → '12 h', '23:30' → '23 h 30' (typographie française). */
+const hFr = (t: string) => { const [h, m] = t.split(':'); return `${Number(h)} h${m === '00' ? '' : ` ${m}`}`; };
 
-/** Horaires groupés par jours consécutifs identiques : [{ jours: 'lundi au vendredi', texte: '12:00 à 16:00, 19:00 à 23:30' }, …]. */
+/** Horaires lisibles : '12 h à 16 h, 19 h à 23 h 30' ou la note. */
+export const horaireTexte = (h: Horaire) =>
+  h.creneaux.length ? h.creneaux.map((c) => `${hFr(c.ouverture)} à ${hFr(c.fermeture)}`).join(', ') : h.note || 'fermé';
+
+/** Horaires groupés par jours consécutifs identiques : [{ jours: 'lundi au vendredi', texte: '12 h à 16 h, 19 h à 23 h 30' }, …]. */
 export const horairesGroupes = (r: Restaurant = site) => {
   const out: { jours: string; texte: string }[] = [];
   let debut = 0;
@@ -253,7 +255,7 @@ export const citations = [
 /** Distinctions : seules les preuves du dossier ; l'année Gault&Millau est incertaine (2017 ou 2018). */
 export const distinctions = [
   { nom: 'Étoile verte MICHELIN', detail: 'gastronomie durable', placeholder: false },
-  { nom: 'Gault&Millau', detail: 'jeune chef de l’année', annee: '2018', anneePlaceholder: true, placeholder: false },
+  { nom: 'Gault&Millau', detail: 'jeune chef de l’année', placeholder: false },
   { nom: 'Prix namurois', detail: 'dont les Alfer', placeholder: false },
 ];
 
@@ -276,7 +278,6 @@ export const questions: Question[] = [
   { q: 'Groupes et événements ?', r: 'Jusqu’à 60 personnes assises ou 120 en dînatoire debout. Dès dix personnes, la maison peut ouvrir en dehors des horaires.', placeholder: false },
   { q: 'Accès en fauteuil roulant ?', r: 'L’accès est réduit jusqu’aux travaux prévus en 2027 : l’entrée se fait par un escalier de cinq marches. Renseignez-vous par téléphone avant de venir.', placeholder: false },
   { q: 'Les chiens sont-ils admis ?', r: 'Oui, les chiens sont acceptés.', placeholder: false },
-  { q: 'Où se garer ?', r: 'Réponse à compléter par le restaurant (exemple : parking dans la cour de la ferme).', placeholder: true },
 ];
 
 /** Quatre saisons : ingrédients du calendrier indicatif et une assiette RÉELLE photographiée à Bossimé, rangée dans la saison de son
