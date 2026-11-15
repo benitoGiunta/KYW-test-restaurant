@@ -3,7 +3,7 @@
 import type { Categorie } from './site';
 export const cuisine: Categorie[] = [
  {
-  "categorie": "Starters",
+  "categorie": "Pour commencer",
   "plats": [
    {
     "nom": "Croquettes de jambon ibérique (6 pièces)",
@@ -49,7 +49,7 @@ export const cuisine: Categorie[] = [
   "categorie": "Plats",
   "plats": [
    {
-    "nom": "Filet pur de boeuf Holstein",
+    "nom": "Filet pur de bœuf Holstein",
     "description": "Béarnaise, pommes allumettes, salade verte",
     "prix": 45.0
    },

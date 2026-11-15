@@ -49,7 +49,6 @@ export interface Restaurant {
   email: { valeur: string; placeholder: boolean };
   reservation: { outil: string; url: string };
   cadeau: { note: string; url: string };
-  horairesNote: { texte: string; placeholder: boolean }; // heures de service à confirmer
   privatisation: { texte: string; placeholder: boolean };
   horaires: Horaire[];
   reseaux: Reseau[];
@@ -86,7 +85,6 @@ export const site: Restaurant = {
   reservation: { outil: 'restaurantpartage.be', url: 'https://restaurantpartage.be/#reservation' }, // règle « groupe de plus de six » retirée (REVUE-1 F0-1 : absente du dossier)
   cadeau: { note: 'Le bon cadeau se commande en ligne, sur le site du restaurant.', url: 'https://restaurantpartage.be/bon-cadeau/' },
   privatisation: { texte: 'La salle se privatise pour des groupes de 20 à 30 personnes.', placeholder: false },
-  horairesNote: { texte: 'Jours de fermeture confirmés ; heures de service indicatives, à confirmer.', placeholder: true },
   horaires: [
     { jour: 'lundi', creneaux: [], note: 'fermé' },
     { jour: 'mardi', creneaux: [{ ouverture: '18:30', fermeture: '22:00' }] },
@@ -100,15 +98,13 @@ export const site: Restaurant = {
     { nom: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61566994066332' },
     { nom: 'Instagram', url: 'https://www.instagram.com/restaurant_partage_namur/' },
   ],
-  // Suggestions : plats réels de la carte ; leur attribution à un jour est illustrative (marquée). Jours fermés : réels.
+  // Suggestions : plats réels de la carte ; aucune attribution à un jour (inventée) : ils défilent sans date.
   suggestions: [
-    { jour: 'lundi', texte: 'Fermé le lundi. On se retrouve mardi soir.', prix: null, placeholder: false },
-    { jour: 'mardi', texte: 'À partager ce soir : croquettes de jambon ibérique, six pièces', prix: '16 €', placeholder: true },
-    { jour: 'mercredi', texte: 'Calamars frits, sauce tartare, au milieu de la table', prix: '22 €', placeholder: true },
-    { jour: 'jeudi', texte: 'Poulpe rôti, niçoise de légumes, chorizo', prix: '34 €', placeholder: true },
-    { jour: 'vendredi', texte: 'Saint-Jacques snackées, fondue de poireaux, beurre blanc', prix: '23 €', placeholder: true },
-    { jour: 'samedi', texte: 'Filet pur de bœuf Holstein, béarnaise, pommes allumettes', prix: '45 €', placeholder: true },
-    { jour: 'dimanche', texte: 'Fermé le dimanche. On se retrouve mardi soir.', prix: null, placeholder: false },
+        { jour: 'mardi', texte: 'Croquettes de jambon ibérique, six pièces', prix: '16 €', placeholder: false },
+    { jour: 'mercredi', texte: 'Calamars frits, sauce tartare, au milieu de la table', prix: '22 €', placeholder: false },
+    { jour: 'jeudi', texte: 'Poulpe rôti, niçoise de légumes, chorizo', prix: '34 €', placeholder: false },
+    { jour: 'vendredi', texte: 'Saint-Jacques snackées, fondue de poireaux, beurre blanc', prix: '23 €', placeholder: false },
+    { jour: 'samedi', texte: 'Filet pur de bœuf Holstein, béarnaise, pommes allumettes', prix: '45 €', placeholder: false },
   ],
   carte: [
     {
@@ -116,7 +112,7 @@ export const site: Restaurant = {
       service: 'midi',
       exemple: false,
       prix: '38 €',
-      note: 'Entrée, plat et dessert, uniquement le midi et pour la table entière. Composition au 21 octobre 2026 : elle change au fil des semaines.',
+      note: 'Entrée, plat et dessert, uniquement le midi et pour la table entière. Composition au 21 octobre 2026.',
       plats: [
         { nom: 'Comme une pomme de terre au foie gras', description: 'gel porto, oignons rouges', prix: null, placeholder: false },
         { nom: 'Raviole de champignons des bois', description: 'bouillon beurré de champignons au soja', prix: null, placeholder: false },
@@ -444,3 +440,6 @@ export const servicesTexte = () => {
   const plage = (j: string[]) => (j.length > 2 ? `du ${j[0]} au ${j[j.length - 1]}` : j.join(' et '));
   return `Le soir ${plage(soir)}, le midi ${plage(midi)}`;
 };
+
+/** « 18:30 » → « 18 h 30 », « 22:00 » → « 22 h » (espaces insécables). */
+export const fmtHeure = (s: string) => { const [h, m] = s.split(':'); return m === '00' ? `${Number(h)}\u00a0h` : `${Number(h)}\u00a0h\u00a0${m}`; };

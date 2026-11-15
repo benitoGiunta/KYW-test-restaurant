@@ -19,7 +19,19 @@ export function initScroll() {
     if (!lenis) addEventListener('scroll', nativeTick, { passive: true });
     return;
   }
-  lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, touchMultiplier: 1.2, anchors: true });
+  lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, touchMultiplier: 1.2 });
+  // Ancres internes : position recalculée au clic (après mise en place des pins), sans dépendre de l'option anchors.
+  document.addEventListener('click', (e) => {
+    const a = (e.target as HTMLElement | null)?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
+    const id = a?.getAttribute('href')?.slice(1);
+    const cible = id ? document.getElementById(id) : null;
+    if (!a || !cible || e.defaultPrevented || e.metaKey || e.ctrlKey) return;
+    e.preventDefault();
+    ScrollTrigger.refresh();
+    const y = cible.getBoundingClientRect().top + (lenis?.scroll ?? scrollY);
+    lenis?.scrollTo(y, { duration: 1.2, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+    history.replaceState(null, '', `#${id}`);
+  });
   lenis.on('scroll', (l: Lenis) => {
     state.y = l.scroll;
     state.velocity = l.velocity;

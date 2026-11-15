@@ -1,9 +1,9 @@
 ---
-// Accueil = l'ardoise. Pas de hero photo : nom en deux lignes, suggestion du jour, onglets midi / soir, lignes plat / prix.
+// Accueil = l'ardoise. Pas de hero photo : nom en deux lignes, plats à partager, onglets midi / soir, lignes plat / prix.
 // Nom et accroche sont peints au premier rendu (aucun data-intro) : le texte est l'élément LCP.
 import Base from '../layouts/Base.astro';
 import Ardoise from '../components/Ardoise.astro';
-import { site, photoDe, adresseLigne, horaireTexte, creneauService } from '../data/site';
+import { site, photoDe, adresseLigne, horaireTexte, creneauService, fmtHeure } from '../data/site';
 import { u, asset } from '../lib/url';
 const salle = photoDe('/photos/salle-claustra-table.webp');
 const trio = photoDe('/photos/facade-equipe.webp');
@@ -17,16 +17,15 @@ const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.g
       <a class="ardoise__lien" href={u('/formules/')}>Lunch et groupes <span aria-hidden="true">→</span></a>
 
       <div class="jour" data-jour={JSON.stringify(site.suggestions)} aria-live="polite">
-        <button class="jour__btn" type="button" data-dir="prev" aria-label="Jour précédent"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M11 3 5 9l6 6" /></svg></button>
+        <button class="jour__btn" type="button" data-dir="prev" aria-label="Plat précédent"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M11 3 5 9l6 6" /></svg></button>
         <div class="jour__texte">
-          <span class="petite-cap jour__label" data-jour-label>Suggestion du jour</span>
+          <span class="petite-cap jour__label" data-jour-label>À partager</span>
           <p class="jour__ligne" data-jour-ligne>
             <span data-jour-texte>{site.suggestions[0].texte}</span>
             <span class="jour__prix num" data-jour-prix>{site.suggestions[0].prix}</span>
-            <span class="ex" data-jour-marque>suggestion illustrative</span>
           </p>
         </div>
-        <button class="jour__btn" type="button" data-dir="next" aria-label="Jour suivant"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m7 3 6 6-6 6" /></svg></button>
+        <button class="jour__btn" type="button" data-dir="next" aria-label="Plat suivant"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m7 3 6 6-6 6" /></svg></button>
       </div>
 
       <Ardoise />
@@ -83,7 +82,7 @@ const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.g
         <h2 class="cap" id="maison-titre">Le bistro de Charles Jeandrain</h2>
         <p>{site.histoire[0]}</p>
         <p style="margin-top: var(--u)">{site.histoire[1]}</p>
-        <a class="lien" href={u('/histoire/')}>Toute l'histoire <span aria-hidden="true">→</span></a>
+        <a class="lien" href={u('/histoire/')}>Toute l’histoire <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -93,7 +92,6 @@ const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.g
       <div>
         <p class="petite-cap">Horaires</p>
         <h2 class="cap cat__titre" id="horaires-titre">Midi et soir</h2>
-        {site.horairesNote.placeholder && <p class="note-horaires"><span class="ex">à confirmer</span> {site.horairesNote.texte}</p>}
         <table class="horaires" style="margin-top: var(--u)">
           <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
           <tbody>
@@ -103,8 +101,8 @@ const carte = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.g
                 <tr data-jour-ligne-tab={h.jour}>
                   <td>{h.jour}</td>
                   {h.creneaux.length ? (<>
-                    <td class={midi ? undefined : 'ferme'}>{midi ? `${midi.ouverture} à ${midi.fermeture}` : 'fermé'}</td>
-                    <td class={soir ? undefined : 'ferme'}>{soir ? `${soir.ouverture} à ${soir.fermeture}` : 'fermé'}</td>
+                    <td class={midi ? undefined : 'ferme'}>{midi ? `${fmtHeure(midi.ouverture)} à ${fmtHeure(midi.fermeture)}` : 'fermé'}</td>
+                    <td class={soir ? undefined : 'ferme'}>{soir ? `${fmtHeure(soir.ouverture)} à ${fmtHeure(soir.fermeture)}` : 'fermé'}</td>
                   </>) : <td class="ferme" colspan="2">{h.note || 'fermé'}</td>}
                 </tr>
               );

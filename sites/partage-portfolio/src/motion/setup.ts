@@ -44,7 +44,7 @@ function signature(intro: gsap.core.Timeline) {
 
 /* ---------- Outils horaires (aucune date en dur : tout vient de data-horaires et de l'horloge du visiteur) ---------- */
 const minutes = (hhmm: string) => { const [h, m] = hhmm.split(':').map(Number); return h * 60 + m; };
-const hhmm = (s: string) => s.replace(':', 'h');
+const hhmm = (s: string) => { const [h, m] = s.split(':'); return m === '00' ? `${Number(h)}\u00a0h` : `${Number(h)}\u00a0h\u00a0${m}`; };
 function etatOuverture(horaires: Horaire[], now = new Date()) {
   const jourIdx = now.getDay();
   const t = now.getHours() * 60 + now.getMinutes();
@@ -91,17 +91,13 @@ function suggestion() {
   const label = root.querySelector<HTMLElement>('[data-jour-label]')!;
   const texte = root.querySelector<HTMLElement>('[data-jour-texte]')!;
   const prix = root.querySelector<HTMLElement>('[data-jour-prix]')!;
-  const marque = root.querySelector<HTMLElement>('[data-jour-marque]')!;
   const ligne = root.querySelector<HTMLElement>('[data-jour-ligne]')!;
-  let i = data.findIndex((d) => d.jour === JOURS[new Date().getDay()]);
-  if (i < 0) i = 0;
+  let i = 0;
   const reduced = prefersReducedMotion();
   let tl: gsap.core.Timeline | null = null;
   const ecrire = (d: (typeof data)[number], estAujourdhui: boolean) => {
-    label.textContent = estAujourdhui ? `Aujourd’hui, ${d.jour}` : d.jour[0].toUpperCase() + d.jour.slice(1);
     texte.innerHTML = d.texte.split(' ').map((m) => `<span class="mot">${m}</span>`).join(' ');
     prix.textContent = d.prix || '';
-    marque.hidden = !d.placeholder;
   };
   const aller = (n: number) => {
     i = (n + data.length) % data.length;
@@ -116,7 +112,7 @@ function suggestion() {
       .from(ligne.querySelectorAll('.mot'), { yPercent: 60, autoAlpha: 0, duration: 0.5, ease: ease.out, stagger: 0.08 })
       .from(prix, { autoAlpha: 0, duration: 0.4 }, '-=0.3');
   };
-  ecrire(data[i], true);
+  ecrire(data[i], false);
   const prev = root.querySelector<HTMLButtonElement>('[data-dir="prev"]');
   const next = root.querySelector<HTMLButtonElement>('[data-dir="next"]');
   const onPrev = () => aller(i - 1);

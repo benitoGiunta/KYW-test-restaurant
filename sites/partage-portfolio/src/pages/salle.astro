@@ -3,8 +3,8 @@
 import Base from '../layouts/Base.astro';
 import { site, photoDe } from '../data/site';
 import { asset, u } from '../lib/url';
-const premiere = photoDe('/photos/service-bouteille.webp');
-const galerie = ['/photos/salle-vue-large.webp', '/photos/salle-table-duo.webp', '/photos/table-citronnier.webp', '/photos/salle-signe.webp', '/photos/salle-claustra-logo.webp', '/photos/salle-suspensions.webp', '/photos/verres-table.webp', '/photos/salle-etagere.webp'].map(photoDe);
+const premiere = photoDe('/photos/salle-vue-large.webp');
+const galerie = ['/photos/service-bouteille.webp', '/photos/salle-table-duo.webp', '/photos/table-citronnier.webp', '/photos/salle-signe.webp', '/photos/salle-claustra-logo.webp', '/photos/salle-suspensions.webp', '/photos/verres-table.webp', '/photos/salle-etagere.webp'].map(photoDe);
 ---
 <Base title="La salle" theme="clair" preloadImage={{ href: premiere.src }} description={`La salle de Partage à ${site.adresse.commune} : briques crème, chêne blond, claustras ajourés et une trentaine de couverts dans le piétonnier.`}>
   <div class="clair" style="padding-bottom: calc(var(--u) * 6)">
@@ -19,7 +19,7 @@ const galerie = ['/photos/salle-vue-large.webp', '/photos/salle-table-duo.webp',
       {site.motsSalle.map((m) => <li>{m}</li>)}
     </ul>
     <section class="wrap section" aria-label="En images">
-      <div class="galerie">
+      <div class="galerie galerie--egale">
         {galerie.map((p, i) => (
           <figure data-reveal="clip" data-delay={String((i % 4) * 0.08)}>
             <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />

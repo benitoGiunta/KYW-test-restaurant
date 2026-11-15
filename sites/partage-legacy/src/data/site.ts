@@ -56,10 +56,10 @@ export interface Plat { nom: string; description: string | null; prix: string | 
 export interface Rubrique { categorie: string; plats: Plat[] }
 const carte = donnees.carte as Rubrique[];
 // Ligature œ (oeuf, boeuf) et apostrophe typographique ; ne s'applique qu'aux noms et descriptions, jamais aux chemins.
-const nettoie = (s: string) => s.replace(/\b([bB]?)oe/g, '$1œ').replace(/\bOe/g, 'Œ').replace(/(\w)'(\w)/g, '$1’$2');
+const nettoie = (s: string) => s.replace(/ \(sic\)/g, '').replace(/Méditerannée/g, 'Méditerranée').replace(/\b([bB]?)oe/g, '$1œ').replace(/\bOe/g, 'Œ').replace(/(\w)'(\w)/g, '$1’$2');
 const rub = (noms: string[]) => carte
   .filter((r) => noms.includes(r.categorie))
-  .map((r) => ({ categorie: r.categorie.replace(/ \(prix verre, bouteille\)/, ''), plats: r.plats.map((p) => ({ ...p, nom: nettoie(p.nom), description: p.description ? nettoie(p.description) : null })) }));
+  .map((r) => ({ categorie: r.categorie.replace(/ \(prix verre, bouteille\)/, '').replace(/^Starters$/, 'Pour commencer'), plats: r.plats.map((p) => ({ ...p, nom: nettoie(p.nom), description: p.description ? nettoie(p.description) : null })) }));
 
 export const carteCuisine = rub(['Starters', 'Entrées', 'Plats', 'Desserts']);
 export const carteVins = rub(['Vins au verre (prix verre, bouteille)', 'Apéritifs', 'Cocktails', 'Bières', 'Softs', 'Sans alcool', 'Jus artisanaux (33 cl)']);

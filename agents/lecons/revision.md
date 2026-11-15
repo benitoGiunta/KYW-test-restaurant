@@ -68,3 +68,6 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 - 2026-11-15 · atelier-de-bossime legacy : le scan des brouillons ne rend que les clés non vides (`{}` = 0) ; un formulaire sans backend se relie par mailto: généré en JS plutôt que d'afficher « pas encore relié ».
 - 2026-11-15 · atelier-de-bossime awwwards : un guillemet suspendu (text-indent négatif) dans un titre découpé en lignes (data-split) est rogné par le masque de la ligne ; préférer un padding-left court sans retrait négatif.
 - 2026-11-15 · atelier-de-bossime portfolio (correcteur) : retirer un portrait non prouvé de `equipe` retire aussi le doublon de photo ; le gabarit de loader garde MIN/MAX du moteur, les ramener à 0,35/0,9 s pour que is-loaded arrive sous 1,5 s.
+- 2026-11-15 · partage legacy : les panneaux d'onglets sont masqués (display:none), donc getBoundingClientRect y vaut 0 ; activer l'onglet avant de mesurer une grille de la carte.
+- 2026-11-15 · partage portfolio (correcteur) : un widget « suggestion du jour » dont l'attribution aux jours est inventée se retire en le rendant sans date ; vérifier data-jour dans dist.
+- 2026-11-15 : serve.mjs prend `--port N` (pas d'argument positionnel) ; Chromium Playwright : chercher `chrome` sous /opt/pw-browsers/chromium-*/chrome-linux64/.

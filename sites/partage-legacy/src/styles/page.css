@@ -208,7 +208,8 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); letter-spacing: 0
 .switcher--actif .panneau + .panneau { margin-top: 0; }
 .panneau__titre { margin-bottom: var(--space-xl); }
 .panneau__note { margin: calc(-1 * var(--space-md)) 0 var(--space-xl); font-size: var(--text-sm); color: var(--color-muted); }
-.rubriques { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2xl) var(--space-3xl); }
+.rubriques { columns: 2; column-gap: var(--space-3xl); }
+.rubriques > * { break-inside: avoid; margin-bottom: var(--space-2xl); }
 .rubrique__titre { margin-bottom: var(--space-sm); font-size: var(--text-xl); }
 .panneau__lunch { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 6fr); gap: var(--space-3xl); align-items: start; }
 .lunch-tete { display: grid; gap: var(--space-md); }
@@ -244,7 +245,7 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); letter-spacing: 0
   .intro__grille, .resa__grille, .infos__grille, .tete-page__grille, .table__grille, .panneau__lunch, .bons__grille, .cloture__grille { grid-template-columns: minmax(0, 1fr); gap: var(--space-2xl); }
   .table__grille { grid-template-areas: "tete" "rangs" "lunch"; }
   .intro__photo { max-width: 26rem; }
-  .rubriques { grid-template-columns: minmax(0, 1fr); }
+  .rubriques { columns: 1; }
   .accrochage { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg) var(--gap-columns); }
   .acc--a { grid-column: 1 / -1; grid-row: auto; }
   .acc--b, .acc--c, .acc--d, .acc--e { grid-column: auto; margin-top: 0; }
@@ -275,3 +276,7 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); letter-spacing: 0
   /* switcher: the chosen panel arrives, it does not jump */
   .switcher--actif .panneau:not([hidden]) { animation: lever var(--dur-short) var(--ease-out); }
 }
+
+/* correction 1 : créneaux sur une ligne */
+.horaires__table td { white-space: nowrap; }
+@media (max-width: 30rem) { .horaires__table th { width: auto; font-size: var(--text-base); } .horaires__table td { padding-right: var(--space-xs); font-size: var(--text-sm); } }

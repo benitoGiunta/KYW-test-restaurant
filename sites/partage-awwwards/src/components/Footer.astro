@@ -2,11 +2,12 @@
 import KywFooter from '@kyw/footer';
 import { u } from '../lib/url';
 import { site, horaires, services } from '../data/site';
+const { page = '' } = Astro.props;
 const midi = horaires.filter((h) => h.midi).map((h) => h.jour.toLowerCase());
 const soir = horaires.filter((h) => h.soir).map((h) => h.jour.toLowerCase());
 ---
 <footer class="pied table-grille">
-  <div class="pied__g">
+  {page !== 'reservation' ? <div class="pied__g">
     <p class="pied__titre">Venir</p>
     <address>
       {site.adresse.rue} {site.adresse.numero}<br />
@@ -14,7 +15,7 @@ const soir = horaires.filter((h) => h.soir).map((h) => h.jour.toLowerCase());
       <span class="pied__doux">Piétonnier, {site.adresse.repere}</span>
     </address>
     <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
-  </div>
+  </div> : <div class="pied__g"></div>}
   <div class="pied__milieu chemin">
     <a class="cta cta--chemin" href={u('/reservation/')}><span class="cta__txt">Réserver</span></a>
     <a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a>
@@ -23,7 +24,7 @@ const soir = horaires.filter((h) => h.soir).map((h) => h.jour.toLowerCase());
     <p class="pied__titre">Service</p>
     <p class="chiffres">Midi, {services.midi.lisible} : du {midi[0]} au {midi[midi.length - 1]}<br />
       Soir, {services.soir.lisible} : du {soir[0]} au {soir[soir.length - 1]}<br />
-      <span class="pied__doux">Fermé le dimanche et le lundi. Heures à confirmer par téléphone.</span></p>
+      <span class="pied__doux">Fermé le dimanche et le lundi.</span></p>
     <ul class="pied__reseaux">
       {site.reseaux.map((r) => <li><a class="lien" href={r.url} rel="noopener">{r.nom}</a></li>)}
     </ul>

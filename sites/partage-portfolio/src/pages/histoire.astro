@@ -22,26 +22,28 @@ const trio = photoDe('/photos/facade-equipe.webp');
   </section>
   <section class="section" aria-labelledby="equipe-titre">
     <div class="wrap">
-      <p class="petite-cap">L'équipe</p>
+      <p class="petite-cap">L’équipe</p>
       <h2 class="cap cat__titre" id="equipe-titre" data-split="words">En cuisine et en salle</h2>
-      <div class="galerie" style="margin-top: calc(var(--u) * 2); grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 40rem">
+      <div class="equipe-bloc">
+      <div class="galerie" style="grid-template-columns: repeat(2, minmax(0, 1fr))">
         {[charles, cuisinier].map((p) => (
           <figure data-reveal="clip" style="grid-row: auto; aspect-ratio: 3 / 4">
             <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
           </figure>
         ))}
       </div>
-      <ul class="equipe" style="margin-top: calc(var(--u) * 3)">
+      <ul class="equipe">
         {site.equipe.map((m) => (
           <li><span class="nom">{m.nom}</span><span class="muted">{m.role}</span>{m.rolePlaceholder && <span class="illu">rôle illustratif</span>}</li>
         ))}
       </ul>
+      </div>
     </div>
   </section>
   <section class="section" aria-labelledby="avis-titre">
     <div class="wrap">
       <p class="petite-cap">La presse et la note</p>
-      <h2 class="cap cat__titre" id="avis-titre">Ce qu'on en dit</h2>
+      <h2 class="cap cat__titre" id="avis-titre">Ce qu’on en dit</h2>
       <div style="margin-top: calc(var(--u) * 2)">
         {site.avis.map((a) => (
           <blockquote class="avis" data-reveal="fade">

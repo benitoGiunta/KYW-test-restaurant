@@ -5,7 +5,7 @@ import { lunch, euros } from '../data/site';
 import { cuisine, boissons } from '../data/carte';
 const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 const intro: Record<string, string> = {
-  Starters: 'Pour ouvrir, au milieu, avant même de choisir.',
+  'Pour commencer': 'Pour ouvrir, au milieu, avant même de choisir.',
   'Entrées': 'À partager à deux ou à quatre.',
   Plats: 'Le plat se coupe à table et fait le tour.',
   Desserts: 'Une cuillère chacun, ou deux.',
@@ -14,7 +14,7 @@ const moitie = Math.ceil(boissons.length / 2);
 const prixBoisson = (p: { prix?: number; bouteille?: number; prixTexte?: string }) =>
   p.prixTexte ?? (p.bouteille ? `${euros(p.prix!)} · ${euros(p.bouteille)}` : euros(p.prix!));
 ---
-<Base title="La carte" page="carte" description="La carte de Partage à Namur : starters, entrées, plats et desserts à partager, le lunch à 38 € du midi, vins au verre et boissons, avec tous les prix.">
+<Base title="La carte" page="carte" description="La carte de Partage à Namur : pour commencer, entrées, plats et desserts à partager, le lunch à 38 € du midi, vins au verre et boissons, avec tous les prix.">
   <section class="page-tete table-grille">
     <h1 class="display"><span class="g">La</span><span class="fente" aria-hidden="true"></span><span class="d">carte</span></h1>
     <div class="page-tete__g"><p class="chapo">Tout se commande pour la table. Les prix sont posés au milieu, comme les plats.</p></div>
