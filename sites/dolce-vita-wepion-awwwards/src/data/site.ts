@@ -3,9 +3,8 @@
 // Hypothèses (aucune question posée, décisions notées) :
 // - Réservation par téléphone uniquement (site client, /infos/) : pas de lien externe, `reservationUrl` = null.
 // - « Depuis 2017 » (site client) ; mois exact non confirmé, donc aucun mois affiché.
-// - Le nom de famille d'Armando (Resto.be, « à confirmer ») n'est pas affiché.
+// - Le nom de famille d'Armando (Resto.be, non confirmé) n'est pas affiché.
 // - Aucun avis, note, nombre d'avis ni distinction affichés (chiffres non vérifiés dans le dossier).
-// - La traduction française de la devise est une traduction KYW (marquée comme telle dans la page).
 // - Fermeture exceptionnelle du 26 au 29 octobre : passée à la date de la maquette, non affichée.
 // - GPS non géocodé : le plan est un lien de recherche Google Maps sur l'adresse.
 
@@ -73,7 +72,7 @@ export const equipe = [
 export const histoire = [
   'La Dolce Vita ouvre en 2017 au 1080 de la chaussée de Dinant, à Wépion. Une maison de ristorante et de pizzeria, sur place ou à emporter.',
   'Armando, passé par de belles tables italiennes à Bruxelles, tient la cuisine. Antigone imagine l’atmosphère : bois blond, mur olive, banquettes sombres, branches de cerisier en fleur. Sur le mur végétal, un néon écrit le nom de la maison.',
-  'Le tiramisu della casa, la crème brûlée, la mousse au chocolat et le nougat glacé sont maison. L’ardoise des suggestions, elle, change au fil du marché.',
+  'Le tiramisu della casa, la crème brûlée, la mousse au chocolat et le nougat glacé sont maison.',
 ];
 
 export const notesCarte = [

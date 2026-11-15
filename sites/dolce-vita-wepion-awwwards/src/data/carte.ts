@@ -13,7 +13,7 @@ export const carte: Categorie[] = [
    },
    {
     "nom": "Escalope Made in Belgium",
-    "description": "Esc. Panée, jambon, mozza., crème tomate et chicons",
+    "description": "Escalope panée, jambon, mozzarella, crème tomate et chicons",
     "prix": 28.0
    },
    {
