@@ -72,7 +72,7 @@ function heroIntro(intro: gsap.core.Timeline) {
   // La photo reste peinte sous le rideau (élément LCP) : elle se pose par un léger dézoom au lieu d'une découpe.
   if (media) tl.fromTo(media, { scale: 1.08 }, { scale: 1, duration: 1.6, ease: ease.out }, 0);
   if (nom.length) tl.fromTo(nom, { y: '0.18em', autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.5, ease: ease.out, stagger: 0.08 }, 0.35); // transform seulement : letter-spacing décalait la mise en page (CLS 0,11)
-  else if (titre.length) tl.fromTo(titre, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.1, ease: ease.out, stagger: 0.12 }, 0.5);
+  else if (titre.length) tl.fromTo(titre, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: ease.out, stagger: 0.08 }, 0.1);
   if (apres.length) tl.fromTo(apres, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: ease.out, stagger: 0.1 }, 0.9);
   intro.add(() => tl.play(), 0);
   return () => { tl.kill(); };
@@ -84,8 +84,7 @@ function ligneDeTemps() {
   if (!root) return () => {};
   const jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
   const tous = JSON.parse(root.dataset.maree || '[]') as { jour: string; debut: string; fin: string; nom: string; aConfirmer?: boolean }[];
-  const services = tous.filter((s) => !s.aConfirmer); // jours non confirmés : jamais « ouvert », jamais « fermé »
-  const aConfirmer = new Set(tous.filter((s) => s.aConfirmer).map((s) => s.jour));
+  const services = tous;
   const badge = root.querySelector<HTMLElement>('[data-maree-badge]');
   const min = (h: string) => parseInt(h.slice(0, 2)) * 60 + parseInt(h.slice(3));
   const update = () => {
@@ -96,8 +95,7 @@ function ligneDeTemps() {
     root.style.setProperty('--maintenant', pct.toFixed(2) + '%');
     root.querySelectorAll<HTMLElement>('[data-jour]').forEach((r) => r.classList.toggle('is-aujourdhui', r.dataset.jour === jour));
     const encours = services.find((s) => s.jour === jour && m >= min(s.debut) && m < min(s.fin));
-    if (badge && aConfirmer.has(jour)) badge.textContent = 'Aujourd’hui : horaires à confirmer par téléphone';
-    else if (badge) {
+    if (badge) {
       if (encours) badge.textContent = `Service du ${encours.nom} jusqu’à ${encours.fin.replace(':', 'h')} (horaires de saison)`;
       else {
         let prochain: typeof tous[number] | undefined;
@@ -107,7 +105,7 @@ function ligneDeTemps() {
           prochain = tous.find((s) => s.jour === j && (i > 0 || m < min(s.debut)));
           if (prochain) dans = i === 0 ? 'ce ' + prochain.nom : i === 1 ? 'demain' : j;
         }
-        badge.textContent = prochain ? `Prochain service ${dans} à ${prochain.debut.replace(':', 'h')}${prochain.aConfirmer ? ' (à confirmer)' : ''}` : 'Horaires à confirmer par téléphone';
+        badge.textContent = prochain ? `Prochain service ${dans} à ${prochain.debut.replace(':', 'h')}` : 'Horaires de saison ci-dessous';
       }
       badge.classList.toggle('is-ouvert', !!encours);
     }

@@ -33,20 +33,20 @@ const sole = photoDe('/photos/service-sole.webp');
         {carteSalle.map((cat) => (
           <div class="carte-cat">
             <div class="carte-cat__tete">
-              <h2>{cat.categorie}{cat.plats.every((p) => p.placeholder) ? <span class="badge badge--illustratif" style="margin-left: 0.75rem; vertical-align: middle">illustratif</span> : null}</h2>
+              <h2>{cat.categorie}</h2>
             </div>
             <ol class="index" data-reveal="up">
               {cat.plats.map((p, i) => (
                 <li>
                   <span class="index__num mono">{String(i + 1).padStart(2, '0')}</span>
                   <span class="index__nom">{p.nom}{p.description ? <span class="index__desc">{p.description}</span> : null}</span>
-                  <span class="index__prix">{p.prix ?? <span class="mono">{p.placeholder ? 'exemple' : ''}</span>}</span>
+                  <span class="index__prix">{p.prix}</span>
                 </li>
               ))}
             </ol>
           </div>
         ))}
-        <p class="muted" style="margin-top: calc(var(--u) * 3); max-width: 60ch">Les desserts et les vins ne sont pas publiés par la maison : les desserts ci-dessus sont des exemples. Allergènes : notre personnel est à votre disposition.</p>
+        <p class="muted" style="margin-top: calc(var(--u) * 3); max-width: 60ch">Allergènes : notre personnel est à votre disposition.</p>
         <div class="paire" style="margin-top: calc(var(--u) * 8)">
           <figure class="media" data-reveal="clip" data-cursor="Voir">
             <img src={asset(sole.src)} alt={sole.alt} width={sole.largeur} height={sole.hauteur} loading="lazy" decoding="async" />

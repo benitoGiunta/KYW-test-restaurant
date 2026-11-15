@@ -6,11 +6,10 @@ import { u, asset } from '../lib/url';
 const salle = photoDe('/photos/salle-panorama.webp');
 const etapes = [
   { quand: 'Le lieu', quoi: 'Au pied du pont du Luxembourg, sur les berges de la Meuse : de grandes baies vitrées et une grande terrasse au bord de l’eau.', aConfirmer: false },
-  { quand: 'Ouverture', quoi: 'Année d’ouverture à confirmer par la maison.', aConfirmer: true },
   { quand: '2026', quoi: 'La maison figure dans la sélection Belgique du Guide MICHELIN.', aConfirmer: false },
   { quand: 'Juillet 2026', quoi: 'Le chef de longue date part à la retraite ; Martin et Rémy reprennent la cuisine.', aConfirmer: false },
 ];
-const galerie = ['/photos/bar.webp', '/photos/cave-a-vins.webp', '/photos/deco-machine-a-ecrire.webp'].map(photoDe);
+const galerie = ['/photos/bar.webp', '/photos/cave-a-vins.webp', '/photos/salle-cuisine-ouverte.webp'].map(photoDe);
 ---
 <Base title="La maison" description={`${site.nom} à Namur : une brasserie au pied du pont du Luxembourg, Martin et Rémy en cuisine depuis juillet 2026, avec Pierre-Alexandre et son équipe.`}>
   <section class="hero hero--texte" aria-labelledby="t-histoire">
@@ -42,7 +41,7 @@ const galerie = ['/photos/bar.webp', '/photos/cave-a-vins.webp', '/photos/deco-m
         <h2 id="t-chrono" style="font-size: var(--t-l); font-weight: 500">Quatre repères</h2>
       </div>
       <ol class="chrono col-large" data-reveal="up">
-        {etapes.map((e) => <li><span class="mono muted">{e.quand}{e.aConfirmer ? ' (à confirmer)' : ''}</span><span>{e.quoi}</span></li>)}
+        {etapes.map((e) => <li><span class="mono muted">{e.quand}</span><span>{e.quoi}</span></li>)}
       </ol>
     </div>
   </section>

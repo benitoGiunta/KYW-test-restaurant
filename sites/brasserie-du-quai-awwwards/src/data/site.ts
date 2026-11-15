@@ -68,7 +68,6 @@ export const classiques = [
 
 export const equipe = [
   { nom: 'Martin et Rémy', role: 'En cuisine depuis juillet 2026, après la retraite du chef de longue date.' },
-  { nom: 'Pierre-Alexandre', role: 'Avec son équipe.' },
 ];
 
 export const histoire = [

@@ -6,7 +6,7 @@ export type Jour = 'lundi' | 'mardi' | 'mercredi' | 'jeudi' | 'vendredi' | 'same
 
 export interface Creneau { ouverture: string; fermeture: string } // 'HH:MM'
 export interface Horaire { jour: Jour; creneaux: Creneau[]; note?: string; aConfirmer?: boolean } // creneaux vide = fermé ; aConfirmer : jour d'ouverture non prouvé par le dossier
-export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean } // prix déjà formaté ('20 €', 'prix du jour')
+export interface Plat { nom: string; description: string; prix: string | null; placeholder: boolean } // prix déjà formaté ('20 €', 'prix du jour')
 export interface Categorie { categorie: string; plats: Plat[] }
 export interface Menu { nom: string; prix: string; description: string; placeholder: boolean }
 export interface Membre { nom: string; role: string; photo?: string; placeholder: boolean }
@@ -59,12 +59,9 @@ export const site: Restaurant = {
   reservation: { outil: 'la page Réservation de la maison', url: 'https://www.brasserieduquai.be/reservation/' },
   horaires: [
     { jour: 'lundi', creneaux: saison },
-    { jour: 'mardi', creneaux: saison, aConfirmer: true },
-    { jour: 'mercredi', creneaux: saison, aConfirmer: true },
     { jour: 'jeudi', creneaux: saison },
     { jour: 'vendredi', creneaux: saison },
     { jour: 'samedi', creneaux: saison },
-    { jour: 'dimanche', creneaux: saison, aConfirmer: true },
   ],
   reseaux: [
     { nom: 'Instagram', url: 'https://www.instagram.com/brasserieduquai/' },
@@ -77,13 +74,13 @@ export const site: Restaurant = {
       {
         "nom": "Tartare de saumon, crème au raifort et caviar de hareng",
         "description": "",
-        "prix": "20 €",
+        "prix": "20 €",
         "placeholder": false
       },
       {
         "nom": "Carpaccio de contrefilet Wagyu, sel de Guérande fumé",
         "description": "",
-        "prix": "22 €",
+        "prix": "22 €",
         "placeholder": false
       },
       {
@@ -95,37 +92,37 @@ export const site: Restaurant = {
       {
         "nom": "Notre assiette de saumon norvégien « Maison Dawagne »",
         "description": "",
-        "prix": "24 €",
+        "prix": "24 €",
         "placeholder": false
       },
       {
         "nom": "Croquettes de crevettes grises « maison »",
-        "description": "1 pièce 11,00 € · 2 pièces 22,00 €",
-        "prix": "11 / 22 €",
+        "description": "1 pièce 11,00 € · 2 pièces 22,00 €",
+        "prix": "11 / 22 €",
         "placeholder": false
       },
       {
         "nom": "Fondus au parmesan « maison »",
-        "description": "1 pièce 9,00 € · 2 pièces 18,00 €",
-        "prix": "9 / 18 €",
+        "description": "1 pièce 9,00 € · 2 pièces 18,00 €",
+        "prix": "9 / 18 €",
         "placeholder": false
       },
       {
         "nom": "Mix croquettes au parmesan et crevettes grises",
         "description": "",
-        "prix": "20 €",
+        "prix": "20 €",
         "placeholder": false
       },
       {
         "nom": "Bisque de homard en cappuccino aux arômes de café torréfié",
         "description": "",
-        "prix": "19 €",
+        "prix": "19 €",
         "placeholder": false
       },
       {
         "nom": "Petits gris de Warnant, champignons d’ici et d’ailleurs, écume à la houppe",
         "description": "",
-        "prix": "24 €",
+        "prix": "24 €",
         "placeholder": false
       }
     ]
@@ -134,13 +131,13 @@ export const site: Restaurant = {
     "categorie": "Les plats : poissons",
     "plats": [
       {
-        "nom": "Tomates aux crevettes grises épluchées main, pommes frites (2 pièces)",
+        "nom": "Tomates aux crevettes grises épluchées main, pommes frites (2 pièces)",
         "description": "",
         "prix": "prix du jour",
         "placeholder": false
       },
       {
-        "nom": "Salade de crevettes grises, frites (2 pièces)",
+        "nom": "Salade de crevettes grises, frites (2 pièces)",
         "description": "",
         "prix": "prix du jour",
         "placeholder": false
@@ -154,19 +151,19 @@ export const site: Restaurant = {
       {
         "nom": "Dos de saumon snacké et crevettes royales",
         "description": "nage de curry thaï et yuzu",
-        "prix": "30 €",
+        "prix": "30 €",
         "placeholder": false
       },
       {
         "nom": "Fish & chips de cabillaud",
         "description": "salade composée, sauce tartare, frites",
-        "prix": "28 €",
+        "prix": "28 €",
         "placeholder": false
       },
       {
         "nom": "Cœur de cabillaud vapeur",
         "description": "lit de poireaux, sauce mousseline, purée de pomme de terre",
-        "prix": "34 €",
+        "prix": "34 €",
         "placeholder": false
       }
     ]
@@ -177,49 +174,49 @@ export const site: Restaurant = {
       {
         "nom": "Américain préparé haché minute",
         "description": "salade composée, frites",
-        "prix": "26 €",
+        "prix": "26 €",
         "placeholder": false
       },
       {
         "nom": "Tartare de bœuf haché minute préparé par vos soins",
         "description": "salade composée, frites",
-        "prix": "26 €",
+        "prix": "26 €",
         "placeholder": false
       },
       {
         "nom": "Pavé de bœuf grillé",
         "description": "salade composée, frites, sauce au choix",
-        "prix": "32 €",
+        "prix": "32 €",
         "placeholder": false
       },
       {
         "nom": "Contrefilet « Holstein »",
         "description": "salade composée, frites, sauce au choix",
-        "prix": "39 €",
+        "prix": "39 €",
         "placeholder": false
       },
       {
         "nom": "Notre vol-au-vent revisité",
         "description": "croustade au beurre, frites",
-        "prix": "28 €",
+        "prix": "28 €",
         "placeholder": false
       },
       {
         "nom": "Notre vol-au-vent « Royal » (truffe et ris de veau)",
         "description": "croustade au beurre, frites",
-        "prix": "34 €",
+        "prix": "34 €",
         "placeholder": false
       },
       {
         "nom": "Rognons de veau à la dijonnaise",
         "description": "pommes de terre rissolées",
-        "prix": "27 €",
+        "prix": "27 €",
         "placeholder": false
       },
       {
         "nom": "Ris de veau braisé",
         "description": "champignons des bois et crème de morilles, croquettes de pommes de terre",
-        "prix": "42 €",
+        "prix": "42 €",
         "placeholder": false
       }
     ]
@@ -230,7 +227,7 @@ export const site: Restaurant = {
       {
         "nom": "Tortellini à la ricotta et truffe",
         "description": "crème de champignons truffés",
-        "prix": "25 €",
+        "prix": "25 €",
         "placeholder": false
       }
     ]
@@ -241,37 +238,37 @@ export const site: Restaurant = {
       {
         "nom": "Beurre maître d’hôtel",
         "description": "",
-        "prix": "3 €",
+        "prix": "3 €",
         "placeholder": false
       },
       {
         "nom": "Nos sauces (poivre vert crème, archiduc, dijonnaise, béarnaise ou choron)",
         "description": "",
-        "prix": "4,50 €",
+        "prix": "4,50 €",
         "placeholder": false
       },
       {
         "nom": "Supplément mayonnaise maison",
         "description": "",
-        "prix": "2 €",
+        "prix": "2 €",
         "placeholder": false
       },
       {
         "nom": "Salade laitue, salade tomates ou salade mixte",
         "description": "",
-        "prix": "7 €",
+        "prix": "7 €",
         "placeholder": false
       },
       {
         "nom": "Supplément frites, purée ou croquettes",
         "description": "",
-        "prix": "3,50 €",
+        "prix": "3,50 €",
         "placeholder": false
       },
       {
         "nom": "Bouquetière de légumes",
         "description": "",
-        "prix": "10 €",
+        "prix": "10 €",
         "placeholder": false
       }
     ]
@@ -282,43 +279,20 @@ export const site: Restaurant = {
       {
         "nom": "Mini steak grillé",
         "description": "frites ou purée",
-        "prix": "14 €",
+        "prix": "14 €",
         "placeholder": false
       },
       {
         "nom": "Mini américain préparé",
         "description": "frites ou purée",
-        "prix": "14 €",
+        "prix": "14 €",
         "placeholder": false
       },
       {
         "nom": "Fish & chips de cabillaud",
         "description": "frites ou purée",
-        "prix": "14 €",
+        "prix": "14 €",
         "placeholder": false
-      }
-    ]
-  },
-  {
-    "categorie": "Desserts",
-    "plats": [
-      {
-        "nom": "Dame blanche",
-        "description": "",
-        "prix": null,
-        "placeholder": true
-      },
-      {
-        "nom": "Crème brûlée à la vanille",
-        "description": "",
-        "prix": null,
-        "placeholder": true
-      },
-      {
-        "nom": "Café gourmand",
-        "description": "",
-        "prix": null,
-        "placeholder": true
       }
     ]
   },
@@ -327,20 +301,20 @@ export const site: Restaurant = {
     "plats": [
       {
         "nom": "Les Normandes n°4",
-        "description": "6 pièces 15,00 € · 12 pièces 30,00 €",
-        "prix": "15 / 30 €",
+        "description": "6 pièces 15,00 € · 12 pièces 30,00 €",
+        "prix": "15 / 30 €",
         "placeholder": false
       },
       {
         "nom": "Les Fines de Claire n°3",
-        "description": "6 pièces 19,20 € · 12 pièces 38,40 €",
-        "prix": "19,20 / 38,40 €",
+        "description": "6 pièces 19,20 € · 12 pièces 38,40 €",
+        "prix": "19,20 / 38,40 €",
         "placeholder": false
       },
       {
         "nom": "Les Gillardeaux n°4",
-        "description": "6 pièces 27,60 € · 12 pièces 55,20 €",
-        "prix": "27,60 / 55,20 €",
+        "description": "6 pièces 27,60 € · 12 pièces 55,20 €",
+        "prix": "27,60 / 55,20 €",
         "placeholder": false
       }
     ]
@@ -369,25 +343,25 @@ export const site: Restaurant = {
       {
         "nom": "Le bol de bulots",
         "description": "",
-        "prix": "13 €",
+        "prix": "13 €",
         "placeholder": false
       },
       {
         "nom": "Le bol de bigorneaux jumbo",
         "description": "",
-        "prix": "14 €",
+        "prix": "14 €",
         "placeholder": false
       },
       {
         "nom": "Le bol de crevettes grises de la mer du Nord à éplucher",
         "description": "",
-        "prix": "16 €",
+        "prix": "16 €",
         "placeholder": false
       },
       {
         "nom": "Les crevettes « Bouquet Royal » (la pièce)",
         "description": "",
-        "prix": "3,50 €",
+        "prix": "3,50 €",
         "placeholder": false
       }
     ]
@@ -398,37 +372,37 @@ export const site: Restaurant = {
       {
         "nom": "L’assiette de l’écailler (1 pers.)",
         "description": "3 Fines de Claire, 3 Normandes, 3 Gillardeaux, 3 Plates (en saison) ou découverte du moment",
-        "prix": "45 €",
+        "prix": "45 €",
         "placeholder": false
       },
       {
         "nom": "L’assiette du Quai (1 pers.)",
         "description": "4 Fines de Claire, 3 Normandes, 3 crevettes Bouquet Royal, bulots, bigorneaux",
-        "prix": "45 €",
+        "prix": "45 €",
         "placeholder": false
       },
       {
         "nom": "Le Trésor du Quai (1 pers.)",
         "description": "4 Fines de Claire, 4 Normandes, 1/2 homard, 2 langoustines, 4 Bouquet Royal, bulots, bigorneaux, crevettes grises non épluchées",
-        "prix": "88 €",
+        "prix": "88 €",
         "placeholder": false
       },
       {
         "nom": "Le Spécial Crustacés (2 pers.)",
         "description": "2 x 1/2 homard, 4 langoustines, 1 tourteau, 6 Bouquet Royal, crevettes grises non épluchées",
-        "prix": "145 €",
+        "prix": "145 €",
         "placeholder": false
       },
       {
         "nom": "Le Plateau du Quai (2 pers.)",
         "description": "8 Normandes, 4 Fines de Claire, 2 x 1/2 homard, 4 langoustines, 6 Bouquet Royal, bulots, bigorneaux, crevettes grises non épluchées",
-        "prix": "165 €",
+        "prix": "165 €",
         "placeholder": false
       },
       {
         "nom": "Le Royal du Quai (2 pers.)",
         "description": "8 Normandes, 12 Fines de Claire, 1 tourteau, 2 x 1/2 homard, 4 langoustines, 4 Bouquet Royal, bulots, bigorneaux, crevettes grises non épluchées",
-        "prix": "195 €",
+        "prix": "195 €",
         "placeholder": false
       }
     ]
@@ -511,13 +485,13 @@ export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adre
 
 /** Horaires lisibles : '12:00 à 14:00, 19:00 à 21:00' ou la note. */
 export const horaireTexte = (h: Horaire) =>
-  (h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé') + (h.aConfirmer ? ' (jour à confirmer)' : '');
+  (h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé');
 
 /** Jours aux horaires identiques regroupés (« lundi, jeudi à samedi ») : évite sept lignes presque identiques. */
 export const horairesGroupes = (r: Restaurant = site) => {
   const groupes: { idx: number[]; texte: string }[] = [];
   r.horaires.forEach((h, i) => {
-    const texte = horaireTexte(h).replace(' (jour à confirmer)', ' (jours à confirmer)');
+    const texte = horaireTexte(h);
     const g = groupes.find((x) => x.texte === texte);
     g ? g.idx.push(i) : groupes.push({ idx: [i], texte });
   });
@@ -529,7 +503,6 @@ export const horairesGroupes = (r: Restaurant = site) => {
       plages.push(j - k >= 2 ? `${a} à ${b}` : j > k ? `${a}, ${b}` : a);
       k = j + 1;
     }
-    if (idx.length === 1) texte = texte.replace('(jours à confirmer)', '(jour à confirmer)');
     return { jours: plages.join(', '), texte };
   });
 };
@@ -558,15 +531,13 @@ export const carteSalle = site.carte.filter((c) => !c.categorie.startsWith('Banc
 /** Les huîtres, en liste « arrivages » (réelles, prix de la carte). */
 export const arrivages: Arrivage[] = (ecailler[0]?.plats ?? []).map((p) => ({ nom: p.nom, detail: p.description, prix: p.prix ?? '', placeholder: p.placeholder }));
 
-/** Règles maison : faits du dossier ; les deux dernières viennent de Gault&Millau, à confirmer. */
+/** Règles maison : faits du dossier . */
 export const regles: Regle[] = [
   { texte: 'Banc d’écailler du jeudi au lundi inclus', placeholder: false },
   { texte: 'Terrasse chauffée, à l’abri du vent', placeholder: false },
   { texte: 'Frites cuites à la graisse de bœuf', placeholder: false },
   { texte: 'Allergènes : demandez à notre personnel', placeholder: false },
   { texte: 'Plats pour les enfants', placeholder: false },
-  { texte: 'Animaux admis', placeholder: true },
-  { texte: 'Plats à emporter', placeholder: true },
 ];
 
 /** Plan schématique : la Meuse, le pont du Luxembourg et les berges sont cités par le site ; tracé non à l'échelle,

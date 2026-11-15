@@ -264,29 +264,6 @@ export const carte: Categorie[] = [
     ]
   },
   {
-    "id": "desserts",
-    "titre": "Desserts",
-    "rive": "quai",
-    "placeholder": true,
-    "plats": [
-      {
-        "nom": "Dame blanche, chocolat chaud",
-        "prix": null,
-        "placeholder": true
-      },
-      {
-        "nom": "Crème brûlée à la vanille",
-        "prix": null,
-        "placeholder": true
-      },
-      {
-        "nom": "Café gourmand",
-        "prix": null,
-        "placeholder": true
-      }
-    ]
-  },
-  {
     "id": "huitres",
     "titre": "Huîtres",
     "rive": "eau",
@@ -393,28 +370,28 @@ export const carte: Categorie[] = [
         "prix": [
           88
         ],
-        "detail": "4 Fines de Claire, 4 Normandes, 1/2 homard, 2 langoustines, 4 Bouquet Royal, bulots, bigorneaux, crevettes grises non épluchées"
+        "detail": "4 Fines de Claire, 4 Normandes, ½ homard, 2 langoustines, 4 Bouquet Royal, bulots, bigorneaux, crevettes grises non épluchées"
       },
       {
         "nom": "Le Spécial Crustacés (2 pers.)",
         "prix": [
           145
         ],
-        "detail": "2 x 1/2 homard, 4 langoustines, 1 tourteau, 6 Bouquet Royal, crevettes grises non épluchées"
+        "detail": "2 × ½ homard, 4 langoustines, 1 tourteau, 6 Bouquet Royal, crevettes grises non épluchées"
       },
       {
         "nom": "Le Plateau du Quai (2 pers.)",
         "prix": [
           165
         ],
-        "detail": "8 Normandes, 4 Fines de Claire, 2 x 1/2 homard, 4 langoustines, 6 Bouquet Royal, bulots, bigorneaux, crevettes grises non épluchées"
+        "detail": "8 Normandes, 4 Fines de Claire, 2 × ½ homard, 4 langoustines, 6 Bouquet Royal, bulots, bigorneaux, crevettes grises non épluchées"
       },
       {
         "nom": "Le Royal du Quai (2 pers.)",
         "prix": [
           195
         ],
-        "detail": "8 Normandes, 12 Fines de Claire, 1 tourteau, 2 x 1/2 homard, 4 langoustines, 4 Bouquet Royal, bulots, bigorneaux, crevettes grises non épluchées"
+        "detail": "8 Normandes, 12 Fines de Claire, 1 tourteau, 2 × ½ homard, 4 langoustines, 4 Bouquet Royal, bulots, bigorneaux, crevettes grises non épluchées"
       }
     ]
   }

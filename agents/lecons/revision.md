@@ -62,3 +62,6 @@ Nouvelle leçon : une ligne datée à la fin de ce fichier.
 
 - Piège : un `style="grid-column: …"` en attribut écrase la règle mobile de la feuille ; utiliser des classes modificatrices déclarées dans le bloc desktop. Mesurer la largeur de `.paire__texte` à 390 px.
 - Mesure de débordement des titres : utiliser une tolérance de 2 px (arrondis sous-pixel), et couvrir 1024-1280 en plus des largeurs mobiles ; serve.mjs prend `--port N`, et Playwright se lance avec executablePath /opt/pw-browsers/chromium + --no-sandbox.
+- 2026-11-15 : un « fait absent » rendu en slot .fill (jour de fermeture) compte comme brouillon pour le scan ; le retirer plutôt que l'étiqueter (brasserie-du-quai/legacy).
+- 15/11/2026 (correcteur-site) : un « à confirmer » dont la valeur n'a aucune source (jours de fermeture) se retire à la source (donnée + pied + réservation) ; garder l'étiquette ferait repasser le scan.
+- 15/11/2026 (correcteur-site) : un « à confirmer » vient souvent d'un drapeau de données (aConfirmer, placeholder) lu à plusieurs endroits (ligne de temps, badge JS, schéma) ; retirer le drapeau à la source, puis grepper le script de badge et le scan dist.
