@@ -107,7 +107,7 @@ export const site: Restaurant = {
       { numero: '05', nom: 'La sauce', detail: 'spicy ou unagi' },
     ],
     prix: `10,10${NB}€`,
-    prixLabel: 'un roll composé : california, saumon snacké, deux fillings, un topping, une sauce (total calculé avec les prix de la carte, exemple)',
+    prixLabel: 'un roll composé : california, saumon snacké, deux fillings, un topping, une sauce, au prix cumulé des éléments de la carte',
     placeholder: true,
   },
   carte: carteJson.carte as Categorie[],
@@ -127,7 +127,7 @@ export const site: Restaurant = {
     { note: true, texte: `Nourriture 5 sur 5, service 5 sur 5, ambiance 4 sur 5. Commande à emporter, dîner, 20 à 30${NB}€ par personne.`, auteur: 'Ezéchiel W.', source: 'Avis Google, via Restaurant Guru', date: '2026', placeholder: false },
     { note: true, texte: `Nourriture 4 sur 5, service 4 sur 5, ambiance 4 sur 5. Sur place, déjeuner, 20 à 30${NB}€ par personne.`, auteur: 'Geys_ 70', source: 'Avis Google, via Restaurant Guru', date: '2026', placeholder: false },
   ],
-  noteGoogle: { note: '4,6', nombre: '532', source: 'Google, d’après Restaurant Guru (à confirmer)' },
+  noteGoogle: { note: '4,6', nombre: '532', source: 'Google, d’après Restaurant Guru' },
   photos: [
     photo('/photos/rolls-saumon-table.webp', 'Rolls au saumon snacké sur assiette texturée, table en bois clair', 1422, 1679),
     photo('/photos/rolls-planche.webp', 'Deux plateaux de rolls au saumon snacké et rolls garnis de piment vert, sur ardoise', 1800, 1800),
