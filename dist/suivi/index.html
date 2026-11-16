@@ -87,13 +87,43 @@ footer{color:var(--muted);font-size:.8rem;margin-top:2rem}
 .pc-site:last-child{padding-bottom:.45rem}
 .pc-tip{position:fixed;z-index:10;pointer-events:none;background:var(--fg);color:var(--bg);font-size:.78rem;padding:.35rem .6rem;border-radius:6px;max-width:20rem;white-space:pre-line}
 .pc-note{color:var(--muted);font-size:.78rem;margin-top:1rem}
+
+.cx-dev{--c:var(--s-dev);background:var(--s-dev)}.cx-dbg{--c:var(--s-debug);background:var(--s-debug)}
+.pc-legende i.cx-dev,.pc-legende i.cx-dbg{width:.8em;height:.8em}
+.cx-grille{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.3rem .8rem .5rem}
+.cx-l{display:grid;grid-template-columns:minmax(9rem,14rem) 1fr minmax(9rem,12rem);gap:.75rem;align-items:center;padding:.3rem 0}
+.cx-r{border-top:1px solid var(--line)}.cx-r:first-child{border-top:0}
+.cx-r>summary{list-style:none;cursor:pointer}.cx-r>summary::-webkit-details-marker{display:none}.cx-r>summary:hover{background:var(--bg)}
+.cx-nom{display:flex;align-items:baseline;gap:.45rem;font-size:.88rem;min-width:0}
+.cx-r>summary .cx-nom::before{content:"▸";color:var(--muted);font-size:.7rem}.cx-r[open]>summary .cx-nom::before{content:"▾"}
+.cx-site .cx-nom{padding-left:2.2rem;font-size:.8rem;color:var(--muted)}
+.cx-track{display:flex;gap:2px;height:14px;min-width:0}
+.cx-s{display:block;height:100%;flex-grow:0;flex-shrink:0;min-width:2px}
+.cx-s:first-child{border-radius:4px 0 0 4px}.cx-s:last-child{border-radius:0 4px 4px 0}.cx-s:only-child{border-radius:4px}
+.cx-site .cx-track{height:9px}
+.cx-s:hover,.cx-s:focus-visible{outline:2px solid var(--fg);outline-offset:1px}
+.cx-val{font-size:.78rem;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}.cx-val small{font-size:.7rem}
+.cx-unite{margin:0 0 1rem}
+.cx-fig{margin:0 0 1.25rem;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem}
+.cx-fig figcaption{display:flex;flex-wrap:wrap;gap:.2rem .75rem;align-items:baseline;margin-bottom:.6rem}.cx-fig figcaption small{color:var(--muted);font-size:.78rem}
+.cx-cols{display:flex;align-items:flex-end;gap:6px;height:190px;padding-top:1.2rem}
+.cx-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;height:100%;position:relative;min-width:0;cursor:default}
+.cx-col i{display:block;width:100%;min-height:2px}.cx-col i:first-of-type{border-radius:4px 4px 0 0}
+.cx-col i+i{margin-top:2px}
+.cx-col .cx-dbg+.cx-dev{border-radius:0}
+.cx-v{font-size:.68rem;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap;margin-bottom:2px}
+.cx-x{font-size:.7rem;color:var(--muted);text-align:center;margin-top:4px;line-height:1.1}.cx-x small{font-size:.62rem}
+.cx-col:hover i,.cx-col:focus-visible i{filter:brightness(1.1)}.cx-col:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.cx-cols-20{gap:3px}.cx-cols-20 .cx-v{font-size:.6rem}
+.cx-duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+@media (max-width:720px){.cx-l{grid-template-columns:1fr}.cx-val{text-align:left}.cx-cols-20 .cx-v{display:none}}
 @media (max-width:640px){.etape{grid-template-columns:1.6rem 1fr}.etape .pct{grid-column:2;text-align:left}}
 </style>
 </head><body><div class="wrap">
 <h1>Suivi du projet KYW Restaurants</h1>
-<p class="sub">Refonte de 20 restaurants namurois en 3 variantes. Mis à jour le 2026-11-16 21:07 UTC depuis l'état du dépôt. </p>
+<p class="sub">Refonte de 20 restaurants namurois en 3 variantes. Mis à jour le 2026-11-16 22:27 UTC depuis l'état du dépôt. </p>
 <ul class="liens"><li>Index des restaurants : <a href="https://kyw-test-restaurant.vercel.app/">https://kyw-test-restaurant.vercel.app/</a></li><li>Galerie des gabarits : <a href="https://kyw-test-restaurant.vercel.app/gabarits/">https://kyw-test-restaurant.vercel.app/gabarits/</a></li><li>Cette page sur Vercel : <a href="https://kyw-test-restaurant.vercel.app/suivi/">https://kyw-test-restaurant.vercel.app/suivi/</a></li><li>Consommation de jetons : <a href="https://claude.ai/artifact/39eBZZyjPAnwQfhAAx2Bxq">https://claude.ai/artifact/39eBZZyjPAnwQfhAAx2Bxq</a></li></ul>
-<div class="onglets" role="tablist" aria-label="Vues du suivi"><button role="tab" aria-selected="true" data-onglet="avancement">Avancement</button><button role="tab" aria-selected="false" data-onglet="parcours">Parcours : dev et débug</button></div>
+<div class="onglets" role="tablist" aria-label="Vues du suivi"><button role="tab" aria-selected="true" data-onglet="avancement">Avancement</button><button role="tab" aria-selected="false" data-onglet="parcours">Parcours : dev et débug</button><button role="tab" aria-selected="false" data-onglet="couts">Coûts</button></div>
 <div data-panneau="avancement">
 <div class="synthese">
 <div class="tuile"><b>100 %</b><span>avancement global (moyenne des 9 étapes)</span></div>
@@ -1681,8 +1711,274 @@ Approche 4 : q.sh et marqueur imposés par hook, captures par page avec couvertu
 0 corrigé" tabindex="0"><b>4</b></span><span class="pc-c pc-debug fait" data-tip="Republication
 Corrections en ligne · libellés de brouillon 0 → 0" tabindex="0"></span><span class="pc-etat">0/0</span></div></details>
 </div>
-<div class="pc-tip" role="tooltip" hidden></div>
 <p class="pc-note">Clique sur un restaurant pour voir ses 3 sites. Survole une case pour le détail de l'étape et ce que l'approche a changé. Pas de chiffre = approche 1. Développement : 6 approches successives (point de départ, méthode sobre, tests A à I, hook de lecture). Débogage : approche 1 pour les restaurants 1 à 4, approche 2 pour 5 à 8, approche 3 pour 9 à 13, approche 4 pour 14 à 20 (et la reprise de Ferme Blanche legacy).</p></div>
+<div data-panneau="couts" hidden>
+<div class="synthese">
+<div class="tuile"><b>481 $</b><span>développement des 20 restaurants (60 sites, hors gabarits du portfolio) · 8,02 $ par site</span></div>
+<div class="tuile"><b>22 $</b><span>correction (identification + rectification) · 0,37 $ par site</span></div>
+<div class="tuile"><b>20,38 $ → 6,13 $</b><span>dev par site, approche 1 → 6</span></div>
+<div class="tuile"><b>1,17 $ → 0,14 $</b><span>correction par site, approche 1 → 4</span></div>
+</div>
+<p class="pc-note">Estimation du prix d'une limite hebdomadaire en cours de calcul.</p>
+<h2>Coût par restaurant</h2>
+<p class="pc-legende"><span><i class="cx-dev"></i>développement</span><span><i class="cx-dbg"></i>correction</span><span class="pc-sep">Clique sur un restaurant pour ses 3 sites ; survole une barre pour le montant.</span></p>
+<div class="cx-grille"><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">1</span><b>Les Potes au Feu</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:84.09199172411314%" data-tip="Les Potes au Feu
+Développement : 57,59 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:5.011965495534723%" data-tip="Les Potes au Feu
+Correction : 3,43 $" tabindex="0"></i></span><span class="cx-val">57,59 $ <small>dev</small> · 3,43 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:109.77662680706419%" data-tip="Les Potes au Feu · Portfolio
+Développement : 25,06 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:6.5299103447853115%" data-tip="Les Potes au Feu · Portfolio
+Correction : 1,49 $" tabindex="0"></i></span><span class="cx-val">25,06 $ · 1,49 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:60.802058263449744%" data-tip="Les Potes au Feu · Awwwards
+Développement : 13,88 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:4.137840411969523%" data-tip="Les Potes au Feu · Awwwards
+Correction : 0,94 $" tabindex="0"></i></span><span class="cx-val">13,88 $ · 0,94 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:81.6972901018255%" data-tip="Les Potes au Feu · Inspi legacy
+Développement : 18,65 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:4.368145729849332%" data-tip="Les Potes au Feu · Inspi legacy
+Correction : 1,00 $" tabindex="0"></i></span><span class="cx-val">18,65 $ · 1,00 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">2</span><b>L'Atelier de Bossimé</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:94.48850120623999%" data-tip="L'Atelier de Bossimé
+Développement : 64,71 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:5.511498793760008%" data-tip="L'Atelier de Bossimé
+Correction : 3,77 $" tabindex="0"></i></span><span class="cx-val">64,71 $ <small>dev</small> · 3,77 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:89.18803359105453%" data-tip="L'Atelier de Bossimé · Portfolio
+Développement : 20,36 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:6.6583402370460805%" data-tip="L'Atelier de Bossimé · Portfolio
+Correction : 1,52 $" tabindex="0"></i></span><span class="cx-val">20,36 $ · 1,52 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:127.86830552666413%" data-tip="L'Atelier de Bossimé · Awwwards
+Développement : 29,19 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:4.716321620001144%" data-tip="L'Atelier de Bossimé · Awwwards
+Correction : 1,08 $" tabindex="0"></i></span><span class="cx-val">29,19 $ · 1,08 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:66.40916450100131%" data-tip="L'Atelier de Bossimé · Inspi legacy
+Développement : 15,16 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:5.159834524232802%" data-tip="L'Atelier de Bossimé · Inspi legacy
+Correction : 1,18 $" tabindex="0"></i></span><span class="cx-val">15,16 $ · 1,18 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">3</span><b>Partage</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:44.00994322911565%" data-tip="Partage
+Développement : 30,14 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:5.763078115186011%" data-tip="Partage
+Correction : 3,95 $" tabindex="0"></i></span><span class="cx-val">30,14 $ <small>dev</small> · 3,95 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:40.87054780965318%" data-tip="Partage · Portfolio
+Développement : 9,33 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:6.046823536061434%" data-tip="Partage · Portfolio
+Correction : 1,38 $" tabindex="0"></i></span><span class="cx-val">9,33 $ · 1,38 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:45.426321627663825%" data-tip="Partage · Awwwards
+Développement : 10,37 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:5.766455082528611%" data-tip="Partage · Awwwards
+Correction : 1,32 $" tabindex="0"></i></span><span class="cx-val">10,37 $ · 1,32 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:45.732960250029926%" data-tip="Partage · Inspi legacy
+Développement : 10,44 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:5.475955726967988%" data-tip="Partage · Inspi legacy
+Correction : 1,25 $" tabindex="0"></i></span><span class="cx-val">10,44 $ · 1,25 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">4</span><b>La Brasserie du Quai</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:48.7117354387292%" data-tip="La Brasserie du Quai
+Développement : 33,36 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:4.205409400555027%" data-tip="La Brasserie du Quai
+Correction : 2,88 $" tabindex="0"></i></span><span class="cx-val">33,36 $ <small>dev</small> · 2,88 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:55.034331795134996%" data-tip="La Brasserie du Quai · Portfolio
+Développement : 12,56 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:5.7371321071820915%" data-tip="La Brasserie du Quai · Portfolio
+Correction : 1,31 $" tabindex="0"></i></span><span class="cx-val">12,56 $ · 1,31 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:47.01792209613549%" data-tip="La Brasserie du Quai · Awwwards
+Développement : 10,73 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:3.563904464431718%" data-tip="La Brasserie du Quai · Awwwards
+Correction : 0,81 $" tabindex="0"></i></span><span class="cx-val">10,73 $ · 0,81 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:44.0829524249171%" data-tip="La Brasserie du Quai · Inspi legacy
+Développement : 10,06 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:3.315191630051272%" data-tip="La Brasserie du Quai · Inspi legacy
+Correction : 0,76 $" tabindex="0"></i></span><span class="cx-val">10,06 $ · 0,76 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">5</span><b>Chez Guillaume</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:39.86302090759313%" data-tip="Chez Guillaume
+Développement : 27,30 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.8396057517167053%" data-tip="Chez Guillaume
+Correction : 0,57 $" tabindex="0"></i></span><span class="cx-val">27,30 $ <small>dev</small> · 0,57 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:48.44890233384396%" data-tip="Chez Guillaume · Portfolio
+Développement : 11,06 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.8410659356327344%" data-tip="Chez Guillaume · Portfolio
+Correction : 0,19 $" tabindex="0"></i></span><span class="cx-val">11,06 $ · 0,19 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:42.622768508888036%" data-tip="Chez Guillaume · Awwwards
+Développement : 9,73 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5650911755032434%" data-tip="Chez Guillaume · Awwwards
+Correction : 0,13 $" tabindex="0"></i></span><span class="cx-val">9,73 $ · 0,13 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:28.517391880047395%" data-tip="Chez Guillaume · Inspi legacy
+Développement : 6,51 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.1126601440141382%" data-tip="Chez Guillaume · Inspi legacy
+Correction : 0,25 $" tabindex="0"></i></span><span class="cx-val">6,51 $ · 0,25 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">6</span><b>La Dolce Vita Wépion</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:28.999252572336985%" data-tip="La Dolce Vita Wépion
+Développement : 19,86 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.8352251999686181%" data-tip="La Dolce Vita Wépion
+Correction : 0,57 $" tabindex="0"></i></span><span class="cx-val">19,86 $ <small>dev</small> · 0,57 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:18.456724698607225%" data-tip="La Dolce Vita Wépion · Portfolio
+Développement : 4,21 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.8746501657014025%" data-tip="La Dolce Vita Wépion · Portfolio
+Correction : 0,20 $" tabindex="0"></i></span><span class="cx-val">4,21 $ · 0,20 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:43.73250828507012%" data-tip="La Dolce Vita Wépion · Awwwards
+Développement : 9,98 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.7476141650068749%" data-tip="La Dolce Vita Wépion · Awwwards
+Correction : 0,17 $" tabindex="0"></i></span><span class="cx-val">9,98 $ · 0,17 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:24.808524733333602%" data-tip="La Dolce Vita Wépion · Inspi legacy
+Développement : 5,66 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.8834112691975768%" data-tip="La Dolce Vita Wépion · Inspi legacy
+Correction : 0,20 $" tabindex="0"></i></span><span class="cx-val">5,66 $ · 0,20 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">7</span><b>Le Royal Namur</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:24.531089789288085%" data-tip="Le Royal Namur
+Développement : 16,80 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.9023936601059546%" data-tip="Le Royal Namur
+Correction : 0,62 $" tabindex="0"></i></span><span class="cx-val">16,80 $ <small>dev</small> · 0,62 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:23.976219901197044%" data-tip="Le Royal Namur · Portfolio
+Développement : 5,47 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.2586785356170433%" data-tip="Le Royal Namur · Portfolio
+Correction : 0,29 $" tabindex="0"></i></span><span class="cx-val">5,47 $ · 0,29 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:28.225355096841586%" data-tip="Le Royal Namur · Awwwards
+Développement : 6,44 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.8512872230449376%" data-tip="Le Royal Namur · Awwwards
+Correction : 0,19 $" tabindex="0"></i></span><span class="cx-val">6,44 $ · 0,19 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:21.39169436982562%" data-tip="Le Royal Namur · Inspi legacy
+Développement : 4,88 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5972152216558825%" data-tip="Le Royal Namur · Inspi legacy
+Correction : 0,14 $" tabindex="0"></i></span><span class="cx-val">4,88 $ · 0,14 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">8</span><b>Incorrect</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:24.98374680325709%" data-tip="Incorrect
+Développement : 17,11 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.883411269197577%" data-tip="Incorrect
+Correction : 0,61 $" tabindex="0"></i></span><span class="cx-val">17,11 $ <small>dev</small> · 0,61 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:29.320493033863375%" data-tip="Incorrect · Portfolio
+Développement : 6,69 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.18712952373162%" data-tip="Incorrect · Portfolio
+Correction : 0,27 $" tabindex="0"></i></span><span class="cx-val">6,69 $ · 0,27 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:27.568272334628514%" data-tip="Incorrect · Awwwards
+Développement : 6,29 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.7140299349382068%" data-tip="Incorrect · Awwwards
+Correction : 0,16 $" tabindex="0"></i></span><span class="cx-val">6,29 $ · 0,16 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:18.06247504127938%" data-tip="Incorrect · Inspi legacy
+Développement : 4,12 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.749074348922904%" data-tip="Incorrect · Inspi legacy
+Correction : 0,17 $" tabindex="0"></i></span><span class="cx-val">4,12 $ · 0,17 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">9</span><b>L'Essentiel</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:26.45853255844643%" data-tip="L'Essentiel
+Développement : 18,12 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.0002259824799011%" data-tip="L'Essentiel
+Correction : 0,69 $" tabindex="0"></i></span><span class="cx-val">18,12 $ <small>dev</small> · 0,69 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:28.59040107584885%" data-tip="L'Essentiel · Portfolio
+Développement : 6,53 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.0177481894722495%" data-tip="L'Essentiel · Portfolio
+Correction : 0,23 $" tabindex="0"></i></span><span class="cx-val">6,53 $ · 0,23 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:27.49526313882706%" data-tip="L'Essentiel · Awwwards
+Développement : 6,28 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.000225982479901%" data-tip="L'Essentiel · Awwwards
+Correction : 0,23 $" tabindex="0"></i></span><span class="cx-val">6,28 $ · 0,23 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:23.289933460663388%" data-tip="L'Essentiel · Inspi legacy
+Développement : 5,32 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.9827037754875524%" data-tip="L'Essentiel · Inspi legacy
+Correction : 0,22 $" tabindex="0"></i></span><span class="cx-val">5,32 $ · 0,22 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">10</span><b>La Ferme Blanche d'Asie</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:23.289933460663388%" data-tip="La Ferme Blanche d'Asie
+Développement : 15,95 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.7471274370348654%" data-tip="La Ferme Blanche d'Asie
+Correction : 0,51 $" tabindex="0"></i></span><span class="cx-val">15,95 $ <small>dev</small> · 0,51 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:18.471326537767517%" data-tip="La Ferme Blanche d'Asie · Portfolio
+Développement : 4,22 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.7373928775946715%" data-tip="La Ferme Blanche d'Asie · Portfolio
+Correction : 0,17 $" tabindex="0"></i></span><span class="cx-val">4,22 $ · 0,17 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:30.386427292564584%" data-tip="La Ferme Blanche d'Asie · Awwwards
+Développement : 6,94 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.9257566027624194%" data-tip="La Ferme Blanche d'Asie · Awwwards
+Correction : 0,21 $" tabindex="0"></i></span><span class="cx-val">6,94 $ · 0,21 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:21.012046551658067%" data-tip="La Ferme Blanche d'Asie · Inspi legacy
+Développement : 4,80 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5782328307475049%" data-tip="La Ferme Blanche d'Asie · Inspi legacy
+Correction : 0,13 $" tabindex="0"></i></span><span class="cx-val">4,80 $ · 0,13 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">11</span><b>Le Félicien</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:26.61915278920964%" data-tip="Le Félicien
+Développement : 18,23 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.9724824880753489%" data-tip="Le Félicien
+Correction : 0,67 $" tabindex="0"></i></span><span class="cx-val">18,23 $ <small>dev</small> · 0,67 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:23.917812544555886%" data-tip="Le Félicien · Portfolio
+Développement : 5,46 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.166686948907213%" data-tip="Le Félicien · Portfolio
+Correction : 0,27 $" tabindex="0"></i></span><span class="cx-val">5,46 $ · 0,27 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:30.882889824014466%" data-tip="Le Félicien · Awwwards
+Développement : 7,05 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.8863316370296349%" data-tip="Le Félicien · Awwwards
+Correction : 0,20 $" tabindex="0"></i></span><span class="cx-val">7,05 $ · 0,20 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:25.056755999058545%" data-tip="Le Félicien · Inspi legacy
+Développement : 5,72 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.8644288782891991%" data-tip="Le Félicien · Inspi legacy
+Correction : 0,20 $" tabindex="0"></i></span><span class="cx-val">5,72 $ · 0,20 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">12</span><b>Le Grill des Amis</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:28.911641537375242%" data-tip="Le Grill des Amis
+Développement : 19,80 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.0878370174416443%" data-tip="Le Grill des Amis
+Correction : 0,74 $" tabindex="0"></i></span><span class="cx-val">19,80 $ <small>dev</small> · 0,74 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:24.92533944661593%" data-tip="Le Grill des Amis · Portfolio
+Développement : 5,69 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.134562902754574%" data-tip="Le Grill des Amis · Portfolio
+Correction : 0,26 $" tabindex="0"></i></span><span class="cx-val">5,69 $ · 0,26 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:35.482469159505975%" data-tip="Le Grill des Amis · Awwwards
+Développement : 8,10 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.046951867792831%" data-tip="Le Grill des Amis · Awwwards
+Correction : 0,24 $" tabindex="0"></i></span><span class="cx-val">8,10 $ · 0,24 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:26.32711600600382%" data-tip="Le Grill des Amis · Inspi legacy
+Développement : 6,01 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.081996281777528%" data-tip="Le Grill des Amis · Inspi legacy
+Correction : 0,25 $" tabindex="0"></i></span><span class="cx-val">6,01 $ · 0,25 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">13</span><b>Le 54</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:22.691258055091478%" data-tip="Le 54
+Développement : 15,54 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.7461539810908459%" data-tip="Le 54
+Correction : 0,51 $" tabindex="0"></i></span><span class="cx-val">15,54 $ <small>dev</small> · 0,51 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:19.887704936315696%" data-tip="Le 54 · Portfolio
+Développement : 4,54 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.9491195454188842%" data-tip="Le 54 · Portfolio
+Correction : 0,22 $" tabindex="0"></i></span><span class="cx-val">4,54 $ · 0,22 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:27.94792015279607%" data-tip="Le 54 · Awwwards
+Développement : 6,38 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.7782780272434849%" data-tip="Le 54 · Awwwards
+Correction : 0,18 $" tabindex="0"></i></span><span class="cx-val">6,38 $ · 0,18 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:20.23814907616267%" data-tip="Le 54 · Inspi legacy
+Développement : 4,62 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5110643706101684%" data-tip="Le 54 · Inspi legacy
+Correction : 0,12 $" tabindex="0"></i></span><span class="cx-val">4,62 $ · 0,12 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">14</span><b>Le Ponti 2</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:23.94701622287646%" data-tip="Le Ponti 2
+Développement : 16,40 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.6147374286482311%" data-tip="Le Ponti 2
+Correction : 0,42 $" tabindex="0"></i></span><span class="cx-val">16,40 $ <small>dev</small> · 0,42 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:23.494359208907454%" data-tip="Le Ponti 2 · Portfolio
+Développement : 5,36 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.8775705335334606%" data-tip="Le Ponti 2 · Portfolio
+Correction : 0,20 $" tabindex="0"></i></span><span class="cx-val">5,36 $ · 0,20 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:26.34171784516411%" data-tip="Le Ponti 2 · Awwwards
+Développement : 6,01 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5709319111673595%" data-tip="Le Ponti 2 · Awwwards
+Correction : 0,13 $" tabindex="0"></i></span><span class="cx-val">6,01 $ · 0,13 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:22.00497161455782%" data-tip="Le Ponti 2 · Inspi legacy
+Développement : 5,02 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.39570984124387326%" data-tip="Le Ponti 2 · Inspi legacy
+Correction : 0,09 $" tabindex="0"></i></span><span class="cx-val">5,02 $ · 0,09 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">15</span><b>Le Servais</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:25.31958910394378%" data-tip="Le Servais
+Développement : 17,34 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.43367462306062865%" data-tip="Le Servais
+Correction : 0,30 $" tabindex="0"></i></span><span class="cx-val">17,34 $ <small>dev</small> · 0,30 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:26.38552336264498%" data-tip="Le Servais · Portfolio
+Développement : 6,02 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5227458419384008%" data-tip="Le Servais · Portfolio
+Correction : 0,12 $" tabindex="0"></i></span><span class="cx-val">6,02 $ · 0,12 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:28.006327509437227%" data-tip="Le Servais · Awwwards
+Développement : 6,39 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.38694873774769895%" data-tip="Le Servais · Awwwards
+Correction : 0,09 $" tabindex="0"></i></span><span class="cx-val">6,39 $ · 0,09 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:21.56691643974911%" data-tip="Le Servais · Inspi legacy
+Développement : 4,92 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.3913292894957861%" data-tip="Le Servais · Inspi legacy
+Correction : 0,09 $" tabindex="0"></i></span><span class="cx-val">4,92 $ · 0,09 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">16</span><b>Li Micougni</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:26.88198589409486%" data-tip="Li Micougni
+Développement : 18,41 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.8323048321365598%" data-tip="Li Micougni
+Correction : 0,57 $" tabindex="0"></i></span><span class="cx-val">18,41 $ <small>dev</small> · 0,57 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:20.17974171952151%" data-tip="Li Micougni · Portfolio
+Développement : 4,61 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:1.0673944426172375%" data-tip="Li Micougni · Portfolio
+Correction : 0,24 $" tabindex="0"></i></span><span class="cx-val">4,61 $ · 0,24 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:31.788203851952474%" data-tip="Li Micougni · Awwwards
+Développement : 7,26 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.6600031300451317%" data-tip="Li Micougni · Awwwards
+Correction : 0,15 $" tabindex="0"></i></span><span class="cx-val">7,26 $ · 0,15 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:28.67801211081059%" data-tip="Li Micougni · Inspi legacy
+Développement : 6,55 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.7695169237473107%" data-tip="Li Micougni · Inspi legacy
+Correction : 0,18 $" tabindex="0"></i></span><span class="cx-val">6,55 $ · 0,18 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">17</span><b>Makimono</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:31.671389138670154%" data-tip="Makimono
+Développement : 21,69 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5942948538238245%" data-tip="Makimono
+Correction : 0,41 $" tabindex="0"></i></span><span class="cx-val">21,69 $ <small>dev</small> · 0,41 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:36.63601445316893%" data-tip="Makimono · Portfolio
+Développement : 8,36 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.8454464873808215%" data-tip="Makimono · Portfolio
+Correction : 0,19 $" tabindex="0"></i></span><span class="cx-val">8,36 $ · 0,19 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:33.26298960714182%" data-tip="Makimono · Awwwards
+Développement : 7,59 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.4205329678163672%" data-tip="Makimono · Awwwards
+Correction : 0,10 $" tabindex="0"></i></span><span class="cx-val">7,59 $ · 0,10 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:25.115163355699703%" data-tip="Makimono · Inspi legacy
+Développement : 5,73 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5169051062742847%" data-tip="Makimono · Inspi legacy
+Correction : 0,12 $" tabindex="0"></i></span><span class="cx-val">5,73 $ · 0,12 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">18</span><b>Pépite, cave à manger</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:24.545691628448374%" data-tip="Pépite, cave à manger
+Développement : 16,81 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.6483216587168994%" data-tip="Pépite, cave à manger
+Correction : 0,44 $" tabindex="0"></i></span><span class="cx-val">16,81 $ <small>dev</small> · 0,44 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:22.99789667745758%" data-tip="Pépite, cave à manger · Portfolio
+Développement : 5,25 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.9330575223425647%" data-tip="Pépite, cave à manger · Portfolio
+Correction : 0,21 $" tabindex="0"></i></span><span class="cx-val">5,25 $ · 0,21 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:32.10944431347887%" data-tip="Pépite, cave à manger · Awwwards
+Développement : 7,33 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.6746049692054222%" data-tip="Pépite, cave à manger · Awwwards
+Correction : 0,15 $" tabindex="0"></i></span><span class="cx-val">7,33 $ · 0,15 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:18.529733894408675%" data-tip="Pépite, cave à manger · Inspi legacy
+Développement : 4,23 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.3373024846027111%" data-tip="Pépite, cave à manger · Inspi legacy
+Correction : 0,08 $" tabindex="0"></i></span><span class="cx-val">4,23 $ · 0,08 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">19</span><b>Sanga</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:23.990821740357333%" data-tip="Sanga
+Développement : 16,43 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5928346699077953%" data-tip="Sanga
+Correction : 0,41 $" tabindex="0"></i></span><span class="cx-val">16,43 $ <small>dev</small> · 0,41 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:21.5815182789094%" data-tip="Sanga · Portfolio
+Développement : 4,93 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5242060258544299%" data-tip="Sanga · Portfolio
+Correction : 0,12 $" tabindex="0"></i></span><span class="cx-val">4,93 $ · 0,12 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:32.53289764912729%" data-tip="Sanga · Awwwards
+Développement : 7,43 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.7038086475260033%" data-tip="Sanga · Awwwards
+Correction : 0,16 $" tabindex="0"></i></span><span class="cx-val">7,43 $ · 0,16 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:17.85804929303531%" data-tip="Sanga · Inspi legacy
+Développement : 4,08 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5504893363429527%" data-tip="Sanga · Inspi legacy
+Correction : 0,13 $" tabindex="0"></i></span><span class="cx-val">4,08 $ · 0,13 $</span></div></details><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">20</span><b>L'Huile sur le Feu</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:28.692613949970884%" data-tip="L'Huile sur le Feu
+Développement : 19,65 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.6059763251520569%" data-tip="L'Huile sur le Feu
+Correction : 0,42 $" tabindex="0"></i></span><span class="cx-val">19,65 $ <small>dev</small> · 0,42 $ <small>corr.</small></span></summary>
+<div class="cx-l cx-site"><span class="cx-nom">Portfolio</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:26.63375462836992%" data-tip="L'Huile sur le Feu · Portfolio
+Développement : 6,08 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.692127176197771%" data-tip="L'Huile sur le Feu · Portfolio
+Correction : 0,16 $" tabindex="0"></i></span><span class="cx-val">6,08 $ · 0,16 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Awwwards</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:36.796634683932126%" data-tip="L'Huile sur le Feu · Awwwards
+Développement : 8,40 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5738522789994177%" data-tip="L'Huile sur le Feu · Awwwards
+Correction : 0,13 $" tabindex="0"></i></span><span class="cx-val">8,40 $ · 0,13 $</span></div><div class="cx-l cx-site"><span class="cx-nom">Inspi legacy</span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:22.647452537610604%" data-tip="L'Huile sur le Feu · Inspi legacy
+Développement : 5,17 $" tabindex="0"></i><i class="cx-s cx-dbg" style="flex-basis:0.5519495202589819%" data-tip="L'Huile sur le Feu · Inspi legacy
+Correction : 0,13 $" tabindex="0"></i></span><span class="cx-val">5,17 $ · 0,13 $</span></div></details></div>
+<h2>Baisse du coût moyen au fil des approches</h2>
+<div class="pc-bascule cx-unite" role="tablist" aria-label="Unité"><button role="tab" aria-selected="true" data-unite="resto">Par restaurant</button><button role="tab" aria-selected="false" data-unite="site">Par site</button></div>
+<figure class="cx-fig cx-fig-large"><figcaption><b>Global : dev + correction par restaurant, dans l'ordre de passage</b><small>sous chaque colonne : approche dev · approche correction</small></figcaption><div class="cx-cols cx-cols-20"><div class="cx-col" data-tip="Les Potes au Feu
+Dev (approche 1) : 57,59 $
+Correction (approche 1) : 3,43 $
+Total : 61,02 $ · par site 20,34 $" tabindex="0"><span class="cx-v" data-par-resto="61 $" data-par-site="20,3 $">61 $</span><i class="cx-dbg" style="height:5.011965495534723%"></i><i class="cx-dev" style="height:84.09199172411314%"></i><span class="cx-x">1<br><small>1·1</small></span></div><div class="cx-col" data-tip="L'Atelier de Bossimé
+Dev (approche 1) : 64,71 $
+Correction (approche 1) : 3,77 $
+Total : 68,48 $ · par site 22,83 $" tabindex="0"><span class="cx-v" data-par-resto="68 $" data-par-site="22,8 $">68 $</span><i class="cx-dbg" style="height:5.511498793760008%"></i><i class="cx-dev" style="height:94.48850120623999%"></i><span class="cx-x">2<br><small>1·1</small></span></div><div class="cx-col" data-tip="Partage
+Dev (approche 2) : 30,14 $
+Correction (approche 1) : 3,95 $
+Total : 34,09 $ · par site 11,36 $" tabindex="0"><span class="cx-v" data-par-resto="34 $" data-par-site="11,4 $">34 $</span><i class="cx-dbg" style="height:5.763078115186011%"></i><i class="cx-dev" style="height:44.00994322911565%"></i><span class="cx-x">3<br><small>2·1</small></span></div><div class="cx-col" data-tip="La Brasserie du Quai
+Dev (approche 2) : 33,36 $
+Correction (approche 1) : 2,88 $
+Total : 36,24 $ · par site 12,08 $" tabindex="0"><span class="cx-v" data-par-resto="36 $" data-par-site="12,1 $">36 $</span><i class="cx-dbg" style="height:4.205409400555027%"></i><i class="cx-dev" style="height:48.7117354387292%"></i><span class="cx-x">4<br><small>2·1</small></span></div><div class="cx-col" data-tip="Chez Guillaume
+Dev (approche 3) : 27,30 $
+Correction (approche 2) : 0,57 $
+Total : 27,87 $ · par site 9,29 $" tabindex="0"><span class="cx-v" data-par-resto="28 $" data-par-site="9,3 $">28 $</span><i class="cx-dbg" style="height:0.8396057517167053%"></i><i class="cx-dev" style="height:39.86302090759313%"></i><span class="cx-x">5<br><small>3·2</small></span></div><div class="cx-col" data-tip="La Dolce Vita Wépion
+Dev (approche 4) : 19,86 $
+Correction (approche 2) : 0,57 $
+Total : 20,43 $ · par site 6,81 $" tabindex="0"><span class="cx-v" data-par-resto="20 $" data-par-site="6,8 $">20 $</span><i class="cx-dbg" style="height:0.8352251999686181%"></i><i class="cx-dev" style="height:28.999252572336985%"></i><span class="cx-x">6<br><small>4·2</small></span></div><div class="cx-col" data-tip="Le Royal Namur
+Dev (approche 5) : 16,80 $
+Correction (approche 2) : 0,62 $
+Total : 17,42 $ · par site 5,81 $" tabindex="0"><span class="cx-v" data-par-resto="17 $" data-par-site="5,8 $">17 $</span><i class="cx-dbg" style="height:0.9023936601059546%"></i><i class="cx-dev" style="height:24.531089789288085%"></i><span class="cx-x">7<br><small>5·2</small></span></div><div class="cx-col" data-tip="Incorrect
+Dev (approche 5) : 17,11 $
+Correction (approche 2) : 0,61 $
+Total : 17,71 $ · par site 5,91 $" tabindex="0"><span class="cx-v" data-par-resto="18 $" data-par-site="5,9 $">18 $</span><i class="cx-dbg" style="height:0.883411269197577%"></i><i class="cx-dev" style="height:24.98374680325709%"></i><span class="cx-x">8<br><small>5·2</small></span></div><div class="cx-col" data-tip="L'Essentiel
+Dev (approche 5) : 18,12 $
+Correction (approche 3) : 0,69 $
+Total : 18,80 $ · par site 6,27 $" tabindex="0"><span class="cx-v" data-par-resto="19 $" data-par-site="6,3 $">19 $</span><i class="cx-dbg" style="height:1.0002259824799011%"></i><i class="cx-dev" style="height:26.45853255844643%"></i><span class="cx-x">9<br><small>5·3</small></span></div><div class="cx-col" data-tip="La Ferme Blanche d'Asie
+Dev (approche 5) : 15,95 $
+Correction (approche 4) : 0,51 $
+Total : 16,46 $ · par site 5,49 $" tabindex="0"><span class="cx-v" data-par-resto="16 $" data-par-site="5,5 $">16 $</span><i class="cx-dbg" style="height:0.7471274370348654%"></i><i class="cx-dev" style="height:23.289933460663388%"></i><span class="cx-x">10<br><small>5·4</small></span></div><div class="cx-col" data-tip="Le Félicien
+Dev (approche 5) : 18,23 $
+Correction (approche 3) : 0,67 $
+Total : 18,90 $ · par site 6,30 $" tabindex="0"><span class="cx-v" data-par-resto="19 $" data-par-site="6,3 $">19 $</span><i class="cx-dbg" style="height:0.9724824880753489%"></i><i class="cx-dev" style="height:26.61915278920964%"></i><span class="cx-x">11<br><small>5·3</small></span></div><div class="cx-col" data-tip="Le Grill des Amis
+Dev (approche 5) : 19,80 $
+Correction (approche 3) : 0,74 $
+Total : 20,55 $ · par site 6,85 $" tabindex="0"><span class="cx-v" data-par-resto="21 $" data-par-site="6,8 $">21 $</span><i class="cx-dbg" style="height:1.0878370174416443%"></i><i class="cx-dev" style="height:28.911641537375242%"></i><span class="cx-x">12<br><small>5·3</small></span></div><div class="cx-col" data-tip="Le 54
+Dev (approche 5) : 15,54 $
+Correction (approche 3) : 0,51 $
+Total : 16,05 $ · par site 5,35 $" tabindex="0"><span class="cx-v" data-par-resto="16 $" data-par-site="5,4 $">16 $</span><i class="cx-dbg" style="height:0.7461539810908459%"></i><i class="cx-dev" style="height:22.691258055091478%"></i><span class="cx-x">13<br><small>5·3</small></span></div><div class="cx-col" data-tip="Le Ponti 2
+Dev (approche 5) : 16,40 $
+Correction (approche 4) : 0,42 $
+Total : 16,82 $ · par site 5,61 $" tabindex="0"><span class="cx-v" data-par-resto="17 $" data-par-site="5,6 $">17 $</span><i class="cx-dbg" style="height:0.6147374286482311%"></i><i class="cx-dev" style="height:23.94701622287646%"></i><span class="cx-x">14<br><small>5·4</small></span></div><div class="cx-col" data-tip="Le Servais
+Dev (approche 6) : 17,34 $
+Correction (approche 4) : 0,30 $
+Total : 17,64 $ · par site 5,88 $" tabindex="0"><span class="cx-v" data-par-resto="18 $" data-par-site="5,9 $">18 $</span><i class="cx-dbg" style="height:0.43367462306062865%"></i><i class="cx-dev" style="height:25.31958910394378%"></i><span class="cx-x">15<br><small>6·4</small></span></div><div class="cx-col" data-tip="Li Micougni
+Dev (approche 6) : 18,41 $
+Correction (approche 4) : 0,57 $
+Total : 18,98 $ · par site 6,33 $" tabindex="0"><span class="cx-v" data-par-resto="19 $" data-par-site="6,3 $">19 $</span><i class="cx-dbg" style="height:0.8323048321365598%"></i><i class="cx-dev" style="height:26.88198589409486%"></i><span class="cx-x">16<br><small>6·4</small></span></div><div class="cx-col" data-tip="Makimono
+Dev (approche 6) : 21,69 $
+Correction (approche 4) : 0,41 $
+Total : 22,10 $ · par site 7,37 $" tabindex="0"><span class="cx-v" data-par-resto="22 $" data-par-site="7,4 $">22 $</span><i class="cx-dbg" style="height:0.5942948538238245%"></i><i class="cx-dev" style="height:31.671389138670154%"></i><span class="cx-x">17<br><small>6·4</small></span></div><div class="cx-col" data-tip="Pépite, cave à manger
+Dev (approche 6) : 16,81 $
+Correction (approche 4) : 0,44 $
+Total : 17,25 $ · par site 5,75 $" tabindex="0"><span class="cx-v" data-par-resto="17 $" data-par-site="5,8 $">17 $</span><i class="cx-dbg" style="height:0.6483216587168994%"></i><i class="cx-dev" style="height:24.545691628448374%"></i><span class="cx-x">18<br><small>6·4</small></span></div><div class="cx-col" data-tip="Sanga
+Dev (approche 6) : 16,43 $
+Correction (approche 4) : 0,41 $
+Total : 16,84 $ · par site 5,61 $" tabindex="0"><span class="cx-v" data-par-resto="17 $" data-par-site="5,6 $">17 $</span><i class="cx-dbg" style="height:0.5928346699077953%"></i><i class="cx-dev" style="height:23.990821740357333%"></i><span class="cx-x">19<br><small>6·4</small></span></div><div class="cx-col" data-tip="L'Huile sur le Feu
+Dev (approche 6) : 19,65 $
+Correction (approche 4) : 0,42 $
+Total : 20,06 $ · par site 6,69 $" tabindex="0"><span class="cx-v" data-par-resto="20 $" data-par-site="6,7 $">20 $</span><i class="cx-dbg" style="height:0.6059763251520569%"></i><i class="cx-dev" style="height:28.692613949970884%"></i><span class="cx-x">20<br><small>6·4</small></span></div></div></figure>
+<div class="cx-duo"><figure class="cx-fig"><figcaption><b>Développement</b><small>6 approches : départ, méthode sobre, tests A-C, D-H, I, hook de lecture</small></figcaption><div class="cx-cols"><div class="cx-col" data-tip="Développement · approche 1
+61,15 $ en moyenne (2 restaurants)" tabindex="0"><span class="cx-v" data-par-resto="61,15 $" data-par-site="20,38 $">61,15 $</span><i class="cx-dev" style="height:100%"></i><span class="cx-x">A1</span></div><div class="cx-col" data-tip="Développement · approche 2
+31,75 $ en moyenne (2 restaurants)" tabindex="0"><span class="cx-v" data-par-resto="31,75 $" data-par-site="10,58 $">31,75 $</span><i class="cx-dev" style="height:51.92150449713818%"></i><span class="cx-x">A2</span></div><div class="cx-col" data-tip="Développement · approche 3
+27,30 $ en moyenne (1 restaurant)" tabindex="0"><span class="cx-v" data-par-resto="27,30 $" data-par-site="9,10 $">27,30 $</span><i class="cx-dev" style="height:44.644317252657395%"></i><span class="cx-x">A3</span></div><div class="cx-col" data-tip="Développement · approche 4
+19,86 $ en moyenne (1 restaurant)" tabindex="0"><span class="cx-v" data-par-resto="19,86 $" data-par-site="6,62 $">19,86 $</span><i class="cx-dev" style="height:32.47751430907604%"></i><span class="cx-x">A4</span></div><div class="cx-col" data-tip="Développement · approche 5
+17,24 $ en moyenne (8 restaurants)" tabindex="0"><span class="cx-v" data-par-resto="17,24 $" data-par-site="5,75 $">17,24 $</span><i class="cx-dev" style="height:28.19910057236304%"></i><span class="cx-x">A5</span></div><div class="cx-col" data-tip="Développement · approche 6
+18,39 $ en moyenne (6 restaurants)" tabindex="0"><span class="cx-v" data-par-resto="18,39 $" data-par-site="6,13 $">18,39 $</span><i class="cx-dev" style="height:30.07086399563914%"></i><span class="cx-x">A6</span></div></div></figure><figure class="cx-fig"><figcaption><b>Correction</b><small>4 approches : revue séparée, agents légers F/H, q.sh + capture, hooks + couverture</small></figcaption><div class="cx-cols"><div class="cx-col" data-tip="Correction · approche 1
+3,51 $ en moyenne (4 restaurants)" tabindex="0"><span class="cx-v" data-par-resto="3,51 $" data-par-site="1,17 $">3,51 $</span><i class="cx-dbg" style="height:100%"></i><span class="cx-x">A1</span></div><div class="cx-col" data-tip="Correction · approche 2
+0,59 $ en moyenne (4 restaurants)" tabindex="0"><span class="cx-v" data-par-resto="0,59 $" data-par-site="0,20 $">0,59 $</span><i class="cx-dbg" style="height:16.88778069514308%"></i><span class="cx-x">A2</span></div><div class="cx-col" data-tip="Correction · approche 3
+0,65 $ en moyenne (4 restaurants)" tabindex="0"><span class="cx-v" data-par-resto="0,65 $" data-par-site="0,22 $">0,65 $</span><i class="cx-dbg" style="height:18.576558764657392%"></i><span class="cx-x">A3</span></div><div class="cx-col" data-tip="Correction · approche 4
+0,43 $ en moyenne (8 restaurants)" tabindex="0"><span class="cx-v" data-par-resto="0,43 $" data-par-site="0,14 $">0,43 $</span><i class="cx-dbg" style="height:12.368933610401912%"></i><span class="cx-x">A4</span></div></div></figure></div>
+<p class="pc-note">Coûts au tarif API, mesurés dans les transcripts. Par site = coût du restaurant divisé par 3 (la recherche client et l'orchestration communes sont réparties). Hors gabarits du portfolio (262 $), préparation et pilotage du projet. Ferme Blanche legacy : coût de la reprise (approche 4).</p></div>
+<div class="pc-tip" role="tooltip" hidden></div>
 <footer>KYW, filiale web de KYN. Page régénérée par <code>scripts/suivi.mjs</code> à chaque publication.</footer>
 </div>
 <script>
@@ -1693,5 +1989,10 @@ try{const m=localStorage.getItem('suivi-onglet');if(m&&document.querySelector('[
 q('.pc-bascule button').forEach(b=>b.addEventListener('click',()=>{q('.pc-bascule button').forEach(x=>x.setAttribute('aria-selected',x===b));q('.pc-r').forEach(d=>d.open=b.dataset.vue==='detaille')}));
 const t=document.querySelector('.pc-tip');const show=(el)=>{t.textContent=el.dataset.tip;t.hidden=false;const r=el.getBoundingClientRect();t.style.left=Math.min(innerWidth-t.offsetWidth-8,Math.max(8,r.left+r.width/2-t.offsetWidth/2))+'px';const y=r.top-t.offsetHeight-8;t.style.top=(y<8?r.bottom+8:y)+'px'};
 q('[data-tip]').forEach(el=>{el.addEventListener('mouseenter',()=>show(el));el.addEventListener('focus',()=>show(el));el.addEventListener('mouseleave',()=>t.hidden=true);el.addEventListener('blur',()=>t.hidden=true);el.addEventListener('click',e=>{if(el.closest('summary')){e.preventDefault();show(el)}})});
+})();
+</script>
+<script>
+(()=>{const q=(s,r=document)=>[...r.querySelectorAll(s)];
+q('.cx-unite button').forEach(b=>b.addEventListener('click',()=>{q('.cx-unite button').forEach(x=>x.setAttribute('aria-selected',x===b));const site=b.dataset.unite==='site';q('.cx-v').forEach(v=>v.textContent=site?v.dataset.parSite:v.dataset.parResto)}));
 })();
 </script></body></html>

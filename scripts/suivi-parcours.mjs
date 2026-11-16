@@ -114,7 +114,6 @@ ${r.sites.map((s) => `<div class="pc-l pc-site"><span class="pc-nom">${NOM_V[s.v
 <div class="pc-l pc-tete"><span class="pc-nom">Restaurant</span>${ETAPES.map((x) => `<span class="pc-h">${x.nom}</span>`).join('')}<span class="pc-etat">Débug</span></div>
 ${lignes}
 </div>
-<div class="pc-tip" role="tooltip" hidden></div>
 <p class="pc-note">Clique sur un restaurant pour voir ses 3 sites. Survole une case pour le détail de l'étape et ce que l'approche a changé. Pas de chiffre = approche 1. Développement : 6 approches successives (point de départ, méthode sobre, tests A à I, hook de lecture). Débogage : approche 1 pour les restaurants 1 à 4, approche 2 pour 5 à 8, approche 3 pour 9 à 13, approche 4 pour 14 à 20 (et la reprise de Ferme Blanche legacy).</p>`;
 
   const css = `
