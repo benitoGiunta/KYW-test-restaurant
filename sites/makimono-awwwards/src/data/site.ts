@@ -1,6 +1,6 @@
 // Contenu de Makimono. Source : data/restaurants/makimono/{donnees.json,dossier.md,photos/}.
 // Hypothèses (voir RAPPORT.md) :
-//  - téléphone : +32 483 03 88 47 (site du client) ; restaurants.json donne +32 495 90 82 74, non repris, à confirmer.
+//  - téléphone : +32 483 03 88 47 (site du client) ; restaurants.json donne +32 495 90 82 74, non repris.
 //  - aucune histoire, aucun nom d'équipe, aucun avis cité : inconnus, donc absents (aucun placeholder inventé).
 //  - pas d'outil de réservation connu : tel:, mailto: et liens de commande du client.
 import carte from './carte.json';
