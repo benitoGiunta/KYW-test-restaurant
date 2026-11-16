@@ -11,6 +11,6 @@ export const photos = {
   terrasse: { src: terrasse, alt: 'Des clients attablés avec leurs verres sur la terrasse, devant la façade en pierre du bar.' },
   spaghetti: { src: spaghetti, alt: 'Une assiette de spaghetti sauce tomate siglée Le Servais, un verre de bière tenu à la main.' },
   dejeuner: { src: dejeuner, alt: 'Petit-déjeuner sur une table en marbre : café dans une tasse turquoise, jus d’orange, viennoiserie.' },
-  verriere: { src: verriere, alt: 'Une salle vitrée couverte de plantes, deux fauteuils orange autour d’une petite table (photo illustrative).' },
+  verriere: { src: verriere, alt: 'Une salle vitrée couverte de plantes, deux fauteuils orange autour d’une petite table.' },
 } as const;
 export type CleePhoto = keyof typeof photos;
