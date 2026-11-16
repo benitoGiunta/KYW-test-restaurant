@@ -178,7 +178,7 @@ export const guinguette = {
     connue: true,
     placeholder: false,
     texte: 'Une terrasse accueille les clients lorsque la météo le permet.',
-    aConfirmer: 'Nombre de places et jours d’ouverture de la terrasse : à confirmer auprès du restaurant.',
+    aConfirmer: '',
   },
   manifeste: {
     titre: ['Simple', 'et familial'],
