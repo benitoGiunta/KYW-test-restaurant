@@ -1,6 +1,6 @@
 // Onglet « Parcours » de la page de suivi : une ligne par restaurant, découpée en colonnes = étapes
 // (développement puis débogage). Une case pleine = étape faite ; un chiffre dans la case = nombre de passes
-// quand l'étape a demandé plusieurs mises en place (ex. 3 = troisième revue). Vue détaillée : chaque restaurant
+// quand l'étape a demandé plusieurs mises en place (ex. 3 = troisième approche de la méthode). Vue détaillée : chaque restaurant
 // déplié avec ses 3 sites en dessous, sur les mêmes colonnes.
 // Sources : sites/<slug>-<v>/ (REVUE-n, REVISION-n, CORRECTION-n), dist/, data/restaurants/, data/review/<slug>/.
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
@@ -38,6 +38,15 @@ export function parcours({ R, restos, esc }) {
   };
   const libelles = (fichier, cle) => { try { const x = lire(fichier)[cle]; return x ? Object.keys(x).length : 0; } catch { return null; } };
   const pl = (n, s) => `${n} ${s}${n > 1 ? 's' : ''}`;
+  // Approches de développement : chaque version de la méthode, appliquée à une suite de restaurants (par rang).
+  const configs = ex('data/usage/chantiers/configurations.json') ? lire('data/usage/chantiers/configurations.json').sort((a, b) => a.ordre - b.ordre) : [];
+  const approcheDev = {}; let rang = 1;
+  configs.forEach((c, i) => {
+    const n = c.restaurants.replace('Pépite, cave à manger', 'Pépite').split(',').filter((x) => x.trim()).length;
+    for (let k = 0; k < n; k++) approcheDev[rang++] = { n: i + 1, quoi: c.nouveaute };
+  });
+  // Approches de débogage : 1 = phase 1 (revue puis correction, contexte complet), 2 = phase 2 (après mesure : agents légers F/H).
+  const APPROCHE_DEBUG = { 1: 'revue Sonnet puis correcteur, scan des brouillons ajouté ensuite', 2: 'ajustements actés après mesure : agents projet légers, brouillons intégrés, configurations F et H' };
 
   const data = restos.map((r) => {
     const dossier = ex(`data/restaurants/${r.slug}/donnees.json`);
@@ -47,22 +56,24 @@ export function parcours({ R, restos, esc }) {
       const probs = rev?.problemes || [];
       const parCat = {}; for (const p of probs) parCat[p.categorie] = (parCat[p.categorie] || 0) + 1;
       const nCorr = compte(dir, /^CORRECTION-\d+\.md$/);
+      const ad = approcheDev[r.rang] || { n: 1, quoi: '' };
+      const ab = r.rang <= 4 ? 1 : 2;
+      const tA = (n, quoi) => `Approche ${n}${quoi ? ' : ' + quoi : ''}`;
       const dec = decisions(`${dir}/CORRECTION-${nCorr || 1}.md`);
       const traites = dec.corrige + dec.refuse + dec.impossible || probs.length;
       const avant = rev ? (libelles(`data/review/${r.slug}/brouillon.json`, `${r.slug}/${v}`) ?? parCat.brouillon ?? 0) : null;
       const apres = rev ? libelles(`data/review/${r.slug}/brouillon-apres.json`, `${r.slug}/${v}`) : null;
       const publie = ex(`dist/${r.slug}/${v}/index.html`);
       // Phase 1 (rangs 1-4) : les brouillons ont été relevés par un scan séparé, après la revue (2e approche).
-      const scanAPart = r.rang <= 4 && ex(`data/review/${r.slug}/brouillon.json`) ? 1 : 0;
       const n = { revue: compte(dir, /^REVUE-\d+\.md$/), revision: compte(dir, /^REVISION-\d+\.md$/) };
       const e = {
         dossier: { fait: dossier, n: 1, tip: dossier ? 'Recherche client faite (donnees.json)' : 'Dossier à faire' },
-        construction: { fait: ex(`${dir}/RAPPORT.md`), n: 1, tip: 'Site construit' },
-        revue: { fait: n.revue > 0, n: n.revue, tip: n.revue ? `${pl(n.revue, 'revue')} avant publication` : 'Pas encore revu' },
-        revision: { fait: n.revision > 0, n: n.revision, tip: n.revision ? `${pl(n.revision, 'révision')} (corrections suite aux revues)` : 'Pas de révision' },
+        construction: { fait: ex(`${dir}/RAPPORT.md`), n: ad.n, tip: `${tA(ad.n, ad.quoi)}\nSite construit` },
+        revue: { fait: n.revue > 0, n: ad.n, tip: `${tA(ad.n, ad.quoi)}\n` + (n.revue ? `${pl(n.revue, 'revue')} avant publication` : 'Pas encore revu') },
+        revision: { fait: n.revision > 0, n: ad.n, tip: `${tA(ad.n, ad.quoi)}\n` + (n.revision ? `${pl(n.revision, 'révision')} (corrections suite aux revues)` : 'Pas de révision') },
         publication: { fait: publie, n: 1, tip: publie ? 'En ligne' : 'Pas encore publié' },
-        identification: { fait: !!rev, n: rev ? 1 + scanAPart : 0, tip: rev ? `${scanAPart ? 'Approche 1 : revue des problèmes (agent) ; approche 2 : scan des libellés de brouillon (script), ajouté après la revue.\n' : ''}${pl(probs.length, 'problème')} relevé${probs.length > 1 ? 's' : ''}${Object.keys(parCat).length ? ' : ' + Object.entries(parCat).map(([c, k]) => `${NOM_CAT[c] || c} ${k}`).join(', ') : ''}${avant != null && !parCat.brouillon ? ` (+ ${pl(avant, 'libellé')} de brouillon)` : ''}` : 'Débogage à venir' },
-        correction: { fait: nCorr > 0, n: nCorr, tip: nCorr ? `${dec.corrige} corrigé${dec.corrige > 1 ? 's' : ''}${dec.refuse ? `, ${dec.refuse} refusé${dec.refuse > 1 ? 's' : ''} (justifié)` : ''}${dec.impossible ? `, ${dec.impossible} impossible${dec.impossible > 1 ? 's' : ''}` : ''}` : 'Correction à venir' },
+        identification: { fait: !!rev, n: rev ? ab : 0, tip: rev ? `${tA(ab, APPROCHE_DEBUG[ab])}\n${pl(probs.length, 'problème')} relevé${probs.length > 1 ? 's' : ''}${Object.keys(parCat).length ? ' : ' + Object.entries(parCat).map(([c, k]) => `${NOM_CAT[c] || c} ${k}`).join(', ') : ''}${avant != null && !parCat.brouillon ? ` (+ ${pl(avant, 'libellé')} de brouillon)` : ''}` : 'Débogage à venir' },
+        correction: { fait: nCorr > 0, n: nCorr ? ab : 0, tip: nCorr ? `${tA(ab, APPROCHE_DEBUG[ab])}\n${dec.corrige} corrigé${dec.corrige > 1 ? 's' : ''}${dec.refuse ? `, ${dec.refuse} refusé${dec.refuse > 1 ? 's' : ''} (justifié)` : ''}${dec.impossible ? `, ${dec.impossible} impossible${dec.impossible > 1 ? 's' : ''}` : ''}` : 'Correction à venir' },
         republication: { fait: nCorr > 0 && publie, n: nCorr > 0 ? 1 : 0, tip: nCorr > 0 ? `Corrections en ligne${apres != null ? ` · libellés de brouillon ${avant ?? '?'} → ${apres}` : ''}` : 'À venir' },
       };
       return { v, e, debug: !!rev, traites, corriges: dec.corrige, avant: avant || 0, apres: apres || 0 };
@@ -97,14 +108,14 @@ ${r.sites.map((s) => `<div class="pc-l pc-site"><span class="pc-nom">${NOM_V[s.v
 <div class="tuile"><b>${T.avant} → ${T.apres}</b><span>libellés de brouillon avant → après</span></div>
 </div>
 <div class="pc-barre-outils"><div class="pc-bascule" role="tablist" aria-label="Niveau de détail"><button role="tab" aria-selected="true" data-vue="condense">Condensé</button><button role="tab" aria-selected="false" data-vue="detaille">Détaillé par site</button></div>
-<p class="pc-legende"><span><i class="pc-dev fait"></i>développement fait</span><span><i class="pc-debug fait"></i>débogage fait</span><span><i class="partiel pc-dev"></i>fait sur une partie des sites</span><span><i class="vide"></i>à faire</span><span><i class="pc-dev fait pc-num">3</i>nombre de passes (ex. 3e revue)</span></p></div>
+<p class="pc-legende"><span><i class="pc-dev fait"></i>développement fait</span><span><i class="pc-debug fait"></i>débogage fait</span><span><i class="partiel pc-dev"></i>fait sur une partie des sites</span><span><i class="vide"></i>à faire</span><span><i class="pc-dev fait pc-num">3</i>n° de l'approche utilisée (méthode améliorée après mesure de la conso)</span></p></div>
 <div class="pc-grille">
 <div class="pc-l pc-tete pc-groupes"><span></span><span class="pc-gdev">Développement</span><span class="pc-gdebug">Débogage</span><span></span></div>
 <div class="pc-l pc-tete"><span class="pc-nom">Restaurant</span>${ETAPES.map((x) => `<span class="pc-h">${x.nom}</span>`).join('')}<span class="pc-etat">Débug</span></div>
 ${lignes}
 </div>
 <div class="pc-tip" role="tooltip" hidden></div>
-<p class="pc-note">Clique sur un restaurant pour voir ses 3 sites. Survole une case pour le détail de l'étape. Débogage : phase 1 pour les restaurants 1 à 4, phase 2 pour les restaurants 5 à 8.</p>`;
+<p class="pc-note">Clique sur un restaurant pour voir ses 3 sites. Survole une case pour le détail de l'étape et ce que l'approche a changé. Pas de chiffre = approche 1. Développement : 6 approches successives (point de départ, méthode sobre, tests A à I, hook de lecture). Débogage : approche 1 pour les restaurants 1 à 4, approche 2 pour les restaurants 5 à 8.</p>`;
 
   const css = `
 .onglets{display:flex;gap:.25rem;border-bottom:1px solid var(--line);margin:0 0 1.5rem;overflow-x:auto}
