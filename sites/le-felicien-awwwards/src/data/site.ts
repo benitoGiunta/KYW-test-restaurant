@@ -22,7 +22,7 @@ export const site = {
   siteClient: 'https://www.lefelicien.be',
   facebook: 'https://www.facebook.com/lefelicienrestaurant/',
   instagram: 'https://www.instagram.com/le.felicien/',
-  credit: 'Photos et illustration : Le Félicien',
+  credit: 'Photos et visuels : Le Félicien',
   placeholder: false,
 };
 

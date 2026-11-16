@@ -300,7 +300,7 @@ export const site: Restaurant = {
   photos: [
     photo('/photos/pates-brasserie.webp', 'Assiette de pâtes et légumes sur un comptoir, arrière-plan flou (photo du restaurant, 2020)', 1800, 914),
     photo('/photos/salle-bar.webp', "clients attablés dans un bar animé, lumières chaudes", 1600, 1067, true),
-    photo('/photos/illustration-carte.webp', "Illustration dessinée de la salle, couverture de la carte d'automne 2026", 1000, 1414),
+    photo('/photos/illustration-carte.webp', "Dessin de la salle, couverture de la carte d'automne 2026", 1000, 1414),
     photo('/photos/galerie-ingredients.webp', "oignon rouge, herbes et poivre sur une planche en bois", 1200, 800, true),
     photo('/photos/galerie-cafe.webp', "un café sur une table en bois", 1200, 800, true),
     photo('/photos/galerie-framboises.webp', "framboises dans une tasse blanche", 1200, 800, true),

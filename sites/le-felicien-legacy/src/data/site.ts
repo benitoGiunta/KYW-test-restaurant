@@ -70,6 +70,6 @@ export const evenements = { prix: `27${NB}€` };
 
 export const photos = {
   hero: { src: 'pates-brasserie', w: 1800, h: 914, alt: 'Assiette de pâtes et légumes sur un comptoir, arrière-plan flou' },
-  carte: { src: 'illustration-carte', w: 1000, h: 1414, alt: 'Illustration dessinée de la salle, couverture de la carte d’automne 2026' },
+  carte: { src: 'illustration-carte', w: 1000, h: 1414, alt: 'Dessin de la salle, couverture de la carte d’automne 2026' },
   salle: { src: 'salle-bar', w: 1600, h: 1067, alt: 'Clients attablés dans un bar animé, lumières chaudes' },
 };
