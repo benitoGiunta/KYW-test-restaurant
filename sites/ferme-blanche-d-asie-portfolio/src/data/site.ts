@@ -125,7 +125,6 @@ export const site: Restaurant = {
     { texte: 'Accueil agréable, cadre reposant, menus variés et délicieux. Prix très abordable. Je reviendrai.', source: 'Resto.be' },
   ],
   notes: [
-    { source: 'Resto.be', note: '9,1/10', nombre: '201 avis', aConfirmer: true },
     { source: 'Trouve Ton Resto', note: '4,4/5', nombre: '6 avis', aConfirmer: false },
   ],
   photos: [

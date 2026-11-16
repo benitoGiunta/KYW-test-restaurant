@@ -2,7 +2,7 @@
 // Source : data/restaurants/ferme-blanche-d-asie/donnees.json et dossier.md (recherche du 09/11/2026).
 // Hypothèses : aucune donnée fictive. Histoire, fondateurs, chef, année d'ouverture, baseline : inconnus, donc absents.
 // Écarts à signaler (voir RAPPORT.md) : nom de plat tronqué « Potage crème nid d », fourchettes de prix du dossier
-// différentes de celles de la carte copiée, avis Resto.be « à confirmer ».
+// différentes de celles de la carte copiée, note Resto.be retirée (source non fiable).
 import carteJson from './carte.json';
 
 export const site = {
@@ -55,7 +55,7 @@ export const avis = [
   { texte: 'Cadre sympathique et épuré. Service impeccable', source: 'Resto.be' },
   { texte: 'Très bon chinois, carte variée, grand parking et surtout commande via une tablette ce qui permet de déterminer le rythme et de prendre son temps... ou pas pour les pressés.', source: 'Trouve Ton Resto' },
 ];
-export const notes = { resto: '9,1/10 sur 201 avis (Resto.be, à confirmer)', ttr: '4,4/5 sur 6 avis (Trouve Ton Resto)' };
+export const notes = { ttr: '4,4/5 sur 6 avis (Trouve Ton Resto)' };
 
 export const eur = (n: number) => n.toLocaleString('fr-BE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(/\s/g, ' ') + ' €';
 export const eur0 = (n: number) => `${n} €`;
