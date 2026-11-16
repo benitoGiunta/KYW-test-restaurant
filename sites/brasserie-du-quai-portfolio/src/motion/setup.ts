@@ -43,7 +43,8 @@ function fitNom() {
       // Révision 1 (F0-1) : un parent `display: contents` (mobile) a une clientWidth de 0 ; on mesure le premier ancêtre réel.
       let parent = el.parentElement;
       while (parent && getComputedStyle(parent).display === 'contents') parent = parent.parentElement;
-      const box = parent?.clientWidth || 0;
+      const cs = parent ? getComputedStyle(parent) : null;
+      const box = parent ? parent.clientWidth - (parseFloat(cs!.paddingLeft) || 0) - (parseFloat(cs!.paddingRight) || 0) : 0; // largeur utile, marges latérales exclues
       if (!box) { el.style.fontSize = ''; continue; } // pas de boîte mesurable : on garde la taille CSS
       el.style.fontSize = '100px';
       el.style.width = 'max-content';

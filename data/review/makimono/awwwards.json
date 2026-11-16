@@ -1,2 +1,99 @@
-{"restaurant":"makimono","variante":"awwwards","url":"https://kyw-test-restaurant.vercel.app/makimono/awwwards/","date":"2026-11-16","statut":"complete","couverture":{"pages_cibles":["accueil","carte","reservation","a-propos"],"desktop":["accueil","carte","reservation","a-propos"],"mobile":["accueil","carte","reservation","a-propos"]},"problemes":[
-{"id":"1","categorie":"brouillon","gravite":"bloquant","page":"carte","viewport":"desktop+mobile","titre":"Mention « Prix à confirmer » visible","description":"Page carte, ligne du roll dont le prix est à confirmer (Poulet Katsu, kimchi...) : texte destiné à l'équipe affiché au visiteur. Retirer l'étiquette, signaler la valeur à vérifier.","preuve":"scan-brouillon: 5 pièces. Poulet Katsu... Prix à con[firmer]","capture":"","suggestion":"Retirer l'étiquette dans Ligne.astro"}]}
+{
+ "restaurant": "makimono",
+ "variante": "awwwards",
+ "url": "https://kyw-test-restaurant.vercel.app/makimono/awwwards/",
+ "date": "2026-11-16",
+ "statut": "complete",
+ "couverture": {
+  "pages_cibles": [
+   "accueil",
+   "carte",
+   "reservation",
+   "a-propos"
+  ],
+  "desktop": [
+   "accueil",
+   "carte",
+   "reservation",
+   "a-propos"
+  ],
+  "mobile": [
+   "accueil",
+   "carte",
+   "reservation",
+   "a-propos"
+  ]
+ },
+ "problemes": [
+  {
+   "id": "1",
+   "categorie": "brouillon",
+   "gravite": "bloquant",
+   "page": "carte",
+   "viewport": "desktop+mobile",
+   "titre": "Mention « Prix à confirmer » visible",
+   "description": "Page carte, ligne du roll dont le prix est à confirmer (Poulet Katsu, kimchi...) : texte destiné à l'équipe affiché au visiteur. Retirer l'étiquette, signaler la valeur à vérifier.",
+   "preuve": "scan-brouillon: 5 pièces. Poulet Katsu... Prix à con[firmer]",
+   "capture": "",
+   "suggestion": "Retirer l'étiquette dans Ligne.astro",
+   "statut": "corrige",
+   "note": "Libellé retiré : scan-brouillon à 0 sur dist (rattrapage 16/11)"
+  },
+  {
+   "id": "2",
+   "categorie": "disposition",
+   "gravite": "important",
+   "page": "reservation",
+   "viewport": "mobile 390",
+   "titre": "Titre « Commander chez soi » tronqué",
+   "description": "h2 inline grid-column 1/7 : « Commander » rogné (204 px pour 171 visibles) ; colonnes texte/photo inline restées en deux colonnes étroites sur mobile (a-propos, carte, reservation).",
+   "preuve": "mesure scrollWidth>clientWidth + planche",
+   "capture": ".shots-a4-makimono-awwwards/reservation/planche.png",
+   "suggestion": "Empiler les blocs inline sous 820 px",
+   "statut": "corrige",
+   "note": "Règle .grille > [style*=grid-column] en 1 / -1 sous 820 px (site.css), photos du trio a-propos exclues (.trio). Planches reservation/a-propos/carte relues, mesure 390 px sans débordement."
+  },
+  {
+   "id": "3",
+   "categorie": "contenu",
+   "gravite": "mineur",
+   "page": "toutes",
+   "viewport": "desktop+mobile",
+   "titre": "Horaires, prix et adresse non sourcés dans ce lot",
+   "description": "Valeurs conservées telles quelles (12 h à 14 h 30 · 18 h à 22 h, prix de la carte 2026, rue Saint-Loup 14, 0483 03 88 47).",
+   "preuve": "relecture",
+   "capture": "",
+   "suggestion": "Vérifier auprès du restaurant",
+   "statut": "a_verifier",
+   "note": "À vérifier avec le restaurant avant mise en ligne"
+  },
+  {
+   "id": "4",
+   "categorie": "fonctionnel",
+   "gravite": "mineur",
+   "page": "reservation",
+   "viewport": "desktop+mobile",
+   "titre": "Formulaire en mailto, liens de commande externes",
+   "description": "Liens internes et ancres contrôlés (0 lien mort) ; le formulaire ouvre la messagerie (mention présente) ; liens Deliverect/Ordering Club externes non testés.",
+   "preuve": "script liens",
+   "capture": "",
+   "suggestion": "RAS",
+   "statut": "laisse",
+   "note": "Comportement attendu pour une maquette sans back-end"
+  },
+  {
+   "id": "5",
+   "categorie": "animation",
+   "gravite": "mineur",
+   "page": "accueil",
+   "viewport": "desktop",
+   "titre": "Cartes à défilement et en-tête flou",
+   "description": "Planches relues : pas de saut ni de contenu invisible ; 0 violation de bords.",
+   "preuve": "planches",
+   "capture": "",
+   "suggestion": "RAS",
+   "statut": "laisse",
+   "note": "Aucun défaut constaté"
+  }
+ ]
+}
