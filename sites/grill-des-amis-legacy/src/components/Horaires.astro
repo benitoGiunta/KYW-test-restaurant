@@ -2,11 +2,11 @@
 import { horaires } from '../data/site';
 ---
 <dl class="sched">
-  {horaires.map((j) => (
+  {horaires.filter((j) => j.ouvert).map((j) => (
     <div class:list={['sched__row', !j.ouvert && 'is-closed']} data-jour={j.jour}>
       <dt>{j.nom}</dt>
       <dd>
-        {j.ouvert ? (<><time>{j.midi}</time> et <time>{j.soir}</time></>) : 'Fermé (à confirmer)'}
+        <time>{j.midi}</time> et <time>{j.soir}</time>
       </dd>
     </div>
   ))}

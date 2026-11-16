@@ -31,7 +31,7 @@ export const nav = [
   { href: 'contact/', label: 'Contact' },
 ];
 
-// Lundi, jeudi, vendredi, samedi : site actuel (pied de page). Mardi, mercredi, dimanche fermés : déduit, à confirmer.
+// Lundi, jeudi, vendredi, samedi : site actuel (pied de page). Autres jours : non publiés, non affichés.
 const service = { midi: '12 h 00 à 14 h 00', soir: '18 h 00 à 21 h 30' };
 export const horaires = [
   { jour: 1, nom: 'Lundi', ouvert: true, ...service },
