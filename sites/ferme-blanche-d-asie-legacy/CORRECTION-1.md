@@ -1,2 +1,2 @@
-id | catégorie | décision | changement | preuve
-(aucun problème relevé : scan brouillon legacy = 0, texte visible des 5 pages relu, cohérent avec donnees.json)
+id | categorie | decision | changement | preuve
+(aucun probleme ; scan brouillon 0 ; faits verifies contre donnees.json)
