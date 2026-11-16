@@ -2,7 +2,7 @@
 // Hypothèses : (1) fondation 2017 (presse : Le Vif, Juliette & Victor), la fiche Mapstr « 2023 » est écartée ;
 // (2) téléphone 0476/620182 (site actuel) ; 081/22 91 81 (annuaires) non repris ; (3) prix des assiettes à la carte,
 // carte des vins, équipe actuelle : inconnus, rien d'inventé : seul le menu affiché du 12 au 14 novembre 2026 est publié ;
-// (4) réservation : lien vers le site du client (outil Tablebooker ou Zenchef à confirmer), pas de formulaire.
+// (4) réservation : lien vers le site du client, pas de formulaire.
 // Aucun champ placeholder : tout vient du dossier.
 export const site = {
   nom: 'Pépite, cave à manger',
