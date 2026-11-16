@@ -71,7 +71,7 @@ export const groupes = [
   ] },
 ];
 // Plat à confirmer (prix d'une ligne ambiguë du PDF)
-groupes[1].rubriques[0].items.forEach((p) => { if (p.nom === 'Margarita') p.desc = 'Version à partager, prix à confirmer'; });
+groupes[1].rubriques[0].items.forEach((p) => { if (p.nom === 'Margarita') p.desc = 'Version à partager'; });
 
 export const signature = [
   { nom: 'Boulets liégeois', desc: 'Porc et bœuf maison, sauce liégeoise au sirop de Liège, frites maison à double cuisson', prix: euro('16.50') + ' la pièce' },
