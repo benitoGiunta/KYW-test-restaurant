@@ -21,7 +21,6 @@ export const site = {
   commandeUrl: 'https://www.sanganamur.be',
   planUrl: 'https://www.google.com/maps/search/?api=1&query=Rue+Saint-Loup+8%2C+5000+Namur',
   reseaux: [] as { nom: string; url: string }[],
-  credit: 'Photos du restaurant, origine à confirmer',
   avisGoogle: { note: '4,6', nombre: '892', source: 'Rankeat, 4 mars 2026' },
 };
 
@@ -88,7 +87,7 @@ export const carte: Categorie[] = [
 
 /** Avis réels repris de data/restaurants/sanga/donnees.json (extraits, source et date). */
 export const avis = [
-  { texte: 'Un vrai régal ! Autant à emporter que sur place ! (orthographe rectifiée)', source: 'client Takeaway.com', date: '1er novembre 2026' },
+  { texte: 'Un vrai régal ! Autant à emporter que sur place !', source: 'client Takeaway.com', date: '1er novembre 2026' },
   { texte: 'Excellent et délai respecté […]', source: 'client Takeaway.com', date: '16 août 2026' },
   { texte: 'Ce fut vraiment une bonne surprise !', source: 'blog Une fille sans chichis', date: 'avril 2018' },
 ];
