@@ -151,12 +151,10 @@ export const site: Restaurant = {
     'Des soirées aux bougies, sans gaz ni électricité, relayées par Le Vif en 2022.',
   ],
   vins: [
-    { nom: 'Blanc vif', ingredients: "vin d'auteur, domaine et cépage à renseigner", prix: '7 €', famille: 'blanc', placeholder: true },
-    { nom: 'Blanc de caractère', ingredients: "vin d'auteur, domaine et cépage à renseigner", prix: '9 €', famille: 'blanc', placeholder: true },
-    { nom: 'Orange', ingredients: "vin de macération, domaine à renseigner", prix: '8 €', famille: 'orange', placeholder: true },
-    { nom: 'Rouge léger', ingredients: "vin d'auteur, domaine et cépage à renseigner", prix: '7,50 €', famille: 'rouge', placeholder: true },
-    { nom: 'Rouge de garde', ingredients: "vin d'auteur, domaine et cépage à renseigner", prix: '12 €', famille: 'rouge', placeholder: true },
-    { nom: 'Pétillant', ingredients: 'vin vivant, domaine à renseigner', prix: '9 €', famille: 'bulles', placeholder: true },
+    { nom: 'Blanc', ingredients: "vins d'auteurs, élaborés dans le respect du vivant", prix: '', famille: 'blanc', placeholder: false },
+    { nom: 'Rouge', ingredients: "vins d'auteurs, élaborés dans le respect du vivant", prix: '', famille: 'rouge', placeholder: false },
+    { nom: 'Orange', ingredients: "vins d'auteurs, élaborés dans le respect du vivant", prix: '', famille: 'orange', placeholder: false },
+    { nom: 'Bulles', ingredients: "vins d'auteurs, élaborés dans le respect du vivant", prix: '', famille: 'bulles', placeholder: false }
   ],
   soirees: [
     { nom: 'Samedi midi', description: 'Le samedi, la boutique ouvre dès 10h30 et la table peut s\'ouvrir à midi.', quand: 'sur demande', placeholder: false },
