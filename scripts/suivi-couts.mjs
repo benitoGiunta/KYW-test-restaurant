@@ -74,6 +74,29 @@ ${lim.repartition_modeles ? `<p class="pc-legende cx-mix"><b>Modèles du chantie
 <p class="pc-note">${esc(lim.methode || '')}</p>`;
   })() : '<p class="pc-note">Estimation du prix d\'une limite hebdomadaire en cours de calcul.</p>';
 
+  // Donut : restaurant moyen avec la dernière approche dev et la dernière approche correction.
+  const derDev = parDev.at(-1)?.k, derDbg = parDbg.at(-1)?.k;
+  const rDev = chantiers.filter((c) => approcheDev[c.ordre] === derDev && !['Portfolio', 'Préparation', 'Pilotage'].includes(c.groupe));
+  const nDev = new Set(rDev.map((c) => c.ordre)).size || 1;
+  const somme = (ks) => rDev.reduce((a, c) => a + ks.reduce((b, k) => b + (c[k] || 0), 0), 0) / nDev;
+  const corrParResto = data.filter((r) => r.sites.every((x) => x.aDbg === derDbg)).map((r) => r.debug);
+  const parts = [
+    { nom: 'Construction', v: somme(['t_construction']), c: 'var(--d1)' },
+    { nom: 'Revue et captures', v: somme(['t_revue', 't_captures']), c: 'var(--d2)' },
+    { nom: 'Révision', v: somme(['t_revision']), c: 'var(--d4)' },
+    { nom: 'Recherche client, orchestration, publication', v: somme(['t_recherche', 't_orchestration', 't_publication', 't_lecons', 't_preparation']), c: 'var(--d5)' },
+    { nom: 'Correction (identification + rectification)', v: moy(corrParResto), c: 'var(--d3)' },
+  ];
+  const totD = parts.reduce((a, x) => a + x.v, 0), devD = totD - parts.at(-1).v;
+  const pctL = (x, L) => `${((x / L) * 100).toFixed(2).replace('.', ',')} %`;
+  const L = lim?.limite_hebdo_dollars;
+  const C = 2 * Math.PI * 70; let cumul = 0;
+  const arcs = parts.map((x) => { const len = (x.v / totD) * C; const gap = len > 4 ? 2 : 0; const o = `<circle r="70" cx="90" cy="90" fill="none" stroke="${x.c}" stroke-width="26" stroke-dasharray="${Math.max(len - gap, 0.8)} ${C}" stroke-dashoffset="${-cumul}" transform="rotate(-90 90 90)" data-tip="${esc(`${x.nom}\n${eur(x.v)} · ${String(Math.round((x.v / totD) * 1000) / 10).replace('.', ',')} % du restaurant${L ? `\n${pctL(x.v, L.estimation)} d'une limite hebdo` : ''}`)}" tabindex="0"/>`; cumul += len; return o; }).join('');
+  const donut = `<h2>Un restaurant avec les dernières approches</h2>
+<div class="cx-donut"><svg viewBox="0 0 180 180" role="img" aria-label="${esc(`Coût moyen d'un restaurant : ${eur(totD)}, dont développement ${eur(devD)} et correction ${eur(parts.at(-1).v)}`)}">${arcs}<text x="90" y="84" text-anchor="middle" class="cx-dt">${eur(totD)}</text><text x="90" y="104" text-anchor="middle" class="cx-ds">${L ? `${pctL(totD, L.estimation)} d'une limite` : 'par restaurant'}</text></svg>
+<div><ul class="cx-dl">${parts.map((x) => `<li><i style="background:${x.c}"></i><span>${esc(x.nom)}</span><b>${eur(x.v)}</b><small>${String(Math.round((x.v / totD) * 1000) / 10).replace('.', ',')} %${L ? ` · ${pctL(x.v, L.estimation)} limite` : ''}</small></li>`).join('')}</ul>
+<div class="synthese cx-dk"><div class="tuile"><b>${eur(devD)}</b><span>développement (approche ${derDev}, moyenne de ${nDev} restaurants)${L ? ` · ${pctL(devD, L.estimation)} d'une limite hebdo` : ''}</span></div><div class="tuile"><b>${eur(parts.at(-1).v)}</b><span>correction (approche ${derDbg}, moyenne de ${corrParResto.length} restaurants)${L ? ` · ${pctL(parts.at(-1).v, L.estimation)} d'une limite hebdo` : ''}</span></div><div class="tuile"><b>${eur(totD)}</b><span>par restaurant (3 sites)${L ? ` · ${pctL(totD, L.estimation)} d'une limite hebdo (${pctL(totD, L.haut)} à ${pctL(totD, L.bas)})` : ''}</span></div></div></div></div>`;
+
   // Barres de coût par restaurant (dev + correction), dépliables par site.
   const maxR = Math.max(...data.map((r) => r.dev + r.debug), 0.01);
   const barre = (dev, debug, max, nom) => `<span class="cx-track">${dev ? `<i class="cx-s cx-dev" style="flex-basis:${(dev / max) * 100}%" data-tip="${esc(`${nom}\nDéveloppement : ${eur(dev)}`)}" tabindex="0"></i>` : ''}${debug ? `<i class="cx-s cx-dbg" style="flex-basis:${(debug / max) * 100}%" data-tip="${esc(`${nom}\nCorrection : ${eur(debug)}`)}" tabindex="0"></i>` : ''}</span>`;
@@ -97,6 +120,7 @@ ${r.sites.map((s) => `<div class="cx-l cx-site"><span class="cx-nom">${NOM_V[s.v
 <div class="tuile"><b>${eur(parDbg[0]?.moy / 3)} → ${eur(dbgActuel)}</b><span>correction par site, approche 1 → ${parDbg.length}</span></div>
 </div>
 ${kpiLimite}
+${donut}
 <h2>Coût par restaurant</h2>
 <p class="pc-legende"><span><i class="cx-dev"></i>développement</span><span><i class="cx-dbg"></i>correction</span><span class="pc-sep">Clique sur un restaurant pour ses 3 sites ; survole une barre pour le montant.</span></p>
 <div class="cx-grille">${lignes}</div>
@@ -107,6 +131,18 @@ ${global}
 <p class="pc-note">Coûts au tarif API, mesurés dans les transcripts. Par site = coût du restaurant divisé par 3 (la recherche client et l'orchestration communes sont réparties). Hors gabarits du portfolio (${eur(chantiers.filter((c) => c.groupe === 'Portfolio').reduce((a, c) => a + c.cout, 0), 0)}), préparation et pilotage du projet. Ferme Blanche legacy : coût de la reprise (approche 4).</p>`;
 
   const css = `
+:root{--d1:#2a78d6;--d2:#eb6834;--d3:#1baf7a;--d4:#eda100;--d5:#e87ba4}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--d1:#3987e5;--d2:#d95926;--d3:#199e70;--d4:#c98500;--d5:#d55181}}
+:root[data-theme="dark"]{--d1:#3987e5;--d2:#d95926;--d3:#199e70;--d4:#c98500;--d5:#d55181}
+.cx-donut{display:grid;grid-template-columns:minmax(180px,260px) 1fr;gap:1.5rem;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1rem}
+.cx-donut svg{width:100%;height:auto}.cx-donut circle:hover,.cx-donut circle:focus-visible{stroke-width:30;outline:none}
+.cx-dt{font:700 17px var(--font);fill:var(--fg)}.cx-ds{font:10px var(--font);fill:var(--muted)}
+.cx-dl{list-style:none;margin:0 0 .8rem;padding:0;display:grid;gap:.35rem}
+.cx-dl li{display:grid;grid-template-columns:.9rem 1fr auto;column-gap:.5rem;align-items:baseline;font-size:.86rem}
+.cx-dl i{width:.8rem;height:.8rem;border-radius:3px;align-self:center}.cx-dl b{font-variant-numeric:tabular-nums}
+.cx-dl small{grid-column:2/4;color:var(--muted);font-size:.74rem}
+.cx-dk{margin:0}.cx-dk .tuile b{font-size:1.3rem}
+@media (max-width:720px){.cx-donut{grid-template-columns:1fr}.cx-donut svg{max-width:240px;margin:0 auto}}
 .cx-dev{--c:var(--s-dev);background:var(--s-dev)}.cx-dbg{--c:var(--s-debug);background:var(--s-debug)}
 .pc-legende i.cx-dev,.pc-legende i.cx-dbg{width:.8em;height:.8em}
 .cx-grille{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.3rem .8rem .5rem}
