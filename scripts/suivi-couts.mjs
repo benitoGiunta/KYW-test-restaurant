@@ -70,6 +70,7 @@ export function couts({ R, restos, esc }) {
 <div class="tuile"><b>≈ ${mois(L, siteActuel)} sites</b><span>par mois avec 2 abonnements, 4 semaines, 80 % consacrés aux sites (fourchette ${mois(bas, siteActuel)} à ${mois(haut, siteActuel)})</span></div>
 <div class="tuile"><b>≈ ${s(L, siteMoyen)} sites</b><span>par limite hebdo au coût moyen de tout le chantier (${eur(siteMoyen)} par site) ; ${mois(L, siteMoyen)} par mois dans les mêmes conditions</span></div>
 </div>
+${lim.repartition_modeles ? `<p class="pc-legende cx-mix"><b>Modèles du chantier (dev + correction, hors portfolio)</b>${Object.entries(lim.repartition_modeles).map(([m, x]) => `<span>${esc(m)} : ${Math.round(x.part_cout * 100)} % du coût · ${Math.round(x.part_jetons * 100)} % des jetons</span>`).join('')}</p>` : ''}
 <p class="pc-note">${esc(lim.methode || '')}</p>`;
   })() : '<p class="pc-note">Estimation du prix d\'une limite hebdomadaire en cours de calcul.</p>';
 
@@ -121,7 +122,7 @@ ${global}
 .cx-site .cx-track{height:9px}
 .cx-s:hover,.cx-s:focus-visible{outline:2px solid var(--fg);outline-offset:1px}
 .cx-val{font-size:.78rem;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}.cx-val small{font-size:.7rem}
-.cx-unite{margin:0 0 1rem}
+.cx-unite{margin:0 0 1rem}.cx-mix b{flex-basis:100%;color:var(--fg)}
 .cx-fig{margin:0 0 1.25rem;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem}
 .cx-fig figcaption{display:flex;flex-wrap:wrap;gap:.2rem .75rem;align-items:baseline;margin-bottom:.6rem}.cx-fig figcaption small{color:var(--muted);font-size:.78rem}
 .cx-cols{display:flex;align-items:flex-end;gap:6px;height:190px;padding-top:1.2rem}

@@ -103,7 +103,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:2rem}
 .cx-site .cx-track{height:9px}
 .cx-s:hover,.cx-s:focus-visible{outline:2px solid var(--fg);outline-offset:1px}
 .cx-val{font-size:.78rem;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}.cx-val small{font-size:.7rem}
-.cx-unite{margin:0 0 1rem}
+.cx-unite{margin:0 0 1rem}.cx-mix b{flex-basis:100%;color:var(--fg)}
 .cx-fig{margin:0 0 1.25rem;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem}
 .cx-fig figcaption{display:flex;flex-wrap:wrap;gap:.2rem .75rem;align-items:baseline;margin-bottom:.6rem}.cx-fig figcaption small{color:var(--muted);font-size:.78rem}
 .cx-cols{display:flex;align-items:flex-end;gap:6px;height:190px;padding-top:1.2rem}
@@ -121,7 +121,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:2rem}
 </style>
 <div class="wrap">
 <h1>Suivi du projet KYW Restaurants</h1>
-<p class="sub">Refonte de 20 restaurants namurois en 3 variantes. Mis à jour le 2026-11-16 22:27 UTC depuis l'état du dépôt. </p>
+<p class="sub">Refonte de 20 restaurants namurois en 3 variantes. Mis à jour le 2026-11-16 22:29 UTC depuis l'état du dépôt. </p>
 <ul class="liens"><li>Index des restaurants : <a href="https://kyw-test-restaurant.vercel.app/">https://kyw-test-restaurant.vercel.app/</a></li><li>Galerie des gabarits : <a href="https://kyw-test-restaurant.vercel.app/gabarits/">https://kyw-test-restaurant.vercel.app/gabarits/</a></li><li>Cette page sur Vercel : <a href="https://kyw-test-restaurant.vercel.app/suivi/">https://kyw-test-restaurant.vercel.app/suivi/</a></li><li>Consommation de jetons : <a href="https://claude.ai/artifact/39eBZZyjPAnwQfhAAx2Bxq">https://claude.ai/artifact/39eBZZyjPAnwQfhAAx2Bxq</a></li></ul>
 <div class="onglets" role="tablist" aria-label="Vues du suivi"><button role="tab" aria-selected="true" data-onglet="avancement">Avancement</button><button role="tab" aria-selected="false" data-onglet="parcours">Parcours : dev et débug</button><button role="tab" aria-selected="false" data-onglet="couts">Coûts</button></div>
 <div data-panneau="avancement">
@@ -1719,7 +1719,15 @@ Corrections en ligne · libellés de brouillon 0 → 0" tabindex="0"></span><spa
 <div class="tuile"><b>20,38 $ → 6,13 $</b><span>dev par site, approche 1 → 6</span></div>
 <div class="tuile"><b>1,17 $ → 0,14 $</b><span>correction par site, approche 1 → 4</span></div>
 </div>
-<p class="pc-note">Estimation du prix d'une limite hebdomadaire en cours de calcul.</p>
+<h2>Ce que vaut une limite hebdomadaire</h2>
+<div class="synthese">
+<div class="tuile"><b>≈ 790 $</b><span>prix API d'une limite hebdomadaire (fourchette 700 $ à 950 $)</span></div>
+<div class="tuile"><b>≈ 125 sites</b><span>par limite hebdo avec la méthode actuelle (6,27 $ par site, dev + correction ; fourchette 111 à 151)</span></div>
+<div class="tuile"><b>≈ 805 sites</b><span>par mois avec 2 abonnements, 4 semaines, 80 % consacrés aux sites (fourchette 714 à 969)</span></div>
+<div class="tuile"><b>≈ 94 sites</b><span>par limite hebdo au coût moyen de tout le chantier (8,40 $ par site) ; 602 par mois dans les mêmes conditions</span></div>
+</div>
+<p class="pc-legende cx-mix"><b>Modèles du chantier (dev + correction, hors portfolio)</b><span>Sonnet 5.5 : 52 % du coût · 53 % des jetons</span><span>Opus 5.5 : 45 % du coût · 28 % des jetons</span><span>Fable 5.1 : 2 % du coût · 0 % des jetons</span><span>Haiku 5.5 : 1 % du coût · 18 % des jetons</span></p>
+<p class="pc-note">Méthode : taux d'utilisation hebdomadaire du compte (rate_limit_event, au centième) relevé au début et à la fin de périodes de production, comparé au coût API mesuré des agents actifs sur la même période. Restaurants 11 à 20 (10/11) : 24 points pour 180,51 $ ; restaurants 3 à 6 (01/11) : 13 points pour 110,66 $ ; soit 7,87 $ par point de limite, ≈ 790 $ pour 100 %. Fourchette 700 à 950 $ : ±1 point d'arrondi et consommation non mesurée (pilotage, reporting, sessions hors dépôt), qui rend le coût réel par point plutôt plus élevé. Mix de modèles du chantier mesuré : Sonnet 52 % du coût, Opus 45 %, Fable 2 %, Haiku 1 %. La limite pondère les modèles : un chantier plus orienté Haiku/Sonnet ferait davantage de sites par limite.</p>
 <h2>Coût par restaurant</h2>
 <p class="pc-legende"><span><i class="cx-dev"></i>développement</span><span><i class="cx-dbg"></i>correction</span><span class="pc-sep">Clique sur un restaurant pour ses 3 sites ; survole une barre pour le montant.</span></p>
 <div class="cx-grille"><details class="cx-r"><summary class="cx-l"><span class="cx-nom"><span class="pc-rang">1</span><b>Les Potes au Feu</b></span><span class="cx-track"><i class="cx-s cx-dev" style="flex-basis:84.09199172411314%" data-tip="Les Potes au Feu
