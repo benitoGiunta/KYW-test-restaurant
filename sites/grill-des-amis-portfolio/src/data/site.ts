@@ -142,7 +142,7 @@ export const site: Restaurant = {
     photo('/photos/grill-flammes.webp', 'Une pince retourne une pièce de viande sur le grill, les flammes au premier plan', 1800, 1200, 'Le grill, au feu de bois'),
     photo('/photos/plat-entrecote.webp', 'Entrecôte grillée, sauce au poivre dans sa casserole en cuivre, purée et légumes sur plat vert', 1800, 1518, 'L’entrecôte au feu de bois'),
     photo('/photos/plat-viande-vin.webp', 'Une pièce de viande grillée dressée à côté d’un verre de vin rouge', 1200, 1800),
-    photo('/photos/salle-comptoir.webp', 'La salle vue depuis le comptoir, tables dressées et lumière chaude', 1800, 1200, 'La salle, vue du comptoir'),
+    photo('/photos/salle-comptoir.webp', 'La salle vue depuis le comptoir, tables dressées et lumière chaude', 1200, 1800, 'La salle, vue du comptoir'),
     photo('/photos/salle-buches.webp', 'Un mur de bûches empilées dans la salle du restaurant', 1200, 1800, 'Le mur de bûches'),
     photo('/photos/terrasse.webp', 'La terrasse du restaurant, chaises disposées autour des tables', 1800, 1198, 'La terrasse'),
     photo('/photos/table-verres.webp', 'Verres de vin rouge posés sur une table dressée', 1198, 1800),

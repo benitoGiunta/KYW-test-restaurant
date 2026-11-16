@@ -16,7 +16,7 @@ import cocktails from '../assets/photos/17-cocktails-trois.jpg';
 export const photos = {
   plat: { src: plat, alt: 'Assiette de viande grillée, croquettes et légumes, avec deux verres de vin rouge.' },
   entrecote: { src: entrecote, alt: 'Pièce de viande grillée, sauce dans une petite casserole, purée et champignons sur un plateau.' },
-  salle: { src: salle, alt: 'Verres à vin suspendus et lampes rouges au plafond de la salle, baie vitrée au fond.' },
+  salle: { src: salle, alt: 'Verres à vin et photophores rouges sur une table de la salle, baie vitrée au fond.' },
   buches: { src: buches, alt: 'Une table devant un mur de bûches empilées, dans la salle du restaurant.' },
   terrasse: { src: terrasse, alt: 'La terrasse devant le restaurant, chaises colorées autour des tables.' },
   table: { src: table, alt: 'Table dressée : verres de vin, plats à partager et bougies rouges.' },
