@@ -24,7 +24,8 @@ export const nav = [
 export const jours = [
   { jour: 'Lundi', days: '1', val: 'Fermé', ferme: true },
   { jour: 'Mardi', days: '2', val: `À partir de 17${N}h${N}00` },
-  { jour: `Du mercredi au samedi`, days: '3,4,5,6', fill: `heures à confirmer` },
+  { jour: 'Du mercredi au vendredi', days: '3,4,5', val: 'Midi et soir' },
+  { jour: 'Samedi', days: '6', val: 'Nous contacter' },
   { jour: 'Dimanche', days: '0', val: `Jusqu’à 17${N}h${N}00` },
 ];
 export type PhotoId = keyof typeof photos;
