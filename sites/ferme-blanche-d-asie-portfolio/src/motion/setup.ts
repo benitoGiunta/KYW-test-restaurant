@@ -146,7 +146,7 @@ function rouleau() {
 
   root.classList.add('is-epingle');
   const scene = root.querySelector<HTMLElement>('[data-rouleau-scene]')!;
-  const course = () => Math.max(0, bande.scrollWidth - piste.clientWidth);
+  const course = () => { const cs = getComputedStyle(piste); return Math.max(0, bande.scrollWidth - (piste.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight))); };
   const glisse = gsap.to(bande, {
     x: () => -course(),
     ease: 'none',

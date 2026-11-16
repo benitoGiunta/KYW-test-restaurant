@@ -29,10 +29,26 @@ for v in $vars; do
     done
     ls "$out/$nom"/d-*.png >/dev/null 2>&1 && vus_d+=("$nom")
     ls "$out/$nom"/m-*.png >/dev/null 2>&1 && vus_m+=("$nom")
+    # contrôle automatique des bords (scripts/controle-bords.mjs) : un JSON par variante, fusion des pages et des deux vues
+    for vue in 1440 390; do
+      timeout 120 node scripts/controle-bords.mjs "$url" --viewport "$vue" --out "$out/$nom/bords-$vue.json" >/dev/null 2>&1 || true
+    done
     if ls "$out/$nom"/[dm]-*.png >/dev/null 2>&1; then
       python3 scripts/planche.py "$out/$nom/planche.png" "$out/$nom"/d-*.png "$out/$nom"/m-*.png --colonnes 4 --largeur 480 >/dev/null 2>&1
     else ratees+=("$nom"); fi
   done
+  python3 - "$slug" "$v" "$out" <<'PY2'
+import json, glob, os, sys
+slug, v, out = sys.argv[1:4]; res = {"variante": v, "pages": {}, "total": 0}
+for f in sorted(glob.glob(f"{out}/*/bords-*.json")):
+    page = f.split('/')[-2]; vue = os.path.basename(f)[6:-5]
+    try: d = json.load(open(f))
+    except Exception: res["pages"].setdefault(page, {})[vue] = {"erreur": "sortie illisible"}; continue
+    n = len(d["violations"]) + (1 if d["debordementPage"] and d["debordementPage"]["deborde"] else 0)
+    res["total"] += n; res["pages"].setdefault(page, {})[vue] = {"ok": d["ok"], "debordementPage": d["debordementPage"], "violations": d["violations"], "defilements": d["defilements"]}
+json.dump(res, open(f"data/review/{slug}/bords-{v}.json", "w"), ensure_ascii=False, indent=1)
+print(f"{v} : contrôle des bords, {res['total']} défaut(s)")
+PY2
   noms=(); for p in "${cibles[@]}"; do noms+=("$([ "$p" = "." ] && echo accueil || echo "$p" | tr '/' '-')"); done
   python3 - "$slug" "$v" "$out" "${#noms[@]}" "${noms[@]}" "--d" "${vus_d[@]}" "--m" "${vus_m[@]}" <<'PY'
 import json, sys
