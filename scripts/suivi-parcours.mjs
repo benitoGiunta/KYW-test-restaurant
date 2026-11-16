@@ -52,6 +52,8 @@ export function parcours({ R, restos, esc }) {
       const avant = rev ? (libelles(`data/review/${r.slug}/brouillon.json`, `${r.slug}/${v}`) ?? parCat.brouillon ?? 0) : null;
       const apres = rev ? libelles(`data/review/${r.slug}/brouillon-apres.json`, `${r.slug}/${v}`) : null;
       const publie = ex(`dist/${r.slug}/${v}/index.html`);
+      // Phase 1 (rangs 1-4) : les brouillons ont été relevés par un scan séparé, après la revue (2e approche).
+      const scanAPart = r.rang <= 4 && ex(`data/review/${r.slug}/brouillon.json`) ? 1 : 0;
       const n = { revue: compte(dir, /^REVUE-\d+\.md$/), revision: compte(dir, /^REVISION-\d+\.md$/) };
       const e = {
         dossier: { fait: dossier, n: 1, tip: dossier ? 'Recherche client faite (donnees.json)' : 'Dossier à faire' },
@@ -59,7 +61,7 @@ export function parcours({ R, restos, esc }) {
         revue: { fait: n.revue > 0, n: n.revue, tip: n.revue ? `${pl(n.revue, 'revue')} avant publication` : 'Pas encore revu' },
         revision: { fait: n.revision > 0, n: n.revision, tip: n.revision ? `${pl(n.revision, 'révision')} (corrections suite aux revues)` : 'Pas de révision' },
         publication: { fait: publie, n: 1, tip: publie ? 'En ligne' : 'Pas encore publié' },
-        identification: { fait: !!rev, n: rev ? 1 : 0, tip: rev ? `${pl(probs.length, 'problème')} relevé${probs.length > 1 ? 's' : ''}${Object.keys(parCat).length ? ' : ' + Object.entries(parCat).map(([c, k]) => `${NOM_CAT[c] || c} ${k}`).join(', ') : ''}${avant != null && !parCat.brouillon ? ` (+ ${pl(avant, 'libellé')} de brouillon)` : ''}` : 'Débogage à venir' },
+        identification: { fait: !!rev, n: rev ? 1 + scanAPart : 0, tip: rev ? `${scanAPart ? 'Approche 1 : revue des problèmes (agent) ; approche 2 : scan des libellés de brouillon (script), ajouté après la revue.\n' : ''}${pl(probs.length, 'problème')} relevé${probs.length > 1 ? 's' : ''}${Object.keys(parCat).length ? ' : ' + Object.entries(parCat).map(([c, k]) => `${NOM_CAT[c] || c} ${k}`).join(', ') : ''}${avant != null && !parCat.brouillon ? ` (+ ${pl(avant, 'libellé')} de brouillon)` : ''}` : 'Débogage à venir' },
         correction: { fait: nCorr > 0, n: nCorr, tip: nCorr ? `${dec.corrige} corrigé${dec.corrige > 1 ? 's' : ''}${dec.refuse ? `, ${dec.refuse} refusé${dec.refuse > 1 ? 's' : ''} (justifié)` : ''}${dec.impossible ? `, ${dec.impossible} impossible${dec.impossible > 1 ? 's' : ''}` : ''}` : 'Correction à venir' },
         republication: { fait: nCorr > 0 && publie, n: nCorr > 0 ? 1 : 0, tip: nCorr > 0 ? `Corrections en ligne${apres != null ? ` · libellés de brouillon ${avant ?? '?'} → ${apres}` : ''}` : 'À venir' },
       };
