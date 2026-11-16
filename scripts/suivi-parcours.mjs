@@ -1,40 +1,33 @@
-// Onglet « Parcours » de la page de suivi : ce qui a été fait sur chaque restaurant et chaque site,
-// en deux temps (développement, puis débogage = identification + correction), vue condensée ou détaillée.
-// Sources : data/usage/chantiers/chantiers.json (coûts de développement par site), sites/<slug>-<v>/ (revues,
-// révisions, CORRECTION-1.md), data/review/<slug>/ (problèmes, brouillons), data/usage/correction-phase1.json
-// et data/usage/phase2.json (coûts de débogage par site).
+// Onglet « Parcours » de la page de suivi : une ligne par restaurant, découpée en colonnes = étapes
+// (développement puis débogage). Une case pleine = étape faite ; un chiffre dans la case = nombre de passes
+// quand l'étape a demandé plusieurs mises en place (ex. 3 = troisième revue). Vue détaillée : chaque restaurant
+// déplié avec ses 3 sites en dessous, sur les mêmes colonnes.
+// Sources : sites/<slug>-<v>/ (REVUE-n, REVISION-n, CORRECTION-n), dist/, data/restaurants/, data/review/<slug>/.
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const VARS = ['portfolio', 'awwwards', 'legacy'];
 const NOM_V = { portfolio: 'Portfolio', awwwards: 'Awwwards', legacy: 'Inspi legacy' };
-const CATS = ['brouillon', 'contenu', 'langue', 'disposition', 'lisibilite', 'animation', 'fonctionnel'];
-const NOM_CAT = { brouillon: 'Brouillon', contenu: 'Contenu', langue: 'Langue', disposition: 'Disposition', lisibilite: 'Lisibilité', animation: 'Animation', fonctionnel: 'Fonctionnel' };
-const GRAV = { bloquant: '●', important: '▲', mineur: '○' };
-// Séries de coût, ordre catégoriel fixe (palette validée : light et dark).
-const SERIES = [
-  { k: 'construction', nom: 'Construction' },
-  { k: 'qa', nom: 'Revue et révision' },
-  { k: 'identifier', nom: 'Identification' },
-  { k: 'rectifier', nom: 'Correction' },
+const NOM_CAT = { brouillon: 'brouillon', contenu: 'contenu', langue: 'langue', disposition: 'disposition', lisibilite: 'lisibilité', animation: 'animation', fonctionnel: 'fonctionnel' };
+// Étapes, dans l'ordre des colonnes. g : groupe (dev | debug).
+const ETAPES = [
+  { k: 'dossier', nom: 'Dossier client', g: 'dev' },
+  { k: 'construction', nom: 'Construction', g: 'dev' },
+  { k: 'revue', nom: 'Revue', g: 'dev' },
+  { k: 'revision', nom: 'Révision', g: 'dev' },
+  { k: 'publication', nom: 'Publication', g: 'dev' },
+  { k: 'identification', nom: 'Identification', g: 'debug' },
+  { k: 'correction', nom: 'Correction', g: 'debug' },
+  { k: 'republication', nom: 'Republication', g: 'debug' },
 ];
 
-export function parcours({ R, restos, esc, URL_PROD }) {
+export function parcours({ R, restos, esc }) {
   const ex = (p) => existsSync(join(R, p));
   const lire = (p) => JSON.parse(readFileSync(join(R, p), 'utf8'));
-  const eur = (x) => (x == null ? '–' : `${x.toFixed(2).replace('.', ',')} $`);
-  const chantiers = ex('data/usage/chantiers/chantiers.json') ? lire('data/usage/chantiers/chantiers.json') : [];
-  const p1 = ex('data/usage/correction-phase1.json') ? lire('data/usage/correction-phase1.json') : null;
-  const p2 = ex('data/usage/phase2.json') ? lire('data/usage/phase2.json').suivi : null;
-  const coutDebug = {};
-  for (const s of p1?.agrege?.par_site || []) coutDebug[`${s.resto}|${s.variante}`] = { phase: 1, identifier: s.identifier, rectifier: s.rectifier };
-  for (const [k, s] of Object.entries(p2?.par_site || {})) coutDebug[k] = { phase: 2, identifier: s.identifier, rectifier: s.rectifier };
-  const config2 = p2?.par_restaurant || {};
-
   const compte = (dir, re) => (ex(dir) ? readdirSync(join(R, dir)).filter((f) => re.test(f)).length : 0);
   const decisions = (fichier) => {
     const d = { corrige: 0, refuse: 0, impossible: 0 };
-    if (!ex(fichier)) return null;
+    if (!ex(fichier)) return d;
     for (const l of readFileSync(join(R, fichier), 'utf8').split('\n')) {
       const c = l.split('|').map((x) => x.trim()).filter((x, i, a) => !(x === '' && (i === 0 || i === a.length - 1)));
       if (c.length < 4) continue;
@@ -44,188 +37,124 @@ export function parcours({ R, restos, esc, URL_PROD }) {
     return d;
   };
   const libelles = (fichier, cle) => { try { const x = lire(fichier)[cle]; return x ? Object.keys(x).length : 0; } catch { return null; } };
+  const pl = (n, s) => `${n} ${s}${n > 1 ? 's' : ''}`;
 
   const data = restos.map((r) => {
-    const ch = chantiers.filter((c) => c.ordre === r.rang);
-    const commun = ch.find((c) => /commun$/.test(c.chantier));
+    const dossier = ex(`data/restaurants/${r.slug}/donnees.json`);
     const sites = VARS.map((v) => {
-      const c = ch.find((x) => x.chantier.endsWith(`· ${v}`)) || {};
       const dir = `sites/${r.slug}-${v}`;
       const rev = ex(`data/review/${r.slug}/${v}.json`) ? lire(`data/review/${r.slug}/${v}.json`) : null;
       const probs = rev?.problemes || [];
-      const parCat = {}; for (const p of probs) (parCat[p.categorie] ||= []).push(p);
-      const dec = rev ? decisions(`${dir}/CORRECTION-1.md`) : null;
-      const cd = coutDebug[`${r.slug}|${v}`] || null;
-      const avant = rev ? (libelles(`data/review/${r.slug}/brouillon.json`, `${r.slug}/${v}`) ?? (parCat.brouillon || []).length) : null;
+      const parCat = {}; for (const p of probs) parCat[p.categorie] = (parCat[p.categorie] || 0) + 1;
+      const nCorr = compte(dir, /^CORRECTION-\d+\.md$/);
+      const dec = decisions(`${dir}/CORRECTION-${nCorr || 1}.md`);
+      const traites = dec.corrige + dec.refuse + dec.impossible || probs.length;
+      const avant = rev ? (libelles(`data/review/${r.slug}/brouillon.json`, `${r.slug}/${v}`) ?? parCat.brouillon ?? 0) : null;
       const apres = rev ? libelles(`data/review/${r.slug}/brouillon-apres.json`, `${r.slug}/${v}`) : null;
-      return {
-        v, url: `${URL_PROD}/${r.slug}/${v}/`,
-        dev: { construction: c.t_construction || 0, revue: c.t_revue || 0, revision: c.t_revision || 0, captures: c.t_captures || 0, publication: c.t_publication || 0, total: c.cout || 0, appels: c.appels || 0, revues: compte(dir, /^REVUE-\d+\.md$/), revisions: compte(dir, /^REVISION-\d+\.md$/) },
-        debug: rev ? { traites: dec && (dec.corrige + dec.refuse + dec.impossible) ? dec.corrige + dec.refuse + dec.impossible : probs.length, phase: cd?.phase ?? (r.rang <= 4 ? 1 : 2), problemes: probs, parCat, dec, identifier: cd?.identifier ?? null, rectifier: cd?.rectifier ?? null, avant, apres } : null,
+      const publie = ex(`dist/${r.slug}/${v}/index.html`);
+      const n = { revue: compte(dir, /^REVUE-\d+\.md$/), revision: compte(dir, /^REVISION-\d+\.md$/) };
+      const e = {
+        dossier: { fait: dossier, n: 1, tip: dossier ? 'Recherche client faite (donnees.json)' : 'Dossier à faire' },
+        construction: { fait: ex(`${dir}/RAPPORT.md`), n: 1, tip: 'Site construit' },
+        revue: { fait: n.revue > 0, n: n.revue, tip: n.revue ? `${pl(n.revue, 'revue')} avant publication` : 'Pas encore revu' },
+        revision: { fait: n.revision > 0, n: n.revision, tip: n.revision ? `${pl(n.revision, 'révision')} (corrections suite aux revues)` : 'Pas de révision' },
+        publication: { fait: publie, n: 1, tip: publie ? 'En ligne' : 'Pas encore publié' },
+        identification: { fait: !!rev, n: rev ? 1 : 0, tip: rev ? `${pl(probs.length, 'problème')} relevé${probs.length > 1 ? 's' : ''}${Object.keys(parCat).length ? ' : ' + Object.entries(parCat).map(([c, k]) => `${NOM_CAT[c] || c} ${k}`).join(', ') : ''}${avant != null && !parCat.brouillon ? ` (+ ${pl(avant, 'libellé')} de brouillon)` : ''}` : 'Débogage à venir' },
+        correction: { fait: nCorr > 0, n: nCorr, tip: nCorr ? `${dec.corrige} corrigé${dec.corrige > 1 ? 's' : ''}${dec.refuse ? `, ${dec.refuse} refusé${dec.refuse > 1 ? 's' : ''} (justifié)` : ''}${dec.impossible ? `, ${dec.impossible} impossible${dec.impossible > 1 ? 's' : ''}` : ''}` : 'Correction à venir' },
+        republication: { fait: nCorr > 0 && publie, n: nCorr > 0 ? 1 : 0, tip: nCorr > 0 ? `Corrections en ligne${apres != null ? ` · libellés de brouillon ${avant ?? '?'} → ${apres}` : ''}` : 'À venir' },
       };
+      return { v, e, debug: !!rev, traites, corriges: dec.corrige, avant: avant || 0, apres: apres || 0 };
     });
-    const somme = (f) => sites.reduce((a, s) => a + (f(s) || 0), 0);
-    const debugues = sites.filter((s) => s.debug).length;
-    return {
-      ...r, sites, commun: commun ? { recherche: commun.t_recherche || 0, orchestration: commun.t_orchestration || 0, lecons: commun.t_lecons || 0, total: commun.cout || 0 } : null,
-      config: config2[r.slug]?.config || (debugues && r.rang <= 4 ? 'phase 1' : null),
-      seg: {
-        construction: somme((s) => s.dev.construction),
-        qa: somme((s) => s.dev.revue + s.dev.revision + s.dev.captures),
-        identifier: somme((s) => s.debug?.identifier),
-        rectifier: somme((s) => s.debug?.rectifier),
-      },
-      debugues, trouves: somme((s) => s.debug?.traites), corriges: somme((s) => s.debug?.dec?.corrige),
-    };
+    // Ligne restaurant : étape faite si les 3 sites l'ont faite, partielle sinon ; chiffre = passes max.
+    const e = Object.fromEntries(ETAPES.map((x) => {
+      const faits = sites.filter((s) => s.e[x.k].fait).length;
+      const n = Math.max(...sites.map((s) => s.e[x.k].n));
+      const tip = x.k === 'dossier' ? sites[0].e.dossier.tip : sites.map((s) => `${NOM_V[s.v]} : ${s.e[x.k].tip}`).join('\n');
+      return [x.k, { fait: faits === 3, partiel: faits > 0 && faits < 3, n, tip }];
+    }));
+    return { ...r, sites, e, debugues: sites.filter((s) => s.debug).length, traites: sites.reduce((a, s) => a + s.traites * s.debug, 0), corriges: sites.reduce((a, s) => a + s.corriges, 0) };
   });
 
-  // Agrégats
-  const all = data.flatMap((r) => r.sites);
-  const devTotal = all.reduce((a, s) => a + s.dev.total, 0) + data.reduce((a, r) => a + (r.commun?.total || 0), 0);
-  const dbg = all.filter((s) => s.debug);
-  const dbgTotal = dbg.reduce((a, s) => a + (s.debug.identifier || 0) + (s.debug.rectifier || 0), 0);
-  const trouves = dbg.reduce((a, s) => a + s.debug.traites, 0);
-  const corriges = dbg.reduce((a, s) => a + (s.debug.dec?.corrige || 0), 0);
-  const brouillons = dbg.reduce((a, s) => a + (s.debug.avant || 0), 0);
-  const brouillonsRestants = dbg.reduce((a, s) => a + (s.debug.apres || 0), 0);
-  const revues = all.reduce((a, s) => a + s.dev.revues, 0), revisions = all.reduce((a, s) => a + s.dev.revisions, 0);
-  const max = Math.max(...data.map((r) => SERIES.reduce((a, x) => a + r.seg[x.k], 0)), 0.01);
+  const all = data.flatMap((r) => r.sites), dbg = all.filter((s) => s.debug);
+  const T = { sites: all.length, publies: all.filter((s) => s.e.publication.fait).length, debugues: dbg.length, traites: dbg.reduce((a, s) => a + s.traites, 0), corriges: dbg.reduce((a, s) => a + s.corriges, 0), avant: dbg.reduce((a, s) => a + s.avant, 0), apres: dbg.reduce((a, s) => a + s.apres, 0) };
 
-  const barre = (r) => {
-    const tot = SERIES.reduce((a, x) => a + r.seg[x.k], 0);
-    const segs = SERIES.filter((x) => r.seg[x.k] > 0).map((x) => `<i class="pc-s pc-${x.k}" style="flex-basis:${(r.seg[x.k] / max) * 100}%" data-tip="${esc(`${r.nom} · ${x.nom} : ${eur(r.seg[x.k])}`)}" tabindex="0"></i>`).join('');
-    return `<div class="pc-bar" role="img" aria-label="${esc(`${r.nom} : ${SERIES.map((x) => `${x.nom} ${eur(r.seg[x.k])}`).join(', ')}`)}"><span class="pc-track">${segs}</span><span class="pc-tot">${eur(tot)}</span></div>`;
-  };
-  const etat3 = (r) => `<span class="pc-3">${r.sites.map((s) => `<b class="${s.debug ? 'ok' : ''}" title="${esc(`${NOM_V[s.v]} : ${s.debug ? 'débogué' : 'développé, pas encore débogué'}`)}">${s.v[0].toUpperCase()}</b>`).join('')}</span>`;
-
-  const condense = `
-<div class="pc-legende" aria-hidden="true">${SERIES.map((x) => `<span><i class="pc-${x.k}"></i>${x.nom}</span>`).join('')}<span class="pc-sep">P · A · L = Portfolio, Awwwards, Inspi legacy ; vert = débogué</span></div>
-<div class="pc-lignes">${data.map((r) => `<div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">${r.rang}</span><b>${esc(r.nom)}</b>${r.config ? `<em>${esc(r.config === 'F' || r.config === 'H' ? `débug phase 2 · ${r.config}` : `débug ${r.config}`)}</em>` : ''}</div>${barre(r)}<div class="pc-res">${etat3(r)}${r.debugues ? `<span>${r.corriges} corrigés sur ${r.trouves}</span>` : '<span class="pc-muted">débug à venir</span>'}</div></div>`).join('')}</div>`;
-
-  const chipsCat = (s) => (!s.debug.parCat.brouillon && s.debug.avant ? `<span class="pc-chip" title="Libellés relevés par le scan des brouillons">Brouillon <b>${s.debug.avant}</b><i class="pc-g0">●</i></span>` : '') + CATS.filter((c) => s.debug.parCat[c]).map((c) => {
-    const ps = s.debug.parCat[c];
-    const g = ['bloquant', 'important', 'mineur'].map((x) => ps.filter((p) => p.gravite === x).length);
-    return `<span class="pc-chip" title="${esc(ps.map((p) => `${GRAV[p.gravite] || '·'} ${p.titre}`).join('\n'))}">${NOM_CAT[c]} <b>${ps.length}</b>${g.map((n, i) => (n ? `<i class="pc-g${i}">${['●', '▲', '○'][i]}${n}</i>` : '')).join('')}</span>`;
+  const cases = (e) => ETAPES.map((x) => {
+    const c = e[x.k];
+    const cls = c.fait ? 'fait' : c.partiel ? 'partiel' : 'vide';
+    return `<span class="pc-c pc-${x.g} ${cls}" data-tip="${esc(`${x.nom}\n${c.tip}`)}" tabindex="0">${c.n > 1 ? `<b>${c.n}</b>` : ''}</span>`;
   }).join('');
-  const decBar = (d) => {
-    if (!d) return '<span class="pc-muted">compte rendu de correction absent</span>';
-    const t = Math.max(1, d.corrige + d.refuse + d.impossible);
-    return `<div class="pc-dec" role="img" aria-label="${d.corrige} corrigés, ${d.refuse} refusés, ${d.impossible} impossibles">${d.corrige ? `<i class="d-ok" style="flex-basis:${(d.corrige / t) * 100}%"></i>` : ''}${d.refuse ? `<i class="d-ref" style="flex-basis:${(d.refuse / t) * 100}%"></i>` : ''}${d.impossible ? `<i class="d-imp" style="flex-basis:${(d.impossible / t) * 100}%"></i>` : ''}</div><small>${d.corrige} corrigés${d.refuse ? ` · ${d.refuse} refusés (justifiés)` : ''}${d.impossible ? ` · ${d.impossible} impossible${d.impossible > 1 ? 's' : ''}` : ''}</small>`;
-  };
-  const carteSite = (s) => `<div class="pc-site"><h4>${NOM_V[s.v]} <a href="${s.url}" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>${eur(s.dev.construction)}</span></li>
-<li class="pc-qa"><b>Revue${s.dev.revues > 1 ? ` ×${s.dev.revues}` : ''}</b><span>${eur(s.dev.revue + s.dev.captures)}</span></li>
-<li class="pc-qa"><b>Révision${s.dev.revisions > 1 ? ` ×${s.dev.revisions}` : ''}</b><span>${eur(s.dev.revision)}</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage${s.debug ? ` · phase ${s.debug.phase}` : ''}</span>${s.debug ? `<ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>${s.debug.traites} point${s.debug.traites > 1 ? 's' : ''} · ${eur(s.debug.identifier)}</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>${eur(s.debug.rectifier)}</span></li></ol>
-<div class="pc-chips">${chipsCat(s) || '<span class="pc-muted">aucun problème relevé</span>'}</div>
-${s.debug.traites ? decBar(s.debug.dec) : ''}
-${s.debug.avant != null ? `<small class="pc-br">Libellés de brouillon : ${s.debug.avant} → ${s.debug.apres ?? '?'}</small>` : ''}` : '<p class="pc-muted pc-todo">Pas encore débogué</p>'}</div></div>`;
-  const detaille = `<p class="pc-legende"><span><i class="pc-g0b">●</i>bloquant</span><span><i class="pc-g1b">▲</i>important</span><span><i class="pc-g2b">○</i>mineur</span><span><i class="d-ok"></i>corrigé</span><span><i class="d-ref"></i>refusé (justifié)</span><span><i class="d-imp"></i>impossible</span><span class="pc-sep">Survole une catégorie pour lire les problèmes.</span></p>
-<div class="pc-restos">${data.map((r, i) => `<details class="pc-resto"${i === 0 ? ' open' : ''}><summary><span class="pc-rang">${r.rang}</span><b>${esc(r.nom)}</b>${etat3(r)}<span class="pc-sum">dev ${eur(r.seg.construction + r.seg.qa)}${r.debugues ? ` · débug ${eur(r.seg.identifier + r.seg.rectifier)} · ${r.corriges} corrigés sur ${r.trouves} traités` : ''}</span></summary>
-${r.commun ? `<p class="pc-commun">Commun au restaurant : recherche client ${eur(r.commun.recherche)} · orchestration ${eur(r.commun.orchestration)}${r.commun.lecons ? ` · leçons ${eur(r.commun.lecons)}` : ''}</p>` : ''}
-<div class="pc-sites">${r.sites.map(carteSite).join('')}</div></details>`).join('')}</div>`;
-
-  const flux = `<div class="pc-flux" aria-label="Étapes du parcours d'un site">
-<div class="pc-phase"><span class="pc-lt">Développement</span><div class="pc-noeuds">
-<div class="pc-n pc-construction"><b>Construction</b><small>${all.length} sites</small></div><span class="pc-fl">→</span>
-<div class="pc-n pc-qa"><b>Revue</b><small>${revues} revues</small></div><span class="pc-fl">→</span>
-<div class="pc-n pc-qa"><b>Révision</b><small>${revisions} révisions</small></div><span class="pc-fl">→</span>
-<div class="pc-n pc-pub"><b>Publication</b><small>${all.length} en ligne</small></div></div></div>
-<div class="pc-phase"><span class="pc-lt">Débogage</span><div class="pc-noeuds">
-<div class="pc-n pc-identifier"><b>Identification</b><small>${dbg.length} sites · ${trouves} points</small></div><span class="pc-fl">→</span>
-<div class="pc-n pc-rectifier"><b>Correction</b><small>${corriges} corrigés · ${brouillons} libellés retirés</small></div><span class="pc-fl">→</span>
-<div class="pc-n pc-pub"><b>Republication</b><small>${brouillonsRestants} libellé restant</small></div></div></div></div>`;
+  const etat = (r) => (r.debugues ? `${r.corriges}/${r.traites} corrigés` : 'débug à venir');
+  const lignes = data.map((r) => `<details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">${r.rang}</span><b>${esc(r.nom)}</b></span>${cases(r.e)}<span class="pc-etat">${etat(r)}</span></summary>
+${r.sites.map((s) => `<div class="pc-l pc-site"><span class="pc-nom">${NOM_V[s.v]}</span>${cases(s.e)}<span class="pc-etat">${s.debug ? `${s.corriges}/${s.traites}` : ''}</span></div>`).join('')}</details>`).join('');
 
   const html = `
 <div class="synthese">
-<div class="tuile"><b>${all.length} / ${all.length}</b><span>sites développés et publiés (${eur(devTotal)})</span></div>
-<div class="tuile"><b>${dbg.length} / ${all.length}</b><span>sites débogués (${eur(dbgTotal)})</span></div>
-<div class="tuile"><b>${corriges} / ${trouves}</b><span>points corrigés sur traités (problèmes et libellés de brouillon)</span></div>
-<div class="tuile"><b>${brouillons} → ${brouillonsRestants}</b><span>libellés de brouillon avant → après</span></div>
+<div class="tuile"><b>${T.publies} / ${T.sites}</b><span>sites développés et publiés</span></div>
+<div class="tuile"><b>${T.debugues} / ${T.sites}</b><span>sites débogués</span></div>
+<div class="tuile"><b>${T.corriges} / ${T.traites}</b><span>points corrigés sur relevés</span></div>
+<div class="tuile"><b>${T.avant} → ${T.apres}</b><span>libellés de brouillon avant → après</span></div>
 </div>
-${flux}
-<div class="pc-bascule" role="tablist" aria-label="Niveau de détail"><button role="tab" aria-selected="true" data-vue="condense">Condensé</button><button role="tab" aria-selected="false" data-vue="detaille">Détaillé par site</button></div>
-<section id="pc-condense"><h2>Coût par restaurant et état du débogage</h2>${condense}</section>
-<section id="pc-detaille" hidden><h2>Détail par restaurant et par site</h2>${detaille}</section>
+<div class="pc-barre-outils"><div class="pc-bascule" role="tablist" aria-label="Niveau de détail"><button role="tab" aria-selected="true" data-vue="condense">Condensé</button><button role="tab" aria-selected="false" data-vue="detaille">Détaillé par site</button></div>
+<p class="pc-legende"><span><i class="pc-dev fait"></i>développement fait</span><span><i class="pc-debug fait"></i>débogage fait</span><span><i class="partiel pc-dev"></i>fait sur une partie des sites</span><span><i class="vide"></i>à faire</span><span><i class="pc-dev fait pc-num">3</i>nombre de passes (ex. 3e revue)</span></p></div>
+<div class="pc-grille">
+<div class="pc-l pc-tete pc-groupes"><span></span><span class="pc-gdev">Développement</span><span class="pc-gdebug">Débogage</span><span></span></div>
+<div class="pc-l pc-tete"><span class="pc-nom">Restaurant</span>${ETAPES.map((x) => `<span class="pc-h">${x.nom}</span>`).join('')}<span class="pc-etat">Débug</span></div>
+${lignes}
+</div>
 <div class="pc-tip" role="tooltip" hidden></div>
-<p class="pc-note">Coûts au tarif de l'API. Développement : construction, revues, révisions, captures et publication de chaque site (la recherche client et l'orchestration communes au restaurant sont indiquées dans la vue détaillée). Débogage : phase 1 pour les restaurants 1 à 4, phase 2 (configurations F et H) pour les restaurants 5 à 8.</p>`;
+<p class="pc-note">Clique sur un restaurant pour voir ses 3 sites. Survole une case pour le détail de l'étape. Débogage : phase 1 pour les restaurants 1 à 4, phase 2 pour les restaurants 5 à 8.</p>`;
 
   const css = `
 .onglets{display:flex;gap:.25rem;border-bottom:1px solid var(--line);margin:0 0 1.5rem;overflow-x:auto}
 .onglets button,.pc-bascule button{font:inherit;color:var(--muted);background:none;border:0;padding:.6rem .9rem;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
 .onglets button[aria-selected=true]{color:var(--fg);border-bottom-color:var(--accent);font-weight:600}
-.pc-bascule{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;margin:1.5rem 0 0}
+:root{--s-dev:#2a78d6;--s-debug:#1baf7a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--s-dev:#3987e5;--s-debug:#199e70}}
+:root[data-theme="dark"]{--s-dev:#3987e5;--s-debug:#199e70}
+.pc-barre-outils{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.5rem;margin:1.5rem 0 .75rem}
+.pc-bascule{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
 .pc-bascule button{border:0;border-radius:999px;padding:.35rem .9rem}
 .pc-bascule button[aria-selected=true]{background:var(--fg);color:var(--bg)}
-:root{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--g0:#d03b3b;--g1:#ec835a;--g2:#b8860b;--d-ok:#2F7D5B;--d-ref:#9AA7AC;--d-imp:#d03b3b}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--g2:#fab219;--d-ok:#7FD1A8}}
-:root[data-theme="dark"]{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--g2:#fab219;--d-ok:#7FD1A8}
-.pc-construction{--c:var(--s1)}.pc-qa{--c:var(--s2)}.pc-identifier{--c:var(--s3)}.pc-rectifier{--c:var(--s4)}.pc-pub{--c:var(--muted)}
-.pc-flux{display:grid;gap:.75rem;margin:1rem 0}
-.pc-phase{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem;min-width:0}
-.pc-lt{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:.5rem}
-.pc-noeuds{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
-.pc-n{border-top:4px solid var(--c);background:var(--bg);border-radius:6px;padding:.45rem .7rem;min-width:8.5rem;flex:1}
-.pc-n b{display:block;font-size:.9rem}.pc-n small{color:var(--muted);font-size:.78rem}
-.pc-fl{color:var(--muted)}
-.pc-legende{display:flex;flex-wrap:wrap;gap:.4rem 1rem;color:var(--muted);font-size:.8rem;margin:.25rem 0 .75rem}
-.pc-legende i{display:inline-block;width:.8em;height:.8em;border-radius:3px;margin-right:.35em;vertical-align:-1px;background:var(--c);font-style:normal}
-.pc-legende .pc-construction,.pc-legende i.pc-construction{background:var(--s1)}.pc-legende i.pc-qa{background:var(--s2)}.pc-legende i.pc-identifier{background:var(--s3)}.pc-legende i.pc-rectifier{background:var(--s4)}
-.pc-legende i[class^=pc-g]{background:none;width:auto;height:auto}.pc-g0b{color:var(--g0)}.pc-g1b{color:var(--g1)}.pc-g2b{color:var(--g2)}
-.pc-legende i.d-ok{background:var(--d-ok)}.pc-legende i.d-ref{background:var(--d-ref)}.pc-legende i.d-imp{background:var(--d-imp)}
-.pc-sep{flex-basis:100%}
-.pc-lignes{display:grid;gap:2px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.4rem .8rem}
-.pc-ligne{display:grid;grid-template-columns:minmax(11rem,15rem) 1fr minmax(9rem,13rem);gap:.75rem;align-items:center;padding:.4rem 0;border-top:1px solid var(--line)}
-.pc-ligne:first-child{border-top:0}
-.pc-nom{min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .45rem}.pc-nom b{font-size:.9rem}.pc-nom em{font-style:normal;font-size:.72rem;color:var(--muted);flex-basis:100%;padding-left:1.7rem}
-.pc-rang{font-family:var(--mono);font-size:.75rem;color:var(--muted);width:1.3rem;text-align:right;display:inline-block}
-.pc-bar{display:flex;align-items:center;height:14px;min-width:0}.pc-track{flex:1;display:flex;gap:2px;height:100%;min-width:0}
-.pc-s{display:block;height:100%;background:var(--c);flex-grow:0;flex-shrink:0;min-width:2px}
-.pc-s:first-child{border-radius:4px 0 0 4px}.pc-s:last-of-type{border-radius:0 4px 4px 0}.pc-s:only-of-type{border-radius:4px}
-.pc-s.pc-construction{--c:var(--s1)}.pc-s.pc-qa{--c:var(--s2)}.pc-s.pc-identifier{--c:var(--s3)}.pc-s.pc-rectifier{--c:var(--s4)}
-.pc-s:hover,.pc-s:focus-visible{outline:2px solid var(--fg);outline-offset:1px}
-.pc-tot{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums;margin-left:.5rem;white-space:nowrap;width:4.2rem;text-align:right;flex-shrink:0}
-.pc-res{display:flex;align-items:center;gap:.5rem;font-size:.8rem;min-width:0}
-.pc-3{display:inline-flex;gap:2px;flex-shrink:0}.pc-3 b{width:1.35rem;height:1.35rem;display:grid;place-items:center;border-radius:4px;font-size:.68rem;background:var(--todo);color:var(--muted)}
-.pc-3 b.ok{background:var(--ok-soft);color:var(--ok)}
-.pc-muted{color:var(--muted)}
-.pc-restos{display:grid;gap:.6rem}
-.pc-resto{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.2rem .9rem}
-.pc-resto summary{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .6rem;padding:.6rem 0;cursor:pointer}
-.pc-sum{color:var(--muted);font-size:.8rem;margin-left:auto}
-.pc-commun{font-size:.8rem;color:var(--muted);margin:0 0 .6rem}
-.pc-sites{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.6rem;padding-bottom:.9rem}
-.pc-site{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:.7rem .8rem;min-width:0}
-.pc-site h4{margin:0 0 .5rem;font-size:.95rem;display:flex;justify-content:space-between}.pc-site h4 a{color:var(--accent);text-decoration:none}
-.pc-lane{margin-top:.6rem}
-.pc-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(5.5rem,1fr));gap:.3rem}
-.pc-steps li{border-left:3px solid var(--c);padding:.15rem .45rem;background:var(--card);border-radius:0 5px 5px 0;min-width:0}
-.pc-steps b{display:block;font-size:.78rem}.pc-steps span{font-size:.74rem;color:var(--muted);font-variant-numeric:tabular-nums}
-.pc-chips{display:flex;flex-wrap:wrap;gap:.3rem;margin:.5rem 0 .4rem}
-.pc-chip{font-size:.74rem;border:1px solid var(--line);border-radius:999px;padding:.08rem .5rem;background:var(--card);cursor:help}
-.pc-chip i{font-style:normal;margin-left:.3rem}.pc-g0{color:var(--g0)}.pc-g1{color:var(--g1)}.pc-g2{color:var(--g2)}
-.pc-dec{display:flex;gap:2px;height:8px;margin:.3rem 0 .2rem}.pc-dec i{display:block;height:100%}
-.pc-dec i:first-child{border-radius:4px 0 0 4px}.pc-dec i:last-child{border-radius:0 4px 4px 0}.pc-dec i:only-child{border-radius:4px}
-.d-ok{background:var(--d-ok)}.d-ref{background:var(--d-ref)}.d-imp{background:var(--d-imp)}
-.pc-site small{display:block;font-size:.74rem;color:var(--muted)}
-.pc-todo{font-size:.8rem;margin:.2rem 0 0}
-.pc-tip{position:fixed;z-index:10;pointer-events:none;background:var(--fg);color:var(--bg);font-size:.78rem;padding:.3rem .55rem;border-radius:6px;max-width:16rem}
-.pc-note{color:var(--muted);font-size:.78rem;margin-top:1.25rem}
-@media (max-width:720px){.pc-ligne{grid-template-columns:1fr}.pc-nom em{padding-left:1.7rem}.pc-sum{margin-left:0;flex-basis:100%}}`;
+.pc-legende{display:flex;flex-wrap:wrap;gap:.4rem 1rem;color:var(--muted);font-size:.8rem;margin:0}
+.pc-legende i{display:inline-grid;place-items:center;width:1.1rem;height:.9rem;border-radius:3px;margin-right:.35em;vertical-align:-2px;font-style:normal;font-size:.62rem;font-weight:700;color:#fff}
+.pc-grille{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.3rem .8rem .5rem;overflow-x:auto}
+.pc-l{display:grid;grid-template-columns:minmax(10rem,14rem) repeat(8,minmax(2.6rem,1fr)) 6.5rem;align-items:center;min-width:700px}
+.pc-tete{font-size:.72rem;color:var(--muted);padding:.4rem 0}
+.pc-groupes{padding-bottom:0}.pc-gdev{grid-column:2/span 5;border-bottom:2px solid var(--s-dev);padding-bottom:.2rem;margin-right:6px;text-transform:uppercase;letter-spacing:.08em}.pc-gdebug{grid-column:7/span 3;border-bottom:2px solid var(--s-debug);padding-bottom:.2rem;text-transform:uppercase;letter-spacing:.08em}
+.pc-h{text-align:center;line-height:1.15;padding:0 2px;border-left:1px solid var(--line)}
+.pc-h:nth-child(7){border-left:2px solid var(--muted)}
+.pc-r{border-top:1px solid var(--line)}
+.pc-r>summary{list-style:none;cursor:pointer;padding:.35rem 0}.pc-r>summary::-webkit-details-marker{display:none}
+.pc-r>summary:hover{background:var(--bg)}
+.pc-nom{min-width:0;display:flex;align-items:baseline;gap:.45rem;font-size:.88rem;padding-right:.5rem}
+.pc-r>summary .pc-nom::before{content:"▸";color:var(--muted);font-size:.7rem;transition:transform .15s}
+.pc-r[open]>summary .pc-nom::before{transform:rotate(90deg)}
+.pc-rang{font-family:var(--mono);font-size:.72rem;color:var(--muted);min-width:1.2rem;text-align:right}
+.pc-c{height:22px;display:grid;place-items:center;border-left:1px solid var(--line);padding:0 3px;position:relative}
+.pc-c:nth-child(7){border-left:2px solid var(--muted)}
+.pc-c::before{content:"";position:absolute;inset:3px 3px;border-radius:4px;background:var(--todo);opacity:.55}
+.pc-c.fait::before{opacity:1;background:var(--sc)}
+.pc-c.partiel::before{opacity:1;background:repeating-linear-gradient(135deg,var(--sc) 0 4px,transparent 4px 7px);outline:1px solid var(--sc);outline-offset:-1px}
+.pc-dev{--sc:var(--s-dev)}.pc-debug{--sc:var(--s-debug)}
+.pc-legende i.fait{background:var(--sc)}.pc-legende i.partiel{background:repeating-linear-gradient(135deg,var(--sc) 0 3px,transparent 3px 5px);outline:1px solid var(--sc);outline-offset:-1px}.pc-legende i.vide{background:var(--todo)}
+.pc-c b{position:relative;font-size:.72rem;color:#fff;font-variant-numeric:tabular-nums}
+.pc-c:hover::before,.pc-c:focus-visible::before{outline:2px solid var(--fg);outline-offset:0}
+.pc-c:focus-visible{outline:none}
+.pc-etat{font-size:.76rem;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.pc-site{padding:.15rem 0 .15rem 0}.pc-site .pc-nom{padding-left:2.2rem;font-size:.8rem;color:var(--muted)}
+.pc-site:last-child{padding-bottom:.45rem}
+.pc-tip{position:fixed;z-index:10;pointer-events:none;background:var(--fg);color:var(--bg);font-size:.78rem;padding:.35rem .6rem;border-radius:6px;max-width:20rem;white-space:pre-line}
+.pc-note{color:var(--muted);font-size:.78rem;margin-top:1rem}`;
 
   const js = `<script>
 (()=>{const q=(s,r=document)=>[...r.querySelectorAll(s)];
 const onglet=(id)=>{q('.onglets button').forEach(b=>b.setAttribute('aria-selected',b.dataset.onglet===id));q('[data-panneau]').forEach(p=>p.hidden=p.dataset.panneau!==id);try{localStorage.setItem('suivi-onglet',id)}catch(e){}};
 q('.onglets button').forEach(b=>b.addEventListener('click',()=>onglet(b.dataset.onglet)));
 try{const m=localStorage.getItem('suivi-onglet');if(m&&document.querySelector('[data-panneau="'+m+'"]'))onglet(m)}catch(e){}
-q('.pc-bascule button').forEach(b=>b.addEventListener('click',()=>{q('.pc-bascule button').forEach(x=>x.setAttribute('aria-selected',x===b));document.getElementById('pc-condense').hidden=b.dataset.vue!=='condense';document.getElementById('pc-detaille').hidden=b.dataset.vue!=='detaille'}));
-const t=document.querySelector('.pc-tip');const show=(e,el)=>{t.textContent=el.dataset.tip;t.hidden=false;const r=el.getBoundingClientRect();t.style.left=Math.min(innerWidth-t.offsetWidth-8,Math.max(8,(e&&e.clientX?e.clientX:r.left+r.width/2)-t.offsetWidth/2))+'px';t.style.top=(r.top-t.offsetHeight-8)+'px'};
-q('[data-tip]').forEach(el=>{el.addEventListener('mousemove',e=>show(e,el));el.addEventListener('focus',()=>show(null,el));el.addEventListener('mouseleave',()=>t.hidden=true);el.addEventListener('blur',()=>t.hidden=true)});
+q('.pc-bascule button').forEach(b=>b.addEventListener('click',()=>{q('.pc-bascule button').forEach(x=>x.setAttribute('aria-selected',x===b));q('.pc-r').forEach(d=>d.open=b.dataset.vue==='detaille')}));
+const t=document.querySelector('.pc-tip');const show=(el)=>{t.textContent=el.dataset.tip;t.hidden=false;const r=el.getBoundingClientRect();t.style.left=Math.min(innerWidth-t.offsetWidth-8,Math.max(8,r.left+r.width/2-t.offsetWidth/2))+'px';const y=r.top-t.offsetHeight-8;t.style.top=(y<8?r.bottom+8:y)+'px'};
+q('[data-tip]').forEach(el=>{el.addEventListener('mouseenter',()=>show(el));el.addEventListener('focus',()=>show(el));el.addEventListener('mouseleave',()=>t.hidden=true);el.addEventListener('blur',()=>t.hidden=true);el.addEventListener('click',e=>{if(el.closest('summary')){e.preventDefault();show(el)}})});
 })();
 </script>`;
-  return { css, html, js, resume: { sites: all.length, debugues: dbg.length, trouves, corriges } };
+  return { css, html, js };
 }

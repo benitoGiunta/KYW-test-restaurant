@@ -50,69 +50,48 @@ footer{color:var(--muted);font-size:.8rem;margin-top:2rem}
 .onglets{display:flex;gap:.25rem;border-bottom:1px solid var(--line);margin:0 0 1.5rem;overflow-x:auto}
 .onglets button,.pc-bascule button{font:inherit;color:var(--muted);background:none;border:0;padding:.6rem .9rem;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
 .onglets button[aria-selected=true]{color:var(--fg);border-bottom-color:var(--accent);font-weight:600}
-.pc-bascule{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;margin:1.5rem 0 0}
+:root{--s-dev:#2a78d6;--s-debug:#1baf7a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--s-dev:#3987e5;--s-debug:#199e70}}
+:root[data-theme="dark"]{--s-dev:#3987e5;--s-debug:#199e70}
+.pc-barre-outils{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.5rem;margin:1.5rem 0 .75rem}
+.pc-bascule{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
 .pc-bascule button{border:0;border-radius:999px;padding:.35rem .9rem}
 .pc-bascule button[aria-selected=true]{background:var(--fg);color:var(--bg)}
-:root{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--g0:#d03b3b;--g1:#ec835a;--g2:#b8860b;--d-ok:#2F7D5B;--d-ref:#9AA7AC;--d-imp:#d03b3b}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--g2:#fab219;--d-ok:#7FD1A8}}
-:root[data-theme="dark"]{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--g2:#fab219;--d-ok:#7FD1A8}
-.pc-construction{--c:var(--s1)}.pc-qa{--c:var(--s2)}.pc-identifier{--c:var(--s3)}.pc-rectifier{--c:var(--s4)}.pc-pub{--c:var(--muted)}
-.pc-flux{display:grid;gap:.75rem;margin:1rem 0}
-.pc-phase{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem;min-width:0}
-.pc-lt{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:.5rem}
-.pc-noeuds{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
-.pc-n{border-top:4px solid var(--c);background:var(--bg);border-radius:6px;padding:.45rem .7rem;min-width:8.5rem;flex:1}
-.pc-n b{display:block;font-size:.9rem}.pc-n small{color:var(--muted);font-size:.78rem}
-.pc-fl{color:var(--muted)}
-.pc-legende{display:flex;flex-wrap:wrap;gap:.4rem 1rem;color:var(--muted);font-size:.8rem;margin:.25rem 0 .75rem}
-.pc-legende i{display:inline-block;width:.8em;height:.8em;border-radius:3px;margin-right:.35em;vertical-align:-1px;background:var(--c);font-style:normal}
-.pc-legende .pc-construction,.pc-legende i.pc-construction{background:var(--s1)}.pc-legende i.pc-qa{background:var(--s2)}.pc-legende i.pc-identifier{background:var(--s3)}.pc-legende i.pc-rectifier{background:var(--s4)}
-.pc-legende i[class^=pc-g]{background:none;width:auto;height:auto}.pc-g0b{color:var(--g0)}.pc-g1b{color:var(--g1)}.pc-g2b{color:var(--g2)}
-.pc-legende i.d-ok{background:var(--d-ok)}.pc-legende i.d-ref{background:var(--d-ref)}.pc-legende i.d-imp{background:var(--d-imp)}
-.pc-sep{flex-basis:100%}
-.pc-lignes{display:grid;gap:2px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.4rem .8rem}
-.pc-ligne{display:grid;grid-template-columns:minmax(11rem,15rem) 1fr minmax(9rem,13rem);gap:.75rem;align-items:center;padding:.4rem 0;border-top:1px solid var(--line)}
-.pc-ligne:first-child{border-top:0}
-.pc-nom{min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .45rem}.pc-nom b{font-size:.9rem}.pc-nom em{font-style:normal;font-size:.72rem;color:var(--muted);flex-basis:100%;padding-left:1.7rem}
-.pc-rang{font-family:var(--mono);font-size:.75rem;color:var(--muted);width:1.3rem;text-align:right;display:inline-block}
-.pc-bar{display:flex;align-items:center;height:14px;min-width:0}.pc-track{flex:1;display:flex;gap:2px;height:100%;min-width:0}
-.pc-s{display:block;height:100%;background:var(--c);flex-grow:0;flex-shrink:0;min-width:2px}
-.pc-s:first-child{border-radius:4px 0 0 4px}.pc-s:last-of-type{border-radius:0 4px 4px 0}.pc-s:only-of-type{border-radius:4px}
-.pc-s.pc-construction{--c:var(--s1)}.pc-s.pc-qa{--c:var(--s2)}.pc-s.pc-identifier{--c:var(--s3)}.pc-s.pc-rectifier{--c:var(--s4)}
-.pc-s:hover,.pc-s:focus-visible{outline:2px solid var(--fg);outline-offset:1px}
-.pc-tot{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums;margin-left:.5rem;white-space:nowrap;width:4.2rem;text-align:right;flex-shrink:0}
-.pc-res{display:flex;align-items:center;gap:.5rem;font-size:.8rem;min-width:0}
-.pc-3{display:inline-flex;gap:2px;flex-shrink:0}.pc-3 b{width:1.35rem;height:1.35rem;display:grid;place-items:center;border-radius:4px;font-size:.68rem;background:var(--todo);color:var(--muted)}
-.pc-3 b.ok{background:var(--ok-soft);color:var(--ok)}
-.pc-muted{color:var(--muted)}
-.pc-restos{display:grid;gap:.6rem}
-.pc-resto{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.2rem .9rem}
-.pc-resto summary{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .6rem;padding:.6rem 0;cursor:pointer}
-.pc-sum{color:var(--muted);font-size:.8rem;margin-left:auto}
-.pc-commun{font-size:.8rem;color:var(--muted);margin:0 0 .6rem}
-.pc-sites{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.6rem;padding-bottom:.9rem}
-.pc-site{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:.7rem .8rem;min-width:0}
-.pc-site h4{margin:0 0 .5rem;font-size:.95rem;display:flex;justify-content:space-between}.pc-site h4 a{color:var(--accent);text-decoration:none}
-.pc-lane{margin-top:.6rem}
-.pc-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(5.5rem,1fr));gap:.3rem}
-.pc-steps li{border-left:3px solid var(--c);padding:.15rem .45rem;background:var(--card);border-radius:0 5px 5px 0;min-width:0}
-.pc-steps b{display:block;font-size:.78rem}.pc-steps span{font-size:.74rem;color:var(--muted);font-variant-numeric:tabular-nums}
-.pc-chips{display:flex;flex-wrap:wrap;gap:.3rem;margin:.5rem 0 .4rem}
-.pc-chip{font-size:.74rem;border:1px solid var(--line);border-radius:999px;padding:.08rem .5rem;background:var(--card);cursor:help}
-.pc-chip i{font-style:normal;margin-left:.3rem}.pc-g0{color:var(--g0)}.pc-g1{color:var(--g1)}.pc-g2{color:var(--g2)}
-.pc-dec{display:flex;gap:2px;height:8px;margin:.3rem 0 .2rem}.pc-dec i{display:block;height:100%}
-.pc-dec i:first-child{border-radius:4px 0 0 4px}.pc-dec i:last-child{border-radius:0 4px 4px 0}.pc-dec i:only-child{border-radius:4px}
-.d-ok{background:var(--d-ok)}.d-ref{background:var(--d-ref)}.d-imp{background:var(--d-imp)}
-.pc-site small{display:block;font-size:.74rem;color:var(--muted)}
-.pc-todo{font-size:.8rem;margin:.2rem 0 0}
-.pc-tip{position:fixed;z-index:10;pointer-events:none;background:var(--fg);color:var(--bg);font-size:.78rem;padding:.3rem .55rem;border-radius:6px;max-width:16rem}
-.pc-note{color:var(--muted);font-size:.78rem;margin-top:1.25rem}
-@media (max-width:720px){.pc-ligne{grid-template-columns:1fr}.pc-nom em{padding-left:1.7rem}.pc-sum{margin-left:0;flex-basis:100%}}
+.pc-legende{display:flex;flex-wrap:wrap;gap:.4rem 1rem;color:var(--muted);font-size:.8rem;margin:0}
+.pc-legende i{display:inline-grid;place-items:center;width:1.1rem;height:.9rem;border-radius:3px;margin-right:.35em;vertical-align:-2px;font-style:normal;font-size:.62rem;font-weight:700;color:#fff}
+.pc-grille{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.3rem .8rem .5rem;overflow-x:auto}
+.pc-l{display:grid;grid-template-columns:minmax(10rem,14rem) repeat(8,minmax(2.6rem,1fr)) 6.5rem;align-items:center;min-width:700px}
+.pc-tete{font-size:.72rem;color:var(--muted);padding:.4rem 0}
+.pc-groupes{padding-bottom:0}.pc-gdev{grid-column:2/span 5;border-bottom:2px solid var(--s-dev);padding-bottom:.2rem;margin-right:6px;text-transform:uppercase;letter-spacing:.08em}.pc-gdebug{grid-column:7/span 3;border-bottom:2px solid var(--s-debug);padding-bottom:.2rem;text-transform:uppercase;letter-spacing:.08em}
+.pc-h{text-align:center;line-height:1.15;padding:0 2px;border-left:1px solid var(--line)}
+.pc-h:nth-child(7){border-left:2px solid var(--muted)}
+.pc-r{border-top:1px solid var(--line)}
+.pc-r>summary{list-style:none;cursor:pointer;padding:.35rem 0}.pc-r>summary::-webkit-details-marker{display:none}
+.pc-r>summary:hover{background:var(--bg)}
+.pc-nom{min-width:0;display:flex;align-items:baseline;gap:.45rem;font-size:.88rem;padding-right:.5rem}
+.pc-r>summary .pc-nom::before{content:"▸";color:var(--muted);font-size:.7rem;transition:transform .15s}
+.pc-r[open]>summary .pc-nom::before{transform:rotate(90deg)}
+.pc-rang{font-family:var(--mono);font-size:.72rem;color:var(--muted);min-width:1.2rem;text-align:right}
+.pc-c{height:22px;display:grid;place-items:center;border-left:1px solid var(--line);padding:0 3px;position:relative}
+.pc-c:nth-child(7){border-left:2px solid var(--muted)}
+.pc-c::before{content:"";position:absolute;inset:3px 3px;border-radius:4px;background:var(--todo);opacity:.55}
+.pc-c.fait::before{opacity:1;background:var(--sc)}
+.pc-c.partiel::before{opacity:1;background:repeating-linear-gradient(135deg,var(--sc) 0 4px,transparent 4px 7px);outline:1px solid var(--sc);outline-offset:-1px}
+.pc-dev{--sc:var(--s-dev)}.pc-debug{--sc:var(--s-debug)}
+.pc-legende i.fait{background:var(--sc)}.pc-legende i.partiel{background:repeating-linear-gradient(135deg,var(--sc) 0 3px,transparent 3px 5px);outline:1px solid var(--sc);outline-offset:-1px}.pc-legende i.vide{background:var(--todo)}
+.pc-c b{position:relative;font-size:.72rem;color:#fff;font-variant-numeric:tabular-nums}
+.pc-c:hover::before,.pc-c:focus-visible::before{outline:2px solid var(--fg);outline-offset:0}
+.pc-c:focus-visible{outline:none}
+.pc-etat{font-size:.76rem;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.pc-site{padding:.15rem 0 .15rem 0}.pc-site .pc-nom{padding-left:2.2rem;font-size:.8rem;color:var(--muted)}
+.pc-site:last-child{padding-bottom:.45rem}
+.pc-tip{position:fixed;z-index:10;pointer-events:none;background:var(--fg);color:var(--bg);font-size:.78rem;padding:.35rem .6rem;border-radius:6px;max-width:20rem;white-space:pre-line}
+.pc-note{color:var(--muted);font-size:.78rem;margin-top:1rem}
 @media (max-width:640px){.etape{grid-template-columns:1.6rem 1fr}.etape .pct{grid-column:2;text-align:left}}
 </style>
 </head><body><div class="wrap">
 <h1>Suivi du projet KYW Restaurants</h1>
-<p class="sub">Refonte de 20 restaurants namurois en 3 variantes. Mis à jour le 2026-11-16 17:46 UTC depuis l'état du dépôt. </p>
+<p class="sub">Refonte de 20 restaurants namurois en 3 variantes. Mis à jour le 2026-11-16 17:52 UTC depuis l'état du dépôt. </p>
 <ul class="liens"><li>Index des restaurants : <a href="https://kyw-test-restaurant.vercel.app/">https://kyw-test-restaurant.vercel.app/</a></li><li>Galerie des gabarits : <a href="https://kyw-test-restaurant.vercel.app/gabarits/">https://kyw-test-restaurant.vercel.app/gabarits/</a></li><li>Cette page sur Vercel : <a href="https://kyw-test-restaurant.vercel.app/suivi/">https://kyw-test-restaurant.vercel.app/suivi/</a></li><li>Consommation de jetons : <a href="https://claude.ai/artifact/39eBZZyjPAnwQfhAAx2Bxq">https://claude.ai/artifact/39eBZZyjPAnwQfhAAx2Bxq</a></li></ul>
 <div class="onglets" role="tablist" aria-label="Vues du suivi"><button role="tab" aria-selected="true" data-onglet="avancement">Avancement</button><button role="tab" aria-selected="false" data-onglet="parcours">Parcours : dev et débug</button></div>
 <div data-panneau="avancement">
@@ -154,583 +133,960 @@ footer{color:var(--muted);font-size:.8rem;margin-top:2rem}
 </div>
 <div data-panneau="parcours" hidden>
 <div class="synthese">
-<div class="tuile"><b>60 / 60</b><span>sites développés et publiés (481,24 $)</span></div>
-<div class="tuile"><b>24 / 60</b><span>sites débogués (14,92 $)</span></div>
-<div class="tuile"><b>127 / 132</b><span>points corrigés sur traités (problèmes et libellés de brouillon)</span></div>
+<div class="tuile"><b>60 / 60</b><span>sites développés et publiés</span></div>
+<div class="tuile"><b>24 / 60</b><span>sites débogués</span></div>
+<div class="tuile"><b>127 / 132</b><span>points corrigés sur relevés</span></div>
 <div class="tuile"><b>85 → 0</b><span>libellés de brouillon avant → après</span></div>
 </div>
-<div class="pc-flux" aria-label="Étapes du parcours d'un site">
-<div class="pc-phase"><span class="pc-lt">Développement</span><div class="pc-noeuds">
-<div class="pc-n pc-construction"><b>Construction</b><small>60 sites</small></div><span class="pc-fl">→</span>
-<div class="pc-n pc-qa"><b>Revue</b><small>108 revues</small></div><span class="pc-fl">→</span>
-<div class="pc-n pc-qa"><b>Révision</b><small>63 révisions</small></div><span class="pc-fl">→</span>
-<div class="pc-n pc-pub"><b>Publication</b><small>60 en ligne</small></div></div></div>
-<div class="pc-phase"><span class="pc-lt">Débogage</span><div class="pc-noeuds">
-<div class="pc-n pc-identifier"><b>Identification</b><small>24 sites · 132 points</small></div><span class="pc-fl">→</span>
-<div class="pc-n pc-rectifier"><b>Correction</b><small>127 corrigés · 85 libellés retirés</small></div><span class="pc-fl">→</span>
-<div class="pc-n pc-pub"><b>Republication</b><small>0 libellé restant</small></div></div></div></div>
-<div class="pc-bascule" role="tablist" aria-label="Niveau de détail"><button role="tab" aria-selected="true" data-vue="condense">Condensé</button><button role="tab" aria-selected="false" data-vue="detaille">Détaillé par site</button></div>
-<section id="pc-condense"><h2>Coût par restaurant et état du débogage</h2>
-<div class="pc-legende" aria-hidden="true"><span><i class="pc-construction"></i>Construction</span><span><i class="pc-qa"></i>Revue et révision</span><span><i class="pc-identifier"></i>Identification</span><span><i class="pc-rectifier"></i>Correction</span><span class="pc-sep">P · A · L = Portfolio, Awwwards, Inspi legacy ; vert = débogué</span></div>
-<div class="pc-lignes"><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">1</span><b>Les Potes au Feu</b><em>débug phase 1</em></div><div class="pc-bar" role="img" aria-label="Les Potes au Feu : Construction 27,93 $, Revue et révision 27,58 $, Identification 1,92 $, Correction 1,18 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:42.85582193510019%" data-tip="Les Potes au Feu · Construction : 27,93 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:42.318781559973615%" data-tip="Les Potes au Feu · Revue et révision : 27,58 $" tabindex="0"></i><i class="pc-s pc-identifier" style="flex-basis:2.949336591492845%" data-tip="Les Potes au Feu · Identification : 1,92 $" tabindex="0"></i><i class="pc-s pc-rectifier" style="flex-basis:1.807162037035695%" data-tip="Les Potes au Feu · Correction : 1,18 $" tabindex="0"></i></span><span class="pc-tot">58,61 $</span></div><div class="pc-res"><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span>20 corrigés sur 22</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">2</span><b>L'Atelier de Bossimé</b><em>débug phase 1</em></div><div class="pc-bar" role="img" aria-label="L'Atelier de Bossimé : Construction 40,95 $, Revue et révision 20,78 $, Identification 2,22 $, Correction 1,22 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:62.833723889808546%" data-tip="L'Atelier de Bossimé · Construction : 40,95 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:31.884854271800283%" data-tip="L'Atelier de Bossimé · Revue et révision : 20,78 $" tabindex="0"></i><i class="pc-s pc-identifier" style="flex-basis:3.4040773704125526%" data-tip="L'Atelier de Bossimé · Identification : 2,22 $" tabindex="0"></i><i class="pc-s pc-rectifier" style="flex-basis:1.8773444679786275%" data-tip="L'Atelier de Bossimé · Correction : 1,22 $" tabindex="0"></i></span><span class="pc-tot">65,17 $</span></div><div class="pc-res"><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span>20 corrigés sur 20</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">3</span><b>Partage</b><em>débug phase 1</em></div><div class="pc-bar" role="img" aria-label="Partage : Construction 19,76 $, Revue et révision 8,52 $, Identification 2,29 $, Correction 1,32 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:30.319765178574283%" data-tip="Partage · Construction : 19,76 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:13.073097131652473%" data-tip="Partage · Revue et révision : 8,52 $" tabindex="0"></i><i class="pc-s pc-identifier" style="flex-basis:3.517547403752187%" data-tip="Partage · Identification : 2,29 $" tabindex="0"></i><i class="pc-s pc-rectifier" style="flex-basis:2.028240845060834%" data-tip="Partage · Correction : 1,32 $" tabindex="0"></i></span><span class="pc-tot">31,89 $</span></div><div class="pc-res"><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span>24 corrigés sur 24</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">4</span><b>La Brasserie du Quai</b><em>débug phase 1</em></div><div class="pc-bar" role="img" aria-label="La Brasserie du Quai : Construction 21,03 $, Revue et révision 10,27 $, Identification 1,76 $, Correction 0,79 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:32.268454539747836%" data-tip="La Brasserie du Quai · Construction : 21,03 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:15.758299007285318%" data-tip="La Brasserie du Quai · Revue et révision : 10,27 $" tabindex="0"></i><i class="pc-s pc-identifier" style="flex-basis:2.6955845539252197%" data-tip="La Brasserie du Quai · Identification : 1,76 $" tabindex="0"></i><i class="pc-s pc-rectifier" style="flex-basis:1.213362938742749%" data-tip="La Brasserie du Quai · Correction : 0,79 $" tabindex="0"></i></span><span class="pc-tot">33,85 $</span></div><div class="pc-res"><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span>21 corrigés sur 21</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">5</span><b>Chez Guillaume</b><em>débug phase 2 · F</em></div><div class="pc-bar" role="img" aria-label="Chez Guillaume : Construction 17,89 $, Revue et révision 7,56 $, Identification 0,44 $, Correction 0,10 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:27.450435174326614%" data-tip="Chez Guillaume · Construction : 17,89 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:11.600072102733886%" data-tip="Chez Guillaume · Revue et révision : 7,56 $" tabindex="0"></i><i class="pc-s pc-identifier" style="flex-basis:0.6828084769466374%" data-tip="Chez Guillaume · Identification : 0,44 $" tabindex="0"></i><i class="pc-s pc-rectifier" style="flex-basis:0.15344010717901965%" data-tip="Chez Guillaume · Correction : 0,10 $" tabindex="0"></i></span><span class="pc-tot">26,00 $</span></div><div class="pc-res"><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span>7 corrigés sur 7</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">6</span><b>La Dolce Vita Wépion</b><em>débug phase 2 · F</em></div><div class="pc-bar" role="img" aria-label="La Dolce Vita Wépion : Construction 12,73 $, Revue et révision 5,26 $, Identification 0,46 $, Correction 0,07 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:19.5329256438892%" data-tip="La Dolce Vita Wépion · Construction : 12,73 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:8.070949637616433%" data-tip="La Dolce Vita Wépion · Revue et révision : 5,26 $" tabindex="0"></i><i class="pc-s pc-identifier" style="flex-basis:0.7119620973106511%" data-tip="La Dolce Vita Wépion · Identification : 0,46 $" tabindex="0"></i><i class="pc-s pc-rectifier" style="flex-basis:0.11201127824068434%" data-tip="La Dolce Vita Wépion · Correction : 0,07 $" tabindex="0"></i></span><span class="pc-tot">18,53 $</span></div><div class="pc-res"><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span>9 corrigés sur 9</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">7</span><b>Le Royal Namur</b><em>débug phase 2 · H</em></div><div class="pc-bar" role="img" aria-label="Le Royal Namur : Construction 10,19 $, Revue et révision 4,77 $, Identification 0,44 $, Correction 0,13 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:15.635546921542105%" data-tip="Le Royal Namur · Construction : 10,19 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:7.319093112439237%" data-tip="Le Royal Namur · Revue et révision : 4,77 $" tabindex="0"></i><i class="pc-s pc-identifier" style="flex-basis:0.6812740758748472%" data-tip="Le Royal Namur · Identification : 0,44 $" tabindex="0"></i><i class="pc-s pc-rectifier" style="flex-basis:0.20100654040451577%" data-tip="Le Royal Namur · Correction : 0,13 $" tabindex="0"></i></span><span class="pc-tot">15,54 $</span></div><div class="pc-res"><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span>8 corrigés sur 9</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">8</span><b>Incorrect</b><em>débug phase 2 · H</em></div><div class="pc-bar" role="img" aria-label="Incorrect : Construction 9,37 $, Revue et révision 5,82 $, Identification 0,37 $, Correction 0,19 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:14.37733804267414%" data-tip="Incorrect · Construction : 9,37 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:8.930214237818944%" data-tip="Incorrect · Revue et révision : 5,82 $" tabindex="0"></i><i class="pc-s pc-identifier" style="flex-basis:0.5661939954905825%" data-tip="Incorrect · Identification : 0,37 $" tabindex="0"></i><i class="pc-s pc-rectifier" style="flex-basis:0.2976738079272981%" data-tip="Incorrect · Correction : 0,19 $" tabindex="0"></i></span><span class="pc-tot">15,75 $</span></div><div class="pc-res"><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span>18 corrigés sur 20</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">9</span><b>L'Essentiel</b></div><div class="pc-bar" role="img" aria-label="L'Essentiel : Construction 9,56 $, Revue et révision 6,49 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:14.668874246314276%" data-tip="L'Essentiel · Construction : 9,56 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:9.958262955918377%" data-tip="L'Essentiel · Revue et révision : 6,49 $" tabindex="0"></i></span><span class="pc-tot">16,05 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">10</span><b>La Ferme Blanche d'Asie</b></div><div class="pc-bar" role="img" aria-label="La Ferme Blanche d'Asie : Construction 9,48 $, Revue et révision 4,49 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:14.546122160571064%" data-tip="La Ferme Blanche d'Asie · Construction : 9,48 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:6.8894608123379815%" data-tip="La Ferme Blanche d'Asie · Revue et révision : 4,49 $" tabindex="0"></i></span><span class="pc-tot">13,97 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">11</span><b>Le Félicien</b></div><div class="pc-bar" role="img" aria-label="Le Félicien : Construction 9,82 $, Revue et révision 6,22 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:15.067818524979732%" data-tip="Le Félicien · Construction : 9,82 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:9.543974666535023%" data-tip="Le Félicien · Revue et révision : 6,22 $" tabindex="0"></i></span><span class="pc-tot">16,04 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">12</span><b>Le Grill des Amis</b></div><div class="pc-bar" role="img" aria-label="Le Grill des Amis : Construction 10,70 $, Revue et révision 6,64 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:16.4180914681551%" data-tip="Le Grill des Amis · Construction : 10,70 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:10.188423116686906%" data-tip="Le Grill des Amis · Revue et révision : 6,64 $" tabindex="0"></i></span><span class="pc-tot">17,34 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">13</span><b>Le 54</b></div><div class="pc-bar" role="img" aria-label="Le 54 : Construction 9,07 $, Revue et révision 4,58 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:13.917017721137082%" data-tip="Le 54 · Construction : 9,07 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:7.0275569087991%" data-tip="Le 54 · Revue et révision : 4,58 $" tabindex="0"></i></span><span class="pc-tot">13,65 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">14</span><b>Le Ponti 2</b></div><div class="pc-bar" role="img" aria-label="Le Ponti 2 : Construction 9,48 $, Revue et révision 4,88 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:14.546122160571064%" data-tip="Le Ponti 2 · Construction : 9,48 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:7.487877230336158%" data-tip="Le Ponti 2 · Revue et révision : 4,88 $" tabindex="0"></i></span><span class="pc-tot">14,36 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">15</span><b>Le Servais</b></div><div class="pc-bar" role="img" aria-label="Le Servais : Construction 9,68 $, Revue et révision 5,61 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:14.853002374929103%" data-tip="Le Servais · Construction : 9,68 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:8.607990012743%" data-tip="Le Servais · Revue et révision : 5,61 $" tabindex="0"></i></span><span class="pc-tot">15,29 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">16</span><b>Li Micougni</b></div><div class="pc-bar" role="img" aria-label="Li Micougni : Construction 10,50 $, Revue et révision 5,85 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:16.111211253797066%" data-tip="Li Micougni · Construction : 10,50 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:8.976246269972648%" data-tip="Li Micougni · Revue et révision : 5,85 $" tabindex="0"></i></span><span class="pc-tot">16,35 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">17</span><b>Makimono</b></div><div class="pc-bar" role="img" aria-label="Makimono : Construction 10,95 $, Revue et révision 8,29 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:16.80169173610265%" data-tip="Makimono · Construction : 10,95 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:12.720184885140732%" data-tip="Makimono · Revue et révision : 8,29 $" tabindex="0"></i></span><span class="pc-tot">19,24 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">18</span><b>Pépite, cave à manger</b></div><div class="pc-bar" role="img" aria-label="Pépite, cave à manger : Construction 8,13 $, Revue et révision 6,59 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:12.474680713654296%" data-tip="Pépite, cave à manger · Construction : 8,13 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:10.111703063097394%" data-tip="Pépite, cave à manger · Revue et révision : 6,59 $" tabindex="0"></i></span><span class="pc-tot">14,72 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">19</span><b>Sanga</b></div><div class="pc-bar" role="img" aria-label="Sanga : Construction 9,54 $, Revue et révision 4,80 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:14.638186224878478%" data-tip="Sanga · Construction : 9,54 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:7.365125144592943%" data-tip="Sanga · Revue et révision : 4,80 $" tabindex="0"></i></span><span class="pc-tot">14,34 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div><div class="pc-ligne"><div class="pc-nom"><span class="pc-rang">20</span><b>L'Huile sur le Feu</b></div><div class="pc-bar" role="img" aria-label="L'Huile sur le Feu : Construction 9,95 $, Revue et révision 7,38 $, Identification 0,00 $, Correction 0,00 $"><span class="pc-track"><i class="pc-s pc-construction" style="flex-basis:15.267290664312455%" data-tip="L'Huile sur le Feu · Construction : 9,95 $" tabindex="0"></i><i class="pc-s pc-qa" style="flex-basis:11.323879909811652%" data-tip="L'Huile sur le Feu · Revue et révision : 7,38 $" tabindex="0"></i></span><span class="pc-tot">17,33 $</span></div><div class="pc-res"><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-muted">débug à venir</span></div></div></div></section>
-<section id="pc-detaille" hidden><h2>Détail par restaurant et par site</h2><p class="pc-legende"><span><i class="pc-g0b">●</i>bloquant</span><span><i class="pc-g1b">▲</i>important</span><span><i class="pc-g2b">○</i>mineur</span><span><i class="d-ok"></i>corrigé</span><span><i class="d-ref"></i>refusé (justifié)</span><span><i class="d-imp"></i>impossible</span><span class="pc-sep">Survole une catégorie pour lire les problèmes.</span></p>
-<div class="pc-restos"><details class="pc-resto" open><summary><span class="pc-rang">1</span><b>Les Potes au Feu</b><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span class="pc-sum">dev 55,51 $ · débug 3,10 $ · 20 corrigés sur 22 traités</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 1,37 $ · orchestration 0,67 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/les-potes-au-feu/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>9,93 $</span></li>
-<li class="pc-qa"><b>Revue ×3</b><span>3,61 $</span></li>
-<li class="pc-qa"><b>Révision ×2</b><span>10,83 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>8 points · 0,81 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,57 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="Libellés relevés par le scan des brouillons">Brouillon <b>19</b><i class="pc-g0">●</i></span><span class="pc-chip" title="○ Apostrophes droites au lieu d'apostrophes typographiques">Langue <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Fin de la mosaïque « Coulisses » : grande zone vide et tuile sombre quasi noire">Disposition <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Page introuvable : 404 générique de Vercel, en anglais">Fonctionnel <b>1</b><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="7 corrigés, 0 refusés, 1 impossibles"><i class="d-ok" style="flex-basis:87.5%"></i><i class="d-imp" style="flex-basis:12.5%"></i></div><small>7 corrigés · 1 impossible</small>
-<small class="pc-br">Libellés de brouillon : 19 → 0</small></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/les-potes-au-feu/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>7,86 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>3,62 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>1,70 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>8 points · 0,50 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,33 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="Libellés relevés par le scan des brouillons">Brouillon <b>4</b><i class="pc-g0">●</i></span><span class="pc-chip" title="○ « Voici celui de cet automne » : saison non prouvée par le dossier">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Accord douteux « quatre services, servi à toute la table »">Langue <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="▲ L’en-tête fixe, sans fond, se superpose au texte qui défile
-▲ Les vignettes rondes de plats recouvrent le nom du plat">Disposition <b>2</b><i class="pc-g1">▲2</i></span></div>
-<div class="pc-dec" role="img" aria-label="8 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>8 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 4 → 0</small></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/les-potes-au-feu/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>10,14 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>3,24 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>4,58 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>6 points · 0,61 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,27 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="○ Prix du menu midi (52 €) affiché sans réserve">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Anglicisme « Home made » en intitulé de section
-○ Mentions légales redondantes et maladroites
-○ Message d'erreur e-mail inadapté quand le champ est vide
-○ Heures écrites « 19:00 à 21:00 » (format informatique)
-○ Abréviation « pdt » dans un plat du menu">Langue <b>5</b><i class="pc-g2">○5</i></span></div>
-<div class="pc-dec" role="img" aria-label="5 corrigés, 1 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:83.33333333333334%"></i><i class="d-ref" style="flex-basis:16.666666666666664%"></i></div><small>5 corrigés · 1 refusés (justifiés)</small>
-<small class="pc-br">Libellés de brouillon : 0 → 0</small></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">2</span><b>L'Atelier de Bossimé</b><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span class="pc-sum">dev 61,73 $ · débug 3,44 $ · 20 corrigés sur 20 traités</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,88 $ · orchestration 2,09 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/atelier-de-bossime/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>8,15 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>2,32 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>8,89 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>11 points · 0,86 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,54 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="Libellés relevés par le scan des brouillons">Brouillon <b>7</b><i class="pc-g0">●</i></span><span class="pc-chip" title="○ Même portrait du chef utilisé deux fois sur la page Histoire">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Heures écrites « 12:00 à 16:00 » au lieu de « 12 h 00 à 16 h 00 »">Langue <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Prix du lunch coupé sur deux lignes (« 42 € / » puis « 52 € »)">Disposition <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Sous-titre du logo et puces de la roue en tout petits caractères">Lisibilité <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="▲ Écran quasi vide pendant trois secondes à chaque page">Animation <b>1</b><i class="pc-g1">▲1</i></span></div>
-<div class="pc-dec" role="img" aria-label="11 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>11 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 7 → 0</small></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/atelier-de-bossime/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>24,47 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>2,33 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>1,40 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>2 points · 0,68 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,29 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="▲ « L'eau 12 € » sans volume ni précision">Contenu <b>1</b><i class="pc-g1">▲1</i></span><span class="pc-chip" title="○ Guillemet ouvrant de la devise coupé sur le bord gauche">Lisibilité <b>1</b><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="2 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>2 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 0 → 0</small></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/atelier-de-bossime/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>8,33 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>2,08 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>3,76 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>7 points · 0,68 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,39 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="Libellés relevés par le scan des brouillons">Brouillon <b>4</b><i class="pc-g0">●</i></span><span class="pc-chip" title="○ Ligne « Menu jeune gastronome » : « sans accord » et « non » ambigus">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Panneau du menu mobile décalé de son bord gauche">Disposition <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="▲ Le formulaire de contact n'envoie rien">Fonctionnel <b>1</b><i class="pc-g1">▲1</i></span></div>
-<div class="pc-dec" role="img" aria-label="7 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>7 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 4 → 0</small></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">3</span><b>Partage</b><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span class="pc-sum">dev 28,28 $ · débug 3,61 $ · 24 corrigés sur 24 traités</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,66 $ · orchestration 0,93 $ · leçons 0,24 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/partage/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>5,63 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,72 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>1,36 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>10 points · 0,79 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,48 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="Libellés relevés par le scan des brouillons">Brouillon <b>4</b><i class="pc-g0">●</i></span><span class="pc-chip" title="○ Photo d'ouverture de « La salle » : un serveur et une bouteille, pas la salle
-○ Fréquence « elle change au fil des semaines » non sourcée">Contenu <b>2</b><i class="pc-g2">○2</i></span><span class="pc-chip" title="○ Apostrophes droites dans des titres, courbes ailleurs
-○ Format des heures incohérent">Langue <b>2</b><i class="pc-g2">○2</i></span><span class="pc-chip" title="▲ Chiffres des formules coupés sur deux lignes
-○ Galerie de la salle : grand vide à droite de la dernière rangée
-○ Équipe : quatre noms, deux portraits seulement">Disposition <b>3</b><i class="pc-g1">▲1</i><i class="pc-g2">○2</i></span></div>
-<div class="pc-dec" role="img" aria-label="10 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>10 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 4 → 0</small></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/partage/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>7,23 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,39 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>1,13 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>7 points · 0,75 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,46 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="Libellés relevés par le scan des brouillons">Brouillon <b>2</b><i class="pc-g0">●</i></span><span class="pc-chip" title="○ Adresse et accès répétés à la suite sur la page réservation">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ « Starters » au lieu d'« Entrées » en titre de section et dans les onglets
-○ « boeuf » sans ligature
-○ « Date non relevée » affiché dans la liste de presse">Langue <b>3</b><i class="pc-g2">○3</i></span><span class="pc-chip" title="▲ Les onglets de la carte ne font pas défiler vers la section">Fonctionnel <b>1</b><i class="pc-g1">▲1</i></span></div>
-<div class="pc-dec" role="img" aria-label="7 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>7 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 2 → 0</small></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/partage/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>6,90 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,76 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>1,16 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>7 points · 0,76 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,38 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="Libellés relevés par le scan des brouillons">Brouillon <b>3</b><i class="pc-g0">●</i></span><span class="pc-chip" title="○ « en une minute » : promesse non prouvée dans le bloc réservation">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ « Marre Méditerannée (sic) » affiché tel quel dans Fin de repas">Langue <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Grand vide sous « Starters » dans l'onglet La carte
-○ Horaires coupés sur deux lignes dans le tableau mobile">Disposition <b>2</b><i class="pc-g2">○2</i></span></div>
-<div class="pc-dec" role="img" aria-label="7 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>7 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 3 → 0</small></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">4</span><b>La Brasserie du Quai</b><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span class="pc-sum">dev 31,30 $ · débug 2,55 $ · 21 corrigés sur 21 traités</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,67 $ · orchestration 1,10 $ · leçons 0,24 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/brasserie-du-quai/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>7,32 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>2,38 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>2,17 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>11 points · 0,81 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,39 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="Libellés relevés par le scan des brouillons">Brouillon <b>13</b><i class="pc-g0">●</i></span><span class="pc-chip" title="○ Photo de machine à écrire sans rapport avec la brasserie">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Le symbole € passe seul à la ligne dans les prix des huîtres">Disposition <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="▲ Phrase en capitales sur la photo de la salle, difficile à lire
-○ Titre du héros d'accueil blanc sur les tables claires de la photo
-○ Petits textes du menu et ligne d'accroche peu lisibles sur la photo des huîtres">Lisibilité <b>3</b><i class="pc-g1">▲1</i><i class="pc-g2">○2</i></span><span class="pc-chip" title="○ Titre du héros absent pendant environ 2 secondes">Animation <b>1</b><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="11 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>11 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 13 → 0</small></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/brasserie-du-quai/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>7,31 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,72 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>1,02 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>7 points · 0,50 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,20 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="Libellés relevés par le scan des brouillons">Brouillon <b>3</b><i class="pc-g0">●</i></span><span class="pc-chip" title="○ Fiche d'équipe de Pierre-Alexandre vide de sens">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ « x » à la place de « × » et fractions écrites « 1/2 » dans les plateaux">Langue <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Le deux-points reste seul sur la ligne avant l'étiquette « à confirmer »">Disposition <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Deux pieds de page de premier niveau sur chaque page">Fonctionnel <b>1</b><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="7 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>7 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 3 → 0</small></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/brasserie-du-quai/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>6,40 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,60 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>1,38 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 1</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>3 points · 0,44 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,20 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="Libellés relevés par le scan des brouillons">Brouillon <b>1</b><i class="pc-g0">●</i></span><span class="pc-chip" title="○ Logo répété dans le héros mobile">Disposition <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Sous-titre du héros peu contrasté et bouton coupé par la barre fixe">Lisibilité <b>1</b><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="3 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>3 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 1 → 0</small></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">5</span><b>Chez Guillaume</b><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span class="pc-sum">dev 25,45 $ · débug 0,54 $ · 7 corrigés sur 7 traités</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,46 $ · orchestration 1,08 $ · leçons 0,29 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/chez-guillaume/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>6,58 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,88 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>1,98 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>1 point · 0,14 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,05 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="○ Horaires au format technique">Langue <b>1</b><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="1 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>1 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 0 → 0</small></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/chez-guillaume/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>7,60 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,93 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,58 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>4 points · 0,10 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,01 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="● « Horaires du site actuel, à confirmer par téléphone. » (pie
-● « Horaires publiés par le site actuel, à confirmer par télép
-● « (à confirmer pour 2026) » dans le rôle de Tamara Truyts
-○ Placeholder « ex. 15 novembre »">Brouillon <b>4</b><i class="pc-g0">●3</i><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="4 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>4 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 4 → 0</small></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/chez-guillaume/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>3,71 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,85 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>1,34 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>2 points · 0,20 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,04 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="○ Menus d'octobre présentés sans nuance">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="▲ Dates passées affichées avec « Réserver »">Fonctionnel <b>1</b><i class="pc-g1">▲1</i></span></div>
-<div class="pc-dec" role="img" aria-label="2 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>2 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 0 → 0</small></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">6</span><b>La Dolce Vita Wépion</b><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span class="pc-sum">dev 17,99 $ · débug 0,54 $ · 9 corrigés sur 9 traités</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,52 $ · orchestration 1,05 $ · leçons 0,27 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/dolce-vita-wepion/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,10 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,82 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,66 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>0 point · 0,17 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,02 $</span></li></ol>
-<div class="pc-chips"><span class="pc-muted">aucun problème relevé</span></div>
-
-<small class="pc-br">Libellés de brouillon : 0 → 0</small></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/dolce-vita-wepion/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>7,61 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,37 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,39 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>5 points · 0,13 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,03 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="● « traduction KYW » sous la devise
-● « traduction KYW » dans le pied
-● « le jour de la maquette » dans l'ardoise">Brouillon <b>3</b><i class="pc-g0">●3</i></span><span class="pc-chip" title="○ Ardoise « au fil du marché » non sourcée">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Abréviation « Esc. Panée … mozza. »">Langue <b>1</b><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="5 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>5 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 3 → 0</small></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/dolce-vita-wepion/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>3,02 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,42 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,60 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>4 points · 0,16 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,03 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="● Alt du logo : « à vérifier »">Brouillon <b>1</b><i class="pc-g0">●1</i></span><span class="pc-chip" title="▲ Ardoise « du moment » inventée
-○ Description parasite « À table »
-○ Distance et ambiance non sourcées">Contenu <b>3</b><i class="pc-g1">▲1</i><i class="pc-g2">○2</i></span></div>
-<div class="pc-dec" role="img" aria-label="4 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>4 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 1 → 0</small></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">7</span><b>Le Royal Namur</b><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span class="pc-sum">dev 14,96 $ · débug 0,57 $ · 8 corrigés sur 9 traités</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,46 $ · orchestration 1,08 $ · leçons 0,28 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/le-royal/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>3,16 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,43 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,27 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>4 points · 0,17 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,10 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="● Annonce moules jumbo avec « conditions à confirmer »
-● Moules jumbo : « Conditions exactes à confirmer »
-● Histoire : annonce moules avec « conditions à confirmer »
-● Réservation : mention de formulaire de démonstration">Brouillon <b>4</b><i class="pc-g0">●4</i></span></div>
-<div class="pc-dec" role="img" aria-label="4 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>4 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 4 → 0</small></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/le-royal/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,49 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,06 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,28 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>4 points · 0,16 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,02 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="● Note de relevé visible : « Annonce relevée sur l’ardoise… conditions à confirmer au restaurant »
-● Note interne sur la source des avis dans « Repères »">Brouillon <b>2</b><i class="pc-g0">●2</i></span><span class="pc-chip" title="○ Mentions « extraits » et « ici, un extrait » sur la carte">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Un élément sans changement au survol">Fonctionnel <b>1</b><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="3 corrigés, 0 refusés, 1 impossibles"><i class="d-ok" style="flex-basis:75%"></i><i class="d-imp" style="flex-basis:25%"></i></div><small>3 corrigés · 1 impossible</small>
-<small class="pc-br">Libellés de brouillon : 1 → 0</small></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/le-royal/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,54 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,24 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,49 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>1 point · 0,11 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,01 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="● Mention de brouillon visible sur l'ardoise de la terrasse">Brouillon <b>1</b><i class="pc-g0">●1</i></span></div>
-<div class="pc-dec" role="img" aria-label="1 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>1 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 1 → 0</small></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">8</span><b>Incorrect</b><span class="pc-3"><b class="ok" title="Portfolio : débogué">P</b><b class="ok" title="Awwwards : débogué">A</b><b class="ok" title="Inspi legacy : débogué">L</b></span><span class="pc-sum">dev 15,19 $ · débug 0,56 $ · 18 corrigés sur 20 traités</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,52 $ · orchestration 1,09 $ · leçons 0,28 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/incorrect/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,40 $</span></li>
-<li class="pc-qa"><b>Revue ×3</b><span>2,50 $</span></li>
-<li class="pc-qa"><b>Révision ×2</b><span>1,15 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>10 points · 0,11 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,15 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="● Définition « illustrative, à écrire avec le restaurant »
-● Phrase d'exemple « Qui s'écarte de la règle… pizza au kimchi »
-● Horaires « à confirmer : les sources divergent » sur l'accueil
-● Marqueur « (illustratif) » sur À emporter (accueil)
-● Bandeau « Illustratif : la vente à emporter est signalée par Le Fooding… »
-● Intertitre « En trois gestes (exemple) »
-● « Formulaire de démonstration sans envoi »
-● Horaires « à confirmer : les sources divergent » (réservation)">Brouillon <b>8</b><i class="pc-g0">●8</i></span><span class="pc-chip" title="○ Prix d'un plat lu « 4,50 € » dans le texte du DOM mais affiché « 14,50 € »">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Pas de page 404 propre au site">Fonctionnel <b>1</b><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="8 corrigés, 2 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:80%"></i><i class="d-ref" style="flex-basis:20%"></i></div><small>8 corrigés · 2 refusés (justifiés)</small>
-<small class="pc-br">Libellés de brouillon : 8 → 0</small></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/incorrect/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,56 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,72 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,38 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>7 points · 0,13 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,02 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="● Mention de brouillon sur les horaires
-● Mention de brouillon sur l'origine des informations
-▲ Chapeau de la carte qui cite le PDF du site actuel">Brouillon <b>3</b><i class="pc-g0">●2</i><i class="pc-g1">▲1</i></span><span class="pc-chip" title="○ Faits annoncés sans source fiable">Contenu <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Libellé redondant « Terrasse | Terrasse. »">Langue <b>1</b><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="7 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>7 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 2 → 0</small></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/incorrect/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,41 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,75 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,32 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage · phase 2</span><ol class="pc-steps">
-<li class="pc-identifier"><b>Identification</b><span>3 points · 0,13 $</span></li>
-<li class="pc-rectifier"><b>Correction</b><span>0,03 $</span></li></ol>
-<div class="pc-chips"><span class="pc-chip" title="● Libellé de brouillon visible : « Horaires à confirmer, les sources se contredisent. »">Brouillon <b>1</b><i class="pc-g0">●1</i></span><span class="pc-chip" title="○ Colonne droite vide en fin de carte">Disposition <b>1</b><i class="pc-g2">○1</i></span><span class="pc-chip" title="○ Mention d'adresse du logo illisible">Lisibilité <b>1</b><i class="pc-g2">○1</i></span></div>
-<div class="pc-dec" role="img" aria-label="3 corrigés, 0 refusés, 0 impossibles"><i class="d-ok" style="flex-basis:100%"></i></div><small>3 corrigés</small>
-<small class="pc-br">Libellés de brouillon : 1 → 0</small></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">9</span><b>L'Essentiel</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 16,05 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,52 $ · orchestration 1,27 $ · leçons 0,24 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/l-essentiel/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,43 $</span></li>
-<li class="pc-qa"><b>Revue ×3</b><span>2,48 $</span></li>
-<li class="pc-qa"><b>Révision ×2</b><span>0,93 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/l-essentiel/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>3,75 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,58 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,26 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/l-essentiel/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>3,38 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,90 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,34 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">10</span><b>La Ferme Blanche d'Asie</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 13,97 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,62 $ · orchestration 1,09 $ · leçons 0,27 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/ferme-blanche-d-asie/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,48 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,74 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,33 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/ferme-blanche-d-asie/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,25 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,61 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,42 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/ferme-blanche-d-asie/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,75 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,92 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,47 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">11</span><b>Le Félicien</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 16,04 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,74 $ · orchestration 1,16 $ · leçons 0,26 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/le-felicien/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,37 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,91 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,44 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/le-felicien/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,47 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,49 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,37 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/le-felicien/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,98 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,71 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,30 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">12</span><b>Le Grill des Amis</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 17,34 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,70 $ · orchestration 1,42 $ · leçons 0,33 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/grill-des-amis/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,75 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,62 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,50 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/grill-des-amis/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>5,03 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,83 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,42 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/grill-des-amis/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,92 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,77 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,50 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">13</span><b>Le 54</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 13,65 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,55 $ · orchestration 1,07 $ · leçons 0,25 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/le-54/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,10 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,40 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,40 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/le-54/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,19 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,34 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,22 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/le-54/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,78 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,80 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,42 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">14</span><b>Le Ponti 2</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 14,36 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,59 $ · orchestration 1,18 $ · leçons 0,23 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/le-ponti-2/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,60 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,60 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,48 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/le-ponti-2/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,12 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,95 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,26 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/le-ponti-2/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,76 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,29 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,30 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">15</span><b>Le Servais</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 15,29 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,60 $ · orchestration 1,14 $ · leçons 0,29 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/le-servais/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,63 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>2,01 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,70 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/le-servais/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,37 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,97 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,37 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/le-servais/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,68 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,24 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,32 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">16</span><b>Li Micougni</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 16,35 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,62 $ · orchestration 1,16 $ · leçons 0,26 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/li-micougni/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,63 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,84 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,45 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/li-micougni/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,56 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,64 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,37 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/li-micougni/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>3,31 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>2,04 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,51 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">17</span><b>Makimono</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 19,24 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,85 $ · orchestration 1,33 $ · leçons 0,24 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/makimono/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>3,12 $</span></li>
-<li class="pc-qa"><b>Revue ×3</b><span>3,60 $</span></li>
-<li class="pc-qa"><b>Révision ×2</b><span>0,83 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/makimono/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,88 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,45 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,44 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/makimono/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,95 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,49 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,48 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">18</span><b>Pépite, cave à manger</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 14,72 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,56 $ · orchestration 1,27 $ · leçons 0,26 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/pepite/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,03 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,82 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,70 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/pepite/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,14 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,98 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,51 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/pepite/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>1,96 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,15 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,43 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">19</span><b>Sanga</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 14,34 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,58 $ · orchestration 1,22 $ · leçons 0,28 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/sanga/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,48 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,29 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,46 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/sanga/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,58 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>1,74 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,41 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/sanga/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,48 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,65 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,25 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details><details class="pc-resto"><summary><span class="pc-rang">20</span><b>L'Huile sur le Feu</b><span class="pc-3"><b class="" title="Portfolio : développé, pas encore débogué">P</b><b class="" title="Awwwards : développé, pas encore débogué">A</b><b class="" title="Inspi legacy : développé, pas encore débogué">L</b></span><span class="pc-sum">dev 17,33 $</span></summary>
-<p class="pc-commun">Commun au restaurant : recherche client 0,61 $ · orchestration 1,41 $ · leçons 0,26 $</p>
-<div class="pc-sites"><div class="pc-site"><h4>Portfolio <a href="https://kyw-test-restaurant.vercel.app/huile-sur-le-feu/portfolio/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,82 $</span></li>
-<li class="pc-qa"><b>Revue ×2</b><span>2,09 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,40 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Awwwards <a href="https://kyw-test-restaurant.vercel.app/huile-sur-le-feu/awwwards/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>4,21 $</span></li>
-<li class="pc-qa"><b>Revue ×3</b><span>2,58 $</span></li>
-<li class="pc-qa"><b>Révision ×2</b><span>0,83 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div><div class="pc-site"><h4>Inspi legacy <a href="https://kyw-test-restaurant.vercel.app/huile-sur-le-feu/legacy/" title="Ouvrir le site">↗</a></h4>
-<div class="pc-lane"><span class="pc-lt">Développement</span><ol class="pc-steps">
-<li class="pc-construction"><b>Construction</b><span>2,92 $</span></li>
-<li class="pc-qa"><b>Revue</b><span>0,99 $</span></li>
-<li class="pc-qa"><b>Révision</b><span>0,49 $</span></li>
-<li class="pc-pub"><b>Publié</b><span>en ligne</span></li></ol></div>
-<div class="pc-lane"><span class="pc-lt">Débogage</span><p class="pc-muted pc-todo">Pas encore débogué</p></div></div></div></details></div></section>
+<div class="pc-barre-outils"><div class="pc-bascule" role="tablist" aria-label="Niveau de détail"><button role="tab" aria-selected="true" data-vue="condense">Condensé</button><button role="tab" aria-selected="false" data-vue="detaille">Détaillé par site</button></div>
+<p class="pc-legende"><span><i class="pc-dev fait"></i>développement fait</span><span><i class="pc-debug fait"></i>débogage fait</span><span><i class="partiel pc-dev"></i>fait sur une partie des sites</span><span><i class="vide"></i>à faire</span><span><i class="pc-dev fait pc-num">3</i>nombre de passes (ex. 3e revue)</span></p></div>
+<div class="pc-grille">
+<div class="pc-l pc-tete pc-groupes"><span></span><span class="pc-gdev">Développement</span><span class="pc-gdebug">Débogage</span><span></span></div>
+<div class="pc-l pc-tete"><span class="pc-nom">Restaurant</span><span class="pc-h">Dossier client</span><span class="pc-h">Construction</span><span class="pc-h">Revue</span><span class="pc-h">Révision</span><span class="pc-h">Publication</span><span class="pc-h">Identification</span><span class="pc-h">Correction</span><span class="pc-h">Republication</span><span class="pc-etat">Débug</span></div>
+<details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">1</span><b>Les Potes au Feu</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 3 revues avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>3</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 2 révisions (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+Portfolio : 3 problèmes relevés : fonctionnel 1, disposition 1, langue 1 (+ 19 libellés de brouillon)
+Awwwards : 4 problèmes relevés : disposition 2, langue 1, contenu 1 (+ 4 libellés de brouillon)
+Inspi legacy : 6 problèmes relevés : contenu 1, langue 5 (+ 0 libellé de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+Portfolio : 7 corrigés, 1 impossible
+Awwwards : 8 corrigés
+Inspi legacy : 5 corrigés, 1 refusé (justifié)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Portfolio : Corrections en ligne · libellés de brouillon 19 → 0
+Awwwards : Corrections en ligne · libellés de brouillon 4 → 0
+Inspi legacy : Corrections en ligne · libellés de brouillon 0 → 0" tabindex="0"></span><span class="pc-etat">20/22 corrigés</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+3 revues avant publication" tabindex="0"><b>3</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+2 révisions (corrections suite aux revues)" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+3 problèmes relevés : fonctionnel 1, disposition 1, langue 1 (+ 19 libellés de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+7 corrigés, 1 impossible" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 19 → 0" tabindex="0"></span><span class="pc-etat">7/8</span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+4 problèmes relevés : disposition 2, langue 1, contenu 1 (+ 4 libellés de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+8 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 4 → 0" tabindex="0"></span><span class="pc-etat">8/8</span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+6 problèmes relevés : contenu 1, langue 5 (+ 0 libellé de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+5 corrigés, 1 refusé (justifié)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 0 → 0" tabindex="0"></span><span class="pc-etat">5/6</span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">2</span><b>L'Atelier de Bossimé</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 1 revue avant publication
+Awwwards : 1 revue avant publication
+Inspi legacy : 1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev partiel" data-tip="Révision
+Portfolio : Pas de révision
+Awwwards : Pas de révision
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+Portfolio : 5 problèmes relevés : animation 1, disposition 1, lisibilité 1, contenu 1, langue 1 (+ 7 libellés de brouillon)
+Awwwards : 2 problèmes relevés : lisibilité 1, contenu 1 (+ 0 libellé de brouillon)
+Inspi legacy : 3 problèmes relevés : fonctionnel 1, disposition 1, contenu 1 (+ 4 libellés de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+Portfolio : 11 corrigés
+Awwwards : 2 corrigés
+Inspi legacy : 7 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Portfolio : Corrections en ligne · libellés de brouillon 7 → 0
+Awwwards : Corrections en ligne · libellés de brouillon 0 → 0
+Inspi legacy : Corrections en ligne · libellés de brouillon 4 → 0" tabindex="0"></span><span class="pc-etat">20/20 corrigés</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev vide" data-tip="Révision
+Pas de révision" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+5 problèmes relevés : animation 1, disposition 1, lisibilité 1, contenu 1, langue 1 (+ 7 libellés de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+11 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 7 → 0" tabindex="0"></span><span class="pc-etat">11/11</span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev vide" data-tip="Révision
+Pas de révision" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+2 problèmes relevés : lisibilité 1, contenu 1 (+ 0 libellé de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+2 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 0 → 0" tabindex="0"></span><span class="pc-etat">2/2</span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+3 problèmes relevés : fonctionnel 1, disposition 1, contenu 1 (+ 4 libellés de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+7 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 4 → 0" tabindex="0"></span><span class="pc-etat">7/7</span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">3</span><b>Partage</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+Portfolio : 7 problèmes relevés : disposition 3, contenu 2, langue 2 (+ 4 libellés de brouillon)
+Awwwards : 5 problèmes relevés : fonctionnel 1, langue 3, contenu 1 (+ 2 libellés de brouillon)
+Inspi legacy : 4 problèmes relevés : disposition 2, langue 1, contenu 1 (+ 3 libellés de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+Portfolio : 10 corrigés
+Awwwards : 7 corrigés
+Inspi legacy : 7 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Portfolio : Corrections en ligne · libellés de brouillon 4 → 0
+Awwwards : Corrections en ligne · libellés de brouillon 2 → 0
+Inspi legacy : Corrections en ligne · libellés de brouillon 3 → 0" tabindex="0"></span><span class="pc-etat">24/24 corrigés</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+7 problèmes relevés : disposition 3, contenu 2, langue 2 (+ 4 libellés de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+10 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 4 → 0" tabindex="0"></span><span class="pc-etat">10/10</span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+5 problèmes relevés : fonctionnel 1, langue 3, contenu 1 (+ 2 libellés de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+7 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 2 → 0" tabindex="0"></span><span class="pc-etat">7/7</span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+4 problèmes relevés : disposition 2, langue 1, contenu 1 (+ 3 libellés de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+7 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 3 → 0" tabindex="0"></span><span class="pc-etat">7/7</span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">4</span><b>La Brasserie du Quai</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+Portfolio : 6 problèmes relevés : lisibilité 3, disposition 1, animation 1, contenu 1 (+ 13 libellés de brouillon)
+Awwwards : 4 problèmes relevés : fonctionnel 1, langue 1, disposition 1, contenu 1 (+ 3 libellés de brouillon)
+Inspi legacy : 2 problèmes relevés : disposition 1, lisibilité 1 (+ 1 libellé de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+Portfolio : 11 corrigés
+Awwwards : 7 corrigés
+Inspi legacy : 3 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Portfolio : Corrections en ligne · libellés de brouillon 13 → 0
+Awwwards : Corrections en ligne · libellés de brouillon 3 → 0
+Inspi legacy : Corrections en ligne · libellés de brouillon 1 → 0" tabindex="0"></span><span class="pc-etat">21/21 corrigés</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+6 problèmes relevés : lisibilité 3, disposition 1, animation 1, contenu 1 (+ 13 libellés de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+11 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 13 → 0" tabindex="0"></span><span class="pc-etat">11/11</span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+4 problèmes relevés : fonctionnel 1, langue 1, disposition 1, contenu 1 (+ 3 libellés de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+7 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 3 → 0" tabindex="0"></span><span class="pc-etat">7/7</span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+2 problèmes relevés : disposition 1, lisibilité 1 (+ 1 libellé de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+3 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 1 → 0" tabindex="0"></span><span class="pc-etat">3/3</span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">5</span><b>Chez Guillaume</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 1 revue avant publication
+Inspi legacy : 1 revue avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+Portfolio : 1 problème relevé : langue 1 (+ 0 libellé de brouillon)
+Awwwards : 4 problèmes relevés : brouillon 4
+Inspi legacy : 2 problèmes relevés : fonctionnel 1, contenu 1 (+ 0 libellé de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+Portfolio : 1 corrigé
+Awwwards : 4 corrigés
+Inspi legacy : 2 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Portfolio : Corrections en ligne · libellés de brouillon 0 → 0
+Awwwards : Corrections en ligne · libellés de brouillon 4 → 0
+Inspi legacy : Corrections en ligne · libellés de brouillon 0 → 0" tabindex="0"></span><span class="pc-etat">7/7 corrigés</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+1 problème relevé : langue 1 (+ 0 libellé de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+1 corrigé" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 0 → 0" tabindex="0"></span><span class="pc-etat">1/1</span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+4 problèmes relevés : brouillon 4" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+4 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 4 → 0" tabindex="0"></span><span class="pc-etat">4/4</span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+2 problèmes relevés : fonctionnel 1, contenu 1 (+ 0 libellé de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+2 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 0 → 0" tabindex="0"></span><span class="pc-etat">2/2</span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">6</span><b>La Dolce Vita Wépion</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 1 revue avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+Portfolio : 0 problème relevé (+ 0 libellé de brouillon)
+Awwwards : 5 problèmes relevés : brouillon 3, contenu 1, langue 1
+Inspi legacy : 4 problèmes relevés : brouillon 1, contenu 3" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+Portfolio : 0 corrigé
+Awwwards : 5 corrigés
+Inspi legacy : 4 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Portfolio : Corrections en ligne · libellés de brouillon 0 → 0
+Awwwards : Corrections en ligne · libellés de brouillon 3 → 0
+Inspi legacy : Corrections en ligne · libellés de brouillon 1 → 0" tabindex="0"></span><span class="pc-etat">9/9 corrigés</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+0 problème relevé (+ 0 libellé de brouillon)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+0 corrigé" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 0 → 0" tabindex="0"></span><span class="pc-etat">0/0</span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+5 problèmes relevés : brouillon 3, contenu 1, langue 1" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+5 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 3 → 0" tabindex="0"></span><span class="pc-etat">5/5</span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+4 problèmes relevés : brouillon 1, contenu 3" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+4 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 1 → 0" tabindex="0"></span><span class="pc-etat">4/4</span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">7</span><b>Le Royal Namur</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+Portfolio : 4 problèmes relevés : brouillon 4
+Awwwards : 4 problèmes relevés : brouillon 2, contenu 1, fonctionnel 1
+Inspi legacy : 1 problème relevé : brouillon 1" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+Portfolio : 4 corrigés
+Awwwards : 3 corrigés, 1 impossible
+Inspi legacy : 1 corrigé" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Portfolio : Corrections en ligne · libellés de brouillon 4 → 0
+Awwwards : Corrections en ligne · libellés de brouillon 1 → 0
+Inspi legacy : Corrections en ligne · libellés de brouillon 1 → 0" tabindex="0"></span><span class="pc-etat">8/9 corrigés</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+4 problèmes relevés : brouillon 4" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+4 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 4 → 0" tabindex="0"></span><span class="pc-etat">4/4</span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+4 problèmes relevés : brouillon 2, contenu 1, fonctionnel 1" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+3 corrigés, 1 impossible" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 1 → 0" tabindex="0"></span><span class="pc-etat">3/4</span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+1 problème relevé : brouillon 1" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+1 corrigé" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 1 → 0" tabindex="0"></span><span class="pc-etat">1/1</span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">8</span><b>Incorrect</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 3 revues avant publication
+Awwwards : 1 revue avant publication
+Inspi legacy : 1 revue avant publication" tabindex="0"><b>3</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 2 révisions (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+Portfolio : 10 problèmes relevés : brouillon 8, fonctionnel 1, contenu 1
+Awwwards : 5 problèmes relevés : brouillon 3, langue 1, contenu 1
+Inspi legacy : 3 problèmes relevés : brouillon 1, disposition 1, lisibilité 1" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+Portfolio : 8 corrigés, 2 refusés (justifié)
+Awwwards : 7 corrigés
+Inspi legacy : 3 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Portfolio : Corrections en ligne · libellés de brouillon 8 → 0
+Awwwards : Corrections en ligne · libellés de brouillon 2 → 0
+Inspi legacy : Corrections en ligne · libellés de brouillon 1 → 0" tabindex="0"></span><span class="pc-etat">18/20 corrigés</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+3 revues avant publication" tabindex="0"><b>3</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+2 révisions (corrections suite aux revues)" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+10 problèmes relevés : brouillon 8, fonctionnel 1, contenu 1" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+8 corrigés, 2 refusés (justifié)" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 8 → 0" tabindex="0"></span><span class="pc-etat">8/10</span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+5 problèmes relevés : brouillon 3, langue 1, contenu 1" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+7 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 2 → 0" tabindex="0"></span><span class="pc-etat">7/7</span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Identification
+3 problèmes relevés : brouillon 1, disposition 1, lisibilité 1" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Correction
+3 corrigés" tabindex="0"></span><span class="pc-c pc-debug fait" data-tip="Republication
+Corrections en ligne · libellés de brouillon 1 → 0" tabindex="0"></span><span class="pc-etat">3/3</span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">9</span><b>L'Essentiel</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 3 revues avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 1 revue avant publication" tabindex="0"><b>3</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 2 révisions (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+3 revues avant publication" tabindex="0"><b>3</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+2 révisions (corrections suite aux revues)" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">10</span><b>La Ferme Blanche d'Asie</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 1 revue avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 1 revue avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">11</span><b>Le Félicien</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">12</span><b>Le Grill des Amis</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">13</span><b>Le 54</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 1 revue avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">14</span><b>Le Ponti 2</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 1 revue avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">15</span><b>Le Servais</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 1 revue avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">16</span><b>Li Micougni</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 1 revue avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">17</span><b>Makimono</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 3 revues avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>3</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 2 révisions (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+3 revues avant publication" tabindex="0"><b>3</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+2 révisions (corrections suite aux revues)" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">18</span><b>Pépite, cave à manger</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">19</span><b>Sanga</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 2 revues avant publication
+Inspi legacy : 1 revue avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 1 révision (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details><details class="pc-r"><summary class="pc-l"><span class="pc-nom"><span class="pc-rang">20</span><b>L'Huile sur le Feu</b></span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Portfolio : Site construit
+Awwwards : Site construit
+Inspi legacy : Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+Portfolio : 2 revues avant publication
+Awwwards : 3 revues avant publication
+Inspi legacy : 1 revue avant publication" tabindex="0"><b>3</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+Portfolio : 1 révision (corrections suite aux revues)
+Awwwards : 2 révisions (corrections suite aux revues)
+Inspi legacy : 1 révision (corrections suite aux revues)" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Publication
+Portfolio : En ligne
+Awwwards : En ligne
+Inspi legacy : En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Portfolio : Débogage à venir
+Awwwards : Débogage à venir
+Inspi legacy : Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Portfolio : Correction à venir
+Awwwards : Correction à venir
+Inspi legacy : Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+Portfolio : À venir
+Awwwards : À venir
+Inspi legacy : À venir" tabindex="0"></span><span class="pc-etat">débug à venir</span></summary>
+<div class="pc-l pc-site"><span class="pc-nom">Portfolio</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+2 revues avant publication" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Awwwards</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+3 revues avant publication" tabindex="0"><b>3</b></span><span class="pc-c pc-dev fait" data-tip="Révision
+2 révisions (corrections suite aux revues)" tabindex="0"><b>2</b></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div><div class="pc-l pc-site"><span class="pc-nom">Inspi legacy</span><span class="pc-c pc-dev fait" data-tip="Dossier client
+Recherche client faite (donnees.json)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Construction
+Site construit" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Revue
+1 revue avant publication" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Révision
+1 révision (corrections suite aux revues)" tabindex="0"></span><span class="pc-c pc-dev fait" data-tip="Publication
+En ligne" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Identification
+Débogage à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Correction
+Correction à venir" tabindex="0"></span><span class="pc-c pc-debug vide" data-tip="Republication
+À venir" tabindex="0"></span><span class="pc-etat"></span></div></details>
+</div>
 <div class="pc-tip" role="tooltip" hidden></div>
-<p class="pc-note">Coûts au tarif de l'API. Développement : construction, revues, révisions, captures et publication de chaque site (la recherche client et l'orchestration communes au restaurant sont indiquées dans la vue détaillée). Débogage : phase 1 pour les restaurants 1 à 4, phase 2 (configurations F et H) pour les restaurants 5 à 8.</p></div>
+<p class="pc-note">Clique sur un restaurant pour voir ses 3 sites. Survole une case pour le détail de l'étape. Débogage : phase 1 pour les restaurants 1 à 4, phase 2 pour les restaurants 5 à 8.</p></div>
 <footer>KYW, filiale web de KYN. Page régénérée par <code>scripts/suivi.mjs</code> à chaque publication.</footer>
 </div>
 <script>
@@ -738,8 +1094,8 @@ footer{color:var(--muted);font-size:.8rem;margin-top:2rem}
 const onglet=(id)=>{q('.onglets button').forEach(b=>b.setAttribute('aria-selected',b.dataset.onglet===id));q('[data-panneau]').forEach(p=>p.hidden=p.dataset.panneau!==id);try{localStorage.setItem('suivi-onglet',id)}catch(e){}};
 q('.onglets button').forEach(b=>b.addEventListener('click',()=>onglet(b.dataset.onglet)));
 try{const m=localStorage.getItem('suivi-onglet');if(m&&document.querySelector('[data-panneau="'+m+'"]'))onglet(m)}catch(e){}
-q('.pc-bascule button').forEach(b=>b.addEventListener('click',()=>{q('.pc-bascule button').forEach(x=>x.setAttribute('aria-selected',x===b));document.getElementById('pc-condense').hidden=b.dataset.vue!=='condense';document.getElementById('pc-detaille').hidden=b.dataset.vue!=='detaille'}));
-const t=document.querySelector('.pc-tip');const show=(e,el)=>{t.textContent=el.dataset.tip;t.hidden=false;const r=el.getBoundingClientRect();t.style.left=Math.min(innerWidth-t.offsetWidth-8,Math.max(8,(e&&e.clientX?e.clientX:r.left+r.width/2)-t.offsetWidth/2))+'px';t.style.top=(r.top-t.offsetHeight-8)+'px'};
-q('[data-tip]').forEach(el=>{el.addEventListener('mousemove',e=>show(e,el));el.addEventListener('focus',()=>show(null,el));el.addEventListener('mouseleave',()=>t.hidden=true);el.addEventListener('blur',()=>t.hidden=true)});
+q('.pc-bascule button').forEach(b=>b.addEventListener('click',()=>{q('.pc-bascule button').forEach(x=>x.setAttribute('aria-selected',x===b));q('.pc-r').forEach(d=>d.open=b.dataset.vue==='detaille')}));
+const t=document.querySelector('.pc-tip');const show=(el)=>{t.textContent=el.dataset.tip;t.hidden=false;const r=el.getBoundingClientRect();t.style.left=Math.min(innerWidth-t.offsetWidth-8,Math.max(8,r.left+r.width/2-t.offsetWidth/2))+'px';const y=r.top-t.offsetHeight-8;t.style.top=(y<8?r.bottom+8:y)+'px'};
+q('[data-tip]').forEach(el=>{el.addEventListener('mouseenter',()=>show(el));el.addEventListener('focus',()=>show(el));el.addEventListener('mouseleave',()=>t.hidden=true);el.addEventListener('blur',()=>t.hidden=true);el.addEventListener('click',e=>{if(el.closest('summary')){e.preventDefault();show(el)}})});
 })();
 </script></body></html>
