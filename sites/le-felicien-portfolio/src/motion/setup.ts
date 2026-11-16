@@ -99,7 +99,6 @@ function suggestion() {
   const label = root.querySelector<HTMLElement>('[data-jour-label]')!;
   const texte = root.querySelector<HTMLElement>('[data-jour-texte]')!;
   const prix = root.querySelector<HTMLElement>('[data-jour-prix]')!;
-  const marque = root.querySelector<HTMLElement>('[data-jour-marque]')!;
   const ligne = root.querySelector<HTMLElement>('[data-jour-ligne]')!;
   let i = data.findIndex((d) => d.jour === JOURS[new Date().getDay()]);
   if (i < 0) i = 0;
@@ -109,7 +108,6 @@ function suggestion() {
     label.textContent = estAujourdhui ? `Aujourd'hui, ${d.jour}` : d.jour[0].toUpperCase() + d.jour.slice(1);
     texte.innerHTML = d.texte.split(' ').map((m) => `<span class="mot">${m}</span>`).join(' ');
     prix.textContent = d.prix || '';
-    marque.hidden = !d.placeholder;
   };
   const aller = (n: number) => {
     i = (n + data.length) % data.length;
