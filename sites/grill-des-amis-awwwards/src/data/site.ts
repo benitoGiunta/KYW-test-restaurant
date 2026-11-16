@@ -1,7 +1,7 @@
 // Contenu du Grill des amiS (variante awwwards « Du brut au feu »). Source : data/restaurants/grill-des-amis/ (donnees.json, dossier.md).
 // Hypothèses : (1) l'e-mail, les réseaux, les avis, l'année d'ouverture et le parking sont inconnus : rien n'est affiché à leur place ;
-// (2) mardi, mercredi et dimanche sont « fermé (à confirmer) » dans les données : affichés ainsi ; (3) la photo « patrons » est légendée sans nom
-// (l'identité est à confirmer) ; (4) aucun plat fictif : la carte vient du PDF du client (placeholder: false partout).
+// (2) les jours sans service ne sont pas listés ; (3) la photo « patrons » est légendée sans nom ;
+// (4) aucun plat fictif : la carte vient du PDF du client.
 import carteJson from './carte.json';
 
 export type Plat = { nom: string; description: string | null; prix: number; unite: string | null; placeholder: boolean };
@@ -32,7 +32,6 @@ export const services = [
   { jours: 'Lundi', schema: ['Monday'], midi: `12${N}h à 14${N}h`, soir: `18${N}h à 21${N}h30`, o1: '12:00', c1: '14:00', o2: '18:00', c2: '21:30' },
   { jours: 'Jeudi au samedi', schema: ['Thursday', 'Friday', 'Saturday'], midi: `12${N}h à 14${N}h`, soir: `18${N}h à 21${N}h30`, o1: '12:00', c1: '14:00', o2: '18:00', c2: '21:30' },
 ] as const;
-export const fermes = 'Mardi, mercredi, dimanche : fermé (à confirmer)';
 
 export const gestes = [
   { verbe: 'Acheter', texte: 'De grosses pièces, brutes, chez des fournisseurs choisis. L’entrecôte du moment suit l’arrivage de Rungis.', photo: null },
