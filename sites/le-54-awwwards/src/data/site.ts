@@ -32,7 +32,6 @@ export const creneaux = { midi: '12 h à 14 h', soir: '18 h 30 à 21 h' } as con
 export const dernieresCommandes = { midi: '13 h', soir: '20 h' } as const;
 // jour, midi, soir, aConfirmer
 export const horaires = [
-  { jour: 'Lundi', midi: true, soir: true, aConfirmer: true },
   { jour: 'Mardi', midi: false, soir: false },
   { jour: 'Mercredi', midi: false, soir: false },
   { jour: 'Jeudi', midi: true, soir: true },

@@ -70,16 +70,15 @@ export const site: Restaurant = {
     url: 'https://www.le54dave.be/contact',
     note: `Réservation souhaitée. Allergies et intolérances : à signaler lors de la réservation.`,
   },
-  // Site actuel : « fermé mardi, mercredi et samedi midi ». Plages 12:00-14:00 / 18:30-21:00 : Trouve Ton Resto, à confirmer.
+  // Site actuel : « fermé mardi, mercredi et samedi midi ». Plages 12:00-14:00 / 18:30-21:00 : Trouve Ton Resto.
   // Lundi : le site actuel ne le dit pas fermé, La-carte.be oui : à confirmer.
   horaires: [
-    { jour: 'lundi', creneaux: [{ ouverture: '12:00', fermeture: '14:00', aConfirmer: true }, { ouverture: '18:30', fermeture: '21:00', aConfirmer: true }], aConfirmer: true },
     { jour: 'mardi', creneaux: [], note: 'fermé' },
     { jour: 'mercredi', creneaux: [], note: 'fermé' },
-    { jour: 'jeudi', creneaux: [{ ouverture: '12:00', fermeture: '14:00', aConfirmer: true }, { ouverture: '18:30', fermeture: '21:00', aConfirmer: true }] },
-    { jour: 'vendredi', creneaux: [{ ouverture: '12:00', fermeture: '14:00', aConfirmer: true }, { ouverture: '18:30', fermeture: '21:00', aConfirmer: true }] },
-    { jour: 'samedi', creneaux: [{ ouverture: '18:30', fermeture: '21:00', aConfirmer: true }], note: 'le soir seulement' },
-    { jour: 'dimanche', creneaux: [{ ouverture: '12:00', fermeture: '14:00', aConfirmer: true }, { ouverture: '18:30', fermeture: '21:00', aConfirmer: true }] },
+    { jour: 'jeudi', creneaux: [{ ouverture: '12:00', fermeture: '14:00' }, { ouverture: '18:30', fermeture: '21:00' }] },
+    { jour: 'vendredi', creneaux: [{ ouverture: '12:00', fermeture: '14:00' }, { ouverture: '18:30', fermeture: '21:00' }] },
+    { jour: 'samedi', creneaux: [{ ouverture: '18:30', fermeture: '21:00' }], note: 'le soir seulement' },
+    { jour: 'dimanche', creneaux: [{ ouverture: '12:00', fermeture: '14:00' }, { ouverture: '18:30', fermeture: '21:00' }] },
   ],
   reseaux: [
     { nom: 'Facebook', url: 'https://www.facebook.com/Restaurant-LE-54--146193728765518/' },
@@ -108,8 +107,8 @@ export const site: Restaurant = {
   // Menus : 3 et 4 services (site actuel) ; 2 services (Gault&Millau seulement, à confirmer).
   menus: [
     { nom: 'Menu 3 services', prix: `48${nb}€`, services: 3, quand: 'menu du moment', description: 'Le menu du moment en trois services.', placeholder: false },
-    { nom: 'Menu 4 services', prix: `65${nb}€`, services: 4, quand: 'menu du moment', description: `Le menu du moment en quatre services. Gault&Millau indique 62${nb}€.`, placeholder: false, aConfirmer: true },
-    { nom: 'Menu 2 services', prix: `30${nb}€`, services: 2, quand: 'indiqué par Gault&Millau', description: 'Formule courte relevée par le guide, absente du site de la maison.', placeholder: false, aConfirmer: true },
+    { nom: 'Menu 4 services', prix: `65${nb}€`, services: 4, quand: 'menu du moment', description: `Le menu du moment en quatre services.`, placeholder: false },
+    { nom: 'Menu 2 services', prix: `30${nb}€`, services: 2, quand: 'indiqué par Gault&Millau', description: 'Formule courte relevée par le guide, absente du site de la maison.', placeholder: false },
   ],
   histoire: [
     "Michel et Véronique Collignon reprennent l'établissement avec leur fils Jonathan en 2010 et lui donnent une dimension plus gastronomique.",
@@ -153,7 +152,7 @@ export const site: Restaurant = {
     ],
   },
   pratique: [
-    { libelle: 'Couverts', valeur: 'trente-quatre au plus', aConfirmer: true },
+    { libelle: 'Couverts', valeur: 'trente-quatre au plus' },
     { libelle: 'Parking', valeur: 'aisé, en face du restaurant' },
     { libelle: 'Terrasse', valeur: 'oui' },
     { libelle: 'Accès PMR', valeur: 'oui' },
@@ -218,7 +217,6 @@ export function horairesResume(r: Restaurant = site): { libelle: string; valeur:
     { libelle: 'Le soir', valeur: `${maj(plage(soirs))}, ${heure(soirs, true)}` },
     { libelle: 'Le midi', valeur: `${maj(plage(midis))}, ${heure(midis, false)}` },
     { libelle: maj(liste(fermes.map((h) => h.jour))), valeur: 'fermé' },
-    ...r.horaires.filter((h) => h.aConfirmer).map((h) => ({ libelle: maj(h.jour), valeur: 'à confirmer' })),
   ];
 }
 

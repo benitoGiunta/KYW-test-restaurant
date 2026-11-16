@@ -22,9 +22,8 @@ export const nav = [
   { href: 'contact', label: 'Contact' },
 ];
 
-// jour : 0 = dimanche (Date.getDay). Plages 12:00-14:00 et 18:30-21:00 recoupées par Trouve Ton Resto et Gault&Millau (à confirmer).
+// jour : 0 = dimanche (Date.getDay). Plages 12:00-14:00 et 18:30-21:00 recoupées par Trouve Ton Resto et Gault&Millau. Lundi retiré : sources contradictoires.
 export const horaires = [
-  { jour: 1, nom: 'Lundi', midi: '12:00 à 14:00', soir: '18:30 à 21:00', aConfirmer: true },
   { jour: 2, nom: 'Mardi', midi: null, soir: null },
   { jour: 3, nom: 'Mercredi', midi: null, soir: null },
   { jour: 4, nom: 'Jeudi', midi: '12:00 à 14:00', soir: '18:30 à 21:00' },

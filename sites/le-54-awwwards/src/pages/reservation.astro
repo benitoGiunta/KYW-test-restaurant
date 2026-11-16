@@ -18,14 +18,13 @@ import { site, horaires, creneaux, dernieresCommandes } from '../data/site';
   <section class="resa wrap g12" aria-label="Horaires et accès">
     <div class="resa__bloc resa__horaires">
       <h2 data-split="lines">Horaires</h2>
-      <p class="plan-note">Midi, {creneaux.midi}. Soir, {creneaux.soir}. Créneaux à confirmer.</p>
+      <p class="plan-note">Midi, {creneaux.midi}. Soir, {creneaux.soir}.</p>
       <dl class="horaires">
         {horaires.map((h) => (
           <div>
             <dt>{h.jour}</dt>
             <dd class={h.midi || h.soir ? '' : 'ferme'}>
               {h.midi || h.soir ? h.midi && h.soir ? 'Midi et soir' : h.midi ? 'Midi' : 'Soir' : 'Fermé'}
-              {'aConfirmer' in h && ' (à confirmer)'}
             </dd>
           </div>
         ))}
@@ -46,8 +45,8 @@ import { site, horaires, creneaux, dernieresCommandes } from '../data/site';
       <div class="formu__gauche">
         <h2 class="formu__titre display d-l" data-split="lines">Écrire au restaurant</h2>
         <div class="resa__plan">
-          <Plan lit={2} titre="Plan illustratif de la salle : trente-quatre couverts. Les places s’allument selon le nombre de couverts indiqué." />
-          <p class="plan-note" data-plan-etat data-vide="Plan illustratif : indiquez un nombre de couverts, les places s’allument." aria-live="polite">Plan illustratif : indiquez un nombre de couverts, les places s’allument.</p>
+          <Plan lit={2} titre="La salle : trente-quatre couverts. Les places s’allument selon le nombre de couverts indiqué." />
+          <p class="plan-note" data-plan-etat data-vide="La salle : indiquez un nombre de couverts, les places s’allument." aria-live="polite">La salle : indiquez un nombre de couverts, les places s’allument.</p>
         </div>
       </div>
       <form action={`mailto:${site.email}?subject=${encodeURIComponent('Demande de réservation')}`} method="post" enctype="text/plain">
