@@ -46,7 +46,7 @@ export function parcours({ R, restos, esc }) {
     for (let k = 0; k < n; k++) approcheDev[rang++] = { n: i + 1, quoi: c.nouveaute };
   });
   // Approches de débogage : 1 = phase 1 (revue puis correction, contexte complet), 2 = phase 2 (après mesure : agents légers F/H).
-  const APPROCHE_DEBUG = { 1: 'revue Sonnet puis correcteur, scan des brouillons ajouté ensuite', 2: 'ajustements actés après mesure : agents projet légers, brouillons intégrés, configurations F et H', 3: 'approche 2 (F) + q.sh obligatoire, sorties sobres, capture ciblée après correction' };
+  const APPROCHE_DEBUG = { 1: 'revue Sonnet puis correcteur, scan des brouillons ajouté ensuite', 2: 'ajustements actés après mesure : agents projet légers, brouillons intégrés, configurations F et H', 3: 'approche 2 (F) + q.sh obligatoire, sorties sobres, capture ciblée après correction', 4: 'q.sh et marqueur imposés par hook, captures par page avec couverture prouvée et relance si revue incomplète, aucun fait retiré sans source' };
 
   const data = restos.map((r) => {
     const dossier = ex(`data/restaurants/${r.slug}/donnees.json`);
@@ -57,7 +57,7 @@ export function parcours({ R, restos, esc }) {
       const parCat = {}; for (const p of probs) parCat[p.categorie] = (parCat[p.categorie] || 0) + 1;
       const nCorr = compte(dir, /^CORRECTION-\d+\.md$/);
       const ad = approcheDev[r.rang] || { n: 1, quoi: '' };
-      const ab = r.rang <= 4 ? 1 : r.rang <= 8 ? 2 : 3;
+      const ab = rev?.couverture ? 4 : r.rang <= 4 ? 1 : r.rang <= 8 ? 2 : r.rang <= 13 ? 3 : 4; // couverture = format de revue de l'approche 4
       const tA = (n, quoi) => `Approche ${n}${quoi ? ' : ' + quoi : ''}`;
       const dec = decisions(`${dir}/CORRECTION-${nCorr || 1}.md`);
       const traites = dec.corrige + dec.refuse + dec.impossible || probs.length;
@@ -115,7 +115,7 @@ ${r.sites.map((s) => `<div class="pc-l pc-site"><span class="pc-nom">${NOM_V[s.v
 ${lignes}
 </div>
 <div class="pc-tip" role="tooltip" hidden></div>
-<p class="pc-note">Clique sur un restaurant pour voir ses 3 sites. Survole une case pour le détail de l'étape et ce que l'approche a changé. Pas de chiffre = approche 1. Développement : 6 approches successives (point de départ, méthode sobre, tests A à I, hook de lecture). Débogage : approche 1 pour les restaurants 1 à 4, approche 2 pour 5 à 8, approche 3 pour 9 à 13.</p>`;
+<p class="pc-note">Clique sur un restaurant pour voir ses 3 sites. Survole une case pour le détail de l'étape et ce que l'approche a changé. Pas de chiffre = approche 1. Développement : 6 approches successives (point de départ, méthode sobre, tests A à I, hook de lecture). Débogage : approche 1 pour les restaurants 1 à 4, approche 2 pour 5 à 8, approche 3 pour 9 à 13, approche 4 pour 14 à 20 (et la reprise de Ferme Blanche legacy).</p>`;
 
   const css = `
 .onglets{display:flex;gap:.25rem;border-bottom:1px solid var(--line);margin:0 0 1.5rem;overflow-x:auto}
