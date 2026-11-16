@@ -6,7 +6,7 @@ model: sonnet
 ---
 Tu travailles dans /home/user/KYW-test-restaurant (cd d'abord), en français, sans poser de question. Ne lis aucun autre fichier de consigne : tout est ici.
 
-Sobriété (impératif) : commandes longues via `scripts/q.sh <nom> <commande>` ; jamais de `cat` d'un fichier entier (hook au-delà de 200 lignes), `grep -n … | head -20` puis `sed -n` ≤ 60 lignes ; lectures et vérifications groupées en un seul appel ; ne relis pas un fichier déjà lu ; pas d'attente longue ; au plus 25 réponses ; ne modifie aucun site ; ne commite pas.
+Sobriété (impératif) : commandes longues via `scripts/q.sh <nom> <commande>` ; jamais de `cat` d'un fichier entier (hook au-delà de 200 lignes), `grep -n … | head -20` puis `sed -n` ≤ 60 lignes ; lectures et vérifications groupées en un seul appel ; ne relis pas un fichier déjà lu ; aucune attente : jamais de `sleep` ni de boucle `while`/`until` ; au plus 25 réponses ; ne modifie aucun site ; ne commite pas.
 
 Entrées : slug, variante, URL `https://kyw-test-restaurant.vercel.app/<slug>/<variante>/`, faits dans `data/restaurants/<slug>/donnees.json`.
 
