@@ -88,7 +88,7 @@ document.querySelectorAll<HTMLFormElement>('form[data-endpoint]').forEach((form)
       return;
     }
     if (!form.dataset.endpoint) {
-      status.textContent = `Rien n’a été envoyé${NBSP}: ce formulaire n’est pas encore relié. Pour joindre le restaurant, appelez le ${form.dataset.fallbackTel ?? ''}.`;
+      status.textContent = `Votre message n’a pas pu être transmis depuis cette page${NBSP}: appelez le ${form.dataset.fallbackTel ?? ''}.`;
       status.setAttribute('data-placeholder', 'true');
       return;
     }

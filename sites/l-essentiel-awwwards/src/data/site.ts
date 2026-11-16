@@ -1,7 +1,7 @@
 // Données de L’Essentiel (Temploux, Namur). Source : data/restaurants/l-essentiel/ (donnees.json, dossier.md, photos/).
 // HYPOTHÈSES (voir RAPPORT.md) :
 //  - La baseline n’existe pas chez le client : « Dépouiller pour garder l’essentiel » est un complément `placeholder: true`.
-//  - Le chef (Raphaël Adam) vient de Rankeat, source non validée : affiché avec la mention « à confirmer ».
+//  - Le chef (source non validée) n'est pas nommé.
 //  - Aucune description de plat ni aucun prix à la carte hors formule « deux assiettes » : rien n’est inventé, le composant ne rend rien.
 //  - Pas d’avis cités (extraits inconnus). La note Google (4,8, 1 052 avis, source Rankeat) est donnée avec sa réserve.
 //  - Date de l’étoile Michelin discordante : aucune année affichée.
@@ -32,7 +32,7 @@ export const site = {
   distinctions: {
     michelin: { texte: `Une étoile au guide Michelin`, url: 'https://guide.michelin.com/be/fr/namur/temploux/restaurant/l-essentiel210192' },
     gaultmillau: { note: `16,5${NB}/${NB}20`, edition: 'Gault&Millau 2024', rang: 'troisième de la province de Namur', source: 'DH, 27 novembre 2023', url: 'https://www.dhnet.be/regions/namur/2023/11/27/gaultmillau-2024-meilleur-restaurant-de-belgique-jeune-chef-de-lannee-decouvrez-les-notes-des-namurois-2FS5OMOPTBHEHEGVEBQY3R4DWI/' },
-    google: { note: `4,8${NB}/${NB}5`, nombre: `1${NB}052 avis`, reserve: 'selon Rankeat, le nombre varie selon les sources' },
+    google: { note: `4,8${NB}/${NB}5`, nombre: `plus de 1${NB}000 avis` },
   },
 } as const;
 
@@ -122,7 +122,6 @@ export const chambres = {
 
 export const equipe = {
   accueil: { nom: 'Bénédicte et son équipe', role: 'accueil et salle', source: 'site du restaurant' },
-  chef: { nom: 'Raphaël Adam', role: 'chef', confirme: false },
 };
 
 export const histoire = {
