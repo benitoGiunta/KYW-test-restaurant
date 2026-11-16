@@ -4,6 +4,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { execSync } from 'node:child_process';
+import { parcours } from './suivi-parcours.mjs';
 const R = resolve(new URL('..', import.meta.url).pathname);
 const ex = (p) => existsSync(join(R, p));
 const lire = (p) => JSON.parse(readFileSync(join(R, p), 'utf8'));
@@ -56,6 +57,7 @@ const phases = [
   { n: 9, titre: 'Reporting de consommation', detail: 'session dédiée, tableau de bord, méthode sobre appliquée', pct: 100 },
 ];
 const total = Math.round(phases.reduce((a, p) => a + p.pct, 0) / phases.length);
+const P = parcours({ R, restos, esc, URL_PROD });
 const ETAPES_R = ['à faire', 'en cours', 'construit', 'revu', 'corrigé', 'publié'];
 const corps = `
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -105,12 +107,15 @@ td.num{color:var(--muted);font-family:var(--mono);font-size:.82rem;width:2.5rem}
 .pastille a{color:inherit;text-decoration:none;border-bottom:1px solid currentColor}
 a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 footer{color:var(--muted);font-size:.8rem;margin-top:2rem}
+${P.css}
 @media (max-width:640px){.etape{grid-template-columns:1.6rem 1fr}.etape .pct{grid-column:2;text-align:left}}
 </style>
 <div class="wrap">
 <h1>Suivi du projet KYW Restaurants</h1>
 <p class="sub">Refonte de ${restos.length} restaurants namurois en 3 variantes. Mis à jour le ${esc(date)} depuis l'état du dépôt. </p>
 <ul class="liens"><li>Index des restaurants : <a href="${URL_PROD}/">${URL_PROD}/</a></li><li>Galerie des gabarits : <a href="${URL_PROD}/gabarits/">${URL_PROD}/gabarits/</a></li><li>Cette page sur Vercel : <a href="${URL_PROD}/suivi/">${URL_PROD}/suivi/</a></li><li>Consommation de jetons : <a href="https://claude.ai/artifact/39eBZZyjPAnwQfhAAx2Bxq">https://claude.ai/artifact/39eBZZyjPAnwQfhAAx2Bxq</a></li></ul>
+<div class="onglets" role="tablist" aria-label="Vues du suivi"><button role="tab" aria-selected="true" data-onglet="avancement">Avancement</button><button role="tab" aria-selected="false" data-onglet="parcours">Parcours : dev et débug</button></div>
+<div data-panneau="avancement">
 <div class="synthese">
 <div class="tuile"><b>${total} %</b><span>avancement global (moyenne des 9 étapes)</span></div>
 <div class="tuile"><b>${gLigne} / 15</b><span>gabarits en ligne (${gFaits} revus et corrigés)</span></div>
@@ -127,8 +132,11 @@ footer{color:var(--muted);font-size:.8rem;margin-top:2rem}
 <div class="tableau"><table><thead><tr><th>#</th><th>Restaurant</th><th>Dossier</th><th>Portfolio</th><th>Awwwards</th><th>Inspi legacy</th></tr></thead><tbody>
 ${restaurants.map((r, i) => `<tr><td class="num">${i + 1}</td><td><b>${esc(r.nom)}</b><br><small style="color:var(--muted)">${esc(r.type_cuisine || '')}</small></td><td><span class="pastille d${r.dossier}">${['à faire', 'en cours', 'complet'][r.dossier]}</span></td>${r.variantes.map((x) => `<td><span class="pastille n${x.n}">${ETAPES_R[x.n]}</span>${x.url ? `<br><small class="url"><a href="${x.url}">${x.url}</a></small>` : ''}</td>`).join('')}</tr>`).join('\n')}
 </tbody></table></div>
+</div>
+<div data-panneau="parcours" hidden>${P.html}</div>
 <footer>KYW, filiale web de KYN. Page régénérée par <code>scripts/suivi.mjs</code> à chaque publication.</footer>
-</div>`;
+</div>
+${P.js}`;
 mkdirSync(join(R, 'dist/suivi'), { recursive: true });
 mkdirSync(join(R, 'data'), { recursive: true });
 writeFileSync(join(R, 'dist/suivi/index.html'), `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">${corps.replace('<meta name="claude:viewport-fit-sides" content="cover">', '')}</body></html>`.replace('<div class="wrap">', '</head><body><div class="wrap">'));
