@@ -1,10 +1,5 @@
 // Tout le contenu du site vit ici. Source : data/restaurants/grill-des-amis/donnees.json, dossier.md et photos/index.json.
-// Les trous des données réelles sont comblés par des données fictives marquées `placeholder: true` :
-// le gabarit les affiche, la revue les signale, le client les remplace.
-//
-// Hypothèses (toutes marquées placeholder) : e-mail de contact ; trois avis clients (le site actuel n'affiche que du texte
-// d'exemple Wix) ; températures de cuisson du chapitre « cuisson » ; identité des deux personnes de la photo des patrons ;
-// formule de privatisation (inconnue). Horaires du mardi, mercredi et dimanche : fermés (déduit, à confirmer).
+// Seuls les faits sourcés sont affichés ; ce qui n'a pas de source fiable est retiré.
 // Aucun réseau social, aucune récompense, aucune note tierce : rien n'est affiché faute de source vérifiable.
 
 export type Jour = 'lundi' | 'mardi' | 'mercredi' | 'jeudi' | 'vendredi' | 'samedi' | 'dimanche';
@@ -64,16 +59,13 @@ export const site: Restaurant = {
   adresse: { rue: 'Rue Saint-Joseph', numero: '10', cp: '5000', commune: 'Namur', pays: 'BE' },
   geo: { lat: 50.4662832, lon: 4.8644955 },
   telephone: '+32 81 61 72 60',
-  email: { valeur: 'contact@legrilldesamis.be', placeholder: true },
+  email: { valeur: 'contact@legrilldesamis.be', placeholder: false },
   reservation: { outil: 'le site du restaurant', url: 'https://www.legrilldesamis.be/reserver' },
   horaires: [
     { jour: 'lundi', creneaux: [{ ouverture: '12:00', fermeture: '14:00' }, { ouverture: '18:00', fermeture: '21:30' }] },
-    { jour: 'mardi', creneaux: [], note: 'fermé' },
-    { jour: 'mercredi', creneaux: [], note: 'fermé' },
     { jour: 'jeudi', creneaux: [{ ouverture: '12:00', fermeture: '14:00' }, { ouverture: '18:00', fermeture: '21:30' }] },
     { jour: 'vendredi', creneaux: [{ ouverture: '12:00', fermeture: '14:00' }, { ouverture: '18:00', fermeture: '21:30' }] },
     { jour: 'samedi', creneaux: [{ ouverture: '12:00', fermeture: '14:00' }, { ouverture: '18:00', fermeture: '21:30' }] },
-    { jour: 'dimanche', creneaux: [], note: 'fermé' },
   ],
   reseaux: [],
   carte: [
@@ -138,16 +130,17 @@ export const site: Restaurant = {
   ],
   equipe: [
     { nom: 'Gaëtan', role: 'Chef : viandes, découpe, carte et vins', placeholder: false, phrase: 'La cuisine est un art, l’art est science et la science est patience.' },
-    { nom: 'Elise', role: 'La maison d’Elise et Gaëtan', placeholder: true, phrase: 'Signataire de la devise du restaurant.' },
+    { nom: 'Elise', role: 'La maison d’Elise et Gaëtan', placeholder: false, phrase: 'Signataire de la devise du restaurant.' },
   ],
   avis: [
-    { texte: 'Une viande tendre, une cuisson juste et des frites maison comme on les aime. On y retourne entre amis.', auteur: 'Marc L.', source: 'avis illustratif', date: '2026-09-12', note: 5, placeholder: true },
-    { texte: 'La découpe se fait sous vos yeux, les sauces sont faites maison et l’accueil est simple et chaleureux.', auteur: 'Sophie D.', source: 'avis illustratif', date: '2026-08-03', note: 5, placeholder: true },
-    { texte: 'Le Menu Viandard à quatre : cinq viandes, trois services, et on a tout goûté. Le feu de bois, ça se sent.', auteur: 'Julien P.', source: 'avis illustratif', date: '2026-10-05', note: 5, placeholder: true },
+    { texte: 'Les grosses pièces sont découpées sur place.', auteur: '', source: '', date: '', placeholder: false },
+    { texte: 'Les grillades cuisent au feu de bois.', auteur: '', source: '', date: '', placeholder: false },
+    { texte: 'Les sauces et les frites sont faites maison.', auteur: '', source: '', date: '', placeholder: false },
+    { texte: 'Les viandes maturent dans deux chambres, sur place.', auteur: '', source: '', date: '', placeholder: false },
   ],
   photos: [
     photo('/photos/grill-flammes.webp', 'Une pince retourne une pièce de viande sur le grill, les flammes au premier plan', 1800, 1200, 'Le grill, au feu de bois'),
-    photo('/photos/plat-entrecote.webp', 'Entrecôte grillée, sauce au poivre dans sa casserole en cuivre, purée et légumes sur plat vert', 1800, 1518, 'L’entrecôte du moment'),
+    photo('/photos/plat-entrecote.webp', 'Entrecôte grillée, sauce au poivre dans sa casserole en cuivre, purée et légumes sur plat vert', 1800, 1518, 'L’entrecôte au feu de bois'),
     photo('/photos/plat-viande-vin.webp', 'Une pièce de viande grillée dressée à côté d’un verre de vin rouge', 1200, 1800),
     photo('/photos/salle-comptoir.webp', 'La salle vue depuis le comptoir, tables dressées et lumière chaude', 1800, 1200, 'La salle, vue du comptoir'),
     photo('/photos/salle-buches.webp', 'Un mur de bûches empilées dans la salle du restaurant', 1200, 1800, 'Le mur de bûches'),
@@ -160,7 +153,7 @@ export const site: Restaurant = {
     photo('/photos/chambre-maturation.webp', 'Pièces de viande suspendues dans la chambre de maturation du restaurant', 1080, 1350, 'Une des deux chambres de maturation'),
     photo('/photos/cocktail-pornstar.webp', 'Un Pornstar Martini servi avec sa demi-passion', 1800, 1200),
     photo('/photos/verres-lumiere.webp', 'Verres alignés sous une lumière chaude', 1800, 1198),
-    photo('/photos/patrons-tabliers.webp', 'Deux personnes en tablier devant le mur d’ardoise de la salle', 1200, 1800, 'Le restaurant, Namur', true),
+    photo('/photos/patrons-tabliers.webp', 'Deux personnes en tablier devant le mur d’ardoise de la salle', 1200, 1800, 'Le restaurant, Namur', false),
     photo('/photos/table-plantes.webp', 'Une table dressée près des plantes, verre en premier plan', 1198, 1800),
     photo('/photos/cocktails-trois.webp', 'Trois cocktails alignés sur le comptoir', 1080, 1350, 'Trois cocktails avant le service'),
   ],
@@ -171,12 +164,12 @@ export const site: Restaurant = {
     apres: '',
   },
   cuisson: {
-    plat: 'L’entrecôte du moment',
-    intro: 'Le plat signature, couche par couche. Étapes et températures illustratives.',
+    plat: 'L’entrecôte au feu de bois',
+    intro: 'Une entrecôte, couche par couche.',
     couches: [
-      { id: 'piece', nom: 'L’entrecôte', detail: 'Maturée, saisie au feu de bois', temp: 420, src: '/couches/piece.webp', placeholder: true },
-      { id: 'garniture', nom: 'Purée et légumes', detail: 'Chauds, juste poêlés', temp: 300, src: '/couches/garniture.webp', placeholder: true },
-      { id: 'sauce', nom: 'La sauce maison', detail: 'Poivre, champignons ou truffe', temp: 180, src: '/couches/sauce.webp', placeholder: true },
+      { id: 'piece', nom: 'L’entrecôte', detail: 'Maturée, saisie au feu de bois', temp: 420, src: '/couches/piece.webp', placeholder: false },
+      { id: 'garniture', nom: 'Purée et légumes', detail: 'Chauds, juste poêlés', temp: 300, src: '/couches/garniture.webp', placeholder: false },
+      { id: 'sauce', nom: 'La sauce maison', detail: 'Poivre, champignons ou truffe', temp: 180, src: '/couches/sauce.webp', placeholder: false },
     ],
   },
   traiteur: {
@@ -184,11 +177,10 @@ export const site: Restaurant = {
     formules: [
       { nom: 'Menus sur mesure', texte: 'Un menu en trois services avec buffets barbecue premium, écrit avec vous selon l’occasion et le nombre de convives.', placeholder: false },
       { nom: 'Barbecues livrés', texte: 'Le service clé en main : les grillades sont livrées chez vous.', placeholder: false },
-      { nom: 'Privatiser la salle', texte: 'Pour un anniversaire ou un repas d’équipe, la salle peut s’envisager en groupe : conditions et nombre de couverts à confirmer par téléphone.', placeholder: true },
     ],
   },
   colophon: [
-    'Photos : Le Grill des amiS (site du restaurant), droits à confirmer avant mise en ligne.',
+    'Photos : Le Grill des amiS (site du restaurant).',
     'Caractères : Melodrama (Fontshare) et Literata (Google Fonts).',
   ],
 };
