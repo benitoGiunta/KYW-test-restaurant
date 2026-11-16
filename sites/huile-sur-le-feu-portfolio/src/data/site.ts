@@ -512,9 +512,6 @@ export const regles: Regle[] = [
   { texte: 'Fermé le dimanche et le lundi', placeholder: false },
   { texte: 'Menu Enfants à 25 €', placeholder: false },
   { texte: 'Réservation en ligne ou par téléphone', placeholder: false },
-  { texte: 'Parking à proximité', placeholder: true },
-  { texte: 'Privatisation sur demande', placeholder: true },
-  { texte: 'Vente à emporter', placeholder: true },
 ];
 
 export const services: Service[] = site.horaires.flatMap((h) =>
