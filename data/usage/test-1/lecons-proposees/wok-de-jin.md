@@ -1,0 +1,1 @@
+- 2026-11-19 : site Next.js (wokdejin.com) : prix du buffet derrière des onglets React que seul un clic JS (element.click() via evaluate, pas getByRole force) bascule ; originaux d'images directement dans /images/<nom> en retirant /_next/image ; l'hôte rankeat.be ne résout pas, Tablebooker 502, La Carte 403.
