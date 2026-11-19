@@ -16,6 +16,7 @@ ces fichiers, dans l'ordre.
 | `3-correction.md` | Message de lancement de la session de correction d'un restaurant | Étape 3 |
 | `4-mesure.md` | Conventions de mesure (identification des agents, fichiers, base de suivi) | Étapes 2 et 3 (déjà incluses dans les messages) |
 | `5-verification.md` | Contrôles de fin, publication Vercel, relecture humaine | Étape 4 |
+| `campagnes/` | Une fiche par campagne (paramètres, file de restaurants) et la conduite d'une campagne | Avant et pendant une campagne |
 
 ## Le déroulé pour un restaurant
 
@@ -33,12 +34,10 @@ restaurants (« session mère ») ne fait que créer les sessions, suivre leurs 
 
 ## Lancer une campagne (session mère)
 
-1. Lire `parametres.md` et `VERSIONS.md` ; remplir les paramètres de la campagne.
-2. Pour chaque restaurant : étape 1 (commit, sans le mot de publication Vercel).
-3. Créer une session de développement par restaurant (`create_session`, modèle indiqué dans `2-developpement.md`,
-   message de lancement avec les paramètres remplacés). Au plus 4 en parallèle.
-4. Quand un restaurant a fini son développement (compte rendu reçu), créer sa session de correction (`3-correction.md`).
-5. À la fin de la campagne : `5-verification.md`, puis mise à jour du suivi (`node scripts/suivi.mjs`).
+Une campagne regroupe des restaurants produits avec les mêmes versions et paramètres : fichier
+`campagnes/<campagne>.json` (paramètres + file de restaurants), conduite décrite dans `campagnes/README.md`.
+Les messages de lancement se produisent avec `python3 scripts/message-lancement.py <campagne> <etape> <slug>`,
+jamais à la main.
 
 L'outil Workflow (utilisé par la session de développement) ne s'exécute que si le porteur l'a autorisé : le message de
 lancement le dit explicitement ; sans lui, la session déroule la même chaîne avec l'outil Agent.
