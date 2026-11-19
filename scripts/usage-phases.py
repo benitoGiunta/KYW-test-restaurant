@@ -64,5 +64,6 @@ def lire(path):
 rows = []
 for p in sorted(glob.glob(os.path.join(HOME, '**', '*.jsonl'), recursive=True)):
     if appartient(p): rows += lire(p)
+import os; os.makedirs(os.path.dirname(os.path.abspath(sortie)), exist_ok=True)  # dossier de campagne data/usage/<campagne>/<slug>/
 json.dump(dict(session_locale=sid, marqueur=marqueur, lignes=rows), open(sortie, 'w'), ensure_ascii=False, indent=1)
 print(f"{len(rows) // 2} transcripts découpés ; écrit dans {sortie}")

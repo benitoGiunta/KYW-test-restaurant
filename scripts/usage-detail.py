@@ -113,6 +113,7 @@ def lire(path):
 
 rows = [lire(p) for p in sorted(fichiers)]
 rows = [r for r in rows if r['appels']]
+import os; os.makedirs(os.path.dirname(os.path.abspath(sortie)), exist_ok=True)  # dossier de campagne data/usage/<campagne>/<slug>/
 json.dump(dict(session_locale=sid, transcripts=len(rows), lignes=rows), open(sortie, 'w'), ensure_ascii=False, indent=1)
 T = collections.Counter()
 for r in rows:

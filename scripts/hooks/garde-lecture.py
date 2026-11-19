@@ -30,7 +30,7 @@ cwd = os.getcwd()
 refus = []
 bavardes = []
 marqueurs = []
-EXCEPTIONS = re.compile(r"(scan-brouillon\.py|usage-[a-z-]+\.py|marqueur\.sh|serve\.mjs)$")
+EXCEPTIONS = re.compile(r"(scan-brouillon\.py|usage-[a-z-]+\.py|message-lancement\.py|marqueur\.sh|serve\.mjs)$")
 def racine(c):
     d = os.path.abspath(c)
     while d != "/" and not os.path.isdir(os.path.join(d, ".git")):

@@ -34,6 +34,19 @@ Dossier `data/usage/<campagne>/<slug>/` :
 | `corr-detail.json`, `corr-commandes.json`, `corr-phases.json` | mêmes scripts + `usage-phases.py` (session de correction) | idem, avec la coupe identifier / rectifier |
 | `corr-resume.json` | la session de correction | début, fin, utilisation hebdo, problèmes, couverture, passes 2, interventions |
 
+Fichiers de la campagne, tenus par la session mère, dans `data/usage/<campagne>/` :
+
+| Fichier | Contenu |
+| --- | --- |
+| `sessions.json` | registre de toutes les sessions (restaurant, étape, id, statut, `usage` de `get_session` = coût et jetons même si la session est morte, compte rendu reçu) |
+| `interventions.json` | interventions de la session mère qui ne relèvent d'aucun fichier résumé |
+| `mere-detail.json` | consommation de la session mère (pilotage de la campagne) |
+| `BILAN.md` | bilan de fin : restaurants terminés ou non, heures, utilisation hebdomadaire, anomalies, mesures manquantes |
+| `lecons-proposees/<slug>.md` | leçons proposées par les agents en mode figé |
+
+Source de vérité pour la base : les fichiers `*-detail.json` (coût recalculé avec les prix de `scripts/usage-chantiers.py`) ;
+à défaut (session morte), `usage.cost_usd` du registre, signalé comme tel dans la saisie.
+
 L'id à passer aux scripts est le nom du fichier `~/.claude/projects/*/<id>.jsonl` le plus récent de la session.
 Ne jamais lire ces fichiers dans la session qui les produit (coût de contexte inutile). Commit sans le mot de
 publication Vercel.

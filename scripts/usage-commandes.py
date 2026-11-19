@@ -41,6 +41,7 @@ for p in glob.glob(os.path.join(HOME, '**', '*.jsonl'), recursive=True):
                 qsh[0 if 'q.sh' in cmd else 1] += n
                 lignes.append(dict(agent=agent, caracteres=n, commande=' '.join(cmd.split())[:160], famille=f))
 lignes.sort(key=lambda r: -r['caracteres']); tot = sum(r['caracteres'] for r in lignes)
+import os; os.makedirs(os.path.dirname(os.path.abspath(sortie)), exist_ok=True)  # dossier de campagne data/usage/<campagne>/<slug>/
 json.dump(dict(total=tot, commandes=len(lignes), via_q_sh=qsh[0], hors_q_sh=qsh[1],
                familles=[dict(famille=k, caracteres=v, appels=nfam[k], part=round(v / tot * 100, 1)) for k, v in fam.most_common(25)],
                plus_grosses=lignes[:40]), open(sortie, 'w'), ensure_ascii=False, indent=1)
