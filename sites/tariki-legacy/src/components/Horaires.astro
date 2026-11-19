@@ -1,6 +1,7 @@
 ---
 import { horaires, resto } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const fermes = horaires.filter((j) => !j.creneaux.length).map((j) => j.jour);
 ---
 <section class="sec sec--end" id="horaires" aria-labelledby="h-horaires">
   <div class="container end">
@@ -19,18 +20,47 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     <div class="end__book" id="reservation">
       <h2>Réservez votre table</h2>
       <p class="lead">Réservez dès maintenant pour profiter pleinement de votre expérience au Tariki Restaurant.</p>
-      <form class="form" action={`${base}#reservation`} method="get" data-endpoint="">
-        <label class="field"><span>Date</span><input type="date" name="date" required /></label>
-        <label class="field"><span>Heure</span><input type="time" name="heure" required /></label>
-        <label class="field"><span>Adultes</span><input type="number" name="adultes" min="1" max="12" value="2" required /></label>
-        <label class="field"><span>Enfants</span><input type="number" name="enfants" min="0" max="12" value="0" /></label>
-        <label class="field field--wide"><span>Nom</span><input type="text" name="nom" autocomplete="name" required /></label>
-        <label class="field field--wide"><span>Téléphone</span><input type="tel" name="telephone" autocomplete="tel" required /></label>
+      <form class="form" action={`${base}#reservation`} method="get" data-endpoint="" data-closed={fermes.join(',')} novalidate>
+        <div class="field">
+          <label for="f-date">Date</label>
+          <input id="f-date" type="date" name="date" autocomplete="off" required aria-describedby="f-date-help" />
+          <p class="field__help" id="f-date-help">Du lundi au samedi, fermé le dimanche.</p>
+        </div>
+        <div class="field">
+          <label for="f-heure">Heure</label>
+          <input id="f-heure" type="text" name="heure" inputmode="numeric" autocomplete="off" placeholder="19:30" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" required aria-describedby="f-heure-help" />
+          <p class="field__help" id="f-heure-help">Au format 19:30.</p>
+        </div>
+        <div class="field">
+          <label for="f-adultes">Adultes</label>
+          <select id="f-adultes" name="adultes" required aria-describedby="f-adultes-help">
+            {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => <option value={n} selected={n === 2}>{n}</option>)}
+          </select>
+          <p class="field__help" id="f-adultes-help">De 1 à 12.</p>
+        </div>
+        <div class="field">
+          <label for="f-enfants">Enfants</label>
+          <select id="f-enfants" name="enfants" aria-describedby="f-enfants-help">
+            {Array.from({ length: 13 }, (_, i) => i).map((n) => <option value={n}>{n}</option>)}
+          </select>
+          <p class="field__help" id="f-enfants-help">Facultatif.</p>
+        </div>
+        <div class="field field--wide">
+          <label for="f-nom">Nom</label>
+          <input id="f-nom" type="text" name="nom" autocomplete="name" placeholder="Prénom et nom" required aria-describedby="f-nom-help" />
+          <p class="field__help" id="f-nom-help">Le nom de la réservation.</p>
+        </div>
+        <div class="field field--wide">
+          <label for="f-tel">Téléphone</label>
+          <input id="f-tel" type="tel" name="telephone" inputmode="tel" autocomplete="tel" placeholder="+32 492 00 00 00" pattern="[+]?[0-9 ]{8,16}" required aria-describedby="f-tel-help" />
+          <p class="field__help" id="f-tel-help">Pour vous rappeler si besoin.</p>
+        </div>
         <div class="form__act">
           <button class="btn btn--primary" type="submit">Demander une table</button>
           <a class="btn" href={resto.telHref}>Appeler le {resto.tel}</a>
         </div>
-        <p class="small" data-status role="status">Le formulaire n’est pas encore relié à un système de réservation : pour réserver aujourd’hui, appelez ou écrivez à <a href={`mailto:${resto.email}`}>{resto.email}</a>.</p>
+        <p class="form__status" data-status role="status" aria-live="polite"></p>
+        <p class="small">Ce formulaire n’est pas encore relié à un système de réservation : pour réserver aujourd’hui, appelez ou écrivez à <a href={`mailto:${resto.email}`}>{resto.email}</a>.</p>
       </form>
       <p class="small"><a href={`${base}la-carte/`}>Accéder au menu</a></p>
     </div>

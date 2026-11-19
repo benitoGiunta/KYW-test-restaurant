@@ -55,23 +55,106 @@ const jsonLd = {
     <main id="contenu">
       <slot />
     </main>
+    {page !== '404' && (
+      <aside class="bar" data-bar aria-label="Réservation rapide">
+        <a class="btn btn--primary" href={`${base}#reservation`}>Réserver une table</a>
+        <a class="btn" href={resto.telHref}>Appeler</a>
+      </aside>
+    )}
     <Footer />
     <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelector('img')?.remove(); s.prepend(im); } };
 document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
     <script is:inline>
       (function () {
-        var j = new Date().getDay();
-        document.querySelectorAll('[data-jour]').forEach(function (el) { if (Number(el.dataset.jour) === j) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); } });
-        document.querySelectorAll('[data-tabs]').forEach(function (root) {
-          var tabs = [].slice.call(root.querySelectorAll('[role="tab"]'));
-          function show(t) {
-            tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on ? 'true' : 'false'); x.tabIndex = on ? 0 : -1; var p = document.getElementById(x.getAttribute('aria-controls')); if (p) p.hidden = !on; });
-          }
+        var $ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var now = new Date();
+
+        // Jour courant dans les horaires
+        $('[data-jour]').forEach(function (el) { if (Number(el.dataset.jour) === now.getDay()) { el.classList.add('is-now'); el.setAttribute('aria-current', 'date'); } });
+
+        // Switcher de carte : midi ou soir selon le jour et l'heure (midi servi du mercredi au samedi), clavier flèches, début, fin
+        $('[data-tabs]').forEach(function (root) {
+          var tabs = $('[role="tab"]', root);
+          function show(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on ? 'true' : 'false'); x.tabIndex = on ? 0 : -1; var p = document.getElementById(x.getAttribute('aria-controls')); if (p) p.hidden = !on; }); }
           tabs.forEach(function (t, i) {
             t.addEventListener('click', function () { show(t); });
-            t.addEventListener('keydown', function (e) { var k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!k) return; e.preventDefault(); var n = tabs[(i + k + tabs.length) % tabs.length]; n.focus(); show(n); });
+            t.addEventListener('keydown', function (e) {
+              var n = e.key === 'ArrowRight' ? (i + 1) % tabs.length : e.key === 'ArrowLeft' ? (i - 1 + tabs.length) % tabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : -1;
+              if (n < 0) return; e.preventDefault(); tabs[n].focus(); show(tabs[n]);
+            });
           });
-          show(tabs[0]);
+          var midiOuvert = now.getDay() >= 3 && now.getDay() <= 6 && now.getHours() < 14;
+          show(midiOuvert || tabs.length < 2 ? tabs[0] : tabs[1]);
+        });
+
+        // Menu du téléphone : aria-expanded, fermeture au clic sur un lien et au passage en bureau
+        var menu = document.getElementById('menu'), mb = document.querySelector('.nav__menu');
+        if (menu && mb) {
+          menu.addEventListener('toggle', function (e) { mb.setAttribute('aria-expanded', e.newState === 'open' ? 'true' : 'false'); });
+          menu.addEventListener('click', function (e) { if (e.target.closest('a')) menu.hidePopover(); });
+          matchMedia('(min-width: 60rem)').addEventListener('change', function (e) { if (e.matches && menu.matches(':popover-open')) menu.hidePopover(); });
+        }
+
+        // Barre de réservation : visible une fois le premier écran passé, masquée devant le formulaire et le pied
+        var bar = document.querySelector('[data-bar]'), after = document.querySelector('[data-bar-after]');
+        if (bar && after && 'IntersectionObserver' in window) {
+          var st = { after: true, end: false };
+          var upd = function () { var on = !st.after && !st.end; bar.classList.toggle('is-on', on); bar.inert = !on; };
+          bar.inert = true;
+          var io = new IntersectionObserver(function (es) { es.forEach(function (e) { st.after = e.isIntersecting; }); upd(); });
+          var io2 = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target._in = e.isIntersecting; }); st.end = $('#reservation, .close').some(function (n) { return n._in; }); upd(); });
+          io.observe(after); $('#reservation, .close').forEach(function (n) { io2.observe(n); });
+        }
+
+        // Un seul reveal : les photographies s'élèvent une fois ; visibles sans script ; état final sous mouvement réduit
+        var rv = $('[data-reveal]');
+        if ('IntersectionObserver' in window && !reduce) {
+          var ro = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); ro.unobserve(e.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
+          rv.forEach(function (n) { ro.observe(n); });
+        } else { rv.forEach(function (n) { n.classList.add('is-in'); }); }
+
+        // Formulaire de réservation : ne poste nulle part tant que data-endpoint est vide
+        $('form[data-endpoint]').forEach(function (form) {
+          var fields = $('input, select', form), status = form.querySelector('[data-status]');
+          var closed = (form.dataset.closed || '').split(',').filter(Boolean).map(Number);
+          var jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+          var d = new Date(); var iso = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+          var date = form.elements.date; if (date) date.min = iso;
+          function msg(f) {
+            var v = f.validity, n = f.name;
+            if (f.checkValidity() && !(n === 'date' && f.value && closed.indexOf(new Date(f.value + 'T12:00:00').getDay()) >= 0)) return '';
+            if (n === 'date') { if (v.valueMissing || v.badInput) return 'Choisissez une date.'; if (v.rangeUnderflow) return 'Cette date est passée : choisissez aujourd’hui ou plus tard.'; return 'Tariki est fermé le ' + jours[new Date(f.value + 'T12:00:00').getDay()] + ' : choisissez un autre jour.'; }
+            if (n === 'heure') return v.valueMissing ? 'Indiquez une heure, par exemple 19:30.' : 'Écrivez l’heure ainsi : 19:30.';
+            if (n === 'nom') return 'Indiquez le nom de la réservation.';
+            if (n === 'telephone') return v.valueMissing ? 'Indiquez un numéro pour vous rappeler.' : 'Écrivez le numéro ainsi : +32 492 00 00 00.';
+            return 'Choisissez une valeur.';
+          }
+          function check(f) {
+            var help = document.getElementById(f.id + '-help'); if (!help) help = document.getElementById(f.getAttribute('aria-describedby'));
+            if (help && help.dataset.rest === undefined) help.dataset.rest = help.textContent;
+            var m = msg(f);
+            if (m) f.setAttribute('aria-invalid', 'true'); else f.removeAttribute('aria-invalid');
+            if (help) { help.textContent = m || help.dataset.rest; help.classList.toggle('is-error', !!m); }
+            return !m;
+          }
+          fields.forEach(function (f) {
+            f.addEventListener('blur', function () { f.dataset.touched = '1'; check(f); });
+            var on = function () { if (f.dataset.touched || f.hasAttribute('aria-invalid')) check(f); };
+            f.addEventListener('input', on); f.addEventListener('change', on);
+          });
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var bad = fields.filter(function (f) { f.dataset.touched = '1'; return !check(f); });
+            if (bad.length) { status.classList.add('is-error'); status.textContent = bad.length === 1 ? 'Un champ est à corriger.' : bad.length + ' champs sont à corriger.'; bad[0].focus(); return; }
+            status.classList.remove('is-error');
+            if (!form.dataset.endpoint) { status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié.'; return; }
+            var btn = form.querySelector('[type="submit"]'); btn.disabled = true; status.textContent = 'Envoi en cours.';
+            fetch(form.dataset.endpoint, { method: 'POST', body: new FormData(form) })
+              .then(function (r) { status.textContent = r.ok ? 'Demande reçue.' : 'La demande n’est pas passée : réessayez dans un instant.'; })
+              .catch(function () { status.textContent = 'La demande n’est pas passée : réessayez dans un instant.'; })
+              .then(function () { btn.disabled = false; });
+          });
         });
       })();
     </script>
