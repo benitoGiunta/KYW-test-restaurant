@@ -29,7 +29,8 @@ const gabarits = directions.map((d) => {
   return { id: d.id, nom: d.nom, pitch: d.pitch, niveau, url: niveau >= 3 ? `${URL_PROD}/gabarits/${d.id}/` : null };
 });
 // Restaurants
-const restos = (ex('data/restaurants.json') ? lire('data/restaurants.json') : []).filter((r) => r.selection !== 'reserve');
+// Suivi et coûts de référence : lot 1 (phase de conception des agents) ; les campagnes de test ont leur onglet sur l'index et leurs mesures dans data/usage/<campagne>/.
+const restos = (ex('data/restaurants.json') ? lire('data/restaurants.json') : []).filter((r) => r.selection === 'retenu' && !r.campagne);
 const VARS = ['portfolio', 'awwwards', 'legacy'];
 const restaurants = restos.map((r) => {
   const dossier = ex(`data/restaurants/${r.slug}/donnees.json`) ? 2 : ex(`data/restaurants/${r.slug}`) ? 1 : 0;

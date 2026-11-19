@@ -4,16 +4,28 @@
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, cpSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 const racine = resolve(new URL('..', import.meta.url).pathname);
-const restos = (existsSync(join(racine, 'data/restaurants.json')) ? JSON.parse(readFileSync(join(racine, 'data/restaurants.json'), 'utf8')) : []).filter((r) => r.selection !== 'reserve');
+const tous = existsSync(join(racine, 'data/restaurants.json')) ? JSON.parse(readFileSync(join(racine, 'data/restaurants.json'), 'utf8')) : [];
+const restos = tous.filter((r) => r.selection !== 'reserve');
+// Lots affichés en onglets : lot 1 = restaurants de la phase de conception des agents (selection « retenu », sans campagne) ;
+// puis un onglet par campagne (agents/production/campagnes/<campagne>.json : champs lot, run, file).
+const dirCamp = join(racine, 'agents/production/campagnes');
+const campagnes = existsSync(dirCamp) ? readdirSync(dirCamp).filter((f) => f.endsWith('.json')).sort().map((f) => JSON.parse(readFileSync(join(dirCamp, f), 'utf8'))) : [];
+const parSlug = Object.fromEntries(tous.map((r) => [r.slug, r]));
+const LOTS = [
+  { id: 'lot-1', titre: 'Lot 1', run: 'Premier run exploratoire · conception des agents', note: 'Restaurants qui ont servi à concevoir et mettre au point les agents de développement et de débogage.', restos: restos.filter((r) => !r.campagne) },
+  ...campagnes.map((c, i) => ({ id: `lot-${i + 2}`, titre: c.lot || `Lot ${i + 2}`, run: c.run || c.campagne, note: c.objet || '',
+    restos: (c.file || []).map((slug) => parSlug[slug]).filter(Boolean) })),
+];
 const variantes = [['portfolio', 'Portfolio'], ['awwwards', 'Awwwards'], ['legacy', 'Inspi legacy']];
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const gabarits = existsSync(join(racine, 'dist/gabarits')) ? readdirSync(join(racine, 'dist/gabarits')).filter((g) => existsSync(join(racine, 'dist/gabarits', g, 'index.html')) && existsSync(join(racine, 'gabarits', g, 'RAPPORT.md'))).sort() : [];
-const lignes = restos.map((r, i) => {
-  const liens = variantes.map(([v, label]) => existsSync(join(racine, 'dist', r.slug, v, 'index.html'))
+const ligne = (r, i) => {
+  const liens = r.selection === 'reserve' ? '<span class="v v-attente" title="Dans la file de la campagne, pas encore lancé">à venir</span>' : variantes.map(([v, label]) => existsSync(join(racine, 'dist', r.slug, v, 'index.html'))
     ? `<a class="v v-${v}" href="/${r.slug}/${v}/">${label}</a>`
     : `<span class="v v-attente" title="En cours">${label}</span>`).join('');
   return `<tr><td class="n">${i + 1}</td><td class="nom"><strong>${esc(r.nom)}</strong><br><small>${esc(r.type_cuisine || '')}${r.commune ? ' · ' + esc(r.commune) : ''}</small></td><td><a class="actuel" href="${esc(r.site_actuel)}" target="_blank" rel="noopener">${esc(r.site_actuel.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''))}</a></td><td class="vs">${liens}</td></tr>`;
-}).join('\n');
+};
+const complet = (r) => variantes.every(([v]) => existsSync(join(racine, 'dist', r.slug, v, 'index.html')));
 const faits = restos.filter((r) => variantes.every(([v]) => existsSync(join(racine, 'dist', r.slug, v, 'index.html')))).length;
 const html = `<!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,6 +55,14 @@ h2{font-size:1.25rem;margin:3rem 0 .75rem}
 .gab{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.6rem;padding:0;list-style:none;margin:0}
 .gab a{display:block;padding:.75rem .9rem;border:1px solid var(--ligne);border-radius:8px;background:#fff;text-decoration:none;color:var(--ardoise)}
 .gab a:hover{border-color:var(--peche-texte)}
+.onglets{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1rem}
+.onglets button{font:inherit;color:inherit;text-align:left;display:flex;flex-direction:column;gap:.1rem;padding:.7rem 1rem;border:1px solid var(--ligne);border-top:4px solid var(--c);border-radius:10px;background:#fff;cursor:pointer;min-width:min(100%,15rem);flex:1 1 15rem}
+.onglets button[aria-selected=true]{background:var(--cs);border-color:var(--c)}
+.onglets b{font-size:1.05rem}.onglets span{font-size:.85rem}.onglets small{font-size:.78rem;color:#6b787d}
+.lot-1{--c:#C9693A;--cs:#FFF3EC}.lot-2{--c:#2a8a89;--cs:#E6F5F4}.lot-3{--c:#6250d6;--cs:#EFEDFB}
+section.lot table{border-top:4px solid var(--c)}
+.lot-note{font-size:.9rem;color:#55646a;margin:0 0 .75rem}
+.pastille{display:inline-block;background:var(--cs);color:var(--ardoise);border:1px solid var(--c);border-radius:999px;padding:.1rem .6rem;font-size:.8rem;font-weight:600;margin-right:.3rem}
 footer{max-width:1100px;margin:0 auto;padding:1rem 1rem 3rem;font-size:.8rem;color:#6b787d}
 @media(max-width:720px){table,thead,tbody,tr,td,th{display:block}thead{display:none}tr{border-top:1px solid var(--ligne);padding:.5rem 0}td{border:0;padding:.3rem .9rem}td.n{display:none}}
 </style></head>
@@ -51,10 +71,14 @@ footer{max-width:1100px;margin:0 auto;padding:1rem 1rem 3rem;font-size:.8rem;col
 <h1>Refontes de sites de restaurants namurois</h1>
 <p>Pour chaque restaurant : son site actuel, puis trois propositions. <strong>Portfolio</strong> adapte un gabarit de notre collection, <strong>Awwwards</strong> est une direction artistique libre au niveau des sites primés, <strong>Inspi legacy</strong> garde l'approche du site actuel et la refond entièrement. Maquettes : certaines données (plats, prix, équipe) sont illustratives.</p></header>
 <main>
-<p class="etat">${restos.length} restaurants sélectionnés · ${faits} avec leurs 3 variantes publiées · mis à jour le ${esc(process.env.KYW_DATE || new Date().toISOString().slice(0, 10))}</p>
+<p class="etat">${restos.length} restaurants lancés · ${faits} avec leurs 3 variantes publiées · mis à jour le ${esc(process.env.KYW_DATE || new Date().toISOString().slice(0, 10))}</p>
+<div class="onglets" role="tablist" aria-label="Lots">${LOTS.map((l, i) => `<button role="tab" id="t-${l.id}" aria-controls="${l.id}" aria-selected="${i === 0}" class="lot-${(i % 3) + 1}"><b>${esc(l.titre)}</b><span>${esc(l.run)}</span><small>${l.restos.filter(complet).length} / ${l.restos.length} restaurants publiés</small></button>`).join('')}</div>
+${LOTS.map((l, i) => `<section id="${l.id}" role="tabpanel" aria-labelledby="t-${l.id}" class="lot lot-${(i % 3) + 1}"${i ? ' hidden' : ''}>
+<p class="lot-note"><span class="pastille">${esc(l.titre)} · ${esc(l.run)}</span> ${esc(l.note)}</p>
 <table><thead><tr><th>#</th><th>Restaurant</th><th>Site actuel</th><th>Propositions KYW</th></tr></thead><tbody>
-${lignes || '<tr><td colspan="4">Sélection en cours.</td></tr>'}
-</tbody></table>
+${l.restos.map(ligne).join('\n') || '<tr><td colspan="4">Aucun restaurant pour l\'instant.</td></tr>'}
+</tbody></table></section>`).join('\n')}
+<script>(()=>{const t=[...document.querySelectorAll('.onglets [role=tab]')];const ouvre=(id)=>{t.forEach(b=>b.setAttribute('aria-selected',b.getAttribute('aria-controls')===id));document.querySelectorAll('section.lot').forEach(s=>s.hidden=s.id!==id)};t.forEach(b=>b.addEventListener('click',()=>{ouvre(b.getAttribute('aria-controls'));history.replaceState(null,'','#'+b.getAttribute('aria-controls'))}));const h=location.hash.slice(1);if(h&&document.getElementById(h))ouvre(h)})()</script>
 <h2><a href="/gabarits/">Collection de gabarits du portfolio</a> (${gabarits.length} publiés sur 15)</h2>
 <ul class="gab">${gabarits.map((g) => `<li><a href="/gabarits/${g}/">${esc(g)}</a></li>`).join('') || '<li>En construction.</li>'}</ul>
 </main>
