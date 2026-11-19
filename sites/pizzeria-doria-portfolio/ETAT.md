@@ -1,4 +1,4 @@
-# ETAT : pizzeria-doria-portfolio (fin de la phase 2 sur 3, passe construction-2)
+# ETAT : pizzeria-doria-portfolio (fin de la phase 3 sur 3, passe construction-3, QA terminée)
 
 ## Fait (phase 1)
 - Gabarit guinguette adapté, DESIGN.md, `site.ts` + `carte.json` (181 lignes), tokens, objets pizza/basilic/tomate, filet tricolore, 7 pages, photos WebP, OG, favicon, footer KYW (un seul `<footer>`).
@@ -20,3 +20,7 @@
 ## Pièges
 - Les mesures Playwright du bureau doivent attendre le loader (7 s sur l'accueil).
 - `gabarits/UTILISATION.md` toujours à compléter (protégé) : « guinguette : pizzeria-doria ». Défauts à reporter dans `gabarits/guinguette` (protégé) : `.table__rail` écrasé par `.rail`, badge trop long, `.table` avec padding, marquee en `getDay()` local, rail mobile en marge négative hors `.wrap`.
+
+## Phase 3 (QA)
+- Fait : axe 0 violation sur 7 pages, clics d'en-tête OK, footer KYW visible en fenêtre, build final vert, RAPPORT.md écrit. Rien à corriger.
+- Reste : points mineurs de RAPPORT.md (vide au-dessus du pied de /carte/, sloplint self, logo vectoriel).
