@@ -1,0 +1,33 @@
+---
+// À emporter : le service existe (site actuel), mais la carte à emporter est un outil externe non lu : aucun plat ni prix affiché.
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, guinguette as g, telHref } from '../data/site';
+---
+<Base title="À emporter" description={`Vente à emporter chez ${site.nom} à ${site.adresse.commune} : la carte à emporter est consultable sur le site du restaurant.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>À emporter</h1>
+      <p class="lead">{g.emporter.texte}</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:84%;--y:0%;--r:10deg;--taille:120px" aria-hidden="true"><Objet id="bol" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="hcarte">
+        <p class="meta">Commander</p>
+        <h2 class="section__titre" style="margin-bottom:0">La carte <em>à emporter</em></h2>
+        <p class="hcarte__ligne"><span>Carte et commande</span><span>sur le site du restaurant</span></p>
+        <p class="hcarte__ligne"><span>Téléphone</span><a class="link" href={telHref()}>{site.telephone}</a></p>
+        <p class="hcarte__ligne"><span>Adresse</span><span>{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</span></p>
+        <div class="actions">
+          <a class="btn btn--plein" href={site.url} rel="noopener">Voir la carte à emporter</a>
+          <a class="btn" href={telHref()}>Appeler</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

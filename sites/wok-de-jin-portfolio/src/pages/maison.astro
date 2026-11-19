@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import Ornements from '../components/Ornements.astro';
+import { site, guinguette, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const galerie = ['/photos/salle-large.webp', '/photos/table-dressee.webp', '/photos/salle-buffet.webp', '/photos/salle-de-jeux.webp', '/photos/cocktail-vert.webp', '/photos/salle-tables-rouges.webp'].map(photoDe);
+const salle = photoDe('/photos/salle-tables-rouges.webp');
+---
+<Base title="La maison" description={`La salle de ${site.nom} à ${site.adresse.commune} : décor chinois, grandes tablées pour les groupes, salle de jeux pour les enfants.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>La maison</h1>
+      <p class="lead">{site.baseline}</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--canard is-flottant" style="--x:86%;--y:0%;--r:-10deg;--taille:120px" aria-hidden="true"><Objet id="lanterne" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap maison__grille">
+      <figure class="tirage" style="--w:100%; cursor: default; --r:-3deg">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="eager" decoding="async" />
+        <figcaption>La salle rouge</figcaption>
+      </figure>
+      <div class="maison__texte">
+        <Ornements />
+        <h2 class="section__titre">{g.maison.titre[0]} <em>{g.maison.titre[1]}</em></h2>
+        <div class="prose">{g.maison.texte.map((p) => <p>{p}</p>)}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--blanc">
+    <div class="wrap">
+      <h2 class="section__titre">Pour <em>tous</em></h2>
+      <div class="equipe">
+        <article class="membre" data-reveal="up">
+          <div class="membre__sans" aria-hidden="true"><Objet id="bol" /></div>
+          <h3>En famille</h3>
+          <p class="muted">Enfants de 0 à 3 ans gratuits, demi-tarif de 4 à 11 ans.</p>
+        </article>
+        <article class="membre" data-reveal="up" data-delay="0.08">
+          <div class="membre__sans" aria-hidden="true"><Objet id="theiere" /></div>
+          <h3>Entre amis ou collègues</h3>
+          <p class="muted">De grandes tables accueillent les groupes.</p>
+        </article>
+        <article class="membre" data-reveal="up" data-delay="0.16">
+          <div class="membre__sans" aria-hidden="true"><Objet id="sushi" /></div>
+          <h3>Un anniversaire</h3>
+          <p class="muted">−50 % sur le buffet hors boissons, sur présentation d’une pièce d’identité.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">La salle, <em>les tables</em></h2>
+      <div class="grille-photos">
+        {galerie.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-3, 4, -2, 3, -5, 2][i]}deg`} data-reveal="up" data-delay={String((i % 3) * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Venir à table</a></div>
+    </div>
+  </section>
+</Base>

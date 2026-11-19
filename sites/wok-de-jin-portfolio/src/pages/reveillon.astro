@@ -1,0 +1,55 @@
+---
+// Réveillon du 31 décembre 2026 : tout est prouvé par le dossier (site actuel, page /reveillon).
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import Ornements from '../components/Ornements.astro';
+import { site, guinguette as g, photoDe, telHref } from '../data/site';
+import { asset } from '../lib/url';
+const r = g.reveillon;
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const photos = ['/photos/reveillon-roti.webp', '/photos/reveillon-sushis.webp', '/photos/reveillon-desserts.webp', '/photos/reveillon-sapin.webp'].map(photoDe);
+---
+<Base title="Réveillon du 31 décembre" description={`Réveillon du ${r.date} chez ${site.nom} à ${site.adresse.commune} : ${r.prix} par personne, boissons comprises, DJ, buffet de fête.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>Réveillon</h1>
+      <p class="lead">Le {r.date}, {r.heure} : un buffet de fête, des boissons comprises et un DJ.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--canard is-flottant" style="--x:84%;--y:0%;--r:-8deg;--taille:130px" aria-hidden="true"><Objet id="lanterne" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section section--corail">
+    <div class="wrap manifeste__inner">
+      <Ornements />
+      <h2 style="font-size: var(--t-xl)">{r.prix}, <em class="ital">boissons comprises</em></h2>
+      <p class="lead">Par personne, le {r.date}, {r.heure}.</p>
+      <ul role="list" class="liste-reveillon">
+        {r.inclus.map((t) => <li class="vege">{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section__titre">Réserver <em>le réveillon</em></h2>
+      <div class="maison__grille">
+        <div class="prose">
+          <p>{r.acompte}</p>
+          <p>{r.enfants}</p>
+          <p>{r.limite}</p>
+          <div class="actions"><a class="btn btn--plein" href={r.url} rel="noopener">Réserver le réveillon</a><a class="btn" href={telHref()}>Appeler le {site.telephone}</a></div>
+        </div>
+        <div class="grille-photos">
+          {photos.map((p, i) => (
+            <figure class="tirage" style={`--r:${[-4, 3, -2, 4][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+              <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+              <figcaption>{p.alt.split(',')[0]}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

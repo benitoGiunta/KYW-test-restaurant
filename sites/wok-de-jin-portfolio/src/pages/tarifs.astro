@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, guinguette, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const picto = (cat: string) => g.pictos.find((p) => cat.startsWith(p.categorie))?.picto ?? 'bol';
+const photos = ['/photos/sushis-tapis.webp', '/photos/buffet-fruits-de-mer.webp', '/photos/desserts-macarons.webp', '/photos/makis-crevette.webp'].map(photoDe);
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const cartes = site.menus.filter((m) => !m.nom.startsWith('Réveillon'));
+---
+<Base title="Buffet et tarifs" description={`Tarifs du buffet à volonté de ${site.nom} à ${site.adresse.commune} : midi, soir en semaine, week-end, formule avec boissons, enfants et anniversaires.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>Buffet et tarifs</h1>
+      <p class="lead">Un seul prix par personne, tout à volonté : buffets chaud et froid, sushis, wok, teppanyaki et desserts. Le tarif change selon le service.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:84%;--y:4%;--r:14deg;--taille:110px" aria-hidden="true"><Objet id="bol" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="carte">
+        <h2 class="sr-only">Les tarifs par personne</h2>
+        <div class="carte__grille">
+          <div>
+            <h3 class="cat__titre"><Objet id="bol" />Buffet seul</h3>
+            <p class="cat__note">{g.tarifs.note}</p>
+            <ul role="list">
+              {g.tarifs.seul.map((t) => (
+                <li class="plat"><span class="plat__nom">{t.moment}</span><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">{t.prix}</span></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 class="cat__titre"><Objet id="theiere" />Buffet et boissons</h3>
+            <p class="cat__note">{g.tarifs.note}</p>
+            <ul role="list">
+              {g.tarifs.boissons.map((t) => (
+                <li class="plat"><span class="plat__nom">{t.moment}</span><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">{t.prix}</span></li>
+              ))}
+            </ul>
+            <p class="muted" style="margin-top:var(--u);font-size:var(--t-s)">{g.tarifs.boissonsListe}</p>
+          </div>
+        </div>
+
+        <h2 class="section__titre" style="margin-top: calc(var(--u) * 5)">Le buffet, <em>en détail</em></h2>
+        <div class="carte__grille">
+          {site.carte.map((c) => (
+            <div>
+              <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie}</h3>
+              <ul role="list">
+                {c.plats.map((p) => (
+                  <li class="plat">
+                    <span class="plat__nom">{p.nom}{p.description && <span class="plat__desc">{p.description}</span>}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="section__titre" style="margin-top: calc(var(--u) * 5)">Enfants et <em>anniversaires</em></h2>
+        <div class="carte__menus">
+          {cartes.map((m) => (
+            <article class="formule">
+              <h3>{m.nom}</h3>
+              {m.prix && <p class="formule__prix">{m.prix}</p>}
+              <p class="muted" style="margin-top:0.8em">{m.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">Au <em>buffet</em></h2>
+      <div class="grille-photos">
+        {photos.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-4, 3, -2, 5][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0].split(' :')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>

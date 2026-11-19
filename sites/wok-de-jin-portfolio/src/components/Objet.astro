@@ -1,0 +1,19 @@
+---
+// Objets au trait (bol, baguettes, lanterne…), dessinés une fois pour le gabarit (SVG inline, trait 2,4 px, bouts ronds).
+// Usage : <Objet id="bol" classe="obj__svg" />  ; décoratif (aria-hidden) : le label vit sur le bouton parent.
+import type { ObjetId } from '../data/site';
+interface Props { id: ObjetId; classe?: string }
+const { id, classe = '' } = Astro.props;
+const traits: Record<ObjetId, string> = {
+  bol: `<path d="M12 46 H88 Q86 80 50 84 Q14 80 12 46 Z"/><path d="M50 84 V90"/><path d="M36 92 H64"/><path d="M30 60 Q50 68 70 60" stroke-dasharray="3 4"/>
+    <path d="M34 36 Q30 28 36 22 Q42 16 38 8"/><path d="M50 36 Q46 28 52 22 Q58 16 54 8"/><path d="M66 36 Q62 28 68 22 Q74 16 70 8"/>`,
+  baguettes: `<path d="M18 92 L72 8"/><path d="M32 94 L86 14"/><path d="M12 70 H38"/><path d="M46 70 H72" stroke-dasharray="2 5"/>`,
+  lanterne: `<path d="M50 6 V18"/><path d="M34 18 H66"/><path d="M30 24 Q16 50 30 76 H70 Q84 50 70 24 Z"/><path d="M36 76 V84 H64 V76"/>
+    <path d="M50 84 V94"/><path d="M42 94 H58"/><path d="M24 40 Q50 48 76 40"/><path d="M24 60 Q50 68 76 60"/>`,
+  sushi: `<rect x="16" y="54" width="68" height="28" rx="14"/><path d="M10 54 Q50 18 90 54 Q50 46 10 54 Z"/><path d="M30 44 L36 52"/><path d="M48 38 L52 49"/><path d="M66 43 L68 51"/>`,
+  theiere: `<path d="M26 40 H70 Q76 70 60 82 H36 Q20 70 26 40 Z"/><path d="M26 50 Q8 50 12 64 Q14 70 24 68"/><path d="M70 46 Q84 40 88 24"/>
+    <path d="M34 40 Q48 28 62 40"/><path d="M48 28 V24"/><circle cx="48" cy="21" r="3"/><path d="M36 90 H62"/>`,
+  wok: `<path d="M10 52 H64 Q62 80 37 82 Q12 80 10 52 Z"/><path d="M64 56 L94 42"/><path d="M26 40 Q22 30 28 24 Q34 18 30 10"/><path d="M44 40 Q40 30 46 24 Q52 18 48 10"/><path d="M26 90 H48"/>`,
+};
+---
+<svg class={classe} viewBox="0 0 100 100" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" set:html={traits[id]} />
