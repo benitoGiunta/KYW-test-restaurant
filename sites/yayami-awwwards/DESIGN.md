@@ -54,3 +54,41 @@ Aucun exemple travaillé de concepts.md n'est utilisé.
 16. [x] Famille de section au plus une fois par page (poster, statement/données riz, index, filmstrip, données zone, pied).
 17. [x] Hero en 3 s : nom, cuisine, ville, appel et carte au-dessus de la flottaison (à confirmer en capture, phase 3).
 18. [x] Mobile 390 recomposé par media queries (`site.css` `max-width: 52rem` et `40rem`), strip menus `overflow-x` + `scroll-snap` ; mesure Playwright en phase 3.
+
+## Phase 2 : mouvement et interactions (construction-2, 2026-11-19)
+- **Module pilote** `src/motion/paire.ts` : une variable p (distance entre les deux pièces d'une paire `[data-paire]`), tirée du défilement de la section (0 écartées, 1 posées), épinglée par `data-state` (404 : `0`, la pièce manque). Pointeur : le jumeau se penche (±7 % de sa taille) ; repos : le filet pointillé du jumeau tourne à 9 degrés par seconde (plateau). Entrée de repos `src/motion/idle.ts` (pointeur, vitesse de défilement au toucher).
+- **Moment signature « le sceau »** : à l'intro, le sceau rouge se pose (échelle 1,5 vers 1, rotation -14 vers 0, `ease.spring`, 0,9 s), puis le jumeau en filet glisse vers lui (1,2 s, `ease.out`) et s'arrête à distance ; le défilement du hero les appaire. Même paire sur l'en-tête de `/carte/` et sur la 404.
+- **Transition** : deux volets rouges, un par moitié d'écran, se posent l'un contre l'autre (0,6 s) puis s'écartent (0,7 s).
+- **Hovers, 3 traitements dans le verbe « poser »** : CTA, la couleur se pose depuis le bas (`.cta::before`, `scale`) ; navigation et liens utilitaires, filet tiré ; lignes de l'index, un petit sceau se pose devant le nom qui se décale. Liens texte soulignés au repos, le rouge monte depuis le filet.
+- **Repos** : décidé, `idleMotion` attendu vrai (rotation du jumeau, mesurée : captures différentes sur 1,5 s à 1440 et 390 et sur la 404).
+- **Mouvement réduit** : ni Lenis, ni scrub, ni intro ; la paire est dessinée posée (jumeau contre le sceau), tout le texte visible (mesuré : 0 élément caché sur accueil, carte, 404).
+- **En-tête** : s'écarte au défilement vers le bas (classe `frame-away`), revient en remontant et au focus clavier.
+
+### Sur-utilisation, phase 2
+19. [x] Menu mobile : `Header.astro` (bouton `aria-expanded`, `aria-controls="menu"`), `src/motion/menu.ts` (overlay plein écran, focus sur le premier lien, Tab piégé, Échap ferme, focus rendu au bouton, fermeture à `astro:before-preparation`) ; mesuré à 390 : ouvert `aria-expanded=true`, focus piégé après 6 Tab, Échap : `hidden` et focus sur le bouton.
+20. [x] Engine verbatim (`src/engine/`), `astro.ts` (`Base.astro` `start(setupMotion)`), `transition:persist` sur `#curtain` (`Base.astro:70`), `transition:animate="none"` sur `<html>` (`Base.astro:33`) ; `#gl` et `#cursor` sans objet (ni GL ni curseur suiveur, décision écrite).
+21. [x] Une horloge : grep de `addEventListener('scroll'` et `requestAnimationFrame` hors `src/engine/` : aucun résultat ; repos et pilote sur `gsap.ticker` (`idle.ts`, `paire.ts`).
+22. [x] Code de page dans `onPage()` (`paire.ts`, `menu.ts`) avec nettoyage (`actives.clear()`, retrait des écouteurs `keydown` et `astro:before-preparation`) ; aucun code DOM au niveau module.
+23. [x] Aucune CSS `transform` sur un élément animé par GSAP : sceau, jumeau, volets, cibles de reveal n'ont que `left/top/inset` ; les hovers CSS passent par `scale`/`translate` sur des éléments que GSAP ne touche pas (`.cta::before`, `.index__nom`, `.tete`).
+24. [x] Module pilote `paire.ts` avec `startIdle()` et influence du pointeur (`idle.x * 14`, `idle.y * 10`), appelé une fois depuis `setup.ts`.
+25. [x] Loader décidé : aucun (Concept Card « Théâtre ») ; pas de composant ni de `role="status"`.
+26. [x] Transition du concept 0,6 + 0,04 s à l'aller, 0,7 + 0,09 s au retour, au plus 1 s par sens (`setup.ts`).
+27. [x] Intro : `hero__bas` en `data-intro` (fondu, délai 0,5 s), sceau et jumeau ajoutés à la timeline d'intro (`paire.ts`) ; titre, accroche et photo du hero peints dès le premier rendu (LCP).
+28. [x] Épinglages : aucun pin GSAP ; nav de la carte en `position: sticky` (phase 1).
+29. [x] Repli statique dessiné : sans `.motion`, la paire est posée (`.jumeau { left: 80% }`, capture réduite) ; `site.css` « Mouvement réduit ».
+30. [x] Copies décoratives `aria-hidden` : jumeau SVG, `pied__mot`, paires de la 404 et du menu ; aucun titre dupliqué.
+31. [x] Une famille d'easing : `ease.out`, `ease.inOut`, `ease.spring` (sceau seul) de l'engine ; CSS en `cubic-bezier(0.215, 0.61, 0.355, 1)` (power3.out = `ease.soft`) ; staggers 50 à 80 ms (`data-delay` 0,05 à 0,08, menu 0,06).
+32. [x] Trois traitements, un par rôle, dans le verbe « poser » : `site.css:189-230`.
+33. [x] `:hover` sous `@media (hover: hover)`, même état sur `:focus-visible`, `:active` présent (`site.css:189-230`).
+34. [x] Liens texte soulignés au repos (`.lien`, `text-decoration: underline`, `site.css:14`).
+35. [ ] `hover.noHoverChange` : à lire dans `report.json` (phase 3).
+36. [x] Repos : rotation du jumeau ; deux captures à 1,5 s d'écart différentes (1440, 390, 404) ; `idleMotion` à confirmer par `report.json`.
+37. [x] Curseur natif visible (aucun `cursor: none`, pas de suiveur) ; rien ne dépend du hover au toucher (index, CTA, liens fonctionnent au clic).
+38. [x] Pas de blur animé ni de `box-shadow` au scroll ; aucun `will-change`.
+39. [x] Réduit : `lenis` absent de `<html>`, aucun scrub ni loader, 0 élément caché (mesure Playwright `reducedMotion: 'reduce'` sur accueil, carte, 404).
+40. [x] GL sans objet, décision écrite (Concept Card « Théâtre ») ; lignes `// GL` retirées de l'engine.
+41. [x] Sans objet (pas de GL).
+44. [x] Lien d'évitement en premier (`Base.astro`) ; focus `--c-accent-texte` sur noir (6,7:1), `--c-riz-accent` sur riz (`site.css:185-186`).
+45. [ ] Contraste AA à confirmer en phase 3 (états de hover : texte noir sur riz, blanc sur rouge 5,1:1).
+46. [x] Tout le texte est dans le DOM (sceau : texte réel + `role="img"` et `aria-label`).
+47. [x] Cibles : « Menu » 43 × 44, « Commander » 118 × 44 à 390 px ; `.tete__tel` passé en `.nl` (padding 0,75 rem) ; à confirmer par `report.json`.

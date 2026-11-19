@@ -1,6 +1,10 @@
-// Motion globale de Yayami : phase 1 = transition de page par deux volets rouges (le sceau se pose). Les signatures arrivent en phase 2.
+// Motion globale de Yayami : tourne une fois sur le client, avant la première page.
+// Pas de loader ni de WebGL (DESIGN.md « Théâtre »). Transition : deux volets rouges qui se posent
+// l'un contre l'autre (la paire) puis s'écartent ; module pilote ./paire.ts ; menu plein écran ./menu.ts.
 import { gsap } from 'gsap';
-import { setTransition, ease } from '../engine';
+import { setTransition, onScroll, ease } from '../engine';
+import { menuMobile } from './menu';
+import { startPaire } from './paire';
 
 export function setupMotion() {
   const volets = (c: HTMLElement) => c.querySelectorAll<HTMLElement>('.curtain__panel');
@@ -20,4 +24,13 @@ export function setupMotion() {
         .set(c, { autoAlpha: 0 });
     },
   });
+  // L'en-tête s'écarte quand on descend, revient quand on remonte (patterns.md § 6) : rien ne couvre le texte.
+  let dernier = 0;
+  onScroll(({ y }) => {
+    if (Math.abs(y - dernier) < 4) return;
+    document.documentElement.classList.toggle('frame-away', y > 240 && y > dernier && !document.querySelector('.menu:not([hidden])'));
+    dernier = y;
+  });
+  menuMobile();
+  startPaire();
 }

@@ -13,7 +13,10 @@ const notes: Record<string, string | undefined> = { Nigiri: 'Les deux pièces.',
     <div class="wrap cols">
       <h1 class="display display--mega">La carte</h1>
       <p class="entete__intro">{categories.length} rubriques et neuf menus. {site.emporterRemise}&nbsp;% de remise à l’emporter, livraison offerte dès {site.livraison.seuil}&nbsp;€.</p>
-      <div class="sceau" aria-label="Nigiri : 4,50 euros les deux pièces"><span class="sceau__haut">Nigiri</span><span class="sceau__prix chiffre">4,50&nbsp;€</span><span class="sceau__bas">les deux pièces</span></div>
+      <div class="pose pose--gauche" data-paire data-loin="-60,-80">
+        <div class="sceau" role="img" aria-label="Nigiri : 4,50 euros les deux pièces" data-piece="sceau"><span class="sceau__haut">Nigiri</span><span class="sceau__prix chiffre">4,50&nbsp;€</span><span class="sceau__bas">les deux pièces</span></div>
+        <svg class="jumeau" viewBox="0 0 100 100" aria-hidden="true" focusable="false" data-piece="jumeau"><circle cx="50" cy="50" r="48" /></svg>
+      </div>
     </div>
   </section>
   <nav class="nav-cat" aria-label="Rubriques de la carte">
@@ -27,9 +30,9 @@ const notes: Record<string, string | undefined> = { Nigiri: 'Les deux pièces.',
     return (
       <section class:list={['cat', !photo && 'cat--sans-photo']} id={slug(c.nom)} aria-labelledby={`t-${slug(c.nom)}`}>
         <div class="wrap cols">
-          {photo && <figure class="cat__media"><Photo cle={photo} widths={[480, 800]} sizes="(max-width: 52rem) 80vw, 40vw" /></figure>}
+          {photo && <figure class="cat__media" data-reveal="clip"><Photo cle={photo} widths={[480, 800]} sizes="(max-width: 52rem) 80vw, 40vw" /></figure>}
           <div class="cat__corps">
-            <h2 id={`t-${slug(c.nom)}`} class="display display--xl cat__titre">{c.nom}</h2>
+            <h2 id={`t-${slug(c.nom)}`} class="display display--xl cat__titre" data-split="lines">{c.nom}</h2>
             {notes[c.nom] && <p class="cat__note">{notes[c.nom]}</p>}
             <ul class="plats">
               {c.plats.map((p) => (
@@ -47,9 +50,9 @@ const notes: Record<string, string | undefined> = { Nigiri: 'Les deux pièces.',
   })}
   <section class="cat cat--menus" id="menus" aria-labelledby="t-menus">
     <div class="wrap cols">
-      <figure class="cat__media"><Photo cle="matsu" widths={[480, 800, 1200]} sizes="(max-width: 52rem) 80vw, 40vw" /></figure>
+      <figure class="cat__media" data-reveal="clip"><Photo cle="matsu" widths={[480, 800, 1200]} sizes="(max-width: 52rem) 80vw, 40vw" /></figure>
       <div class="cat__corps">
-        <h2 id="t-menus" class="display display--xl cat__titre">Menus</h2>
+        <h2 id="t-menus" class="display display--xl cat__titre" data-split="lines">Menus</h2>
         <ul class="plats">
           {menus.map((m) => (
             <li class="plat">

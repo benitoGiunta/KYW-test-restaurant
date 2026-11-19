@@ -18,8 +18,22 @@ const liens = [
   <nav class="tete__nav" aria-label="Navigation principale">
     <ul>
       {liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
-      <li class="tete__cache"><a class="tete__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></li>
+      <li class="tete__cache"><a class="nl tete__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></li>
       <li><a class="cta cta--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="cta__txt">Commander</span></a></li>
     </ul>
   </nav>
+  <button class="tete__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-bouton>Menu</button>
 </header>
+<nav id="menu" class="menu" hidden aria-label="Menu" data-menu>
+  <button class="menu__fermer" type="button" data-menu-fermer>Fermer</button>
+  <ul>
+    <li><a class="menu__lien" href={base} aria-current={path === base ? 'page' : undefined}>Accueil</a></li>
+    {liens.map((l) => <li><a class="menu__lien" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+    <li><a class="menu__lien" href={u('/reservation/')} aria-current={courant('/reservation/')}>Commander</a></li>
+  </ul>
+  <div class="menu__pied">
+    <a class="menu__tel" href={site.telephoneHref}>Appeler le {site.telephoneLisible}</a>
+    <span>{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</span>
+    <span class="menu__paire" aria-hidden="true"><span></span><span></span></span>
+  </div>
+</nav>

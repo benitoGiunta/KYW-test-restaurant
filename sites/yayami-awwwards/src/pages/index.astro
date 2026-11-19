@@ -22,12 +22,15 @@ const photoMenu: Record<string, 'matsu' | 'chirashi' | undefined> = { 'Menu Mats
         </div>
         <figure class="hero__media" data-hero-media>
           <Photo cle="nigiri" widths={[640, 960, 1280]} sizes="(max-width: 52rem) 100vw, 55vw" prioritaire />
-          <div class="sceau hero__sceau" aria-label="Nigiri : 4,50 euros les deux pièces">
-            <span class="sceau__haut">Nigiri</span><span class="sceau__prix chiffre">4,50&nbsp;€</span><span class="sceau__bas">les deux pièces</span>
+          <div class="pose hero__pose" data-paire data-loin="70,-95">
+            <div class="sceau" role="img" aria-label="Nigiri : 4,50 euros les deux pièces" data-piece="sceau">
+              <span class="sceau__haut">Nigiri</span><span class="sceau__prix chiffre">4,50&nbsp;€</span><span class="sceau__bas">les deux pièces</span>
+            </div>
+            <svg class="jumeau" viewBox="0 0 100 100" aria-hidden="true" focusable="false" data-piece="jumeau"><circle cx="50" cy="50" r="48" /></svg>
           </div>
         </figure>
       </div>
-      <p class="hero__bas">
+      <p class="hero__bas" data-reveal="fade" data-intro data-delay="0.5">
         <span><strong>{site.adresse.rue} {site.adresse.numero}</strong>, {site.adresse.cp} {site.adresse.commune}</span>
         <span><strong>7 jours sur 7</strong>, {services[0].libelle.toLowerCase()} et {services[1].libelle.toLowerCase()}</span>
         <span class="petit">{site.baseline}</span>
@@ -38,15 +41,15 @@ const photoMenu: Record<string, 'matsu' | 'chirashi' | undefined> = { 'Menu Mats
   <section class="riz" aria-labelledby="titre-paire">
     <div class="wrap">
       <div class="cols">
-        <h2 id="titre-paire" class="display display--l riz__phrase">On vend le nigiri par deux. La maison aussi va par paires : sur place ou chez vous.</h2>
+        <h2 id="titre-paire" class="display display--l riz__phrase" data-split="lines">On vend le nigiri par deux. La maison aussi va par paires : sur place ou chez vous.</h2>
       </div>
       <div class="paire">
-        <div class="paire__cellule">
+        <div class="paire__cellule" data-reveal="up">
           <p class="paire__chiffre chiffre">−{site.emporterRemise}&nbsp;%</p>
           <h3 class="paire__titre">Vous venez le chercher</h3>
           <p class="petit">Remise de {site.emporterRemise}&nbsp;% pour toute commande retirée au {site.adresse.rue} {site.adresse.numero}.</p>
         </div>
-        <div class="paire__cellule">
+        <div class="paire__cellule" data-reveal="up" data-delay="0.08">
           <p class="paire__chiffre chiffre">{site.livraison.seuil}&nbsp;€</p>
           <h3 class="paire__titre">On vous le livre</h3>
           <p class="petit">Livraison gratuite à partir de {site.livraison.seuil}&nbsp;€, à Namur et dans six codes postaux voisins.</p>
@@ -58,7 +61,7 @@ const photoMenu: Record<string, 'matsu' | 'chirashi' | undefined> = { 'Menu Mats
   <section class="index" aria-labelledby="titre-index">
     <div class="wrap cols">
       <div class="index__tete">
-        <h2 id="titre-index" class="display display--xl">La carte</h2>
+        <h2 id="titre-index" class="display display--xl" data-split="lines">La carte</h2>
         <a class="cta cta--ligne" href={u('/carte/')}><span class="cta__txt">Toute la carte</span></a>
       </div>
       <ul class="index__liste">
@@ -72,20 +75,20 @@ const photoMenu: Record<string, 'matsu' | 'chirashi' | undefined> = { 'Menu Mats
         ))}
       </ul>
       <div class="index__media">
-        <figure><Photo cle="california" widths={[480, 800]} sizes="(max-width: 52rem) 100vw, 30vw" /></figure>
-        <figure><Photo cle="assortiment" widths={[480, 800]} sizes="(max-width: 52rem) 100vw, 30vw" /></figure>
+        <figure data-reveal="clip"><Photo cle="california" widths={[480, 800]} sizes="(max-width: 52rem) 100vw, 30vw" /></figure>
+        <figure data-reveal="clip" data-delay="0.08"><Photo cle="assortiment" widths={[480, 800]} sizes="(max-width: 52rem) 100vw, 30vw" /></figure>
       </div>
     </div>
   </section>
 
   <section class="menus" aria-labelledby="titre-menus">
     <div class="wrap menus__tete">
-      <h2 id="titre-menus" class="display display--l">Les menus</h2>
+      <h2 id="titre-menus" class="display display--l" data-split="lines">Les menus</h2>
       <a class="lien" href={u('/carte/#menus')}>Les neuf menus</a>
     </div>
     <ul class="menus__piste">
-      {menusChoisis.map((m) => (
-        <li class="menu-carte">
+      {menusChoisis.map((m, i) => (
+        <li class="menu-carte" data-reveal="up" data-delay={(i * 0.06).toFixed(2)}>
           {photoMenu[m.nom] && <Photo cle={photoMenu[m.nom]!} widths={[480, 800]} sizes="(max-width: 40rem) 80vw, 24rem" />}
           <h3 class="titre-m">{m.nom}</h3>
           <p class="menu-carte__prix chiffre">{euro(m.prix)}</p>
@@ -97,13 +100,13 @@ const photoMenu: Record<string, 'matsu' | 'chirashi' | undefined> = { 'Menu Mats
 
   <section class="zone" aria-labelledby="titre-zone">
     <div class="wrap cols">
-      <h2 id="titre-zone" class="display display--xl zone__titre">Sept codes postaux</h2>
+      <h2 id="titre-zone" class="display display--xl zone__titre" data-split="lines">Sept codes postaux</h2>
       <div class="zone__texte">
         <p>La livraison est gratuite dès {site.livraison.seuil}&nbsp;€ dans ces codes postaux autour de Namur.</p>
         <a class="cta" href={u('/reservation/')}><span class="cta__txt">Commander</span></a>
       </div>
       <ul class="zone__codes" aria-label="Codes postaux livrés">
-        {site.livraison.codes.map((c) => <li class="chiffre">{c}</li>)}
+        {site.livraison.codes.map((c, i) => <li class="chiffre" data-reveal="up" data-delay={(i * 0.05).toFixed(2)}>{c}</li>)}
       </ul>
     </div>
   </section>
