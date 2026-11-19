@@ -1,0 +1,11 @@
+---
+import { u, alts, dims } from '../data/site';
+interface Props { nom: string; sizes?: string; priority?: boolean; alt?: string; pos?: string }
+const { nom, sizes = '100vw', priority = false, alt, pos } = Astro.props;
+const d = dims[nom];
+const texte = alt ?? alts[nom] ?? '';
+---
+<div data-slot={nom} data-alt={texte}>
+  <img src={u(`photos/${nom}.webp`)} srcset={`${u(`photos/${nom}-800.webp`)} ${d.w2}w, ${u(`photos/${nom}.webp`)} ${d.w}w`} sizes={sizes} width={d.w} height={d.h} alt={texte}
+    loading={priority ? 'eager' : 'lazy'} decoding="async" fetchpriority={priority ? 'high' : undefined} style={pos ? `object-position:${pos}` : undefined} />
+</div>

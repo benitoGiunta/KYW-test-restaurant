@@ -1,0 +1,40 @@
+---
+import '../styles/page.css';
+import KywFooter from '@kyw/footer';
+import Nav from '../components/Nav.astro';
+import Pied from '../components/Pied.astro';
+import { resto, u } from '../data/site';
+interface Props { title: string; description: string; current?: string }
+const { title, description, current = '' } = Astro.props;
+const SLOTS = '<script>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === \'string\' ? v : v.src; im.alt = (typeof v === \'object\' && v.alt) || s.dataset.alt || \'\'; s.querySelectorAll(\':scope > img\').forEach((o) => o.remove()); s.prepend(im); } };\ndocument.querySelectorAll(\'[data-slot] img\').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener(\'error\', () => i.remove(), { once: true }); });</script>';
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const og = new URL(u('photos/salle-rouge-800.webp'), Astro.site).href;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={og} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/webp" href={u('photos/logo.webp')} />
+    <script>document.documentElement.classList.add('js')</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Sans:wght@400;500;600&display=swap" />
+  </head>
+  <body>
+    <a class="visually-hidden" href="#contenu">Aller au contenu</a>
+    <Nav current={current} />
+    <main id="contenu"><slot /></main>
+    <Pied />
+    <Fragment set:html={SLOTS} />
+    <KywFooter base={import.meta.env.BASE_URL} />
+  </body>
+</html>

@@ -1,0 +1,27 @@
+---
+import { resto, u } from '../data/site';
+interface Props { current?: string }
+const { current = '' } = Astro.props;
+const accueil = u('');
+const liens = [
+  { href: `${accueil}#tarifs`, t: 'Nos tarifs' },
+  { href: `${accueil}#buffet`, t: 'Le buffet' },
+  { href: `${accueil}#salle`, t: 'La salle' },
+  { href: u('reveillon/'), t: 'Réveillon', page: 'reveillon' },
+  { href: `${accueil}#venir`, t: 'Nous trouver' },
+];
+---
+<header class="nav">
+  <div class="container">
+    <a class="nav-brand" href={accueil} aria-label="Wok de Jin, accueil">
+      <img src={u('photos/logo.webp')} width="44" height="44" alt="" />
+      <span>{resto.nom}</span>
+    </a>
+    <nav aria-label="Principale">
+      <ul class="nav-links">
+        {liens.map((l) => <li><a href={l.href} aria-current={l.page && l.page === current ? 'page' : undefined}>{l.t}</a></li>)}
+      </ul>
+    </nav>
+    <div class="nav-cta"><a class="btn" href={resto.tel.href}>Réserver</a></div>
+  </div>
+</header>

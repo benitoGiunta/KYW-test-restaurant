@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { resto, reveillon as r, u } from '../data/site';
+const N = ' ';
+---
+<Base title="Réveillon du Nouvel An avec DJ, Wok de Jin, Jambes" description="Réveillon du 31 décembre 2026 chez Wok de Jin : DJ, buffet de fête à volonté, boissons comprises, 80 € par personne." current="reveillon">
+  <section class="hero rev-hero" aria-labelledby="h-rev">
+    <div class="hero-photo"><Photo nom="reveillon-sushis" sizes="100vw" priority pos="50% 50%" /></div>
+    <div class="container g12 hero-body">
+      <h1 id="h-rev">On passe à 2027 ensemble.</h1>
+      <div class="hero-side">
+        <p class="lead">Un DJ, un buffet de fête à volonté et le décompte tous ensemble : {r.prix} par personne, boissons comprises.</p>
+        <div class="actions">
+          <a class="btn" href={resto.reservationReveillon} rel="noopener">Réserver ma table en ligne</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--s section" aria-label="Les faits">
+    <div class="container">
+      <dl class="faits">
+        <div><dt>Date</dt><dd>{r.date}</dd></div>
+        <div><dt>Horaire</dt><dd>{r.depuis}</dd></div>
+        <div><dt>Ambiance</dt><dd>DJ toute la soirée</dd></div>
+        <div><dt>La place</dt><dd>{r.prix}, boissons comprises</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-menu">
+    <div class="container">
+      <div class="g12 sec-head">
+        <h2 class="head" id="h-menu">Le buffet du réveillon</h2>
+        <p class="head-line">Encore plus de choix : le buffet à volonté, enrichi pour l’occasion.</p>
+      </div>
+      <div class="g12 menu-grid">
+        <div class="menu-rows">
+          {r.menu.map((m) => <div class="row"><h3>{m.titre}</h3><p>{m.texte}</p></div>)}
+        </div>
+        <div class="menu-photos">
+          <Photo nom="reveillon-roti" sizes="(min-width: 60rem) 30vw, 100vw" />
+          <Photo nom="reveillon-desserts" sizes="(min-width: 60rem) 30vw, 100vw" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" aria-labelledby="h-deroule">
+    <div class="container">
+      <div class="g12 sec-head"><h2 class="head" id="h-deroule">Votre soirée, pas à pas</h2></div>
+      <ol class="deroule">
+        {r.deroule.map((d) => <li><h3>{d.titre}</h3><p>{d.texte}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-resa">
+    <div class="container g12 venir">
+      <div class="cond">
+        <h2 id="h-resa">Réservez dès maintenant.</h2>
+        {r.conditions.map((c) => <p>{c}</p>)}
+      </div>
+      <div class="cond-cta">
+        <a class="btn" href={resto.reservationReveillon} rel="noopener">Réserver ma table en ligne</a>
+        <p class="muted">{resto.adresse.rue} {resto.adresse.numero}, {resto.adresse.cp} {resto.adresse.ville}. Une question ? <a class="link" href={resto.tel.href}>{resto.tel.affiche}</a></p>
+        <a class="link" href={u('')}>Retour à l’accueil</a>
+      </div>
+    </div>
+  </section>
+</Base>

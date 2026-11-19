@@ -1,0 +1,151 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto, tarifs, boissonsIncluses, buffet, reveillon, u } from '../data/site';
+const N = ' ';
+---
+<Base title="Wok de Jin, buffet à volonté asiatique à Jambes (Namur)" description="Buffet asiatique à volonté à Jambes : wok, sushis, teppanyaki et desserts. Tarifs, horaires, adresse et réveillon du 31 décembre.">
+  <!-- 1. Hero : Ledge, la salle en plein cadre, titre posé au bas -->
+  <section class="hero" aria-labelledby="h-hero">
+    <div class="hero-photo"><Photo nom="salle-rouge" sizes="100vw" priority pos="50% 60%" /></div>
+    <p class="hero-cap">La grande salle de Wok de Jin, à Jambes.</p>
+    <div class="container g12 hero-body">
+      <h1 id="h-hero">Buffet à volonté asiatique.</h1>
+      <div class="hero-side">
+        <p class="lead">Toutes vos envies à la même table, dès 16,80{N}€ le midi.</p>
+        <div class="actions">
+          <a class="btn" href={resto.tel.href}>Réserver une table</a>
+          <a class="link" href="#tarifs">Voir les tarifs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Tarifs : Table + prix géant (signature) -->
+  <section class="section" id="tarifs" aria-labelledby="h-tarifs">
+    <div class="container">
+      <div class="g12 sec-head">
+        <h2 class="head" id="h-tarifs">Nos tarifs</h2>
+        <p class="head-line">Par personne, à volonté : buffets chaud et froid, sushis, wok, teppanyaki et desserts.</p>
+      </div>
+      <div class="g12 tarifs-grid">
+        <div class="prix-lead">
+          <span class="prix-geant" aria-hidden="true">16,80{N}€</span>
+          <p>Le buffet seul, le midi, hors boissons.</p>
+        </div>
+        <table class="tarif-table">
+          <caption class="visually-hidden">Tarifs par personne selon le service</caption>
+          <thead><tr><th scope="col">Service</th><th scope="col">Buffet seul</th><th scope="col">Buffet et boissons</th></tr></thead>
+          <tbody>
+            {tarifs.map((t, i) => (
+              <tr><th scope="row">{t.service}</th><td class:list={['num', { 'lead-cell': i === 0 }]}>{t.seul}</td><td class="num">{t.boissons}</td></tr>
+            ))}
+          </tbody>
+        </table>
+        <div class="tarif-notes">
+          <div class="row"><h3>Avec les boissons</h3><p>{boissonsIncluses}</p></div>
+          <div class="row"><h3>Pour les petits convives</h3><p>Les enfants de 0 à 3{N}ans mangent gratuitement, ceux de 4 à 11{N}ans paient demi-tarif, sur présentation de la carte d’identité.</p></div>
+          <div class="row"><h3>Une année de plus à célébrer</h3><p>−50{N}% sur le buffet hors boissons pour votre anniversaire, sur présentation d’identité, à ± 3{N}jours.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Showcase photographique : les sushis -->
+  <section class="show" aria-labelledby="h-sushis">
+    <figure class="show-fig">
+      <Photo nom="sushis-tapis" sizes="100vw" pos="50% 42%" />
+      <figcaption class="plate">
+        <h2 id="h-sushis">Sushis à volonté</h2>
+        <p>Nigiris, makis et créations de la maison.</p>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 4. Buffet : Rows avec vignette (matière du thème, sans grande photo) -->
+  <section class="section" id="buffet" aria-labelledby="h-buffet">
+    <div class="container">
+      <div class="g12 sec-head">
+        <h2 class="head" id="h-buffet">Le buffet</h2>
+        <p class="head-line">Commencez par ce qui vous tente, revenez pour ce que vous aimez. Ici, la découverte est à volonté.</p>
+      </div>
+      <div>
+        {buffet.map((b) => (
+          <div class="row buf-row">
+            <h3>{b.titre}</h3>
+            <p>{b.texte}</p>
+            <div class="thumb" data-slot={b.photo} data-alt={b.alt}><img src={u(`photos/${b.photo}-800.webp`)} width="800" height="600" alt={b.alt} loading="lazy" decoding="async" /></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Wok et teppanyaki : bento 7/5, un visage de cuisine -->
+  <section class="section--s section" aria-labelledby="h-wok">
+    <div class="container g12 wok">
+      <figure class="wok-a"><Photo nom="wok-flamme" sizes="(min-width: 60rem) 58vw, 100vw" /></figure>
+      <figure class="wok-b"><Photo nom="teppanyaki" sizes="(min-width: 60rem) 40vw, 100vw" pos="50% 40%" /></figure>
+      <div class="wok-text">
+        <h2 id="h-wok">Le spectacle est aussi en cuisine.</h2>
+        <p>Choisissez vos ingrédients. Regardez nos chefs les préparer devant vous.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Réveillon : bandeau, prix géant -->
+  <section class="band section--s section" aria-labelledby="h-rev">
+    <div class="container g12 rev">
+      <div class="rev-text">
+        <h2 id="h-rev">Réveillon du 31{N}décembre</h2>
+        <p>{reveillon.date}, dès 18{N}h{N}00 : DJ, buffet de fête et boissons comprises.</p>
+        <div class="actions"><a class="btn" href={u('reveillon/')}>Découvrir la soirée</a><a class="link" href={resto.reservationReveillon} rel="noopener">Réserver en ligne</a></div>
+      </div>
+      <div class="rev-prix">
+        <span class="prix-geant" aria-hidden="true">{reveillon.prix}</span>
+        <p>Par personne, boissons comprises.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. La salle : showcase + rangées -->
+  <section class="section" id="salle" aria-labelledby="h-salle">
+    <div class="container">
+      <div class="g12 sec-head">
+        <h2 class="head" id="h-salle">Une maison de partage</h2>
+        <p class="head-line">Des décors chinois, une salle accueillante, et le plaisir d’être ensemble.</p>
+      </div>
+      <figure style="margin:0">
+        <Photo nom="salle-large" sizes="(min-width: 90rem) 1312px, 100vw" pos="50% 55%" />
+      </figure>
+      <div class="g12 salle-sub">
+        <div class="rows">
+          <div class="row"><h3>Salle de jeux</h3><p>Les enfants ont leur propre moment de détente pendant votre repas.</p></div>
+          <div class="row"><h3>Grandes tablées</h3><p>De grandes tables réunissent la famille, les amis ou les collègues. Une grande tablée ? Parlons-en au <a class="link" href={resto.tel.href}>{resto.tel.affiche}</a>.</p></div>
+        </div>
+        <figure class="thumb-b"><Photo nom="salle-jeux" sizes="(min-width: 60rem) 30vw, 100vw" /></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Horaires, adresse, réservation (clôture) -->
+  <section class="section band" id="venir" aria-labelledby="h-venir">
+    <div class="container">
+      <div class="g12 sec-head">
+        <h2 class="head" id="h-venir">Horaires et adresse</h2>
+        <p class="head-line">Ouvert tous les jours sauf le mardi.</p>
+      </div>
+      <div class="g12 venir">
+        <Horaires />
+        <div class="lieu">
+          <address>{resto.adresse.rue} {resto.adresse.numero}<br />{resto.adresse.cp} {resto.adresse.ville}</address>
+          <a class="link" href={resto.itineraire} rel="noopener">Voir l’itinéraire</a>
+          <a class="tel" href={resto.tel.href}>{resto.tel.affiche}</a>
+          <div class="actions"><a class="btn" href={resto.tel.href}>Réserver une table</a></div>
+          <p class="muted">À emporter : composez votre repas à retirer au restaurant. <span class="fill" data-fill="lien">lien de commande à fournir</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
