@@ -1,4 +1,4 @@
-# ETAT, tariki-portfolio, construction phase 2 sur 3
+# ETAT, tariki-portfolio, construction phase 3 sur 3 (QA terminée)
 
 ## Fait (phase 1)
 - Gabarit braise adapté, contenu complet du dossier, 5 pages, assets du client en WebP, adéquation 72 % (voir DESIGN.md).
@@ -28,3 +28,6 @@
 ## Pièges
 - `.photos/` et `.logs/` à la racine, non commités. `dist/tariki/awwwards/` est modifié par un autre agent : ne pas l'ajouter.
 - Le formulaire est `visibility: hidden` (data-reveal) tant qu'il n'a pas été défilé : un test Playwright doit scroller avant `fill`.
+
+## Phase 3 (QA)
+- Logo mobile 44x44, 404 axe = faux positif, pages histoire/reservation/404 vérifiées. RAPPORT.md écrit. Build final OK. Reste : droits des photos, UTILISATION.md (gabarits protégé).
