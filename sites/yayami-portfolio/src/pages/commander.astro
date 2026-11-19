@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+---
+<Base title="Commander" description={`Commander chez ${site.nom} à ${site.adresse.commune} : sur le site de commande en ligne ou par téléphone au ${site.telephone}. Ouvert 7 jours sur 7.`}>
+  <section class="hero hero--page col-l">
+    <h1 class="hero__titre tube" data-tube>Commander</h1>
+    <p class="lead" data-reveal="fade">Toute la carte se commande en ligne, à emporter ou en livraison. Vous pouvez aussi appeler le restaurant.</p>
+    <div class="actions" data-reveal="up" data-delay="0.15">
+      <a class="btn btn--ambre" href={site.commande.url} rel="noopener">Ouvrir la commande en ligne <span class="fleche" aria-hidden="true">→</span></a>
+      <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+    </div>
+  </section>
+
+  <section class="section col-l venir" aria-labelledby="horaires">
+    <div data-reveal="fade">
+      <h2 id="horaires" class="tube tube--xl" data-tube style="margin-bottom: calc(var(--u) * 2)">Horaires</h2>
+      <dl class="horaires">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+    </div>
+    <div class="stack" data-reveal="fade" data-delay="0.15">
+      <p class="meta">Adresse</p>
+      <address>{adresseLigne()}</address>
+      <p class="meta" style="margin-top: calc(var(--u) * 2)">À savoir</p>
+      <ol class="regles" style="border-top: 0">
+        {site.regles.slice(1).map((r) => <li class="regle" style="font-size: var(--t-body)">{r.texte}</li>)}
+      </ol>
+    </div>
+  </section>
+</Base>

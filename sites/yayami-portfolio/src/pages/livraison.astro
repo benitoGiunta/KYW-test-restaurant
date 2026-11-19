@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, telHref, photoDe } from '../data/site';
+import { asset, u } from '../lib/url';
+const photo = photoDe('/photos/maki-assortiment-noir.webp');
+const l = site.livraison;
+---
+<Base title="Livraison et emporter" description={`Livraison gratuite dès ${l.minimum} chez ${site.nom} à ${site.adresse.commune}, ${l.remise} de remise à l'emporter. Zone : ${l.zone.join(', ')}.`}>
+  <section class="hero hero--page col-l">
+    <h1 class="hero__titre tube" data-tube>Livraison</h1>
+    <p class="lead" data-reveal="fade">Livraison gratuite à partir de {l.minimum}. À l'emporter, {l.remise} de remise.</p>
+  </section>
+
+  <section class="mos" aria-label="Un assortiment de maki" style="grid-template-columns: 1fr">
+    <figure class="mos__item" data-lampe-item style="aspect-ratio: 21 / 9">
+      <img class="mos__img" src={asset(photo.src)} alt={photo.alt} width={photo.largeur} height={photo.hauteur} loading="lazy" decoding="async" />
+      <img class="mos__lum" src={asset(photo.src)} alt="" aria-hidden="true" width={photo.largeur} height={photo.hauteur} loading="lazy" decoding="async" />
+    </figure>
+  </section>
+
+  <section class="section col-l" aria-labelledby="formats">
+    <div class="section__tete">
+      <h2 id="formats" class="tube tube--xl" data-tube data-reveal="fade">Trois façons</h2>
+    </div>
+    <ul class="soirees">
+      {site.modes.map((e, i) => (
+        <li class="soiree" data-reveal="up" data-delay={String(i * 0.1)}>
+          <p class="soiree__quand">{e.quand}</p>
+          <p class="titre" style="font-size: var(--t-m)">{e.nom}</p>
+          <p>{e.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section col-l" aria-labelledby="zone">
+    <div class="venir">
+      <div class="stack" data-reveal="fade">
+        <h2 id="zone" class="tube tube--xl" data-tube>La zone</h2>
+        <p>La livraison dessert sept codes postaux.</p>
+        <ul class="familles" style="margin-bottom: 0">
+          {l.zone.map((z) => <li><i></i>{z}</li>)}
+        </ul>
+      </div>
+      <div class="stack" data-reveal="fade" data-delay="0.15">
+        <p class="meta">Paiement</p>
+        <p>{l.paiement.join(', ')}.</p>
+        <div class="actions">
+          <a class="btn btn--ambre" href={u('/commander/')}>Commander <span class="fleche" aria-hidden="true">→</span></a>
+          <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

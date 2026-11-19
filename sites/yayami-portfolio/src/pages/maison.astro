@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe, adresseLigne } from '../data/site';
+import { asset, u } from '../lib/url';
+const nb = photoDe('/photos/nigiri-saumon-noir.webp');
+const spec = site.specialites.map((x) => ({ ...x, p: photoDe(x.photo) }));
+---
+<Base title="La maison" description={`${site.nom}, restaurant japonais au ${site.adresse.numero} ${site.adresse.rue} à ${site.adresse.commune} : ce que la maison prépare, de ses nigiri à ses plats chauds.`}>
+  <section class="hero hero--page col-l">
+    <h1 class="hero__titre tube" data-tube>La maison</h1>
+    <p class="lead" data-reveal="fade">{site.accroche.maison}</p>
+  </section>
+
+  <section class="origin" data-origin aria-labelledby="origine">
+    <div class="origin__stage">
+      <p class="meta origin__tete" id="origine">Yayami Sushi</p>
+      <div class="origin__photo">
+        <img src={asset(nb.src)} alt={nb.alt} width={nb.largeur} height={nb.hauteur} loading="lazy" decoding="async" />
+      </div>
+      <div class="origin__phrases">
+        {site.originStory.map((p) => <p class="origin__phrase" data-origin-phrase>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section col-l" aria-labelledby="specialites">
+    <div class="section__tete">
+      <h2 id="specialites" class="tube tube--xl" data-tube data-reveal="fade">Au menu</h2>
+      <p class="meta">Six plats de la carte</p>
+    </div>
+  </section>
+  <section class="mos" aria-label="Six plats de la carte">
+    {spec.map((x, i) => (
+      <figure class={`mos__item ${i % 4 === 1 || i % 4 === 2 ? 'mos__item--s' : 'mos__item--l'}`} data-lampe-item>
+        <img class="mos__img" src={asset(x.p.src)} alt={x.p.alt} width={x.p.largeur} height={x.p.hauteur} loading="lazy" decoding="async" />
+        <img class="mos__lum" src={asset(x.p.src)} alt="" aria-hidden="true" width={x.p.largeur} height={x.p.hauteur} loading="lazy" decoding="async" />
+      </figure>
+    ))}
+  </section>
+  <section class="section col-l">
+    <ul class="familles" style="margin-bottom: 0">
+      {spec.map((x) => <li><i></i>{x.nom}</li>)}
+    </ul>
+    <p class="muted" style="margin-top: calc(var(--u) * 3)">{adresseLigne()}</p>
+    <div class="actions">
+      <a class="btn btn--ambre" href={u('/commander/')}>Commander <span class="fleche" aria-hidden="true">→</span></a>
+      <a class="btn" href={u('/carte/')}>La carte</a>
+    </div>
+  </section>
+</Base>

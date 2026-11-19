@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { asset, u } from '../lib/url';
+const biere = photoDe('/photos/biere-asahi.webp');
+const familles: { nom: string; var: string }[] = [
+  { nom: 'bière', var: 'var(--c-accent)' },
+  { nom: 'ramune', var: 'var(--c-fg)' },
+];
+---
+<Base title="Boissons" description={`Les boissons de ${site.nom} à ${site.adresse.commune} : trois bières japonaises (Asahi, Kirin Ichiban, Sapporo) et quatre ramune, avec les prix.`}>
+  <section class="hero hero--page col-l">
+    <h1 class="hero__titre tube" data-tube>Boissons</h1>
+    <p class="lead" data-reveal="fade">{site.accroche.boissons}</p>
+  </section>
+
+  <section class="mos" aria-label="Une bière Asahi" style="grid-template-columns: 1fr">
+    <figure class="mos__item" data-lampe-item style="aspect-ratio: 21 / 9">
+      <img class="mos__img" src={asset(biere.src)} alt={biere.alt} width={biere.largeur} height={biere.hauteur} loading="lazy" decoding="async" />
+      <img class="mos__lum" src={asset(biere.src)} alt="" aria-hidden="true" width={biere.largeur} height={biere.hauteur} loading="lazy" decoding="async" />
+    </figure>
+  </section>
+
+  <section class="section col-l" aria-labelledby="liste">
+    <h2 id="liste" class="meta" style="margin-bottom: calc(var(--u) * 2)">Par type</h2>
+    <ul class="familles">
+      {familles.map((f) => <li><i style={`--fam: ${f.var}`}></i>{f.nom}</li>)}
+    </ul>
+    <ul class="ckt" data-reveal="fade">
+      {site.boissons.map((c) => (
+        <li class="ckt__item" data-fam={c.famille}>
+          <span class="ckt__nom tube tube--l" data-tube>{c.nom}</span>
+          <span class="ckt__prix">{c.prix}</span>
+          <span class="ckt__ing">{c.description}</span>
+          <span class="ckt__fam">{c.famille}</span>
+        </li>
+      ))}
+    </ul>
+    <div class="actions">
+      <a class="btn btn--ambre" href={u('/commander/')}>Commander <span class="fleche" aria-hidden="true">→</span></a>
+      <a class="btn" href={u('/carte/')}>La carte</a>
+    </div>
+  </section>
+</Base>

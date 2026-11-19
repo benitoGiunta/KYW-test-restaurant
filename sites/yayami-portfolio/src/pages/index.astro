@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, serviceSoir, heure, photoDe, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { asset, u } from '../lib/url';
+const voletG = photoDe('/photos/california-roll-noir.webp');
+const voletD = photoDe('/photos/gyoza-noir.webp');
+const nb = photoDe('/photos/nigiri-saumon-noir.webp');
+const s = serviceSoir(site);
+const statut = JSON.stringify(site.horaires.map((h) => ({ jour: h.jour, creneaux: h.creneaux })));
+const mosaique = site.mosaique.map((m) => photoDe(m.src));
+const boxes = site.menus;
+const bandes = [
+  { texte: site.accroche.bande, cite: '' },
+  { texte: `Livraison gratuite à partir de ${site.livraison.minimum}, ${site.livraison.remise} de remise à l'emporter.`, cite: '' },
+];
+---
+
+<Base description={`${site.nom}, restaurant japonais à ${site.adresse.commune} : sushi, maki et plats chauds, à emporter ou livrés. Ouvert 7 jours sur 7, de ${heure(s.ouverture)} à ${heure(s.fermeture)} le soir.`}>
+  <section class="hero" data-hero aria-labelledby="titre">
+    <div class="hero__volet hero__volet--g" data-volet="gauche">
+      <img src={asset(voletG.src)} alt={voletG.alt} width={voletG.largeur} height={voletG.hauteur} fetchpriority="high" decoding="async" />
+    </div>
+    <div class="hero__centre">
+      <p class="hero__nom">{site.nom}</p>
+      <h1 id="titre" class="hero__titre tube" data-tube>{site.accroche.titre[0]}<br />{site.accroche.titre[1]}</h1>
+      <p class="statut" data-statut={statut}><span data-statut-texte>{`Ouvert 7 jours sur 7, 12h à 14h et ${heure(s.ouverture)} à ${heure(s.fermeture)}`}</span></p>
+      <p class="hero__sous" data-hero-apres>{site.accroche.sousTitre}</p>
+      <div class="actions" style="margin-top: 0" data-hero-apres>
+        <a class="btn btn--ambre" href={u('/commander/')}>Commander <span class="fleche" aria-hidden="true">→</span></a>
+        <a class="btn" href={u('/carte/')}>La carte</a>
+      </div>
+    </div>
+    <div class="hero__volet hero__volet--d" data-volet="droite">
+      <img src={asset(voletD.src)} alt={voletD.alt} width={voletD.largeur} height={voletD.hauteur} fetchpriority="high" decoding="async" />
+    </div>
+  </section>
+
+  <section class="section col-l" aria-labelledby="regles">
+    <div class="section__tete">
+      <h2 id="regles" class="tube tube--xl" data-tube data-reveal="fade">À savoir</h2>
+      <p class="meta">Horaires, livraison, paiement</p>
+    </div>
+    <ol class="regles">
+      {site.regles.map((r, i) => <li class="regle" data-reveal="fade" data-delay={String(i * 0.08)}>{r.texte}{r.placeholder && <span class="illu">illustratif</span>}</li>)}
+    </ol>
+  </section>
+
+  <section class="mos" aria-label="Les plats de la maison en photos">
+    {mosaique.map((p, i) => (
+      <>
+        <figure class={`mos__item ${i % 4 === 1 || i % 4 === 2 ? 'mos__item--s' : 'mos__item--l'}`} data-lampe-item>
+          <img class="mos__img" src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          <img class="mos__lum" src={asset(p.src)} alt="" aria-hidden="true" width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+        {(i === 5 || i === 11) && (
+          <div class="mos__bande" data-reveal="fade">
+            {i === 5 && <p class="meta">Japanese Sushi &amp; take away</p>}
+            <p>{bandes[i === 5 ? 0 : 1].texte}</p>
+          </div>
+        )}
+      </>
+    ))}
+  </section>
+
+  <section class="section col-l" aria-labelledby="menu">
+    <div class="section__tete">
+      <h2 id="menu" class="tube tube--xl" data-tube data-reveal="fade">Menus et box</h2>
+      <p class="meta">Du chirashi bowl à la Sakana Box</p>
+    </div>
+    <ol class="index" data-reveal="fade">
+      {boxes.slice(0, 6).map((p, i) => (
+        <li class="index__item">
+          <span class="index__num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="index__nom">{p.nom}</span>
+          <span class="index__prix">{p.prix}</span>
+          {p.description && <span class="index__desc">{p.description}</span>}
+        </li>
+      ))}
+    </ol>
+    <div class="actions">
+      <a class="btn" href={u('/carte/')}>Toute la carte <span class="fleche" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="section col-l" aria-labelledby="bar">
+    <div class="section__tete">
+      <h2 id="bar" class="tube tube--xl" data-tube data-reveal="fade">À boire</h2>
+      <p class="meta">Bières japonaises et ramune</p>
+    </div>
+    <ul class="ckt" data-reveal="fade">
+      {site.boissons.slice(0, 4).map((c) => (
+        <li class="ckt__item" data-fam={c.famille}>
+          <span class="ckt__nom tube tube--l" data-tube>{c.nom}</span>
+          <span class="ckt__prix">{c.prix}</span>
+          <span class="ckt__ing">{c.description}</span>
+          <span class="ckt__fam">{c.famille}</span>
+        </li>
+      ))}
+    </ul>
+    <div class="actions">
+      <a class="btn" href={u('/boissons/')}>Les boissons <span class="fleche" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="origin" data-origin aria-labelledby="origine">
+    <div class="origin__stage">
+      <p class="meta origin__tete" id="origine">La maison</p>
+      <div class="origin__photo">
+        <img src={asset(nb.src)} alt={nb.alt} width={nb.largeur} height={nb.hauteur} loading="lazy" decoding="async" />
+      </div>
+      <div class="origin__phrases">
+        {site.originStory.map((p) => <p class="origin__phrase" data-origin-phrase>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section col-l" aria-labelledby="soirees">
+    <div class="section__tete">
+      <h2 id="soirees" class="tube tube--xl" data-tube data-reveal="fade">Commander</h2>
+      <a class="link" href={u('/livraison/')}>Livraison et zone de livraison</a>
+    </div>
+    <ul class="soirees">
+      {site.modes.map((e, i) => (
+        <li class="soiree" data-reveal="up" data-delay={String(i * 0.1)}>
+          <p class="soiree__quand">{e.quand}</p>
+          <p class="titre" style="font-size: var(--t-m)">{e.nom}</p>
+          <p>{e.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section col-l venir" aria-labelledby="venir">
+    <div class="stack" data-reveal="fade">
+      <h2 id="venir" class="tube tube--xl" data-tube>Venir</h2>
+      <address>{adresseLigne()}<br />{site.accroche.complementAdresse}</address>
+      <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+      <p class="muted">{site.regles[1].texte}</p>
+    </div>
+    <div data-reveal="fade" data-delay="0.15">
+      <p class="meta" style="margin-bottom: var(--u)">Horaires</p>
+      <dl class="horaires">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+      </dl>
+    </div>
+  </section>
+</Base>

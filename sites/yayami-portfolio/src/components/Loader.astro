@@ -1,0 +1,12 @@
+---
+// Loader « horloge de service » : le compteur va de l'ouverture du soir au dernier service (calculé depuis site.horaires).
+import { site, serviceSoir } from '../data/site';
+const s = serviceSoir(site);
+---
+<div id="loader" role="status" aria-label="Chargement" data-de={s.ouverture} data-a={s.fermeture}>
+  <div class="loader__inner">
+    <span class="loader__name" data-loader-out>{site.nom}</span>
+    <span class="loader__count" data-loader-out data-loader-count>{s.ouverture}</span>
+  </div>
+  <div class="loader__bar" data-loader-bar></div>
+</div>
