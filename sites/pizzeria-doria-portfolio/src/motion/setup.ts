@@ -1,5 +1,6 @@
 // Motion « Guinguette » : loader nappe, rideau corail depuis le bas, objets qui tombent et rebondissent puis se saisissent
-// (Draggable + inertie maison par quickTo), table de tirages draggables, « Avis » qui sort du flou, marquee d'état.
+// (Draggable + inertie maison par quickTo), table de tirages draggables qu'on repose de travers puis qu'on remet en place,
+// filet de lecture sous le tricolore, marquee d'état (heure de Bruxelles).
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Draggable } from 'gsap/Draggable';
@@ -24,32 +25,37 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [marquee(), heroObjets(intro), table(), avis()];
+    const cleanups = [marquee(), heroTitre(intro), heroObjets(intro), table(), progres()];
     return () => cleanups.forEach((c) => c());
   });
 }
 
-/** État « ouvert / fermé » calculé depuis site.horaires (data-horaires), jamais une date en dur. */
+/** État « ouvert / fermé » calculé depuis site.horaires (data-horaires) à l'heure de Bruxelles, jamais une date en dur. */
 function marquee() {
   const root = document.querySelector<HTMLElement>('[data-marquee]');
   if (!root) return () => {};
   const jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
   const horaires = JSON.parse(root.dataset.horaires || '[]') as { j: string; c: { ouverture: string; fermeture: string }[] }[];
   const parJour = (j: string) => horaires.find((h) => h.j === j);
+  const fmt = new Intl.DateTimeFormat('fr-BE', { timeZone: 'Europe/Brussels', weekday: 'long', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+  const heure = (hhmm: string) => { const [h, m] = hhmm.split(':'); return `${Number(h)}\u00a0h${m === '00' ? '' : `\u00a0${m}`}`; };
   const peindre = () => {
-    const d = new Date();
-    const hhmm = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-    const auj = parJour(jours[d.getDay()]);
+    const parts = fmt.formatToParts(new Date());
+    const val = (t: string) => parts.find((p) => p.type === t)?.value ?? '';
+    const jour = val('weekday').toLowerCase();
+    const idx = Math.max(0, jours.indexOf(jour));
+    const hhmm = `${val('hour')}:${val('minute')}`;
+    const auj = parJour(jour);
     let texte = 'Horaires du jour';
     let etat = '';
     const ouvert = auj?.c.find((c) => c.ouverture <= hhmm && hhmm < c.fermeture);
     const suivant = auj?.c.find((c) => c.ouverture > hhmm);
-    if (ouvert) { texte = `Ouvert, arrivée jusqu'à ${ouvert.fermeture}`; etat = 'is-ouvert'; }
-    else if (suivant) { texte = `Fermé en ce moment, ouverture à ${suivant.ouverture}`; etat = 'is-ferme'; }
+    if (ouvert) { texte = `Ouvert, arrivée jusqu'à ${heure(ouvert.fermeture)}`; etat = 'is-ouvert'; }
+    else if (suivant) { texte = `Fermé en ce moment, ouverture à ${heure(suivant.ouverture)}`; etat = 'is-ferme'; }
     else {
       for (let k = 1; k <= 7; k++) {
-        const h = parJour(jours[(d.getDay() + k) % 7]);
-        if (h && h.c.length) { texte = `Fermé aujourd'hui, prochain service ${h.j} à ${h.c[0].ouverture}`; etat = 'is-ferme'; break; }
+        const h = parJour(jours[(idx + k) % 7]);
+        if (h && h.c.length) { texte = `Fermé aujourd'hui, prochain service ${h.j} à ${heure(h.c[0].ouverture)}`; etat = 'is-ferme'; break; }
       }
     }
     root.querySelectorAll<HTMLElement>('[data-marquee-etat]').forEach((e) => { e.textContent = texte; e.className = `marquee__etat ${etat}`; });
@@ -60,8 +66,9 @@ function marquee() {
 }
 
 /** Rend un élément saisissable : Draggable x,y borné au parent, zIndex au drag, inertie maison, flèches au clavier. */
-function saisissable(el: HTMLElement, bounds: HTMLElement, opts: { exclure?: HTMLElement | null; rebond?: boolean } = {}) {
+function saisissable(el: HTMLElement, bounds: HTMLElement, opts: { exclure?: HTMLElement | null; rebond?: boolean; pose?: boolean; onMove?: () => void } = {}) {
   let z = 10;
+  el.dataset.r0 = el.style.getPropertyValue('--r');
   let vx = 0, vy = 0, lastX = 0, lastY = 0, lastT = 0;
   const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3.out' });
   const yTo = gsap.quickTo(el, 'y', { duration: 0.6, ease: 'power3.out' });
@@ -74,6 +81,8 @@ function saisissable(el: HTMLElement, bounds: HTMLElement, opts: { exclure?: HTM
     onRelease() {
       el.classList.remove('is-drag');
       const d = this as Draggable;
+      if (opts.pose) { el.classList.add('is-pose'); el.style.setProperty('--r', `${gsap.utils.random(-8, 8, 1)}deg`); }
+      opts.onMove?.();
       const cibleX = gsap.utils.clamp(d.minX, d.maxX, d.x + vx * 140);
       const cibleY = gsap.utils.clamp(d.minY, d.maxY, d.y + vy * 140);
       if (opts.exclure && chevauche(el, opts.exclure)) {
@@ -91,6 +100,7 @@ function saisissable(el: HTMLElement, bounds: HTMLElement, opts: { exclure?: HTM
     if (!dx && !dy) return;
     e.preventDefault();
     el.style.zIndex = String(++z + 20);
+    opts.onMove?.();
     gsap.to(el, { x: `+=${dx}`, y: `+=${dy}`, duration: 0.25, ease: 'power2.out', onComplete: () => drag.applyBounds(bounds) });
   };
   el.addEventListener('keydown', clavier);
@@ -121,33 +131,48 @@ function heroObjets(intro: gsap.core.Timeline) {
   return () => cleanups.forEach((c) => c());
 }
 
-/** La table : tirages posés en stagger avec rotation, puis saisissables (desktop) ; rail en mobile. */
+/** La table : tirages posés en stagger avec rotation, puis saisissables (desktop), reposés de travers au lâcher ; « Remettre la table » les ramène. Rail en mobile. */
 function table() {
   const scene = document.querySelector<HTMLElement>('[data-table-scene]');
   if (!scene || isMobile() || getComputedStyle(scene).display === 'none') return () => {};
   const items = [...scene.querySelectorAll<HTMLElement>('[data-tirage], [data-obj]')];
   const cleanups: (() => void)[] = [];
-  if (prefersReducedMotion()) {
-    scene.querySelectorAll<HTMLElement>('[data-tirage]').forEach((t) => cleanups.push(saisissable(t, scene)));
-    return () => cleanups.forEach((c) => c());
-  }
-  const tl = gsap.timeline({
-    scrollTrigger: { trigger: scene, start: 'top 70%', once: true },
-    onComplete: () => items.forEach((t) => cleanups.push(saisissable(t, scene))),
-  });
+  const reduit = prefersReducedMotion();
+  const bouton = document.querySelector<HTMLButtonElement>('[data-table-reset]');
+  const bouge = () => { if (bouton) bouton.hidden = false; };
+  const armer = () => items.forEach((t) => cleanups.push(saisissable(t, scene, { pose: t.hasAttribute('data-tirage'), onMove: bouge })));
+  const remettre = () => {
+    items.forEach((t) => { if (t.dataset.r0) t.style.setProperty('--r', t.dataset.r0); t.style.zIndex = ''; });
+    gsap.to(items, {
+      x: 0, y: 0, duration: reduit ? 0 : 0.8, ease: 'back.out(1.4)', stagger: reduit ? 0 : { each: 0.05, from: 'random' },
+      onComplete: () => items.forEach((t) => (Draggable.get(t) as Draggable | undefined)?.update()),
+    });
+    if (bouton) bouton.hidden = true;
+    items[0]?.focus({ preventScroll: true });
+  };
+  bouton?.addEventListener('click', remettre);
+  cleanups.push(() => { bouton?.removeEventListener('click', remettre); if (bouton) bouton.hidden = true; });
+  if (reduit) { armer(); return () => cleanups.forEach((c) => c()); }
+  const tl = gsap.timeline({ scrollTrigger: { trigger: scene, start: 'top 70%', once: true }, onComplete: armer });
   tl.from(items, { y: 90, autoAlpha: 0, rotation: () => gsap.utils.random(-14, 14), duration: 0.9, ease: 'back.out(1.6)', stagger: { each: 0.06, from: 'random' } });
   cleanups.push(() => tl.kill());
   return () => cleanups.forEach((c) => c());
 }
 
-/** Avis : le mot géant sort du flou au scrub ; les cartes glissent par-dessus en tournant. */
-function avis() {
-  const root = document.querySelector<HTMLElement>('[data-avis]');
-  if (!root || prefersReducedMotion()) return () => {};
-  const mot = root.querySelector<HTMLElement>('[data-avis-mot]');
-  const cartes = root.querySelectorAll<HTMLElement>('[data-carte-avis]');
-  const vars = { flou: 14 };
-  const st = gsap.to(vars, { flou: 0, ease: 'none', onUpdate: () => mot?.style.setProperty('--flou', `${vars.flou.toFixed(1)}px`), scrollTrigger: { trigger: root, start: 'top 85%', end: 'center center', scrub: 0.6 } });
-  const tw = gsap.from(cartes, { y: 120, rotation: (i) => (i % 2 ? 10 : -10), autoAlpha: 0, duration: 1, ease: ease.out, stagger: 0.1, scrollTrigger: { trigger: root, start: 'top 70%', once: true } });
-  return () => { st.kill(); tw.kill(); };
+/** Hero : le titre monte de deux lignes (transform seul, texte jamais caché), l'accroche s'écrit de gauche à droite. */
+function heroTitre(intro: gsap.core.Timeline) {
+  const lignes = document.querySelectorAll<HTMLElement>('.hero__titre span');
+  const slogan = document.querySelector<HTMLElement>('.hero__slogan');
+  if (!lignes.length || prefersReducedMotion()) return () => {};
+  intro.from(lignes, { y: 34, duration: 0.9, ease: ease.out, stagger: 0.12, clearProps: 'transform' }, 0.05);
+  if (slogan) intro.fromTo(slogan, { clipPath: 'inset(-10% 100% -10% 0)' }, { clipPath: 'inset(-10% -2% -10% -2%)', duration: 1, ease: 'power2.out', clearProps: 'clipPath' }, 0.4);
+  return () => {};
+}
+
+/** Filet de lecture : un trait d'encre sous le tricolore avance avec le défilement (--progres, 0 à 1). */
+function progres() {
+  const t = document.querySelector<HTMLElement>('.tricolore');
+  if (!t || prefersReducedMotion()) return () => {};
+  const st = ScrollTrigger.create({ start: 0, end: 'max', onUpdate: (self) => t.style.setProperty('--progres', self.progress.toFixed(3)) });
+  return () => st.kill();
 }

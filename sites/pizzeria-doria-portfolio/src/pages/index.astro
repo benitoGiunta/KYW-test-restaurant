@@ -24,7 +24,7 @@ const [m1, m2] = g.manifeste.titre;
     </div>
     <div class="hero__zone" data-hero-zone>
       {g.objets.map((o, i) => (
-        <button type="button" class:list={['obj', { 'obj--mobile': o.mobile, 'obj--corail': i % 3 === 0, 'obj--canard': i % 3 === 1 }]} data-obj aria-label={`${o.label}, déplaçable aux flèches`} style={`--x:${o.x}%;--y:${o.y}%;--r:${o.r}deg;--taille:${o.taille}px;${o.mx !== undefined ? `--mx:${o.mx}%;` : ''}--delai:${(i * 0.6).toFixed(1)}s`}>
+        <button type="button" data-cursor="Attrapez" class:list={['obj', { 'obj--mobile': o.mobile, 'obj--corail': i % 3 === 0, 'obj--canard': i % 3 === 1 }]} data-obj aria-label={`${o.label}, déplaçable aux flèches`} style={`--x:${o.x}%;--y:${o.y}%;--r:${o.r}deg;--taille:${o.taille}px;${o.mx !== undefined ? `--mx:${o.mx}%;` : ''}--delai:${(i * 0.6).toFixed(1)}s`}>
           <Objet id={o.id} classe="obj__svg" />
         </button>
       ))}
@@ -59,17 +59,18 @@ const [m1, m2] = g.manifeste.titre;
     </div>
     <div class="table__scene" data-table-scene>
       {g.tirages.map((t, i) => (
-        <figure class="tirage" data-tirage tabindex="0" aria-label={`${t.legende}, photo déplaçable aux flèches`} style={`--x:${t.x}%;--y:${t.y}%;--r:${t.r}deg`}>
+        <figure class="tirage" data-tirage data-cursor="Attrapez" tabindex="0" aria-label={`${t.legende}, photo déplaçable aux flèches`} style={`--x:${t.x}%;--y:${t.y}%;--r:${t.r}deg`}>
           <img src={petite(t.src)} alt={photoDe(t.src).alt} width="640" height="640" loading="lazy" decoding="async" draggable="false" />
           <figcaption>{t.legende}</figcaption>
         </figure>
       ))}
       {(['verre', 'tomate', 'fourchette'] as const).map((id, i) => (
-        <button type="button" class="obj" data-obj aria-label={`${id} dessiné au trait, déplaçable aux flèches`} style={`--x:${[48, 8, 88][i]}%;--y:${[30, 80, 78][i]}%;--r:${[12, -20, 40][i]}deg;--taille:110px`}>
+        <button type="button" class="obj" data-obj data-cursor="Attrapez" aria-label={`${id} dessiné au trait, déplaçable aux flèches`} style={`--x:${[3, 90, 47][i]}%;--y:${[40, 38, 84][i]}%;--r:${[12, -20, 40][i]}deg;--taille:110px`}>
           <Objet id={id} classe="obj__svg" />
         </button>
       ))}
     </div>
+    <button type="button" class="btn btn--lin table__reset" data-table-reset hidden><span>Remettre la table</span></button>
     <div class="table__rail rail" role="region" tabindex="0" aria-label="Photos de la table, défilement horizontal">
       {g.tirages.map((t) => (
         <figure class="tirage" style={`--r:${t.r}deg`}>
@@ -79,7 +80,7 @@ const [m1, m2] = g.manifeste.titre;
       ))}
     </div>
     <div class="badge" aria-hidden="true">
-      <svg viewBox="0 0 120 120"><defs><path id="cercle" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" /></defs><text><textPath href="#cercle">attrapez-moi · attrapez-moi · attrapez-moi · </textPath></text></svg>
+      <svg viewBox="0 0 120 120"><defs><path id="cercle" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" /></defs><text class="badge__t badge__t--bureau"><textPath href="#cercle" textLength="270" lengthAdjust="spacing">attrapez-moi · attrapez-moi · </textPath></text><text class="badge__t badge__t--mobile"><textPath href="#cercle" textLength="270" lengthAdjust="spacing">glissez · glissez · glissez · </textPath></text></svg>
       <svg class="badge__main" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M30 60 V30 a6 6 0 0 1 12 0 V52" /><path d="M42 50 V26 a6 6 0 0 1 12 0 V52" /><path d="M54 50 V30 a6 6 0 0 1 12 0 V56" /><path d="M66 54 V40 a6 6 0 0 1 12 0 V68 a26 26 0 0 1 -26 26 h-6 a24 24 0 0 1 -20 -11 L18 66 a6 6 0 0 1 10 -7 L30 62" /></svg>
     </div>
   </section>

@@ -37,3 +37,12 @@ objets à redessiner, photos de lieu rares.
 3. Salle des coffres mise en avant dès l'accueil.
 
 Limites : peu de photos de plats (4 libres illustratives), pas d'avis, pas de logo vectoriel ni de script, réservation par téléphone seulement, motion à régler en phases 2 et 3.
+
+## Phase 2 : motion, signature, états (passe construction-2)
+
+- Signature « la tablée » : tirages posés en stagger puis saisissables ; au lâcher un tirage se repose de travers (`--r` aléatoire, rebond CSS) ; bouton « Remettre la table » (apparaît après le premier déplacement, ramène tirages et objets, rend le focus au premier tirage) ; curseur « Attrapez » sur objets et tirages ; flèches du clavier (Maj = grand pas). Deux rangées de 4 tirages et trois objets autour d'une bande libre pour le titre ; taille des tirages bornée en `svh` (1280×720 sans recouvrement du titre).
+- Hero : titre qui monte (transform seul, texte jamais caché), accroche qui s'écrit par `clip-path` (posé par l'intro JS, nettoyé ensuite) ; objets qui rebondissent puis flottent. Filet d'encre de lecture sous le tricolore (`--progres`, ScrollTrigger `end: max`).
+- États : marquee « ouvert / fermé / prochain service » à l'heure de Bruxelles, heures en français (« 13 h 30 ») ; pause du marquee au survol ; `:active` des boutons ; survol d'une ligne de carte (prix et pointillés en tomate) ; tous les `:hover` sous `(hover: hover)`.
+- Mobile : rail de tirages calé sur la gouttière (`scroll-padding`), badge « glissez » à la place de « attrapez-moi », page À emporter sans élargissement (valeurs de faits en texte et non en pastille), grille de photos bornée (`overflow-x: clip`). Contrôlé à 320, 360, 390 : `scrollWidth` = fenêtre sur les 7 pages.
+- Reduced motion : aucune animation, aucun texte caché, table en grille 4×2 toujours déplaçable, bouton « Remettre la table » opérant.
+- Retiré : CSS et JS de la section « avis » (supprimée en phase 1).

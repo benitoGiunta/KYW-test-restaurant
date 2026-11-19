@@ -133,14 +133,14 @@ export const guinguette = {
   ] as Objet[],
   /** La table : 8 tirages (4 photos du client, 4 photos libres marquées illustratives). */
   tirages: [
-    { src: '/photos/salle-des-coffres.webp', legende: 'La salle des coffres', x: 5, y: 8, r: -6 },
-    { src: '/photos/pizza-coupe.webp', legende: 'Pizza (photo libre)', x: 27, y: 4, r: 5 },
-    { src: '/photos/friture.webp', legende: 'Friture de poisson', x: 50, y: 6, r: -4 },
-    { src: '/photos/pate.webp', legende: 'La pâte (photo libre)', x: 72, y: 5, r: 7 },
-    { src: '/photos/bouchons.webp', legende: 'Cadre de bouchons', x: 8, y: 50, r: 5 },
-    { src: '/photos/pizza-basilic.webp', legende: 'Basilic (photo libre)', x: 30, y: 52, r: -7 },
-    { src: '/photos/roquette.webp', legende: 'Roquette et balsamique', x: 52, y: 50, r: 4 },
-    { src: '/photos/burrata.webp', legende: 'Burrata (photo libre)', x: 74, y: 48, r: -5 },
+    { src: '/photos/salle-des-coffres.webp', legende: 'La salle des coffres', x: 5, y: 4, r: -6 },
+    { src: '/photos/pizza-coupe.webp', legende: 'Pizza (photo libre)', x: 27, y: 2, r: 5 },
+    { src: '/photos/friture.webp', legende: 'Friture de poisson', x: 50, y: 5, r: -4 },
+    { src: '/photos/pate.webp', legende: 'La pâte (photo libre)', x: 72, y: 3, r: 7 },
+    { src: '/photos/bouchons.webp', legende: 'Cadre de bouchons', x: 6, y: 60, r: 5 },
+    { src: '/photos/pizza-basilic.webp', legende: 'Basilic (photo libre)', x: 27, y: 62, r: -7 },
+    { src: '/photos/roquette.webp', legende: 'Roquette et balsamique', x: 49, y: 59, r: 4 },
+    { src: '/photos/burrata.webp', legende: 'Burrata (photo libre)', x: 70, y: 61, r: -5 },
   ] as Tirage[],
   pictos: [
     { categorie: 'Pizzas', picto: 'pizza' },
