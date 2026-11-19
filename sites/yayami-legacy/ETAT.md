@@ -1,4 +1,8 @@
-# ETAT · yayami-legacy · phase 2 (construction-2) terminée
+# ETAT · yayami-legacy · phase 3 (QA) terminée
+
+**Phase 3** : titre home raccourci (54), twitter:card ajouté, CSS dupliqué retiré, focus clavier vérifié (0 sans contour), build et index OK. Non traités et motivés : voir RAPPORT.md. Site prêt.
+
+## Historique phase 2
 
 **Fait (phase 2)** : nav masthead (liens, logo centre, « Commander ») ; menu mobile en `<dialog>` modal (testé à 390 et 320 : ouverture, focus sur le premier lien, Échap, focus rendu au bouton) ; boutons huit états ; rail de rayons sticky sur /carte/ avec rayon courant ; un seul reveal (photographie qui sort du fond, opacité, caractère « still ») visible sans script et sous reduced-motion ; statut « Ouvert maintenant / Fermé, rouvre à … » et service en cours dans le pied ; survol et focus des lignes d'index (prix rouge, lien étiré) ; cibles 44 px sous `(pointer: coarse)` ; safe-area ; photo du hero agrandie (1,3, et 1,1 sous 60rem) après comparaison avec la comp ; tokens `--color-scrim`, `--nav-h` ; waivers sloplint corrigés au bon format ; hero sloplint `--stage hero` : 0 FAIL (WARN 49 et NOTE 58 écartés au stamp) ; build OK, 3 pages, KywFooter, noindex et mention présents sur chacune, 0 tiret cadratin ; DESIGN.md (composants, points 2 à 72) et comp.md (reproduction) à jour ; entrée `log.json` : nav `masthead`.
 
