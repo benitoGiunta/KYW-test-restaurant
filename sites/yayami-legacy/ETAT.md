@@ -1,0 +1,11 @@
+# ETAT · yayami-legacy · phase 1 (construction-1)
+
+**Fait** : AUDIT.md ; concept (Darkroom rouge, Letter + Ledge) ; DESIGN.md ; comp.md et deux comps ; site.ts et carte.json (47 plats, 9 menus, descriptions de rayons du site) ; pages `/`, `/carte/`, `/404` ; Nav, Pied, Fig, Base ; CSS statique responsive (stamp en tête) ; build `pnpm build:site sites/yayami-legacy` OK, 3 pages ; KywFooter et noindex vérifiés par grep sur les 3 pages.
+
+**Reste** (phases 2 et 3) : nav mobile (menu), états des contrôles, reveal unique, jour courant dans le pied ; `sloplint --render` sur toutes les routes (alias aplati page.css + tokens + base pour contourner le stamp non première ligne), `--kept` ; capture des 3 tailles et lecture de la planche ; vérifier le h1 (4 lignes à 1440 ?), la hauteur du hero à 1280 x 800, le sticky de la photo Matsu, les lignes de prix à 390 px ; RAPPORT.md ; entrée de `.hallmark/log.json` (écrite) ; `pnpm index`.
+
+**Décisions** : job « book » du draw remplacé par « order » (aucune réservation chez Yayami) ; Switcher midi/soir remplacé par un index de rayons (le site n'a qu'un service continu et une carte unique) ; nav « search-led » remplacée par une barre simple ; page /carte/ ajoutée pour la carte complète (le /menu du site actuel est consigné `dropped`, panier, recherche et compte aussi) ; photos du client en couleur ; compositions des menus : « x/y » du site traité comme séparateur de lignes ; « 2 pieces » corrigé en « 2 pièces » ; description des salades tronquée avant « voici la Salade japonaise ! » (19/58).
+
+**Hypothèses** : horaires identiques les sept jours (« Ouvert 7/7 ») ; lien de commande https://www.yayami.be/shop/ gardé ; liens de rayon `yayami.be/product-category/<slug>/` pour nigiri, temaki, plats-chaud, salades (slugs déduits des pages sauvegardées, maki, bieres, boissons vus dans le HTML) ; numéros de plats du site non repris. Aucun contenu fictif : pas de `data-placeholder`, pas de slot `.fill`. À vérifier côté client : e-mail, réseaux, avis, photos de salle.
+
+**Pièges** : base.css filtre les photos en mono (retiré dans page.css) ; `[data-slot]` masque les enfants d'une image (la légende est hors du slot) ; sloplint signalera les FAIL 48 et 24a du paquet kyw-footer.

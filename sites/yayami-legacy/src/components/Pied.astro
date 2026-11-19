@@ -1,0 +1,39 @@
+---
+import { base, resto, categories } from '../data/site';
+const { adresse: a } = resto;
+---
+<footer class="pied" id="horaires">
+  <div class="container pied__in">
+    <div class="pied__marque">
+      <img src={`${base}photos/logo.png`} width="1672" height="274" alt="YAYAMI" loading="lazy" />
+      <p class="pied__base">{resto.baseline}</p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__t">Ouvert 7 jours sur 7</h2>
+      <dl class="hor">
+        {resto.services.map((s) => (
+          <div class="hor__l"><dt>{s.nom}</dt><dd><time datetime={s.debut}>{s.debut.replace(':', ' h ')}</time> à <time datetime={s.fin}>{s.fin.replace(':', ' h ')}</time></dd></div>
+        ))}
+      </dl>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__t">Adresse</h2>
+      <address>{a.rue} {a.numero}<br />{a.cp} {a.ville}</address>
+      <p><a href={resto.osm} rel="noopener">Voir sur la carte</a></p>
+      <p class="pied__tel"><a href={resto.telHref}>{resto.telTexte}</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__t">À table</h2>
+      <ul class="pied__liens">
+        <li><a href={`${base}carte/`}>La carte</a></li>
+        <li><a href={resto.commander} rel="noopener">Commander en ligne</a></li>
+        {categories.slice(0, 3).map((c) => <li><a href={`${base}carte/#${c.slug}`}>{c.nom}</a></li>)}
+      </ul>
+    </div>
+    <div class="pied__col pied__col--pay">
+      <h2 class="pied__t">Paiement</h2>
+      <ul class="pied__liens pied__liens--pay">{resto.paiement.map((p) => <li>{p}</li>)}</ul>
+    </div>
+  </div>
+  <p class="container pied__credits" data-credits>Photos et logo : Yayami Sushi, via sa carte en ligne (Order &amp; Eat).</p>
+</footer>

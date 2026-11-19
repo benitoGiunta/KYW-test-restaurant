@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { base, resto, menus, categories } from '../data/site';
+const matsu = menus.find((m) => m.nom === 'Menu Matsu')!;
+const autres = menus.filter((m) => m.nom !== 'Menu Matsu');
+const { adresse: a } = resto;
+---
+<Base title="Yayami Sushi, restaurant japonais à Namur : sushi à emporter et livraison" description="Sushi, maki, temaki et plats chauds à emporter ou livrés à Namur, rue de Bruxelles 15. Livraison gratuite dès 30 €, 10 % de remise à l’emporter.">
+  <section class="hero" aria-labelledby="h-hero">
+    <div class="container hero__in">
+      <div class="hero__texte">
+        <h1 id="h-hero">Sushi à Namur, livrés ou à emporter</h1>
+        <p class="lead">Livraison gratuite dès 30 €, moins 10 % si vous venez chercher.</p>
+        <p class="actions">
+          <a class="btn btn--primary" href={resto.commander} rel="noopener">Commander en ligne</a>
+          <a class="btn" href={resto.telHref}>Appeler le {resto.telTexte}</a>
+        </p>
+      </div>
+      <Fig k="nigiri" class="hero__fig" eager sizes="(min-width: 60rem) 52vw, 100vw" />
+    </div>
+    <div class="ledge">
+      <div class="container ledge__in">
+        <p><span class="ledge__k">Adresse</span> {a.rue} {a.numero}, {a.cp} {a.ville}</p>
+        <p><span class="ledge__k">Ouvert</span> 7 jours sur 7, midi et soir</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="menus" id="menus" aria-labelledby="h-menus">
+    <div class="container menus__in">
+      <Fig k="matsu" class="menus__fig" sizes="(min-width: 60rem) 42vw, 100vw" legende="Menu Matsu." />
+      <div class="menus__texte">
+        <h2 id="h-menus">Les menus</h2>
+        <div class="matsu">
+          <h3>{matsu.nom}</h3>
+          <p class="matsu__prix figure num">{matsu.prix}</p>
+          <p class="matsu__compo">{matsu.compo.join(', ')}</p>
+        </div>
+        <ul class="rows">
+          {autres.map((m) => (
+            <li class="row">
+              <div class="row__t"><h3>{m.nom}</h3>{m.compo.length > 0 && <p>{m.compo.join(', ')}</p>}</div>
+              <p class="row__p num">{m.prix}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="livr" id="livraison" aria-labelledby="h-livr">
+    <div class="container livr__in">
+      <h2 id="h-livr">Livraison et emporter</h2>
+      <div class="livr__fig">
+        <p class="figure num">{resto.livraisonDes}</p>
+        <p class="livr__l">Livraison gratuite à partir de ce montant.</p>
+      </div>
+      <div class="livr__fig">
+        <p class="figure num">{resto.remiseEmporter}</p>
+        <p class="livr__l">De remise si vous ramassez sur place.</p>
+      </div>
+      <div class="livr__zone">
+        <h3>Zone de livraison</h3>
+        <ul class="cp">{resto.zone.map((z) => <li class="num">{z}</li>)}</ul>
+        <p class="livr__l">Codes postaux desservis.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="idx" id="carte" aria-labelledby="h-idx">
+    <div class="container idx__in">
+      <div class="idx__tete">
+        <h2 id="h-idx">Faites votre choix</h2>
+        <p class="lead">Sept rayons, de 3,50 € la boisson à 17,80 € le plat chaud.</p>
+      </div>
+      <ul class="rows rows--idx">
+        {categories.map((c) => (
+          <li class="row row--idx">
+            <div class="row__t"><h3><a href={`${base}carte/#${c.slug}`}>{c.nom}</a></h3><p>{c.texte}</p></div>
+            <p class="row__p num"><span class="row__des">dès</span> {c.des}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="idx__fin"><a class="btn" href={`${base}carte/`}>Voir toute la carte</a> <a class="btn btn--primary" href={resto.commander} rel="noopener">Commander en ligne</a></p>
+    </div>
+  </section>
+</Base>

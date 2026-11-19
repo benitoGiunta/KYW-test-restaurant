@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { base, resto, menus, categories, photoPar } from '../data/site';
+---
+<Base title="La carte de Yayami Sushi, Namur : nigiri, maki, temaki, plats chauds" description="Toute la carte de Yayami Sushi à Namur avec les prix : nigiri, maki, temaki, menus, plats chauds, salades, bières et boissons.">
+  <section class="tete" aria-labelledby="h-carte">
+    <div class="container tete__in">
+      <h1 id="h-carte">La carte</h1>
+      <p class="lead">Nigiri, maki, temaki, menus, plats chauds, salades, bières et boissons, avec les prix du site.</p>
+      <nav class="sauts" aria-label="Rayons de la carte">
+        <a href="#menus">Menus</a>
+        {categories.map((c) => <a href={`#${c.slug}`}>{c.nom}</a>)}
+      </nav>
+    </div>
+  </section>
+
+  <section class="rayon" id="menus" aria-labelledby="h-menus">
+    <div class="container rayon__in">
+      <div class="rayon__tete">
+        <h2 id="h-menus">Menus</h2>
+        <p>Plusieurs variétés réunies dans un même plateau, du nigiri au maki.</p>
+        <Fig k="chirashi" class="rayon__fig" sizes="(min-width: 60rem) 34vw, 100vw" legende="Chirashi bowl, à 18,90 €." />
+      </div>
+      <ul class="rows">
+        {menus.map((m) => (
+          <li class="row">
+            <div class="row__t"><h3>{m.nom}</h3>{m.compo.length > 0 && <p>{m.compo.join(', ')}</p>}</div>
+            <p class="row__p num">{m.prix}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {categories.map((c) => (
+    <section class="rayon" id={c.slug} aria-labelledby={`h-${c.slug}`}>
+      <div class="container rayon__in">
+        <div class="rayon__tete">
+          <h2 id={`h-${c.slug}`}>{c.nom}</h2>
+          <p>{c.texte}</p>
+          {photoPar[c.slug] && <Fig k={photoPar[c.slug]} class="rayon__fig" sizes="(min-width: 60rem) 34vw, 100vw" />}
+          <p><a class="btn" href={`https://yayami.be/product-category/${c.slug}/`} rel="noopener">Commander : {c.nom.toLowerCase()}</a></p>
+        </div>
+        <ul class="rows">
+          {c.plats.map((p) => (
+            <li class="row">
+              <div class="row__t"><h3>{p.nom}</h3>{p.detail && <p>{p.detail}</p>}</div>
+              <p class="row__p num">{p.prix}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+</Base>
