@@ -3,6 +3,7 @@
 Langue : français. Dépôt de production des maquettes de sites de restaurants namurois (agence KYW, sous-marque web de KYN).
 
 - Lire `README.md` puis `agents/README.md` avant toute action. Les prompts de production sont dans `agents/`.
+- **Produire un nouveau restaurant avec les agents : suivre `agents/production/README.md`** (paramètres, versions en vigueur, messages de lancement, mesure).
 - Un site = un paquet Astro dans `sites/<slug>-<variante>/` (variantes : `portfolio`, `awwwards`, `legacy`) ; les gabarits du portfolio dans `gabarits/<nom>/`.
 - Build d'un site : `pnpm build:site sites/<slug>-<variante>` (écrit `dist/<slug>/<variante>/`). Les `dist/` sont **commités** : Vercel sert `dist/` tel quel, sans build.
 - Après chaque site publié : `pnpm index` (régénère `dist/index.html`), commit, push sur la branche de travail.

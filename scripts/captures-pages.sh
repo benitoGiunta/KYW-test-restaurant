@@ -15,6 +15,8 @@ curl -s --retry 15 --retry-connrefused --retry-delay 1 -o /dev/null "http://127.
 mkdir -p "data/review/$slug"
 for v in $vars; do
   base="dist/$slug/$v"; [ -d "$base" ] || { echo "absent : $base"; continue; }
+  # entrée en correction : active le garde-fou du marqueur pour ce site (scripts/hooks/garde-*.py)
+  mkdir -p .logs && touch ".logs/identification-$slug-$v"
   # pages : accueil, puis pages cibles par mot-clé, puis complément jusqu'à 6
   mapfile -t toutes < <(find "$base" -mindepth 2 -maxdepth 3 -name index.html | sed "s#^$base/##; s#/index.html##" | grep -vE '^(kyw|_astro|fonts|photos|images|node_modules)(/|$)' | sort)
   cibles=("."); for p in "${toutes[@]}"; do echo "$p" | grep -qiE 'carte|menu|reserv|contact|horaire|prix|info|tarif' && cibles+=("$p"); done

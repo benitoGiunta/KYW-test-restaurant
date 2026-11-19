@@ -1,7 +1,7 @@
 export const meta = {
   name: 'refonte-restaurant',
   description: 'Refonte d un restaurant en 3 variantes, version sobre (01/11) : agents courts, captures par Haiku, révision ciblée',
-  whenToUse: 'Lancer avec args = { slug } pour un restaurant présent dans data/restaurants.json',
+  whenToUse: 'Lancer avec args = { slug, phase? } pour un restaurant présent dans data/restaurants.json (mode d emploi : agents/production/)',
   phases: [
     { title: 'Recherche', detail: 'dossier client complet (site actuel, photos, faits)' },
     { title: 'Construction', detail: '3 agents courts par variante : structure, motion, QA' },
@@ -34,7 +34,9 @@ const PORTS = { portfolio: 4501, awwwards: 4502, legacy: 4503 }
 
 // Test A (01/11) : awwwards et legacy lisent commun.md + phase-N.md au lieu du prompt complet ; portfolio garde le sien.
 const promptPhase = (v, n) => (v === 'awwwards' || v === 'legacy') ? [`agents/variante-${v}/commun.md`, `agents/variante-${v}/phase-${n}.md`] : undefined
-const entete = (role, v, passe) => `Rôle : ${role} · Restaurant : ${slug} · Variante : ${v || '-'} · Passe : ${passe || '-'}`
+// Phase de mesure (args.phase, ex. « test ») : ajoutée à la ligne d'identification pour séparer développement et test des agents.
+const PHASE = args?.phase ? ` · Phase : ${args.phase}` : ''
+const entete = (role, v, passe) => `Rôle : ${role} · Restaurant : ${slug} · Variante : ${v || '-'} · Passe : ${passe || '-'}${PHASE}`
 const socle = (role, v, passe, fichiersPrompt) => `${entete(role, v, passe)}\nTu es l'agent « ${role} » du dépôt ${ROOT} (cd ${ROOT} avant toute commande). Lis d'abord intégralement ${ROOT}/agents/sobriete.md (règles de sobriété, prioritaires sur tout le reste), puis ${fichiersPrompt ? fichiersPrompt.map((f) => `${ROOT}/${f}`).join(' + ') : `${ROOT}/agents/${role}.md`} (ton prompt de production) et ${ROOT}/agents/lecons/commun.md + le fichier de ton rôle dans ${ROOT}/agents/lecons/ (construction, revue, revision, recherche ou publication). Restaurant : slug « ${slug} » (entrée de data/restaurants.json). Chromium Playwright est préinstallé : ne lance jamais « playwright install ». Serveur : note son PID, arrête-le avec kill <PID> (jamais pkill -f). Ne touche jamais à gabarits/ ni aux dossiers d'autres restaurants. Ne pose aucune question : décide, note tes hypothèses, livre. Au plus 40 réponses : vers 35, écris ETAT.md dans le dossier du site et termine. Réponse finale : compte rendu factuel court.`
 
 const SCHEMA_RECHERCHE = { type: 'object', properties: { ok: { type: 'boolean' }, photos: { type: 'number' }, manques: { type: 'array', items: { type: 'string' } }, resume: { type: 'string' } }, required: ['ok', 'photos', 'resume'] }

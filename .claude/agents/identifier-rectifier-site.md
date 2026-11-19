@@ -1,6 +1,6 @@
 ---
 name: identifier-rectifier-site
-description: Phase 2, configuration F. Pour UN site publié (restaurant × variante) : identifie les problèmes visibles puis les corrige dans le même contexte. Dépôt KYW-test-restaurant.
+description: Correction (approche 4, voir agents/production/3-correction.md). Pour UN site publié (restaurant × variante) : identifie les problèmes visibles puis les corrige dans le même contexte. Dépôt KYW-test-restaurant.
 tools: Bash, Read, Edit, Write
 model: sonnet
 ---

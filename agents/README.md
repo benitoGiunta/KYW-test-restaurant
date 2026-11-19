@@ -1,8 +1,30 @@
-# Agents et workflow
+# Agents — index
 
-Un restaurant passe par la chaîne suivante. Chaque rôle a son prompt complet dans ce dossier ; l'orchestrateur
-(session fille ou workflow) lance les agents avec ces prompts, dans cet ordre, et ne fait rien d'autre que
-coordonner, commiter et publier.
+**Pour produire un nouveau restaurant : `agents/production/README.md`** (mode d'emploi, paramètres, versions en
+vigueur, messages de lancement, mesure). Ce fichier-ci décrit l'organisation du dossier et l'historique des règles.
+
+## Organisation
+
+```
+agents/
+├── production/            point d'entrée : mode d'emploi, paramètres, versions, messages de lancement, mesure
+├── workflow-restaurant.js chaîne de développement d'un restaurant (outil Workflow)
+├── sobriete.md            règles communes à tout agent, lues en premier
+├── recherche-client.md    rôle : dossier client
+├── variante-portfolio.md  rôle : construction portfolio (sur un gabarit de gabarits/)
+├── variante-awwwards.md   rôle : construction awwwards (+ variante-awwwards/commun.md, phase-N.md)
+├── variante-legacy.md     rôle : construction legacy (+ variante-legacy/commun.md, phase-N.md)
+├── relecteur-site.md      rôle : revue d'un site
+├── reviseur-site.md       rôle : révision après revue
+├── publication.md         rôle : build, index, commit [publier], vérification
+├── portfolio-*.md         rôles de la recherche du portfolio et des 15 gabarits (fait une fois)
+├── lecons/                leçons apprises par rôle (lues par les agents), lecons.md = règle d'écriture
+└── archives/              anciennes consignes des phases de mise au point (non utilisées)
+.claude/agents/identifier-rectifier-site.md   agent de correction (identifier puis corriger un site)
+scripts/hooks/                                garde-fous (sobriété des commandes, marqueur de correction)
+```
+
+## Chaîne de développement d'un restaurant (`workflow-restaurant.js`)
 
 | Étape | Rôle | Prompt | Entrée → sortie |
 | --- | --- | --- | --- |
@@ -16,14 +38,19 @@ coordonner, commiter et publier.
 | 6 | Publication | `publication.md` | build, index, commit, push, vérification de l'URL Vercel |
 | 7 | Leçons | tous | `lecons/<rôle>.md` enrichi ; l'orchestrateur reporte dans les prompts les paragraphes proposés par les agents |
 
+
 Les trois variantes (2a, 2b, 2c) sont indépendantes et tournent en parallèle ; la chaîne 3 → 5 est par variante.
+La correction (après publication) est décrite dans `agents/production/3-correction.md`.
 
-Préalables faits une seule fois : `gabarits/` (15 gabarits, voir `portfolio-*.md`), `packages/kyw-footer`,
-`scripts/`. Pour lancer un nouveau restaurant : l'ajouter à `data/restaurants.json` (slug, nom, site_actuel…) puis
-démarrer une session avec `session-restaurant.md` comme message initial, en remplaçant `<slug>`.
+Préalables faits une seule fois : `gabarits/` (15 gabarits, voir `portfolio-*.md`), `packages/kyw-footer`, `scripts/`.
 
-Export : tout ce dossier plus `scripts/`, `packages/kyw-footer`, `gabarits/` et `.claude/skills/` constitue l'agent
-complet ; il se copie tel quel dans un autre dépôt.
+Export : `agents/`, `.claude/agents/`, `scripts/`, `packages/kyw-footer`, `gabarits/` et `.claude/skills/`
+constituent l'agent complet ; ils se copient tels quels dans un autre dépôt.
+
+# Historique des règles (référence)
+
+Les sections suivantes retracent les décisions prises pendant la mise au point (octobre-novembre 2026). Elles
+expliquent le pourquoi des versions en vigueur ; les ids de sessions et budgets qu'elles citent sont historiques.
 
 ## Sobriété (01/11/2026, mesure de la session de reporting)
 

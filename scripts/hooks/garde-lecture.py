@@ -5,7 +5,8 @@ Bloque `cat <fichier>` (et `cat a b …`) quand un fichier lu dépasse 200 ligne
 120 lignes. Laisse passer `cat > fichier`, `cat <<EOF`, `cat` en fin de tube et les fichiers courts.
 Approche 4 (16/11/2026) : refuse aussi, sans le préfixe `scripts/q.sh <nom>`, les commandes bavardes (node scripts/…,
 shoot/audit/sloplint/theme.mjs, pnpm, npx, playwright, curl, python3 scripts/…) ; exceptions : scan-brouillon.py,
-usage-*.py, marqueur.sh. Refuse `sed -i` sur sites/<slug>-<v>/ tant que .logs/marqueur-<slug>-<v> n'existe pas.
+usage-*.py, marqueur.sh. Pendant la correction d'un site (.logs/identification-<slug>-<v>), refuse `sed -i` sur sites/<slug>-<v>/ tant que
+.logs/marqueur-<slug>-<v> n'existe pas.
 Code de sortie 2 = refus, le message (stderr) est renvoyé à l'agent."""
 import json, os, re, shlex, sys
 
@@ -60,7 +61,9 @@ for seg in re.split(r"\|\||&&|;|\n", cmd):
         if prog == "sed" and any(m == "-i" or m.startswith("-i") for m in mots[1:]):
             for m in mots[1:]:
                 r = re.search(r"sites/([a-z0-9-]+)-(portfolio|awwwards|legacy)/", m if m.endswith("/") else m + "/")
-                if r and not os.path.exists(os.path.join(racine(cwd), ".logs", f"marqueur-{r.group(1)}-{r.group(2)}")):
+                lg = os.path.join(racine(cwd), ".logs")
+                if r and os.path.exists(os.path.join(lg, f"identification-{r.group(1)}-{r.group(2)}")) \
+                   and not os.path.exists(os.path.join(lg, f"marqueur-{r.group(1)}-{r.group(2)}")):
                     marqueurs.append(f"{r.group(1)}-{r.group(2)}")
         if mots[0] == "cat" and i == 0:
             if any(m.startswith("<") or m.startswith(">") for m in mots[1:]):
