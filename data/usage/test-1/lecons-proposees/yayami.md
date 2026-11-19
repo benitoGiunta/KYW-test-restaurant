@@ -1,0 +1,1 @@
+- 2026-11-19 : site WordPress/Flatsome Order & Eat (yayami.be) : carte dans /product-category/<cat>/ (blocs product-small, originaux d'images en retirant -WxH sur pics.orderandeat.eu) ; le hook refuse tout curl direct, même dans un heredoc : écrire un .sh dans le scratchpad et le lancer via scripts/q.sh.
