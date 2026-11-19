@@ -56,7 +56,7 @@ const route = site.chemin.map((e) => e.pays);
           <p class="note" style="margin-top: var(--u)">{site.cuisson.intro}</p>
           <ol class="cuisson__list">
             {site.cuisson.couches.map((c, i) => (
-              <li class="cuisson__item">
+              <li class="cuisson__item" data-nom={c.nom} data-t={c.temp}>
                 <button type="button">
                   <span class="num">0{i + 1}</span>
                   <span>{c.nom}<span class="det">{c.detail}, {c.temp}&nbsp;°C</span></span>
@@ -70,6 +70,7 @@ const route = site.chemin.map((e) => e.pays);
           {site.cuisson.couches.map((c) => (
             <img class={`couche couche--${c.id}`} src={asset(c.src)} alt="" width="1200" height="1200" loading={c.id === 'fond' ? 'eager' : 'lazy'} decoding="async" />
           ))}
+          <p class="cuisson__temp num" aria-hidden="true" data-cuisson-temp></p>
         </div>
       </div>
     </div>

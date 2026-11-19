@@ -137,7 +137,7 @@ export function initBraise() {
     if (!reduced) target = tempAt(scrollState().y);
     apply(shown);
     requestAnimationFrame(() => { buildKeys(); target = tempAt(reduced ? scrollY : scrollState().y); });
-    const offs = [initHeader(), initPastille(), initCuisson(reduced), initManifeste(reduced), initCarte(), initMarquee(reduced), initThermoAnchors(), initButtons()];
+    const offs = [initHeader(), initPastille(), initHeroDrift(reduced), initBraises(reduced), initCuisson(reduced), initManifeste(reduced), initCarte(), initRoute(reduced), initMarquee(reduced), initThermoAnchors(), initButtons()];
     return () => offs.forEach((o) => o && o());
   });
 }
@@ -182,6 +182,75 @@ function initPastille() {
   } catch { /* on garde le texte rendu côté serveur */ }
 }
 
+/** Dérive lente de la photo du hero au défilement (échelle + glissement, sans jamais découvrir le bord). */
+function initHeroDrift(reduced: boolean) {
+  const img = document.querySelector<HTMLElement>('.hero__media img');
+  const hero = img?.closest<HTMLElement>('.hero');
+  if (!img || !hero || reduced) return;
+  const tw = gsap.fromTo(img, { yPercent: 0, scale: 1.06 }, { yPercent: 7, scale: 1.14, ease: 'none',
+    scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+  return () => { tw.scrollTrigger?.kill(); tw.kill(); gsap.set(img, { clearProps: 'transform' }); };
+}
+
+/** Braises : des étincelles montent dans le hero ; leur nombre visible suit la température, elles s'arrêtent hors écran. */
+function initBraises(reduced: boolean) {
+  const media = document.querySelector<HTMLElement>('.hero__media');
+  if (!media || reduced) return;
+  const cv = document.createElement('canvas');
+  cv.className = 'hero__braises';
+  cv.setAttribute('aria-hidden', 'true');
+  const ctx = cv.getContext('2d');
+  if (!ctx) return;
+  media.appendChild(cv);
+  let w = 1, h = 1;
+  const size = () => { w = cv.width = Math.max(1, media.clientWidth); h = cv.height = Math.max(1, media.clientHeight); };
+  size();
+  const mk = (init: boolean) => ({ x: Math.random() * w, y: init ? Math.random() * h : h + 8, r: 0.8 + Math.random() * 1.7, vy: 0.3 + Math.random() * 0.7, ph: Math.random() * 6.28, sw: 6 + Math.random() * 20, a: 0.4 + Math.random() * 0.6 });
+  const ps = Array.from({ length: isTouch() ? 14 : 32 }, () => mk(true));
+  let on = true;
+  const io = new IntersectionObserver((es) => { on = es[0].isIntersecting; if (!on) ctx.clearRect(0, 0, w, h); });
+  io.observe(media);
+  const tick = (time: number, dt: number) => {
+    if (!on) return;
+    ctx.clearRect(0, 0, w, h);
+    const k = Math.max(0, Math.min(1, (shown - 60) / 840));
+    ps.forEach((p, i) => {
+      p.y -= p.vy * dt * 0.07;
+      if (p.y < -10) Object.assign(p, mk(false));
+      if (i / ps.length > k) return;
+      const x = p.x + Math.sin(time * 0.7 + p.ph) * p.sw;
+      const a = p.a * Math.min(1, p.y / (h * 0.85)) * (0.55 + 0.45 * Math.sin(time * 4 + p.ph));
+      ctx.fillStyle = `rgba(255, 140, 60, ${(a * 0.18).toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(x, p.y, p.r * 3.2, 0, 6.2832); ctx.fill();
+      ctx.fillStyle = `rgba(255, 205, 130, ${a.toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(x, p.y, p.r, 0, 6.2832); ctx.fill();
+    });
+  };
+  taches.add(tick);
+  addEventListener('resize', size);
+  return () => { taches.delete(tick); io.disconnect(); removeEventListener('resize', size); cv.remove(); };
+}
+
+/** Route (page « Le chemin ») : le trait descend au défilement et allume les étapes qu'il atteint. */
+function initRoute(reduced: boolean) {
+  const route = document.querySelector<HTMLElement>('.route');
+  if (!route) return;
+  const steps = [...route.querySelectorAll<HTMLElement>('.route__step')];
+  const fill = route.querySelector<HTMLElement>('.route__fill');
+  if (reduced) {
+    steps.forEach((s) => s.classList.add('is-lit'));
+    if (fill) fill.style.transform = 'scaleY(1)';
+    return;
+  }
+  const st = ScrollTrigger.create({ trigger: route, start: 'top 70%', end: 'bottom 75%', scrub: true,
+    onUpdate: (self) => {
+      if (fill) fill.style.transform = `scaleY(${self.progress.toFixed(4)})`;
+      const H = route.offsetHeight;
+      steps.forEach((s) => s.classList.toggle('is-lit', self.progress >= (s.offsetTop + 28) / H - 0.01));
+    } });
+  return () => st.kill();
+}
+
 /** Scène de couches : sticky stage, timeline scrub ; sauce qui frémit ; liste 01-04 cliquable. */
 function initCuisson(reduced: boolean) {
   const sec = document.querySelector<HTMLElement>('.cuisson');
@@ -192,6 +261,13 @@ function initCuisson(reduced: boolean) {
   const fond = sec.querySelector<HTMLElement>('.couche--fond');
   const buttons = [...sec.querySelectorAll<HTMLButtonElement>('.cuisson__item button')];
   const n = couches.length + 1;
+  const lbl = sec.querySelector<HTMLElement>('[data-cuisson-temp]');
+  const dire = (k: number) => {
+    const it = items[Math.max(0, k)];
+    if (!lbl || !it) return;
+    const txt = `${it.dataset.nom}, ${it.dataset.t} °C`;
+    if (lbl.textContent !== txt) lbl.textContent = txt;
+  };
   if (reduced) {
     items.forEach((i) => i.classList.add('is-lit'));
     buttons.forEach((b, i) => b.addEventListener('click', () => sec.scrollIntoView()));
@@ -202,7 +278,9 @@ function initCuisson(reduced: boolean) {
     scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: 1, invalidateOnRefresh: true,
       onUpdate: (st) => {
         if (bar) bar.style.transform = `scaleX(${st.progress})`;
-        items.forEach((it, i) => it.classList.toggle('is-lit', st.progress >= i / n + 0.02));
+        let lit = -1;
+        items.forEach((it, i) => { const on = st.progress >= i / n + 0.02; it.classList.toggle('is-lit', on); if (on) lit = i; });
+        dire(lit);
       } },
   });
   tl.fromTo(fond, { scale: 0.92, autoAlpha: 0.6 }, { scale: 1, autoAlpha: 1, duration: 1, ease: ease.out }, 0);
@@ -240,12 +318,25 @@ function initCarte() {
   if (filtres) {
     const cats = [...document.querySelectorAll<HTMLElement>('.carte__cat[data-service]')];
     const btns = [...filtres.querySelectorAll<HTMLButtonElement>('button')];
+    const etat = document.querySelector<HTMLElement>('[data-carte-etat]');
     const set = (f: string) => {
       btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filtre === f)));
       cats.forEach((c) => { c.hidden = f !== 'tout' && c.dataset.service !== f && c.dataset.service !== 'desserts'; });
+      const vues = cats.filter((c) => !c.hidden);
+      const plats = vues.reduce((n, c) => n + c.querySelectorAll('.plat').length, 0);
+      if (etat) etat.textContent = `${vues.length} rubriques, ${plats} plats affichés`;
       requestAnimationFrame(() => ScrollTrigger.refresh());
     };
     btns.forEach((b) => b.addEventListener('click', () => set(b.dataset.filtre || 'tout')));
+    // Un repère du thermomètre vers une rubrique masquée remet d'abord « Tout ».
+    const reperes = [...document.querySelectorAll<HTMLAnchorElement>('.thermo__reperes a')];
+    const ouvre = (e: Event) => {
+      const id = (e.currentTarget as HTMLAnchorElement).getAttribute('href')?.split('#')[1];
+      const t = id ? document.getElementById(id) : null;
+      if (t && t.hidden) set('tout');
+    };
+    reperes.forEach((a) => a.addEventListener('click', ouvre));
+    offs.push(() => reperes.forEach((a) => a.removeEventListener('click', ouvre)));
   }
   const vignette = document.getElementById('vignette');
   const img = vignette?.querySelector('img');

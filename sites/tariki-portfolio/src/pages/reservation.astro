@@ -33,13 +33,14 @@ import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
         <form class="form" data-reservation action={site.reservation.url} method="get">
           <label>Nom <input type="text" name="nom" autocomplete="name" required /></label>
           <label>Téléphone <input type="tel" name="tel" autocomplete="tel" /></label>
-          <label>Date <input type="date" name="date" required /></label>
+          <label>Date <input type="date" name="date" required aria-describedby="err-date" /><span class="form__err" id="err-date" data-err-date hidden></span></label>
           <label>Heure <input type="time" name="heure" required /></label>
           <label>Couverts <input type="number" name="couverts" min="1" max="12" value="2" required /></label>
           <label class="full">Message <textarea name="message" rows="3"></textarea></label>
           <div class="actions full" style="margin-top: 0">
             <button class="btn btn--solid" type="submit">Continuer vers la réservation</button>
           </div>
+          <p class="form__status full" role="status" aria-live="polite" data-status></p>
         </form>
       </div>
     </div>
@@ -51,8 +52,34 @@ import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
   onPage(() => {
     const form = document.querySelector<HTMLFormElement>('[data-reservation]');
     if (!form) return;
-    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    const date = form.elements.namedItem('date') as HTMLInputElement;
+    const err = form.querySelector<HTMLElement>('[data-err-date]');
+    const status = form.querySelector<HTMLElement>('[data-status]');
+    // Pas de date passée (jour de Bruxelles) ; dimanche refusé : le restaurant est fermé.
+    const auj = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Brussels' });
+    date.min = auj;
+    const verifie = () => {
+      const [y, m, d] = date.value.split('-').map(Number);
+      const dimanche = !!date.value && new Date(y, m - 1, d).getDay() === 0;
+      date.setCustomValidity(dimanche ? 'Le restaurant est fermé le dimanche.' : '');
+      if (err) { err.hidden = !dimanche; err.textContent = dimanche ? 'Le restaurant est fermé le dimanche, choisissez un autre jour.' : ''; }
+    };
+    date.addEventListener('input', verifie);
+    const go = (e: SubmitEvent) => {
+      e.preventDefault();
+      verifie();
+      if (!form.reportValidity()) return;
+      const w = window.open(form.action, '_blank'); // « noopener » renverrait toujours null : on coupe l'opener à la main
+      if (w) w.opener = null;
+      if (!status) return;
+      status.textContent = '';
+      if (w) { status.textContent = 'Le module de réservation du restaurant s’ouvre dans un nouvel onglet.'; return; }
+      const a = document.createElement('a');
+      a.className = 'link'; a.href = form.action; a.rel = 'noopener'; a.target = '_blank';
+      a.textContent = 'ouvrir le module de réservation';
+      status.append('Votre navigateur a bloqué l’ouverture : ', a, '.');
+    };
     form.addEventListener('submit', go);
-    return () => form.removeEventListener('submit', go);
+    return () => { form.removeEventListener('submit', go); date.removeEventListener('input', verifie); };
   });
 </script>
