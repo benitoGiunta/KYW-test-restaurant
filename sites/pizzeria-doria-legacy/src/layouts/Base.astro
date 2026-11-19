@@ -32,7 +32,8 @@ const liens = [
     <header class="slab">
       <div class="container slab__in">
         <a class="slab__marque" href={base} aria-label="Pizzeria Doria, accueil">Doria <span>pizzeria</span></a>
-        <nav class="slab__nav" aria-label="Navigation principale">
+        <button class="slab__burger" type="button" popovertarget="menu-principal" aria-label="Ouvrir le menu">Menu</button>
+        <nav class="slab__nav" id="menu-principal" popover="auto" aria-label="Navigation principale">
           <ul>
             {liens.map((l) => <li><a href={l.href} aria-current={l.id === page ? 'page' : undefined}>{l.label}</a></li>)}
           </ul>
@@ -54,5 +55,42 @@ const liens = [
       <p class="container pied__credits" data-credits>Photographies d’illustration : Unsplash (Benu Marinescu, Hoja Studio, Nadya Spetnitskaya, Pinar Kucuk), à remplacer par des photos du restaurant. Autres photos : Pizzeria Doria.</p>
     </footer>
     <KywFooter base={import.meta.env.BASE_URL} />
+    <script is:inline>
+      (function () {
+        var doc = document;
+        /* Menu : le bouton annonce l'état réel du popover, Échap et clic dehors sont natifs */
+        var nav = doc.getElementById('menu-principal'), burger = doc.querySelector('.slab__burger');
+        if (nav && burger && nav.addEventListener) {
+          nav.addEventListener('toggle', function (e) {
+            var open = e.newState === 'open';
+            burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+            burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+          });
+        }
+        /* Index de la carte : la pastille de la section ciblée est marquée (aria-current) */
+        var pills = doc.querySelectorAll('.onglets a');
+        function marque() { var h = location.hash; pills.forEach(function (a) { if (h && a.getAttribute('href') === h) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); }); }
+        if (pills.length) { window.addEventListener('hashchange', marque); marque(); }
+        /* Jour courant dans les casiers (fuseau de Namur), sans dire « ouvert » : l'heure n'est pas testée */
+        var jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+        var nom = '';
+        try { nom = new Intl.DateTimeFormat('fr-BE', { weekday: 'long', timeZone: 'Europe/Brussels' }).format(new Date()); } catch (e) { nom = jours[new Date().getDay()]; }
+        nom = nom.charAt(0).toUpperCase() + nom.slice(1).toLowerCase();
+        doc.querySelectorAll('.casier').forEach(function (c) {
+          var dt = c.querySelector('dt');
+          if (dt && dt.textContent.trim() === nom) { c.classList.add('casier--jour'); c.setAttribute('data-today', 'true'); }
+        });
+        /* Un seul reveal : les casiers et les avis, visibles sans script, sans mouvement réduit */
+        var cibles = doc.querySelectorAll('[data-reveal]');
+        var reduit = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!cibles.length) return;
+        if (reduit || !('IntersectionObserver' in window)) { cibles.forEach(function (n) { n.classList.add('is-in'); }); return; }
+        var io = new IntersectionObserver(function (es) {
+          es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+        }, { rootMargin: '0px 0px -12% 0px', threshold: 0.05 });
+        cibles.forEach(function (n) { io.observe(n); });
+        setTimeout(function () { cibles.forEach(function (n) { n.classList.add('is-in'); }); }, 4000);
+      })();
+    </script>
   </body>
 </html>

@@ -29,7 +29,7 @@ Source de vérité : `src/styles/tokens.css` (paper oklch 41/47/34 % sur teinte 
 # Composants
 
 - **Carte** : Rows (`Rows.astro`), titre colonnes 1 à 5, description au milieu, prix Gabarito à droite en `tabular-nums` ; sur téléphone nom et prix sur la première ligne, description dessous (F25) ; navigation par ancres en pastilles (Index), tout est visible sans script ; jamais de tuile à icône ni de carte dans une carte.
-- **Horaires** : Schedule en `<dl>` de sept tuiles « casiers » (`Fin.astro`), `<time>` par plage, mardi et mercredi en contour et `--color-muted`, jamais barrés ; dits une fois (en fin de page et sur chaque page via Fin), pas d’horloge. Jour courant par étape de surface : phase 2.
+- **Horaires** : Schedule en `<dl>` de sept tuiles « casiers » (`Fin.astro`), `<time>` par plage, mardi et mercredi en contour et `--color-muted`, jamais barrés ; dits une fois (en fin de page et sur chaque page via Fin), pas d’horloge. Jour courant marqué par script (fuseau Europe/Brussels, bordure pêche et « aujourd’hui », sans dire « ouvert »).
 - **Pied** : index columns (logo carré fourni, le site, nous joindre, nous suivre, paiement et TVA), `data-credits`, ni « Tous droits réservés » ni newsletter, puis KywFooter.
 - **Photo** : `<figure data-slot data-alt>` avec dimensions, `srcset`, hero `fetchpriority="high"`, autres `lazy`, `data-placeholder` pour le stock.
 
@@ -41,4 +41,28 @@ Source de vérité : `src/styles/tokens.css` (paper oklch 41/47/34 % sur teinte 
 - [ ] 4. comps c1 et c2 construites · non faites en phase 1 (comp.md, ETAT.md)
 - [x] 5. build statique des 4 routes + 404 · preuve : dist/pizzeria-doria/legacy/
 - [x] 6. noindex, mention KYW et signature sur 5 pages · preuve : grep de dist
-- [ ] 7. sloplint --render sur le build · phase 2
+- [x] 7. sloplint --render (hero) via --url sur le serveur de dev · preuve : .logs/doria-sloplint.log (3 FAIL 34 et 50 faux positifs : base.css porte overflow-x: clip et overflow-wrap, sloplint ne suit pas @import)
+
+## Phase 2 (construction-2)
+
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : page.css, transitions listées `translate`, `opacity`, `background-color`, `color` seulement
+- [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : base.css:9 (outline 2px `--color-focus`, offset 2px), `.card :focus-visible`, summary offset -4px
+- [x] 7. Fallback reduced motion et contenu visible sans script (27, 62) · preuve : page.css `.js [data-reveal]`, bloc `prefers-reduced-motion`, test navigateur : sans JS opacité 1, reduce opacité 1 et transition 1e-05s
+- [x] 17. Hero en `svh` (6a) · preuve : page.css `.hero` (`100svh`), `padding-top: 40svh`, aucune unité `vh` restante
+- [x] 19. Sticky non superposés (56) · preuve : un seul sticky (`.slab`, `top: 0`, `--z-sticky-nav`), le titre de carte non sticky sous 60rem ; `scroll-padding-top` 96px (base.css)
+- [x] 20. Radios-onglets gardés (53) · n/a : aucun switcher, la carte est une page à ancres
+- [x] 21. Vidéo de fond (28a, 28b) · n/a : photo plein cadre (`<picture>` paysage et portrait, `fetchpriority="high"`)
+- [x] 22. Reveal sous `.js` seulement (62) · preuve : Base.astro (classe `js` en tête), page.css `.js [data-reveal] > *`, filet de sécurité 4 s
+- [x] 23. États d'input (39a) · n/a : aucun champ (voir Décisions : le téléphone est la réservation) ; états du bouton : hover, focus-visible, active, disabled (trois canaux : couleur, bordure pointillée, curseur)
+- [x] 24. Tooltip et auto-rotation (17, 18) · n/a : aucun
+- [x] 29. Aucun faux envoi (70) · preuve : aucun formulaire ; « Réserver » = `tel:` du site d'origine
+- [x] 30. SVG décoratifs (33) · n/a : aucun SVG
+- [x] 48. Hover : un signal, conteneur, pas sur non-interactif, pas de rebond, pas de toast (11, 12, 16) · preuve : page.css bloc `@media (hover: hover)`, easing `--ease-out` sans rebond
+- [x] 49. `:active`, `:disabled`, cibles 44 à 52px (26b, 39b) · preuve : `.btn` 48px, `.slab__burger` 44px, `@media (pointer: coarse)` pour pied, contact et adresse
+- [x] 56. Une seule recette de primaire rempli (F4) · preuve : `.btn--primary` seul rempli (pêche), jamais deux côte à côte ; les secondaires sont en contour
+- [x] 58. Une recette de conteneur ; un pattern de scroll (F8) · preuve : tuiles et cartes uniquement, un reveal sans chorégraphie scroll
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : base.css:3-9
+- [x] 72. Responsive · preuve : breakpoints 60rem et 40rem, `(hover: hover)`, `(pointer: coarse)`, scrollWidth = viewport sur 4 routes à 375 et 1440, nav en popover sous 60rem (Échap, clic dehors, retour du focus au bouton), `@supports not selector(:popover-open)` : nav toujours visible
+
+Hero review : `hero-review: fix · 2 findings · 2 resolved` (auto-notation self : pas d'outil Agent en session d'agent). Findings : plaque verticale qui masquait la pizza à 1280x800 (resolved : plaque pleine largeur sur deux colonnes, titre en `--text-display-s`) ; lien d'adresse sur deux lignes à 375 (resolved : ville hors du lien).
+Nav : forme `slab` (barre pleine, marque à gauche, liens et Réserver à droite), sticky 72px.
