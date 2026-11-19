@@ -1,4 +1,4 @@
-# ETAT.md : wok-de-jin awwwards (fin de la phase 2 sur 3)
+# ETAT.md : wok-de-jin awwwards (fin de la phase 3 sur 3)
 
 ## Fait
 - Concept « La semaine à volonté », DESIGN.md (brief, 3 concepts notés, Concept Card, système, checklist 1 à 18).
@@ -36,3 +36,8 @@
 - Aucun placeholder fictif : rien d'inventé (pas d'avis, d'e-mail, de réseau, d'histoire, de parking).
 - Photos 2048 px des salles recadrées à 1600 px (sharp) avant import.
 - Serveur de mesure : port 4417, PID noté puis arrêté.
+
+## Phase 3 (construction-3)
+- QA sur preuves : 4 pages sans erreur ; seule correction : décalage au survol du téléphone (reservation). Build vert, audit 0 FAIL / 1 WARN justifié.
+- Reste : critique jury indépendant, OG composée, relire les `colorOnly` (accueil, carte), `pnpm index`, commit final `[publier]` (superviseur).
+- Piège : la 404 capturée par l'agent captures est la réponse brute de serve.mjs (faux positifs contraste/cible).
