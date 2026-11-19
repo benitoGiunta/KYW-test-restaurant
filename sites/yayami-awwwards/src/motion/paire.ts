@@ -17,7 +17,8 @@ function apply(q: Paire) {
   gsap.set(q.jumeau, {
     xPercent: q.loin[0] * d + idle.x * 14,
     yPercent: q.loin[1] * d + idle.y * 10,
-    rotation: idle.t * 9, // le filet pointillé tourne : 9 degrés par seconde
+    rotation: idle.t * 18, // le filet pointillé tourne : 18 degrés par seconde
+    scale: 1 + 0.07 * Math.sin(idle.t * 1.4), // et respire de 7 %
     autoAlpha: q.entree,
   });
 }
