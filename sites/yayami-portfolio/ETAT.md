@@ -1,4 +1,4 @@
-# ETAT : yayami-portfolio (phase 2 sur 3, construction-2)
+# ETAT : yayami-portfolio (phase 3 sur 3, QA terminée)
 
 ## Fait (phases 1 et 2)
 - Phase 1 : gabarit Nocturne adapté (DESIGN.md), 6 pages + 404, données du dossier, palette rouge enseigne, 15 photos WebP.
@@ -35,3 +35,7 @@
 - Ne pas remettre `tabular-nums` sur les prix à virgule.
 - Les horaires apparaissent deux fois par page (section et pied de page) : `aujourdhui()` marque les deux.
 - Halo et tubes en contour : desktop avec pointeur fin seulement ; mobile et reduced motion = tubes pleins.
+
+## Phase 3 (QA)
+- Corrigé : lien « Commander » de l'en-tête masqué sous 520 px (dépassait à 390 px). Build OK. Détails dans RAPPORT.md.
+- Reste : `pnpm index`, commit final `[publier]`, ligne UTILISATION.md.
