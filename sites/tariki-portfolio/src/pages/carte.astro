@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const feu = photoDe('/photos/feu-de-camp.webp');
+const temps = [520, 450, 380, 240, 150];
+const ids = site.carte.map((c, i) => (site.carte.findIndex((x) => x.service === c.service) === i ? c.service : undefined));
+---
+<Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : mezzés à partager, grillades au feu de bois le soir, sandwichs et formule à 17 € le midi.`} start={900} reperes={[{ id: 'soir', label: 'Soir' }, { id: 'midi', label: 'Midi' }]}>
+  <section class="hero hero--page" data-temp="900">
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro>Dressage</p>
+      <h1 class="hero__title" data-split="lines" data-intro data-delay="0.1">La carte, au feu</h1>
+      <div class="hero__foot">
+        <p class="hero__lead">Une carte volontairement courte. Le soir, des mezzés à partager puis les grillades au charbon. Le midi, des sandwichs au feu de bois et une formule à 17&nbsp;€.</p>
+        <div class="carte__filtres" role="group" aria-label="Filtrer la carte" data-reveal="fade" data-intro data-delay="0.7">
+          <button type="button" data-filtre="tout" aria-pressed="true">Tout</button>
+          <button type="button" data-filtre="midi" aria-pressed="false">Midi</button>
+          <button type="button" data-filtre="soir" aria-pressed="false">Soir</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-temp="520" data-temp-end="150">
+    <div class="wrap">
+      {site.carte.map((cat, k) => (
+        <div class="carte__cat" id={ids[k]} data-service={cat.service}>
+          <div class="cols">
+            <div class="c1-8">
+              <h2>{cat.categorie}</h2>
+              {cat.note && <p class="note">{cat.note}</p>}
+            </div>
+            <p class="c9-12 t-s muted num" style="align-self: end">{temps[k] ? `${temps[k]} °C` : ''}</p>
+          </div>
+          <ol class="plats" style="margin-top: calc(var(--u) * 2)">
+            {cat.plats.map((p, i) => (
+              <li class={`plat${p.photo ? ' plat--photo' : ''}`} data-photo={p.photo ? asset(p.photo) : undefined} data-reveal="fade" data-delay={String(i * 0.05)}>
+                <span class="plat__num">0{i + 1}</span>
+                {p.photo && <img class="plat__vignette" src={asset(p.photo)} alt="" width="200" height="200" loading="lazy" decoding="async" />}
+                <span><span class="plat__nom">{p.nom}</span>{p.description && <span class="plat__desc muted">{p.description}</span>}</span>
+                <span class="plat__prix">{p.prix ?? ''}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+      <p class="note" style="margin-top: calc(var(--u) * 3)">Carte du soir de la page « La carte » du site actuel ; la version d'accueil affiche des prix légèrement supérieurs (à confirmer avec le restaurant).</p>
+    </div>
+  </section>
+
+  <section class="section" data-temp="110" data-temp-end="60" aria-labelledby="t-formules">
+    <div class="wrap">
+      <div class="section__head cols">
+        <div class="c1-8">
+          <p class="chapeau">Table</p>
+          <h2 class="t-xl" id="t-formules" data-split="lines">Deux façons de s'attabler</h2>
+        </div>
+      </div>
+      <div class="formules">
+        {site.menus.map((m, i) => (
+          <article class="formule" data-reveal="up" data-delay={String(i * 0.1)}>
+            <h3>{m.nom}</h3>
+            <p class="t-m num">{m.prix}</p>
+            <p class="note" style="margin-top: var(--u)">{m.description}</p>
+            {m.aConfirmer && <p class="tag" style="margin-top: var(--u)">À confirmer avec le restaurant</p>}
+          </article>
+        ))}
+      </div>
+      <div class="salle__wall" style="margin-top: calc(var(--u) * 8)">
+        <figure class="s1"><div class="fig" data-parallax="0.1"><img src={asset(feu.src)} alt={feu.alt} width={feu.largeur} height={feu.hauteur} loading="lazy" decoding="async" /></div><figcaption>{feu.legende}</figcaption></figure>
+      </div>
+      <div class="actions">
+        <a class="btn btn--solid" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={u('/histoire/')}>Le chemin de Tariki</a>
+      </div>
+    </div>
+  </section>
+</Base>

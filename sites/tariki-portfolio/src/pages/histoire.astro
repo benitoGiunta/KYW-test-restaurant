@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const braises = photoDe('/photos/braises.webp');
+const arcades = photoDe('/photos/arcades.webp');
+---
+<Base title="Le chemin de Tariki" description={`L'histoire de ${site.nom} à ${site.adresse.commune} : un chemin de la Syrie à la Belgique, Bayti, puis un nouveau chapitre autour du feu.`} start={420} reperes={[{ id: 'recit', label: 'Récit' }, { id: 'route', label: 'Route' }]}>
+  <section class="hero hero--page" data-temp="420">
+    <div class="hero__media" aria-hidden="true">
+      <img src={asset(braises.src)} alt="" width={braises.largeur} height={braises.hauteur} fetchpriority="high" data-critical />
+      <div class="hero__voile"></div>
+    </div>
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro>Le chemin</p>
+      <h1 class="hero__title" data-split="lines" data-intro data-delay="0.1">Mon chemin</h1>
+      <p class="hero__lead" style="margin-top: calc(var(--u) * 3)">Tariki veut dire «&nbsp;mon chemin&nbsp;». Il commence en Syrie et finit, ce soir, à votre table.</p>
+    </div>
+  </section>
+
+  <section class="section" id="recit" data-temp="300" data-temp-end="150">
+    <div class="wrap cols">
+      <div class="c1-7">
+        <figure class="fig" data-reveal="clip" style="aspect-ratio: 4 / 3"><img src={asset(arcades.src)} alt={arcades.alt} width={arcades.largeur} height={arcades.hauteur} loading="lazy" decoding="async" /></figure>
+        <p class="t-s muted" style="margin-top: var(--u)">{arcades.legende}</p>
+      </div>
+      <div class="c9-12 prose" style="padding-top: 12vh">
+        <p class="chapeau">Le récit</p>
+        {site.histoire.map((x) => <p data-reveal="up">{x}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="route" data-temp="110" data-temp-end="60" aria-labelledby="t-route">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Table</p>
+        <h2 class="t-xl" id="t-route" data-split="lines">La route, étape par étape</h2>
+      </div>
+      <ol class="plats">
+        {site.chemin.map((e, i) => (
+          <li class="plat" data-reveal="fade" data-delay={String(i * 0.06)}>
+            <span class="plat__num">0{i + 1}</span>
+            <span><span class="plat__nom">{e.pays}</span><span class="plat__desc muted">{e.texte}</span></span>
+            <span class="plat__prix"></span>
+          </li>
+        ))}
+      </ol>
+      <div class="formules" style="margin-top: calc(var(--u) * 6)">
+        {site.valeurs.map((v, i) => (
+          <article class="formule" data-reveal="up" data-delay={String(i * 0.1)}>
+            <h3>{v}</h3>
+          </article>
+        ))}
+      </div>
+      <div class="actions">
+        <a class="btn btn--solid" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={u('/carte/')}>Voir la carte</a>
+      </div>
+    </div>
+  </section>
+</Base>

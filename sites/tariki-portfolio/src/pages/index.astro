@@ -1,0 +1,161 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe, horaireTexte, adresseLigne, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/braises.webp');
+const feu = photoDe('/photos/feu-de-camp.webp');
+const arcades = photoDe('/photos/arcades.webp');
+const soir = site.carte.filter((c) => c.service === 'soir');
+const feuDeBois = soir.find((c) => c.categorie.includes('feu de bois'))!;
+const reperes = [
+  { id: 'cuisson', label: 'Cuisson' },
+  { id: 'carte', label: 'Carte' },
+  { id: 'chemin', label: 'Chemin' },
+  { id: 'pratique', label: 'Pratique' },
+];
+const horairesJson = JSON.stringify(site.horaires.map((h) => ({ jour: h.jour, creneaux: h.creneaux })));
+const route = site.chemin.map((e) => e.pays);
+---
+<Base start={900} reperes={reperes}>
+  <section class="hero" data-temp="900" aria-labelledby="titre">
+    <div class="hero__media" aria-hidden="true">
+      <img src={asset(hero.src)} alt="" width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="sync" data-critical />
+      <div class="hero__voile"></div>
+    </div>
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro data-delay="0.9">Cuisine levantine au feu de bois, Namur</p>
+      <h1 class="hero__title" id="titre" data-split="lines" data-intro data-delay="0.2"><span class="ligne">{site.nom}</span></h1>
+      <div class="hero__foot">
+        <p class="hero__lead">{site.baseline} Des grillades cuites au charbon et à flamme ouverte, des mezzés à partager, une carte volontairement courte.</p>
+        <div class="stack" data-reveal="fade" data-intro data-delay="1">
+          <p class="pastille" data-pastille data-horaires={horairesJson}>Service du soir dès 18 h</p>
+          <div class="actions" style="margin-top: var(--u)">
+            <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+            <a class="btn btn--quiet" href="#cuisson" data-ancre>Suivre le feu</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section manifeste" data-temp="700">
+    <div class="wrap cols">
+      <div class="c1-8">
+        <p class="chapeau">Manifeste</p>
+        <p class="manifeste__txt">{site.manifeste.avant} <span class="mot">{site.manifeste.motCle}</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cuisson" id="cuisson" data-temp="520" data-temp-end="180" aria-labelledby="t-cuisson">
+    <div class="cuisson__stage">
+      <div class="wrap cuisson__grid">
+        <div>
+          <p class="chapeau">Cuisson</p>
+          <h2 class="t-xl" id="t-cuisson">{site.cuisson.plat}</h2>
+          <p class="note" style="margin-top: var(--u)">{site.cuisson.intro}</p>
+          <ol class="cuisson__list">
+            {site.cuisson.couches.map((c, i) => (
+              <li class="cuisson__item">
+                <button type="button">
+                  <span class="num">0{i + 1}</span>
+                  <span>{c.nom}<span class="det">{c.detail}, {c.temp}&nbsp;°C</span></span>
+                </button>
+              </li>
+            ))}
+          </ol>
+          <div class="cuisson__bar" aria-hidden="true"><i></i></div>
+        </div>
+        <div class="cuisson__scene" role="img" aria-label={`${site.cuisson.plat}, dessin illustratif du plat en quatre couches`}>
+          {site.cuisson.couches.map((c) => (
+            <img class={`couche couche--${c.id}`} src={asset(c.src)} alt="" width="1200" height="1200" loading={c.id === 'fond' ? 'eager' : 'lazy'} decoding="async" />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="carte" data-temp="240" aria-labelledby="t-carte">
+    <div class="wrap">
+      <div class="section__head cols">
+        <div class="c1-8">
+          <p class="chapeau">Dressage</p>
+          <h2 class="t-xl" id="t-carte" data-split="lines">Au feu de bois, le soir</h2>
+        </div>
+        <p class="c9-12 note" data-reveal="fade">{feuDeBois.note} Le midi, du mercredi au samedi : sandwichs au feu de bois à 9&nbsp;€, formule à 17&nbsp;€.</p>
+      </div>
+      <ol class="plats">
+        {feuDeBois.plats.map((x, i) => (
+          <li class="plat" data-reveal="fade" data-delay={String(i * 0.06)}>
+            <span class="plat__num">0{i + 1}</span>
+            <span><span class="plat__nom">{x.nom}</span>{x.description && <span class="plat__desc muted">{x.description}</span>}</span>
+            <span class="plat__prix">{x.prix}</span>
+          </li>
+        ))}
+      </ol>
+      <p class="section__link"><a class="link link--arrow" href={u('/carte/')}>Toute la carte, midi et soir</a></p>
+    </div>
+  </section>
+
+  <section class="section mains" id="chemin" data-temp="150" aria-labelledby="t-chemin">
+    <div class="wrap mains__grid">
+      <figure class="duo mains__portrait" data-reveal="clip">
+        <img src={asset(feu.src)} alt={feu.alt} width={feu.largeur} height={feu.hauteur} loading="lazy" decoding="async" />
+        <figcaption>{feu.legende}</figcaption>
+      </figure>
+      <div class="mains__txt">
+        <p class="chapeau">Le chemin</p>
+        <h2 class="t-l" id="t-chemin" data-split="lines">Tariki, «&nbsp;mon chemin&nbsp;»</h2>
+        <div class="prose" data-reveal="up" style="margin-top: calc(var(--u) * 2)">
+          <p>{site.histoire[0]}</p>
+        </div>
+        <p class="section__link"><a class="link link--arrow" href={u('/histoire/')}>Toute la route</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="salle" data-temp="150" data-temp-end="130" aria-label="Ambiance">
+    <div class="wrap">
+      <div class="salle__wall">
+        <figure class="s1">
+          <div class="fig" data-parallax="0.08"><img src={asset(arcades.src)} alt={arcades.alt} width={arcades.largeur} height={arcades.hauteur} loading="lazy" decoding="async" /></div>
+          <figcaption>{arcades.legende}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="avis" data-temp="105" aria-label="La route de Tariki">
+    <div class="marquee">
+      {[0, 1].map((k) => route.map((pays) => (
+        <p class="marquee__item" aria-hidden={k === 1 ? 'true' : undefined}><span>{pays}</span></p>
+      )))}
+    </div>
+  </section>
+
+  <section class="section" id="pratique" data-temp="60" data-temp-end="20" aria-labelledby="t-pratique">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Nuit</p>
+        <h2 class="t-xl" id="t-pratique" data-split="lines">Venir, réserver</h2>
+      </div>
+      <div class="pratique__grid">
+        <div class="pratique__a stack" data-reveal="up">
+          <dl class="horaires">
+            {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+          </dl>
+          <p class="note">Le soir du lundi au samedi, le midi du mercredi au samedi. Fermé le dimanche.</p>
+          <div class="actions">
+            <a class="btn btn--solid" href={u('/reservation/')}>Réserver</a>
+            <a class="btn" href={telHref()}>{site.telephone}</a>
+          </div>
+        </div>
+        <div class="pratique__b stack" data-reveal="up" data-delay="0.1">
+          <address>{adresseLigne()}</address>
+          <p><a class="link" href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(adresseLigne())}`} rel="noopener">Itinéraire sur OpenStreetMap</a></p>
+          <p class="note">{site.presse.texte} <span class="muted">{site.presse.media}, 11 septembre 2026.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
