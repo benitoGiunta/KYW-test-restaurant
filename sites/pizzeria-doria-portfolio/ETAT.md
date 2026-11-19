@@ -24,3 +24,8 @@
 ## Phase 3 (QA)
 - Fait : axe 0 violation sur 7 pages, clics d'en-tête OK, footer KYW visible en fenêtre, build final vert, RAPPORT.md écrit. Rien à corriger.
 - Reste : points mineurs de RAPPORT.md (vide au-dessus du pied de /carte/, sloplint self, logo vectoriel).
+
+## Relecture passe 1 (relecteur-site, test)
+- Fait : REVUE-1.md écrit (verdict A_CORRIGER : 0 F0, 2 F1, 6 F2, 5 F3). Mesures propres sur 7 pages x 2 largeurs, horloge 10 cas, contraste canvas, nav mobile, reduced-motion. Serveur propre arrêté (port 4823).
+- Reste : réviseur traite F1-1 (nav mobile 6 liens coupés), F1-2 (bandeau « arrivée jusqu'à »), puis F2 et F3 ; passe 2 de relecture ensuite.
+- Pièges : scratchpad partagé avec des `rev1-*` d'un agent frère (ne pas toucher) ; QA limité à 3 pages, planches QA à grande zone blanche.
