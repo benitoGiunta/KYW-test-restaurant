@@ -17,7 +17,7 @@ export function setupMotion() {
   setLoaderExit((root) =>
     gsap.timeline()
       .to(root.querySelectorAll('[data-loader-out]'), { opacity: 0, duration: 0.25, ease: 'steps(3)', stagger: 0.08 })
-      .to(root, { yPercent: -102, duration: isMobile() ? 0.6 : 0.9, ease: ease.inOut }, '-=0.05'),
+      .to(root, { yPercent: -102, duration: isMobile() ? 0.5 : 0.65, ease: ease.inOut }, '-=0.05'),
   );
   setTransition({
     leave: (c) => gsap.timeline()

@@ -72,7 +72,7 @@ export const site: Restaurant = {
     minimum: '30 €',
     zone: ['5000', '5001', '5002', '5003', '5004', '5020', '5100'],
     remise: '10 %',
-    paiement: ["Cash à la livraison", "Cash à l'emporter", 'Bancontact', 'Maestro', 'MasterCard', 'Visa'],
+    paiement: ["Cash à la livraison", "Cash à l’emporter", 'Bancontact', 'Maestro', 'MasterCard', 'Visa'],
   },
   specialites: [
     { nom: 'Nigiri', photo: '/photos/nigiri-saumon-noir.webp' },
@@ -87,16 +87,16 @@ export const site: Restaurant = {
     sousTitre: 'Restaurant japonais rue de Bruxelles. Nigiri, maki, temaki et plats chauds, à emporter ou livrés chez vous.',
     bande: 'Nigiri, maki, temaki, plats chauds, salades, bières et boissons : toute la carte se commande en ligne.',
     carte: 'Nigiri, maki et temaki, des menus et des box à partager, des plats chauds, des salades, des bières et des boissons.',
-    boissons: 'Trois bières japonaises et quatre ramune, la limonade japonaise à bille, pour accompagner les sushi.',
-    maison: 'Un restaurant japonais de quartier, au 15 rue de Bruxelles : des sushi, des plats chauds et la commande en ligne.',
-    complementAdresse: 'Rue de Bruxelles, au centre de Namur.',
+    boissons: 'Trois bières japonaises et quatre ramune, la limonade japonaise, pour accompagner les sushi.',
+    maison: 'Un restaurant japonais au 15 rue de Bruxelles, à Namur : des sushi, des plats chauds et la commande en ligne.',
+    complementAdresse: 'Rue de Bruxelles, à Namur.',
   },
   regles: [
     { texte: 'Ouvert 7 jours sur 7, de 12h à 14h et de 18h à 22h.', placeholder: false },
     { texte: 'Livraison gratuite à partir de 30 €, dans sept codes postaux autour de Namur.', placeholder: false },
     { texte: "10 % de remise si vous venez chercher votre commande sur place.", placeholder: false },
     { texte: 'On commande en ligne : le panier ouvre le site de commande de la maison.', placeholder: false },
-    { texte: 'Paiement : cash à la livraison ou à l\'emporter, Bancontact, Maestro, MasterCard, Visa.', placeholder: false },
+    { texte: 'Paiement : cash à la livraison ou à l’emporter, Bancontact, Maestro, MasterCard, Visa.', placeholder: false },
   ],
   originStory: [
     'Yayami Sushi est un restaurant japonais, au 15 rue de Bruxelles, à Namur.',
@@ -115,7 +115,7 @@ export const site: Restaurant = {
   ],
   modes: [
     { nom: 'Livraison', quand: 'dès 30 €', description: 'Gratuite à partir de 30 € de commande, dans sept codes postaux autour de Namur.', placeholder: false },
-    { nom: "À l'emporter", quand: '-10 %', description: 'Vous passez prendre votre commande rue de Bruxelles : 10 % de remise.', placeholder: false },
+    { nom: "À l’emporter", quand: '-10 %', description: 'Vous passez prendre votre commande rue de Bruxelles : 10 % de remise.', placeholder: false },
     { nom: 'Commande en ligne', quand: '7 jours sur 7', description: 'La carte complète, avec les prix, sur le site de commande de la maison.', placeholder: false },
   ],
   mosaique: [

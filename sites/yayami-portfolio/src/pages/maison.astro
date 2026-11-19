@@ -1,8 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site, photoDe, adresseLigne } from '../data/site';
-import { asset, u } from '../lib/url';
-const nb = photoDe('/photos/nigiri-saumon-noir.webp');
+import { asset, u } from "../lib/url";
+const depart = [
+  { nom: 'Nigiri', prix: '4,50 €', note: 'les deux pièces' },
+  { nom: 'Maki', prix: 'dès 5,50 €', note: 'selon la garniture' },
+  { nom: 'Temaki', prix: '6 €', note: 'à la carte' },
+  { nom: 'Nouilles udon', prix: 'dès 15,80 €', note: 'plat chaud' },
+];
 const spec = site.specialites.map((x) => ({ ...x, p: photoDe(x.photo) }));
 ---
 <Base title="La maison" description={`${site.nom}, restaurant japonais au ${site.adresse.numero} ${site.adresse.rue} à ${site.adresse.commune} : ce que la maison prépare, de ses nigiri à ses plats chauds.`}>
@@ -11,16 +16,20 @@ const spec = site.specialites.map((x) => ({ ...x, p: photoDe(x.photo) }));
     <p class="lead" data-reveal="fade">{site.accroche.maison}</p>
   </section>
 
-  <section class="origin" data-origin aria-labelledby="origine">
-    <div class="origin__stage">
-      <p class="meta origin__tete" id="origine">Yayami Sushi</p>
-      <div class="origin__photo">
-        <img src={asset(nb.src)} alt={nb.alt} width={nb.largeur} height={nb.hauteur} loading="lazy" decoding="async" />
-      </div>
-      <div class="origin__phrases">
-        {site.originStory.map((p) => <p class="origin__phrase" data-origin-phrase>{p}</p>)}
-      </div>
+  <section class="section col-l" aria-labelledby="prix">
+    <div class="section__tete">
+      <h2 id="prix" class="tube tube--xl" data-tube data-reveal="fade">Prix de départ</h2>
+      <p class="meta">Quatre familles de la carte</p>
     </div>
+    <ul class="ckt" data-reveal="fade">
+      {depart.map((d) => (
+        <li class="ckt__item">
+          <span class="ckt__nom">{d.nom}</span>
+          <span class="ckt__prix">{d.prix}</span>
+          <span class="ckt__ing">{d.note}</span>
+        </li>
+      ))}
+    </ul>
   </section>
 
   <section class="section col-l" aria-labelledby="specialites">

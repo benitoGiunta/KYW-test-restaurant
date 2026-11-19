@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, serviceSoir, heure, photoDe, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { site, serviceSoir, heure, photoDe, adresseLigne, telHref } from '../data/site';
 import { asset, u } from '../lib/url';
 const voletG = photoDe('/photos/california-roll-noir.webp');
 const voletD = photoDe('/photos/gyoza-noir.webp');
@@ -11,11 +11,11 @@ const mosaique = site.mosaique.map((m) => photoDe(m.src));
 const boxes = site.menus;
 const bandes = [
   { texte: site.accroche.bande, cite: '' },
-  { texte: `Livraison gratuite à partir de ${site.livraison.minimum}, ${site.livraison.remise} de remise à l'emporter.`, cite: '' },
+  { texte: 'À emporter ou livrés chez vous : la carte complète se commande en ligne, sept jours sur sept.', cite: '' },
 ];
 ---
 
-<Base description={`${site.nom}, restaurant japonais à ${site.adresse.commune} : sushi, maki et plats chauds, à emporter ou livrés. Ouvert 7 jours sur 7, de ${heure(s.ouverture)} à ${heure(s.fermeture)} le soir.`}>
+<Base description={`${site.nom}, restaurant japonais à ${site.adresse.commune} : sushi, maki et plats chauds, à emporter ou livrés. Ouvert 7 jours sur 7, de 12h à 14h et de ${heure(s.ouverture)} à ${heure(s.fermeture)}.`}>
   <section class="hero" data-hero aria-labelledby="titre">
     <div class="hero__volet hero__volet--g" data-volet="gauche">
       <img src={asset(voletG.src)} alt={voletG.alt} width={voletG.largeur} height={voletG.hauteur} fetchpriority="high" decoding="async" />
@@ -135,13 +135,6 @@ const bandes = [
       <h2 id="venir" class="tube tube--xl" data-tube>Venir</h2>
       <address>{adresseLigne()}<br />{site.accroche.complementAdresse}</address>
       <p><a class="link" href={telHref()}>{site.telephone}</a></p>
-      <p class="muted">{site.regles[1].texte}</p>
-    </div>
-    <div data-reveal="fade" data-delay="0.15">
-      <p class="meta" style="margin-bottom: var(--u)">Horaires</p>
-      <dl class="horaires">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
-      </dl>
     </div>
   </section>
 </Base>
