@@ -1,0 +1,1 @@
+- 2026-11-19 : site Wix dont la carte n'est qu'en affiches (originaux par suppression du /v1/… de l'URL static.wixstatic.com, lecture à l'œil) ; la page /la-carte et l'accueil portent deux versions de la carte avec prix différents.
