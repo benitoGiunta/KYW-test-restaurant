@@ -2,8 +2,8 @@
 import { horaires } from '../data/site';
 ---
 <dl class="sched">
-  {horaires.map((j) => (
-    <div class:list={[{ ferme: j.plages.length === 0 }]}>
+  {horaires.map((j, i) => (
+    <div data-d={(i + 1) % 7} class:list={[{ ferme: j.plages.length === 0 }]}>
       <dt>{j.jour}</dt>
       <dd>{j.plages.length ? j.plages.join(' et ') : 'Fermé'}</dd>
     </div>

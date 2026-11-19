@@ -12,7 +12,8 @@
 - **Signature** · 16,80 € le midi, posé en or à 10 rem dans les tarifs et repris à 80 € au réveillon
 - **Sections** · Hero · Tarifs (Table) · Showcase sushis · Buffet (Rows) · Wok (Bento 7/5) · Réveillon (Band) · Salle (Showcase + Rows) · Horaires et adresse (Schedule) · Pied
 - **Material** · real : tarifs, horaires, adresse, téléphone, textes · pictures : 16 photos du client en WebP · absent : avis, notes, e-mail, réseaux, histoire (rien d'inventé)
-- **Comp** · 2 built, c1 chosen
+- **Comp** · 2 built, no key · c1 chosen · reproduced (checked at 1280x800)
+- **Hero review** · self (pas d'outil Agent en session) · ship, 2 findings (hero mobile à 3 lignes, plafond noir au cadrage) · 2 resolved
 - **Sweep** · phases 2 et 3
 
 ## Approche
@@ -34,4 +35,22 @@ Brand, `dealt 0/3, seed restaurant-namur-asian-buffet-b13f·00f1f266·2026-11-19
 - [x] 3. deal, draw, scaffold, stamp · preuve : `src/styles/page.css:1-6`, `.logs/wok-deal.log`, `wok-draw.log`
 - [x] 4. comp avant build, deux comps capturées · preuve : `comp.md`, `.hallmark/comps/*.png`
 - [x] 5. pied KYW, noindex, `lang="fr"` · preuve : `src/layouts/Base.astro`
-- [ ] 6. sloplint rendu sur le site construit : phase 2 (hors navigateur en phase 1)
+- [x] 6. sloplint rendu `--stage hero --url` sur le site construit · preuve : `.logs/wokleg2-sloplint3.log` (0 FAIL réel ; FAIL 34 faux positif, `overflow-x: clip` est dans `base.css:4`, `scrollWidth` = viewport à 1280, 800, 375, 320)
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : `page.css` (transitions listées ; `transform`/`opacity`/couleurs seulement ; filet de prix en `scaleX`)
+- [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : `page.css` section phase 2, outline or sur fond sombre, saut au contenu mesuré visible au premier Tab
+- [x] 7. Fallback reduced motion et contenu visible sans script (27, 62) · preuve : mesure Playwright, opacité 1 sans JS et en `reduce`, animation du hero à `none`
+- [x] 17. Hero en `dvh` (6a) · preuve : `.hero { min-height: calc(100dvh - var(--nav-h)) }`
+- [x] 19. Sticky non superposés (56) · preuve : une seule nav sticky `--z-sticky-nav`, `scroll-padding-top` = nav + 16 px
+- [ ] 20. Radios-onglets (53) · non applicable : aucun switcher de carte (buffet à tarif unique, pas de liste de plats)
+- [ ] 21. Vidéo de fond (28a, 28b) · non applicable : aucune vidéo
+- [x] 22. Reveal sous `.js` seulement (62) · preuve : `.js [data-reveal]:not(.is-in)`, un seul recipe (opacité + 16 px)
+- [ ] 23. États d'input (39a) · non applicable : aucun champ ; l'original réserve par `tel:` et par un service externe (réveillon), liens conservés
+- [ ] 24. Tooltip et auto-rotation (17, 18) · non applicable : aucun tooltip ni boucle
+- [ ] 29. Aucun faux envoi (70) · satisfait par l'absence de formulaire
+- [x] 30. SVG décoratifs `aria-hidden` (33) · preuve : aucun svg ; barres du menu en `span aria-hidden`
+- [x] 48. Hover : un signal, conteneur, pas de rebond, pas de toast (11, 12, 16) · preuve : tout `:hover` sous `@media (hover: hover)`
+- [x] 49. `:active`, `:disabled`, contrôles 44 à 52 px (26b, 39b) · preuve : `.btn` 48 px, toggle 48 px, `.btn--outline`, `.nav-toggle`
+- [x] 56. Un primaire rempli (F4) · preuve : la nav passe en `.btn--outline` (or) ; le corail plein reste au hero et au corps
+- [x] 58. Une recette de conteneur ; un seul pattern de scroll (F8) · preuve : aucun scroll pattern, un reveal d'entrée d'écran
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : `base.css:4,8,9`
+- [x] 72. Responsive (60rem, 40rem, `hover`, `pointer: coarse`, table restackée, `dvh`, safe-area) · preuve : `page.css` fin ; mesures 375 et 320 sans débordement

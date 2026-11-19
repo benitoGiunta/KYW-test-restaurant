@@ -17,11 +17,14 @@ const liens = [
       <img src={u('photos/logo.webp')} width="44" height="44" alt="" />
       <span>{resto.nom}</span>
     </a>
-    <nav aria-label="Principale">
+    <nav class="site-nav" id="menu" popover aria-label="Principale">
       <ul class="nav-links">
         {liens.map((l) => <li><a href={l.href} aria-current={l.page && l.page === current ? 'page' : undefined}>{l.t}</a></li>)}
       </ul>
     </nav>
-    <div class="nav-cta"><a class="btn" href={resto.tel.href}>Réserver</a></div>
+    <div class="nav-cta">
+      <a class="btn btn--outline" href={resto.tel.href}>Réserver</a>
+      <button class="nav-toggle" type="button" popovertarget="menu" aria-controls="menu" aria-expanded="false" aria-label="Menu"><span class="bars" aria-hidden="true"></span></button>
+    </div>
   </div>
 </header>

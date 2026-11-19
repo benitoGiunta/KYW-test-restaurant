@@ -30,11 +30,31 @@ const og = new URL(u('photos/salle-rouge-800.webp'), Astro.site).href;
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Sans:wght@400;500;600&display=swap" />
   </head>
   <body>
-    <a class="visually-hidden" href="#contenu">Aller au contenu</a>
+    <a class="skip" href="#contenu">Aller au contenu</a>
     <Nav current={current} />
-    <main id="contenu"><slot /></main>
+    <main id="contenu" tabindex="-1"><slot /></main>
     <Pied />
     <Fragment set:html={SLOTS} />
+    <script>
+      // Reveal unique : les blocs [data-reveal] se posent à l'entrée dans l'écran (le CSS les laisse visibles sans script).
+      const rev = [...document.querySelectorAll('[data-reveal]')];
+      if (!('IntersectionObserver' in window)) rev.forEach((e) => e.classList.add('is-in'));
+      else {
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+        rev.forEach((e) => io.observe(e));
+        addEventListener('beforeprint', () => rev.forEach((e) => e.classList.add('is-in')));
+      }
+      // Menu mobile : aria-expanded suit le popover, un lien d'ancre le referme.
+      const menu = document.getElementById('menu'), tog = document.querySelector('.nav-toggle');
+      if (menu && tog && menu.matches('[popover]')) {
+        menu.addEventListener('toggle', (e) => tog.setAttribute('aria-expanded', String(e.newState === 'open')));
+        menu.addEventListener('click', (e) => { if (e.target.closest('a') && menu.matches(':popover-open')) menu.hidePopover(); });
+      }
+      // Jour courant dans les horaires (heure de Bruxelles).
+      const today = new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'Europe/Brussels' }).format(new Date());
+      const dow = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }[today];
+      document.querySelector(`.sched [data-d="${dow}"]`)?.setAttribute('aria-current', 'date');
+    </script>
     <KywFooter base={import.meta.env.BASE_URL} />
   </body>
 </html>
