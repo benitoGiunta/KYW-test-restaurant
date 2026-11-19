@@ -7,13 +7,16 @@ import { base, resto, menus, categories, photoPar } from '../data/site';
   <section class="tete" aria-labelledby="h-carte">
     <div class="container tete__in">
       <h1 id="h-carte">La carte</h1>
-      <p class="lead">Nigiri, maki, temaki, menus, plats chauds, salades, bières et boissons, avec les prix du site.</p>
-      <nav class="sauts" aria-label="Rayons de la carte">
-        <a href="#menus">Menus</a>
-        {categories.map((c) => <a href={`#${c.slug}`}>{c.nom}</a>)}
-      </nav>
+      <p class="lead">Toute la carte, avec les prix du site.</p>
     </div>
   </section>
+
+  <nav class="sauts" aria-label="Rayons de la carte" data-sauts>
+    <div class="container sauts__in">
+      <a href="#menus">Menus</a>
+      {categories.map((c) => <a href={`#${c.slug}`}>{c.nom}</a>)}
+    </div>
+  </nav>
 
   <section class="rayon" id="menus" aria-labelledby="h-menus">
     <div class="container rayon__in">
@@ -53,4 +56,18 @@ import { base, resto, menus, categories, photoPar } from '../data/site';
       </div>
     </section>
   ))}
+  <script is:inline>
+    (() => {
+      const rail = document.querySelector('[data-sauts] .sauts__in'); if (!rail || !('IntersectionObserver' in window)) return;
+      const liens = [...rail.querySelectorAll('a')], par = new Map(liens.map((a) => [a.getAttribute('href').slice(1), a]));
+      const io = new IntersectionObserver((es) => es.forEach((e) => {
+        if (!e.isIntersecting) return;
+        liens.forEach((a) => a.removeAttribute('aria-current'));
+        const a = par.get(e.target.id); if (!a) return;
+        a.setAttribute('aria-current', 'location');
+        if (rail.scrollWidth > rail.clientWidth) rail.scrollTo({ left: a.offsetLeft - 24, behavior: 'auto' });
+      }), { rootMargin: '-30% 0px -60% 0px' });
+      document.querySelectorAll('.rayon').forEach((r) => io.observe(r));
+    })();
+  </script>
 </Base>

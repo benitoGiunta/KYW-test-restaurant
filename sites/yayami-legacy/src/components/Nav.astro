@@ -1,14 +1,32 @@
 ---
 import { base, resto } from '../data/site';
+const chemin = Astro.url.pathname;
+const surCarte = chemin.replace(/\/$/, '').endsWith('/carte');
+const liens = [
+  { href: `${base}carte/`, nom: 'La carte', courant: surCarte },
+  { href: `${base}#livraison`, nom: 'Livraison', courant: false },
+  { href: '#horaires', nom: 'Horaires', courant: false },
+];
 ---
 <header class="nav">
   <div class="container nav__in">
-    <a class="nav__logo" href={base} aria-label="Yayami Sushi, accueil"><img src={`${base}photos/logo.png`} width="1672" height="274" alt="YAYAMI" /></a>
     <nav class="nav__links" aria-label="Principale">
-      <a href={`${base}carte/`}>La carte</a>
-      <a href={`${base}#livraison`}>Livraison</a>
-      <a href="#horaires">Horaires</a>
+      {liens.map((l) => <a href={l.href} aria-current={l.courant ? 'page' : undefined}>{l.nom}</a>)}
     </nav>
-    <a class="btn btn--primary nav__cta" href={resto.commander} rel="noopener">Commander</a>
+    <a class="nav__logo" href={base} aria-label="Yayami Sushi, accueil"><img src={`${base}photos/logo.png`} width="1672" height="274" alt="YAYAMI" /></a>
+    <div class="nav__droite">
+      <a class="btn btn--primary nav__cta" href={resto.commander} rel="noopener">Commander</a>
+      <button class="btn nav__menu" type="button" aria-haspopup="dialog" aria-controls="menu-mobile" aria-expanded="false" hidden>Menu</button>
+    </div>
   </div>
+  <dialog class="menu" id="menu-mobile" aria-label="Menu">
+    <div class="menu__in">
+      <button class="btn menu__fermer" type="button" aria-label="Fermer le menu">Fermer</button>
+      <ul class="menu__liens">
+        {liens.map((l, i) => <li><a href={l.href} aria-current={l.courant ? 'page' : undefined} autofocus={i === 0 ? true : undefined}>{l.nom}</a></li>)}
+      </ul>
+      <a class="btn btn--primary menu__cta" href={resto.commander} rel="noopener">Commander en ligne</a>
+      <p class="menu__tel"><a href={resto.telHref}>{resto.telTexte}</a></p>
+    </div>
+  </dialog>
 </header>

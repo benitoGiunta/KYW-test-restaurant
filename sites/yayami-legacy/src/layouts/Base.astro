@@ -43,6 +43,39 @@ const ld = JSON.stringify({
     <KywFooter base={base} />
     <script is:inline>
       document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });
+      (() => {
+        const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // menu mobile : <dialog> modal, focus rendu au bouton par le navigateur
+        const bouton = document.querySelector('.nav__menu'), menu = document.getElementById('menu-mobile');
+        if (bouton && menu && menu.showModal) {
+          bouton.hidden = false;
+          const fermer = () => menu.close();
+          bouton.addEventListener('click', () => { menu.showModal(); bouton.setAttribute('aria-expanded', 'true'); });
+          menu.addEventListener('close', () => bouton.setAttribute('aria-expanded', 'false'));
+          menu.querySelector('.menu__fermer').addEventListener('click', fermer);
+          menu.addEventListener('click', (e) => { if (e.target === menu || e.target.closest('a[href^="#"], a[href^="/"]')) fermer(); });
+          matchMedia('(min-width: 60rem)').addEventListener('change', (m) => { if (m.matches && menu.open) fermer(); });
+        }
+        // jour et service en cours (heure de Namur), horaires du site : 12 h 00 à 14 h 00 et 18 h 00 à 22 h 00, 7 jours sur 7
+        const etat = document.querySelector('[data-etat]');
+        if (etat) {
+          const [h, m] = new Intl.DateTimeFormat('fr-BE', { timeZone: 'Europe/Brussels', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).format(new Date()).split(':').map(Number);
+          const t = h * 60 + m, S = [['Midi', 720, 840], ['Soir', 1080, 1320]];
+          const cur = S.find(([, a, b]) => t >= a && t < b), nxt = S.find(([, a]) => t < a) || S[0];
+          const f = (x) => Math.floor(x / 60) + '\u00a0h\u00a000';
+          etat.textContent = cur ? `Ouvert maintenant, jusqu’à ${f(cur[2])}` : `Fermé, rouvre ${t >= 1320 ? 'demain ' : ''}à ${f(nxt[1])}`;
+          etat.dataset.ouvert = cur ? 'oui' : 'non'; etat.hidden = false;
+          document.querySelectorAll('.hor__l').forEach((l) => { if (cur && l.dataset.service === cur[0]) l.setAttribute('aria-current', 'time'); });
+        }
+        // un seul reveal : la photographie sort du fond une fois (thème Darkroom, mouvement still)
+        const figs = [...document.querySelectorAll('[data-reveal]')];
+        if (!figs.length) return;
+        if (reduit || !('IntersectionObserver' in window)) { figs.forEach((f) => f.classList.add('is-in')); return; }
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+        figs.forEach((f) => io.observe(f));
+        // filet : si l’observateur ne répond pas, tout est montré après 3 s
+        setTimeout(() => figs.forEach((f) => f.classList.add('is-in')), 3000);
+      })();
     </script>
   </body>
 </html>

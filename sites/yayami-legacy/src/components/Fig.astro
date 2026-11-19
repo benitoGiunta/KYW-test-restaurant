@@ -4,7 +4,7 @@ interface Props { k: string; sizes?: string; eager?: boolean; class?: string; le
 const { k, sizes = '(min-width: 60rem) 50vw, 100vw', eager = false, legende } = Astro.props;
 const p = photos[k];
 ---
-<figure class:list={['fig', Astro.props.class]} data-fond={p.fond ? 'noir' : 'plat'}>
+<figure class:list={['fig', Astro.props.class]} data-reveal data-fond={p.fond ? 'noir' : 'plat'}>
   <div class="fig__slot" data-slot={k} data-alt={p.alt}>
     <img src={`${base}photos/${p.src}`} width={p.w} height={p.h} alt={p.alt} sizes={sizes}
       loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} decoding={eager ? 'sync' : 'async'} />
