@@ -1,4 +1,4 @@
-# ETAT — wok-de-jin · portfolio · phase 2 sur 3 (motion, signature, états, mobile)
+# ETAT — wok-de-jin · portfolio · phase 3 sur 3 (QA terminée)
 
 ## Fait en phase 2
 - Signature « La grande tablée » : bug corrigé (le rail mobile s'affichait aussi en desktop, +650 px de hauteur et titre décentré : `.table .table__rail`) ; 12 tirages repositionnés (haut, bas, deux flancs) pour laisser le titre lisible au centre ; bouton « Ranger la table » (desktop, remet tirages et objets en place avec rebond, aussi en reduced motion, sans animation) ; curseur `grab` sur les tirages.
@@ -20,3 +20,8 @@
 ## Pièges
 - Ne pas rebuilder pendant un shoot ou une mesure de fond (dist vidé sous le serveur).
 - Serveur de test (PID 5213) arrêté en fin de passe.
+
+## Phase 3 (QA)
+- Fait : axe ciblé 7 pages (0 violation), 404 réelle vérifiée, apostrophes de la 404 corrigées, build final OK, RAPPORT.md écrit.
+- Reste : UTILISATION.md et gabarits/guinguette (protégés), commit [publier] et pnpm index par l'orchestrateur.
+- Serveur de test PID 15648 arrêté.
