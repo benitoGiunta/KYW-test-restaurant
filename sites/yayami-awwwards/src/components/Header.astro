@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/photos/logo.png';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
+const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
+const liens = [
+  { href: '/carte/', label: 'La carte' },
+  { href: '/a-propos/', label: 'La maison' },
+];
+---
+<header class="tete">
+  <a class="tete__marque" href={base} aria-label="Yayami Sushi, accueil" aria-current={path === base ? 'page' : undefined}>
+    <Image src={logo} alt="" width={160} height={26} densities={[1, 2]} loading="eager" decoding="async" />
+  </a>
+  <nav class="tete__nav" aria-label="Navigation principale">
+    <ul>
+      {liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      <li class="tete__cache"><a class="tete__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></li>
+      <li><a class="cta cta--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="cta__txt">Commander</span></a></li>
+    </ul>
+  </nav>
+</header>

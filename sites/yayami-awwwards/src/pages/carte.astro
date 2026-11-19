@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, categories, menus, euro } from '../data/site';
+const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '-');
+const photoCat: Record<string, 'assortiment' | 'udon' | 'wakame' | 'asahi' | 'ramune' | 'california' | undefined> = {
+  Nigiri: undefined, Maki: 'assortiment', Temaki: undefined, 'Plats chauds': 'udon', Salades: 'wakame', Bières: 'asahi', Boissons: 'ramune',
+};
+const notes: Record<string, string | undefined> = { Nigiri: 'Les deux pièces.', Maki: 'Le nombre de pièces est indiqué sous chaque nom.' };
+---
+<Base page="carte" title="La carte" description="La carte de Yayami Sushi à Namur : nigiri, maki, temaki, plats chauds, salades, bières, boissons et neuf menus, avec les prix du restaurant.">
+  <section class="entete">
+    <div class="wrap cols">
+      <h1 class="display display--mega">La carte</h1>
+      <p class="entete__intro">{categories.length} rubriques et neuf menus. {site.emporterRemise}&nbsp;% de remise à l’emporter, livraison offerte dès {site.livraison.seuil}&nbsp;€.</p>
+      <div class="sceau" aria-label="Nigiri : 4,50 euros les deux pièces"><span class="sceau__haut">Nigiri</span><span class="sceau__prix chiffre">4,50&nbsp;€</span><span class="sceau__bas">les deux pièces</span></div>
+    </div>
+  </section>
+  <nav class="nav-cat" aria-label="Rubriques de la carte">
+    <ul>
+      {categories.map((c) => <li><a href={`#${slug(c.nom)}`}>{c.nom}</a></li>)}
+      <li><a href="#menus">Menus</a></li>
+    </ul>
+  </nav>
+  {categories.map((c) => {
+    const photo = photoCat[c.nom];
+    return (
+      <section class:list={['cat', !photo && 'cat--sans-photo']} id={slug(c.nom)} aria-labelledby={`t-${slug(c.nom)}`}>
+        <div class="wrap cols">
+          {photo && <figure class="cat__media"><Photo cle={photo} widths={[480, 800]} sizes="(max-width: 52rem) 80vw, 40vw" /></figure>}
+          <div class="cat__corps">
+            <h2 id={`t-${slug(c.nom)}`} class="display display--xl cat__titre">{c.nom}</h2>
+            {notes[c.nom] && <p class="cat__note">{notes[c.nom]}</p>}
+            <ul class="plats">
+              {c.plats.map((p) => (
+                <li class="plat">
+                  <span class="plat__nom">{p.nom}</span>
+                  {p.detail && <span class="plat__detail">{p.detail}</span>}
+                  <span class="plat__prix chiffre">{euro(p.prix)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    );
+  })}
+  <section class="cat cat--menus" id="menus" aria-labelledby="t-menus">
+    <div class="wrap cols">
+      <figure class="cat__media"><Photo cle="matsu" widths={[480, 800, 1200]} sizes="(max-width: 52rem) 80vw, 40vw" /></figure>
+      <div class="cat__corps">
+        <h2 id="t-menus" class="display display--xl cat__titre">Menus</h2>
+        <ul class="plats">
+          {menus.map((m) => (
+            <li class="plat">
+              <span class="plat__nom">{m.nom}</span>
+              {m.detail && <span class="plat__detail">{m.detail}</span>}
+              <span class="plat__prix chiffre">{euro(m.prix)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>

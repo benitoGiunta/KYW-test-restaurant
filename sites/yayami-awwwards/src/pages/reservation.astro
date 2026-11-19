@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+import { site, services } from '../data/site';
+---
+<Base page="reservation" title="Commander" description="Commander chez Yayami Sushi à Namur : appelez le 081 34 37 89 ou commandez en ligne, à emporter avec 10 % de remise ou livré dès 30 euros.">
+  <section class="entete">
+    <div class="wrap cols">
+      <h1 class="display display--mega">Commander</h1>
+      <p class="entete__intro">Pas de réservation de table en ligne : on commande par téléphone ou sur le site de la maison.</p>
+    </div>
+  </section>
+  <section class="cmd" aria-label="Moyens de commander">
+    <div class="wrap cols">
+      <div class="cmd__tel">
+        <p class="cmd__numero chiffre"><a href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+        <div class="cmd__actions">
+          <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler</span></a>
+          <a class="cta cta--ligne" href={site.commandeUrl} rel="noopener"><span class="cta__txt">Commander en ligne</span></a>
+        </div>
+        <p class="petit">La commande en ligne s’ouvre sur le site officiel yayami.be. {site.emporterRemise}&nbsp;% de remise à l’emporter, livraison gratuite dès {site.livraison.seuil}&nbsp;€.</p>
+      </div>
+      <div class="cmd__infos">
+        <section aria-labelledby="c-adresse">
+          <h2 id="c-adresse" class="titre-m">Venir chercher</h2>
+          <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+          <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+        </section>
+        <section aria-labelledby="c-horaires">
+          <h2 id="c-horaires" class="titre-m">Horaires</h2>
+          <ul>{services.map((s) => <li class="chiffre">Tous les jours, {s.libelle.toLowerCase()}</li>)}</ul>
+        </section>
+        <section aria-labelledby="c-zone">
+          <h2 id="c-zone" class="titre-m">Livraison</h2>
+          <p class="chiffre">{site.livraison.codes.join(', ')}</p>
+        </section>
+        <section aria-labelledby="c-paiement">
+          <h2 id="c-paiement" class="titre-m">Paiement</h2>
+          <ul>{site.paiements.map((p) => <li>{p}</li>)}</ul>
+        </section>
+      </div>
+    </div>
+  </section>
+</Base>
