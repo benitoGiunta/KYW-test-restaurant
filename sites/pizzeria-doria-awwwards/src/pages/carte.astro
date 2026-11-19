@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { casiers, eur, nbPizzas } from '../data/site';
+const desc = (d: string | null) => (d ? d.replace(/\s+-\s+/g, ' · ') : '');
+---
+<Base title="La carte" page="carte" description={`La carte de la Pizzeria Doria à Malonne : ${nbPizzas} pizzas et pains, pâtes fraîches, viandes, desserts, vins d’Italie, rangés en casiers.`}>
+  <section class="entete wrap" aria-labelledby="titre">
+    <h1 id="titre" class="entete__titre display">La carte</h1>
+    <p class="entete__lead">Douze casiers, du plus demandé au dernier verre. Ouvrez-les un à un ou parcourez la liste.</p>
+    <nav class="plaques" aria-label="Les casiers de la carte">
+      <ul>
+        {casiers.map((c) => <li><a class="plaque-lien" href={`#${c.slug}`}><span class="plaque" aria-hidden="true">{c.numero}</span><span>{c.nom}</span></a></li>)}
+      </ul>
+    </nav>
+  </section>
+
+  <section class="casiers wrap" aria-label="La carte complète">
+    {casiers.map((c, i) => (
+      <details class="tiroir" id={c.slug} open={i === 0}>
+        <summary class="tiroir__face">
+          <span class="plaque" aria-hidden="true">{c.numero}</span>
+          <span class="tiroir__nom display">{c.nom}</span>
+          <span class="tiroir__meta">{c.plats.length} lignes{c.min != null && c.max != null ? <Fragment> · <span class="prix">{eur(c.min)} à {eur(c.max)}</span></Fragment> : null}</span>
+          <span class="poignee" aria-hidden="true"></span>
+        </summary>
+        <div class="tiroir__fond">
+          {c.slug === 'pizzas' && <p class="tiroir__note">Pizzas au fior di latte (sans lactose sur demande) et à la tomate San Marzano. Sur place ou à emporter.</p>}
+          {c.slug === 'pasta' && <p class="tiroir__note">Pâtes fraîches bio Eggusto : supplément de 2,50 €.</p>}
+          <ul class="plats">
+            {c.plats.map((p) => (
+              <li class="plat">
+                <span class="plat__nom">{p.nom}</span>
+                <span class="plat__prix prix">{p.prix != null ? eur(p.prix) : ''}</span>
+                {p.description && <span class="plat__desc">{desc(p.description)}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </details>
+    ))}
+  </section>
+
+  <section class="paire wrap" aria-label="À l’emporter">
+    <figure class="paire__photo">
+      <Photo cle="coupe" widths={[480, 800]} sizes="(min-width: 64rem) 30vw, 90vw" />
+      <figcaption>Photo libre illustrative, pas une photo du restaurant.</figcaption>
+    </figure>
+    <div class="paire__texte">
+      <h2 class="display">Sur place ou à emporter</h2>
+      <p>Tout se prend à table dans la salle des coffres ou à emporter, en ligne ou par téléphone. Paiement par Payconiq ou en espèces.</p>
+      <p class="paire__actions"><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></p>
+    </div>
+  </section>
+</Base>

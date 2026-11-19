@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, casier, casiers, jours, libelleJour, suggestions, midis, eur, nbPizzas } from '../data/site';
+const mur = ['pizzas', 'pasta', 'antipasti', 'viandes', 'desserts', 'vins-bouteilles'].map((s) => casier(s));
+const fourchette = (c: (typeof casiers)[number]) => (c.min != null && c.max != null ? `${eur(c.min)} à ${eur(c.max)}` : '');
+---
+<Base page="home">
+  <section class="hero wrap" aria-labelledby="titre">
+    <h1 id="titre" class="hero__titre display"><span>Pizzeria</span> <span>Doria</span></h1>
+    <p class="hero__lead">Pizzas au fior di latte, pâtes fraîches et plats italiens, servis dans l’ancienne salle des coffres d’une banque, à Malonne.</p>
+    <p class="hero__actions">
+      <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+      <a class="cta cta--contour" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
+    </p>
+    <figure class="hero__photo">
+      <Photo cle="coffres" widths={[480, 800, 1200]} sizes="(min-width: 64rem) 34vw, 90vw" prioritaire />
+      <figcaption>La salle des coffres. {site.credit}.</figcaption>
+    </figure>
+    <p class="hero__bas">{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}. Fermé le mardi et le mercredi.</p>
+  </section>
+
+  <section class="mur wrap" aria-labelledby="t-mur">
+    <h2 id="t-mur" class="mur__titre display">La carte, casier par casier</h2>
+    <p class="mur__intro">Douze casiers, {nbPizzas} pizzas et pains, quinze plats de pâtes, des viandes, des vins d’Italie. Ouvrez celui qui vous tente.</p>
+    <ul class="mur__liste">
+      {mur.map((c) => (
+        <li>
+          <a class="rang" href={u(`/carte/#${c.slug}`)}>
+            <span class="plaque" aria-hidden="true">{c.numero}</span>
+            <span class="rang__nom display">{c.nom}</span>
+            <span class="rang__meta"><span>{c.plats.length} lignes</span><span class="prix">{fourchette(c)}</span></span>
+            <span class="poignee" aria-hidden="true"></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="mur__suite"><a class="lien" href={u('/carte/')}>Voir toute la carte</a></p>
+  </section>
+
+  <section class="mot wrap" aria-labelledby="t-mot">
+    <h2 id="t-mot" class="mot__texte display">Ici, la pizza se sert là où l’on gardait l’argent des autres.</h2>
+    <p class="mot__suite">Ouverte en octobre 2017, la Doria occupe depuis mai 2023 une ancienne banque restaurée. Rocco et Luigi la tiennent. <a class="lien" href={u('/histoire/')}>Lire l’histoire</a></p>
+  </section>
+
+  <section class="coffre" aria-labelledby="t-sugg">
+    <div class="wrap coffre__grille">
+      <figure class="coffre__photo">
+        <Photo cle="basilic" widths={[480, 800]} sizes="(min-width: 64rem) 36vw, 90vw" />
+        <figcaption>Photo libre illustrative, pas une photo du restaurant.</figcaption>
+      </figure>
+      <div class="coffre__texte">
+        <h2 id="t-sugg" class="display coffre__titre">En ce moment</h2>
+        <p class="coffre__note">{suggestions.titre}.</p>
+        <ul class="sugg">
+          {suggestions.plats.map((p) => (
+            <li><span class="sugg__nom display">{p.nom}</span><span class="sugg__detail">{p.detail}</span><span class="prix sugg__prix">{eur(p.prix)}</span></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="heures wrap" aria-labelledby="t-heures">
+    <h2 id="t-heures" class="heures__titre display">Heures d’ouverture</h2>
+    <ul class="heures__liste">
+      {jours.map((j) => (
+        <li class:list={[{ 'est-ferme': j.creneaux.length === 0 }]}><span class="heures__jour">{j.nom}</span><span class="heures__h">{libelleJour(j)}</span></li>
+      ))}
+    </ul>
+    <div class="heures__midis">
+      <h3 class="display">{midis.titre}</h3>
+      <p>{midis.texte}</p>
+      <p><a class="lien" href={site.emporterUrl} rel="noopener">Commander à emporter en ligne</a></p>
+    </div>
+  </section>
+
+  <section class="plein" aria-labelledby="t-vins">
+    <div class="plein__image"><Photo cle="bouchons" widths={[800, 1200, 1500]} sizes="100vw" decorative /></div>
+    <div class="wrap plein__texte">
+      <h2 id="t-vins" class="display">Une carte des vins italienne</h2>
+      <p>Vingt-deux bouteilles, cinq vins au verre ou au pichet dont une sélection choisie par Luigi, et deux bières de la région : la Philomène de Malonne et la Vulpio de Wépion.</p>
+      <p><a class="lien lien--clair" href={u('/carte/#vins-bouteilles')}>Ouvrir le casier des vins</a></p>
+    </div>
+  </section>
+</Base>

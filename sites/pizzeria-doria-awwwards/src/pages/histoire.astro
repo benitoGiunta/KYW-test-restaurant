@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, histoire, equipe, pratique } from '../data/site';
+---
+<Base title="Histoire" page="histoire" description="L’histoire de la Pizzeria Doria : ouverte en octobre 2017 par Rocco et Luigi, installée depuis mai 2023 dans une ancienne banque restaurée à Malonne.">
+  <section class="entete wrap" aria-labelledby="titre">
+    <h1 id="titre" class="entete__titre display">Une histoire de famille, dans une banque</h1>
+  </section>
+  <section class="recit wrap">
+    <figure class="recit__photo">
+      <Photo cle="coffres" widths={[480, 800, 1200]} sizes="(min-width: 64rem) 40vw, 90vw" prioritaire />
+      <figcaption>Entre les casiers. {site.credit}.</figcaption>
+    </figure>
+    <div class="recit__texte">
+      {histoire.map((p) => <p>{p}</p>)}
+      <h2 class="display recit__sous">Aux manettes</h2>
+      <ul class="equipe">
+        {equipe.map((e) => <li><span class="equipe__nom display">{e.nom}</span><span>{e.role}</span></li>)}
+      </ul>
+    </div>
+  </section>
+  <section class="paire wrap" aria-labelledby="t-pratique">
+    <figure class="paire__photo">
+      <Photo cle="pate" widths={[480, 800]} sizes="(min-width: 64rem) 30vw, 90vw" />
+      <figcaption>Photo libre illustrative, pas une photo du restaurant.</figcaption>
+    </figure>
+    <div class="paire__texte">
+      <h2 id="t-pratique" class="display">Bon à savoir</h2>
+      <dl class="pratique">
+        {pratique.map((p) => <div><dt>{p.titre}</dt><dd>{p.texte}</dd></div>)}
+      </dl>
+      <p class="paire__actions"><a class="cta" href={u('/carte/')}><span class="cta__txt">Voir la carte</span></a></p>
+    </div>
+  </section>
+</Base>
