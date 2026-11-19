@@ -15,10 +15,11 @@
 - Mesures (`.logs/tariki-aw2-check*.log`, script scratchpad) : aucune erreur console, `scrollWidth` = viewport sur 5 pages à 1440 et 390, aucun texte caché dans le viewport après l'intro, réduit `hiddenText=0` et immobile, menu mobile conforme, navigation ClientRouter vers la carte OK.
 - Build OK (`scripts/q.sh … pnpm build:site sites/tariki-awwwards`).
 
-## Reste (phase 3)
-- Shoot complet (agent captures), lire `report.json` : `idleMotion`/`idleAt`, `settledMs`, `noHoverChange`, contraste, cibles, axe ; points 35, 36, 45, 47 de DESIGN.md.
-- RAPPORT.md, Lighthouse, OG à revérifier (inchangée).
-- À juger : écart vertical entre CTA et route dans le héros à 1440×900 (environ 100 px), fil de la carte rempli par la progression de page (pas par rubrique).
+## Phase 3 (construction-3), fait
+- Planches et report.json lus ; page réservation captée (0 erreur, axe 0). Index mobile : « Accompagnements » ne déborde plus. Audit 0 FAIL, 3 WARN justifiés. Build OK. RAPPORT.md écrit.
+
+## Reste
+- Critique jury indépendant (Agent absent) et accessoire retiré ; 404 réelle à re-photographier ; contraste de la note du pied KYW (paquet) ; OG à revérifier.
 
 ## Décisions et hypothèses
 - Repos révisé : la Concept Card disait « immobilité » ; la route qui coule sous le voyageur porte le verbe « cheminer », DESIGN.md mis à jour.
