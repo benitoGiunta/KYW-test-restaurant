@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import CarteBloc from '../components/CarteBloc.astro';
+import { site, groupes, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const bouchons = photoDe('/photos/bouchons.webp');
+---
+<Base title="Vins et boissons" description={`Vins italiens, bières locales (Philomène de Malonne, Vulpio de Wépion), apéritifs et digestifs chez ${site.nom}.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>Vins et boissons</h1>
+      <p class="lead">Une carte des vins italiens, une sélection au verre choisie par Luigi, et des bières du coin : la Philomène de Malonne et la Vulpio de Wépion.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--canard is-flottant" style="--x:86%;--y:0%;--r:12deg;--taille:130px" aria-hidden="true"><Objet id="bouteille" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="carte">
+        <h2 class="sr-only">Les vins</h2>
+        <CarteBloc categories={groupes.vins} long />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap maison__grille">
+      <figure class="tirage" style="--w:100%; cursor: default; --r:3deg">
+        <img src={asset(bouchons.src)} alt={bouchons.alt} width={bouchons.largeur} height={bouchons.hauteur} loading="lazy" decoding="async" style="aspect-ratio: 3 / 4; object-fit: cover" />
+        <figcaption>Cadre de bouchons</figcaption>
+      </figure>
+      <div class="maison__texte">
+        <h2 class="section__titre">Avant, pendant, <em>après</em></h2>
+        <p class="lead">Apéritifs, bières, softs, cafés et digestifs complètent la carte.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="carte">
+        <h2 class="sr-only">Apéritifs, bières, softs, cafés et digestifs</h2>
+        <CarteBloc categories={groupes.boissons} long />
+      </div>
+      <div class="actions" style="justify-content:center"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>

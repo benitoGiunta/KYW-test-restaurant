@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import CarteBloc from '../components/CarteBloc.astro';
+import { site, guinguette, groupes, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const photos = ['/photos/friture.webp', '/photos/roquette.webp', '/photos/pate.webp', '/photos/pizza-coupe.webp'].map(photoDe);
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const legende = (p: { alt: string; placeholder: boolean }) => (p.placeholder ? 'Photo libre, illustrative' : p.alt.split(',')[0]);
+---
+<Base title="La carte" description={`La carte de ${site.nom} à Malonne : quarante-cinq pizzas et pains, pâtes fraîches, viandes, salades, antipasti et desserts.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>La carte</h1>
+      <p class="lead">Quarante-cinq pizzas et pains, des pâtes fraîches, des viandes et des desserts. À table ou à emporter.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:84%;--y:4%;--r:14deg;--taille:120px" aria-hidden="true"><Objet id="pizza" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="carte">
+        <h2 class="sr-only">Suggestions du moment</h2>
+        <div class="cat">
+          <h3 class="cat__titre"><Objet id="tomate" />Suggestions de {g.suggestions.periode}</h3>
+          <div class="sugg">
+            {g.suggestions.plats.map((p) => (
+              <article>
+                <h4 class="sugg__nom">{p.nom}</h4>
+                <p class="muted">{p.description}</p>
+                <p class="sugg__prix">{p.prix}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+        <CarteBloc categories={groupes.pizzas} long />
+        <p class="muted" style="font-size:var(--t-s);margin-bottom:calc(var(--u)*4)">Fior di latte sans lactose sur demande. Pâtes fraîches bio artisanales Eggusto : supplément de 2,50 €.</p>
+        <CarteBloc categories={groupes.cuisine} long />
+        <p class="muted" style="font-size:var(--t-s)">Paiement {site.paiement}. Boissons et vins : <a class="link" href={u('/vins/')}>page des vins et boissons</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">Dans <em>l'assiette</em></h2>
+      <div class="grille-photos">
+        {photos.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-4, 3, -2, 5][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{legende(p)}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>

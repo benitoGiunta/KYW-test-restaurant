@@ -1,0 +1,36 @@
+---
+// À emporter : faits du dossier seulement (commande en ligne via Pizzy, téléphone, paiement). Aucun horaire de retrait inventé.
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, guinguette, horaireTexte, telHref } from '../data/site';
+const g = guinguette;
+---
+<Base title="À emporter" description={`Commander à emporter chez ${site.nom} à Malonne : en ligne via ${site.emporter.outil} ou par téléphone au ${site.telephone}.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>À emporter</h1>
+      <p class="lead">Pizzas, pâtes et le reste de la carte se prennent sur place ou à emporter. Commandez en ligne ou par téléphone.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:84%;--y:0%;--r:10deg;--taille:130px" aria-hidden="true"><Objet id="pizza" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="actions" style="margin-top:0">
+        <a class="btn btn--plein" href={site.emporter.url} rel="noopener">Commander sur {site.emporter.outil}</a>
+        <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+      </div>
+      <div class="carte" style="margin-top:calc(var(--u)*4)">
+        <h2 class="sr-only">Ce qu'il faut savoir</h2>
+        <ul role="list">
+          <li class="plat"><span class="plat__nom">Paiement</span><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">{site.paiement}</span></li>
+          <li class="plat"><span class="plat__nom">Cornets de pâtes, midis scolaires</span><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">{g.midis.cornets}</span></li>
+          <li class="plat"><span class="plat__nom">Paninis maison, midis scolaires</span><span class="plat__points" aria-hidden="true"></span><span class="plat__prix">{g.midis.paninis}</span></li>
+        </ul>
+        <p class="muted" style="margin-top:calc(var(--u)*3);font-size:var(--t-s)">Le fior di latte sans lactose se demande à la commande. {site.noteCuisine}</p>
+      </div>
+    </div>
+  </section>
+</Base>

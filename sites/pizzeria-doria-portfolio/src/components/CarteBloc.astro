@@ -1,0 +1,23 @@
+---
+// Un bloc de carte : titre à pictogramme, puis lignes nom / pointillés / prix. `long` : liste en deux colonnes.
+import Objet from './Objet.astro';
+import { guinguette, type Categorie } from '../data/site';
+interface Props { categories: Categorie[]; long?: boolean }
+const { categories, long = false } = Astro.props;
+const picto = (cat: string) => guinguette.pictos.find((p) => cat.startsWith(p.categorie))?.picto ?? 'fourchette';
+const titre = (c: string) => c.replace(' (bouteilles 75 cl)', '');
+---
+{categories.map((c) => (
+  <div class="cat">
+    <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{titre(c.categorie)}{c.categorie.includes('bouteilles') && <span class="plat__sl">75 cl</span>}</h3>
+    <ul role="list" class:list={{ 'liste-longue': long }}>
+      {c.plats.map((p) => (
+        <li class="plat">
+          <span class="plat__nom">{p.nom}{p.sansLactose && <span class="plat__sl">fior di latte sans lactose sur demande</span>}{p.description && <span class="plat__desc">{p.description}</span>}</span>
+          <span class="plat__points" aria-hidden="true"></span>
+          {p.prix && <span class="plat__prix">{p.prix}</span>}
+        </li>
+      ))}
+    </ul>
+  </div>
+))}
