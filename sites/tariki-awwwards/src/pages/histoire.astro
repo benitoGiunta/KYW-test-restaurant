@@ -5,12 +5,12 @@ import { histoire, etapes } from '../data/site';
 ---
 <Base page="histoire" title="L’histoire" description="L’histoire de Tariki, « mon chemin » : de la Syrie à Namur par le Liban, la Turquie et la Grèce, jusqu’au feu de bois.">
   <section class="wrap entete" aria-labelledby="titre-histoire">
-    <h1 class="entete__titre display" id="titre-histoire" style="--mot: 4.5" data-split>L’histoire</h1>
-    <p class="entete__texte">{histoire.lead}</p>
+    <h1 class="entete__titre display" id="titre-histoire" style="--mot: 4.5" data-split data-intro>L’histoire</h1>
+    <p class="entete__texte" data-reveal="up" data-intro data-delay="0.15">{histoire.lead}</p>
   </section>
 
   <section class="wrap chemin" aria-label="Le chemin">
-    <div class="chemin__texte">
+    <div class="chemin__texte" data-reveal="up">
       {histoire.paragraphes.map((p) => <p>{p}</p>)}
       <ul class="valeurs">{histoire.valeurs.map((v) => <li>{v}</li>)}</ul>
     </div>
@@ -20,14 +20,14 @@ import { histoire, etapes } from '../data/site';
   </section>
 
   <section class="wrap wrap--bloc" aria-labelledby="titre-trilogie">
-    <h2 class="titre-sec display" id="titre-trilogie">Trois adresses, un même chemin</h2>
-    <ul class="trilogie">
+    <h2 class="titre-sec display" id="titre-trilogie" data-split>Trois adresses, un même chemin</h2>
+    <ul class="trilogie" data-reveal="up">
       {histoire.trilogie.map((t) => <li><strong>{t.nom}</strong><span>{t.note}</span></li>)}
     </ul>
   </section>
 
   <section class="wrap" style="padding-bottom: var(--aere)" aria-label="Le feu">
-    <figure class="feu">
+    <figure class="feu" data-reveal="clip">
       <Photo cle="feu" widths={[480, 800, 1024]} sizes="100vw" />
       <figcaption class="petit">Feu de camp : visuel d’ambiance du site de Tariki, illustratif.</figcaption>
     </figure>

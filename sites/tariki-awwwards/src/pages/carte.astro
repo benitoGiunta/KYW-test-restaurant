@@ -6,8 +6,8 @@ const eur = (n: number) => `${n} €`;
 ---
 <Base page="carte" title="La carte" description="La carte de Tariki : à grignoter, à partager, grillades au feu de bois, desserts, et le midi sandwichs à 9 € ou formule à 17 €.">
   <section class="wrap entete" aria-labelledby="titre-carte">
-    <h1 class="entete__titre display" id="titre-carte" style="--mot: 3.82" data-split>La carte</h1>
-    <p class="entete__texte">Volontairement courte. Cinq étapes le soir, un sandwich au feu de bois le midi.</p>
+    <h1 class="entete__titre display" id="titre-carte" style="--mot: 3.82" data-split data-intro>La carte</h1>
+    <p class="entete__texte" data-reveal="up" data-intro data-delay="0.15">Volontairement courte. Cinq étapes le soir, un sandwich au feu de bois le midi.</p>
   </section>
 
   <div class="wrap carte">
@@ -21,10 +21,10 @@ const eur = (n: number) => `${n} €`;
       {soir.map((r) => (
         <section class="rubrique" id={r.id} aria-labelledby={`t-${r.id}`}>
           <div class="rubrique__tete">
-            <h2 class="rubrique__titre display" id={`t-${r.id}`}>{r.titre}</h2>
+            <h2 class="rubrique__titre display" id={`t-${r.id}`} data-split>{r.titre}</h2>
             <p class="rubrique__etape">{r.etape}</p>
           </div>
-          <ul class="plats">
+          <ul class="plats" data-reveal="up">
             {r.plats.map((p) => (
               <li class="plat">
                 <h3 class="plat__nom">{p.nom}</h3>
@@ -37,10 +37,10 @@ const eur = (n: number) => `${n} €`;
       ))}
       <section class="rubrique" id="midi" aria-labelledby="t-midi">
         <div class="rubrique__tete">
-          <h2 class="rubrique__titre display" id="t-midi">Le midi</h2>
+          <h2 class="rubrique__titre display" id="t-midi" data-split>Le midi</h2>
           <p class="rubrique__etape">Du mercredi au samedi, 11&nbsp;h&nbsp;30 à 14&nbsp;h</p>
         </div>
-        <ul class="plats">
+        <ul class="plats" data-reveal="up">
           {midi.map((p) => (
             <li class="plat">
               <h3 class="plat__nom">{p.nom}, sandwich au feu de bois</h3>

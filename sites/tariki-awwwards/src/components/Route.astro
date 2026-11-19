@@ -1,14 +1,21 @@
 ---
-// La route : fil ondulé et cinq étapes (récit du client). L'arrivée, Namur, est « votre table ».
+// La route : fil ondulé et cinq étapes (récit du client). L'arrivée, Namur, est « votre table ».
+// Phase 2 : le fil se trace (calque `data-route-fil` découpé par clip-path), un voyageur se place sur la route
+// selon la progression de la page (pilote src/motion/route.ts). `p` = position statique (mouvement réduit),
+// `epingle` = position fixe quel que soit le défilement (404), `intro` = tracé joué avec l'intro de la page.
 import { etapes } from '../data/site';
-interface Props { cassee?: boolean }
-const { cassee = false } = Astro.props;
+interface Props { cassee?: boolean; p?: number; epingle?: boolean; intro?: boolean }
+const { cassee = false, p = 0, epingle = false, intro = false } = Astro.props;
+const d = 'M0 30 Q125 8 250 30 T500 30 T750 30 T1000 30';
 ---
-<div class:list={['route', { 'route--cassee': cassee }]} data-route>
+<div class:list={['route', { 'route--cassee': cassee }]} data-route data-p={p} data-epingle={epingle ? '' : undefined} data-route-intro={intro ? '' : undefined}>
   <svg class="route__trace" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <path class="route__ombre" d="M0 30 Q125 52 250 30 T500 30 T750 30 T1000 30" />
-    <path class="route__fil" data-route-fil d="M0 30 Q125 8 250 30 T500 30 T750 30 T1000 30" />
+    <path class="route__ombre" data-route-ombre d="M0 30 Q125 52 250 30 T500 30 T750 30 T1000 30" />
   </svg>
+  <svg class="route__trace route__trace--fil" data-route-fil viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path class="route__fil" d={d} />
+  </svg>
+  <span class="route__voyageur" data-route-voyageur aria-hidden="true"></span>
   <ol aria-label="Les étapes de la route">
     {etapes.map((e) => <li><span>{e}</span></li>)}
   </ol>
