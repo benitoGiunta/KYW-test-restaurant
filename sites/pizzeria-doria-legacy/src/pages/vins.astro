@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Rows from '../components/Rows.astro';
+import Fin from '../components/Fin.astro';
+import { groupeVins, nomCat } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="vins" title="Les vins, Pizzeria Doria à Malonne" description="La carte des vins italiens de la Pizzeria Doria : bouteilles, verres et pichets, avec la sélection de Luigi.">
+  <section class="entete entete--vins" aria-labelledby="vins-titre">
+    <div class="container vins__grille">
+      <div>
+        <h1 id="vins-titre">Les vins</h1>
+        <p class="lead">Une carte italienne, avec une sélection au verre choisie par Luigi.</p>
+      </div>
+      <figure class="ph ph--bouchons" data-slot="bouchons" data-alt="Un cadre de bouchons de liège sur un mur orangé, vu de dessus">
+        <img src={`${base}photos/bouchons-800.webp`} width="800" height="1067" alt="Un cadre de bouchons de liège sur un mur orangé" fetchpriority="high" decoding="async" />
+      </figure>
+    </div>
+  </section>
+  {groupeVins.map((c, i) => (
+    <section class="sect carte" aria-labelledby={`v${i}`}>
+      <div class="container carte__grille">
+        <h2 id={`v${i}`} class="carte__titre">{nomCat(c.categorie)}</h2>
+        <div class="carte__corps"><Rows plats={c.plats} /></div>
+      </div>
+    </section>
+  ))}
+  <Fin emploiVisible={false} />
+</Base>

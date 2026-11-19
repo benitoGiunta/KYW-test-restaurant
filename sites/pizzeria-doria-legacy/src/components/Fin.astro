@@ -1,0 +1,47 @@
+---
+import { resto, horaires, horairesNote, emploi } from '../data/site';
+interface Props { emploiVisible?: boolean }
+const { emploiVisible = true } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<section class="fin" id="reserver" aria-labelledby="fin-titre">
+  <div class="container fin__grille">
+    <div class="fin__tete">
+      <h2 id="fin-titre">Réservez votre table</h2>
+      <p class="lead">{resto.baseline}</p>
+      <p class="fin__actions">
+        <a class="btn btn--primary" href={resto.telHref}>Réserver au {resto.tel}</a>
+        <a class="btn" href={resto.pizzy} rel="noopener">Commander à emporter</a>
+      </p>
+      <address class="fin__adresse">
+        <a href={resto.carteGps} rel="noopener">{resto.adresse}<br />{resto.ville}</a>
+      </address>
+    </div>
+    <div class="fin__horaires">
+      <h3 class="fin__h3">Horaires</h3>
+      <dl class="casiers">
+        {horaires.map((j) => (
+          <div class={`casier${j.h.length ? '' : ' casier--ferme'}`}>
+            <dt>{j.jour}</dt>
+            <dd>
+              {j.h.length ? j.h.map((x) => <time>{x}</time>) : <span>Fermé</span>}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <p class="fin__note">{horairesNote}</p>
+    </div>
+  </div>
+  {emploiVisible && (
+    <div class="container emploi">
+      <details class="tile emploi__tile">
+        <summary>{emploi.titre}</summary>
+        <div class="emploi__corps">
+          <div><h4>Missions</h4><ul>{emploi.taches.map((t) => <li>{t}</li>)}</ul><p>{emploi.dispo}</p></div>
+          <div><h4>Conditions</h4><ul>{emploi.conditions.map((t) => <li>{t}</li>)}</ul><p>{emploi.fin}</p></div>
+        </div>
+        <a class="btn" href={`mailto:${resto.email}?subject=Offre%20d%E2%80%99emploi`}>Postuler par e-mail</a>
+      </details>
+    </div>
+  )}
+</section>

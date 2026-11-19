@@ -1,0 +1,58 @@
+---
+import KywFooter from '@kyw/footer';
+import { resto, horaires } from '../data/site';
+import '../styles/page.css';
+interface Props { title: string; description: string; page: 'accueil' | 'menu' | 'vins' | 'contact' | '404'; }
+const { title, description, page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const liens = [
+  { id: 'accueil', href: base, label: 'Accueil' },
+  { id: 'menu', href: `${base}menu/`, label: 'Menu 2026' },
+  { id: 'vins', href: `${base}vins/`, label: 'Les vins' },
+  { id: 'contact', href: `${base}contact/`, label: 'Contact' },
+];
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1a5b33" />
+    <link rel="icon" href={`${base}photos/logo-doria.png`} type="image/png" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@800&family=Manrope:wght@500;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <header class="slab">
+      <div class="container slab__in">
+        <a class="slab__marque" href={base} aria-label="Pizzeria Doria, accueil">Doria <span>pizzeria</span></a>
+        <nav class="slab__nav" aria-label="Navigation principale">
+          <ul>
+            {liens.map((l) => <li><a href={l.href} aria-current={l.id === page ? 'page' : undefined}>{l.label}</a></li>)}
+          </ul>
+        </nav>
+        <a class="btn btn--primary slab__cta" href={resto.telHref}>Réserver</a>
+      </div>
+    </header>
+    <main id="contenu"><slot /></main>
+    <footer class="pied">
+      <div class="container pied__grille">
+        <div class="pied__marque">
+          <img src={`${base}photos/logo-doria.png`} width="120" height="120" alt="Doria Pizzeria" loading="lazy" />
+        </div>
+        <nav aria-label="Pied de page"><h2 class="pied__t">Le site</h2><ul>{liens.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul></nav>
+        <div><h2 class="pied__t">Nous joindre</h2><ul><li><a href={resto.telHref}>{resto.tel}</a></li><li><a href={`mailto:${resto.email}`}>{resto.email}</a></li><li>{resto.adresse}, {resto.ville}</li></ul></div>
+        <div><h2 class="pied__t">Nous suivre</h2><ul><li><a href={resto.facebook} rel="noopener">Facebook</a></li><li><a href={resto.tripadvisor} rel="noopener">Tripadvisor</a></li></ul></div>
+        <div><h2 class="pied__t">Paiement</h2><ul><li>Payconiq</li><li>Espèces</li><li>TVA {resto.tva}</li></ul></div>
+      </div>
+      <p class="container pied__credits" data-credits>Photographies d’illustration : Unsplash (Benu Marinescu, Hoja Studio, Nadya Spetnitskaya, Pinar Kucuk), à remplacer par des photos du restaurant. Autres photos : Pizzeria Doria.</p>
+    </footer>
+    <KywFooter base={import.meta.env.BASE_URL} />
+  </body>
+</html>

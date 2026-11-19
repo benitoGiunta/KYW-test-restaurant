@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Fin from '../components/Fin.astro';
+import { resto } from '../data/site';
+---
+<Base page="contact" title="Contact, Pizzeria Doria à Malonne" description="Adresse, téléphone, e-mail et réseaux de la Pizzeria Doria, rue Fond de Malonne 66 à Namur.">
+  <section class="entete" aria-labelledby="contact-titre">
+    <div class="container contact__grille">
+      <div>
+        <h1 id="contact-titre">Nous contacter</h1>
+        <p class="lead">{resto.baseline}</p>
+      </div>
+      <ul class="contact__liste">
+        <li class="tile"><span>Adresse</span><a href={resto.carteGps} rel="noopener">{resto.adresse}, {resto.ville}</a></li>
+        <li class="tile"><span>Téléphone</span><a href={resto.telHref}>{resto.tel}</a></li>
+        <li class="tile"><span>E-mail</span><a href={`mailto:${resto.email}`}>{resto.email}</a></li>
+        <li class="tile"><span>Facebook</span><a href={resto.facebook} rel="noopener">Pizzeria Doria</a></li>
+        <li class="tile"><span>Tripadvisor</span><a href={resto.tripadvisor} rel="noopener">Pizzeria Doria</a></li>
+        <li class="tile"><span>Paiement</span><b>Payconiq et espèces</b></li>
+      </ul>
+    </div>
+  </section>
+  <Fin emploiVisible={false} />
+</Base>

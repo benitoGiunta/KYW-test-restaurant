@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Rows from '../components/Rows.astro';
+import Fin from '../components/Fin.astro';
+import { groupesMenu, nomCat, resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="menu" title="Menu 2026, Pizzeria Doria à Malonne" description="La carte complète de la Pizzeria Doria : pizzas, pâtes, viandes, desserts, apéritifs et digestifs, avec les prix.">
+  <section class="entete" aria-labelledby="menu-titre">
+    <div class="container">
+      <h1 id="menu-titre">Menu 2026</h1>
+      <p class="lead">Sur place ou à emporter. Pâtes fraîches bio artisanales Eggusto : 2,50 € de plus. Fior di latte sans lactose sur demande.</p>
+      <nav class="onglets" aria-label="Sections de la carte">
+        <ul>{groupesMenu.map((g) => <li><a class="pill" href={`#${g.id}`}>{g.titre}</a></li>)}</ul>
+      </nav>
+      <p><a class="btn" href={resto.pdfEmporter} rel="noopener">Menu à emporter, PDF</a></p>
+    </div>
+  </section>
+  {groupesMenu.map((g) => (
+    <section class="sect carte" id={g.id} aria-labelledby={`t-${g.id}`}>
+      <div class="container carte__grille">
+        <h2 id={`t-${g.id}`} class="carte__titre">{g.titre}</h2>
+        <div class="carte__corps">
+          {g.cats.map((c) => (
+            <div class="carte__cat">
+              {g.cats.length > 1 && <h3>{nomCat(c.categorie)}</h3>}
+              <Rows plats={c.plats} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+  <Fin emploiVisible={false} />
+</Base>
