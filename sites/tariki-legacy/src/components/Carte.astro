@@ -1,0 +1,39 @@
+---
+import { midi, formuleMidi, soir } from '../data/site';
+interface Props { compact?: boolean; id?: string }
+const { compact = false, id = 'carte' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const eur = (n: number) => `${n} €`;
+const rubriques = compact ? soir.filter((r) => ['feu', 'accompagnements'].includes(r.id)) : soir;
+---
+<div class="carte" data-tabs>
+  <div class="tabs" role="tablist" aria-label="Choisir la carte">
+    <button class="tab" role="tab" type="button" id={`${id}-t-midi`} aria-controls={`${id}-p-midi`} aria-selected="true">Midi</button>
+    <button class="tab" role="tab" type="button" id={`${id}-t-soir`} aria-controls={`${id}-p-soir`} aria-selected="false" tabindex="-1">Soir</button>
+  </div>
+  <div class="panel" role="tabpanel" id={`${id}-p-midi`} aria-labelledby={`${id}-t-midi`}>
+    <h3 class="rub">Sandwichs au feu de bois</h3>
+    <ul class="rows">
+      {midi.map((p) => (
+        <li class="row"><h4 class="row__nom">{p.nom}</h4><p class="row__desc">{p.desc}</p><span class="row__prix num">{eur(p.prix)}</span></li>
+      ))}
+    </ul>
+    <h3 class="rub">{formuleMidi.nom}</h3>
+    <ul class="rows">
+      <li class="row"><h4 class="row__nom">Sandwich, accompagnement, baklava</h4><p class="row__desc">{formuleMidi.desc}</p><span class="row__prix num">{eur(formuleMidi.prix)}</span></li>
+    </ul>
+  </div>
+  <div class="panel" role="tabpanel" id={`${id}-p-soir`} aria-labelledby={`${id}-t-soir`}>
+    {rubriques.map((r) => (
+      <>
+        <h3 class="rub">{r.titre}</h3>
+        <ul class="rows">
+          {r.plats.map((p) => (
+            <li class="row"><h4 class="row__nom">{p.nom}</h4><p class="row__desc">{p.desc}</p><span class="row__prix num">{eur(p.prix)}</span></li>
+          ))}
+        </ul>
+      </>
+    ))}
+    {compact && <p class="more"><a href={`${base}la-carte/`}>À grignoter, à partager, desserts : toute la carte du soir</a></p>}
+  </div>
+</div>

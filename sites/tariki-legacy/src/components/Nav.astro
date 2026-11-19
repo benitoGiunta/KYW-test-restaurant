@@ -1,0 +1,20 @@
+---
+import { resto } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<header class="nav">
+  <div class="nav__in">
+    <a class="nav__brand" href={base} aria-label="Tariki, accueil">
+      <span class="nav__name">Tariki</span>
+      <span class="nav__ar" lang="ar" dir="rtl" aria-hidden="true">طريقي</span>
+    </a>
+    <nav class="nav__links" aria-label="Principale">
+      <a href={`${base}la-carte/`} aria-current={page === 'carte' ? 'page' : undefined}>La carte</a>
+      <a href={`${base}#histoire`}>Notre histoire</a>
+      <a href={`${base}#horaires`}>Horaires</a>
+    </nav>
+    <a class="btn btn--primary nav__cta" href={`${base}#reservation`}>Réserver</a>
+  </div>
+</header>

@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import Carte from '../components/Carte.astro';
+import { allergenes, resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="carte" title="La carte de Tariki, grillades au feu de bois à Namur" description="La carte de Tariki : sandwichs et formule du midi, mezzés, grillades au feu de bois, accompagnements et desserts du soir.">
+  <section class="sec sec--page" aria-labelledby="h-carte-page">
+    <div class="container">
+      <div class="head">
+        <h1 id="h-carte-page">La carte</h1>
+        <p class="lead">Une carte volontairement courte, du midi au soir.</p>
+      </div>
+      <Carte id="la-carte" />
+      <p class="small allergenes">{allergenes}</p>
+      <div class="actions actions--end">
+        <a class="btn btn--primary" href={`${base}#reservation`}>Réserver une table</a>
+        <a class="btn" href={resto.telHref}>Appeler le {resto.tel}</a>
+      </div>
+    </div>
+  </section>
+</Base>
