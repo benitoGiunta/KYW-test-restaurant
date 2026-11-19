@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Route from '../components/Route.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, formuleMidi } from '../data/site';
+import { soir, midi } from '../data/carte';
+import { u } from '../lib/url';
+const fourchette = (r: { plats: { prix: number }[] }) => {
+  const p = r.plats.map((x) => x.prix);
+  const a = Math.min(...p), b = Math.max(...p);
+  return a === b ? `${a} €` : `${a} à ${b} €`;
+};
+---
+<Base page="accueil">
+  <section class="wrap hero" aria-labelledby="titre-accueil">
+    <p class="hero__arabe" lang="ar" dir="rtl" aria-hidden="true">{site.arabe}</p>
+    <h1 class="hero__titre display" id="titre-accueil" data-split>{site.nom}</h1>
+    <div class="hero__bas">
+      <p class="hero__baseline">{site.baseline}</p>
+      <p class="petit">Cuisine levantine au feu de bois, Namur.</p>
+      <div class="cta-groupe">
+        <a class="cta" href={site.reservationUrl} rel="noopener">Réserver une table</a>
+        <a class="cta cta--contour" href={site.telephoneHref}>Appeler le <span class="nw">{site.telephoneLisible}</span></a>
+      </div>
+    </div>
+    <figure class="hero__media" data-parallax>
+      <Photo cle="braises" widths={[480, 800, 1200]} sizes="(max-width: 820px) 100vw, 30vw" prioritaire />
+      <figcaption>Braises : visuel d’ambiance du site de Tariki, illustratif.</figcaption>
+    </figure>
+    <div class="hero__route"><Route /></div>
+  </section>
+
+  <section class="wrap wrap--bloc" aria-labelledby="titre-enonce">
+    <div class="enonce">
+      <h2 class="enonce__titre display" id="titre-enonce" data-split>Tariki veut dire «&nbsp;mon <em>chemin</em>&nbsp;».</h2>
+      <div class="enonce__texte">
+        <p>Une cuisine levantine cuite au charbon et à flamme ouverte, des mezzés posés au milieu de la table, et une carte volontairement courte.</p>
+        <p><a class="lien" href={u('/histoire/')}>Lire l’histoire de la route</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="titre-etapes">
+    <h2 class="titre-sec display" id="titre-etapes">La carte, étape par étape</h2>
+    <ol class="index">
+      {soir.map((r, i) => (
+        <li class="index__ligne">
+          <a href={u(`/carte/#${r.id}`)}>
+            <span class="index__rang">{i + 1}</span>
+            <span class="index__nom">{r.titre}</span>
+            <span class="index__etape">{r.etape}, {r.plats.length} plats</span>
+            <span class="index__prix">{fourchette(r)}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="papier" aria-labelledby="titre-midi" style="margin-top: var(--aere)">
+    <div class="wrap wrap--bloc">
+      <div class="midi">
+        <p class="midi__prix display" aria-hidden="true">{formuleMidi.prix}<small>€</small></p>
+        <div class="midi__texte">
+          <h2 id="titre-midi">Le midi : la formule à {formuleMidi.prix}&nbsp;€</h2>
+          <p>{formuleMidi.detail}</p>
+          <ul class="midi__liste">
+            {midi.map((p) => <li><span>{p.nom}, sandwich au feu de bois</span><span class="prix">{p.prix}&nbsp;€</span></li>)}
+          </ul>
+          <p class="petit">Du mercredi au samedi, de 11&nbsp;h&nbsp;30 à 14&nbsp;h.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap wrap--bloc" aria-labelledby="titre-venir">
+    <div class="paire">
+      <figure class="paire__image">
+        <Photo cle="arcades" widths={[480, 800, 1200]} sizes="(max-width: 820px) 100vw, 60vw" />
+        <figcaption class="petit">Illustration d’ambiance (couloir d’arcades), pas une photo du restaurant.</figcaption>
+      </figure>
+      <div class="paire__texte">
+        <h2 class="titre-sec display" id="titre-venir">Venir, du lundi au samedi</h2>
+        <p>{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}. Fermé le dimanche.</p>
+        <Horaires />
+        <div class="cta-groupe"><a class="cta" href={u('/reservation/')}>Réserver</a></div>
+      </div>
+    </div>
+  </section>
+</Base>

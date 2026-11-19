@@ -1,0 +1,18 @@
+---
+import { horaires } from '../data/site';
+---
+<dl class="horaires" aria-label="Horaires d’ouverture">
+  {horaires.map((h) => (
+    <div>
+      <dt>{h.jour}</dt>
+      {h.midi === null && h.soir === null ? (
+        <dd class="ferme">Fermé</dd>
+      ) : (
+        <>
+          <dd>{h.midi ?? 'Soir seulement'}</dd>
+          <dd>{h.soir}</dd>
+        </>
+      )}
+    </div>
+  ))}
+</dl>

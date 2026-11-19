@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import Route from '../components/Route.astro';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+---
+<Base page="404" title="Page introuvable" description="Cette page n’existe pas : vous avez quitté le chemin. Reprenez la route vers l’accueil, la carte ou la réservation de Tariki.">
+  <section class="wrap perdu" aria-labelledby="titre-404">
+    <h1 class="perdu__titre display" id="titre-404">Vous avez quitté le chemin.</h1>
+    <p class="perdu__texte">Cette page n’existe pas. La route reprend à l’accueil.</p>
+    <Route cassee />
+    <div class="cta-groupe">
+      <a class="cta" href={u('/')}>Reprendre la route</a>
+      <a class="cta cta--contour" href={u('/carte/')}>La carte</a>
+      <a class="cta cta--contour" href={site.reservationUrl} rel="noopener">Réserver</a>
+    </div>
+  </section>
+</Base>

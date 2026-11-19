@@ -1,0 +1,15 @@
+---
+// La route : fil ondulé et cinq étapes (récit du client). L'arrivée, Namur, est « votre table ».
+import { etapes } from '../data/site';
+interface Props { cassee?: boolean }
+const { cassee = false } = Astro.props;
+---
+<div class:list={['route', { 'route--cassee': cassee }]} data-route>
+  <svg class="route__trace" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path class="route__ombre" d="M0 30 Q125 52 250 30 T500 30 T750 30 T1000 30" />
+    <path class="route__fil" data-route-fil d="M0 30 Q125 8 250 30 T500 30 T750 30 T1000 30" />
+  </svg>
+  <ol aria-label="Les étapes de la route">
+    {etapes.map((e) => <li><span>{e}</span></li>)}
+  </ol>
+</div>
