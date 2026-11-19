@@ -17,10 +17,10 @@ import { site, tarifs, comptoirs, famille, reveillon, prix } from '../data/site'
         </p>
       </div>
       <figure class="hero__media"><Photo cle="sashimi" widths={[480, 800, 1200]} sizes="(max-width: 47.99rem) 100vw, 40vw" prioritaire /></figure>
-      <ul class="hero__bandeau" aria-label="Tarifs du buffet seul, par personne">
-        <li><b>{prix(tarifs.t1.buffet)}</b><span>Midi, en semaine</span></li>
-        <li><b>{prix(tarifs.t2.buffet)}</b><span>Soir, en semaine</span></li>
-        <li><b>{prix(tarifs.t3.buffet)}</b><span>Week-end et jours fériés</span></li>
+      <ul class="hero__bandeau" aria-label="Tarifs du buffet seul, par personne" data-bandeau>
+        <li data-tarif="t1"><b>{prix(tarifs.t1.buffet)}</b><span>Midi, en semaine</span><i class="etiquette" data-etiquette hidden></i></li>
+        <li data-tarif="t2"><b>{prix(tarifs.t2.buffet)}</b><span>Soir, en semaine</span><i class="etiquette" data-etiquette hidden></i></li>
+        <li data-tarif="t3"><b>{prix(tarifs.t3.buffet)}</b><span>Week-end et jours fériés</span><i class="etiquette" data-etiquette hidden></i></li>
       </ul>
     </div>
   </section>
@@ -56,7 +56,7 @@ import { site, tarifs, comptoirs, famille, reveillon, prix } from '../data/site'
   <section class="sec nuit" aria-labelledby="wok-titre">
     <div class="wrap paire">
       <figure class="paire__a">
-        <div class="cadre cadre--43"><Photo cle="wokChef" widths={[480, 800, 1170]} sizes="(max-width: 47.99rem) 100vw, 40vw" /></div>
+        <div class="cadre cadre--43" data-reveal="clip"><Photo cle="wokChef" widths={[480, 800, 1170]} sizes="(max-width: 47.99rem) 100vw, 40vw" /></div>
         <figcaption class="legende-photo">{site.credit}</figcaption>
       </figure>
       <div class="paire__b">
@@ -70,7 +70,7 @@ import { site, tarifs, comptoirs, famille, reveillon, prix } from '../data/site'
 
   <section class="sec" aria-labelledby="famille-titre">
     <div class="wrap">
-      <div class="pleincadre"><Photo cle="salleLarge" widths={[800, 1200, 1600]} sizes="100vw" /></div>
+      <div class="pleincadre" data-reveal="clip"><Photo cle="salleLarge" widths={[800, 1200, 1600]} sizes="100vw" /></div>
       <p class="legende-photo">La salle. {site.credit}</p>
       <div class="sec__tete" style="margin-top: var(--normal); margin-bottom: 0;">
         <h2 class="display sec__titre" id="famille-titre" data-split="lines,words,chars">Une grande salle pour toute la tablée.</h2>
@@ -87,7 +87,7 @@ import { site, tarifs, comptoirs, famille, reveillon, prix } from '../data/site'
         <p class="display reveillon__prix" aria-hidden="true">{reveillon.prix}&nbsp;€</p>
         <div class="reveillon__texte">
           <p class="lib">Réveillon, {reveillon.date}</p>
-          <h2 class="display sec__titre" id="reveillon-titre">Le 31, boissons comprises.</h2>
+          <h2 class="display sec__titre" data-split="lines,words,chars" id="reveillon-titre">Le 31, boissons comprises.</h2>
           <p class="txt">{reveillon.texte} Dès 18&nbsp;h.</p>
           <p class="actions">
             <a class="cta" href={site.reveillonUrl} rel="noopener">Réserver le réveillon</a>

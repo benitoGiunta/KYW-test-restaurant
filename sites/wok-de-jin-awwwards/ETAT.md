@@ -1,4 +1,4 @@
-# ETAT.md : wok-de-jin awwwards (fin de la phase 1 sur 3)
+# ETAT.md : wok-de-jin awwwards (fin de la phase 2 sur 3)
 
 ## Fait
 - Concept « La semaine à volonté », DESIGN.md (brief, 3 concepts notés, Concept Card, système, checklist 1 à 18).
@@ -7,10 +7,26 @@
 - 5 pages statiques : `/`, `/carte/`, `/a-propos/`, `/reservation/`, 404. Pied composé (`Footer.astro`) + `KywFooter`.
 - Build OK (`pnpm build:site sites/wok-de-jin-awwwards` vers `dist/wok-de-jin/awwwards/`). Mesures Playwright 1440, 1280, 1024, 390, 360, 320 : pas de débordement horizontal, `.display` left >= gouttière.
 
-## Reste (phases 2 et 3)
-- Phase 2 : signature (cases de la semaine qui se servent, case du service en cours allumée par `Intl` Europe/Brussels, respiration au repos), `data-split`/`data-reveal` branchés dans `motion/`, hovers d'images éventuels, reduced motion.
-- Phase 3 : QA navigateur (shoot, axe, audit), OG composée (actuelle provisoire : aplat + photo, sans texte), checklist 9 et 19+, RAPPORT.md, `pnpm index`, commit final avec `[publier]`.
-- Aucun `data-reveal` encore posé (aucun lien dans un bloc révélé à vérifier).
+## Fait en phase 2 (construction-2)
+- Pilote `src/motion/semaine.ts` (service du moment par `Intl` Europe/Brussels, en cours sinon prochain ; distribué à la case de la grille, au tarif du bandeau du hero et à la pastille du jour au pied ; recalcul chaque minute par `gsap.delayedCall`).
+- Signature : les cases se servent jour après jour (`--rempli` sur `::before`, prix qui monte, filet du jour `--trait`), déclenchée par IntersectionObserver.
+- Repos : bande de vapeur hachurée qui s'écoule (14 px/s, `gsap.ticker`, `--flux` sur le porteur visible), accélérée au pointeur ; case visée = ligne de légende allumée.
+- Intro du hero sans texte caché (filet du bandeau, prix +18 px, photo 1,08 vers 1). Hero recalé : titre `19svh`, photo `54svh`, bandeau sans marge : les trois prix tiennent dans 1440×900 (bas 875) et commencent à 686 px à 1280×720.
+- Reveals : `data-split="lines,words,chars"` sur tous les h2 de section, `data-reveal="clip"` sur les cadres photo non prioritaires (aucun sur un bloc à lien).
+- Menu mobile `<dialog>` (`Header.astro`, `motion/menu.ts` adapté de le-54 : monte du bas, boucle de Tab, Échap, focus rendu) ; « Menu » et « Réserver » à 44 px au téléphone.
+- Survols sous `(hover: hover)`, mêmes états au `:focus-visible`, `:active` ; or réservé aux grands textes et fonds noirs (4,2:1 sur cinabre), lien KYW souligné au survol.
+- Contrôles Playwright (scratchpad `wdj2-check.mjs`) : 0 erreur console ni requête échouée sur 5 pages, aucun débordement à 1440/390/360/320, signature finie (`--rempli` = 1, 0 prix caché), réduit : 0 texte caché, captures immobiles, ni `.motion` ni Lenis.
+- DESIGN.md : § Mouvement réécrit, checklist 19 à 47 (preuves du code).
+- Build vert : `scripts/q.sh build pnpm build:site sites/wok-de-jin-awwwards`.
+
+## Reste (phase 3)
+- Shoot complet et audit (agent captures), puis champs `report.json` : 35 (`hover.*`), 36 (`desktop.idleMotion`, `idleAt`, `settledMs` non nul), 39 (`reduced.*`), 44, 45 (contraste des étiquettes et états), 47 (`smallTargets`).
+- Repos : la bande de vapeur fait ~0,2 % de l'écran à 1440×900 (au-dessus du seuil 0,05 %, sous le seuil `settled` 1 %) ; à vérifier dans `report.json`. Au téléphone le bandeau est sous la ligne de flottaison (908 px) : repos invisible au premier écran mobile, accepté.
+- OG composée (actuelle provisoire), RAPPORT.md, checklist 9, `pnpm index`, commit final avec `[publier]`.
+
+## Pièges notés
+- Le hachuré `::after` du porteur passe au-dessus de l'étiquette absolue du bandeau (pseudo peint après les enfants) : `z-index: 1` sur `.etiquette`.
+- `pnpm-lock.yaml` apparaît modifié dans l'arbre : pas de mon fait, non commité.
 
 ## Décisions et hypothèses
 - Pas de loader, pas de GL (voir DESIGN.md).

@@ -16,7 +16,7 @@ const { page = 'page' } = Astro.props;
     <div class="pied__col">
       <h2 class="pied__titre">Ouvert</h2>
       <ul class="pied__semaine" aria-label="Jours d’ouverture, fermé le mardi">
-        {semaine.map((j) => <li class={j.ferme ? 'ferme' : undefined} aria-label={j.ferme ? `${j.nom}, fermé` : j.nom}><span aria-hidden="true">{j.court.charAt(0)}</span></li>)}
+        {semaine.map((j) => <li class={j.ferme ? 'ferme' : undefined} data-jour={j.id} aria-label={j.ferme ? `${j.nom}, fermé` : j.nom}><span aria-hidden="true">{j.court.charAt(0)}</span></li>)}
       </ul>
       {page === 'reservation'
         ? <p class="petit">Les horaires sont au-dessus.</p>

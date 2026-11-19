@@ -1,5 +1,6 @@
 ---
 import { u, asset } from '../lib/url';
+import { site } from '../data/site';
 const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
@@ -7,6 +8,7 @@ const liens = [
   { href: '/carte/', label: 'Buffet' },
   { href: '/a-propos/', label: 'La maison' },
 ];
+const menu = [{ href: '/', label: 'Accueil' }, ...liens, { href: '/reservation/', label: 'Réserver' }];
 ---
 <header class="tete">
   <a class="tete__marque" href={base} aria-current={path === base ? 'page' : undefined}>
@@ -14,8 +16,22 @@ const liens = [
   </a>
   <nav class="tete__nav" aria-label="Navigation principale">
     <ul>
-      {liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      {liens.map((l) => <li class="tete__bureau"><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      <li class="tete__mob"><button class="tete__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button></li>
       <li><a class="cta cta--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}>Réserver</a></li>
     </ul>
   </nav>
+  <dialog id="menu" class="panneau" aria-label="Menu">
+    <div class="panneau__haut">
+      <span class="panneau__marque">Wok de Jin</span>
+      <button class="panneau__fermer" type="button" data-menu-fermer>Fermer</button>
+    </div>
+    <ul class="panneau__liste">
+      {menu.map((l, i) => <li><a class="panneau__lien display" href={u(l.href)} aria-current={courant(l.href)} autofocus={i === 0 ? true : undefined}><span>{l.label}</span></a></li>)}
+    </ul>
+    <div class="panneau__pied">
+      <p class="panneau__info">{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}. Fermé le mardi.</p>
+      <a class="cta" href={site.telephoneHref}>Appeler le <span class="nw">{site.telephoneLisible}</span></a>
+    </div>
+  </dialog>
 </header>

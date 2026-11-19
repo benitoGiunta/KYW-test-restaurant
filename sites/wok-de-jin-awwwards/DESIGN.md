@@ -41,7 +41,7 @@ Typo : Tanker (display, 400, condensé de poids, capitales, interlettrage -0,01 
 
 Grille : 12 colonnes, gouttière fluide 16 à 40 px, lignes fortes à la colonne 1 (alignement des titres) et à la colonne 7 (début des textes), humeurs d'espacement `--serre`, `--normal`, `--aere`. Rayon : 0 (cases carrées, comme des plaques de buffet). Cadre quatre coins : non, justifié : la grille de cases porte la structure.
 
-Mouvement (phase 2) : ease `ease.out` pour les révélations, `ease.inOut` pour le rideau ; rideau en deux volets (noir, cinabre) qui montent. Hovers : CTA = remplissage or qui monte (fait en CSS), nav = soulignement qui se dessine (fait), liens texte = épaisseur du soulignement (fait), images : aucun. Repos : la case du service en cours respire (phase 2).
+Mouvement (phase 2, fait) : famille d'easing de l'engine (`ease.out` révélations, `ease.inOut` rideau et menu). Rideau en deux volets (noir, cinabre) qui montent, 0,68 s à l'aller, 0,82 s au retour. Pilote `src/motion/semaine.ts` : une variable, le service du moment (heure de Bruxelles par `Intl`, en cours sinon prochain), distribuée à la case de la grille (contour or, étiquette « En cours » ou « Prochain »), au tarif du bandeau du hero (étiquette « Ce soir, dès 18 h ») et à la pastille du jour au pied ; recalculée chaque minute (`gsap.delayedCall`). Signature : les cases se servent, jour après jour (`--rempli` 0 vers 1 sur `::before`, `scale: 1 var(--rempli)` depuis le bas, prix qui monte, filet du jour qui se trace ; stagger 80 ms par jour, 60 ms par service). Intro du hero : filet du bandeau tracé (`--trait`), prix qui montent de 18 px sans disparaître, photo qui se pose (scale 1,08 vers 1) ; titre et accroche jamais cachés (LCP). Repos : sur le porteur du service du moment, une bande de vapeur hachurée de 6 px s'écoule à vitesse constante (14 px/s, `--flux` écrit par `gsap.ticker` sur le seul porteur visible, `gsap.utils.wrap` sur la tuile de 12 px), accélérée par 2,2 quand le pointeur est dessus ; la case visée au pointeur allume sa ligne de légende. Hovers (sous `(hover: hover)`, mêmes états au `:focus-visible`) : CTA = remplissage or qui monte ; nav = soulignement qui se dessine (épaissi et or sur la page courante) ; liens texte = soulignés au repos, soulignement épaissi et or. Images : aucun survol (décision). Menu mobile : `<dialog>` plein écran qui monte du bas (clip-path), lignes en stagger 60 ms. Mouvement réduit : pas de Lenis, rien ne bouge, cases pleines, état du service posé (information).
 
 Plan de composition (familles distinctes) :
 - Accueil : poster (titre + photo + 3 prix), données (la semaine), index (comptoirs), paire asymétrique (wok), média plein cadre + liste (salle et famille), statement (réveillon), pied.
@@ -71,3 +71,26 @@ Test de généricité : un modèle générique ferait un hero noir et or avec la
 16. [x] Famille de section au plus une fois par page : mesuré à la composition (voir plan).
 17. [x] Hero en 3 s : nom, cuisine, action et 3 prix visibles à 1440×900 (mesure : CTA bas à 770 px).
 18. [x] Mobile 390 recomposé : `site.css` § Téléphone ; mesure `scrollWidth` = 390 à 390 et 360.
+19. [x] Menu mobile accessible : `Header.astro` (bouton « Menu » `aria-expanded`, `aria-controls="menu"`, `<dialog>` plein écran), `motion/menu.ts` (`showModal`, boucle de Tab, Échap natif, focus rendu au bouton). Mesure Playwright 390 : `aria-expanded` true puis false, 9 Tab sans sortie, focus rendu au bouton, panneau 844 px de haut, CTA « Appeler » à 828 px (555 à 320×568).
+20. [x] Engine verbatim (`src/engine/`), `astro.ts`, `transition:persist="curtain"` et `transition:animate="none"` dans `Base.astro:35,72` ; ni `#gl` ni `#cursor` (pas de GL, pas de follower : décision).
+21. [x] Une horloge : grep `addEventListener('scroll')`, `requestAnimationFrame`, `setInterval` hors `src/engine/` : aucun ; repos par `gsap.ticker`, minuterie par `gsap.delayedCall`.
+22. [x] Code de page dans `onPage()` avec nettoyage : `semaine.ts` (`initSemaine` renvoie le nettoyage : ticker, IO, listeners, minuterie), `menu.ts`.
+23. [x] Aucune CSS `transform` sur élément GSAP : les cases, filets et bandeau sont animés par variables (`--rempli`, `--trait`) lues par `scale` sur des pseudo-éléments ; `transform` CSS restant seulement sur `.cta::before` et `.skip-link` (non animés par GSAP).
+24. [x] Module pilote `src/motion/semaine.ts` : une variable (service du moment), `startIdle()`, influence du pointeur (vapeur accélérée, case visée et légende), appelé une fois depuis `setup.ts` (`startSemaine()`).
+25. [x] Loader décidé : aucun (Concept Card, Théâtre) ; aucun `#loader` ni `role="status"` dans le HTML.
+26. [x] Transition du concept (volets qui montent comme un bol qui se remplit) : 0,6 s + 0,08 s à l'aller, 0,7 s + 0,12 s au retour, sous 1 s (`setup.ts`).
+27. [x] Intro : premier frame complet (titre, accroche, CTA, photo, trois prix visibles et lisibles), l'intro ne cache rien (`semaine.ts`, bloc « Intro du hero »). Bandeau des prix remonté dans le premier écran : bas à 875 px à 1440×900 (était 965).
+28. [x] Épinglages : aucun (pas de pin ni de scrub, décision : la grille se lit d'un coup d'œil).
+29. [x] Repli statique dessiné : `--rempli` et `--trait` valent 1 par défaut, la grille reste pleine et l'état du service reste posé ; mesure réduite : 0 texte caché sur les 5 pages, captures identiques à 1,5 s d'écart (accueil et 404).
+30. [x] Copies décoratives `aria-hidden` : `.reveillon__prix`, `.pied__mot`, lettres des pastilles ; aucun titre dupliqué.
+31. [x] Une famille d'easing (`ease.*`), durées 0,6 à 1,6 s (grands objets plus lents : photo 1,6 s, cases 0,75 s, menu 0,6 s), stagger 40 à 80 ms.
+32. [x] Un traitement par rôle, trois au total (remplissage qui monte, soulignement qui se dessine, soulignement épaissi), dans le verbe « se servir ».
+33. [x] Hover sous `@media (hover: hover)` (`site.css`, bloc « Survols »), mêmes états au `:focus-visible`, `:active` présent ; visibles en mouvement réduit (transitions CSS seulement).
+34. [x] Liens texte soulignés au repos (`.lien`).
+37. [x] Curseur natif visible (aucun follower), rien ne dépend du hover au toucher (pointeur ignoré si `isTouch()`).
+38. [x] Pas de blur animé, pas de `box-shadow` au scroll, aucun `will-change`.
+40. [x] GL : sans objet, décision écrite (Concept Card), aucune ligne `// GL` dans l'engine.
+41. [x] Sans objet (pas de GL).
+46. [x] Texte réel partout, aucun canvas.
+47. [ ] Cibles : « Menu » et « Réserver » de l'en-tête à 44 px au téléphone (mesure Playwright 390) ; reste à prouver par `report.json` en phase 3 (`smallTargets`).
+À prouver en phase 3 par `report.json` : 35 (`hover.*`), 36 (`desktop.idleMotion`, `idleAt`), 39 (`reduced.*`), 44 (skip link, focus), 45 (contraste de chaque état, étiquettes or sur cinabre et sur noir).

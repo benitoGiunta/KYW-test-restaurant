@@ -11,12 +11,12 @@ const [midi, soir] = services;
           <p class="case case--ferme" data-service="ferme"><span class="case__prix">Fermé</span><span class="case__quand">Le wok se repose.</span></p>
         ) : (
           <>
-            <p class={`case case--${j.midi}`} data-service="midi">
-              <span class="case__prix">{prix(tarifs[j.midi!].buffet)}</span>
+            <p class={`case case--${j.midi}`} data-service="midi" data-tarif={j.midi}>
+              <span class="case__prix">{prix(tarifs[j.midi!].buffet)}</span><i class="etiquette" data-etiquette hidden></i>
               <span class="case__quand"><b>{midi.libelle}</b><span>{plage(midi.debut, midi.fin)}</span></span>
             </p>
-            <p class={`case case--${j.soir}`} data-service="soir">
-              <span class="case__prix">{prix(tarifs[j.soir!].buffet)}</span>
+            <p class={`case case--${j.soir}`} data-service="soir" data-tarif={j.soir}>
+              <span class="case__prix">{prix(tarifs[j.soir!].buffet)}</span><i class="etiquette" data-etiquette hidden></i>
               <span class="case__quand"><b>{soir.libelle}</b><span>{plage(soir.debut, soir.fin)}</span></span>
             </p>
           </>
@@ -26,7 +26,7 @@ const [midi, soir] = services;
   </ol>
   <dl class="legende">
     {(['t1', 't2', 't3'] as const).map((t) => (
-      <div>
+      <div data-tarif={t}>
         <dt><span class={`puce puce--${t}`} aria-hidden="true"></span>{tarifs[t].libelle}, {tarifs[t].contexte}</dt>
         <dd>Buffet seul {prix(tarifs[t].buffet)}. Avec boissons {prix(tarifs[t].boissons)}.</dd>
       </div>

@@ -1,7 +1,10 @@
-// Motion globale de Wok de Jin (phase 1 : transition de page seule ; la signature « grille de la semaine » arrive en phase 2).
+// Motion globale de Wok de Jin. Transition de page ci-dessous ; le concept (service du moment, cases qui se servent,
+// vapeur au repos) vit dans semaine.ts ; le menu mobile dans menu.ts.
 // Deux volets noir de fumée et cinabre qui montent comme un bol qui se remplit puis se vident.
 import { gsap } from 'gsap';
 import { setTransition, ease } from '../engine';
+import { startSemaine } from './semaine';
+import { setupMenu } from './menu';
 
 export function setupMotion() {
   const volets = (c: HTMLElement) => c.querySelectorAll<HTMLElement>('.curtain__panel');
@@ -21,4 +24,6 @@ export function setupMotion() {
         .set(c, { autoAlpha: 0 });
     },
   });
+  startSemaine();
+  setupMenu();
 }
