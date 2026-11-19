@@ -37,6 +37,9 @@ export function setupMotion() {
     cleanups.push(originStory());
     cleanups.push(coins());
     cleanups.push(scintille());
+    cleanups.push(enseigne(intro));
+    cleanups.push(carteSaut());
+    cleanups.push(aujourdhui());
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -147,4 +150,64 @@ function scintille() {
     offs.push(() => { el.removeEventListener('pointerenter', on); el.removeEventListener('pointerleave', off); el.removeEventListener('focusin', on); el.removeEventListener('focusout', off); });
   });
   return () => offs.forEach((f) => f());
+}
+
+/** Signature : l'enseigne. Le titre du hero s'allume en tube qui crépite (paliers), puis reprend un bref crépitement
+ *  toutes les 8 à 13 s. Sans mouvement (reduced motion) : allumé, fixe. `--neon` vaut 1 par défaut (CSS). */
+function enseigne(intro: gsap.core.Timeline) {
+  const el = document.querySelector<HTMLElement>('.hero__titre[data-tube]');
+  const hero = document.querySelector('[data-hero]');
+  if (!el || !hero || prefersReducedMotion()) return () => {};
+  const crepite = (tl: gsap.core.Timeline, t0: number, vals: number[]) => {
+    vals.forEach((v, i) => tl.set(el, { '--neon': v }, t0 + i * 0.07));
+    return tl;
+  };
+  gsap.set(el, { '--neon': 0.12 });
+  const tl = gsap.timeline({ paused: true });
+  crepite(tl, 0, [0.12, 1, 0.2, 0.9, 0.15, 1, 0.45, 1]);
+  intro.add(() => tl.play(), isMobile() ? 0.3 : 1.5);
+  let attente: gsap.core.Tween | null = null;
+  const boucle = () => {
+    attente = gsap.delayedCall(8 + Math.random() * 5, () => {
+      crepite(gsap.timeline({ onComplete: boucle }), 0, [1, 0.35, 1, 0.6, 1]);
+    });
+  };
+  intro.add(boucle, isMobile() ? 2.4 : 3.6);
+  return () => { tl.kill(); attente?.kill(); gsap.set(el, { '--neon': 1 }); };
+}
+
+/** Carte : puces de catégories collées en haut, la puce de la section lue s'allume (aria-current), la rangée suit. */
+function carteSaut() {
+  const nav = document.querySelector<HTMLElement>('[data-saut]');
+  if (!nav) return () => {};
+  const liens = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a'));
+  const cibles = liens.map((a) => document.getElementById(a.hash.slice(1))).filter(Boolean) as HTMLElement[];
+  const liste = nav.querySelector<HTMLElement>('.saut__liste');
+  const activer = (i: number) => {
+    liens.forEach((a, k) => (k === i ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+    const a = liens[i];
+    if (a && liste && liste.scrollWidth > liste.clientWidth) liste.scrollTo({ left: a.offsetLeft - (liste.clientWidth - a.offsetWidth) / 2, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+  };
+  const vus = new Set<number>();
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e) => { const i = cibles.indexOf(e.target as HTMLElement); if (e.isIntersecting) vus.add(i); else vus.delete(i); });
+    if (vus.size) activer(Math.min(...vus));
+  }, { rootMargin: '-25% 0px -60% 0px' });
+  cibles.forEach((c) => io.observe(c));
+  return () => io.disconnect();
+}
+
+/** Horaires : la ligne du jour (heure de Bruxelles) est marquée : couleur, pastille et aria-current="date". */
+function aujourdhui() {
+  const jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+  const w = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', weekday: 'short' }).format(new Date());
+  const j = jours[['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(w)];
+  const marques: HTMLElement[] = [];
+  document.querySelectorAll<HTMLElement>('.horaires dt').forEach((dt) => {
+    if ((dt.textContent || '').trim().toLowerCase() !== j) return;
+    const dd = dt.nextElementSibling as HTMLElement | null;
+    dt.classList.add('is-auj'); dd?.classList.add('is-auj'); dt.setAttribute('aria-current', 'date');
+    marques.push(dt); if (dd) marques.push(dd);
+  });
+  return () => marques.forEach((m) => { m.classList.remove('is-auj'); m.removeAttribute('aria-current'); });
 }

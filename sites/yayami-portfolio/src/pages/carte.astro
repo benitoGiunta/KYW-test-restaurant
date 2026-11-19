@@ -2,6 +2,11 @@
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
 import { u } from '../lib/url';
+const slug = (t: string) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const cats = site.carte.map((cat) => {
+  const [titre, ...reste] = cat.categorie.split(/,\s*/);
+  return { cat, titre, detail: reste.join(', ').replace(/[()]/g, ''), id: `c-${slug(titre)}` };
+});
 ---
 <Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : nigiri, maki, temaki, menus et box, plats chauds, salades, bières et boissons, avec les prix.`}>
   <section class="hero hero--page col-l">
@@ -9,8 +14,15 @@ import { u } from '../lib/url';
     <p class="lead" data-reveal="fade">{site.accroche.carte} Prix en euros, à emporter ou en livraison.</p>
   </section>
 
-  <section class="section section--serre col-l" aria-labelledby="formules">
-    <h2 id="formules" class="meta" style="margin-bottom: calc(var(--u) * 3)">Menus et box</h2>
+  <nav class="saut" aria-label="Catégories de la carte" data-saut>
+    <ul class="saut__liste col-l">
+      <li><a href="#formules">Menus et box</a></li>
+      {cats.map((c) => <li><a href={`#${c.id}`}>{c.titre}</a></li>)}
+    </ul>
+  </nav>
+
+  <section id="formules" class="section section--serre col-l" aria-labelledby="formules-t">
+    <h2 id="formules-t" class="meta" style="margin-bottom: calc(var(--u) * 3)">Menus et box</h2>
     <ul class="menus" style="list-style: none; padding: 0">
       {site.menus.map((m, i) => (
         <li class="menu" data-reveal="up" data-delay={String(i * 0.08)}>
@@ -22,11 +34,9 @@ import { u } from '../lib/url';
     </ul>
   </section>
 
-  {site.carte.map((cat) => {
-    const [titre, ...reste] = cat.categorie.split(/,\s*/);
-    const detail = reste.join(', ').replace(/[()]/g, '');
+  {cats.map(({ cat, titre, detail, id }) => {
     return (
-    <section class="section section--serre col-l">
+    <section id={id} class="section section--serre col-l" aria-label={titre}>
       <div class="section__tete">
         <h2 class="tube tube--l" data-tube data-reveal="fade">{titre}</h2>
         {detail && <p class="meta">{detail}</p>}

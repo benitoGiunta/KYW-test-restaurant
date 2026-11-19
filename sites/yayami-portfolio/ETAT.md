@@ -1,32 +1,37 @@
-# ETAT : yayami-portfolio (phase 1 sur 3, construction-1)
+# ETAT : yayami-portfolio (phase 2 sur 3, construction-2)
 
-## Fait
-- Gabarit nocturne copié et adapté (choix argumenté dans DESIGN.md) ; `site.ts` + `carte.json` + `photos.json` depuis
-  `data/restaurants/yayami/` (47 plats, 9 menus et box, prix en virgule, « pièces », « bœuf »).
-- Pages : `/`, `/carte/`, `/boissons/`, `/maison/`, `/livraison/`, `/commander/`, `404`. Mise en page statique du gabarit,
-  en-tête (logo), boutons de coin (Appeler, Commander), pied de page (KywFooter, noindex, mention maquette).
-- Palette passée de l'ambre au rouge enseigne (tokens, halo `lampe.ts`), favicon, OG, 15 photos WebP.
-- Build OK : `scripts/q.sh build-yayami pnpm build:site sites/yayami-portfolio` (7 pages, dist/yayami/portfolio/ 2,3 Mo).
-  Contrôles grep : aucun tiret cadratin, aucun reste du gabarit, noindex présent.
+## Fait (phases 1 et 2)
+- Phase 1 : gabarit Nocturne adapté (DESIGN.md), 6 pages + 404, données du dossier, palette rouge enseigne, 15 photos WebP.
+- Phase 2 (motion, signature, interactions, états, mobile, finitions) :
+  - Signature « enseigne » (`enseigne()` dans `src/motion/setup.ts`, `--neon` sur `.hero__titre`) : le titre du hero s'allume en
+    crépitant (paliers) après l'ouverture des volets, puis un bref crépitement toutes les 8 à 13 s ; halo rouge par `drop-shadow`.
+    Reduced motion : titre allumé et fixe (aucun appel). Mobile : même allumage, plus court.
+  - `/carte/` : puces de catégories collées en haut (`.saut`, `carteSaut()`), scrollspy (`aria-current="true"`), rangée qui
+    défile pour garder la puce active visible, ancres via Lenis (clic réel testé : section à 56 px du haut).
+  - Horaires : ligne du jour marquée (pastille rouge, `aria-current="date"`, heure de Bruxelles) ; format « 12h à 14h, 18h à 22h ».
+  - États : survol des lignes de carte (fond rouge léger, nom rouge), `:active` des boutons, pastille « ouvert » qui respire
+    (`braise`), `color-scheme: dark`, focus visibles conservés.
+  - Mobile : « Commander » en tube débordait à 320 px (359 px) : `min(var(--t-xl), 8.2vw)` sous 420 px ; plus de débordement
+    (6 pages à 320, 390, 1440 normal et reduced motion : `scrollWidth` = fenêtre, 0 erreur console).
+  - Contrôles faits : statut aux heures (mer 12h30 ouvert, 15h fermé, 19h ouvert, 22h30 demain midi), clics réels sur les
+    5 liens d'en-tête de 6 pages en 1440 (aucun échec), en-tête sur une ligne de 768 à 1201 px, bas de page 1440 (mention maquette,
+    bandeau KYW visibles, coins retirés). Build OK (`scripts/q.sh yayami-build pnpm build:site sites/yayami-portfolio`).
 
-## Reste (phases 2 et 3)
-- QA navigateur : shoot 1440 et 390, clics réels sur l'en-tête, bas de page, débordements, contraste du rouge sur noir,
-  nav à 5 liens entre 960 et 1200 px, logo de l'en-tête sur mobile.
-- Animations : vérifier volets, tubes, halo, scène collante `/maison/` (4 phrases) avec ce contenu ; `/maison/` utilise
-  la scène sur une page courte (cf. leçon collage : ScrollTrigger).
-- Mosaïque : 12 photos de 1080 à 1800 px, contrôler le recadrage `--s` (colonnes étroites) ; `pnpm index` et commit à faire
-  après la QA. `[publier]` seulement au commit final.
-- Option : photos libres de salle ou façade (placeholder) si la revue juge le site trop « sans lieu ».
+## Reste (phase 3)
+- Shoot complet par l'agent « captures » : lire `QA-<étape>.md`, vérifier la scène collante `/maison/` (page courte), la mosaïque
+  (recadrage `--s`), contraste du rouge #ff4438 sur noir, nav 5 liens.
+- `pnpm index`, commit final avec `[publier]` seulement quand le restaurant est terminé (phase 3 ou lot).
+- Option : photos libres de salle ou façade (placeholder) si la revue juge le site « sans lieu ».
+- Mettre à jour `gabarits/UTILISATION.md` (interdit à cet agent) : ligne `nocturne | pepite, yayami`.
 
 ## Décisions et hypothèses
-- Nocturne retenu malgré son usage par pepite : seul gabarit sombre libre ; `gabarits/UTILISATION.md` NON mis à jour
-  (gabarits/ interdit à cet agent) : ajouter la ligne `nocturne | pepite, yayami`.
-- Pas de réservation de table (site client : commande en ligne seulement) : boutons « Commander » vers yayami.be/shop/.
-- Sources tierces évoquant une formule à volonté en salle : non reprise (non confirmée).
-- Bière et ramune décrites par « Bière japonaise » / « Limonade japonaise » (déduction des marques, pas de description client).
-- Zone de livraison : sept codes postaux listés, formulée « autour de Namur » ; le code 5100 n'est pas nommé (Jambes non prouvé).
-- Aucune dépendance ajoutée ; `valeurs`, `histoire`, `equipe`, `avis` retirés du modèle.
+- Pas de réservation de table : boutons « Commander » vers yayami.be/shop/. Formule à volonté citée par des tiers : non reprise.
+- Bière et ramune décrites par « Bière japonaise » / « Limonade japonaise » (déduction des marques).
+- Zone de livraison : sept codes postaux, « autour de Namur » ; 5100 non nommé.
+- Aucune dépendance ajoutée ; aucune donnée inventée ; le crépitement de l'enseigne est purement décoratif (pas de texte).
 
 ## Pièges
-- Le gabarit se contente de `reseaux[0]` pour le coin gauche : remplacé par « Appeler » (pas de réseau connu).
-- Ne pas remettre `tabular-nums` sur les prix à virgule (retiré de `.index__prix`, `.ckt__prix`).
+- Le gabarit se contente de `reseaux[0]` pour le coin gauche : remplacé par « Appeler ».
+- Ne pas remettre `tabular-nums` sur les prix à virgule.
+- Les horaires apparaissent deux fois par page (section et pied de page) : `aujourdhui()` marque les deux.
+- Halo et tubes en contour : desktop avec pointeur fin seulement ; mobile et reduced motion = tubes pleins.

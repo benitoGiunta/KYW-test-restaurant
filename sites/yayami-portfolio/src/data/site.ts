@@ -137,7 +137,7 @@ export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adre
 
 /** Horaires lisibles : '12:00 à 14:00, 19:00 à 21:00' ou la note. */
 export const horaireTexte = (h: Horaire) =>
-  h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé';
+  h.creneaux.length ? h.creneaux.map((c) => `${heure(c.ouverture)} à ${heure(c.fermeture)}`).join(', ') : h.note || 'fermé';
 
 /** Jours de service du soir et bornes du service, pour les textes serveur et le loader. */
 export function serviceSoir(r: Restaurant = site) {
