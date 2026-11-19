@@ -32,4 +32,4 @@ Produire un message de lancement : `python3 scripts/message-lancement.py <campag
 
 | Campagne | Objet | Versions | État |
 | --- | --- | --- | --- |
-| `test-1` | premier test des agents finalisés sur 10 nouveaux restaurants, mode figé, toute la limite hebdomadaire jusqu'au 20/11 10:30 UTC | développement A6, correction A4 | prête, à lancer |
+| `test-1` | premier test des agents finalisés sur 10 nouveaux restaurants (+10 en réserve de file), mode figé, toute la limite hebdomadaire jusqu'au 20/11 10:30 UTC | développement A6, correction A4 | prête, à lancer |
