@@ -11,7 +11,7 @@
 .chiffre { font-variant-numeric: tabular-nums; }
 .nw { white-space: nowrap; }
 figure { margin: 0; }
-.lien { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.lien { display: inline-block; padding-block: 0.4rem; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
 .lien-util { font-size: var(--t-s); text-decoration: underline; text-underline-offset: 0.2em; padding-block: 0.4rem; display: inline-block; }
 
 /* Boutons : rectangle rouge plein, ou filet. Le disque est réservé au sceau. */
@@ -260,3 +260,11 @@ html.menu-open { overflow: clip; }
 @media (prefers-reduced-motion: reduce) {
   .cta::before, .index__nom, .index__nom::before, .lien, .nl, .tete { transition: none; }
 }
+
+/* QA : survol du lien de la page courante et de la marque */
+.nl[aria-current='page']:focus-visible { color: var(--c-accent-texte); }
+@media (hover: hover) { .nl[aria-current='page']:hover { color: var(--c-accent-texte); } .tete__marque { transition: opacity 0.3s; } .tete__marque:hover { opacity: 0.7; } }
+.tete__marque:focus-visible { opacity: 0.7; }
+.cmd__numero a { background: linear-gradient(currentColor, currentColor) left bottom 0.1em / 0% 2px no-repeat; transition: background-size 0.4s cubic-bezier(0.215, 0.61, 0.355, 1), color 0.3s; }
+@media (hover: hover) { .cmd__numero a:hover { background-size: 100% 2px; color: var(--c-accent-texte); } }
+.cmd__numero a:focus-visible { background-size: 100% 2px; }
