@@ -26,7 +26,8 @@ Produire un message de lancement : `python3 scripts/message-lancement.py <campag
    Si l'utilisation hebdomadaire atteint `seuil-hebdo`, idem.
 6. Noter toute intervention (déblocage, relance, décision) dans le fichier résumé de l'étape concernée
    (`../4-mesure.md`, § 5).
-7. Fin : `../5-verification.md`, puis `node scripts/suivi.mjs`.
+7. Fin : `../5-verification.md`, `node scripts/suivi.mjs`, puis saisie des métriques du run dans la base de suivi
+   (`../4-mesure.md`, § 6).
 
 ## Campagnes
 

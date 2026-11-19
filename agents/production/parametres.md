@@ -25,7 +25,7 @@ Toutes les valeurs variables sont ici, une seule fois. Les messages de lancement
 | `<heure-limite>` | Après cette heure, plus aucun lancement ni relance (les agents en cours finissent) | `2026-11-20 10:30 UTC` (11:30 à Bruxelles ; la limite se réinitialise à 11:00 UTC) |
 | `<lecons>` | `false` = mode figé : les agents ne modifient pas `agents/`, les leçons sont proposées dans `data/usage/<campagne>/lecons-proposees/` ; `true` = les agents enrichissent leurs consignes | `false` |
 | `<consigne-lecons>` | Phrase ajoutée aux agents de correction en mode figé (vide si `<lecons>` = `true`) | ` Mode figé : ne modifie rien dans agents/ ; leçon structurelle éventuelle en une ligne datée dans data/usage/<campagne>/lecons-proposees/<slug>.md.` |
-| `<base-suivi>` | Base de données de suivi de la campagne (voir `4-mesure.md`) | à brancher |
+| `<base-suivi>` | Base de données de suivi de la campagne (voir `4-mesure.md`, § 6) | repo `benitoGiunta/KYN-project-prospecting`, run 2 « Test des agents · lot 2 » |
 
 ## Modèles par session
 

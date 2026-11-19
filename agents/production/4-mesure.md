@@ -50,11 +50,25 @@ Toute action humaine ou de la session mère nécessaire pour qu'un restaurant ab
 décision) est notée dans `interventions` du fichier résumé de l'étape (date, cause, action). C'est la mesure de
 l'autonomie des agents.
 
-## 6. Base de suivi
+## 6. Base de suivi (repo `benitoGiunta/KYN-project-prospecting`)
 
-Base de données de la campagne (`<base-suivi>` dans `parametres.md`) : **à brancher**. Quand elle est fournie, ce
-paragraphe décrira où et comment chaque session y écrit (une ligne par restaurant et par étape, à partir des fichiers
-résumé ci-dessus), et les messages de lancement recevront l'étape d'écriture correspondante.
+Base SQLite `data/prospects.db` du repo KYN-project-prospecting (règles d'écriture dans son `CLAUDE.md` : `PRAGMA
+foreign_keys = ON`, transaction, `scripts/dump.py`, commit de la base et de `data/tables/` ensemble, une seule session
+qui écrit à la fois, puis reconstruction et republication de l'artefact « Pilotage prospection »).
+
+- Organisation : catégorie Restaurants → lot → run → phases `dev` et `debug`. Phase de conception des agents = run 1
+  « Premier run exploratoire » (lot 1) ; campagne `test-1` = run 2 « Test des agents · lot 2 » (lot 2, 20 restaurants,
+  `reprend_run_id` = 1).
+- **Niveau run uniquement** (décision du porteur) : pas de coût par restaurant dans la base. Les sessions de restaurant
+  n'écrivent PAS dans la base ; elles produisent les fichiers du § 3.
+- À la fin de la campagne, la session mère agrège les fichiers du § 3 et saisit, pour chaque phase du run, les mêmes
+  types de mesure que le run 1 (table `type_consommation`) : `cout_api_moyen_par_restaurant`, `cout_api_moyen_par_site`,
+  `cout_api_moyen_par_probleme` (debug), `part_limite_hebdo_par_*` (limite estimée dans `data/usage/limite-hebdo.json`),
+  `cout_api_total_restaurants`, `part_limite_hebdo_total_phase`, `nombre_restaurants`, `nombre_sites`,
+  `nombre_problemes_trouves`, `jetons_entree`, `jetons_sortie`, plus `duree` (minutes, moyenne par restaurant) ; elle
+  renseigne `debut_le` / `fin_le` des phases et du run. Les types `*_derniere_approche` ne servent qu'au run 1 (le run
+  de test n'a qu'une version). Trace de la saisie : `scripts/saisies/00N_…py` du repo de la base (modèle :
+  `002_metriques_conception_et_run_test.py`).
 
 ## 7. Comparaison
 
