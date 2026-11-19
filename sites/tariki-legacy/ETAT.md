@@ -1,3 +1,8 @@
+# ETAT · tariki-legacy · phase 3 sur 3 (QA) terminée, 2026-11-19
+
+Fait : captures ciblées, sloplint 0 FAIL 0 REFLEX, page carte scindée, clôture élargie, waiver 77, log Hallmark, build et index OK, RAPPORT.md écrit. Reste : finish review sous-agent, axe menu/formulaire, jury, validation client des placeholders (voir RAPPORT.md § 5). Piège : waiver à 3 champs.
+
+---
 # ETAT · tariki-legacy · phase 2 sur 3 (construction-2), 2026-11-19
 
 ## Fait en phase 2
