@@ -1,5 +1,6 @@
 ---
 import { u } from '../lib/url';
+import { site } from '../data/site';
 import { Image } from 'astro:assets';
 import logo from '../assets/logo-doria.png';
 const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
@@ -20,4 +21,16 @@ const liens = [
       <li><a class="cta cta--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="cta__txt">Réserver</span></a></li>
     </ul>
   </nav>
+  <button class="tete__menu" type="button" data-menu-ouvrir aria-expanded="false" aria-controls="menu">Menu</button>
 </header>
+<dialog class="menu" id="menu" aria-label="Menu">
+  <div class="menu__tiroir">
+    <p class="menu__haut"><span class="menu__marque display" aria-hidden="true">Pizzeria Doria</span><button class="menu__fermer" type="button" data-menu-fermer>Fermer</button></p>
+    <ul class="menu__liste">
+      <li><a class="menu__lien display" href={base} aria-current={path === base ? 'page' : undefined}><span class="plaque" aria-hidden="true">01</span>Accueil</a></li>
+      {liens.map((l, i) => <li><a class="menu__lien display" href={u(l.href)} aria-current={courant(l.href)}><span class="plaque" aria-hidden="true">{String(i + 2).padStart(2, '0')}</span>{l.label}</a></li>)}
+      <li><a class="menu__lien display" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="plaque" aria-hidden="true">04</span>Réserver</a></li>
+    </ul>
+    <p class="menu__pied"><a class="cta cta--coffre" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a></p>
+  </div>
+</dialog>

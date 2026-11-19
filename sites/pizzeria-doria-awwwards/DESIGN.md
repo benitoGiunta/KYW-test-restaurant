@@ -59,3 +59,35 @@
 16. [x] Une famille de section au plus une fois par page (accueil : poster, index, statement, paire sombre, données, plein cadre).
 17. [x] Hero en 3 secondes : mesure Playwright, h1 bas à y 465 et CTA à y 727 à 1440×900, y 676 à 1280×720 (`.logs/doria-mesure.log`).
 18. [x] Mobile 390 recomposé : titre 22 vw, rangées empilées, boutons pleins, `scrollWidth` 390 sur les 4 pages (`.logs/doria-mesure.log`).
+
+## Sur-utilisation de la skill (phase 2)
+Mesures : `.logs/doria-p2-check.log` (Playwright, build du 19/11, 1440×900, 390×844 tactile, mouvement réduit).
+19. [x] Menu téléphone : bouton « Menu » `aria-expanded` (`Header.astro`, `menu.ts`), `<dialog>` modal plein écran (focus piégé : 7 Tab restent dans le dialog), Échap ferme, focus rendu au bouton (`tete__menu`), fermé avant navigation (menu vers histoire : `open` false). « Réserver » reste dans l'en-tête.
+20. [x] Engine verbatim (`src/engine/*`), adaptateur `astro.ts`, `transition:persist` sur `#curtain` (`Base.astro` l.73), `transition:animate="none"` sur `<html>` (l.36). Ni `#gl` ni `#cursor` (aucun GL, pas de follower : décision).
+21. [x] Une horloge : `gsap.ticker.add(tick)` (`casiers.ts` l.79) ; grep `addEventListener('scroll')` et `requestAnimationFrame` : 0 dans `src/motion`, `src/pages`, `src/components`.
+22. [x] Code de page dans `onPage()` avec nettoyage rendu (`casiers.ts` : 3 `onPage`, `menu.ts` : 1).
+23. [x] Aucune CSS `transform` sur élément GSAP (grep `transform` dans `site.css` : seulement `text-transform`) ; les façades portent des `translate` individuels écrits par variable CSS, jamais tweenés par GSAP.
+24. [x] Module pilote `src/motion/casiers.ts` : variable unique `--tire-js` distribuée aux façades visibles (IntersectionObserver), nourrie par la vitesse Lenis, la proximité du pointeur et `startIdle()` (l.50) ; appelé une fois depuis `setup.ts` l.9.
+25. [x] Loader : non (décision de phase 1, Concept Card) ; aucun composant ni `role="status"`.
+26. [x] Transition « volets de coffre » : sortie 0,64 s, entrée 0,79 s (`setup.ts`), ≤ 1 s par sens.
+27. [x] Intro `data-split="lines" data-intro` sur chaque h1 (accueil : deux mots décalés de 80 ms) ; 0 élément `[data-split]`/`[data-reveal]` caché après l'intro.
+28. [x] Épinglages : aucun (décision : une carte se lit, rien n'est épinglé).
+29. [x] Repli statique : en mouvement réduit `html.motion` absent, 0 élément caché dans `main` (accueil, carte), tiroirs en `<details>` natif (ouverture instantanée testée), translations neutralisées (`site.css`, bloc `prefers-reduced-motion`).
+30. [x] Copies décoratives `aria-hidden` (« À table dans le coffre. », marque du menu) ; aucun titre dupliqué.
+31. [x] Une famille d'easing (`ease.out`, `ease.inOut` de l'engine ; CSS `cubic-bezier(0.22, 1, 0.36, 1)` équivalent), durées 0,45 à 0,7 s, stagger 20 ms (plats) et 60 ms (rangées).
+32. [x] Trois traitements, tous « coulisser » : CTA (le plein glisse de gauche à droite), façades et plaques (le tiroir se tire : plaque et nom glissent de 0,9 rem, poignée s'allonge et rougit), liens texte et nav (trait qui s'épaissit en rouge).
+33. [x] `:hover` sous `@media (hover: hover)`, mêmes états sur `:focus-visible`, `:active` présent ; en réduit l'état reste visible (couleurs, poignée) sans glissement.
+34. [x] Liens texte soulignés au repos (`.lien`, `.lien-util`, téléphones).
+35. [ ] `hover.noHoverChange` : à prouver par `report.json` en phase 3.
+36. [x] État de repos : un tiroir visible après l'autre s'entrouvre (1,1 s) puis se referme, après 2,6 s sans geste ; mesuré `--tire-js` 0,987 sur la première rangée après 4,5 s immobile. `idleMotion` à confirmer par `report.json` (phase 3).
+37. [x] Curseur natif jamais masqué ; au toucher, pas de proximité du pointeur (`isTouch`), tout est cliquable sans survol.
+38. [x] Ni blur animé, ni `box-shadow` au scroll (le seul `box-shadow` est statique sur la ligne du jour), aucun `will-change` posé.
+39. [x] Réduit : Lenis absent (engine), ni GL, ni scrub, ni loader ; pilote désactivé (`prefersReducedMotion`).
+40. [x] GL : sans objet, décision écrite (Concept Card) ; aucune ligne `// GL` dans l'engine.
+41. [x] Sans objet (pas de GL).
+44. [x] Lien d'évitement premier (`Base.astro`), focus dans l'accent partout, rouge éclairci sur fond noir (`site.css`).
+45. [ ] Contraste AA à mesurer en phase 3 (calculs de phase 1 : muted 5,6:1, accent 4,9:1 ; blanc sur rouge du CTA survolé ~6,5:1).
+46. [x] Texte réel partout (SplitText sur du texte HTML), aucun canvas.
+47. [x] Cibles : « Menu », « Fermer » 44 px, CTA 52 px, liens du menu 72 px ; `smallTargets` à confirmer en phase 3.
+
+Ajouts de phase 2 hors checklist : état « Ouvert en ce moment / Fermé en ce moment, prochain service … » calculé à l'heure de Bruxelles depuis les créneaux rendus (`data-creneaux`), ligne du jour marquée (accueil, réservation) ; ouverture du tiroir ciblé par l'ancre (chargement, `hashchange`, plaques d'index de la carte).

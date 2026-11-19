@@ -1,9 +1,13 @@
 // Motion globale (phase 1 : transition de base, deux volets qui se ferment comme une porte de coffre).
-// Les signatures du concept (tiroirs qui coulissent) viennent en phase 2.
+// Phase 2 : pilote « Casiers » (tiroirs, tirage distribué, repos, état ouvert) et menu téléphone.
 import { gsap } from 'gsap';
 import { setTransition, ease } from '../engine';
+import { setupCasiers } from './casiers';
+import { setupMenu } from './menu';
 
 export function setupMotion() {
+  setupCasiers();
+  setupMenu();
   const volets = (c: HTMLElement) => c.querySelectorAll<HTMLElement>('.curtain__panel');
   setTransition({
     leave: (c) => {

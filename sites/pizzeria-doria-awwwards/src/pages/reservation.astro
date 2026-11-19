@@ -5,7 +5,7 @@ import { site, jours, libelleJour, midis } from '../data/site';
 ---
 <Base title="Réserver" page="reservation" description="Réserver une table à la Pizzeria Doria, Rue Fond de Malonne 66 à Malonne : par téléphone ou par e-mail. Horaires, adresse et plan.">
   <section class="entete wrap" aria-labelledby="titre">
-    <h1 id="titre" class="entete__titre display">Réserver une table</h1>
+    <h1 id="titre" class="entete__titre display" data-split="lines" data-intro>Réserver une table</h1>
     <p class="entete__lead">La réservation se fait par téléphone ou par e-mail. Un tableau des heures d’ouverture se trouve juste en dessous.</p>
   </section>
   <section class="resa wrap">
@@ -28,8 +28,9 @@ import { site, jours, libelleJour, midis } from '../data/site';
     <div class="resa__infos">
       <h2 class="display">Heures d’ouverture</h2>
       <ul class="heures__liste heures__liste--page">
-        {jours.map((j) => <li class:list={[{ 'est-ferme': j.creneaux.length === 0 }]}><span class="heures__jour">{j.nom}</span><span class="heures__h">{libelleJour(j)}</span></li>)}
+        {jours.map((j) => <li class:list={[{ 'est-ferme': j.creneaux.length === 0 }]} data-jour={j.cle} data-nom={j.nom} data-creneaux={j.creneaux.map((c) => `${c.debut}-${c.fin}`).join(',')}><span class="heures__jour">{j.nom}</span><span class="heures__h">{libelleJour(j)}</span></li>)}
       </ul>
+      <p class="etat" data-etat hidden></p>
       <p class="resa__note">Le dimanche et les jours fériés : 18 h 00 à 21 h 30, sauf quand ils tombent un mardi ou un mercredi.</p>
       <h2 class="display resa__sous">Venir</h2>
       <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>

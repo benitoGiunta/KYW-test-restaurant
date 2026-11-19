@@ -12,16 +12,11 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6rem; 
 
 /* Liens, boutons */
 .lien { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.25em; padding-block: 0.4em; display: inline-block; font-weight: 600; }
-.lien:hover { color: var(--c-accent-texte); }
-.lien--clair:hover { color: var(--c-coffre-accent); }
 .lien-util { font-size: var(--t-s); text-decoration: underline; text-underline-offset: 0.25em; padding-block: 0.5em; display: inline-block; }
 .cta { display: inline-flex; align-items: center; min-height: 3.25rem; padding: 0.5rem 1.6rem; background: var(--c-fg); color: var(--c-bg); font-family: var(--f-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 1.25rem; border: 2px solid var(--c-fg); border-radius: var(--radius); transition: background 0.25s, color 0.25s; }
-.cta:hover { background: var(--c-accent); border-color: var(--c-accent); color: #fff; }
 .cta--contour { background: transparent; color: var(--c-fg); }
-.cta--contour:hover { background: var(--c-fg); border-color: var(--c-fg); color: var(--c-bg); }
 .cta--petit { min-height: 2.75rem; padding-inline: 1.1rem; font-size: 1.0625rem; }
 .cta--coffre { background: var(--c-coffre-fg); color: var(--c-coffre); border-color: var(--c-coffre-fg); }
-.cta--coffre:hover { background: var(--c-coffre-accent); border-color: var(--c-coffre-accent); color: var(--c-coffre); }
 
 /* En-tête */
 .tete { position: sticky; top: 0; z-index: var(--z-header); display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem var(--gutter); background: var(--c-bg); border-bottom: 1px solid var(--c-line); }
@@ -29,12 +24,12 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6rem; 
 .tete__logo { width: 3.4rem; height: auto; }
 .tete__nav ul { display: flex; align-items: center; gap: clamp(0.75rem, 2.4vw, 2rem); list-style: none; padding: 0; }
 .nl { font-family: var(--f-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 1.125rem; padding-block: 0.7rem; border-bottom: 2px solid transparent; }
-.nl:hover, .nl[aria-current='page'] { border-bottom-color: var(--c-accent); }
+.nl[aria-current='page'] { border-bottom-color: var(--c-accent); }
 
 /* Plaque et poignée : le vocabulaire du casier */
 .plaque { display: inline-grid; place-items: center; min-width: 2.75rem; padding: 0.15rem 0.5rem; background: var(--c-plaque); color: var(--c-fg); border: 1px solid var(--c-fg); border-radius: var(--radius); font-family: var(--f-display); font-weight: 700; font-size: 1.25rem; line-height: 1.1; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
 .plaque--grande { font-size: clamp(2.5rem, 8vw, 5rem); padding: 0.1em 0.4em; margin-bottom: var(--serre); }
-.poignee { justify-self: end; width: 3.5rem; height: 0.5rem; background: var(--c-fg); border-radius: 0 0 var(--radius) var(--radius); }
+.poignee { justify-self: end; width: calc(3.5rem + var(--tire, 0) * 2.5rem); background: color-mix(in srgb, var(--c-accent) calc(var(--tire, 0) * 100%), var(--c-fg)); height: 0.5rem; border-radius: 0 0 var(--radius) var(--radius); }
 
 /* Accueil : poster */
 .hero { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--serre); padding-block: var(--serre) var(--normal); align-content: start; }
@@ -53,7 +48,6 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6rem; 
 .mur__intro { grid-column: 9 / 13; align-self: end; max-width: 38ch; }
 .mur__liste { grid-column: 1 / -1; list-style: none; padding: 0; margin-top: var(--serre); border-top: 2px solid var(--c-fg); }
 .rang { display: grid; grid-template-columns: 4rem minmax(0, 1fr) auto 4.5rem; align-items: center; gap: var(--gutter); padding: clamp(0.9rem, 0.5rem + 1.2vw, 1.6rem) 0.5rem; border-bottom: 1px solid var(--c-line); transition: background 0.25s; }
-.rang:hover { background: var(--c-plaque); }
 .rang__nom { font-size: var(--t-l); }
 .rang__meta { display: grid; justify-items: end; font-size: var(--t-s); color: var(--c-muted); }
 .mur__suite { grid-column: 1 / -1; }
@@ -106,16 +100,13 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6rem; 
 /* Carte : plaques d'index et tiroirs */
 .plaques ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; }
 .plaque-lien { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0.25rem 0.9rem 0.25rem 0.35rem; border: 1px solid var(--c-line); font-size: var(--t-s); font-weight: 600; transition: border-color 0.2s, background 0.2s; }
-.plaque-lien:hover { border-color: var(--c-fg); background: var(--c-plaque); }
 .casiers { padding-block: var(--serre) var(--normal); scroll-margin-top: 5rem; }
 .tiroir { border-top: 2px solid var(--c-fg); scroll-margin-top: 4.5rem; }
 .tiroir:last-child { border-bottom: 2px solid var(--c-fg); }
 .tiroir__face { list-style: none; display: grid; grid-template-columns: 4rem minmax(0, 1fr) auto 4.5rem; align-items: center; gap: var(--gutter); padding: clamp(1rem, 0.6rem + 1.2vw, 1.75rem) 0.5rem; cursor: pointer; transition: background 0.25s; }
 .tiroir__face::-webkit-details-marker { display: none; }
-.tiroir__face:hover { background: var(--c-plaque); }
 .tiroir__nom { font-size: var(--t-l); }
 .tiroir__meta { font-size: var(--t-s); color: var(--c-muted); text-align: right; }
-.tiroir[open] .poignee { width: 6rem; background: var(--c-accent); }
 .tiroir__fond { padding: var(--serre) 0.5rem var(--normal) calc(4rem + var(--gutter) + 0.5rem); }
 .tiroir__note { color: var(--c-muted); margin-bottom: var(--serre); max-width: 60ch; }
 .plats { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: calc(var(--gutter) * 2); }
@@ -155,7 +146,6 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6rem; 
 .resa h2 { font-size: var(--t-l); }
 .resa__sous { margin-top: var(--serre); }
 .resa__tel { font-size: var(--t-xl); white-space: nowrap; letter-spacing: 0; }
-.resa__tel:hover { color: var(--c-accent-texte); }
 .resa__note { color: var(--c-muted); font-size: var(--t-s); max-width: 46ch; }
 .resa__infos .heures__liste { grid-column: auto; width: 100%; }
 .heures__liste--page li { grid-template-columns: 8rem minmax(0, 1fr); }
@@ -187,9 +177,86 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6rem; 
 .pied__horaires li { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0.5rem; }
 .pied__tel { font-family: var(--f-display); font-weight: 700; font-size: var(--t-m); white-space: nowrap; display: inline-block; padding-block: 0.3rem; }
 .pied__reseaux { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0 1.25rem; margin-top: 0.5rem; }
-.pied .lien:hover { color: var(--c-coffre-accent); }
 .pied__cta { grid-column: 1 / -1; }
 .pied__colophon { grid-column: 1 / -1; font-size: var(--t-xs); color: var(--c-coffre-muted); max-width: 70ch; }
+
+/* Phase 2 : interactions. Trois traitements, tous dans le verbe « coulisser » :
+   1. CTA : le plein coulisse (fond qui glisse de gauche à droite, inversion complète) ;
+   2. rangées, tiroirs, plaques, liens du menu : le tiroir se tire (--tire : plaque et nom glissent, poignée s'allonge et rougit) ;
+   3. liens texte et navigation : soulignés au repos, le trait s'épaissit et passe au rouge. */
+@property --tire-h { syntax: '<number>'; inherits: true; initial-value: 0; }
+.rang, .tiroir__face, .plaque-lien, .menu__lien { --tire-js: 0; --tire: max(var(--tire-h), var(--tire-js)); transition: --tire-h 0.45s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s; }
+.rang > .plaque, .rang__nom, .tiroir__face > .plaque, .tiroir__nom, .plaque-lien > .plaque, .menu__lien > .plaque { translate: calc(var(--tire) * 0.9rem) 0; }
+.rang > .plaque, .tiroir__face > .plaque, .plaque-lien > .plaque, .menu__lien > .plaque { background: color-mix(in srgb, var(--c-fg) calc(var(--tire-h) * 100%), var(--c-plaque)); color: color-mix(in srgb, var(--c-plaque) calc(var(--tire-h) * 100%), var(--c-fg)); }
+.tiroir[open] > .tiroir__face { --tire-h: 1; }
+.rang:focus-visible, .tiroir__face:focus-visible, .plaque-lien:focus-visible { --tire-h: 1; background-color: var(--c-plaque); outline-offset: -2px; }
+.rang:active, .tiroir__face:active, .plaque-lien:active { background-color: var(--c-line); }
+.plaque-lien { border-color: color-mix(in srgb, var(--c-fg) calc(var(--tire-h) * 100%), var(--c-line)); }
+
+.cta { position: relative; isolation: isolate; overflow: hidden; transition: color 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s; }
+.cta::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--cta-plein, var(--c-accent)); translate: -101% 0; transition: translate 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+.cta--contour { --cta-plein: var(--c-fg); }
+.cta--coffre { --cta-plein: var(--c-coffre-accent); }
+.cta:focus-visible { color: var(--cta-encre, #fff); border-color: var(--cta-plein, var(--c-accent)); }
+.cta:focus-visible::before { translate: 0 0; }
+.cta--contour { --cta-encre: var(--c-bg); }
+.cta--coffre { --cta-encre: var(--c-coffre); }
+.cta:active { translate: 0 1px; }
+
+.lien, .lien-util { text-decoration-color: currentColor; transition: text-decoration-color 0.25s, text-decoration-thickness 0.25s, color 0.25s; }
+.lien:focus-visible, .lien-util:focus-visible { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); }
+.coffre .lien:focus-visible, .plein .lien:focus-visible, .pied .lien:focus-visible, .pied .lien-util:focus-visible { text-decoration-color: var(--c-coffre-accent); }
+.nl { transition: border-color 0.25s; }
+.nl:focus-visible { border-bottom-color: var(--c-accent); }
+.resa__tel, .pied__tel { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.12em; text-decoration-color: var(--c-line); transition: text-decoration-color 0.25s; }
+.resa__tel:focus-visible { text-decoration-color: var(--c-accent); }
+.pied__tel:focus-visible { text-decoration-color: var(--c-coffre-accent); }
+.kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
+.lien:active, .lien-util:active, .nl:active { opacity: 0.7; }
+
+@media (hover: hover) {
+  .rang:hover, .tiroir__face:hover, .plaque-lien:hover, .menu__lien:hover { --tire-h: 1; background-color: var(--c-plaque); }
+  .menu__lien:hover { background-color: transparent; }
+  .cta:hover { color: var(--cta-encre, #fff); border-color: var(--cta-plein, var(--c-accent)); }
+  .cta:hover::before { translate: 0 0; }
+  .lien:hover, .lien-util:hover { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); }
+  .coffre .lien:hover, .plein .lien:hover, .pied .lien:hover, .pied .lien-util:hover { text-decoration-color: var(--c-coffre-accent); }
+  .nl:hover { border-bottom-color: var(--c-accent); }
+  .resa__tel:hover { text-decoration-color: var(--c-accent); }
+  .pied__tel:hover { text-decoration-color: var(--c-coffre-accent); }
+}
+
+/* État « ouvert en ce moment » (calculé, Europe/Brussels) */
+.heures > .etat { grid-column: 1 / 8; }
+.heures > .heures__midis { grid-row: 2 / span 2; }
+.etat { display: flex; align-items: center; gap: 0.6rem; font-weight: 600; }
+.etat::before { content: ''; width: 0.75rem; height: 0.75rem; border-radius: var(--radius); background: var(--c-muted); flex: none; }
+.etat[data-etat='ouvert']::before { background: var(--c-vert); }
+.etat[hidden] { display: none; }
+.heures__liste .est-aujourdhui { background: var(--c-plaque); box-shadow: inset 4px 0 0 var(--c-accent); padding-inline-start: 0.75rem; }
+
+/* Menu téléphone : un tiroir plein écran */
+.tete__menu { display: none; min-height: 2.75rem; padding: 0 0.9rem; border: 2px solid var(--c-fg); border-radius: var(--radius); font-family: var(--f-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 1rem; color: var(--c-fg); }
+.tete__menu:active { background: var(--c-plaque); }
+.menu { position: fixed; inset: 0; width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; background: var(--c-coffre); color: var(--c-coffre-fg); }
+.menu::backdrop { background: var(--c-coffre); }
+.menu__tiroir { min-height: 100%; display: grid; grid-template-rows: auto 1fr auto; gap: var(--normal); padding: 0.6rem var(--gutter) var(--normal); }
+.menu__haut { display: flex; justify-content: space-between; align-items: center; }
+.menu__marque { font-size: 1.5rem; letter-spacing: 0.02em; }
+.menu__fermer { min-height: 2.75rem; padding: 0 0.9rem; border: 2px solid var(--c-coffre-fg); border-radius: var(--radius); color: var(--c-coffre-fg); font-family: var(--f-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 1rem; }
+.menu__liste { list-style: none; padding: 0; align-self: center; border-top: 2px solid var(--c-coffre-fg); }
+.menu__lien { display: flex; align-items: center; gap: 1rem; min-height: 4.5rem; font-size: clamp(2.25rem, 1rem + 8vw, 3.5rem); border-bottom: 1px solid #3a3e3b; }
+.menu__lien[aria-current='page'] { color: var(--c-coffre-accent); }
+.menu .plaque { --c-plaque: var(--c-coffre-fg); }
+.menu :focus-visible { outline-color: var(--c-coffre-accent); }
+.motion .menu[open] .menu__tiroir { animation: menu-tire 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes menu-tire { from { translate: 0 -100%; } }
+
+/* Mouvement réduit : rien ne glisse, chaque état reste visible (couleur, trait, poignée) */
+@media (prefers-reduced-motion: reduce) {
+  .rang, .tiroir__face, .plaque-lien, .menu__lien, .cta, .cta::before, .lien, .lien-util { transition-duration: 0.01s; }
+  .rang > .plaque, .rang__nom, .tiroir__face > .plaque, .tiroir__nom, .plaque-lien > .plaque, .menu__lien > .plaque { translate: none; }
+}
 
 /* Tablette et téléphone */
 @media (max-width: 63.99rem) {
@@ -205,10 +272,16 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6rem; 
   .coffre__photo img, .paire__photo img, .recit__photo img { aspect-ratio: 5 / 4; }
   .plats { grid-template-columns: minmax(0, 1fr); }
   .pied__col, .pied__col:nth-of-type(1) { grid-column: 1 / -1; }
+  .heures > .etat { grid-column: 1 / -1; }
+  .heures > .heures__midis { grid-row: auto; }
 }
 @media (max-width: 47.99rem) {
   .tete__logo { width: 2.75rem; }
   .tete__nav ul { gap: 0.6rem; }
+  .tete__nav li:not(:last-child) { display: none; }
+  .tete__menu { display: inline-flex; align-items: center; }
+  .tete { gap: 0.6rem; }
+  .tete__nav { margin-left: auto; }
   .nl { font-size: 1rem; letter-spacing: 0.03em; }
   .cta--petit { padding-inline: 0.8rem; font-size: 1rem; }
   .hero__titre { font-size: clamp(3.5rem, 1rem + 22vw, 8rem); }
@@ -216,7 +289,7 @@ figcaption { font-size: var(--t-xs); color: var(--c-muted); margin-top: 0.6rem; 
   .rang, .tiroir__face { grid-template-columns: 3rem minmax(0, 1fr) 2.5rem; gap: 0.75rem; }
   .rang__meta, .tiroir__meta { grid-column: 2; grid-row: 2; justify-items: start; text-align: left; display: flex; gap: 0.75rem; }
   .rang .poignee, .tiroir__face .poignee { grid-column: 3; grid-row: 1; width: 2.25rem; }
-  .tiroir[open] .poignee { width: 2.25rem; }
+  .rang .poignee, .tiroir__face .poignee { width: calc(1.5rem + var(--tire, 0) * 0.75rem); }
   .tiroir__fond { padding-left: 0.5rem; }
   .plaque { min-width: 2.5rem; font-size: 1.125rem; }
   .heures__liste li, .heures__liste--page li, .equipe li, .pratique > div { grid-template-columns: minmax(0, 1fr); gap: 0.15rem; }
