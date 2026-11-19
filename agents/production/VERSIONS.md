@@ -16,6 +16,13 @@ Coût de référence mesuré (phase de développement, tarif API) : **développe
 soit ≈ 18,8 $ par restaurant et ≈ 6,3 $ par site, ≈ 2,4 % d'une limite hebdomadaire (estimation 790 $ par limite,
 `data/usage/limite-hebdo.json`).
 
+## Mode figé (phase de test)
+
+Avec `"lecons": false` (paramètre de campagne), le workflow saute l'étape Leçons et aucun agent ne modifie `agents/` :
+les leçons sont seulement proposées dans `data/usage/<campagne>/lecons-proposees/<slug>.md`. La version reste donc
+identique du premier au dernier restaurant de la campagne ; les leçons proposées sont revues ensuite, et intégrées
+(nouvelle approche) si le porteur le décide.
+
 ## Faiblesses connues de ces versions (non corrigées, à observer pendant le test)
 
 - Un agent de correction peut déclarer une couverture complète sans ouvrir toutes les planches (mesuré : 1 image lue pour 6 pages sur le-servais).
