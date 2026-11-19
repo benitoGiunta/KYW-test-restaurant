@@ -1,0 +1,36 @@
+---
+import { semaine, tarifs, services, plage, prix, boissonsFormule } from '../data/site';
+const [midi, soir] = services;
+---
+<div class="semaine" id="semaine" data-semaine>
+  <ol class="semaine__jours" aria-label="La semaine, jour par jour">
+    {semaine.map((j) => (
+      <li class="jour" data-jour={j.id}>
+        <h3 class="jour__nom">{j.nom}</h3>
+        {j.ferme ? (
+          <p class="case case--ferme" data-service="ferme"><span class="case__prix">Fermé</span><span class="case__quand">Le wok se repose.</span></p>
+        ) : (
+          <>
+            <p class={`case case--${j.midi}`} data-service="midi">
+              <span class="case__prix">{prix(tarifs[j.midi!].buffet)}</span>
+              <span class="case__quand"><b>{midi.libelle}</b><span>{plage(midi.debut, midi.fin)}</span></span>
+            </p>
+            <p class={`case case--${j.soir}`} data-service="soir">
+              <span class="case__prix">{prix(tarifs[j.soir!].buffet)}</span>
+              <span class="case__quand"><b>{soir.libelle}</b><span>{plage(soir.debut, soir.fin)}</span></span>
+            </p>
+          </>
+        )}
+      </li>
+    ))}
+  </ol>
+  <dl class="legende">
+    {(['t1', 't2', 't3'] as const).map((t) => (
+      <div>
+        <dt><span class={`puce puce--${t}`} aria-hidden="true"></span>{tarifs[t].libelle}, {tarifs[t].contexte}</dt>
+        <dd>Buffet seul {prix(tarifs[t].buffet)}. Avec boissons {prix(tarifs[t].boissons)}.</dd>
+      </div>
+    ))}
+  </dl>
+  <p class="petit semaine__note">Prix par personne. Formule avec boissons : {boissonsFormule}. Tarif lu d’après le site du restaurant : confirmez-le à la réservation.</p>
+</div>

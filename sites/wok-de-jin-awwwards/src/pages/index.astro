@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Semaine from '../components/Semaine.astro';
+import { u } from '../lib/url';
+import { site, tarifs, comptoirs, famille, reveillon, prix } from '../data/site';
+---
+<Base page="accueil">
+  <section class="hero" aria-labelledby="hero-titre">
+    <div class="wrap hero__grille">
+      <h1 class="display hero__titre" id="hero-titre"><span>À</span><span>volonté</span></h1>
+      <div class="hero__texte">
+        <p class="lede">Buffet asiatique à Jambes : sushis, fruits de mer, wok et teppanyaki cuits devant vous, desserts pour finir. Vous reprenez autant de fois que vous voulez.</p>
+        <p class="actions">
+          <a class="cta" href={u('/reservation/')}>Réserver une table</a>
+          <a class="cta cta--vide" href={site.telephoneHref}>Appeler le {site.telephoneLisible}</a>
+        </p>
+      </div>
+      <figure class="hero__media"><Photo cle="sashimi" widths={[480, 800, 1200]} sizes="(max-width: 47.99rem) 100vw, 40vw" prioritaire /></figure>
+      <ul class="hero__bandeau" aria-label="Tarifs du buffet seul, par personne">
+        <li><b>{prix(tarifs.t1.buffet)}</b><span>Midi, en semaine</span></li>
+        <li><b>{prix(tarifs.t2.buffet)}</b><span>Soir, en semaine</span></li>
+        <li><b>{prix(tarifs.t3.buffet)}</b><span>Week-end et jours fériés</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec nuit" aria-labelledby="semaine-titre">
+    <div class="wrap">
+      <div class="sec__tete">
+        <p class="lib">Quand venir</p>
+        <h2 class="display sec__titre" id="semaine-titre" data-split="lines,words,chars">Une semaine, un prix par service.</h2>
+      </div>
+      <Semaine />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="comptoirs-titre">
+    <div class="wrap">
+      <div class="sec__tete">
+        <h2 class="display sec__titre" id="comptoirs-titre" data-split="lines,words,chars">Cinq comptoirs, à volonté.</h2>
+        <p class="lede">Le buffet n’a pas de carte de plats : on se sert, on revient, on goûte autre chose.</p>
+      </div>
+      <ul class="comptoirs">
+        {comptoirs.map((c) => (
+          <li>
+            <h3>{c.nom}</h3>
+            <p>{c.texte}</p>
+            <figure><Photo cle={c.photo} widths={[240, 480]} sizes="12vw" decorative /></figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec nuit" aria-labelledby="wok-titre">
+    <div class="wrap paire">
+      <figure class="paire__a">
+        <div class="cadre cadre--43"><Photo cle="wokChef" widths={[480, 800, 1170]} sizes="(max-width: 47.99rem) 100vw, 40vw" /></div>
+        <figcaption class="legende-photo">{site.credit}</figcaption>
+      </figure>
+      <div class="paire__b">
+        <p class="lib">Wok et teppanyaki</p>
+        <h2 class="display sec__titre" id="wok-titre" data-split="lines,words,chars">Vous composez, ils cuisent.</h2>
+        <p class="txt">Au wok comme à la plaque, vous choisissez vos viandes et vos légumes parmi les bacs du buffet. Le cuisinier les prépare devant vous et vous les sert chauds.</p>
+        <p><a class="lien" href={u('/carte/')}>Voir le buffet en détail</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="famille-titre">
+    <div class="wrap">
+      <div class="pleincadre"><Photo cle="salleLarge" widths={[800, 1200, 1600]} sizes="100vw" /></div>
+      <p class="legende-photo">La salle. {site.credit}</p>
+      <div class="sec__tete" style="margin-top: var(--normal); margin-bottom: 0;">
+        <h2 class="display sec__titre" id="famille-titre" data-split="lines,words,chars">Une grande salle pour toute la tablée.</h2>
+      </div>
+      <ul class="famille">
+        {famille.map((f) => <li><h3>{f.titre}</h3><p>{f.texte}</p></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec nuit" aria-labelledby="reveillon-titre">
+    <div class="wrap">
+      <div class="reveillon">
+        <p class="display reveillon__prix" aria-hidden="true">{reveillon.prix}&nbsp;€</p>
+        <div class="reveillon__texte">
+          <p class="lib">Réveillon, {reveillon.date}</p>
+          <h2 class="display sec__titre" id="reveillon-titre">Le 31, boissons comprises.</h2>
+          <p class="txt">{reveillon.texte} Dès 18&nbsp;h.</p>
+          <p class="actions">
+            <a class="cta" href={site.reveillonUrl} rel="noopener">Réserver le réveillon</a>
+            <a class="cta cta--vide" href={u('/reservation/#reveillon')}>Conditions</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

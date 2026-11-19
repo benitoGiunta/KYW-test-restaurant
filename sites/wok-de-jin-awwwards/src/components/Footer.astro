@@ -1,0 +1,33 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site, semaine } from '../data/site';
+interface Props { page?: string }
+const { page = 'page' } = Astro.props;
+---
+<section class="pied" aria-label="Contact et accès">
+  <div class="wrap pied__corps">
+    <p class="pied__mot" aria-hidden="true">Mardi, on éteint.</p>
+    <div class="pied__col">
+      <h2 class="pied__titre">Venir</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Ouvert</h2>
+      <ul class="pied__semaine" aria-label="Jours d’ouverture, fermé le mardi">
+        {semaine.map((j) => <li class={j.ferme ? 'ferme' : undefined} aria-label={j.ferme ? `${j.nom}, fermé` : j.nom}><span aria-hidden="true">{j.court.charAt(0)}</span></li>)}
+      </ul>
+      {page === 'reservation'
+        ? <p class="petit">Les horaires sont au-dessus.</p>
+        : <p><a class="lien" href={u('/reservation/#horaires')}>Horaires détaillés</a></p>}
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Réserver</h2>
+      <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+      {page === 'reservation' ? null : <p><a class="cta" href={u('/reservation/')}>Réserver une table</a></p>}
+    </div>
+    <p class="pied__colophon">{site.credit}. Polices : Tanker (Indian Type Foundry, Fontshare) et Switzer (Fontshare). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />

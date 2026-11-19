@@ -1,0 +1,21 @@
+---
+import { u, asset } from '../lib/url';
+const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
+const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
+const liens = [
+  { href: '/carte/', label: 'Buffet' },
+  { href: '/a-propos/', label: 'La maison' },
+];
+---
+<header class="tete">
+  <a class="tete__marque" href={base} aria-current={path === base ? 'page' : undefined}>
+    <img class="tete__logo" src={asset('/logo.png')} alt="" width="512" height="512" /><span>Wok de Jin</span>
+  </a>
+  <nav class="tete__nav" aria-label="Navigation principale">
+    <ul>
+      {liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      <li><a class="cta cta--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}>Réserver</a></li>
+    </ul>
+  </nav>
+</header>

@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, semaine, services, plage, reveillon, prix, tarifs } from '../data/site';
+const [midi, soir] = services;
+const ouverts = semaine.filter((j) => !j.ferme);
+---
+<Base title="Réserver" description="Réservez une table chez Wok de Jin à Jambes : téléphone au 081 30 68 88, réservation en ligne, adresse, horaires midi et soir, fermé le mardi, réveillon du 31 décembre." page="reservation">
+  <section class="wrap page-tete">
+    <p class="lib">Réserver</p>
+    <h1 class="display page-titre">À table, à quelle heure ?</h1>
+    <p class="lede">Réservez par téléphone ou en ligne. Les grandes tablées sont les bienvenues : familles, amis, collègues.</p>
+    <p><a class="contact-gros" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+    <p class="actions">
+      <a class="cta" href={site.reservationUrl} rel="noopener">Réserver en ligne</a>
+      <a class="cta cta--vide" href={site.telephoneHref}>Appeler</a>
+    </p>
+  </section>
+
+  <section class="sec nuit" id="horaires" aria-labelledby="horaires-titre">
+    <div class="wrap fiches">
+      <div class="fiche fiche--large">
+        <h2 class="display sec__titre" id="horaires-titre">Horaires</h2>
+        <ul class="horaires">
+          {semaine.map((j) => (
+            <li class={j.ferme ? 'ferme' : undefined}>
+              <span>{j.nom}</span>
+              <span>{j.ferme ? 'Fermé' : `${plage(midi.debut, midi.fin)} et ${plage(soir.debut, soir.fin)}`}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="petit">{ouverts.length} jours sur 7. Le tarif week-end s’applique aussi aux jours fériés.</p>
+      </div>
+      <div class="fiche fiche--large">
+        <h2 class="display sec__titre">Accès</h2>
+        <address style="font-style: normal;">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></p>
+        <p class="petit">À Jambes, commune de Namur, sur l’avenue du Bourgmestre Jean Materne.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="reveillon" aria-labelledby="reveillon-titre">
+    <div class="wrap fiches">
+      <div class="fiche fiche--large">
+        <p class="lib">Réveillon, {reveillon.date}</p>
+        <h2 class="display sec__titre" id="reveillon-titre">{prix(reveillon.prix)}, boissons comprises.</h2>
+        <p class="txt">{reveillon.texte} À partir de 18&nbsp;h.</p>
+      </div>
+      <div class="fiche fiche--large">
+        <h3>Conditions</h3>
+        <p>{reveillon.conditions}</p>
+        <p><a class="cta" href={site.reveillonUrl} rel="noopener">Réserver le réveillon</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec nuit" aria-label="Avant de venir">
+    <div class="wrap fiches">
+      <div class="fiche fiche--large">
+        <h3>Tarifs, en bref</h3>
+        <ul class="liste-prix">
+          {(['t1', 't2', 't3'] as const).map((t) => <li><span>{tarifs[t].libelle}, {tarifs[t].contexte}</span><b>{prix(tarifs[t].buffet)}</b></li>)}
+        </ul>
+      </div>
+      <div class="fiche fiche--large">
+        <h3>Enfants et anniversaires</h3>
+        <p>Gratuit jusqu’à 3 ans, demi-tarif de 4 à 11 ans. Moins 50 % sur le buffet pour un anniversaire. Une pièce d’identité est demandée.</p>
+      </div>
+    </div>
+  </section>
+</Base>
