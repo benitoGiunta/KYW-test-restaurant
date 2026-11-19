@@ -21,3 +21,8 @@
 - Les `[data-slot]` ne portent pas de hauteur propre : leur donner `aspect-ratio` ou `inset: 0`.
 - Menu mobile : le `::backdrop` du popover couvre aussi la barre de nav (assombrie, toggle encore lisible).
 - Dev server : lancé port 4321, arrêté en fin de phase.
+
+## Fin de la phase 3 (QA)
+- Corrigé : `twitter:card` (Base.astro). Les autres constats de QA-build sont des faux positifs ou sous seuil (voir RAPPORT.md).
+- Build final passe ; RAPPORT.md écrit. Serveur de test arrêté (PID noté, kill).
+- Reste : lien de commande à emporter (slot `.fill`), sweep sloplint/finish review non refaits.
