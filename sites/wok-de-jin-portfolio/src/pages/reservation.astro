@@ -34,7 +34,7 @@ import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
         <label>Heure <input type="time" name="heure" required /></label>
         <label>Couverts <input type="number" name="couverts" min="1" max="40" value="2" required /></label>
         <label class="large">Message <textarea name="message" rows="3"></textarea></label>
-        <div class="actions"><button class="btn btn--plein" type="submit">Continuer sur {site.reservation.outil}</button></div>
+        <div class="actions"><button class="btn btn--plein" type="submit">Continuer sur {site.reservation.outil}</button><p class="form__etat" role="status" data-form-etat></p></div>
       </form>
     </div>
   </section>
@@ -69,7 +69,8 @@ import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
   onPage(() => {
     const form = document.querySelector<HTMLFormElement>('[data-reservation]');
     if (!form) return;
-    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); };
+    const etat = document.querySelector<HTMLElement>('[data-form-etat]');
+    const go = (e: SubmitEvent) => { e.preventDefault(); window.open(form.action, '_blank', 'noopener'); if (etat) etat.textContent = 'Votre demande est prête : la réservation s’ouvre dans un nouvel onglet.'; };
     form.addEventListener('submit', go);
     return () => form.removeEventListener('submit', go);
   });

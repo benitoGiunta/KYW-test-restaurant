@@ -61,6 +61,7 @@ html.motion .marquee__piste { animation: marquee 38s linear infinite; }
 .btn--lin:hover { color: var(--c-ink); }
 .section--corail .btn::before { background: var(--c-ink); }
 .section--corail .btn:hover { color: var(--c-lin); }
+.btn:active { transform: scale(0.97); }
 .btn:focus-visible, .nav a:focus-visible, .link:focus-visible, .obj:focus-visible, .tirage:focus-visible { outline: 3px solid var(--c-canard); outline-offset: 3px; }
 .section--canard .btn:focus-visible, .section--canard .tirage:focus-visible { outline-color: var(--c-paille); }
 .actions { display: flex; flex-wrap: wrap; gap: var(--u); margin-top: calc(var(--u) * 3); }
@@ -81,6 +82,10 @@ html.motion .marquee__piste { animation: marquee 38s linear infinite; }
 .obj__svg { display: block; width: 100%; height: 100%; rotate: var(--r); filter: drop-shadow(0 0 0 transparent); transition: filter 0.3s; }
 .obj:hover .obj__svg, .obj.is-drag .obj__svg { filter: drop-shadow(0 10px 10px rgb(31 26 23 / 0.22)); }
 html.motion .obj.is-flottant .obj__svg { animation: flotte 4.5s ease-in-out infinite; animation-delay: var(--delai, 0s); }
+/* Vapeur du bol et du wok */
+.vap { transform-box: fill-box; transform-origin: 50% 100%; }
+html.motion .vap { animation: vapeur 3.4s ease-in-out infinite; }
+@keyframes vapeur { 0%, 100% { opacity: 0.3; translate: 0 3px; } 50% { opacity: 1; translate: 0 -3px; } }
 @keyframes flotte { 0%, 100% { translate: 0 0; } 50% { translate: 0 -3px; } }
 .obj--corail { color: var(--c-corail-ink); }
 .obj--canard { color: var(--c-canard); }
@@ -108,6 +113,7 @@ html.motion .obj.is-flottant .obj__svg { animation: flotte 4.5s ease-in-out infi
 .tirage { display: block; width: var(--w, 15rem); padding: 0.9rem 0.9rem 2.6rem; background: var(--c-blanc); border-radius: var(--radius); box-shadow: 0 14px 30px rgb(31 26 23 / 0.18); color: var(--c-ink); text-align: left; border: 0; cursor: grab; touch-action: none; }
 .tirage img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: calc(var(--radius) - 8px); }
 .tirage figcaption, .tirage__legende { display: block; margin-top: 0.6rem; font-family: var(--f-display); font-style: italic; font-size: 1rem; line-height: 1.2; }
+.table__scene .tirage { cursor: grab; }
 .tirage.is-drag { cursor: grabbing; box-shadow: 0 30px 50px rgb(31 26 23 / 0.3); }
 
 /* La table (signature) */
@@ -120,6 +126,8 @@ html.motion .obj.is-flottant .obj__svg { animation: flotte 4.5s ease-in-out infi
 .table__scene .tirage:hover { rotate: 0deg; }
 .table__scene .tirage.is-drag { rotate: 0deg; }
 .table__scene .obj { color: var(--c-paille); }
+.table__reset { position: absolute; left: var(--gutter); bottom: calc(var(--u) * 3); z-index: 4; }
+html:not(.motion) .table__reset { display: none; }
 .badge { position: absolute; right: var(--gutter); bottom: calc(var(--u) * 3); z-index: 3; width: 7.5rem; height: 7.5rem; display: grid; place-items: center; color: var(--c-lin); pointer-events: none; }
 .badge svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 html.motion .badge svg { animation: tourne 14s linear infinite; }
@@ -127,7 +135,7 @@ html.motion .badge svg { animation: tourne 14s linear infinite; }
 .badge text { font-family: var(--f-body); font-weight: 700; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; fill: currentColor; }
 /* La main reste petite au centre : `.badge svg` (absolu, 100 %) l'agrandissait à toute la pastille (REVISION-1, F2-6). */
 .badge .badge__main { position: relative; inset: auto; width: 2.2rem; height: 2.2rem; }
-.table__rail { display: none; }
+.table .table__rail { display: none; }
 
 /* Le menu : carte blanche */
 /* La carte part d'un scale > 1 (data-reveal="scale") : avant sa révélation elle débordait de 10 px en 390 px. */
@@ -141,6 +149,7 @@ html.motion .badge svg { animation: tourne 14s linear infinite; }
 .plat__nom { font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: var(--t-s); }
 .plat__desc { display: block; font-weight: 500; text-transform: none; letter-spacing: 0; font-size: var(--t-s); color: var(--c-muted); }
 .plat__points { flex: 1 1 auto; min-width: 1.5rem; border-bottom: 2px dotted var(--c-line); translate: 0 -0.35em; }
+.plat:hover .plat__prix { background: var(--c-corail); color: var(--c-ink); }
 .plat__prix { flex: 0 0 auto; min-width: 2.6rem; padding: 0.15em 0.6em; border: 2px solid var(--c-corail); border-radius: var(--pill); font-weight: 700; font-size: var(--t-s); text-align: center; }
 .vege { display: inline-block; margin-left: 0.5em; padding: 0.1em 0.5em; border-radius: var(--pill); background: var(--c-paille); color: var(--c-ink); font-size: var(--t-xs); letter-spacing: 0.06em; vertical-align: middle; }
 .carte__menus { display: grid; gap: calc(var(--u) * 2); grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); margin-top: calc(var(--u) * 4); }
@@ -216,7 +225,11 @@ html.motion .avis__mot { --flou: 14px; }
 .form label.large { grid-column: 1 / -1; }
 .form input, .form select, .form textarea { font: inherit; padding: 0.7em 1em; border: 2px solid var(--c-ink); border-radius: 16px; background: var(--c-blanc); color: var(--c-ink); }
 .form input:focus-visible, .form textarea:focus-visible { outline: 3px solid var(--c-canard); outline-offset: 2px; }
-.form .actions { grid-column: 1 / -1; margin-top: 0; }
+.form .actions { grid-column: 1 / -1; margin-top: 0; align-items: center; }
+.form input:user-invalid, .form textarea:user-invalid { border-color: var(--c-corail-ink); background: #fff3ef; }
+.form label:has(:user-invalid)::after { content: 'À compléter'; color: var(--c-corail-ink); font-size: var(--t-xs); }
+.form__etat { font-weight: 700; font-size: var(--t-s); color: var(--c-canard); }
+.form__etat:empty { display: none; }
 
 /* Page 404 */
 .page-404 { min-height: 60svh; display: grid; place-content: center; text-align: center; padding-block: calc(var(--u) * 8); position: relative; }
@@ -251,6 +264,8 @@ html.motion .avis__mot { --flou: 14px; }
   .header__inner { grid-template-columns: 1fr auto; }
   .nav { position: fixed; left: 50%; bottom: max(0.75rem, env(safe-area-inset-bottom)); translate: -50% 0; z-index: var(--z-header); max-width: calc(100vw - 1.5rem); overflow-x: auto; scrollbar-width: none; box-shadow: 0 10px 30px rgb(31 26 23 / 0.25); }
   .nav a { white-space: nowrap; }
+  .nav a.nav__sec { display: none; }
+  .table__reset { display: none; }
   body { padding-bottom: 4.5rem; }
   .hero { padding-block: calc(var(--u) * 8) calc(var(--u) * 16); min-height: 0; }
   .hero__titre { font-size: clamp(2.6rem, 14vw, 3.6rem); }
@@ -265,7 +280,7 @@ html.motion .avis__mot { --flou: 14px; }
   .table { min-height: 0; }
   .table__scene { display: none; }
   .table__titre { position: static; translate: none; margin-bottom: calc(var(--u) * 3); }
-  .table__rail { display: flex; }
+  .table .table__rail { display: flex; }
   .table__rail .tirage { --w: 14rem; rotate: var(--r); cursor: default; }
   .badge { position: relative; right: auto; bottom: auto; width: 6.5rem; height: 6.5rem; margin: calc(var(--u) * 2) auto 0; }
   .carte { padding: calc(var(--u) * 3) calc(var(--u) * 2); }
@@ -292,3 +307,8 @@ html:not(.motion) .section--canard .btn { transition: none; }
 .puces .vege { margin-left: 0; font-size: var(--t-s); padding: 0.4em 1em; }
 .liste-reveillon { display: flex; flex-wrap: wrap; gap: 0.6em; justify-content: center; margin-top: calc(var(--u) * 3); }
 .liste-reveillon .vege { margin-left: 0; font-size: var(--t-s); padding: 0.4em 1em; }
+
+/* Repli sans motion : tirages à plat, séparés, jamais collés aux bords */
+html:not(.motion) .table__scene { gap: calc(var(--u) * 2); padding-inline: var(--gutter); }
+html:not(.motion) .table__scene .tirage { width: 100%; max-width: 15rem; justify-self: center; }
+@media (max-width: 380px) { .nav a { padding-inline: 0.55em; font-size: 0.8125rem; } }

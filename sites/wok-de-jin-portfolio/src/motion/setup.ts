@@ -127,6 +127,13 @@ function table() {
   if (!scene || isMobile() || getComputedStyle(scene).display === 'none') return () => {};
   const items = [...scene.querySelectorAll<HTMLElement>('[data-tirage], [data-obj]')];
   const cleanups: (() => void)[] = [];
+  const reset = document.querySelector<HTMLButtonElement>('[data-table-reset]');
+  if (reset) {
+    const ranger = () => gsap.to(items, { x: 0, y: 0, duration: prefersReducedMotion() ? 0 : 0.9, ease: 'back.out(1.4)', stagger: prefersReducedMotion() ? 0 : { each: 0.03, from: 'random' }, onComplete: () => Draggable.get(items[0])?.update() });
+    const rangerTout = () => { ranger().eventCallback('onUpdate', () => items.forEach((t) => Draggable.get(t)?.update())); };
+    reset.addEventListener('click', rangerTout);
+    cleanups.push(() => reset.removeEventListener('click', rangerTout));
+  }
   if (prefersReducedMotion()) {
     scene.querySelectorAll<HTMLElement>('[data-tirage]').forEach((t) => cleanups.push(saisissable(t, scene)));
     return () => cleanups.forEach((c) => c());
