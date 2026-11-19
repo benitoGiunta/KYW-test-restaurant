@@ -32,3 +32,7 @@
 - Aucun loader, aucun GL (justifiés dans la Concept Card).
 - Pièges : un `widths={480, 800}` sans crochets compile en JS mais casse le rendu ; `scripts/planche.py` doit passer par q.sh.
 - Phase 2 : pas de follower de curseur, pas d'épinglage, pas de loader (une carte se lit) ; `.etat` placé par `.heures > .etat` (dans `.resa__infos`, une colonne explicite créerait des pistes implicites).
+
+## Phase 3 (construction-3, 19/11/2026)
+- QA relue sur preuves, 404 re-mesurée sur la vraie page (QA-build avait mesuré la 404 générique de serve.mjs) : rien à corriger. Build final OK (dist inchangé). RAPPORT.md écrit.
+- Reste : score jury indépendant (`/jury`), captures de /reservation/, lecture noHoverChange/colorOnly/idleMotion dans report.json, accessoire à retirer, photos et données client.
