@@ -1,0 +1,19 @@
+---
+import { horaires, h } from '../data/site';
+---
+<section class="horaires" id="horaires" aria-labelledby="h-horaires" data-placeholder="true">
+  <h2 id="h-horaires">Horaires</h2>
+  <dl class="sched">
+    {horaires.filter((j) => j.creneaux).map((j) => (
+      <div class="sched__jour">
+        <dt>{j.jour}</dt>
+        <dd>{j.creneaux!.map((c, i) => (<>{i > 0 && <span class="sep"> et </span>}<time datetime={c.de}>{h(c.de)}</time> à <time datetime={c.a}>{h(c.a)}</time></>))}</dd>
+      </div>
+    ))}
+    <div class="sched__jour sched__jour--ferme">
+      <dt>lundi, mardi, mercredi</dt>
+      <dd><span class="fill">À confirmer</span></dd>
+    </div>
+  </dl>
+  <p class="note">Horaires à confirmer auprès du restaurant : le site d’origine n’indiquait que « 18 h 00 à 23 h 00 », sans les jours.</p>
+</section>
