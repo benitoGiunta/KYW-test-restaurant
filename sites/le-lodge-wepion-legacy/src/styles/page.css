@@ -87,6 +87,7 @@ body { padding-bottom: 0; }
 
 /* Carte: Switcher and Rows */
 .seg { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-xl); margin-bottom: var(--space-xl); border-bottom: var(--rule-hair) solid var(--color-rule); }
+.nowrap { white-space: nowrap; }
 .seg button { min-height: 44px; padding: var(--space-sm) 0; border: 0; border-bottom: var(--rule-bar) solid transparent; margin-bottom: -1px; background: none; color: var(--color-muted); font: 600 var(--text-md)/1 var(--font-outlier); cursor: pointer; transition: color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out); }
 .seg button:active { transform: translateY(1px); }
 .seg button:disabled { opacity: 0.45; cursor: not-allowed; }
@@ -182,7 +183,12 @@ body { padding-bottom: 0; }
 }
 @media (max-width: 40rem) {
   .pied__cols { grid-template-columns: minmax(0, 1fr); }
-  .hero { min-height: max(30rem, calc(100dvh - 130px)); }
+  .hero { display: block; min-height: 0; }
+  .hero__img { position: relative; inset: auto; }
+  .hero__img .fig__frame { height: auto; aspect-ratio: 4 / 3; }
+  .hero__in { padding-block: 0 var(--space-lg); margin-top: calc(var(--space-xl) * -1); }
+  .seg { flex-wrap: nowrap; gap: var(--space-md); overflow-x: auto; scrollbar-width: none; }
+  .seg button { flex: none; white-space: nowrap; }
   .index thead { display: none; }
   .index tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-md); padding-block: var(--space-sm); border-bottom: var(--rule-hair) solid var(--color-rule); }
   .index th, .index td { border: 0; padding: var(--space-3xs) 0; }

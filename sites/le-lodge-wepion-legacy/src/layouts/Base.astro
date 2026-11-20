@@ -8,6 +8,17 @@ import '../styles/page.css';
 interface Props { title: string; description: string; home?: boolean }
 const { title, description, home = true } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const ogImage = new URL(`${base.endsWith('/') ? base : base + '/'}og.jpg`, Astro.site ?? Astro.url).href;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: SITE.nom,
+  url: SITE.reservation,
+  telephone: '+3281400891',
+  image: ogImage,
+  address: { '@type': 'PostalAddress', streetAddress: 'Chaussée de Dinant 931', postalCode: '5100', addressLocality: 'Wépion', addressCountry: 'BE' },
+  sameAs: [SITE.facebook, SITE.instagram],
+};
 ---
 <!doctype html>
 <html lang="fr">
@@ -20,6 +31,12 @@ const base = import.meta.env.BASE_URL;
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="fr_BE" />
+    <link rel="icon" href={u('favicon.svg')} type="image/svg+xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@600&display=swap" rel="stylesheet" />
@@ -31,9 +48,11 @@ const base = import.meta.env.BASE_URL;
       <slot />
     </main>
     <Footer />
-    <div class="collant" data-collant>
-      <a class="btn" href={SITE.reservation} rel="noopener">Réserver une table</a>
-    </div>
+    {home && (
+      <aside class="collant" data-collant aria-label="Réservation">
+        <a class="btn" href={SITE.reservation} rel="noopener">Réserver une table</a>
+      </aside>
+    )}
     <KywFooter base={base} />
     <script is:inline>
       document.querySelectorAll('[data-carte]').forEach((root) => {
@@ -55,6 +74,10 @@ const base = import.meta.env.BASE_URL;
         show(0);
       });
       const menu = document.getElementById('menu');
+      if (menu) {
+        const behind = () => [...document.body.children].flatMap((el) => el.tagName === 'HEADER' ? [...el.children].filter((c) => c !== menu) : [el]).filter((el) => el.tagName !== 'SCRIPT');
+        menu.addEventListener('beforetoggle', (e) => behind().forEach((el) => { el.inert = e.newState === 'open'; }));
+      }
       if (menu && menu.hidePopover) menu.querySelectorAll('[data-menu-link]').forEach((a) => a.addEventListener('click', () => menu.hidePopover()));
       const reveals = [...document.querySelectorAll('[data-reveal]')];
       if ('IntersectionObserver' in window) {

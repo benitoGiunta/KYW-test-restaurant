@@ -55,7 +55,7 @@ const pick = (...names: string[]) => names.map(byName);
 
 /** Panneaux de la carte (Switcher). Les glaces, crêpes et gaufres sont au tea-room. */
 export const PANNEAUX: { id: string; titre: string; cats: Cat[] }[] = [
-  { id: 'debuts', titre: 'Pour commencer', cats: pick('À partager', 'Les entrées', 'Les salades') },
+  { id: 'debuts', titre: 'Entrées', cats: pick('À partager', 'Les entrées', 'Les salades') },
   { id: 'plats', titre: 'Les plats', cats: pick('Les viandes', 'Les tartares', 'Les burgers', 'Les poissons', 'Les pâtes artisanales (Mil’pat)', 'Les suggestions du moment', 'Pour les bambins', 'Accompagnements en supplément') },
   { id: 'desserts', titre: 'Desserts', cats: pick('Desserts') },
   { id: 'boissons', titre: 'Boissons', cats: pick('Boissons (extraits)') },
