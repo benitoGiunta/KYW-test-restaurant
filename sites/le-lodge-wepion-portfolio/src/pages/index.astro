@@ -20,7 +20,7 @@ const [m1, m2] = g.manifeste.titre;
     <div class="hero__inner" data-hero-texte>
       <h1 class="hero__titre"><span>{g.heroTitre[0]}</span><span class="l2">{g.heroTitre[1]}</span></h1>
       <p class="hero__slogan">{g.slogan.texte}{g.slogan.placeholder && <span class="illu">exemple</span>}</p>
-      <p class="hero__adresse">{lieux.fermeture.texteCourt} · accueil au {lieux.provisoire.nom}, {lieux.provisoire.commune}</p>
+      <p class="hero__adresse">Accueil au {lieux.provisoire.nom}, {lieux.provisoire.commune}</p>
       <div class="actions">
         <a class="btn btn--plein" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
         <a class="btn" href={u('/carte/')}>Voir la carte</a>
@@ -44,7 +44,6 @@ const [m1, m2] = g.manifeste.titre;
       </figure>
       <div class="maison__texte" data-reveal="fade">
         <Ornements />
-        <p class="meta">La maison</p>
         <h2 class="section__titre">Au bord de <em>l'eau</em></h2>
         <div class="prose">
           <p>{site.histoire[0]}</p>
@@ -94,7 +93,6 @@ const [m1, m2] = g.manifeste.titre;
   <!-- Le menu : carte blanche -->
   <section class="section" id="menu">
     <div class="wrap">
-      <p class="meta" style="text-align:center">Le menu</p>
       <h2 class="section__titre" style="text-align:center">Ce qu'on <em>pose</em> sur la table</h2>
       <div class="carte" data-reveal="scale">
         <div class="carte__grille">
@@ -114,7 +112,7 @@ const [m1, m2] = g.manifeste.titre;
           ))}
         </div>
       </div>
-      <p class="muted" style="text-align:center;margin-top:calc(var(--u)*2)">Extrait de la carte saisonnière du site du Lodge, relevée le 20 novembre 2026. La carte servie à {lieux.provisoire.commune} est à confirmer.</p>
+      <p class="muted" style="text-align:center;margin-top:calc(var(--u)*2)">Extrait de la carte saisonnière du site du Lodge, relevée le 20 novembre 2026. La carte servie à {lieux.provisoire.commune} n'est pas communiquée.</p>
       <div class="actions" style="justify-content:center"><a class="btn" href={u('/carte/')}>Toute la carte</a></div>
     </div>
   </section>
@@ -123,17 +121,15 @@ const [m1, m2] = g.manifeste.titre;
   <section class="section section--blanc avis" id="avis" data-avis>
     <p class="display avis__mot" aria-hidden="true" data-avis-mot>Avis</p>
     <div class="wrap">
-      <p class="meta" style="text-align:center">Ils en parlent</p>
       <h2 class="sr-only">Avis</h2>
       <div class="avis__cartes">
         {site.avis.map((a, i) => (
           <blockquote class="carte-avis carte-avis--vraie" data-carte-avis style={`--r:${rot[i]}deg`}>
-            <span class="carte-avis__etiq">{a.source}</span>
             <p>{a.texte}</p>
           </blockquote>
         ))}
       </div>
-      <p class="muted" style="text-align:center;margin-top:calc(var(--u)*3)">Extraits sans date ni auteur. Le Lodge n'affiche aucune note en ligne : aucune note n'est reprise ici.</p>
+      <p class="muted" style="text-align:center;margin-top:calc(var(--u)*3)">Extraits de Trouve Ton Resto, sans date ni auteur. Le Lodge n'affiche aucune note en ligne : aucune note n'est reprise ici.</p>
     </div>
   </section>
 
@@ -155,7 +151,6 @@ const [m1, m2] = g.manifeste.titre;
   <!-- Où nous trouver -->
   <section class="section" id="lieux">
     <div class="wrap">
-      <p class="meta" style="text-align:center">Où nous trouver</p>
       <h2 class="section__titre" style="text-align:center">Pour <em>venir</em></h2>
       <Lieux />
     </div>

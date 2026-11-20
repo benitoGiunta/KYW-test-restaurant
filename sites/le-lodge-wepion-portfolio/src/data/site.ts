@@ -71,14 +71,14 @@ export const site: Restaurant = {
   menus: [],
   histoire: [
     'Le Lodge est une brasserie, un restaurant et un tea-room au bord de la Meuse, à Wépion. La salle et la terrasse regardent le fleuve et les rochers de l’autre rive.',
-    `Il a ouvert ses portes en 2008 et compte 160${NB}couverts, selon l’annuaire Trouve Ton Resto (à confirmer). Grégory Jorion le dirige.`,
+    `Il a ouvert ses portes en 2008 et compte 160${NB}couverts, selon l’annuaire Trouve Ton Resto. Grégory Jorion le dirige.`,
     'À la carte : des tartares, des boulettes maison sauce tomate ou liégeoise, des pâtes artisanales de chez Mil’pat, des desserts et des glaces. L’après-midi, la brasserie devient tea-room : crêpes, gaufres et glaces.',
     'Les produits locaux sont cités sur la carte : fromage de Chimay Poteaupré, porc qualité Ardenne, truite d’Annevoie, canard de la Ferme de la Sauvenière, sirop de sureau de Wépion. Mot d’ordre de la carte : une table, une addition.',
   ],
   equipe: [{ nom: 'Grégory Jorion', role: 'Gérant', placeholder: false }],
   avis: [
     { texte: 'Service très agréable, très bien situé au bord de l’eau ! Les spaghettis carbonara sont délicieux !', source: 'Trouve Ton Resto, extrait sans date', placeholder: false },
-    { texte: 'L’onglet de bœuf est tout simplement excellent.', source: 'Trouve Ton Resto, extrait sans date', placeholder: false },
+    { texte: 'L’onglet de bœuf est tout simplement excellent et j’y retournerais volontiers.', source: 'Trouve Ton Resto, extrait sans date', placeholder: false },
     { texte: 'Cadre agréable et cosy pour passer un bon moment, accueil chaleureux, carte assez variée.', source: 'Trouve Ton Resto, extrait sans date', placeholder: false },
   ],
   photos,
@@ -113,21 +113,21 @@ export const telHref = (num: string = site.telephone) => `tel:${num.replace(/\s+
 
 export const lieux = {
   fermeture: { date: '21 mai 2026', texteCourt: 'Fermé depuis l’incendie du 21 mai 2026' },
-  reouverture: 'Réouverture à Wépion envisagée fin 2026, voire début 2027 (propos du gérant dans La DH du 26 mai 2026, à confirmer).',
+  reouverture: 'Réouverture à Wépion envisagée fin 2026, voire début 2027 (propos du gérant dans La DH du 26 mai 2026).',
   provisoire: {
     nom: 'Wine & More',
     rue: 'Chaussée de Marche 496',
     commune: 'Erpent',
     telephone: '+32 496 92 55 13',
     telAffiche: '0496\u00a092\u00a055\u00a013',
-    texte: 'Depuis le 15 septembre, l’équipe du Lodge est accueillie au Wine & More, « 6 jours sur 7 » selon le site du Lodge (relevé du 20 novembre 2026). Les jours et horaires exacts sont à confirmer.',
+    texte: 'Depuis le 15 septembre, l’équipe du Lodge est accueillie au Wine & More, « 6 jours sur 7 » selon le site du Lodge (relevé du 20 novembre 2026). Les jours et horaires exacts ne sont pas communiqués.',
     lien: 'https://www.openstreetmap.org/search?query=Chauss%C3%A9e%20de%20Marche%20496%20Erpent',
   },
-  avant: 'Avant l’incendie, d’après le site du Lodge : tous les jours, de 11 h 30 à 22 h 30 (un annuaire indique 12 h à 15 h et 18 h à 21 h 30 : à confirmer).',
+  avant: 'Avant l’incendie, d’après le site du Lodge : tous les jours, de 11 h 30 à 22 h 30.',
   presse: [
-    { media: 'L’Avenir', date: '22 mai 2026', titre: 'Le restaurant Le Lodge ravagé par un incendie ce jeudi soir à Wépion', url: 'https://www.lavenir.net/regions/namur/namur/2026/05/22/namur-le-restaurant-le-lodge-ravage-par-un-incendie-ce-jeudi-soir-J3P57GI63FEPDOVLUCB6FA7UUM/' },
-    { media: 'La DH', date: '26 mai 2026', titre: 'Pas de réouverture avant la fin de l’année', url: 'https://www.dhnet.be/regions/namur/2026/05/26/incendie-au-restaurant-le-lodge-a-wepion-pas-de-reouverture-avant-la-fin-de-lannee-SHRIHXPV4JATRPP5M57NM4DREU/' },
-    { media: 'La DH', date: '10 juin 2026', titre: 'Le Lodge reprend ses activités à l’Aquaplane de Profondeville', url: 'https://www.dhnet.be/regions/namur/2026/06/10/wepion-victime-dun-incendie-le-restaurant-le-lodge-reprend-ses-activites-a-laquaplane-de-profondeville-des-ce-samedi-UYIEOLSJPNA63DESLTSHW4XKVI/' },
+    { media: 'L’Avenir', date: '22 mai 2026', titre: 'Le restaurant Le Lodge ravagé par un incendie ce jeudi soir à Wépion : les dégâts sont très lourds', url: 'https://www.lavenir.net/regions/namur/namur/2026/05/22/namur-le-restaurant-le-lodge-ravage-par-un-incendie-ce-jeudi-soir-J3P57GI63FEPDOVLUCB6FA7UUM/' },
+    { media: 'La DH', date: '26 mai 2026', titre: 'Incendie au restaurant Le Lodge à Wépion : pas de réouverture avant la fin de l’année', url: 'https://www.dhnet.be/regions/namur/2026/05/26/incendie-au-restaurant-le-lodge-a-wepion-pas-de-reouverture-avant-la-fin-de-lannee-SHRIHXPV4JATRPP5M57NM4DREU/' },
+    { media: 'La DH', date: '10 juin 2026', titre: 'Wépion : victime d’un incendie, le restaurant le Lodge reprend ses activités à l’Aquaplane de Profondeville, dès ce samedi', url: 'https://www.dhnet.be/regions/namur/2026/06/10/wepion-victime-dun-incendie-le-restaurant-le-lodge-reprend-ses-activites-a-laquaplane-de-profondeville-des-ce-samedi-UYIEOLSJPNA63DESLTSHW4XKVI/' },
   ],
 };
 
