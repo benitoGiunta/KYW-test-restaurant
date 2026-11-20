@@ -30,7 +30,7 @@ const choix = [carte[1].plats[0], carte[1].plats[4], carte[1].plats[2]];
           <p>La villa Barabas, avec ses chambres, se trouve à deux cents mètres. Entre les deux, une prairie : le domaine compte plus de cinq hectares.</p>
         </div>
       </div>
-      <div class="mat">
+      <div class="mat" data-reveal>
         <Fig class="mat__img" id="16-chef-facade" sizes="(max-width: 60rem) 80vw, 30vw" pos="50% 30%" cap="Le chef devant l’entrée du restaurant." />
       </div>
     </div>
@@ -38,13 +38,13 @@ const choix = [carte[1].plats[0], carte[1].plats[4], carte[1].plats[2]];
 
   <section class="sec sec--tint" aria-labelledby="h-carte">
     <div class="container">
-      <div class="sec__head">
+      <div class="sec__head" data-reveal>
         <h2 id="h-carte">Deux menus, et la carte de saison.</h2>
         <p>Chasse, poissons et homard du vivier selon les arrivages.</p>
       </div>
       <div class="menus">
-        {menus.slice(0, 2).map((m) => (
-          <article class="menu">
+        {menus.slice(0, 2).map((m, i) => (
+          <article class="menu" data-reveal style={`--i:${i}`}>
             <h3>{m.nom}</h3>
             <p class="menu__prix num">{eur(m.prix)}<small>accord mets et vins {eur(m.accord!)}</small></p>
             <p>{m.texte}</p>
@@ -60,14 +60,14 @@ const choix = [carte[1].plats[0], carte[1].plats[4], carte[1].plats[2]];
     </div>
   </section>
 
-  <figure class="band">
+  <figure class="band" data-reveal>
     <Fig class="band__in" id="07-terrasse-bassin" ratio="16 / 7" sizes="100vw" pos="50% 55%" />
     <figcaption>La terrasse, au bord du bassin.</figcaption>
   </figure>
 
   <section class="sec" aria-labelledby="h-barabas">
     <div class="container">
-      <div class="sec__head">
+      <div class="sec__head" data-reveal>
         <h2 id="h-barabas">À deux cents mètres, la villa Barabas.</h2>
         <p>Chambres à thèmes, piscine chauffée et petit-déjeuner à 18&nbsp;€ par personne.</p>
       </div>

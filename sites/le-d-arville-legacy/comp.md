@@ -11,3 +11,11 @@ Chemins : `.hallmark/comps/c1.html` (+ `c1.png`), `.hallmark/comps/c2.html` (+ `
 - Carte, horaires, index des services : `code` (lignes, filets).
 - Air WebGL du thème Atelier : `neither` ici, coupé en phase 1 (la copie ne le soutient pas ; décision phase 2).
 Les trois questions de reproduction viennent en phase 2.
+
+## Reproduction (phase 2, capture 1280x800 contre `.hallmark/comps/c1.png`)
+- **Masse** : le poids reste en bas à gauche (plaque sur la photo plein cadre, titre en Sentient 300 au même corps) ; la plaque monte plus haut (38 % de la hauteur contre 27 %) parce qu'elle porte aussi le bouton et le lien, absents du comp.
+- **Intervalle** : photo plein cadre sous une barre de 72 px dans les deux cas ; marge gauche de la plaque 64 px (comp 28 px), air sous la plaque 40 px : même rapport.
+- **Entrée** : l'œil tombe d'abord sur le bâtiment en briques, puis sur le titre de la plaque : identique.
+- Plus grand écart : la hauteur de la plaque. Gardé : le comp avait oublié le job (réserver), la plaque a besoin de son bouton. Le comp n'avait pas non plus les liens de nav.
+- Stamp : `comp: 2 built, no key · c1 chosen · reproduced (checked at 1280x800)`.
+

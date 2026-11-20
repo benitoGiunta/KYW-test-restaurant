@@ -49,5 +49,18 @@ const jsonLd = {
       </div>
     )}
     <KywFooter base={base} />
+    <script is:inline>
+    (function () {
+      try {
+        var j = new Date().toLocaleDateString('fr-BE', { weekday: 'long', timeZone: 'Europe/Brussels' }).toLowerCase();
+        document.querySelectorAll('.sched [data-jour]').forEach(function (r) { if (r.getAttribute('data-jour') === j) r.setAttribute('aria-current', 'date'); });
+      } catch (e) {}
+      var els = document.querySelectorAll('[data-reveal]');
+      var show = function (el) { el.classList.add('is-in'); };
+      if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { els.forEach(show); return; }
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+    </script>
   </body>
 </html>

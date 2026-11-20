@@ -26,7 +26,13 @@ Atelier, tokens dans `src/styles/tokens.css` : papier `oklch(94.5% 0.010 76)`, e
 - **Pied** : statement (une phrase en Sentient 300 puis quatre colonnes : adresse, contact, ouvert, suivre), `data-credits`, pas de « Tous droits réservés », puis `KywFooter`.
 - **Photo** : `<figure>` avec `data-slot` et `data-alt`, `width`/`height`, `srcset` 800/1600, `object-position`, hero `fetchpriority="high"`, autres lazy, légende = un fait.
 - **Index (villa Barabas)** : lignes à filets, numéro au crayon, titre Sentient 300, flèche ardoise.
-- Nav mobile, états du bouton, reveal : phase 2.
+- **Nav** (phase 2) : forme `edge-aligned bar` (nom à gauche, six pages, « Réserver »), 72 px ; sous 60rem 64 px, bouton Menu (`popovertarget`) et `<nav popover>` en feuille sous la barre (liens Sentient 300, 56 px, « Réserver une table » en bouton), `aria-expanded` tenu par `toggle`, fermeture au clic sur un lien, à Escape et au retour au bureau ; sous 40rem la barre de réservation fixe porte « Réserver ». Skip link, logo `aria-label`, `scroll-padding-top` = nav + 16 px. Sticky : la nav (`--z-sticky-nav`) et la barre du bas (`--z-sticky`) ne se superposent pas.
+- **Boutons** : un seul recette (hairline ink, 3 px), jamais rempli ; états repos, hover (`@media (hover: hover)`), `:focus-visible` instantané, `:active` (1 px de chute), `:disabled` (tirets, trois canaux), courant ; `transition` listée (`background-color`, `color`, `transform`).
+- **Reveal** : un seul (`[data-reveal]` sous `.js`, 12 px et opacité, 420 ms `--ease-out`, une fois), sur têtes de section, menus (décalage 80 ms), bandeau et passe-partout ; visible sans script, sous mouvement réduit et à l'impression. Caractère de motion : calme. Aucun mouvement au hero.
+- **Signature** : le passe-partout est du carton de coton (fibre feTurbulence, cadre intérieur fin, bord éclairé, étiquette en caractères pressés) ; il se pose au mur au reveal (chute de 14 px et −0,6°).
+- **Air WebGL d'Atelier** : coupé, décision phase 2 (`neither`) : papier fixe ; la copie ne soutient pas un fond animé et les photos du client portent déjà la lumière.
+- **Jour courant** : script de 3 lignes, `aria-current="date"` sur la ligne du jour (fuseau Europe/Brussels), souligné ardoise et « aujourd'hui » ; aucune mention « ouvert maintenant » (heures inconnues).
+- **Formulaire** : sans objet. L'original renvoyait vers Zenchef (lien « Réserver en ligne » conservé) : aucun faux envoi, aucun champ.
 
 ## Sur-utilisation
 - [x] 1. Audit lancé avec `--before` · preuve : `.hallmark/before.txt`, `AUDIT.md`
@@ -40,4 +46,23 @@ Atelier, tokens dans `src/styles/tokens.css` : papier `oklch(94.5% 0.010 76)`, e
 - [x] 9. Noindex et mention KYW sur chaque route · preuve : grep des 9 `index.html`/`404.html` (noindex, `Maquette KYW`, `kyw-signature` à 1)
 - [x] 10. Aucun chiffre ou avis inventé · preuve : avis Tripadvisor et notes écartés (`dropped`), Gault&Millau non repris (15/20 contre 16/20)
 - [ ] 11. Sloplint de rendu sur `src` · reste en phase 3 (balayage final)
-- [ ] 12. Animations, nav mobile, jour courant · phase 2
+- [x] 12. Animations, nav mobile, jour courant · `src/styles/page.css` § nav, reveal, jour courant ; `src/layouts/Base.astro` (script)
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : grep `transition: all` sans résultat ; `page.css:19-20,47,201` (`opacity`, `transform`, couleurs)
+- [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : `base.css:6`, `page.css:21` ; 12 tabulations mesurées en navigateur, `outline: solid 2px` partout (`--color-focus` 50 % sur papier 94 %, 3:1 tenu)
+- [x] 7. Fallback reduced motion sur chaque animation, contenu visible sans script (27, 62) · preuve : `page.css:204`, `base.css:19` ; mesure Playwright : sans JS opacité 1 sur les 6 `[data-reveal]`, avec `reducedMotion` opacité 1 et `transform: none`
+- [x] 17. Hero en `svh` (6a) · preuve : `page.css:73` (`min(100svh - var(--nav-h), 920px)`), plus aucun `vh`
+- [x] 19. Sticky non superposés (56) · preuve : nav `top: 0` seule ; barre fixe en `bottom` sous 60rem ; `scroll-padding-top: 88px` mesuré
+- [x] 20. Radios-onglets gardés (53) · sans objet : aucun switcher de carte (une page `carte/` à sections)
+- [x] 21. Vidéo de fond conforme (28a, 28b) · sans objet : aucune vidéo
+- [x] 22. Reveal sous `.js` seulement (62) · preuve : `page.css:201-203` ; `Base.astro` (observer, repli sans IntersectionObserver)
+- [x] 23. États d'input (39a) · sans objet : aucun champ (réservation externe Zenchef, `Réserver en ligne` gardé)
+- [x] 24. Tooltip et auto-rotation (17, 18) · sans objet : ni tooltip ni boucle
+- [x] 29. Aucun faux envoi (70) · sans objet : aucun formulaire, donc aucune confirmation simulée
+- [x] 30. SVG décoratifs `aria-hidden` (33) · preuve : `Nav.astro` (icône Menu `aria-hidden`, bouton labellisé)
+- [x] 48. Hover : un signal, conteneur, pas sur non-interactif, pas de rebond, pas de toast (11, 12, 16) · preuve : `page.css` boutons (fond), index (flèche glisse de 6 px et titre souligné, sur le lien entier), liens ; `--ease-out` seulement
+- [x] 49. `:active`, `:disabled`, contrôles 44 à 52 px (26b, 39b) · preuve : `page.css:19-22,30` ; mesure à 375 sur 8 routes : seul `kyw-footer__link` (24 px, paquet) sous 44 px
+- [x] 56. Un primaire rempli (F4) · aucun bouton rempli (recette Atelier : hairline ink) ; « courant » seul remplit le bouton de la page active
+- [x] 58. Une recette de conteneur (F7) ; un pattern de scroll (F8) · preuve : cartons (passe-partout) et filets seuls ; un reveal, pas de chorégraphie scroll (l'original était statique)
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : `base.css:3-5`
+- [x] 72. Responsive (breakpoints rem, capacités, tables restackées, `svh`, safe-area) · preuve : 60rem et 40rem ; `(hover: hover)` et `(pointer: coarse)` ; `env(safe-area-inset-*)` nav et barre ; scrollWidth = largeur à 320, 375, 768, 1000, 1280 sur l'accueil et à 375 sur les 8 routes
+- [x] hero review (self, pas d'outil sous-agent) : sloplint `--render --stage hero` : 44d (texte à 104 px du bord à 1920, plate recalée sur le conteneur) et 48 (deux oklch sortis en tokens) et F24 (ombre du popover retirée) résolus ; reste le faux positif 34 et la NOTE 58 (130 mots à 1440 px, section Maison, contenu fixe). Verdict self : `ship`. Stamp : `hero-review: self · ship · 3 findings · 3 resolved`

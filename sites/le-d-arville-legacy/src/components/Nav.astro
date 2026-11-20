@@ -8,12 +8,27 @@ const liens = [
 ---
 <header class="nav">
   <div class="container nav__in">
-    <a class="nav__brand" href={base}>Le D’Arville</a>
-    <nav aria-label="Navigation principale">
+    <a class="nav__brand" href={base} aria-label="Le D’Arville, accueil">Le D’Arville</a>
+    <nav class="site-nav" id="menu" popover="auto" aria-label="Navigation principale">
       <ul class="nav__list">
         {liens.map(([s, l]) => <li><a href={`${base}${s}/`} aria-current={page === s ? 'page' : undefined}>{l}</a></li>)}
+        <li class="nav__book-m"><a href={`${base}reservation/`} aria-current={page === 'reservation' ? 'page' : undefined}>Réserver une table</a></li>
       </ul>
     </nav>
-    <a class="btn btn--sm" href={`${base}reservation/`} aria-current={page === 'reservation' ? 'page' : undefined}>Réserver</a>
+    <a class="btn btn--sm nav__book" href={`${base}reservation/`} aria-current={page === 'reservation' ? 'page' : undefined}>Réserver</a>
+    <button class="nav__toggle" type="button" popovertarget="menu" aria-controls="menu" aria-expanded="false" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path class="l1" d="M2 6h16" /><path class="l2" d="M2 14h16" /></svg>
+      <span>Menu</span>
+    </button>
   </div>
 </header>
+<script is:inline>
+(function () {
+  var m = document.getElementById('menu'), b = document.querySelector('.nav__toggle');
+  if (!m || !b) return;
+  m.addEventListener('toggle', function (e) { b.setAttribute('aria-expanded', e.newState === 'open' ? 'true' : 'false'); });
+  m.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a') && m.matches(':popover-open')) m.hidePopover(); });
+  var mq = matchMedia('(min-width: 60.01rem)');
+  mq.addEventListener('change', function () { if (mq.matches && m.matches(':popover-open')) m.hidePopover(); });
+})();
+</script>

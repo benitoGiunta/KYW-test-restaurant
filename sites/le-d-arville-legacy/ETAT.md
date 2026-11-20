@@ -1,27 +1,23 @@
-# ETAT · Le D’Arville · variante legacy · fin de la phase 1 (construction-1)
+# ETAT · Le D’Arville · variante legacy · fin de la phase 2 (construction-2)
 
-## Fait
-- Audit (`AUDIT.md`, `.hallmark/before.*`), approche conservée (Photographic 08, Poster, huit routes), deal / draw / scaffold Atelier (`2/3`, seed `restaurant-namur-gastronomic-seasonal-e85e·ef2833fe·2026-11-20·r0`, draw `73cd2c`), stamp en tête de `page.css`.
-- Deux comps (`comp.md`), c1 retenu. `DESIGN.md` (Picks, Approche, Thème, Composants, Sur-utilisation 1 à 10 cochés).
-- Contenu dans `src/data/site.ts` (données du dossier uniquement). 9 pages : accueil, carte, photos, chambres, seminaires, cheque-cadeau, traiteur-noel, reservation, 404. Mise en page statique, mobile par media queries (barre de réservation fixe sous 60 rem).
-- 22 photos du client en WebP 800 et 1600 px ; PDF des vins copié (`public/carte-des-vins.pdf`).
-- Build passe (`scripts/q.sh build pnpm build:site sites/le-d-arville-legacy`), pied KYW, noindex et mention présents sur les 9 routes. Sloplint `src` : seul FAIL 34 restant, faux positif connu (le `overflow-x: clip` est dans `base.css`).
+## Fait (phases 1 et 2)
+- Phase 1 : audit, deal Atelier, comps, DESIGN.md, 9 pages, 22 photos WebP, pied KYW, noindex et mention sur les 9 routes.
+- Phase 2 : nav `edge-aligned bar` 72 px, menu `<nav popover>` sous 60rem (Menu, aria-expanded, Escape, clic sur un lien, retour bureau), « Réserver » dans la barre sous 40rem via la barre fixe du bas ; boutons en huit états (hover gardé par `(hover: hover)`, focus-visible, active, disabled, courant) ; un seul reveal calme sous `.js` (têtes de section, menus, bandeau, passe-partout), visible sans script, sous mouvement réduit et à l’impression ; signature : passe-partout en carton de coton (fibre, cadre fin, étiquette pressée) qui se pose au reveal ; jour courant des horaires (`aria-current="date"`, Europe/Brussels) ; flèche de l’index qui glisse ; hero en `svh`, plaque et légende alignées sur le conteneur à 1920 ; légende du hero sur scrim (contraste) ; `pointer: coarse` à 48 px ; tokens `--color-scrim-cap`, `--color-mat-edge` ajoutés.
+- Hero review `self` (pas d’outil sous-agent) : sloplint `--render --stage hero` sans FAIL réel (reste le faux positif 34 et la NOTE 58). Comp : trois réponses dans `comp.md`, plus grand écart (hauteur de la plaque) assumé.
+- Mesures navigateur : pas de débordement horizontal à 320, 375, 768, 1000, 1280 et sur les 8 routes à 375 ; 12 tabulations avec anneau 2 px ; sans JS et avec `reducedMotion` tout est visible ; aucune erreur console.
+- Bugs corrigés : `<figure>` du hero avait la marge du navigateur (40 px) car la classe `ph` était remplacée (`figure { margin: 0 }`) ; `Fig` demandait `-1024.webp` pour les photos de 1024 px (les fichiers s’appellent `-1600`), 404 sur le portrait du chef.
+- Build passe (`scripts/q.sh build pnpm build:site sites/le-d-arville-legacy`), 9 pages, noindex + mention + `kyw-signature` + aucun tiret cadratin vérifiés dans `dist/`.
 
-## Reste
-- Phase 2 : nav mobile (popover), états (hover déjà, focus, active posés), jour courant dans les horaires, un seul reveal, air WebGL d’Atelier (à décider, sinon papier fixe), trois questions de reproduction du comp, `data-endpoint` sans objet (pas de formulaire).
-- Phase 3 : QA navigateur 375 et 1440, sloplint de rendu, contraste de la légende du hero sur photo claire, poids des pages (hero 1600 px), Sweep dans DESIGN.md, RAPPORT.md, entrée finale du journal.
-- Aucune capture de la maquette n’a été regardée en phase 1 (hors comps) : vérifier le hero (photo en `height: 100%`), la galerie asymétrique et le passe-partout.
+## Reste (phase 3 et agent captures)
+- Captures complètes 375 et 1440 (QA), sloplint de rendu final sur toutes les routes, contraste de la légende du hero sur photo claire (désormais scrim 62 %), poids des pages (hero 1600 px), Sweep dans DESIGN.md, RAPPORT.md, entrée finale de `.hallmark/log.json` (nav : `edge-aligned bar`), puis `pnpm index`.
+- Vérifier au rendu que la feuille du menu (popover) ne chevauche pas la barre fixe du bas sur petits écrans en hauteur (testé à 375x812 seulement).
+- Pas de formulaire de réservation : l’original renvoyait vers Zenchef, le lien « Réserver en ligne » est conservé (checklist 23 et 29 sans objet).
 
 ## Décisions et hypothèses
-- Atelier plutôt que Hedgerow (photos claires HDR) ou Vellum (gothique). L’orange d’origine est abandonné (accent chaud interdit par le thème, logo absent).
-- Shape Photographic au lieu du Catalogue tiré ; hero Poster au lieu de Stage.
-- `.fill` (slots à compléter) : heures d’ouverture (Horaires), contenu du menu Bon Plan, tarifs des chambres, détails séminaires, montants du chèque cadeau, carte traiteur ; au plus un par page sauf carte (deux : heures et Bon Plan) et réservation (un).
-- Avis, notes Tripadvisor, Trouve Ton Resto, Petit Futé, Gault&Millau et Delta d’Or non repris : chiffres variables ou contradictoires (15/20 contre 16/20), règle 46a.
-- Desserts sans prix : prix non rendus. Dates : « menus d’actualité jusqu’au 20 décembre 2026 » et congés 2027 repris du site.
-- Le widget Zenchef devient un lien « Réserver en ligne » vers ledarville.be/reservation/ ; « Réserver » de la nav et du hero va à la page `reservation/` de la maquette.
-- Photo 16 légendée « Le chef devant l’entrée » (sujet de l’index) ; le nom Olivier Bourguignon vient du dossier (gaultmillau.be), pas de la photo.
+- Air WebGL d’Atelier coupé (papier fixe) ; un seul reveal ; pas de motion au hero.
+- Le jour courant n’affiche pas « ouvert maintenant » : les heures sont des slots `.fill`.
+- Rien de commité hors `sites/le-d-arville-legacy/` (sauf `src`, `DESIGN.md`, `comp.md`, `ETAT.md`), `dist/le-d-arville/legacy/` et la ligne de leçon proposée.
 
 ## Pièges
-- `sites/_test-legacy/` n’existe pas : `astro.config.mjs` copié de `cafe-fleuri-legacy`.
-- Fig : la légende est hors du `data-slot` (base.css cache les enfants d’un slot qui contient une image).
-- `pnpm-lock.yaml` modifié par un autre agent : ne pas l’ajouter au commit.
+- Le hook de sobriété refuse TOUTE la commande Bash si elle contient un `curl` ou un `python3 scripts/…` hors `q.sh` : les éditions placées avant dans la même commande ne s’exécutent pas (le script Base.astro a manqué ainsi une fois). Séparer éditions et contrôles.
+- `pnpm-lock.yaml` modifié par un autre agent : ne pas l’ajouter.
