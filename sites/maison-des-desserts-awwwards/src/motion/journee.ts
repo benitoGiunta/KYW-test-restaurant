@@ -40,11 +40,13 @@ export const formatHeure = (h: number) => {
 function peindre(el: HTMLElement, avant: Ton, apres: Ton, p: number) {
   const A = TONS[avant], B = TONS[apres];
   const bg = gsap.utils.interpolate(A.bg, B.bg, p) as string;
-  const cote = contraste(bg, A.fg) >= contraste(bg, B.fg) ? A : B;
+  const note = (T: { fg: string; muted: string }) => Math.min(contraste(bg, T.fg), contraste(bg, T.muted));
+  const cote = note(A) >= note(B) ? A : B;
+  const muted = contraste(bg, cote.muted) >= 4.5 ? cote.muted : cote.fg; // à mi-glissement, l'encre atténuée cède à l'encre pleine
   const s = el.style;
   s.setProperty('--c-bg', bg);
   s.setProperty('--c-fg', cote.fg);
-  s.setProperty('--c-muted', cote.muted);
+  s.setProperty('--c-muted', muted);
   s.setProperty('--c-accent', cote.accent);
   s.setProperty('--c-accent-texte', cote.accent);
 }
