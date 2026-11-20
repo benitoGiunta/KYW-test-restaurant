@@ -43,3 +43,28 @@ Générés par le scaffold dans `src/styles/tokens.css` (jamais depuis le thème
 - [x] 7. Données : rien d'inventé, aucun prix · preuve : `src/data/site.ts` relu contre `dossier.md`
 - [x] 8. sloplint source `--genre playful` · preuve : 0 FAIL, 0 WARN (après fusion des deux boutons primaires)
 - [ ] 9. sloplint `--render`, QA navigateur, motion, nav mobile : phase 2 et 3
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : `grep "transition: all"` = 0 ; transitions listées en `background-color`, `border-color`, `box-shadow`, `opacity`, `transform` (`page.css`)
+- [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : `base.css:8` (focus `--color-focus` 5,78:1 sur le papier), `.carte__fiche .btn:focus-visible` en encre sur la fiche ; tab 1 = skip link, tab 2 = logo (Playwright)
+- [x] 7. Reduced motion sur chaque animation, contenu visible sans script (27, 62) · preuve : `base.css` (règle globale) et `page.css` (menu, tuiles) ; Playwright `javaScriptEnabled: false` : titres et tuiles à opacité 1, menu qui s'ouvre sans script (Popover natif) ; `reducedMotion: reduce` : menu ouvert sans glissement, `scroll-behavior: auto`
+- [x] 17. Hero en `dvh` (6a) · preuve : `page.css` `.hero__photo [data-slot] { max-height: calc(100dvh - 9rem) }`, aucun `vh`
+- [x] 19. Sticky non superposés (56) · preuve : un seul élément fixe, `.nav` à `--z-sticky-nav` ; `scroll-padding-top: 7rem`, la section ancrée tombe à 112 px sous le haut à 375
+- [x] 20. Radios-onglets gardés (53) · sans objet : aucun switcher (la carte est en Rows, aucune carte publiée)
+- [x] 21. Vidéo de fond (28a, 28b) · sans objet : aucune vidéo
+- [x] 22. Reveal sous `.js` seulement (62) · aucun reveal : Squeeze déclare « No reveal, no parallax, no loop » (`themes/squeeze.md` § Motion) ; le prompt limite à UN reveal, zéro respecte la limite et le thème
+- [x] 23. États d'input (39a) · sans objet : aucun champ, la réservation est un `tel:` (le site d'origine n'avait pas de formulaire de réservation)
+- [x] 24. Tooltip et auto-rotation (17, 18) · aucun tooltip, aucune rotation (carrousel d'origine supprimé en phase 1)
+- [x] 29. Aucun faux envoi (70) · aucun formulaire ; `tel:` et `mailto:` conservés
+- [x] 30. SVG décoratifs `aria-hidden` (33) · preuve : `Nav.astro` (icône du menu, `aria-hidden` + `focusable="false"`), logo du pied en masque CSS sur un `<span aria-hidden>`
+- [x] 48. Hover : un signal, conteneur, rien sur les non-interactifs, pas de rebond ni de toast (11, 12, 16) · preuve : hover sous `@media (hover: hover)` sur boutons, liens de nav et lignes du menu seulement ; tuiles, lignes de carte et photos ne réagissent pas
+- [x] 49. `:active`, `:disabled`, contrôles 44 à 52 px (26b, 39b) · preuve : `.btn:active` (1 px), `.btn:disabled, [aria-disabled]` (3 canaux : couleur, curseur, barré) ; mesures à 1280 et 320 : boutons 45 à 48 px, aucun replié (« Appeler 0493 46 79 71 » à 320 : 48 px après réduction du padding de la fiche)
+- [x] 56. Un primaire rempli (F4) · une recette pêche partout, jamais deux pleins côte à côte (le bouton de la nav et celui du hero sont à 600 px d'écart)
+- [x] 58. Une recette de conteneur ; un pattern de scroll (F7, F8) · pilule limitée à la nav, aux tags et aux contrôles ; aucune chorégraphie de scroll (l'original n'était pas animé au scroll)
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color`, `accent-color` (F16) · preuve : `base.css:3-7`
+- [x] 72. Responsive · deux breakpoints rem (60rem : menu Popover ; 40rem : nav compacte, fiche), `(hover: hover)`, `(pointer: coarse)` à 44 px, `dvh`, safe-area dans `--gutter` et `top` de la nav, aucun débordement de 320 à 1280 (`scrollWidth` = largeur)
+- [x] 9. sloplint `--render --stage hero` · preuve : 0 FAIL, 0 WARN, 1 NOTE 58 (99 mots sur l'écran de la carte à 1440, contenu fixe)
+
+## Phase 2 : composants et motion (construction-2)
+- **Motion character** : brisk, état seulement (thème Squeeze) : pression 1 px à `--dur-micro`, anneau pêche à `--dur-short` sur ce qui est « choisi » (lien de section actif, jour courant). Aucun reveal, aucune boucle.
+- **Nav** : pilule (inchangée) ; sous 60 rem les liens passent dans un menu `popover` (ouvre à `--dur-short` `--ease-out`, ferme à `--ease-in`, entrées en fondu décalé de 30 ms, Escape et clic extérieur natifs, focus rendu au bouton, fermeture au clic sur un lien) ; le bouton « Réserver » reste dans la pilule à toutes les largeurs ; lien actif par IntersectionObserver (`aria-current`) ; liens en `base + #ancre`, donc valides aussi depuis la 404.
+- **Signature** : le jour courant porte un anneau pêche et la pastille « Aujourd’hui », seulement entre le 19 juin et le 6 septembre 2026 (fuseau Europe/Brussels, bornes dans `saison`) ; hors saison rien n'est affiché (on ne promet pas une ouverture inconnue).
+- **Logo du client** : placé dans le pied en masque `currentColor` (pêche), décoratif.

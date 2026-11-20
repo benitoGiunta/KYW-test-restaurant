@@ -1,20 +1,22 @@
-# ETAT · escale-en-vue-legacy · fin de la phase 1 (construction-1)
+# ETAT · escale-en-vue-legacy · fin de la phase 2 (construction-2)
 
-## Fait
-- Audit (`AUDIT.md`, `.hallmark/before.txt`), approche conservée (one-page), deal/draw/scaffold/stamp (Squeeze, seed `restaurant-namur-seasonal-terrace-028c·65042563·2026-11-20·r0`, draw 99e2b7), entrée au journal partagé `.hallmark/log.json`.
-- Deux comps, c1 retenu (`comp.md`). `DESIGN.md` (Picks, tokens, composants, Sur-utilisation points 1 à 8).
-- Pages : `/` (Hero Stage, Horaires en tuiles, Carte en Rows, Lieu, Pied) et `404`. Données dans `src/data/site.ts`, polices auto-hébergées (`public/fonts`), photos du client en WebP (`public/photos`).
-- Build : `dist/escale-en-vue/legacy/` OK ; sloplint source `--genre playful` : 0 FAIL, 0 WARN ; noindex, KywFooter et mention présents sur `/` et `404` ; aucun tiret cadratin.
+## Fait (phase 1 conservée, voir DESIGN.md)
+- Nav : menu Popover sous 60 rem (bouton 44 px, icône ouvrir/fermer, Escape, clic extérieur, fermeture au clic sur un lien, focus rendu), « Réserver » toujours visible dans la pilule (compacte sous 40 rem, aucun débordement de 320 à 1280), lien de section actif (`aria-current`), liens en `base + #ancre` (valides depuis la 404).
+- Boutons : huit états (repos, hover sous `(hover: hover)`, focus-visible, active 1 px, disabled en 3 canaux ; chargement et erreur sans objet), 45 à 48 px, aucun replié à 320 (fiche de la carte réduite à 24 px de padding sous 40 rem).
+- Motion : Squeeze = état seulement. Aucun reveal, aucune boucle (écart voulu avec « un reveal par page » : le thème dit « No reveal »). Reduced motion : règle globale + menu.
+- Signature : jour courant (anneau pêche + pastille « Aujourd’hui »), seulement du 19 juin au 6 septembre 2026, fuseau Europe/Brussels ; hors saison rien (vérifié avec une horloge simulée : vendredi en saison = tuile Vendredi, 20/11/2026 = aucune).
+- Logo du client placé dans le pied en masque `currentColor`.
+- Mobile : safe-area (gutter, `top` de la nav), `scroll-padding-top: 7rem`, `scroll-behavior: smooth` sous `no-preference`, liens tactiles 44 px, `accent-color`.
+- Sans script : tout visible, le menu s'ouvre (Popover natif). 404 : mêmes nav, mention, KywFooter (grep OK).
+- sloplint `--render --stage hero` : 0 FAIL, 0 WARN, 1 NOTE 58 (99 mots sur l'écran de la carte à 1440). Build `pnpm build:site` OK. Contraste calculé : muted sur paper-2 4,86:1, accent-ink sur accent 8,0:1, focus sur papier 5,8:1.
+- DESIGN.md : points 2, 6, 7, 9, 17, 19 à 24, 29, 30, 48, 49, 56, 58, 63, 72 cochés avec preuves. comp.md : reproduction répondue.
 
-## Reste (phases 2 et 3)
-- Nav mobile (menu Popover sous 40 rem, aujourd'hui liens masqués), lien actif, jour courant des horaires (surface seule), un reveal au plus, états des boutons vérifiés.
-- sloplint `--render` sur `/` et `404` (aucun rendu navigateur fait en phase 1), captures 1920/1280/390/320, fold du héro à 1280x800, axe, contraste du texte `--color-muted` sur `paper-2`.
-- Sweep des gates jugées § 5, RAPPORT.md, `.hallmark/preflight.json`, waiver 59 à confirmer par sloplint.
-- Logo : `public/photos/logo.webp` (dessin au trait vert sur transparent, 512 px) copié mais non placé ; à tester en masque `currentColor` dans le pied ou sur la fiche blanche.
+## Reste (phase 3 et agent captures)
+- Captures complètes 1920/1280/390/320, axe, LCP, clavier (agent « captures »), puis jury des gates § 5, RAPPORT.md, `.hallmark/preflight.json`, waiver 59 à confirmer.
+- Hero review : faite en `self` (pas de sous-agent dans cette session) ; à refaire par un sous-agent frais si la phase 3 en dispose.
+- À regarder en capture : le bandeau KYW du pied sur 375 (mention + signature) ; la tuile du jour courant ne se voit pas hors saison (voulu).
 
-## Décisions et hypothèses
-- Hero Stage au lieu de Poster : meilleure source 1024 px. Aucun prix, aucune carte inventée : la carte reste en quatre offres citées par le client (planchette, plat du jour sur réservation, bières, softs).
-- Saison 2026 (19 juin au 6 septembre) affichée telle quelle sous les actions, sans date de réouverture (inconnue). Horaires de l'affiche 2026 repris ; samedi en un créneau 11 h 30 à 21 h 30.
-- Photos écartées : 03 (382 px), 08, 09 (possiblement générée), 10, 11 (événement privé), 13 (400 px). Transats (07) disponible en `photos.transats` mais non placée.
-- Adresse « Dave (Namur) » ; aucun `.fill` ni placeholder : tout vient du dossier. Pas de widget de réservation : le bouton est un `tel:`.
-- Leçon proposée : `data/usage/test-1/lecons-proposees/escale-en-vue.md` (mode figé, `agents/` intact).
+## Pièges
+- Le serveur de dev (port 4331) est arrêté (PID 10309 tué). `.hallmark/shots/evl-p2-*.png` sont mes prises de contrôle, non commitées.
+- Pas de formulaire, de switcher, de vidéo ni de tooltip : points sans objet cochés avec la raison.
+- Leçon proposée (mode figé) : `data/usage/test-1/lecons-proposees/escale-en-vue.md`.

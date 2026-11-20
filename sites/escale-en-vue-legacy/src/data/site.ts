@@ -17,7 +17,7 @@ export const resto = {
   siteActuel: 'https://www.escale-en-vue.be',
 };
 
-export const saison = { texte: `Saison 2026${nb}: du 19 juin au 6 septembre`, statut: 'terminée' };
+export const saison = { debut: '2026-06-19', fin: '2026-09-06', texte: `Saison 2026${nb}: du 19 juin au 6 septembre`, statut: 'terminée' };
 
 // Affiche d'horaires 2026 (site-actuel/horaires-2026.jpg). Lundi à mercredi fermés.
 export const jours = [

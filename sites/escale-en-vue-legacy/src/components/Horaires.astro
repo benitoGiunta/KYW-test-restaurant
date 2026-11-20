@@ -1,5 +1,6 @@
 ---
-import { jours } from '../data/site';
+import { jours, saison } from '../data/site';
+const dow = { Jeudi: 'Thursday', Vendredi: 'Friday', Samedi: 'Saturday', Dimanche: 'Sunday' };
 const ouverts = jours.filter((j) => j.ouvert), fermes = jours.filter((j) => !j.ouvert);
 ---
 <section class="horaires" id="horaires" aria-labelledby="horaires-titre">
@@ -8,10 +9,10 @@ const ouverts = jours.filter((j) => j.ouvert), fermes = jours.filter((j) => !j.o
       <h2 id="horaires-titre">Du jeudi soir au dimanche après-midi.</h2>
       <p class="lead">Toutes les tables sont en extérieur. Le plat maison se réserve dès le vendredi soir.</p>
     </div>
-    <ol class="jours" aria-label="Horaires d’ouverture">
+    <ol class="jours" aria-label="Horaires d’ouverture" data-debut={saison.debut} data-fin={saison.fin}>
       {ouverts.map((j) => (
-        <li class="jour">
-          <span class="jour__nom">{j.jour}</span>
+        <li class="jour" data-dow={dow[j.jour]}>
+          <span class="jour__nom">{j.jour}<span class="jour__auj">Aujourd’hui</span></span>
           <span class="jour__heures num"><time>{j.de}</time> à <time>{j.a}</time></span>
           <span class="jour__note">{j.note}</span>
         </li>

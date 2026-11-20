@@ -51,5 +51,35 @@ const ld = JSON.stringify({
     </main>
     <Pied />
     <KywFooter base={base} />
+    <script is:inline>
+      (() => {
+        const q = (s, r = document) => [...r.querySelectorAll(s)];
+        const menu = document.getElementById('menu'), btn = document.querySelector('.nav__menu');
+        if (menu && btn && menu.showPopover) {
+          menu.addEventListener('toggle', (e) => btn.setAttribute('aria-expanded', String(e.newState === 'open')));
+          q('a', menu).forEach((a) => a.addEventListener('click', () => menu.hidePopover()));
+        }
+        const links = q('.nav__liens a, .menu a[href*="#"]');
+        const secs = ['horaires', 'carte', 'venir'].map((id) => document.getElementById(id)).filter(Boolean);
+        if (secs.length && 'IntersectionObserver' in window) {
+          const set = (id) => links.forEach((a) => (id && a.hash === '#' + id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+          const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) set(e.target.id); else if (links.some((a) => a.hash === '#' + e.target.id && a.hasAttribute('aria-current'))) set(null); }), { rootMargin: '-45% 0px -50% 0px' });
+          secs.forEach((s) => io.observe(s));
+        }
+        const ol = document.querySelector('.jours[data-debut]');
+        if (ol) {
+          try {
+            const tz = { timeZone: 'Europe/Brussels' };
+            const now = new Date();
+            const day = new Intl.DateTimeFormat('en-CA', tz).format(now);
+            if (day >= ol.dataset.debut && day <= ol.dataset.fin) {
+              const dow = new Intl.DateTimeFormat('en-US', { ...tz, weekday: 'long' }).format(now);
+              const li = ol.querySelector('[data-dow="' + dow + '"]');
+              if (li) li.setAttribute('aria-current', 'date');
+            }
+          } catch (_) {}
+        }
+      })();
+    </script>
   </body>
 </html>
