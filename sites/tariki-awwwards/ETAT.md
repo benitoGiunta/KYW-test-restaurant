@@ -26,3 +26,6 @@
 - Pas de loader, pas de GL, pas de follower de curseur, pas de `data-magnetic` (le `scale` de `:active` des CTA serait absorbé par GSAP).
 - Carte du soir = page « La carte » ; « Le début du voyage » 18 € omis. Adresse Rue de l'Ouvrage 2. Aucun avis, chef, date, citation.
 - « ş » de « turşu » hors du sous-ensemble latin des polices (repli système).
+
+## Revue 1 (relecteur-site), fait
+- REVUE-1.md écrit : verdict A_CORRIGER, F0 0, F1 1 (procédure d'allergènes inventée, `pageInfos.acces`), F2 2 (légendes de trilogie, crédit « Photos : Tariki »), F3 3. Serveur de revue arrêté. Reste : révision des F1 à F3.
