@@ -1,2 +1,5 @@
 - 2026-11-20 relecteur-site le-d-arville portfolio (passe 3) : un regex Python avec `\s+` transforme les U+00A0 en espaces (faux « guillemets sans nbsp ») : collapser avec `[ \t\n\r]+` avant de compter les espaces insécables ; un échantillon de pixels sur la boîte d'un `p` ou bouton pleine largeur donne de faux 1,2 : 1, restreindre au rectangle du texte (`Range`) ; `curl -s -o` est refusé par le hook hors `q.sh` (utiliser urllib).
 - 2026-11-20 publication : dist Le D'Arville déjà commité sans [publier] (commits de QA 0119f4d, 4efaaf8) : le déploiement n'a eu lieu qu'avec un commit final [publier] portant les sources ; vérifier l'historique [publier] avant de conclure. Rebase : suivi généré en conflit, sauter le commit et régénérer par pnpm index.
+
+## Orchestrateur (session de développement)
+- Ne jamais faire `git pull --rebase` (ni commit de sauvegarde) pendant qu'un workflow tourne : les agents écrivent dans l'arbre, le rebase échoue (« untracked files would be overwritten ») et `rebase --abort` aussi. Attendre la fin du workflow ; si le hook Stop réclame un commit, répondre que les modifications appartiennent aux agents en cours.
