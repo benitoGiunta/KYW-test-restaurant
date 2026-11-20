@@ -1,4 +1,4 @@
-# ETAT : Le D’Arville, variante awwwards (fin de phase 2 sur 3)
+# ETAT : Le D’Arville, variante awwwards (fin de phase 3 sur 3)
 
 ## Fait
 - Phase 1 : brief, concepts, Concept Card « La balade », système, pages statiques, build (voir DESIGN.md).
@@ -22,3 +22,7 @@
 - Pas de loader, pas de GL, pas de curseur suiveur. Pas d'aperçu photo au curseur sur la carte (aucune photo attribuable à un plat).
 - Mobile : le sentier tient dans la gouttière droite (point seul) ; la balise du hero compte les mètres.
 - Heures non publiées jamais écrites ; aucun contenu fictif.
+
+## Phase 3 (20/11/2026)
+- QA terminée : LCP mobile 1032 ms, cibles 44 px, hover marque, reduced hiddenText, meta description, og.png recomposé. Audit 0 FAIL, 4 WARN justifiés. Build final OK. Détails dans RAPPORT.md.
+- Reste : score jury indépendant (non fait), `pnpm index` + commit `[publier]` en fin de restaurant.

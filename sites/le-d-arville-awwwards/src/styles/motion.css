@@ -93,3 +93,10 @@ html:not(.motion) .domaine__img { inset: 0; }
 /* L'image remplit son cadre (le <picture> d'astro:assets est en ligne par défaut). */
 .photo > picture { display: block; height: 100%; }
 @media (max-width: 52rem) { .entete .menu-mobile__liste { display: grid; align-items: start; gap: 0.2rem; } }
+
+/* QA phase 3 : cibles tactiles, survol de la marque */
+.lien, .pied a, .p404 a:not(.btn) { display: inline-flex; align-items: center; min-height: 44px; }
+.entete__marque { transition: opacity 0.25s, letter-spacing 0.3s; }
+@media (hover: hover) { .entete__marque:hover { opacity: 0.7; letter-spacing: 0.04em; } }
+.entete__marque:focus-visible { opacity: 0.7; }
+@media (prefers-reduced-motion: reduce) { #curtain { display: none; } }

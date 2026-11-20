@@ -15,7 +15,7 @@ export const site = {
   baseline: 'Restaurant gastronomique',
   typeCuisine: 'Gastronomique de saison',
   description:
-    'Le D’Arville, restaurant gastronomique dans une ferme du 19e siècle à Wierde, près de Namur : cuisine de saison, homard du vivier, terrasse sur l’étang, villa d’hôtes à 200 mètres.',
+    'Le D’Arville, restaurant gastronomique dans une ferme du 19e siècle à Wierde, près de Namur : cuisine de saison, homard du vivier, terrasse sur l’étang.',
   adresse: { rue: 'Rue d’Arville', numero: '94', cp: '5100', commune: 'Wierde (Namur)', pays: 'BE' },
   geo: { lat: 50.41238, lon: 4.95854 },
   telephone: '+32 81 46 23 65',
