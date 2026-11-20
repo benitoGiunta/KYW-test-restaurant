@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { u } from '../lib/url';
+import { euro } from '../lib/format';
+import { site, phares, cremes } from '../data/site';
+---
+<Base page="accueil" title="Restaurant grec à Bouge, Namur" description="El Greco, restaurant grec à Bouge (Namur) : crèmes grecques, mezze signature, giouvetsi, poulpe grillé et grillades. Carte, horaires et réservation par téléphone.">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap grille hero__grille">
+      <h1 class="hero__titre display" id="h1"><span>El</span><span>Greco</span></h1>
+      <div class="hero__bas">
+        <p class="hero__phrase">Cuisine grecque à partager, à Bouge, aux portes de Namur. Depuis {site.depuis}, selon le site du restaurant.</p>
+        <div class="actions">
+          <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+          <a class="cta cta--contour" href={u('/carte/')}><span class="cta__txt">Voir la carte</span></a>
+        </div>
+      </div>
+      <figure class="hero__media">
+        <div class="tall"><Photo cle="clocher" sizes="(min-width: 52rem) 28vw, 90vw" widths={[480, 800, 1200]} prioritaire /></div>
+        <figcaption class="legende">Illustration (Pexels) : un clocher des Cyclades, pas le restaurant.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-cremes">
+    <div class="wrap">
+      <div class="grille cremes__tete">
+        <h2 class="cremes__titre display" id="h-cremes">Les crèmes d’abord</h2>
+        <p class="cremes__intro">Les crèmes grecques se partagent avec du pain pita. Les trois ensemble : <strong class="num">12,90&nbsp;€</strong>, ou chacune à <span class="num">9,90&nbsp;€</span>.</p>
+      </div>
+      <ul class="cremes__piste" aria-label="Les trois crèmes grecques">
+        {cremes.map((c) => (
+          <li class="creme">
+            <h3 class="creme__nom display">{c.nom}</h3>
+            <p class="creme__detail">{c.detail}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec papier" aria-labelledby="h-mezze">
+    <div class="wrap grille mezze">
+      <figure class="mezze__photo">
+        <div class="tall"><Photo cle="terrasses" sizes="(min-width: 52rem) 30vw, 90vw" loading="lazy" /></div>
+        <figcaption class="legende">Illustration (Pexels) : terrasses blanches de Santorin, pas le restaurant.</figcaption>
+      </figure>
+      <div class="mezze__texte">
+        <h2 class="mezze__titre display" id="h-mezze">Mezze signature</h2>
+        <p class="mezze__prix display num">31,90&nbsp;€</p>
+        <ul class="mezze__liste">
+          <li>Une sélection de spécialités grecques</li>
+          <li>Brochette de poulet</li>
+          <li>Brochette d’agneau</li>
+          <li>Keftedes de bœuf</li>
+        </ul>
+        <p><a class="cta" href={u('/carte/')}><span class="cta__txt">Voir toute la carte</span></a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-index">
+    <div class="wrap">
+      <div class="index__tete"><h2 class="index__titre display" id="h-index">Six plats pour commencer</h2></div>
+      <ul class="index">
+        {phares.map((p) => (
+          <li><div class="ligne"><span class="index__nom">{p.nom}</span><span class="index__prix">{euro(p.prix)}</span><span class="index__detail">{p.detail}</span></div></li>
+        ))}
+      </ul>
+      <p class="suite"><a class="lien" href={u('/carte/')}>Toute la carte, boissons comprises</a></p>
+    </div>
+  </section>
+
+  <section class="sec papier" aria-labelledby="h-venir">
+    <div class="wrap grille venir">
+      <div class="venir__a">
+        <h2 class="display index__titre" id="h-venir">Venir</h2>
+        <a class="venir__tel display num" href={site.telephoneHref}>{site.telephoneLisible}</a>
+        <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+        <p class="petit">Paiement : {site.paiements}.</p>
+      </div>
+      <div class="venir__b">
+        <h3 class="resa__h">Horaires</h3>
+        <Horaires />
+        <p class="petit">D’après Trouve Ton Resto, à confirmer par téléphone.</p>
+      </div>
+    </div>
+  </section>
+</Base>

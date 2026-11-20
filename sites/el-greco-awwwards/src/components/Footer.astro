@@ -1,0 +1,34 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+---
+<section class="pied" aria-label="Contact">
+  <div class="wrap pied__corps">
+    <h2 class="pied__mot display">À table</h2>
+    <div class="pied__cols">
+      <div class="pied__col">
+        <h3 class="pied__titre">Venir</h3>
+        <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+      </div>
+      <div class="pied__col">
+        <h3 class="pied__titre">Réserver</h3>
+        <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+        <p><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
+      </div>
+      <div class="pied__col">
+        <h3 class="pied__titre">Ailleurs</h3>
+        <ul class="pied__liens">
+          <li><a class="lien-util" href={u('/carte/')}>La carte</a></li>
+          <li><a class="lien-util" href={u('/histoire/')}>L’histoire</a></li>
+          <li><a class="lien-util" href={u('/reservation/')}>Réservation</a></li>
+          <li><a class="lien-util" href={site.facebook} rel="noopener">Facebook</a></li>
+          <li><a class="lien-util" href={site.instagram} rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="pied__colophon">{site.credit}. Police : Archivo (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />
