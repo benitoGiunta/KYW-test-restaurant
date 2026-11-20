@@ -1,0 +1,38 @@
+---
+import { resto, horaires } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const home = page === 'accueil' ? '' : base;
+/* Hallmark · reworded "Réservations & bons cadeaux" to "Réservations" · 63 names the ampersand, and no gift voucher content exists on the source */
+const liens = [
+  { href: `${home}#propos`, t: 'À propos', k: 'propos' },
+  { href: `${base}la-carte/`, t: 'La carte', k: 'la-carte' },
+  { href: `${home}#fetes`, t: 'Fêtes patronales', k: 'fetes' },
+  { href: `${home}#reservation`, t: 'Réservations', k: 'reservation' },
+  { href: `${home}#galerie`, t: 'Galerie', k: 'galerie' },
+  { href: `${base}contact/`, t: 'Contact', k: 'contact' },
+];
+---
+<header class="nav" data-nav>
+  <a class="skip" href="#contenu">Aller au contenu</a>
+  <div class="nav__banner">
+    <div class="container nav__banner-in">
+      <p>7 j sur 7. Du lundi au samedi de 11 h 00 à 22 h 00, le dimanche de 11 h 00 à 16 h 00.</p>
+      <p><a href={resto.telHref}>{resto.tel}</a></p>
+    </div>
+  </div>
+  <div class="nav__bar">
+    <div class="container nav__bar-in">
+      <a class="nav__brand" href={`${base}`} aria-label="Champs Elysées, bistro convivial, accueil">
+        <img src={`${base}photos/logo.webp`} width="1721" height="1135" alt="" />
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav__links">
+          {liens.map((l) => <li><a href={l.href} aria-current={l.k === page ? 'page' : undefined}>{l.t}</a></li>)}
+        </ul>
+      </nav>
+      <a class="btn nav__cta" href={resto.zenchef}>Réserver</a>
+    </div>
+  </div>
+</header>

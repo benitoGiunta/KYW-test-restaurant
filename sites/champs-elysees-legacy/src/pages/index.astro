@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto, photos, signatures, fetes } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="accueil" title="Champs Elysées, bistro convivial à Namur" description="Brasserie moderne et contemporaine avenue Albert Ier, à Jambes (Namur) : cuisine de brasserie, bières, ouvert 7 jours sur 7.">
+  <!-- Hero : Poster (gardé) -->
+  <section class="hero" aria-labelledby="h-hero">
+    <Photo {...photos.hero} slot="hero" hero sizes="100vw" pos="50% 62%" class="hero__photo" />
+    <div class="container hero__in">
+      <div class="plate stock">
+        {/* Hallmark · reworded "Plaisir et partage au cœur de chaque repas : Bienvenue aux Champs Elysées" to "Plaisir et partage, à chaque repas" · 58 caps the hero head at seven words */}
+        <h1 id="h-hero">Plaisir et partage, à chaque repas</h1>
+        <p class="lead">Une brasserie moderne et contemporaine à Namur.</p>
+        <div class="actions">
+          <a class="btn" href={resto.zenchef}>Réserver une table</a>
+          <a class="link" href={`${base}la-carte/`}>Découvrir le menu</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- À propos : Split -->
+  <section class="sec about" id="propos" aria-labelledby="h-propos">
+    <div class="container split">
+      <div class="split__text">
+        {/* Hallmark · eyebrow « Bistro convivial » devient le titre ; « Une brasserie moderne et contemporaine à Namur » est déjà la phrase du hero */}
+        <h2 id="h-propos">Bistro convivial</h2>
+        <p class="lead statement">Aux Champs Élysées, nous vous accueillons dans un cadre chaleureux et moderne, inspiré des bistrots parisiens.</p>
+        <p>Ici, chaque plat est préparé avec passion et des produits frais, dans le respect de la tradition tout en y apportant une touche de nouveauté. Que ce soit pour un déjeuner entre amis, un dîner en famille ou simplement pour savourer un moment suspendu, nous mettons un point d’honneur à offrir une expérience conviviale et mémorable. Venez découvrir notre ambiance unique, où la bonne humeur et la cuisine de qualité se rencontrent pour vous offrir un moment de plaisir authentique.</p>
+      </div>
+      <div class="split__visual">
+        <Photo {...photos.facade} slot="facade" sizes="(min-width: 60rem) 40vw, 100vw" pos="50% 40%" class="mat">
+          <figcaption>Avenue Albert Ier, à Jambes. Ouverte le 13 juillet 1984.</figcaption>
+        </Photo>
+      </div>
+    </div>
+  </section>
+
+  <!-- La carte : Rows -->
+  <section class="sec carte" id="carte" aria-labelledby="h-carte">
+    <div class="container rows-layout">
+      <div class="rows-layout__head">
+        <h2 id="h-carte">La carte</h2>
+        <p class="lead">Découvrez nos délices.</p>
+        <a class="btn" href={`${base}la-carte/`}>Découvrir le menu</a>
+      </div>
+      <ul class="rows rows--home">
+        {signatures.map((p) => (
+          <li class="row">
+            <div class="row__name"><h3>{p.nom}</h3>{p.desc && <p class="row__desc">{p.desc}</p>}</div>
+            <ul class="row__prices">{p.prix.map((x) => <li class="num">{x.l && <span>{x.l}</span>} {x.p && <b>{x.p}</b>}</li>)}</ul>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Galerie : Bento -->
+  <section class="sec galerie" id="galerie" aria-labelledby="h-galerie">
+    <div class="container">
+      <h2 id="h-galerie">Galerie</h2>
+      <div class="bento">
+        <Photo {...photos.fenetre} slot="g-fenetre" sizes="(min-width: 60rem) 40vw, 100vw" class="bento__a" />
+        <Photo {...photos.casserole} slot="g-casserole" sizes="(min-width: 60rem) 30vw, 100vw" pos="50% 40%" class="bento__b" />
+        <Photo {...photos.biere} slot="g-biere" sizes="(min-width: 60rem) 30vw, 100vw" pos="50% 55%" class="bento__c" />
+        <Photo {...photos.frites} slot="g-frites" sizes="(min-width: 60rem) 30vw, 100vw" pos="50% 55%" class="bento__d" />
+        <Photo {...photos.spritz} slot="g-spritz" sizes="(min-width: 60rem) 30vw, 100vw" pos="50% 40%" class="bento__e" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Fêtes patronales : Band -->
+  <section class="band" id="fetes" aria-labelledby="h-fetes">
+    <div class="container band__in">
+      <div>
+        <h2 id="h-fetes">Fêtes patronales</h2>
+        <p class="lead">Menu de trois services, entrée, plat et dessert au choix : {fetes.prixSans} par personne sans boissons, {fetes.prixAvec} avec boissons.</p>
+        <p><a class="btn" href={`${base}fetes-patronales/`}>Voir le menu des fêtes</a></p>
+      </div>
+      <img class="band__mascotte" src={`${base}photos/mascotte.webp`} width="1208" height="1122" alt="Illustration du serveur de la maison portant une bouteille et une coupe" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- Heures d’ouverture : Schedule -->
+  <section class="sec horaires" id="horaires" aria-labelledby="h-horaires">
+    <div class="container rows-layout">
+      <div class="rows-layout__head">
+        <h2 id="h-horaires">Heures d’ouverture</h2>
+        <p class="lead">7 jours sur 7.</p>
+      </div>
+      <Horaires />
+    </div>
+  </section>
+
+  <!-- Réservations + adresse : Band de fin -->
+  <section class="sec reservation" id="reservation" aria-labelledby="h-resa">
+    <div class="container resa">
+      <div class="resa__head">
+        <h2 id="h-resa">Réservations</h2>
+        <p class="lead">En ligne, par téléphone ou par e-mail. Pour plus de 10 personnes, contactez-nous par téléphone.</p>
+        <p class="actions"><a class="btn" href={resto.zenchef}>Réserver en ligne</a></p>
+      </div>
+      <dl class="facts">
+        <div><dt>Téléphone</dt><dd class="num"><a href={resto.telHref}>{resto.tel}</a></dd></div>
+        <div><dt>E-mail</dt><dd><a href={`mailto:${resto.email}`}>{resto.email}</a></dd></div>
+        <div><dt>Adresse</dt><dd>{resto.adresse1}<br />{resto.adresse2}<br /><a href={resto.maps}>Voir sur la carte</a></dd></div>
+      </dl>
+    </div>
+  </section>
+</Base>

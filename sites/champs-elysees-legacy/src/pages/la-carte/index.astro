@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import Rows from '../../components/Rows.astro';
+import { resto, carte } from '../../data/site';
+const slug = (t: string) => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/-$/, '');
+const groupes = [{ t: 'À manger', r: carte.filter((c) => !c.boisson) }, { t: 'À boire', r: carte.filter((c) => c.boisson) }];
+---
+<Base page="la-carte" title="La carte, Champs Elysées, brasserie à Namur" description="La carte de la brasserie Champs Elysées : partage, entrées, plats de brasserie, viandes, poissons, desserts, bières et cocktails.">
+  <section class="banner" aria-labelledby="h-carte">
+    <div class="container banner__in">
+      <h1 id="h-carte">La carte</h1>
+      <p class="lead">Produits frais et tradition, avec une touche de nouveauté.</p>
+      <ul class="index">
+        {carte.map((c) => <li><a href={`#${slug(c.titre)}`}>{c.titre}</a></li>)}
+      </ul>
+      <p class="actions"><a class="btn" href={resto.zenchef}>Réserver une table</a></p>
+    </div>
+  </section>
+  {groupes.map((g) => (
+    <section class="sec carte-page" aria-label={g.t}>
+      <div class="container">
+        <p class="group">{g.t}</p>
+        {g.r.map((c) => (
+          <div class="rubrique" id={slug(c.titre)}>
+            <h2>{c.titre}</h2>
+            <Rows plats={c.plats} />
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
+</Base>

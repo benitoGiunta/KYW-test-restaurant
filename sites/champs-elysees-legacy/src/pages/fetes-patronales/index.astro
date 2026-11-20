@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { resto, photos, fetes } from '../../data/site';
+---
+<Base page="fetes" title="Fêtes patronales, menu de trois services, Champs Elysées" description="Menu des fêtes patronales de la brasserie Champs Elysées : trois services au choix, 50 € sans boissons, 65 € avec boissons.">
+  <section class="banner" aria-labelledby="h-fetes">
+    <div class="container banner__in">
+      <h1 id="h-fetes">Fêtes patronales</h1>
+      <p class="lead">Menu de trois services, entrée, plat et dessert au choix.</p>
+      <p class="actions"><a class="btn" href={resto.zenchef}>Réserver une table</a><a class="link" href={resto.flipbook}>Feuilleter le menu</a></p>
+    </div>
+  </section>
+  <section class="sec fetes-page">
+    <div class="container rows-layout">
+      <div class="rows-layout__head">
+        <h2>Le menu</h2>
+        <p class="prix-fetes"><span class="num">{fetes.prixSans}</span> par personne sans boissons<br /><span class="num">{fetes.prixAvec}</span> par personne avec boissons</p>
+      </div>
+      <div class="menu">
+        {fetes.services.map((s) => (
+          <div class="menu__service">
+            <h3>{s.titre}</h3>
+            <ol class="menu__choix">{s.choix.map((c) => <li>{c}</li>)}</ol>
+          </div>
+        ))}
+        <div class="menu__service">
+          <h3>Formule boissons</h3>
+          <ul class="menu__choix menu__choix--plain">{fetes.boissons.map((c) => <li>{c}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="container resa">
+      <div class="resa__head">
+        <h2>Réserver pour les fêtes</h2>
+        <p class="lead">Pour toute réservation de plus de 10 personnes, contactez-nous par téléphone.</p>
+        <p class="actions"><a class="btn" href={resto.telHref}>Appeler le {resto.tel}</a></p>
+      </div>
+      <Photo {...photos.carte} slot="fetes-carte" sizes="(min-width: 60rem) 40vw, 100vw" pos="50% 50%" class="mat" />
+    </div>
+  </section>
+</Base>

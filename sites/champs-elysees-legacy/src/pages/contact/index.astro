@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import { resto } from '../../data/site';
+---
+<Base page="contact" title="Contact, Champs Elysées, brasserie à Namur" description="Écrire à la brasserie Champs Elysées, avenue Albert Ier à Jambes (Namur) : formulaire, téléphone, e-mail et adresse.">
+  <section class="banner" aria-labelledby="h-contact">
+    <div class="container banner__in">
+      <h1 id="h-contact">Contact</h1>
+      <p class="lead">Un message, un appel ou un e-mail.</p>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="container resa">
+      <form class="form" method="post" data-endpoint="" action="" novalidate>
+        <h2>Envoyez-nous un message</h2>
+        <div class="form__grid">
+          <label>Prénom *<input name="prenom" type="text" autocomplete="given-name" required /></label>
+          <label>Nom *<input name="nom" type="text" autocomplete="family-name" required /></label>
+          <label>Adresse e-mail *<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Téléphone ou GSM<input name="tel" type="tel" autocomplete="tel" /></label>
+          <label class="form__wide">Message *<textarea name="message" rows="5" required></textarea></label>
+        </div>
+        {/* Hallmark · reworded "Les Terrasses du Prince" to "le restaurant" · le site d’origine cite une autre enseigne par erreur, texte de consentement à faire valider */}
+        <p class="form__consent"><label class="check"><input type="checkbox" name="consentement" required /> Oui, je donne mon consentement *</label></p>
+        <p class="small">En envoyant ce formulaire, vous acceptez que le restaurant mémorise et utilise les informations collectées afin de traiter votre demande.</p>
+        <p><button class="btn" type="submit">Envoyer</button></p>
+        <p class="small" data-placeholder="true">Maquette : l’envoi n’est pas encore branché.</p>
+      </form>
+      <dl class="facts">
+        <div><dt>Téléphone</dt><dd class="num"><a href={resto.telHref}>{resto.tel}</a></dd></div>
+        <div><dt>E-mail</dt><dd><a href={`mailto:${resto.email}`}>{resto.email}</a></dd></div>
+        <div><dt>Adresse</dt><dd>{resto.adresse1}<br />{resto.adresse2}<br /><a href={resto.maps}>Voir sur la carte</a></dd></div>
+        <div><dt>Réseaux</dt><dd><a href={resto.facebook}>Facebook</a></dd></div>
+      </dl>
+    </div>
+  </section>
+</Base>
