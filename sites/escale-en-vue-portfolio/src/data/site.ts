@@ -162,10 +162,10 @@ export const guinguette = {
     { src: '/photos/planchette-vue.webp', cote: 640, alt: 'Planchette d’apéro et verre de jus sur une table de terrasse, la vallée en fond', x: 27, y: 2, r: 5, legende: 'Planchette, vallée en fond', placeholder: false },
     { src: '/photos/table-panorama.webp', cote: 608, alt: 'Table avec une plante, une bière et un verre devant le panorama de la vallée', x: 50, y: 5, r: -3, legende: 'Devant le panorama', placeholder: false },
     { src: '/photos/bieres-trappistes.webp', cote: 575, alt: 'Huit bouteilles de bières trappistes alignées', x: 73, y: 3, r: 7, legende: 'Les trappistes', placeholder: false },
-    { src: '/photos/bol-coucher-soleil.webp', cote: 382, alt: 'Bol-salade et verre sur une table en bois au coucher du soleil, la vallée en fond', x: 10, y: 46, r: 6, legende: 'Au coucher du soleil', placeholder: false },
-    { src: '/photos/mur-pierre.webp', cote: 640, alt: 'Chaises de terrasse devant un mur de pierre, l’affiche du restaurant au mur', x: 32, y: 50, r: -5, legende: 'Le mur de pierre', placeholder: false },
-    { src: '/photos/pres-transats.webp', cote: 640, alt: 'Prairie clôturée avec des transats jaunes, une colline au fond', x: 55, y: 46, r: 4, legende: 'Le pré aux transats', placeholder: false },
-    { src: '/photos/boule-osier.webp', cote: 640, alt: 'Boule d’osier suspendue à une branche', x: 77, y: 52, r: -7, legende: 'Boule d’osier', placeholder: false },
+    { src: '/photos/bol-coucher-soleil.webp', cote: 382, alt: 'Bol-salade et verre sur une table en bois au coucher du soleil, la vallée en fond', x: 10, y: 64, r: 6, legende: 'Au coucher du soleil', placeholder: false },
+    { src: '/photos/mur-pierre.webp', cote: 640, alt: 'Chaises de terrasse devant un mur de pierre, l’affiche du restaurant au mur', x: 32, y: 66, r: -5, legende: 'Le mur de pierre', placeholder: false },
+    { src: '/photos/pres-transats.webp', cote: 640, alt: 'Prairie clôturée avec des transats jaunes, une colline au fond', x: 55, y: 62, r: 4, legende: 'Le pré aux transats', placeholder: false },
+    { src: '/photos/boule-osier.webp', cote: 640, alt: 'Boule d’osier suspendue à une branche', x: 77, y: 67, r: -7, legende: 'Boule d’osier', placeholder: false },
   ] as Tirage[],
   /** Pictogramme au trait par catégorie de carte (celles de la carte réelle puis les exemples). */
   pictos: [

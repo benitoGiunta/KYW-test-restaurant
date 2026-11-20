@@ -102,9 +102,21 @@ function saisissable(el: HTMLElement, bounds: HTMLElement, opts: { exclure?: HTM
   return () => { el.removeEventListener('keydown', clavier); drag.kill(); };
 }
 
+/** Rectangles réellement occupés par le texte du hero (lignes de texte et boutons), pas la boîte pleine largeur. */
+function rectsTexte(b: HTMLElement) {
+  const rects: DOMRect[] = [];
+  b.querySelectorAll<HTMLElement>('h1 > span, .hero__slogan, .hero__adresse, .btn').forEach((n) => {
+    if (n.classList.contains('btn')) { rects.push(n.getBoundingClientRect()); return; }
+    const r = document.createRange();
+    r.selectNodeContents(n);
+    Array.from(r.getClientRects()).forEach((q) => { if (q.width > 4) rects.push(q); });
+  });
+  return rects.length ? rects : [b.getBoundingClientRect()];
+}
+
 function chevauche(a: HTMLElement, b: HTMLElement) {
-  const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
-  return ra.left < rb.right && ra.right > rb.left && ra.top < rb.bottom && ra.bottom > rb.top;
+  const ra = a.getBoundingClientRect();
+  return rectsTexte(b).some((rb) => ra.left < rb.right && ra.right > rb.left && ra.top < rb.bottom && ra.bottom > rb.top);
 }
 
 /** Hero : les objets tombent et rebondissent (bounce.out) avec l'intro, puis deviennent saisissables ; au repos ils flottent. */
