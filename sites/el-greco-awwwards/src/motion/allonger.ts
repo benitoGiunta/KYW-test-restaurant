@@ -13,7 +13,7 @@ import { idle, startIdle } from './idle';
 gsap.registerPlugin(ScrollTrigger);
 
 const DEPART = 0.28;
-const PERIODE = 9; // secondes, respiration des cadres
+const PERIODE = 14; // secondes, respiration des cadres
 
 export function startAllonger() {
   startIdle();
@@ -57,12 +57,12 @@ export function startAllonger() {
       if (e.isIntersecting) visibles.add(i); else visibles.delete(i);
     }));
     cadres.forEach((c) => io.observe(c));
-    // yPercent de l'image (110 % du cadre) entre -9 et 0 : centre -4,5, sinus ±3,6, pointeur ±0,9.
+    // yPercent de l'image (110 % du cadre) entre -9 et 0 : centre -4,5, sinus ±1,8, pointeur ±0,9.
     const tick = () => {
       visibles.forEach((i) => {
         const img = imgs[i];
         if (!img) return;
-        gsap.set(img, { yPercent: -4.5 + 3.6 * Math.sin((idle.t / PERIODE) * Math.PI * 2 + i * 1.7) + idle.y * 1.8 });
+        gsap.set(img, { yPercent: -4.5 + 1.8 * Math.sin((idle.t / PERIODE) * Math.PI * 2 + i * 1.7) + idle.y * 1.8 });
       });
     };
     gsap.ticker.add(tick);

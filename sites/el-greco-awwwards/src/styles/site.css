@@ -17,6 +17,7 @@
 .lien:focus-visible { text-decoration-thickness: 3px; text-underline-offset: 0.12em; }
 @media (hover: hover) { .lien:hover { text-decoration-thickness: 3px; text-underline-offset: 0.12em; } }
 .lien:active { text-decoration-thickness: 5px; }
+p:not(.carte__note) > .lien, li > .lien { display: inline-flex; align-items: center; min-height: 2.75rem; }
 .lien-util { color: var(--c-muted); }
 .lien-util:focus-visible, .lien-util:active { color: var(--c-fg); }
 @media (hover: hover) { .lien-util:hover { color: var(--c-fg); } }
@@ -120,7 +121,7 @@
 
 /* Pages intérieures : titre en colonne haute. */
 .entete { padding-block: var(--normal) var(--serre); }
-.entete__titre { font-size: var(--t-mega); }
+.entete__titre { font-size: var(--t-mega); white-space: nowrap; } /* une ligne avec la vraie police : pas de saut quand elle remplace la police de repli */
 .entete__phrase { max-width: 40rem; margin-top: var(--serre); font-size: var(--t-m); line-height: 1.25; font-weight: 500; }
 
 /* Carte : sommaire collant à gauche, rubriques à droite. */
@@ -139,6 +140,7 @@
 .plat__desc { grid-column: 1; color: var(--c-muted); max-width: 56ch; font-size: var(--t-s); }
 .plat__prix { grid-column: 2; grid-row: 1; font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
 .carte__note { margin-block: var(--serre) var(--normal); max-width: 56ch; }
+.carte__note .lien { display: inline-block; white-space: nowrap; padding-block: 0.6rem; margin-block: -0.6rem; }
 @media (min-width: 52rem) {
   .carte__nav { grid-column: 1 / 4; position: sticky; top: 5.5rem; align-self: start; }
   .carte__nav ul { flex-direction: column; overflow: visible; border-bottom: 0; border-left: 1px solid var(--c-line); padding: 0; gap: 0; }
