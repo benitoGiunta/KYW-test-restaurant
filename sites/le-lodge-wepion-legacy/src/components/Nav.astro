@@ -24,7 +24,22 @@ const liens = [
           {liens.map((l) => <li><a href={l.href}>{l.t}</a></li>)}
         </ul>
       </nav>
-      <a class="btn btn--sm" href={SITE.reservation} rel="noopener">Réserver une table</a>
+      <a class="btn btn--sm btn--ghost" href={SITE.reservation} rel="noopener">Réserver une table</a>
+      <button class="burger" type="button" popovertarget="menu" aria-controls="menu" aria-haspopup="true">Menu</button>
+    </div>
+  </div>
+  <div class="menu" id="menu" popover>
+    <div class="container menu__in">
+      <div class="menu__head">
+        <span class="menu__titre">Le Lodge</span>
+        <button class="burger" type="button" popovertarget="menu" popovertargetaction="hide">Fermer</button>
+      </div>
+      <nav aria-label="Menu">
+        <ul>
+          {liens.map((l) => <li><a href={l.href} data-menu-link>{l.t}</a></li>)}
+        </ul>
+      </nav>
+      <a class="btn" href={SITE.reservation} rel="noopener">Réserver une table</a>
     </div>
   </div>
 </header>

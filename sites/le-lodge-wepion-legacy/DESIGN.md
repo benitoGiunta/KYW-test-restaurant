@@ -38,4 +38,22 @@ Papier `oklch(94% 0.03 80)`, encre `oklch(27% 0.05 50)`, accent `oklch(52% 0.20 
 - [x] 5. Tokens seulement, pas de couleur littérale · preuve : `page.css` (`color-mix` sur variables)
 - [x] 6. Pas de tiret cadratin · preuve : `grep -c '—\|–' dist/le-lodge-wepion/legacy/index.html` = 0
 - [ ] 7. Waive 8 · préciser : séquence gardée, composition neuve (phase 3)
-- [ ] 8. Motion, états, reveal, QA navigateur · phase 2 et 3
+- [ ] 8. QA navigateur complète · phase 3 (captures)
+- [x] 2b. Pas de `transition: all` ni de géométrie animée · preuve : `grep -c 'transition: all' src/styles/*.css` = 0 ; animations en `transform`/`opacity` (`page.css`, bloc « Motion »)
+- [x] 6. `:focus-visible` partout, 3:1 · preuve : `base.css:6` (accent), `.bar/.menu/.band-ink/.pied :focus-visible` en papier, `.btn:focus-visible` encre
+- [x] 7b. Reduced motion et contenu visible sans script · preuve : `.js [data-reveal]` masqué seulement sous `prefers-reduced-motion: no-preference` ; mesuré : 9 reveals à opacity 1 en reduced, `animation-name: none` sur `.plate`
+- [x] 17. Hero en `dvh` · preuve : `.hero { min-height: max(34rem, calc(100dvh - 130px)) }`
+- [x] 19. Sticky non superposés · preuve : bandeau défilant, barre `top: 0` (`--z-sticky-nav`), barre de réservation fixée en bas sous 60rem
+- [x] 20. Switcher gardé · preuve : `role=tablist`, flèches, Début et Fin (`Base.astro`), panneaux `tabindex=0`, tous visibles sans script
+- [x] 21. Vidéo de fond : sans objet (photo, dérogation 28b de la phase 1)
+- [x] 22. Reveal sous `.js` seulement · preuve : `page.css` bloc « Motion », 9 éléments `data-reveal`, `hiddenReveal = 0` après défilement
+- [x] 23. États d'input : sans objet, pas de formulaire (réservation = lien Barestho conservé, `tel:` conservé)
+- [x] 24. Tooltip et auto-rotation : aucun (rail à défilement manuel)
+- [x] 29. Aucun faux envoi : aucun formulaire
+- [x] 30. SVG décoratifs : aucun SVG inline (logo en `<img alt>`)
+- [x] 48. Hover : un signal par contrôle, sous `@media (hover: hover)`, aucun hover sur non-interactif, sans rebond ni toast · preuve : `page.css` fin
+- [x] 49. `:active`, `:disabled`, cibles 44 px · preuve : `.btn`, `.btn--ghost`, `.burger`, `.link`, `.seg button` ; mesure 375 : restent le pied KYW (« Réalisé par », paquet) et le lien tél. inline (44 px sous `pointer: coarse`)
+- [x] 56. Un primaire rempli : rouge brique ; barre du bureau et bouton Menu en contour papier ; barre fixe du téléphone retirée (`is-off`) tant qu'un bouton de `main` est visible
+- [x] 58. Une recette de conteneur, pilule limitée aux contrôles ; aucun pattern de scroll
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` · preuve : `base.css:5,6`, `.rail`
+- [x] 72. Responsive : 60rem et 40rem, `dvh`, safe-area sur la barre fixe, tables restackées, `overflow-x: clip`; `scrollWidth - innerWidth` = 0 à 1440 et 375
