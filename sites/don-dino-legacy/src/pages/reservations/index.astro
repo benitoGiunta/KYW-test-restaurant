@@ -18,18 +18,24 @@ import { resto } from '../../data/site';
         <div class="actions"><a class="btn btn--primary" href={resto.reservationEnLigne} rel="noopener">Devis et réservation</a><a class="btn btn--ghost" href={resto.telHref}>Appeler</a></div>
         <Photo id="pizza-planche" w={1600} h={1066} alt="Pizza garnie d’aubergine et de poivron sur une planche en bois" ratio="3 / 2" sizes="(min-width: 60rem) 40vw, 100vw" />
       </div>
-      <form class="card form form--card" data-endpoint="" method="post" action="#" aria-labelledby="f-t">
+      <form class="card form form--card" data-endpoint="" method="post" action="#" novalidate aria-labelledby="f-t">
         <h2 id="f-t" style="font-size:var(--text-xl)">Devis et réservation</h2>
         <div class="form__row">
-          <div class="field"><label for="f-nom">Nom</label><input id="f-nom" name="nom" autocomplete="name" required /></div>
-          <div class="field"><label for="f-tel">Téléphone</label><input id="f-tel" name="telephone" type="tel" autocomplete="tel" required /></div>
+          <div class="field"><label for="f-nom">Nom</label><input id="f-nom" name="nom" autocomplete="name" placeholder="Prénom Nom" aria-describedby="f-nom-h" required /><p class="field__help" id="f-nom-h" data-hint="Le nom de la réservation."></p></div>
+          <div class="field"><label for="f-tel">Téléphone</label><input id="f-tel" name="telephone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0470 12 34 56" aria-describedby="f-tel-h" required /><p class="field__help" id="f-tel-h" data-hint="Pour vous rappeler si besoin."></p></div>
         </div>
         <div class="form__row">
-          <div class="field"><label for="f-date">Date</label><input id="f-date" name="date" type="date" required /></div>
-          <div class="field"><label for="f-pers">Personnes</label><input id="f-pers" name="personnes" type="number" min="1" inputmode="numeric" required /></div>
+          <div class="field"><label for="f-date">Date</label><input id="f-date" name="date" type="date" autocomplete="off" aria-describedby="f-date-h" required /><p class="field__help" id="f-date-h" data-hint="À partir d’aujourd’hui."></p></div>
+          <div class="field"><label for="f-pers">Personnes</label>
+            <select id="f-pers" name="personnes" autocomplete="off" aria-describedby="f-pers-h" required>
+              <option value="">Choisir</option>
+              {Array.from({ length: 12 }, (_, i) => <option value={i + 1}>{i + 1} {i === 0 ? 'personne' : 'personnes'}</option>)}
+            </select>
+            <p class="field__help" id="f-pers-h" data-hint="Au-delà de 12, voyez la page Groupes."></p></div>
         </div>
-        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message"></textarea></div>
-        <div class="actions"><button class="btn btn--primary" type="submit">Envoyer la demande</button></div>
+        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" aria-describedby="f-msg-h"></textarea><p class="field__help" id="f-msg-h" data-hint="Facultatif."></p></div>
+        <div class="actions"><button class="btn btn--ghost" type="submit">Envoyer la demande</button></div>
+        <p class="form__status" role="status" aria-live="polite" data-status></p>
         <p class="note">Formulaire illustratif : l’envoi n’est pas branché dans cette maquette.</p>
       </form>
     </div>

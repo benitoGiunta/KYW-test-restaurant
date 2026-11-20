@@ -3,12 +3,13 @@ import Base from '../layouts/Base.astro';
 import Hours from '../components/Hours.astro';
 import Photo from '../components/Photo.astro';
 import Reservation from '../components/Reservation.astro';
-import { cat, fmtPrix, equipements, resto, carte } from '../data/site';
+import { cat, slugify, fmtPrix, equipements, resto, carte } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const choix = ['Margherita', 'Prosciutto', 'Capri', 'Diavola', 'Sicilia', 'Pescatora'];
 const pizzas = cat('Pizzas');
 const vitrine = choix.map((n) => pizzas.plats.find((p) => p.nom === n)).filter(Boolean) as typeof pizzas.plats;
 const rubriques = ['Pizzas', 'Pâtes', 'Entrées chaudes', 'Poissons', 'Veau', 'Bœuf'].map((n) => carte.find((c) => c.categorie === n)!);
+const titreIndex = `Les pizzas de la carte, de ${fmtPrix(pizzas.min)} à ${fmtPrix(pizzas.max)}`;
 const plur = (n: number) => `${n} plats`;
 ---
 <Base page="" title="Don Dino, brasserie pizzeria à Naninne (Namur)" description="Brasserie, restaurant et pizzeria à Naninne : spécialités italiennes, ouvert 7 jours sur 7, midi et soir, patron en salle.">
@@ -23,13 +24,15 @@ const plur = (n: number) => `${n} plats`;
         </div>
       </div>
       <section class="index" aria-labelledby="idx-t">
-        <h2 class="index__title" id="idx-t">Les pizzas de la carte, de {fmtPrix(pizzas.min)} à {fmtPrix(pizzas.max)}</h2>
+        <h2 class="index__title" id="idx-t">{titreIndex}</h2>
         <ul class="rows">
           {vitrine.map((p) => (
-            <li class="dish">
-              <span class="dish__name">{p.nom}</span>
-              <span class="dish__price num">{fmtPrix(p.prix)}</span>
-              {p.description && <span class="dish__desc">{p.description}</span>}
+            <li>
+              <a class="dish dish--link" href={`${base}carte/#pizzas-${slugify(p.nom)}`}>
+                <span class="dish__name">{p.nom}</span>
+                <span class="dish__price num">{fmtPrix(p.prix)}</span>
+                {p.description && <span class="dish__desc">{p.description}</span>}
+              </a>
             </li>
           ))}
         </ul>

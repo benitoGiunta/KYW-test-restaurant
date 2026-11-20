@@ -35,6 +35,7 @@ export const slugify = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '')
 export type Plat = { nom: string; description: string | null; prix: number };
 export const carte = (carteBrute as { categorie: string; plats: Plat[] }[]).map((c) => ({
   ...c,
+  plats: c.plats.map((p) => ({ ...p, description: p.description ? p.description.replace(/,(?=\S)/g, ', ') : p.description })),
   slug: slugify(c.categorie),
   min: Math.min(...c.plats.map((p) => p.prix)),
   max: Math.max(...c.plats.map((p) => p.prix)),

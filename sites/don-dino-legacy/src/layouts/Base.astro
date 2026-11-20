@@ -17,7 +17,7 @@ const jsonLd = {
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="robots" content="noindex" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -33,7 +33,80 @@ const jsonLd = {
   <body data-page={page}>
     <a class="skip" href="#contenu">Aller au contenu</a>
     <Nav page={page} />
-    <main id="contenu"><slot /></main>
+    <main id="contenu" tabindex="-1"><slot /></main>
     <SiteFooter />
+    <script is:inline>
+(function () {
+  var tz = 'Europe/Brussels';
+  /* jour courant dans les horaires */
+  try {
+    var jour = new Intl.DateTimeFormat('fr-BE', { weekday: 'long', timeZone: tz }).format(new Date()).toLowerCase();
+    document.querySelectorAll('.schedule__row').forEach(function (row) {
+      if (row.getAttribute('data-day') !== jour) return;
+      row.setAttribute('data-today', '');
+      row.setAttribute('aria-current', 'date');
+      var dt = row.querySelector('dt');
+      if (dt) { var t = document.createElement('span'); t.className = 'schedule__today'; t.textContent = 'Aujourd’hui'; dt.appendChild(t); }
+    });
+  } catch (e) {}
+  /* menu : état exposé au clavier et aux lecteurs d'écran */
+  var toggle = document.querySelector('.nav__toggle'), menu = document.getElementById('menu');
+  if (toggle && menu && menu.showPopover) {
+    toggle.setAttribute('aria-expanded', 'false');
+    menu.addEventListener('toggle', function (e) { toggle.setAttribute('aria-expanded', String(e.newState === 'open')); });
+  }
+  /* carte : rubrique en cours dans la barre des pastilles */
+  var chips = document.querySelectorAll('.catnav .chip');
+  if (chips.length && 'IntersectionObserver' in window) {
+    var byId = {};
+    chips.forEach(function (c) { byId[c.getAttribute('href').slice(1)] = c; });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        chips.forEach(function (c) { c.removeAttribute('aria-current'); });
+        var c = byId[en.target.id];
+        if (c) { c.setAttribute('aria-current', 'location'); if (c.scrollIntoView && getComputedStyle(c.parentElement).overflowX === 'auto') c.scrollIntoView({ inline: 'nearest', block: 'nearest' }); }
+      });
+    }, { rootMargin: '-25% 0px -65% 0px' });
+    document.querySelectorAll('.cat').forEach(function (s) { io.observe(s); });
+  }
+  /* formulaire de réservation : valide, ne poste nulle part */
+  document.querySelectorAll('form[data-endpoint]').forEach(function (form) {
+    var fields = Array.prototype.slice.call(form.querySelectorAll('input, select, textarea'));
+    var status = form.querySelector('[data-status]');
+    var date = form.querySelector('input[type="date"]');
+    if (date) {
+      var d = new Intl.DateTimeFormat('en-CA', { timeZone: tz }).format(new Date());
+      date.min = d;
+    }
+    var messages = {
+      nom: function (v) { return v.trim() ? '' : 'Indiquez le nom de la réservation.'; },
+      telephone: function (v) { var n = v.replace(/\D/g, '').length; return !v.trim() ? 'Indiquez un numéro de téléphone.' : (n < 8 || n > 15 ? 'Ce numéro semble incomplet. Écrivez-le comme 0470 12 34 56.' : ''); },
+      date: function (v, el) { return !v ? 'Choisissez une date.' : (el.min && v < el.min ? 'Choisissez une date à partir d’aujourd’hui.' : ''); },
+      personnes: function (v) { return v ? '' : 'Choisissez le nombre de personnes.'; }
+    };
+    function help(el) { return document.getElementById(el.getAttribute('aria-describedby')); }
+    function check(el) {
+      var fn = messages[el.name], msg = fn ? fn(el.value, el) : '', h = help(el);
+      if (msg) { el.setAttribute('aria-invalid', 'true'); h.textContent = msg; h.setAttribute('data-error', ''); }
+      else { el.removeAttribute('aria-invalid'); h.textContent = h.getAttribute('data-hint') || ''; h.removeAttribute('data-error'); }
+      return !msg;
+    }
+    fields.forEach(function (el) {
+      var h = help(el); if (h) h.textContent = h.getAttribute('data-hint') || '';
+      el.addEventListener('blur', function () { el.setAttribute('data-touched', ''); check(el); });
+      var live = function () { if (el.hasAttribute('data-touched') || el.hasAttribute('aria-invalid')) check(el); };
+      el.addEventListener('input', live); el.addEventListener('change', live);
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var first = null;
+      fields.forEach(function (el) { el.setAttribute('data-touched', ''); if (!check(el) && !first) first = el; });
+      if (first) { status.removeAttribute('data-on'); status.textContent = 'Corrigez les champs signalés.'; status.setAttribute('data-on', ''); first.focus(); return; }
+      if (!form.dataset.endpoint) { status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié. Appelez le restaurant ou utilisez la demande en ligne.'; status.setAttribute('data-on', ''); return; }
+    });
+  });
+})();
+    </script>
   </body>
 </html>

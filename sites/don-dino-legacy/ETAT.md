@@ -1,22 +1,24 @@
-# ETAT · Don Dino legacy · phase 1 (construction-1)
+# ETAT · Don Dino legacy · phase 2 (construction-2) terminée
 
-## Fait
-- Audit (AUDIT.md), deal Squeeze, draw 16177b, scaffold, stamp, comps c1/c2 (c1 choisi), DESIGN.md, comp.md.
-- Contenu : `src/data/site.ts` + `src/data/carte.json` (115 plats, 12 rubriques, tirés de donnees.json, apostrophes typographiques).
-- 6 routes + 404 : accueil (hero Index, horaires, pile Du four à la table, rubriques de carte, pile La salle et le bar, réservation), /carte/ (115 plats), /reservations/ (formulaire illustratif `data-endpoint=""`, lien vers la demande en ligne d'origine), /groupes/, /a-propos/, /contact/.
-- Photos en WebP 800/1600 dans `public/photos/`, logo PNG recoloré en blanc chaud par masque CSS.
-- Build : `pnpm build:site sites/don-dino-legacy` passe, 6 pages, `dist/don-dino/legacy/`. KywFooter, noindex, mention présents sur chaque page.
+## Fait (phase 1)
+Audit, deal Squeeze, comps, DESIGN.md, contenu (115 plats), 6 routes + 404, photos WebP, KywFooter, noindex.
 
-## Reste (phases 2 et 3)
-- Nav mobile (pour l'instant rangée de pastilles défilante), états des contrôles et du formulaire, jour courant (`data-today` via script), un reveal au plus.
-- Aucun contrôle en navigateur fait : sloplint --render, captures 1440 et 375, contraste, tailles tactiles (44 px), débordement horizontal, sticky des piles à vérifier ; tuile « Sur place » dans `.stack__shots` à équilibrer à 1440.
-- RAPPORT.md, DESIGN.md § Sweep, trois questions de comp.
+## Fait (phase 2)
+- Nav : bord à bord ; sous 60rem « Réserver » + bouton « Menu » (Popover natif, aria-expanded par script, fonctionne sans script) ; 76 px au bureau, 66 au téléphone (`--nav-h`, sticky et scroll-padding alignés) ; skip link ; à 320 px le mot « Menu » est masqué visuellement.
+- Boutons et pastilles : états repos, hover (sous `hover: hover`), focus-visible, active, disabled, busy, aria-current ; une seule recette de primaire (sur /reservations/ le primaire est la demande en ligne d'origine ; nav et envoi du formulaire en contour).
+- Formulaire /reservations/ : `novalidate`, validation blur puis input, aides 1lh, `aria-invalid`, select 1 à 12 personnes, message « Rien n’a été envoyé… », ring de champ en encre de carte, jamais d'envoi.
+- Interactions : six pizzas du hero liées à la ligne de la carte (`:target` cerné) ; rubrique en cours sur /carte/ (rangée défilante au téléphone) ; jour courant dans les horaires.
+- Finitions : safe-area dans `.container`, liens 44 px sous `pointer: coarse`, hover de scale sur les photos retiré, descriptions de carte normalisées (« , » suivi d'une espace).
+- Aucun reveal (thème Squeeze : état seulement), documenté dans DESIGN.md.
+- Contrôles : sloplint hero rendu 0 FAIL 4 NOTE ; aucun débordement horizontal à 1440, 1100, 961, 960, 768, 375, 320 sur 6 routes ; build OK (6 pages + 404), KywFooter, noindex, mention sur chaque page ; test JS coupé.
+- Hero review : auto-notation `self` (pas d'outil Agent), voir DESIGN.md § Phase 2.
 
-## Décisions et hypothèses
-- Thème Squeeze (vert) : rappelle le vert du logo ; logo recoloré en blanc chaud (le rouge du logo disparaît, remplacé par la pêche des contrôles).
-- h1 réduit à 7 mots (`reworded`, gate 58). Bandeaux cookies, avertissement navigateur, FR/EN/NL, newsletter : `dropped`. Recrutement : lien externe vers dondino.be/fr/jobs dans le pied.
-- Hero : Index (draw) ; nav « search-led » remplacée par bord à bord (pas de recherche).
-- Écart à confirmer : le site annonce « 20 pizzas à partir de 9,30 € », la carte PDF en liste 26 de 10,50 à 17,80 € ; la maquette suit la carte PDF.
-- Presse : seulement les noms Petit Futé et L'Avenir, titres marqués `data-placeholder`. Desserts et boissons absents : mention « demandez à la salle » sur /carte/ à vérifier.
-- Photo « homme tenant une pizza » : alt neutre, personne non nommée.
-- Aucun avis, note ni chiffre inventé (7 j/7 et 115 plats viennent des données).
+## Reste (phase 3)
+- Shoot complet par l'agent « captures » (1440, 375, reduced motion) ; sloplint sans `--stage hero` ; contraste du texte `--color-muted` sur `--color-paper-2` à mesurer ; tuile « Sur place » à équilibrer à 1440 (non vérifiée) ; RAPPORT.md ; DESIGN.md § Sweep ; `pnpm index` déjà relancé.
+- Le mobile du `:target` d'une pizza (carte, 375) non revérifié visuellement (desktop OK).
+
+## Décisions et pièges
+- Pas de push (commit local seulement) ; pas de publication.
+- NOTE 58 de sloplint (h1 « 29 mots » = commentaire JSX Hallmark dans le h1, paragraphes de 13-14 mots sur /carte/ et /groupes/) : faux positif du commentaire ; paragraphes à raccourcir en phase 3 si souhaité.
+- Date : le champ `type="date"` s'affiche selon la langue du navigateur (mm/dd/yyyy en headless).
+- Le jour courant utilise l'heure de Bruxelles ; le fuseau du serveur de captures peut changer le jour surligné.

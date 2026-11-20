@@ -9,11 +9,15 @@ const logo = `url(${base}photos/logo-don-dino.png)`;
     <a class="nav__brand" href={base} aria-label="Don Dino, accueil">
       <span class="nav__logo" style={`--logo: ${logo}`} role="img" aria-label="Don Dino"></span>
     </a>
-    <nav class="nav__links" aria-label="Navigation principale">
+    <nav class="nav__links" id="menu" popover aria-label="Navigation principale">
       {nav.map((l) => (
         <a class="chip" href={`${base}${l.href}`} aria-current={page === l.href.replace('/', '') ? 'page' : undefined}>{l.label}</a>
       ))}
     </nav>
-    <a class="btn btn--primary nav__cta" href={`${base}reservations/`}>Réserver</a>
+    <a class={`btn nav__cta ${page === 'reservations' ? 'btn--ghost' : 'btn--primary'}`} href={`${base}reservations/`} aria-current={page === 'reservations' ? 'page' : undefined}>Réserver</a>
+    <button class="btn btn--ghost nav__toggle" type="button" popovertarget="menu" aria-controls="menu">
+      <span class="nav__toggle-t">Menu</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h16M4 16h16" /></svg>
+    </button>
   </div>
 </header>

@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Reservation from '../../components/Reservation.astro';
-import { carte, fmtPrix, nbPlats } from '../../data/site';
+import { carte, slugify, fmtPrix, nbPlats } from '../../data/site';
 ---
 <Base page="carte" title="La carte, Don Dino à Naninne" description="La carte de Don Dino : pizzas, pâtes, entrées, poissons, viandes, de la cuisine italienne et française.">
   <section class="pagehead">
@@ -23,7 +23,7 @@ import { carte, fmtPrix, nbPlats } from '../../data/site';
         </div>
         <ul class="rows">
           {c.plats.map((p) => (
-            <li class="dish">
+            <li class="dish" id={`${c.slug}-${slugify(p.nom)}`}>
               <span class="dish__name">{p.nom}</span>
               <span class="dish__price num">{fmtPrix(p.prix)}</span>
               {p.description && <span class="dish__desc">{p.description}</span>}
