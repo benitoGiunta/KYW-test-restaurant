@@ -1,4 +1,4 @@
-# ETAT · Brasserie Edgard · variante legacy · construction-2 (2026-11-20)
+# ETAT · Brasserie Edgard · variante legacy · construction-3 (2026-11-20)
 
 ## Fait (phase 1, voir DESIGN.md) 
 Audit, deal/draw, tokens, 7 pages, données réelles, 29 photos du client, build.
@@ -23,3 +23,7 @@ Audit, deal/draw, tokens, 7 pages, données réelles, 29 photos du client, build
 - `sloplint src` garde FAIL 34 sur `Base.astro` : faux positif, la règle est dans `base.css:2` (prouvé par `scrollWidth`).
 - La barre sombre en bas des captures dev est la toolbar Astro, pas le site.
 - Les dist/ des autres variantes sont modifiés dans l'arbre par d'autres sessions : ne committer que `sites/brasserie-edgard-legacy/` et `dist/brasserie-edgard/legacy/`.
+
+## Phase 3 (QA)
+- Fait : métadonnées SEO et favicon dans Base.astro, console accueil propre, build + `pnpm index` passés, RAPPORT.md écrit.
+- Reste : sloplint `--render --stage page` + `--kept`, finish review, gates jugées, log `theme.mjs`, cases restantes de DESIGN.md, ligne `dropped` « Carte réduite pour les groupes ».
