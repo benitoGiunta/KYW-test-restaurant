@@ -19,7 +19,7 @@ export const resto = {
 
 export const itineraire = `https://www.google.com/maps/search/?api=1&query=${resto.geo.lat},${resto.geo.lon}`;
 
-// Horaires : jeudi à dimanche d'après Trouve Ton Resto (à confirmer) ; le site d'origine affichait « 18:00 - 23:00 » sans jours.
+// Horaires : jeudi à dimanche d'après Trouve Ton Resto ; le site d'origine affichait « 18:00 - 23:00 » sans jours.
 export type Creneau = { de: string; a: string };
 export const horaires: { jour: string; court: string; creneaux: Creneau[] | null }[] = [
   { jour: 'lundi', court: 'lun', creneaux: null },
@@ -47,7 +47,7 @@ export const boissons: Categorie[] = carte.slice(8);
 const trouver = (n: string) => carte.flatMap((c) => c.plats).find((p) => p.nom === n)!;
 export const specialites: Plat[] = ['Mezze signature', 'Giouvetsi', 'Poulpe grillé', 'Gyros', 'Spanakopita', 'Crèmes grecques'].map(trouver);
 
-// Avis repris mot pour mot de donnees.json (Trustindex) ; à faire vérifier par le client. Aucune note, aucun nombre d'avis.
+// Avis repris mot pour mot de donnees.json (Trustindex) . Aucune note, aucun nombre d'avis.
 export const avis = [
   { texte: 'Resto familial extra ! Un goût authentique au niveau des plats et vins. […] profiter de la terrasse au calme est toujours très agréable', auteur: 'lf gh', date: 'juillet 2026' },
   { texte: 'Bon moment culinaire, très bonne qualité de plats, belle présentation. Personnel aimable et attentionné.', auteur: 'Ferdinando Longo', date: 'juillet 2026' },

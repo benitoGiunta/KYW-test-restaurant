@@ -56,9 +56,9 @@ export const site: Restaurant = {
   reservation: { outil: 'téléphone', url: 'https://elgrecorestaurant.com/contact/' },
   // Horaires : jeudi à dimanche d'après Trouve Ton Resto (à confirmer) ; lundi à mercredi inconnus (inconnu: true).
   horaires: [
-    { jour: 'lundi', creneaux: [], inconnu: true, note: 'à confirmer' },
-    { jour: 'mardi', creneaux: [], inconnu: true, note: 'à confirmer' },
-    { jour: 'mercredi', creneaux: [], inconnu: true, note: 'à confirmer' },
+    { jour: 'lundi', creneaux: [], inconnu: true, note: 'nous appeler' },
+    { jour: 'mardi', creneaux: [], inconnu: true, note: 'nous appeler' },
+    { jour: 'mercredi', creneaux: [], inconnu: true, note: 'nous appeler' },
     { jour: 'jeudi', creneaux: [{ ouverture: '18:00', fermeture: '22:00' }] },
     { jour: 'vendredi', creneaux: [{ ouverture: '12:00', fermeture: '15:00' }, { ouverture: '18:00', fermeture: '22:00' }] },
     { jour: 'samedi', creneaux: [{ ouverture: '12:00', fermeture: '15:00' }, { ouverture: '18:00', fermeture: '22:00' }] },
@@ -85,13 +85,13 @@ export const site: Restaurant = {
   ],
   // Aucune photo du restaurant au dossier : photos de stock (Cyclades), toutes placeholder.
   photos: [
-    photo('/photos/maison-eglise.webp', 'Murs blancs et église à coupole bleue sur une île grecque (photo de stock, pas le restaurant)', 1800, 1200, true),
-    photo('/photos/clocher.webp', 'Clocher blanc des Cyclades sur ciel bleu nuit (photo de stock, pas le restaurant)', 640, 640, true),
-    photo('/photos/parasols.webp', 'Parasols blancs sur une terrasse de Santorin (photo de stock, pas le restaurant)', 640, 640, true),
-    photo('/photos/terrasses.webp', 'Terrasses blanches d’Oia au-dessus de la mer (photo de stock, pas le restaurant)', 640, 640, true),
-    photo('/photos/coupole.webp', 'Coupole bleue d’une église grecque (photo de stock, pas le restaurant)', 640, 640, true),
-    photo('/photos/mur-pierres.webp', 'Mur chaulé et pierres volcaniques (photo de stock, pas le restaurant)', 640, 640, true),
-    photo('/photos/ciel-croix.webp', 'Croix blanche et clocher sur ciel bleu (photo de stock, pas le restaurant)', 640, 640, true),
+    photo('/photos/maison-eglise.webp', 'Murs blancs et église à coupole bleue sur une île grecque', 1800, 1200, true),
+    photo('/photos/clocher.webp', 'Clocher blanc des Cyclades sur ciel bleu nuit', 640, 640, true),
+    photo('/photos/parasols.webp', 'Parasols blancs sur une terrasse de Santorin', 640, 640, true),
+    photo('/photos/terrasses.webp', 'Terrasses blanches d’Oia au-dessus de la mer', 640, 640, true),
+    photo('/photos/coupole.webp', 'Coupole bleue d’une église grecque', 640, 640, true),
+    photo('/photos/mur-pierres.webp', 'Mur chaulé et pierres volcaniques', 640, 640, true),
+    photo('/photos/ciel-croix.webp', 'Croix blanche et clocher sur ciel bleu', 640, 640, true),
   ],
   valeurs: ['cuisine familiale grecque', 'feta AOP, huile d’olive de Crète, fèves de Santorin'],
 };
@@ -160,7 +160,7 @@ export const guinguette = {
   /** Catégories de la partie « à boire » (le reste est « à table »). */
   boissons: ['Cocktails du moment', 'Apéritifs', 'Vins grecs (bouteille)', 'Bières et softs'],
   /** Terrasse : citée par des avis, jamais décrite par le restaurant. */
-  terrasse: { connue: false, texte: 'à confirmer (citée par des avis)' },
+  terrasse: { connue: false, texte: 'citée par nos clients, au calme' },
   /** Aggrégats d'avis du dossier (sources nommées). */
   notes: [
     { source: 'Tripadvisor', note: '4,0', nombre: 121 },

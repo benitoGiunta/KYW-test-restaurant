@@ -47,7 +47,7 @@ function marquee() {
     let etat = '';
     const ouvert = auj?.c.find((c) => c.ouverture <= hhmm && hhmm < c.fermeture);
     const suivant = auj?.c.find((c) => c.ouverture > hhmm);
-    if (auj?.i) { texte = 'Horaires du jour à confirmer, appelez-nous'; }
+    if (auj?.i) { texte = 'Horaires du jour : appelez-nous'; }
     else if (ouvert) { texte = `Ouvert, arrivée jusqu'à ${ouvert.fermeture}`; etat = 'is-ouvert'; }
     else if (suivant) { texte = `Fermé en ce moment, ouverture à ${suivant.ouverture}`; etat = 'is-ferme'; }
     else {

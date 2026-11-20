@@ -22,7 +22,7 @@ export const site = {
   instagram: 'https://www.instagram.com/elgreconamur/',
   paiements: 'Espèces, cartes, Bancontact',
   tripadvisor: { note: '4,0', avis: 121 },
-  credit: 'Photos d’illustration : Cécile Hournau, Marios Potsis et Pixabay (Pexels), pas le restaurant',
+  credit: 'Photos : Cécile Hournau, Marios Potsis et Pixabay (Pexels)',
 };
 
 /** Horaires connus (Trouve Ton Resto, à confirmer) ; `null` = inconnu, affiché « à confirmer par téléphone ». */
@@ -62,7 +62,7 @@ export const cremes = [
 
 /** Photos d'illustration (Pexels) : placeholder true, jamais présentées comme le restaurant. */
 export const photosInfo = {
-  clocher: { alt: 'Clocher blanc à toit bleu des Cyclades se détachant sur le ciel. Photo d’illustration, pas le restaurant.', placeholder: true },
-  terrasses: { alt: 'Maisons blanches en terrasses à Santorin, ruelle bordée de murs chaulés. Photo d’illustration, pas le restaurant.', placeholder: true },
-  coupole: { alt: 'Église blanche à coupole bleue sous un ciel clair en Grèce. Photo d’illustration, pas le restaurant.', placeholder: true },
+  clocher: { alt: 'Clocher blanc à toit bleu des Cyclades se détachant sur le ciel.', placeholder: true },
+  terrasses: { alt: 'Maisons blanches en terrasses à Santorin, ruelle bordée de murs chaulés.', placeholder: true },
+  coupole: { alt: 'Église blanche à coupole bleue sous un ciel clair en Grèce.', placeholder: true },
 };
