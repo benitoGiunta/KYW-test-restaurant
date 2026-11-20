@@ -49,7 +49,7 @@ const ouvert = (n?: string): Horaire['creneaux'] => [{ ouverture: '08:00', ferme
 export const site: Restaurant = {
   slug: 'maison-des-desserts',
   nom: 'La Maison des Desserts',
-  baseline: 'Pâtisserie artisanale au cœur de Namur depuis 1946',
+  baseline: 'Chocolaterie née en 1946, pâtisserie et salon de thé au cœur de Namur',
   description: 'La Maison des Desserts, pâtisserie, boulangerie, chocolaterie et salon de thé dans une bâtisse du 17e siècle du vieux Namur, rue Haute Marcelle.',
   url: 'https://lamaisondesdesserts.be',
   typeCuisine: 'Salon de thé, pâtisserie, boulangerie, chocolaterie, petite restauration',
@@ -126,7 +126,6 @@ export const site: Restaurant = {
   },
   stickers: [
     { texte: 'Fabriqué par la maison', placeholder: false },
-    { texte: 'Depuis 1946', placeholder: false },
     { texte: 'Bâtisse du 17e siècle', placeholder: false },
   ],
   quartier: { phrase: 'Quartier Saint-Loup, dans le vieux Namur, rue Haute Marcelle.', placeholder: false },
@@ -154,3 +153,14 @@ export const horaireTexte = (h: Horaire) =>
 
 /** Téléphone pour href="tel:" (sans espaces). */
 export const telHref = (r: Restaurant = site) => `tel:${r.telephone.replace(/\s+/g, '')}`;
+
+const MOIS: Record<string, string> = { janvier: '01', décembre: '12' };
+/** Exceptions datées pour l'état d'ouverture, tirées de `fetes.jours` (même source que la page Fêtes). */
+export const exceptionsFetes = site.fetes.jours.map((j) => {
+  const [jj, mois] = j.date.split(' ');
+  const m = { md: `${MOIS[mois]}-${String(parseInt(jj)).padStart(2, '0')}` } as { md: string; ferme?: boolean; fermeture?: string };
+  if (j.etat === 'ferme') m.ferme = true;
+  const h = /(\d{1,2})h(\d{2})/.exec(j.note);
+  if (h) m.fermeture = `${h[1].padStart(2, '0')}:${h[2]}`;
+  return m;
+});

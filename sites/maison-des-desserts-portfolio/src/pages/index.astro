@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Activite from '../components/Activite.astro';
-import { site, photoDe, horaireTexte, telHref } from '../data/site';
+import { site, exceptionsFetes, photoDe, horaireTexte, telHref } from '../data/site';
 import { u, asset } from '../lib/url';
 const hero = photoDe('/photos/facade-jour.webp');
 const fete = photoDe('/photos/facade-vitrine-noel.webp');
@@ -28,7 +28,7 @@ const fmtP = (d: string | null) => (d ? new Date(d).toLocaleDateString('fr-BE', 
         <p class="etiquette" data-hero-apres>Pâtisserie, boulangerie et salon de thé à {site.adresse.commune}</p>
         <a class="btn btn--ink" href={site.boutique.url} rel="noopener" data-hero-apres data-magnetic="0.2">Commander en ligne</a>
         <a class="btn" href={u('/carte/')} data-hero-apres>La carte</a>
-        <p class="statut" data-hero-apres data-ouvert data-horaires={JSON.stringify(site.horaires)}></p>
+        <p class="statut" data-hero-apres data-ouvert data-horaires={JSON.stringify(site.horaires)} data-exceptions={JSON.stringify(exceptionsFetes)}></p>
       </div>
     </div>
   </section>
@@ -39,12 +39,13 @@ const fmtP = (d: string | null) => (d ? new Date(d).toLocaleDateString('fr-BE', 
         <h2 class="sr-only" id="manifeste">La maison</h2>
         <p class="manifeste__phrase" data-split="lines">{site.manifeste.avant}<em>{site.manifeste.italique}</em>{site.manifeste.apres}</p>
         <p class="lead" style="margin-top: calc(var(--u) * 2)" data-reveal="up">{site.histoire[2]}</p>
+        <p class="postit" style="margin-top: calc(var(--u) * 2)"><strong>Date à confirmer</strong>La maison donne plusieurs dates de fondation selon ses supports (voir Histoire).</p>
         <div class="stickers" style="margin-top: var(--u)">
           {site.stickers.map((s) => <span class="sticker" tabindex="0">{s.texte}</span>)}
         </div>
       </div>
       <div class="bulle" data-reveal="up" data-delay="0.15">
-        <p class="sur">Depuis 1946</p>
+        <p class="sur">Repère à confirmer · 1946</p>
         <p>{site.histoire[0]}</p>
         <span class="bulle__qui">{site.histoire[1]}</span>
       </div>

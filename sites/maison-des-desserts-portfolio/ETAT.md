@@ -1,4 +1,4 @@
-# ETAT phase 3/3 (QA) : portfolio, La Maison des Desserts : TERMINÉ
-- Fait : audit (0 FAIL), mesures 5 pages x 2 largeurs, clics d'en-tête, pieds de page, titre raccourci, post-it Histoire reformulé, build final OK, RAPPORT.md réécrit.
-- Reste : ligne UTILISATION.md (gabarits/ protégé) ; validation des dates avec le client.
-- Pièges : le loader recouvre l'en-tête quelques secondes (attendre 3,5 s avant un clic réel) ; QA-build.md n'avait pas été produit.
+# ETAT · révision 1
+Fait : R-01, R-02, R-03, R-04 corrigés et vérifiés (voir REVISION-1.md). Build refait.
+Reste : F3 (R-05 à R-10), non traités ; commit de publication avec `pnpm index` si la revue 2 est bonne.
+Pièges : axe `label-content-name-mismatch` exige de retirer l'`aria-label` du logo (sr-only) ; SplitText pose `aria-label` par défaut (`aria: 'none'`).

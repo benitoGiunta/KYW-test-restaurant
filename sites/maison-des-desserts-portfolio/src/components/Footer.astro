@@ -1,7 +1,7 @@
 ---
 // Pied de page finale : logo en cases, liens, puis le pied de page KYW obligatoire (un seul logo, kyw-signature).
 import KywFooter from '@kyw/footer';
-import { site, adresseLigne, telHref } from '../data/site';
+import { site, exceptionsFetes, adresseLigne, telHref } from '../data/site';
 import { u } from '../lib/url';
 const [a, b, ...reste] = site.nom.split(' ');
 ---
@@ -16,7 +16,7 @@ const [a, b, ...reste] = site.nom.split(' ');
     <div class="footer__cols">
       <div class="stack">
         <address>{adresseLigne()}</address>
-        <p class="statut statut--pied" data-ouvert data-horaires={JSON.stringify(site.horaires)}></p>
+        <p class="statut statut--pied" data-ouvert data-horaires={JSON.stringify(site.horaires)} data-exceptions={JSON.stringify(exceptionsFetes)}></p>
         <p><a class="link" href={telHref()}>{site.telephone}</a></p>
         <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
       </div>

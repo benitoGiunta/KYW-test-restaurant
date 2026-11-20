@@ -117,7 +117,13 @@ html[data-menu-open] { overflow: hidden; }
 .lignes li { display: flex; justify-content: space-between; gap: var(--u); padding: 0.55em 0; border-bottom: 1px solid var(--c-fg); }
 .lignes li > span + span { white-space: nowrap; }
 .lignes li > .prix--long { white-space: normal; text-align: right; max-width: 55%; }
-.lignes li > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.lignes li > span:first-child { min-width: 0; overflow-wrap: break-word; }
+@media (max-width: 48rem) {
+  .lignes li { flex-wrap: wrap; row-gap: 0.15em; }
+  .lignes li > span:first-child { flex: 1 1 100%; }
+  .lignes li > span + span { white-space: normal; }
+  .lignes li > .prix--long { max-width: none; text-align: left; }
+}
 .lignes li .muted, .lignes li .illu { white-space: normal; }
 .prix { font-family: var(--f-display); font-size: var(--t-l); }
 

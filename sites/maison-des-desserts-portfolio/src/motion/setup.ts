@@ -140,23 +140,40 @@ function sommaire() {
 
 /** État d'ouverture calculé depuis les horaires de la page (Europe/Brussels), jamais depuis l'heure du visiteur. */
 interface Jour { jour: string; creneaux: { ouverture: string; fermeture: string }[] }
+/** Exception datée (jours de fêtes) : md = « MM-JJ » ; ferme = fermé toute la journée ; fermeture = heure de fermeture ce jour-là. */
+interface Exception { md: string; ferme?: boolean; fermeture?: string }
 const JOURS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
 const hm = (t: string) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
 const lisible = (t: string) => { const [h, m] = t.split(':'); return m === '00' ? `${Number(h)}h` : `${Number(h)}h${m}`; };
-export function etatOuvertureTexte(horaires: Jour[], maintenant: Date) {
-  const f = new Intl.DateTimeFormat('fr-BE', { timeZone: 'Europe/Brussels', weekday: 'long', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+const fmt = (maintenant: Date) => {
+  const f = new Intl.DateTimeFormat('fr-BE', { timeZone: 'Europe/Brussels', weekday: 'long', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
   const p = Object.fromEntries(f.formatToParts(maintenant).map((x) => [x.type, x.value]));
-  const idx = JOURS.indexOf(String(p.weekday).toLowerCase());
-  const min = Number(p.hour) * 60 + Number(p.minute);
+  return { idx: JOURS.indexOf(String(p.weekday).toLowerCase()), md: `${p.month}-${p.day}`, min: Number(p.hour) * 60 + Number(p.minute) };
+};
+export function etatOuvertureTexte(horaires: Jour[], maintenant: Date, exceptions: Exception[] = []) {
+  const { idx, md, min } = fmt(maintenant);
   const jour = (i: number) => horaires.find((h) => h.jour === JOURS[(i + 7) % 7]);
-  const auj = jour(idx);
-  const en = auj?.creneaux.find((c) => min >= hm(c.ouverture) && min < hm(c.fermeture));
-  if (en) return { ouvert: true, texte: `Ouvert jusqu'à ${lisible(en.fermeture)}` };
-  const plus = auj?.creneaux.find((c) => min < hm(c.ouverture));
+  const exc = (m: string) => exceptions.find((e) => e.md === m);
+  // Créneaux d'un jour, exceptions comprises (null = jour exceptionnel ouvert sans horaires connus).
+  const creneauxDe = (i: number, m: string) => {
+    const e = exc(m);
+    const base = jour(i)?.creneaux ?? [];
+    if (e?.ferme) return [];
+    if (e?.fermeture) return (base.length ? base : [{ ouverture: '08:00', fermeture: e.fermeture }]).map((c) => ({ ...c, fermeture: e.fermeture! }));
+    if (e && !base.length) return null;
+    return base;
+  };
+  const auj = creneauxDe(idx, md);
+  if (auj === null) return { ouvert: true, texte: 'Ouvert aujourd\u2019hui (jour de fêtes)' };
+  const en = auj.find((c) => min >= hm(c.ouverture) && min < hm(c.fermeture));
+  if (en) return { ouvert: true, texte: `Ouvert jusqu\u2019à ${lisible(en.fermeture)}` };
+  const plus = auj.find((c) => min < hm(c.ouverture));
   if (plus) return { ouvert: false, texte: `Fermé, ouvre à ${lisible(plus.ouverture)}` };
-  for (let d = 1; d <= 7; d++) {
-    const j = jour(idx + d);
-    if (j?.creneaux.length) return { ouvert: false, texte: `Fermé, ouvre ${d === 1 ? 'demain' : j.jour} à ${lisible(j.creneaux[0].ouverture)}` };
+  for (let d = 1; d <= 14; d++) {
+    const g = fmt(new Date(maintenant.getTime() + d * 86400000));
+    const c = creneauxDe(g.idx, g.md);
+    if (c === null) return { ouvert: false, texte: `Fermé, ouvre ${d === 1 ? 'demain' : JOURS[g.idx]}` };
+    if (c.length) return { ouvert: false, texte: `Fermé, ouvre ${d === 1 ? 'demain' : JOURS[g.idx]} à ${lisible(c[0].ouverture)}` };
   }
   return null;
 }
@@ -166,7 +183,9 @@ function etatOuverture() {
   const maj = () => els.forEach((el) => {
     let h: Jour[] = [];
     try { h = JSON.parse(el.dataset.horaires || '[]'); } catch { /* données absentes : rien à afficher */ }
-    const e = etatOuvertureTexte(h, new Date());
+    let x: Exception[] = [];
+    try { x = JSON.parse(el.dataset.exceptions || '[]'); } catch { /* sans exceptions */ }
+    const e = etatOuvertureTexte(h, new Date(), x);
     el.textContent = e ? e.texte : '';
     el.dataset.etat = e ? (e.ouvert ? 'ouvert' : 'ferme') : '';
   });
