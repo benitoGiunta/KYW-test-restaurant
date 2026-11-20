@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import Fig from '../components/Fig.astro';
 import { brunchs, formules, aussi, boissons, mardi, resto } from '../data/site';
 ---
 <Base page="carte" title="La carte, Café Fleuri à Namur" description="La carte de Café Fleuri : brunchs salé, sucré et mixte, pancakes au gravlax, limonades et thé glacé maison.">
@@ -27,6 +26,7 @@ import { brunchs, formules, aussi, boissons, mardi, resto } from '../data/site';
       <ul class="rows">
         {brunchs.concat(aussi as any).map((b) => <li class="row"><span class="row__t">{b.nom}</span>{b.texte && <span class="row__d">{b.texte}</span>}</li>)}
       </ul>
+      <p class="note carte__note">Pancakes au saumon gravlax et plateau charcuterie et fromage : plats relevés sur une ancienne fiche, à confirmer.</p>
     </div>
   </section>
 
@@ -40,13 +40,12 @@ import { brunchs, formules, aussi, boissons, mardi, resto } from '../data/site';
   </section>
 
   <section class="sec" aria-labelledby="h-mardi">
-    <div class="container fin">
+    <div class="container fin fin--solo">
       <div class="card">
         <h2 id="h-mardi">Le mardi</h2>
         <p>{mardi}</p>
         <p><a class="btn btn--card" href={`tel:${resto.tel.href}`}>Appeler</a></p>
       </div>
-      <Fig p="table" class="fig--tall" label="Photo à fournir" />
     </div>
   </section>
 </Base>

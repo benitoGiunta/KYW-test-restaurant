@@ -22,3 +22,7 @@ Source : QA-build.md (captures et audit de l'agent « captures » : 0 erreur con
 - Mention « Maquette KYW, certaines données sont illustratives » et noindex présents via Base/pied KYW.
 
 Build final : `pnpm build:site sites/cafe-fleuri-legacy` exit 0 (dist/cafe-fleuri/legacy/). Pas de `pnpm index`, pas de `[publier]`.
+
+## Révision 1
+- Statut (F1-1) : ligne « Statut de l'établissement à confirmer » ajoutée au bloc Venir (accueil) et à la page Venir ; l'arbitrage reste à l'orchestrateur (dossier : probablement fermé, repris par Bistro Camélia en 2025).
+- og:image non produite (F2-6), omission assumée.

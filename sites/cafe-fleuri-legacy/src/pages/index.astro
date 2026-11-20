@@ -1,20 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
-import Fig from '../components/Fig.astro';
 import Horaires from '../components/Horaires.astro';
 import { resto, brunchs, formules, mardi, histoire } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const a = resto.adresse;
 ---
-<Base page="accueil" title="Café Fleuri, café-brunch à Namur" description="Café Fleuri, café-brunch à Namur : brunchs salé, sucré ou mixte, gravlax, pancakes, limonades et thé glacé maison, rue des Fossés Fleuris.">
+<Base page="accueil" title="Café Fleuri, café-brunch à Namur" description="Café Fleuri, café-brunch à Namur : brunchs salé, sucré ou mixte, gravlax, granola, limonades et thé glacé maison, rue des Fossés Fleuris.">
   <section class="hero" aria-labelledby="h-hero">
     <div class="container hero__in">
       <div class="hero__top">
-        <p class="figure num" data-placeholder="true">{formules[0].prix}<span class="figure__cap">Le brunch, prix indicatif.</span></p>
+        <p class="figure num" data-placeholder="true">{formules[0].prix}<span class="figure__cap">Le brunch, prix d’un ancien guide, illustratif, à confirmer.</span></p>
       </div>
       <div class="hero__base">
         <h1 id="h-hero">Brunch salé, sucré ou mixte.</h1>
-        <p class="lead">Gravlax, pancakes et limonade maison, rue des Fossés Fleuris à Namur.</p>
+        <p class="lead">Gravlax, granola et limonades maison, rue des Fossés Fleuris à Namur.</p>
         <p class="actions"><a class="btn btn--hero" href={`tel:${resto.tel.href}`}>Appeler</a><a class="btn btn--ghost" href={`${base}carte/`}>La carte</a></p>
       </div>
     </div>
@@ -29,13 +28,9 @@ const a = resto.adresse;
     </div>
   </section>
 
-  <section class="sec sec--flush" aria-label="La salle">
-    <Fig p="salle" class="fig--band" label="Photo de la salle à fournir" />
-  </section>
-
   <section class="sec sec--band" aria-labelledby="h-maison">
     <div class="container band">
-      <h2 id="h-maison" class="statement">Gravlax, granola et limonades, tout est fait maison.</h2>
+      <h2 id="h-maison" class="statement">Gravlax, granola et limonades maison.</h2>
       <p class="band__txt">{histoire}</p>
       <p><a class="btn" href={`${base}carte/`}>Voir la carte</a></p>
     </div>
@@ -56,17 +51,17 @@ const a = resto.adresse;
         <p><a class="link" href={resto.carte} rel="noopener">Voir sur la carte</a></p>
       </div>
       <div class="venir__col"><Horaires /></div>
+      <p class="note statut">Statut de l’établissement à confirmer : les sources divergent, le lieu serait fermé ou repris.</p>
     </div>
   </section>
 
   <section class="sec" aria-labelledby="h-fin">
-    <div class="container fin">
+    <div class="container fin fin--solo">
       <div class="card">
         <h2 id="h-fin">À table</h2>
-        <p>{a.rue} {a.numero}, {a.commune}. Téléphone {resto.tel.affiche}.</p>
+        <p>{a.rue} {a.numero}, {a.commune}. Téléphone {resto.tel.affiche} (illustratif).</p>
         <p><a class="btn btn--card" href={`tel:${resto.tel.href}`}>Appeler</a></p>
       </div>
-      <Fig p="table" class="fig--tall" label="Photo à fournir" />
     </div>
   </section>
 </Base>
