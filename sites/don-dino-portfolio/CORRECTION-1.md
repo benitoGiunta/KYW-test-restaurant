@@ -3,3 +3,4 @@ id | catégorie | décision | changement | preuve
 2 | brouillon | corrige | carte : bloc Desserts/Boissons (plats et prix inventés, « exemples illustratifs ») retiré ; pastilles Desserts/Boissons retirées ; placeholder de recherche sans « tiramisu » | .shots-a4-apres-don-dino-portfolio/carte
 3 | brouillon | corrige | réservation : « Formulaire de démonstration sans envoi » remplacé par « La validation vous conduit vers dondino.be pour confirmer votre demande. » | .shots-a4-apres-don-dino-portfolio/reservation
 4 | contenu | a_verifier | desserts et boissons absents de la carte : à obtenir auprès du restaurant ; le patron « Placido Scalisi » (histoire) garde un pictogramme au lieu d'une photo (non modifié) | -
+5 | brouillon | corrige | passe 2 : données mortes inventées (avis d'exemple, desserts/boissons d'exemple, pastilles) retirées de src/data/site.ts ; repli « à confirmer » de la ligne Terrasse retiré (accueil, réservation) | build OK, scan 0

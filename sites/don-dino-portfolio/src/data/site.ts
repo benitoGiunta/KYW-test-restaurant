@@ -163,38 +163,10 @@ export const guinguette = {
     { categorie: 'Bœuf', picto: 'fourchette' },
     { categorie: 'Sauces', picto: 'basilic' },
     { categorie: 'Agneau', picto: 'fourchette' },
-    { categorie: 'Desserts', picto: 'parasol' },
-    { categorie: 'Boissons', picto: 'chope' },
   ] as Picto[],
   /** Catégories mises en avant sur l'accueil (extrait de la carte réelle) et nombre de plats montrés. */
   accueilCategories: ['Pizzas', 'Pâtes', 'Entrées chaudes'],
   accueilNombre: 6,
-  /** Desserts et boissons : absents du dossier (carte PDF sans eux) → exemples marqués. */
-  carteExemple: [
-    {
-      categorie: 'Desserts',
-      plats: [
-        { nom: 'Tiramisu', description: '', prix: '7 €', placeholder: true, vege: true },
-        { nom: 'Panna cotta', description: 'coulis de fruits rouges', prix: '7 €', placeholder: true, vege: true },
-        { nom: 'Dame blanche', description: '', prix: '7,50 €', placeholder: true, vege: true },
-      ],
-    },
-    {
-      categorie: 'Boissons',
-      plats: [
-        { nom: 'Bière pression', description: '25 cl', prix: '3 €', placeholder: true, vege: true },
-        { nom: 'Verre de vin italien', description: 'blanc ou rouge', prix: '5,50 €', placeholder: true, vege: true },
-        { nom: 'Café', description: '', prix: '2,60 €', placeholder: true, vege: true },
-      ],
-    },
-  ] as (Categorie & { plats: (Plat & { vege: boolean })[] })[],
-  /** Avis d'exemple : aucun avis lu au dossier ; sans nom ni source, étiquetés « Exemple d'avis » à l'écran. */
-  avisExemples: [
-    { texte: 'La pizza est arrivée brûlante, fine, bien garnie. On a tout fini, même les croûtes.', note: 5, r: -4, placeholder: true },
-    { texte: 'Le patron passe de table en table avec le sourire. On se sent attendu.', note: 5, r: 3, placeholder: true },
-    { texte: 'Lasagne maison généreuse, service rapide malgré la salle pleine un samedi soir.', note: 5, r: -2, placeholder: true },
-    { texte: 'On y vient en famille depuis des années : il y a de tout, pour tous les goûts.', note: 5, r: 5, placeholder: true },
-  ] as AvisExemple[],
   /** Faits chiffrés du dossier (constantes). */
   faits: { ouvertDepuis: 2014, jours: 7, categories: 12 },
   /** Terrasse (mentionnée par le site actuel, sans détail) et accueil de groupes (réel). */
