@@ -99,6 +99,14 @@ const jsonLd = {
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      (() => {
+        const f = document.querySelector('.footer'), fr = document.querySelector('.frise');
+        if (!f || !fr) return;
+        const maj = () => fr.classList.toggle('is-masquee', getComputedStyle(fr).position === 'fixed' && f.getBoundingClientRect().top < innerHeight * 0.85);
+        addEventListener('scroll', maj, { passive: true }); addEventListener('resize', maj); maj();
+      })();
+    </script>
     <script>
       import { start } from '../engine/astro';
       import { setupMotion } from '../motion/setup';

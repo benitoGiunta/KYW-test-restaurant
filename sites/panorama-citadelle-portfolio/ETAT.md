@@ -19,3 +19,6 @@
 - scrollWidth ≠ éléments qui dépassent : `innerWidth` suit la page élargie ; seuil `right > 391`.
 - `isTouch` du moteur est une fonction (`isTouch()`).
 - Placeholders inchangés : 2 lignes « dernier verre » (marquées exemple).
+
+## Phase 3 (QA), faite
+- Pied KYW rendu visible (z-index, couleurs) ; frise masquée devant le pied nuit. Détails et points ouverts : RAPPORT.md. Build final OK. Reste : publication par la session de correction.
