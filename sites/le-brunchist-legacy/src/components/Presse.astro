@@ -1,0 +1,22 @@
+---
+import { presse, avis } from '../data/site';
+---
+<section class="presse fibre" id="presse" aria-labelledby="t-presse">
+  <div class="container">
+    <h2 id="t-presse">On en parle</h2>
+    <ul class="rows rows--presse">
+      {presse.map((a) => (
+        <li>
+          <p class="rows__src">{a.media}, {a.date}</p>
+          <p class="rows__titre">«&nbsp;<a class="lien" href={a.url} rel="noopener" target="_blank">{a.titre}</a>&nbsp;»</p>
+        </li>
+      ))}
+      {avis.map((a) => (
+        <li>
+          <p class="rows__src">{a.auteur}, avis Google relevé sur Restaurant Guru</p>
+          <blockquote lang="en"><p>«&nbsp;{a.texte}&nbsp;»</p></blockquote>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

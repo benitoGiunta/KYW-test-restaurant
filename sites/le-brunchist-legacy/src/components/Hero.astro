@@ -1,0 +1,22 @@
+---
+import { resto, base, photos } from '../data/site';
+const h = photos.hero;
+---
+<section class="hero" aria-labelledby="titre">
+  <div class="container hero__grid">
+    <div class="hero__text">
+      <h1 id="titre">Brunch fait maison, au centre de Namur.</h1>
+      <p class="lead">Cafés de spécialité et cuisine locale, du mercredi au dimanche.</p>
+      <p class="actions">
+        <a class="btn" href={resto.telHref}>Appeler le café</a>
+        <a class="btn btn--ligne" href={`${base}#carte`}>Voir la carte</a>
+      </p>
+    </div>
+    <figure class="hero__photo">
+      <div class="frame frame--hero" data-slot="hero" data-alt={h.data} data-credits={`${h.credit}, ${h.licence}`} data-placeholder="true">
+        <img src={`${base}${h.src}`} width={h.w} height={h.h} alt={h.alt} fetchpriority="high" decoding="async" style="object-position: 50% 50%" />
+      </div>
+      <figcaption>Photo provisoire, remplacée par celle du café.</figcaption>
+    </figure>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+---
+import { carte, base, photos } from '../data/site';
+const c = photos.carte;
+---
+<section class="carte" id="carte" aria-labelledby="t-carte">
+  <div class="container carte__grid">
+    <div class="carte__head">
+      <h2 id="t-carte">La carte</h2>
+      <p class="lead">Les plats que les convives citent le plus, au salé, au sucré et au verre.</p>
+      <figure class="carte__photo">
+        <div class="frame frame--carte" data-slot="carte" data-alt={c.data} data-credits={`${c.credit}, ${c.licence}`} data-placeholder="true">
+          <img src={`${base}${c.src}`} width={c.w} height={c.h} alt={c.alt} loading="lazy" decoding="async" style="object-position: 40% 50%" />
+        </div>
+        <figcaption>Photo provisoire d’un croissant aux amandes.</figcaption>
+      </figure>
+    </div>
+    <div class="carte__body" data-tabs>
+      <div class="tabs__list" role="tablist" aria-label="Parties de la carte">
+        {carte.map((s, i) => (
+          <button type="button" role="tab" id={`tab-${s.id}`} aria-controls={`panneau-${s.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{s.nom}</button>
+        ))}
+      </div>
+      {carte.map((s, i) => (
+        <div class={`panel${i === 0 ? ' is-on' : ''}`} role="tabpanel" id={`panneau-${s.id}`} aria-labelledby={`tab-${s.id}`}>
+          <h3 class="panel__nom">{s.nom}</h3>
+          <ul class="rows">
+            {s.plats.map((pl) => (
+              <li data-placeholder={pl.placeholder ? 'true' : undefined}>
+                <h4 class="rows__nom">{pl.nom}</h4>
+                <p class="rows__desc">{pl.desc}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <p class="notes">Compositions illustratives. Prix : <span class="fill">à renseigner par le café</span>. Options végétales et sans gluten annoncées par des sources tierces, à confirmer.</p>
+    </div>
+  </div>
+</section>

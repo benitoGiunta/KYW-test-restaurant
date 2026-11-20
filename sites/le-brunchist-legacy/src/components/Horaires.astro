@@ -1,0 +1,28 @@
+---
+import { horaires, resto } from '../data/site';
+---
+<section class="horaires" id="horaires" aria-labelledby="t-horaires">
+  <div class="container horaires__grid">
+    <div class="horaires__text">
+      <h2 id="t-horaires">Horaires et adresse</h2>
+      <address class="adresse">
+        {resto.adresse.rue}&nbsp;{resto.adresse.numero}<br />
+        {resto.adresse.cp}&nbsp;{resto.adresse.ville}<br />
+        <a class="lien" href={resto.telHref}>{resto.telAffiche}</a>
+      </address>
+      <p class="actions">
+        <a class="btn btn--clair" href={resto.telHref}>Appeler le café</a>
+        <a class="btn btn--ligne-clair" href={resto.itineraire} rel="noopener" target="_blank">Itinéraire</a>
+      </p>
+      <p class="notes">Horaires relevés sur Namur CentreVille, à confirmer. Réservation : <span class="fill">à confirmer avec le café</span>.</p>
+    </div>
+    <dl class="hours">
+      {horaires.map((h) => (
+        <div class={`hours__row${h.ouvert ? '' : ' is-closed'}`} data-jour={h.jour}>
+          <dt>{h.jour}</dt>
+          <dd>{h.ouvert ? <><time datetime={h.iso[0]}>{h.de}</time> à <time datetime={h.iso[1]}>{h.a}</time></> : 'Fermé'}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

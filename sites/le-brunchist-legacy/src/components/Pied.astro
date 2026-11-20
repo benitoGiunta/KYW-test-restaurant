@@ -1,0 +1,28 @@
+---
+import { resto, base, photos } from '../data/site';
+const credits = [photos.hero, photos.carte, photos.lieu];
+---
+<footer class="mast" data-credits>
+  <div class="container">
+    <p class="mast__mark">Le Brunchist</p>
+    <div class="mast__cols">
+      <nav aria-label="Pied de page">
+        <ul>
+          <li><a class="lien" href={`${base}#carte`}>Carte</a></li>
+          <li><a class="lien" href={`${base}#lieu`}>Le lieu</a></li>
+          <li><a class="lien" href={`${base}#horaires`}>Horaires</a></li>
+        </ul>
+      </nav>
+      <address>
+        {resto.adresse.rue}&nbsp;{resto.adresse.numero}, {resto.adresse.cp}&nbsp;{resto.adresse.ville}<br />
+        <a class="lien" href={resto.telHref}>{resto.telAffiche}</a><br />
+        Du mercredi au dimanche, 9&nbsp;h&nbsp;30 à 15&nbsp;h&nbsp;30
+      </address>
+      <ul>
+        <li><a class="lien" href={resto.facebook} rel="noopener" target="_blank">Facebook</a></li>
+        <li><a class="lien" href={resto.instagram} rel="noopener" target="_blank">Instagram</a></li>
+      </ul>
+    </div>
+    <p class="credits">Photographies provisoires, Wikimedia Commons&nbsp;: {credits.map((c, i) => (<><a class="lien" href={c.url} rel="noopener" target="_blank">{c.credit}</a> ({c.licence}){i < credits.length - 1 ? ', ' : '.'}</>))}</p>
+  </div>
+</footer>

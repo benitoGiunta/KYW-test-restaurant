@@ -1,0 +1,174 @@
+/* Hallmark · shape: Split Studio · genre: editorial · theme: Vellum (deal 1/3, seed restaurant-namur-brunch-specialty-40dd·ed6fbcfe·2026-11-20·r0) · redesign: full
+ * hero: Stage (kept: one page, text and photograph; the original could not be read) · nav: edge-aligned wordmark, links and one action · footer: mast · imagery: provisional photographs (Wikimedia Commons) · signature: the week as a day book on the ultramarine field, under the blackletter head · vellum: parchment
+ * axes: light/blackletter/cool · posture: committed · contrast: pass · fold: pass · draw: 97d21a · comp: 2 built, no key · c1 chosen · job: book (visit, no booking tool known) · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E3 S3 R4 V3 · weakest: E, no client photograph and no price exist, so the carte leans on type and one provisional croissant; kept as ruled rows */
+/* Hallmark · waive 8 · hero, a carte, press and a close is the original sequence of a one-page café site, here with new compositions (stage, switcher, band, split, day book) · sequence kept on purpose */
+/* Hallmark · dropped sticky booking bar and next free times · the dossier knows no booking tool and the site reportedly takes no reservations; the action is the call and the route */
+/* Hallmark · dropped search-led nav · a one-page café has three destinations, no search; replaced by an edge-aligned bar */
+/* Hallmark · waive 49b · the two links are press headlines (a.lien in .rows__titre), long by nature and set as block rows, so wrapping on a 320px phone is correct · the title is the press's own wording */
+/* Hallmark · dismissed 42 · the bar is a wordmark, three page anchors and one call, the least a one-page café needs, under a double rule · edge-aligned shape chosen at the draw swap */
+/* Hallmark · answered F4 · .btn--clair is the same primary inverted on the ultramarine band, the page has one primary recipe */
+/* Hallmark · waive 59 · the only gap under 120px is the mast handing over to the KYW footer strip, a package component and not a section of the page · the mast and the strip read as one close */
+/* Hallmark · dismissed 25 · the blockquote holds one short customer sentence set at display size, 30ch is a lede measure · a quote, not running prose */
+@import url("./tokens.css");
+@import url("./base.css");
+
+:root { --nav-h: 72px; }
+
+.nobr { white-space: nowrap; }
+.skip { position: absolute; left: var(--space-md); top: -100px; z-index: var(--z-modal); background: var(--color-accent); color: var(--color-accent-ink); padding: var(--space-sm) var(--space-md); border-radius: var(--radius-pill); }
+.skip:focus-visible { top: var(--space-md); }
+
+/* contrôles : pigment plein et fantôme, 2px */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 var(--space-lg); border: var(--rule-hair) solid var(--color-accent); border-radius: var(--radius-pill); background: var(--color-accent); color: var(--color-accent-ink); font-weight: 500; line-height: 1.2; text-decoration: none; cursor: pointer; white-space: nowrap; transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out); }
+.btn:active { background: var(--color-accent-deep); }
+.btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; transition: none; }
+.btn:disabled, .btn[aria-disabled="true"] { cursor: not-allowed; background: var(--color-paper-3); border-color: var(--color-rule); color: var(--color-muted); }
+.btn--ligne { background: transparent; border-color: var(--color-ink); color: var(--color-ink); }
+.btn--ligne:active { background: var(--color-paper-3); }
+.btn--sm { min-height: 40px; padding: 0 var(--space-md); }
+.lien { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: var(--color-rule); transition: color var(--dur-micro) var(--ease-out), text-decoration-color var(--dur-micro) var(--ease-out); }
+.lien:active { color: var(--color-accent-deep); }
+@media (hover: hover) {
+  .btn:hover { background: var(--color-accent-deep); border-color: var(--color-accent-deep); }
+  .btn--ligne:hover { background: var(--color-paper-3); border-color: var(--color-ink); }
+  .lien:hover { color: var(--color-accent); text-decoration-color: var(--color-accent); }
+}
+
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-top: var(--space-xl); max-width: none; }
+.notes { margin-top: var(--space-lg); font-size: var(--text-sm); color: var(--color-muted); max-width: 52ch; }
+.fill { padding-inline: var(--space-2xs); border-bottom: 1px dashed currentColor; }
+
+/* nav : barre à bords alignés */
+.nav { position: sticky; top: 0; z-index: var(--z-sticky-nav); background: var(--color-paper); border-bottom: var(--rule-double) double var(--color-ink); }
+.nav__in { display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); min-height: var(--nav-h); }
+.nav__mark { font-family: var(--font-display); font-weight: var(--display-weight); font-size: 2rem; line-height: 1; letter-spacing: var(--tracking-display); text-decoration: none; margin-right: auto; }
+.nav__links { display: flex; gap: var(--space-xl); }
+.nav__links a { font-weight: 600; text-decoration: none; padding-block: var(--space-xs); border-bottom: 1px solid transparent; transition: border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out); }
+.nav__links a:active { color: var(--color-accent-deep); }
+@media (hover: hover) { .nav__links a:hover { color: var(--color-accent); border-bottom-color: var(--color-accent); } }
+
+/* grille de douze colonnes */
+.hero__grid, .carte__grid, .lieu__grid, .horaires__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); }
+
+/* photographies : filet, 2px, légende = un fait */
+.frame { border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-card); }
+figure { margin: 0; min-width: 0; }
+figcaption { margin-top: var(--space-xs); font-size: var(--text-sm); color: var(--color-muted); }
+
+/* hero : Stage, texte sur 5 colonnes, photographie sur 7 */
+.hero { padding-block: var(--space-2xl); min-height: calc(100dvh - var(--nav-h)); display: grid; align-items: center; }
+.hero__grid { align-items: center; width: 100%; }
+.hero__text { grid-column: 1 / 7; padding-right: var(--space-xl); min-width: 0; }
+.hero h1 { max-width: 12ch; line-height: 0.92; }
+.hero .lead { margin-top: var(--space-lg); }
+.hero__photo { grid-column: 7 / 13; }
+.frame--hero { aspect-ratio: 4 / 3; max-height: 62dvh; width: 100%; }
+
+/* carte : tête sur 4 colonnes avec une photographie, rangées sur 5 à 12 */
+.carte { padding-block: var(--section-gap) var(--section-gap-s); }
+.carte__head { grid-column: 1 / 5; min-width: 0; }
+.carte__head .lead { margin-top: var(--space-md); font-size: var(--text-md); }
+.carte__photo { margin-top: var(--space-xl); }
+.frame--carte { aspect-ratio: 4 / 3; }
+.carte__body { grid-column: 6 / 13; min-width: 0; }
+.tabs__list { display: none; }
+.js .tabs__list { display: flex; }
+.tabs__list [role="tab"] { flex: 1 1 0; min-height: 48px; border: var(--rule-hair) solid var(--color-ink); border-radius: 0; margin-left: -1px; background: transparent; color: var(--color-ink); font-weight: 500; cursor: pointer; transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out); }
+.tabs__list [role="tab"]:first-child { margin-left: 0; border-radius: var(--radius-card) 0 0 var(--radius-card); }
+.tabs__list [role="tab"]:last-child { border-radius: 0 var(--radius-card) var(--radius-card) 0; }
+.tabs__list [role="tab"][aria-selected="true"] { background: var(--color-ink); color: var(--color-paper); }
+.tabs__list [role="tab"]:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; transition: none; position: relative; z-index: 1; }
+@media (hover: hover) { .tabs__list [role="tab"][aria-selected="false"]:hover { background: var(--color-accent-soft); } }
+.js .panel:not(.is-on) { display: none; }
+.panel__nom { font-size: var(--text-title); margin-top: var(--space-xl); font-family: var(--font-body); font-weight: 600; }
+.js .panel__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); margin: 0; }
+.rows { list-style: none; margin: 0; padding: 0; }
+.panel .rows { margin-top: var(--space-md); border-top: var(--rule-double) double var(--color-ink); }
+.js .panel .rows { margin-top: var(--space-lg); }
+.rows li { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); column-gap: var(--gap-columns); align-items: baseline; padding-block: var(--space-lg); border-bottom: var(--rule-hair) solid var(--color-rule); transition: background-color var(--dur-micro) var(--ease-out); }
+@media (hover: hover) { .panel .rows li:hover { background: var(--color-accent-soft); } }
+.rows__nom { font-family: var(--font-body); font-weight: 600; font-size: var(--text-title); line-height: 1.2; }
+.rows__desc { color: var(--color-ink-2); }
+
+/* presse et avis : bande sur papier à fibres */
+.fibre { position: relative; isolation: isolate; background: var(--color-paper-2); }
+.fibre::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: var(--fibre); mix-blend-mode: multiply; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004 0.02' numOctaves='4' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.62 0 0 0 0 0.52 0 0 0 0 0.36 0 0 0 0.3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"); }
+.presse { padding-block: var(--section-gap-s); border-top: var(--rule-hair) solid var(--color-ink); }
+.rows--presse { margin-top: var(--space-xl); border-top: var(--rule-double) double var(--color-ink); }
+.rows--presse li { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); align-items: start; padding-block: var(--space-xl); }
+.rows__src { font-size: var(--text-sm); color: var(--color-muted); font-weight: 500; }
+.rows__titre { font-size: var(--text-xl); line-height: 1.25; max-width: 40ch; }
+blockquote { margin: 0; }
+blockquote p { font-family: var(--font-outlier); font-size: var(--text-2xl); line-height: 1.15; max-width: 30ch; }
+
+/* lieu : photographie sur 6 colonnes, texte sur 5 */
+.lieu { padding-block: var(--section-gap); }
+.lieu__grid { align-items: center; }
+.lieu__photo { grid-column: 1 / 7; }
+.frame--lieu { aspect-ratio: 5 / 4; }
+.lieu__text { grid-column: 8 / 13; min-width: 0; }
+.lieu__text .lead { margin-top: var(--space-md); }
+.faits { margin: var(--space-xl) 0 0; border-top: var(--rule-double) double var(--color-ink); }
+.faits > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: var(--gap-columns); padding-block: var(--space-md); border-bottom: var(--rule-hair) solid var(--color-rule); }
+.faits dt { color: var(--color-muted); font-size: var(--text-sm); font-weight: 500; }
+.faits dd { margin: 0; }
+
+/* horaires : le livre du jour sur le champ ultramarine */
+.horaires { background: var(--color-field); color: var(--color-accent-ink); padding-block: var(--section-gap-s); }
+.horaires :focus-visible { outline-color: var(--color-accent-ink); }
+.horaires__text { grid-column: 1 / 6; min-width: 0; }
+.adresse { margin-top: var(--space-lg); font-style: normal; font-size: var(--text-lg); line-height: 1.5; }
+.horaires .notes { color: color-mix(in oklab, var(--color-accent-ink) 82%, var(--color-accent)); }
+.btn--clair { background: var(--color-accent-ink); border-color: var(--color-accent-ink); color: var(--color-accent); }
+.btn--ligne-clair { background: transparent; border-color: var(--color-accent-ink); color: var(--color-accent-ink); }
+.btn--clair:active, .btn--ligne-clair:active { background: var(--color-accent-deep); color: var(--color-accent-ink); }
+@media (hover: hover) {
+  .btn--clair:hover { background: var(--color-accent-soft); border-color: var(--color-accent-soft); color: var(--color-accent-deep); }
+  .btn--ligne-clair:hover { background: var(--color-accent-deep); border-color: var(--color-accent-ink); color: var(--color-accent-ink); }
+  .horaires .lien:hover { color: var(--color-accent-ink); text-decoration-color: var(--color-accent-ink); }
+}
+.horaires .lien { text-decoration-color: color-mix(in oklab, var(--color-accent-ink) 60%, var(--color-accent)); }
+.hours { grid-column: 7 / 13; margin: 0; border-top: var(--rule-double) double var(--color-accent-ink); align-self: start; }
+.hours__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--gap-columns); align-items: baseline; padding-block: var(--space-md); border-bottom: var(--rule-hair) solid color-mix(in oklab, var(--color-accent-ink) 40%, var(--color-accent)); }
+.hours dt { font-weight: 600; font-size: var(--text-title); }
+.hours dd { margin: 0; font-variant-numeric: tabular-nums; font-size: var(--text-lead); text-align: right; }
+.hours__row.is-closed dt, .hours__row.is-closed dd { color: color-mix(in oklab, var(--color-accent-ink) 78%, var(--color-accent)); font-weight: 400; }
+
+/* pied : mast */
+.mast { padding-block: var(--section-gap-s) var(--space-xl); border-top: var(--rule-double) double var(--color-ink); }
+.mast__mark { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--text-display); line-height: 0.92; letter-spacing: var(--tracking-display); max-width: none; }
+.mast__cols { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); row-gap: var(--space-lg); margin-top: var(--space-xl); padding-top: var(--space-lg); border-top: var(--rule-hair) solid var(--color-ink); }
+.mast__cols > :nth-child(1) { grid-column: 1 / 4; }
+.mast__cols > :nth-child(2) { grid-column: 4 / 9; }
+.mast__cols > :nth-child(3) { grid-column: 10 / 13; }
+.mast ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-xs); }
+.mast address { font-style: normal; }
+.credits { margin-top: var(--space-xl); font-size: var(--text-sm); color: var(--color-muted); max-width: none; }
+
+/* 404 */
+.perdu { padding-block: var(--section-gap); min-height: 60dvh; }
+.perdu .lead { margin-top: var(--space-md); }
+.perdu p:last-child { margin-top: var(--space-xl); }
+
+/* sous 60rem : tout s'empile dans l'ordre de lecture */
+@media (max-width: 60rem) {
+  .hero { min-height: 0; padding-block: var(--space-xl) var(--space-2xl); }
+  .hero__text, .hero__photo, .carte__head, .carte__body, .lieu__photo, .lieu__text, .horaires__text, .hours,
+  .mast__cols > * { grid-column: 1 / -1; }
+  .hero__text { padding-right: 0; }
+  .hero__photo { margin-top: var(--space-xl); }
+  .frame--hero { max-height: none; }
+  .carte__body { margin-top: var(--space-xl); }
+  .carte__photo { display: block; }
+  .lieu__text { margin-top: var(--space-xl); }
+  .hours { margin-top: var(--space-xl); }
+  .nav__links { display: none; }
+}
+@media (max-width: 40rem) {
+  .rows li { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-2xs); }
+  .actions .btn { flex: 1 1 100%; }
+  .faits > div { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-3xs); }
+  .nav__mark { font-size: 1.9rem; }
+}
