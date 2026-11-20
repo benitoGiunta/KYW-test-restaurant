@@ -313,3 +313,57 @@ html:not(.motion) .onglet[aria-selected='true'] .onglet__barre::after { transfor
 .services { list-style: none; padding: 0; display: grid; gap: var(--u); max-width: var(--col-texte); }
 .services li { padding-block: var(--u); border-bottom: 1px dotted var(--c-accent); }
 @media (min-width: 768px) { .chambres { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Phase 2 : états, finitions, filet de lecture, mouvement des pages intérieures. */
+/* Filet de progression de lecture : le trait cuivre de l'en-tête se dessine au défilement (sans JS, navigateurs compatibles). */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .header::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; animation: lecture linear both; animation-timeline: scroll(root block); pointer-events: none; }
+    @keyframes lecture { to { transform: scaleX(1); } }
+  }
+}
+/* Filet sous le titre des pages intérieures : se dessine à l'arrivée (état final = visible, sans JS ni mouvement). */
+.hero-page__filet { display: block; width: 4.5rem; height: 1px; margin-top: calc(var(--u) * 2.5); background: var(--c-accent); transform-origin: left; }
+.hero-page__filet + .hero-page__chapo { margin-top: calc(var(--u) * 2.5); }
+/* Cibles de lecture : les lignes de carte, de formules et d'offres répondent au survol (pointeur fin seulement). */
+.menu__numero, .menu__nom, .menu__prix, .formule__prix, .formule__nom, .offre__nom { transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.offre__photo img, .chambre img, .triptyque__item img, .portrait__photo img { transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+.lien--fleche::after { display: inline-block; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+@media (hover: hover) {
+  .menu__ligne:hover .menu__nom { color: var(--c-muted); transform: translateX(0.3em); }
+  .menu__ligne:hover .menu__numero { transform: translateX(-0.12em); }
+  .menu__ligne--hors:hover .menu__nom { color: var(--c-fg); }
+  .menu__ligne--prix:hover .menu__prix { color: var(--c-fg); }
+  .formule:hover .formule__prix { color: var(--c-muted); }
+  .formule:hover .formule__nom { transform: translateX(0.25em); }
+  .offre:hover .offre__photo img, .chambre:hover img, .triptyque__item:hover img, .portrait__photo:hover img { transform: scale(1.04); }
+  .offre:hover .offre__nom { color: var(--c-muted); }
+  .lien--fleche:hover::after, .lien--fleche:focus-visible::after { transform: translateY(0.18em); }
+}
+.menu__ligne { transition: border-color 0.4s; }
+.menu__ligne:hover { border-bottom-color: var(--c-muted); }
+/* États : focus lisible sur les surfaces claires, appui, lien de la page courante dans le pied. */
+.btn:focus-visible, .nav__lien:focus-visible, .onglet:focus-visible, .header__brand:focus-visible, .header__menu:focus-visible { outline: 2px solid var(--c-fg); outline-offset: 4px; }
+.btn--primary:focus-visible { outline-color: var(--c-muted); }
+.btn:active::before { transition-duration: 0.15s; }
+.onglet:active { transform: translateY(1px); }
+.header__menu:hover .header__menu-trait { transform: scaleY(0.6); }
+.footer .lien[aria-current='page'] { color: var(--c-muted); text-decoration-color: currentColor; }
+/* Mobile : la lecture reste calme, pas de translation au toucher, galerie qui accroche par photo. */
+@media (max-width: 767px) {
+  .hero-page__titre { font-size: clamp(2.25rem, 11vw, 3rem); overflow-wrap: break-word; }
+  .menu__ligne--prix { gap: 0 var(--u); }
+  .galerie__bande { scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu__ligne:hover .menu__nom, .menu__ligne:hover .menu__numero, .formule:hover .formule__nom { transform: none; }
+  .offre:hover .offre__photo img, .chambre:hover img, .triptyque__item:hover img, .portrait__photo:hover img, .galerie__item:hover img { transform: none; }
+}
+/* Galerie au bureau : les cinq photos tiennent dans la fenêtre (à 1024 la bande débordait de 83 px). */
+@media (min-width: 1024px) { .galerie__item { width: min(18rem, calc((100vw - 2 * var(--gutter) - 6 * var(--u)) / 5)); } }
+/* Horaires : première lettre seule en capitale (« Du lundi au mercredi », pas « Du Lundi Au Mercredi ») ; dans le pied,
+   libellé au-dessus de la valeur (la colonne de 12 rem ne tient pas deux colonnes de texte). */
+.horaires dt { text-transform: none; }
+.horaires dt::first-letter { text-transform: uppercase; }
+.footer .horaires { grid-template-columns: minmax(0, 1fr); gap: 0; }
+.footer .horaires dd { margin-bottom: 0.6em; color: var(--c-fg); }

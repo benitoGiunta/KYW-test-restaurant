@@ -27,7 +27,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [heroIntro(intro), rideaux(), compteurs(), citation(), onglets()];
+    const cleanups = [heroIntro(intro), pageIntro(), rideaux(), compteurs(), citation(), onglets()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -39,8 +39,20 @@ function heroIntro(intro: gsap.core.Timeline) {
   if (!mots.length || prefersReducedMotion() || isMobile()) return () => {};
   gsap.set(mots, { yPercent: 110 });
   const tl = gsap.timeline({ paused: true }).to(mots, { yPercent: 0, duration: 1.1, ease: ease.out, stagger: 0.08 });
+  // La photo se pose : elle revient de 1,07 à 1 pendant que les mots montent (transform seul, rien ne bouge au repos).
+  const img = document.querySelector<HTMLElement>('.hero__photo img');
+  if (img) tl.fromTo(img, { scale: 1.07 }, { scale: 1, duration: 2.2, ease: ease.out }, 0);
   intro.add(() => tl.play(), 0.1);
-  return () => { tl.kill(); gsap.set(mots, { clearProps: 'transform' }); };
+  return () => { tl.kill(); gsap.set(mots, { clearProps: 'transform' }); if (img) gsap.set(img, { clearProps: 'transform' }); };
+}
+
+/** Pages intérieures : le filet cuivre sous le titre se dessine de gauche à droite, le titre et le chapô restent peints
+ *  au premier rendu (LCP). Reduced motion : le filet reste tracé (état final du CSS). */
+function pageIntro() {
+  const filet = document.querySelector<HTMLElement>('[data-filet]');
+  if (!filet || prefersReducedMotion()) return () => {};
+  const tw = gsap.fromTo(filet, { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: ease.out, delay: 0.25, clearProps: 'transform' });
+  return () => { tw.kill(); gsap.set(filet, { clearProps: 'transform' }); };
 }
 
 /** Rideau : un pan vert sapin par section [data-rideau], levé une fois quand la section arrive au tiers de l'écran.

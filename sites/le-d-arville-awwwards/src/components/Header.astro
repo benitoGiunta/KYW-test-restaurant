@@ -1,5 +1,6 @@
 ---
 import { u } from '../lib/url';
+import { site } from '../data/site';
 interface Props { page: string }
 const { page } = Astro.props;
 const liens = [
@@ -7,6 +8,7 @@ const liens = [
   { cle: 'histoire', href: '/histoire/', nom: 'Le domaine' },
   { cle: 'reservation', href: '/reservation/', nom: 'Réserver' },
 ];
+const tel = `tel:${site.telephone.replace(/\s/g, '')}`;
 ---
 <header class="entete">
   <a class="entete__marque" href={u('/')} aria-label="Le D’Arville, accueil" aria-current={page === 'accueil' ? 'page' : undefined}>
@@ -16,8 +18,20 @@ const liens = [
   <nav aria-label="Navigation principale">
     <ul>
       {liens.map((l) => (
-        <li><a class:list={['nav-lien', { 'nav-lien--cta': l.cle === 'reservation' }]} href={u(l.href)} aria-current={page === l.cle ? 'page' : undefined}>{l.nom}</a></li>
+        <li class:list={{ 'nav-item--secondaire': l.cle !== 'reservation' }}><a class:list={['nav-lien', { 'nav-lien--cta': l.cle === 'reservation' }]} href={u(l.href)} aria-current={page === l.cle ? 'page' : undefined}>{l.nom}</a></li>
       ))}
+      <li class="nav-item--menu"><button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mobile"><span class="menu-btn__texte">Menu</span><span class="menu-btn__traits" aria-hidden="true"></span></button></li>
     </ul>
   </nav>
+  <div id="menu-mobile" class="menu-mobile" hidden>
+    <p class="etiquette menu-mobile__depart">Départ, rue d’Arville {site.adresse.numero}</p>
+    <ul class="menu-mobile__liste">
+      <li><a href={u('/')} aria-current={page === 'accueil' ? 'page' : undefined}>Accueil</a></li>
+      {liens.map((l) => <li><a href={u(l.href)} aria-current={page === l.cle ? 'page' : undefined}>{l.nom}</a></li>)}
+    </ul>
+    <div class="menu-mobile__actions">
+      <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+      <a class="btn" href={tel}>Appeler le {site.telephoneAffiche}</a>
+    </div>
+  </div>
 </header>

@@ -1,0 +1,95 @@
+/* Le D’Arville, phase 2 : sentier (signature), micro-interactions par rôle, menu mobile, finitions.
+   Verbe « cheminer » : tout glisse de gauche à droite, comme on avance sur le sentier.
+   Aucun `transform` CSS sur un élément animé par GSAP (.sentier__borne, .sentier__fait, rideau, reveals). */
+
+::selection { background: var(--c-accent); color: #141c16; }
+.sec--pierre ::selection { background: #17201a; color: var(--c-pierre); }
+
+/* ---------- Signature : le sentier fixe, borne 0 m → 200 m ---------- */
+.sentier { position: fixed; z-index: calc(var(--z-header) - 1); right: calc(var(--gutter) * 0.5); top: 22svh; bottom: 14svh; width: 0; pointer-events: none; }
+.sentier__trace { position: absolute; inset: 0 auto 0 -1px; width: 2px; background: repeating-linear-gradient(to bottom, var(--c-accent) 0 6px, transparent 6px 12px); opacity: 0.55; }
+.sentier__fait { position: absolute; inset: 0; background: var(--c-accent); transform-origin: 50% 0; } /* scaleY posé par GSAP (balade.ts) */
+.sentier__borne { position: absolute; top: 0; right: -0.45rem; display: flex; align-items: center; gap: 0.45rem; flex-direction: row-reverse; margin-top: -0.45rem; }
+.sentier__point { width: 0.9rem; height: 0.9rem; background: var(--c-accent); border: 2px solid #141c16; border-radius: 50%; flex: none; }
+.sentier__m { font-family: var(--f-display); font-weight: 800; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; font-variant-numeric: tabular-nums; white-space: nowrap; padding: 0.3em 0.55em; background: #141c16; color: #eeeadc; line-height: 1; }
+.is-arrivee .sentier__m { background: var(--c-accent); color: #141c16; }
+html:not(.motion) .sentier { display: none; } /* repli : la balise du hero et le pied racontent la distance */
+.menu-ouvert .sentier { visibility: hidden; }
+@media (max-width: 52rem) {
+  /* Mobile : le sentier tient dans la gouttière droite, la borne ne garde que le point ; la balise du hero compte les mètres. */
+  .sentier { right: 0.45rem; top: 30svh; bottom: 16svh; }
+  .sentier__m { display: none; }
+  .sentier__point { width: 0.7rem; height: 0.7rem; }
+  .sentier__borne { right: -0.35rem; margin-top: -0.35rem; }
+}
+
+/* Rideau : une borne de sentier traverse avec le panneau de brique */
+.curtain__borne { position: absolute; left: var(--gutter); bottom: var(--gutter); font-family: var(--f-display); font-weight: 800; font-size: var(--t-l); text-transform: uppercase; letter-spacing: 0.02em; color: #eeeadc; visibility: hidden; }
+
+/* ---------- Micro-interactions : trois traitements ---------- */
+/* 1. CTA : le remplissage chemine de gauche à droite, la flèche avance. */
+.btn, .nav-lien--cta { position: relative; isolation: isolate; overflow: clip; --flood: var(--c-fg); --flood-ink: var(--c-bg); transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, scale 0.2s; }
+.btn::before, .nav-lien--cta::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--flood); scale: 0 1; transform-origin: 0 50%; transition: scale 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+.btn::after { content: '→' / ''; font-family: var(--f-body); font-weight: 400; transition: translate 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+.sec--voile .btn--plein { --flood: var(--c-pierre); --flood-ink: #141c16; }
+.sec--voile .btn:not(.btn--plein) { --flood: #141c16; --flood-ink: var(--c-accent); }
+.nav-lien--cta { display: inline-flex; align-items: center; min-height: 44px; }
+@media (hover: hover) {
+  .btn:hover::before, .nav-lien--cta:hover::before { scale: 1 1; }
+  .btn:hover, .nav-lien--cta:hover { color: var(--flood-ink); border-color: var(--flood); }
+  .btn:hover::after { translate: 5px 0; }
+}
+.btn:focus-visible::before, .nav-lien--cta:focus-visible::before { scale: 1 1; }
+.btn:focus-visible, .nav-lien--cta:focus-visible { color: var(--flood-ink); border-color: var(--flood); }
+.btn:focus-visible::after { translate: 5px 0; }
+.btn:active, .nav-lien--cta:active { scale: 0.97; }
+
+/* 2. Navigation : un trait de sentier se trace sous le lien ; la page courante garde le trait. */
+.nav-lien:not(.nav-lien--cta)::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.15em; height: 2px; background: var(--c-accent); scale: 0 1; transform-origin: 0 50%; transition: scale 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+.nav-lien[aria-current='page']::after { scale: 1 1; }
+@media (hover: hover) { .nav-lien:not(.nav-lien--cta):hover::after { scale: 1 1; } }
+.nav-lien:not(.nav-lien--cta):focus-visible::after { scale: 1 1; }
+
+/* 3. Liens texte : soulignés au repos, le trait s'épaissit et se rapproche. */
+.lien { transition: text-decoration-thickness 0.3s, text-underline-offset 0.3s; }
+@media (hover: hover) { .lien:hover { text-decoration-thickness: 3px; text-underline-offset: 0.18em; } }
+.lien:focus-visible { text-decoration-thickness: 3px; text-underline-offset: 0.18em; }
+
+/* Utilitaires (pied) : changement de couleur et soulignement suffisent. */
+@media (hover: hover) { .pied a:hover { color: var(--c-accent); text-decoration: underline; text-underline-offset: 0.2em; } }
+.pied a:focus-visible { color: var(--c-accent); text-decoration: underline; text-underline-offset: 0.2em; }
+.kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
+
+/* Mouvement réduit : l'état reste visible (remplissage, trait), sans déplacement. */
+@media (prefers-reduced-motion: reduce) {
+  .btn, .nav-lien--cta, .btn::before, .nav-lien--cta::before, .btn::after, .nav-lien::after, .lien { transition: none; }
+  .btn:hover::after, .btn:focus-visible::after { translate: none; }
+}
+
+/* Repli statique dessiné (r-*) : sans JS ou en mouvement réduit, les haltes de la route sont posées,
+   la photo du domaine est cadrée sans dérive, rien n'est caché. */
+html:not(.motion) .domaine__img { inset: 0; }
+
+/* ---------- Menu mobile ---------- */
+.menu-btn, .nav-item--menu { display: none; }
+.menu-mobile { display: none; }
+@media (max-width: 52rem) {
+  .nav-item--secondaire { display: none; }
+  .nav-item--menu { display: list-item; }
+  .menu-btn { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 0.6rem; min-height: 44px; padding: 0 0.2rem 0 0.6rem; font-family: var(--f-display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; font-size: 1rem; color: var(--c-fg); }
+  .menu-btn__traits { width: 1.4rem; height: 0.7rem; border-block: 2px solid currentColor; transition: height 0.3s; }
+  .menu-btn[aria-expanded='true'] .menu-btn__traits { height: 2px; border-bottom: 0; }
+  .menu-btn:active { scale: 0.97; }
+  .menu-mobile:not([hidden]) { position: fixed; inset: 0; z-index: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 2rem; padding: 6rem var(--gutter) calc(var(--gutter) + 1rem); background: var(--c-bg); color: var(--c-fg); overflow-y: auto; }
+  .menu-ouvert .entete__marque { position: relative; z-index: 2; }
+  .menu-ouvert .nav-lien--cta { visibility: hidden; }
+  .menu-mobile__liste { list-style: none; padding: 0 0 0 1.2rem; border-left: 2px solid var(--c-accent); display: grid; gap: 0.2rem; }
+  .menu-mobile__liste a { display: block; padding: 0.2rem 0; font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(2.6rem, 13vw, 4rem); line-height: 1; }
+  .menu-mobile__liste a[aria-current='page'] { color: var(--c-accent); }
+  .menu-mobile__actions { display: grid; gap: 0.75rem; }
+  .menu-mobile__actions .btn { justify-content: space-between; }
+}
+
+/* L'image remplit son cadre (le <picture> d'astro:assets est en ligne par défaut). */
+.photo > picture { display: block; height: 100%; }
+@media (max-width: 52rem) { .entete .menu-mobile__liste { display: grid; align-items: start; gap: 0.2rem; } }

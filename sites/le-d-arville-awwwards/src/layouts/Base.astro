@@ -8,9 +8,10 @@ import Pied from '../components/Pied.astro';
 import '../styles/tokens.css';
 import '../styles/engine.css';
 import '../styles/site.css';
+import '../styles/motion.css';
 
-interface Props { title?: string; description?: string; page?: string }
-const { title, description = site.description, page = 'accueil' } = Astro.props;
+interface Props { title?: string; description?: string; page?: string; borne?: 'hors' }
+const { title, description = site.description, page = 'accueil', borne } = Astro.props;
 const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Restaurant gastronomique à Wierde, Namur`;
 const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
@@ -43,6 +44,8 @@ const jsonLd = {
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#141c16" />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={asset('/favicon-32.png')} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
     <link rel="sitemap" href={asset('/sitemap-index.xml')} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.nom} />
@@ -66,9 +69,13 @@ const jsonLd = {
     </script>
     <ClientRouter fallback="swap" />
   </head>
-  <body data-page={page}>
+  <body data-page={page} data-borne={borne}>
     <a class="skip-link" href="#main">Aller au contenu</a>
-    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div><p class="curtain__borne">Halte suivante</p></div>
+    <div class="sentier" transition:persist="sentier" aria-hidden="true">
+      <span class="sentier__trace"><span class="sentier__fait"></span></span>
+      <span class="sentier__borne"><span class="sentier__point"></span><span class="sentier__m" data-borne-m>0&nbsp;m</span></span>
+    </div>
     <Header page={page} />
     <main id="main" tabindex="-1">
       <slot />
