@@ -1,0 +1,35 @@
+---
+import { resto, jours } from '../data/site';
+interface Props { horaires?: boolean }
+const { horaires = true } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const a = resto.adresse;
+---
+<footer class="pied" data-credits="Photographies : Le D’Arville">
+  <div class="container">
+    <p class="pied__sentence">Une table dans la campagne de Wierde, à quelques minutes de Namur.</p>
+    <div class="pied__cols">
+      <div>
+        <h2>Adresse</h2>
+        <p>{resto.nom}<br />{a.rue}&nbsp;{a.numero}<br />{a.cp} {a.commune}</p>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <p><a href={`tel:${resto.tel.href}`}>{resto.tel.affiche}</a><br /><a href={`mailto:${resto.email}`}>{resto.email}</a></p>
+      </div>
+      {horaires && (
+        <div>
+          <h2>Ouvert</h2>
+          <p>Jeudi soir, vendredi et samedi midi et soir, dimanche midi. <a class="link" href={`${base}reservation/`}>Horaires et congés</a></p>
+        </div>
+      )}
+      <div>
+        <h2>Suivre</h2>
+        <ul>
+          <li><a href={resto.facebook} rel="noopener">Facebook, Le D’Arville</a></li>
+          <li><a href={resto.facebookBarabas} rel="noopener">Facebook, La Suite du D’Arville</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

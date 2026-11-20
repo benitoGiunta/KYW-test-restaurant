@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+const a = resto.adresse;
+---
+<Base page="reservation" title="Réservation et contact, Le D’Arville" description="Réserver une table au restaurant Le D’Arville à Wierde, horaires, congés 2027, adresse et contact.">
+  <section class="pagehead">
+    <div class="container">
+      <h1>Réservation et contact</h1>
+      <p class="lead">Au-delà de six personnes, appelez le {resto.tel.affiche} ou écrivez à {resto.email}.</p>
+    </div>
+  </section>
+  <section class="sec sec--tight">
+    <div class="container split">
+      <div class="split__a">
+        <h2>Réserver une table</h2>
+        <p><a class="btn" href={resto.reservation} rel="noopener">Réserver en ligne</a></p>
+        <dl class="coords" style="margin-top: var(--space-lg)">
+          <div><dt>Téléphone</dt><dd><a href={`tel:${resto.tel.href}`}>{resto.tel.affiche}</a></dd></div>
+          <div><dt>Courriel</dt><dd><a href={`mailto:${resto.email}`}>{resto.email}</a></dd></div>
+          <div><dt>Adresse</dt><dd>{a.rue}&nbsp;{a.numero}, {a.cp} {a.commune}</dd></div>
+          <div><dt>Parking</dt><dd>Parking privé</dd></div>
+        </dl>
+        <p><a class="link" href={`https://www.google.com/maps/search/?api=1&query=${resto.geo.lat},${resto.geo.lon}`} rel="noopener">Ouvrir l’itinéraire</a></p>
+      </div>
+      <div class="split__b">
+        <Fig id="12-table-lampe" sizes="(max-width: 60rem) 100vw, 40vw" ratio="4 / 5" cap="Une table dressée près du mur de briques." />
+      </div>
+    </div>
+  </section>
+  <section class="sec sec--tint sec--tight" aria-labelledby="h-h">
+    <div class="container hours">
+      <div class="hours__tbl">
+        <h2 id="h-h" style="margin-bottom: var(--space-xl)">Horaires et congés</h2>
+        <Horaires conges />
+      </div>
+    </div>
+  </section>
+</Base>

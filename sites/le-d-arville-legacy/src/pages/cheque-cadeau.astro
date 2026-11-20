@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { resto } from '../data/site';
+---
+<Base page="cheque-cadeau" title="Chèque cadeau, Le D’Arville" description="Offrir une table au restaurant Le D’Arville à Wierde avec le chèque cadeau.">
+  <section class="pagehead">
+    <div class="container">
+      <h1>Chèque cadeau</h1>
+      <p class="lead">Offrir une table au D’Arville.</p>
+    </div>
+  </section>
+  <section class="sec sec--tight">
+    <div class="container split">
+      <div class="split__a">
+        <h2>Un repas à offrir</h2>
+        <p>Le chèque cadeau est proposé par le restaurant.</p>
+        <p class="label"><span class="fill" data-fill="cheque">Montants et retrait du chèque à confirmer</span></p>
+        <dl class="coords" style="margin-top: var(--space-lg)">
+          <div><dt>Téléphone</dt><dd><a href={`tel:${resto.tel.href}`}>{resto.tel.affiche}</a></dd></div>
+          <div><dt>Courriel</dt><dd><a href={`mailto:${resto.email}`}>{resto.email}</a></dd></div>
+        </dl>
+      </div>
+      <div class="split__b">
+        <Fig id="04-dessert-assiette-blanche" sizes="(max-width: 60rem) 100vw, 40vw" cap="Une assiette de dessert dressée sur un rondin." />
+      </div>
+    </div>
+  </section>
+</Base>

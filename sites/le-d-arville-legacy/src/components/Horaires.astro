@@ -1,0 +1,20 @@
+---
+import { jours, heuresFill, conges } from '../data/site';
+interface Props { conges?: boolean }
+const { conges: avecConges = false } = Astro.props;
+---
+<dl class="sched">
+  {jours.map((j) => (
+    <div class={j.services ? undefined : 'closed'}>
+      <dt>{j.jour}</dt>
+      <dd>{j.services ?? 'Fermé'}</dd>
+    </div>
+  ))}
+</dl>
+<p class="label" style="margin-top: var(--space-sm)"><span class="fill" data-fill="heures">{heuresFill}</span></p>
+{avecConges && (
+  <>
+    <h3 style="margin-top: var(--space-xl)">Congés 2027</h3>
+    <ul class="conges">{conges.map((c) => <li>{c}</li>)}</ul>
+  </>
+)}

@@ -1,0 +1,19 @@
+---
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const liens = [
+  ['carte', 'Carte'], ['photos', 'Photos'], ['chambres', 'Chambres'], ['seminaires', 'Séminaires'], ['cheque-cadeau', 'Chèque cadeau'], ['traiteur-noel', 'Traiteur'],
+];
+---
+<header class="nav">
+  <div class="container nav__in">
+    <a class="nav__brand" href={base}>Le D’Arville</a>
+    <nav aria-label="Navigation principale">
+      <ul class="nav__list">
+        {liens.map(([s, l]) => <li><a href={`${base}${s}/`} aria-current={page === s ? 'page' : undefined}>{l}</a></li>)}
+      </ul>
+    </nav>
+    <a class="btn btn--sm" href={`${base}reservation/`} aria-current={page === 'reservation' ? 'page' : undefined}>Réserver</a>
+  </div>
+</header>

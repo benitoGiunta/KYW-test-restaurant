@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import { menus, carte, boissons, eur } from '../data/site';
+---
+<Base page="carte" title="Menus et carte, Le D’Arville" description="Les menus Tendance de saison et Balade, la carte de saison et la carte des vins du restaurant Le D’Arville à Wierde.">
+  <section class="pagehead">
+    <div class="container">
+      <h1>Menus et carte</h1>
+      <p class="lead">Menus d’actualité jusqu’au 20&nbsp;décembre 2026. La carte change avec la saison.</p>
+    </div>
+  </section>
+  <section class="sec sec--tight" aria-labelledby="h-menus">
+    <div class="container">
+      <h2 id="h-menus" style="margin-bottom: var(--space-xl)">Les menus</h2>
+      <div class="menus">
+        {menus.map((m) => (
+          <article class="menu">
+            <h3>{m.nom}</h3>
+            <p class="menu__prix num">{eur(m.prix)}{m.accord && <small>accord mets et vins {eur(m.accord)}</small>}</p>
+            <p>{m.texte}</p>
+          </article>
+        ))}
+        <article class="menu">
+          <h3>Menu «&nbsp;Bon Plan&nbsp;»</h3>
+          <p class="menu__prix">Jeudi soir, vendredi et samedi midi</p>
+          <p><span class="fill" data-fill="bonplan">Contenu et prix du menu à confirmer</span></p>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="sec sec--tint sec--tight" aria-labelledby="h-carte">
+    <div class="container">
+      <h2 id="h-carte" style="margin-bottom: var(--space-xl)">La carte</h2>
+      {carte.map((c) => (
+        <div class="cat">
+          <h3>{c.cat}</h3>
+          <ul class="rows">
+            {c.plats.map((p) => (
+              <li><span class="t">{p.nom}</span><span class="d">{p.d}</span>{p.prix != null && <span class="p num">{eur(p.prix)}</span>}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <div class="cat">
+        <h3>Boissons</h3>
+        <ul class="rows">
+          {boissons.map((b) => <li><span class="t">{b.nom}</span><span class="d">{b.unite}</span><span class="p num">{b.prix}</span></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="sec sec--tight" id="vins" aria-labelledby="h-vins">
+    <div class="container split">
+      <div class="split__a">
+        <h2 id="h-vins">Le cellier du D’Arville</h2>
+        <p>La carte des vins se consulte en PDF.</p>
+        <p><a class="btn" href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}carte-des-vins.pdf`}>Ouvrir la carte des vins</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

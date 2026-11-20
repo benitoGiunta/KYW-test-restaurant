@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { galerie } from '../data/site';
+---
+<Base page="photos" title="Photos, Le D’Arville" description="La salle, les assiettes, la cuisine, la terrasse et le jardin du restaurant Le D’Arville à Wierde.">
+  <section class="pagehead">
+    <div class="container">
+      <h1>Photos</h1>
+      <p class="lead">La salle, les assiettes, la cuisine, la terrasse et le jardin.</p>
+    </div>
+  </section>
+  <section class="sec sec--tight" aria-label="Galerie">
+    <div class="container gal">
+      {galerie.map((id) => <Fig id={id} sizes="(max-width: 40rem) 100vw, 50vw" />)}
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto, menus, carte, eur } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const choix = [carte[1].plats[0], carte[1].plats[4], carte[1].plats[2]];
+---
+<Base page="accueil" horaires={false} title="Le D’Arville, restaurant gastronomique à Wierde, Namur" description="Estelle et Olivier vous accueillent dans leur ferme du 19e siècle à Wierde : cuisine de saison, terrasse, jardin et villa Barabas à deux cents mètres.">
+  <section class="hero" aria-labelledby="h-hero">
+    <Fig class="hero__img" id="09-batiment-etang" eager sizes="100vw" pos="50% 60%" ratio="auto" />
+    <div class="plate">
+      <h1 id="h-hero">Le D’Arville</h1>
+      <p class="lead">Restaurant gastronomique dans une ferme du 19<sup>e</sup>&nbsp;siècle, à Wierde.</p>
+      <div class="plate__act">
+        <a class="btn" href={`${base}reservation/`}>Réserver une table</a>
+        <a class="link" href={`${base}carte/`}>Lire la carte</a>
+      </div>
+    </div>
+    <p class="hero__cap">Le bâtiment en briques, l’étang et la terrasse.</p>
+  </section>
+
+  <section class="sec" aria-labelledby="h-maison">
+    <div class="container statement">
+      <div class="statement__txt">
+        <h2 id="h-maison">Estelle et Olivier vous accueillent dans leur ferme.</h2>
+        <p class="pencil">Olivier Bourguignon, chef et propriétaire</p>
+        <div class="wall">
+          <p class="dropcap">Un cadre contemporain pour satisfaire vos papilles : une cuisine ouverte, un salon, une table d’hôte, et dehors une terrasse, un jardin et un point d’eau.</p>
+          <p>La villa Barabas, avec ses chambres, se trouve à deux cents mètres. Entre les deux, une prairie : le domaine compte plus de cinq hectares.</p>
+        </div>
+      </div>
+      <div class="mat">
+        <Fig class="mat__img" id="16-chef-facade" sizes="(max-width: 60rem) 80vw, 30vw" pos="50% 30%" cap="Le chef devant l’entrée du restaurant." />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--tint" aria-labelledby="h-carte">
+    <div class="container">
+      <div class="sec__head">
+        <h2 id="h-carte">Deux menus, et la carte de saison.</h2>
+        <p>Chasse, poissons et homard du vivier selon les arrivages.</p>
+      </div>
+      <div class="menus">
+        {menus.slice(0, 2).map((m) => (
+          <article class="menu">
+            <h3>{m.nom}</h3>
+            <p class="menu__prix num">{eur(m.prix)}<small>accord mets et vins {eur(m.accord!)}</small></p>
+            <p>{m.texte}</p>
+          </article>
+        ))}
+      </div>
+      <ul class="rows">
+        {choix.map((p) => (
+          <li><span class="t">{p.nom}</span><span class="d">{p.d}</span><span class="p num">{eur(p.prix!)}</span></li>
+        ))}
+      </ul>
+      <p class="carte-note"><a class="btn" href={`${base}carte/`}>Toute la carte</a><a class="link" href={`${base}carte/#vins`}>La carte des vins</a></p>
+    </div>
+  </section>
+
+  <figure class="band">
+    <Fig class="band__in" id="07-terrasse-bassin" ratio="16 / 7" sizes="100vw" pos="50% 55%" />
+    <figcaption>La terrasse, au bord du bassin.</figcaption>
+  </figure>
+
+  <section class="sec" aria-labelledby="h-barabas">
+    <div class="container">
+      <div class="sec__head">
+        <h2 id="h-barabas">À deux cents mètres, la villa Barabas.</h2>
+        <p>Chambres à thèmes, piscine chauffée et petit-déjeuner à 18&nbsp;€ par personne.</p>
+      </div>
+      <ul class="idx">
+        <li><a href={`${base}chambres/`}><span class="n">01</span><span class="t">Chambres</span><span class="d">Suites et chambres à thèmes, piscine chauffée.</span></a></li>
+        <li><a href={`${base}seminaires/`}><span class="n">02</span><span class="t">Séminaires</span><span class="d">Réunions et événements à la villa Barabas.</span></a></li>
+        <li><a href={`${base}cheque-cadeau/`}><span class="n">03</span><span class="t">Chèque cadeau</span><span class="d">Offrir une table au D’Arville.</span></a></li>
+        <li><a href={`${base}traiteur-noel/`}><span class="n">04</span><span class="t">Traiteur de fêtes</span><span class="d">Le service traiteur de fin d’année.</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--tint" id="horaires" aria-labelledby="h-horaires">
+    <div class="container hours">
+      <div class="hours__tbl">
+        <h2 id="h-horaires" style="margin-bottom: var(--space-xl)">Ouvert du jeudi au dimanche.</h2>
+        <Horaires />
+      </div>
+      <div class="hours__side">
+        <p class="lead">Une table se réserve en ligne ; au-delà de six personnes, par téléphone ou par courriel.</p>
+        <p><a class="btn" href={`${base}reservation/`}>Réserver une table</a></p>
+        <p><a class="link" href={`tel:${resto.tel.href}`}>{resto.tel.affiche}</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
