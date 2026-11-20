@@ -1,4 +1,4 @@
-# ETAT — escale-en-vue · portfolio · construction phase 2/3
+# ETAT — escale-en-vue · portfolio · construction phase 3/3 (QA terminée)
 
 ## Fait
 - Gabarit guinguette copié, contenu remplacé (`src/data/site.ts`), 6 pages : accueil, carte, histoire (La maison), terrasse, reservation, 404.
@@ -27,3 +27,7 @@
 - Plats du plat du jour (parmigiana, tagliatelles, poulet) = posts Facebook 2026, sans prix ; carte d'exemple marquée `*` / `placeholder: true` (12 plats fictifs).
 - Placeholders : carte d'exemple (tous les plats et prix), parking gratuit (« à confirmer »), géolocalisation. Notes tierces : relevé non vérifié, source affichée.
 - `gabarits/` non touché : `gabarits/UTILISATION.md` doit recevoir « guinguette | escale-en-vue » (à faire par l'orchestrateur). `pnpm-lock.yaml` modifié par `pnpm install` (nouveau paquet du workspace), non commité ici.
+
+## Phase 3 (QA)
+- Fait : lecture QA-build.md, capture ciblée de la vraie 404 (axe 0), rebuild OK, RAPPORT.md écrit. Aucune correction de code requise (faux positifs).
+- Reste : points ouverts de RAPPORT.md ; `gabarits/UTILISATION.md` et `pnpm-lock.yaml` à traiter par l'orchestrateur.
