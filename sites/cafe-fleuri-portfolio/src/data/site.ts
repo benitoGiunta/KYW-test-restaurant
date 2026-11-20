@@ -64,7 +64,7 @@ export const site: Restaurant = {
     {
       categorie: 'Les brunchs',
       plats: [
-        { nom: 'Brunch salé', description: 'avocado toast, oeufs Benedict sur épinards avec gravlax de saumon maison ou bacon grillé, salade', prix: null, placeholder: false },
+        { nom: 'Brunch salé', description: 'avocado toast, œufs Benedict sur épinards avec gravlax de saumon maison ou bacon grillé, salade', prix: null, placeholder: false },
         { nom: 'Brunch sucré', description: 'deux pancakes au sirop d’érable, une tranche de pain perdu, granola maison', prix: null, placeholder: false },
         { nom: 'Brunch mixte', description: 'un mélange du salé et du sucré', prix: null, placeholder: false },
       ],
@@ -92,7 +92,7 @@ export const site: Restaurant = {
   histoire: [
     "Le Café Fleuri ouvre en 2020 comme second lieu du Bistro Bisou : les brunchs de la maison mère étaient trop demandés pour une seule salle.",
     "Le lieu ferme peu après son ouverture à cause du Covid, est réaménagé, puis rouvre. Une adresse de poche, cocooning, au cœur du centre historique de Namur, rue des Fossés Fleuris.",
-    "On y vient pour un brunch salé, sucré ou mixte : avocado toast, oeufs Benedict avec gravlax de saumon préparé maison, pancakes au sirop d’érable, pain perdu, granola maison. Les limonades et le thé glacé sont maison aussi.",
+    "On y vient pour un brunch salé, sucré ou mixte : avocado toast, œufs Benedict avec gravlax de saumon préparé maison, pancakes au sirop d’érable, pain perdu, granola maison. Les limonades et le thé glacé sont maison aussi.",
     "Le mardi, les étudiants se voient offrir une boisson avec un brunch.",
   ],
   equipe: [],
@@ -170,7 +170,7 @@ export const moments: Moment[] = [
     accroche: 'Le moment de la maison : salé, sucré ou mixte, avec du gravlax préparé sur place et un granola maison.',
     accrochePlaceholder: false, placeholder: false, photo: '/photos/yaourt-fraises.webp',
     lignes: [
-      { nom: 'Brunch salé', detail: 'avocado toast, oeufs Benedict, gravlax maison ou bacon grillé, salade', prix: null, placeholder: false },
+      { nom: 'Brunch salé', detail: 'avocado toast, œufs Benedict, gravlax maison ou bacon grillé, salade', prix: null, placeholder: false },
       { nom: 'Brunch sucré', detail: 'deux pancakes au sirop d’érable, pain perdu, granola maison', prix: null, placeholder: false },
       { nom: 'Brunch mixte', detail: 'un peu de chaque', prix: '21,95 €', placeholder: true },
     ],

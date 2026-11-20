@@ -1,4 +1,4 @@
-# ETAT : cafe-fleuri-portfolio, phase 2 (construction-2) terminée
+# ETAT : cafe-fleuri-portfolio, phase 3 (QA) terminée
 ## Fait (phase 1 + 2)
 Phase 1 : gabarit journee adapté, 6 pages, données, 10 photos, favicon, OG.
 Phase 2 :
@@ -17,3 +17,5 @@ Phase 2 :
 ## Pièges
 - Leçon proposée dans data/usage/test-1/lecons-proposees/cafe-fleuri.md (agents/ figé).
 - Ne pas rebuilder pendant un shoot de fond ; serveur propre sur son port.
+## Phase 3 (QA)
+Fait : contrôles script 6 pages × 3 largeurs OK, correction « œufs », rebuild OK, RAPPORT.md écrit. QA-build.md n'existait pas. Reste : pnpm index, commit final [publier] par l'orchestrateur.
