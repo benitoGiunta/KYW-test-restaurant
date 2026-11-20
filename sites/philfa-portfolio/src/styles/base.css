@@ -75,6 +75,25 @@ html.motion .marquee__piste { animation: marquee 38s linear infinite; }
 .orn--bl { bottom: 0; left: 0; border-right: 0; border-top: 0; border-bottom-left-radius: 14px; }
 .orn--br { bottom: 0; right: 0; border-left: 0; border-top: 0; border-bottom-right-radius: 14px; }
 
+/* États : appui, survol de ligne, formulaire */
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.plat { transition: background 0.25s; border-radius: 12px; }
+.plat__prix { transition: background 0.25s, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@media (hover: hover) {
+  .plat:hover .plat__prix { background: var(--c-paille); transform: scale(1.06); }
+  .formule { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s; }
+  .formule:hover { transform: translateY(-4px) rotate(-0.6deg); background: var(--c-blanc); }
+}
+.form input:hover, .form textarea:hover { border-color: var(--c-corail-ink); }
+.form input:user-invalid, .form textarea:user-invalid { border-color: var(--c-corail-ink); background: #fbeee9; }
+.form__etat { grid-column: 1 / -1; padding: 0.9em 1.1em; border-radius: 16px; background: var(--c-paille); font-weight: 500; }
+.form__etat[hidden] { display: none; }
+.table .table__reset { position: absolute; left: var(--gutter); bottom: calc(var(--u) * 3); z-index: 4; min-height: 44px; }
+.table .table__reset[hidden] { display: none; }
+.table .badge { transition: opacity 0.5s; }
+.table.a-joue .badge { opacity: 0; }
+
 /* Objets au trait saisissables */
 .obj { position: absolute; left: var(--x); top: var(--y); width: var(--taille); height: var(--taille); padding: 0; border: 0; background: none; color: var(--c-ink); cursor: grab; touch-action: none; z-index: 2; border-radius: 50%; }
 .obj:active, .obj.is-drag { cursor: grabbing; }
@@ -127,7 +146,7 @@ html.motion .badge svg { animation: tourne 14s linear infinite; }
 .badge text { font-family: var(--f-body); font-weight: 700; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; fill: currentColor; }
 /* La main reste petite au centre : `.badge svg` (absolu, 100 %) l'agrandissait à toute la pastille (REVISION-1, F2-6). */
 .badge .badge__main { position: relative; inset: auto; width: 2.2rem; height: 2.2rem; }
-.table__rail { display: none; }
+.table .table__rail { display: none; }
 
 /* Le menu : carte blanche */
 /* La carte part d'un scale > 1 (data-reveal="scale") : avant sa révélation elle débordait de 10 px en 390 px. */
@@ -250,7 +269,11 @@ html.motion .avis__mot { --flou: 14px; }
 @media (max-width: 767px) {
   .header__inner { grid-template-columns: 1fr auto; }
   .nav { position: fixed; left: 50%; bottom: max(0.75rem, env(safe-area-inset-bottom)); translate: -50% 0; z-index: var(--z-header); max-width: calc(100vw - 1.5rem); overflow-x: auto; scrollbar-width: none; box-shadow: 0 10px 30px rgb(31 26 23 / 0.25); }
-  .nav a { white-space: nowrap; }
+  .nav a { white-space: nowrap; padding: 0.4em 0.55em; font-size: 0.8rem; }
+  .nav { gap: 0.1em; }
+  .nav__suite { display: none; }
+  .hero__zone { overflow: clip; }
+  .table .table__reset { display: none; }
   body { padding-bottom: 4.5rem; }
   .hero { padding-block: calc(var(--u) * 8) calc(var(--u) * 16); min-height: 0; }
   .hero__titre { font-size: clamp(2.6rem, 14vw, 3.6rem); }
@@ -259,13 +282,16 @@ html.motion .avis__mot { --flou: 14px; }
   /* En mobile, les objets se posent sous les boutons, dans la marge basse du hero : jamais sur le titre ni sur un bouton (REVISION-1, F1-3). */
   .hero__zone .obj { top: auto; bottom: calc(var(--u) * 2); left: var(--mx, var(--x)); width: calc(var(--taille) * 0.62); height: calc(var(--taille) * 0.62); }
   .btn { width: 100%; }
+  .plat__prix { flex: 0 1 auto; max-width: 58%; white-space: normal; border-radius: 18px; line-height: 1.25; }
+  .plat { align-items: flex-start; }
+  .plat__points { translate: 0 0.6em; }
   .header__cta { width: auto; min-height: 40px; padding: 0.5em 1.1em; }
   .maison__grille { grid-template-columns: 1fr; }
   .maison__texte { padding: calc(var(--u) * 2.5) calc(var(--u) * 2); }
   .table { min-height: 0; }
   .table__scene { display: none; }
   .table__titre { position: static; translate: none; margin-bottom: calc(var(--u) * 3); }
-  .table__rail { display: flex; }
+  .table .table__rail { display: flex; }
   .table__rail .tirage { --w: 14rem; rotate: var(--r); cursor: default; }
   .badge { position: relative; right: auto; bottom: auto; width: 6.5rem; height: 6.5rem; margin: calc(var(--u) * 2) auto 0; }
   .carte { padding: calc(var(--u) * 3) calc(var(--u) * 2); }
@@ -275,6 +301,7 @@ html.motion .avis__mot { --flou: 14px; }
   .footer__finale { font-size: clamp(4rem, 30vw, 7rem); }
   .marquee__groupe { font-size: var(--t-xs); }
 }
+@media (max-width: 359px) { .nav a { padding-inline: 0.4em; font-size: 0.74rem; } }
 @media (min-width: 768px) and (max-width: 1023px) {
   .nav a { padding-inline: 0.6em; }
 }

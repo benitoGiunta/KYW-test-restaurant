@@ -1,24 +1,23 @@
-# ETAT, philfa-portfolio (phase 1 sur 3, construction-1)
+# ETAT, philfa-portfolio (phase 2 sur 3, construction-2)
 
-## Fait
-- Gabarit guinguette choisi et copié ; DESIGN.md (matrice, art direction, adéquation 78 %).
-- Contenu : `src/data/site.ts` + `src/data/carte.json` (carte tirée de donnees.json par jq, prix « 17 € »).
-- 5 pages + 404 : accueil, carte, la maison (`/histoire/`), terrasse et salle, réservation/contact. Page « À emporter » supprimée, nav mise à jour.
-- Photos WebP + recadrages carrés, OG, favicon, jetons de palette PhilFa.
-- Build OK (`scripts/q.sh philfa-build node scripts/build-site.mjs sites/philfa-portfolio`) ; noindex, mention « Maquette KYW » et pied KYW présents.
+## Fait en phase 2
+- Signature « La table » : 2 rangées de 6 tirages (y 1-3 % et 61-64 %) qui libèrent le titre ; objets déplacés dans la bande centrale ; bug du gabarit corrigé (`.table .table__rail` en desktop et mobile : section 1185 px au lieu de 1552). Badge « attrapez-moi » qui s'efface au premier geste, bouton « Ranger la table » (rebond décalé, remet tirages et objets en place, `Draggable.update`). Drag souris, flèches (Maj = 48 px) et rangement testés sans erreur console.
+- Hero : citron déplacé (il chevauchait « Voir la carte »).
+- États : `:active` des boutons, survol des lignes de carte (pastille paille) et des formules, champs `:hover` et `:user-invalid`, message `role="status"` après envoi du formulaire (Barestho s'ouvre), date minimale calculée côté client (aucune date en dur).
+- Mobile : pastilles de prix longues passent à la ligne dans la pastille (plus de rognage à 320-390) ; nav du bas tient sans défilement (320, 360, 390 : « Terrasse » seul, ` et salle` masqué sous 768 px) ; bouton « Ranger » masqué (rail en mobile).
+- Reduced motion : `motion` absent, 0 animation, 0 texte caché, tirages en grille droite, objets saisissables au clavier.
+- Clic réel des 4 liens d'en-tête en 1440 : OK (elementFromPoint = `<a>`, URL change) ; bas de page 1440 : bande KYW, mention « Maquette KYW, certaines données sont illustratives » et logo visibles.
+- Build OK (`scripts/q.sh philfa-build node scripts/build-site.mjs sites/philfa-portfolio`), 0 erreur console.
 
-## Reste (phases 2 et 3)
-- QA navigateur : captures desktop/mobile, objets saisissables, table de tirages, marquee, contraste (palette changée : texte encre sur ocre, rose `#a23c5d` sur crème, crème sur olive), clic réel des liens d'en-tête et bas de page 1440.
-- Vérifier le débordement des pastilles de prix longues (« 17 € (2 pers.) / 22 € (3-4 pers.) », « 21,50 € (entrée) / 26 € (plat) ») en mobile 320-390.
-- Le hero ne montre aucune photo (poster d'objets) : envisager une photo de salle en phase 2 si le rendu est pauvre.
-- Slogan « cuisine revisitée, épices du monde » repris du site actuel ; baseline reformulée (à confirmer). RAPPORT.md à écrire.
-- Facade 400 px (qualité 2) : tirage petit.
+## Reste (phase 3 et captures)
+- Shoot/audit complets par l'agent captures ; contraste (rose `#a23c5d` sur crème, texte crème sur olive) à lire dans QA.
+- RAPPORT.md à écrire en phase 3 ; `gabarits/UTILISATION.md` (protégé) : guinguette : philfa, à faire par la session mère ; `pnpm index` non lancé (mère).
+- Hero sans photo (poster d'objets) : conservé, la photo de salle suit immédiatement dans « La maison » ; à juger sur capture desktop.
+- Facade 400 px (tirage petit mais acceptable).
 
-## Décisions et hypothèses
-- Aucun avis vérifié : seule la fiche Gault&Millau (12/20, paraphrase) est présentée comme réelle ; 3 cartes d'exemple étiquetées.
-- E-mail du site actuel (adresse personnelle) non repris ; formulaire de démonstration renvoie vers Barestho.
-- Menu du moment : date inconnue, « change toutes les 6 semaines » repris du PDF.
-- `gabarits/UTILISATION.md` (protégé) : ajouter guinguette : philfa.
+## Pièges
+- `documentElement.scrollWidth` > largeur sur carte/histoire/terrasse en mobile (394/404 à 390) sans défilement réel (`scrollX` reste 0, body `overflow-x: clip`) ; artefact de mesure, ne pas le corriger sans preuve de défilement.
+- Leçon proposée dans `data/usage/test-2/lecons-proposees/philfa.md` (mode figé, agents/ non modifié).
 
-## Placeholders
-Cartes « Exemple d'avis » (3, `avisExemples`). Rien d'autre d'inventé ; équipe sans photo.
+## Hypothèses
+- Texte du bouton « Ranger la table » et du message de formulaire : copy d'interface, sans fait inventé.

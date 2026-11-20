@@ -60,7 +60,7 @@ function marquee() {
 }
 
 /** Rend un élément saisissable : Draggable x,y borné au parent, zIndex au drag, inertie maison, flèches au clavier. */
-function saisissable(el: HTMLElement, bounds: HTMLElement, opts: { exclure?: HTMLElement | null; rebond?: boolean } = {}) {
+function saisissable(el: HTMLElement, bounds: HTMLElement, opts: { exclure?: HTMLElement | null; rebond?: boolean; auJeu?: () => void } = {}) {
   let z = 10;
   let vx = 0, vy = 0, lastX = 0, lastY = 0, lastT = 0;
   const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3.out' });
@@ -69,7 +69,7 @@ function saisissable(el: HTMLElement, bounds: HTMLElement, opts: { exclure?: HTM
     type: 'x,y',
     bounds,
     zIndexBoost: false,
-    onPress() { el.classList.add('is-drag'); el.classList.remove('is-flottant'); el.style.zIndex = String(++z + 20); lastX = this.x; lastY = this.y; lastT = performance.now(); vx = vy = 0; },
+    onPress() { opts.auJeu?.(); el.classList.add('is-drag'); el.classList.remove('is-flottant'); el.style.zIndex = String(++z + 20); lastX = this.x; lastY = this.y; lastT = performance.now(); vx = vy = 0; },
     onDrag() { const t = performance.now(); const dt = Math.max(1, t - lastT); vx = (this.x - lastX) / dt; vy = (this.y - lastY) / dt; lastX = this.x; lastY = this.y; lastT = t; },
     onRelease() {
       el.classList.remove('is-drag');
@@ -90,6 +90,7 @@ function saisissable(el: HTMLElement, bounds: HTMLElement, opts: { exclure?: HTM
     const dy = e.key === 'ArrowDown' ? pas : e.key === 'ArrowUp' ? -pas : 0;
     if (!dx && !dy) return;
     e.preventDefault();
+    opts.auJeu?.();
     el.style.zIndex = String(++z + 20);
     gsap.to(el, { x: `+=${dx}`, y: `+=${dy}`, duration: 0.25, ease: 'power2.out', onComplete: () => drag.applyBounds(bounds) });
   };
@@ -121,19 +122,31 @@ function heroObjets(intro: gsap.core.Timeline) {
   return () => cleanups.forEach((c) => c());
 }
 
-/** La table : tirages posés en stagger avec rotation, puis saisissables (desktop) ; rail en mobile. */
+/** La table : tirages posés en stagger avec rotation, puis saisissables (desktop) ; rail en mobile.
+ *  Signature : dès le premier geste le badge s'efface et « Ranger la table » ramène tout à sa place (rebond, décalé). */
 function table() {
+  const section = document.querySelector<HTMLElement>('[data-table]');
   const scene = document.querySelector<HTMLElement>('[data-table-scene]');
-  if (!scene || isMobile() || getComputedStyle(scene).display === 'none') return () => {};
+  if (!section || !scene || isMobile() || getComputedStyle(scene).display === 'none') return () => {};
   const items = [...scene.querySelectorAll<HTMLElement>('[data-tirage], [data-obj]')];
+  const reset = section.querySelector<HTMLButtonElement>('[data-table-reset]');
   const cleanups: (() => void)[] = [];
+  const auJeu = () => { section.classList.add('a-joue'); if (reset) reset.hidden = false; };
+  const ranger = () => {
+    const reduit = prefersReducedMotion();
+    gsap.to(items, { x: 0, y: 0, duration: reduit ? 0 : 0.9, ease: 'back.out(1.4)', stagger: reduit ? 0 : { each: 0.04, from: 'random' }, onComplete: () => items.forEach((t) => Draggable.get(t)?.update()) });
+    if (reset) reset.hidden = true;
+    section.classList.remove('a-joue');
+  };
+  reset?.addEventListener('click', ranger);
+  cleanups.push(() => reset?.removeEventListener('click', ranger));
   if (prefersReducedMotion()) {
-    scene.querySelectorAll<HTMLElement>('[data-tirage]').forEach((t) => cleanups.push(saisissable(t, scene)));
+    scene.querySelectorAll<HTMLElement>('[data-tirage]').forEach((t) => cleanups.push(saisissable(t, scene, { auJeu })));
     return () => cleanups.forEach((c) => c());
   }
   const tl = gsap.timeline({
     scrollTrigger: { trigger: scene, start: 'top 70%', once: true },
-    onComplete: () => items.forEach((t) => cleanups.push(saisissable(t, scene))),
+    onComplete: () => items.forEach((t) => cleanups.push(saisissable(t, scene, { auJeu }))),
   });
   tl.from(items, { y: 90, autoAlpha: 0, rotation: () => gsap.utils.random(-14, 14), duration: 0.9, ease: 'back.out(1.6)', stagger: { each: 0.06, from: 'random' } });
   cleanups.push(() => tl.kill());
