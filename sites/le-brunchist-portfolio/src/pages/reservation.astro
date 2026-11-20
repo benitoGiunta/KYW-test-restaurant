@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Badge from '../components/Badge.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, adresseLigne, telHref, photoDe } from '../data/site';
+import { asset } from '../lib/url';
+const salle = photoDe('/photos/theiere.webp');
+const osm = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adresseLigne())}`;
+---
+<Base title="Venir, réserver" theme="aube" description={`Venir chez ${site.nom} à ${site.adresse.commune} : adresse, horaires du mercredi au dimanche, téléphone ${site.telephone}.`}>
+  <section class="section" data-ciel="aube">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p data-reveal="fade" data-intro style="margin-bottom: calc(var(--u) * 2)"><Badge /></p>
+        <h1 class="t-xl" data-split="lines" data-intro>Venir, réserver</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">Une table ? Le plus simple est d'appeler. Certaines sources recommandent de réserver, le site de la maison indiquerait ne pas prendre de réservation : à confirmer par téléphone.<span class="tag">à confirmer</span></p>
+        <div class="actions" data-reveal="up" data-intro data-delay="0.3">
+          <a class="btn btn--solid" href={telHref()} data-magnetic="0.2">Appeler le {site.telephone}</a>
+          <a class="btn" href={osm} rel="noopener">Itinéraire</a>
+        </div>
+      </div>
+      <div class="c8-12" data-reveal="up" data-intro data-delay="0.2">
+        <p class="chapeau">Horaires</p>
+        <Horaires />
+        <p class="note" style="margin-top: calc(var(--u) * 2)"><strong>Adresse</strong><br />{adresseLigne()}<span class="tag">à confirmer</span></p>
+        <p class="note">{site.reseaux.map((r, i) => <><a class="link" href={r.url} rel="noopener">{r.nom}</a>{i < site.reseaux.length - 1 ? ' · ' : ''}</>)}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="midi">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau">Avant de venir</p>
+        <h2 class="t-l" data-split="words">Terrasse en extérieur</h2>
+        <p class="note" style="margin-top: var(--u)">La maison a une terrasse. Les horaires du dossier sont contradictoires selon les sources (9h30 à 15h30 retenus) : à vérifier avant de venir.<span class="tag">à confirmer</span></p>
+      </div>
+      <figure class="c8-12 photo photo--4x5" data-reveal="scale">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </section>
+</Base>

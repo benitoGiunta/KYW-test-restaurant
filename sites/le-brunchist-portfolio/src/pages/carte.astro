@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import Ligne from '../components/Ligne.astro';
+import { site, moments, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const visuel = photoDe('/photos/granola-fraises.webp');
+const salle = photoDe('/photos/salle-table-bois.webp');
+const serv = moments.filter((mo) => mo.lignes.length);
+---
+<Base title="La carte" theme="midi" description={`La carte de ${site.nom} à ${site.adresse.commune} : brunch, plats salés, cafés de spécialité et jus frais. Prix illustratifs.`}>
+  <section class="section" data-ciel="midi">
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro>La carte</p>
+      <h1 class="t-xl" data-split="lines" data-intro>Du café au salé</h1>
+      <div class="bandeau" style="margin-top: calc(var(--u) * 2)"><span class="tag" style="margin: 0">illustratif</span><span>Les plats viennent de la presse et d'avis publics. La carte complète n'est pas communiquée : les prix et les lignes marquées « exemple » sont illustratifs.</span></div>
+    </div>
+  </section>
+
+  {serv.map((mo) => (
+    <section class="section" id={mo.id} data-ciel={mo.theme} aria-labelledby={`c-${mo.id}`}>
+      <div class="wrap cols">
+        <div class="c1-5">
+          <div class="moment__tete" style="margin-bottom: var(--u)">
+            <p class="moment__heure num" data-split="chars">{mo.heureTexte}</p>
+            <h2 class="moment__titre" id={`c-${mo.id}`} data-split="words">{mo.titre}</h2>
+          </div>
+          <p class="note">{mo.accroche}</p>
+        </div>
+        <ul class="c7-12 lignes" data-reveal="up">
+          {mo.lignes.map((l) => <Ligne l={l} />)}
+        </ul>
+      </div>
+    </section>
+  ))}
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap">
+      <div class="cols">
+        <div class="c1-6">
+          {site.carte.map((c, i) => (
+            <div style={i ? 'margin-top: calc(var(--u) * 4)' : ''}>
+              <h3 class="t-l" data-split="words">{c.categorie}</h3>
+              <ul class="lignes" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
+                {c.plats.map((p) => <Ligne l={p} />)}
+              </ul>
+            </div>
+          ))}
+          <p class="note" style="margin-top: calc(var(--u) * 2)">Options végétales et sans gluten citées par une recherche tierce : à confirmer.<span class="tag">à confirmer</span></p>
+        </div>
+        <figure class="c8-12 photo photo--carre" data-reveal="scale">
+          <img src={asset(visuel.src)} alt={visuel.alt} width={visuel.largeur} height={visuel.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      </div>
+      <figure class="photo photo--large" style="margin-top: calc(var(--u) * 6)" data-reveal="clip">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" data-parallax="0.1" />
+      </figure>
+      <div class="actions">
+        <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Venir, réserver</a>
+        <a class="btn" href={u('/brunch/')}>Le brunch</a>
+      </div>
+    </div>
+  </section>
+</Base>

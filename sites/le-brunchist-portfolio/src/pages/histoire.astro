@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/salle-table-bois.webp');
+const gal = ['/photos/cafe-filtre.webp', '/photos/theiere.webp', '/photos/biscuits-citron.webp'].map(photoDe);
+---
+<Base title="Notre histoire" theme="ocre" description={`L'histoire de ${site.nom} : un café-brunch namurois ouvert en 2022, local et fait maison, Place d'Armes.`}>
+  <section class="section" data-ciel="ocre">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>Depuis 2022, à Namur</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Local, fait maison</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">{site.baseline}</p>
+      </div>
+      <figure class="c8-12 photo photo--4x3">
+        <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap cols">
+      <div class="c2-11 prose">
+        {site.histoire.map((p, i) => <p class={i === 0 ? 't-m' : ''} data-reveal="up">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="corail">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">La maison</p>
+        <h2 class="t-xl" data-split="words">Ceux qui l'ont ouverte</h2>
+      </div>
+      <div class="grid">
+        {site.equipe.map((m, i) => (
+          <article class="membre" data-reveal="up" data-delay={String(i * 0.08)}>
+            <h3 class="t-m" style="font-weight: 600">{m.nom}</h3>
+            <p class="t-s muted">{m.role}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="nuit">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Ambiance<span class="tag">photos illustratives</span></p>
+        <h2 class="t-xl" data-split="words">Décontracté, convivial</h2>
+      </div>
+      <div class="cols">
+        {gal.map((p) => <figure class="c1-4 photo photo--3x2" data-reveal="scale"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>)}
+      </div>
+      <div class="grid" style="margin-top: calc(var(--u) * 6)">
+        {site.avis.map((a) => (
+          <blockquote class="avis" data-reveal="fade">
+            <p>{a.texte}</p>
+            <cite>{a.auteur}, {a.source}</cite>
+          </blockquote>
+        ))}
+      </div>
+      <div class="actions">
+        <a class="btn" href={u('/carte/')}>Découvrir la carte</a>
+        <a class="btn btn--soleil" href={u('/reservation/')} data-magnetic="0.2">Venir, réserver</a>
+      </div>
+    </div>
+  </section>
+</Base>

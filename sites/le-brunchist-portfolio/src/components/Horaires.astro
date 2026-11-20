@@ -1,0 +1,20 @@
+---
+// Horaires à flèches : un jour à la fois (‹ ›), ligne unique (horaires du dossier).
+import { site, horaireTexte } from '../data/site';
+const data = site.horaires.map((h) => ({ jour: h.jour, cuisine: horaireTexte(h) }));
+const premier = data[0];
+---
+<div class="horo" data-horo data-jours={JSON.stringify(data)}>
+  <div class="horo__nav">
+    <button class="horo__fleche" type="button" data-horo-prev aria-label="Jour précédent">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+    </button>
+    <p class="horo__jour t-l" data-horo-jour aria-live="polite">{premier.jour}</p>
+    <button class="horo__fleche" type="button" data-horo-next aria-label="Jour suivant">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+    </button>
+  </div>
+  <dl class="horo__lignes">
+    <dt>Ouvert</dt><dd class="num" data-horo-cuisine>{premier.cuisine}</dd>
+  </dl>
+</div>
