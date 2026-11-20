@@ -1,0 +1,21 @@
+---
+// Frise du jour : ligne graduée 7h → 23h, disque soleil / lune positionné par --heure (tweené par le driver).
+// Desktop : fixée à droite dans la voie réservée par .wrap (--frise). Mobile : rangée de 6 points dans l'en-tête.
+import { moments } from '../data/site';
+import { u } from '../lib/url';
+const accueil = Astro.url.pathname.replace(/\/+$/, '') === u('/').replace(/\/+$/, '');
+const pos = (h: number) => `${((h - 7) / 16) * 100}%`;
+---
+<nav class="frise" aria-label="Moments de la journée">
+  <ol class="frise__liste">
+    {moments.map((m) => (
+      <li class="frise__item" style={`--pos: ${pos(m.heure)}`}>
+        <a class="frise__cran" href={accueil ? `#${m.id}` : u(`/#${m.id}`)} data-frise-cran={m.heure}>
+          <span class="frise__h num">{m.heureTexte}</span>
+          <span class="frise__bulle">{m.titre}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+  <span class="frise__disque" aria-hidden="true"></span>
+</nav>

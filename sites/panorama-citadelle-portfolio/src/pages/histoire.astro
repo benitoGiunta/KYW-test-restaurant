@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const equipePhoto = photoDe('/photos/equipe.webp');
+const hero = photoDe('/photos/aerienne.webp');
+const coulisses = ['/photos/bar-service.webp', '/photos/four-bois.webp', '/photos/cave.webp', '/photos/terrasse-pergola.webp'].map(photoDe);
+const initiales = (nom: string) => nom.split(' ').map((x) => x[0]).join('');
+---
+<Base title="La maison" theme="ocre" description={`La maison ${site.nom} : un pavillon vitré au sommet de la Citadelle de ${site.adresse.commune}, rouvert en 2022, avec une carte signée Yves Mattagne.`}>
+  <section class="section" data-ciel="ocre">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>Depuis 2022, Route Merveilleuse</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Au sommet de la Citadelle</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">{site.baseline}</p>
+      </div>
+      <figure class="c8-12 photo photo--4x3">
+        <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap cols">
+      <div class="c2-11 prose">
+        {site.histoire.map((p, i) => <p class={i === 0 ? 't-m' : ''} data-reveal="up">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="corail">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">L'équipe</p>
+        <h2 class="t-xl" data-split="words">Ceux qui font la maison</h2>
+      </div>
+      <div class="grid">
+        {site.equipe.map((m, i) => {
+          const p = m.photo ? photoDe(m.photo) : null;
+          return (
+            <article class="membre" data-reveal="up" data-delay={String(i * 0.08)}>
+              {p ? <figure class="photo"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure> : <p class="membre__initiales" aria-hidden="true">{initiales(m.nom)}</p>}
+              <h3 class="t-m" style="font-weight: 600">{m.nom}</h3>
+              <p class="t-s muted">{m.role}{m.placeholder ? <span class="tag">rôle à confirmer</span> : null}</p>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="nuit">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Les coulisses</p>
+        <h2 class="t-xl" data-split="words">Du bar au four à bois</h2>
+      </div>
+      <div class="cols">
+        <figure class="c1-7 photo photo--4x3" data-reveal="clip"><img src={asset(equipePhoto.src)} alt={equipePhoto.alt} width={equipePhoto.largeur} height={equipePhoto.hauteur} loading="lazy" decoding="async" /><figcaption>{equipePhoto.alt}</figcaption></figure>
+        <div class="c8-12 stack">
+          {coulisses.slice(0, 2).map((p) => <figure class="photo photo--3x2" data-reveal="scale"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>)}
+        </div>
+        {coulisses.slice(2).map((p) => <figure class="c1-6 photo photo--3x2" data-reveal="scale"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /><figcaption>{p.alt}</figcaption></figure>)}
+      </div>
+      <div class="grid" style="margin-top: calc(var(--u) * 6)">
+        {site.presse.map((a) => (
+          <blockquote class="avis" data-reveal="fade">
+            <p>{a.titre}</p>
+            <cite><a class="link" href={a.url} rel="noopener">{a.media}{a.date ? `, ${a.date.slice(0, 4)}` : ''}</a></cite>
+          </blockquote>
+        ))}
+      </div>
+      <div class="actions">
+        <a class="btn" href={u('/carte/')}>Découvrir la carte</a>
+        <a class="btn btn--soleil" href={u('/reservation/')} data-magnetic="0.2">Réserver</a>
+      </div>
+    </div>
+  </section>
+</Base>

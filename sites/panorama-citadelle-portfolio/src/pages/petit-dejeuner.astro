@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, moments, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const pd = moments.find((m) => m.id === 'm-8h')!;
+const hero = photoDe('/photos/facade-960.webp');
+const heroFull = photoDe('/photos/facade.webp');
+const vue = photoDe('/photos/table-verres-vue.webp');
+const terrasse = photoDe('/photos/terrasse-large.webp');
+const formules = site.menus.slice(0, 4);
+---
+<Base title="Petit-déjeuner" theme="aube" description={`Les petits-déjeuners du ${site.nom} à ${site.adresse.commune}, de 8h à 10h30 : quatre formules de 12 à 25 € face à la vallée de la Meuse.`}>
+  <section class="section" data-ciel="aube">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau">De 8h à 10h30</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Le petit-déjeuner</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">{pd.accroche}</p>
+        <p class="note" style="margin-top: var(--u)">Quatre formules, de 12 à 25 €. Horaires à confirmer auprès de la maison.</p>
+        <div class="actions" data-reveal="up" data-intro data-delay="0.3">
+          <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Réserver</a>
+          <a class="btn" href={u('/carte/')}>La carte du midi et du soir</a>
+        </div>
+      </div>
+      <figure class="c8-12 photo photo--4x5">
+        <img src={asset(hero.src)} alt={heroFull.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="midi">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Les formules</p>
+        <h2 class="t-xl" data-split="words">Quatre façons de commencer</h2>
+      </div>
+      <div class="grid">
+        {formules.map((me, i) => (
+          <article class="carte" data-reveal="up" data-delay={String(i * 0.08)}>
+            <h3>{me.nom}</h3>
+            <p class="carte__prix num">{me.prix}</p>
+            <p class="t-s muted">{me.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="ocre">
+    <div class="wrap cols">
+      <figure class="c1-7 photo photo--4x3" data-reveal="clip">
+        <img src={asset(vue.src)} alt={vue.alt} width={vue.largeur} height={vue.hauteur} loading="lazy" decoding="async" />
+      </figure>
+      <div class="c8-12">
+        <p class="chapeau">Ensuite</p>
+        <h2 class="t-l" data-split="words">La terrasse ouvre la journée</h2>
+        <p class="note" style="margin-top: var(--u)">Pas de réservation pour la terrasse. Pour les groupes à partir de sept personnes : {site.email.valeur}.</p>
+        <figure class="photo photo--3x2" style="margin-top: calc(var(--u) * 2)" data-reveal="scale">
+          <img src={asset(terrasse.src)} alt={terrasse.alt} width={terrasse.largeur} height={terrasse.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      </div>
+    </div>
+  </section>
+</Base>

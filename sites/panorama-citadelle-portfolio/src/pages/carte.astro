@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, moments, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const visuel = photoDe('/photos/table-vitres.webp');
+const salle = photoDe('/photos/vue-meuse.webp');
+const plats = site.carte;
+---
+<Base title="La carte" theme="midi" description={`La carte de ${site.nom} à ${site.adresse.commune}, heure par heure : petits-déjeuners, tartes flambées au four à bois, entrées, poissons, viandes et plats à partager.`}>
+  <section class="section" data-ciel="midi">
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro>La carte d’automne 2026</p>
+      <h1 class="t-xl" data-split="lines" data-intro>Heure par heure</h1>
+      <p class="lead" style="margin-top: calc(var(--u) * 2)">Ce qui se sert à chaque moment de la journée, puis la carte complète signée Yves Mattagne. Les lignes marquées « exemple » sont illustratives.</p>
+    </div>
+  </section>
+
+  {moments.map((mo) => (
+    <section class="section" id={mo.id} data-ciel={mo.theme} aria-labelledby={`c-${mo.id}`}>
+      <div class="wrap cols">
+        <div class="c1-5">
+          <div class="moment__tete" style="margin-bottom: var(--u)">
+            <p class="moment__heure num" data-split="chars">{mo.heureTexte}</p>
+            <h2 class="moment__titre" id={`c-${mo.id}`} data-split="words">{mo.titre}{mo.placeholder ? <span class="tag">illustratif</span> : null}</h2>
+          </div>
+          <p class="note">{mo.accroche}</p>
+        </div>
+        <ul class="c7-12 lignes" data-reveal="up">
+          {mo.lignes.map((l) => (
+            <li class="ligne"><span class="ligne__nom">{l.nom}{l.placeholder ? <span class="tag">exemple</span> : null}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+
+  <section class="section" data-ciel="ocre" id="carte-complete">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">La carte complète</p>
+        <h2 class="t-xl" data-split="words">Du four à bois au grill</h2>
+      </div>
+      <div class="cols">
+        <div class="c1-7">
+          {plats.slice(0, 3).map((c) => (
+            <>
+              <h3 class="t-l" style="margin-top: calc(var(--u) * 4)" data-split="words">{c.categorie}</h3>
+              <ul class="lignes" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
+                {c.plats.map((p) => <li class="ligne"><span class="ligne__nom">{p.nom}</span>{p.prix && <span class="ligne__prix">{p.prix}</span>}{p.description && <span class="ligne__detail">{p.description}</span>}</li>)}
+              </ul>
+            </>
+          ))}
+        </div>
+        <figure class="c8-12 photo photo--carre" data-reveal="scale">
+          <img src={asset(visuel.src)} alt={visuel.alt} width={visuel.largeur} height={visuel.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      </div>
+      <div class="cols">
+        <div class="c1-7">
+          {plats.slice(3).map((c) => (
+            <>
+              <h3 class="t-l" style="margin-top: calc(var(--u) * 4)" data-split="words">{c.categorie}</h3>
+              <ul class="lignes" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
+                {c.plats.map((p) => <li class="ligne"><span class="ligne__nom">{p.nom}</span>{p.prix && <span class="ligne__prix">{p.prix}</span>}{p.description && <span class="ligne__detail">{p.description}</span>}</li>)}
+              </ul>
+            </>
+          ))}
+        </div>
+      </div>
+      <p class="note" style="margin-top: calc(var(--u) * 3)">Desserts, carte des vins et boissons : voir la carte sur place. Pain sans gluten sur demande.</p>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Les formules</p>
+        <h2 class="t-xl" data-split="words">Matin et fêtes</h2>
+      </div>
+      <div class="grid">
+        {site.menus.map((me, i) => (
+          <article class="carte" data-reveal="up" data-delay={String(i * 0.08)}>
+            <h3>{me.nom}</h3>
+            <p class="carte__prix num">{me.prix}</p>
+            <p class="t-s muted">{me.description}</p>
+          </article>
+        ))}
+      </div>
+      <figure class="photo photo--large" style="margin-top: calc(var(--u) * 6)" data-reveal="clip">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" data-parallax="0.1" />
+      </figure>
+      <div class="actions">
+        <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+        <a class="btn" href={u('/petit-dejeuner/')}>Le petit-déjeuner</a>
+      </div>
+    </div>
+  </section>
+</Base>
