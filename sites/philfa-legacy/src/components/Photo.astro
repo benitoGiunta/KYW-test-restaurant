@@ -1,0 +1,11 @@
+---
+import { u } from '../data/site';
+interface Props { slot: string; file: string; widths: number[]; w: number; h: number; alt: string; sizes?: string; pos?: string; hero?: boolean; class?: string }
+const { slot, file, widths, w, h, alt, sizes = '(min-width: 60rem) 50vw, 100vw', pos = '50% 50%', hero = false } = Astro.props;
+const srcset = widths.map((x) => `${u(`photos/${file}-${x}.webp`)} ${x}w`).join(', ');
+const big = Math.max(...widths);
+---
+<figure class:list={['ph', Astro.props.class]} data-slot={slot} data-alt={alt} style={`aspect-ratio:${w}/${h}`}>
+  <img src={u(`photos/${file}-${big}.webp`)} srcset={srcset} sizes={sizes} width={w} height={h} alt={alt}
+    loading={hero ? 'eager' : 'lazy'} fetchpriority={hero ? 'high' : undefined} decoding="async" style={`object-position:${pos}`} />
+</figure>

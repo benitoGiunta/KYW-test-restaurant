@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Photo from '../components/Photo.astro';
+import { resto, horaires, moment, momentPrix, carte, u } from '../data/site';
+const nb = (s: string) => s.replace(/ €/g, ' €').replace(/ ;/g, ' ;');
+const adr = `${resto.adresse.rue} ${resto.adresse.numero}`;
+---
+<Base title="PhilFa, brasserie à Namur : menu du moment, carte et réservation" description="Brasserie de centre-ville rue de Marchovelette à Namur : menu du moment à 35 € et 41 €, carte de saison, terrasse. Ouvert du mardi au samedi, midi et soir.">
+  <Nav slot="nav" />
+
+  <section class="hero" id="top">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <h1>Brasserie de centre-ville à Namur.</h1>
+        <p class="lead">Une cuisine de saison aux épices du monde, dans un cadre feutré.</p>
+        <p class="hero__actions">
+          <a class="btn btn--primary" href={resto.reservation} rel="noopener">Réserver une table</a>
+          <a class="btn btn--ghost" href="#carte">Voir la carte</a>
+        </p>
+      </div>
+      <Photo class="hero__photo" slot="hero" file="01-salle-couloir" widths={[1000, 1200]} w={1200} h={1600} hero pos="50% 40%" sizes="(min-width: 60rem) 36vw, 100vw"
+        alt="Salle en longueur, mur sombre, banquettes roses, vue vers la vitrine" />
+    </div>
+    <div class="container">
+      <dl class="counter" aria-label="Menu du moment">
+        <div><dt>Menu du moment, deux services</dt><dd class="figure">{nb(momentPrix.deux)}</dd></div>
+        <div><dt>Menu du moment, trois services</dt><dd class="figure">{nb(momentPrix.trois)}</dd></div>
+        <div><dt>Renouvelé</dt><dd class="counter__txt">toutes les 6 semaines</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="infos band" id="infos">
+    <div class="container infos__grid">
+      <div class="infos__head">
+        <h2>Midi et soir, du mardi au samedi.</h2>
+        <address class="adresse">
+          <p>{adr}<br />{resto.adresse.cp} {resto.adresse.ville}, en centre-ville</p>
+          <p><a href={`tel:${resto.tel}`}>{resto.telAffiche}</a></p>
+          <p><a href={resto.carteOsm} rel="noopener">Voir sur le plan</a></p>
+        </address>
+      </div>
+      <dl class="schedule">
+        {horaires.map((h) => (
+          <div class:list={['schedule__row', h.ferme && 'is-closed']}>
+            <dt>{h.jour}</dt>
+            <dd>{h.ferme ? <span>Fermé</span> : <><time>{h.midi}</time><time>{h.soir}</time></>}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+    <p class="container infos__note">Fermé le 11 novembre.</p>
+  </section>
+
+  <section class="menu" id="carte">
+    <div class="container">
+      <h2>Le menu du moment et la carte.</h2>
+      <div class="switcher" data-switcher>
+        <div role="tablist" aria-label="Choisir le menu" class="switcher__tabs">
+          <button role="tab" id="tab-moment" aria-controls="p-moment" aria-selected="true" type="button">Menu du moment</button>
+          <button role="tab" id="tab-carte" aria-controls="p-carte" aria-selected="false" type="button">À la carte</button>
+        </div>
+        <div role="tabpanel" id="p-moment" aria-labelledby="tab-moment" class="panel">
+          <p class="panel__lead">{nb(momentPrix.deux)} en deux services, {nb(momentPrix.trois)} en trois, avec deux choix à chaque service.</p>
+          <ol class="moment">
+            {moment.map((m) => (
+              <li class="moment__row">
+                <h3>{m.service}</h3>
+                <ul>{m.choix.map((c) => <li>{c}</li>)}</ul>
+              </li>
+            ))}
+          </ol>
+          <p class="panel__pdf"><a href={resto.momentPdf} rel="noopener">Menu du moment en PDF</a></p>
+        </div>
+        <div role="tabpanel" id="p-carte" aria-labelledby="tab-carte" class="panel">
+          {carte.map((c) => (
+            <section class="cat">
+              <h3>{c.cat}</h3>
+              <ul class="rows">
+                {c.plats.map(([nom, prix]) => (
+                  <li class="row"><span class="row__nom">{nom}</span><span class="row__prix num">{nb(prix)}</span></li>
+                ))}
+              </ul>
+            </section>
+          ))}
+          <p class="panel__pdf"><a href={resto.cartePdf} rel="noopener">Carte en PDF</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="salle" id="salle" aria-label="La salle">
+    <figure class="salle__fig">
+      <Photo slot="salle" file="04-salle-lampe-table" widths={[1000, 1600]} w={1600} h={1000} pos="50% 55%" sizes="100vw"
+        alt="Table dressée, lampe, salle au fond, plantes" />
+      <figcaption class="container">La salle compte 55 places.</figcaption>
+    </figure>
+  </section>
+
+  <section class="maison" id="maison">
+    <div class="container maison__grid">
+      <Photo class="maison__photo" slot="terrasse" file="08-terrasse" widths={[1000]} w={1000} h={1250} pos="50% 50%" sizes="(min-width: 60rem) 40vw, 100vw"
+        alt="Terrasse à l’avant, chaises cannées et tables rondes" />
+      <div class="maison__text">
+        <h2>Une maison de Namur depuis 2013.</h2>
+        <p class="lead">Rénovée et repensée en 2020, elle est tenue par Fabian Rammeloo et Philippe Legrand, avec leur équipe.</p>
+        <dl class="faits">
+          <div><dt>Terrasse</dt><dd>20 places, ombragée, à l’avant</dd></div>
+          <div><dt>Salle</dt><dd>55 places, air conditionné</dd></div>
+          <div><dt>Enfants</dt><dd>Un menu jusqu’à 12 ans</dd></div>
+          <div><dt>Animaux</dt><dd>Acceptés</dd></div>
+          <div><dt>Bon cadeau</dt><dd><a href={resto.bonCadeau} rel="noopener">À offrir en ligne</a></dd></div>
+          <div><dt>Gault&amp;Millau</dt><dd>12/20 depuis 2025</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="reserve band cream" id="reserver">
+    <div class="container reserve__grid">
+      <h2>Une table, midi ou soir.</h2>
+      <p class="reserve__actions">
+        <a class="btn btn--primary" href={resto.reservation} rel="noopener">Réserver une table</a>
+        <a class="btn btn--ghost" href={`tel:${resto.tel}`}>{resto.telAffiche}</a>
+      </p>
+    </div>
+  </section>
+
+  <footer slot="pied" class="pied">
+    <div class="container pied__grid">
+      <div class="pied__id">
+        <p class="pied__nom">PhilFa</p>
+        <p>Brasserie, Namur</p>
+      </div>
+      <div>
+        <h2 class="pied__t">Adresse</h2>
+        <p>{adr}<br />{resto.adresse.cp} {resto.adresse.ville}</p>
+        <p>Mardi au samedi, midi et soir</p>
+      </div>
+      <div>
+        <h2 class="pied__t">Contact</h2>
+        <p><a href={`tel:${resto.tel}`}>{resto.telAffiche}</a></p>
+        <p><a href={resto.reservation} rel="noopener">Réserver en ligne</a></p>
+      </div>
+      <div>
+        <h2 class="pied__t">Suivre</h2>
+        <p><a href={resto.facebook} rel="noopener">Facebook</a></p>
+        <p><a href={resto.instagram} rel="noopener">Instagram</a></p>
+        <p><a href={resto.siteActuel} rel="noopener">philfa.be</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script is:inline>
+    (() => {
+      const s = document.querySelector('[data-switcher]'); if (!s) return;
+      const tabs = [...s.querySelectorAll('[role=tab]')];
+      const show = (t) => tabs.forEach((x) => { const on = x === t; x.setAttribute('aria-selected', String(on)); document.getElementById(x.getAttribute('aria-controls')).hidden = !on; });
+      tabs.forEach((t) => t.addEventListener('click', () => show(t)));
+      show(tabs[0]);
+    })();
+  </script>
+</Base>

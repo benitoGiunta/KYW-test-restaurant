@@ -1,0 +1,5 @@
+# ETAT philfa-legacy (phase 1, 20/11/2026)
+Fait : AUDIT.md, DESIGN.md (Picks, approche, thème, composants), comp.md (texte), tokens/base/page.css, `Base`, `Nav`, `Photo`, `index` (hero Counter, infos, menu Switcher, salle, maison, réserver, pied), `404`, 8 photos WebP du client, build vert, sloplint src.
+Reste (phases 2 et 3) : comps HTML c1/c2 capturés ; nav mobile (menu) ; jour courant dans Schedule ; un reveal ; QA navigateur (375, 768, 1440), sloplint `--render`, contrastes ; fiche RAPPORT.md ; entrée `$LOG` (`theme.mjs log`) ; photos de plats absentes (aucune au dossier, pas de TOGETHER_API_KEY).
+Décisions : une page + 404 (one-page conservée) ; Hedgerow recoloré olive et or du logo ; logo non repris en image (fond blanc du PNG) : wordmark Prata ; e-mail gmail non repris ; Mapbox remplacé par un lien OpenStreetMap ; « Fermé le 11 novembre » et « 12/20 G&M depuis 2025 » repris du dossier (à vérifier) ; aucun avis ni note ; aucune donnée fictive.
+Pièges : slot photo masque les enfants d'une image (légende hors slot) ; faux positif sloplint 34 sur src.
