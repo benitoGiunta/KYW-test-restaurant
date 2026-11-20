@@ -1,0 +1,6 @@
+# Audit Hallmark · Be Belge… et d’ailleurs · 2026-11-20
+Source : https://bebelgeetdailleurs.be (WordPress Enfold, RevSlider WebGL, GSAP/three). Genre inféré : editorial (restaurant à menu du chef, salle de pierre, jardin).
+**Lecture** : (1) sert à réserver une table ou lire le menu du chef ; (2) reste : horaires, adresse, téléphone, Zenchef, photos de salle et de terrasse ; (3) lu généré : hero sombre tramé avec logo en double (gate 8, F3 sans text-wrap balance), titres de pied en h3 (F21) ; (4) cassé : menu et carte identiques et périmés (13/08 au 06/09/2026), galerie vide, bandeau cookies, description absente (F23).
+**Structure** : one-page d’accueil (slider, horaires, adresse, formulaire de contact) + /menu/, /carte/, /banquets-et-receptions/, /photos/, /reservation/ ; nav hamburger ; pas de photo de plat ; mobile 375 : h3 d’adresse coupé (F26).
+**Findings** : sloplint avant : 356 FAIL, 99 REFLEX, 57 WARN (`.hallmark/before.txt`) ; WARN notables F2 (points de suspension), F3, F21, F23, F26 ; rendu partiel (feuilles de style distantes absentes, `render` WARN).
+**Axes d’amélioration** : peu coûteux : meta description, hiérarchie des titres, ellipsis ; moyen : carte lisible et datée, galerie remplie ; full seul : système typographique, composition, logo lisible.

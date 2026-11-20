@@ -1,0 +1,25 @@
+---
+// Objets au trait d'El Greco (gabarit guinguette : amphore, brochette, branche d'olivier ajoutés), dessinés une fois pour le gabarit (SVG inline, trait 2,4 px, bouts ronds).
+// Usage : <Objet id="frites" classe="obj__svg" />  ; décoratif (aria-hidden) : le label vit sur le bouton parent.
+import type { ObjetId } from '../data/site';
+interface Props { id: ObjetId; classe?: string }
+const { id, classe = '' } = Astro.props;
+const traits: Record<ObjetId, string> = {
+  frites: `<path d="M28 44 L34 90 H66 L72 44 Z"/><path d="M28 44 Q50 52 72 44"/><path d="M36 60 Q50 66 64 60"/>
+    <path d="M38 44 L30 14"/><path d="M48 42 L46 10"/><path d="M58 42 L64 12"/><path d="M66 44 L80 20"/><path d="M44 42 L36 24"/>
+    <circle cx="50" cy="72" r="3" fill="currentColor" stroke="none"/>`,
+  fourchette: `<path d="M50 92 V46"/><path d="M38 10 V34 Q38 46 50 46 Q62 46 62 34 V10"/><path d="M46 10 V34"/><path d="M54 10 V34"/>`,
+  verre: `<path d="M30 10 H70 L66 40 Q62 58 50 58 Q38 58 34 40 Z"/><path d="M50 58 V84"/><path d="M34 88 H66"/><path d="M36 28 H64"/>
+    <path d="M40 20 Q50 24 60 20" stroke-dasharray="2 4"/>`,
+  parasol: `<path d="M10 52 Q50 8 90 52"/><path d="M10 52 Q18 44 26 52 Q34 44 42 52 Q50 44 58 52 Q66 44 74 52 Q82 44 90 52"/>
+    <path d="M50 14 V8"/><path d="M50 52 V92"/><path d="M50 92 Q58 96 62 88"/><path d="M26 52 Q40 30 50 14"/><path d="M74 52 Q60 30 50 14"/>`,
+  bouteille: `<path d="M42 8 H58 V26 Q70 36 70 50 V88 Q70 92 66 92 H34 Q30 92 30 88 V50 Q30 36 42 26 Z"/><path d="M42 8 V26"/><path d="M58 8 V26"/>
+    <rect x="36" y="54" width="28" height="22" rx="4"/><path d="M42 64 H58" stroke-dasharray="3 3"/>`,
+  amphore: `<path d="M38 8 H62"/><path d="M40 8 V18 Q40 26 30 34 Q18 46 24 66 Q30 90 50 92 Q70 90 76 66 Q82 46 70 34 Q60 26 60 18 V8"/><path d="M40 16 Q20 18 22 42"/><path d="M60 16 Q80 18 78 42"/><path d="M27 54 Q50 62 73 54"/><path d="M30 68 H70" stroke-dasharray="3 4"/>`,
+  brochette: `<path d="M50 4 V96"/><rect x="34" y="14" width="32" height="18" rx="7"/><rect x="34" y="36" width="32" height="18" rx="7"/><circle cx="50" cy="68" r="10"/><rect x="36" y="82" width="28" height="10" rx="5"/>`,
+  olive: `<path d="M18 92 Q46 62 82 10"/><path d="M42 68 Q26 60 30 44 Q46 50 42 68 Z"/><path d="M58 46 Q44 38 48 22 Q64 28 58 46 Z"/><path d="M52 62 Q68 62 74 50 Q60 44 52 62 Z"/><circle cx="30" cy="82" r="5"/><circle cx="64" cy="76" r="5"/>`,
+  citron: `<circle cx="50" cy="50" r="34"/><circle cx="50" cy="50" r="26" stroke-dasharray="4 5"/>
+    <path d="M50 24 V76"/><path d="M24 50 H76"/><path d="M32 32 L68 68"/><path d="M68 32 L32 68"/>`,
+};
+---
+<svg class={classe} viewBox="0 0 100 100" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" set:html={traits[id]} />

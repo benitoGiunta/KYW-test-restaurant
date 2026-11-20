@@ -1,0 +1,17 @@
+---
+import { carte } from '../data/site';
+---
+{carte.map((c) => (
+  <section class="rows" aria-labelledby={`c-${c.categorie.slice(0, 4)}`}>
+    <h2 class="rows__h" id={`c-${c.categorie.slice(0, 4)}`}>{c.categorie}<span class="rows__n"> ({c.note})</span></h2>
+    <ul class="ruled">
+      {c.plats.map((p) => (
+        <li class="row">
+          <h3>{p.nom}</h3>
+          <p class="row__d">{p.desc}</p>
+          {p.prix && <p class="row__p num">{p.prix}</p>}
+        </li>
+      ))}
+    </ul>
+  </section>
+))}

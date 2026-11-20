@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { photos as P } from '../data/site';
+const l = [
+  [P.cheminee, 'La salle, mur de pierre et cheminée', 'g-wide'], [P.brasero, 'Table de terrasse et foyer', ''],
+  [P.terrasse, 'La terrasse ombragée', ''], [P.banquette, 'La salle et sa banquette', 'g-wide'],
+  [P.jardin, 'Le restaurant vu du jardin', ''], [P.tableaux, 'Table dressée, tableaux rouges', ''],
+  [P.buffet, 'Le buffet et ses bouteilles', ''], [P.enseigne, 'L’enseigne', ''], [P.applique, 'Une applique murale', ''],
+];
+---
+<Base title="Photos, Be Belge… et d’ailleurs" description="La salle, le jardin et la terrasse de Be Belge… et d’ailleurs à Wépion." here="photos/">
+  <section class="sec page-head"><div class="container"><p class="pencil">Photos</p><h1>La salle, le jardin, la terrasse</h1></div></section>
+  <section class="sec"><div class="container gal">
+    {l.map(([p, t, c]) => <Photo p={p as any} label={t as string} class={c as string} sizes="(min-width: 60rem) 33vw, 100vw" />)}
+  </div></section>
+</Base>

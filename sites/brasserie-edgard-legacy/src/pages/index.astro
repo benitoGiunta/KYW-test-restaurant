@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import Reservation from '../components/Reservation.astro';
+import Footer from '../components/Footer.astro';
+import { site, selection, lunch, groupe, prix, prixPortions } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="Mr Edgard, brasserie à Saint-Servais (Namur)" description="Brasserie Edgard, Chaussée de Waterloo à Saint-Servais : croquettes, moules de Zélande, brochettes géantes, lunch en semaine, menus de groupe.">
+  <Nav />
+  <main id="contenu">
+    <section class="hero" aria-labelledby="titre">
+      <Photo name="facade" class="hero__photo" eager sizes="100vw" pos="50% 62%" caption="La façade, la nuit." />
+      <div class="container hero__inner">
+        <div class="plate">
+          <h1 id="titre">Mr Edgard, brasserie de Saint-Servais</h1>
+          <div class="plate__side">
+            <p class="lead">Croquettes aux crevettes grises, moules de Zélande et brochettes géantes.</p>
+            <div class="actions">
+              <a class="btn btn--solid" href={site.reservation} rel="noopener">Réserver une table</a>
+              <a class="link" href={u('la-carte/')}>Voir la carte</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec home-carte" aria-labelledby="carte-titre">
+      <div class="container grid12">
+        <div class="head">
+          <h2 id="carte-titre">À la carte</h2>
+          <p class="lead">Carpaccios, croquettes, brochettes géantes, pâtes fraîches et un porcelet à partager.</p>
+          <a class="link" href={u('la-carte/')}>Toute la carte</a>
+        </div>
+        <ul class="rows">
+          {selection.map((p) => (
+            <li><h3>{p.nom}</h3>{p.description && <p>{p.description}</p>}<span class="price">{prixPortions(p.prix).map((x) => <span class="portion">{x}</span>)}</span></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="sec band lunch" aria-labelledby="lunch-titre">
+      <div class="container grid12">
+        <div class="head">
+          <h2 id="lunch-titre">Le lunch en semaine</h2>
+          <p class="lead">{lunch.quand}.</p>
+          <a class="link" href={u('lunch-et-suggestions/')}>Les plats du lunch</a>
+        </div>
+        <ul class="figures">
+          <li data-reveal><span class="figure num">{prix(lunch.platDuJour)}</span><span class="what">Plat du jour au choix</span></li>
+          <li data-reveal><span class="figure num">{prix(lunch.platDessert)}</span><span class="what">Plat et dessert</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="showcase" aria-label="La salle">
+      <div class="container grid12">
+        <Photo name="bar" reveal sizes="(min-width: 60rem) 66vw, 100vw" caption="Le comptoir en bois sculpté et la salle." />
+        <Photo name="lampes" reveal sizes="(min-width: 60rem) 33vw, 100vw" />
+      </div>
+    </section>
+
+    <section class="sec statement" aria-labelledby="groupe-titre">
+      <div class="container grid12">
+        <h2 id="groupe-titre" class="statement__text">Plus de dix personnes, la maison dresse une grande table, seize au maximum.</h2>
+        <div class="statement__wall">
+          <p class="dropcap">Le menu de groupe se compose en trois temps, entrée, plat et dessert à {prix(groupe.formules[0].prix)}, ou en deux temps à {prix(groupe.formules[1].prix)} et {prix(groupe.formules[2].prix)}. Le choix des plats et le nombre de convives se confirment 48 h avant.</p>
+          <a class="link" href={u('menu-groupe/')}>Le menu de groupe</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec where band" aria-label="Horaires et adresse">
+      <div class="container grid12">
+        <Horaires />
+        <address class="address">
+          <h2>Adresse</h2>
+          <p>{site.adresse.rue}<br />{site.adresse.ville}</p>
+          <p><a class="link" href={site.maps} rel="noopener">Voir sur la carte</a></p>
+          <p><a class="link" href={site.telHref}>{site.tel}</a></p>
+        </address>
+      </div>
+    </section>
+
+    <Reservation />
+  </main>
+  <Footer hours={false} />
+</Base>

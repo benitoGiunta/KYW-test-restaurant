@@ -1,0 +1,64 @@
+---
+import { site } from '../data/site';
+---
+<div class="contact">
+  <div class="contact__intro">
+    <h2 id="h-contact">Nous écrire</h2>
+    <p class="wall">Une question, une demande de banquet ? Écrivez-nous, ou appelez le <a href={site.telHref}>{site.telAffiche}</a>.</p>
+  </div>
+  <form data-endpoint="" novalidate aria-labelledby="h-contact" data-mail={site.mail} data-tel={site.telAffiche}>
+    <div class="field">
+      <label for="c-nom">Nom</label>
+      <input id="c-nom" name="nom" type="text" autocomplete="name" required aria-describedby="c-nom-h" placeholder="Prénom et nom" />
+      <p class="field__help" id="c-nom-h" aria-live="polite"></p>
+    </div>
+    <div class="field">
+      <label for="c-mail">Adresse mail</label>
+      <input id="c-mail" name="email" type="email" inputmode="email" autocomplete="email" required aria-describedby="c-mail-h" placeholder="nom@exemple.be" />
+      <p class="field__help" id="c-mail-h" aria-live="polite"></p>
+    </div>
+    <div class="field">
+      <label for="c-sujet">Sujet</label>
+      <input id="c-sujet" name="sujet" type="text" autocomplete="off" aria-describedby="c-sujet-h" placeholder="Réservation, banquet, question" />
+      <p class="field__help" id="c-sujet-h" aria-live="polite"></p>
+    </div>
+    <div class="field">
+      <label for="c-msg">Message</label>
+      <textarea id="c-msg" name="message" rows="5" required aria-describedby="c-msg-h"></textarea>
+      <p class="field__help" id="c-msg-h" aria-live="polite"></p>
+    </div>
+    <div class="form__actions">
+      <button class="btn" type="submit">Envoyer le message</button>
+    </div>
+    <p class="form__status" role="status" aria-live="polite"></p>
+  </form>
+</div>
+<script is:inline>
+  document.querySelectorAll('form[data-endpoint]').forEach((form) => {
+    const status = form.querySelector('.form__status');
+    const msgs = { nom: 'Écrivez votre nom.', email: 'Écrivez votre adresse sous la forme nom@exemple.be.', message: 'Écrivez votre message.' };
+    const check = (el) => {
+      const help = document.getElementById(el.getAttribute('aria-describedby'));
+      const ok = el.checkValidity();
+      el.toggleAttribute('aria-invalid', !ok);
+      if (!ok) el.setAttribute('aria-invalid', 'true');
+      if (help) help.textContent = ok ? '' : (msgs[el.name] || '');
+      return ok;
+    };
+    const fields = [...form.querySelectorAll('input, textarea')];
+    fields.forEach((el) => {
+      el.addEventListener('blur', () => { if (el.value || el.hasAttribute('aria-invalid')) { el.dataset.touched = '1'; check(el); } });
+      el.addEventListener('input', () => { if (el.dataset.touched) check(el); });
+    });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      status.textContent = '';
+      const bad = fields.filter((el) => { el.dataset.touched = '1'; return !check(el); });
+      if (bad.length) { bad[0].focus(); return; }
+      if (!form.dataset.endpoint) { status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié. Écrivez à ' + form.dataset.mail + ' ou appelez le ' + form.dataset.tel + '.'; return; }
+      fetch(form.dataset.endpoint, { method: 'POST', body: new FormData(form) })
+        .then((r) => { status.textContent = r.ok ? 'Message envoyé. Nous vous répondons par mail.' : 'L’envoi n’a pas abouti. Réessayez dans une minute.'; })
+        .catch(() => { status.textContent = 'L’envoi n’a pas abouti. Réessayez dans une minute.'; });
+    });
+  });
+</script>

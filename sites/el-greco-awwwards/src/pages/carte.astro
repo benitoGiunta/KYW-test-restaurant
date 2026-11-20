@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import { carte } from '../data/carte';
+import { euro } from '../lib/format';
+import { site } from '../data/site';
+const manger = carte.filter((c) => c.groupe === 'manger');
+const boire = carte.filter((c) => c.groupe === 'boire');
+---
+<Base page="carte" title="La carte" description="La carte d’El Greco à Bouge : crèmes grecques, entrées, spécialités, grillades, poissons, menus enfant, cocktails, vins grecs et bières, avec les prix.">
+  <section class="entete" aria-labelledby="h1">
+    <div class="wrap">
+      <h1 class="entete__titre display" id="h1" data-allonge data-intro>La carte</h1>
+      <p class="entete__phrase">Cuisine grecque, prix en euros. Les grillades, spécialités, poissons et menus enfant sont servis avec frites, pâtes grecques ou pomme au four, salade et trois sauces froides.</p>
+    </div>
+  </section>
+  <div class="wrap grille carte">
+    <nav class="carte__nav" aria-label="Rubriques de la carte">
+      <ul>
+        {carte.map((c) => <li><a href={`#${c.id}`}>{c.nom}</a></li>)}
+      </ul>
+    </nav>
+    <div class="carte__corps">
+      <h2 class="groupe display" data-split="lines">À manger</h2>
+      {manger.map((c) => (
+        <section class="rubrique" id={c.id} aria-labelledby={`t-${c.id}`}>
+          <h3 class="rubrique__nom display" id={`t-${c.id}`}>{c.nom}</h3>
+          <ul class="carte__liste">
+            {c.plats.map((p) => (
+              <li><span class="plat__nom">{p.nom}</span>{p.description && <span class="plat__desc">{p.description}</span>}<span class="plat__prix">{euro(p.prix)}</span></li>
+            ))}
+          </ul>
+        </section>
+      ))}
+      <h2 class="groupe display" style="margin-top: var(--aere)" data-split="lines">À boire</h2>
+      {boire.map((c) => (
+        <section class="rubrique" id={c.id} aria-labelledby={`t-${c.id}`}>
+          <h3 class="rubrique__nom display" id={`t-${c.id}`}>{c.nom}</h3>
+          <ul class="carte__liste">
+            {c.plats.map((p) => (
+              <li><span class="plat__nom">{p.nom}</span>{p.description && <span class="plat__desc">{p.description}</span>}<span class="plat__prix">{euro(p.prix)}</span></li>
+            ))}
+          </ul>
+        </section>
+      ))}
+      <p class="carte__note petit">Carte relevée sur le site du restaurant, à confirmer par téléphone au <a class="lien" href={site.telephoneHref}>{site.telephoneLisible}</a>.</p>
+    </div>
+  </div>
+</Base>

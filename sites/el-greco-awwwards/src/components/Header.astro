@@ -1,0 +1,38 @@
+---
+import { u } from '../lib/url';
+import { site } from '../data/site';
+const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
+const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
+const liens = [
+  { href: '/carte/', label: 'La carte' },
+  { href: '/histoire/', label: 'L’histoire' },
+  { href: '/reservation/', label: 'Réserver' },
+];
+---
+<header class="tete">
+  <a class="tete__marque display" href={base} aria-current={path === base ? 'page' : undefined} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
+  <nav class="tete__nav" aria-label="Navigation principale">
+    <ul>
+      {liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}><span class="nl__txt">{l.label}</span></a></li>)}
+    </ul>
+  </nav>
+  <a class="cta cta--petit tete__appel" href={site.telephoneHref}><span class="cta__txt">Appeler</span></a>
+  <button class="tete__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir><span class="nl__txt">Menu</span></button>
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden data-menu>
+    <div class="menu__haut">
+      <span class="tete__marque display" aria-hidden="true">{site.nom}</span>
+      <button class="tete__menu" type="button" data-menu-fermer><span class="nl__txt">Fermer</span></button>
+    </div>
+    <nav class="menu__nav" aria-label="Navigation (menu)">
+      <ul>
+        <li data-menu-item><a class="display" href={base} aria-current={path === base ? 'page' : undefined}>Accueil</a></li>
+        {liens.map((l) => <li data-menu-item><a class="display" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="menu__bas" data-menu-item>
+      <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+      <p class="petit">{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</p>
+    </div>
+  </div>
+</header>

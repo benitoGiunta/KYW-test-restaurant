@@ -1,0 +1,13 @@
+---
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+interface Props { titre?: string }
+const { titre = 'Réserver une table' } = Astro.props;
+---
+<section class="resa" aria-labelledby="h-resa">
+  <div class="container resa__in">
+    <h2 id="h-resa">{titre}</h2>
+    <p>Par téléphone au <a href={resto.telHref}>{resto.tel}</a> ou par e-mail.</p>
+    <p class="resa__actions"><a class="btn btn--primary" href={resto.telHref}>Appeler le {resto.tel}</a><a class="btn btn--secondary" href={`${base}contact/`}>Infos et réservation</a></p>
+  </div>
+</section>

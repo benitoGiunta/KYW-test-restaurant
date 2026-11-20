@@ -1,0 +1,23 @@
+---
+import { jours } from '../data/site';
+---
+<dl class="sched ruled">
+  {jours.map((j) => (
+    <div class:list={['sched__row', j.services.length === 0 && 'is-closed']}>
+      <dt>{j.jour}</dt>
+      <dd>{j.services.length === 0 ? 'Fermé' : j.services.map((s, i) => <>{i > 0 && <span class="sep"> · </span>}<time datetime={s[0]}>{s[0]}</time> à <time datetime={s[1]}>{s[1]}</time></>)}</dd>
+    </div>
+  ))}
+</dl>
+<script is:inline>
+  (() => {
+    const today = new Intl.DateTimeFormat('fr-BE', { weekday: 'long', timeZone: 'Europe/Brussels' }).format(new Date()).toLowerCase();
+    document.querySelectorAll('.sched__row').forEach((row) => {
+      const dt = row.querySelector('dt');
+      if (dt && dt.textContent.trim().toLowerCase() === today) {
+        row.setAttribute('aria-current', 'date');
+        const t = document.createElement('span'); t.className = 'today'; t.textContent = 'Aujourd’hui'; dt.append(t);
+      }
+    });
+  })();
+</script>

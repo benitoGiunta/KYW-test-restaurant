@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, photos, privatisation as p } from '../data/site';
+---
+<Base title="Banquets et réceptions, Be Belge… et d’ailleurs" description="Privatiser Be Belge… et d’ailleurs à Wépion : repas assis de 15 à 34 personnes, walking dinner de 20 à 40." here="banquets-et-receptions/">
+  <section class="sec page-head">
+    <div class="container two">
+      <div>
+        <p class="pencil">Privatisation</p>
+        <h1>Banquets et réceptions</h1>
+        <p class="lead">{p.texte}</p>
+      </div>
+      <Photo p={photos.banquette} hero sizes="(min-width: 60rem) 45vw, 100vw" label="La salle et sa banquette" ratio="4/3" />
+    </div>
+  </section>
+  <section class="sec">
+    <div class="container cap">
+      <div class="cap__c"><p class="cap__n num">{p.assis.min} à {p.assis.max}</p><h2 class="cap__h">Repas assis</h2><p>Nous privatisons le restaurant pour des repas assis.</p></div>
+      <div class="cap__c"><p class="cap__n num">{p.walking.min} à {p.walking.max}</p><h2 class="cap__h">Walking dinner</h2><p>Nous privatisons le restaurant pour un walking dinner.</p></div>
+      <div class="cap__c"><p class="cap__n">Sur mesure</p><h2 class="cap__h">Jours et horaires</h2><p>{p.souple}</p></div>
+    </div>
+  </section>
+  <section class="sec sec--alt"><div class="container cta"><p class="big">Parlons de votre réception.</p><p><a class="btn btn--fill" href={`mailto:${site.mail}`}>Écrire au restaurant</a> <a class="btn" href={site.telHref}>{site.telAffiche}</a></p></div></section>
+</Base>

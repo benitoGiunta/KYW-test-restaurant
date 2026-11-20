@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const lieux = [
+  { titre: 'La salle', texte: 'Un mur de pierre, une cheminée, des tables dressées et une banquette : la salle à manger du restaurant.', photo: '/photos/cheminee-1140.webp' },
+  { titre: 'Le jardin', texte: "Un bâtiment entouré d'arbres et de pelouse, avenue de Marlagne.", photo: '/photos/jardin-1140.webp' },
+  { titre: 'La terrasse', texte: 'Une terrasse ombragée, et un foyer à feu pour s’installer dehors.', photo: '/photos/brasero-1140.webp' },
+];
+---
+<Base title="La maison" description="La salle de pierre, le jardin et la terrasse de Be Belge… et d'ailleurs, avenue de Marlagne à Wépion (Namur)." preloadImage={{ href: '/photos/cheminee-1140.webp', media: '(max-width: 767px)' }}>
+  <HeroPage titre="La maison" chiffre={site.chiffres.jours} sur="Un nouveau petit nid à Wépion">
+    <p>{site.histoire[0]}</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Les lieux">
+    <div class="wrap offres">
+      {lieux.map((o, i) => { const p = photoDe(o.photo); return (
+        <article class:list={['offre', { 'offre--inverse': i % 2 === 1 }]}>
+          <figure class="offre__photo" {...(i === 0 ? {} : { 'data-reveal': 'clip' })}>
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} {...(i === 0 ? { fetchpriority: 'high' } : { loading: 'lazy' })} decoding="async" />
+          </figure>
+          <div class="offre__texte">
+            <h2 class="offre__nom">{o.titre}</h2>
+            <p>{o.texte}</p>
+          </div>
+        </article>
+      ); })}
+    </div>
+  </section>
+
+  <section class="section section--recit" aria-labelledby="recit-titre">
+    <div class="wrap recit">
+      <h2 class="petite-cap" id="recit-titre">La cuisine</h2>
+      <div class="recit__texte stack">
+        {site.histoire.slice(1).map((p) => <p data-reveal="fade">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="valeurs-titre">
+    <div class="wrap equipe">
+      <h2 class="petite-cap" id="valeurs-titre">Ce qui compte</h2>
+      <ul class="valeurs" aria-label="Ce qui compte">
+        {site.valeurs.map((v) => <li>{v}</li>)}
+      </ul>
+      <p class="actions"><a class="btn btn--primary" href={u('/reservation/')}>Réserver une table</a></p>
+    </div>
+  </section>
+</Base>

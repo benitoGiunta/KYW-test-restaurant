@@ -1,0 +1,70 @@
+---
+// La salle et la terrasse : uniquement ce que prouvent les photos et le dossier (aucune histoire ni équipe inventée).
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import Ornements from '../components/Ornements.astro';
+import { site, guinguette as g, photoDe, adresseLigne } from '../data/site';
+import { u, asset } from '../lib/url';
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const salle = ['salle-baies-vitrees', 'comptoir-bois-sculpte', 'salle-tables-dressees', 'mur-bois-passe-plat', 'salle-banquettes', 'horloge-mosaique'].map((n) => photoDe(`/photos/${n}.webp`));
+const terrasse = ['terrasse-parasols', 'terrasse-tables', 'terrasse-exterieur'].map((n) => photoDe(`/photos/${n}.webp`));
+const veranda = photoDe('/photos/salle-veranda.webp');
+---
+<Base title="La salle et la terrasse" description={`La salle contemporaine en bois sculpté et la terrasse couverte de la ${site.nom} à Saint-Servais (Namur).`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>La salle</h1>
+      <p class="lead">Un nouveau cadre contemporain : bois sculpté, banquettes en cuir, baies cintrées, et une terrasse couverte.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--canard is-flottant" style="--x:86%;--y:0%;--r:-10deg;--taille:120px" aria-hidden="true"><Objet id="parasol" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap maison__grille">
+      <figure class="tirage" style="--w:100%; cursor: default; --r:-3deg">
+        <img src={asset(veranda.src)} alt={veranda.alt} width={veranda.largeur} height={veranda.hauteur} loading="eager" decoding="async" />
+        <figcaption>Côté terrasse couverte</figcaption>
+      </figure>
+      <div class="maison__texte">
+        <Ornements />
+        <h2 class="section__titre">Pour un petit creux, <em>une grande faim</em></h2>
+        <div class="prose">
+          <p>Un dîner d'affaires, un repas en famille, un verre entre amis : la brasserie est ouverte tous les jours de 10 h à 22 h 30, au {adresseLigne()}.</p>
+          <p>{g.terrasse.texte} La cuisine ferme de 15 h à 18 h en semaine ; le week-end et les jours fériés, elle ne s'arrête pas.</p>
+        </div>
+        <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--blanc">
+    <div class="wrap">
+      <h2 class="section__titre">Dans <em>la salle</em></h2>
+      <div class="grille-photos">
+        {salle.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-3, 4, -2, 3, -5, 2][i]}deg`} data-reveal="up" data-delay={String((i % 3) * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">Sur <em>la terrasse</em></h2>
+      <div class="grille-photos">
+        {terrasse.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-4, 3, -2][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Venir à table</a></div>
+    </div>
+  </section>
+</Base>

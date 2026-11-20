@@ -1,0 +1,50 @@
+---
+// Menus de groupe : prix et seuils du site actuel (page « Menu groupe »).
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, guinguette as g, photoDe, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const photos = ['/photos/salle-tables-dressees.webp', '/photos/salle-banquettes.webp', '/photos/verres-table.webp'].map(photoDe);
+---
+<Base title="Menus de groupe" description={`Menus de groupe de la ${site.nom} à Saint-Servais : de 34 à 49 € par personne, pour les tables de plus de ${g.groupe.min} personnes (maximum ${g.groupe.max}).`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>Menus de groupe</h1>
+      <p class="lead">Pour les tables de plus de {g.groupe.min} personnes, jusqu'à {g.groupe.max} : un dîner d'affaires, un repas en famille ou entre amis.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--canard is-flottant" style="--x:84%;--y:0%;--r:-8deg;--taille:120px" aria-hidden="true"><Objet id="verre" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <h2 class="sr-only">Les menus</h2>
+      <div class="carte__menus">
+        {g.groupe.menus.map((m) => (
+          <article class="formule" data-reveal="up">
+            <h3>{m.nom}</h3>
+            <p class="formule__prix">{m.prix}</p>
+          </article>
+        ))}
+      </div>
+      <p class="muted" style="margin-top:calc(var(--u)*3)">Renseignements et demandes : <a class="link" href={telHref()}>{site.telephone}</a>.</p>
+      <div class="actions"><a class="btn btn--plein" href={u('/reservation/')}>Réserver et contact</a></div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">La <em>salle</em></h2>
+      <div class="grille-photos">
+        {photos.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-4, 3, -2][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

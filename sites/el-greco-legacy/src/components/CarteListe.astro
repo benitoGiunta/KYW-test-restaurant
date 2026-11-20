@@ -1,0 +1,22 @@
+---
+import { prix, slug, type Categorie } from '../data/site';
+interface Props { categories: Categorie[] }
+const { categories } = Astro.props;
+---
+<nav class="rubriques" aria-label="Rubriques">
+  {categories.map((c) => <a href={`#${slug(c.nom)}`}>{c.nom}</a>)}
+</nav>
+{categories.map((c) => (
+  <section class="rub" id={slug(c.nom)} aria-labelledby={`h-${slug(c.nom)}`}>
+    <h2 id={`h-${slug(c.nom)}`} class="rub__titre">{c.nom}</h2>
+    <ul class="rows">
+      {c.plats.map((p) => (
+        <li class="row">
+          <h3 class="row__nom">{p.nom}</h3>
+          <p class="row__prix num">{prix(p.prix)}</p>
+          {p.desc && <p class="row__desc">{p.desc}</p>}
+        </li>
+      ))}
+    </ul>
+  </section>
+))}

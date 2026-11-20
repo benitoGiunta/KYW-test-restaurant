@@ -1,0 +1,23 @@
+---
+import { navLiens } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<header class="nav">
+  <div class="container nav__in">
+    <a class="nav__logo" href={base} aria-label="El Greco, accueil">
+      <img src={`${base}img/el-greco-logo.png`} width="489" height="195" alt="" />
+      <span class="nav__nom">El Greco</span>
+    </a>
+    <button class="btn btn--secondary nav__menu" type="button" popovertarget="menu" aria-controls="menu">
+      <span class="nav__menu-ouvrir">Menu</span><span class="nav__menu-fermer">Fermer</span>
+    </button>
+    <nav class="nav__liens" id="menu" popover aria-label="Navigation principale">
+      {navLiens.map((l) => (
+        <a href={`${base}${l.href}`} aria-current={l.id === page ? 'page' : undefined}>{l.texte}</a>
+      ))}
+    </nav>
+    <a class="btn btn--primary nav__resa" href={`${base}contact/`}>Réserver</a>
+  </div>
+</header>

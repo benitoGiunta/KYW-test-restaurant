@@ -1,0 +1,62 @@
+---
+// Lunch et suggestions : données du site actuel (page « Lunch & Suggestions », relevé du 20/11).
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, guinguette as g, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const photos = ['/photos/plat-salade.webp', '/photos/plat-viande-croquette.webp', '/photos/coupelles-aperitif.webp'].map(photoDe);
+---
+<Base title="Lunch et suggestions" description={`Lunch en semaine et suggestions du moment à la ${site.nom} : plat du jour 14,50 €, plat et dessert 21,50 €, moules de Zélande, choucroute de la mer.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>Lunch et suggestions</h1>
+      <p class="lead">Le midi, du lundi au vendredi : un plat du jour, ou un plat et un dessert. Et les suggestions du moment, à toute heure.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:84%;--y:0%;--r:10deg;--taille:120px" aria-hidden="true"><Objet id="frites" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <h2 class="section__titre">Le <em>lunch</em></h2>
+      <div class="carte__menus">
+        {site.menus.map((m) => (
+          <article class="formule">
+            <h3>{m.nom}</h3>
+            <p class="formule__prix">{m.prix}</p>
+            <p class="muted" style="margin-top:0.8em">{m.description}</p>
+          </article>
+        ))}
+      </div>
+      <div class="carte" style="margin-top:calc(var(--u)*5)">
+        <h2 class="section__titre">Suggestions du <em>moment</em></h2>
+        <ul role="list">
+          {g.suggestions.map((p) => (
+            <li class="plat">
+              <span class="plat__nom">{p.nom}</span>
+              <span class="plat__points" aria-hidden="true"></span>
+              <span class:list={["plat__prix", { "plat__prix--long": String(p.prix).length > 11 }]}>{p.prix}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">À <em>table</em></h2>
+      <div class="grille-photos">
+        {photos.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-4, 3, -2][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,30 @@
+---
+import KywFooter from '@kyw/footer';
+import { site } from '../data/site';
+const b = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<section class="close" aria-label="Coordonnées">
+  <div class="container close__in">
+    <p class="close__s">À table, du mercredi au dimanche.</p>
+    <div class="close__cols">
+      <address>
+        <h2 class="close__h">Adresse</h2>
+        <p>{site.nom}<br />{site.adresse.rue}<br />{site.adresse.ville}</p>
+        <p><a href={site.itineraire} rel="noopener">Itinéraire</a></p>
+      </address>
+      <div>
+        <h2 class="close__h">Contact</h2>
+        <p><a href={site.telHref}>{site.telAffiche}</a><br /><a href={`mailto:${site.mail}`}>{site.mail}</a><br /><a href={site.facebook} rel="noopener">Facebook</a></p>
+      </div>
+      <div>
+        <h2 class="close__h">Horaires</h2>
+        <p>Mercredi et dimanche, midi<br />Jeudi et vendredi, midi et soir<br />Samedi, soir<br /><span class="muted">Lundi et mardi, fermé</span></p>
+      </div>
+      <div>
+        <a class="btn btn--fill" href={`${b}reservation/`}>Réserver une table</a>
+      </div>
+    </div>
+    <p class="close__credits" data-credits>Photographies : Be Belge… et d’ailleurs.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />

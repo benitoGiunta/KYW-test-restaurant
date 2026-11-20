@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto, specialites, prix, avis, histoire, itineraire, menu, boissons } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const nbPlats = (l: { plats: unknown[] }[]) => l.reduce((n, c) => n + c.plats.length, 0);
+---
+<Base page="accueil" photos schema title="El Greco, restaurant grec à Bouge (Namur)" description="Cuisine familiale grecque à Bouge, aux portes de Namur : mezze, giouvetsi, grillades et vins grecs. Rue de Sardanson 22.">
+  <section class="hero container" aria-labelledby="h-hero">
+    <div class="hero__texte">
+      <h1 id="h-hero" class="hero__titre"><span class="guides"><span>Saveurs</span> <span>grecques</span></span></h1>
+      <p class="lead">Les traditions culinaires familiales de la Grèce, à Bouge, aux portes de Namur.</p>
+      <p class="actions">
+        <a class="btn btn--primary" href={`${base}contact/`}>Réserver une table</a>
+        <a class="btn btn--secondary" href={`${base}our-menu/`}>Voir le menu</a>
+      </p>
+    </div>
+    <div class="hero__index">
+      <h2 class="index__titre">Nos spécialités</h2>
+      <ul class="rows rows--index">
+        {specialites.map((p) => (
+          <li class="row"><h3 class="row__nom">{p.nom}</h3><p class="row__prix num">{prix(p.prix)}</p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="histoire container" aria-labelledby="h-histoire">
+    <div class="histoire__texte">
+      <h2 id="h-histoire">Depuis {resto.depuis}, la table familiale de la Grèce à Namur</h2>
+      <p>{histoire[1]}</p>
+      <p><a href={`${base}about-us/`}>Lire notre histoire</a></p>
+    </div>
+    <Photo nom="coupole" w={1600} h={1067} slot="histoire" alt="Église à coupole bleue sur une île grecque, sous un ciel clair" legende="Illustration : église à coupole bleue, Grèce. Photographie de stock, pas le restaurant." sizes="(min-width: 60rem) 66vw, 100vw" position="60% 40%" class="histoire__photo" />
+  </section>
+
+  <section class="cartes container" aria-labelledby="h-cartes">
+    <h2 id="h-cartes">À table</h2>
+    <ul class="rows rows--grandes">
+      <li class="row row--lien">
+        <h3 class="row__nom"><a href={`${base}our-menu/`}>Le menu</a></h3>
+        <p class="row__desc">Entrées froides et chaudes, spécialités, grillades, poissons, salades et menus enfant : {nbPlats(menu)} lignes de carte.</p>
+      </li>
+      <li class="row row--lien">
+        <h3 class="row__nom"><a href={`${base}carte-des-boissons/`}>Les boissons</a></h3>
+        <p class="row__desc">Cocktails grecs, apéritifs, vins grecs à la bouteille, bières et softs.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="avis container" aria-labelledby="h-avis" data-verify="avis Trustindex repris mot pour mot, à faire vérifier par le client">
+    <h2 id="h-avis">Ce que disent nos clients</h2>
+    <ul class="avis__liste">
+      {avis.map((a) => (
+        <li class="avis__item">
+          <blockquote><p>« {a.texte} »</p></blockquote>
+          <p class="avis__auteur">{a.auteur}, {a.date}</p>
+        </li>
+      ))}
+    </ul>
+    <p class="note">Avis reproduits mot pour mot depuis Trustindex, sans note ni nombre d’avis.</p>
+  </section>
+
+  <section class="lieu" aria-label="Horaires et adresse">
+    <div class="container lieu__in">
+      <Horaires />
+      <div class="lieu__adresse">
+        <h2>Adresse</h2>
+        <address>
+          <p>{resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.commune}</p>
+          <p><a href={resto.telHref}>{resto.tel}</a><br /><a href={`mailto:${resto.email}`}>{resto.email}</a></p>
+        </address>
+        <p><a href={itineraire}>Itinéraire</a></p>
+        <p class="actions"><a class="btn btn--primary" href={`${base}contact/`}>Réserver une table</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

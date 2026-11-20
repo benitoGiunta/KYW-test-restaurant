@@ -1,0 +1,27 @@
+---
+import KywFooter from '@kyw/footer';
+import { site, nav, jours } from '../data/site';
+import { u } from '../lib/url';
+const { hours = true } = Astro.props;
+---
+<div class="close" role="group" aria-label="Coordonnées et liens">
+  <div class="container close__grid">
+    <p class="close__line">À très vite, Chaussée de Waterloo.</p>
+    <address class="close__block">
+      <p>{site.nomLong}<br />{site.adresse.rue}<br />{site.adresse.ville}</p>
+      <p><a href={site.telHref}>{site.tel}</a><br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
+      {hours && <p>Tous les jours, {jours[0].heures}</p>}
+    </address>
+    <nav class="close__nav" aria-label="Pied de page">
+      <ul>
+        {nav.map((n) => <li><a href={u(n.href)}>{n.label}</a></li>)}
+        <li><a href={site.facebook} rel="noopener">Facebook</a></li>
+        <li><a href={site.tripadvisor} rel="noopener">Tripadvisor</a></li>
+      </ul>
+    </nav>
+    <p class="close__credits" data-credits>Photographies : Mr Edgard, d’après le site d’origine. Logo : Mr Edgard.</p>
+  </div>
+</div>
+<script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelector('img')?.remove(); s.appendChild(im); } };
+document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+<KywFooter base={import.meta.env.BASE_URL} />

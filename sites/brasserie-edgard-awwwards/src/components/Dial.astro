@@ -1,0 +1,43 @@
+---
+// Le cadran : anneau de 24 h, midi en haut, minuit en bas. Arc extérieur = salle ouverte ; arcs intérieurs = cuisine (semaine).
+// Décoratif (aria-hidden) : l'information est écrite en texte à côté. L'aiguille est dessinée vers 12 h 30 ; src/motion/cadran.ts la tourne à l'heure de Namur,
+// allume l'arc courant, fait courir la trotteuse (repos) et dessine l'aiguille fantôme sous le pointeur.
+import { site } from '../data/site';
+interface Props { vide?: boolean; classe?: string }
+const { vide = false, classe = '' } = Astro.props;
+const C = 240;
+const ang = (h: number) => ((h / 24) * 360 + 180) * (Math.PI / 180);
+const pt = (r: number, h: number) => [C + r * Math.sin(ang(h)), C - r * Math.cos(ang(h))].map((n) => n.toFixed(2));
+const arc = (r: number, a: number, b: number) => {
+  const [x1, y1] = pt(r, a); const [x2, y2] = pt(r, b);
+  return `M${x1} ${y1}A${r} ${r} 0 ${b - a > 12 ? 1 : 0} 1 ${x2} ${y2}`;
+};
+const ticks = Array.from({ length: 48 }, (_, i) => i / 2);
+const reperes: [number, string][] = [[10, '10 h'], [12, '12 h'], [15, '15 h'], [18, '18 h'], [22.5, '22 h 30']];
+---
+<svg class={`dial ${classe}`} viewBox="0 0 480 480" aria-hidden="true" focusable="false" data-dial data-vide={vide ? '' : undefined}>
+  <circle class="dial__fond" cx={C} cy={C} r="226" />
+  {ticks.map((h) => {
+    const [x1, y1] = pt(h % 1 ? 200 : 194, h); const [x2, y2] = pt(212, h);
+    return <line class={h % 1 ? 'dial__tic' : 'dial__tic dial__tic--h'} x1={x1} y1={y1} x2={x2} y2={y2} />;
+  })}
+  {!vide && <>
+    <path class="dial__salle" d={arc(168, site.ouverture, site.fermeture)} data-arc="salle" />
+    <path class="dial__cuisine" d={arc(140, site.ouverture, site.pause.debut)} data-arc="midi" />
+    <path class="dial__cuisine" d={arc(140, site.pause.fin, site.fermeture)} data-arc="soir" />
+    <path class="dial__pause" d={arc(140, site.pause.debut, site.pause.fin)} data-arc="pause" />
+    {reperes.map(([h, t]) => { const [x, y] = pt(106, h); return <text class="dial__txt" x={x} y={y} text-anchor="middle" dominant-baseline="middle">{t}</text>; })}
+  </>}
+  {!vide && <g class="dial__fantome" data-dial-fantome>
+    <line x1={C} y1={C} x2={pt(186, 12.5)[0]} y2={pt(186, 12.5)[1]} />
+  </g>}
+  {!vide && <text class="dial__lecture" x={C} y={C + 52} text-anchor="middle" data-dial-lecture></text>}
+  <g class="dial__aiguille" data-dial-aiguille>
+    <line x1={C} y1={C} x2={vide ? C + 60 : pt(76, 12.5)[0]} y2={vide ? C - 120 : pt(76, 12.5)[1]} />
+  </g>
+  {!vide && <g class="dial__trotteuse" data-dial-trotteuse>
+    <line x1={C} y1={C + 26} x2={C} y2={C - 196} />
+    <circle cx={C} cy={C - 158} r="8" />
+  </g>}
+  <circle class="dial__axe" cx={C} cy={C} r="7" />
+</svg>

@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, histoire } from '../data/site';
+---
+<Base page="maison" title="La maison" description="La Brasserie Edgard à Saint-Servais : un cadre contemporain en bois sculpté, des banquettes en cuir caramel, de grandes baies cintrées et une terrasse couverte.">
+  <section class="entete wrap">
+    <h1 class="entete__titre display" data-split="lines" data-intro>La maison</h1>
+    <p class="entete__texte">Chaussée de Waterloo {site.adresse.numero}, à Saint-Servais (Namur).</p>
+  </section>
+
+  <section class="maison">
+    <figure class="maison__grande"><Photo cle="baies" widths={[800, 1400, 2000]} sizes="100vw" prioritaire /><figcaption>La salle sous les baies cintrées.</figcaption></figure>
+    <div class="maison__texte wrap">
+      {histoire.map((p) => <p>{p}</p>)}
+    </div>
+    <div class="maison__paire wrap">
+      <figure class="paire paire--a" data-reveal="clip"><Photo cle="banquettes" sizes="(min-width: 900px) 52vw, 100vw" /><figcaption>Banquettes et mur de bois sculpté.</figcaption></figure>
+      <figure class="paire paire--b" data-reveal="clip" data-delay="0.12"><Photo cle="lampes" sizes="(min-width: 900px) 30vw, 70vw" widths={[400, 700]} /><figcaption>Lampes sur le rebord d’une baie.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="terrasse" aria-labelledby="t-terrasse">
+    <div class="wrap terrasse__grille">
+      <h2 class="terrasse__titre display" data-split="lines" id="t-terrasse">La terrasse<br />couverte.</h2>
+      <p class="terrasse__texte" data-reveal="up">Parasols, tables dressées et vue sur la rue : la terrasse prolonge la salle en été. Le côté véranda, lumineux, donne directement dessus.</p>
+      <figure class="terrasse__a" data-reveal="clip"><Photo cle="terrasse" sizes="(min-width: 900px) 55vw, 100vw" /></figure>
+      <figure class="terrasse__b" data-parallax="0.15"><Photo cle="veranda" sizes="(min-width: 900px) 30vw, 70vw" widths={[400, 700]} /></figure>
+    </div>
+  </section>
+
+  <section class="reserve wrap" aria-labelledby="t-reserve">
+    <h2 class="reserve__titre display" data-split="lines" id="t-reserve">Venez voir.</h2>
+    <p><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver</span></a></p>
+  </section>
+</Base>

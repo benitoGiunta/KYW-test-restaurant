@@ -1,0 +1,75 @@
+---
+const prixSouple = (t: string) => t.split(' / ').map((s) => s.replace(/ /g, '\u00a0')).join(' / ');
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, guinguette, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const picto = (cat: string) => g.pictos.find((p) => cat.startsWith(p.categorie))?.picto ?? 'fourchette';
+const photos = ['/photos/plat-tartare.webp', '/photos/plat-burger.webp', '/photos/plat-volaille-pates.webp', '/photos/dessert-coupe-glacee.webp'].map(photoDe);
+const slug = (t: string) => 'cat-' + t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '');
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+---
+<Base title="La carte" description={`La carte et les formules de ${site.nom} à ${site.adresse.commune} : entrées, viandes, poissons, pâtes fraîches, salades, desserts et menu enfants.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>La carte</h1>
+      <p class="lead">Entrées, viandes, poissons, pâtes fraîches, salades, menu enfants et desserts. Moules de Zélande en suggestion du moment, supplément emballage de 0,60 € à emporter.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:84%;--y:4%;--r:14deg;--taille:110px" aria-hidden="true"><Objet id="fourchette" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="carte">
+        <h2 class="sr-only">Le menu</h2>
+        <nav class="carte__index" data-carte-index aria-label="Catégories de la carte">
+          {site.carte.map((c) => <a href={`#${slug(c.categorie)}`}>{c.categorie}</a>)}
+        </nav>
+        <div class="carte__grille">
+          {site.carte.map((c) => (
+            <div id={slug(c.categorie)} data-cat>
+              <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie}</h3>
+              <ul role="list">
+                {c.plats.map((p) => (
+                  <li class="plat">
+                    <span class="plat__nom">{p.nom}{p.description && <span class="plat__desc">{p.description}</span>}</span>
+                    <span class="plat__points" aria-hidden="true"></span>
+                    {p.prix && <span class:list={['plat__prix', { 'plat__prix--long': p.prix.length > 11 }]}>{prixSouple(p.prix)}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <h2 class="section__titre" style="margin-top: calc(var(--u) * 5)">Le <em>lunch</em></h2>
+        <div class="carte__menus">
+          {site.menus.map((m) => (
+            <article class="formule">
+              <h3>{m.nom}</h3>
+              <p class="formule__prix">{m.prix}</p>
+              <p class="muted" style="margin-top:0.8em">{m.description}</p>
+            </article>
+          ))}
+        </div>
+        </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">Dans <em>l'assiette</em></h2>
+      <div class="grille-photos">
+        {photos.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-4, 3, -2, 5][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>

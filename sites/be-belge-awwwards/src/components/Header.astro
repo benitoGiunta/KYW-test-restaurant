@@ -1,0 +1,35 @@
+---
+import { site } from '../data/site';
+import { u } from '../lib/url';
+interface Props { page?: string }
+const { page = 'page' } = Astro.props;
+const liens = [
+  { id: 'carte', href: u('/carte/'), texte: 'La carte' },
+  { id: 'histoire', href: u('/histoire/'), texte: 'Le nid' },
+  { id: 'reservation', href: u('/reservation/'), texte: 'Venir et réserver' },
+];
+---
+<header class="tete">
+  <div class="tete__in">
+    <a class="tete__marque" href={u('/')} aria-label={`${site.nom}, accueil`}>Be Belge<span class="tete__pts" aria-hidden="true">…</span></a>
+    <nav class="tete__nav" aria-label="Principale">
+      {liens.map((l) => <a class="nl" href={l.href} aria-current={page === l.id ? 'page' : undefined}>{l.texte}</a>)}
+    </nav>
+    <a class="btn btn--tete" href={site.reservationUrl} rel="noopener" target="_blank">Réserver<span class="sr-only"> (nouvel onglet)</span></a>
+    <button class="tete__menu" type="button" aria-expanded="false" aria-controls="volet" data-menu-bouton>Menu</button>
+  </div>
+  <div class="volet" id="volet" role="dialog" aria-modal="true" aria-label="Menu" hidden data-menu>
+    <div class="volet__haut">
+      <span class="tete__marque" aria-hidden="true">Be Belge<span class="tete__pts">…</span></span>
+      <button class="tete__menu" type="button" data-menu-fermer>Fermer</button>
+    </div>
+    <nav class="volet__nav" aria-label="Menu principal">
+      <a class="volet__lien" href={u('/')} aria-current={page === 'accueil' ? 'page' : undefined}><span>Accueil</span></a>
+      {liens.map((l) => <a class="volet__lien" href={l.href} aria-current={page === l.id ? 'page' : undefined}><span>{l.texte}</span></a>)}
+    </nav>
+    <div class="volet__actions">
+      <a class="btn" href={site.reservationUrl} rel="noopener" target="_blank">Réserver une table<span class="sr-only"> (nouvel onglet)</span></a>
+      <a class="btn btn--clair-ligne" href={site.telephoneHref}>Appeler le {site.telephoneLisible}</a>
+    </div>
+  </div>
+</header>

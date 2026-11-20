@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import Ornements from '../components/Ornements.astro';
+import { site, guinguette, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const galerie = ['/photos/clocher.webp', '/photos/parasols.webp', '/photos/terrasses.webp'].map(photoDe);
+const trio = photoDe('/photos/maison-eglise.webp');
+const histoire = site.histoire;
+---
+<Base title="La maison" description={`L'histoire de ${site.nom} : cuisine familiale grecque à ${site.adresse.commune} depuis 1986, selon le site du restaurant.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>La maison</h1>
+      <p class="lead">{site.baseline}</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--canard is-flottant" style="--x:86%;--y:0%;--r:-10deg;--taille:120px" aria-hidden="true"><Objet id="amphore" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap maison__grille">
+      <figure class="tirage" style="--w:100%; cursor: default; --r:-3deg">
+        <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="eager" decoding="async" />
+        <figcaption>Murs chaulés et coupole bleue<span class="illu">photo de stock</span></figcaption>
+      </figure>
+      <div class="maison__texte">
+        <Ornements />
+        <h2 class="section__titre">Une maison <em>de famille</em></h2>
+        <div class="prose">{histoire.map((p) => <p>{p}</p>)}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">Un air de <em>Cyclades</em></h2>
+      <div class="grille-photos">
+        {galerie.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-3, 4, -2, 3, -5, 2][i]}deg`} data-reveal="up" data-delay={String((i % 3) * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(' sur')[0]}<span class="illu">photo de stock</span></figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>

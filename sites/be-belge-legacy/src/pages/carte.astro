@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import Rows from '../components/Rows.astro';
+import { formules, periode } from '../data/site';
+const b = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title="La carte, Be Belge… et d’ailleurs" description="Entrées, plats et desserts du Menu du Chef de Be Belge… et d’ailleurs, à Wépion." here="carte/">
+  <section class="sec page-head">
+    <div class="container">
+      <p class="pencil">Carte</p>
+      <h1>La carte</h1>
+      <p class="lead">Un choix par service, dernier menu publié, {periode}. {formules.map((f) => `${f.nom} ${f.prix}`).join(', ')} ; vins en option.</p>
+    </div>
+  </section>
+  <section class="sec"><div class="container carte-page"><Rows /></div></section>
+  <section class="sec sec--alt"><div class="container cta"><p class="big">Envie de venir ?</p><a class="btn btn--fill" href={`${b}reservation/`}>Réserver</a></div></section>
+</Base>

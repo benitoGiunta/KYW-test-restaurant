@@ -1,0 +1,67 @@
+/* Jetons de la Brasserie Edgard (variante « Le cadran »). Les NOMS sont le contrat de l'engine ; les valeurs viennent de DESIGN.md :
+   le mur crème de la salle, le noyer sculpté, le cuir caramel des chaises, les verres prune des tables.
+   Les url() des polices portent la base (/brasserie-edgard/awwwards/) : Vite ne réécrit pas ces chemins vers public/. */
+
+@font-face {
+  font-family: 'Gambarino';
+  src: url('/brasserie-edgard/awwwards/fonts/gambarino-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Hanken';
+  src: url('/brasserie-edgard/awwwards/fonts/hanken-100_900-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Couleur : par rôle */
+  --c-bg: #f1e7cf;            /* ground : mur crème de la salle */
+  --c-fg: #231710;            /* ink : noyer presque noir (15,2:1) */
+  --c-muted: #6b5645;         /* muted : bois patiné (5,6:1) */
+  --c-line: #d6c5a0;          /* line : joints du mur */
+  --c-accent: #a3214b;        /* accent : verres prune des tables ; titres, focus, CTA (6,0:1) */
+  --c-cuir: #c27a38;          /* cuir caramel des chaises : arcs du cadran, aplats (décoratif) */
+  --c-curtain: #2b1b12;       /* curtain : bois sculpté sombre du mur */
+
+  /* Sections « bois » : fond noyer, texte crème */
+  --c-bois-muted: #d6bd98;    /* 9,4:1 sur noyer */
+  --c-bois-accent: #e69a56;   /* caramel clair, 7,6:1 sur noyer */
+
+  /* Familles */
+  --f-display: 'Gambarino', 'Georgia', serif;
+  --f-body: 'Hanken', system-ui, sans-serif;
+
+  /* Échelle fluide (390 → 1440 px), sauts × 2 environ */
+  --t-mega: clamp(3.75rem, 1.4rem + 10.5vw, 13rem);
+  --t-xl: clamp(2.75rem, 1.4rem + 5.4vw, 6.5rem);
+  --t-l: clamp(1.9rem, 1.3rem + 2.6vw, 3.6rem);
+  --t-m: clamp(1.2rem, 1.05rem + 0.7vw, 1.6rem);
+  --t-body: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem;
+
+  /* Espace : quatre humeurs */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+  --serre: calc(var(--u) * 3);
+  --normal: calc(var(--u) * 8);
+  --aere: calc(var(--u) * 14);
+  --entracte: calc(var(--u) * 20);
+
+  /* Forme : rien n'est arrondi sauf ce qui est rond dans la salle, l'horloge et la pastille */
+  --radius: 0px;
+
+  /* Couches */
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}

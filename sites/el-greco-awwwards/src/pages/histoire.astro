@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+---
+<Base page="histoire" title="L’histoire" description="L’histoire d’El Greco, restaurant grec de Bouge (Namur) : des traditions culinaires familiales, depuis 1986 selon le site du restaurant, et un nom qui s’étire.">
+  <section class="entete" aria-labelledby="h1">
+    <div class="wrap"><h1 class="entete__titre display" id="h1" data-allonge data-intro>Le Grec</h1></div>
+  </section>
+  <section class="sec--serre sec">
+    <div class="wrap grille recit">
+      <div class="recit__texte">
+        <p>Depuis {site.depuis}, selon le site du restaurant, El Greco célèbre les traditions culinaires familiales de la Grèce à Namur. L’adresse est à Bouge, rue de Sardanson, aux portes de la ville.</p>
+        <p>À la carte : des crèmes grecques à partager avec du pain pita, un mezze signature, de l’agneau mijoté plusieurs heures, du poulpe grillé et des grillades d’Angus et d’agneau. Les vins sont grecs, du Limniona au Retsina.</p>
+        <p>Pour en savoir plus sur la maison, appelez le <a class="lien nw" href={site.telephoneHref}>{site.telephoneLisible}</a>.</p>
+      </div>
+      <figure class="recit__photo">
+        <div class="tall" data-allonge="cadre" data-intro data-respire><Photo cle="coupole" sizes="(min-width: 52rem) 28vw, 90vw" widths={[480, 800, 1200]} /></div>
+        <figcaption class="legende">Illustration (Pexels) : église à coupole bleue en Grèce, pas le restaurant.</figcaption>
+      </figure>
+    </div>
+  </section>
+  <section class="sec papier" aria-labelledby="h-nom">
+    <div class="wrap grille recit">
+      <div class="recit__texte">
+        <Photo cle="logo" classe="logo-nom" sizes="144px" widths={[300]} />
+        <h2 class="display index__titre" id="h-nom" data-split="lines">Un nom qui s’étire</h2>
+        <p>El Greco veut dire « le Grec » en espagnol. Sur ce site, tout s’allonge : les titres, les cadres, les prix.</p>
+      </div>
+    </div>
+  </section>
+  <section class="sec" aria-labelledby="h-reperes">
+    <div class="wrap">
+      <h2 class="display index__titre" id="h-reperes" style="margin-bottom: var(--normal)" data-split="lines">Trois repères</h2>
+      <ul class="chiffres">
+        <li data-reveal="clip"><span class="grand display num">{site.depuis}</span><span>Année annoncée par le site du restaurant pour les débuts d’El Greco.</span></li>
+        <li data-reveal="clip" data-delay="0.08"><span class="grand display num">{site.tripadvisor.note}&nbsp;/&nbsp;5</span><span>Note sur Tripadvisor, pour {site.tripadvisor.avis} avis (relevé du dossier).</span></li>
+        <li data-reveal="clip" data-delay="0.16"><span class="grand display num">30&nbsp;€</span><span>Budget moyen annoncé hors boisson, d’après Trouve Ton Resto (ancien).</span></li>
+      </ul>
+      <p class="suite"><a class="lien" href={u('/reservation/')}>Réserver une table</a></p>
+    </div>
+  </section>
+</Base>
