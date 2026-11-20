@@ -10,6 +10,7 @@ const eur = (n: number) => `${n.toFixed(2).replace('.', ',')} €`.replace(',00
 const A = 8, Z = 24;
 const barre = (h: (typeof horaires)[number]) => ({ a: ((h.ouvre - A) / (Z - A)) * 100, w: ((h.ferme - h.ouvre) / (Z - A)) * 100 });
 const echelle = [8, 11, 14, 17, 20, 22];
+const echelleM = [8, 14, 22];
 ---
 <Base description="Brasserie de Jambes, ouverte depuis 1984 : croquettes artisanales, boulettes, vol-au-vent, bières de caractère. De 11 h à 22 h, sans fermer.">
   <section class="hero ground-midi" data-hour="11">
@@ -35,9 +36,9 @@ const echelle = [8, 11, 14, 17, 20, 22];
 
   <section class="sec ground-apres" data-hour="15" aria-labelledby="h-heures">
     <div class="wrap grid">
-      <div class="sec__hour"><span>15 h, toujours ouvert</span></div>
+      <div class="sec__hour"><span>15 h, la salle est ouverte</span></div>
       <div class="sec__body">
-        <h2 id="h-heures" class="display display--xl" data-split="lines" style="max-width:12ch">Pas de pause entre midi et soir.</h2>
+        <h2 id="h-heures" class="display display--xl" data-split="lines" style="max-width:12ch">De 11 h à 22 h, la salle reste ouverte.</h2>
         <p class="prose" style="margin-block:1.5rem 3rem">La maison ouvre à 11 h et reste ouverte jusqu’à 22 h, du lundi au samedi. Le dimanche, elle ferme à 16 h.</p>
         <div class="week" role="list" aria-label="Heures d’ouverture de la semaine">
           {horaires.map((h) => {
@@ -53,7 +54,7 @@ const echelle = [8, 11, 14, 17, 20, 22];
         </div>
         <div class="week__scale" aria-hidden="true">
           <span></span>
-          <div>{echelle.map((e) => <span style={`left:${((e - A) / (Z - A)) * 100}%`}>{e}</span>)}</div>
+          <div>{echelle.map((e) => <span class={echelleM.includes(e) ? "" : "no-m"} style={`left:${((e - A) / (Z - A)) * 100}%`}>{e}</span>)}</div>
           <span></span>
         </div>
       </div>
@@ -105,7 +106,7 @@ const echelle = [8, 11, 14, 17, 20, 22];
       <div class="sec__hour"><span>20 h, à table</span></div>
       <div class="sec__body">
         <h2 id="h-mur" class="display display--l" data-split="lines" style="max-width:20ch;margin-bottom:2.5rem">Des frites, une casserole qui fume, une Chimay tirée à la pression.</h2>
-        <div class="strip">
+        <div class="strip" role="region" aria-label="Photos de la maison" tabindex="0">
           <figure><div class="frame" data-reveal="clip"><Photo cle="frites" sizes="(max-width: 760px) 72vw, 22vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
           <figure><div class="frame" data-reveal="clip"><Photo cle="casserole" sizes="(max-width: 760px) 72vw, 22vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
           <figure><div class="frame" data-reveal="clip"><Photo cle="biere" sizes="(max-width: 760px) 72vw, 22vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>

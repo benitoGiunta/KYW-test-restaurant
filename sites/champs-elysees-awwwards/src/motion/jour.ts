@@ -35,7 +35,6 @@ function wake() {
 
 function tick(_t: number, dt: number) {
   if (!clock || !setHand || !setSweep) return;
-  if (!wide?.matches) return; // horloge masquée au téléphone : rien ne tourne
   const reduced = prefersReducedMotion();
   s.hour = reduced ? s.target : s.hour + (s.target - s.hour) * Math.min(1, dt / 120);
   if (!reduced && !s.idle && performance.now() - lastInput > IDLE_AFTER) startIdle();

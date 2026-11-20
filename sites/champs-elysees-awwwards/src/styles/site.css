@@ -25,7 +25,7 @@ body { background: var(--c-bg); }
 .ground-midi { --c-bg: var(--g-midi); }
 .ground-apres { --c-bg: var(--g-apres); }
 .ground-soir, .ground-nuit {
-  --c-fg: #eef0e8; --c-muted: #b4cbc1; --c-line: rgb(238 240 232 / 0.24); --c-accent: #ff7d4a;
+  --c-fg: #eef0e8; --c-muted: #b4cbc1; --c-line: rgb(238 240 232 / 0.24); --c-accent: #ff7d4a; --c-btn: #ff7d4a;
 }
 .ground-soir { --c-bg: var(--g-soir); }
 .ground-nuit { --c-bg: var(--g-nuit); }
@@ -60,7 +60,7 @@ body { background: var(--c-bg); }
 .btn { transition: color 0.35s, border-color 0.35s; }
 .btn:focus-visible { color: var(--c-bg); }
 .btn:focus-visible::before { transform: none; }
-.btn--plein { background: var(--c-accent); border-color: var(--c-accent); color: #12302a; }
+.btn--plein { background: var(--c-btn); border-color: var(--c-btn); color: #12302a; }
 .btn--plein::before { background: var(--c-fg); }
 .btn--plein:focus-visible { border-color: var(--c-fg); color: var(--c-bg); }
 @media (hover: hover) {
@@ -136,6 +136,7 @@ body { background: var(--c-bg); }
 .week__scale { display: grid; grid-template-columns: minmax(6rem, 10rem) 1fr minmax(6.5rem, 9rem); gap: var(--gutter); font-size: var(--t-xs); color: var(--c-muted); padding-top: 0.6rem; }
 .week__scale > div { position: relative; height: 1rem; }
 .week__scale span { position: absolute; transform: translateX(-50%); }
+@media (max-width: 480px) { .week__scale .no-m { display: none; } }
 @media (max-width: 600px) { .week__row, .week__scale { grid-template-columns: 5.2rem 1fr 5.6rem; gap: 0.6rem; } .week__day { font-size: var(--t-body); } }
 
 /* Paire asymétrique */
@@ -262,7 +263,14 @@ body { background: var(--c-bg); }
 .horloge__face i { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #12302a; }
 .horloge__h { padding: 0.15rem 0.5rem; background: #12302a; color: #eef0e8; font-family: var(--f-display); font-weight: 700; font-size: var(--t-xs); letter-spacing: 0.02em; white-space: nowrap; }
 html:not(.js) #horloge { display: none; }
-@media (max-width: 760px) { #horloge { display: none; } }
+body:has(.carte__rail) #horloge { display: none; }
+@media (max-width: 760px) {
+  #horloge { left: auto; right: var(--gutter); bottom: 0.75rem; gap: 0.25rem; }
+  .horloge__face { width: 2.5rem; border-width: 1.5px; }
+  .horloge__aiguille { width: 3px; margin-left: -1.5px; }
+  .horloge__face i { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; }
+  .horloge__h { font-size: 0.7rem; padding: 0.1rem 0.35rem; }
+}
 
 /* Pied KYW : retour au survol sans toucher au paquet */
 .kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
