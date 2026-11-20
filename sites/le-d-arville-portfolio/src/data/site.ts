@@ -143,14 +143,14 @@ export const site: Restaurant = {
       placeholder: false,
     },
   ],
-  bonPlan: 'Le site de la maison annonce aussi un menu « Bon Plan » le jeudi soir, le vendredi midi et le samedi midi. Sa composition et son prix ne sont pas publiés : à demander au restaurant.',
+  bonPlan: 'Le site de la maison annonce aussi un menu « Bon Plan » le jeudi soir, le vendredi midi et le samedi midi. Composition et prix : nous les demander.',
   vins: 'La carte des vins, « Le cellier du D’Arville », est proposée au restaurant. Eaux aromatisées 4 € le verre, kombucha 4,50 €.',
-  bonCadeau: { texte: 'Le restaurant propose des chèques cadeau. Montants et modalités : à demander à la maison.', placeholder: false },
+  bonCadeau: { texte: 'Le restaurant propose des chèques cadeau.', placeholder: false },
   histoire: [
-    "Estelle et Olivier accueillent dans leur ferme du 19e siècle, à Wierde, aux portes de Namur. Un cadre contemporain, un salon, une table d'hôte, une cuisine ouverte sur la salle.",
-    "Le D'Arville a 20 ans, dit l'affiche de la maison. Avec le temps, la villa Barabas, la « petite sœur », est venue s'ajouter à 200 mètres du restaurant, avec ses suites et ses chambres à thèmes.",
+    "Estelle et Olivier accueillent dans leur ferme du 19e siècle, à Wierde. Un cadre contemporain, un salon, une table d'hôte, une cuisine ouverte sur la salle.",
+    "Le D'Arville a fêté ses 20 ans en 2025, dit l'affiche de la maison. Avec le temps, la villa Barabas, la « petite sœur », est venue s'ajouter à 200 mètres du restaurant, avec ses suites et ses chambres à thèmes.",
     "Entre les deux, une prairie : la maison l'a acquise, et le domaine compte aujourd'hui plus de 5 hectares. Un gîte équestre, « les filles d'à côté », y a été créé avec Nathalie Maroy.",
-    "La terrasse, le jardin et le point d'eau font partie de la maison : on y dresse les tables, on y prolonge le repas, on y regarde passer la lumière sur la brique.",
+    "La terrasse, le jardin et le point d'eau font partie de la maison : on y dresse les tables, on y prolonge le repas.",
   ],
   equipe: [
     { nom: 'Olivier Bourguignon', role: 'Chef et propriétaire', placeholder: false },
@@ -181,9 +181,9 @@ export const site: Restaurant = {
   privatisation: {
     intro: 'Séminaires, fêtes de fin d’année, cadeaux : la maison vous reçoit aussi en dehors du repas.',
     offres: [
-      { nom: 'Séminaires', texte: 'Les séminaires et les événements se tiennent à la villa Barabas, à 200 mètres du restaurant. Le déjeuner ou le dîner se prend au D’Arville.', textePlaceholder: true, photo: '/photos/barabas-petit-dejeuner.webp' },
-      { nom: 'Traiteur de fêtes', texte: 'Un service traiteur est proposé pour les fêtes de fin d’année : le restaurant précise la formule et les dates de commande sur demande.', textePlaceholder: true, photo: '/photos/traiteur-bois.webp' },
-      { nom: 'Chèque cadeau', texte: 'Offrez une table au D’Arville : le restaurant propose des chèques cadeau. Montants et retrait à demander à la maison.', textePlaceholder: false, photo: '/photos/cheque-table.webp' },
+      { nom: 'Séminaires', texte: 'Les séminaires et les événements se tiennent à la villa Barabas, à 200 mètres du restaurant. ', textePlaceholder: true, photo: '/photos/barabas-petit-dejeuner.webp' },
+      { nom: 'Traiteur de fêtes', texte: 'Un service traiteur est proposé pour les fêtes de fin d’année.', textePlaceholder: true, photo: '/photos/salle-tables.webp' },
+      { nom: 'Chèque cadeau', texte: 'Offrez une table au D’Arville : le restaurant propose des chèques cadeau.', textePlaceholder: false, photo: '/photos/cheque-table.webp' },
     ],
   },
   barabas: {
@@ -198,7 +198,7 @@ export const site: Restaurant = {
     services: ['Suites à thèmes : Glamour, Orientale, à la française', 'Chambres Zen et Aux pommes', 'Piscine chauffée', 'Petit-déjeuner à 18 € par personne', "Room service jusqu'à 23 h"],
   },
   photos: [
-    photo('/photos/hero-1800.webp', "Terrasse et bâtiment en briques au bord d'un bassin", 1800, 1198),
+    photo('/photos/hero-1800.webp', "Terrasse et bâtiment en briques au bord d'un bassin", 1600, 1065),
     photo('/photos/hero-960.webp', "Terrasse et bâtiment en briques au bord d'un bassin", 960, 639),
     photo('/photos/chap-dessert-1200.webp', 'Assiette blanche dressée sur un rondin de bois, couverts dorés', 1200, 1200),
     photo('/photos/chap-salle-1200.webp', 'Salle à manger, banquette ondulée bleue et mur orangé', 1200, 1200),

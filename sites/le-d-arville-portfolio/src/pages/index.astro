@@ -100,7 +100,7 @@ const resume = horairesResume();
   </section>
 
   <section class="galerie" aria-label="La maison en noir et blanc">
-    <div class="galerie__bande">
+    <div class="galerie__bande" tabindex="0" role="region" aria-label="Galerie, défilement horizontal">
       {galerie.map((p, i) => (
         <figure class:list={['galerie__item', `galerie__item--${hauteurs[i]}`]} data-reveal="up" data-delay={String(i * 0.08)} data-cursor="Voir">
           <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
@@ -114,7 +114,7 @@ const resume = horairesResume();
     <div class="wrap cloture__bloc">
       <p class="chiffre chiffre--centre" aria-hidden="true"><span data-compteur={String(c.ouverture.valeur)}>{c.ouverture.valeur}</span></p>
       <h2 class="petite-cap" id="cloture-titre"><span class="sr-only">{c.ouverture.valeur} </span>{c.ouverture.libelle}</h2>
-      <p class="cloture__sous">Le D'Arville a 20 ans, {c.ouverture.sousLibelle}.</p>
+      <p class="cloture__sous">Le D'Arville a fêté ses 20 ans en 2025, {c.ouverture.sousLibelle}.</p>
       <address class="cloture__adresse">{adresseLigne()}</address>
       <dl class="cloture__horaires">
         {resume.map((r) => <div><dt>{r.libelle}</dt><dd>{r.valeur}</dd></div>)}

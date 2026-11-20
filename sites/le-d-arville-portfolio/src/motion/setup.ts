@@ -14,7 +14,7 @@ export function setupMotion() {
     gsap.timeline()
       .to(root.querySelector('[data-loader-bar]'), { scaleX: 0, transformOrigin: 'right', duration: 0.4, ease: ease.inOut })
       .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -110, duration: 0.6, ease: ease.inOut, stagger: 0.05 }, '<')
-      .to(root, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.1, ease: ease.inOut }, '-=0.3'),
+      .to(root, { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.8, ease: ease.inOut }, '-=0.3'),
   );
   // Transition : le rideau monte du bas pour couvrir, puis se lève sur la nouvelle page.
   setTransition({

@@ -1,6 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-import { site } from '../data/site';
+import { site, heuresIllustratives } from '../data/site';
 import { asset } from '../lib/url';
 import Loader from '../components/Loader.astro';
 import Header from '../components/Header.astro';
@@ -54,9 +54,10 @@ const jsonLd = {
     addressCountry: site.adresse.pays,
   },
   geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon },
-  openingHoursSpecification: site.horaires.flatMap((h) =>
+  // Heures illustratives (dossier : « heures inconnues ») : jamais publiées en données structurées.
+  ...(heuresIllustratives() ? {} : { openingHoursSpecification: site.horaires.flatMap((h) =>
     h.creneaux.map((c) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: jours[h.jour], opens: c.ouverture, closes: c.fermeture })),
-  ),
+  ) }),
   acceptsReservations: site.reservation.url,
   sameAs: site.reseaux.map((r) => r.url),
 };
