@@ -25,7 +25,7 @@ export const site = {
   siteClient: 'https://www.tarikirestaurant.be',
   instagram: 'https://www.instagram.com/tariki.restaurant',
   planUrl: 'https://www.openstreetmap.org/search?query=Rue%20de%20l%27Ouvrage%202%205000%20Namur',
-  credit: 'Photos : Tariki',
+  credit: 'Visuels d’ambiance du site de Tariki, illustratifs',
 } as const;
 
 /** Services d’ouverture (donnees.json > horaires). */
@@ -62,9 +62,9 @@ export const histoire = {
     'Tariki ouvre un nouveau chapitre autour du feu : grillades cuites au charbon et à flamme ouverte, mezzés posés au milieu de la table, une carte volontairement courte.',
   ],
   trilogie: [
-    { nom: 'Bayti', note: 'Le foyer.' },
-    { nom: 'Bayti le Comptoir', note: 'Le comptoir.' },
-    { nom: 'Tariki', note: 'Le feu. Il prolonge les deux autres sans les remplacer.' },
+    { nom: 'Bayti', note: '' },
+    { nom: 'Bayti le Comptoir', note: '' },
+    { nom: 'Tariki', note: 'Il prolonge les deux autres sans les remplacer.' },
   ],
   valeurs: ['Cuisson au charbon et à flamme ouverte', 'Le partage', 'L’hospitalité'],
 } as const;
@@ -74,6 +74,6 @@ export const pageInfos = {
     'Le restaurant est fermé le dimanche.',
     'Du mercredi au samedi, le service du midi a lieu de 11 h 30 à 14 h : sandwichs au feu de bois à 9 €, formule à 17 €.',
     'Le lundi et le mardi, seul le service du soir est ouvert, de 18 h à 21 h.',
-    'La carte signale les allergènes : fruits à coque, lait, sésame. Dites-le à la personne qui vous accueille.',
+    'La carte signale les allergènes : fruits à coque, lait, sésame.',
   ],
 } as const;
