@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Hook PreToolUse (Bash) : refuse la lecture complète d'un gros fichier (règle de sobriété, 10/11/2026).
 
-Bloque `cat <fichier>` (et `cat a b …`) quand un fichier lu dépasse 200 lignes, et `sed -n 'a,bp'` sur plus de
-120 lignes. Laisse passer `cat > fichier`, `cat <<EOF`, `cat` en fin de tube et les fichiers courts.
+Bloque `cat <fichier>` (et `cat a b …`) quand un fichier lu dépasse 80 lignes, et `sed -n 'a,bp'`, `head -n`, `tail -n`
+sur plus de 80 lignes (seuils de 200 / 120 jusqu'au 20/11/2026). Laisse passer `cat > fichier`, `cat <<EOF`, `cat` en fin de tube et les fichiers courts.
 Approche 4 (16/11/2026) : refuse aussi, sans le préfixe `scripts/q.sh <nom>`, les commandes bavardes (node scripts/…,
 shoot/audit/sloplint/theme.mjs, pnpm, npx, playwright, curl, python3 scripts/…) ; exceptions : scan-brouillon.py,
 usage-*.py, marqueur.sh. Pendant la correction d'un site (.logs/identification-<slug>-<v>), refuse `sed -i` sur sites/<slug>-<v>/ tant que
@@ -10,7 +10,8 @@ usage-*.py, marqueur.sh. Pendant la correction d'un site (.logs/identification-<
 Code de sortie 2 = refus, le message (stderr) est renvoyé à l'agent."""
 import json, os, re, shlex, sys
 
-LIMITE_CAT, LIMITE_SED = 200, 120
+# Approche 5 / 7 (20/11/2026) : seuils abaissés de 200 / 120 à 80 lignes (run 2 : 77 à 87 % des sorties hors q.sh, surtout des cat).
+LIMITE_CAT, LIMITE_SED = 80, 80
 try:
     cmd = json.load(sys.stdin).get("tool_input", {}).get("command", "") or ""
 except Exception:
@@ -72,6 +73,13 @@ for seg in re.split(r"\|\||&&|;|\n", cmd):
                 n = lignes(f, cwd)
                 if n > LIMITE_CAT:
                     refus.append(f"`cat {f}` ({n} lignes)")
+        if mots[0] in ("head", "tail") and i == 0:
+            for k, m in enumerate(mots[1:], 1):
+                n = None
+                if m == "-n" and k + 1 < len(mots) and mots[k + 1].lstrip("+").isdigit(): n = int(mots[k + 1].lstrip("+"))
+                elif re.fullmatch(r"-n?\d+", m): n = int(re.sub(r"\D", "", m))
+                if n and n > LIMITE_SED:
+                    refus.append(f"`{mots[0]} {m}` ({n} lignes)")
         if mots[0] == "sed" and "-n" in mots:
             for m in mots:
                 r = re.fullmatch(r"'?(\d+),(\d+)p'?", m)
@@ -91,7 +99,7 @@ if marqueurs:
 if refus:
     sys.stderr.write(
         "Lecture refusée par la règle de sobriété (agents/sobriete.md) : " + ", ".join(refus)
-        + ". Lis la plage utile : `grep -n <motif> <fichier> | head -20`, puis `sed -n 'a,bp'` sur 60 lignes au plus, "
+        + ". Lis la plage utile : `grep -n <motif> <fichier> | head -20`, puis `sed -n 'a,bp'` sur 60 lignes au plus (80 au maximum), "
         "ou l'outil Read avec offset/limit. Pour un journal : `tail -20`.\n")
     sys.exit(2)
 sys.exit(0)
