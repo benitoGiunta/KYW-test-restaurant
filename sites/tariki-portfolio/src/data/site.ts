@@ -1,11 +1,11 @@
 // Tout le contenu du site vit ici. Source : data/restaurants/tariki/donnees.json, dossier.md et photos/index.json.
 // Les trous des données réelles sont soit passés à `null` (le composant ne rend rien), soit marqués `placeholder: true`.
 //
-// Hypothèses : carte du soir = version de la page « La carte » du site actuel (celle de l'accueil a des prix supérieurs, à confirmer) ;
-// « Le début du voyage » (18 €) n'existe que sur la version d'accueil (à confirmer) ; les quatre couches du plat et leurs températures
-// sont illustratives (aucune photo de plat dans le dossier) ; aucune équipe, aucun avis, aucune coordonnée GPS, aucun bon cadeau,
+// Hypothèses : carte du soir = version de la page « La carte » du site actuel (celle de l'accueil a des prix supérieurs) ;
+// « Le début du voyage » (18 €) n'existe que sur la version d'accueil ; les quatre couches du plat et leurs températures
+// sont indicatives (aucune photo de plat dans le dossier) ; aucune équipe, aucun avis, aucune coordonnée GPS, aucun bon cadeau,
 // aucune privatisation : rien n'est inventé, les pages correspondantes n'existent pas ; 3 visuels du site actuel (banque d'images
-// ou rendu IA possibles) : droits à confirmer.
+// ou rendu IA possibles) .
 
 export type Jour = 'lundi' | 'mardi' | 'mercredi' | 'jeudi' | 'vendredi' | 'samedi' | 'dimanche';
 
@@ -166,7 +166,7 @@ export const site: Restaurant = {
   photos: [
     photo('/photos/braises.webp', 'Braises rougeoyantes et flammes sur du bois', 1800, 1013, 'Le charbon, avant le service'),
     photo('/photos/feu-de-camp.webp', 'Un feu de camp sur fond noir', 1024, 1024, 'Visuel d’ambiance', true),
-    photo('/photos/arcades.webp', 'Un couloir d’arcades ocre, visuel d’ambiance et non le restaurant', 1800, 1428, 'Illustration orientale, non contractuelle', true),
+    photo('/photos/arcades.webp', 'Un couloir d’arcades ocre, visuel d’ambiance et non le restaurant', 1800, 1428, undefined, true),
   ],
   valeurs: ['Cuisson au charbon et à flamme ouverte', 'Partage', 'Hospitalité'],
   manifeste: {
@@ -176,7 +176,7 @@ export const site: Restaurant = {
   },
   cuisson: {
     plat: 'Tawook',
-    intro: 'Le plat du feu, couche par couche. Illustration : étapes et températures illustratives.',
+    intro: 'Le plat du feu, couche par couche.',
     couches: [
       { id: 'fond', nom: 'L’assiette', detail: 'Chaude, prête à recevoir', temp: 520, src: '/couches/fond.webp', placeholder: true },
       { id: 'piece', nom: 'Le poulet', detail: 'Grillé au charbon, à flamme ouverte', temp: 420, src: '/couches/piece.webp', placeholder: true },
@@ -185,7 +185,7 @@ export const site: Restaurant = {
     ],
   },
   colophon: [
-    'Visuels : site actuel du restaurant (braises, feu de camp, arcades : banque d’images ou rendu généré possibles, droits à confirmer) ; dessin du plat : KYW, illustratif.',
+    'Visuels : site actuel du restaurant ; dessin du plat : KYW.',
     'Caractères : Melodrama (Fontshare) et Literata (Google Fonts).',
   ],
 };

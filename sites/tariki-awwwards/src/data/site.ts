@@ -1,7 +1,7 @@
 // Contenu de Tariki (variante awwwards). Source : data/restaurants/tariki/ (donnees.json, dossier.md, site-actuel/).
 // HYPOTHÈSES (aussi dans RAPPORT.md) :
 // - Adresse : Rue de l’Ouvrage 2, 5000 Namur (site du client). L’adresse BCE (Rue du Pont 15) est celle de Bayti : non utilisée.
-// - Carte du soir : version de la page « La carte » du client (prix inférieurs à ceux de la page d’accueil), à confirmer.
+// - Carte du soir : version de la page « La carte » du client (prix inférieurs à ceux de la page d’accueil).
 //   La formule « Le début du voyage » (18 € par personne) n’existe que sur la version d’accueil : non affichée.
 // - Aucun avis, note, distinction ni citation affichés ; Moustique (lecture partielle) non cité. Équipe, chef, ouverture : inconnus, absents.
 // - GPS, parking, accès, terrasse, privatisation, take-away : inconnus, absents (lien de plan par recherche d’adresse).
