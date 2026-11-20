@@ -34,7 +34,7 @@ export const boissons = [
 export const mardi = 'Le mardi, une boisson offerte aux étudiants avec un brunch.';
 export const histoire = 'Ouvert en 2020, rue des Fossés Fleuris, à deux pas du Bistro Bisou dont les brunchs ont donné l’idée du lieu.';
 export const photos = {
-  salle: { alt: 'La salle du café, petit lieu cocooning (photo du client à fournir)', ratio: '16/9' },
-  facade: { alt: 'La façade et la terrasse de la rue des Fossés Fleuris (photo du client à fournir)', ratio: '4/3' },
-  table: { alt: 'Une table de brunch dressée (photo du client à fournir)', ratio: '4/5' },
+  salle: { alt: 'La salle du café, petit lieu cocooning', ratio: '16/9' },
+  facade: { alt: 'La façade et la terrasse de la rue des Fossés Fleuris', ratio: '4/3' },
+  table: { alt: 'Une table de brunch dressée', ratio: '4/5' },
 };

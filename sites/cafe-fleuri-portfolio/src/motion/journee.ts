@@ -209,7 +209,7 @@ function invitation() {
     if (h < moments[0].heure || h >= moments[moments.length - 1].heure || !lien || !texte) { bloc.hidden = true; return; }
     const m = momentCourant(h);
     lien.href = `#${m.id}`;
-    texte.textContent = `Il est ${pad(d.getHours())}h${pad(d.getMinutes())} : aller au moment présent, ${m.titre.toLowerCase()}${m.placeholder ? ' (illustratif)' : ''}`;
+    texte.textContent = `Il est ${pad(d.getHours())}h${pad(d.getMinutes())} : aller au moment présent, ${m.titre.toLowerCase()}`;
     bloc.hidden = false;
   };
   maj();

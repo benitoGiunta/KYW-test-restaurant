@@ -79,15 +79,15 @@ export const site: Restaurant = {
     {
       categorie: 'Boissons',
       plats: [
-        { nom: 'Limonade maison', description: 'framboise', prix: '4,50 €', placeholder: true },
-        { nom: 'Thé glacé maison', description: 'pêche', prix: '4,50 €', placeholder: true },
+        { nom: 'Limonade maison', description: 'framboise', prix: null, placeholder: true },
+        { nom: 'Thé glacé maison', description: 'pêche', prix: null, placeholder: true },
         { nom: 'Café et boissons chaudes', description: '', prix: '3 €', placeholder: true },
       ],
     },
   ],
   menus: [
-    { nom: 'Brunch', prix: '21,95 €', description: 'Prix relevé dans un guide ancien, à confirmer. Salé, sucré ou mixte.', placeholder: true },
-    { nom: 'Petit-déjeuner', prix: '11,95 €', description: 'Prix relevé dans un guide ancien, à confirmer.', placeholder: true },
+    { nom: 'Brunch', prix: '21,95 €', description: 'Salé, sucré ou mixte.', placeholder: true },
+    { nom: 'Petit-déjeuner', prix: '11,95 €', description: '', placeholder: true },
   ],
   histoire: [
     "Le Café Fleuri ouvre en 2020 comme second lieu du Bistro Bisou : les brunchs de la maison mère étaient trop demandés pour une seule salle.",
@@ -160,8 +160,8 @@ export const moments: Moment[] = [
     accroche: 'La salle ouvre : un café, une boisson chaude, le petit-déjeuner sur une table en bois.',
     accrochePlaceholder: true, placeholder: true, photo: '/photos/cafe-latte.webp',
     lignes: [
-      { nom: 'Café et boissons chaudes', detail: '', prix: '3 €', placeholder: true },
-      { nom: 'Petit-déjeuner', detail: 'Prix relevé dans un guide ancien, à confirmer', prix: '11,95 €', placeholder: true },
+      { nom: 'Café et boissons chaudes', detail: '', prix: null, placeholder: true },
+      { nom: 'Petit-déjeuner', detail: '', prix: '11,95 €', placeholder: true },
       { nom: 'Pain perdu', detail: '', prix: null, placeholder: false },
     ],
   },
@@ -177,7 +177,7 @@ export const moments: Moment[] = [
   },
   {
     id: 'm-12h', heure: 12, heureTexte: '12h', titre: 'Le déjeuner', theme: 'ocre',
-    accroche: 'Plats cités par un annuaire en ligne, à titre d’exemple : pancakes au gravlax, œufs Benedict sur épinards.',
+    accroche: 'Pancakes au gravlax, œufs Benedict sur épinards.',
     accrochePlaceholder: true, placeholder: false, photo: '/photos/comptoir.webp',
     lignes: [
       { nom: 'Pancakes au saumon gravlax', detail: 'mascarpone, aneth et citron', prix: null, placeholder: false },
@@ -189,15 +189,15 @@ export const moments: Moment[] = [
     accroche: 'Une limonade à la framboise, un thé glacé à la pêche, un granola maison : la pause de l’après-midi, en terrasse si le ciel le veut.',
     accrochePlaceholder: true, placeholder: true, photo: '/photos/framboises.webp',
     lignes: [
-      { nom: 'Limonade maison', detail: 'framboise', prix: '4,50 €', placeholder: true },
-      { nom: 'Thé glacé maison', detail: 'pêche', prix: '4,50 €', placeholder: true },
+      { nom: 'Limonade maison', detail: 'framboise', prix: null, placeholder: true },
+      { nom: 'Thé glacé maison', detail: 'pêche', prix: null, placeholder: true },
       { nom: 'Pain perdu', detail: 'aussi dans le brunch sucré', prix: null, placeholder: false },
       { nom: 'Granola maison', detail: '', prix: null, placeholder: false },
     ],
   },
   {
     id: 'm-16h', heure: 16, heureTexte: '16h', titre: 'La fermeture', theme: 'nuit',
-    accroche: 'La frise s’arrête à 16h, heure de fermeture retenue pour cette maquette, à confirmer.',
+    accroche: 'Dernière heure de la journée : la fermeture, à 16h.',
     accrochePlaceholder: true, placeholder: true,
     lignes: [
       { nom: 'Terrasse', detail: 'mentionnée par les sites d’avis', prix: null, placeholder: false },
