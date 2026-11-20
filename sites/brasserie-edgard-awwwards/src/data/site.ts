@@ -8,7 +8,7 @@ export const site = {
   nom: 'Brasserie Edgard',
   alias: 'Mr Edgard',
   baseline: 'Votre brasserie restaurant à Namur',
-  description: 'Brasserie belge à Saint-Servais (Namur), ouverte tous les jours de 10 h à 22 h 30 : carpaccios, croquettes maison, moules de Zélande, brochettes géantes et pâtes fraîches.',
+  description: 'Brasserie belge à Saint-Servais (Namur), ouverte tous les jours de 10 h à 22 h 30 : carpaccios, croquettes, moules de Zélande, brochettes et pâtes fraîches.',
   typeCuisine: 'Brasserie belge et française',
   adresse: { rue: 'Chaussée de Waterloo', numero: '473', cp: '5002', commune: 'Saint-Servais (Namur)', pays: 'BE' },
   geo: { lat: 50.472276, lon: 4.8331165 },

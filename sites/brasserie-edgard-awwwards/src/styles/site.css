@@ -10,7 +10,7 @@ body { font-weight: 400; }
 
 /* Liens et boutons : deux traitements (soulignement qui se redessine, plaque qui se remplit) */
 /* (1) Liens texte : soulignés au repos, un trait de 2 px se redessine depuis la gauche par-dessus. */
-.lien { --trait: var(--c-accent); background: linear-gradient(var(--trait), var(--trait)) 0 100% / 0 2px no-repeat, linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; padding-bottom: 0.1em; transition: background-size 0.5s cubic-bezier(0.215, 0.61, 0.355, 1); }
+.lien { --trait: var(--c-accent); background: linear-gradient(var(--trait), var(--trait)) 0 100% / 0 2px no-repeat, linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; display: inline-block; padding-block: 0.3em; transition: background-size 0.5s cubic-bezier(0.215, 0.61, 0.355, 1); }
 @media (hover: hover) { .lien:hover { background-size: 100% 2px, 100% 1px; } }
 .lien:focus-visible, .lien:active { background-size: 100% 2px, 100% 1px; }
 .plats .lien, .pied .lien, .terrasse .lien { --trait: var(--c-bois-accent); }
@@ -37,7 +37,7 @@ body { font-weight: 400; }
 .tete__marque img { width: auto; height: 2.5rem; }
 .tete__nav ul { display: flex; align-items: center; gap: calc(var(--u) * 2.5); list-style: none; padding: 0; }
 .nl { font-size: var(--t-s); font-weight: 500; padding-block: 0.4em; background: linear-gradient(var(--c-accent), var(--c-accent)) 0 100% / 0 2px no-repeat; transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-@media (hover: hover) { .nl:hover { background-size: 100% 2px; } }
+@media (hover: hover) { .nl:hover { background-size: 100% 2px; color: var(--c-accent); } .tete__marque img { transition: scale 0.4s cubic-bezier(0.16, 1, 0.3, 1), rotate 0.4s cubic-bezier(0.16, 1, 0.3, 1); } .tete__marque:hover img { scale: 1.06; rotate: -2deg; } .pied__tel { transition: color 0.3s, translate 0.4s cubic-bezier(0.16, 1, 0.3, 1); } .pied__tel:hover { color: var(--c-bois-accent); translate: 0.1em 0; } }
 .nl:focus-visible, .nl:active, .nl[aria-current] { background-size: 100% 2px; }
 .tete__menu { display: none; font-size: var(--t-s); font-weight: 600; padding: 0.6em 1.1em; border: 1.5px solid var(--c-fg); border-radius: 999px; }
 main { padding-top: 4.4rem; }
