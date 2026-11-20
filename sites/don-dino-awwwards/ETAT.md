@@ -1,22 +1,21 @@
-# ETAT : Don Dino, variante awwwards, phase 1 (construction-1)
+# ETAT : Don Dino, variante awwwards, phase 2 (construction-2) terminée
 
-## Fait
-- Concept « Quatorze services » choisi sur trois (DESIGN.md : brief, concepts notés, Concept Card, système, checklist 1 à 18).
-- Scaffold Astro 5, engine copié d'un site livré (huile-sur-le-feu, vérifié identique à engine.md), tokens, engine.css, polices (Big Shoulders Display 800, Work Sans), favicon, OG provisoire.
-- `src/data/site.ts` (coordonnées, horaires, accès, aucun placeholder), `src/data/carte.ts` (115 plats réels générés depuis donnees.json), `src/lib/photos.ts` (11 photos du client).
-- Pages : accueil, carte, histoire, réservation, 404, toutes statiques et sans `.motion`. Rideau et menu mobile en place (`motion/setup.ts`, `menu.ts`).
-- Build OK (`scripts/q.sh build pnpm build:site sites/don-dino-awwwards`), `dist/don-dino/awwwards/` écrit, `pnpm index` passé. Hero mesuré aux 4 viewports, pas de défilement horizontal à 1440, 1280, 1024, 390 (page d'accueil).
+## Fait (phase 1)
+- Concept « Quatorze services », DESIGN.md (checklist 1 à 18), scaffold, données réelles (115 plats), 5 pages statiques, rideau, menu mobile.
 
-## Reste (phases 2 et 3)
-- Animations : cascade des 14 cases (`.sem`), reveals `data-split` / `data-reveal`, hovers, curseur facultatif ; `motion/` ne contient que rideau et menu.
-- Point 9 de la checklist : OG composée avec `og.mjs` (l'actuelle est faite avec sharp, police de repli), vérifier favicon.
-- Point 16 : la paire asymétrique est utilisée deux fois sur l'accueil.
-- QA navigateur (captures, axe, clavier, LCP), contrôle des polices préchargées, mobile 390 non capturé (seulement mesuré), `carte.astro` : bandeau d'index sticky à tester au toucher.
-- RAPPORT.md (phase 3) : listes des écarts de données ci-dessous.
+## Fait (phase 2)
+- Module pilote `src/motion/services.ts` (heure de Bruxelles vers les 14 services) + `src/motion/idle.ts` (`startIdle`), branchés par `setup.ts`. Ligne d'état (accueil, réservation), case courante ou suivante, filet d'avancement, jour courant des horaires, filet rouge qui suit le jour survolé (bureau), trotteuse en temps réel (repos).
+- Signature : cascade des 14 cases (clip-path du haut, jour après jour), ScrollTrigger `once`.
+- Intros `data-split="lines" data-intro` sur les 5 h1 ; `data-split="lines"` sur les h2 de l'accueil ; photo du hero non cachée (échelle douce).
+- Hovers : 3 traitements (`site.css` § Phase 2), tous sous `(hover: hover)` + `:focus-visible` + `:active` ; lien du pied KYW souligné.
+- Point 16 : pâtes en bande de trois photos (`.trio`), 2 colonnes au téléphone.
+- Build OK ; contrôles Playwright (`.logs/dd-aw2-check*.mjs`) : états du pilote justes à 3 instants (ven 19 h 15, sam 15 h, dim 10 h, sam 22 h 45 sur la réservation), cascade finie, 0 texte caché après défilement, `scrollWidth` = fenêtre à 1440 et 390, menu (Échap, focus), navigation vers la carte sans erreur, réduit sans texte caché.
+
+## Reste (phase 3)
+- Shoot complet (agent captures), `report.json` : points 35, 36 (`idleMotion` probablement false : trotteuse petite, immobilité écrite), 44, 45, 47 ; OG composée (point 9) ; RAPPORT.md avec les écarts de données (voir phase 1 ci-dessous).
+- Vérifier à l'œil le contraste de « SOIR PROCHAIN » sur case rouge et de la case courante (encre) ; vérifier la hauteur de la cascade au téléphone (cases en lignes).
 
 ## Décisions et pièges
-- Aucun placeholder : desserts, boissons, avis, presse, e-mail absents (donc pas de mailto ni de formulaire).
-- Écarts de données à signaler : « 20 pizzas dès 9,30 € » (site) contre 26 pizzas de 10,50 à 17,80 € (carte PDF, retenue) ; note Google 4,3 avec 1033 ou 350 avis (non affichée) ; orthographes du PDF conservées (« carbonnara »).
-- La photo 09 (homme en chemise blanche) n'est pas identifiée : jamais nommée Dino. Photo 05 (image de vidéo, 226 px) et logo non utilisés.
-- Hero : titre en `--t-mega` 9,6 vw (au-delà, le CTA sortait de la flottaison). Semaine : `.sem__jour { min-width: 0 }` indispensable (débordement de 6 px sinon).
-- Scripts temporaires dans `.logs/` (gitignorés) : dd-mesure.mjs (mesure du hero), dd-ico.mjs.
+- La ligne d'état suppose les horaires réguliers (jours fériés et fermetures exceptionnelles inconnus) : à signaler dans RAPPORT.md comme hypothèse.
+- Les captures d'élément Playwright (`locator.screenshot` plus haut que la fenêtre) montrent le lien d'évitement fixe : artefact de capture, pas un défaut (absent de la capture de fenêtre).
+- Données (phase 1) : « 20 pizzas dès 9,30 € » (site) contre 26 pizzas de 10,50 à 17,80 € (carte PDF, retenue) ; note Google non affichée ; orthographes du PDF conservées ; photo 09 jamais nommée Dino.

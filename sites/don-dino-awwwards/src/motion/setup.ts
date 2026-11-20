@@ -1,7 +1,8 @@
-// Mouvement global (phase 1 : rideau et menu). Le rideau se verse de bas en haut : un voile rouge puis le vert de nuit.
+// Mouvement global : rideau, menu, module pilote des services (phase 2). Le rideau se verse de bas en haut : un voile rouge puis le vert de nuit.
 import { gsap } from 'gsap';
 import { setTransition, ease } from '../engine';
 import { startMenu } from './menu';
+import { startServices } from './services';
 
 export function setupMotion() {
   const panneaux = (c: HTMLElement) => [c.querySelector<HTMLElement>('.curtain__panel--b')!, c.querySelector<HTMLElement>('.curtain__panel--a')!];
@@ -21,4 +22,5 @@ export function setupMotion() {
     },
   });
   startMenu();
+  startServices();
 }
