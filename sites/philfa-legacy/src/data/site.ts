@@ -17,7 +17,7 @@ export const resto = {
 };
 export const horaires = [
   { jour: 'Lundi', ferme: true }, { jour: 'Mardi' }, { jour: 'Mercredi' }, { jour: 'Jeudi' }, { jour: 'Vendredi' }, { jour: 'Samedi' }, { jour: 'Dimanche', ferme: true },
-].map((h) => ({ ...h, midi: h.ferme ? null : '12:00 à 14:30', soir: h.ferme ? null : '18:15 à 21:00' }));
+].map((h) => ({ ...h, midi: h.ferme ? null : '12\u202fh à 14\u202fh\u202f30', soir: h.ferme ? null : '18\u202fh\u202f15 à 21\u202fh' }));
 export const momentPrix = { deux: '35 €', trois: '41 €' };
 export const moment = [
   { service: 'Entrée', choix: ['Saumon frais mariné, agrumes menthe, citron et bâtonnets de poireaux crus', 'Poêlée de champignons, beurre à l’ail, fines herbes, mini croque-monsieur, huile de truffe'] },

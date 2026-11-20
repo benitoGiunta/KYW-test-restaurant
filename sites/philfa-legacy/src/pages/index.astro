@@ -12,7 +12,7 @@ const adr = `${resto.adresse.rue} ${resto.adresse.numero}`;
   <section class="hero" id="top">
     <div class="container hero__grid">
       <div class="hero__text">
-        <h1>Brasserie de centre-ville à Namur.</h1>
+        <h1>Brasserie de <span class="nowrap">centre-ville</span> à Namur.</h1>
         <p class="lead">Une cuisine de saison aux épices du monde, dans un cadre feutré.</p>
         <p class="hero__actions">
           <a class="btn btn--primary" href={resto.reservation} rel="noopener">Réserver une table</a>
@@ -26,7 +26,7 @@ const adr = `${resto.adresse.rue} ${resto.adresse.numero}`;
       <dl class="counter" aria-label="Menu du moment">
         <div><dt>Menu du moment, deux services</dt><dd class="figure">{nb(momentPrix.deux)}</dd></div>
         <div><dt>Menu du moment, trois services</dt><dd class="figure">{nb(momentPrix.trois)}</dd></div>
-        <div><dt>Renouvelé</dt><dd class="counter__txt">toutes les 6 semaines</dd></div>
+        <div><dt>Le menu du moment est renouvelé</dt><dd class="counter__txt">Toutes les 6 semaines</dd></div>
       </dl>
     </div>
   </section>
@@ -41,6 +41,7 @@ const adr = `${resto.adresse.rue} ${resto.adresse.numero}`;
           <p><a href={resto.carteOsm} rel="noopener">Voir sur le plan</a></p>
         </address>
       </div>
+      <div class="infos__col">
       <dl class="schedule">
         {horaires.map((h) => (
           <div class:list={['schedule__row', h.ferme && 'is-closed']}>
@@ -49,8 +50,9 @@ const adr = `${resto.adresse.rue} ${resto.adresse.numero}`;
           </div>
         ))}
       </dl>
+      <p class="infos__note">Fermé le 11 novembre.</p>
+      </div>
     </div>
-    <p class="container infos__note">Fermé le 11 novembre.</p>
   </section>
 
   <section class="menu" id="carte">
@@ -127,7 +129,7 @@ const adr = `${resto.adresse.rue} ${resto.adresse.numero}`;
     </div>
   </section>
 
-  <footer slot="pied" class="pied">
+  <section slot="pied" class="pied" aria-label="Coordonnées">
     <div class="container pied__grid">
       <div class="pied__id">
         <p class="pied__nom">PhilFa</p>
@@ -150,7 +152,7 @@ const adr = `${resto.adresse.rue} ${resto.adresse.numero}`;
         <p><a href={resto.siteActuel} rel="noopener">philfa.be</a></p>
       </div>
     </div>
-  </footer>
+  </section>
 
   <script is:inline>
     (() => {
