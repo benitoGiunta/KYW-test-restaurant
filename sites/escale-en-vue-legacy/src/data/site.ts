@@ -34,8 +34,8 @@ export const jours = [
 export const carte = [
   { titre: 'Apéro planchette', detail: 'À partager sur la terrasse, avec une vue sur la vallée.', quand: 'Du jeudi soir au dimanche midi' },
   { titre: 'Plat du jour maison', detail: 'Parmigiana, tagliatelles fraîches, filet de poulet mariné. Une variante végé est prévue.', quand: 'Sur réservation, dès le vendredi soir' },
-  { titre: 'Bières régionales et trappistes', detail: 'Achel, Chimay, Orval, Rochefort, Westmalle et d’autres.', quand: 'Toute la saison' },
-  { titre: 'Softs de qualité', detail: 'Pour accompagner l’apéro et le repas.', quand: 'Toute la saison' },
+  { titre: 'Bières régionales et trappistes', detail: 'Achel, Chimay, Orval, Rochefort, Westmalle et d’autres.', quand: null },
+  { titre: 'Softs de qualité', detail: 'Pour accompagner l’apéro et le repas.', quand: null },
 ];
 
 export const photos = {

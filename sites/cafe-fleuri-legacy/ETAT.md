@@ -1,8 +1,1 @@
-# ETAT · cafe-fleuri-legacy · construction-3 (phase 3/3, terminé)
-**Fait (phase 1)** : audit, deal/draw, Squeeze, comps, DESIGN.md, comp.md, AUDIT.md, composants, 4 routes.
-**Fait (phase 2)** : hero review (self), reproduction de la comp (comp.md), nav alignée sur le conteneur + logo `aria-label`, barre d'appel limitée au téléphone et qui s'efface devant un bouton Appeler (IntersectionObserver, `inert`), Appeler de la nav et du hero masqués au téléphone, bouton « Copier le numéro » (page Venir, pointeur fin) avec états par le texte, états `:active`/`:disabled`, cibles 44 px (logo, liens), safe-area, carte : « Aussi » fusionné dans « Brunchs et plats » (REFLEX 77), Venir : titres au `--text-section` (REFLEX 78) et marge de grille corrigée (F20), waive 81 (photos). Mesures : aucun débordement 320 à 1920, 7 arrêts clavier avec anneau, reduced motion et sans script contrôlés. Build OK, sloplint sans FAIL ni REFLEX ouvert, KywFooter + noindex + mention sur les 4 routes.
-**Reste (phase 3)** : captures (agent captures) puis QA 375/1280/1920, RAPPORT.md, entrée `$LOG` ; photos du client à fournir (3 slots : salle, façade, table) ; pas de `pnpm index` ni `[publier]` ici.
-**Décisions** : le thème Squeeze interdit reveal, parallax et boucle : motion = états seulement (gate 22 sans objet) ; pas de formulaire ni de switcher (aucune donnée) ; pas de badge « ouvert » (horaires contradictoires) ; barre d'appel retirée du bureau (la nav porte Appeler).
-**Pièges** : `.hallmark/` gitignoré ; le NOTE 58 (3 blocs avant les actions) est accepté ; planche.py rogne les captures mobiles (ne pas juger la barre d'appel dessus : mesurée par script).
-
-**Fait (phase 3)** : QA ciblée, cible tactile du pied de page à 44 px, twitter:card, rebuild OK, RAPPORT.md écrit. Reste : photos client, og:image, téléphone et horaires réels ; `pnpm index` et `[publier]` à la charge de la publication.
+Révision 1 terminée : F1 et F2 traités sauf og:image. Voir REVISION-1.md.

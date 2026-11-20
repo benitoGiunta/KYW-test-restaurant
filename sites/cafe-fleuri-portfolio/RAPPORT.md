@@ -13,3 +13,6 @@ Hypothèse : QA-build.md de l'agent « captures » absent ; contrôles ciblés f
 - Loader : compte de 00:00 à l'heure réelle, hors 9-16h affiche p. ex. 21:00 ; désactivé en mobile.
 - Badge dupliqué (en-tête compact + hero), hérité du gabarit.
 - Non fait : sloplint, capture visuelle complète (pas de QA-build.md), commit final [publier], gabarits/UTILISATION.md (gabarits/ protégé).
+
+## Statut d'activité (ajouté en révision 1)
+Le dossier et `donnees.json` signalent que le café est probablement fermé définitivement (local repris par Bistro Camélia). `restaurants.json` le marque « actif » : l'arbitrage reste à l'orchestrateur. La maquette garde le ton présent ; le statut n'est pas affiché sur le site (F1-3, voir REVISION-1.md).

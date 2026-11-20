@@ -1,0 +1,43 @@
+# Revue legacy · Escale en Vue ! · passe 1
+Verdict : A_CORRIGER
+Lecture en une ligne de l'idée du site (sans avoir lu DESIGN.md) : une page unique vert forêt et pêche, ton « guinguette de terrasse » franc, qui met la vue sur la vallée, les quatre soirs d'ouverture et un coup de fil en avant ; sobre, lisible, sans effets.
+
+Scores /10 :
+- Design 7 : palette vert + pêche cohérente et non crème-terracotta, hero tenu (`d-01-hero.png`, h1 dense, photo de la planchette arrondie), mais une seule vraie photo « vue » et deux photos exploitables (terrasse parasol, table panorama) livrées puis inutilisées.
+- Usabilité 8 : appel et horaires à portée dès le hero, menu Popover fonctionnel à 320 px (capture ciblée `relsite-escale-320-menu.png`), 0 débordement à 1440/390/320, focus visible (QA : 0 invisible).
+- Créativité 6 : pas de slop (aucun eyebrow, aucun reveal, aucun dégradé), mais l'idée reste un gabarit propre : la signature « jour courant » est invisible hors saison (20/11/2026 : `jsAuj` = 0), donc rien de mémorable à l'œil aujourd'hui.
+- Contenu 6 : faits (adresse, tél., e-mail, horaires, réseaux, lien carte) tous conformes à `donnees.json`/`infos.json` ; mais saison terminée non dite et deux fréquences/légendes non prouvées (F2-1, F2-2).
+- Technique 8 : build à jour (captures 01:24 postérieures au dist 01:23, `src/` plus ancien), 0 erreur console, 0 requête en échec, CLS 0, LCP mobile 1540 ms, 737 Ko ; un contentinfo en double (F2-3) et une photo de 484 Ko (F3-4).
+
+Méthode : QA-revue1.md et planches lues ; mesures propres (axe-core de node_modules, accueil + `404.html` réel × 1440/390/320, console, requêtes, débordement, cibles, liens, survol) ; 4 captures ciblées ; contrôle typographique Python sur le HTML du dist. Pas de shoot complet. Serveur propre sur le port 4871, arrêté par `kill`.
+Non vérifié : rendu à 1920 px (le contrôle `sloplint` a signalé « texte à 8 px du bord à 1920 », mais son run `--render` sur fichiers locaux est inutilisable : polices et images non chargées, hors `base`) ; à contrôler en passe 2 si une capture 1920 est prise.
+
+## Findings (par gravité)
+
+Aucun F0, aucun F1.
+
+### F2 majeurs-mineurs (bloquent « PUBLIABLE » : le prompt exige 0 invention non marquée)
+- **F2-1 · Saison terminée présentée au présent.** `data/restaurants/escale-en-vue/donnees.json` : « saison terminée » ; dossier : « Saison 2026 … terminée ». Le site (`Hero.astro:14` « Saison 2026 : du 19 juin au 6 septembre. », `Horaires.astro:10` « Du jeudi soir au dimanche après-midi. », bouton « Réserver au … » dans le hero, la nav et le menu, JSON-LD `openingHoursSpecification` permanent) invite à venir et réserver aujourd'hui (20/11/2026) sans dire que la terrasse est fermée jusqu'à la saison suivante. Preuve : `d-01-hero.png` (aucune mention de fermeture), `jsAuj` = 0. Correction : sous la ligne de saison du hero, ajouter une phrase factuelle du type « Saison 2026 terminée. Les horaires ci-dessous sont ceux de 2026. » (statut déjà présent dans `site.ts` : `saison.statut: 'terminée'`, non rendu) ; ne pas inventer de date de réouverture ; garder « Réserver » seulement pour le plat maison.
+- **F2-2 · Fréquence et légende non prouvées.** `site.ts:37-38` : « Toute la saison » pour les bières et les softs (aucune source ne dit que tout est servi toute la saison ; c'est la fréquence inventée de `lecons/commun.md`) ; `Carte.astro:24` légende « Les trappistes de la carte des bières. » (le dossier : « Aucune carte publiée » ; `donnees.json` : « liste exacte inconnue »). Correction : retirer `quand` des deux lignes (le composant ne rend rien si `null`) ; légende neutre « Huit bières trappistes. » (sujet de `photos/index.json` : huit bouteilles). La liste « Achel, Chimay, Orval, Rochefort, Westmalle » est lisible sur la photo (index.json) : à garder, avec « et d'autres ».
+- **F2-3 · Deux `contentinfo` : axe `landmark-no-duplicate-contentinfo` (moderate), toutes pages et toutes largeurs.** `Pied.astro:4` `<footer class="pied">` + le `<footer>` du paquet `kyw-footer`. Correction : `<footer class="pied">` devient `<div class="pied">` (ne pas toucher `packages/kyw-footer`). Même correction déjà notée dans `lecons/revue.md` (le-ponti-2).
+- **F2-4 · Espaces sécables avant « : » et « ! » dans les textes visibles et les métadonnées.** Espace ordinaire (U+0020) dans `Pied.astro:24` « Photographies : », « Site d'origine : » (accueil et 404, risque de « : » seul en début de ligne à 320 px), `<title>` « Escale en Vue ! Terrasse… » et description « à Dave : cuisine… » (`pages/index.astro:8`), `og:site_name`. Le reste (`resto.nom`, `saison.texte`) utilise bien U+00A0. Correction : U+00A0 devant « : » et « ! » dans ces quatre endroits (Python, pas `sed`).
+
+### F3 finitions
+- **F3-1 · « à deux pas de Namur » contredit l'adresse « Dave (Namur) ».** `Lieu.astro:10` : Dave est une section de Namur (dossier : « Dave est une section de Namur »). Dire « au-dessus de la vallée, à Dave » ou « aux portes de la ville de Namur » est faux aussi ; proposer : « Une terrasse et un jardin potager à Dave, sur les hauteurs de Namur » seulement si « hauteurs » est prouvé, sinon « Une terrasse et un jardin potager à Dave. ».
+- **F3-2 · Orphelin « 71 » dans le menu à 320 px.** `Nav.astro:22` « Appeler le 0493 46 79 71 » passe sur deux lignes avec « 71 » seul (`relsite-escale-320-menu.png`) ; sloplint 49b le signale aussi à 375. Correction : numéro en U+00A0 (ou `white-space: nowrap` sur le numéro) et libellé « Appeler » + numéro sur la ligne suivante.
+- **F3-3 · Marque sans survol.** `.nav__marque` : aucun changement d'état au survol (mesure : fond, transform, couleur, soulignement identiques). Le CTA « Réserver au … » réagit bien (mesure : fond, léger transform) : le « none » du `report.json` (h-01) est un artefact de capture, ne pas corriger. Correction : soulignement ou léger changement de couleur sur la marque.
+- **F3-4 · `photos/mur-pierre.webp` = 484 Ko** (> 300 Ko ; affichée à ~500 px de large, sous le pli, `loading=lazy`, donc sans effet sur le LCP). Correction : ré-encoder à ~1000 px de large, qualité 72 (cible < 200 Ko). Deux fichiers de `dist/…/photos/` ne sont référencés nulle part dans le HTML : `terrasse-parasol.webp` (144 Ko), `table-panorama.webp` (68 Ko) : les utiliser (la terrasse parasol est la photo « vue » de qualité 4, conseillée pour le hero ou l'ambiance) ou les retirer de `public/`.
+- **F3-5 · Cible tactile « escale-en-vue.be » de 115 × 19 px** (crédit du pied, desktop et 320). Lien en ligne dans une phrase : exception WCAG 2.5.8, donc F3 ; `padding-block` possible.
+- **F3-6 · 404 : le paragraphe d'aide flotte à droite, désaligné du h1** (`relsite-escale-404-d.png` : h1 à gauche, « Revenez à l'accueil… » à y = 250 px sur la colonne de droite, bouton sous le h1). Correction : placer le bouton sous le paragraphe, ou empiler h1, paragraphe, bouton dans la même colonne.
+
+### Écartés (faux positifs, à ne pas corriger)
+- Axe `color-contrast` sur la 404 de `QA-revue1.md` (`.kyw-footer__note`, #6b787d sur #fbfaf8) : non reproduit sur le vrai `404.html` (0 violation de contraste à 1440/390/320, note en #55646a sur #F3F2EF) ; c'était la 404 brute de `serve.mjs`.
+- `skipLinkFirst: false` : `keyboard.stops[0]` = « Aller au contenu ». WARN robots/sitemap : `robots.txt` et `sitemap-index.xml` présents dans le dist (`Disallow: /`, conforme maquette). « `--nav` : aucun lien cliquable » : page unique. Hover « none » du CTA hero : artefact (voir F3-3).
+- `sloplint` : le run complet `--render` sur fichiers locaux (13 FAIL) et le run statique (3 FAIL : stamp, `:focus-visible`, `overflow-x: clip`) lisent l'HTML sans la feuille liée ; le CSS du dist contient `:focus-visible` (3), `overflow-x:clip` (1), `:active` (4). Seul reste à vérifier le tampon Hallmark en ligne 1 du CSS (la première règle du CSS construit est `.kyw-footer`) ; le prompt de revue ne le demande pas, non classé.
+
+## Ce qui est bien (à ne pas casser à la révision)
+1. Données de contact, horaires, adresse, liens (tel +32 493 46 79 71, mailto, Google Maps, Facebook, Instagram) tous conformes au dossier ; aucune note ni avis tiers repris ; aucun prix inventé ; `noindex`, mention « Maquette KYW, certaines données sont illustratives. » et logo KYW (un seul, bandeau clair) présents sur l'accueil et la 404.
+2. Zéro slop : pas d'eyebrow, de dégradé, de reveal ni de chiffres décoratifs ; palette vert + pêche propre à l'enseigne ; hiérarchie h1/h2/h3 correcte, un seul h1, `lang="fr"`, lien d'évitement, JSON-LD `Restaurant` avec adresse, géo, horaires.
+3. Robustesse mobile : 0 débordement de 320 à 1440, menu Popover (icône ouvrir/fermer), « Réserver » toujours visible, LCP mobile 1540 ms, CLS 0, mouvement réduit sans texte caché.
+
+Constats chiffrés : F0 0 · F1 0 · F2 4 · F3 6.

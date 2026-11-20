@@ -70,10 +70,10 @@ export const site: Restaurant = {
       ],
     },
     {
-      categorie: 'Plats cités par la presse locale',
+      categorie: 'Plats cités par un annuaire en ligne',
       plats: [
         { nom: 'Pancakes au saumon gravlax', description: 'mascarpone, aneth et citron', prix: null, placeholder: false },
-        { nom: 'Plateau charcuterie et fromage', description: 'à partager', prix: null, placeholder: false },
+        { nom: 'Plateau charcuterie et fromage', description: 'à partager, plutôt à l’apéritif du soir selon l’annuaire', prix: null, placeholder: false },
       ],
     },
     {
@@ -105,13 +105,13 @@ export const site: Restaurant = {
     photo('/photos/framboises.webp', 'Une tasse blanche remplie de framboises sur une table en bois clair', 1600, 1067),
     photo('/photos/yaourt-fraises.webp', 'Un bol de yaourt, flocons d’avoine et fraises', 1600, 1067),
     photo('/photos/the-citron.webp', 'Une main tient une tasse de thé au citron et au gingembre', 1600, 1067),
-    photo('/photos/terrasse.webp', 'Une terrasse fleurie avec des tables et des chaises pliantes bleues', 1600, 1067),
+    photo('/photos/terrasse.webp', 'Une terrasse avec des chaises rouges, une figurine, un tableau noir et des plantes devant la façade', 1000, 667),
     photo('/photos/salle.webp', 'Une longue table en bois et deux tasses dans une salle lumineuse ouverte sur la rue', 1600, 1067),
     photo('/photos/miel.webp', 'Un pot de miel et sa cuillère en bois', 1600, 1067),
     photo('/photos/legumes.webp', 'Oignon rouge, herbes et poivres sur une planche en bois', 1600, 1067),
     photo('/photos/comptoir.webp', 'Un comptoir de café animé, clients au bar', 1600, 1067),
   ],
-  valeurs: ['Fait maison', 'Gravlax préparé sur place', 'Limonades et thé glacé maison', 'Un lieu cocooning'],
+  valeurs: ['Fait maison', 'Gravlax maison', 'Limonades et thé glacé maison', 'Un lieu cocooning'],
 };
 
 /** Photo par chemin (erreur explicite si le chemin n'existe pas : un gabarit ne doit pas pointer dans le vide). */
@@ -161,48 +161,47 @@ export const moments: Moment[] = [
     accrochePlaceholder: true, placeholder: true, photo: '/photos/cafe-latte.webp',
     lignes: [
       { nom: 'Café et boissons chaudes', detail: '', prix: '3 €', placeholder: true },
-      { nom: 'Petit-déjeuner', detail: 'prix d’un guide ancien, à confirmer', prix: '11,95 €', placeholder: true },
+      { nom: 'Petit-déjeuner', detail: 'Prix relevé dans un guide ancien, à confirmer', prix: '11,95 €', placeholder: true },
       { nom: 'Pain perdu', detail: '', prix: null, placeholder: false },
     ],
   },
   {
     id: 'm-10h30', heure: 10.5, heureTexte: '10h30', titre: 'Le brunch', theme: 'midi',
-    accroche: 'Le moment de la maison : salé, sucré ou mixte, avec du gravlax préparé sur place et un granola maison.',
+    accroche: 'Le moment de la maison : salé, sucré ou mixte, avec du gravlax maison et un granola maison.',
     accrochePlaceholder: false, placeholder: false, photo: '/photos/yaourt-fraises.webp',
     lignes: [
       { nom: 'Brunch salé', detail: 'avocado toast, œufs Benedict, gravlax maison ou bacon grillé, salade', prix: null, placeholder: false },
       { nom: 'Brunch sucré', detail: 'deux pancakes au sirop d’érable, pain perdu, granola maison', prix: null, placeholder: false },
-      { nom: 'Brunch mixte', detail: 'un peu de chaque', prix: '21,95 €', placeholder: true },
+      { nom: 'Brunch mixte', detail: 'un peu de chaque', prix: null, placeholder: false },
     ],
   },
   {
     id: 'm-12h', heure: 12, heureTexte: '12h', titre: 'Le déjeuner', theme: 'ocre',
-    accroche: 'Le brunch se prend aussi à midi. Pancakes au gravlax, plateau de charcuterie et de fromage à partager.',
-    accrochePlaceholder: true, placeholder: false, photo: '/photos/legumes.webp',
+    accroche: 'Le brunch se prend aussi à midi : pancakes au gravlax, œufs Benedict sur épinards.',
+    accrochePlaceholder: true, placeholder: false, photo: '/photos/comptoir.webp',
     lignes: [
       { nom: 'Pancakes au saumon gravlax', detail: 'mascarpone, aneth et citron', prix: null, placeholder: false },
-      { nom: 'Plateau charcuterie et fromage', detail: 'à partager', prix: null, placeholder: false },
-      { nom: 'Oeufs Benedict sur épinards', detail: 'gravlax maison ou bacon grillé', prix: null, placeholder: false },
+      { nom: 'Œufs Benedict sur épinards', detail: 'gravlax maison ou bacon grillé', prix: null, placeholder: false },
     ],
   },
   {
     id: 'm-14h', heure: 14, heureTexte: '14h', titre: 'Le goûter', theme: 'corail',
-    accroche: 'Une limonade à la framboise, un thé glacé à la pêche, un dessert : la pause de l’après-midi, en terrasse si le ciel le veut.',
+    accroche: 'Une limonade à la framboise, un thé glacé à la pêche, un granola maison : la pause de l’après-midi, en terrasse si le ciel le veut.',
     accrochePlaceholder: true, placeholder: true, photo: '/photos/framboises.webp',
     lignes: [
       { nom: 'Limonade maison', detail: 'framboise', prix: '4,50 €', placeholder: true },
       { nom: 'Thé glacé maison', detail: 'pêche', prix: '4,50 €', placeholder: true },
-      { nom: 'Pancakes au sirop d’érable', detail: 'deux pièces', prix: null, placeholder: false },
+      { nom: 'Pain perdu', detail: 'aussi dans le brunch sucré', prix: null, placeholder: false },
       { nom: 'Granola maison', detail: '', prix: null, placeholder: false },
     ],
   },
   {
     id: 'm-16h', heure: 16, heureTexte: '16h', titre: 'La fermeture', theme: 'nuit',
-    accroche: 'La salle ferme en fin d’après-midi. À demain pour un nouveau brunch.',
+    accroche: 'La frise s’arrête à 16h, heure de fermeture retenue pour cette maquette, à confirmer.',
     accrochePlaceholder: true, placeholder: true,
     lignes: [
-      { nom: 'Limonade à emporter', detail: '', prix: '4,50 €', placeholder: true },
-      { nom: 'Thé glacé à emporter', detail: '', prix: '4,50 €', placeholder: true },
+      { nom: 'Terrasse', detail: 'mentionnée par les sites d’avis', prix: null, placeholder: false },
+      { nom: 'Mardi étudiants', detail: 'une boisson offerte avec un brunch', prix: null, placeholder: false },
     ],
   },
 ];
@@ -213,6 +212,6 @@ export const mardiEtudiants = 'Le mardi, une boisson offerte aux étudiants avec
 /** Horaires de la formule brunch (illustratifs) ; les horaires de la salle sont `site.horaires`. */
 export const horairesBar: { jour: Jour; texte: string; placeholder: boolean }[] = (
   ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'] as Jour[]
-).map((jour) => ({ jour, texte: '09:00 à 14:30', placeholder: true }));
+).map((jour) => ({ jour, texte: '10:30 à 14:30', placeholder: true }));
 
 export const jours: Jour[] = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];

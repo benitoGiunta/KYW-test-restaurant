@@ -21,7 +21,7 @@ const medaillons = [
   <div data-accueil>
     <!-- HERO : cadran réglé à l'heure réelle. Le nom et l'accroche sont peints au premier rendu (LCP). -->
     <section class="hero" id="accueil" data-ciel="auto" aria-labelledby="titre">
-      <figure class="hero__astre" data-astre data-reveal="fade" data-intro data-delay="0.2">
+      <figure class="hero__astre" data-astre>
         <span class="hero__orbite" data-astre-orbite aria-hidden="true"><span class="hero__soleil"></span></span>
         <span class="hero__repere hero__repere--g" aria-hidden="true">9h</span>
         <span class="hero__repere hero__repere--d" aria-hidden="true">16h</span>
@@ -31,14 +31,14 @@ const medaillons = [
       <div class="wrap">
         <div class="hero__haut">
           <Badge />
-          <p class="horloge" aria-label="Heure locale">
+          <div class="horloge" role="group" aria-label="Heure locale">
             <svg class="horloge__ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="fond" cx="18" cy="18" r="15.9" /><circle class="cran" cx="18" cy="18" r="15.9" pathLength="100" data-horloge-ring /></svg>
-            <span class="horloge__hm num" data-horloge-hm>--:--</span>
+            <span class="horloge__hm num" data-horloge-hm>09:00</span>
             <span class="horloge__s num" data-horloge-s aria-hidden="true"></span>
-          </p>
+          </div>
         </div>
         <h1 class="hero__nom t-mega" id="titre">Café<br />Fleuri</h1>
-        <p class="hero__baseline lead">Café-brunch à Namur, rue des Fossés Fleuris : un café le matin, le brunch salé, sucré ou mixte, une limonade maison l'après-midi.</p>
+        <p class="hero__baseline lead">Café-brunch à Namur, rue des Fossés Fleuris : un café le matin, le brunch salé, sucré ou mixte, une limonade maison l’après-midi.</p>
         <ul class="chips" data-reveal="up" data-intro data-delay="0.35" aria-label="Les moments de la journée">
           {moments.map((x, i) => (
             <li><a class="chip" href={`#${x.id}`} data-chip={x.id}><Icone nom={icones[i]} /><span class="chip__h">{x.heureTexte}</span><span class="chip__t">{x.titre}</span></a></li>
@@ -80,7 +80,7 @@ const medaillons = [
         </div>
         <div class="cols">
           <p class="c1-6 moment__accroche">{brunch.accroche}</p>
-          <ul class="c1-10 medaillons" data-medaillons tabindex="0" aria-label="Assiettes du brunch">
+          <ul class="c1-10 medaillons" data-medaillons tabindex="0" aria-label="Photos libres du brunch">
             {medaillons.map((md, i) => (
               <li>
                 <div class="medaillon">
@@ -171,7 +171,7 @@ const medaillons = [
           <p class="chapeau">Horaires de la semaine</p>
           <Horaires />
           <div class="actions">
-            <a class="btn btn--soleil" href={u('/reservation/')}>Réserver</a>
+            <a class="btn btn--soleil" href={u('/reservation/')}>Horaires et contact</a>
             <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
           </div>
         </div>

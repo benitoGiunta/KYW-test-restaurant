@@ -16,9 +16,9 @@ const [m1, m2] = g.manifeste.titre;
     <div class="hero__inner" data-hero-texte>
       <h1 class="hero__titre"><span>{g.heroTitre[0]}</span><span class="l2">{g.heroTitre[1]}</span></h1>
       <p class="hero__slogan">{g.slogan.texte}</p>
-      <p class="hero__adresse">{g.ouverture} · {adresseLigne()}</p>
+      <p class="hero__adresse">{site.saison.terminee ? `${site.saison.texte.replace('Saison 2026 du', 'Saison 2026 terminée (du')}). ` : ''}{g.ouverture} · {adresseLigne()}</p>
       <div class="actions">
-        <a class="btn btn--plein" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+        <a class="btn btn--plein" href={u('/reservation/')} data-magnetic="0.2">Contacter la maison</a>
         <a class="btn" href={u('/carte/')}>Voir la carte</a>
       </div>
     </div>
@@ -105,7 +105,7 @@ const [m1, m2] = g.manifeste.titre;
             </div>
           ))}
         </div>
-        <p class="bandeau-ex" style="margin-top: calc(var(--u) * 5)">Aucune carte publiée : prix et carte complète à confirmer avec le restaurant</p>
+        
       </div>
       <div class="actions" style="justify-content:center"><a class="btn" href={u('/carte/')}>La carte</a></div>
     </div>
@@ -118,16 +118,14 @@ const [m1, m2] = g.manifeste.titre;
       <p class="meta" style="text-align:center">Ils en parlent</p>
       <h2 class="sr-only">Avis</h2>
       <div class="avis__cartes">
-        {g.notes.map((n, i) => (
+        {g.themesAvis.map((t, i) => (
           <blockquote class="carte-avis carte-avis--vraie" data-carte-avis style={`--r:${[-4, 3, -2, 5][i]}deg`}>
-            <span class="carte-avis__etiq">{n.source}</span>
-            <p class="carte-avis__note">{n.note}</p>
-            <cite>{n.nombre}{n.date && <>, {n.date}</>}</cite>
+            <span class="carte-avis__etiq">On y parle de</span>
+            <p class="carte-avis__theme">{t}</p>
           </blockquote>
         ))}
       </div>
-      <p class="muted" style="text-align:center;margin-top:calc(var(--u)*3)">Notes relevées sur des sites tiers, non vérifiées directement. On y parle de {g.themesAvis.join(', ')}.</p>
-    </div>
+          </div>
   </section>
 
   <!-- Manifeste corail -->
@@ -137,7 +135,7 @@ const [m1, m2] = g.manifeste.titre;
       <h2 data-split="words">{m1}<br />{m2.replace(g.manifeste.motItalique, '').trim()} <em class="ital">{g.manifeste.motItalique}</em></h2>
       <p class="lead">{g.manifeste.texte}</p>
       <div class="actions">
-        <a class="btn" href={u('/reservation/')}>Réserver</a>
+        <a class="btn" href={u('/reservation/')}>Nous contacter</a>
         <a class="btn" href={u('/terrasse/')}>La terrasse</a>
       </div>
       <span class="obj is-flottant obj--mobile" style="--x:2%;--y:8%;--r:-15deg;--taille:120px;--delai:0.4s" aria-hidden="true"><Objet id="parasol" classe="obj__svg" /></span>
