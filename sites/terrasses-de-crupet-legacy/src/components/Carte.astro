@@ -1,0 +1,57 @@
+---
+import { panneaux, typo } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const fetes = [
+  { nom: 'Menu deux services', desc: '', prix: ['37\u00a0€\u00a0: plat-dessert', '44\u00a0€\u00a0: entrée-plat'] },
+  { nom: 'Menu trois services', desc: 'Ravioles de homard, foie gras au torchon, pavé de saumon laqué, biche rôtie, entremets façon Forêt-Noire (choix à chaque service)', prix: ['53\u00a0€\u00a0: entrée-plat-dessert', '59\u00a0€\u00a0: deux entrées-plat'] },
+  { nom: 'Menu quatre services', desc: 'Deux entrées, plat, dessert. Zakouskis en supplément, 3 pièces pour 10\u00a0€.', prix: ['69\u00a0€'] },
+];
+---
+<section class="carte" id="carte" aria-labelledby="h-carte">
+  <div class="container">
+    <header class="carte__head">
+      <h2 id="h-carte">La carte</h2>
+      <p class="lead">Cuisine de brasserie, du terroir et à partager. Carte du 15 octobre, les prix peuvent avoir changé.</p>
+    </header>
+    <div class="switch" data-switch>
+      <div class="switch__tabs" role="tablist" aria-label="Rubriques de la carte">
+        {panneaux.map((p, i) => <button type="button" role="tab" id={`t-${p.id}`} aria-controls={`p-${p.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{p.titre}</button>)}
+      </div>
+      {panneaux.map((p, i) => (
+        <div class="switch__panel" role="tabpanel" id={`p-${p.id}`} aria-labelledby={`t-${p.id}`} data-active={i === 0 ? '' : undefined}>
+          <p class="switch__note">{typo(p.note)}</p>
+          {p.blocs.map((b) => (
+            <div class="rows-group">
+              {p.blocs.length > 1 && <h3 class="rows-group__t">{b.categorie.replace(' (sélection)', '')}</h3>}
+              <ul class="rows">
+                {b.plats.map((d: any) => (
+                  <li class="row">
+                    <span class="row__nom">{typo(d.nom)}{d.description && <span class="row__desc">{typo(d.description)}</span>}</span>
+                    <span class="row__prix num">{typo(d.prix)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+    <div class="fetes">
+      <h3>Menus de fêtes à emporter</h3>
+      <p>Retrait au restaurant le 24 ou le 31 décembre, de 10 h 00 à 15 h 00. Commande avant le 20 décembre (24/12) ou le 27 décembre (31/12).</p>
+      <ul class="rows">
+        {fetes.map((f) => (
+          <li class="row"><span class="row__nom">{f.nom}{f.desc && <span class="row__desc">{f.desc}</span>}</span><span class="row__prix num">{f.prix.map((x) => <span>{x}</span>)}</span></li>
+        ))}
+      </ul>
+      <p class="fetes__liens"><a class="link" href={`${base}menu-fetes-emporter.pdf`}>Menu de fêtes en PDF</a> <a class="link" href={`${base}carte-crupet.pdf`}>La carte complète en PDF</a></p>
+    </div>
+  </div>
+</section>
+<script is:inline>
+document.querySelectorAll('[data-switch]').forEach((sw) => {
+  const tabs = [...sw.querySelectorAll('[role=tab]')];
+  const show = (t, focus) => { tabs.forEach((x) => { const on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; const p = document.getElementById(x.getAttribute('aria-controls')); if (on) p.setAttribute('data-active', ''); else p.removeAttribute('data-active'); }); if (focus) t.focus(); };
+  tabs.forEach((t, i) => { t.addEventListener('click', () => show(t)); t.addEventListener('keydown', (e) => { const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (k) { e.preventDefault(); show(tabs[(i + k + tabs.length) % tabs.length], true); } }); });
+});
+</script>

@@ -1,0 +1,16 @@
+---
+import { resto, nav } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<header class="nav">
+  <div class="container nav__in">
+    <a class="nav__mark" href={base} aria-label={`${resto.nom}, accueil`}>
+      <img src={`${base}logo.png`} width="44" height="44" alt="" />
+      <span class="nav__name">Les Terrasses<span class="nav__lieu"> de Crupet</span></span>
+    </a>
+    <nav class="nav__links" aria-label="Sections">
+      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+    </nav>
+    <a class="btn btn--accent nav__cta" href={resto.reserver} rel="noopener">Réserver une table</a>
+  </div>
+</header>

@@ -1,0 +1,46 @@
+---
+import Nav from '../components/Nav.astro';
+import KywFooter from '@kyw/footer';
+import { resto } from '../data/site';
+import '../styles/page.css';
+interface Props { title: string; description: string }
+const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const og = new URL(`${base}photos/09-tables-fauteuils-orange.jpg`, Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, url: resto.site, image: og,
+  telephone: '+32 83 65 51 11', servesCuisine: 'Brasserie familiale',
+  address: { '@type': 'PostalAddress', streetAddress: 'Rue Basse 13', postalCode: '5330', addressLocality: 'Crupet (Assesse)', addressCountry: 'BE' },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens: '12:00', closes: '14:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens: '18:00', closes: '22:00' },
+  ],
+  sameAs: [resto.facebook, resto.instagram],
+};
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1a1613" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={`${base}logo.png`} type="image/png" />
+    <meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:image" content={og} /><meta property="og:locale" content="fr_BE" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Nav />
+    <main id="contenu"><slot /></main>
+    <script is:inline>document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+    <KywFooter base={base} />
+  </body>
+</html>

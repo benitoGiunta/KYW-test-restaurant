@@ -1,0 +1,13 @@
+---
+import { horaires, resto } from '../data/site';
+---
+<section class="horaires" id="horaires" aria-labelledby="h-horaires">
+  <div class="container horaires__in">
+    <h2 id="h-horaires">Ouvert tous les jours, midi et soir</h2>
+    <dl class="sched">
+      <div class="sched__row sched__row--lead"><dt>Du lundi au dimanche</dt><dd>La cuisine est ouverte</dd></div>
+      {horaires.map((h) => <div class="sched__row"><dt>{h.service}</dt><dd><time datetime={h.debut}>{h.debut.replace(':', ' h ')}</time> à <time datetime={h.fin}>{h.fin.replace(':', ' h ')}</time></dd></div>)}
+    </dl>
+    <p class="horaires__act"><a class="btn btn--accent" href={resto.reserver} rel="noopener">Réserver une table</a></p>
+  </div>
+</section>
