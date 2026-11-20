@@ -1,4 +1,4 @@
-# ETAT · Le Lodge Wépion · variante legacy · construction-2 (20/11/2026)
+# ETAT · Le Lodge Wépion · variante legacy · construction-3 (20/11/2026)
 
 ## Fait (phases 1 et 2)
 - Phase 1 : audit, deal Solstice, comp c1, contenu réel (`site.ts`, `carte.json`), one-page + `/cookies/` + 404, pied KYW, noindex (voir DESIGN.md).
@@ -19,3 +19,8 @@
 - Pas de formulaire : la réservation est le lien Barestho d'origine (et `tel:`), donc points 23 et 29 sans objet.
 - Restaurant fermé (incendie du 21/05/2026) : slots `.fill` (horaires Erpent, date de réouverture), 2 par page au plus ; hypothèses de phase 1 inchangées.
 - Serveur de dev arrêté en fin de phase.
+
+## Phase 3 (QA, 20/11/2026)
+- Fait : build OK, 3 routes (pied KYW, noindex, 0 tiret), QA navigateur desktop 1440 et mobile 375 (0 débordement, 0 reveal caché, 0 erreur JS ou HTTP), RAPPORT.md écrit. Aucune correction nécessaire.
+- Reste : `report.json` du shoot, axe, CLS, LCP (shoot complet bloqué en passe build et en passe QA) ; test Safari iOS du menu ; commit final avec `[publier]` à poser par l'orchestrateur ; `pnpm index`.
+- Pièges : faux positif « images cassées » (lazy), voir RAPPORT.md.
