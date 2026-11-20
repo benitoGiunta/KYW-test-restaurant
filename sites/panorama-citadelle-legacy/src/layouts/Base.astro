@@ -7,9 +7,11 @@ import { resto } from '../data/site';
 interface Props { title: string; description: string; page: string }
 const { title, description, page } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonicalRoot = new URL(base, Astro.site).href;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const jsonLd = {
-  '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, telephone: '+3281841134', servesCuisine: 'Brasserie, bistronomie, produits locaux',
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, telephone: '+3281841134', servesCuisine: 'Brasserie, bistronomie, produits locaux', url: canonicalRoot, image: new URL(`${base}photos/02-vue-meuse-1600.webp`, Astro.site).href, sameAs: [resto.facebook, resto.instagram],
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens: '08:00', closes: '23:00' }],
   address: { '@type': 'PostalAddress', streetAddress: 'Route Merveilleuse 82', postalCode: '5000', addressLocality: 'Namur', addressCountry: 'BE' },
   geo: { '@type': 'GeoCoordinates', latitude: resto.geo.lat, longitude: resto.geo.lon },
 };
@@ -26,7 +28,7 @@ const jsonLd = {
     <script is:inline>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400&family=Archivo+Narrow:wght@600&display=swap" rel="stylesheet" />
     {page !== '404' && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%23c9212e%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-size=%2720%27 text-anchor=%27middle%27 fill=%27%23fff%27 font-family=%27serif%27%3EP%3C/text%3E%3C/svg%3E" />
     <meta name="twitter:card" content="summary_large_image" />

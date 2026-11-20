@@ -21,7 +21,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <h2 id={`h-${r.id}`}>{r.titre}</h2>
         <ul class="rows">
           {r.plats.map((p) => (
-            <li class="row"><div class="t"><strong>{p.nom}</strong>{p.desc && <span>{p.desc}</span>}</div><span class="p">{p.prix}</span></li>
+            <li class={`row${String(p.prix).length > 9 ? ' dbl' : ''}`}><div class="t"><strong>{p.nom}</strong>{p.desc && <span>{p.desc}</span>}</div><span class="p">{p.prix}</span></li>
           ))}
         </ul>
       </section>
@@ -38,7 +38,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
     <section class="rub" id="fetes" aria-labelledby="h-fetes">
       <h2 id="h-fetes">{fetes.nom}</h2>
-      <ul class="rows"><li class="row lg"><div class="t"><strong>Menu de fêtes</strong><span>{fetes.desc}</span></div><span class="p">{fetes.prix}</span></li></ul>
+      <ul class="rows"><li class="row lg dbl"><div class="t"><strong>Menu de fêtes</strong><span>{fetes.desc}</span></div><span class="p">{fetes.prix}</span></li></ul>
     </section>
   </div>
 
