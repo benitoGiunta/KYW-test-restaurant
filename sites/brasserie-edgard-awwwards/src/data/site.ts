@@ -35,8 +35,7 @@ export const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi
 export const ouvertureJsonLd = [{ dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '10:00', closes: '22:30' }];
 
 export const histoire = [
-  'La brasserie occupe un bâtiment bas de la chaussée de Waterloo, à Saint-Servais. Son enseigne, Mr Edgard, s’allume la nuit sur la façade.',
+  'La brasserie est installée chaussée de Waterloo, à Saint-Servais. Son enseigne, Mr Edgard, s’allume la nuit sur la façade.',
   'À l’intérieur, le cadre est contemporain : un bois sculpté en sillons court sur les murs et le comptoir, des banquettes en cuir caramel, de grandes baies cintrées. Côté rue, une terrasse couverte accueille la belle saison.',
-  'La carte reste celle d’une grande brasserie : carpaccios, croquettes maison, moules de Zélande en saison, pâtes fraîches. Le cassolet des suggestions est celui de « notre chef Titi », nommé ainsi sur la carte.',
-  'L’année d’ouverture et l’histoire de la maison ne nous ont pas été transmises : nous préférons les laisser vides plutôt que les inventer.',
+  'La carte reste celle d’une grande brasserie : carpaccios, croquettes maison, moules de Zélande en saison, pâtes fraîches. Le cassolet des suggestions est celui du chef Titi.',
 ];
