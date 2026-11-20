@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { histoire, specialites, site } from '../data/site';
+---
+<Base page="histoire" title="L’histoire" description="De la chocolaterie de la rue de Fer en 1946 au salon de thé de la rue Haute Marcelle en 1993 : trois générations, une bâtisse du 17e siècle au cœur du vieux Namur.">
+  <section class="tranche entete" data-ton="matin">
+    <div class="wrap grille">
+      <p class="heure"><span class="num">1946</span><small>La chocolaterie</small></p>
+      <h1 class="entete__titre display">Une maison, trois générations.</h1>
+      <p class="entete__lede">La chocolaterie est née rue de Fer. Le salon de thé s’est installé, plus tard, dans une bâtisse du 17e siècle du quartier Saint-Loup.</p>
+    </div>
+  </section>
+  <section class="tranche" data-ton="matin" style="padding-top: 0" aria-label="Repères">
+    <div class="wrap grille">
+      <div class="corps">
+        <ol class="fil-histoire">
+          {histoire.map((h) => <li><span class="fil-histoire__an num">{h.annee}</span><p>{h.texte}</p></li>)}
+        </ol>
+        <div class="duo">
+          <figure class="duo__a"><Photo cle="facadeNoel" widths={[480, 800, 1200]} sizes="(max-width: 760px) 80vw, 50vw" /><p class="credit">{site.credit}</p></figure>
+          <figure class="duo__b"><Photo cle="salleRayures" widths={[480, 800]} sizes="(max-width: 760px) 70vw, 24vw" /></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="tranche" data-ton="gouter" aria-labelledby="t-signature">
+    <div class="wrap grille">
+      <p class="heure"><span class="num">Aujourd’hui</span></p>
+      <div class="corps">
+        <h2 class="titre display" id="t-signature">Fabriqué par les équipes de la maison.</h2>
+        <p class="texte">La carte des fêtes 2026-2027 l’affirme en toutes lettres : toutes les réalisations sont fabriquées par les équipes de la maison. Elle est signée Henry de Hucorne, dont le nom figure aussi, sous la forme « E. de Hucorne », sur le logo.</p>
+        <ul class="specialites">{specialites.map((s) => <li>{s}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+</Base>

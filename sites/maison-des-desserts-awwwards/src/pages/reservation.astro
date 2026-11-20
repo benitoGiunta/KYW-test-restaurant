@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, fetes } from '../data/site';
+---
+<Base page="reservation" title="Réservation et accès" description="Joindre La Maison des Desserts à Namur : téléphone, e-mail, boutique en ligne, adresse rue Haute Marcelle 17, horaires et dates d’ouverture des fêtes.">
+  <section class="tranche entete" data-ton="matin">
+    <div class="wrap grille">
+      <p class="heure"><span class="num">8 h</span><small>Du mardi au samedi</small></p>
+      <h1 class="entete__titre display">Réserver, commander, venir.</h1>
+      <p class="entete__lede">Le site de la maison ne propose pas de formulaire de réservation de table : voici les contacts qu’elle publie.</p>
+    </div>
+  </section>
+  <section class="tranche" data-ton="matin" style="padding-top: 0" aria-label="Contacts et accès">
+    <div class="wrap grille">
+      <div class="corps">
+        <div class="contacts">
+          <div class="bloc">
+            <h2 class="bloc__titre">Téléphone</h2>
+            <p><a class="gros-tel" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+            <div class="actions" style="margin-top: var(--serre)">
+              <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler</span></a>
+              <a class="cta cta--contour" href={`mailto:${site.email}`}><span class="cta__txt">Écrire un e-mail</span></a>
+            </div>
+            <p class="petit" style="margin-top: var(--serre)">{site.email}</p>
+          </div>
+          <div class="bloc">
+            <h2 class="bloc__titre">Adresse</h2>
+            <p><address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address></p>
+            <p>Quartier Saint-Loup, dans le vieux Namur.</p>
+            <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+          </div>
+          <div class="bloc">
+            <h2 class="bloc__titre">Horaires</h2>
+            <Horaires />
+            <p class="petit" style="margin-top: var(--serre)">Petit déjeuner de 8 h 30 à 10 h 30. Cuisine de 12 h à 15 h, ou de 11 h 30 à 17 h 30 selon les plats.</p>
+          </div>
+          <div class="bloc">
+            <h2 class="bloc__titre">Commander</h2>
+            <p>Cougnous, bûches, galettes et pâtisseries se commandent aussi sur la boutique en ligne de la maison.</p>
+            <p><a class="lien" href={site.boutiqueUrl} rel="noopener">Ouvrir la boutique en ligne</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="tranche" data-ton="midi" aria-labelledby="t-fetes">
+    <div class="wrap grille">
+      <p class="heure"><span class="num">Fêtes</span><small>2026-2027</small></p>
+      <div class="corps">
+        <h2 class="titre display" id="t-fetes">Les dates des fêtes.</h2>
+        <ul class="liste-fil">
+          <li><span>Ouvert</span><span>{fetes.ouvert}</span></li>
+          <li><span>Fermé</span><span>{fetes.ferme}</span></li>
+        </ul>
+        <p class="texte" style="margin-top: var(--serre)">{fetes.note} {fetes.commandes}</p>
+      </div>
+    </div>
+  </section>
+  <section class="tranche tranche--serre" data-ton="soir" aria-label="La façade">
+    <div class="wrap">
+      <div class="cadre"><Photo cle="facadeNoel" widths={[800, 1200, 1600]} sizes="100vw" /></div>
+      <p class="credit">{site.credit}. La façade rue Haute Marcelle, vitrine de Noël.</p>
+    </div>
+  </section>
+</Base>

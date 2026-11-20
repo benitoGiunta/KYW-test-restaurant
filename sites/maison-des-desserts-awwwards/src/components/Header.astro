@@ -1,0 +1,23 @@
+---
+import { u } from '../lib/url';
+import { site } from '../data/site';
+interface Props { sur?: string }
+const { sur = 'matin' } = Astro.props;
+const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
+const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
+const liens = [
+  { href: '/carte/', label: 'La carte' },
+  { href: '/histoire/', label: 'L’histoire' },
+  { href: '/reservation/', label: 'Réservation' },
+];
+---
+<header class="tete" data-sur={sur}>
+  <a class="tete__marque" href={base} aria-current={path === base ? 'page' : undefined} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
+  <div class="tete__droite">
+    <nav class="tete__nav" aria-label="Navigation principale">
+      <ul>{liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}</ul>
+    </nav>
+    <a class="cta cta--petit tete__appel" href={site.telephoneHref}><span class="cta__txt">Appeler</span></a>
+  </div>
+</header>

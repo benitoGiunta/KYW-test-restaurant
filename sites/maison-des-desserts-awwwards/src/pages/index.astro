@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, journee, specialites } from '../data/site';
+import { NOMBRE_LIGNES } from '../data/carte';
+---
+<Base page="accueil" description="Boulangerie, pâtisserie et chocolaterie sous le même toit, salon de thé rue Haute Marcelle au cœur du vieux Namur. Ouvert du mardi au samedi, de 8 h à 18 h.">
+  <section class="tranche hero" data-ton="matin" data-heure="8">
+    <div class="wrap grille">
+      <h1 class="hero__titre display"><span>La Maison</span><span>des Desserts</span></h1>
+      <div class="hero__media" data-intro>
+        <Photo cle="facade" prioritaire widths={[480, 800, 1200]} sizes="(max-width: 760px) 100vw, 33vw" />
+      </div>
+      <div class="hero__bas">
+        <p class="hero__lede">Boulangerie, pâtisserie et chocolaterie sous le même toit, salon de thé dans le vieux Namur.</p>
+        <div class="actions">
+          <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+          <a class="cta cta--contour" href={u('/carte/')}><span class="cta__txt">Voir la carte</span></a>
+        </div>
+      </div>
+      <p class="hero__meta"><span><strong>Du mardi au samedi</strong>, de 8 h à 18 h</span><span>{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</span></p>
+    </div>
+  </section>
+
+  <section class="tranche" data-ton="matin" data-heure="8.5" aria-labelledby="t-pain" style="padding-top: 0">
+    <div class="wrap grille">
+      <p class="heure"><span class="num">8 h 30</span><small>Au comptoir</small></p>
+      <div class="paire__texte">
+        <h2 class="titre display" id="t-pain">Le pain avant le café.</h2>
+        <p class="texte">La boulangerie, la pâtisserie et la chocolaterie travaillent sous le même toit. La journée s’ouvre au comptoir, parmi les pains ronds, le pain de campagne et la baguette, avant le petit déjeuner servi dès 8 h 30.</p>
+        <ul class="liste-fil">
+          <li><span>Petit déjeuner</span><span class="num">8 h 30 à 10 h 30</span></li>
+          <li><span>Boulangerie et viennoiseries</span><span><a class="lien" href={`${u('/carte/')}#emporter`}>Voir la carte</a></span></li>
+        </ul>
+      </div>
+      <figure class="paire__a"><Photo cle="painCroute" widths={[480, 800]} sizes="(max-width: 760px) 80vw, 36vw" /></figure>
+      <figure class="paire__b"><Photo cle="painCraquele" widths={[360, 640]} sizes="(max-width: 760px) 70vw, 24vw" /></figure>
+    </div>
+  </section>
+
+  <section class="tranche" data-ton="midi" data-heure="12" aria-labelledby="t-journee">
+    <div class="wrap grille">
+      <p class="heure"><span class="num">12 h</span><small>Les rendez-vous</small></p>
+      <div class="corps">
+        <h2 class="titre display" id="t-journee">De 8 h à 18 h, six rendez-vous.</h2>
+        <ol class="journee">
+          {journee.map((j) => (
+            <li><span class="journee__h num">{j.h}</span><span class="journee__t">{j.t}</span><span class="journee__d">{j.d}</span></li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="tranche" data-ton="gouter" data-heure="15" aria-labelledby="t-patisserie">
+    <div class="wrap grille">
+      <p class="heure"><span class="num">15 h</span><small>La vitrine</small></p>
+      <div class="corps">
+        <h2 class="titre display" id="t-patisserie">Chaque entremets porte l’étiquette de la maison.</h2>
+        <p class="texte">Macarons de Paris, pralines, biétrumés, cougnous : la maison fabrique ses réalisations avec ses propres équipes, et les signe d’une étiquette.</p>
+        <div class="mur">
+          <figure class="mur__1"><Photo cle="entremetsChocolat" widths={[480, 800]} sizes="(max-width: 760px) 50vw, 28vw" /><figcaption>Entremets au chocolat</figcaption></figure>
+          <figure class="mur__2"><Photo cle="entremetsRouge" widths={[480, 800]} sizes="(max-width: 760px) 50vw, 22vw" /><figcaption>Entremets au glaçage rouge</figcaption></figure>
+          <figure class="mur__3"><Photo cle="entremetsDore" widths={[480, 800]} sizes="(max-width: 760px) 50vw, 22vw" /><figcaption>Entremets doré</figcaption></figure>
+          <figure class="mur__4"><Photo cle="millefeuille" widths={[480, 800]} sizes="(max-width: 760px) 50vw, 28vw" /><figcaption>Feuilleté au chocolat</figcaption></figure>
+        </div>
+        <ul class="specialites">{specialites.map((s) => <li>{s}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="tranche tranche--entracte" data-ton="soir" data-heure="17" aria-labelledby="t-salle">
+    <div class="wrap grille">
+      <p class="heure"><span class="num">17 h 30</span><small>Le salon de thé</small></p>
+      <h2 class="enonce display" id="t-salle">Une bâtisse du 17e siècle, un salon de thé depuis 1993.</h2>
+      <p class="enonce-bas texte">Rue Haute Marcelle, dans le quartier Saint-Loup, au cœur du vieux Namur. Les derniers desserts et la cuisine se servent jusqu’à 17 h 30, la maison ferme à 18 h.</p>
+    </div>
+    <div class="wrap" style="margin-top: var(--normal)">
+      <div class="cadre"><Photo cle="salleColonne" widths={[800, 1200, 1600]} sizes="100vw" /></div>
+      <p class="credit">{site.credit}</p>
+    </div>
+  </section>
+
+  <section class="tranche tranche--serre" data-ton="soir" data-heure="18" aria-labelledby="t-carte" style="padding-top: 0">
+    <div class="wrap grille">
+      <p class="heure"><span class="num">18 h</span><small>La carte</small></p>
+      <div class="corps">
+        <p class="chiffre num" id="t-carte">{NOMBRE_LIGNES}</p>
+        <p class="titre--l display" style="margin-top: var(--serre)">lignes à la carte, rangées dans l’ordre de la journée.</p>
+        <div class="actions" style="margin-top: var(--normal)">
+          <a class="cta" href={u('/carte/')}><span class="cta__txt">Lire la carte</span></a>
+          <a class="cta cta--contour" href={u('/reservation/')}><span class="cta__txt">Venir ou commander</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { chapitres, NOMBRE_LIGNES } from '../data/carte';
+import { euro } from '../lib/format';
+---
+<Base page="carte" title="La carte" description={`La carte de La Maison des Desserts à Namur : petit déjeuner, cuisine, pâtisseries, crêpes, glaces, boissons et boulangerie des fêtes, ${NOMBRE_LIGNES} lignes avec leurs prix.`}>
+  <section class="tranche entete" data-ton="matin">
+    <div class="wrap grille">
+      <p class="heure"><span class="num">8 h</span><small>Ouverture</small></p>
+      <h1 class="entete__titre display">La carte, heure par heure.</h1>
+      <p class="entete__lede">{NOMBRE_LIGNES} lignes, rangées dans l’ordre de la journée. Les prix sont ceux de la carte de la maison.</p>
+      <ul class="sommaire">
+        {chapitres.map((c) => <li><a class="lien-util" href={`#${c.id}`}><span class="num">{c.heure}</span><span>{c.titre}</span></a></li>)}
+      </ul>
+    </div>
+  </section>
+  {chapitres.map((c) => (
+    <section class="tranche" data-ton={c.ton} id={c.id} aria-labelledby={`t-${c.id}`}>
+      <div class="wrap grille">
+        <p class="heure"><span class="num">{c.heure}</span>{c.fin && <small>jusqu’à {c.fin}</small>}</p>
+        <div class="corps">
+          <h2 class="chap__titre display" id={`t-${c.id}`}>{c.titre}</h2>
+          {c.sections.map((s) => (
+            <div class="rayon">
+              <h3 class="rayon__titre">{s.titre}</h3>
+              {s.note && <p class="rayon__note">{s.note}</p>}
+              <ul class="plats">
+                {s.plats.map((p) => (
+                  <li class="plat">
+                    <span class="plat__nom">{p.nom}</span>
+                    {p.prix !== undefined
+                      ? <span class="plat__prix">{euro(p.prix)}{p.unite && <small> {p.unite}</small>}{p.aConfirmer && <small> (à confirmer)</small>}</span>
+                      : p.prixTexte ? <span class="plat__prix plat__prix--texte">{p.prixTexte}</span> : p.aConfirmer ? <span class="plat__prix plat__prix--texte">Prix à confirmer</span> : null}
+                    {p.description && <span class="plat__desc">{p.description}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+</Base>
