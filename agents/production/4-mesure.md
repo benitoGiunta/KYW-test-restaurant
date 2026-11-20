@@ -11,8 +11,8 @@ Le premier message de chaque agent commence par une ligne d'identification, lue 
 
 ```
 Rôle : <rôle> · Restaurant : <slug> · Variante : <v> · Passe : <n> · Phase : <phase>        (développement, ajoutée par le workflow)
-Rôle : identifier-rectifier-site · Restaurant : <slug> · Variante : <v> · Approche : 4 · Phase : <phase>   (correction)
-Rôle : orchestrateur-qualite · Restaurant : <slug> · Approche : 4 · Phase : <phase>                        (correction)
+Rôle : identifier-rectifier-site · Restaurant : <slug> · Variante : <v> · Approche : 5 · Phase : <phase>   (correction)
+Rôle : orchestrateur-qualite · Restaurant : <slug> · Approche : 5 · Phase : <phase>                        (correction)
 ```
 
 Ne jamais la retirer ni la reformuler : sans elle, le coût d'un agent n'est attribué à aucune étape.

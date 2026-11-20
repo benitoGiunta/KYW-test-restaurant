@@ -28,6 +28,15 @@ Produire un message de lancement : `python3 scripts/message-lancement.py <campag
    Une correction occupe un créneau comme un développement.
 5. Arrêt : après `heure-limite`, ne plus créer aucune session ; les sessions en cours appliquent la même règle.
    Si l'utilisation hebdomadaire atteint `seuil-hebdo`, idem.
+   **Reprise après coupure** (run 2 : la limite de 5 h coupe aussi la session mère, et une chaîne de `send_later` se rompt si
+   un tour échoue) : au lancement, la session mère crée une tâche planifiée **récurrente** vers elle-même (`create_trigger`,
+   `persistent_session_id` = son id, cron horaire, `initiation` own_followup) qui relance son contrôle de campagne ; elle la
+   supprime (`delete_trigger`) en fin de campagne. À chaque contrôle, une session fille inactive (`get_session` : idle ou
+   failed) depuis plus de 40 minutes, sans compte rendu et pas finie, reçoit `send_message` : « Reprise : reprends là où tu
+   en étais (workflow : resumeFromRunId ; correction : étape suivante non faite) et termine par mesure et compte rendu. »
+   Chaque reprise est une intervention (étape 6).
+   **Rôle strict** : la session mère ne modifie aucun fichier de site, de revue ni de correction et ne fait aucun commit de
+   contenu ; un défaut laissé par une session fille se signale dans `BILAN.md`.
 6. Noter toute intervention (déblocage, relance, décision) dans le fichier résumé de l'étape concernée
    (`../4-mesure.md`, § 5) ; si la session de l'étape est terminée ou morte, dans `data/usage/<campagne>/interventions.json`.
 7. **Registre des sessions** (filet de sécurité de la mesure, tenu par la session mère) : `data/usage/<campagne>/sessions.json`,
@@ -51,7 +60,7 @@ Produire un message de lancement : `python3 scripts/message-lancement.py <campag
 
 | Campagne | Objet | Versions | État |
 | --- | --- | --- | --- |
-| `test-1` | premier test des agents finalisés sur 10 nouveaux restaurants (+10 en réserve de file), mode figé, toute la limite hebdomadaire jusqu'au 20/11 10:30 UTC | développement A6, correction A4 | prête, à lancer |
+| `test-1` | premier test des agents finalisés sur 10 nouveaux restaurants (+10 en réserve de file), mode figé, toute la limite hebdomadaire jusqu'au 20/11 10:30 UTC | développement A6, correction A4 | terminée (12 restaurants, `data/usage/test-1/BILAN.md`) |
 
 ## Démarrer une campagne depuis une nouvelle conversation
 

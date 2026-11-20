@@ -8,10 +8,10 @@ utilise les versions en vigueur ci-dessous **sans les modifier**, pour comparer 
 
 | Étape | Version | Ce qu'elle contient | Fichiers |
 | --- | --- | --- | --- |
-| Développement | **Approche 6** | Workflow sobre : recherche (Sonnet), construction en 3 agents par variante (portfolio et legacy Sonnet ; awwwards Sonnet / Opus pour l'animation / Sonnet), captures et publication Haiku, revues et révisions Sonnet, 40 réponses max par agent, garde-fou de lecture (hook) | `agents/workflow-restaurant.js`, `agents/*.md` (rôles), `agents/variante-*/`, `scripts/hooks/garde-lecture.py` |
-| Correction | **Approche 4** | Orchestrateur Haiku ; captures par page avant les agents (`scripts/captures-pages.sh`, contrôle des bords) ; un agent Sonnet par site qui identifie, lance le marqueur, puis corrige ; `q.sh` et marqueur imposés par hooks ; couverture prouvée et relance « Passe 2 » ; aucun fait retiré ou inventé sans source | `3-correction.md`, `.claude/agents/identifier-rectifier-site.md`, `scripts/captures-pages.sh`, `scripts/capture-page.mjs`, `scripts/controle-bords.mjs`, `scripts/marqueur.sh`, `scripts/hooks/` |
+| Développement | **Approche 7** | Approche 6 + seuils de lecture à 80 lignes (`cat`, `sed -n`, `head`, `tail`), orchestrateur cantonné à son rôle (aucune modification de contenu), reprise après coupure par tâche planifiée récurrente. Base (approche 6) : workflow sobre : recherche (Sonnet), construction en 3 agents par variante (portfolio et legacy Sonnet ; awwwards Sonnet / Opus pour l'animation / Sonnet), captures et publication Haiku, revues et révisions Sonnet, 40 réponses max par agent, garde-fou de lecture (hook) | `agents/workflow-restaurant.js`, `agents/*.md` (rôles), `agents/variante-*/`, `scripts/hooks/garde-lecture.py` |
+| Correction | **Approche 5** | Approche 4 + couverture constatée : chaque planche lue est journalisée (`scripts/hooks/journal-lecture.py`) et `scripts/marqueur.sh` refuse la correction tant qu'une planche capturée n'a pas été lue ; seuils de lecture à 80 lignes ; orchestrateur cantonné à son rôle. Base (approche 4) : orchestrateur Haiku ; captures par page avant les agents (`scripts/captures-pages.sh`, contrôle des bords) ; un agent Sonnet par site qui identifie, lance le marqueur, puis corrige ; `q.sh` et marqueur imposés par hooks ; couverture prouvée et relance « Passe 2 » ; aucun fait retiré ou inventé sans source | `3-correction.md`, `.claude/agents/identifier-rectifier-site.md`, `scripts/captures-pages.sh`, `scripts/capture-page.mjs`, `scripts/controle-bords.mjs`, `scripts/marqueur.sh`, `scripts/hooks/` |
 
-Coût de référence mesuré (phase de développement, tarif API) : **développement 18,39 $ par restaurant**
+Approches 7 et 5 : pas encore mesurées (premier usage à la prochaine campagne). Coût de référence mesuré (approches 6 et 4, phase de développement, tarif API) : **développement 18,39 $ par restaurant**
 (moyenne des restaurants 15 à 20), **correction 0,43 $ par restaurant** (moyenne des restaurants 14 à 20),
 soit ≈ 18,8 $ par restaurant et ≈ 6,3 $ par site, ≈ 2,4 % d'une limite hebdomadaire (estimation 790 $ par limite,
 `data/usage/limite-hebdo.json`).
@@ -25,9 +25,10 @@ identique du premier au dernier restaurant de la campagne ; les leçons proposé
 
 ## Faiblesses connues de ces versions (non corrigées, à observer pendant le test)
 
-- Un agent de correction peut déclarer une couverture complète sans ouvrir toutes les planches (mesuré : 1 image lue pour 6 pages sur le-servais).
+- ~~Un agent de correction peut déclarer une couverture complète sans ouvrir toutes les planches~~ : corrigé en approche 5 (marqueur conditionné aux lectures).
 - Une écriture par `python3` ou redirection shell échappe au garde-fou du marqueur.
-- La capture après correction est souvent omise.
+- La capture après correction est souvent omise (toujours observé au run 2 / test-1).
+- Le hook « non commité » des sessions cloud provoque des commits intermédiaires ; sans effet sur Vercel depuis que seule `publication` déploie.
 - Le contrôle des bords ne voit pas `overflow: clip` ni les photos tournées : la lecture des planches reste nécessaire.
 
 ## Historique
@@ -37,9 +38,10 @@ identique du premier au dernier restaurant de la campagne ; les leçons proposé
 | 1 | point de départ, agents longs Fable/Opus (1-2) | revue séparée Sonnet puis correcteur, contexte complet (1-4) |
 | 2 | méthode sobre : modèle par rôle, agents courts, captures Haiku (3-4) | agents projet légers, brouillons intégrés, configurations F et H (5-8) |
 | 3 | tests A, B, C (5) | F + q.sh obligatoire, sorties sobres, capture ciblée (9-13) |
-| 4 | tests D, H (6) | hooks q.sh et marqueur, captures par page, couverture, relance (14-20) |
-| 5 | test I, lectures groupées (7-14) | — |
-| 6 | hook de lecture (15-20) | — |
+| 4 | tests D, H (6) | hooks q.sh et marqueur, captures par page, couverture, relance (14-20) ; testée au run 2 (campagne test-1) |
+| 5 | test I, lectures groupées (7-14) | couverture constatée (lectures journalisées, marqueur conditionné), seuils 80 lignes, orchestrateur cantonné (décidée après test-1, non mesurée) |
+| 6 | hook de lecture (15-20) ; testée au run 2 (campagne test-1) | — |
+| 7 | seuils de lecture 80 lignes, orchestrateur cantonné, reprise par tâche récurrente (décidée après test-1, non mesurée) | — |
 
 Détail et mesures : `data/usage/chantiers/configurations.json`, `data/usage/*PROTOCOLE*.md`, artefact de reporting.
 

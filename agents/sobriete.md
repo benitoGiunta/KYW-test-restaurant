@@ -13,7 +13,7 @@ chaque réponse ; une attente de plus de 5 min fait réécrire tout le contexte.
    `pnpm` (install, build:site), `node scripts/*.mjs`, `shoot.mjs`, `audit.mjs`, `sloplint.mjs`, `theme.mjs`, Playwright
    et tout script de contrôle maison ; depuis un sous-dossier, utilise le chemin absolu
    `/home/user/KYW-test-restaurant/scripts/q.sh`. Interdit : `cat`, `sed -n 1,999p` ou Read complet d'un fichier de plus
-   de 200 lignes (lis la plage utile) ; un script de contrôle maison n'imprime que des totaux et les écarts, jamais
+   de 80 lignes (lis la plage utile) ; un script de contrôle maison n'imprime que des totaux et les écarts, jamais
    l'objet complet (`console.log(JSON.stringify(…))` sur tout un rapport est interdit).
 2. **Aucune attente de plus de 5 minutes.** Pas de `sleep`, de Monitor ni de boucle d'attente sur un traitement long.
    Les captures et audits complets sont faits par l'agent « captures » (Haiku) du workflow, AVANT toi ; tu lis son
@@ -34,7 +34,8 @@ chaque réponse ; une attente de plus de 5 min fait réécrire tout le contexte.
    les lectures et vérifications en une seule commande quand c'est possible (plusieurs `grep`/`sed -n`/`curl`/contrôles
    enchaînés par `;` ou `&&` dans un seul appel Bash) ; jamais une réponse par fichier ou par vérification.
 
-8. **Contrôle automatique (10/11/2026).** Un hook (`.claude/settings.json` → `scripts/hooks/garde-lecture.py`) refuse
-   `cat` d'un fichier de plus de 200 lignes et `sed -n 'a,bp'` sur plus de 120 lignes. En cas de refus, lis la plage
+8. **Contrôle automatique (10/11/2026, resserré le 20/11/2026).** Un hook (`.claude/settings.json` → `scripts/hooks/garde-lecture.py`) refuse
+   `cat` d'un fichier de plus de 80 lignes et `sed -n 'a,bp'`, `head -n`, `tail -n` sur plus de 80 lignes (200 / 120 jusqu'au
+   20/11 : le run 2 avait encore 77 à 87 % de ses sorties hors q.sh, surtout des `cat`). En cas de refus, lis la plage
    utile (`grep -n … | head -20`, puis `sed -n` sur 60 lignes au plus, ou Read avec offset/limit) ; ne cherche pas à
    contourner le contrôle.

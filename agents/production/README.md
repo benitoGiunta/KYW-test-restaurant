@@ -10,7 +10,7 @@ ces fichiers, dans l'ordre.
 | Fichier | Rôle | Quand le lire |
 | --- | --- | --- |
 | `parametres.md` | Toutes les valeurs à fixer pour une campagne (branche, sessions, seuil hebdo, phase de mesure) | Avant tout lancement |
-| `VERSIONS.md` | Version en vigueur de chaque étape (développement A6, correction A4), historique, procédure pour faire évoluer | Avant tout lancement, et avant de modifier un agent |
+| `VERSIONS.md` | Version en vigueur de chaque étape (développement A7, correction A5), historique, procédure pour faire évoluer | Avant tout lancement, et avant de modifier un agent |
 | `1-ajouter-restaurant.md` | Inscrire un restaurant dans `data/restaurants.json` | Étape 1 |
 | `2-developpement.md` | Message de lancement de la session de développement d'un restaurant | Étape 2 |
 | `3-correction.md` | Message de lancement de la session de correction d'un restaurant | Étape 3 |
