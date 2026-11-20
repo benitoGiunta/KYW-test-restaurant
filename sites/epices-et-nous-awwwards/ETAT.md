@@ -32,3 +32,8 @@
 - Corrigé : cibles tactiles (0 restante), répétition plan/horaires sur la réservation. Build OK, audit 0 FAIL.
 - Reste : critique jury indépendant (2 passes) non fait, skipLinkFirst faux positif, retrait d'un accessoire non fait. Voir RAPPORT.md.
 - Piège : shoot.mjs est dans `.claude/skills/awwwards/scripts/`; un shoot de 3 pages dépasse 120 s, le lancer en arrière-plan.
+
+## Relecture passe 1 (relecteur-site) : A_CORRIGER, 0 F0, 2 F1, 7 F2, 5 F3
+- Fait : REVUE-1.md (méthode, scores, findings avec preuves). Mesures propres car QA-revue1.md absent (shoot « browser closed »).
+- Reste (réviseur) : F1-1 `.cadre picture` à remplir (site.css:30), F1-2 `.nappe .cta--contour` (site.css:23), F2-1 `.espaces__bande` accessible, F2-2/F2-3 métatexte et procédure, F2-4 marges mobile.
+- Pièges : un fondu de reveal (800 ms) ressemble au bloc brun ; le vrai défaut persiste après 2,2 s.
