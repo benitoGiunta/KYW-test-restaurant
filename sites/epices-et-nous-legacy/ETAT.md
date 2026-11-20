@@ -1,4 +1,9 @@
-# ETAT · Épices & Nous · variante legacy · construction-2 (phase 2 sur 3, terminée)
+# ETAT · Épices & Nous · variante legacy · construction-3 (phase 3 sur 3, QA terminée)
+
+## Phase 3
+- Corrigé : contraste note du pied de page (404), h3 en h2 (actualites), twitter:card. Build OK. RAPPORT.md écrit.
+- Non fait (mode test) : sweep sloplint complet, finish review, entrée `.hallmark/log.json`, checklist 72 cases complète. Pas de commit `[publier]`.
+
 
 ## Fait (phase 2)
 - Hero review `self` : fix, 1 finding résolu (photo de table bleutée, réchauffée par `sepia(0.22) saturate(0.9)`). Bug trouvé : le rebord (`.hero__wrap`) était caché derrière la photo (z-index du slot), corrigé (`z-index: var(--z-raised)`) ; rebord sans `100vw` (`--marge`, aligné sur le conteneur).
