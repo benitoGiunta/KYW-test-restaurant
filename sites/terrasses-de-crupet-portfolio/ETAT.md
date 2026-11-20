@@ -28,3 +28,8 @@
 
 ## Révision 1 (reviseur-site)
 F1-1, F1-2, F2-1 à F2-7 corrigés, build OK, voir REVISION-1.md. Non fait : F3 (sauf apostrophes), axe non relancé.
+
+## Revue 2 (relecteur-site, passe 2)
+Fait : REVUE-2.md écrit, verdict A_CORRIGER (0 F0, 0 F1, 2 F2, 7 F3). F1-1, F1-2, F2-1 à F2-5 vérifiés OK ; F2-6 et F2-7 partiels.
+Reste (pour une révision 2) : F2-1 précharger `zodiak-400-normal.woff2` (hero `.l2` en police système avec `font-display: optional`) puis re-mesurer LCP ; F2-2 axe `region` sur `.marquee` ; F3 au choix.
+Pièges : QA-revue2 limité à 3 pages ; `getPlatformFontsForNode` est le seul test qui révèle une graisse non préchargée ; serveur propre port 4781 arrêté.
