@@ -24,7 +24,7 @@ const tel = `tel:${site.telephone.replace(/\s/g, '')}`;
             <li><span>{j.jour}</span>{j.service ? <span>{j.service}</span> : <span class="ferme">fermé</span>}</li>
           ))}
         </ul>
-        <p class="resa__aide" style="margin-top:0.8rem">Les heures de service ne sont pas publiées : demandez-les lors de la réservation. {congesIntro}</p>
+        <p class="resa__aide" style="margin-top:0.8rem">Heures de service non communiquées. {congesIntro}</p>
       </div>
       <figure class="photo resa__photo" data-reveal="clip"><Photo cle="terrasseTable" sizes="100vw" widths={[800, 1200, 1600]} /></figure>
       <div class="resa__pratique">
@@ -36,8 +36,8 @@ const tel = `tel:${site.telephone.replace(/\s/g, '')}`;
         {pratique.map((p) => <div><h2 class="etiquette">{p.titre}</h2><p class="corps" style="font-size:var(--t-s)">{p.texte}</p></div>)}
         <div>
           <h2 class="etiquette">Une question par e-mail</h2>
-          <form class="form-mail" action={`mailto:${site.email}`} method="post" enctype="text/plain">
-            <label>Votre message<textarea name="message" rows="3"></textarea></label>
+          <form class="form-mail" action={`mailto:${site.email}`} method="get">
+            <label>Votre message<textarea name="body" rows="3"></textarea></label>
             <button class="btn" type="submit">Ouvrir mon e-mail</button>
           </form>
         </div>

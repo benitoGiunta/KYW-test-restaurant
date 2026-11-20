@@ -97,7 +97,7 @@ export const plats: { categorie: string; note?: string; plats: Plat[] }[] = [
   },
   {
     categorie: 'Les desserts',
-    note: 'Prix non affichés par le restaurant ; ils sont compris dans les menus.',
+    note: 'Prix non communiqués. Le dessert de la carte fait partie des deux menus.',
     plats: [
       { nom: 'Moelleux au chocolat des Caraïbes', description: 'autour de l’ananas et du fruit de la passion', prix: null },
       { nom: 'La dame blanche tournée à la minute', description: 'chocolat croquant', prix: null },
@@ -128,7 +128,7 @@ export const equipe = [
 export const histoire = {
   titre: 'Une ferme, une prairie, une villa',
   paragraphes: [
-    'Estelle et Olivier ont fait naître le restaurant dans une ferme du 19e siècle, à Wierde, sur la route d’Arville. Les briques sont restées, le cadre est devenu contemporain : un salon, une table d’hôte, une cuisine ouverte, une terrasse, un jardin et un point d’eau.',
+    'Estelle et Olivier ont fait naître le restaurant dans une ferme du 19e siècle, à Wierde, rue d’Arville. Les briques sont restées, le cadre est devenu contemporain : un salon, une table d’hôte, une cuisine ouverte, une terrasse, un jardin et un point d’eau.',
     'La villa Barabas est venue ensuite, à 200 mètres. Entre les deux, ils ont acquis la prairie : le domaine compte aujourd’hui plus de 5 hectares. Selon l’affiche du restaurant, le D’Arville a 20 ans.',
     'Un gîte équestre, « les filles d’à côté », est né de la même histoire, avec Nathalie Maroy.',
   ],
@@ -143,7 +143,7 @@ export const barabas = {
 export const pratique = [
   { titre: 'Y venir', texte: 'Rue d’Arville 94, à Wierde, commune de Namur. Un parking privé accueille les voitures.' },
   { titre: 'Groupes', texte: 'Au-delà de 6 personnes, le restaurant demande de l’appeler ou de lui écrire.' },
-  { titre: 'Offrir', texte: 'Le chèque cadeau, le traiteur de fêtes et les séminaires à la villa Barabas se demandent au restaurant.' },
+  { titre: 'Offrir', texte: 'Chèque cadeau, traiteur de fêtes et séminaires à la villa Barabas : voir le site du restaurant, ledarville.be.' },
 ];
 
 export const congesIntro = 'Fermetures annoncées pour 2027 : du 1er au 6 janvier, du 26 avril au 5 mai, du 16 août au 1er septembre, du 20 au 31 décembre (service traiteur).';
