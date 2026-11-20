@@ -1,1 +1,2 @@
 - 2026-11-20 · publication Le Lodge Wépion : dist déjà commité et identique au build de contrôle (pas de [publier] ajouté) ; le suivi (data/suivi.html, dist/suivi/index.html) entre en conflit au rebase car index.mjs le réécrit : résoudre en prenant la version amont (`git checkout --ours`), relancer `node scripts/index.mjs`, puis `git rebase --continue`.
+2026-11-20 : shoot.mjs peut dépasser 120 s quand plusieurs agents tournent ; le lancer en arrière-plan dès le départ.
