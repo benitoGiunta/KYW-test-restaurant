@@ -4,7 +4,7 @@ import Nav from '../components/Nav.astro';
 import Photo from '../components/Photo.astro';
 import Reservation from '../components/Reservation.astro';
 import Footer from '../components/Footer.astro';
-import { categories, prix } from '../data/site';
+import { categories, prix, prixPortions } from '../data/site';
 const photoPar: Record<string, { name: string; caption: string }> = {
   entrees: { name: 'tartare', caption: 'Tartare de bœuf et frites.' },
   pates: { name: 'volaille-pates', caption: 'Viande grillée et pâtes au parmesan.' },
@@ -34,7 +34,7 @@ const photoPar: Record<string, { name: string; caption: string }> = {
           </div>
           <ul class="rows">
             {c.plats.map((p) => (
-              <li><h3>{p.nom}</h3>{p.description && <p>{p.description}</p>}<span class="price">{prix(p.prix)}</span></li>
+              <li><h3>{p.nom}</h3>{p.description && <p>{p.description}</p>}<span class="price">{prixPortions(p.prix).map((x) => <span class="portion">{x}</span>)}</span></li>
             ))}
           </ul>
         </div>

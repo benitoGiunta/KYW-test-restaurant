@@ -18,10 +18,16 @@ export const site = {
 };
 
 const nbsp = ' ';
+const fmt = (n: number) => `${Number.isInteger(n) ? String(n) : n.toFixed(2).replace('.', ',')}${nbsp}€`;
+/** Prix : nombre, texte libre (« Prix du jour », affiché tel quel) ou « 18.60 (1 pce) / 23.90 (2 pces) » (une ligne par portion). */
+export function prixPortions(p: string | number): string[] { return prix(p).split(' · '); }
 export function prix(p: string | number): string {
-  const n = typeof p === 'string' ? parseFloat(p) : p;
-  const s = Number.isInteger(n) ? String(n) : n.toFixed(2).replace('.', ',');
-  return `${s}${nbsp}€`;
+  if (typeof p === 'number') return fmt(p);
+  const t = p.trim();
+  if (/^\d+(\.\d+)?$/.test(t)) return fmt(parseFloat(t));
+  const parts = [...t.matchAll(/(\d+(?:\.\d+)?)\s*\((\d+)\s*pces?\)/g)];
+  if (parts.length) return parts.map((m) => `${m[2]}${nbsp}${Number(m[2]) > 1 ? 'pièces' : 'pièce'}${nbsp}${fmt(parseFloat(m[1]))}`).join(' · ');
+  return t;
 }
 
 /** Horaires du site d'origine : tous les jours de 10 h 00 à 22 h 30, cuisine fermée de 15 h à 18 h en semaine. */
@@ -130,8 +136,8 @@ export const groupe = {
     'Choix des plats et nombre de personnes exact au plus tard 48 h avant l’événement.',
     'La brasserie se réserve le droit de facturer le nombre de personnes confirmées.',
   ],
-  participants: ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'],
-  menus: ['À la carte réduite (pour les groupes)', 'Menu : entrée, plat, dessert', 'Menu : entrée, plat', 'Menu : plat, dessert'],
+  participants: ['11', '12', '13', '14', '15', '16'],
+  menus: ['Menu : entrée, plat, dessert', 'Menu : entrée, plat', 'Menu : plat, dessert'],
   heures: ['12 h 00 à 12 h 30', '13 h 00 à 13 h 30', '14 h 00 à 14 h 30', '18 h 00 à 18 h 30', '19 h 00 à 19 h 40', '20 h 00 à 20 h 30', '21 h 00 à 21 h 30'],
 };
 

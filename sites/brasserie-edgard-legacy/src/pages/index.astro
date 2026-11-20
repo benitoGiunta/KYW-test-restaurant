@@ -5,7 +5,7 @@ import Photo from '../components/Photo.astro';
 import Horaires from '../components/Horaires.astro';
 import Reservation from '../components/Reservation.astro';
 import Footer from '../components/Footer.astro';
-import { site, selection, lunch, groupe, prix } from '../data/site';
+import { site, selection, lunch, groupe, prix, prixPortions } from '../data/site';
 import { u } from '../lib/url';
 ---
 <Base title="Mr Edgard, brasserie à Saint-Servais (Namur)" description="Brasserie Edgard, Chaussée de Waterloo à Saint-Servais : croquettes, moules de Zélande, brochettes géantes, lunch en semaine, menus de groupe.">
@@ -36,7 +36,7 @@ import { u } from '../lib/url';
         </div>
         <ul class="rows">
           {selection.map((p) => (
-            <li><h3>{p.nom}</h3>{p.description && <p>{p.description}</p>}<span class="price">{prix(p.prix)}</span></li>
+            <li><h3>{p.nom}</h3>{p.description && <p>{p.description}</p>}<span class="price">{prixPortions(p.prix).map((x) => <span class="portion">{x}</span>)}</span></li>
           ))}
         </ul>
       </div>
@@ -65,7 +65,7 @@ import { u } from '../lib/url';
 
     <section class="sec statement" aria-labelledby="groupe-titre">
       <div class="container grid12">
-        <h2 id="groupe-titre" class="statement__text">À partir de dix personnes, la maison dresse une grande table, jusqu’à seize.</h2>
+        <h2 id="groupe-titre" class="statement__text">Plus de dix personnes, la maison dresse une grande table, seize au maximum.</h2>
         <div class="statement__wall">
           <p class="dropcap">Le menu de groupe se compose en trois temps, entrée, plat et dessert à {prix(groupe.formules[0].prix)}, ou en deux temps à {prix(groupe.formules[1].prix)} et {prix(groupe.formules[2].prix)}. Le choix des plats et le nombre de convives se confirment 48 h avant.</p>
           <a class="link" href={u('menu-groupe/')}>Le menu de groupe</a>
