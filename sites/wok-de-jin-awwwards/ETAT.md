@@ -41,3 +41,6 @@
 - QA sur preuves : 4 pages sans erreur ; seule correction : décalage au survol du téléphone (reservation). Build vert, audit 0 FAIL / 1 WARN justifié.
 - Reste : critique jury indépendant, OG composée, relire les `colorOnly` (accueil, carte), `pnpm index`, commit final `[publier]` (superviseur).
 - Piège : la 404 capturée par l'agent captures est la réponse brute de serve.mjs (faux positifs contraste/cible).
+
+## Révision 1 (reviseur-site)
+F2-1 et F2-2 corrigés, build OK ; voir REVISION-1.md.

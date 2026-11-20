@@ -22,6 +22,7 @@ const r = g.reveillon;
         <a class="btn btn--plein" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
         <a class="btn" href={u('/tarifs/')}>Voir les tarifs</a>
       </div>
+      <figure class="hero__photo"><img src={petite(sashimi.src)} alt={sashimi.alt} width="640" height="640" decoding="async" fetchpriority="high" /></figure>
     </div>
     <div class="hero__zone" data-hero-zone>
       {g.objets.map((o, i) => (
@@ -42,7 +43,7 @@ const r = g.reveillon;
       <div class="maison__texte" data-reveal="fade">
         <Ornements />
         <p class="meta">Le buffet</p>
-        <h2 class="section__titre">Tout à volonté, <em>chaud et froid</em></h2>
+        <h2 class="section__titre">Tout à volonté, chaud et froid</h2>
         <div class="prose">
           {g.buffet.texte.map((t) => <p>{t}</p>)}
         </div>
@@ -73,7 +74,7 @@ const r = g.reveillon;
         </button>
       ))}
     </div>
-    <button type="button" class="btn table__reset" data-table-reset>Ranger la table</button>
+    <button type="button" class="btn btn--lin table__reset" data-table-reset>Ranger la table</button>
     <div class="table__rail rail" role="region" tabindex="0" aria-label="Photos de la table, défilement horizontal">
       {g.tirages.slice(0, 8).map((t) => (
         <figure class="tirage" style={`--r:${t.r}deg`}>
@@ -110,8 +111,7 @@ const r = g.reveillon;
   <!-- Tarifs : carte blanche -->
   <section class="section section--blanc" id="tarifs">
     <div class="wrap">
-      <p class="meta" style="text-align:center">Les tarifs</p>
-      <h2 class="section__titre" style="text-align:center">Un prix, <em>tout à volonté</em></h2>
+            <h2 class="section__titre" style="text-align:center">Un prix, tout à volonté</h2>
       <div class="carte" data-reveal="scale">
         <div class="carte__grille">
           <div>
@@ -159,8 +159,7 @@ const r = g.reveillon;
   <section class="section" id="horaires">
     <div class="wrap">
       <div class="hcarte" data-reveal="up">
-        <p class="meta">Horaires</p>
-        <h2 class="section__titre" style="margin-bottom:0">Quand <em>venir</em></h2>
+                <h2 class="section__titre" style="margin-bottom:0">Quand venir</h2>
         <dl class="horaires">
           {site.horaires.map((h) => (
             <>
@@ -175,7 +174,7 @@ const r = g.reveillon;
         <p class="hcarte__ligne"><span>Adresse</span><span>{adresseLigne()}</span></p>
         <div class="actions">
           <a class="btn btn--plein" href={u('/reservation/')}>Réserver</a>
-          <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
+          <a class="btn" href={site.reseaux[0].url} rel="noopener">Itinéraire</a>
         </div>
       </div>
     </div>

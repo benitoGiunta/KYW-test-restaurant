@@ -27,7 +27,7 @@ const [midi, soir] = services;
   <dl class="legende">
     {(['t1', 't2', 't3'] as const).map((t) => (
       <div data-tarif={t}>
-        <dt><span class={`puce puce--${t}`} aria-hidden="true"></span>{tarifs[t].libelle}, {tarifs[t].contexte}</dt>
+        <dt><span class={`puce puce--${t}`} aria-hidden="true"></span>{tarifs[t].contexte ? `${tarifs[t].libelle}, ${tarifs[t].contexte}` : tarifs[t].libelle}</dt>
         <dd>Buffet seul {prix(tarifs[t].buffet)}. Avec boissons {prix(tarifs[t].boissons)}.</dd>
       </div>
     ))}

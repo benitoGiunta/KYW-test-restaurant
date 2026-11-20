@@ -38,7 +38,7 @@ export const services = [
 ] as const;
 
 export const tarifs = {
-  t1: { id: 't1', libelle: 'Midi', contexte: 'en semaine', buffet: 16.8, boissons: 28 },
+  t1: { id: 't1', libelle: 'Midi', contexte: '', buffet: 16.8, boissons: 28 },
   t2: { id: 't2', libelle: 'Soir', contexte: 'en semaine', buffet: 23.8, boissons: 37 },
   t3: { id: 't3', libelle: 'Week-end et jours fériés', contexte: 'midi et soir', buffet: 27.8, boissons: 40 },
 } as const;

@@ -139,7 +139,7 @@ export const guinguette = {
   heroTitre: ['Buffet asiatique', 'à volonté'],
   slogan: { texte: 'Toutes vos envies à la même table', placeholder: false },
   objets: [
-    { id: 'lanterne', label: 'Lanterne dessinée au trait', x: 6, y: 10, r: -12, taille: 150, mobile: true, mx: 4 },
+    { id: 'lanterne', label: 'Lanterne dessinée au trait', x: 1, y: 10, r: -12, taille: 150, mobile: true, mx: 4 },
     { id: 'theiere', label: 'Théière dessinée au trait', x: 84, y: 8, r: 10, taille: 120, mobile: false },
     { id: 'bol', label: 'Bol fumant dessiné au trait', x: 10, y: 66, r: 8, taille: 130, mobile: true, mx: 40 },
     { id: 'baguettes', label: 'Baguettes dessinées au trait', x: 30, y: 78, r: -30, taille: 120, mobile: false },
@@ -211,7 +211,7 @@ export const guinguette = {
     url: 'https://wokdejin.com/reveillon/reserver',
   },
   emporter: {
-    texte: 'Wok de Jin propose la vente à emporter. La carte à emporter est consultable sur le site du restaurant.',
+    texte: 'Wok de Jin propose la vente à emporter. Pour la carte à emporter, appelez le +32 81 30 68 88.',
   },
   manifeste: {
     titre: ['Réveillon du', '31 décembre'],

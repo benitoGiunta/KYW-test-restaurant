@@ -40,13 +40,13 @@ const lignes = [
       <div class="fiche fiche--large">
         <h2 class="display sec__titre" data-split="lines,words,chars" id="tarifs-titre">Buffet seul</h2>
         <ul class="liste-prix">
-          {(['t1', 't2', 't3'] as const).map((t) => <li><span>{tarifs[t].libelle}, {tarifs[t].contexte}</span><b>{prix(tarifs[t].buffet)}</b></li>)}
+          {(['t1', 't2', 't3'] as const).map((t) => <li><span>{tarifs[t].contexte ? `${tarifs[t].libelle}, ${tarifs[t].contexte}` : tarifs[t].libelle}</span><b>{prix(tarifs[t].buffet)}</b></li>)}
         </ul>
       </div>
       <div class="fiche fiche--large">
         <h2 class="display sec__titre" data-split="lines,words,chars">Avec boissons</h2>
         <ul class="liste-prix">
-          {(['t1', 't2', 't3'] as const).map((t) => <li><span>{tarifs[t].libelle}, {tarifs[t].contexte}</span><b>{prix(tarifs[t].boissons)}</b></li>)}
+          {(['t1', 't2', 't3'] as const).map((t) => <li><span>{tarifs[t].contexte ? `${tarifs[t].libelle}, ${tarifs[t].contexte}` : tarifs[t].libelle}</span><b>{prix(tarifs[t].boissons)}</b></li>)}
         </ul>
         <p class="petit">Comprend : {boissonsFormule}.</p>
       </div>

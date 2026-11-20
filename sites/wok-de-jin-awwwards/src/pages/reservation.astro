@@ -59,7 +59,7 @@ const ouverts = semaine.filter((j) => !j.ferme);
       <div class="fiche fiche--large">
         <h3>Tarifs, en bref</h3>
         <ul class="liste-prix">
-          {(['t1', 't2', 't3'] as const).map((t) => <li><span>{tarifs[t].libelle}, {tarifs[t].contexte}</span><b>{prix(tarifs[t].buffet)}</b></li>)}
+          {(['t1', 't2', 't3'] as const).map((t) => <li><span>{tarifs[t].contexte ? `${tarifs[t].libelle}, ${tarifs[t].contexte}` : tarifs[t].libelle}</span><b>{prix(tarifs[t].buffet)}</b></li>)}
         </ul>
       </div>
       <div class="fiche fiche--large">

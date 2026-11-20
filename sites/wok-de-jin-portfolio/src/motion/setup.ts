@@ -37,14 +37,17 @@ function marquee() {
   const horaires = JSON.parse(root.dataset.horaires || '[]') as { j: string; c: { ouverture: string; fermeture: string }[] }[];
   const parJour = (j: string) => horaires.find((h) => h.j === j);
   const peindre = () => {
-    const d = new Date();
-    const hhmm = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+    const get = (t: string) => parts.find((x) => x.type === t)?.value || '';
+    const jourIdx = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday'));
+    const hhmm = `${get('hour')}:${get('minute')}`;
+    const d = { getDay: () => jourIdx };
     const auj = parJour(jours[d.getDay()]);
     let texte = 'Horaires du jour';
     let etat = '';
     const ouvert = auj?.c.find((c) => c.ouverture <= hhmm && hhmm < c.fermeture);
     const suivant = auj?.c.find((c) => c.ouverture > hhmm);
-    if (ouvert) { texte = `Ouvert, arrivée jusqu'à ${ouvert.fermeture}`; etat = 'is-ouvert'; }
+    if (ouvert) { texte = `Ouvert, service jusqu'à ${ouvert.fermeture}`; etat = 'is-ouvert'; }
     else if (suivant) { texte = `Fermé en ce moment, ouverture à ${suivant.ouverture}`; etat = 'is-ferme'; }
     else {
       for (let k = 1; k <= 7; k++) {
