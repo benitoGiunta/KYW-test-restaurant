@@ -24,7 +24,7 @@ body { background: var(--c-bg); }
 .corps { grid-column: 3 / span 10; grid-row: 1; }
 
 /* Liens et boutons : le verbe est « avancer » (un remplissage avance de gauche à droite, comme l'aiguille) */
-.lien { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; text-decoration-color: color-mix(in srgb, currentColor 55%, transparent); transition: text-decoration-color 0.3s; }
+.lien { display: inline-block; padding-block: 0.4em; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; text-decoration-color: color-mix(in srgb, currentColor 55%, transparent); transition: text-decoration-color 0.3s; }
 .lien-util { color: var(--c-muted); transition: color 0.25s; }
 .cta { position: relative; display: inline-flex; align-items: center; gap: 0.6em; min-height: 3.1rem; padding: 0.75em 1.5em; border: 1px solid var(--c-fg); background: var(--c-fg); color: var(--c-bg); font-weight: 600; font-size: var(--t-s); letter-spacing: 0.02em; overflow: hidden; isolation: isolate; }
 .cta::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -40,7 +40,7 @@ body { background: var(--c-bg); }
 
 /* En-tête : marque à gauche, trois liens, appel. Page courante soulignée par un filet plein. */
 .tete { position: absolute; top: 0; left: 0; right: 0; z-index: var(--z-header); display: flex; align-items: center; justify-content: space-between; gap: var(--gap); padding: calc(var(--u) * 1.4) var(--gutter); color: var(--c-fg); }
-.tete__marque { font-family: var(--f-display); font-size: var(--t-m); letter-spacing: -0.02em; line-height: 1; }
+.tete__marque { display: inline-block; padding-block: 0.35em; font-family: var(--f-display); font-size: var(--t-m); letter-spacing: -0.02em; line-height: 1; }
 .tete__nav ul { display: flex; gap: calc(var(--u) * 2.5); list-style: none; padding: 0; }
 .nl { position: relative; display: inline-block; padding-block: 0.7em; font-size: var(--t-s); font-weight: 500; }
 .nl::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.35em; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -236,7 +236,7 @@ html:not(.motion) .cadran { display: none; }
 
 /* Hero : la lumière du jour avance sur la façade (heure, pointeur, repos). Un rai net, comme par une fenêtre. */
 .hero__media { overflow: hidden; }
-.hero__lumiere { position: absolute; inset: -10% -60%; pointer-events: none; mix-blend-mode: soft-light; background: linear-gradient(100deg, transparent 44%, rgb(255 238 205 / 0.55) 45.5%, rgb(255 238 205 / 0.4) 50%, transparent 51.5%); }
+.hero__lumiere { position: absolute; inset: -10% -60%; pointer-events: none; mix-blend-mode: overlay; background: linear-gradient(100deg, transparent 38%, rgb(255 238 205 / 0.9) 46%, rgb(255 238 205 / 0.8) 52%, transparent 60%); }
 html:not(.motion) .hero__lumiere { display: none; }
 
 /* Rideau : le gris rayé de la salle avance de gauche à droite, l'aiguille dorée sur son bord avant. */

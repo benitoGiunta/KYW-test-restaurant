@@ -1,12 +1,21 @@
 ---
 import { jours, site } from '../data/site';
 const h = (s: string) => s.replace(':00', ' h').replace(/^0/, '');
+// Regroupe les jours consécutifs de même statut : « Du mardi au samedi » plutôt que cinq lignes identiques.
+const groupes: { nom: string; ferme: boolean }[] = [];
+const ordre = [...jours.slice(1), jours[0]]; // mardi à dimanche, puis lundi
+for (const j of ordre) {
+  const d = groupes[groupes.length - 1];
+  if (d && d.ferme === j.ferme) d.nom = d.nom.split(' au ')[0] + ' au ' + j.nom.toLowerCase();
+  else groupes.push({ nom: j.nom, ferme: j.ferme });
+}
+const lib = (n: string) => (n.includes(' au ') ? 'Du ' + n.charAt(0).toLowerCase() + n.slice(1) : n);
 ---
 <ul class="horaires" aria-label="Horaires d’ouverture">
-  {jours.map((j) => (
+  {groupes.map((g) => (
     <li>
-      <span>{j.nom}</span>
-      {j.ferme ? <span class="horaires__ferme">Fermé</span> : <span class="nw">{h(site.ouverture)} à {h(site.fermeture)}</span>}
+      <span>{lib(g.nom)}</span>
+      {g.ferme ? <span class="horaires__ferme">Fermé</span> : <span class="nw">{h(site.ouverture)} à {h(site.fermeture)}</span>}
     </li>
   ))}
 </ul>
