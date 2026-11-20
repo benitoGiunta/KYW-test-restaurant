@@ -24,3 +24,6 @@
 ## Pièges
 - Aucun formulaire : la réservation est le module Wix externe (lien conservé), pas de faux envoi.
 - sloplint ne rend pas l'index Astro sur disque : utiliser `--url` sur le serveur de dev (base `/epices-et-nous/legacy/`).
+
+## Révision 1 (20/11/2026)
+F1-1 et F2-1 à F2-5 traités, voir REVISION-1.md. Reste : F3, vérification visuelle des recadrages.

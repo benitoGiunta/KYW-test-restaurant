@@ -12,6 +12,10 @@ const jsonLd = {
   servesCuisine: 'Française',
   address: { '@type': 'PostalAddress', streetAddress: 'Chaussée de Marche 561', postalCode: '5101', addressLocality: 'Erpent (Namur)', addressCountry: 'BE' },
   sameAs: [resto.facebook],
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '12:00', closes: '13:45' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '19:00', closes: '20:30' },
+  ],
 };
 ---
 <!doctype html>
@@ -33,7 +37,8 @@ const jsonLd = {
     <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
     <style is:global>html, body { overflow-x: clip; }</style>
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={`${base}photos/table-1600.webp`} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta property="og:locale" content="fr_BE" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

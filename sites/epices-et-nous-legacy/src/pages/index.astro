@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Fig from '../components/Fig.astro';
 import Venir from '../components/Venir.astro';
-import { resto, menu, actus } from '../data/site';
+import { resto, menu, actus, actusDatees } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 <Base page="accueil" title="Épices & Nous, restaurant à Erpent (Namur)" description="Depuis 1999, Denis et Sophie Delvigne vous accueillent à Erpent : cuisine française de saison relevée d’épices, menu trois services à 52 €.">
@@ -67,7 +67,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   <section class="section section--bark statement" aria-labelledby="signature-titre">
     <div class="container">
       <h2 id="signature-titre" class="statement__texte">Le ris de veau façon carbonara : dés croustillants, lardons, pâtes fraîches, jaune d’œuf, tuile fromagère.</h2>
-      <p class="statement__suite">La spécialité de la maison. Aussi à la carte, l’Américain maison et le hamburger gourmand. Recommandé par le Guide Michelin, 13,5/20 au Gault&amp;Millau.</p>
+      <p class="statement__suite">Notre plat signature. Parmi les classiques revisités : l’Américain maison et le hamburger gourmand. Recommandé par le Guide Michelin, 13,5/20 au Gault&amp;Millau.</p>
     </div>
   </section>
 
@@ -78,7 +78,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <p><a class="link" href={`${base}actualites/`}>Toutes les actualités</a></p>
       </div>
       <ul class="rows rows--dated" data-reveal>
-        {actus.slice(0, 3).map(([d, t, x]) => <li><h3>{t}</h3><p>{x}</p><time>{d}</time></li>)}
+        {actusDatees.slice(0, 3).map(([d, t, x]) => <li><h3>{t}</h3><p>{x}</p><time>{d}</time></li>)}
       </ul>
     </div>
   </section>

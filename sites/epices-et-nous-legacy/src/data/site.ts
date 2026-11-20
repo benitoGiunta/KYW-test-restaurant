@@ -57,7 +57,7 @@ export const carte = [
     ['Saint-Jacques de Dieppe', 'Noix de Saint-Jacques de Dieppe snackées, céleri, lard confit et bouillon de moules, châtaigne', '25,50'],
     ['Lentilles vertes du Puy', 'Salade tiède de lentilles vertes du Puy, Morteau, escalope de foie gras de canard poêlée', '25,50'],
   ] },
-  { cat: 'Plats', photo: 'viande', plats: [
+  { cat: 'Plats', photo: 'scampis', plats: [
     ['Filet de biche du Pays', 'Filet de biche rôti, légumes d’automne, airelles, sauce poivrade et mousseline de céleri rave', '45,75'],
     ['Aloyau de bœuf', 'Aloyau de bœuf du Pays cuit au sautoir, quelques légumes du moment, frites et sauce au choix', '33,50'],
     ['Ris de veau', 'Croustillant de ris de veau, laquage miel, soja, gingembre confit, légumes racines et mousseline de céleri rave', '45,75'],
@@ -98,10 +98,13 @@ export const menu = {
 };
 
 export const actus = [
-  ['4 mai', 'Plaisir de mai', '« En mai, fais ce qu’il te plaît » et viens découvrir notre carte du mois ! La carte de mai, c’est du plaisir et le plaisir de vous retrouver !'],
-  ['26 mars', 'Fermeture exceptionnelle', 'Du 2 avril au 5 mai inclus, pour raison médicale. Nous serons ouverts après cette date et bien entendu avant : réservez dès maintenant.'],
+  ['4 mai, date illustrative', 'Plaisir de mai', '« En mai, fais ce qu’il te plaît » et viens découvrir notre carte du mois ! La carte de mai, c’est du plaisir et le plaisir de vous retrouver !'],
+  ['26 mars, date illustrative', 'Fermeture exceptionnelle', 'Du 2 avril au 5 mai inclus, pour raison médicale. Nous serons ouverts après cette date et bien entendu avant : réservez dès maintenant.'],
   ['14 déc. 2025', 'Traiteur réveillon de Noël', 'Vos plats traiteur Épices & Nous à la maison pour le réveillon de Noël : venez chercher vos plats chez nous.'],
   ['3 déc. 2025', 'Carte de saison', 'À partir du 3 décembre, notre carte de saison et notre menu. Prenez le temps de les découvrir.'],
   ['17 sept. 2025', 'Nouvelle carte pour la reprise', 'Découvrez en quelques images notre nouvelle carte. Réservez votre table dès aujourd’hui pour découvrir les merveilles de saison.'],
   ['27 août 2025', 'Nouveau site', 'Pour le 1er septembre, nous lançons notre nouveau site avec un système de réservation revu et une présentation en ligne de notre carte.'],
 ];
+
+// Accueil : seules les actualités datées d’une année (les autres restent sur /actualites/, avec la mention).
+export const actusDatees = actus.filter(([d]) => d.includes('20'));
