@@ -98,8 +98,8 @@ export const menu = {
 };
 
 export const actus = [
-  ['4 mai, date illustrative', 'Plaisir de mai', '« En mai, fais ce qu’il te plaît » et viens découvrir notre carte du mois ! La carte de mai, c’est du plaisir et le plaisir de vous retrouver !'],
-  ['26 mars, date illustrative', 'Fermeture exceptionnelle', 'Du 2 avril au 5 mai inclus, pour raison médicale. Nous serons ouverts après cette date et bien entendu avant : réservez dès maintenant.'],
+  ['4 mai', 'Plaisir de mai', '« En mai, fais ce qu’il te plaît » et viens découvrir notre carte du mois ! La carte de mai, c’est du plaisir et le plaisir de vous retrouver !'],
+  ['26 mars', 'Fermeture exceptionnelle', 'Du 2 avril au 5 mai inclus, pour raison médicale. Nous serons ouverts après cette date et bien entendu avant : réservez dès maintenant.'],
   ['14 déc. 2025', 'Traiteur réveillon de Noël', 'Vos plats traiteur Épices & Nous à la maison pour le réveillon de Noël : venez chercher vos plats chez nous.'],
   ['3 déc. 2025', 'Carte de saison', 'À partir du 3 décembre, notre carte de saison et notre menu. Prenez le temps de les découvrir.'],
   ['17 sept. 2025', 'Nouvelle carte pour la reprise', 'Découvrez en quelques images notre nouvelle carte. Réservez votre table dès aujourd’hui pour découvrir les merveilles de saison.'],
