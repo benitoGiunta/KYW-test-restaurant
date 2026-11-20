@@ -1,23 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
+import Berge from '../components/Berge.astro';
 import { u } from '../lib/url';
 import { site, wepion, relais, reperes } from '../data/site';
 ---
 <Base page="accueil" description="Le Lodge, brasserie et tea-room au bord de la Meuse à Wépion, est fermé depuis l’incendie du 21 mai 2026. L’équipe vous reçoit à Erpent, au Wine & More.">
-  <section class="rives" aria-labelledby="titre-accueil">
+  <section class="rives" aria-labelledby="titre-accueil" data-rives>
+    <div class="rives__crue" aria-hidden="true"></div>
+    <Berge sens="v" classe="rives__berge" />
     <div class="rive rive--nuit">
       <p class="mention">Wépion · {wepion.rue} {wepion.numero} · fermé depuis le 21 mai 2026</p>
       <h1 id="titre-accueil" class="display" data-split="lines" data-intro>Le Lodge<br /><em>Wépion</em></h1>
-      <div class="photo" data-reveal="clip" data-intro>
+      <div class="photo">
         <Photo cle="terrasse" sizes="(max-width: 60rem) 100vw, 58vw" widths={[480, 800, 1145]} prioritaire />
       </div>
     </div>
     <div class="rive rive--jour jour">
+      <Berge sens="h" classe="rives__berge-h" />
       <div class="rive__corps">
         <p class="mention">Aujourd’hui · Erpent · {relais.lieu}</p>
-        <h2 class="display">À table à Erpent, en attendant la berge.</h2>
-        <p>Brasserie, restaurant et tea-room au bord de la Meuse : l’équipe du Lodge vous reçoit au {relais.lieu} depuis le 15 septembre 2026, six jours sur sept.</p>
+        <h2 class="display" data-split="lines" data-intro data-delay="0.25">À table à Erpent, en attendant la berge.</h2>
+        <p>Brasserie, restaurant et tea-room au bord de la Meuse : l’équipe du Lodge vous reçoit au {relais.lieu} depuis le <span class="nw">15 septembre 2026</span>, six jours sur sept.</p>
         <div class="rive__actions">
           <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver une table</span></a>
           <a class="cta cta--contour" href={relais.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{relais.telephone}</span></span></a>
@@ -37,7 +41,7 @@ import { site, wepion, relais, reperes } from '../data/site';
   </section>
 
   <section class="sec wrap" aria-labelledby="titre-passage">
-    <div class="grille"><h2 id="titre-passage" class="passage__titre display">Deux rives, un seul <em>Lodge</em></h2></div>
+    <div class="grille"><h2 id="titre-passage" class="passage__titre display" data-split="lines">Deux rives, un seul <em>Lodge</em></h2></div>
     <div class="passage" role="table" aria-label="Wépion et Erpent côte à côte">
       <div class="passage__tete passage__tete--vide" role="presentation"></div>
       <div class="passage__tete passage__nuit" role="columnheader">La berge · Wépion</div>
@@ -55,10 +59,10 @@ import { site, wepion, relais, reperes } from '../data/site';
   </section>
 
   <section class="sec wrap grille" aria-labelledby="titre-reperes">
-    <h2 id="titre-reperes" class="reperes__titre display">À la carte, <em>six repères</em></h2>
+    <h2 id="titre-reperes" class="reperes__titre display" data-split="lines">À la carte, <em>six repères</em></h2>
     <ul class="reperes__liste">
       {reperes.map((r) => (
-        <li class="repere">
+        <li class="repere" data-reveal="up">
           <span class="repere__nom">{r.nom}</span>
           <span class="repere__prix prix">{r.prix}</span>
           <span class="repere__note">{r.note}</span>
@@ -76,7 +80,7 @@ import { site, wepion, relais, reperes } from '../data/site';
 
   <section class="sec wrap grille" aria-labelledby="titre-tea">
     <div class="paire__texte">
-      <h2 id="titre-tea" class="display">Et l’après-midi, <em>le tea-room.</em></h2>
+      <h2 id="titre-tea" class="display" data-split="lines">Et l’après-midi, <em>le tea-room.</em></h2>
       <p>Crêpes, gaufres et glaces Pagotini : la brasserie devient tea-room l’après-midi. Les fraises de Wépion arrivent en dessert dès qu’elles sont de saison.</p>
       <p><a class="lien" href={u('/carte/') + '#crepes'}>Crêpes et gaufres</a></p>
     </div>

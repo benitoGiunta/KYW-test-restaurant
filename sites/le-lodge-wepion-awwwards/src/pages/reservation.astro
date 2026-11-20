@@ -1,10 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import Berge from '../components/Berge.astro';
 import Photo from '../components/Photo.astro';
 import { site, wepion, relais, horairesWepion } from '../data/site';
 ---
 <Base page="reservation" title="Réserver" description="Réservez une table du Lodge à Erpent, au Wine & More : téléphone, réservation en ligne ou e-mail. Adresses de Wépion et d’Erpent, plan et horaires connus.">
   <header class="entete wrap grille">
+    <Berge sens="h" classe="entete__berge" />
     <p class="mention">Réservation · Erpent</p>
     <h1 class="display" data-split="lines" data-intro>Réserver, <em>côté relais.</em></h1>
     <p>Le Lodge est fermé à Wépion depuis le 21 mai 2026. Pour manger avec l’équipe aujourd’hui, c’est à Erpent, au {relais.lieu}.</p>
@@ -12,7 +14,7 @@ import { site, wepion, relais, horairesWepion } from '../data/site';
 
   <section class="sec wrap cols2" aria-labelledby="titre-contact">
     <div class="cols2__a">
-      <h2 id="titre-contact" class="display titre">Une table, trois façons</h2>
+      <h2 id="titre-contact" class="display titre" data-split="lines">Une table, trois façons</h2>
       <div class="texte">
         <p>Appelez le <a class="lien nw" href={relais.telephoneHref}>{relais.telephone}</a>, réservez en ligne, ou écrivez à <a class="lien" href={`mailto:${site.email}`}>{site.email}</a>. Ce numéro est celui indiqué par le site du Lodge : il reste à confirmer.</p>
       </div>
@@ -35,7 +37,7 @@ import { site, wepion, relais, horairesWepion } from '../data/site';
 
   <section class="sec--serre wrap cols2" aria-labelledby="titre-adresses">
     <div class="cols2__a">
-      <h2 id="titre-adresses" class="display titre">Où nous trouver</h2>
+      <h2 id="titre-adresses" class="display titre" data-split="lines">Où nous trouver</h2>
       <address class="adresse">
         <strong>Aujourd’hui, à Erpent</strong>
         <span>{relais.lieu}</span>

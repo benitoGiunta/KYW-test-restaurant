@@ -15,10 +15,9 @@
 /* Boutons */
 .cta { position: relative; z-index: 0; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0.7rem 1.5rem; background: var(--c-fg); color: var(--c-bg); font-weight: 600; font-size: var(--t-s); letter-spacing: 0.02em; border: 1px solid var(--c-fg); }
 .cta--contour { background: transparent; color: var(--c-fg); }
-.cta--petit { min-height: 40px; padding: 0.4rem 1.1rem; }
+.cta--petit { min-height: 44px; padding: 0.4rem 1.1rem; }
 .cta__txt { position: relative; }
 .lien { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.22em; text-decoration-color: var(--c-accent); }
-.lien:hover { text-decoration-thickness: 2px; }
 
 /* En-tête */
 .tete { position: sticky; top: 0; z-index: var(--z-header); display: flex; align-items: center; gap: 1.6rem; min-height: 3.6rem; padding: 0.4rem var(--gutter); background: var(--c-bg); border-bottom: 1px solid var(--c-line); }
@@ -27,10 +26,9 @@
 .tete__nav { margin-left: auto; }
 .tete__nav ul { list-style: none; padding: 0; display: flex; gap: 1.8rem; }
 .nl { position: relative; display: inline-flex; align-items: center; min-height: 44px; font-size: var(--t-s); }
-.nl::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.55rem; height: 1px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform 0.35s cubic-bezier(0.33, 1, 0.68, 1); }
+.nl::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.55rem; height: 1px; background: var(--c-accent); transform: scaleX(0); transform-origin: right; transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1); }
 .nl[aria-current='page']::after { transform: scaleX(1); }
 .tete__menu { display: none; }
-@media (hover: hover) { .nl:hover::after { transform: scaleX(1); } }
 @media (max-width: 52rem) { .tete__nav, .tete__appel { display: none; } .tete__menu { display: inline-flex; margin-left: auto; } }
 
 /* Menu téléphone */
@@ -150,7 +148,6 @@ html.menu-ouvert { overflow: hidden; }
 .carte-nav ul { list-style: none; padding: 0; display: flex; gap: 1.4rem; overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter); padding-inline: var(--gutter) 3.5rem; }
 .carte-nav li { scroll-snap-align: start; flex: none; }
 .carte-nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--t-s); white-space: nowrap; color: var(--c-muted); }
-.carte-nav a:hover, .carte-nav a:focus-visible { color: var(--c-fg); }
 .avis-carte { padding-block: var(--serre); font-size: var(--t-s); color: var(--c-muted); max-width: 46rem; }
 .cat { padding-block: var(--normal) 0; scroll-margin-top: 7rem; }
 .cat__grille { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); border-top: 1px solid var(--c-fg); padding-top: var(--serre); }
@@ -192,7 +189,6 @@ html.menu-ouvert { overflow: hidden; }
 .pied__titre { font-size: var(--t-xs); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--c-muted); }
 .pied__liens { list-style: none; padding: 0; display: grid; gap: 0.1rem; }
 .lien-util { color: var(--c-muted); font-size: var(--t-s); display: inline-flex; align-items: center; min-height: 32px; }
-.lien-util:hover, .lien-util:focus-visible { color: var(--c-fg); text-decoration: underline; text-decoration-color: var(--c-accent); }
 .pied__tel { font-family: var(--f-display); font-size: var(--t-m); }
 .pied__colophon { grid-column: 1 / -1; font-size: var(--t-xs); color: var(--c-muted); max-width: 52rem; }
 @media (max-width: 60rem) { .pied__col { grid-column: 1 / -1; } }
@@ -204,8 +200,67 @@ html.menu-ouvert { overflow: hidden; }
 .perdu__jour { border-left: 1px solid var(--c-fg); }
 @media (max-width: 60rem) { .perdu { grid-template-columns: 1fr; min-height: 0; } .perdu__jour { border-left: 0; border-top: 1px solid var(--c-fg); } .perdu__nuit { padding-block: calc(var(--u) * 6); } }
 
-/* Focus lisible sur les deux rives */
+/* Lignes masquées : place pour les capitales accentuées (À, É) */
+.split-line { padding-top: 0.16em; margin-top: -0.16em; }
+
+/* LA BERGE (concept « Deux rives ») : trait ondulé ambre entre les rives, piloté par src/motion/berge.ts.
+   --bx (px) déplace le trait (pointeur, défilement) ; .rives__crue est le jour d'Erpent qui traverse avec lui.
+   Sans script ou en mouvement réduit : le trait est dessiné, immobile, et la crue reste invisible. */
+.rives, .perdu { position: relative; overflow: clip; }
+.rive--jour, .perdu__jour { position: relative; }
+.berge { position: absolute; z-index: 3; pointer-events: none; overflow: clip; translate: var(--bx, 0px) 0; }
+.berge__onde { display: block; max-width: none; }
+.berge path { fill: none; stroke: var(--c-accent); stroke-width: 1.5; }
+.berge--v { top: 0; bottom: 0; left: calc(100% * 7 / 12 - 6px); width: 12px; }
+.berge--v .berge__onde { width: 12px; height: 200%; }
+.berge--h { left: 0; right: 0; height: 12px; }
+.berge--h .berge__onde { width: 200%; height: 12px; }
+.rives__crue { position: absolute; top: 0; bottom: 0; left: 0; width: calc(100% * 7 / 12); z-index: 2; pointer-events: none; background: var(--c-jour); clip-path: inset(0 0 0 calc(100% + var(--bx, 0px))); }
+.rives__berge-h { display: none; top: -6px; }
+.entete { position: relative; border-bottom-color: transparent; }
+.entete__berge { bottom: -6px; }
+@media (min-width: 60.001rem) { .rive--jour, .perdu__jour { border-left-color: transparent; } }
+@media (max-width: 60rem) {
+  .rives__berge, .rives__crue { display: none; }
+  .rives__berge-h { display: block; }
+  .rive--jour, .perdu__jour { border-top-color: transparent; }
+}
+
+/* Rideau de page : le jour d'Erpent aborde, la nuit suit avec la berge ambre sur son bord (sens droite vers gauche). */
+.curtain__panel--b { background: var(--c-jour); }
+.curtain__panel--a::before { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--c-accent); }
+
+/* SURVOLS, verbe « traverser » (trois traitements) :
+   1. CTA : l'autre rive entre par la droite et remplit le bouton ;
+   2. navigation et liens texte : un trait passe de droite à gauche (liens texte soulignés au repos) ;
+   3. utilitaires (pied, carte) : le texte s'éclaire et se souligne.
+   Même état au :focus-visible ; :active présent ; aucun survol ne porte une information. */
+.cta { transition: color 0.45s cubic-bezier(0.215, 0.61, 0.355, 1); }
+.cta::before { content: ''; position: absolute; inset: -1px; z-index: -1; background: var(--c-bg); translate: 101% 0; transition: translate 0.5s cubic-bezier(0.215, 0.61, 0.355, 1); }
+.cta--contour::before { background: var(--c-fg); }
+.cta:focus-visible { color: var(--c-fg); }
+.cta--contour:focus-visible { color: var(--c-bg); }
+.cta:focus-visible::before { translate: 0 0; }
 .cta:active { scale: 0.98; }
-@media (hover: hover) { .cta:hover { background: transparent; color: var(--c-fg); } .cta--contour:hover { background: var(--c-fg); color: var(--c-bg); } }
-.cta:focus-visible { background: transparent; color: var(--c-fg); }
-.cta--contour:focus-visible { background: var(--c-fg); color: var(--c-bg); }
+.lien { background: linear-gradient(currentColor, currentColor) no-repeat right 0 bottom 0 / 0% 1px; padding-bottom: 0.12em; transition: background-size 0.45s cubic-bezier(0.215, 0.61, 0.355, 1), text-decoration-color 0.3s; }
+.lien:focus-visible { background-size: 100% 1px; background-position: left 0 bottom 0; text-decoration-color: transparent; }
+.lien:active, .lien-util:active, .nl:active { opacity: 0.72; }
+.nl:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+.lien-util:focus-visible, .carte-nav a:focus-visible { color: var(--c-fg); text-decoration: underline; text-decoration-color: var(--c-accent); text-underline-offset: 0.22em; }
+.pied__tel { text-decoration: underline; text-decoration-thickness: 1px; text-decoration-color: transparent; text-underline-offset: 0.18em; transition: text-decoration-color 0.3s; }
+.pied__tel:focus-visible { text-decoration-color: var(--c-accent); text-decoration-thickness: 2px; }
+.tete__marque img { transition: translate 0.45s cubic-bezier(0.215, 0.61, 0.355, 1); }
+.tete__marque:focus-visible img { translate: -4px 0; }
+.kyw-footer__link:focus-visible { text-decoration: underline; }
+@media (hover: hover) {
+  .cta:hover { color: var(--c-fg); }
+  .cta--contour:hover { color: var(--c-bg); }
+  .cta:hover::before { translate: 0 0; }
+  .nl:hover::after { transform: scaleX(1); transform-origin: left; }
+  .nl[aria-current='page']:hover::after { height: 2px; }
+  .lien:hover { background-size: 100% 1px; background-position: left 0 bottom 0; text-decoration-color: transparent; }
+  .lien-util:hover, .carte-nav a:hover { color: var(--c-fg); text-decoration: underline; text-decoration-color: var(--c-accent); text-underline-offset: 0.22em; }
+  .pied__tel:hover { text-decoration-color: var(--c-accent); text-decoration-thickness: 2px; }
+  .tete__marque:hover img { translate: -4px 0; }
+  .kyw-footer__link:hover { text-decoration: underline; }
+}

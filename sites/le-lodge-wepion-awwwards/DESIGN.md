@@ -51,10 +51,12 @@ Références : photos du client (08, 03, 09, 02). Défaut n° 1 (crème, serif c
 - 12 colonnes, gouttière fluide ; lignes verticales fortes : la berge (colonne 7/8) et la marge gauche. Mobile : la berge devient une ligne horizontale entre deux panneaux.
 - Humeurs d'espacement : `--serre`, `--normal`, `--aere`, `--entracte`. Une règle de forme : angles vifs, un seul trait, la berge.
 
-### Mouvement (planifié, phase 2)
-- Famille d'easing : `ease.out` pour les entrées, `ease.inOut` pour la berge et le rideau ; durées 0,6 à 0,9 s ; le verbe « traverser » : tout entre par la droite et sort par la gauche, comme un bac.
-- Hovers : CTA = remplissage inversé (nuit/jour), nav et liens = trait ambre qui se trace, plats et images = légère translation de la berge intérieure. Trois traitements.
-- Repos : la berge ondule (déplacement horizontal de 4 à 6 px, 8 s) ; immobilité décidée sous `prefers-reduced-motion`.
+### Mouvement (réalisé, phase 2)
+- Famille d'easing : `ease.out` (expo.out) pour les entrées, `ease.inOut` (expo.inOut) pour le rideau et le menu, une courbe CSS unique (power3.out, `cubic-bezier(0.215, 0.61, 0.355, 1)`) pour les survols ; lignes 1,2 s (stagger 80 ms), blocs 1,2 à 1,3 s (stagger 60 ms), rideau 0,75 à 0,8 s par panneau. Verbe « traverser » : tout entre par la droite et sort par la gauche, comme un bac.
+- **Signature « le passage »** : composant `Berge.astro` (onde SVG ambre) entre les rives, à l'accueil et à la 404 (vertical au bureau, horizontal au téléphone) et sous l'en-tête des pages intérieures. Pilote unique `src/motion/berge.ts` : la progression du défilement dans le héros fait traverser le jour d'Erpent vers Wépion (`--bx` jusqu'à 42 % de la rive de nuit, panneau `.rives__crue` découpé sur le trait) ; le pointeur déplace le trait de ±6 px ; au repos l'onde coule le long de la berge à vitesse constante (plus vite au toucher pendant le défilement). Intro : le trait se dessine (clip 1,3 s), la photo de Wépion se pose (échelle 1,08 vers 1, jamais cachée), les titres montent par lignes.
+- Rideau : panneau jour puis panneau nuit à bord ambre, de droite à gauche (0,87 s à l'aller, 0,9 s au retour). Tableau « Deux rives » : la colonne d'Erpent entre par la droite (clip).
+- Hovers (trois traitements) : CTA = l'autre rive entre par la droite et remplit le bouton ; navigation et liens texte = un trait qui passe de droite à gauche (liens texte soulignés ambre au repos) ; utilitaires = éclaircissement et soulignement. Images : pas de survol (aucune image n'est un lien) ; aperçu de plat au curseur non retenu (la carte n'a que trois photos de plats, aucune n'est liée à une ligne).
+- Repos : l'onde de la berge coule (environ 12 px/s) ; immobile en mouvement réduit.
 
 ### Plan de composition (accueil)
 ```
@@ -90,3 +92,32 @@ Carte : liste index par catégorie (titre sticky à gauche, plats à droite) et 
 16. Une famille de section au plus une fois par page : accueil = poster, énoncé, données, index, média, paire, pied. [x]
 17. Héros en 3 s : mesures Playwright, CTA dans la flottaison à 1440x900 (y 425), 1280x720 (404), 1024x768 (445), 390x844 (711). [x]
 18. Mobile 390 recomposé : panneaux empilés, berge horizontale, photo 2:1, mur de la carte en bande `scroll-snap`, `scrollWidth` = 390 sur les 4 pages. [x]
+
+## Sur-utilisation de la skill (phase 2)
+19. Menu mobile accessible : `menu.ts:31` (`aria-expanded`), `.menu` plein écran (`site.css` « Menu téléphone »), focus piégé `menu.ts:18-24`, Échap `menu.ts:19`, retour du focus au bouton ; mesure Playwright 390 : 12 Tab restent dans le menu, Échap rend `aria-expanded=false` et le focus au bouton. [x]
+20. Engine verbatim (`src/engine/`), adaptateur `astro.ts`, `transition:persist` sur `#curtain` (`Base.astro:73`), `transition:animate="none"` sur `<html>` (`Base.astro:36`) ; ni `#gl` ni `#cursor` (pas de GL, pas de suiveur : décision). [x]
+21. Une horloge : `gsap.ticker` seul (`berge.ts:40`, `idle.ts:15`) ; grep `addEventListener('scroll')` et `requestAnimationFrame` dans `src/motion`, `src/components`, `src/pages` : aucun. [x]
+22. Code de page dans `onPage()` avec nettoyage : `berge.ts:41` (retour `:71`), `menu.ts:9` (retour `:66`). [x]
+23. Aucune CSS `transform` sur un élément GSAP : `transform` CSS seulement sur `.nl::after` (transition CSS) ; cibles GSAP (`.berge`, `.berge__onde`, `.photo img`, `.passage__jour`, `.repere`, panneaux du rideau, menu) sans `transform` CSS ; le décalage du trait passe par `translate: var(--bx)` sur le conteneur, l'onde par `yPercent` sur le SVG enfant. [x]
+24. Module pilote `src/motion/berge.ts` : une variable (progression du héros), pointeur (`idle.x`, `berge.ts:30`), `startIdle()` (`berge.ts:39`), appelé une fois depuis `setup.ts`. [x]
+25. Loader : non, décidé (§ Concept Card, Théâtre) ; aucun composant ni `role="status"`. [x]
+26. Transition du concept (`setup.ts`) : jour puis nuit de droite à gauche, 0,87 s aller, 0,9 s retour (≤ 1 s par sens). [x]
+27. Intro `data-intro` : h1 et h2 du héros en lignes, trait de la berge qui se dessine, photo peinte dès le premier rendu (capture réduite 1440 = état final dessiné). [x]
+28. Épinglages : aucun pin ; un seul `ScrollTrigger` de progression (`berge.ts:58`, `top top` vers `bottom top`) ; titres de catégorie de la carte en `position: sticky` CSS. [x]
+29. Repli statique dessiné : sans `.motion`, l'onde est tracée immobile, la crue invisible (`--bx` absent), tout le texte visible ; mesure réduit : `hidden` = 0, `motion` = false, `lenis` = false, captures identiques à 1,5 s d'écart. [x]
+30. Copies décoratives : aucune copie de texte ; `Berge.astro` et `.rives__crue` en `aria-hidden="true"`. [x]
+31. Une famille d'easing (`ease.*` de l'engine + une courbe CSS), Timing respecté, stagger 60 à 80 ms (§ Mouvement). [x]
+32. Trois traitements par rôle dans le verbe (§ Mouvement, `site.css` « SURVOLS »). [x]
+33. Survols sous `@media (hover: hover)` (`site.css:255`), même état sur `:focus-visible`, visibles en réduit (changement d'état sans durée) ; `:active` sur CTA et liens. [x]
+34. Liens texte soulignés au repos (`.lien`, ambre). [x]
+35. `hover.noHoverChange` : à prouver en phase 3 ; lien courant de la nav épaissi au survol, marque translatée, téléphone du pied souligné, lien du pied KYW souligné. [ ] (phase 3)
+36. `desktop.idleMotion` : onde qui coule ; mesure 1440 et 390 : captures différentes à 1,5 s d'écart sur l'accueil. `report.json` en phase 3. [x partiel]
+37. Curseur natif visible (aucun suiveur) ; rien ne dépend du survol au toucher. [x]
+38. Pas de blur animé, pas de `box-shadow` au défilement, pas de `will-change`. [x]
+39. Réduit : ni Lenis, ni GL, ni scrub, ni loader (mesure Playwright `reducedMotion: 'reduce'`, `lenis` false, rien ne bouge) ; `report.json` en phase 3. [x partiel]
+40. GL : sans objet, décision écrite (§ Concept Card, Théâtre) ; aucune ligne `// GL` dans l'engine. [x]
+41. Sans objet (pas de GL). [x]
+44. Lien d'évitement en premier (`Base.astro`, « Aller au contenu »), focus ambre partout (`engine.css:33`), CTA et liens au même état qu'au survol. [x]
+45. Contraste AA : à mesurer en phase 3 (axe), palette calculée en phase 1 ; la crue est un aplat de la couleur jour sans texte. [ ] (phase 3)
+46. Texte réel partout, aucun canvas. [x]
+47. Cibles : CTA 48 px, « Appeler » de l'en-tête 44 px (`.cta--petit`), liens de nav et bouton Menu 44 px, utilitaires 32 px. [x]
