@@ -24,7 +24,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [marquee(), heroObjets(intro), table(), avis()];
+    const cleanups = [marquee(), navCourant(), heroObjets(intro), table(), avis()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -54,9 +54,26 @@ function marquee() {
     }
     root.querySelectorAll<HTMLElement>('[data-marquee-etat]').forEach((e) => { e.textContent = texte; e.className = `marquee__etat ${etat}`; });
   };
+  // La piste translate de 50 % : chaque moitié doit couvrir la fenêtre (sinon un trou apparaît à droite en fin de cycle).
+  const piste = root.querySelector<HTMLElement>('.marquee__piste');
+  const modele = piste?.querySelector<HTMLElement>('.marquee__groupe');
+  const clones: HTMLElement[] = [];
+  if (piste && modele && modele.offsetWidth > 0) {
+    const n = Math.ceil(Math.max(window.innerWidth, window.screen?.width || 0) / modele.offsetWidth);
+    for (let k = 0; k < n * 2 - 2; k++) { const c = modele.cloneNode(true) as HTMLElement; c.setAttribute('aria-hidden', 'true'); piste.appendChild(c); clones.push(c); }
+  }
   peindre();
   const id = window.setInterval(peindre, 60_000);
-  return () => window.clearInterval(id);
+  return () => { window.clearInterval(id); clones.forEach((c) => c.remove()); };
+}
+
+/** Barre de navigation mobile défilante : le lien de la page courante reste visible, sans faire défiler la page. */
+function navCourant() {
+  const nav = document.querySelector<HTMLElement>('.nav');
+  const cur = nav?.querySelector<HTMLElement>('[aria-current="page"]');
+  if (!nav || !cur || nav.scrollWidth <= nav.clientWidth) return () => {};
+  nav.scrollLeft = cur.offsetLeft - (nav.clientWidth - cur.offsetWidth) / 2;
+  return () => {};
 }
 
 /** Rend un élément saisissable : Draggable x,y borné au parent, zIndex au drag, inertie maison, flèches au clavier. */

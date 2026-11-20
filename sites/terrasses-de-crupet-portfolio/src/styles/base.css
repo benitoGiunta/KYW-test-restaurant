@@ -45,6 +45,7 @@ html.motion .marquee__piste { animation: marquee 38s linear infinite; }
 .header__cta { justify-self: end; }
 .nav { display: flex; gap: 0.2em; padding: 0.3em; border: 2px solid var(--c-ink); border-radius: var(--pill); background: var(--c-blanc); }
 .nav a { position: relative; display: inline-block; padding: 0.45em 0.9em; min-height: 24px; border-radius: var(--pill); font-size: var(--t-s); font-weight: 700; transition: background 0.3s, color 0.3s, translate 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.nav a { white-space: nowrap; }
 .nav a:hover { background: var(--c-paille); translate: 0 -2px; }
 .nav a[aria-current='page'] { background: var(--c-ink); color: var(--c-lin); }
 .nav a[aria-current='page']:hover { background: var(--c-corail); color: var(--c-ink); }
@@ -111,11 +112,11 @@ html.motion .obj.is-flottant .obj__svg { animation: flotte 4.5s ease-in-out infi
 .tirage.is-drag { cursor: grabbing; box-shadow: 0 30px 50px rgb(31 26 23 / 0.3); }
 
 /* La table (signature) */
-.table { position: relative; min-height: 100svh; overflow: clip; }
-.table__titre { position: absolute; inset: auto 0; top: 50%; translate: 0 -50%; z-index: 1; text-align: center; pointer-events: none; }
-.table__titre h2 { font-size: var(--t-xl); color: var(--c-lin); }
+.table { --th: max(100svh, 46rem); position: relative; min-height: var(--th); overflow: clip; padding-block: 0; }
+.table__titre { position: absolute; inset: auto 0; top: calc(var(--th) / 2); translate: 0 -50%; z-index: 1; text-align: center; pointer-events: none; }
+.table__titre h2 { font-size: clamp(3rem, 5.4vw, 5rem); color: var(--c-lin); }
 .table__titre p { font-family: var(--f-display); font-style: italic; font-size: var(--t-m); margin-top: 0.4em; color: var(--c-lin); }
-.table__scene { position: relative; z-index: 2; height: 100svh; }
+.table__scene { position: relative; z-index: 2; height: var(--th); }
 .table__scene .tirage { position: absolute; left: var(--x); top: var(--y); rotate: var(--r); --w: clamp(11rem, 15vw, 15rem); transition: rotate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s; }
 .table__scene .tirage:hover { rotate: 0deg; }
 .table__scene .tirage.is-drag { rotate: 0deg; }
@@ -127,7 +128,7 @@ html.motion .badge svg { animation: tourne 14s linear infinite; }
 .badge text { font-family: var(--f-body); font-weight: 700; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; fill: currentColor; }
 /* La main reste petite au centre : `.badge svg` (absolu, 100 %) l'agrandissait à toute la pastille (REVISION-1, F2-6). */
 .badge .badge__main { position: relative; inset: auto; width: 2.2rem; height: 2.2rem; }
-.table__rail { display: none; }
+.table__rail.rail { display: none; }
 
 /* Le menu : carte blanche */
 /* La carte part d'un scale > 1 (data-reveal="scale") : avant sa révélation elle débordait de 10 px en 390 px. */
@@ -250,7 +251,8 @@ html.motion .avis__mot { --flou: 14px; }
 @media (max-width: 767px) {
   .header__inner { grid-template-columns: 1fr auto; }
   .nav { position: fixed; left: 50%; bottom: max(0.75rem, env(safe-area-inset-bottom)); translate: -50% 0; z-index: var(--z-header); max-width: calc(100vw - 1.5rem); overflow-x: auto; scrollbar-width: none; box-shadow: 0 10px 30px rgb(31 26 23 / 0.25); }
-  .nav a { white-space: nowrap; }
+  .nav { gap: 0; padding: 0.25em; }
+  .nav a { white-space: nowrap; padding: 0.55em 0.5em; font-size: clamp(0.64rem, 3vw, 0.8rem); }
   body { padding-bottom: 4.5rem; }
   .hero { padding-block: calc(var(--u) * 8) calc(var(--u) * 16); min-height: 0; }
   .hero__titre { font-size: clamp(2.6rem, 14vw, 3.6rem); }
@@ -262,10 +264,10 @@ html.motion .avis__mot { --flou: 14px; }
   .header__cta { width: auto; min-height: 40px; padding: 0.5em 1.1em; }
   .maison__grille { grid-template-columns: 1fr; }
   .maison__texte { padding: calc(var(--u) * 2.5) calc(var(--u) * 2); }
-  .table { min-height: 0; }
+  .table { min-height: 0; padding-block: calc(var(--u) * 8) calc(var(--u) * 6); }
   .table__scene { display: none; }
   .table__titre { position: static; translate: none; margin-bottom: calc(var(--u) * 3); }
-  .table__rail { display: flex; }
+  .table__rail.rail { display: flex; }
   .table__rail .tirage { --w: 14rem; rotate: var(--r); cursor: default; }
   .badge { position: relative; right: auto; bottom: auto; width: 6.5rem; height: 6.5rem; margin: calc(var(--u) * 2) auto 0; }
   .carte { padding: calc(var(--u) * 3) calc(var(--u) * 2); }
@@ -276,7 +278,10 @@ html.motion .avis__mot { --flou: 14px; }
   .marquee__groupe { font-size: var(--t-xs); }
 }
 @media (min-width: 768px) and (max-width: 1023px) {
-  .nav a { padding-inline: 0.6em; }
+  .nav a { padding-inline: 0.5em; font-size: var(--t-xs); }
+  .header__inner { gap: var(--u); }
+  .header__brand { font-size: var(--t-s); }
+  .header__cta { padding-inline: 1em; }
 }
 /* Sans motion : tout posé, tout visible, grille droite */
 html:not(.motion) .table__scene .tirage { position: static; rotate: 0deg; }

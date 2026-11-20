@@ -42,6 +42,8 @@ const jsonLd = {
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#0f2a28" />
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <link rel="icon" href={`${base}favicon-32.png`} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`} />
     <link rel="sitemap" href={`${base}sitemap-index.xml`} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_BE" />
@@ -73,11 +75,27 @@ const jsonLd = {
           {nav.map((n) => (
             n.href === 'reservation/'
               ? <a class="btn btn--solid" href={`${base}${n.href}`} aria-current={path.startsWith('/reservation') ? 'page' : undefined}>{n.label}</a>
-              : <a class={n.href === 'a-propos/' ? '' : ''} href={`${base}${n.href}`} aria-current={path.startsWith('/' + n.href.replace('/', '')) ? 'page' : undefined}>{n.label}</a>
+              : <a class="nav__lien" href={`${base}${n.href}`} aria-current={path.startsWith('/' + n.href.replace('/', '')) ? 'page' : undefined}>{n.label}</a>
           ))}
+          <button class="btn ui menu-btn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
         </nav>
       </div>
     </header>
+    <div id="menu" class="menu" hidden>
+      <div class="menu__panel">
+        <div class="wrap menu__top">
+          <span class="brand__mark" aria-hidden="true">T</span>
+          <button class="btn ui menu__close" type="button">Fermer</button>
+        </div>
+        <nav class="wrap" aria-label="Menu">
+          <ul class="menu__list">
+            <li><a class="display" href={base} aria-current={path === '/' ? 'page' : undefined}>Accueil</a></li>
+            {nav.map((n) => (<li><a class="display" href={`${base}${n.href}`} aria-current={path.startsWith('/' + n.href.replace('/', '')) ? 'page' : undefined}>{n.label}</a></li>))}
+          </ul>
+          <p class="menu__pied"><a class="btn btn--solid ui" href={r.phoneHref}>Appeler le {r.phone}</a></p>
+        </nav>
+      </div>
+    </div>
     <main id="main" tabindex="-1">
       <slot />
     </main>

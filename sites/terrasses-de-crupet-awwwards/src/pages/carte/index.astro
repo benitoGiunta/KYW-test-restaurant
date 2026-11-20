@@ -8,7 +8,7 @@ const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,
 <Base theme="stone" title="La carte" description="La carte des Terrasses de Crupet : plats à partager, entrées, plats, carte enfants, desserts, cocktails, bières, vins et cafés Delahaut, avec les prix.">
   <section class="intro">
     <div class="wrap">
-      <h1 class="display display--mega" data-split="lines">La carte</h1>
+      <h1 class="display display--mega" data-split="lines" data-intro>La carte</h1>
       <p class="lede">Plats de brasserie, plats à partager, une carte pour les enfants. Carte du restaurant, mise à jour sur le site du client.</p>
     </div>
   </section>
@@ -24,7 +24,7 @@ const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,
         return (
           <section class="cat" id={slug(c.categorie)} aria-labelledby={`h-${slug(c.categorie)}`}>
             <header class="cat__head">
-              <div class="hublot cat__hublot" data-reveal="scale">
+              <div class="hublot cat__hublot" data-iris>
                 <Image src={ph.src} alt="" widths={[200, 360]} sizes="9rem" loading="lazy" decoding="async" />
               </div>
               <h2 id={`h-${slug(c.categorie)}`} class="display display--xl">{c.categorie}</h2>
@@ -51,7 +51,10 @@ const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,
   .carte { display: grid; grid-template-columns: 14rem minmax(0, 1fr); column-gap: var(--gutter); padding-bottom: 6rem; }
   .carte__nav { position: sticky; top: 5.5rem; align-self: start; }
   .carte__nav li a { display: block; padding: 0.45rem 0; text-decoration: none; border-bottom: 1px solid var(--c-line); font-size: var(--t-s); font-weight: 600; letter-spacing: 0.03em; }
-  .carte__nav li a:hover, .carte__nav li a:focus-visible { color: var(--c-accent); padding-left: 0.5rem; transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .carte__nav li a { background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat; transition: background-size 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  .carte__nav li a:focus-visible { background-size: 100% 1px; }
+  @media (hover: hover) { .carte__nav li a:hover { background-size: 100% 1px; } }
+  .carte__nav li a:active { opacity: 0.7; }
   .cat { padding-block: 2.5rem 1rem; border-top: 1px solid var(--c-line); scroll-margin-top: 5rem; }
   .cat__head { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
   .cat__hublot { width: clamp(5rem, 9vw, 9rem); flex: none; }
