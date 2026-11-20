@@ -3,6 +3,8 @@ import KywFooter from '@kyw/footer';
 import { u } from '../lib/url';
 import { site, reseaux } from '../data/site';
 import Horaires from './Horaires.astro';
+const { page = '' } = Astro.props;
+const resa = page === 'reservation';
 ---
 <section class="pied nappe-nuit" aria-label="Contact">
   <div class="wrap">
@@ -13,7 +15,7 @@ import Horaires from './Horaires.astro';
       <div class="deux__g">
         <h3 class="voix">Venir</h3>
         <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
-        <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+        {!resa && <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>}
         <h3 class="voix pied__voix2">Ailleurs</h3>
         <ul class="pied__liens">
           <li><a class="lien-util" href={u('/carte/')}>La carte</a></li>
@@ -26,8 +28,8 @@ import Horaires from './Horaires.astro';
         <h3 class="voix">Réserver</h3>
         <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
         <p><a class="lien" href={site.reservationUrl} rel="noopener">Réserver en ligne</a></p>
-        <h3 class="voix pied__voix2">Horaires</h3>
-        <Horaires />
+        {!resa && <h3 class="voix pied__voix2">Horaires</h3>}
+        {!resa && <Horaires />}
       </div>
     </div>
     <p class="pied__colophon">{site.credit}. Polices : Boska (Fontshare) et Switzer (Fontshare). Construit avec Astro, GSAP et Lenis.</p>
