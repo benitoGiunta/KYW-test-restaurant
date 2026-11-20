@@ -16,7 +16,7 @@ export const site = {
   nom: 'PhilFa',
   nomLong: 'Brasserie PhilFa',
   typeCuisine: 'Brasserie française moderne',
-  description: 'PhilFa, brasserie du centre de Namur, rue de Marchovelette : menu du moment à double choix, croquettes, tartare coupé au couteau, gibier de saison. Salle feutrée et terrasse.',
+  description: 'PhilFa, brasserie du centre de Namur, rue de Marchovelette : menu du moment à double choix, croquettes, tartare au couteau, gibier de saison.',
   adresse: { rue: 'Rue de Marchovelette', numero: '21/23', cp: '5000', commune: 'Namur', pays: 'BE' },
   geo: { lat: 50.4626126, lon: 4.8668955 },
   telephone: '+3281226111',

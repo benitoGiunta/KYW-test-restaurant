@@ -1,4 +1,4 @@
-# ETAT : philfa-awwwards, construction-2 (phase 2 sur 3)
+# ETAT : philfa-awwwards, construction-3 (phase 3 sur 3)
 
 ## Fait
 - Phase 1 : voir DESIGN.md (concept « Phil | Fa », pages, données, build).
@@ -17,3 +17,7 @@
 - Piège corrigé : `margin-block` négatif de l'enfant parallaxe dans `.bande__cadre { overflow: clip }` fusionnait avec la marge du parent et faisait remonter la photo de 86 px sur le hero (CTA coupé) : `display: flow-root`.
 - Piège corrigé : `.choix` en `<button>` avec `color: inherit` prenait la crème de la section sur la moitié moutarde : couleur laissée aux classes `t-phil`/`t-fa`.
 - Piège corrigé : « Réserver » en `--t-mega` débordait à 1440 en mouvement réduit (1452 px, mot non découpé) : `.titre-page h1` plafonné à `(100vw - 2 gutter) / 5.2`.
+
+## Phase 3 (QA)
+- Fait : descriptions < 160, LCP mobile 1228 ms, cibles 24 px, 404 vérifiée en direct, build final OK, RAPPORT.md écrit.
+- Reste : relire contrastNeedsReview, remesurer carte/histoire/réservation, OG, critique jury neuf (2 passes).

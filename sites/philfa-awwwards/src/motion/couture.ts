@@ -49,11 +49,13 @@ export function startCouture() {
     if (hero && !prefersReducedMotion()) {
       const phil = hero.querySelector('.hero__titre .phil-mot');
       const fa = hero.querySelector('.hero__titre .fa-mot');
+      const large = window.matchMedia('(min-width: 761px)').matches;
       intro
-        .fromTo(hero, { '--ouvre': 0 }, { '--ouvre': 1, duration: 1.1, ease: 'expo.inOut' }, 0)
-        .fromTo(hero, { '--fil': 0 }, { '--fil': 1, duration: 0.9, ease: 'expo.out' }, 0.75)
-        .fromTo(phil, { xPercent: -18, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, duration: 1.1, ease: 'expo.out' }, 0.7)
-        .fromTo(fa, { xPercent: 18, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, duration: 1.1, ease: 'expo.out' }, 0.76);
+        .fromTo(hero, { '--ouvre': 0 }, { '--ouvre': 1, duration: 0.8, ease: 'expo.inOut' }, 0)
+        .fromTo(hero, { '--fil': 0 }, { '--fil': 1, duration: 0.7, ease: 'expo.out' }, 0.5);
+      if (large) intro
+        .fromTo(phil, { xPercent: -18, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, duration: 0.8, ease: 'expo.out' }, 0.15)
+        .fromTo(fa, { xPercent: 18, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, duration: 0.8, ease: 'expo.out' }, 0.2);
     }
 
     // Le double choix : choisir un plat éclaire sa moitié et éteint l'autre (bouton à bascule, clavier et toucher).

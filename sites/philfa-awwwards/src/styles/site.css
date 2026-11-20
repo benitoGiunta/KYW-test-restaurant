@@ -20,7 +20,7 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
 :is(.t-fa, .t-papier) ::selection { background: var(--c-fg); color: var(--c-bg); }
 
 /* Liens : soulignés au repos dans le texte, couture qui se ferme au survol */
-.lien { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.lien { display: inline-block; min-height: 24px; line-height: 24px; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
 @media (hover: hover) { .lien:hover { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); } }
 .lien:focus-visible { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); }
 .lien:active { text-decoration-thickness: 1px; }
@@ -272,7 +272,7 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
   background: linear-gradient(90deg, var(--c-bg) calc((50% + var(--cx)) * var(--ouvre)), var(--c-papier) 0, var(--c-papier) calc(100% - (50% - var(--cx)) * var(--ouvre)), var(--c-fa) 0); }
 .hero__titre .phil-mot, .hero__titre .fa-mot { translate: var(--cx) 0; }
 html.motion .hero { --ouvre: 0; --fil: 0; }
-html.motion .hero__titre .phil-mot, html.motion .hero__titre .fa-mot { visibility: hidden; }
+@media (min-width: 761px) { html.motion .hero__titre .phil-mot, html.motion .hero__titre .fa-mot { visibility: hidden; } } /* téléphone : le nom est le LCP, jamais caché en attendant le JS */
 
 /* Le fil : points de couture qui courent sur la couture (repos), sur chaque diptyque */
 .cousu { position: relative; }
