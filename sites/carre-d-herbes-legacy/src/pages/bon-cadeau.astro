@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { photos, resto } from '../data/site';
+const B = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title="Bon cadeau, Carré d’herbes à Wépion" description="Chèque-cadeau d’une valeur définie ou deux menus au choix, valable six mois sauf le samedi soir, à retirer au restaurant." page="cadeau">
+  <div class="pagehead"><div class="container"><h1>Le plaisir d’offrir</h1><p class="lead">Régalez vos proches et faites-leur découvrir le Carré d’herbes.</p></div></div>
+  <section class="section">
+    <div class="container cols">
+      <div class="split__a stack">
+        <p>Selon votre souhait, le bon cadeau peut être un chèque d’une valeur préalablement définie ou deux menus au choix.</p>
+        <ul class="rows">
+          <li class="row" style="grid-template-columns: 1fr"><span class="row__d">Valable pendant six mois, excepté le samedi soir.</span></li>
+          <li class="row" style="grid-template-columns: 1fr"><span class="row__d">Retrait directement au restaurant, paiement en espèces.</span></li>
+        </ul>
+        <p>Pour en savoir plus sur les conditions, appelez le <a href={resto.telHref}>{resto.tel}</a>.</p>
+        <a class="btn-2" href={B + 'nos-menus/'}>Voir les menus</a>
+      </div>
+      <div class="split__b"><Photo p={photos.voutes} caption="La salle et ses arches en bois" /></div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,22 @@
+---
+import { resto, nav } from '../data/site';
+const B = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<footer class="colophon">
+  <div class="container cols">
+    <div class="c1">
+      <h2>Carré d’herbes</h2>
+      <p style="margin-top: var(--space-md)">{resto.baseline}.<br />{resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.commune}</p>
+      <p style="margin-top: var(--space-md)">Réservation par téléphone : <a href={resto.telHref}>{resto.tel}</a></p>
+    </div>
+    <div class="c2">
+      <span class="small">Le site</span>
+      <ul>{nav.map((i) => <li><a href={B + i.href}>{i.label}</a></li>)}<li><a href={B + 'bon-cadeau/'}>Bon cadeau</a></li><li><a href={B + 'reservations/'}>Comment réserver</a></li></ul>
+    </div>
+    <div class="c3">
+      <span class="small">Ailleurs</span>
+      <ul><li><a href={resto.facebook} rel="noopener">Facebook</a></li></ul>
+    </div>
+    <p class="small credits" data-credits>Photographies : Carré d’herbes, d’après le site d’origine, usage à confirmer pour les plats issus du fil Facebook.</p>
+  </div>
+</footer>

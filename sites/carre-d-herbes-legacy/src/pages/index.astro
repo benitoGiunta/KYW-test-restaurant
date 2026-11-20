@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto, menus, photos, actus, citation, eur } from '../data/site';
+const B = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const resume = [
+  ['Lunch en 2 assiettes', 'Entrée et plat selon l’inspiration du chef, midis et jeudi soir sur réservation.', menus[0].prix],
+  ['Menu en 3 assiettes', 'Foie gras, biche, puis un dessert au choix.', menus[1].prix],
+  ['Menu en 4 assiettes', 'Une seconde entrée, et le choix entre poisson et biche.', menus[2].prix],
+  ['Menu en 5 assiettes', 'Trois entrées, le plat, le dessert.', menus[3].prix],
+];
+---
+<Base title="Carré d’herbes, restaurant à Wépion entre Namur et Profondeville" description="Cuisine sincère et raffinée dans une maison de bord de Meuse à Wépion. Menus en deux à cinq assiettes, produits locaux de saison, tout est fait maison." page="accueil">
+  <section class="hero">
+    <div class="hero__img"><img src={B + photos.hero.src} width={photos.hero.w} height={photos.hero.h} alt={photos.hero.alt} fetchpriority="high" decoding="async" /></div>
+    <div class="container">
+      <h1>Cuisine sincère et raffinée</h1>
+      <p class="lead">Une maison de bord de Meuse, entre Namur et Profondeville.</p>
+      <div class="actions">
+        <a class="btn" href={resto.telHref}>Réserver au {resto.tel}</a>
+        <a class="btn-2" href={B + 'nos-menus/'}>Voir les menus</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="sec-head">
+        <h2>Menus de {eur(38)} à {eur(85)}</h2>
+        <a class="btn-2" href={B + 'nos-menus/'}>Tous les menus</a>
+      </div>
+      <ul class="rows">
+        {resume.map(([t, d, p]) => (
+          <li class="row"><span class="row__t">{t}</span><span class="row__d">{d}</span><span class="row__p">{p}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container cols">
+      <div class="split__a split"><Photo p={photos.cuisine} caption="En cuisine au Carré d’herbes" /></div>
+      <div class="split__b stack">
+        <h2>Damien Herbay, au fourneau</h2>
+        <p class="lead">Après son apprentissage sous la direction d’Éric Briffard, il s’est perfectionné aux Forges du Pont d’Oye, à La Table des Guilloux et à L’Air du Temps.</p>
+        <p>Aujourd’hui, il réalise son rêve et ouvre les portes de sa maison pour proposer une cuisine à son image, où gastronomie rime avec convivialité. Les produits locaux de saison y sont sublimés et tout ce qui est proposé à la dégustation est fait maison. Anne-Sophie Gevaert-Herbay vous accueille en salle.</p>
+        <a class="btn-2" href={B + 'le-restaurant/'}>Son histoire</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-ink">
+    <div class="container">
+      <p class="statement">« {citation.texte} »</p>
+      <p class="small" style="margin-top: var(--space-lg)">{citation.auteur}, citation reprise du site d’origine</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cols">
+      <div class="split__a stack">
+        <h2>Un nom, une tour, un potager</h2>
+        <p>Le nom « Carré d’herbes » vient de la tour carrée qui orne la façade, du carré potager rempli de plantes aromatiques utilisées par le chef, et d’un clin d’œil à son nom de famille, Herbay.</p>
+        <p>La maison de bord de Meuse a été entièrement rénovée. Son parc arboré de plus de 28 ares accueille une terrasse.</p>
+      </div>
+      <div class="split__b"><Photo p={photos.parc} caption="Le carré potager et le parc" sizes="(min-width: 1000px) 50vw, 100vw" /></div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container">
+      <div class="sec-head"><h2>Quoi de neuf</h2><a class="btn-2" href={B + 'actualites/'}>Toutes les actualités</a></div>
+      <ul class="news">
+        {actus.slice(0, 2).map((a) => (
+          <li><span class="small">{a.date}</span><div><h3>{a.titre}</h3><p style="margin-top: var(--space-xs)">{a.texte}</p></div>{a.lien && <a class="btn-2" href={B + a.lien}>{a.libelle}</a>}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cols">
+      <div class="split__a stack">
+        <h2>Réserver une table</h2>
+        <p>{resto.reservation}</p>
+        <a class="bigtel" href={resto.telHref}>{resto.tel}</a>
+        <p>{resto.adresse.rue}, {resto.adresse.cp} {resto.adresse.commune}.</p>
+        <p>{resto.parking}</p>
+        <a class="btn-2" href={B + 'reservations/'}>Comment réserver</a>
+      </div>
+      <div class="split__b stack">
+        <h2>Horaires</h2>
+        <Horaires />
+        <Photo p={photos.terrasse} caption="La terrasse, au bord du parc" sizes="(min-width: 1000px) 24vw, 70vw" />
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import { actus } from '../data/site';
+const B = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title="Actualités, Carré d’herbes à Wépion" description="Fêtes de fin d’année, nouvelle carte et autres nouvelles du Carré d’herbes." page="actus">
+  <div class="pagehead"><div class="container"><h1>Quoi de neuf</h1><p class="lead">Les nouvelles du restaurant.</p></div></div>
+  <section class="section">
+    <div class="container">
+      <ul class="news">
+        {actus.map((a) => (
+          <li><span class="small">{a.date}</span><div><h2 style="font-size: var(--text-2xl)">{a.titre}</h2><p style="margin-top: var(--space-sm)">{a.texte}</p></div>{a.lien ? <a class="btn-2" href={B + a.lien}>{a.libelle}</a> : <span></span>}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

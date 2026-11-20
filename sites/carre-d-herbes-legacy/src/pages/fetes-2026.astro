@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Etapes from '../components/Etapes.astro';
+import Photo from '../components/Photo.astro';
+import { noel, emporter, photos, resto, menus } from '../data/site';
+---
+<Base title="Fêtes de fin d’année 2026, Carré d’herbes" description="Noël au restaurant le midi du 25 décembre et menu de Noël et Nouvel An à emporter les 24 et 31 décembre." page="fetes">
+  <div class="pagehead"><div class="container"><h1>Fêtes de fin d’année</h1><p class="lead">Sur place le 25 décembre à midi, ou à emporter les 24 et 31 décembre.</p></div></div>
+
+  <section class="section">
+    <div class="container cols">
+      <div class="split__a stack">
+        <h2>{noel.nom}</h2>
+        <p class="panel__price">{noel.prix}</p>
+        <p>{noel.quand}. {noel.note}</p>
+        <p>Réservation par téléphone : <a href={resto.telHref}>{resto.tel}</a></p>
+        <Photo p={photos.sapin} caption="Un dessert de fêtes en forme de sapin de macarons" sizes="(min-width: 1000px) 38vw, 100vw" />
+      </div>
+      <div class="split__b"><Etapes etapes={noel.etapes} /></div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container">
+      <div class="sec-head"><h2>{emporter.nom}</h2></div>
+      <div class="cols">
+        <div class="split__a stack">
+          <p class="panel__price">{emporter.prix}</p>
+          <p>{emporter.note}</p>
+          <Photo p={photos.emporter} caption="Plats à emporter en barquettes" sizes="(min-width: 1000px) 38vw, 100vw" />
+        </div>
+        <div class="split__b">
+          <ul class="rows">
+            {emporter.plats.map((p) => (
+              <li class="row" style="grid-template-columns: minmax(0, 8fr) minmax(0, 4fr)"><span><span class="row__t">{p.nom}</span><br /><span class="small">{p.etape}</span><br /><span class="row__d">{p.desc}</span></span><span class="row__p">{p.prix}</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
