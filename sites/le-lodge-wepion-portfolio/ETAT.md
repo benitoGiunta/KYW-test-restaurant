@@ -1,4 +1,4 @@
-# ETAT : le-lodge-wepion, variante portfolio, passe construction-2 (phase 2 sur 3)
+# ETAT : le-lodge-wepion, variante portfolio, passe construction-3 (phase 3 sur 3, QA terminée)
 
 ## Fait (phase 1)
 - Gabarit guinguette adapté (7 pages, carte réelle, 12 photos, bandeau d'annonce, composants `Annonce`, `Lieux`), voir `DESIGN.md`.
@@ -28,3 +28,7 @@
 ## Pièges
 - `gabarits/UTILISATION.md` à mettre à jour par l'orchestrateur : « guinguette | le-lodge-wepion » ; défaut `.rail`/`.table__rail` à reporter dans `gabarits/guinguette` (protégé).
 - Test de clic d'en-tête : lent (6 pages × 6 liens), à lancer en arrière-plan.
+
+## Phase 3 (QA)
+- Fait : contraste pied de page, méta description, formulation « à confirmer » ; vérifications ciblées dans RAPPORT.md. Build final OK (7 pages).
+- Reste : `pnpm index`, mise à jour de `gabarits/UTILISATION.md`, commit `[publier]` (orchestrateur).

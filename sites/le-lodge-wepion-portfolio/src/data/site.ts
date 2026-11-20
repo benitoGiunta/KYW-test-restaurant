@@ -54,7 +54,7 @@ export const site: Restaurant = {
   nom: 'Le Lodge Wépion',
   baseline: 'Brasserie, restaurant et tea-room au bord de la Meuse.',
   description:
-    'Le Lodge Wépion, brasserie, restaurant et tea-room au bord de la Meuse : fermé depuis l’incendie de mai 2026, l’équipe vous accueille à Erpent en attendant la réouverture.',
+    'Le Lodge Wépion, brasserie, restaurant et tea-room au bord de la Meuse : fermé depuis l’incendie de mai 2026, accueil provisoire à Erpent.',
   url: 'https://www.lodgewepion.be',
   typeCuisine: 'Brasserie, restaurant et tea-room',
   adresse: { rue: 'Chaussée de Dinant', numero: '931', cp: '5100', commune: 'Wépion', pays: 'BE' },
@@ -120,7 +120,7 @@ export const lieux = {
     commune: 'Erpent',
     telephone: '+32 496 92 55 13',
     telAffiche: '0496\u00a092\u00a055\u00a013',
-    texte: 'Depuis le 15 septembre, l’équipe du Lodge est accueillie au Wine & More, « 6 jours sur 7 » selon le site du Lodge (relevé du 20 novembre 2026). Les jours et horaires exacts sont à confirmer par téléphone.',
+    texte: 'Depuis le 15 septembre, l’équipe du Lodge est accueillie au Wine & More, « 6 jours sur 7 » selon le site du Lodge (relevé du 20 novembre 2026). Les jours et horaires exacts sont à confirmer.',
     lien: 'https://www.openstreetmap.org/search?query=Chauss%C3%A9e%20de%20Marche%20496%20Erpent',
   },
   avant: 'Avant l’incendie, d’après le site du Lodge : tous les jours, de 11 h 30 à 22 h 30 (un annuaire indique 12 h à 15 h et 18 h à 21 h 30 : à confirmer).',
