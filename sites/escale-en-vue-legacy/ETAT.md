@@ -1,4 +1,8 @@
-# ETAT · escale-en-vue-legacy · fin de la phase 2 (construction-2)
+# ETAT · escale-en-vue-legacy · fin de la phase 3 (construction-3, QA)
+
+Phase 3 faite : QA lue, 2 corrections (séparateur « à » des horaires, survol non chromatique), build et index passés, RAPPORT.md écrit, DESIGN.md 72 cases. Reste : revue finish par sous-agent frais (non disponible), jury facultatif. Serveur de contrôle (port 4617) arrêté.
+
+## Phase 2 (conservée)
 
 ## Fait (phase 1 conservée, voir DESIGN.md)
 - Nav : menu Popover sous 60 rem (bouton 44 px, icône ouvrir/fermer, Escape, clic extérieur, fermeture au clic sur un lien, focus rendu), « Réserver » toujours visible dans la pilule (compacte sous 40 rem, aucun débordement de 320 à 1280), lien de section actif (`aria-current`), liens en `base + #ancre` (valides depuis la 404).

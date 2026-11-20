@@ -42,7 +42,7 @@ Générés par le scaffold dans `src/styles/tokens.css` (jamais depuis le thème
 - [x] 6. Pas de tiret cadratin ni demi-cadratin · preuve : contrôle Python sur `src/` et `dist/`
 - [x] 7. Données : rien d'inventé, aucun prix · preuve : `src/data/site.ts` relu contre `dossier.md`
 - [x] 8. sloplint source `--genre playful` · preuve : 0 FAIL, 0 WARN (après fusion des deux boutons primaires)
-- [ ] 9. sloplint `--render`, QA navigateur, motion, nav mobile : phase 2 et 3
+- [x] 9. sloplint `--render`, QA navigateur, motion, nav mobile : phase 2 et 3 · preuve phase 3 : QA captures (axe 0, erreurs 0, overflow false, LCP mobile 1544 ms, CLS 0), voir RAPPORT.md
 - [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : `grep "transition: all"` = 0 ; transitions listées en `background-color`, `border-color`, `box-shadow`, `opacity`, `transform` (`page.css`)
 - [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : `base.css:8` (focus `--color-focus` 5,78:1 sur le papier), `.carte__fiche .btn:focus-visible` en encre sur la fiche ; tab 1 = skip link, tab 2 = logo (Playwright)
 - [x] 7. Reduced motion sur chaque animation, contenu visible sans script (27, 62) · preuve : `base.css` (règle globale) et `page.css` (menu, tuiles) ; Playwright `javaScriptEnabled: false` : titres et tuiles à opacité 1, menu qui s'ouvre sans script (Popover natif) ; `reducedMotion: reduce` : menu ouvert sans glissement, `scroll-behavior: auto`
