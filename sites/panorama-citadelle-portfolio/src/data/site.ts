@@ -292,8 +292,6 @@ export const moments: Moment[] = [
     accrochePlaceholder: false, placeholder: false,
     lignes: [
       l('La Pano', 'bière blanche, exclusive au restaurant', null),
-      l('Digestif de la maison', '', '8 €', true),
-      l('Verre de vin de la cave', '', '7 €', true),
     ],
   },
 ];

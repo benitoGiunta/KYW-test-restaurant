@@ -28,13 +28,13 @@ export const restaurant = {
   credit: 'photos : Le Panorama',
 } as const;
 
-/** Les jours, de lundi à dimanche. Horaires identiques selon l'accueil du site client (à confirmer). */
+/** Les jours, de lundi à dimanche. Horaires identiques selon l'accueil du site client. */
 export const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'] as const;
 export const ouverture = { de: 8, a: 23 } as const;
 /** Moments de la journée portés par la règle de l'horizon (début et fin en heures décimales). */
 export const moments = [
   { id: 'matin', de: 8, a: 10.5, libelle: 'Petits-déjeuners', detail: '8 h à 10 h 30' },
-  { id: 'brasserie', de: 11, a: 23, libelle: 'Brasserie', detail: '11 h à 23 h, à confirmer' },
+  { id: 'brasserie', de: 11, a: 23, libelle: 'Brasserie', detail: '11 h à 23 h' },
 ] as const;
 
 /** Les lieux, du haut vers le bas : l'index de l'accueil. */

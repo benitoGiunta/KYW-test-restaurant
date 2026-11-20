@@ -18,7 +18,7 @@ export const nav = [
   { href: 'la-carte/', label: 'La carte' },
   { href: 'reservation-contact/', label: 'Réservation et contact' },
 ];
-// Horaires : 8 h 00 à 23 h 00 tous les jours (bandeau du site) ; petits-déjeuners 8 h 00 à 10 h 30 (PDF) ; brasserie 11 h 00 à 23 h 00 (page contact). À confirmer.
+// Horaires : 8 h 00 à 23 h 00 tous les jours (bandeau du site) ; petits-déjeuners 8 h 00 à 10 h 30 (PDF) ; brasserie 11 h 00 à 23 h 00 (page contact). À vérifier.
 export const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 export const heures = '8 h 00 à 23 h 00';
 export const petitsDej = [
