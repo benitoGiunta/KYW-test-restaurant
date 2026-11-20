@@ -35,3 +35,27 @@ Voir `src/styles/tokens.css` : paper 15/19/24 %, ink 93 %, accent cuivre, voile 
 - [x] 4. Deux comps construites et capturées, choix écrit · preuve : comp.md
 - [x] 5. sloplint --render sur le build servi avec base · preuve : .logs/legacy-sloplint3.log (1 FAIL source scaffold-only 34, 2 REFLEX 49b et 59, voir ETAT.md)
 - [x] 6. Photos du client uniquement, pas de génération · preuve : public/photos/
+- [x] 7. Mouvement : Spore dit « état seulement, rien ne se révèle ni ne grandit » ; aucun reveal au scroll, aucune boucle ; seules des transitions d'état de 120 à 220 ms (onglet, bouton, lien de nav, ouverture du menu) · preuve : page.css:36, :88 ; waive 22 (aucun reveal, thème Spore § Motion)
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : grep `transition: all` = 0 ; transitions listées (couleur, bordure, opacity, transform)
+- [x] 6. `:focus-visible` instantané (`transition: none`), contour 2 px clair sur fond sombre, sur lien, bouton, burger, onglet, panneau · preuve : page.css (règles `:focus-visible`)
+- [x] 7b. Fallback reduced motion : règle globale `prefers-reduced-motion: reduce` (durées 0,01 ms) ; contenu visible sans script (six panneaux de carte affichés, menu en ligne, burger fonctionnel sans script par `popovertarget`) · preuve : page.css:162, test Playwright sans JS (6 panneaux)
+- [x] 17. Hero en `svh` (min-height max(34rem, 100svh - nav)) · preuve : page.css:69, captures 375x740 et 1920x1080
+- [x] 19. Un seul sticky (nav, `--z-sticky-nav`), `scroll-padding-top` = 72 px + 16 px · preuve : base.css ; mesure : l'ancre #horaires arrive à 88 px
+- [x] 20. Pas de radios-onglets : Switcher à boutons `role="tab"`, flèches, Début/Fin, panneaux `tabindex="0"`, premier panneau visible sans script · preuve : Carte.astro
+- [x] 21. Pas de vidéo de fond (photo seulement) · preuve : Hero.astro
+- [x] 22. Pas de reveal (voir 7) · preuve : aucun `data-reveal` dans src
+- [x] 23. États d'input : sans objet, aucun champ ; la réservation est le lien Zenchef conservé (rid 367820), le `tel:` et le mailto · preuve : Reservation.astro
+- [x] 24. Pas de tooltip, pas d'auto-rotation · preuve : src
+- [x] 29. Aucun faux envoi : aucun formulaire · preuve : src
+- [x] 30. SVG décoratif (burger) `aria-hidden` · preuve : Nav.astro
+- [x] 48. Hover : un signal par contrôle (bordure ou soulignement), sur le contrôle, jamais sur une photo ni un texte non interactif, aucun rebond, aucun toast · preuve : page.css (`@media (hover: hover)`)
+- [x] 49. `:active` (décalage de 1 px et fond), `:disabled` défini sur `.btn`, cibles de 44 à 56 px (mesure à 375 : aucune cible de nav sous 44) · preuve : mesure Playwright
+- [x] 56. Un primaire rempli par écran (bouton du héros ; la nav passe en contour cuivre `btn--line`, l'onglet choisi en bordure cuivre sur fond sourd) · preuve : page.css
+- [x] 58. Une recette de conteneur (rangées à filets), pilule limitée aux contrôles ; aucune chorégraphie de scroll (l'original n'en avait pas) · preuve : page.css
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color`, `-webkit-tap-highlight-color` thémés · preuve : base.css
+- [x] 72. Responsive : breakpoints en rem (70rem pour le menu, mesuré ; 60rem et 40rem pour la mise en page), `hover: hover`, `pointer: coarse`, `svh`, `overflow-x: clip` sur html et body, aucun défilement horizontal de 1440 à 320 · preuve : `scrollWidth` = `innerWidth` à 1440, 1024, 961, 800, 375, 320
+
+# Phase 2 : nav, revue du héros, comp
+- Nav : forme `slab` (différente des trois derniers du log : masthead, masthead, floating pill), sticky. Menu `<nav popover>` sous 70rem (cinq ancres, bouton et nom ne tiennent pas à 1024 px : mesuré, bouton écrasé), bouton « Menu » adjacent dans le DOM, ferme au clic sur une ancre, `aria-current` par IntersectionObserver (un état, pas un mouvement). Ancres préfixées par la base (404 comprise).
+- hero-review: self · fix · 3 findings · 2 resolved (pas d'outil Agent en session : auto-notation). (1) bande vide sous le bouton à 1920x1080, hero plafonné à 860 px : resolved (svh sans plafond). (2) titre posé sur les verres clairs à droite, contraste faible : resolved (voile latéral gauche). (3) titre de 9 mots, accroche de 17 : unresolved, contenu fixé par l'original (redesign).
+- comp: 2 built, no key · c1 chosen · reproduced (checked at 1280x800). Masse : photo plein cadre, titre en bas à gauche, reproduite. Intervalle : titre, accroche, bouton espacés de 24 px, bloc à 64 px du bord bas, reproduit. Entrée : la photo ouvre l'écran avant le texte, aucun reveal, reproduite. Plus grand écart : la comp montrait la salle claire non filtrée, le build applique le grain sépia du thème et un voile plus dense, la photo est plus sombre ; gardé, le titre doit rester lisible.

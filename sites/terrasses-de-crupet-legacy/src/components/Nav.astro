@@ -8,9 +8,32 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       <img src={`${base}logo.png`} width="44" height="44" alt="" />
       <span class="nav__name">Les Terrasses<span class="nav__lieu"> de Crupet</span></span>
     </a>
-    <nav class="nav__links" aria-label="Sections">
-      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+    <button class="nav__burger" type="button" popovertarget="menu" aria-label="Menu" aria-controls="menu" aria-expanded="false">
+      <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true" focusable="false"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="2" fill="none" /></svg>
+      <span>Menu</span>
+    </button>
+    <nav class="nav__links" id="menu" popover aria-label="Sections">
+      {nav.map((n) => <a href={`${base}${n.href}`}>{n.label}</a>)}
     </nav>
-    <a class="btn btn--accent nav__cta" href={resto.reserver} rel="noopener">Réserver une table</a>
+    <a class="btn btn--line nav__cta" href={resto.reserver} rel="noopener"><span>Réserver<span class="nav__cta-rest">&nbsp;une table</span></span></a>
   </div>
 </header>
+<script is:inline>
+const initNav = () => {
+  const menu = document.getElementById('menu');
+  const burger = document.querySelector('.nav__burger');
+  if (!menu || !burger || !menu.showPopover) return;
+  menu.addEventListener('toggle', (e) => burger.setAttribute('aria-expanded', e.newState === 'open'));
+  menu.addEventListener('click', (e) => { if (e.target.closest('a')) menu.hidePopover(); });
+  const links = [...menu.querySelectorAll('a')];
+  const cible = new Map(links.map((a) => [a.hash.slice(1), a]).filter(([id]) => id && document.getElementById(id)));
+  if (!cible.size || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    const a = cible.get(e.target.id);
+    if (e.isIntersecting) { links.forEach((l) => l.removeAttribute('aria-current')); a.setAttribute('aria-current', 'true'); }
+    else a.removeAttribute('aria-current');
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  cible.forEach((_, id) => io.observe(document.getElementById(id)));
+};
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initNav); else initNav();
+</script>

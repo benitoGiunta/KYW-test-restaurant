@@ -1,21 +1,23 @@
-# ETAT · terrasses-de-crupet · variante legacy · phase 1 (construction-1)
+# ETAT · terrasses-de-crupet · variante legacy · phase 2 (construction-2)
 
-## Fait
-- AUDIT.md, comp.md (c1 choisie), DESIGN.md (Picks, Approche, Thème, Composants, Sur-utilisation).
-- Thème Spore, accent cuivre de la marque ; stamp en tête de `src/styles/page.css`.
-- Paquet Astro : `src/data/{site.ts,carte.json,menus.json,photos.json}`, composants Nav, Hero, Apropos, Carte (Switcher), Bande, Horaires, Reservation, Job, Pied, Fig ; pages `index` et `404` ; photos du client dans `public/photos/`, PDF de la carte et du menu de fêtes dans `public/`.
-- Build OK : `dist/terrasses-de-crupet/legacy/` (index + 404, noindex, KywFooter, mention KYW présents sur les deux).
-- sloplint --render (build servi avec base) : 0 FAIL de rendu ; reste FAIL 34 de la lecture des sources (faux positif, `html, body { overflow-x: clip }` existe, rendu sans scroll horizontal à 375), REFLEX 49b (e-mail sur deux lignes à 1024 px), REFLEX 59 (écart de 60 px mesuré entre deux sections, non localisé), WARN F15 (quatre gaps de colonnes), F4 (boutons d'onglet remplis).
+## Fait (phase 1 conservée, voir DESIGN.md)
+- Nav : menu Popover sous 70rem (bouton « Menu », fermeture au clic d'ancre, `aria-expanded`), nav courante par `aria-current` (IntersectionObserver), CTA nav en contour cuivre (un seul primaire rempli : le héros), ancres préfixées par la base, cible 44 px, nom seul à 375 (logo masqué sous 30rem, bouton « Menu » icône seule sous 23rem).
+- Switcher : onglet choisi en bordure cuivre sur fond sourd (plus de remplissage), hover, `:active`, focus ; flèches plus Début/Fin ; panneaux `tabindex="0"`.
+- Motion : Spore = état seulement, donc aucun reveal ni boucle ; transitions d'état de 120 à 220 ms ; reduced-motion global ; tout visible sans script (testé : 6 panneaux).
+- Héros : `svh` sans plafond (plus de bande à 1920x1080), voile latéral pour la lisibilité du titre. hero-review self : fix, 2 resolved sur 3.
+- Pied : e-mail en une ligne (49b), colonnes en deux sous 70rem ; cibles tactiles `pointer: coarse` ; focus du panneau.
+- Mesures Playwright (dev) : aucun défilement horizontal de 1440 à 320, aucune cible de nav sous 44 px à 375, bouton du héros au-dessus du pli à 375x740 et 320x740, aucune erreur de page.
+- Build OK : `dist/terrasses-de-crupet/legacy/` (index et 404 : noindex, kyw-signature, mention KYW, 5 ancres préfixées). sloplint hero --render : 0 FAIL (Base.astro porte maintenant `overflow-x: clip` html et body), 3 NOTE 58 (titre 9 mots, accroche 17 mots : contenu fixé).
 
-## Reste (phases 2 et 3)
-- Phase 2 : un reveal (IntersectionObserver), états de nav mobile (les ancres sont masquées sous 1100 px, aucun menu : à ajouter), focus et hover du Switcher à vérifier, QA navigateur (captures 375 / 1440, fold du héros), alt réel des photos, `pnpm index`.
-- Phase 3 : sweep, RAPPORT.md, entrée de `.hallmark/log.json` finalisée, `preflight.json`.
-- Corriger les restes sloplint ci-dessus.
+## Reste (phase 3)
+- Captures complètes et QA (agent « captures »), vérifier visuellement le menu ouvert à 375 et le défilement des ancres.
+- Sweep, RAPPORT.md, entrée de `.hallmark/log.json` (nav `slab`), `preflight.json`, `pnpm index`.
+- REFLEX 59 (écart de 60 px entre deux sections) toujours non localisé ; WARN F15 (gaps de colonnes) ; F4 revu (onglets plus remplis).
+- Photos 675 x 1200 en grand format (bande, chalet) peuvent paraître molles.
 
-## Décisions et hypothèses
-- Adresse réelle : Rue Basse 13, 5330 Crupet (Assesse) ; l'adresse BCE de restaurants.json (Namur/Naninne) n'est pas utilisée. E-mail : resto@lesterrassesdecrupet.be (site), pas celui de restaurants.json.
-- Aucune donnée inventée : pas d'avis ni de note (Restaurant Guru non confirmé), pas d'histoire ni d'équipe ; aucun slot `.fill` ni placeholder nécessaire.
-- Carte du 15 octobre (année à confirmer) mentionnée sous le titre ; boissons : sélection partielle du dossier seulement.
-- Formulaire d'emploi remplacé par un lien mailto « Candidature ». Bons cadeaux : une phrase (dossier : « s'offre au restaurant »), pas de procédure inventée.
-- Hero Index du draw échangé contre Poster (posture d'origine). Pas de commit `[publier]` : phase de test.
-- Seul motif d'attention : deux photos 675 × 1200 affichées en grand format peuvent paraître molles (bande, chalet).
+## Décisions et pièges
+- Aucun reveal : choix du thème (Spore § Motion), waive 22 documenté. Menu à 70rem et non 60rem : mesuré (à 1024 le bouton Réserver était écrasé).
+- Pas de formulaire : la réservation est le lien Zenchef (rid 367820), conservé.
+- Grille de nav en colonnes explicites (mark 1, liens 3, CTA 4) : sans elles, le CTA tombe dans la colonne 1fr quand le burger est masqué.
+- Le script de nav attend DOMContentLoaded (il est placé avant `<main>`).
+- Pas de commit `[publier]` (phase de test). Aucun sous-agent de revue disponible : hero review en auto-notation.
