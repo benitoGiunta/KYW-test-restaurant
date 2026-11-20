@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+---
+<Base page="accueil" description={site.description}>
+  <section class="hero" aria-labelledby="titre-accueil">
+    <div class="wrap hero__ciel">
+      <h1 class="hero__titre display" id="titre-accueil"><span>Escale</span> <span>en vue&nbsp;!</span></h1>
+    </div>
+    <div class="horizon" aria-hidden="true"></div>
+    <div class="wrap grille hero__bas">
+      <div class="hero__texte">
+        <p class="hero__accroche">Terrasse et restaurant saisonniers à Dave, au-dessus de la vallée.</p>
+        <p class="petit">Du jeudi soir au dimanche après-midi. Toutes les tables sont dehors.</p>
+        <div class="hero__actions">
+          <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+          <a class="cta cta--contour" href={u('/carte/')}><span class="cta__txt">Voir la carte</span></a>
+        </div>
+      </div>
+      <div class="hero__media"><Photo cle="parasol" sizes="(min-width: 62rem) 55vw, 100vw" widths={[640, 1024]} prioritaire /></div>
+    </div>
+  </section>
+
+  <section class="enonce wrap" aria-label="La terrasse">
+    <p class="enonce__texte display">Toutes les tables sont dehors, face à la <em>vallée</em>.</p>
+    <div class="grille paire">
+      <figure class="paire__a" style="margin:0"><Photo cle="mur" sizes="(min-width: 62rem) 30vw, 70vw" widths={[480, 800]} /><figcaption class="legende">Le mur de pierre et l’affiche de la maison.</figcaption></figure>
+      <figure class="paire__b" style="margin:0"><Photo cle="bol" sizes="(min-width: 62rem) 50vw, 100vw" widths={[382]} /><figcaption class="legende">Un bol-salade au coucher du soleil.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="index wrap grille" aria-labelledby="titre-table">
+    <h2 class="index__titre display" id="titre-table">Sur la table</h2>
+    <div class="index__liste">
+      <a class="index__ligne" href={u('/carte/')}><div><p class="index__nom">Apéro planchette</p><p class="index__desc">Du jeudi soir au dimanche midi.</p></div><div class="index__vignette"><Photo cle="planchette" sizes="176px" widths={[176, 352]} decorative /></div></a>
+      <a class="index__ligne" href={u('/carte/')}><div><p class="index__nom">Le plat maison</p><p class="index__desc">Sur réservation à partir du vendredi soir, avec sa variante végé.</p></div><div class="index__vignette"><Photo cle="bol" sizes="176px" widths={[176, 352]} decorative /></div></a>
+      <a class="index__ligne" href={u('/carte/')}><div><p class="index__nom">Bières trappistes et régionales</p><p class="index__desc">Huit trappistes alignées sur la photo de la maison.</p></div><div class="index__vignette"><Photo cle="trappistes" sizes="176px" widths={[176, 352]} decorative /></div></a>
+      <p class="index__suite"><a class="lien" href={u('/carte/')}>Toute la carte</a></p>
+    </div>
+  </section>
+
+  <figure class="panorama">
+    <Photo cle="panorama" sizes="100vw" widths={[800, 1080]} />
+    <figcaption class="wrap legende">La vue depuis la table. {site.credit}</figcaption>
+  </figure>
+
+  <section class="soir" aria-labelledby="titre-soir">
+    <div class="wrap grille">
+      <h2 class="soir__titre display" id="titre-soir">Du jeudi au <em>dimanche</em>.</h2>
+      <div class="soir__corps">
+        <Horaires />
+        <div class="soir__note">
+          <p class="petit">{site.saison}. Les dates de la prochaine saison ne sont pas communiquées, à suivre sur la page Facebook de la maison.</p>
+          <p class="petit">Horaires de la saison 2026, d’après l’affiche de la maison.</p>
+        </div>
+        <div class="soir__actions">
+          <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+          <a class="cta cta--contour" href={u('/reservation/')}><span class="cta__txt">Venir et réserver</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { histoire, pratique, equipe, site } from '../data/site';
+---
+<Base page="lieu" title="Le lieu" description="Escale en Vue ! est une terrasse saisonnière sur la colline de Dave, au-dessus de la vallée de la Meuse : toutes les tables dehors, du jeudi au dimanche.">
+  <section class="wrap page-tete">
+    <h1 class="page-tete__titre display">Le lieu</h1>
+  </section>
+  <section class="lieu wrap grille" aria-label="Présentation">
+    <div class="prose">{histoire.map((t) => <p>{t}</p>)}</div>
+  </section>
+  <section class="wrap lieu__photos" aria-label="Photos du lieu">
+    <div class="grille paire">
+      <figure class="paire__a" style="margin:0"><Photo cle="parasol" sizes="(min-width: 62rem) 55vw, 100vw" widths={[640, 1024]} /><figcaption class="legende">La terrasse et son parasol rouge.</figcaption></figure>
+      <figure class="paire__b" style="margin:0"><Photo cle="planchette" sizes="(min-width: 62rem) 30vw, 100vw" widths={[480, 800]} /><figcaption class="legende">Une planchette, la vallée derrière.</figcaption></figure>
+    </div>
+  </section>
+  <section class="pratique wrap grille" aria-labelledby="titre-pratique">
+    <h2 class="index__titre display" id="titre-pratique">Sur place</h2>
+    <ul class="pratique__liste">
+      {pratique.map((p) => <li><h3>{p.titre}</h3><p>{p.texte}</p></li>)}
+      {equipe.map((e) => <li><h3>{e.nom}</h3><p>{e.role}.</p></li>)}
+    </ul>
+  </section>
+  <section class="wrap" aria-label="Prairie"><figure class="panorama" style="margin-bottom:var(--aere)"><Photo cle="transats" sizes="100vw" widths={[800, 1279]} /><figcaption class="legende">La prairie et ses transats. {site.credit}</figcaption></figure></section>
+</Base>

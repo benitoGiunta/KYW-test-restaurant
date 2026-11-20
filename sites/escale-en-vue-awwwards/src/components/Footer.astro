@@ -1,0 +1,32 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site, reseaux, horaires } from '../data/site';
+const path = Astro.url.pathname;
+const surReservation = path.includes('/reservation');
+---
+<footer class="pied" aria-label="Contact">
+  <div class="wrap pied__corps">
+    <p class="pied__mot display" aria-hidden="true">À table,<br />là-haut.</p>
+    <div class="pied__col">
+      <h2 class="pied__titre">Venir</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Réserver</h2>
+      <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+      {!surReservation && <p><a class="lien" href={u('/reservation/')}>Tous les détails</a></p>}
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Ailleurs</h2>
+      <ul class="pied__liens">
+        <li><a class="lien-util" href={u('/carte/')}>La carte</a></li>
+        <li><a class="lien-util" href={u('/a-propos/')}>Le lieu</a></li>
+        {reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+    <p class="pied__colophon">{site.credit} Polices : Anybody et Albert Sans (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />
