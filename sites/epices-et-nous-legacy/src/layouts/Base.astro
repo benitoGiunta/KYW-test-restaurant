@@ -44,5 +44,33 @@ const jsonLd = {
     </main>
     <Footer />
     <KywFooter base={import.meta.env.BASE_URL} />
+    <script>
+      // Un reveal, le menu mobile (popover) et le jour courant. Tout est lisible sans script.
+      const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const cibles = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (reduit || !('IntersectionObserver' in window)) {
+        cibles.forEach((el) => el.classList.add('is-in'));
+      } else {
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px' });
+        cibles.forEach((el) => io.observe(el));
+      }
+
+      const nav = document.getElementById('nav-principal');
+      const bouton = document.querySelector<HTMLButtonElement>('.menu-btn');
+      if (nav && bouton && 'showPopover' in nav) {
+        nav.addEventListener('toggle', (e) => bouton.setAttribute('aria-expanded', String((e as ToggleEvent).newState === 'open')));
+        nav.addEventListener('click', (e) => { if ((e.target as HTMLElement).closest('a')) nav.hidePopover(); });
+        matchMedia('(min-width: 60.0625rem)').addEventListener('change', (m) => { if (m.matches && nav.matches(':popover-open')) nav.hidePopover(); });
+      }
+
+      const jour = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Brussels' })).getDay();
+      document.querySelectorAll<HTMLElement>('.schedule__row[data-jours]').forEach((row) => {
+        if ((row.dataset.jours ?? '').split(' ').includes(String(jour))) {
+          row.setAttribute('aria-current', 'date');
+          const dt = row.querySelector('dt');
+          if (dt) { const m = document.createElement('span'); m.className = 'schedule__now'; m.textContent = 'Aujourd’hui'; dt.append(m); }
+        }
+      });
+    </script>
   </body>
 </html>

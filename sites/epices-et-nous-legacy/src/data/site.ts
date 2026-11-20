@@ -12,10 +12,10 @@ export const resto = {
 };
 
 export const horaires = [
-  { jour: 'Lundi', h: null },
-  { jour: 'Mardi à vendredi', h: ['12:00 à 13:45', '19:00 à 20:30'] },
-  { jour: 'Samedi', h: ['19:00 à 20:30'] },
-  { jour: 'Dimanche', h: null },
+  { jour: 'Lundi', h: null, n: [1] },
+  { jour: 'Mardi à vendredi', h: ['12:00 à 13:45', '19:00 à 20:30'], n: [2, 3, 4, 5] },
+  { jour: 'Samedi', h: ['19:00 à 20:30'], n: [6] },
+  { jour: 'Dimanche', h: null, n: [0] },
 ];
 
 export type Photo = { n: string; ws: number[]; w: number; h: number };

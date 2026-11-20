@@ -16,14 +16,16 @@ const liens = [
 <header class="site-header">
   <div class="site-header__bar container">
     <a class="brand" href={base} aria-label="Épices & Nous, accueil"><img src={`${base}photos/logo-560.webp`} width="560" height="227" alt="Épices & Nous" /></a>
-    <nav class="site-nav" aria-label="Navigation principale">
+    <nav class="site-nav" id="nav-principal" aria-label="Navigation principale" popover="auto">
       <ul>
         {liens.map(([id, label, href]) => <li><a href={href} aria-current={page === id ? 'page' : undefined}>{label}</a></li>)}
+        <li class="site-nav__tel"><a href={resto.telHref}>{resto.tel}</a></li>
       </ul>
     </nav>
     <div class="site-header__action">
       <a class="tel" href={resto.telHref}>{resto.tel}</a>
       <a class="btn btn--accent" href={resto.reservation} rel="noopener">Réserver</a>
+      <button class="menu-btn" type="button" popovertarget="nav-principal" aria-controls="nav-principal" aria-expanded="false"><span class="menu-btn__icon" aria-hidden="true"></span>Menu</button>
     </div>
   </div>
 </header>

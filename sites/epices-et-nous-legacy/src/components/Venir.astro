@@ -16,9 +16,9 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <a class="btn" href={resto.telHref}>{resto.tel}</a>
       </p>
     </div>
-    <dl class="schedule">
+    <dl class="schedule" data-reveal>
       {horaires.map((j) => (
-        <div class={`schedule__row${j.h ? '' : ' is-closed'}`}>
+        <div class={`schedule__row${j.h ? '' : ' is-closed'}`} data-jours={j.n.join(' ')}>
           <dt>{j.jour}</dt>
           <dd>{j.h ? j.h.map((x, i) => <>{i > 0 && <span class="et"> et </span>}<span class="num">{x}</span></>) : 'Fermé'}</dd>
         </div>
