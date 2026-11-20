@@ -6,7 +6,7 @@
 // (chips, médaillons, horaires à flèches) vivent ici, chacun derrière onPage() avec test de présence.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { onPage, prefersReducedMotion, ease } from '../engine';
+import { onPage, prefersReducedMotion, ease, isTouch } from '../engine';
 import { moments, jours, type Jour } from '../data/site';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -53,6 +53,24 @@ export function applyCiel(theme: Theme, animate = true) {
 }
 const momentDuTheme = (t: Theme) => moments.find((m) => m.theme === t)?.id;
 
+/** Signature du hero : le soleil de l'orbite part de 7h et se pose à l'heure réelle (2,4 s, dans l'intro), la photo
+ *  se pose de 1,26 à 1,1 ; ensuite le disque suit la souris d'un souffle (±10 px). Reduced motion : tout est posé. */
+function astre(page: { intro: gsap.core.Timeline }) {
+  const el = document.querySelector<HTMLElement>('[data-astre]');
+  if (!el) return;
+  const cible = Math.round(Math.min(1, Math.max(0, (heureDecimale() - 7) / 16)) * 180);
+  if (prefersReducedMotion()) { gsap.set(el, { '--angle': cible, '--zoom': 1.1 }); el.classList.add('is-pose'); return; }
+  gsap.set(el, { '--angle': 0, '--zoom': 1.26 });
+  page.intro.to(el, { '--angle': cible, '--zoom': 1.1, duration: 2.4, ease: ease.out, onComplete: () => el.classList.add('is-pose') }, 0.2);
+  const img = el.querySelector<HTMLElement>('[data-astre-img]');
+  if (!img || isTouch()) return;
+  const x = gsap.quickTo(img, 'x', { duration: 0.8, ease: 'power3.out' });
+  const y = gsap.quickTo(img, 'y', { duration: 0.8, ease: 'power3.out' });
+  const bouge = (e: PointerEvent) => { x((e.clientX / innerWidth - 0.5) * 20); y((e.clientY / innerHeight - 0.5) * 20); };
+  window.addEventListener('pointermove', bouge, { passive: true });
+  return () => window.removeEventListener('pointermove', bouge);
+}
+
 export function initJournee() {
   // Ciel réglé à l'heure réelle avant le premier rendu visible (le loader couvre), puis la page décide.
   applyCiel(momentCourant().theme as Theme, false);
@@ -79,6 +97,7 @@ export function initJournee() {
   onPage(medaillons);
   onPage(horairesFleches);
   onPage(invitation);
+  onPage(astre);
 }
 
 /** Horloge du hero : HH:MM en display, secondes en petit, anneau qui avance d'un cran par seconde (idle). */

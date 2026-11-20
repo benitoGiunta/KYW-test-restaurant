@@ -1,25 +1,21 @@
-# ETAT, panorama-citadelle · portfolio · construction passe 1 sur 3
+# ETAT, panorama-citadelle · portfolio · construction passe 2 sur 3 (motion, signature, états, mobile)
 
-## Fait
-- Gabarit `journee` choisi (matrice dans DESIGN.md), copié sans toucher à `gabarits/`.
-- `src/data/site.ts` entièrement remplacé : carte d'automne 2026 (44 plats), 4 petits-déjeuners, menu des fêtes 110 €, horaires 8h-23h, histoire, équipe, presse, 16 photos (alt depuis `photos/index.json`), 6 moments.
-- Pages : accueil (6 moments), carte (heure par heure + carte complète + formules), petit-déjeuner (remplace brunch), histoire (« La maison »), réservation, 404. Header, footer, Horaires adaptés.
-- Photos WebP dans `public/photos/` (script sharp), `og.jpg` 1200x630.
-- Build OK : `dist/panorama-citadelle/portfolio/` (6 pages), noindex, mention « Maquette KYW » et pied KYW présents.
+## Fait (phase 2)
+- Signature du hero « astre » (≥ 1200 px) : disque photo (vue sur la Meuse, 960 px), orbite en pointillé, 6 crans aux heures des moments, soleil qui se pose à l'heure réelle (tween `--angle`/`--zoom` dans la timeline d'intro, 2,4 s), halo qui respire, photo qui suit la souris (±10 px, zoom de base 1,1). Reduced motion : tout posé, halo coupé. Masqué sous 1200 px (l'accroche le recouvrirait). Code : `astre()` dans `src/motion/journee.ts`, bloc `.astre` en fin de `base.css`, markup dans `index.astro` (aria-hidden, décoratif).
+- Accent vert des tabourets (`--vert #1f6b4a`) : anneau de focus (`--focus` : vert, encre sur corail, ivoire sur nuit et pied), sélection de texte, états valide du formulaire. Le soleil reste l'accent des boutons.
+- Débordement mobile corrigé : scrollWidth 400 → 390 sur carte, petit-déjeuner, histoire, réservation (`.section, .moment { overflow-x: clip }`).
+- Tartes flambées de l'accueil : préfixe « Tarte flambée » retiré de l'affichage (chapeau « Au four à bois : Flammeküeche »), colonne nom `minmax(7rem, 9rem)` : plus de nom sur 3 lignes.
+- Formulaire réservation : états focus (anneau), invalide (rouge), valide (vert), date minimale = aujourd'hui, message `role="status"` après envoi, bouton désactivé 4 s.
+- Vérifié : build OK (`scripts/q.sh`), accueil 1440 (hero, 6 moments) et 390 (6 moments), pages intérieures en 390 (scrollWidth), console sans erreur.
 
-## Reste (phases 2 et 3)
-- Art direction : accent vert (tabourets), contrôle contraste, favicon/logo ; supprimer dans `journee.ts` la mention « brunch » (commentaire) ; nom de 2 mots « Le Panorama » dans le hero (vérifier la mise en page du `t-mega` sur 2 lignes).
-- Animations, loader, frise, ciel : tester avec le contenu réel ; médaillons (3 au lieu de 3, ok) ; `photo--4x5` sur photos paysage (facade) : vérifier le recadrage.
-- QA navigateur (mesures 1440/390, clic en-tête, bas de page), sloplint, RAPPORT.md, leçons.
+## Reste (phase 3 et captures)
+- Lire `QA-<étape>.md` de l'agent captures ; sloplint ; RAPPORT.md ; contrôle du contraste du texte sur le disque (décoratif).
+- Favicon/logo : aucun logo client, favicon du gabarit conservé. Retirer la mention « brunch » du commentaire de `journee.ts` si elle subsiste (grep).
+- Badge « ouvert » présent deux fois en 1440 (en-tête + hero) : comportement du gabarit, à arbitrer.
+- Clic réel de l'en-tête et capture du bas de page : script lancé en fin de phase (résultat dans la réponse finale).
 - `pnpm index`, commit final, publication par la session de correction.
 
-## Décisions / hypothèses
-- Horaires : 8h-23h tous les jours (accueil du site) ; « brasserie 11h-23h » affiché « à confirmer » en seconde ligne.
-- Page `/brunch/` supprimée (aucune donnée) ; remplacée par `/petit-dejeuner/`.
-- E-mail : seul `groupes@panoramanamur.be` (groupes dès 7 personnes), non placeholder.
-- Aucun avis client : bloc presse (titres et liens du dossier) à la place.
-- Moment « 10h » = présentation du lieu, créé pour garder 6 moments à ciel distinct.
-- Portrait 18 (chef) non utilisé : identité à confirmer. Photo 19 (four à bois) en alt neutre.
-- Placeholders : 2 lignes du « dernier verre » (digestif 8 €, verre de vin 7 €, marqués « exemple »).
-- `gabarits/UTILISATION.md` non mis à jour (gabarits/ protégé) : ajouter la ligne `journee | panorama-citadelle`.
-- Pas de `pnpm index` ni de push dans cette phase.
+## Pièges
+- scrollWidth ≠ éléments qui dépassent : `innerWidth` suit la page élargie ; seuil `right > 391`.
+- `isTouch` du moteur est une fonction (`isTouch()`).
+- Placeholders inchangés : 2 lignes « dernier verre » (marquées exemple).
