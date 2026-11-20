@@ -27,7 +27,7 @@ export function prix(p: string | number): string {
   if (/^\d+(\.\d+)?$/.test(t)) return fmt(parseFloat(t));
   const parts = [...t.matchAll(/(\d+(?:\.\d+)?)\s*\((\d+)\s*pces?\)/g)];
   if (parts.length) return parts.map((m) => `${m[2]}${nbsp}${Number(m[2]) > 1 ? 'pièces' : 'pièce'}${nbsp}${fmt(parseFloat(m[1]))}`).join(' · ');
-  return t;
+  return t.replace(/\d+(?:\.\d+)?/g, (n) => fmt(parseFloat(n)));
 }
 
 /** Horaires du site d'origine : tous les jours de 10 h 00 à 22 h 30, cuisine fermée de 15 h à 18 h en semaine. */
