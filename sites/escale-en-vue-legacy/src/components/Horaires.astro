@@ -1,0 +1,22 @@
+---
+import { jours } from '../data/site';
+const ouverts = jours.filter((j) => j.ouvert), fermes = jours.filter((j) => !j.ouvert);
+---
+<section class="horaires" id="horaires" aria-labelledby="horaires-titre">
+  <div class="container horaires__grille">
+    <div class="horaires__tete">
+      <h2 id="horaires-titre">Du jeudi soir au dimanche après-midi.</h2>
+      <p class="lead">Toutes les tables sont en extérieur. Le plat maison se réserve dès le vendredi soir.</p>
+    </div>
+    <ol class="jours" aria-label="Horaires d’ouverture">
+      {ouverts.map((j) => (
+        <li class="jour">
+          <span class="jour__nom">{j.jour}</span>
+          <span class="jour__heures num"><time>{j.de}</time> à <time>{j.a}</time></span>
+          <span class="jour__note">{j.note}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="horaires__ferme">Fermé le {fermes.map((j) => j.jour.toLowerCase()).slice(0, -1).join(', ')} et le {fermes[fermes.length - 1].jour.toLowerCase()}.</p>
+  </div>
+</section>
