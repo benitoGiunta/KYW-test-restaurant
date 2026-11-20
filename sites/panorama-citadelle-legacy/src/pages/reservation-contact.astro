@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import Horaires from '../components/Horaires.astro';
+import Fig from '../components/Fig.astro';
+import { resto } from '../data/site';
+---
+<Base page="reservation-contact" title="Réservation et contact, Le Panorama" description="Réserver une table au Panorama, Citadelle de Namur : téléphone, réservation en ligne, groupes dès 7 personnes, formulaire de contact et itinéraire.">
+  <div class="container page-head">
+    <h1>Réserver ou contacter le Panorama</h1>
+    <p class="lead">Une table pour aujourd’hui, un groupe, une question : voici comment nous joindre.</p>
+  </div>
+
+  <section class="sec" aria-labelledby="reserver">
+    <div class="container cols">
+      <div class="a">
+        <h2 id="reserver">Réserver votre table</h2>
+        <p>Pour une réservation en ligne, utilisez le module de réservation du restaurant. Pour une demande de dernière minute, appelez-nous.</p>
+        <div class="actions"><a class="btn" href={resto.reservation} rel="noopener">Réserver en ligne</a><a class="btn-link" href={resto.telHref}>{resto.tel}</a></div>
+        <p>Pour les groupes à partir de 7 personnes : <a href={`mailto:${resto.groupes}`}>{resto.groupes}</a>. Nous ne prenons pas de réservation pour la terrasse.</p>
+      </div>
+      <div class="b"><Fig k="table" /></div>
+    </div>
+  </section>
+
+  <section class="sec sec-bar" aria-labelledby="contact">
+    <div class="container cols">
+      <div class="a">
+        <h2 id="contact">Nous contacter</h2>
+        <p>Pour une réservation d’aujourd’hui ou toute autre question, remplissez le formulaire. Nous répondons dans les plus brefs délais.</p>
+      </div>
+      <div class="b">
+        <form class="form" method="post" action="#" data-endpoint="">
+          <div class="field"><label for="nom">Nom et prénom</label><input id="nom" name="nom" autocomplete="name" required /></div>
+          <div class="field"><label for="email">Adresse e-mail</label><input id="email" name="email" type="email" autocomplete="email" required /></div>
+          <div class="field"><label for="tel">Téléphone</label><input id="tel" name="tel" type="tel" autocomplete="tel" /></div>
+          <div class="field"><label for="msg">Votre message</label><textarea id="msg" name="msg" required></textarea></div>
+          <label class="check"><input type="checkbox" name="actus" /><span>Je souhaite être tenu à jour des actualités du Panorama.</span></label>
+          <label class="check"><input type="checkbox" name="rgpd" required /><span>J’accepte que mes données soient utilisées par l’équipe du Panorama pour me recontacter par e-mail ou par téléphone.</span></label>
+          <div class="actions"><button class="btn" type="submit">Envoyer</button></div>
+          <p class="small">Maquette : le formulaire n’envoie rien tant qu’aucun service d’envoi n’est branché.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-bar" aria-labelledby="venir">
+    <div class="container cols">
+      <div class="a">
+        <h2 id="venir">Horaires et adresse</h2>
+        <dl class="facts">
+          <div><dt>Adresse</dt><dd>{resto.adresse[0]}<br />{resto.adresse[1]}</dd></div>
+          <div><dt>Téléphone</dt><dd><a href={resto.telHref}>{resto.tel}</a></dd></div>
+        </dl>
+        <div class="actions"><a class="btn-link" href={resto.maps} rel="noopener">Itinéraire</a></div>
+      </div>
+      <div class="b"><Horaires /></div>
+    </div>
+  </section>
+</Base>

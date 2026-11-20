@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="le-panorama" title="Le lieu, Le Panorama, Citadelle de Namur" description="Le Panorama : salle rénovée, terrasse sous les platanes, bar en marbre et vue à 360° sur Namur et la Meuse, à une centaine de mètres du téléphérique.">
+  <div class="container page-head">
+    <h1>Au sommet de la Citadelle, le Panorama</h1>
+    <p class="lead">Une expérience pleine de charme, du cadre à l’assiette.</p>
+  </div>
+
+  <section class="sec" aria-label="Le lieu">
+    <div class="container split">
+      <div class="txt">
+        <p>Situé sur la Route Merveilleuse, au sommet de la Citadelle, le Panorama vous propose de vous attabler dans un lieu qui offre une vue plongeante sur la ville de Namur et sur l’esplanade. Ouvert du lundi au dimanche, à une centaine de mètres du téléphérique.</p>
+        <p>Accompagnez cette vue d’un plat agréé par le chef étoilé Yves Mattagne : une carte tournée vers le monde, composée de produits frais et locaux, sans oublier les classiques de brasserie revus façon bistronomie.</p>
+        <div class="actions"><a class="btn" href={base + 'la-carte/'}>Découvrir la carte</a></div>
+      </div>
+      <Fig k="salle" />
+    </div>
+  </section>
+
+  <section class="sec sec-bar" aria-labelledby="salle-bar">
+    <div class="container">
+      <div class="sec-head"><h2 id="salle-bar">En salle, au bar, en terrasse</h2></div>
+      <div class="gallery">
+        <Fig k="bar" />
+        <Fig k="cave" />
+        <Fig k="table" />
+        <Fig k="facade" />
+      </div>
+    </div>
+  </section>
+
+  <section class="band sec" aria-labelledby="hauteur">
+    <div class="container cols">
+      <div class="a"><h2 id="hauteur">Prendre de la hauteur et profiter de la Citadelle</h2></div>
+      <div class="b">
+        <p>Le téléphérique relie la Citadelle et le centre-ville en moins de cinq minutes. On prend désormais de la hauteur facilement, pour profiter d’une vue imprenable sur la ville.</p>
+        <p style="margin-top:var(--space-md)">Manger un bout au Panorama, flâner dans les jardins, découvrir une exposition au Pavillon : la Citadelle se visite à son rythme.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="pano">
+    <div class="container split rev">
+      <div class="txt">
+        <h2 id="pano">La Pano, une bière blanche unique</h2>
+        <p>Servie uniquement dans la brasserie, la Pano est brassée avec La Houppe. Elle convient parfaitement à l’apéritif, un verre à la main devant la vue.</p>
+      </div>
+      <Fig k="pano" cls="sq" sizes="(min-width: 60rem) 45vw, 100vw" />
+    </div>
+  </section>
+
+  <section class="sec sec-bar" aria-labelledby="fin">
+    <div class="container cols">
+      <div class="a">
+        <h2 id="fin">Venir nous voir</h2>
+        <p>{resto.adresse[0]}, {resto.adresse[1]}. Pas de réservation pour la terrasse.</p>
+        <div class="actions"><a class="btn" href={base + 'reservation-contact/'}>Réserver une table</a><a class="btn-link" href={resto.maps} rel="noopener">Itinéraire</a></div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import { carte } from '../data/carte';
+import { petitsDej, fetes, pdfs, resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="la-carte" title="La carte d’automne 2026, Le Panorama" description="La carte d’automne 2026 du Panorama, signée par le chef Yves Mattagne : apéro, tartes flambées au four à bois, entrées, poissons, viandes, gibier, petits-déjeuners.">
+  <div class="container page-head">
+    <h1>Une carte signée Yves Mattagne</h1>
+    <p class="lead">La carte d’automne 2026, de 12&nbsp;€ à 98&nbsp;€, avec des produits locaux et des accents du monde.</p>
+    <ul class="carte-nav" aria-label="Rubriques de la carte">
+      {carte.map((r) => <li><a href={`#${r.id}`}>{r.titre}</a></li>)}
+      <li><a href="#petits-dejeuners">Petits-déjeuners</a></li>
+      <li><a href="#fetes">Menu des fêtes</a></li>
+    </ul>
+  </div>
+
+  <div class="container">
+    {carte.map((r) => (
+      <section class="rub" id={r.id} aria-labelledby={`h-${r.id}`}>
+        <h2 id={`h-${r.id}`}>{r.titre}</h2>
+        <ul class="rows">
+          {r.plats.map((p) => (
+            <li class="row"><div class="t"><strong>{p.nom}</strong>{p.desc && <span>{p.desc}</span>}</div><span class="p">{p.prix}</span></li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <p class="small" style="margin-top:var(--space-lg)">Pain sans gluten sur demande. Carte d’automne 2026 transcrite depuis le PDF du restaurant.</p>
+
+    <section class="rub" id="petits-dejeuners" aria-labelledby="h-pd">
+      <h2 id="h-pd">Les petits-déjeuners</h2>
+      <p class="small" style="margin-bottom:var(--space-md)">Servis de 8&nbsp;h&nbsp;00 à 10&nbsp;h&nbsp;30.</p>
+      <ul class="rows">
+        {petitsDej.map((p) => <li class="row"><div class="t"><strong>{p.nom}</strong><span>{p.desc}</span></div><span class="p">{p.prix}</span></li>)}
+      </ul>
+    </section>
+
+    <section class="rub" id="fetes" aria-labelledby="h-fetes">
+      <h2 id="h-fetes">{fetes.nom}</h2>
+      <ul class="rows"><li class="row lg"><div class="t"><strong>Menu de fêtes</strong><span>{fetes.desc}</span></div><span class="p">{fetes.prix}</span></li></ul>
+    </section>
+  </div>
+
+  <section class="sec" aria-labelledby="pdf">
+    <div class="container">
+      <div class="sec-head"><h2 id="pdf">Les cartes en PDF</h2></div>
+      <ul class="rows pdfs" style="border-top:0">
+        {pdfs.map((f) => <li class="row" style="grid-column:auto;display:block;border-top:var(--rule-bar) solid var(--color-ink)"><a class="btn-link" href={base + f.href}>{f.label}</a></li>)}
+      </ul>
+      <div class="actions" style="margin-top:var(--space-xl)"><a class="btn" href={base + 'reservation-contact/'}>Réserver une table</a><a class="btn-link" href={resto.telHref}>{resto.tel}</a></div>
+    </div>
+  </section>
+</Base>
