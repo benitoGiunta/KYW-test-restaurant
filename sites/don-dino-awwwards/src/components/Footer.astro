@@ -1,0 +1,31 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site, reseaux } from '../data/site';
+---
+<section class="pied" aria-label="Contact">
+  <div class="wrap pied__corps">
+    <h2 class="pied__mot display">À table.</h2>
+    <div class="pied__col">
+      <h3 class="pied__titre">Venir</h3>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h3 class="pied__titre">Réserver</h3>
+      <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+      <p class="petit">Midi et soir, 7 jours sur 7. <a class="lien" href={u('/reservation/')}>Les horaires</a></p>
+    </div>
+    <div class="pied__col">
+      <h3 class="pied__titre">Ailleurs</h3>
+      <ul class="pied__liens">
+        <li><a class="lien-util" href={u('/carte/')}>La carte</a></li>
+        <li><a class="lien-util" href={u('/histoire/')}>L’histoire</a></li>
+        <li><a class="lien-util" href={u('/reservation/')}>Réservation</a></li>
+        {reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+    <p class="pied__colophon">{site.credit}. Polices : Big Shoulders Display et Work Sans (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />

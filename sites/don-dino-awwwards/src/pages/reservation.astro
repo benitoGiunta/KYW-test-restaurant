@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, accesPratique } from '../data/site';
+---
+<Base page="reservation" title="Réservation" description="Réserver chez Don Dino à Naninne : téléphone 081 74 15 60 ou demande en ligne, horaires midi et soir 7 jours sur 7, parking, accès PMR et plan.">
+  <section class="wrap grille pagetete" aria-labelledby="titre-resa">
+    <h1 class="pagetete__titre display display--mega" id="titre-resa" data-split>Réserver un service.</h1>
+  </section>
+  <section class="wrap grille resa" aria-label="Réserver et venir">
+    <div class="resa__actions">
+      <p class="chapo">Midi ou soir, un appel suffit. Vous pouvez aussi envoyer une demande depuis le site du restaurant.</p>
+      <a class="resa__tel" href={site.telephoneHref}>{site.telephoneLisible}</a>
+      <div class="cta-groupe">
+        <a class="cta" href={site.telephoneHref}>Appeler</a>
+        <a class="cta cta--contour" href={site.reservationUrl} rel="noopener">Demande en ligne</a>
+      </div>
+      <p class="petit">Groupes, anniversaires et privatisation : <a class="lien" href={site.groupesUrl} rel="noopener">voir sur dondino.be</a>, sur devis.</p>
+    </div>
+    <div class="resa__infos">
+      <div><h2>Horaires</h2><Horaires /></div>
+      <div>
+        <h2>Adresse</h2>
+        <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+      </div>
+      <div>
+        <h2>Accès et pratique</h2>
+        <ul class="pratique__liste" style="grid-column:auto">
+          {accesPratique.map((a) => <li><h3>{a.titre}</h3><p>{a.texte}</p></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>

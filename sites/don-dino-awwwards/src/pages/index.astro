@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { jours, lisible, site, accesPratique } from '../data/site';
+import { plat } from '../lib/plats';
+import { u } from '../lib/url';
+const pizzas = ['Margherita', 'Dino', 'Pescatora'].map(plat);
+const pates = ['Spaghetti bolognaise', 'Lasagne maison à la bolognaise', 'Cannelloni ricotta et épinards'].map(plat);
+---
+<Base page="accueil">
+  <section class="wrap grille hero" aria-labelledby="titre-accueil">
+    <h1 class="hero__titre display display--mega" id="titre-accueil" data-split>Quatorze services par semaine.</h1>
+    <div class="hero__bas">
+      <p class="chapo">Brasserie, restaurant, pizzeria à Naninne, sur les hauteurs de Namur. Le patron est en salle, midi et soir, sept jours sur sept.</p>
+      <div class="cta-groupe">
+        <a class="cta" href={u('/reservation/')}>Réserver une table</a>
+        <a class="cta cta--contour" href={site.telephoneHref}>Appeler le&nbsp;<span class="nw">{site.telephoneLisible}</span></a>
+      </div>
+      <p class="hero__marque"><span>{site.adresse.rue} {site.adresse.numero}, Naninne</span><span>26 pizzas dès 10,50&nbsp;€</span></p>
+    </div>
+    <div class="hero__media" data-reveal><Photo cle="pizzaPlanche" widths={[480, 800, 1200]} sizes="(max-width: 640px) 100vw, 33vw" prioritaire /></div>
+    <p class="hero__legende credit">{site.credit}</p>
+  </section>
+
+  <section class="papier semaine" aria-labelledby="titre-semaine">
+    <div class="wrap">
+      <div class="grille semaine__tete">
+        <h2 class="semaine__titre display display--xl" id="titre-semaine">Sept jours, deux services.</h2>
+        <p class="semaine__note">Le midi de 12&nbsp;h à 14&nbsp;h&nbsp;30, le soir dès 18&nbsp;h. Les vendredis et samedis, le soir se prolonge jusqu’à 23&nbsp;h&nbsp;30.</p>
+      </div>
+      <ol class="sem" aria-label="Les quatorze services de la semaine">
+        {jours.map((j) => (
+          <li class="sem__jour">
+            <span class="sem__nom">{j.nom}</span>
+            <span class="sem__case"><span class="sem__service">Midi</span><span class="sem__heures nw">{lisible(j.midi)}</span></span>
+            <span class={`sem__case${j.soirFin === '23:30' ? ' sem__case--tard' : ''}`}><span class="sem__service">Soir</span><span class="sem__heures nw">{lisible(j.soir)}</span></span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="wrap grille paire" aria-labelledby="titre-pizzas">
+    <div class="paire__media cadre" data-reveal><Photo cle="jambonCru" sizes="(max-width: 640px) 100vw, 50vw" /></div>
+    <div class="paire__texte">
+      <h2 class="display display--l" id="titre-pizzas">Les pizzas, du four à la table</h2>
+      <p class="corps">Vingt-six pizzas à la carte, de la Margherita à la Pescatora.</p>
+      <ul class="ligne-plats">
+        {pizzas.map((p) => <li><span class="pl__nom">{p.nom}</span><span class="pl__prix eu nw">{p.prixTexte}</span><span class="pl__desc">{p.description}</span></li>)}
+      </ul>
+      <p><a class="lien" href={u('/carte/#pizzas')}>Toutes les pizzas</a></p>
+    </div>
+  </section>
+
+  <section class="wrap grille paire paire--inverse paire--cale" aria-labelledby="titre-pates">
+    <div class="paire__media cadre" data-reveal><Photo cle="spaghetti" sizes="(max-width: 640px) 100vw, 42vw" /></div>
+    <div class="paire__texte">
+      <h2 class="display display--l" id="titre-pates">Pâtes et gratinés maison</h2>
+      <p class="corps">Des spaghetti aux lasagne, la cuisine italienne côtoie les escalopes, les poissons et les viandes grillées.</p>
+      <ul class="ligne-plats">
+        {pates.map((p) => <li><span class="pl__nom">{p.nom}</span><span class="pl__prix eu nw">{p.prixTexte}</span>{p.description && <span class="pl__desc">{p.description}</span>}</li>)}
+      </ul>
+      <p><a class="lien" href={u('/carte/')}>Les 115 plats de la carte</a></p>
+    </div>
+  </section>
+
+  <section class="wrap grille salle" aria-labelledby="titre-salle">
+    <h2 class="salle__titre display display--xl" id="titre-salle">Le patron est en salle.</h2>
+    <div class="salle__a cadre" data-reveal><Photo cle="salleHomme" sizes="(max-width: 640px) 100vw, 40vw" /></div>
+    <div class="salle__texte">
+      <p class="chapo">{site.patron}, dit « Dino », mène la maison à Naninne depuis 2014, avec un accueil sicilien et de la bonne humeur.</p>
+      <p><a class="lien" href={u('/histoire/')}>L’histoire de la maison</a></p>
+    </div>
+    <div class="salle__b cadre" data-reveal><Photo cle="four" sizes="(max-width: 640px) 100vw, 40vw" /></div>
+  </section>
+
+  <section class="papier" aria-labelledby="titre-pratique">
+    <div class="wrap grille pratique">
+      <h2 class="pratique__titre display display--l" id="titre-pratique">Venir à Naninne</h2>
+      <ul class="pratique__liste">
+        {accesPratique.map((a) => <li><h3>{a.titre}</h3><p>{a.texte}</p></li>)}
+        <li><h3>Groupes</h3><p>Anniversaires, fêtes et privatisation, sur devis. <a class="lien" href={site.groupesUrl} rel="noopener">Voir sur dondino.be</a></p></li>
+      </ul>
+    </div>
+  </section>
+</Base>

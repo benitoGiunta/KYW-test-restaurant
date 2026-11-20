@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { carte } from '../data/carte';
+import { euro } from '../lib/format';
+import type { CleePhoto } from '../lib/photos';
+const total = carte.reduce((n, c) => n + c.plats.length, 0);
+// Une photo du client après certains chapitres (sujet réel : moules gratinées, spaghetti, pizza anchois, escalope).
+const apres: Record<string, CleePhoto> = { 'entrees-chaudes': 'moules', pates: 'spaghetti', pizzas: 'anchois', veau: 'escalope' };
+---
+<Base page="carte" title="La carte" description={`La carte de Don Dino à Naninne : ${total} plats, pizzas dès 10,50 €, pâtes, gratinés, escalopes, poissons et viandes grillées, servis midi et soir.`}>
+  <section class="wrap grille pagetete" aria-labelledby="titre-carte">
+    <h1 class="pagetete__titre display display--mega" id="titre-carte" data-split>La carte</h1>
+    <p class="pagetete__texte chapo">{total} plats en {carte.length} chapitres, servis le midi et le soir. Les prix sont ceux de la carte du restaurant.</p>
+  </section>
+  <div class="wrap grille carte">
+    <nav class="carte__nav" aria-label="Chapitres de la carte">
+      <ul>{carte.map((c) => <li><a href={`#${c.id}`}><span>{c.nom}</span><span class="nb">{c.plats.length}</span></a></li>)}</ul>
+    </nav>
+    <div class="carte__corps">
+      {carte.map((c) => (
+        <>
+          <section class="cat" id={c.id} aria-labelledby={`t-${c.id}`}>
+            <h2 class="cat__titre"><span class="display display--l" id={`t-${c.id}`}>{c.nom}</span><span class="cat__nb">{c.plats.length} plats</span></h2>
+            <ul class="plats">
+              {c.plats.map((p) => (
+                <li class="plat"><span class="plat__nom">{p.nom}</span><span class="plat__prix">{euro(p.prix)}</span>{p.description && <span class="plat__desc">{p.description}</span>}</li>
+              ))}
+            </ul>
+          </section>
+          {apres[c.id] && <figure class="carte__photo cadre" data-reveal><Photo cle={apres[c.id]} sizes="(max-width: 1024px) 100vw, 66vw" /></figure>}
+        </>
+      ))}
+      <p class="carte__note">Photos : Don Dino. Desserts et boissons : se renseigner auprès du restaurant. Maquette : la carte reproduit celle du site actuel, à confirmer avec le restaurant.</p>
+    </div>
+  </div>
+</Base>
