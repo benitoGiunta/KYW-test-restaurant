@@ -10,3 +10,8 @@
 Fait : REVUE-1.md (A_CORRIGER : 0 F0, 1 F1, 3 F2, 5 F3). Mesures maison : axe 5 pages x 3 largeurs, liens (133, 0 KO), prix (44 plats), reduced-motion, LCP/CLS CDP x4, Tab. Serveur PID 30997 et 4872 arrêtés.
 Reste : corriger F1-1 (focus du mur de photos mobile), F2-1 horaires, F2-2 photos doublons, F2-3 espaces insécables ; puis revue passe 2.
 Pièges : captures QA = accueil, carte, 404 brute (la vraie 404.html a été capturée dans .shots-panorama-citadelle-awwwards-revue1/rev1/).
+
+## Relecteur-site passe 2 (20/11/2026)
+Fait : REVUE-2.md (PUBLIABLE : 0 F0, 0 F1, 0 F2, 7 F3). Les 5 corrections annoncées (F1-1, F2-1, F2-2, F2-3, F3-3) vérifiées sur le dist de 17:09 : axe 0 violation sur 15 cas (5 pages x 1440/390/360), 0 console, 0 débordement. Serveur PID 11567 arrêté.
+Reste (facultatif, F3) : espace sécable avant « ? » dans carte, outline du mur rogné à gauche sur mobile, « par téléphone » (réservation), pied de page « Lundi à dimanche », canonical de 404.html, intertitre et légende de l'histoire.
+Pièges : pas de QA-revue2.md ; captures de .shots antérieures au dist, non utilisées ; `\s` Python normalise U+00A0.
