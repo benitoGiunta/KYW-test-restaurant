@@ -8,14 +8,14 @@ export const NOMBRE_LIGNES = 142;
 export const chapitres: Chapitre[] = [
  {
   "id": "petit-dejeuner",
-  "heure": "8 h 30",
-  "fin": "10 h 30",
+  "heure": "8 h 30",
+  "fin": "10 h 30",
   "titre": "Le petit déjeuner",
   "ton": "matin",
   "sections": [
    {
     "titre": "Petit déjeuner et sur le pouce",
-    "note": "Servi de 8 h 30 à 10 h 30",
+    "note": "Servi de 8 h 30 à 10 h 30",
     "plats": [
      {
       "nom": "Bulles au déjeuner",
@@ -38,14 +38,14 @@ export const chapitres: Chapitre[] = [
  },
  {
   "id": "sucre-du-moment",
-  "heure": "9 h",
-  "fin": "17 h 30",
+  "heure": "9 h",
+  "fin": "17 h 30",
   "titre": "Desserts et boissons du moment",
   "ton": "matin",
   "sections": [
    {
     "titre": "Suggestions desserts et boissons",
-    "note": "De 9 h à 17 h 30",
+    "note": "De 9 h à 17 h 30",
     "plats": [
      {
       "nom": "Pain perdu",
@@ -100,8 +100,8 @@ export const chapitres: Chapitre[] = [
  },
  {
   "id": "cuisine",
-  "heure": "11 h 30",
-  "fin": "17 h 30",
+  "heure": "11 h 30",
+  "fin": "17 h 30",
   "titre": "La cuisine",
   "ton": "midi",
   "sections": [
@@ -162,7 +162,7 @@ export const chapitres: Chapitre[] = [
     ]
    },
    {
-    "titre": "Servie de 11 h 30 à 17 h 30",
+    "titre": "Servie de 11 h 30 à 17 h 30",
     "plats": [
      {
       "nom": "Le feuilleté jambon fromage",
@@ -207,7 +207,7 @@ export const chapitres: Chapitre[] = [
     ]
    },
    {
-    "titre": "Servie de 12 h à 15 h",
+    "titre": "Servie de 12 h à 15 h",
     "plats": [
      {
       "nom": "Le croque midi",
@@ -721,7 +721,7 @@ export const chapitres: Chapitre[] = [
    },
    {
     "titre": "Fêtes de fin d’année 2026-2027",
-    "note": "Commandes de Noël jusqu’au 22 décembre à 18 h, du Nouvel An jusqu’au 29 décembre à 18 h",
+    "note": "Commandes de Noël jusqu’au 22 décembre à 18 h, du Nouvel An jusqu’au 29 décembre à 18 h",
     "plats": [
      {
       "nom": "Bûches de Noël (Forêt Noire, Confluent, Dacquoise, Éclat, Moka, Crème fraîche, Paris-Brest, Fruits des Bois, Éphémère)",

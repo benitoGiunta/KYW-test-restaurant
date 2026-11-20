@@ -20,6 +20,8 @@ body { background: var(--c-bg); }
   width: 1px; background: currentColor; opacity: 0.28; pointer-events: none;
 }
 .heure { grid-column: 1 / span 2; grid-row: 1; align-self: start; position: sticky; top: calc(var(--u) * 6); font-family: var(--f-display); font-size: var(--t-l); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; padding-right: var(--u); }
+.heure .num, .journee__h, .sommaire a span:first-child { white-space: nowrap; }
+.heure .num--mot { white-space: normal; font-size: var(--t-m); overflow-wrap: normal; hyphens: manual; }
 .heure small { display: block; margin-top: 0.6em; font-family: var(--f-body); font-size: var(--t-xs); letter-spacing: 0.04em; color: var(--c-muted); text-transform: uppercase; }
 .corps { grid-column: 3 / span 10; grid-row: 1; }
 
@@ -52,6 +54,7 @@ body { background: var(--c-bg); }
 .hero { padding-top: calc(var(--u) * 9); padding-bottom: var(--normal); }
 .hero__titre { grid-column: 1 / span 8; grid-row: 1; font-size: var(--t-mega); align-self: end; }
 .hero__titre span { display: block; }
+.hero__titre { min-height: 2lh; }
 .hero__media { grid-column: 9 / span 4; grid-row: 1 / span 2; }
 .hero__media picture, .hero__media img { width: 100%; height: 100%; object-fit: cover; }
 .hero__media { aspect-ratio: 4 / 5; position: relative; }
@@ -126,7 +129,7 @@ body { background: var(--c-bg); }
 .entete__lede { grid-column: 3 / span 6; margin-top: var(--serre); font-size: var(--t-m); line-height: 1.35; }
 .sommaire { grid-column: 3 / span 10; margin-top: var(--normal); display: flex; flex-wrap: wrap; gap: 0; list-style: none; padding: 0; border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
 .sommaire li { flex: 1 1 14rem; border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
-.sommaire a { display: grid; grid-template-columns: 4.5rem 1fr; align-items: baseline; padding: 0.9em 0; font-size: var(--t-s); }
+.sommaire a { display: grid; grid-template-columns: minmax(4.5rem, max-content) 1fr; column-gap: 1em; align-items: baseline; padding: 0.9em 0; font-size: var(--t-s); }
 .sommaire a span:first-child { font-family: var(--f-display); font-size: var(--t-m); font-variant-numeric: tabular-nums; }
 
 .chap__titre { font-size: var(--t-xl); margin-bottom: var(--serre); }
@@ -266,7 +269,8 @@ html.menu-ouvert .cadran { visibility: hidden !important; }
   .js .tete__nav { display: none; }
   .js .tete__menu { display: inline-flex; align-items: center; }
   .js .tete { flex-wrap: nowrap; }
-  .cadran { left: var(--gutter); bottom: var(--gutter); gap: 0.7em; padding: 0.45em 0.7em 0.5em; }
+  .cadran { display: none; }
+  .cadran-old { left: var(--gutter); bottom: var(--gutter); gap: 0.7em; padding: 0.45em 0.7em 0.5em; }
   .cadran__heure { font-size: 1rem; }
   .cadran__regle { width: 5.5rem; }
   .sommaire a { padding-block: 0.7em; }
