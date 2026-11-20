@@ -1,8 +1,9 @@
 ---
 // Pied de page finale : mot géant coupé par le bas, trois colonnes, puis le pied de page KYW (unique mention « Maquette »).
 import KywFooter from '@kyw/footer';
-import { site, guinguette, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { site, guinguette, adresseLigne, telHref } from '../data/site';
 import { u } from '../lib/url';
+const ouverts = site.horaires.filter((h) => h.creneaux.length);
 ---
 <section class="footer" aria-label="Pied de page du restaurant">
   <div class="wrap footer__cols">
@@ -14,9 +15,8 @@ import { u } from '../lib/url';
     </div>
     <div>
       <p class="footer__titre">Horaires</p>
-      <dl class="horaires horaires--petit">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd >{horaireTexte(h)}</dd></>)}
-      </dl>
+      <p>{ouverts[0].jour} à {ouverts[ouverts.length - 1].jour}</p>
+      <p class="muted">Détail des horaires sur la page Réservation, à confirmer</p>
     </div>
     <div class="stack">
       <p class="footer__titre">Suivre</p>

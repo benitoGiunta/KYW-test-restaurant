@@ -38,8 +38,11 @@ function marquee() {
   const parJour = (j: string) => horaires.find((h) => h.j === j);
   const peindre = () => {
     const d = new Date();
-    const hhmm = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-    const auj = parJour(jours[d.getDay()]);
+    const bxl = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', hour: '2-digit', minute: '2-digit', weekday: 'long', hourCycle: 'h23' }).formatToParts(d);
+    const part = (t: string) => bxl.find((p) => p.type === t)?.value || '';
+    const hhmm = `${part('hour')}:${part('minute')}`;
+    const idxJour = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].indexOf(part('weekday').toLowerCase());
+    const auj = parJour(jours[idxJour]);
     let texte = 'Horaires du jour';
     let etat = '';
     const ouvert = auj?.c.find((c) => c.ouverture <= hhmm && hhmm < c.fermeture);
@@ -49,7 +52,7 @@ function marquee() {
     else if (suivant) { texte = `Fermé en ce moment, ouverture à ${suivant.ouverture}`; etat = 'is-ferme'; }
     else {
       for (let k = 1; k <= 7; k++) {
-        const h = parJour(jours[(d.getDay() + k) % 7]);
+        const h = parJour(jours[(idxJour + k) % 7]);
         if (h && h.c.length) { texte = `Fermé aujourd'hui, prochain service ${h.j} à ${h.c[0].ouverture}`; etat = 'is-ferme'; break; }
       }
     }
