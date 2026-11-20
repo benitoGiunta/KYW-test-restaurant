@@ -1,4 +1,4 @@
-# ETAT · maison-des-desserts · variante legacy · construction-2 (phase 2 sur 3)
+# ETAT · maison-des-desserts · variante legacy · construction-3 (phase 3 sur 3, terminée)
 
 ## Fait (phase 2)
 - Nav : sticky 72 px (64 sous 60 rem), `<nav popover>` plein cadre sous 60 rem (bouton Menu/Fermer, `aria-expanded`, Échap, fermeture au passage en large), skip link visible au focus, `main tabindex=-1`, `scroll-padding-top` = nav + 24 px, index de la carte sticky sous la nav.
@@ -26,3 +26,7 @@
 - Nav sticky choisie pour que le menu mobile reste accessible après défilement ; le primaire de la nav (Boutique en ligne) et celui du hero partagent la même recette.
 - Aperçu du switcher : trois premières lignes de la rubrique de la carte liée (la rubrique « fetes » pour Chocolaterie, wiring de la phase 1).
 - Placeholders de téléphone et d'e-mail : formats génériques (`0470 00 00 00`, `nom@exemple.be`), pas des données du client.
+
+## Phase 3 (QA) : terminée
+- Corrigé : favicon, métadonnées (canonical, og, twitter), double contentinfo, landmark-unique carte, h2 au token section, waivers 71 et 83. axe 0 sur 6 pages, 0 erreur console, sloplint 0 REFLEX (FAIL 34 faux positif). Build et index OK. Voir RAPPORT.md.
+- Reste : polices réelles hors ligne, pied KYW (cibles 24 px), review finish par sous-agent.

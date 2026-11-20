@@ -4,6 +4,9 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 interface Props { title: string; description: string; current?: string }
 const { title, description, current = '' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonical = Astro.url.pathname;
+const ogImage = `${base}photos/01-facade-vitrine-noel-800.webp`;
 ---
 <!doctype html>
 <html lang="fr">
@@ -13,6 +16,14 @@ const { title, description, current = '' } = Astro.props;
     <meta name="robots" content="noindex" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f0eae0'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' text-anchor='middle' fill='%23221a14'%3EM%3C/text%3E%3C/svg%3E" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -5,10 +5,14 @@
 /* Hallmark · hero-review: self (no sub-agent tool in this session) · 3 findings · 2 resolved · 1 waived (44c) · comp: 2 built, no key · c1 chosen · reproduced (checked at 1280x800) · nav: edge-aligned, sticky, popover under 60rem · motion: still, one reveal */
 /* Hallmark · waive 44c · hero text column (title, actions, index) and print centred on each other within 20px at 1440x900 · the linter measures the head alone, the index list is part of the hero */
 /* Hallmark · waive 8 · sequence kept from the original (hero, trio of métiers, call to action), composition replaced by split, index and rows · the original sequence is the client's content order */
+/* Hallmark · waive 83 · the gallery page is a wall of the restaurant's own photographs, the page exists to show them · client photos fill every slot and nothing else sits on the page */
+/* Hallmark · waive 71 · dish names are h3 inside list rows with equal padding-block above and below, the price column spans both rows · a priced list item is one unit, its name is not a section head */
 /* Hallmark · answered 23: the drop cap is the theme's one slate signal in a wall-text paragraph, never a display head */
 /* Hallmark · dropped: dark mode toggle (Atelier is a light material, the page keeps one mode), Turnstile widget on the contact form (no endpoint yet, data-endpoint is empty), logo bitmap (gold on transparent fails on paper, replaced by the house name in Sentient) */
 @import url("./tokens.css");
 @import url("./base.css");
+html { overflow-x: clip; }
+body { overflow-x: clip; }
 
 /* chrome */
 .nav { border-bottom: var(--rule-hair) solid var(--color-rule); background: var(--color-paper); position: sticky; top: 0; z-index: var(--z-sticky-nav); }
@@ -107,7 +111,7 @@
 .carte__index a { display: block; padding-block: var(--space-xs); min-height: 44px; font-size: var(--text-sm); text-decoration: none; border-bottom: var(--rule-hair) solid var(--color-rule); }
 .carte__index ul { margin: 0; padding: 0; list-style: none; border-top: var(--rule-head) solid var(--color-ink); }
 .carte__body { grid-column: 6 / span 7; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3xl); }
-.cat h2 { font-size: var(--text-3xl); max-width: none; }
+.cat h2 { font-size: var(--text-section); max-width: none; }
 .cat__note { color: var(--color-muted); font-size: var(--text-sm); margin: var(--space-xs) 0 var(--space-lg); }
 .pdf { margin-top: var(--space-xl); font-size: var(--text-sm); }
 
@@ -115,7 +119,7 @@
 .wall { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-xl) var(--gap-columns); align-items: start; margin-bottom: var(--section-gap-s); }
 .wall figure { margin: 0; grid-column: span var(--span, 4); }
 .wall [data-slot] { aspect-ratio: var(--ar, 4 / 3); width: 100%; }
-.group-t { margin-bottom: var(--space-xl); font-size: var(--text-3xl); }
+.group-t { margin-bottom: var(--space-xl); font-size: var(--text-section); }
 
 /* contact, jobs */
 .contact { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); row-gap: var(--space-2xl); padding-bottom: var(--section-gap-s); align-items: start; }
@@ -127,7 +131,7 @@
 .contact .schedule { grid-column: auto; }
 .card { grid-column: 7 / span 6; background: var(--color-card); box-shadow: var(--shadow-card); padding: var(--space-2xl) var(--space-xl); position: relative; }
 .card::after { content: ""; position: absolute; inset: var(--space-sm); border: var(--rule-hair) solid var(--color-card-edge); pointer-events: none; }
-.card h2 { font-size: var(--text-3xl); margin-bottom: var(--space-lg); }
+.card h2 { font-size: var(--text-section); margin-bottom: var(--space-lg); }
 .form { display: grid; gap: var(--space-lg); position: relative; z-index: 1; }
 .field { display: grid; gap: var(--space-2xs); }
 .field label { font-size: var(--text-sm); color: var(--color-ink-2); }

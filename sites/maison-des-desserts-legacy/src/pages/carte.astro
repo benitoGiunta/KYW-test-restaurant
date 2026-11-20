@@ -15,9 +15,9 @@ import { carte } from '../data/site';
       </nav>
       <div class="carte__body">
         {carte.map((c) => (
-          <section class="cat" id={c.id} aria-labelledby={`${c.id}-t`}>
+          <section class="cat" id={c.id} aria-labelledby={c.note ? `${c.id}-t ${c.id}-n` : `${c.id}-t`}>
             <h2 id={`${c.id}-t`}>{fr(c.titre)}</h2>
-            {c.note && <p class="cat__note">{fr(c.note)}</p>}
+            {c.note && <p class="cat__note" id={`${c.id}-n`}>{fr(c.note)}</p>}
             <ul class="rows dish-list">
               {c.plats.map((p) => <li><h3>{fr(p.nom)}</h3>{p.description && <p class="desc">{fr(p.description)}</p>}{p.prix && <span class="price">{fr(p.prix)}</span>}</li>)}
             </ul>
