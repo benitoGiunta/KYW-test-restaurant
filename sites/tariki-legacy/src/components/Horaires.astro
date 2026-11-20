@@ -19,8 +19,8 @@ const fermes = horaires.filter((j) => !j.creneaux.length).map((j) => j.jour);
     </div>
     <div class="end__book" id="reservation">
       <h2>Réservez votre table</h2>
-      <p class="lead">Réservez dès maintenant pour profiter pleinement de votre expérience au Tariki Restaurant.</p>
-      <form class="form" action={`${base}#reservation`} method="get" data-endpoint="" data-closed={fermes.join(',')} novalidate>
+      <p class="lead">Du lundi au samedi, midi et soir ; fermé le dimanche.</p>
+      <form class="form" action={`${base}#reservation`} method="get" data-endpoint="" data-mailto={resto.email} data-closed={fermes.join(',')} data-slots={JSON.stringify(Object.fromEntries(horaires.map((j) => [j.jour, j.creneaux])))} novalidate>
         <div class="field">
           <label for="f-date">Date</label>
           <input id="f-date" type="date" name="date" autocomplete="off" required aria-describedby="f-date-help" />
@@ -56,11 +56,11 @@ const fermes = horaires.filter((j) => !j.creneaux.length).map((j) => j.jour);
           <p class="field__help" id="f-tel-help">Pour vous rappeler si besoin.</p>
         </div>
         <div class="form__act">
-          <button class="btn btn--primary" type="submit">Demander une table</button>
+          <button class="btn btn--primary" type="submit">Préparer ma demande</button>
           <a class="btn" href={resto.telHref}>Appeler le {resto.tel}</a>
         </div>
         <p class="form__status" data-status role="status" aria-live="polite"></p>
-        <p class="small">Ce formulaire n’est pas encore relié à un système de réservation : pour réserver aujourd’hui, appelez ou écrivez à <a href={`mailto:${resto.email}`}>{resto.email}</a>.</p>
+        <p class="small">Ce formulaire prépare un e-mail adressé au restaurant, à envoyer depuis votre messagerie ; vous pouvez aussi appeler ou écrire à <a href={`mailto:${resto.email}`}>{resto.email}</a>.</p>
       </form>
       <p class="small"><a href={`${base}la-carte/`}>Accéder au menu</a></p>
     </div>

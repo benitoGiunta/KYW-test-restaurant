@@ -34,7 +34,6 @@ const arcades = photoDe('/photos/arcades.webp');
   <section class="section" id="route" data-temp="110" data-temp-end="60" aria-labelledby="t-route">
     <div class="wrap">
       <div class="section__head">
-        <p class="chapeau">Table</p>
         <h2 class="t-xl" id="t-route" data-split="lines">La route, étape par étape</h2>
       </div>
       <div class="route">
@@ -43,18 +42,12 @@ const arcades = photoDe('/photos/arcades.webp');
           {site.chemin.map((e) => (
             <li class="route__step">
               <h3 class="route__pays">{e.pays}</h3>
-              <p class="route__texte">{e.texte}</p>
+              {e.texte && <p class="route__texte">{e.texte}</p>}
             </li>
           ))}
         </ol>
       </div>
-      <div class="formules" style="margin-top: calc(var(--u) * 6)">
-        {site.valeurs.map((v, i) => (
-          <article class="formule" data-reveal="up" data-delay={String(i * 0.1)}>
-            <h3>{v}</h3>
-          </article>
-        ))}
-      </div>
+      <p class="t-m" style="margin-top: calc(var(--u) * 6)" data-reveal="up">{site.valeurs.join(' · ')}</p>
       <div class="actions">
         <a class="btn btn--solid" href={u('/reservation/')}>Réserver une table</a>
         <a class="btn" href={u('/carte/')}>Voir la carte</a>

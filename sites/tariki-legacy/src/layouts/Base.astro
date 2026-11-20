@@ -32,6 +32,7 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#14110e" />
+    <link rel="icon" type="image/png" sizes="64x64" href={`${base}favicon.png`} />
     <script is:inline>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -121,9 +122,15 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
           var jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
           var d = new Date(); var iso = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
           var date = form.elements.date; if (date) date.min = iso;
+          var slots = {}; try { slots = JSON.parse(form.dataset.slots || '{}'); } catch (e) {}
+          function mn(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
+          function slotsDuJour() { var dv = form.elements.date && form.elements.date.value; if (!dv) return null; return slots[new Date(dv + 'T12:00:00').getDay()] || []; }
+          function slotOk(v) { var l = slotsDuJour(); if (!l || !l.length) return true; var m = mn(v); return l.some(function (c) { var p = c.split(' à '); return m >= mn(p[0]) && m <= mn(p[1]); }); }
+          function slotMsg() { var l = slotsDuJour(); return 'Ce jour-là, Tariki est ouvert ' + l.map(function (c) { return c.replace(' à ', ' à '); }).join(' et ') + '.'; }
           function msg(f) {
             var v = f.validity, n = f.name;
-            if (f.checkValidity() && !(n === 'date' && f.value && closed.indexOf(new Date(f.value + 'T12:00:00').getDay()) >= 0)) return '';
+            if (f.checkValidity() && !(n === 'date' && f.value && closed.indexOf(new Date(f.value + 'T12:00:00').getDay()) >= 0) && !(n === 'heure' && !slotOk(f.value))) return '';
+            if (n === 'heure' && f.checkValidity()) return slotMsg();
             if (n === 'date') { if (v.valueMissing || v.badInput) return 'Choisissez une date.'; if (v.rangeUnderflow) return 'Cette date est passée : choisissez aujourd’hui ou plus tard.'; return 'Tariki est fermé le ' + jours[new Date(f.value + 'T12:00:00').getDay()] + ' : choisissez un autre jour.'; }
             if (n === 'heure') return v.valueMissing ? 'Indiquez une heure, par exemple 19:30.' : 'Écrivez l’heure ainsi : 19:30.';
             if (n === 'nom') return 'Indiquez le nom de la réservation.';
@@ -148,7 +155,13 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
             var bad = fields.filter(function (f) { f.dataset.touched = '1'; return !check(f); });
             if (bad.length) { status.classList.add('is-error'); status.textContent = bad.length === 1 ? 'Un champ est à corriger.' : bad.length + ' champs sont à corriger.'; bad[0].focus(); return; }
             status.classList.remove('is-error');
-            if (!form.dataset.endpoint) { status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié.'; return; }
+            if (!form.dataset.endpoint) {
+              var e = form.elements, sujet = 'Demande de table le ' + e.date.value + ' à ' + e.heure.value;
+              var corps = ['Bonjour,', '', 'Je souhaite réserver une table.', 'Date : ' + e.date.value, 'Heure : ' + e.heure.value, 'Adultes : ' + e.adultes.value, 'Enfants : ' + (e.enfants.value || '0'), 'Nom : ' + e.nom.value, 'Téléphone : ' + e.telephone.value, '', 'Merci de me confirmer par retour.'].join('\n');
+              status.textContent = 'Votre messagerie s’ouvre avec la demande prête à envoyer. Elle ne sera réservée qu’après confirmation du restaurant.';
+              window.location.href = 'mailto:' + form.dataset.mailto + '?subject=' + encodeURIComponent(sujet) + '&body=' + encodeURIComponent(corps);
+              return;
+            }
             var btn = form.querySelector('[type="submit"]'); btn.disabled = true; status.textContent = 'Envoi en cours.';
             fetch(form.dataset.endpoint, { method: 'POST', body: new FormData(form) })
               .then(function (r) { status.textContent = r.ok ? 'Demande reçue.' : 'La demande n’est pas passée : réessayez dans un instant.'; })

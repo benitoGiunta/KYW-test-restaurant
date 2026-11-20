@@ -305,7 +305,7 @@ function initCuisson(reduced: boolean) {
 function initManifeste(reduced: boolean) {
   const el = document.querySelector<HTMLElement>('.manifeste__txt');
   if (!el || reduced) return;
-  const split = SplitText.create(el, { type: 'words', wordsClass: 'w', autoSplit: true,
+  const split = SplitText.create(el, { type: 'words', wordsClass: 'w', aria: 'none', autoSplit: true,
     onSplit: (self) => gsap.to(self.words, { color: 'var(--c-fg)', stagger: 0.08, ease: 'none',
       scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 45%', scrub: true } }) });
   return () => split.revert();

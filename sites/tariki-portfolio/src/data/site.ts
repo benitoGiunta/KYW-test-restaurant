@@ -122,7 +122,7 @@ export const site: Restaurant = {
     {
       categorie: 'Le midi, sandwichs au feu de bois',
       service: 'midi',
-      note: 'Du mercredi au samedi. Prix de la carte du midi du site actuel.',
+      note: 'Du mercredi au samedi.',
       plats: [
         p('Tawook', 'Poulet, toum, sauce Tariki, pickles de légumes', 9),
         p('Tawook épicé', 'Poulet, spicy toum, sauce Tariki, pickles de légumes', 9),
@@ -151,21 +151,21 @@ export const site: Restaurant = {
     'La carte est volontairement courte. On y partage, on y goûte, on y revient : le tawook au toum et à la sauce Tariki, la kefta d’agneau, le magret de canard à la grenade.',
   ],
   chemin: [
-    { pays: 'Syrie', texte: 'Le point de départ.' },
-    { pays: 'Liban', texte: 'Premier détour, première table à partager.' },
-    { pays: 'Turquie', texte: 'Le feu, les épices, les pickles.' },
-    { pays: 'Grèce', texte: 'La mer, les herbes, le citron.' },
+    { pays: 'Syrie', texte: '' },
+    { pays: 'Liban', texte: '' },
+    { pays: 'Turquie', texte: '' },
+    { pays: 'Grèce', texte: '' },
     { pays: 'Belgique', texte: 'Un foyer, Bayti, puis Tariki.' },
   ],
   presse: {
     media: 'Moustique',
     date: '2026-09-11',
-    texte: 'Tariki figure parmi les adresses namuroises recommandées par Éric Boschman, comme troisième volet d’une trilogie après Bayti.',
+    texte: '14 adresses namuroises recommandées par Éric Boschman, dont Tariki.',
     url: 'https://www.moustique.be/tendances/2026/09/11/restaurants-a-namur-14-bonnes-adresses-recommandees-par-eric-boschman-KSBTVPGC4BC5FJJNIZBNYJKQ4I/',
   },
   photos: [
     photo('/photos/braises.webp', 'Braises rougeoyantes et flammes sur du bois', 1800, 1013, 'Le charbon, avant le service'),
-    photo('/photos/feu-de-camp.webp', 'Un feu de camp sur fond noir', 1024, 1024, 'Visuel d’ambiance, à remplacer', true),
+    photo('/photos/feu-de-camp.webp', 'Un feu de camp sur fond noir', 1024, 1024, 'Visuel d’ambiance', true),
     photo('/photos/arcades.webp', 'Un couloir d’arcades ocre, visuel d’ambiance et non le restaurant', 1800, 1428, 'Illustration orientale, non contractuelle', true),
   ],
   valeurs: ['Cuisson au charbon et à flamme ouverte', 'Partage', 'Hospitalité'],
