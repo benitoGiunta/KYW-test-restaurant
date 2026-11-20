@@ -27,7 +27,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [heroIntro(intro), rideaux(), compteurs(), citation(), onglets()];
+    const cleanups = [heroIntro(intro), carre(intro), progres(), rideaux(), compteurs(), citation(), galerie(), copie(), onglets()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -130,6 +130,8 @@ function onglets() {
     tween = gsap.to(prog, { v: 1, duration: 6, ease: 'none', onUpdate: applique, onComplete: () => { i = (i + 1) % tabs.length; lance(); } });
   };
   const choisis = (k: number, focus = false) => { i = (k + tabs.length) % tabs.length; lance(); if (focus) tabs[i].focus(); };
+  const pauseBtn = document.querySelector<HTMLButtonElement>('[data-onglets-pause]');
+  let manuel = false;
   const handlers: [EventTarget, string, EventListener][] = [];
   const on = (t: EventTarget, ev: string, fn: EventListener) => { t.addEventListener(ev, fn); handlers.push([t, ev, fn]); };
   tabs.forEach((t, k) => {
@@ -140,12 +142,96 @@ function onglets() {
     }) as EventListener);
   });
   on(root, 'pointerenter', () => tween?.pause());
-  on(root, 'pointerleave', () => tween?.play());
+  on(root, 'pointerleave', () => { if (!manuel) tween?.play(); });
   on(root, 'focusin', () => tween?.pause());
-  on(root, 'focusout', () => tween?.play());
+  on(root, 'focusout', () => { if (!manuel) tween?.play(); });
+  if (pauseBtn && !reduced) {
+    pauseBtn.hidden = false;
+    on(pauseBtn, 'click', () => {
+      manuel = !manuel;
+      pauseBtn.setAttribute('aria-pressed', String(manuel));
+      pauseBtn.textContent = manuel ? 'Reprendre le défilement des offres' : 'Suspendre le défilement des offres';
+      if (manuel) tween?.pause(); else tween?.play();
+    });
+  }
   // La rotation ne tourne que quand le bloc est à l'écran (une horloge, en pause hors champ).
-  const st = ScrollTrigger.create({ trigger: root, start: 'top bottom', end: 'bottom top', onEnter: () => tween?.play(), onEnterBack: () => tween?.play(), onLeave: () => tween?.pause(), onLeaveBack: () => tween?.pause() });
+  const st = ScrollTrigger.create({ trigger: root, start: 'top bottom', end: 'bottom top', onEnter: () => { if (!manuel) tween?.play(); }, onEnterBack: () => { if (!manuel) tween?.play(); }, onLeave: () => tween?.pause(), onLeaveBack: () => tween?.pause() });
   lance();
   if (!st.isActive) tween?.pause();
-  return () => { tween?.kill(); st.kill(); handlers.forEach(([t, ev, fn]) => t.removeEventListener(ev, fn)); };
+  return () => { tween?.kill(); st.kill(); if (pauseBtn) pauseBtn.hidden = true; handlers.forEach(([t, ev, fn]) => t.removeEventListener(ev, fn)); };
+}
+
+/** Signature « carré d'herbes » : le carré du potager se trace autour du hero (filet cuivre, 1,6 s) puis ses quatre coins
+ *  se plantent un à un ; le hero qui défile le fait respirer (la photo recule de 8 %). Statique en reduced motion et en
+ *  mobile pour les coins ; le tracé est peint par défaut, l'état de départ ne vit que sous `.motion`. */
+function carre(intro: gsap.core.Timeline) {
+  const trait = document.querySelector<SVGRectElement>('[data-carre-trait]');
+  const coins = document.querySelectorAll<HTMLElement>('[data-carre-coin]');
+  const photo = document.querySelector<HTMLElement>('.hero__photo img');
+  if (!trait || prefersReducedMotion()) return () => {};
+  const tl = gsap.timeline({ paused: true })
+    .fromTo(trait, { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 1.6, ease: ease.inOut }, 0)
+    .fromTo(coins, { scale: 0 }, { scale: 1, duration: 0.6, ease: ease.out, stagger: 0.18 }, 0.5);
+  if (photo) tl.fromTo(photo, { scale: 1.1 }, { scale: 1, duration: 2.2, ease: ease.out }, 0);
+  intro.add(() => tl.play(), 0.2);
+  const st = photo ? gsap.to(photo, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '[data-hero]', start: 'top top', end: 'bottom top', scrub: true } }) : null;
+  return () => { tl.kill(); st?.scrollTrigger?.kill(); st?.kill(); gsap.set([trait, ...coins, ...(photo ? [photo] : [])], { clearProps: 'all' }); };
+}
+
+/** Filet de progression de l'en-tête : `--progres` (0 à 1) suit le défilement de la page, rendu par `.header::after`. */
+function progres() {
+  if (prefersReducedMotion()) return () => {};
+  const header = document.querySelector<HTMLElement>('.header');
+  if (!header) return () => {};
+  const st = ScrollTrigger.create({ start: 0, end: 'max', onUpdate: (self) => header.style.setProperty('--progres', self.progress.toFixed(4)) });
+  return () => { st.kill(); header.style.removeProperty('--progres'); };
+}
+
+/** Galerie : glisser à la souris, clavier (flèches sur la bande focalisable), et sur écran tactile les photos se colorent
+ *  quand elles passent au centre de la bande (pas de survol sur mobile). */
+function galerie() {
+  const bande = document.querySelector<HTMLElement>('[data-galerie]');
+  if (!bande) return () => {};
+  const items = [...bande.querySelectorAll<HTMLElement>('.galerie__item')];
+  let io: IntersectionObserver | null = null;
+  if (matchMedia('(hover: none)').matches) {
+    io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('is-vu', e.isIntersecting)), { root: bande, rootMargin: '0px -30% 0px -30%', threshold: 0.2 });
+    items.forEach((i) => io!.observe(i));
+  }
+  // Focalisable seulement quand elle défile (sinon un arrêt clavier inutile).
+  const focalisable = () => { if (bande.scrollWidth > bande.clientWidth + 1) bande.tabIndex = 0; else bande.removeAttribute('tabindex'); };
+  focalisable();
+  const ro = new ResizeObserver(focalisable);
+  ro.observe(bande);
+  let x0 = 0, s0 = 0, drag = false;
+  const down = (e: PointerEvent) => { if (e.pointerType !== 'mouse' || e.button !== 0) return; drag = true; x0 = e.clientX; s0 = bande.scrollLeft; };
+  const move = (e: PointerEvent) => { if (!drag) return; const dx = e.clientX - x0; if (Math.abs(dx) > 4) bande.classList.add('is-drag'); bande.scrollLeft = s0 - dx; };
+  const up = () => { drag = false; bande.classList.remove('is-drag'); };
+  const key = (e: KeyboardEvent) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    bande.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * Math.min(bande.clientWidth * 0.6, 360), behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+  };
+  bande.addEventListener('pointerdown', down);
+  addEventListener('pointermove', move);
+  addEventListener('pointerup', up);
+  bande.addEventListener('keydown', key);
+  bande.addEventListener('dragstart', (e) => e.preventDefault());
+  return () => { io?.disconnect(); ro.disconnect(); bande.removeEventListener('pointerdown', down); removeEventListener('pointermove', move); removeEventListener('pointerup', up); bande.removeEventListener('keydown', key); };
+}
+
+/** Réservation : « Copier le numéro » (bouton montré seulement si le presse-papiers est disponible), annonce lue en direct. */
+function copie() {
+  const btn = document.querySelector<HTMLButtonElement>('[data-copie]');
+  const etat = document.querySelector<HTMLElement>('[data-copie-etat]');
+  if (!btn || !navigator.clipboard) return () => {};
+  btn.hidden = false;
+  let t = 0;
+  const clic = async () => {
+    try { await navigator.clipboard.writeText(btn.dataset.copie || ''); btn.textContent = 'Numéro copié'; if (etat) etat.textContent = 'Numéro copié dans le presse-papiers'; }
+    catch { btn.textContent = 'Copie impossible, appelez-nous'; if (etat) etat.textContent = 'Copie impossible'; }
+    clearTimeout(t); t = window.setTimeout(() => { btn.textContent = 'Copier le numéro'; if (etat) etat.textContent = ''; }, 2400);
+  };
+  btn.addEventListener('click', clic);
+  return () => { btn.removeEventListener('click', clic); clearTimeout(t); };
 }

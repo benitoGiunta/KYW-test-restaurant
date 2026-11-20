@@ -20,6 +20,8 @@ const resume = horairesResume();
       <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical />
     </picture>
     <div class="hero__scrim" aria-hidden="true"></div>
+    <svg class="hero__carre" aria-hidden="true" focusable="false" preserveAspectRatio="none"><rect data-carre-trait pathLength="100" x="0" y="0" width="100%" height="100%" /></svg>
+    <span class="hero__coin hero__coin--hg" aria-hidden="true" data-carre-coin></span><span class="hero__coin hero__coin--hd" aria-hidden="true" data-carre-coin></span><span class="hero__coin hero__coin--bg" aria-hidden="true" data-carre-coin></span><span class="hero__coin hero__coin--bd" aria-hidden="true" data-carre-coin></span>
     <div class="wrap hero__contenu">
       <p class="petite-cap hero__sur">{adresseLigne()}</p>
       <h1 class="hero__nom">{motsNom.map((m, i) => <><span class="hero__mot"><span class="hero__mot-in" data-hero-mot>{m}</span></span>{i < motsNom.length - 1 ? ' ' : ''}</>)}</h1>
@@ -86,12 +88,12 @@ const resume = horairesResume();
           <p>{o.texte}{o.textePlaceholder && <span class="illu">texte illustratif</span>}</p>
         </div>
       ))}
-      <p class="onglets__action"><a class="btn" href={u('/fetes/')}>Les fêtes en détail</a></p>
+      <p class="onglets__action"><a class="btn" href={u('/fetes/')}>Les fêtes en détail</a><button class="lien onglets__pause" type="button" data-onglets-pause aria-pressed="false" hidden>Suspendre le défilement des offres</button></p>
     </div>
   </section>
 
   <section class="galerie" aria-label="La maison en noir et blanc">
-    <div class="galerie__bande">
+    <div class="galerie__bande" role="group" aria-label="Photos de la maison, faites défiler" data-galerie>
       {galerie.map((p, i) => (
         <figure class:list={['galerie__item', `galerie__item--${hauteurs[i]}`]} data-reveal="up" data-delay={String(i * 0.08)} data-cursor="Voir">
           <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />

@@ -300,3 +300,40 @@ html:not(.motion) .onglet[aria-selected='true'] .onglet__barre::after { transfor
   .onglets::before { display: none; }
   .galerie__item { width: 70vw; }
 }
+
+/* ---- Phase 2 : signature « carré d'herbes », progression, états, galerie, mobile (fin de feuille : gagne sur les media queries plus haut) ---- */
+.hero { --cadre: clamp(0.75rem, 2.2vw, 2rem); }
+.hero__carre { position: absolute; inset: var(--cadre); width: calc(100% - 2 * var(--cadre)); height: calc(100% - 2 * var(--cadre)); overflow: visible; pointer-events: none; }
+.hero__carre rect { fill: none; stroke: var(--c-accent); stroke-width: 1; stroke-opacity: 0.55; stroke-dasharray: 100; stroke-dashoffset: 0; vector-effect: non-scaling-stroke; }
+.motion .hero__carre rect { stroke-dashoffset: 100; }
+.hero__coin { position: absolute; width: 7px; height: 7px; background: var(--c-accent); pointer-events: none; }
+.hero__coin--hg { top: calc(var(--cadre) - 3px); left: calc(var(--cadre) - 3px); }
+.hero__coin--hd { top: calc(var(--cadre) - 3px); right: calc(var(--cadre) - 3px); }
+.hero__coin--bg { bottom: calc(var(--cadre) - 3px); left: calc(var(--cadre) - 3px); }
+.hero__coin--bd { bottom: calc(var(--cadre) - 3px); right: calc(var(--cadre) - 3px); }
+.motion .hero__coin { transform: scale(0); }
+.header::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--c-accent); transform: scaleX(var(--progres, 0)); transform-origin: left; pointer-events: none; }
+.btn:active::before { transition-duration: 0.12s; }
+.lien:active, .guides__item:active .guides__nom { color: var(--c-accent); }
+.onglet:focus-visible { outline-offset: 6px; }
+.onglets__action { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--u) * 1.5) calc(var(--u) * 3); }
+.onglets__pause, .lien--copie { background: none; border: 0; color: var(--c-fg); font: inherit; font-size: var(--t-s); cursor: pointer; min-height: 44px; }
+.onglets__pause[hidden], .lien--copie[hidden] { display: none; }
+.galerie__bande:focus-visible { outline-offset: -2px; }
+.galerie__bande.is-drag { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.galerie__bande.is-drag .galerie__item img { transition: none; }
+.galerie__item.is-vu::after { clip-path: inset(0 0 100% 0); }
+@media (max-width: 767px) {
+  .hero { --cadre: 0.5rem; }
+  .hero__coin { width: 5px; height: 5px; }
+  .hero__coin--hg, .hero__coin--hd { top: calc(var(--cadre) - 2px); } .hero__coin--bg, .hero__coin--bd { bottom: calc(var(--cadre) - 2px); }
+  .hero__coin--hg, .hero__coin--bg { left: calc(var(--cadre) - 2px); } .hero__coin--hd, .hero__coin--bd { right: calc(var(--cadre) - 2px); }
+  .hero__contenu { padding-inline-start: calc(var(--gutter) + 0.25rem); }
+}
+@media (max-width: 380px) { .header__nom { font-size: 0.95rem; letter-spacing: 0.06em; } .hero__nom { font-size: clamp(2.4rem, 11.5vw, 3rem); } }
+@media (prefers-reduced-motion: reduce) { .header::after { display: none; } }
+/* Onglets des fêtes : les photos (z -1, venues après le voile) le recouvraient ; photos en -2, voile latéral qui tient le texte
+   sur la photo claire du macaron (révision phase 2). Mobile : voile masqué, la photo est au-dessus du texte. */
+.onglets__photos { z-index: -2; }
+.onglets::before { z-index: -1; background: linear-gradient(90deg, rgb(27 55 48 / 0.95) 0%, rgb(27 55 48 / 0.86) 42%, rgb(27 55 48 / 0.4) 100%), linear-gradient(180deg, var(--c-bg) 0%, transparent 28%, rgb(27 55 48 / 0.6) 100%); }
+@media (max-width: 767px) { .onglets::before { display: none; } }

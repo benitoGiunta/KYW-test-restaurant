@@ -55,7 +55,7 @@ export const site: Restaurant = {
   monogramme: 'Ch',
   baseline: 'Cuisine sincère et raffinée, entre Namur et Profondeville',
   description:
-    "Carré d'herbes, restaurant gastronomique à Wépion (Namur) : menus en 2 à 5 assiettes de 38 à 85 €, produits locaux de saison, parc et terrasse en bord de Meuse.",
+    "Carré d'herbes, restaurant gastronomique à Wépion (Namur) : menus en 2 à 5 assiettes de 38 à 85 €, produits locaux de saison, parc et terrasse en bord de Meuse.",
   url: 'https://carredherbes.be',
   typeCuisine: 'Cuisine raffinée de saison, produits locaux, fait maison',
   adresse: { rue: 'Chaussée de Dinant', numero: '780', cp: '5100', commune: 'Wépion (Namur)', pays: 'BE' },
@@ -100,7 +100,7 @@ export const site: Restaurant = {
         { nom: 'Dame blanche à notre façon', description: '', prix: null, placeholder: false },
         { nom: 'Sabayon au Champagne', description: 'Gratiné, fruit et glace du moment', prix: null, placeholder: false },
         { nom: 'Île flottante revisitée', description: 'Marmelade de rhubarbe et framboises, crème anglaise vanillée', prix: null, placeholder: false },
-        { nom: 'Assiette de fromages affinés', description: 'En supplément, ou en remplacement du dessert', prix: '15 € / 7 €', placeholder: false },
+        { nom: 'Assiette de fromages affinés', description: 'En supplément, ou en remplacement du dessert', prix: '15 € / 7 €', placeholder: false },
       ],
     },
     {
@@ -112,10 +112,10 @@ export const site: Restaurant = {
     },
   ],
   menus: [
-    { nom: 'Lunch en 2 assiettes', prix: '38 €', services: 2, quand: 'le midi et le jeudi soir sur réservation, sauf dimanche et jours fériés', description: "Entrée et plat annoncés oralement, selon l'inspiration du chef. 48 € avec un dessert commandé en début de repas.", placeholder: false },
-    { nom: 'Menu en 3 assiettes', prix: '55 €', services: 3, quand: 'entrée, plat, dessert', description: 'Accord mets-vins en option : 69 €.', placeholder: false },
-    { nom: 'Menu en 4 assiettes', prix: '68 €', services: 4, quand: 'deux entrées, plat, dessert', description: 'Accord mets-vins en option : 89 €.', placeholder: false },
-    { nom: 'Menu en 5 assiettes', prix: '85 €', services: 5, quand: 'trois entrées, plat, dessert', description: 'Accord mets-vins en option : 113 €.', placeholder: false },
+    { nom: 'Lunch en 2 assiettes', prix: '38 €', services: 2, quand: 'le midi et le jeudi soir sur réservation, sauf dimanche et jours fériés', description: "Entrée et plat annoncés oralement, selon l'inspiration du chef. 48 € avec un dessert commandé en début de repas.", placeholder: false },
+    { nom: 'Menu en 3 assiettes', prix: '55 €', services: 3, quand: 'entrée, plat, dessert', description: 'Accord mets-vins en option : 69 €.', placeholder: false },
+    { nom: 'Menu en 4 assiettes', prix: '68 €', services: 4, quand: 'deux entrées, plat, dessert', description: 'Accord mets-vins en option : 89 €.', placeholder: false },
+    { nom: 'Menu en 5 assiettes', prix: '85 €', services: 5, quand: 'trois entrées, plat, dessert', description: 'Accord mets-vins en option : 113 €.', placeholder: false },
   ],
   bonCadeau: { montants: 'de la valeur de votre choix, ou deux menus au choix', texte: 'Valable 6 mois, sauf le samedi soir. Retrait au restaurant.', placeholder: false },
   histoire: [
@@ -139,7 +139,7 @@ export const site: Restaurant = {
   avis: [],
   chiffres: {
     menus: { valeur: 4, libelle: 'menus', sousLibelle: 'le lunch, puis 3, 4 ou 5 assiettes', preuve: 'dossier.md, Offre et carte', placeholder: false },
-    prix: { valeur: 38, libelle: 'euros', sousLibelle: 'le lunch en 2 assiettes, jusqu’à 85 € pour 5 assiettes', preuve: 'dossier.md, Offre et carte', placeholder: false },
+    prix: { valeur: 38, libelle: 'euros', sousLibelle: 'le lunch en 2 assiettes, jusqu’à 85 € pour 5 assiettes', preuve: 'dossier.md, Offre et carte', placeholder: false },
     parc: { valeur: 28, libelle: 'ares de parc', sousLibelle: 'plus de 28 ares de parc arboré, avec terrasse', preuve: 'dossier.md, Identité (site client)', placeholder: false },
     parking: { valeur: 10, libelle: 'places de parking', sousLibelle: 'un parking privé, accès Route de Saint-Gérard', preuve: 'dossier.md, Identité (site client)', placeholder: false },
   },
@@ -149,8 +149,8 @@ export const site: Restaurant = {
   fetes: {
     intro: 'Pour les fêtes 2026, la maison propose un menu de Noël à table et un menu à emporter pour les 24 et 31 décembre.',
     offres: [
-      { nom: 'Noël au restaurant', texte: 'Le midi du 25 décembre, un menu en 5 services à 68 € : maquereau et truite, Saint-Jacques, ris de veau (supplément 12 €), pithivier de biche, sablé « Petit Bateau ». Acompte de 40 € par personne ; accord mets-vins à 7 € le verre.', textePlaceholder: false, photo: '/photos/fete-sapin.webp' },
-      { nom: 'À emporter, 24 et 31 décembre', texte: 'Un menu de 1, 2 ou 3 entrées, plat et dessert à 50, 60 ou 70 €, à composer par téléphone. Commande avant le 20 décembre pour le 24, avant le 27 décembre pour le 31.', textePlaceholder: false, photo: '/photos/fete-emporter.webp' },
+      { nom: 'Noël au restaurant', texte: 'Le midi du 25 décembre, un menu en 5 services à 68 € : maquereau et truite, Saint-Jacques, ris de veau (supplément 12 €), pithivier de biche, sablé « Petit Bateau ». Acompte de 40 € par personne ; accord mets-vins à 7 € le verre.', textePlaceholder: false, photo: '/photos/fete-sapin.webp' },
+      { nom: 'À emporter, 24 et 31 décembre', texte: 'Un menu de 1, 2 ou 3 entrées, plat et dessert à 50, 60 ou 70 €, à composer par téléphone. Commande avant le 20 décembre pour le 24, avant le 27 décembre pour le 31.', textePlaceholder: false, photo: '/photos/fete-emporter.webp' },
       { nom: 'Bon cadeau', texte: 'Un chèque de la valeur de votre choix, ou deux menus au choix. Valable 6 mois, sauf le samedi soir ; retrait au restaurant.', textePlaceholder: false, photo: '/photos/fete-cadeau.webp' },
     ],
   },
