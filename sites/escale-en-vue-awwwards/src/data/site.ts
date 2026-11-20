@@ -5,7 +5,7 @@
 export const site = {
   nom: 'Escale en Vue !',
   nomCourt: 'Escale en Vue',
-  description: 'Terrasse et restaurant saisonniers à Dave, au-dessus de la vallée de la Meuse : petites assiettes fraîches et locales, bières régionales et trappistes, toutes les tables dehors.',
+  description: 'Terrasse et restaurant saisonniers à Dave, au-dessus de la vallée de la Meuse : petites assiettes locales, bières régionales et trappistes, tables dehors.',
   baseline: 'Terrasse et restaurant saisonniers',
   typeCuisine: 'Petites assiettes saisonnières, apéro planchette',
   adresse: { rue: 'Rue de la Rêche-Terre', numero: '21', cp: '5100', commune: 'Dave (Namur)', localite: 'Dave', pays: 'BE' },
