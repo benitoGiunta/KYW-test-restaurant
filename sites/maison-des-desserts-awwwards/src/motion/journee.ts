@@ -110,7 +110,7 @@ export function startJournee() {
       if (heureTxt.textContent !== t) heureTxt.textContent = t;
       setAiguille?.(p * regle);
     }
-    setLumiere?.(p);
+    setLumiere?.(p + derive * 0.7);
   };
 
   const surDefilement = () => {
@@ -127,7 +127,7 @@ export function startJournee() {
 
   // Repos : l'aiguille et la lumière avancent d'elles-mêmes (écoulement lent en aller-retour, sans point mort),
   // le pointeur les pousse de plus ou moins un quart d'heure.
-  const repos = () => appliquer(gsap.utils.wrapYoyo(0, 0.75, idle.t * 0.12) + idle.x * 0.5);
+  const repos = () => appliquer(gsap.utils.wrapYoyo(0, 0.75, idle.t * 0.13) + idle.x * 0.5);
 
   onScroll(() => surDefilement());
 

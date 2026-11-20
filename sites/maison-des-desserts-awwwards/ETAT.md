@@ -1,4 +1,4 @@
-# ETAT : maison-des-desserts, variante awwwards (construction-2 faite)
+# ETAT : maison-des-desserts, variante awwwards (construction-3 faite)
 
 ## Fait (phase 1)
 - Concept « la journée de la maison », système, pages statiques (accueil, carte, histoire, réservation, 404), données réelles, photos du client. Voir DESIGN.md.
@@ -11,13 +11,9 @@
 - Build : `scripts/q.sh mdd-aw2-build pnpm build:site sites/maison-des-desserts-awwwards` passe (5 pages).
 - Tests maison (Playwright, serveur 4471) : 0 erreur console ni requête en échec (bureau, 390, 360, 320) ; aucun débordement à 390/360/320 sur 5 pages ; repos visible dans le hero ; menu : focus piégé, Échap, focus rendu, fermé à la navigation ; réduit : 0 bloc caché, pas de Lenis, cadran masqué. Captures ciblées : `.shots/p2/planche-*.png`.
 
-## Reste (phase 3)
-- Shoot complet (agent captures), lecture de `report.json` : `hover.noHoverChange`, `idleMotion`, `settledMs`, `reduced.*`, contraste (y compris pendant le glissement des fonds), cibles, skip link (faux négatif connu : « Aller au contenu »).
-- LCP et `loaderMs` (sans loader), mesure de la transition `d-90..92`.
-- RAPPORT.md (données douteuses listées ci-dessous), `pnpm index`, cases 35, 44, 45 de DESIGN.md.
+## Fait (phase 3)
+- Corrections : titre, horaires regroupés, doublons de la réservation, cibles tactiles, repos du hero (idleMotion true), survol du logo. Build passe (5 pages), audit 0 FAIL, 1 WARN faux positif.
+- RAPPORT.md écrit. Pas de score jury (pas d'outil Agent).
 
-## Décisions et pièges
-- Pas de loader ni de GL. Le rai de lumière est volontairement discret (soft-light) ; s'il ne suffit pas à `idleMotion`, augmenter l'opacité du dégradé (`.hero__lumiere`) avant la vitesse.
-- Le cadran est absent de l'histoire (repères en années) et de la 404 (un seul repère) : voulu.
-- Carte : les chapitres « Après-midi », « Toute la journée », « À commander » n'ont pas de repère ; l'aiguille interpole de 11 h 30 au pied (18 h). Heure décorative (`aria-hidden`).
-- À signaler en RAPPORT : prix « à confirmer » (chocolat chaud viennois, mignardises 3,50 €) ; « 20/12 et 31/12 fermeture à 17 h » incohérent, seul le 20/12 repris ; libellés « Après-midi », « Toute la journée » éditoriaux ; légendes = champ `sujet` ; « baguette » d'après la photo 15.
+## Reste
+- Critique jury neuf (`/jury`), CLS mobile accueil 0,062 (piste dans RAPPORT.md), lecture à l'œil des `colorOnly`.
