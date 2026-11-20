@@ -28,7 +28,7 @@ def main():
             msg = msg.replace(f"<{cle}>", str(val))
     if "A_REMPLIR" in msg:
         sys.exit("paramètre « A_REMPLIR » dans la campagne (ex. session-mere) : le remplir avant de lancer")
-    reste = sorted(set(re.findall(r"<(slug|phase|campagne|lecons|consigne-lecons|seuil-hebdo|heure-limite|session-mere|session-reporting|vars|extra)>", msg)))
+    reste = sorted(set(re.findall(r"<(slug|phase|campagne|lecons|consigne-lecons|seuil-hebdo|heure-limite|session-mere|session-reporting|vars|extra|branche-publication|budget-stockage|seuil-stockage)>", msg)))
     if reste:
         sys.exit(f"paramètres non remplis : {', '.join(reste)}")
     sys.stdout.write(msg.strip() + "\n")

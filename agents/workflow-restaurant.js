@@ -8,7 +8,7 @@ export const meta = {
     { title: 'Captures', detail: 'shoot + audit par Haiku, résumé QA-<étape>.md' },
     { title: 'Revue', detail: 'texte + fonctionnel, par variante' },
     { title: 'Révision', detail: 'corrections ciblées puis re-revue' },
-    { title: 'Publication', detail: 'build, index, commit, push, vérification Vercel' },
+    { title: 'Publication', detail: 'build, index, commit, push sur la branche de travail, vérification locale (aucun déploiement)' },
     { title: 'Leçons', detail: 'auto-amélioration des prompts' },
   ],
 }

@@ -1,6 +1,6 @@
 ---
 name: publication
-description: Publie les variantes terminées d'un restaurant : build de contrôle, régénération de l'index, commit, push, puis vérification des URL en production sur Vercel.
+description: Clôt les variantes terminées d'un restaurant sur la branche de travail : build de contrôle, régénération de l'index, commit, push, vérification locale. Ne déploie jamais (la branche « publication » est poussée une seule fois par la session de correction).
 model: haiku
 effort: medium
 tools: Read, Glob, Grep, Bash
@@ -16,13 +16,12 @@ F0/F1 restant). Tu ne modifies aucun site.
 1. Pour chaque variante : `scripts/q.sh build node scripts/build-site.mjs sites/<slug>-<variante>` (le script vérifie noindex et pied de
    page KYW ; un échec = ne pas publier cette variante, le signaler).
 2. `node scripts/index.mjs` ; vérifie dans `dist/index.html` que la ligne du restaurant montre les bons liens.
-3. `git add -A && git commit -m "Publie <nom> : <variantes> [publier]" && git push -u origin claude/laughing-wozniak-vxc1fo`
+3. `git add -A && git commit -m "Termine <nom> : <variantes>" && git push -u origin claude/laughing-wozniak-vxc1fo`
    (sur échec réseau, réessaie 4 fois : 2 s, 4 s, 8 s, 16 s). Ne jamais pousser sur une autre branche. Le message de
    commit se termine par les lignes d'attribution en vigueur dans la session.
-4. Attends le déploiement Vercel (lié au dépôt, production = cette branche) : au plus 6 essais espacés de 30 s de
-   `curl -s -o /dev/null -w '%{http_code}' https://kyw-test-restaurant.vercel.app/<slug>/<variante>/` jusqu'à `200`,
-   puis `curl -s https://kyw-test-restaurant.vercel.app/<slug>/<variante>/ | grep -c kyw-footer` ≥ 1. Vérifie aussi
-   `https://kyw-test-restaurant.vercel.app/` (index) contient `/<slug>/<variante>/`.
-   Si le connecteur Vercel est disponible, `list_deployments` sur le projet `kyw-test-restaurant` et confirme l'état
-   `READY` du dernier déploiement ; sinon le `curl` suffit.
-5. Réponds : URL de chaque variante publiée, état du déploiement, ce qui n'a pas été publié et pourquoi.
+4. Vérification locale, sans déploiement : `node .claude/skills/awwwards/scripts/serve.mjs dist --port 4620 &` (PID noté),
+   `scripts/q.sh pub-verif bash -c 'curl -s --retry 15 --retry-connrefused --retry-delay 1 http://127.0.0.1:4620/<slug>/<variante>/ | grep -c kyw-footer'`
+   (≥ 1 par variante) et l'index local `http://127.0.0.1:4620/` contient `/<slug>/<variante>/` ; `kill <PID>`.
+   Ne pousse JAMAIS sur la branche « publication » et n'écris pas « [publier] » : la mise en ligne est faite une seule
+   fois, après la correction du restaurant (`agents/production/3-correction.md`).
+5. Réponds : variantes terminées et vérifiées en local, ce qui n'a pas été terminé et pourquoi.
