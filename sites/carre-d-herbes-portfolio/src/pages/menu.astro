@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const photos = ['/photos/plat-volaille.webp', '/photos/plat-entrees.webp', '/photos/dessert-glaces.webp'].map(photoDe);
+const [momentA, momentB, desserts, regimes] = site.carte;
+const groupes = [momentA, momentB, desserts];
+---
+<Base title="Les menus" description="Les menus de Carré d'herbes à Wépion : lunch en 2 assiettes, menus en 3, 4 et 5 assiettes. Foie gras, biche, Saint-Jacques, ris de veau." >
+  <HeroPage titre="Les menus" chiffre={site.chiffres.menus} sur="Lunch, 3, 4 ou 5 assiettes">
+    <p>Pas de carte à la carte : des menus en assiettes, de {site.menus[0].prix} à {site.menus[3].prix}. Voici les plats du moment.</p>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="menu-titre">
+    <div class="wrap menu__grille">
+      <h2 class="sr-only" id="menu-titre">Les plats du moment</h2>
+      <div class="menu__liste" aria-labelledby="menu-titre">
+        {groupes.map((g) => (
+          <>
+            <p class="petite-cap" data-reveal="fade">{g.categorie}</p>
+            <ul class="menu__plats">
+              {g.plats.map((p) => (
+                <li class="menu__ligne" data-reveal="up">
+                  <span class="menu__numero" aria-hidden="true">·</span>
+                  <span class="menu__nom">{p.nom}{p.prix && <> <strong>{p.prix}</strong></>}</span>
+                  {p.description && <span class="menu__desc">{p.description}</span>}
+                </li>
+              ))}
+            </ul>
+          </>
+        ))}
+      </div>
+      <aside class="menu__cote" data-reveal="fade">
+        <p class="petite-cap">{regimes.categorie}</p>
+        <ul class="menu__options">
+          {regimes.plats.map((p) => <li><span>{p.nom}, {p.description}</span></li>)}
+        </ul>
+        <p class="muted">{site.reservation.note}</p>
+        <p><a class="btn btn--primary" href={u('/reservation/')}>Réserver</a></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--photos" aria-label="Assiettes">
+    <div class="wrap triptyque">
+      {photos.map((p, i) => (
+        <figure class:list={['triptyque__item', `triptyque__item--${i}`]} data-reveal="clip" data-delay={String(i * 0.1)}>
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+---
+<Base title="Réservation" description={`Réserver une table à Carré d'herbes, ${site.adresse.commune} : par téléphone au ${site.telephone}, du mercredi au dimanche dès 10h.`}>
+  <HeroPage titre="Réserver" sur="Par téléphone, du mercredi au dimanche">
+    <p>{site.reservation.note}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={telHref()}>Appeler le {site.telephone}</a>
+      <a class="btn" href={site.reservation.url} rel="noopener">Formulaire de contact</a>
+    </div>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="services-titre">
+    <div class="wrap resa">
+      <div class="resa__horaires" data-reveal="fade">
+        <h2 class="petite-cap" id="services-titre">Services</h2>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+        <p class="muted resa__note">Dernière commande à 13h15 le midi et à 20h15 le soir. Le lunch est aussi servi le jeudi soir, sur réservation.</p>
+      </div>
+      <div class="resa__infos" data-reveal="fade">
+        <h2 class="petite-cap">Adresse</h2>
+        <address>{adresseLigne()}<br />Bord de Meuse. Parking privé de 10 places, accès Route de Saint-Gérard.</address>
+        <p><a class="lien" href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(adresseLigne())}`} rel="noopener">Itinéraire</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
