@@ -33,3 +33,5 @@
 ## Phase 3 (QA)
 - Build final passe, `pnpm index` fait. Aucune casse trouvée ; violation axe 404 = 404 générique du serveur de test, pas le site. RAPPORT.md écrit.
 - Non fait : sweep sloplint, gates jugées, finish review, log theme.mjs.
+
+Révision 1 terminée (F1-1, F1-2, F2-1 à F2-3 corrigés) : voir REVISION-1.md.

@@ -1,8 +1,10 @@
 ---
 import { resto, navLiens } from '../data/site';
+interface Props { photos?: boolean }
+const { photos = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
-<footer class="pied">
+<section class="pied" aria-label="Coordonnées">
   <div class="container pied__in">
     <p class="pied__nom">El Greco</p>
     <address class="pied__adresse">
@@ -15,6 +17,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       <a href={resto.facebook} rel="noopener">Facebook</a>
       <a href={resto.instagram} rel="noopener">Instagram</a>
     </nav>
-    <p class="pied__credits" data-credits>Photographies d’ambiance : banque d’images (Pexels), à remplacer par celles du restaurant.</p>
+    {photos && <p class="pied__credits" data-credits>Photographies d’ambiance : photographies de stock (Pexels), pas le restaurant.</p>}
   </div>
-</footer>
+</section>
