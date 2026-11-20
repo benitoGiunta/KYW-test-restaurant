@@ -22,3 +22,8 @@ Audit, deal Squeeze, comps, DESIGN.md, contenu (115 plats), 6 routes + 404, phot
 - NOTE 58 de sloplint (h1 « 29 mots » = commentaire JSX Hallmark dans le h1, paragraphes de 13-14 mots sur /carte/ et /groupes/) : faux positif du commentaire ; paragraphes à raccourcir en phase 3 si souhaité.
 - Date : le champ `type="date"` s'affiche selon la langue du navigateur (mm/dd/yyyy en headless).
 - Le jour courant utilise l'heure de Bruxelles ; le fuseau du serveur de captures peut changer le jour surligné.
+
+# Phase 3 (QA) terminée
+- sloplint rendu 0 FAIL, 0 REFLEX ouvert (8 waivers en tête de page.css) ; corrections : focus du lien d'évitement, contraste de la note du formulaire, téléphone à 320 px, débordement /carte/ à 375, en-têtes de page.
+- Build et `pnpm index` passés ; RAPPORT.md écrit.
+- Reste : finish review par sous-agent, entrée de log Hallmark (`$LOG`) et cases DESIGN.md de la checklist de phase 3 non faites ; WARN kept sur les pages d'origine non rendues.

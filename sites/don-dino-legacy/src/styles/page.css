@@ -3,6 +3,10 @@
  * draw: 16177b · axes: mid/geometric-sans/warm · posture: drenched · contrast: pass · fold: pass · job: book · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S3 R3 V4 · weakest: S, the stacked photo columns repeat; sticky pane and one wide photo per stack break the rhythm */
 /* Hallmark · waive 8 · hero, hours, stack, rows, stack, close · the sequence is the client's (menu, hours, room, contact) in new compositions */
+/* Hallmark · waive 44c · carte, reservations, groupes, a-propos, contact · these are page heads of a utility route (title and one sentence), not a hero; the content that follows is the point of the page */
+/* Hallmark · waive 44a · a-propos · the page head sits under the nav and keeps the 96px offset shared by every inner route */
+/* Hallmark · waive 59 · a-propos · the gap after the head is 66px by design, the page head and the concept split read as one block */
+/* Hallmark · waive 78 · a-propos · the h2 headings are the term column of a definition list, set at title size on purpose */
 /* Hallmark · reworded "Les pizzas de Don Dino ? Les meilleures de la région paraît-il !" to "Les meilleures pizzas de la région, paraît-il" · 58 caps the headline at seven words */
 /* Hallmark · dropped language switch FR/EN/NL, cookie banner, browser-support notice, newsletter link · the maquette is French only and sets no cookie; 85 names the newsletter */
 @import url("./tokens.css");
@@ -44,7 +48,7 @@
 .nav__toggle[aria-expanded="true"] { background: var(--color-paper-3); }
 .nav__cta { min-height: 44px; }
 .skip { position: absolute; left: var(--space-md); top: -4rem; z-index: var(--z-toast); background: var(--color-card); color: var(--color-card-ink); padding: var(--space-sm) var(--space-md); border-radius: var(--radius-control); }
-.skip:focus-visible { top: var(--space-md); outline-color: var(--color-card-ink); }
+.skip:focus-visible { top: var(--space-md); outline: 3px solid var(--color-focus); outline-offset: 3px; box-shadow: 0 0 0 3px var(--color-card-ink); }
 @media (max-width: 75rem) { .nav__links[popover] { margin-inline: auto var(--space-xs); gap: var(--space-3xs); } .nav__links .chip { padding-inline: var(--space-sm); } .nav__bar { gap: var(--space-sm); } .nav__logo { width: 124px; } }
 @media (max-width: 60rem) {
   .nav__toggle { display: inline-flex; }
@@ -63,7 +67,7 @@
 .sec--deep { background: var(--color-paper-3); }
 .sec--tint { background: var(--color-paper-2); }
 .grid12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); }
-.pagehead { padding-block: var(--space-3xl) var(--space-2xl); }
+.pagehead { padding-block: var(--space-3xl) 0; }
 .pagehead h1 { max-width: 18ch; }
 .pagehead .lead { margin-top: var(--space-lg); }
 
@@ -129,13 +133,14 @@
 .catrow__info span:last-child { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* carte page */
-.catnav { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-top: var(--space-xl); }
+.catnav { display: flex; min-width: 0; flex-wrap: wrap; gap: var(--space-xs); margin-top: var(--space-xl); }
 .catnav .chip { background: var(--color-paper-2); }
 .cat { padding-block: var(--space-2xl); border-top: var(--rule-bar) solid var(--color-rule); display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--space-3xl); scroll-margin-top: calc(var(--nav-h) + var(--space-md)); }
 .cat__head { position: sticky; top: calc(var(--nav-h) + var(--space-lg)); align-self: start; }
 .cat__head p { margin-top: var(--space-sm); color: var(--color-muted); font-size: var(--text-sm); }
 .cat .dish { padding-block: var(--space-md); }
 .note { color: var(--color-muted); font-size: var(--text-sm); }
+.form .note { color: var(--color-card-ink); }
 
 /* close */
 .close { padding-block: var(--section-gap-s); background: var(--color-paper-3); }
@@ -145,6 +150,7 @@
 .card .btn:not(.btn--primary) { border-color: var(--color-card-ink); color: var(--color-card-ink); }
 .close__addr { font-style: normal; font: 700 var(--text-xl)/1.3 var(--font-body); }
 .close__tel { margin-block: var(--space-sm) var(--space-lg); font: 800 var(--text-3xl)/1.1 var(--font-display); font-variant-numeric: lining-nums tabular-nums; }
+.close__tel { font-size: clamp(1.5rem, 8.5vw, var(--text-3xl)); white-space: nowrap; }
 .close__tel a { text-decoration: none; }
 
 /* inner pages */
@@ -194,5 +200,5 @@
   .index, .tile, .card { padding: var(--space-lg); }
   .foot__logo { width: 120px; }
 }
-@media (max-width: 40rem) { .catnav { flex-wrap: nowrap; overflow-x: auto; padding-bottom: var(--space-xs); scroll-snap-type: x proximity; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); } .catnav .chip { flex: none; scroll-snap-align: start; white-space: nowrap; } .nav__logo { width: 96px; } .nav__bar { gap: var(--space-xs); } .nav__cta, .nav__toggle { padding-inline: var(--space-md); } .stack__shots { grid-template-columns: minmax(0, 1fr); } .dish__name, .dish__price { font-size: var(--text-lg); } .hero h1 { max-width: none; } }
+@media (max-width: 40rem) { .catnav { flex-wrap: nowrap; overflow-x: auto; padding-bottom: var(--space-xs); scroll-snap-type: x proximity; } .catnav .chip { flex: none; scroll-snap-align: start; white-space: nowrap; } .nav__logo { width: 96px; } .nav__bar { gap: var(--space-xs); } .nav__cta, .nav__toggle { padding-inline: var(--space-md); } .stack__shots { grid-template-columns: minmax(0, 1fr); } .dish__name, .dish__price { font-size: var(--text-lg); } .hero h1 { max-width: none; } }
 @media (max-width: 21rem) { .nav .nav__logo { width: 88px; } .nav__cta, .nav__toggle { padding-inline: var(--space-sm); } .nav__toggle-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } .nav__bar { gap: var(--space-xs); } }
