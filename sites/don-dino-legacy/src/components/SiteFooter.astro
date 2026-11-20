@@ -1,0 +1,22 @@
+---
+import KywFooter from '@kyw/footer';
+import { resto, nav } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const logo = `url(${base}photos/logo-don-dino.png)`;
+---
+<footer class="foot">
+  <div class="container foot__grid">
+    <span class="nav__logo foot__logo" style={`--logo: ${logo}`} role="img" aria-label="Don Dino"></span>
+    <p class="foot__colophon">
+      {resto.nom}, brasserie, restaurant et pizzeria, {resto.adresse.rue}, {resto.adresse.cp} {resto.adresse.commune}.
+      Téléphone <a href={resto.telHref}>{resto.tel}</a>. Les horaires sont sur la <a href={`${base}contact/`}>page contact</a>.
+      Retrouvez-nous sur <a href={resto.facebook} rel="noopener">Facebook</a>, ou
+      <a href={resto.recrutement} rel="noopener">rejoignez l’équipe</a> et faites la <a href={resto.visiteVirtuelle} rel="noopener">visite virtuelle</a> sur le site d’origine.
+    </p>
+    <ul class="foot__links">
+      {nav.map((l) => <li><a href={`${base}${l.href}`}>{l.label}</a></li>)}
+    </ul>
+    <p class="foot__credits" data-credits>Photographies : Don Dino, dondino.be.</p>
+  </div>
+  <KywFooter base={import.meta.env.BASE_URL} />
+</footer>

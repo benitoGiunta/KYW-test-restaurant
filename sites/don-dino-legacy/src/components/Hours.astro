@@ -1,0 +1,14 @@
+---
+import { horaires } from '../data/site';
+---
+<dl class="schedule">
+  {horaires.map((h) => (
+    <div class="schedule__row" data-day={h.jour.toLowerCase()}>
+      <dt>{h.jour}</dt>
+      <dd>
+        <span><time datetime={h.midi[0]}>{h.midi[0]}</time> à <time datetime={h.midi[1]}>{h.midi[1]}</time></span>
+        <span><time datetime={h.soir[0]}>{h.soir[0]}</time> à <time datetime={h.soir[1]}>{h.soir[1]}</time></span>
+      </dd>
+    </div>
+  ))}
+</dl>

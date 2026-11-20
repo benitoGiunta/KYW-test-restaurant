@@ -1,0 +1,39 @@
+---
+import Nav from '../components/Nav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { resto } from '../data/site';
+interface Props { title: string; description: string; page: string }
+const { title, description, page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, telephone: resto.tel, servesCuisine: 'Italienne, pizzeria',
+  address: { '@type': 'PostalAddress', streetAddress: 'Chaussée de Marche 826', postalCode: '5100', addressLocality: 'Naninne (Namur)', addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: resto.geo.lat, longitude: resto.geo.lon },
+  openingHours: ['Mo-Th 12:00-14:30', 'Mo-Th 18:00-22:30', 'Fr-Sa 12:00-14:30', 'Fr-Sa 18:00-23:30', 'Su 12:00-14:30', 'Su 18:00-22:30'],
+};
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={`${base}photos/logo-don-dino.png`} type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@800&family=Manrope:wght@500;700&display=swap" rel="stylesheet" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <style is:global>@import "../styles/page.css";</style>
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Nav page={page} />
+    <main id="contenu"><slot /></main>
+    <SiteFooter />
+  </body>
+</html>

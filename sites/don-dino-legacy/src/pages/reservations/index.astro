@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { resto } from '../../data/site';
+---
+<Base page="reservations" title="Réserver une table, Don Dino" description="Réservez une table chez Don Dino à Naninne, en ligne ou au +32 81 74 15 60.">
+  <section class="pagehead">
+    <div class="container">
+      <h1>Réserver une table</h1>
+      <p class="lead">Réservez en ligne ou par téléphone au <a class="link" href={resto.telHref}>{resto.tel}</a>.</p>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="container split split--a">
+      <div class="prose">
+        <h2>Une demande en ligne</h2>
+        <p>Faites une demande de réservation : le restaurant vous répond.</p>
+        <div class="actions"><a class="btn btn--primary" href={resto.reservationEnLigne} rel="noopener">Devis et réservation</a><a class="btn btn--ghost" href={resto.telHref}>Appeler</a></div>
+        <Photo id="pizza-planche" w={1600} h={1066} alt="Pizza garnie d’aubergine et de poivron sur une planche en bois" ratio="3 / 2" sizes="(min-width: 60rem) 40vw, 100vw" />
+      </div>
+      <form class="card form form--card" data-endpoint="" method="post" action="#" aria-labelledby="f-t">
+        <h2 id="f-t" style="font-size:var(--text-xl)">Devis et réservation</h2>
+        <div class="form__row">
+          <div class="field"><label for="f-nom">Nom</label><input id="f-nom" name="nom" autocomplete="name" required /></div>
+          <div class="field"><label for="f-tel">Téléphone</label><input id="f-tel" name="telephone" type="tel" autocomplete="tel" required /></div>
+        </div>
+        <div class="form__row">
+          <div class="field"><label for="f-date">Date</label><input id="f-date" name="date" type="date" required /></div>
+          <div class="field"><label for="f-pers">Personnes</label><input id="f-pers" name="personnes" type="number" min="1" inputmode="numeric" required /></div>
+        </div>
+        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message"></textarea></div>
+        <div class="actions"><button class="btn btn--primary" type="submit">Envoyer la demande</button></div>
+        <p class="note">Formulaire illustratif : l’envoi n’est pas branché dans cette maquette.</p>
+      </form>
+    </div>
+  </section>
+</Base>

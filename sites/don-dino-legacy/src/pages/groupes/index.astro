@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import Reservation from '../../components/Reservation.astro';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const occasions = ['Anniversaires', 'Fêtes', 'Mariages', 'Cocktails'];
+---
+<Base page="groupes" title="Groupes et privatisation, Don Dino" description="Un lieu privatisable à Namur pour anniversaires, fêtes, mariages et cocktails : demandez un devis à Don Dino.">
+  <section class="pagehead">
+    <div class="container">
+      <h1>Groupes et privatisation</h1>
+      <p class="lead">Un lieu unique et privatisable à Namur pour vos anniversaires, fêtes, mariages et cocktails.</p>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="container split">
+      <Photo id="salle-patron" w={1600} h={1123} alt="Un homme en chemise blanche tient une pizza dans la salle, des clients attablés derrière lui" ratio="4 / 3" pos="70% 40%" eager sizes="(min-width: 60rem) 48vw, 100vw" />
+      <div class="prose">
+        <h2>Privatisez notre restaurant</h2>
+        <p>Notre espace peut accueillir vos événements dans un cadre convivial et privatisé. Présentez-nous votre projet ou demandez un devis personnalisé.</p>
+        <div class="actions"><a class="btn btn--primary" href={`${base}reservations/`}>Devis et réservation</a></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec sec--deep" aria-labelledby="occ-t">
+    <div class="container">
+      <h2 id="occ-t" style="margin-bottom:var(--space-2xl)">Pour quelles occasions</h2>
+      <ul class="facts" style="list-style:none;padding:0;margin:0;grid-template-columns:repeat(4,minmax(0,1fr))">
+        {occasions.map((o) => <li class="tile"><h3>{o}</h3></li>)}
+      </ul>
+    </div>
+  </section>
+  <Reservation />
+</Base>

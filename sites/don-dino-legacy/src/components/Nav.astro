@@ -1,0 +1,19 @@
+---
+import { nav } from '../data/site';
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const logo = `url(${base}photos/logo-don-dino.png)`;
+---
+<header class="nav">
+  <div class="container nav__bar">
+    <a class="nav__brand" href={base} aria-label="Don Dino, accueil">
+      <span class="nav__logo" style={`--logo: ${logo}`} role="img" aria-label="Don Dino"></span>
+    </a>
+    <nav class="nav__links" aria-label="Navigation principale">
+      {nav.map((l) => (
+        <a class="chip" href={`${base}${l.href}`} aria-current={page === l.href.replace('/', '') ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </nav>
+    <a class="btn btn--primary nav__cta" href={`${base}reservations/`}>Réserver</a>
+  </div>
+</header>

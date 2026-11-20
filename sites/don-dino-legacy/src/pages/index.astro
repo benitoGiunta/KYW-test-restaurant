@@ -1,0 +1,108 @@
+---
+import Base from '../layouts/Base.astro';
+import Hours from '../components/Hours.astro';
+import Photo from '../components/Photo.astro';
+import Reservation from '../components/Reservation.astro';
+import { cat, fmtPrix, equipements, resto, carte } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const choix = ['Margherita', 'Prosciutto', 'Capri', 'Diavola', 'Sicilia', 'Pescatora'];
+const pizzas = cat('Pizzas');
+const vitrine = choix.map((n) => pizzas.plats.find((p) => p.nom === n)).filter(Boolean) as typeof pizzas.plats;
+const rubriques = ['Pizzas', 'Pâtes', 'Entrées chaudes', 'Poissons', 'Veau', 'Bœuf'].map((n) => carte.find((c) => c.categorie === n)!);
+const plur = (n: number) => `${n} plats`;
+---
+<Base page="" title="Don Dino, brasserie pizzeria à Naninne (Namur)" description="Brasserie, restaurant et pizzeria à Naninne : spécialités italiennes, ouvert 7 jours sur 7, midi et soir, patron en salle.">
+  <section class="hero" aria-labelledby="hero-t">
+    <div class="container hero__grid">
+      <div>
+        <h1 id="hero-t">{/* Hallmark, reworded "Les pizzas de Don Dino ? Les meilleures de la région paraît-il !" to "Les meilleures pizzas de la région, paraît-il" · 58 */}Les meilleures pizzas de la région, paraît-il</h1>
+        <p class="lead">{resto.baseline}</p>
+        <div class="actions">
+          <a class="btn btn--primary" href={`${base}reservations/`}>Réserver une table</a>
+          <a class="btn btn--ghost" href={resto.telHref}>{resto.tel}</a>
+        </div>
+      </div>
+      <section class="index" aria-labelledby="idx-t">
+        <h2 class="index__title" id="idx-t">Les pizzas de la carte, de {fmtPrix(pizzas.min)} à {fmtPrix(pizzas.max)}</h2>
+        <ul class="rows">
+          {vitrine.map((p) => (
+            <li class="dish">
+              <span class="dish__name">{p.nom}</span>
+              <span class="dish__price num">{fmtPrix(p.prix)}</span>
+              {p.description && <span class="dish__desc">{p.description}</span>}
+            </li>
+          ))}
+        </ul>
+        <p class="index__more"><a class="link" href={`${base}carte/#pizzas`}>Voir la carte complète</a></p>
+      </section>
+    </div>
+  </section>
+
+  <section class="sec sec--tint" id="horaires" aria-labelledby="h-t">
+    <div class="container hours__grid">
+      <div>
+        <p class="figure" aria-hidden="true">7<span class="figure__unit">jours sur 7</span></p>
+        <h2 id="h-t" class="visually-hidden">Horaires d’ouverture, 7 jours sur 7, midi et soir</h2>
+      </div>
+      <div>
+        <Hours />
+        <p class="schedule__note">Service du midi et du soir, le vendredi et le samedi jusqu’à 23:30.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="table-t">
+    <div class="container stack">
+      <div class="stack__pane">
+        <h2 id="table-t">Du four à la table</h2>
+        <p class="lead">Pizzas, pâtes, escalopes : de l’italien à la cuisine française.</p>
+        <div class="actions"><a class="btn btn--ghost" href={`${base}carte/`}>Voir la carte</a></div>
+      </div>
+      <div class="stack__shots">
+        <Photo class="wide" id="four" w={1600} h={1070} alt="Pizzaïolo enfournant une pizza dans un four à gaz" ratio="16 / 10" pos="40% 50%" caption="Le four de la pizzeria, service du midi et du soir." sizes="(min-width: 60rem) 62vw, 100vw" />
+        <Photo id="jambon-cru" w={1600} h={1011} alt="Pizza au jambon cru, tomate et roquette" ratio="4 / 3" sizes="(min-width: 60rem) 30vw, 100vw" />
+        <Photo id="spaghetti" w={1600} h={960} alt="Assiette de spaghetti persillés aux lardons" ratio="4 / 3" sizes="(min-width: 60rem) 30vw, 100vw" />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--deep" aria-labelledby="carte-t">
+    <div class="container">
+      <div class="head-split">
+        <h2 id="carte-t">La carte en douze rubriques</h2>
+        <p class="lead">{carte.reduce((n, c) => n + c.plats.length, 0)} plats, des potages aux viandes grillées.</p>
+      </div>
+      <ul class="rows">
+        {rubriques.map((c) => (
+          <li>
+            <a class="catrow" href={`${base}carte/#${c.slug}`}>
+              <h3>{c.categorie}</h3>
+              <div class="catrow__info"><span>{plur(c.plats.length)}</span><span class="num">de {fmtPrix(c.min)} à {fmtPrix(c.max)}</span></div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="salle-t">
+    <div class="container stack stack--b">
+      <div class="stack__pane">
+        <h2 id="salle-t">La salle et le bar</h2>
+        <p class="lead">Une brasserie pizzeria spacieuse, avec une terrasse pour les beaux jours.</p>
+        <div class="actions"><a class="btn btn--ghost" href={resto.visiteVirtuelle} rel="noopener">Visite virtuelle</a></div>
+      </div>
+      <div class="stack__shots">
+        <Photo class="wide" id="salle" w={1600} h={1060} alt="Salle vue du comptoir, tables dressées" ratio="16 / 10" caption="La salle, vue depuis le comptoir." sizes="(min-width: 60rem) 58vw, 100vw" />
+        <Photo id="bar" w={1600} h={1584} alt="Le bar : tireuses à bière, serveur au second plan" ratio="1 / 1" pos="50% 60%" sizes="(min-width: 60rem) 28vw, 100vw" />
+        <div class="tile">
+          <h3>Sur place</h3>
+          <ul class="list">{equipements.map((e) => <li>{e}</li>)}</ul>
+          <p class="sub">Paiement par Mastercard, Visa, carte de débit ou espèces.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Reservation />
+</Base>

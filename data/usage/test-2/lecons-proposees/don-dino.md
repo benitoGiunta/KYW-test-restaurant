@@ -1,1 +1,2 @@
 - 2026-11-20 · don-dino · awwwards phase 1 : copier engine, engine.css, kyw/ et menu.ts d'un site livré gagne ~10 réponses ; un script .mjs doit vivre dans le dépôt (par ex. .logs/) pour résoudre sharp et playwright, pas dans le scratchpad.
+- 2026-11-20 · don-dino · legacy (phase 1) : `grep -P` sans locale UTF-8 voit des tirets cadratins dans « À » et « € » (octets E2 80) ; contrôler la gate 19 avec python3 ou LC_ALL=C.UTF-8.

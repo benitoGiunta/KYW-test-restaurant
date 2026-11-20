@@ -1,0 +1,22 @@
+---
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<section class="close" id="reserver" aria-labelledby="close-t">
+  <div class="container close__grid">
+    <div class="close__text">
+      <h2 id="close-t">Une table chez Don Dino</h2>
+      <p class="lead">Réservez en ligne ou par téléphone.</p>
+    </div>
+    <div class="card close__card">
+      <address class="close__addr">
+        <strong>{resto.adresse.rue}</strong><br />{resto.adresse.cp} {resto.adresse.commune}
+      </address>
+      <p class="close__tel"><a href={resto.telHref}>{resto.tel}</a></p>
+      <div class="actions">
+        <a class="btn btn--primary" href={`${base}reservations/`}>Réserver une table</a>
+        <a class="btn btn--ghost" href={resto.itineraire} rel="noopener">Itinéraire</a>
+      </div>
+    </div>
+  </div>
+</section>

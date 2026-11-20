@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import Reservation from '../../components/Reservation.astro';
+import { carte, fmtPrix, nbPlats } from '../../data/site';
+---
+<Base page="carte" title="La carte, Don Dino à Naninne" description="La carte de Don Dino : pizzas, pâtes, entrées, poissons, viandes, de la cuisine italienne et française.">
+  <section class="pagehead">
+    <div class="container">
+      <h1>La carte</h1>
+      <p class="lead">{nbPlats} plats en {carte.length} rubriques, prix en euros. Desserts et boissons : demandez à la salle.</p>
+      <nav class="catnav" aria-label="Rubriques de la carte">
+        {carte.map((c) => <a class="chip" href={`#${c.slug}`}>{c.categorie}</a>)}
+      </nav>
+    </div>
+  </section>
+  <div class="container">
+    {carte.map((c) => (
+      <section class="cat" id={c.slug} aria-labelledby={`t-${c.slug}`}>
+        <div class="cat__head">
+          <h2 id={`t-${c.slug}`}>{c.categorie}</h2>
+          <p>{c.plats.length} plats, de {fmtPrix(c.min)} à {fmtPrix(c.max)}</p>
+          {c.categorie === 'Bœuf' && <p>Le Mixed grilled est facturé par couvert, pour deux personnes au minimum.</p>}
+        </div>
+        <ul class="rows">
+          {c.plats.map((p) => (
+            <li class="dish">
+              <span class="dish__name">{p.nom}</span>
+              <span class="dish__price num">{fmtPrix(p.prix)}</span>
+              {p.description && <span class="dish__desc">{p.description}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+  <Reservation />
+</Base>

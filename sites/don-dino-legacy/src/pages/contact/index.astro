@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hours from '../../components/Hours.astro';
+import { resto, equipements, paiements } from '../../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="contact" title="Contact et informations pratiques, Don Dino" description="Adresse, téléphone, horaires, parking et paiements de Don Dino, Chaussée de Marche 826 à Naninne (Namur).">
+  <section class="pagehead">
+    <div class="container">
+      <h1>Contact et infos pratiques</h1>
+      <p class="lead">Chaussée de Marche 826, 5100 Naninne (Namur).</p>
+      <div class="actions" style="margin-top:var(--space-xl)">
+        <a class="btn btn--primary" href={resto.telHref}>{resto.tel}</a>
+        <a class="btn btn--ghost" href={resto.itineraire} rel="noopener">Itinéraire</a>
+      </div>
+    </div>
+  </section>
+  <section class="sec sec--tint" aria-labelledby="ho-t">
+    <div class="container hours__grid">
+      <h2 id="ho-t">Heures d’ouverture</h2>
+      <Hours />
+    </div>
+  </section>
+  <section class="sec">
+    <div class="container facts">
+      <div class="tile"><h3>Sur place</h3><ul class="list">{equipements.map((e) => <li>{e}</li>)}</ul></div>
+      <div class="tile"><h3>Paiement</h3><ul class="list">{paiements.map((e) => <li>{e}</li>)}</ul></div>
+      <div class="tile"><h3>Nous contacter</h3><p>Vous pouvez nous joindre au <a class="link" href={resto.telHref}>{resto.tel}</a>, ou <a class="link" href={`${base}reservations/`}>réserver une table</a>. Nous sommes aussi sur <a class="link" href={resto.facebook} rel="noopener">Facebook</a>.</p></div>
+    </div>
+  </section>
+</Base>
