@@ -37,3 +37,10 @@
 - Fait : REVUE-1.md (méthode, scores, findings avec preuves). Mesures propres car QA-revue1.md absent (shoot « browser closed »).
 - Reste (réviseur) : F1-1 `.cadre picture` à remplir (site.css:30), F1-2 `.nappe .cta--contour` (site.css:23), F2-1 `.espaces__bande` accessible, F2-2/F2-3 métatexte et procédure, F2-4 marges mobile.
 - Pièges : un fondu de reveal (800 ms) ressemble au bloc brun ; le vrai défaut persiste après 2,2 s.
+
+## Révision 1 (terminée)
+F1-1, F1-2, F2-1 à F2-7 corrigés, voir REVISION-1.md. Dist reconstruit.
+
+## Relecture passe 2 (relecteur-site) : A_CORRIGER, 0 F0, 0 F1, 1 F2, 3 F3
+- Fait : REVUE-2.md ; 9 corrections sur 9 vérifiées, une crée une régression axe (F2-1 : `role="region"` sur le `ul` de `.espaces__bande`, index.astro:92 : passer sur un `div` enveloppant).
+- Reste : F2-1, puis F3 (U+00A0, hero 1280x720, doublon réservation/pied).
