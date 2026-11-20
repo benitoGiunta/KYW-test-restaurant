@@ -1,4 +1,4 @@
-# ETAT brasserie-edgard-awwwards, construction-2 (20/11/2026)
+# ETAT brasserie-edgard-awwwards, construction-3 (20/11/2026)
 
 ## Fait (phase 1)
 - Brief, 3 concepts, Concept Card « Le cadran », système, checklist 1 à 18 (DESIGN.md). Scaffold Astro 5, engine verbatim, 5 pages, contenu réel (71 plats, 23 photos du client), favicon, og.png.
@@ -14,7 +14,13 @@
 - Contrôle Playwright (1440, 390, réduit ; 5 pages) : 0 erreur console, 0 requête échouée, `scrollWidth` = largeur, 0 bloc caché dans le premier écran, menu mobile OK (Échap, retour du focus), navigation avec rideau OK.
 - Build OK (`scripts/q.sh build pnpm build:site sites/brasserie-edgard-awwwards`). Checklist 19 à 47 dans DESIGN.md.
 
-## Reste (phase 3)
+## Fait (phase 3)
+- QA corrigée : cibles 24 px, survols (logo, tel, liens courants), descriptions < 160, audit 0 FAIL, captures ciblées des 5 pages sans erreur. RAPPORT.md écrit. Build final OK.
+
+## Reste (non fait en phase 3)
+- Passe jury indépendante (outil Agent), relecture à l'œil des contrastNeedsReview, test du statut à plusieurs instants, og.png à revérifier.
+
+## Ancien reste (phase 2)
 - Shoot complet par l'agent captures, puis : `idleMotion` (trotteuse assez grande ? sinon épaissir la pastille), `settledMs`, `hover.noHoverChange`, contraste, clavier, cibles (`cta--petit` 40 px), LCP (h1 en `data-intro`).
 - Tester le statut à plusieurs instants (`page.clock.install` + `timezoneId`) : avant 10 h, 16 h en semaine, 16 h le samedi, après 22 h 30.
 - Titre mobile : `left` 13 px < gutter 16 signalé en phase 1, à remesurer. Planche de la carte mobile non vue.
