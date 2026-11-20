@@ -35,3 +35,6 @@ Pas de loader, pas de GL, repos du hero (respiration des cadres, pause hors écr
 
 ## Leçons structurelles
 Voir data/usage/test-2/lecons-proposees/el-greco.md.
+
+## À fournir (révision 1)
+Photos du lieu, des plats et de Bouge : les images actuelles sont des illustrations Pexels légendées « pas le restaurant ».
