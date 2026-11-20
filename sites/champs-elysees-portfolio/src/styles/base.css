@@ -111,11 +111,11 @@ html.motion .obj.is-flottant .obj__svg { animation: flotte 4.5s ease-in-out infi
 .tirage.is-drag { cursor: grabbing; box-shadow: 0 30px 50px rgb(31 26 23 / 0.3); }
 
 /* La table (signature) */
-.table { position: relative; min-height: 100svh; overflow: clip; }
-.table__titre { position: absolute; inset: auto 0; top: 50%; translate: 0 -50%; z-index: 1; text-align: center; pointer-events: none; }
+.table { position: relative; min-height: 100svh; overflow: clip; padding-bottom: calc(var(--u) * 4); }
+.table__titre { position: relative; z-index: 3; padding-top: calc(var(--u) * 7); text-align: center; pointer-events: none; }
 .table__titre h2 { font-size: var(--t-xl); color: var(--c-lin); }
 .table__titre p { font-family: var(--f-display); font-style: italic; font-size: var(--t-m); margin-top: 0.4em; color: var(--c-lin); }
-.table__scene { position: relative; z-index: 2; height: 100svh; }
+.table__scene { position: relative; z-index: 2; height: max(100svh, 46rem); margin-top: calc(var(--u) * 2); }
 .table__scene .tirage { position: absolute; left: var(--x); top: var(--y); rotate: var(--r); --w: clamp(11rem, 15vw, 15rem); transition: rotate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s; }
 .table__scene .tirage:hover { rotate: 0deg; }
 .table__scene .tirage.is-drag { rotate: 0deg; }
@@ -128,6 +128,12 @@ html.motion .badge svg { animation: tourne 14s linear infinite; }
 /* La main reste petite au centre : `.badge svg` (absolu, 100 %) l'agrandissait à toute la pastille (REVISION-1, F2-6). */
 .badge .badge__main { position: relative; inset: auto; width: 2.2rem; height: 2.2rem; }
 .table__rail { display: none; }
+.table__reset { position: absolute; left: var(--gutter); bottom: calc(var(--u) * 3); z-index: 3; background: var(--c-paille); }
+.table__reset[hidden] { display: none; }
+html.motion .table__reset:not([hidden]) { animation: pose 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes pose { from { opacity: 0; translate: 0 14px; } }
+.badge { transition: opacity 0.4s; }
+.badge.is-vu { opacity: 0; }
 
 /* Le menu : carte blanche */
 /* La carte part d'un scale > 1 (data-reveal="scale") : avant sa révélation elle débordait de 10 px en 390 px. */
@@ -138,7 +144,8 @@ html.motion .badge svg { animation: tourne 14s linear infinite; }
 .cat__titre svg { width: 2.2rem; height: 2.2rem; flex: 0 0 auto; color: var(--c-canard); }
 .cat__note { font-size: var(--t-s); color: var(--c-muted); margin: -0.6em 0 1em; }
 .plat { display: flex; align-items: baseline; gap: 0.5em; padding-block: 0.55em; }
-.plat__nom { font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: var(--t-s); }
+.carte__grille > * { min-width: 0; }
+.plat__nom { min-width: 0; overflow-wrap: anywhere; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: var(--t-s); }
 .plat__desc { display: block; font-weight: 500; text-transform: none; letter-spacing: 0; font-size: var(--t-s); color: var(--c-muted); }
 .plat__points { flex: 1 1 auto; min-width: 1.5rem; border-bottom: 2px dotted var(--c-line); translate: 0 -0.35em; }
 .plat__prix { flex: 0 0 auto; min-width: 2.6rem; padding: 0.15em 0.6em; border: 2px solid var(--c-corail); border-radius: var(--pill); font-weight: 700; font-size: var(--t-s); text-align: center; }
@@ -189,11 +196,11 @@ html.motion .avis__mot { --flou: 14px; }
 /* Galerie et rails */
 .rail { display: flex; gap: calc(var(--u) * 2); overflow-x: auto; scroll-snap-type: x mandatory; padding: calc(var(--u) * 2) var(--gutter) calc(var(--u) * 3); margin-inline: calc(-1 * var(--gutter)); scrollbar-width: thin; }
 .rail > * { flex: 0 0 auto; scroll-snap-align: center; }
-.grille-photos { display: grid; gap: calc(var(--u) * 3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+.grille-photos { overflow-x: clip; padding-block: 0.5rem; display: grid; gap: calc(var(--u) * 3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
 .grille-photos .tirage { width: 100%; cursor: default; rotate: var(--r, 0deg); transition: rotate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .grille-photos .tirage:hover { rotate: 0deg; }
 /* Un tirage incliné sur toute la largeur déborde de 1 px en 390 px : la grille garde une gouttière intérieure en mobile. */
-@media (max-width: 767px) { .grille-photos { padding-inline: 0.5rem; } }
+@media (max-width: 767px) { .grille-photos { padding-inline: 1.25rem; } }
 
 /* Hero de page intérieure */
 .hero--page { min-height: 0; padding-block: calc(var(--u) * 8) calc(var(--u) * 6); }
@@ -257,14 +264,14 @@ html.motion .avis__mot { --flou: 14px; }
   .hero__slogan { font-size: clamp(1.4rem, 7vw, 2rem); transform: translateX(0) rotate(-2deg); }
   .obj:not(.obj--mobile) { display: none; }
   /* En mobile, les objets se posent sous les boutons, dans la marge basse du hero : jamais sur le titre ni sur un bouton (REVISION-1, F1-3). */
-  .hero__zone .obj { top: auto; bottom: calc(var(--u) * 2); left: var(--mx, var(--x)); width: calc(var(--taille) * 0.62); height: calc(var(--taille) * 0.62); }
+  .hero__zone .obj { top: auto; bottom: calc(var(--u) * 2); left: min(var(--mx, var(--x)), calc(100% - var(--taille) * 0.62 - 1rem)); width: calc(var(--taille) * 0.62); height: calc(var(--taille) * 0.62); }
   .btn { width: 100%; }
   .header__cta { width: auto; min-height: 40px; padding: 0.5em 1.1em; }
   .maison__grille { grid-template-columns: 1fr; }
   .maison__texte { padding: calc(var(--u) * 2.5) calc(var(--u) * 2); }
   .table { min-height: 0; }
   .table__scene { display: none; }
-  .table__titre { position: static; translate: none; margin-bottom: calc(var(--u) * 3); }
+  .table__titre { padding-top: calc(var(--u) * 6); margin-bottom: calc(var(--u) * 3); }
   .table__rail { display: flex; }
   .table__rail .tirage { --w: 14rem; rotate: var(--r); cursor: default; }
   .badge { position: relative; right: auto; bottom: auto; width: 6.5rem; height: 6.5rem; margin: calc(var(--u) * 2) auto 0; }
@@ -282,7 +289,7 @@ html.motion .avis__mot { --flou: 14px; }
 html:not(.motion) .table__scene .tirage { position: static; rotate: 0deg; }
 html:not(.motion) .table__scene { height: auto; display: grid; gap: calc(var(--u) * 2); grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); padding-block: calc(var(--u) * 6); }
 html:not(.motion) .table__scene .obj { display: none; }
-html:not(.motion) .table__titre { position: static; translate: none; padding-top: calc(var(--u) * 8); }
+html:not(.motion) .table__titre { padding-top: calc(var(--u) * 8); }
 html:not(.motion) .carte-avis, html:not(.motion) .grille-photos .tirage { rotate: 0deg; }
 html:not(.motion) .avis__mot { opacity: 0.25; }
 html:not(.motion) .section--canard .btn { transition: none; }

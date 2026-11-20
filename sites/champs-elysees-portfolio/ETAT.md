@@ -1,6 +1,29 @@
-# ETAT champs-elysees-portfolio, passe construction-1 (phase 1 sur 3), 20/11/2026
+# ETAT champs-elysees-portfolio, passe construction-2 (phase 2 sur 3), 20/11/2026
 
-## Fait
+(Phase 1 : voir plus bas, inchangée.)
+
+## Phase 2 (construction-2) : fait
+- Build OK (`pnpm build:site`), 6 pages. Contrôles Playwright maison (1440 et 390, 5 pages) : zéro erreur console, aucun débordement horizontal (`scrollWidth` = largeur), mention Maquette KYW et pied KYW visibles en bas de page, clics réels sur les 7 liens d'en-tête : tous bien ciblés.
+- **La table (signature)** : le titre « La table du bistro » était caché sous les 12 tirages ; il est maintenant au-dessus de la scène (statique, z-index 3), scène `max(100svh, 46rem)`.
+- **États ajoutés** : dès le premier geste (souris, tactile ou flèches) le badge « attrapez-moi » s'efface et un bouton « Remettre la table » apparaît (retour de tous les tirages et objets à leur place, `back.out`, durée 0 en reduced motion ; mesuré : transform ramené à 0,0). Classes `.table__reset`, `.badge.is-vu`.
+- **Mobile** : débordement de viewport en émulation (396 à 404 px sur carte, histoire, terrasse) corrigé : `.grille-photos` en `overflow-x: clip` + `padding-inline: 1.25rem` ; `min-width: 0` sur la grille de carte et `overflow-wrap: anywhere` sur `.plat__nom` ; objets du hero bornés à la largeur (`min(…, 100% - taille)`).
+- Marquee d'état : jour et heure calculés en `Europe/Brussels` (`Intl`), plus l'heure locale du visiteur.
+- Lien d'évitement : complètement hors écran au repos (une bande de 5 px dépassait en 1440).
+- Reduced motion (émulé) : objets posés, tirages saisissables, aucun texte caché hors badge effacé, aucune erreur ; clavier : flèches déplacent un tirage.
+- Contrastes calculés : encre sur orange 6,9:1 ; orange encre sur lin 4,96:1 et sur blanc 5,73:1 ; lin sur canard 8,5:1 ; paille sur canard 7,3:1 ; lin ou blanc sur orange 2,1 à 2,5:1 (jamais utilisé : les bandes orange portent du texte encre).
+
+## Reste (phase 3)
+- Orange encre sur paille = 4,23:1 : vérifier qu'aucun texte courant n'est posé ainsi (seulement badges grands corps) ; orange pur sur canard = 4,0:1 (grands corps seulement).
+- Shoot complet et audit par l'agent captures, puis relecture de la planche : table (1440) après drag, bas de page, mobile rail.
+- Wording : relire libellés d'objets du hero, vérifier U+00A0 dans « », pas de tiret cadratin.
+- Recadrage éventuel des carrés 640 (façade, menu) ; RAPPORT.md ; `gabarits/UTILISATION.md` (ligne `guinguette | champs-elysees`, à faire par la session mère).
+- `kyw-signature` : le sélecteur `.kyw-signature` ne trouve rien dans le DOM (l'image s'appelle `kyw-signature-720.webp`) : faux négatif de mon script, le logo est bien visible dans la capture du bas de page.
+
+## Pièges (phase 2)
+- Le viewport mobile s'élargit sans qu'aucun élément non clippé ne dépasse : bisecter par `<style>` injecté via `page.route` (cf. leçon li-micougni) ; ici la cause était la grille de photos inclinées.
+- Ne pas cliquer le bouton reset avec Playwright pour mesurer une position : il fait défiler la page ; lire le `transform`.
+
+## Phase 1 : fait
 - Gabarit Guinguette choisi (matrice dans DESIGN.md), copié, renommé `champs-elysees-portfolio`, build OK (6 pages : accueil, carte, histoire, terrasse, reservation, 404), dist dans `dist/champs-elysees/portfolio/`.
 - `src/data/site.ts` réécrit depuis `donnees.json` : carte complète (15 catégories, 94 lignes), horaires 7/7, e-mail et téléphone, Zenchef, histoire 1984, Maurice et Teresa, presse La DH, menu des fêtes patronales. Aucun contenu inventé : avis, équipe illustrative, emporter, privatisation, carte d'exemple retirés.
 - Photos : 12 photos + 2 mascottes en WebP dans `public/photos/`, carrés 640 px dans `public/photos/v/` (anciennes `s/` supprimées), og.jpg (mascotte), favicon SVG.
