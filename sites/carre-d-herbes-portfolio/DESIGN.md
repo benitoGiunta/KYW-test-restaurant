@@ -1,0 +1,141 @@
+# DESIGN — Carré d'herbes, variante portfolio (gabarit Velours)
+
+## Choix du gabarit
+
+Notes sur 5 (positionnement / ambiance / richesse du contenu / type de carte / réservation / signature). Les 15 gabarits ont été
+comparés sur leur FICHE ; les trois finalistes sont détaillés, les autres sont écartés d'emblée (affiche, guinguette, forno, braise,
+nocturne, collage, journee, maree : registres populaires, festifs, feu ou bar ; encre : asiatique ; comptoir : omakase blanc, déjà
+donné à deux tables).
+
+| Gabarit | Positionnement | Ambiance | Contenu | Carte | Réservation | Signature | Total |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| velours | 5 (table Gault&Millau, menus chiffrés) | 4 (feutré, vert sapin, cuivre ; photos claires à contrôler) | 4 (nombres prouvés : 4 menus, 38 €, 28 ares, 10 places) | 5 (menus à prix fixes) | 4 (téléphone, bouton remplacé) | 4 (rideau + chiffre cuivre) | 26 |
+| verger | 4 (table de saison) | 5 (parc, potager, lumière) | 2 (roue des 12 mois : calendrier de produits inconnu, producteurs inconnus) | 3 | 4 | 3 (la roue serait illustrative) | 21 |
+| quatre-mains | 3 | 3 | 2 (diptyque de deux chefs : un chef et une hôtesse, aucun portrait) | 3 | 4 | 3 | 18 |
+
+Décision : **velours**. Un gabarit qui vit de nombres vrais convient à un dossier qui en fournit quatre sans rien inventer
+(menus, prix, ares, places). Verger aurait imposé un calendrier de saisons et des producteurs que le dossier ne contient pas.
+Velours est donné une seule fois (le-54) ; la répartition reste équilibrée. `gabarits/UTILISATION.md` (protégé) : à mettre à jour
+(velours : le-54, carre-d-herbes).
+
+## Sections
+
+- **Conservées** : hero, bande des guides (une distinction : Gault&Millau), chapitres à chiffre cuivre (4 menus, 38 euros, 28 ares),
+  citation (témoignage réel du site client), galerie N&B (5 photos), carte de clôture (10 places de parking), pages menu,
+  formules, maison (ex-chefs), réservation, 404.
+- **Remplacées** : onglets « Le samedi » (privatisation, mariage, chef à domicile : aucune donnée) par « Les fêtes 2026 » (Noël
+  au restaurant, à emporter 24 et 31 décembre, bon cadeau : tout est dans le dossier) ; page `/privatisation/` par `/fetes/` ;
+  chapitre « 2 chefs » par « 28 ares de parc » ; page « Les chefs » (portraits N&B) par « La maison » (cuisine et salle en photos
+  sans personne identifiée, parc et terrasse en triptyque) ; menu unique en 4 services par les plats du moment des menus 3, 4 et 5
+  assiettes ; réservation Zenchef par téléphone (formulaire de contact du client en repli).
+- **Retirées** : équipe de salle (Sara, Jordan), avis Michelin, portraits.
+- **Composants créés** : aucun ; `Chapitre`, `HeroPage`, triptyque, onglets réutilisés. CSS : `.menu__plats` (listes par groupe).
+
+## Direction artistique
+
+Palette, typographie et motion du gabarit conservés (vert sapin #1b3730, cuivre #c48f60, ivoire ; Boska et Source Serif 4). Le vert
+sapin rejoint la flamme verte de la façade du logo. Les photos du restaurant sont claires : hero en pleine largeur sous le voile du
+gabarit, galerie convertie en noir et blanc (`sharp`, WebP), recadrages `attention`. Favicon : monogramme « Ch » sur sapin. OG :
+hero 1200x630. Aucune photo libre ajoutée (25 photos exploitables).
+
+## Taux d'adéquation estimé : 82 %
+
+1. Contenu 100 % issu du dossier : nombres prouvés, menus et plats réels, fêtes 2026, aucun avis ni distinction inventés.
+2. Ambiance feutrée et gastronomique cohérente avec la maison de bord de Meuse et un G&M 13,5/20.
+3. Structure à chiffres monumentaux adaptée à des menus à prix fixes.
+
+Limiterait encore : photos de plats de 600 px (22, 21, 23-25), tonalité claire des photos face à un gabarit sombre, pas de portraits,
+pas d'e-mail ni de GPS, avis uniques.
+
+## Système du gabarit « Velours » (hérité, inchangé)
+
+## Concept Card
+- **Idée** : la maison se raconte par ses nombres vrais. Chaque chapitre est un rideau vert sapin qui se lève sur un chiffre
+  cuivre monumental posé à cheval sur une photo sombre, puis le texte suit. Ici : **4** services, **67** euros (le menu
+  unique), **2** chefs, et **2020** en carte de clôture, libellé « société fondée » (BCE : DAMFRA SRL constituée le 14/01/2020 ; la date d'ouverture du restaurant est inconnue, révision 1). Aucun nombre inventé : le nombre de tables est inconnu dans le
+  dossier, le chapitre « tables » du cahier est donc remplacé par le prix unique (67 €), un fait du dossier.
+- **Métaphore** : le lever de rideau d'une petite salle de théâtre. **Émotion** : l'attente heureuse, la rareté.
+- **Verbe de motion** : « se dévoile comme un rideau ». Loader = rideau baissé (vert sapin, nom en cuivre, compteur
+  tabular) qui se lève ; transition de page = même rideau ; chaque chapitre = rideau `clip-path inset(0 0 100% 0) → inset(0)`,
+  1,1 s expo.inOut, une fois, au tiers de l'écran ; chiffre qui compte 0 → valeur (0,9 s, tabular) et parallaxe 40 px scrubbée.
+- **Capture signature** : le chapitre « 4 » : photo du boeuf confit sur assiette rouge, un « 4 » cuivre de 260 px à cheval sur
+  le coin supérieur gauche, « SERVICES » en petites capitales, texte à droite en colonne de 500 px.
+- **Test de généricité** : un modèle ferait un site noir et doré avec un serif et des étoiles. Ici les chapitres sont des
+  nombres réels de la maison, le vert sapin et le rideau construisent un théâtre, le site est court (8 sections).
+
+## Système
+- **Palette** (cahier) : `--c-bg #1B3730` vert sapin, `--c-deep #0E1512` profond (citation, loader), `--c-accent #C48F60`
+  cuivre (aplat, jamais dégradé), `--c-copper-light #E2BE94` texte secondaire (6,9:1 sur sapin), `--c-fg #EEE6D8` ivoire
+  (11,7:1). `--c-muted` = cuivre clair. Texte doux sur sapin ≥ 4,5:1 vérifié aux deux arrêts (sapin, profond).
+- **Typo** : Boska (Fontshare, slug `boska`, 400/700 + italiques) pour le nom, les chiffres (tabular, line-height 0,9),
+  les titres en capitales (+0.08em) ; Source Serif 4 (Google, 300/400 + italiques) corps 17 px, interlignage 1,55.
+  Auto-hébergées dans `public/fonts/`, `@font-face` dans Base.astro (chemins sous base), préchargement Boska 400 + SS4 300.
+- **Grille** : `.wrap` 1140 px (`min(100% - 2*gutter, 71.25rem)`), textes en colonne de 500 px (`--col-texte: 31.25rem`),
+  photos qui débordent jusqu'au bord (`.chapitre__photo` en `grid-column` jusqu'au bord via `calc`), 200 px entre
+  chapitres (`--chapitre: clamp(6rem, 4rem + 8vw, 12.5rem)`).
+- **Radius** : 0 ; seul le logo cerclé (en-tête) est rond.
+- **Motion language** : ease `expo.inOut` pour les rideaux, `expo.out` pour les entrées ; gros = lent (rideau 1,1 s,
+  chiffre 0,9 s, lettres 0,9 s stagger 18 ms). Idle : aucun (site calme, décision écrite) sauf les onglets qui tournent
+  toutes les 6 s (pause au survol/focus, désactivé en reduced motion). Curseur : point cuivre + cercle retardé (natif
+  conservé, fine pointer seulement).
+
+## Wireframes (desktop 1440 / mobile 390)
+```
+HERO (100svh, photo salle pleine largeur, scrim sapin 55 %)        | MOBILE
+[◯ logo]   MENU  CARTE  LES CHEFS  PRIVATISER   [RÉSERVER]         | [◯]  ≡ (nav repliée en liste) [RÉSERVER]
+                                                                   |
+        L E S   P O T E S   A U   F E U   (Boska 700 cuivre clair) | LES POTES / AU FEU (plafonné 390)
+        Bistronomie à Namur. (accroche ivoire, peinte au 1er rendu)| accroche
+        [Réserver une table]  Voir le menu ↓                       | [Réserver]
+-------------------------------------------------------------------
+BANDE DISTINCTIONS  « Guide MICHELIN · Restaurant sélectionné, Belgique » (aucune année en dur) (cuivre, petites capitales, fondu)
+-------------------------------------------------------------------
+CHAPITRE 1   ┌photo boeuf (déborde à gauche)┐   4 SERVICES         | 4 (160 px) SERVICES
+             │  4 (260 px cuivre à cheval)  │   texte 500 px       | photo pleine largeur
+             └──────────────────────────────┘   [Le menu]          | texte, bouton
+CHAPITRE 2   texte 500 px  ┊ filet pointillé ┊ ┌photo salle (droite)┐  67 EUROS, LE MENU UNIQUE
+CITATION (fond profond)  « Un restaurant décontracté qui swingue… » mots qui s'allument au scrub, Boska italique 48 px
+CHAPITRE 3   ┌portrait N&B Damien┐ ┌portrait N&B François┐   2 CHEFS  bio courte (phrases du dossier)
+ONGLETS      PRIVATISATION ▬▬▬▬  MARIAGE ▬▬  CHEF À DOMICILE ▬  (barre cuivre 6 s)  photo de fond qui change
+GALERIE N&B  bande horizontale de 5 photos de hauteurs variées (scroll natif en mobile)
+CLÔTURE      « 2020 · société fondée »  adresse  3 lignes d'horaires  [Réserver]  (rideau)
+FOOTER       logo cerclé, liens, KywFooter
+```
+Pages : `/` accueil, `/menu/` (4 services détaillés), `/carte/` (3 formules + options + bons cadeaux), `/histoire/`
+(2 chefs, Sara et Jordan), `/privatisation/` (samedi : privatisation, mariage, chef à domicile), `/reservation/`, 404.
+
+## Règles dures (preuve)
+- [x] Grille et alignements : `.wrap` unique, colonnes de texte 500 px, chiffres optiquement décalés (`margin-left: -0.06em`).
+- [x] Corps 17 px / 1,55 ; petites capitales 12-13 px cuivre clair à 6,9:1.
+- [x] Hover/focus/actif par rôle : CTA = remplissage cuivre qui monte (clip-path, verbe « rideau ») ; nav = filet cuivre
+  qui se lève sous le libellé ; photos de galerie = levée du voile N&B (curseur « Voir ») ; liens utilitaires = couleur.
+- [x] Idle : décision « site calme » (cahier) ; seuls les onglets tournent (6 s, pause au survol, off en reduced motion).
+- [x] Une famille d'easing (`ease` du moteur) ; gros = lent.
+- [x] Transform/opacity/clip-path seulement ; une horloge (GSAP ticker, ScrollTrigger) ; tout dans `onPage()`.
+- [x] Reduced motion : rideaux levés, chiffres à leur valeur, citation allumée, onglets fixes, Lenis coupé (moteur).
+- [x] Premier cadre : hero photo + nom peints sous le rideau du loader dès le premier rendu (preload, fetchpriority).
+- [x] UI fixe : en-tête absolu sur le hero puis sticky opaque sapin ; aucun coin occupé par un instrument.
+- [x] Nav visible sur chaque page, `aria-current`. Curseur natif conservé. Loader ≤ 2,6 s (plancher moteur).
+- [x] 390 px : chiffres 160 px au-dessus des photos, galerie en scroll natif, titre plafonné (mot le plus long « BISTRONOMIE »
+  ne figure pas dans le h1 ; « POTES » tient), curseur désactivé.
+- [x] Un h1 par page, landmarks, titles uniques, OG, canonical, sitemap, robots, JSON-LD, 404 (socle).
+- [x] Copies décoratives (chiffre dupliqué pour le filigrane) hors des titres, `aria-hidden`.
+- [x] Copy : pas de tiret cadratin, pas de filler, vouvoiement, phrases du dossier neutralisées (pas de « il y a quatorze
+  ans »), chaque donnée non prouvée a son drapeau et sa marque visible.
+
+## Décisions de la révision 1 (30/10/2026, REVUE-1)
+- **Nom du hero** : Boska **700** en cuivre clair `--c-muted` (#E2BE94) avec une ombre portée douce, sur un voile qui
+  descend du profond 30 % au sapin 94 % sous le bloc texte. Contraste mesuré derrière le h1 (pixel au 98e centile de
+  luminance) : 4,8:1 en 390 et en 1440, médiane 8,9 à 9,4:1. Boska 700 est préchargée. Le cuivre `--c-accent` reste aux
+  chiffres, filets et aplats.
+- **2020** : chiffre de clôture libellé « société fondée » (h2 lu « société fondée en 2020 »), sous-libellé « DAMFRA SRL,
+  la société des deux chefs, constituée en janvier » ; le mot « ouverture » et « depuis 2020 » disparaissent du site.
+- **Chiffre monumental** : seulement pour une donnée prouvée ; les numéros 01/02/03 des offres de privatisation sont retirés.
+- **Citation** : en mobile, texte plein (pas de scrub) ; en desktop, départ à 0,5 d'opacité et allumage complet au milieu
+  de l'écran.
+- **Nav mobile** : une seule ligne d'en-tête (logo, bouton « Menu », Réserver) ; la nav s'ouvre en liste sous la ligne
+  (`aria-expanded`, Échap ferme). Sans JS, la nav reste visible (règles sous `.js`).
+- **Réservation** : un seul chemin (Zenchef + téléphone dans le hero de page) ; le formulaire de démonstration est retiré,
+  la page garde les services jour par jour et l'adresse.
+- **Pied de page** : horaires condensés en trois lignes (`horairesResume`) ; le détail jour par jour vit sur la réservation.
+- **Années** : aucune année en dur hors de la source exacte de la citation (« Guide MICHELIN Belgique 2026 »).

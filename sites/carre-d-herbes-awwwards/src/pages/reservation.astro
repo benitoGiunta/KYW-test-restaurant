@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, horaires, fetes } from '../data/site';
+const a = site.adresse;
+---
+<Base page="reservation" title="Réserver" description="Réservez chez Carré d'herbes par téléphone au 081 34 48 19, du mercredi au dimanche dès 10 h. Horaires, adresse et accès à Wépion.">
+  <section class="sec sec--ardoise resa-tete" aria-labelledby="titre">
+    <div class="wrap">
+      <h1 id="titre" data-split="lines" data-intro class="display resa-tete__titre">Réserver</h1>
+      <p class="resa-tete__texte">Il n'y a pas de réservation en ligne : on réserve par téléphone. {horaires.telephoneNote}</p>
+      <p class="hero__actions">
+        <a class="btn" href={`tel:${site.telephone}`}><span>Appeler le {site.telephoneAffiche}</span></a>
+        <a class="lien" href={site.reservationUrl} rel="noopener">Formulaire de contact du restaurant</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="sec sec--pierre prat" aria-labelledby="quand">
+    <div class="wrap prat__grid">
+      <h2 id="quand" data-split="lines" class="display titre">Quand</h2>
+      <div class="prat__bloc">
+        <h3 class="sous">Horaires de service</h3>
+        <ul class="heures">
+          {horaires.jours.map((j) => <li><span>{j.jour}</span><span>{j.midi ? `${j.midi}${j.soir ? `, ${j.soir}` : ''}` : 'Fermé'}</span></li>)}
+        </ul>
+        <p class="note">{horaires.derniereCommande} Le lunch en deux assiettes se sert les midis et le jeudi soir sur réservation, sauf dimanche et jours fériés.</p>
+      </div>
+      <div class="prat__bloc">
+        <h3 class="sous">À signaler en réservant</h3>
+        <p>{fetes.regimes}</p>
+        <p>Pour Noël : acompte de 40&nbsp;€ par personne au restaurant du 25 décembre.</p>
+        <p>{fetes.bonCadeau}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--ardoise acces" aria-labelledby="acces">
+    <div class="wrap acces__grid">
+      <div>
+        <h2 id="acces" data-split="lines" class="display titre">Accès</h2>
+        <address class="acces__adr">{a.rue} {a.numero}<br />{a.cp} {a.commune}</address>
+        <p>Entre Namur et Profondeville, au bord de la Meuse.</p>
+        <p>Parking privé de dix voitures, accès par la Route de Saint-Gérard. Terrasse et parc au calme.</p>
+        <p><a class="lien" href={site.plan} rel="noopener">Voir le plan</a></p>
+      </div>
+      <Photo reveal="clip" k="terrasse" ratio="4 / 5" pos="50% 60%" sizes="(min-width: 900px) 28vw, 80vw" />
+    </div>
+  </section>
+</Base>

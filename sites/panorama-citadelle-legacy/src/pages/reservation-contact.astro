@@ -29,15 +29,16 @@ import { resto } from '../data/site';
         <p>Pour une réservation d’aujourd’hui ou toute autre question, remplissez le formulaire. Nous répondons dans les plus brefs délais.</p>
       </div>
       <div class="b">
-        <form class="form" method="post" action="#" data-endpoint="">
-          <div class="field"><label for="nom">Nom et prénom</label><input id="nom" name="nom" autocomplete="name" required /></div>
-          <div class="field"><label for="email">Adresse e-mail</label><input id="email" name="email" type="email" autocomplete="email" required /></div>
-          <div class="field"><label for="tel">Téléphone</label><input id="tel" name="tel" type="tel" autocomplete="tel" /></div>
-          <div class="field"><label for="msg">Votre message</label><textarea id="msg" name="msg" required></textarea></div>
+        <form class="form" method="post" action="#" data-endpoint="" novalidate>
+          <div class="field"><label for="nom">Nom et prénom</label><input id="nom" name="nom" autocomplete="name" required aria-describedby="nom-aide" /><p class="aide" id="nom-aide" data-aide="Indiquez votre nom et prénom."></p></div>
+          <div class="field"><label for="email">Adresse e-mail</label><input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="prenom@exemple.be" required aria-describedby="email-aide" /><p class="aide" id="email-aide" data-aide="Cette adresse semble incomplète. Écrivez-la sous la forme prenom@exemple.be."></p></div>
+          <div class="field"><label for="tel">Téléphone (facultatif)</label><input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="0470 12 34 56" aria-describedby="tel-aide" /><p class="aide" id="tel-aide"></p></div>
+          <div class="field"><label for="msg">Votre message</label><textarea id="msg" name="msg" required aria-describedby="msg-aide"></textarea><p class="aide" id="msg-aide" data-aide="Écrivez votre message : date, heure et nombre de personnes si c’est pour une table."></p></div>
           <label class="check"><input type="checkbox" name="actus" /><span>Je souhaite être tenu à jour des actualités du Panorama.</span></label>
-          <label class="check"><input type="checkbox" name="rgpd" required /><span>J’accepte que mes données soient utilisées par l’équipe du Panorama pour me recontacter par e-mail ou par téléphone.</span></label>
-          <div class="actions"><button class="btn" type="submit">Envoyer</button></div>
-          <p class="small">Maquette : le formulaire n’envoie rien tant qu’aucun service d’envoi n’est branché.</p>
+          <div class="field"><label class="check"><input type="checkbox" name="rgpd" required aria-describedby="rgpd-aide" /><span>J’accepte que mes données soient utilisées par l’équipe du Panorama pour me recontacter par e-mail ou par téléphone.</span></label><p class="aide" id="rgpd-aide" data-aide="Cochez cette case pour que nous puissions vous répondre."></p></div>
+          <div class="actions"><button class="btn" type="submit">Envoyer le message</button></div>
+          <p class="statut" role="status" aria-live="polite" data-statut></p>
+          <p class="small">Maquette&nbsp;: ce formulaire n’envoie rien tant qu’aucun service d’envoi n’est branché.</p>
         </form>
       </div>
     </div>
@@ -56,4 +57,29 @@ import { resto } from '../data/site';
       <div class="b"><Horaires /></div>
     </div>
   </section>
+
+<script is:inline>
+  document.querySelectorAll('form[data-endpoint]').forEach((form) => {
+    const champs = [...form.querySelectorAll('input[required], textarea[required]')];
+    const statut = form.querySelector('[data-statut]');
+    const aide = (c) => document.getElementById(c.getAttribute('aria-describedby'));
+    const verifier = (c) => {
+      const ok = c.checkValidity(), a = aide(c);
+      if (ok) c.removeAttribute('aria-invalid'); else c.setAttribute('aria-invalid', 'true');
+      if (a && a.dataset.aide) a.textContent = ok ? '' : a.dataset.aide;
+      return ok;
+    };
+    champs.forEach((c) => {
+      c.addEventListener('blur', () => { c.dataset.touche = '1'; verifier(c); });
+      const r = c.type === 'checkbox' ? 'change' : 'input';
+      c.addEventListener(r, () => { if (c.dataset.touche || c.hasAttribute('aria-invalid')) verifier(c); });
+    });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const faux = champs.filter((c) => !verifier(c));
+      if (faux.length) { statut.textContent = faux.length === 1 ? 'Un champ est à corriger avant l’envoi.' : faux.length + ' champs sont à corriger avant l’envoi.'; faux[0].focus(); return; }
+      if (!form.dataset.endpoint) { statut.textContent = 'Rien n’a été envoyé\u00a0: ce formulaire n’est pas encore relié.'; return; }
+    });
+  });
+</script>
 </Base>

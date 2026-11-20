@@ -1,0 +1,17 @@
+---
+const { etapes } = Astro.props;
+---
+{etapes.map((e) => (
+  <div class="step">
+    <p class="step__n">{e.etape}</p>
+    <div class="step__c">
+      {e.choix.map((c, i) => (
+        <div class="choice">
+          {i > 0 && <p class="or">ou</p>}
+          <b>{c.nom}{c.prix && <span class="small"> {c.prix}</span>}</b>
+          {c.desc && <p>{c.desc}</p>}
+        </div>
+      ))}
+    </div>
+  </div>
+))}

@@ -79,6 +79,8 @@ address { font-style: normal; }
 
 /* Frise du jour : desktop fixée à droite dans la voie --frise ; mobile en rangée dans l'en-tête. */
 .frise { position: fixed; right: calc(var(--gutter) * 0.9); top: 50%; z-index: var(--z-frise); height: min(56vh, 34rem); width: 2.5rem; transform: translateY(-50%); }
+.frise { transition: opacity 0.3s; }
+.frise.is-masquee { opacity: 0; pointer-events: none; }
 .frise__liste { list-style: none; padding: 0; position: absolute; inset: 0; }
 .frise::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--ligne); }
 .frise__item { position: absolute; left: 0; right: 0; top: var(--pos); }
@@ -148,6 +150,7 @@ address { font-style: normal; }
 
 /* Photos : 16 px, légendes discrètes. */
 .photo { overflow: clip; border-radius: var(--radius-photo); }
+.section, .moment { overflow-x: clip; } /* le reveal scale (1,15) d’une figure pas encore révélée élargissait la page à 400 px en mobile */
 .photo img { width: 100%; height: 100%; object-fit: cover; }
 .photo--4x5 { aspect-ratio: 4 / 5; } .photo--4x3 { aspect-ratio: 4 / 3; } .photo--3x2 { aspect-ratio: 3 / 2; } .photo--carre { aspect-ratio: 1; } .photo--large { aspect-ratio: 21 / 9; }
 figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux); }
@@ -179,7 +182,7 @@ figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux)
 
 /* 12h : liste index des jours. */
 .jours { list-style: none; padding: 0; border-top: 1px solid var(--ligne); }
-.jour { display: grid; grid-template-columns: 7rem 1fr auto; column-gap: calc(var(--u) * 2); align-items: baseline; padding-block: calc(var(--u) * 1.4); border-bottom: 1px solid var(--ligne); }
+.jour { display: grid; grid-template-columns: minmax(7rem, 9rem) 1fr auto; column-gap: calc(var(--u) * 2); align-items: baseline; padding-block: calc(var(--u) * 1.4); border-bottom: 1px solid var(--ligne); }
 .jour__nom { text-transform: capitalize; font-weight: 600; }
 .jour__plat { font-family: var(--f-display); font-weight: 800; font-size: var(--t-m); letter-spacing: -0.02em; line-height: 1.1; }
 .jour__prix { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
@@ -239,7 +242,13 @@ figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux)
 .form { display: grid; gap: calc(var(--u) * 2); max-width: 36rem; }
 .form label { display: grid; gap: 0.4em; font-weight: 600; font-size: var(--t-s); }
 .form input, .form select, .form textarea { padding: 0.7em 1em; border: 1.5px solid var(--ligne); border-radius: 16px; background: var(--voile); color: var(--encre); font-weight: 400; font-size: var(--t-body); transition: border-color 0.3s; }
-.form input:focus, .form textarea:focus { border-color: var(--encre); outline: none; }
+.form input:focus, .form textarea:focus { border-color: var(--encre); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 35%, transparent); }
+.form input:user-invalid, .form textarea:user-invalid { border-color: #b3261e; }
+.form input:user-valid { border-color: var(--vert); }
+.form__etat { min-height: 1.5em; font-size: var(--t-s); font-weight: 600; color: var(--encre); }
+.form__etat::before { content: ''; display: inline-block; width: 0.6em; height: 0.6em; margin-right: 0.5em; border-radius: 50%; background: var(--vert); vertical-align: 0.05em; }
+.form__etat:empty::before { display: none; }
+.form button[disabled] { opacity: 0.55; pointer-events: none; }
 .form textarea { border-radius: 16px; }
 
 /* Bandeau illustratif (pages dont le moment n'existe pas encore chez ce restaurant). */
@@ -252,8 +261,9 @@ figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux)
 .footer__titre { font-weight: 600; margin-bottom: var(--u); }
 .footer .link:hover { text-decoration-color: var(--soleil); }
 /* Pied de page KYW : lien « Réalisé par » à 24 px minimum, couleurs de la nuit. */
-.kyw-footer { background: var(--nuit-profonde); color: var(--ivoire); }
-.kyw-footer__link { min-height: 24px; display: inline-flex; align-items: center; }
+.kyw-footer { position: relative; z-index: var(--z-content); background: var(--nuit-profonde); color: var(--ivoire); }
+.kyw-footer__note { color: var(--ivoire); }
+.kyw-footer__link { padding: 0.2rem 0.6rem; border-radius: 8px; background: #f3f2ef; color: #314044; min-height: 24px; display: inline-flex; align-items: center; }
 
 /* Loader : ciel d'aube, nom à gauche, horloge qui compte à droite. */
 #loader { background: linear-gradient(180deg, var(--aube), var(--aube-basse)); color: var(--ink); align-content: end; }
@@ -281,3 +291,26 @@ figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux)
 .maintenant__point::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--disque); animation: frise-pulse 2.4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .maintenant__point::after { animation: none; opacity: 0; } }
 .bandeau--fort { border-style: solid; border-color: var(--encre); background: var(--voile); font-size: var(--t-body); }
+
+/* Signature du hero (≥ 1200 px) : disque photo, orbite et soleil à l'heure réelle ; au-dessous, l'accroche recouvrirait le disque. */
+.astre { display: none; }
+@media (min-width: 1200px) {
+  .astre { --astre: clamp(19rem, 29vw, 28rem); --angle: 0; --zoom: 1.1; display: block; position: absolute; top: 0; bottom: 0; margin-block: auto; height: var(--astre); width: var(--astre); right: calc(var(--frise) + var(--gutter) * 2 + 1.5rem); pointer-events: none; }
+  .astre__photo { position: absolute; inset: 11%; border-radius: 50%; overflow: clip; box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.14); }
+  .astre__photo img { width: 100%; height: 100%; object-fit: cover; transform: scale(var(--zoom)); will-change: transform; }
+  .astre__orbite { position: absolute; inset: 0; border-radius: 50%; border: 1.5px dashed var(--ligne); }
+  .astre__cran { position: absolute; inset: 0; rotate: calc(var(--a) * 1deg); }
+  .astre__cran::before { content: ''; position: absolute; left: -3px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%; background: var(--encre); opacity: 0.55; }
+  .astre__bras { position: absolute; inset: 0; rotate: calc(var(--angle) * 1deg); }
+  .astre__soleil { position: absolute; left: 0; top: 50%; width: 2.4rem; height: 2.4rem; margin: -1.2rem 0 0 -1.2rem; border-radius: 50%; background: var(--disque); box-shadow: 0 0 0 0.5rem color-mix(in srgb, var(--disque) 28%, transparent); }
+  .astre.is-pose .astre__soleil { animation: astre-halo 3.2s ease-in-out infinite; }
+}
+@keyframes astre-halo { 50% { box-shadow: 0 0 0 0.95rem color-mix(in srgb, var(--disque) 12%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .astre.is-pose .astre__soleil { animation: none; } }
+
+/* Accent vert (tabourets du bar) : anneau de focus, sélection, jalons. Le soleil reste l'accent des boutons. */
+:root { --vert: #1f6b4a; --focus: var(--vert); }
+:root[data-theme='corail'] { --focus: var(--ink); }
+:root[data-theme='nuit'], :root[data-theme='nuitProfonde'], .footer { --focus: var(--ivoire); }
+:focus-visible { outline-color: var(--focus); }
+::selection { background: var(--vert); color: var(--ivoire); }

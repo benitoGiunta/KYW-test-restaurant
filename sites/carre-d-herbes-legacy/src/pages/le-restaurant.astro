@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { photos, avis, resto } from '../data/site';
+const B = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title="Le restaurant, Carré d’herbes à Wépion" description="Le chef Damien Herbay, la maison de bord de Meuse, son parc et l’histoire du nom Carré d’herbes." page="restaurant">
+  <div class="pagehead"><div class="container"><h1>Le restaurant</h1><p class="lead">Une cuisine à l’image du chef, dans une maison de bord de Meuse.</p></div></div>
+
+  <section class="section">
+    <div class="container cols">
+      <div class="split__a stack">
+        <h2>Damien Herbay, chef passionné et déterminé</h2>
+        <p>D’aussi loin qu’il s’en souvienne, Damien Herbay était un enfant émerveillé et curieux des recettes préparées par sa mère et sa grand-mère. Inspiré et poussé par l’un de ses professeurs, il a persévéré sur cette voie.</p>
+        <p>Après son apprentissage sous la direction d’Éric Briffard, il a perfectionné son savoir dans plusieurs maisons renommées, comme Les Forges du Pont d’Oye, La Table des Guilloux ou L’Air du Temps.</p>
+        <p>Aujourd’hui, il réalise son rêve et vous ouvre les portes de sa maison pour vous proposer une cuisine à son image, où gastronomie rime avec convivialité. Les produits locaux de saison y sont sublimés et tout ce qui vous est proposé à la dégustation est fait maison.</p>
+      </div>
+      <div class="split__b"><Photo p={photos.noire} caption="Un plat dressé sur assiette noire" /></div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container cols split--r">
+      <div class="split__a stack">
+        <h2>Un restaurant avec terrasse</h2>
+        <p>Nous vous accueillons dans une maison de bord de Meuse, entièrement rénovée et aménagée dans un esprit moderne et chaleureux. Son parc arboré de plus de 28 ares offre une vue magnifique en toute saison.</p>
+        <p>À la carte ou sous forme de menus, une cuisine raffinée et généreuse.</p>
+        <a class="btn-2" href={B + 'nos-menus/'}>Voir les menus</a>
+      </div>
+      <div class="split__b"><Photo p={photos.salle} caption="La salle et sa baie vitrée sur le parc" sizes="(min-width: 1000px) 55vw, 100vw" /></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cols">
+      <div class="split__a stack">
+        <h2>L’histoire du nom</h2>
+        <p>« Carré d’herbes » a été choisi d’une part pour la tour carrée qui orne la façade, d’autre part à l’image du cadre verdoyant et du carré potager rempli de plantes aromatiques utilisées par le chef. Le mot « herbes » est aussi un clin d’œil au nom de famille du chef, Herbay.</p>
+      </div>
+      <div class="split__b stack">
+        <h3>L’équipe</h3>
+        <ul class="rows">
+          <li class="row"><span class="row__t">Damien Herbay</span><span class="row__d">Chef, au fourneau</span><span></span></li>
+          <li class="row"><span class="row__t">Anne-Sophie Gevaert-Herbay</span><span class="row__d">En salle</span><span></span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-ink">
+    <div class="container">
+      <p class="statement">« {avis.texte} »</p>
+      <p class="small" style="margin-top: var(--space-lg)">{avis.auteur}, {avis.source}. À vérifier avec le restaurant.</p>
+    </div>
+  </section>
+</Base>

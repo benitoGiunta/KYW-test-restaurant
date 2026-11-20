@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Menu from '../components/Menu.astro';
+import { u } from '../lib/url';
+import { carte, menuDuMoment, eur } from '../data/site';
+---
+<Base title="La carte" description="La carte de PhilFa à Namur : assiettes à partager, salades, poissons, viandes, gibier de saison. Plats de 11 à 39 euros, menu du moment à 35 ou 41 euros." page="carte">
+  <section class="titre-page" aria-labelledby="titre-carte">
+    <h1 class="display display--mega" id="titre-carte" data-split="chars" data-intro>La carte</h1>
+    <p class="chapo" data-reveal="up" data-intro data-delay="0.35">Croquettes, tartare coupé au couteau, saint-jacques, gibier de saison. Prix en euros.</p>
+  </section>
+
+  <section class="menu" aria-labelledby="titre-menu">
+    <div class="menu__tete">
+      <h2 class="display display--xl" id="titre-menu" data-split="lines">Le menu du moment</h2>
+      <p class="prix"><b class="num">{menuDuMoment.prixDeux}&nbsp;€ / {menuDuMoment.prixTrois}&nbsp;€</b>Deux choix à chaque étape. Il change {menuDuMoment.rotation}.</p>
+    </div>
+    <Menu />
+    <div class="menu__pied"><p>Menu relevé sur le site actuel de PhilFa, sa date n’est pas connue : il a pu changer depuis.</p></div>
+  </section>
+
+  <section class="carte t-papier" aria-label="Plats">
+    <div class="carte__grille">
+      <nav class="sommaire" aria-label="Rubriques de la carte">
+        <ul>{carte.map((c) => <li><a href={`#${c.cle}`}>{c.titre}</a></li>)}</ul>
+      </nav>
+      <div class="biefs">
+        {carte.map((c) => (
+          <section class="bief" id={c.cle} aria-labelledby={`t-${c.cle}`}>
+            <div class="bief__tete">
+              <h2 class="display display--l" id={`t-${c.cle}`}>{c.titre}</h2>
+              {c.note && <p>{c.note}</p>}
+            </div>
+            <ul class="plats">
+              {c.plats.map((p) => (
+                <li class="plat">
+                  <h3 class="plat__nom">{p.nom}</h3>
+                  {p.description && <p class="plat__desc">{p.description}</p>}
+                  <p class="plat__prix">{p.prix.map((x) => <span>{eur(x.v)}{x.lib && <small>{x.lib}</small>}</span>)}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+        <p class="carte__note">Carte relevée sur le site actuel de PhilFa ; les prix et les plats de saison peuvent avoir changé. Pour réserver : <a class="lien" href={u('/reservation/')}>page de réservation</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bande" aria-label="Le bar">
+    <Photo cle="bar" widths={[800, 1200, 1600]} sizes="100vw" />
+    <p class="credit">Le comptoir. Photos : PhilFa</p>
+  </section>
+</Base>

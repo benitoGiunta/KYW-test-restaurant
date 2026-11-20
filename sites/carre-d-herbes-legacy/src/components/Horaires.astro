@@ -1,0 +1,14 @@
+---
+import { horaires, derniereCommande } from '../data/site';
+---
+<dl class="schedule">
+  {horaires.map((j) => (
+    <>
+      <dt class:list={[!j.midi && 'is-closed']}>{j.jour}</dt>
+      <dd>
+        {j.midi ? <span><time>{j.midi}</time>{j.soir && <>, <time>{j.soir}</time></>}</span> : 'Fermé'}
+      </dd>
+    </>
+  ))}
+</dl>
+<p class="small" style="margin-top: var(--space-md)">{derniereCommande}</p>

@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const portraits = [photoDe('/photos/cuisine-dressage.webp'), photoDe('/photos/salle-brique.webp')];
+const damienM = photoDe('/photos/cuisine-dressage-700.webp');
+const parc = ['/photos/terrasse-table.webp', '/photos/parc-large.webp', '/photos/terrasse-parasols.webp'].map(photoDe);
+---
+<Base title="La maison et ses hôtes" description={`${site.equipe[0].nom} en cuisine, ${site.equipe[1].nom} en salle : l'histoire de la maison Carré d'herbes, en bord de Meuse à Wépion.`} preloadImage={{ href: damienM.src, media: '(max-width: 767px)' }}>
+  <HeroPage titre="La maison" chiffre={site.chiffres.parc} sur="Le chef, la salle, le parc">
+    <p>{site.histoire[0]}</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Portraits">
+    <div class="wrap portraits">
+      {site.equipe.map((m, i) => { const p = portraits[i]; return (
+        <article class="portrait">
+          <figure class="portrait__photo" {...(i === 0 ? {} : { 'data-reveal': 'clip' })}>
+            {i === 0 ? (
+              <picture>
+                <source media="(max-width: 767px)" srcset={asset(damienM.src)} />
+                <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} fetchpriority="high" decoding="async" />
+              </picture>
+            ) : (
+              <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            )}
+          </figure>
+          <h2 class="portrait__nom">{m.nom}</h2>
+          <p class="petite-cap">{m.role}</p>
+          {m.bio?.map((b) => <p class="portrait__bio">{b}{m.bioPlaceholder && <span class="illu">illustratif</span>}</p>)}
+        </article>
+      ); })}
+    </div>
+  </section>
+
+  <section class="section section--recit" aria-labelledby="recit-titre">
+    <div class="wrap recit">
+      <h2 class="petite-cap" id="recit-titre">Le nom, le lieu, la cuisine</h2>
+      <div class="recit__texte stack">
+        {site.histoire.slice(1).map((p) => <p data-reveal="fade">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--photos" aria-label="Le parc et la terrasse">
+    <div class="wrap triptyque">
+      {parc.map((p, i) => (
+        <figure class:list={['triptyque__item', `triptyque__item--${i}`]} data-reveal="clip" data-delay={String(i * 0.1)}>
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="equipe-titre">
+    <div class="wrap equipe">
+      <h2 class="petite-cap" id="equipe-titre">Ce qui compte</h2>
+      <ul class="valeurs" aria-label="Ce qui compte">
+        {site.valeurs.map((v) => <li>{v}</li>)}
+      </ul>
+      <p class="actions"><a class="btn btn--primary" href={u('/reservation/')}>Réserver une table</a></p>
+    </div>
+  </section>
+</Base>

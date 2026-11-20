@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import Etapes from '../components/Etapes.astro';
+import Photo from '../components/Photo.astro';
+import { menus, accordNote, regimes, photos, resto } from '../data/site';
+const B = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title="Les menus, Carré d’herbes à Wépion" description="Lunch en deux assiettes, menus en trois, quatre et cinq assiettes de 38 € à 85 €, avec accord mets-vins en option." page="menus">
+  <div class="pagehead"><div class="container"><h1>Les menus</h1><p class="lead">Quatre formules, du lunch aux cinq assiettes. Selon l’arrivage, la composition des plats peut changer.</p></div></div>
+
+  <section class="section">
+    <div class="container">
+      <div data-tabs>
+        <div class="tabs" role="tablist" aria-label="Choisir un menu">
+          {menus.map((m, i) => <button type="button" role="tab" id={`tab-${m.slug}`} aria-controls={`panel-${m.slug}`} aria-selected={i === 1 ? 'true' : 'false'} tabindex={i === 1 ? 0 : -1}>{m.court}</button>)}
+        </div>
+        {menus.map((m, i) => (
+          <div class="panel" role="tabpanel" id={`panel-${m.slug}`} aria-labelledby={`tab-${m.slug}`}>
+            <div class="panel__head">
+              <h2>{m.nom}</h2>
+              <p class="panel__price">{m.prix}</p>
+            </div>
+            {m.accord && <p class="small" style="margin-bottom: var(--space-lg)">Avec accord mets-vins : {m.accord}. {accordNote}</p>}
+            {m.note && <p style="margin-bottom: var(--space-lg)">{m.note}</p>}
+            <Etapes etapes={m.etapes} />
+            {m.apres && <p style="margin-top: var(--space-lg)">{m.apres}</p>}
+          </div>
+        ))}
+      </div>
+      <p style="margin-top: var(--space-2xl)">{regimes}</p>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container cols">
+      <div class="split__a stack">
+        <h2>Pour réserver</h2>
+        <p>{resto.reservation}</p>
+        <a class="btn" href={resto.telHref}>Appeler le {resto.tel}</a>
+      </div>
+      <div class="split__b"><Photo p={photos.bouche} caption="Mises en bouche sur planche en bois d’olivier" sizes="(min-width: 1000px) 50vw, 100vw" /></div>
+    </div>
+  </section>
+  <script is:inline>
+    document.querySelectorAll('[data-tabs]').forEach((root) => {
+      const tabs = [...root.querySelectorAll('[role=tab]')]; const panels = [...root.querySelectorAll('[role=tabpanel]')];
+      const show = (i) => { tabs.forEach((t, k) => { t.setAttribute('aria-selected', k === i); t.tabIndex = k === i ? 0 : -1; }); panels.forEach((p, k) => { p.hidden = k !== i; }); };
+      show(1);
+      tabs.forEach((t, i) => { t.addEventListener('click', () => show(i)); t.addEventListener('keydown', (e) => { const n = e.key === 'ArrowRight' ? (i + 1) % tabs.length : e.key === 'ArrowLeft' ? (i + tabs.length - 1) % tabs.length : null; if (n !== null) { show(n); tabs[n].focus(); } }); });
+    });
+  </script>
+</Base>

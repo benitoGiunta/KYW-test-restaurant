@@ -8,7 +8,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   <div class="container page-head">
     <h1>Une carte signée Yves Mattagne</h1>
     <p class="lead">La carte d’automne 2026, de 12&nbsp;€ à 98&nbsp;€, avec des produits locaux et des accents du monde.</p>
-    <ul class="carte-nav" aria-label="Rubriques de la carte">
+    <ul class="carte-nav" aria-label="Rubriques de la carte" data-rail>
       {carte.map((r) => <li><a href={`#${r.id}`}>{r.titre}</a></li>)}
       <li><a href="#petits-dejeuners">Petits-déjeuners</a></li>
       <li><a href="#fetes">Menu des fêtes</a></li>
@@ -51,4 +51,20 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       <div class="actions" style="margin-top:var(--space-xl)"><a class="btn" href={base + 'reservation-contact/'}>Réserver une table</a><a class="btn-link" href={resto.telHref}>{resto.tel}</a></div>
     </div>
   </section>
+
+<script is:inline>
+  (() => {
+    const rail = document.querySelector('[data-rail]'); if (!rail || !('IntersectionObserver' in window)) return;
+    const liens = new Map([...rail.querySelectorAll('a[href^="#"]')].map((a) => [a.getAttribute('href').slice(1), a]));
+    const vus = new Set(); let courant = null;
+    const maj = () => {
+      const premier = [...liens.keys()].find((id) => vus.has(id)); if (!premier || premier === courant) return;
+      liens.get(courant)?.removeAttribute('aria-current'); courant = premier;
+      const a = liens.get(courant); a.setAttribute('aria-current', 'location');
+      if (rail.scrollWidth > rail.clientWidth) { const l = a.offsetLeft - rail.clientWidth / 2 + a.offsetWidth / 2; rail.scrollTo({ left: l, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+    };
+    const io = new IntersectionObserver((es) => { es.forEach((e) => (e.isIntersecting ? vus.add(e.target.id) : vus.delete(e.target.id))); maj(); }, { rootMargin: '-80px 0px -60% 0px' });
+    liens.forEach((_, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+  })();
+</script>
 </Base>

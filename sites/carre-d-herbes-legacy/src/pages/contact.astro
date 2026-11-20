@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import Horaires from '../components/Horaires.astro';
+import Photo from '../components/Photo.astro';
+import { resto, photos } from '../data/site';
+const B = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title="Contact et horaires, Carré d’herbes à Wépion" description="Chaussée de Dinant 780 à Wépion, le long de la Meuse. Horaires d’ouverture, parking privé et réservation par téléphone." page="contact">
+  <div class="pagehead"><div class="container"><h1>Nous trouver</h1><p class="lead">Le restaurant se situe le long de la Meuse, entre Namur et Dinant.</p></div></div>
+  <section class="section">
+    <div class="container cols">
+      <div class="split__a stack">
+        <h2>Adresse</h2>
+        <p>{resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.commune}</p>
+        <p>{resto.parking}</p>
+        <h2 style="margin-top: var(--space-xl)">Téléphone</h2>
+        <a class="bigtel" href={resto.telHref}>{resto.tel}</a>
+        <p>{resto.reservation}</p>
+        <a class="btn-2" href={B + 'reservations/'}>Comment réserver</a>
+        <Photo p={photos.facade} caption="La façade en brique rouge" sizes="(min-width: 1000px) 30vw, 70vw" />
+      </div>
+      <div class="split__b stack">
+        <h2>Horaires</h2>
+        <Horaires />
+      </div>
+    </div>
+  </section>
+</Base>

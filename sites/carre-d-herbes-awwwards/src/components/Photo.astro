@@ -1,0 +1,14 @@
+---
+import { Picture } from 'astro:assets';
+import { photos } from '../data/site';
+const imgs = import.meta.glob<{ default: ImageMetadata }>('../assets/photos/*.jpg', { eager: true });
+interface Props { k: keyof typeof photos; sizes?: string; eager?: boolean; class?: string; ratio?: string; pos?: string; reveal?: 'clip' | 'scale' | 'fade'; tournette?: number }
+const { k, sizes = '(min-width: 900px) 50vw, 100vw', eager = false, class: cls = '', ratio, pos, reveal, tournette } = Astro.props;
+const p = photos[k];
+const meta = imgs[`../assets/photos/${p.src}.jpg`].default;
+const style = [ratio ? `aspect-ratio:${ratio}` : '', pos ? `object-position:${pos}` : ''].filter(Boolean).join(';') || undefined;
+const widths = [480, 800, 1200, 1600].filter((w) => w <= meta.width);
+---
+<Picture src={meta} alt={p.alt} formats={['avif', 'webp']} fallbackFormat="webp" widths={widths.length ? widths : [meta.width]} sizes={sizes}
+  loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : undefined}
+  class={cls} pictureAttributes={{ class: 'photo-p', 'data-reveal': reveal, 'data-tournette': tournette }} style={style} />

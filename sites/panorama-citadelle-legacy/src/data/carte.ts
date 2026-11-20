@@ -3,7 +3,7 @@ export type Plat = { nom: string; desc: string | null; prix: string };
 export type Rubrique = { titre: string; id: string; plats: Plat[] };
 export const carte: Rubrique[] = [
  {
-  "titre": "Pour l'apéro à partager",
+  "titre": "Pour l’apéro à partager",
   "id": "pour-l-apero-a-partager",
   "plats": [
    {
@@ -137,7 +137,7 @@ export const carte: Rubrique[] = [
    },
    {
     "nom": "Poêlée de cuisses de grenouilles",
-    "desc": "beurre à l'ail, persil",
+    "desc": "beurre à l’ail, persil",
     "prix": "23,00 €"
    }
   ]
@@ -148,7 +148,7 @@ export const carte: Rubrique[] = [
   "plats": [
    {
     "nom": "Sole n°2",
-    "desc": "fondue d'épinards, purée au beurre ou frites",
+    "desc": "fondue d’épinards, purée au beurre ou frites",
     "prix": "Prix du jour"
    },
    {
@@ -220,11 +220,11 @@ export const carte: Rubrique[] = [
   "plats": [
    {
     "nom": "Bar de ligne en croûte de sel",
-    "desc": "beurre blanc, légumes de saison (± 50 min d'attente)",
+    "desc": "beurre blanc, légumes de saison (± 50 min d’attente)",
     "prix": "98,00 €"
    },
    {
-    "nom": "Épaule d'agneau",
+    "nom": "Épaule d’agneau",
     "desc": "zaatar, tzatziki aubergine, relish, menthe, grenade, pain gyros",
     "prix": "98,00 €"
    },

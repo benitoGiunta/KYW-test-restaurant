@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import { resto } from '../data/site';
+---
+<Base title="Comment réserver, Carré d’herbes à Wépion" description="Les réservations se prennent uniquement par téléphone, du mercredi au dimanche à partir de 10 h 00. Formulaire de contact les jours de fermeture." page="reservations">
+  <div class="pagehead"><div class="container"><h1>Comment réserver</h1><p class="lead">{resto.reservation}</p></div></div>
+  <section class="section">
+    <div class="container stack">
+      <a class="bigtel" href={resto.telHref}>{resto.tel}</a>
+      <p>Le formulaire ci-dessous est à votre disposition si vous souhaitez impérativement nous contacter durant les jours de fermeture ou de congé. Nous répondons à partir du mercredi, mais comme nous passons beaucoup de temps derrière les fourneaux, cela peut prendre quelques jours. Pour une réponse rapide et complète, privilégiez l’appel téléphonique.</p>
+    </div>
+  </section>
+  <section class="section band">
+    <div class="container">
+      <h2>Nous écrire</h2>
+      <form class="form" style="margin-top: var(--space-xl)" method="post" data-endpoint="" novalidate>
+        <div><label for="prenom">Prénom</label><input id="prenom" name="prenom" autocomplete="given-name" required /></div>
+        <div><label for="nom">Nom</label><input id="nom" name="nom" autocomplete="family-name" required /></div>
+        <div><label for="mail">E-mail</label><input id="mail" name="email" type="email" autocomplete="email" required /></div>
+        <div><label for="tel">Téléphone</label><input id="tel" name="tel" type="tel" autocomplete="tel" required /></div>
+        <div><label for="date">Date souhaitée</label><input id="date" name="date" type="date" required /></div>
+        <div><label for="couverts">Nombre de couverts</label><input id="couverts" name="couverts" type="number" min="1" required /></div>
+        <div class="full"><label for="msg">Message</label><textarea id="msg" name="message"></textarea></div>
+        <div class="full"><button class="btn" type="submit">Envoyer</button><p class="small" style="margin-top: var(--space-md)">Maquette : ce formulaire n’envoie rien pour l’instant.</p></div>
+      </form>
+    </div>
+  </section>
+</Base>

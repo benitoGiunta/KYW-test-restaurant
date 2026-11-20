@@ -50,3 +50,42 @@ Choix : le 1, seul concept qui tient du hero au pied, à la carte (grille des he
 16. Familles de section : poster, média, paire, index, paire, données, pied, une fois chacune sur l'accueil. [x]
 17. Hero en 3 s : nom, cuisine, horaires, CTA dans le premier écran (mesure : h1 top 107 px, CTA 454 px à 1440x900). [x]
 18. Mobile 390 recomposé : titre une ligne, `scrollW` = 390 sur 4 pages mesurées, bande défilante, strip snap, règle une heure sur deux. [x]
+
+## Mouvement (phase 2, réalisé)
+- **Variable pilote** : l'heure, de 8 h à 23 h (`src/motion/horizon.ts`). Le défilement fait avancer la journée (haut de page 8 h, pied 23 h) ; le pointeur l'incline de 0,8 h au plus (vitesse de défilement au toucher) ; au repos, le soleil balaie ± 0,7 h à vitesse constante (aller-retour linéaire, pas de point mort). Consommateurs : soleils des règles `pilote` (hero avec étiquette d'heure, journée, pied), en pause hors écran (IntersectionObserver + `gsap.ticker`).
+- **Intro du hero** : composition peinte dès la première image (h1 et photo jamais masqués) ; les mots du titre montent de 16 %, la règle se trace cran par cran de 8 h à 23 h (stagger 30 ms), le soleil se lève, la vue se pose (échelle 1,16 vers 1,08). La règle du hero passe en haut de la vue, sur un voile ardoise, pour que le soleil se lise dans le premier écran (1440x900 : y = 590 ; 1280x720 : 559 ; 390x844 : 514).
+- **Signature** : la règle et son soleil, recette « scrub lié au scroll » + repos ; la vue du hero balaie l'horizon au défilement (`xPercent` 2 vers -2, scrub 0,6).
+- **Révélations** : titres de section `data-split="lines"` (engine) ; images par balayage latéral `clip-path inset(0 100% 0 0)` vers 0 (1,4 s, `expo.out`), jamais au premier écran ; règles hors hero tracées cran par cran (25 ms).
+- **Transition** : la nuit balaie l'écran de gauche à droite (0,7 s puis 0,85 s, `expo.inOut`), elle porte la ligne d'horizon et un soleil qui la traverse plus vite (parallaxe interne).
+- **Hovers** (deux traitements, verbe balayer) : aplat qui balaie de gauche à droite (CTA ; liens texte en surlignage bas, soulignés au repos) ; trait qui se trace (navigation, index de la carte, où la section lue reste tracée et passe en vert Meuse).
+- **Mobile** : pas de menu hamburger, décision phase 1 maintenue et mesurée : les 3 entrées tiennent à 320, 360 et 390 px (`scrollWidth` = largeur, cibles de l'en-tête ≥ 44 px).
+- **Repli** : sans `.motion`, règles à leur marque (hero 20 h, journée 13 h, pied 23 h), étiquette masquée, images et titres visibles, aucune transition de page animée.
+
+## Sur-utilisation de la skill (phase 2)
+19. Menu mobile : sans objet, décision écrite (3 liens, mesure 320/360/390 : `scrollWidth` 320/360/390, `navRight` 304/344/374, 0 cible < 44 px dans `.tete`). [x]
+20. Engine verbatim (`src/engine/`), `astro.ts`, `transition:persist` sur `#curtain` (Base.astro:77, pas de `#gl` ni `#cursor`), `transition:animate="none"` sur `<html>` (Base.astro:40). [x]
+21. Une horloge : grep `addEventListener('scroll'|requestAnimationFrame` dans motion/, components/, pages/, layouts/ : 0 résultat ; ticker dans horizon.ts. [x]
+22. Code de page dans `onPage()` avec nettoyage (horizon.ts:57 et 152 ; `io.disconnect`, `ticker.remove`, `removeEventListener('refresh')`). [x]
+23. Aucune CSS `transform` sur élément GSAP : astre (x), crans (scaleY), mots du h1, `picture` du hero, rideau ; `.regle__h` (translateX CSS) et `.regle__etiquette` (translate CSS) animés en opacité seulement. [x]
+24. Module pilote avec `startIdle` (horizon.ts:22) et pointeur (`idle.x`). [x]
+25. Loader : non, décision de concept (phase 1) ; aucun composant ni `role="status"`. [x]
+26. Transition du concept ≤ 1 s par sens : 0,7 s et 0,85 s (setup.ts). [x]
+27. Intro du hero dans la timeline `intro` de l'engine (horizon.ts, `intro.add`), premier frame = composition complète (h1 et photo peints). [x]
+28. Épinglages : aucun pin ; scrub de la vue avec `invalidateOnRefresh`. [x]
+29. Repli statique dessiné : `html:not(.motion) .regle__etiquette`, règles à leur marque (Regle.astro). [x]
+30. Copies décoratives `aria-hidden` (règles, rideau, `pied__mot`), pas de titre dupliqué. [x]
+31. Une famille d'easing (`ease.out`, `ease.inOut`, `ease.soft` ; CSS `cubic-bezier(0.19, 1, 0.22, 1)` = expo.out), stagger 25 à 70 ms. [x]
+32. Deux traitements dans le verbe (site.css:248 à 276). [x]
+33. Hover sous `@media (hover: hover)` (site.css:269), même état sur `:focus-visible`, `:active` présent. [x]
+34. Liens texte soulignés au repos (`.lien`, site.css:16). [x]
+35. `hover.noHoverChange` : phase 3 (report.json). [ ]
+36. Repos : mesuré, captures à 1,5 s d'écart différentes à 1440, 1280, 390, 320 (soleil + étiquette) ; `idleMotion` à lire en phase 3. [x partiel]
+37. Curseur natif visible (pas de follower), rien ne dépend du hover au toucher. [x]
+38. Pas de blur, pas de `box-shadow` au scroll, pas de `will-change`. [x]
+39. Réduit : `startHorizon` sort tôt, Lenis absent (engine), 0 texte caché à 390 réduit sur les 5 pages (mesure). [x]
+40. GL : sans objet, décision écrite (Concept Card). [x]
+41. Sans objet. [x]
+44. Skip link en premier (Base.astro), focus dans l'accent, `.nuit` en vert sauge. [x]
+45. Contraste : liens du pied passés en vert sauge sur nuit (ils étaient en vert Meuse sur ardoise) ; voile ardoise 0,78 sous la règle du hero ; mesure en phase 3. [x partiel]
+46. Texte réel, aucun canvas. [x]
+47. Cibles : `.tete__nav a` 44 px, CTA 48 px. [x]

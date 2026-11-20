@@ -16,6 +16,9 @@ const medaillons = [
   { photo: photoDe('/photos/bar-salle.webp'), titre: 'Le bar', texte: 'Marbre noir, tabourets verts' },
 ];
 const fourABois = site.carte[1];
+const photoAstre = photoDe('/photos/vue-meuse.webp');
+const angleDe = (h: number) => Math.round(Math.min(1, Math.max(0, (h - 7) / 16)) * 180);
+const nomTarte = (n: string) => n.replace(/^Tarte flambée\s+/i, '');
 ---
 <Base theme="aube">
   <div data-accueil>
@@ -40,6 +43,13 @@ const fourABois = site.carte[1];
         <p class="maintenant" data-maintenant hidden>
           <a class="maintenant__lien" href="#accueil" data-maintenant-lien><span class="maintenant__point" aria-hidden="true"></span><span data-maintenant-texte>Aller au moment présent</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" /></svg></a>
         </p>
+      </div>
+      <!-- Signature : la vue sur la Meuse dans un disque, un soleil qui parcourt l'orbite de 7h à 23h et se pose à l'heure réelle. Décoratif. -->
+      <div class="astre" data-astre aria-hidden="true">
+        <div class="astre__photo"><img src={asset(photoAstre.src.replace('.webp', '-960.webp'))} alt="" width="960" height={Math.round(960 * photoAstre.hauteur / photoAstre.largeur)} decoding="async" data-astre-img /></div>
+        <div class="astre__orbite"></div>
+        {moments.map((x) => <span class="astre__cran" style={`--a:${angleDe(x.heure)}`}></span>)}
+        <div class="astre__bras" data-astre-bras><span class="astre__soleil"></span></div>
       </div>
     </section>
 
@@ -120,7 +130,7 @@ const fourABois = site.carte[1];
           <ol class="jours">
             {fourABois.plats.map((p) => (
               <li class="jour" data-reveal="up">
-                <span class="jour__nom">{p.nom}</span>
+                <span class="jour__nom">{nomTarte(p.nom)}</span>
                 <span class="jour__plat">{p.description}</span>
                 <span class="jour__prix">{p.prix}</span>
               </li>

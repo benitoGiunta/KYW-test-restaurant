@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Rondes from '../components/Rondes.astro';
+import { site, menus, plats, fromages, fetes } from '../data/site';
+import { u } from '../lib/url';
+const groupes = [
+  { titre: 'Entrée', liste: plats.entrees, ou: 'Menus en trois, quatre et cinq assiettes' },
+  { titre: 'Plat', liste: plats.plats, ou: 'Tous les menus' },
+  { titre: 'Dessert', liste: plats.desserts, ou: 'Un au choix' },
+  { titre: 'Assiettes en plus', liste: plats.supplements, ou: 'Menus en quatre et cinq assiettes' },
+];
+---
+<Base page="carte" title="La carte" description="Menus en deux, trois, quatre ou cinq assiettes de 38 à 85 euros, avec accord mets-vins. Les plats du moment de Carré d'herbes, à Wépion.">
+  <section class="sec sec--ardoise carte-tete" aria-labelledby="titre">
+    <div class="wrap">
+      <h1 id="titre" data-split="lines" data-intro class="display carte-tete__titre">On compte en assiettes</h1>
+      <p class="carte-tete__texte">Pas de carte à la carte : quatre menus, de deux à cinq assiettes. Le chef annonce les plats, la maison choisit l'accord.</p>
+      <ol class="idx idx--grand">
+        {menus.map((m) => (
+          <li class="idx__ligne">
+            <div class="idx__lien">
+              <Rondes n={m.assiettes} />
+              <h2 class="idx__nom display">{m.nom}</h2>
+              <p class="idx__detail">{m.detail}</p>
+              <p class="idx__prix"><span class="prix">{m.prix}&nbsp;€</span>{m.accord && <span class="accord">avec accord mets-vins {m.accord}&nbsp;€</span>}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="note">Fromages affinés : {fromages.supplement}&nbsp;€ en supplément, ou {fromages.remplacement}&nbsp;€ en remplacement du dessert.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--pierre plats" aria-labelledby="plats">
+    <div class="wrap">
+      <h2 id="plats" data-split="lines" class="display titre">Dans l'assiette en ce moment</h2>
+      <div class="plats__corps">
+        <div class="plats__liste">
+          {groupes.map((g) => (
+            <section class="plats__groupe" aria-label={g.titre}>
+              <h3 class="sous">{g.titre}<span class="note"> · {g.ou}</span></h3>
+              <ul class="plats__ul">
+                {g.liste.map((p) => (
+                  <li class="plat"><h4 class="plat__nom display">{p.nom}</h4>{p.description && <p class="plat__desc">{p.description}</p>}</li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+        <div class="plats__ph">
+          <Photo reveal="scale" k="plat" class="rond" tournette={0.7} sizes="(min-width: 900px) 30vw, 70vw" />
+          <Photo reveal="scale" k="entrees" class="rond plats__ph2" tournette={-1} sizes="(min-width: 900px) 18vw, 45vw" />
+        </div>
+      </div>
+      <p class="note">Les plats changent avec la saison et l'inspiration du chef. Photos : plats du restaurant.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--ardoise fetes" aria-labelledby="fetes">
+    <div class="wrap fetes__grid">
+      <h2 id="fetes" data-split="lines" class="display titre">Les fêtes de fin d'année</h2>
+      <article class="fetes__bloc">
+        <h3 class="sous">{fetes.noel.titre}</h3>
+        <p class="fetes__quand">{fetes.noel.quand}</p>
+        <p class="prix prix--grand">{fetes.noel.prix}&nbsp;€</p>
+        <p>{fetes.noel.note}</p>
+      </article>
+      <article class="fetes__bloc">
+        <h3 class="sous">{fetes.emporter.titre}</h3>
+        <p class="fetes__quand">{fetes.emporter.quand}</p>
+        <p class="prix prix--grand">{fetes.emporter.formules.join(' / ')}&nbsp;€</p>
+        <p>{fetes.emporter.note}</p>
+        <ul class="heures heures--prix">
+          {fetes.emporter.plats.map((p) => <li><span>{p.nom}</span><span class="prix">{p.prix}&nbsp;€</span></li>)}
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec sec--pierre infos" aria-labelledby="infos">
+    <div class="wrap infos__grid">
+      <h2 id="infos" data-split="lines" class="titre">À savoir</h2>
+      <div>
+        <p>{fetes.regimes}</p>
+        <p>{fetes.bonCadeau}</p>
+        <p class="hero__actions"><a class="btn btn--pierre" href={`tel:${site.telephone}`}><span>Réserver au {site.telephoneAffiche}</span></a><a class="lien" href={u('/reservation/')}>Horaires et accès</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
