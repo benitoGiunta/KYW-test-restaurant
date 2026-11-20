@@ -11,12 +11,33 @@ const liens = [
 ---
 <header class="entete">
   <div class="wrap entete__in">
-    <a class="entete__marque" href={u('/')} aria-label="Le Brunchist, accueil">Le Brunchist</a>
+    <div class="entete__gauche">
+      <a class="entete__marque" href={u('/')}>Le Brunchist</a>
+      <span class="entete__heure mono" aria-hidden="true" data-cadran-heure>9&nbsp;h&nbsp;30</span>
+    </div>
     <nav class="entete__nav" aria-label="Navigation principale">
       <ul>
         {liens.map((l) => <li><a class="nav-lien" href={u(l.href)} aria-current={page === l.id ? 'page' : undefined}>{l.nom}</a></li>)}
       </ul>
     </nav>
-    <a class="cta cta--petit" href={restaurant.telephoneHref}><span class="cta__txt">Appeler</span></a>
+    <div class="entete__droite">
+      <button class="entete__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button>
+      <a class="cta cta--petit" href={restaurant.telephoneHref}><span class="cta__txt">Appeler</span></a>
+    </div>
   </div>
+  <span class="entete__regle" aria-hidden="true"><span class="entete__fil" data-cadran-fil></span></span>
+  <dialog class="menu" id="menu" aria-label="Menu">
+    <div class="wrap menu__in">
+      <div class="menu__haut">
+        <span class="menu__marque">Le Brunchist</span>
+        <button class="menu__fermer" type="button" data-menu-fermer>Fermer</button>
+      </div>
+      <ul class="menu__liens">
+        <li><a class="menu__lien" href={u('/')} aria-current={page === 'accueil' ? 'page' : undefined}>Accueil</a></li>
+        {liens.map((l) => <li><a class="menu__lien" href={u(l.href)} aria-current={page === l.id ? 'page' : undefined}>{l.nom}</a></li>)}
+      </ul>
+      <p class="menu__bas">{restaurant.adresse.rue} {restaurant.adresse.numero}, Namur. Du mercredi au dimanche, 9&nbsp;h&nbsp;30 à 15&nbsp;h&nbsp;30.</p>
+      <p><a class="cta cta--clair" href={restaurant.telephoneHref}><span class="cta__txt">Appeler</span></a></p>
+    </div>
+  </dialog>
 </header>

@@ -1,19 +1,22 @@
-# ETAT : Le Brunchist, variante awwwards, phase 1 (construction-1)
+# ETAT : Le Brunchist, variante awwwards, phases 1 et 2 faites
 
 ## Fait
-- DESIGN.md (brief, 3 concepts, Concept Card, système, checklist 1 à 18).
-- Scaffold Astro, engine verbatim (sans GL), tokens, site.css, polices (Cabinet 500/800, DM Mono 400).
-- Contenu `src/data/site.ts` (placeholders marqués), 5 pages statiques : /, /carte/, /histoire/, /reservation/, 404. Pied KYW, noindex, JSON-LD Restaurant.
-- Build OK (`scripts/q.sh build pnpm build:site sites/le-brunchist-awwwards`). Mesures 1440/1280/1024/390 : aucun débordement, h1 et CTA du hero dans le viewport.
+- Phase 1 : DESIGN.md (brief, concepts, Concept Card, système), scaffold Astro, engine verbatim sans GL, contenu `src/data/site.ts`, 5 pages, pied KYW, noindex, JSON-LD.
+- Phase 2 (construction-2) :
+  - Pilote `src/motion/cadran.ts` : heure du service (9 h 30 à 15 h 30) tirée du scroll vers l'heure de l'en-tête, la règle des heures (fil jaune), le disque du hero ; sol des bandes qui s'étale en cercle (`--etale`, classe `etale`/`is-plein`) ; lettres gommées du mot-valise ; barres de la semaine. Repos : trotteuse (perle griotte) au rythme réel des secondes. 404 épinglée à 15 h 31 (`data-heure-fixe`).
+  - Transition de page (setup.ts) : café en cercle depuis le clic, jaune au centre. Pas de loader.
+  - Menu mobile `<dialog>` (Header.astro, menu.ts), testé (aria-expanded, focus, Échap, fermeture au clic).
+  - Reveals `data-split`/`data-reveal`, intro par page, hovers sous `(hover: hover)` + `:focus-visible` + `:active`, `::selection`, lien KYW souligné au survol, favicon PNG 32 et apple-touch 180.
+  - Pied du site passé de `<footer>` à `<section aria-label="Informations pratiques">` (le composant KYW porte le seul `<footer>`).
+  - Hero recomposé : tailles plafonnées en `svh` (CTA visibles à 1280×720), disque en grand sous la méta au téléphone ; `.hero { overflow: clip }` (le disque grossi au scroll débordait de 6 px).
+  - Build OK. DESIGN.md § Sur-utilisation : points 19 à 47 cochés avec preuve (sauf 35, 36, 41, 45 : phase 3).
 
-## Reste (phases 2 et 3)
-- Phase 2 : pilote du cadran (`src/motion/setup.ts` est un squelette vide) : heure, disque en clip-path, règle d'heures, respiration au repos, reveals, état « ouvert » calculé depuis `jours`.
-- Phase 3 : QA navigateur, shoot/audit, OG (`public/og.png` absent : balise og:image pointe dessus), favicon-32/apple-touch non faits (SVG seulement), RAPPORT.md, checklist 42 à 63.
-- Vérifier le SplitText/data-reveal : aucun attribut posé en phase 1.
+## Reste (phase 3)
+- Shoot et audit complets (agent captures), lecture de `report.json` : `idleMotion` (perle de 1,6 rem, ~21 px de déplacement en 1,5 s), `settledMs`, contraste, `hover.*`, cibles.
+- OG `public/og.png` absent (balise og:image pointe dessus) ; RAPPORT.md ; checklist 42 à 63.
+- Vérifier à l'œil les heures `data-split="lines"` contenant des insécables (« 9 h 30 ») sur la carte et l'index.
 
-## Décisions
-- Aucune photo (aucune fournie ; stock écarté) : compositions typographiques et disque CSS. Pas de loader, pas de GL.
-- Prix, descriptions et classement par moment illustratifs (`placeholder: true`), signalés sur la carte. Aucun e-mail, aucun avis, aucune note.
-- Réservation : tel + réseaux, mention honnête que les sources divergent. Pas de formulaire.
-- Source des faits douteux : horaires (9 h 30 à 15 h 30 retenus), adresse (place d'Armes) et téléphone récents ; rue des Brasseurs citée comme ancienne adresse (namur.top 2023).
-- Serveur de mesure sur le port 4400 arrêté en fin de phase.
+## Décisions et pièges
+- Sol de la bande café (pied) exclu de l'étalement : texte clair sur sol vert pendant le cercle = contraste insuffisant.
+- `startIdle()` n'existe pas dans cet engine : repos démarré par `intro.call` à 1,45 s.
+- Serveur de test : `serve.mjs dist --port 4421`, lancé en tâche de fond par l'agent, arrêté en fin de phase.
