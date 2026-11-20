@@ -8,7 +8,7 @@ const horaires = JSON.stringify(site.horaires.map((h) => ({ j: h.jour, c: h.cren
   <div class="marquee__piste">
     {[0, 1].map((k) => (
       <p class="marquee__groupe" aria-hidden={k === 1 ? 'true' : undefined}>
-        <span class="marquee__etat" data-marquee-etat>{site.saison.terminee ? 'Saison terminée' : 'Horaires du jour'}</span>
+        <span class:list={['marquee__etat', { 'is-ferme': site.saison.terminee }]} data-marquee-etat>{site.saison.terminee ? `${site.saison.texte}, terminée : rendez-vous à la prochaine saison` : 'Horaires du jour'}</span>
         {base.map((t) => <span>{t}</span>)}
       </p>
     ))}

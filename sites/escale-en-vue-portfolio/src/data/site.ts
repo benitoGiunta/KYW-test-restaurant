@@ -215,14 +215,13 @@ export const guinguette = {
     points: ['Toutes les tables dehors', 'Vue sur la vallée', 'Une alternative végé à chaque plat', 'Bières régionales et trappistes'],
     pratique: [
       { texte: 'Carte bancaire acceptée', source: 'Petit Futé' },
-      { texte: 'Parking gratuit', source: 'Tripadvisor' },
     ],
   },
   /** Manifeste : phrases tirées des valeurs réelles du dossier. */
   manifeste: {
     titre: ['Fraîche, familiale', 'et locale'],
     motItalique: 'locale',
-    texte: 'Une cuisine fraîcheur, créative, familiale. Des produits d’artisans locaux et d’une coopérative de paysans-artisans, et des tomates et aubergines du jardin pour la parmigiana de fin d’été.',
+    texte: 'Et au jardin, les tomates et les aubergines de la parmigiana de fin d’été.',
   },
   finale: 'À bientôt !',
 };
