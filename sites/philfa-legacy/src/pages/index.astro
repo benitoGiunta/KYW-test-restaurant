@@ -154,11 +154,41 @@ const adr = `${resto.adresse.rue} ${resto.adresse.numero}`;
 
   <script is:inline>
     (() => {
-      const s = document.querySelector('[data-switcher]'); if (!s) return;
-      const tabs = [...s.querySelectorAll('[role=tab]')];
-      const show = (t) => tabs.forEach((x) => { const on = x === t; x.setAttribute('aria-selected', String(on)); document.getElementById(x.getAttribute('aria-controls')).hidden = !on; });
-      tabs.forEach((t) => t.addEventListener('click', () => show(t)));
-      show(tabs[0]);
+      /* Switcher : flèches, Début, Fin, tabindex itinérant ; sans script les deux panneaux restent visibles */
+      const s = document.querySelector('[data-switcher]');
+      if (s) {
+        const tabs = [...s.querySelectorAll('[role=tab]')];
+        const show = (t, focus) => {
+          tabs.forEach((x) => { const on = x === t; x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; });
+          if (focus) t.focus();
+        };
+        tabs.forEach((t, i) => {
+          t.addEventListener('click', () => show(t));
+          t.addEventListener('keydown', (e) => {
+            const k = { ArrowRight: i + 1, ArrowDown: i + 1, ArrowLeft: i - 1, ArrowUp: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+            if (k === undefined) return;
+            e.preventDefault(); show(tabs[(k + tabs.length) % tabs.length], true);
+          });
+        });
+        show(tabs[0]);
+      }
+      /* Horaires : jour courant, fuseau de Namur */
+      const jour = new Intl.DateTimeFormat('fr-BE', { weekday: 'long', timeZone: 'Europe/Brussels' }).format(new Date()).toLowerCase();
+      document.querySelectorAll('.schedule__row').forEach((r) => {
+        const dt = r.querySelector('dt');
+        if (dt && dt.textContent.trim().toLowerCase() === jour) {
+          r.setAttribute('aria-current', 'date');
+          const m = document.createElement('span'); m.className = 'schedule__today'; m.textContent = 'Aujourd’hui'; dt.append(m);
+        }
+      });
+      /* Menu mobile : aria-expanded, position sous la barre, fermeture au clic sur un lien */
+      const nav = document.getElementById('menu-nav'), btn = document.querySelector('.nav__menu'), head = document.querySelector('.nav');
+      if (nav && btn && nav.showPopover) {
+        nav.addEventListener('beforetoggle', (e) => { if (e.newState === 'open') nav.style.setProperty('--nav-h', Math.round(head.getBoundingClientRect().bottom) + 'px'); });
+        nav.addEventListener('toggle', (e) => btn.setAttribute('aria-expanded', String(e.newState === 'open')));
+        nav.addEventListener('click', (e) => { if (e.target.closest('a')) nav.hidePopover(); });
+        matchMedia('(min-width: 60rem)').addEventListener('change', (m) => { if (m.matches && nav.matches(':popover-open')) nav.hidePopover(); });
+      }
     })();
   </script>
 </Base>
