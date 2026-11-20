@@ -1,0 +1,1 @@
+- 2026-11-20 : site Laravel/Inertia (WeKode) : carte en PDF dont deux pages sont des images (fêtes) et dont le texte `pdftotext -layout` mélange les colonnes (lire la page rendue par `pdftoppm`, recadrer avec -x -y -W -H) ; le hook sobriété refuse tout `curl` écrit dans la commande, même dans un script heredoc : écrire le script avec Write puis `scripts/q.sh <nom> bash <script>`.
