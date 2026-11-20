@@ -29,3 +29,7 @@
 
 ## Revue 1 (relecteur-site), fait
 - REVUE-1.md écrit : verdict A_CORRIGER, F0 0, F1 1 (procédure d'allergènes inventée, `pageInfos.acces`), F2 2 (légendes de trilogie, crédit « Photos : Tariki »), F3 3. Serveur de revue arrêté. Reste : révision des F1 à F3.
+
+## Publication (2026-11-20, agent publication)
+- Publié sur https://kyw-test-restaurant.vercel.app/tariki/awwwards/ (build OK, footer KYW présent, déploiement vérifié HTTP 200).
+- Reste : aucune revue de la révision légère ; legacy n'a pas été revu après REVISION-1 ; le portfolio publié avec des modifications de sources non revues après REVUE-2 (F2 corrigés au build, non revérifiés).
