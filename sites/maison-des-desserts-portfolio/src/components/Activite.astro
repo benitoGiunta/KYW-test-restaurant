@@ -1,0 +1,47 @@
+---
+// Un savoir-faire de la maison = un aplat pleine largeur de sa couleur ; la photo passe d'un côté à l'autre.
+import Vague from './Vague.astro';
+import { photoDe } from '../data/site';
+import type { Activite } from '../data/site';
+import { u, asset } from '../lib/url';
+interface Props { a: Activite; i: number; precedent: 'ecru' | 'vert' | 'rose' | 'bleu' | 'postit' | 'cacao' }
+const { a, i, precedent } = Astro.props;
+const p1 = photoDe(a.photo);
+const p2 = a.photo2 ? photoDe(a.photo2) : null;
+const inv = i % 2 === 1;
+const stickerCouleur = a.couleur === 'postit' ? 'ecru' : a.couleur === 'vert' ? 'ecru' : 'postit';
+---
+<section class={`aplat aplat--${a.couleur}`} id={a.id} data-activite={a.nom} data-couleur={a.couleur} aria-labelledby={`t-${a.id}`} style="padding-top: 0; border-top: 0">
+  <Vague couleur={precedent} />
+  <div class="wrap split" style="padding-top: calc(var(--u) * 4)" class:list={[inv ? 'split--inv' : '']}>
+    <div style={inv ? 'order: 2' : undefined}>
+      <h2 class="titre" id={`t-${a.id}`}><span class="etiquette" data-split="lines">{a.accroche} <em>{a.motItalique}</em></span></h2>
+      <p class="lead" style="margin-bottom: calc(var(--u) * 2)" data-reveal="up">{a.texte}</p>
+      <div class="stickers" data-reveal="up" data-delay="0.1">
+        {a.specialites.map((s) => <span class={`sticker sticker--${stickerCouleur}`} tabindex="0">{s}</span>)}
+      </div>
+      <div class="actions">
+        <a class="btn btn--ink" href={u('/carte/') + `#${a.id}`}>Voir la carte</a>
+      </div>
+    </div>
+    <div class="cadre" data-reveal="up" data-delay="0.15">
+      <img src={asset(p1.src)} alt={p1.alt} width={p1.largeur} height={p1.hauteur} loading="lazy" decoding="async" />
+      {p1.placeholder && <p class="tag" style="margin: var(--u)">Photo illustrative</p>}
+    </div>
+  </div>
+  {a.id === 'salon' && (
+    <svg class="tasse" data-derive viewBox="0 0 180 150" aria-hidden="true" focusable="false">
+      <path d="M20 40 h100 v60 a40 40 0 0 1 -40 40 h-20 a40 40 0 0 1 -40 -40 z" fill="#f2eee6" stroke="#0b0b0b" stroke-width="4" />
+      <path d="M120 55 h18 a22 22 0 0 1 0 44 h-18" fill="none" stroke="#0b0b0b" stroke-width="4" />
+      <path d="M45 20 c0 -10 10 -10 10 0 c0 10 -10 10 -10 20 M70 15 c0 -10 10 -10 10 0 c0 10 -10 10 -10 20" fill="none" stroke="#0b0b0b" stroke-width="4" stroke-linecap="round" />
+      <ellipse cx="70" cy="40" rx="50" ry="8" fill="#f7e25a" stroke="#0b0b0b" stroke-width="4" />
+    </svg>
+  )}
+  {p2 && (
+    <div class="wrap" style="padding-top: calc(var(--u) * 3)">
+      <div class="cadre" style="max-width: 40rem; margin-inline: auto" data-reveal="up">
+        <img src={asset(p2.src)} alt={p2.alt} width={p2.largeur} height={p2.hauteur} loading="lazy" decoding="async" />
+      </div>
+    </div>
+  )}
+</section>

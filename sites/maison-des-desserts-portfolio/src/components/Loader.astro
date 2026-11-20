@@ -1,0 +1,14 @@
+---
+// Loader : les trois cases du logo se collent une à une (setLoaderFormat), compteur en sr-only, barre ink.
+import { site } from '../data/site';
+const [a, b, ...reste] = site.nom.split(' ');
+---
+<div id="loader" role="status" aria-label="Chargement">
+  <div class="loader__inner" aria-hidden="true">
+    <span class="loader__case" data-loader-out data-loader-case>{a}</span>
+    <span class="loader__case" data-loader-out data-loader-case>{b}</span>
+    <span class="loader__case" data-loader-out data-loader-case>{reste.join(' ')}</span>
+  </div>
+  <span class="sr-only" data-loader-count>000</span>
+  <div class="loader__bar" data-loader-bar></div>
+</div>

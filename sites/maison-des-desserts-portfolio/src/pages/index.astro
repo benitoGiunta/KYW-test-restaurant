@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import Activite from '../components/Activite.astro';
+import { site, photoDe, horaireTexte, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/facade-jour.webp');
+const fete = photoDe('/photos/facade-vitrine-noel.webp');
+const [a, b, ...reste] = site.nom.split(' ');
+const ordre = ['rose', 'postit', 'cacao', 'bleu'] as const;
+const fmtP = (d: string | null) => (d ? new Date(d).toLocaleDateString('fr-BE', { month: 'long', year: 'numeric' }) : '');
+---
+<Base>
+  <Fragment slot="head">
+    <link rel="preload" as="image" href={asset('/photos/facade-jour.webp')} fetchpriority="high" />
+  </Fragment>
+
+  <section class="hero" data-hero>
+    <div class="hero__photo">
+      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="sync" />
+    </div>
+    <div class="wrap hero__inner">
+      <h1 class="hero__cases">
+        <span class="hero__case" data-hero-case>{a}</span>
+        <span class="hero__case" data-hero-case>{b}</span>
+        <span class="hero__case" data-hero-case>{reste.join(' ')}</span>
+      </h1>
+      <div class="hero__ligne">
+        <p class="etiquette" data-hero-apres>Pâtisserie, boulangerie et salon de thé à {site.adresse.commune}</p>
+        <a class="btn btn--ink" href={site.boutique.url} rel="noopener" data-hero-apres data-magnetic="0.2">Commander en ligne</a>
+        <a class="btn" href={u('/carte/')} data-hero-apres>La carte</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" aria-labelledby="manifeste">
+    <div class="wrap manifeste">
+      <div>
+        <h2 class="sr-only" id="manifeste">La maison</h2>
+        <p class="manifeste__phrase" data-split="lines">{site.manifeste.avant}<em>{site.manifeste.italique}</em>{site.manifeste.apres}</p>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)" data-reveal="up">{site.histoire[2]}</p>
+        <div class="stickers" style="margin-top: var(--u)">
+          {site.stickers.map((s) => <span class="sticker" tabindex="0">{s.texte}</span>)}
+        </div>
+      </div>
+      <div class="bulle" data-reveal="up" data-delay="0.15">
+        <p class="sur">Depuis 1946</p>
+        <p>{site.histoire[0]}</p>
+        <span class="bulle__qui">{site.histoire[1]}</span>
+      </div>
+    </div>
+  </section>
+
+  {site.activites.map((act, i) => <Activite a={act} i={i} precedent={i === 0 ? 'ecru' : ordre[i - 1]} />)}
+
+  <section class="surphoto" id="fetes" data-activite="Les fêtes" data-couleur="ecru" aria-labelledby="t-fetes">
+    <div class="surphoto__photo">
+      <img src={asset(fete.src)} alt={fete.alt} width={fete.largeur} height={fete.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+    </div>
+    <div class="wrap">
+      <div class="cartouche" data-reveal="scale">
+        <p class="sur">Fêtes 2026-2027</p>
+        <h2 class="titre titre--l" id="t-fetes">Bûches, gâteaux de l'An et <em>galettes</em></h2>
+        <p>Commandes de Noël {site.fetes.commandes.noel}. Commandes du Nouvel An {site.fetes.commandes.nouvelAn}.</p>
+        <div class="actions">
+          <a class="btn btn--ink" href={u('/fetes/')}>Les fêtes en détail</a>
+          <a class="btn" href={telHref()}>{site.telephone}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" aria-labelledby="t-presse">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-presse"><span class="etiquette" data-split="lines">Dans la <em>presse</em></span></h2>
+      <div class="avis-grille">
+        {site.presse.map((x, i) => (
+          <blockquote class="avis" data-reveal="scale" data-delay={String(i * 0.12)}>
+            <p>{x.titre}</p>
+            <cite>{x.media}{x.date ? `, ${fmtP(x.date)}` : ''}. <a class="link" href={x.url} rel="noopener">Lire l'article</a></cite>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--postit" aria-labelledby="t-infos">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-infos"><span class="etiquette" data-split="lines">Pour <em>venir</em></span></h2>
+      <div class="infos">
+        <div data-reveal="up">
+          <h3>Horaires</h3>
+          <dl class="horaires">{site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}</dl>
+        </div>
+        <div data-reveal="up" data-delay="0.08">
+          <h3>Adresse</h3>
+          <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+          <p style="margin-top: var(--u)"><a class="link" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a></p>
+        </div>
+        <div data-reveal="up" data-delay="0.16">
+          <h3>Contact</h3>
+          <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+          <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
+          <p style="margin-top: var(--u)"><a class="btn btn--ink" href={site.boutique.url} rel="noopener">Commander en ligne</a></p>
+        </div>
+        <div data-reveal="up" data-delay="0.24">
+          <h3>Le bâtiment</h3>
+          <p>{site.quartier.phrase}</p>
+          <p class="muted" style="margin-top: var(--u)">Une bâtisse du 17e siècle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
