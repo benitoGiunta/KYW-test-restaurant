@@ -1,0 +1,22 @@
+---
+import { u } from '../lib/fr';
+import { photos } from '../data/site';
+interface Props { n: string; slot: string; sizes?: string; eager?: boolean; ar?: string; pos?: string }
+const { n, slot, sizes = '(max-width: 60rem) 100vw, 50vw', eager = false, ar, pos } = Astro.props;
+const p = photos[n];
+const style = [ar ? `--ar:${ar}` : '', ].filter(Boolean).join(';');
+---
+<div data-slot={slot} data-alt={p.sujet} style={style || undefined}>
+  <img
+    src={u(`photos/${p.k}.webp`)}
+    srcset={`${u(`photos/${p.k}-800.webp`)} ${p.w2}w, ${u(`photos/${p.k}.webp`)} ${p.w}w`}
+    sizes={sizes}
+    width={p.w}
+    height={p.h}
+    alt={p.sujet}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+    fetchpriority={eager ? 'high' : undefined}
+    style={pos ? `object-position:${pos}` : undefined}
+  />
+</div>
