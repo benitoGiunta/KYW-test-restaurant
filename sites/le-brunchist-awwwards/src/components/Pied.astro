@@ -6,7 +6,7 @@ import { restaurant, jours, hh, horairesTexte } from '../data/site';
 <section class="pied band band--fin" aria-label="Informations pratiques">
   <div class="wrap pied__corps">
     <p class="pied__heure" aria-hidden="true" data-split="chars">15&nbsp;h&nbsp;30</p>
-    <p class="pied__mot">On range les tasses à 15&nbsp;h&nbsp;30. Le dernier café se commande avant.</p>
+    <p class="pied__mot">On range les tasses à 15&nbsp;h&nbsp;30.</p>
     <div class="pied__col">
       <h2 class="pied__titre">Venir</h2>
       <address>{restaurant.adresse.rue} {restaurant.adresse.numero}<br />{restaurant.adresse.cp} {restaurant.adresse.commune}<br /><span class="pied__doux">Terrasse en extérieur</span></address>
@@ -17,6 +17,7 @@ import { restaurant, jours, hh, horairesTexte } from '../data/site';
       <ul class="pied__horaires">
         {jours.map((j) => <li><span>{j.long}</span><span>{j.ouvre === null ? 'Fermé' : `${hh(j.ouvre)} à ${hh(j.ferme)}`}</span></li>)}
       </ul>
+      <p class="pied__doux">Horaires à confirmer : les sources divergent.</p>
     </div>
     <div class="pied__col">
       <h2 class="pied__titre">Contact</h2>
@@ -24,7 +25,7 @@ import { restaurant, jours, hh, horairesTexte } from '../data/site';
       <ul class="pied__reseaux">
         {restaurant.reseaux.map((r) => <li><a class="lien" href={r.url} rel="noopener">{r.nom}</a></li>)}
       </ul>
-      <p class="pied__cta"><a class="cta cta--clair" href={u('/reservation/')}><span class="cta__txt">Réserver ou venir</span></a></p>
+      <p class="pied__cta"><a class="cta cta--clair" href={u('/reservation/')}><span class="cta__txt">Nous trouver</span></a></p>
     </div>
     <p class="pied__colophon">{restaurant.credit}. Polices : Cabinet Grotesk (Indian Type Foundry, Fontshare) et DM Mono (Colophon, Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
   </div>

@@ -1,0 +1,40 @@
+# Revue awwwards · Le Brunchist · passe 1
+Verdict : A_CORRIGER
+Lecture en une ligne de l'idée du site (sans avoir lu DESIGN.md) : un brunch est un créneau horaire (9 h 30 à 15 h 30) ; le site entier est un cadran dont la couleur de fond, l'heure de l'en-tête et un disque à trotteuse suivent le défilement, de « 9 h 30 » (jaune) à « 15 h 30 » (brun), sans aucune photo.
+
+Scores /10 :
+- Design 7,5 : palette jaune d'œuf / vert / brun cohérente, titre « Brunchist » massif et net (d-01-hero), cadran lisible ; mais hero desktop très vide au centre et interlignes du bloc meta trop larges (F3), aucune image de plat.
+- Usabilité 7 : navigation courte, CTA « Voir la carte » et « Appeler » toujours visibles à 1280x720 et 390 px, menu `<dialog>` testé par le constructeur, 0 débordement à 1440/390/360 sur 5 pages ; le seul vrai appel à l'action est le téléphone (pas de réservation, voir F1-1).
+- Créativité 8 : le concept « le site se lit à l'heure du service » est propre à CE restaurant, mot-valise Br-eakfast / L-unch, transition de page en tasse de café, 404 « 15 h 31 » ; pas de gabarit reconnaissable.
+- Contenu 6 : faits conformes à `donnees.json` (adresse, téléphone, horaires, réseaux, presse), plats marqués illustratifs ; mais une procédure inventée (F1-1), une règle de service inventée répétée sur 5 pages (F2-1) et des horaires contestés présentés sans réserve hors accueil (F2-4).
+- Technique 8 : build OK, 0 erreur console, 0 requête en échec (15 chargements), CLS 0, LCP mobile 952 ms (QA, CPU x4 + 4G), page la plus lourde ~135 Ko, 60 FPS, 0 lien interne mort (tous les href internes résolus dans `dist/`), JSON-LD `Restaurant` avec adresse et horaires sur les 5 pages ; mais 1 violation axe serious sur l'accueil (F2-2).
+
+Preuves : `QA-revue1.md` et planches de `.shots-le-brunchist-awwwards-revue1/{home,le-brunchist-item}/`, plus deux scripts de mesure maison (axe-core complet après défilement par 300 px, console, requêtes, débordement, balises, 5 pages x 1440/390/360 px ; lignes réelles des titres ; reduced-motion). dist (01:24) postérieur à `src/` (`find -newer` vide) : captures du QA valides. La « 404 » de la planche du QA est la réponse brute de `serve.mjs` (page « Refontes de sites… ») : le vrai `404.html` a été mesuré à part (h1, lang, noindex, mention, 1 logo, 0 axe, 0 débordement à 3 largeurs).
+
+## Findings
+
+### F1 (majeur)
+- **F1-1 · T-invente · réservation par téléphone présentée comme un fait.** `src/pages/reservation.astro:5` (meta description : « Un coup de fil pour réserver une table ») et `reservation.astro:11` (« Le plus simple pour réserver ou poser une question : un coup de fil. »). Dossier, section Pratique : réservation « recommandée selon Quefaireanamur, non prise selon le site (à confirmer) » ; `donnees.json` : `reservation.outil: null`. La même page dit plus bas « certaines la recommandent, d'autres indiquent qu'elle n'est pas prise » : elle se contredit. Le titre de page et le CTA du pied (« Réserver ou venir ») laissent aussi entendre qu'on réserve. Correction : « Pour savoir si une table peut être réservée, appelez. » ; description : « …téléphone, horaires, plan, terrasse. » sans « réserver une table » ; renommer le CTA du pied en « Venir » ou « Nous trouver ».
+
+### F2 (mineur)
+- **F2-1 · T-invente · « On range les tasses à 15 h 30. Le dernier café se commande avant. »** `src/components/Pied.astro:9`, présent sur les 5 pages (le WARN « phrase répétée » de l'audit). Une dernière commande avant la fermeture n'est ni dans le dossier ni marquée illustrative. Correction : retirer la 2e phrase (garder « On range les tasses à 15 h 30. » comme image, ou l'horaire seul).
+- **F2-2 · Accessibilité · axe `aria-prohibited-attr` (serious), 5 nœuds, `.hero__meta`, accueil, aux 3 largeurs (1440, 390, 360).** SplitText pose `aria-label` sur des éléments sans rôle ; non vu par `shoot.mjs` (QA : 0 violation). Correction : option `aria: 'none'` de SplitText (ou `aria-hidden` sur les copies et texte réel en `sr-only`) pour `.hero__meta`. Autres pages : 0 violation axe aux 3 largeurs.
+- **F2-3 · Typographie · l'heure du titre de la section horaires est coupée entre « 9 » et « h 30 ».** `src/pages/index.astro:58` (`#titre-semaine`) : le HTML contient `9&nbsp;h&nbsp;30`, mais `data-split="lines"` coupe aux insécables. Mesure : lignes réelles « Du mercredi / au dimanche, 9 / h 30 à 15 h 30 » à 1440 et à 390 px (capture d'élément `rs-brun-h2-390.png` du scratchpad, planche `home/d-05-scroll.png` et `m-04-scroll.png`). C'est le coeur du concept (l'heure) qui est cassé. Correction : empêcher la coupure (SplitText `wordDelimiter` qui ignore U+00A0, ou envelopper l'heure dans un `<span class="nowrap">` conservé par le split, ou resserrer le titre pour tenir en 2 lignes : « Du mercredi au dimanche » / « 9 h 30 à 15 h 30 »).
+- **F2-4 · Contenu · horaires contestés affichés sans réserve hors accueil.** Dossier : « Contradictions : week-end seul 9:00-15:00, mercredi 10:00. À confirmer. » ; seule la section de l'accueil dit « Les sources consultées divergent ». Le tableau d'horaires du pied (5 pages), le JSON-LD et les meta les donnent comme certains. Correction : « (à confirmer) » discret sous le tableau d'horaires du pied (`Pied.astro`), ou un `placeholder`/mention dans le bloc Horaires.
+- **F2-5 · Contenu/design · aucune image.** Le dossier prévoit « des photos libres marquées placeholder » pour les agents de production ; le site n'en a aucune (pied : « les visuels sont des compositions typographiques »). Pour un café-brunch, rien ne montre un plat ; « Trois moments » et la carte sont des listes de texte. À arbitrer : si la variante veut rester typographique, ajouter au moins un visuel de plat dessiné/illustré (SVG) pour le jaune d'œuf du concept ; sinon 2 ou 3 photos libres marquées placeholder avec alt neutre.
+
+### F3 (finition)
+- **F3-1** Accueil : « Ouvert en 2022 par Mélisande et Arnaud. » sans « à confirmer » (dossier : fondateurs « à confirmer », prénoms seuls). Seule la page Histoire le dit, en petit. Ajouter la réserve ou « selon ELLE.be ».
+- **F3-2** Aucune espace insécable avant « : » (9 occurrences sur l'accueil, ex. « Du jaune d'œuf au dernier café : une matinée ») : la ponctuation peut passer seule en début de ligne. Convertir en U+00A0 (ou U+202F) dans `site.ts` et les `.astro`.
+- **F3-3** Hero desktop (`d-01-hero.png`) : le bloc `.hero__meta` a des interlignes quasi doubles (« Brunch et cafés de / spécialité » espacés d'environ 43 px pour 24 px de corps ; texte de 13 px à ~25 px) et le « Le » est décalé de 8 px à gauche de « Brunchist ». Resserrer `line-height` du split-line.
+- **F3-4** `.hero__disque` dépasse la fenêtre de 9 px à 390 et 360 px (right = 399), masqué par `.hero { overflow: clip }` : pas de défilement horizontal (scrollWidth = clientWidth), à surveiller.
+- **F3-5** Pas de `robots.txt` (le sitemap existe, 4 pages, sans 404) : sans effet pour une maquette `noindex`, le « 0 sitemap » du QA est un faux positif.
+- **F3-6** Le disque du hero n'a pas de nom accessible ni de rôle (décoratif) : vérifier `aria-hidden` ; non bloquant (0 violation axe).
+
+## Ce qui est bien (à ne pas casser à la révision)
+1. Le concept horaire : fond qui change de couleur au scroll, heure de l'en-tête, règle des heures, transition « tasse de café » ; repos en trotteuse, reduced-motion sans texte caché (0 élément à l'opacité 0 en `prefers-reduced-motion`).
+2. Honnêteté des données : carte et prix marqués illustratifs, mention « Maquette KYW, certaines données sont illustratives » et un seul logo KYW sur les 5 pages, `noindex, nofollow`, `lang="fr"`, un seul `h1`, un seul `<footer>`, titres/descriptions uniques, og.png composé (1200x630, vérifié), favicon, 404 designée.
+3. Mobile pensé : disque agrandi sous la méta, CTA visibles, menu `<dialog>`, tableau d'horaires en barres lisible à 390 px (m-04), 0 cible tactile < 24 px sur les pages du site.
+
+## Critères PUBLIABLE
+Build OK, 0 erreur console, 0 lien interne mort, 0 fait faux, 0 débordement, 0 axe critique, mention + logo + noindex présents : tenus. Non tenu : « 0 invention non marquée » (F1-1, F2-1). Aucun F0.
