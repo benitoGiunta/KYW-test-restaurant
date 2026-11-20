@@ -10,10 +10,11 @@ import Base from '../layouts/Base.astro';
     <div class="jobs">
       <section class="card" aria-labelledby="job-t">
         <h2 id="job-t">Être prévenu</h2>
-        <form class="form" method="post" action="" data-endpoint="">
-          <div class="field"><label for="job-mail">Adresse e-mail</label><input id="job-mail" name="email" type="email" autocomplete="email" required /></div>
+        <form class="form" method="post" action="" data-endpoint="" novalidate>
+          <div class="field"><label for="job-mail">Adresse e-mail</label><input id="job-mail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="nom@exemple.be" required aria-describedby="job-mail-m" /><span class="field__m" id="job-mail-m"></span></div>
           <small>Nous vous prévenons dès qu’un poste est disponible. Désabonnement en un clic.</small>
-          <div><button class="btn btn--primary" type="submit">Me notifier</button></div>
+          <p class="form__status" role="status" data-status></p>
+          <div><button class="btn btn--primary" type="submit">Me prévenir par e-mail</button></div>
         </form>
       </section>
     </div>

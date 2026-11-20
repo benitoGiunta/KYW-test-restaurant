@@ -6,8 +6,9 @@ const links = [['', 'Accueil'], ['carte', 'Carte'], ['galerie', 'Galerie'], ['jo
 ---
 <header class="nav">
   <div class="container nav__in">
-    <a class="nav__name" href={u('')}>{nom}</a>
-    <nav class="nav__links" aria-label="Principale">
+    <a class="nav__name" href={u('')} aria-label={`${nom}, accueil`}>{nom}</a>
+    <button class="nav__toggle btn" type="button" popovertarget="menu" aria-controls="menu" aria-expanded="false"><span class="nav__toggle-t">Menu</span></button>
+    <nav class="nav__links" id="menu" popover aria-label="Principale">
       {links.map(([h, l]) => <a href={u(h)} aria-current={current === h ? 'page' : undefined}>{l}</a>)}
       <a class="btn btn--primary" href={shop}>Boutique en ligne</a>
     </nav>

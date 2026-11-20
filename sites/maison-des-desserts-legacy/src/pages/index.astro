@@ -4,6 +4,7 @@ import Photo from '../components/Photo.astro';
 import Schedule from '../components/Schedule.astro';
 import { u, fr } from '../lib/fr';
 import { histoire, metiers, faq, fetes, carte, shop, adresse, tel } from '../data/site';
+const aperçu = (id: string) => (carte.find((c) => c.id === id)?.plats ?? []).slice(0, 3).map((p) => p.nom);
 const sugg = carte[0].plats.filter((p) => p.prix).slice(0, 5);
 const indexHero = [['Cuisine de midi', 'cuisine-midi'], ['Pâtisseries et assiettes', 'patisseries'], ['Crêpes et gaufres', 'crepes'], ['Boulangerie', 'boulangerie']];
 ---
@@ -40,18 +41,28 @@ const indexHero = [['Cuisine de midi', 'cuisine-midi'], ['Pâtisseries et assiet
       <h2 id="histoire" class="visually-hidden">Notre histoire</h2>
       <p class="display-s">Une chocolaterie née en 1946, un salon de thé depuis 1993.</p>
       <p class="pencil">trois générations, une même maison</p>
-      <div class="wall-text">{histoire.map((t) => <p>{fr(t)}</p>)}</div>
+      <div class="wall-text reveal">{histoire.map((t) => <p>{fr(t)}</p>)}</div>
     </div>
   </section>
 
   <section class="sec" aria-labelledby="metiers">
     <div class="container">
       <div class="sec__head"><h2 id="metiers">Trois métiers sous le même toit</h2><p class="lead">Les créations sont fabriquées par les équipes de la maison.</p></div>
-      <ul class="rows">
-        {metiers.map((m) => (
-          <li><h3>{m.nom}</h3><p class="desc">{fr(m.texte)}</p><a class="more link" href={u(`carte#${m.ancre}`)}>Voir à la carte</a></li>
-        ))}
-      </ul>
+      <div class="switch reveal" data-switch>
+        <div class="switch__tabs" role="tablist" aria-label="Nos métiers" hidden>
+          {metiers.map((m, i) => <button class="switch__tab" role="tab" type="button" id={`tab-${i}`} aria-controls={`panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{m.nom}</button>)}
+        </div>
+        <div class="switch__panels">
+          {metiers.map((m, i) => (
+            <div class="switch__panel" role="tabpanel" id={`panel-${i}`} aria-labelledby={`tab-${i}`} tabindex="0">
+              <h3>{m.nom}</h3>
+              <p class="lead">{fr(m.texte)}</p>
+              <p class="switch__aper">À la carte : {aperçu(m.ancre).map(fr).join(', ')}</p>
+              <p><a class="link" href={u(`carte#${m.ancre}`)}>Voir à la carte</a></p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
@@ -75,7 +86,7 @@ const indexHero = [['Cuisine de midi', 'cuisine-midi'], ['Pâtisseries et assiet
         <dl style="margin:0">{faq.map((f) => <><dt>{fr(f.q)}</dt><dd>{fr(f.r)}</dd></>)}</dl>
         <p><a class="btn btn--primary" href={shop}>Ouvrir la boutique</a></p>
       </div>
-      <div class="order__dates">
+      <div class="order__dates reveal">
         <h3 style="margin-bottom: var(--space-md)">Fêtes de fin d’année</h3>
         <ul class="rows">{fetes.map((f) => <li><span>{fr(f.q)}</span><span class="num">{fr(f.d)}</span></li>)}</ul>
       </div>

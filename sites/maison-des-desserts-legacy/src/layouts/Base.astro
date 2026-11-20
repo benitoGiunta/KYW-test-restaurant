@@ -21,9 +21,10 @@ const { title, description, current = '' } = Astro.props;
     <script is:inline>document.documentElement.classList.add('js')</script>
   </head>
   <body>
-    <a class="visually-hidden" href="#contenu">Aller au contenu</a>
+    <a class="skip" href="#contenu">Aller au contenu</a>
     <Nav current={current} />
-    <main id="contenu"><slot /></main>
+    <main id="contenu" tabindex="-1"><slot /></main>
     <Footer />
+    <script>import '../scripts/site.js';</script>
   </body>
 </html>

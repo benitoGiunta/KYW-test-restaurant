@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import { photos } from '../data/site';
+import { u } from '../lib/fr';
 // [numéro, colonnes occupées, rapport]
 const groupes: { t: string; items: [string, number, string][] }[] = [
   { t: 'La maison et le salon de thé', items: [['02', 7, '4 / 3'], ['03', 5, '4 / 5'], ['04', 4, '4 / 5'], ['05', 4, '4 / 5'], ['01', 4, '4 / 3']] },
@@ -21,7 +22,10 @@ const groupes: { t: string; items: [string, number, string][] }[] = [
         <div class="wall">
           {g.items.map(([n, span, ar]) => (
             <figure style={`--span:${span}`}>
-              <Photo n={n} slot={`galerie-${n}`} ar={ar} sizes={`(max-width: 60rem) 100vw, ${Math.round(span * 8)}vw`} />
+              <div class="zoomwrap">
+                <Photo n={n} slot={`galerie-${n}`} ar={ar} sizes={`(max-width: 60rem) 100vw, ${Math.round(span * 8)}vw`} />
+                <button class="zoom" type="button" data-full={u(`photos/${photos[n].k}.webp`)} data-cap={photos[n].sujet} aria-label={`Agrandir : ${photos[n].sujet}`}></button>
+              </div>
               <figcaption><span>{photos[n].sujet}</span></figcaption>
             </figure>
           ))}
@@ -29,4 +33,9 @@ const groupes: { t: string; items: [string, number, string][] }[] = [
       </section>
     ))}
   </div>
+  <dialog class="lightbox" id="lightbox" aria-label="Photographie agrandie">
+    <form method="dialog"><button class="btn lightbox__close" type="submit">Fermer</button></form>
+    <img alt="" />
+    <p class="lightbox__cap"></p>
+  </dialog>
 </Base>
