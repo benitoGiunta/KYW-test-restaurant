@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import { restaurant, jours, hh } from '../data/site';
+---
+<Base page="reservation" title="Réserver ou venir" description="Venir au Brunchist, place d’Armes 8 à Namur : téléphone, horaires du mercredi au dimanche, plan, terrasse. Un coup de fil pour réserver une table.">
+  <section class="band band--matin" aria-labelledby="titre-venir">
+    <div class="wrap grid" style="row-gap: 2rem">
+      <h1 class="display display--xl" id="titre-venir" style="grid-column: 1 / 13; font-size: var(--t-mega)">Venir</h1>
+      <div style="grid-column: 1 / 13">
+        <a class="appel" href={restaurant.telephoneHref}>{restaurant.telephoneLisible}</a>
+        <p class="lede" style="margin-top: 1rem">Le plus simple pour réserver ou poser une question : un coup de fil.</p>
+        <p style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.8rem"><a class="cta" href={restaurant.telephoneHref}><span class="cta__txt">Appeler maintenant</span></a>
+        {restaurant.reseaux.map((r) => <a class="cta cta--creux" href={r.url} rel="noopener"><span class="cta__txt">{r.nom}</span></a>)}</p>
+      </div>
+    </div>
+  </section>
+  <section class="band band--midi" aria-label="Adresse et horaires">
+    <div class="wrap colonnes3">
+      <div>
+        <h2>Adresse</h2>
+        <address style="font-style: normal">{restaurant.adresse.rue} {restaurant.adresse.numero}<br />{restaurant.adresse.cp} {restaurant.adresse.commune}</address>
+        <p style="margin-top: 0.8rem"><a class="lien" href={restaurant.mapUrl} rel="noopener">Ouvrir le plan</a></p>
+      </div>
+      <div>
+        <h2>Horaires</h2>
+        <ul class="horaires">
+          {jours.map((j) => <li><span>{j.long}</span><span>{j.ouvre === null ? 'Fermé' : `${hh(j.ouvre)} à ${hh(j.ferme as number)}`}</span></li>)}
+        </ul>
+      </div>
+      <div>
+        <h2>Bon à savoir</h2>
+        <ul class="savoir">
+          <li>Terrasse en extérieur.</li>
+          <li>Budget relevé en ligne : 18 à 28&nbsp;€ par personne.</li>
+          <li>Les sources divergent sur la réservation : certaines la recommandent, d’autres indiquent qu’elle n’est pas prise. Appelez pour être fixé.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>

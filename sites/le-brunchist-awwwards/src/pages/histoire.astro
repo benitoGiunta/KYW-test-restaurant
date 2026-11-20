@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import { histoire, equipe, presse } from '../data/site';
+---
+<Base page="histoire" title="L’histoire" description="L’histoire du Brunchist : ouvert en 2022 à Namur par Mélisande et Arnaud, un couple namurois, café-brunch local et fait maison, place d’Armes.">
+  <section class="band band--matin" aria-labelledby="titre-histoire">
+    <div class="wrap">
+      <h1 class="display display--xl" id="titre-histoire" style="font-size: var(--t-mega); max-width: 12ch">{histoire.titre}</h1>
+    </div>
+  </section>
+  <section class="band band--matin band--serre" aria-label="Récit">
+    <div class="wrap grid" style="row-gap: 2.5rem">
+      <div class="cote">
+        <ol class="etapes">
+          {histoire.etapes.map((e) => <li><span class="etapes__quand">{e.quand}</span><span>{e.texte}</span></li>)}
+        </ol>
+      </div>
+      <div class="recit texte">
+        {histoire.paragraphes.map((p) => <p class="lede">{p}</p>)}
+        <p class="petit muted">{histoire.source}</p>
+      </div>
+    </div>
+  </section>
+  <section class="band band--midi" aria-labelledby="titre-equipe">
+    <div class="wrap grid paire">
+      <div class="paire__gros">
+        <h2 class="display display--xl" id="titre-equipe">{equipe[0].nom}</h2>
+      </div>
+      <div class="paire__petit texte">
+        <p>{equipe[0].role} du Brunchist. Pas de photo de l’équipe sur cette maquette : aucune n’a été fournie.</p>
+      </div>
+    </div>
+  </section>
+  <section class="band band--aprem" aria-labelledby="titre-presse">
+    <div class="wrap grid" style="row-gap: 2rem">
+      <h2 class="display display--l cote" id="titre-presse">Ce qu’on en écrit</h2>
+      <ul class="liste-presse recit">
+        {presse.map((p) => <li><a class="lien" href={p.url} rel="noopener">{p.titre}</a><p class="petit muted">{p.media}, {p.date}</p></li>)}
+      </ul>
+    </div>
+  </section>
+</Base>

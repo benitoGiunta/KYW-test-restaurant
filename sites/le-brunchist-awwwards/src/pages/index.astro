@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+import { restaurant, jours, moments, plats, hh, horairesTexte } from '../data/site';
+const dMin = 8 * 60, dMax = 17 * 60;
+const pct = (m: number) => `${(((m - dMin) / (dMax - dMin)) * 100).toFixed(2)}%`;
+---
+<Base page="accueil">
+  <section class="band band--matin hero" aria-labelledby="titre-accueil">
+    <div class="wrap hero__grid">
+      <p class="hero__meta"><strong>Brunch et cafés de spécialité</strong>Place d’Armes 8, Namur. Du mercredi au dimanche.</p>
+      <div class="hero__disque" aria-hidden="true"><span>9&nbsp;h&nbsp;30</span></div>
+      <h1 class="display hero__titre" id="titre-accueil"><span class="petit-mot">Le</span><span>Brunchist</span></h1>
+      <p class="hero__lede lede">Du jaune d’œuf au dernier café : une matinée qui se prolonge jusqu’à 15&nbsp;h&nbsp;30, à Namur.</p>
+      <div class="hero__actions">
+        <a class="cta" href={u('/carte/')}><span class="cta__txt">Voir la carte</span></a>
+        <a class="cta cta--creux" href={restaurant.telephoneHref}><span class="cta__txt">Appeler</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--matin" aria-labelledby="titre-valise">
+    <div class="wrap valise">
+      <h2 class="valise__mot" id="titre-valise">
+        <span class="ligne"><span>Br</span><span class="gomme">eakfast</span></span>
+        <span class="ligne"><span class="gomme">L</span><span>unch</span></span>
+        <span class="egal display">Brunch</span>
+      </h2>
+      <div class="valise__texte texte">
+        <p>Un brunch n’est pas un plat, c’est un créneau : le moment où le petit-déjeuner et le déjeuner se rejoignent. Au Brunchist, ce créneau a des horaires précis, de 9&nbsp;h&nbsp;30 à 15&nbsp;h&nbsp;30, et tout le site se lit à cette heure-là.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--matin" aria-labelledby="titre-moments">
+    <div class="wrap">
+      <div class="entete-section">
+        <h2 class="display display--xl" id="titre-moments">Trois moments</h2>
+        <p class="petit muted">Cuisine locale, faite maison. Carte illustrative.</p>
+      </div>
+      <ol class="index">
+        {moments.map((m) => (
+          <li class="index__ligne">
+            <p class="index__heure">{m.heure}</p>
+            <div class="index__corps"><h3>{m.titre}</h3><p>{m.texte}</p></div>
+            <ul class="index__plats" aria-label={`Plats : ${m.titre}`}>
+              {plats.filter((p) => p.moment === m.id).slice(0, 3).map((p) => <li><a class="lien" href={u(`/carte/#${m.id}`)}>{p.nom}</a></li>)}
+            </ul>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="band band--midi" aria-labelledby="titre-semaine">
+    <div class="wrap grid paire">
+      <div class="paire__gros">
+        <h2 class="display display--xl" id="titre-semaine">Du mercredi au dimanche, 9&nbsp;h&nbsp;30 à 15&nbsp;h&nbsp;30</h2>
+      </div>
+      <div class="paire__petit texte"><p>Fermé le lundi et le mardi. Les sources consultées divergent sur certaines heures : la maquette retient 9&nbsp;h&nbsp;30 à 15&nbsp;h&nbsp;30.</p></div>
+    </div>
+    <div class="wrap" style="margin-top: clamp(2rem, 1rem + 3vw, 4rem)">
+      <ul class="semaine" aria-label="Horaires de la semaine">
+        {jours.map((j) => (
+          <li class={j.ouvre === null ? 'semaine__ferme' : ''}>
+            <span class="semaine__jour">{j.court}</span>
+            <span class="semaine__piste" aria-hidden="true">{j.ouvre !== null && <span class="semaine__barre" style={`--d:${pct(j.ouvre)};--f:${pct(j.ferme as number)}`}></span>}</span>
+            <span class="semaine__h">{j.ouvre === null ? 'Fermé' : `${hh(j.ouvre)} à ${hh(j.ferme as number)}`}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--midi band--serre" aria-labelledby="titre-couple">
+    <div class="wrap grid paire">
+      <div class="paire__gros">
+        <h2 class="display display--xl" id="titre-couple">Ouvert en 2022 par Mélisande et Arnaud.</h2>
+      </div>
+      <div class="paire__petit texte">
+        <p>Un couple namurois, du local, du fait maison, une tasse de café de spécialité à la main.</p>
+        <p><a class="lien" href={u('/histoire/')}>Lire l’histoire du lieu</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

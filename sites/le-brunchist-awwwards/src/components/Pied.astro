@@ -1,0 +1,32 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { restaurant, jours, hh, horairesTexte } from '../data/site';
+---
+<footer class="pied band band--fin" aria-label="Pied de page">
+  <div class="wrap pied__corps">
+    <p class="pied__heure" aria-hidden="true">15&nbsp;h&nbsp;30</p>
+    <p class="pied__mot">On range les tasses à 15&nbsp;h&nbsp;30. Le dernier café se commande avant.</p>
+    <div class="pied__col">
+      <h2 class="pied__titre">Venir</h2>
+      <address>{restaurant.adresse.rue} {restaurant.adresse.numero}<br />{restaurant.adresse.cp} {restaurant.adresse.commune}<br /><span class="pied__doux">Terrasse en extérieur</span></address>
+      <p><a class="lien" href={restaurant.mapUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Horaires</h2>
+      <ul class="pied__horaires">
+        {jours.map((j) => <li><span>{j.long}</span><span>{j.ouvre === null ? 'Fermé' : `${hh(j.ouvre)} à ${hh(j.ferme)}`}</span></li>)}
+      </ul>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Contact</h2>
+      <p><a class="pied__tel" href={restaurant.telephoneHref}>{restaurant.telephoneLisible}</a></p>
+      <ul class="pied__reseaux">
+        {restaurant.reseaux.map((r) => <li><a class="lien" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+      <p class="pied__cta"><a class="cta cta--clair" href={u('/reservation/')}><span class="cta__txt">Réserver ou venir</span></a></p>
+    </div>
+    <p class="pied__colophon">{restaurant.credit}. Polices : Cabinet Grotesk (Indian Type Foundry, Fontshare) et DM Mono (Colophon, Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

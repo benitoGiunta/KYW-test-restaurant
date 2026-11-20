@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import { moments, plats, prixFmt, restaurant } from '../data/site';
+const bandes = { matin: 'band--matin', brunch: 'band--midi', midi: 'band--aprem' } as const;
+---
+<Base page="carte" title="La carte" description="La carte du Brunchist à Namur : cafés de spécialité, jus frais, granola maison, pancakes, eggs benedict, toast à l’avocat. Prix illustratifs, maquette.">
+  <section class="band band--matin band--serre" aria-labelledby="titre-carte">
+    <div class="wrap grid paire">
+      <h1 class="display display--xl paire__gros" id="titre-carte" style="font-size: var(--t-mega)">La carte</h1>
+      <div class="paire__petit">
+        <p class="note">Maquette : la carte du Brunchist n’a pas été communiquée. Les plats sont ceux que citent la presse locale et les avis ; les prix, les descriptions et le classement par moment sont illustratifs.</p>
+      </div>
+    </div>
+  </section>
+  {moments.map((m) => (
+    <section class={`band ${bandes[m.id]}`} id={m.id} aria-labelledby={`t-${m.id}`}>
+      <div class="wrap chap">
+        <div class="chap__tete">
+          <p class="chap__heure display" aria-hidden="true">{m.heure}</p>
+          <h2 class="chap__titre" id={`t-${m.id}`}>{m.titre}, dès {m.heure}</h2>
+          <p class="petit muted" style="margin-top: 0.4rem; max-width: 22em">{m.texte}</p>
+        </div>
+        <ul class="chap__plats">
+          {plats.filter((p) => p.moment === m.id).map((p) => (
+            <li class="plat">
+              <h3 class="plat__nom">{p.nom}</h3>
+              <p class="plat__prix"><span class="sr-only">Prix illustratif : </span>{prixFmt(p.prix)}</p>
+              <p class="plat__desc muted">{p.description}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+  <section class="band band--aprem band--serre" aria-label="Précisions sur la carte">
+    <div class="wrap texte">
+      <p>Des options végétales et sans gluten sont évoquées par des sources tierces : à confirmer auprès de l’équipe. Un repère de budget relevé en ligne : 18 à 28&nbsp;€ par personne.</p>
+      <p><a class="lien" href={restaurant.telephoneHref}>Appeler le Brunchist</a></p>
+    </div>
+  </section>
+</Base>

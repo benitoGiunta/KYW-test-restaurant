@@ -1,0 +1,80 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { restaurant, jours } from '../data/site';
+import { asset } from '../lib/url';
+import Header from '../components/Header.astro';
+import Pied from '../components/Pied.astro';
+import '../styles/tokens.css';
+import '../styles/engine.css';
+import '../styles/site.css';
+
+interface Props { title?: string; description?: string; page?: string }
+const { title, description = restaurant.description, page = 'page' } = Astro.props;
+const fullTitle = title ? `${title} | ${restaurant.nom}` : `Brunch et café de spécialité à Namur | ${restaurant.nom}`;
+const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = new URL(asset('/og.png'), siteUrl).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: restaurant.nom,
+  description: restaurant.description,
+  url: new URL(asset('/'), siteUrl).href,
+  telephone: restaurant.telephone,
+  servesCuisine: restaurant.typeCuisine,
+  image: ogImage,
+  address: { '@type': 'PostalAddress', streetAddress: `${restaurant.adresse.rue} ${restaurant.adresse.numero}`, postalCode: restaurant.adresse.cp, addressLocality: restaurant.adresse.commune, addressCountry: restaurant.adresse.pays },
+  openingHoursSpecification: jours.filter((j) => j.ouvre !== null).map((j) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: j.schema, opens: '09:30', closes: '15:30' })),
+  hasMenu: new URL(asset('/carte/'), siteUrl).href,
+  sameAs: restaurant.reseaux.map((r) => r.url),
+};
+---
+<!doctype html>
+<html lang="fr" transition:animate="none">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#f2b52c" />
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" href={asset('/sitemap-index.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={restaurant.nom} />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <link rel="preload" as="font" type="font/woff2" href={asset('/fonts/cabinet-800-normal.woff2')} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={asset('/fonts/cabinet-500-normal.woff2')} crossorigin />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+    </script>
+    <ClientRouter fallback="swap" />
+  </head>
+  <body data-page={page}>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
+    <Header page={page} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Pied />
+    <script>
+      import { start } from '../engine/astro';
+      import { setupMotion } from '../motion/setup';
+      start(setupMotion);
+    </script>
+  </body>
+</html>
