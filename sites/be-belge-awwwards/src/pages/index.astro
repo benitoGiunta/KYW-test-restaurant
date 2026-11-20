@@ -1,4 +1,5 @@
 ---
+import Points from '../components/Points.astro';
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import { site, menus, couples, horaires, plage } from '../data/site';
@@ -6,12 +7,12 @@ import { u } from '../lib/url';
 const ouvertures = horaires.filter((h) => h.ouvert.length);
 ---
 <Base page="accueil" description="Be Belge… et d’ailleurs, à Wépion (Namur) : cuisine belge et de saison, menu du chef en 3 ou 4 services, mur de pierre, terrasse et feu de bois. Réservez au 081 47 00 95.">
-  <!-- 1. Poster : le nom, trois points, la suite hors de la page -->
+  {/* 1. Poster : le nom, trois points, la suite */}
   <section class="hero wrap">
-    <h1 class="hero__titre display" data-hero-titre>
+    <h1 class="hero__titre display" data-hero-titre data-intro-points>
       <span class="hero__nom">Be Belge</span>
-      <span class="hero__pts" aria-hidden="true">…</span>
-      <span class="hero__suite">et d’ailleurs</span>
+      <Points class="hero__pts" />
+      <span class="hero__suite" data-hero-suite>et d’ailleurs</span>
     </h1>
     <p class="hero__sous">Cuisine belge et de saison, avec le goût d’ailleurs. Avenue de Marlagne, à Wépion.</p>
     <div class="hero__actions">
@@ -23,18 +24,18 @@ const ouvertures = horaires.filter((h) => h.ouvert.length);
     </figure>
   </section>
 
-  <!-- 2. Statement : la phrase de la maison -->
+  {/* 2. Statement : la phrase de la maison */}
   <section class="statement wrap">
-    <p class="statement__texte display">{site.accroche}</p>
-    <p class="statement__suite">{site.accueil} <span class="statement__src">Le mot d’accueil de la maison.</span></p>
+    <p class="statement__texte display" data-split="lines">{site.accroche}</p>
+    <p class="statement__suite" data-reveal="up" data-delay="0.15">{site.accueil} <span class="statement__src">Le mot d’accueil de la maison.</span></p>
   </section>
 
-  <!-- 3. Paires asymétriques : d'ici … d'ailleurs -->
+  {/* 3. Paires asymétriques : d'ici, d'ailleurs */}
   <section class="couples wrap" aria-labelledby="couples-titre">
-    <h2 id="couples-titre" class="titre-l display">D’ici<span class="pts">…</span> d’ailleurs</h2>
+    <h2 id="couples-titre" class="titre-l display">D’ici<Points /> d’ailleurs</h2>
     <ol class="couples__liste">
       {couples.map((c) => (
-        <li class="couple">
+        <li class="couple" data-reveal="up">
           <h3 class="couple__plat">{c.plat}</h3>
           <p class="couple__ici"><span class="couple__lib">D’ici</span>{c.ici}</p>
           <p class="couple__la"><span class="couple__lib">D’ailleurs</span>{c.ailleurs}</p>
@@ -44,13 +45,13 @@ const ouvertures = horaires.filter((h) => h.ouvert.length);
     <p class="couples__lien"><a class="lt" href={u('/carte/')}>Lire toute la carte</a></p>
   </section>
 
-  <!-- 4. Données : le menu du chef -->
+  {/* 4. Données : le menu du chef */}
   <section class="menus" aria-labelledby="menus-titre">
     <div class="wrap">
-      <h2 id="menus-titre" class="titre-l display">Le menu du chef</h2>
+      <h2 id="menus-titre" class="titre-l display" data-split="words">Le menu du chef</h2>
       <ul class="menus__liste">
         {menus.map((m) => (
-          <li class="menu">
+          <li class="menu" data-reveal="up">
             <p class="menu__nom">{m.nom}</p>
             <p class="menu__detail">{m.detail}</p>
             <p class="menu__prix"><span class="chiffre">{m.prix}</span>&nbsp;€</p>
@@ -62,9 +63,9 @@ const ouvertures = horaires.filter((h) => h.ouvert.length);
     </div>
   </section>
 
-  <!-- 5. Filmstrip : le nid, du jardin à la salle -->
+  {/* 5. Filmstrip : le nid, du jardin à la salle */}
   <section class="lieu" aria-labelledby="lieu-titre">
-    <div class="wrap"><h2 id="lieu-titre" class="titre-l display">Un petit nid, à l’orée du jardin</h2></div>
+    <div class="wrap"><h2 id="lieu-titre" class="titre-l display" data-split="words">Un petit nid, à l’orée du jardin</h2></div>
     <ul class="strip" role="list">
       <li class="strip__vue strip__vue--l"><Photo cle="facade" sizes="(min-width: 900px) 40vw, 78vw" widths={[480, 800, 1200]} /><p>Le jardin et le bâtiment.</p></li>
       <li class="strip__vue"><Photo cle="tableaux" sizes="(min-width: 900px) 30vw, 70vw" widths={[480, 800]} /><p>La salle, ses tableaux rouges.</p></li>
@@ -73,10 +74,10 @@ const ouvertures = horaires.filter((h) => h.ouvert.length);
     </ul>
   </section>
 
-  <!-- 6. Pratique : jours d'ouverture -->
+  {/* 6. Pratique : jours d'ouverture */}
   <section class="jours wrap" aria-labelledby="jours-titre">
-    <h2 id="jours-titre" class="titre-l display">Du mercredi au dimanche</h2>
-    <ul class="jours__liste">
+    <h2 id="jours-titre" class="titre-l display" data-split="words">Du mercredi au dimanche</h2>
+    <ul class="jours__liste" data-reveal="up">
       {ouvertures.map((h) => <li><span class="jours__j">{h.jour}</span><span class="jours__h">{h.ouvert.map(plage).join(' et ')}</span></li>)}
     </ul>
     <p class="jours__note">Fermé le lundi et le mardi.</p>

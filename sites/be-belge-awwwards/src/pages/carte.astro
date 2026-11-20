@@ -1,10 +1,11 @@
 ---
+import Points from '../components/Points.astro';
 import Base from '../layouts/Base.astro';
 import { site, menus, carte, periodeMenu } from '../data/site';
 ---
 <Base page="carte" title="La carte" description="La carte de Be Belge… et d’ailleurs à Wépion : menu du chef en 3 services à 57 € ou 4 services à 72 €, entrées, plats et desserts de saison, vins en accord.">
   <section class="page-tete wrap">
-    <h1 class="display page-tete__titre">La carte<span class="pts">…</span></h1>
+    <h1 class="display page-tete__titre" data-intro-points>La carte<Points /></h1>
     <p class="page-tete__chapo">Un menu du chef, à choisir parmi trois entrées, trois plats et des desserts. {periodeMenu}</p>
   </section>
 
@@ -24,10 +25,10 @@ import { site, menus, carte, periodeMenu } from '../data/site';
   <div class="carte wrap">
     {carte.map((c) => (
       <section class="carte__bloc" aria-labelledby={`c-${c.titre}`}>
-        <h2 id={`c-${c.titre}`} class="carte__titre display">{c.titre}<span class="pts">…</span><span class="carte__cat">{c.categorie}</span></h2>
+        <h2 id={`c-${c.titre}`} class="carte__titre display">{c.titre}<Points /><span class="carte__cat">{c.categorie}</span></h2>
         <ul class="carte__liste">
           {c.plats.map((p) => (
-            <li class="ligne">
+            <li class="ligne" data-reveal="up">
               <div class="ligne__tete">
                 <h3 class="ligne__nom">{p.nom}</h3>
                 <span class="ligne__pts" aria-hidden="true"></span>

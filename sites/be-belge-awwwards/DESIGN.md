@@ -54,3 +54,37 @@ Test de l'échange : la phrase A ne tient avec aucun autre restaurant (le nom es
 16. Une famille de section au plus une fois par page : accueil (poster, statement, paires, données, filmstrip, index).
 17. Hero en 3 s : nom, cuisine, CTA visibles à 1440x900 (CTA à y=661), mesuré.
 18. Mobile 390 : titre 98 px de haut, CTA empilés, photo sous le texte, strip en snap ; aucun débordement horizontal (scrollWidth 390).
+
+## Mouvement (phase 2, réalisé)
+- **Pilote** `src/motion/points.ts` : une variable par groupe de points `p` (0 à 3, points allumés). Écrite par ScrollTrigger (titres : de `top 92%` à `top 62%`, scrub 0,6), par l'intro (hero et h1 des pages, `data-intro-points`), penchée par le pointeur vers la droite (la suite) et animée au repos par `idle.ts` (vague de 0,045 em). Un point éteint attend à gauche (−0,4 em, opacité 0,12) : la phrase arrive.
+- **Signature** : « Be Belge » peint au premier rendu, ses trois points s'allument un à un, puis « et d'ailleurs » glisse depuis la gauche (`hero.ts`). À la carte, les points de conduite courent du plat vers le prix (`ScrollTrigger.batch`, clip-path).
+- **Transition** : panneau d'encre qui entre par la gauche, trois points rouges s'y allument, sort par la droite (0,75 + 0,3 s / 0,85 s), `setup.ts`.
+- **Hovers** : lien texte souligné qui s'épaissit ; bouton rempli d'encre, trois points glissent après le libellé ; nav à filet rouge tracé de gauche à droite.
+- **Mouvement réduit** : ni Lenis ni pilote ni intro ; points pleins et immobiles, tout le contenu visible.
+
+## Sur-utilisation de la skill (phase 2)
+19. [x] Menu mobile : `Header.astro` (bouton `aria-expanded`, `role="dialog"`, volet plein écran), `motion/menu.ts` (focus piégé, Échap, retour au bouton) ; mesuré à 390 : ouvert `true`, Tab ×8 reste dans le volet, Échap ferme et rend le focus (`.logs/bebelge-c2-check2.log`).
+20. [x] Engine verbatim + `astro.ts` ; `Base.astro:38` `transition:animate="none"`, `Base.astro:75` `transition:persist` sur `#curtain` ; pas de `#gl` ni de `#cursor` (sans GL ni suiveur, décision écrite).
+21. [x] Une horloge : `gsap.ticker` (`idle.ts`, `points.ts`) ; grep `addEventListener('scroll'` et `requestAnimationFrame` hors engine : 0.
+22. [x] Code de page dans `onPage()` avec nettoyage (`points.ts`, `hero.ts`, `menu.ts`).
+23. [x] Aucune CSS `transform` sur élément GSAP (grep `transform` dans `site.css` : seulement `text-transform`) ; les points sont écrits par `style.translate`.
+24. [x] Pilote `points.ts` avec `startIdle()` (`idle.ts`) et pointeur (`idle.x` penche les points vers la droite).
+25. [x] Loader : non (décision de la Concept Card), aucun composant ni `role="status"`.
+26. [x] Transition du concept ≤ 1 s par sens (`setup.ts`).
+27. [x] Intro : titre et accroche peints (LCP), points puis « et d'ailleurs » dans la timeline `intro` (`hero.ts`) ; `intro-faite` posée à 2,6 s (mesure). Pas d'attribut `data-intro` de l'engine : l'intro est horizontale (verbe), écrite dans `hero.ts`.
+28. [x] Pas d'épinglage (titres de la carte en `position: sticky`, sans ScrollTrigger).
+29. [x] Repli statique : sans `.motion`, points pleins, `hero__suite` visible (garde-fou CSS à 3 s si le script échoue) ; réduit : 0 élément caché sur les 5 pages (mesure).
+30. [x] Pas de copie décorative ; `Points.astro` et la phrase du pied en `aria-hidden`.
+31. [x] Easing de l'engine seulement (`ease.out`, `inOut`, `soft`, courbe CSS équivalente à expo.out), durées du tableau, staggers 0,05 à 0,08 s.
+32. [x] Un traitement par rôle, 3 au total, dans le verbe (`site.css` § Liens et boutons).
+33. [x] Survol sous `@media (hover: hover)`, même état sur `:focus-visible`, `:active` présents ; visibles en réduit (transitions CSS à 0,01 ms, états conservés).
+34. [x] Liens texte soulignés au repos (`.lt`).
+36. [x] Repos : vague des points visibles (translate change à chaque frame, mesuré : écart de 0,02 à 0,07 em en 0,9 s) ; à confirmer par `idleMotion` en phase 3.
+37. [x] Curseur natif, pas de suiveur ; rien ne dépend du survol au toucher.
+38. [x] Ni blur animé, ni `box-shadow` au scroll, ni `will-change`.
+39. [x] Réduit : pas de Lenis (engine), pas de pilote (`startPoints` sort), pas de loader.
+40. [x] GL sans objet (décision écrite, Concept Card).
+44. [x] Skip link en premier ; anneau accent, rouge relevé sur la tôle et dans le volet (`site.css` § Sélection et focus).
+46. [x] Texte réel partout, aucun canvas.
+47. [x] Cibles mobiles : « Réserver » 86×44, « Menu » 68×44, actions du volet 52 px de haut.
+- Finitions : `::selection` rouge profond, `favicon-32.png` et `apple-touch-icon.png` (180) issus de `favicon.svg`.
