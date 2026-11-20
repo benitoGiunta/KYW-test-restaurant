@@ -1,4 +1,4 @@
-# ETAT, philfa-portfolio (phase 2 sur 3, construction-2)
+# ETAT, philfa-portfolio (phase 3 sur 3, QA terminée)
 
 ## Fait en phase 2
 - Signature « La table » : 2 rangées de 6 tirages (y 1-3 % et 61-64 %) qui libèrent le titre ; objets déplacés dans la bande centrale ; bug du gabarit corrigé (`.table .table__rail` en desktop et mobile : section 1185 px au lieu de 1552). Badge « attrapez-moi » qui s'efface au premier geste, bouton « Ranger la table » (rebond décalé, remet tirages et objets en place, `Draggable.update`). Drag souris, flèches (Maj = 48 px) et rangement testés sans erreur console.
@@ -21,3 +21,7 @@
 
 ## Hypothèses
 - Texte du bouton « Ranger la table » et du message de formulaire : copy d'interface, sans fait inventé.
+
+## Phase 3 (QA)
+- Fait : meta description 156 car., captures ciblées bas de page 1440/390 et 404.html réelle : OK ; RAPPORT.md écrit ; build final OK.
+- Reste : pnpm index, UTILISATION.md, publication (session mère) ; mesure LCP mobile en série par la revue.

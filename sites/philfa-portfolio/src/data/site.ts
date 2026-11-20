@@ -49,7 +49,7 @@ export const site: Restaurant = {
   nom: 'PhilFa',
   baseline: 'Brasserie de centre-ville à Namur : cuisine revisitée, épices du monde.',
   description:
-    'PhilFa, brasserie de centre-ville à Namur : cuisine revisitée et épices du monde, menu du moment, salle feutrée de 55 places et terrasse ombragée. Du mardi au samedi, midi et soir.',
+    'PhilFa, brasserie de centre-ville à Namur : cuisine revisitée et épices du monde, salle de 55 places et terrasse ombragée. Du mardi au samedi, midi et soir.',
   url: 'https://www.philfa.be',
   typeCuisine: 'Brasserie, cuisine française revisitée',
   adresse: { rue: 'Rue de Marchovelette', numero: '21/23', cp: '5000', commune: 'Namur', pays: 'BE' },
