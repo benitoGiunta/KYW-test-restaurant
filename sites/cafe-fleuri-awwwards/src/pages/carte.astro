@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import { brunchs, boissons, aussi, tarifs, tarifsNote } from '../data/site';
+import { u } from '../lib/url';
+const eur = (n: number) => `${n.toFixed(2).replace('.', ',')} €`;
+---
+<Base page="carte" title="La carte" description="La carte du Café Fleuri à Namur : brunch salé, sucré ou mixte, pancakes, gravlax maison, limonades et thé glacé maison.">
+  <section class="sec page-tete" aria-labelledby="titre-carte">
+    <div class="wrap">
+      <h1 class="display" id="titre-carte">La carte</h1>
+      <p class="lead">Trois brunchs, des boissons maison. Les prix ne sont pas encore confirmés.</p>
+    </div>
+  </section>
+
+  <section class="sec bloc" aria-labelledby="titre-brunchs">
+    <div class="wrap">
+      <h2 class="sr-only" id="titre-brunchs">Les brunchs</h2>
+      <ul class="idx">
+        {brunchs.map((b) => (
+          <li class={`idx__row idx__row--${b.id}`} id={b.id}>
+            <div class="idx__link">
+              <h3 class="idx__nom display">{b.nom}</h3>
+              <p class="idx__desc">{b.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec bloc" aria-labelledby="titre-boissons">
+    <div class="wrap deux deux--decale">
+      <div class="deux__a">
+        <h2 class="display" id="titre-boissons">À boire</h2>
+        <ul class="liste">
+          {boissons.map((p) => <li><strong>{p.nom}</strong>{p.description && <span>{p.description}</span>}</li>)}
+        </ul>
+      </div>
+      <div class="deux__b">
+        <h2 class="display" style="font-size: var(--t-m)">Cité ailleurs</h2>
+        <ul class="liste">
+          {aussi.map((p) => <li><strong>{p.nom}</strong>{p.description && <span>{p.description}</span>}</li>)}
+        </ul>
+        <p class="note">Ces plats sont cités par un guide en ligne, à confirmer avec le café.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--salle bloc" aria-labelledby="titre-tarifs">
+    <div class="wrap deux">
+      <div class="deux__a">
+        <h2 class="display" id="titre-tarifs">Tarifs relevés</h2>
+        {tarifs.map((t) => <div class="tarif"><span>{t.nom}</span><span class="prix">{eur(t.prix)}</span></div>)}
+        <p class="note">{tarifsNote}</p>
+      </div>
+      <div class="deux__b">
+        <p>Pour connaître la carte du jour et les prix à jour, le plus simple est d’appeler le café.</p>
+        <div class="ctas"><a class="btn" href={u('/reservation/')}><span>Réserver</span></a></div>
+      </div>
+    </div>
+  </section>
+</Base>

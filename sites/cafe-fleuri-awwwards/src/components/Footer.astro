@@ -1,0 +1,31 @@
+---
+import KywFooter from '@kyw/footer';
+import { site, horaires } from '../data/site';
+import { u } from '../lib/url';
+const a = site.adresse;
+---
+<footer class="pied sec sec--salle">
+  <div class="wrap">
+    <p class="pied__38 display" aria-hidden="true">{a.numero}</p>
+    <div class="pied__grid">
+      <div class="pied__bloc">
+        <h2 class="pied__titre">Le trop-plein se range ici</h2>
+        <address>
+          {a.rue} {a.numero}<br />{a.cp} {a.commune}
+        </address>
+        <p><a class="lien" href={`tel:${site.telephone}`}>{site.telephoneAffiche}</a></p>
+      </div>
+      <div class="pied__bloc">
+        <p>Tous les jours, {horaires.de} à {horaires.a}</p>
+        <p class="note">{horaires.note}</p>
+      </div>
+      <ul class="pied__liens">
+        <li><a class="lien" href={u('/carte/')}>La carte</a></li>
+        <li><a class="lien" href={u('/histoire/')}>Histoire</a></li>
+        <li><a class="lien" href={u('/reservation/')}>Réserver</a></li>
+        <li><a class="lien" href={site.plan} rel="noopener">Plan</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

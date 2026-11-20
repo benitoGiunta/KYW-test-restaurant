@@ -1,0 +1,20 @@
+---
+import { site } from '../data/site';
+import { u } from '../lib/url';
+interface Props { page?: string }
+const { page = '' } = Astro.props;
+const liens = [
+  { href: u('/carte/'), label: 'La carte', id: 'carte' },
+  { href: u('/histoire/'), label: 'Histoire', id: 'histoire' },
+  { href: u('/reservation/'), label: 'Réserver', id: 'reservation' },
+];
+---
+<header class="top">
+  <a class="top__mark" href={u('/')} aria-label="Café Fleuri, accueil">Café Fleuri</a>
+  <nav class="top__nav" aria-label="Navigation principale">
+    <ul>
+      {liens.map((l) => <li><a class="lien-nav" href={l.href} aria-current={page === l.id ? 'page' : undefined}>{l.label}</a></li>)}
+    </ul>
+  </nav>
+  <a class="btn btn--s top__call" href={`tel:${site.telephone}`}><span>Appeler</span></a>
+</header>

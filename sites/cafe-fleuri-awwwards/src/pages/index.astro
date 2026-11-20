@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, brunchs, maison, mardi } from '../data/site';
+import { u } from '../lib/url';
+const a = site.adresse;
+---
+<Base page="accueil" description={site.description}>
+  <section class="sec hero" aria-labelledby="titre-accueil">
+    <div class="wrap hero__grid">
+      <p class="hero__adresse">Café-brunch, {a.rue} {a.numero}, {a.commune}</p>
+      <h1 class="display hero__h1" id="titre-accueil"><span class="l1">Café</span><span class="l2">Fleuri</span></h1>
+      <div class="hero__lead">
+        <p>Né en 2020 parce que la salle d’à côté ne suffisait plus. Un brunch tous les jours, salé, sucré ou mixte.</p>
+        <div class="ctas">
+          <a class="btn" href={u('/reservation/')}><span>Réserver une table</span></a>
+        </div>
+      </div>
+      <div class="plates" aria-hidden="true"><i class="plate plate--f"></i><i class="plate plate--a"></i></div>
+    </div>
+  </section>
+
+  <section class="sec enonce" aria-labelledby="titre-enonce">
+    <div class="wrap enonce__grid">
+      <h2 class="display enonce__h" id="titre-enonce">Les brunchs du Bisou étaient <em>trop demandés</em> pour une seule salle.</h2>
+      <div class="enonce__p">
+        <p>Le Bistro Bisou, au 44 et 46 de la rue des Fossés Fleuris, ne pouvait plus suivre. Le Café Fleuri a ouvert au 38, dans la même rue, pour que le brunch ait sa propre salle.</p>
+        <p><a class="lien" href={u('/histoire/')}>Lire l’histoire du lieu</a></p>
+      </div>
+      <p class="note enonce__note">Petit lieu cocooning, avec terrasse, au centre historique de Namur.</p>
+    </div>
+  </section>
+
+  <section class="sec brunchs" aria-labelledby="titre-brunchs">
+    <div class="wrap">
+      <h2 class="display titre-sec" id="titre-brunchs">Trois brunchs, une seule assiette de différence.</h2>
+      <ul class="idx">
+        {brunchs.map((b) => (
+          <li class={`idx__row idx__row--${b.id}`}>
+            <a class="idx__link" href={u(`/carte/#${b.id}`)}>
+              <span class="idx__nom display">{b.court}</span>
+              <span class="idx__desc">{b.description}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--salle mur" aria-labelledby="titre-mur">
+    <div class="wrap">
+      <h2 class="display titre-sec" id="titre-mur">Ce qui sort de la cuisine est fait sur place.</h2>
+      <div class="mur__grid">
+        {maison.map((m) => (
+          <div class="mur__case"><h3 class="display mur__mot">{m.mot}</h3><p>{m.texte}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--flood mardi" aria-label="Le mardi">
+    <div class="wrap"><p class="display mardi__txt">{mardi}</p></div>
+    <p class="mardi__stamp" aria-hidden="true">Mardi</p>
+  </section>
+</Base>
