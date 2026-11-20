@@ -9,6 +9,7 @@ import { u, asset } from '../lib/url';
 const icones = ['tasse', 'assiette', 'couverts', 'verre', 'cloche'];
 const m = Object.fromEntries(moments.map((x) => [x.id, x]));
 const cafe = m['m-9h'], brunch = m['m-10h30'], dej = m['m-12h'], gouter = m['m-14h'], fin = m['m-16h'];
+const photoAstre = photoDe('/photos/tasse-rouge.webp');
 const photoCafe = photoDe(cafe.photo!), photoDej = photoDe(dej.photo!), photoGouter = photoDe(gouter.photo!);
 const medaillons = [
   { photo: photoDe('/photos/yaourt-fraises.webp'), titre: 'Granola et fruits', texte: 'Photo libre, assiette non attribuée', placeholder: true },
@@ -20,6 +21,13 @@ const medaillons = [
   <div data-accueil>
     <!-- HERO : cadran réglé à l'heure réelle. Le nom et l'accroche sont peints au premier rendu (LCP). -->
     <section class="hero" id="accueil" data-ciel="auto" aria-labelledby="titre">
+      <figure class="hero__astre" data-astre data-reveal="fade" data-intro data-delay="0.2">
+        <span class="hero__orbite" data-astre-orbite aria-hidden="true"><span class="hero__soleil"></span></span>
+        <span class="hero__repere hero__repere--g" aria-hidden="true">9h</span>
+        <span class="hero__repere hero__repere--d" aria-hidden="true">16h</span>
+        <span class="hero__photo"><img src={asset(photoAstre.src)} alt={photoAstre.alt} width={photoAstre.largeur} height={photoAstre.hauteur} fetchpriority="high" decoding="async" data-astre-img /></span>
+        <figcaption class="hero__legende">Photo libre, illustrative</figcaption>
+      </figure>
       <div class="wrap">
         <div class="hero__haut">
           <Badge />

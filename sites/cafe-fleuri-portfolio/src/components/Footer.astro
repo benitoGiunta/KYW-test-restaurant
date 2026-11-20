@@ -3,6 +3,7 @@
 import KywFooter from '@kyw/footer';
 import { site, adresseLigne, telHref } from '../data/site';
 import { u } from '../lib/url';
+import credits from '../data/credits.json';
 ---
 <footer class="footer" data-theme-footer>
   <div class="wrap">
@@ -27,6 +28,7 @@ import { u } from '../lib/url';
         {site.reseaux.length === 0 ? <p class="t-s muted">Réseaux sociaux : non communiqués<span class="tag">illustratif</span></p> : null}
       </div>
     </div>
+    <p class="footer__credits">Photos libres de droits (Unsplash, via Lorem Picsum), illustratives : {credits.map((c, i) => <><a class="link" href={c.source} rel="noopener">{c.author}</a>{i < credits.length - 1 ? ', ' : '.'}</>)}</p>
   </div>
 </footer>
 <KywFooter base={import.meta.env.BASE_URL} />

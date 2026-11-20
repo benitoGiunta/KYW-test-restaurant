@@ -1,11 +1,19 @@
-# ETAT : cafe-fleuri-portfolio, phase 1 (construction-1)
-## Fait
-Gabarit journee copié et adapté ; DESIGN.md ; site.ts (données réelles + placeholders) ; 6 pages (accueil 5 moments, carte, brunch, histoire, nous trouver, 404) ; 10 photos WebP ; favicon et OG ; build OK (`dist/cafe-fleuri/portfolio/`), mention KYW et noindex présents.
-## Reste (phase 2/3)
-Animations et QA navigateur (shoot, audit, clics en-tête, bas de page 1440) ; vérifier loader (compte jusqu'à l'heure : hors 9-17h), badge « ouvert » (horaires 9h-16h illustratifs) et bandeau `maintenant` ; colophon crédits photos ; sloplint ; RAPPORT.md ; `pnpm index` et commit final avec [publier].
-## Décisions / hypothèses
-- Café présenté comme actif malgré le statut « probablement fermé » du dossier.
-- Horaires 9h-16h 7j/7 (sources contradictoires), brunch 9h-14h30 : illustratifs. Prix brunch 21,95 € et petit-déjeuner 11,95 € : guide ancien, marqués. Boissons : prix fictifs marqués « exemple ».
-- Pas d'e-mail, de réseaux, d'équipe, de réservation : rien affiché. Avis : un seul réel (« Wonderful place! »), note 4,2 (223 avis) citée sur la page histoire.
-- Page /reservation/ conservée comme URL mais intitulée « Nous trouver ».
-- gabarits/UTILISATION.md non mis à jour (gabarits/ protégé) : ajouter `journee | cafe-fleuri`.
+# ETAT : cafe-fleuri-portfolio, phase 2 (construction-2) terminée
+## Fait (phase 1 + 2)
+Phase 1 : gabarit journee adapté, 6 pages, données, 10 photos, favicon, OG.
+Phase 2 :
+- Signature : « astre » du hero (photo tasse-rouge en disque, orbite avec soleil à l'heure réelle, 9h à gauche, 16h à droite, bornes tenues la nuit, montée en 1,6 s au premier rendu, photo qui dérive au défilement, légende « Photo libre, illustrative »). Mobile : disque centré sous les chips ; desktop : à droite, baseline plafonnée (min(36rem, 46vw)) pour ne pas passer dessous. Code : index.astro, base.css (bloc « Astre du hero »), journee.ts (`astre()`).
+- États : :active (btn, chip, flèches horaires), outline de focus en `--encre` (ivoire dans le footer), reduced motion sans translation/zoom au survol.
+- Colophon : crédits des 10 photos (auteurs liés Unsplash) dans le footer (`src/data/credits.json`, copie de public/photos/credits.json), sans mapping photo par photo (inconnu).
+- Correctifs : `html { overflow-x: clip }` (scrollWidth 323-400 pour 320-390 : plus de défilement horizontal) ; `.kyw-footer` en relative + z-index (bande rose sous le footer) et retour au bandeau clair du paquet (logo KYW de nouveau lisible).
+- Mesures (scripts maison, serveur tué) : 5 pages × 320/390/768/1440 + reduced motion 390/1440 : 0 erreur console, 0 texte caché en reduced motion, scrollWidth = largeur. Clic réel sur chaque lien d'en-tête (1440, 5 pages) : elementFromPoint = <a>, URL change. Bas de page 1440 : bande KYW, mention et logo visibles.
+- build : OK (`scripts/q.sh`), dist/cafe-fleuri/portfolio/ à jour. Non commité avec [publier].
+## Reste (phase 3 / captures)
+- Shoot complet + audit par l'agent captures ; lire QA-<étape>.md.
+- Loader : compte de 00:00 à l'heure réelle (hors 9-16h il affiche p. ex. 00:58 ou 21:00) : laissé tel quel (horloge réelle), à juger à la revue. Désactivé en mobile (CSS du gabarit).
+- Badge dupliqué (en-tête compact + hero) : héritage du gabarit, non touché.
+- Reveal `scale` : figures à r = largeur + 10 px tant qu'il joue (faux positif de débordement).
+- sloplint, RAPPORT.md, `pnpm index`, commit final [publier], gabarits/UTILISATION.md (`journee | cafe-fleuri`, gabarits/ protégé).
+## Pièges
+- Leçon proposée dans data/usage/test-1/lecons-proposees/cafe-fleuri.md (agents/ figé).
+- Ne pas rebuilder pendant un shoot de fond ; serveur propre sur son port.
