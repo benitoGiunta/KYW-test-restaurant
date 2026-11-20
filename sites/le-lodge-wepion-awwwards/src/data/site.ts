@@ -19,7 +19,7 @@ export const site = {
   gerant: 'Grégory Jorion',
   // Constantes issues du dossier (aucune date relative en dur)
   fermetureDepuis: '21 mai 2026',
-  reouverture: 'envisagée fin 2026, voire début 2027, sans date confirmée',
+  reouverture: 'envisagé fin 2026, voire début 2027, sans date confirmée',
 } as const;
 
 export const wepion = {
@@ -73,7 +73,7 @@ export const presse = [
 
 // Plats mis en avant sur l'accueil (noms exacts de la carte, prix de la carte)
 export const reperes = [
-  { nom: 'Le tartare de bœuf à l’italienne', note: 'Parmesan, tartufata, sésame, pepperoni, huile au pesto', prix: '24 €', photo: 'viande' },
+  { nom: 'L’Italien, tartare de bœuf', note: 'Parmesan, tartufata, sésame, pepperoni, huile au pesto', prix: '24 €', photo: 'viande' },
   { nom: 'Les boulettes maison', note: 'Sauce tomate ou liégeoise, porc qualité Ardenne, frites', prix: '20 €', photo: 'panee' },
   { nom: 'Le vol-au-vent maison', note: 'Quenelles de volaille, champignons', prix: '22 €', photo: 'feuillete' },
   { nom: 'Croquettes de crevettes grises', note: 'Persil frit et citron, une pièce', prix: '15 €', photo: 'bol' },
