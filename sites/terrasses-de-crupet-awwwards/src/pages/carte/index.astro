@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { photos, credit } from '../../data/photos';
+import { carte, photoCategorie, euro, menuFetes } from '../../data/site';
+const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]+/g, '-').replace(/-$/, '');
+---
+<Base theme="stone" title="La carte" description="La carte des Terrasses de Crupet : plats à partager, entrées, plats, carte enfants, desserts, cocktails, bières, vins et cafés Delahaut, avec les prix.">
+  <section class="intro">
+    <div class="wrap">
+      <h1 class="display display--mega" data-split="lines">La carte</h1>
+      <p class="lede">Plats de brasserie, plats à partager, une carte pour les enfants. Carte du restaurant, mise à jour sur le site du client.</p>
+    </div>
+  </section>
+  <div class="wrap carte">
+    <nav class="carte__nav" aria-label="Catégories de la carte">
+      <ul>
+        {carte.map((c) => (<li><a href={`#${slug(c.categorie)}`}>{c.categorie}</a></li>))}
+      </ul>
+    </nav>
+    <div class="carte__body">
+      {carte.map((c) => {
+        const ph = (photos as any)[photoCategorie[c.categorie]];
+        return (
+          <section class="cat" id={slug(c.categorie)} aria-labelledby={`h-${slug(c.categorie)}`}>
+            <header class="cat__head">
+              <div class="hublot cat__hublot" data-reveal="scale">
+                <Image src={ph.src} alt="" widths={[200, 360]} sizes="9rem" loading="lazy" decoding="async" />
+              </div>
+              <h2 id={`h-${slug(c.categorie)}`} class="display display--xl">{c.categorie}</h2>
+            </header>
+            <ul class="cat__list">
+              {c.plats.map((p) => (
+                <li>
+                  <div><h3 class="plat">{p.nom}</h3>{p.description && <p class="muted">{p.description}</p>}</div>
+                  <span class="price">{euro(p.prix)}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+      <p class="muted cat__note">Menus de fêtes à emporter : de {menuFetes.prix}, retrait {menuFetes.retrait}. Les prix sont ceux de la carte du restaurant. {credit}.</p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .intro { padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 4vw, 3rem); }
+  .intro .lede { margin-top: 1.5rem; }
+  .carte { display: grid; grid-template-columns: 14rem minmax(0, 1fr); column-gap: var(--gutter); padding-bottom: 6rem; }
+  .carte__nav { position: sticky; top: 5.5rem; align-self: start; }
+  .carte__nav li a { display: block; padding: 0.45rem 0; text-decoration: none; border-bottom: 1px solid var(--c-line); font-size: var(--t-s); font-weight: 600; letter-spacing: 0.03em; }
+  .carte__nav li a:hover, .carte__nav li a:focus-visible { color: var(--c-accent); padding-left: 0.5rem; transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .cat { padding-block: 2.5rem 1rem; border-top: 1px solid var(--c-line); scroll-margin-top: 5rem; }
+  .cat__head { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .cat__hublot { width: clamp(5rem, 9vw, 9rem); flex: none; }
+  .cat__list li { display: flex; justify-content: space-between; gap: 1.5rem; padding-block: 0.9rem; border-bottom: 1px solid var(--c-line); align-items: baseline; }
+  .plat { font-family: var(--f-display); font-weight: 400; font-size: var(--t-m); line-height: 1.15; letter-spacing: -0.01em; }
+  .cat__list .price { font-size: var(--t-m); font-weight: 600; }
+  .cat__note { margin-top: 3rem; max-width: 62ch; }
+  @media (max-width: 900px) {
+    .carte { display: block; }
+    .carte__nav { position: sticky; top: 4.25rem; z-index: 5; background: var(--c-bg); margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); overflow-x: auto; scroll-snap-type: x proximity; border-bottom: 1px solid var(--c-line); }
+    .carte__nav ul { display: flex; gap: 1.25rem; width: max-content; }
+    .carte__nav li a { border: 0; white-space: nowrap; padding-block: 0.8rem; scroll-snap-align: start; }
+    .cat__head { gap: 1rem; }
+  }
+</style>

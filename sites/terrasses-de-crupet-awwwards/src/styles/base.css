@@ -1,0 +1,67 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--c-bg); color: var(--c-fg); font: 400 var(--t-body)/1.55 var(--f-body); font-variant-numeric: lining-nums; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3, p, ul, ol, dl, dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button { font: inherit; }
+::selection { background: var(--c-accent); color: var(--c-on-accent); }
+
+.wrap { width: 100%; max-width: 1680px; margin-inline: auto; padding-inline: var(--gutter); }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+@media (max-width: 720px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.display { font-family: var(--f-display); font-weight: 400; line-height: 0.95; text-wrap: balance; letter-spacing: -0.02em; }
+.display--mega { font-size: var(--t-mega); letter-spacing: -0.035em; line-height: 0.88; }
+.display--xl { font-size: var(--t-xl); letter-spacing: -0.03em; line-height: 0.95; }
+.display--l { font-size: var(--t-l); letter-spacing: -0.02em; line-height: 1.02; }
+.lede { font-size: var(--t-m); line-height: 1.35; max-width: 34ch; text-wrap: balance; }
+.prose { max-width: 62ch; }
+.prose p + p { margin-top: 1em; }
+.ui { font-size: var(--t-s); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; }
+.muted { color: var(--c-muted); }
+.price { font-variant-numeric: tabular-nums; white-space: nowrap; }
+a.text { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+
+/* En-tête : médaillon T + nom, navigation à droite. */
+.site-header { position: sticky; top: 0; z-index: var(--z-header); background: color-mix(in srgb, var(--c-bg) 92%, transparent); border-bottom: 1px solid var(--c-line); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 4.25rem; }
+.brand { display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; font-family: var(--f-display); font-size: var(--t-m); line-height: 1; }
+.brand__mark { width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 1.5px solid var(--c-accent); display: grid; place-items: center; color: var(--c-accent); font-size: 1.15rem; flex: none; }
+.brand__name { display: none; }
+@media (min-width: 560px) { .brand__name { display: inline; } }
+.nav { display: flex; align-items: center; gap: clamp(0.5rem, 2vw, 2rem); }
+.nav a { text-decoration: none; padding: 0.6rem 0.25rem; position: relative; }
+.nav a:not(.btn)::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.3rem; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.nav a:not(.btn):hover::after, .nav a[aria-current='page']:not(.btn)::after { transform: scaleX(1); }
+@media (max-width: 480px) { .nav { gap: 0.25rem; } .nav a.hide-s { display: none; } .nav .ui { letter-spacing: 0.02em; } }
+
+/* Bouton rond-pilule : la seule forme de CTA. Réponse au survol : le cuivre monte comme un liquide (verbe : ouvrir). */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 3rem; padding: 0.7rem 1.6rem; border: 1.5px solid var(--c-accent); border-radius: 999px; background: transparent; color: var(--c-fg); text-decoration: none; position: relative; overflow: hidden; isolation: isolate; cursor: pointer; }
+.btn::before { content: ''; position: absolute; inset: 0; background: var(--c-accent); border-radius: 50%; transform: translateY(101%) scale(1.4); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); z-index: -1; }
+.btn:hover::before, .btn:focus-visible::before { transform: none; }
+.btn:hover, .btn:focus-visible { color: var(--c-on-accent); }
+.btn--solid { background: var(--c-accent); color: var(--c-on-accent); }
+.btn--solid::before { background: var(--c-fg); }
+.btn--solid:hover, .btn--solid:focus-visible { color: var(--c-bg); }
+
+/* Hublot : toute image ronde (écho des trois miroirs de la salle). */
+.hublot { position: relative; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--c-panel); border: 1.5px solid var(--c-accent); outline: 6px solid var(--c-bg); outline-offset: -7px; }
+.hublot img { width: 100%; height: 100%; object-fit: cover; }
+
+section { padding-block: clamp(3.5rem, 8vw, 8rem); }
+.rule { border-top: 1px solid var(--c-line); }
+.credit { font-size: var(--t-xs); color: var(--c-muted); }
+
+/* Pied : bandeau final propre au site, puis composant KYW intact. */
+.site-footer { background: var(--c-curtain); color: #f1e7d6; padding-block: clamp(3rem, 6vw, 5rem) 2rem; }
+.site-footer .wrap { display: grid; gap: 2rem; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+.site-footer .f-big { grid-column: 1 / -1; font-family: var(--f-display); font-size: var(--t-xl); line-height: 0.95; letter-spacing: -0.03em; }
+.site-footer .f-col { grid-column: span 4; }
+.site-footer a { color: #f1e7d6; }
+.site-footer .f-label { color: #b9c9be; margin-bottom: 0.5rem; }
+@media (max-width: 720px) { .site-footer .wrap { grid-template-columns: 1fr; } .site-footer .f-col { grid-column: 1; } }
+.site-footer .btn { color: #f1e7d6; border-color: #e0904f; }
+.site-footer .btn--solid { color: #0a1b2b; }
+.site-footer .btn:hover, .site-footer .btn:focus-visible { color: #0a1b2b; }

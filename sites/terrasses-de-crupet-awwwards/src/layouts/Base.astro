@@ -1,0 +1,108 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import KywFooter from '@kyw/footer';
+import { restaurant as r, nav } from '../data/site';
+import '../styles/tokens.css';
+import '../styles/engine.css';
+import '../styles/base.css';
+
+interface Props { title?: string; description?: string; theme?: string; }
+const { title, description = r.description, theme } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const fullTitle = title ? `${title} | ${r.name}` : `${r.name} | Brasserie à Crupet`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(`${base}og.png`, Astro.site).href;
+const path = Astro.url.pathname.replace(base, '/');
+const jours = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: r.name,
+  description: r.description,
+  url: new URL(base, Astro.site).href,
+  image: ogImage,
+  telephone: '+3283655111',
+  servesCuisine: ['Brasserie', 'Cuisine belge'],
+  address: { '@type': 'PostalAddress', streetAddress: r.street, postalCode: r.postalCode, addressLocality: 'Crupet', addressCountry: 'BE' },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: jours, opens: '12:00', closes: '14:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: jours, opens: '18:00', closes: '22:00' },
+  ],
+  sameAs: r.socials.map((s) => s.href),
+};
+---
+<!doctype html>
+<html lang="fr" transition:animate="none" data-theme={theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0f2a28" />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <link rel="sitemap" href={`${base}sitemap-index.xml`} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preload" href={`${base}fonts/young-serif-400-normal.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${base}fonts/dm-sans-400-normal.woff2`} as="font" type="font/woff2" crossorigin />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+    </script>
+    <ClientRouter fallback="swap" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
+    <div id="cursor" transition:persist="cursor" aria-hidden="true"><span data-cursor-label></span></div>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href={base} aria-label={`${r.name}, accueil`}>
+          <span class="brand__mark" aria-hidden="true">T</span>
+          <span class="brand__name">{r.name}</span>
+        </a>
+        <nav class="nav ui" aria-label="Navigation principale">
+          {nav.map((n) => (
+            n.href === 'reservation/'
+              ? <a class="btn btn--solid" href={`${base}${n.href}`} aria-current={path.startsWith('/reservation') ? 'page' : undefined}>{n.label}</a>
+              : <a class={n.href === 'a-propos/' ? '' : ''} href={`${base}${n.href}`} aria-current={path.startsWith('/' + n.href.replace('/', '')) ? 'page' : undefined}>{n.label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="f-big">Tous les jours, midi et soir.</p>
+        <div class="f-col">
+          <p class="ui f-label">Adresse</p>
+          <p>{r.street}<br />{r.postalCode} {r.locality}</p>
+        </div>
+        <div class="f-col">
+          <p class="ui f-label">Table</p>
+          <p><a href={r.phoneHref}>{r.phone}</a><br /><a href={`mailto:${r.email}`}>{r.email}</a></p>
+        </div>
+        <div class="f-col">
+          <p class="ui f-label">Suivre</p>
+          <p>{r.socials.map((s, i) => (<Fragment>{i > 0 && <br />}<a href={s.href} rel="noopener" target="_blank">{s.label}</a></Fragment>))}</p>
+        </div>
+      </div>
+    </footer>
+    <KywFooter base={base} />
+    <script>
+      import { start } from '../engine/astro';
+      import { setupMotion } from '../motion/setup';
+      start(setupMotion);
+    </script>
+  </body>
+</html>

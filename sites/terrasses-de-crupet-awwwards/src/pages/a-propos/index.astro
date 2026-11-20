@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { photos, credit } from '../../data/photos';
+import { restaurant as r } from '../../data/site';
+const base = import.meta.env.BASE_URL;
+const lieux = [
+  { p: photos.terrasse, t: 'La terrasse', d: 'Des tables dressées sous un auvent, au rythme des beaux jours.' },
+  { p: photos.banquette, t: 'La salle', d: 'Banquettes, fauteuils orange et miroirs ronds sur fond de carrelage vert.' },
+  { p: photos.bar, t: 'Le bar', d: 'Le comptoir carrelé de vert, où se préparent les cocktails et se tirent les bières.' },
+  { p: photos.chalet, t: 'Le chalet d’hiver', d: 'On peut réserver au restaurant ou dans le chalet d’hiver.' },
+];
+---
+<Base title="Le lieu" description="Une brasserie conviviale et familiale au cœur du village de Crupet : la terrasse, la salle, le bar et le chalet d’hiver des Terrasses de Crupet.">
+  <section class="head">
+    <div class="wrap grid">
+      <h1 class="display display--mega head__title" data-split="lines">Le lieu</h1>
+      <div class="head__txt prose">
+        <p class="lede">Une brasserie conviviale et familiale au cœur du village de Crupet, où il fait bon se restaurer en famille ou entre amis.</p>
+        <p>La cuisine est ouverte tous les jours, de 12{' '}h à 14{' '}h et de 18{' '}h à 22{' '}h. On y sert une carbonnade à la bière avec ses croquettes, le vol-au-vent de Mamy avec des frites fraîches, des plats à partager, une carte pour les enfants et des cafés signés Delahaut.</p>
+      </div>
+    </div>
+  </section>
+  <section class="rule lieux" aria-label="Les espaces du restaurant">
+    <div class="wrap">
+      <ul class="lieux__list">
+        {lieux.map((x, i) => (
+          <li class={`lieu lieu--${i % 2 ? 'b' : 'a'}`}>
+            <div class="hublot" data-reveal="scale"><Image src={x.p.src} alt={x.p.alt} widths={[400, 700]} sizes="(min-width: 900px) 32vw, 80vw" loading={i < 1 ? 'eager' : 'lazy'} decoding="async" /></div>
+            <div class="lieu__txt"><h2 class="display display--xl" data-split="lines">{x.t}</h2><p class="lede">{x.d}</p></div>
+          </li>
+        ))}
+      </ul>
+      <p class="credit">{credit}</p>
+    </div>
+  </section>
+  <section class="rule venir" aria-labelledby="h-venir">
+    <div class="wrap grid">
+      <h2 id="h-venir" class="display display--l venir__title">Venir à Crupet</h2>
+      <p class="venir__txt prose">{r.street}, {r.postalCode} {r.locality}. Le plan s’ouvre dans un nouvel onglet. Pour toute question d’accès ou de stationnement, le plus simple est d’appeler le <a class="text" href={r.phoneHref}>{r.phone}</a>.</p>
+      <p class="venir__cta"><a class="btn ui" href={r.mapUrl} rel="noopener" target="_blank">Ouvrir le plan</a> <a class="btn btn--solid ui" href={`${base}reservation/`}>Réserver</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { padding-block: clamp(2.5rem, 6vw, 5rem); }
+  .head__title { grid-column: 1 / span 6; }
+  .head__txt { grid-column: 7 / span 5; align-self: end; }
+  .head__txt p + p { margin-top: 1em; }
+  @media (max-width: 900px) { .head__title, .head__txt { grid-column: 1 / -1; } .head__txt { margin-top: 2rem; } }
+  .lieux__list { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(3rem, 7vw, 7rem); }
+  .lieu { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: center; }
+  .lieu .hublot { grid-column: 1 / span 5; grid-row: 1; }
+  .lieu__txt { grid-column: 7 / span 5; grid-row: 1; display: grid; gap: 1.25rem; }
+  .lieu--b .hublot { grid-column: 8 / span 5; }
+  .lieu--b .lieu__txt { grid-column: 1 / span 5; }
+  .lieux .credit { margin-top: 3rem; }
+  @media (max-width: 900px) {
+    .lieu { grid-template-columns: 1fr; row-gap: 1.5rem; }
+    .lieu .hublot, .lieu--b .hublot, .lieu__txt, .lieu--b .lieu__txt { grid-column: 1; grid-row: auto; }
+    .lieu .hublot { width: 80%; }
+    .lieu--b .hublot { margin-left: auto; }
+  }
+  .venir__title { grid-column: 1 / span 4; }
+  .venir__txt { grid-column: 6 / span 5; }
+  .venir__cta { grid-column: 6 / span 6; margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  @media (max-width: 900px) { .venir__title, .venir__txt, .venir__cta { grid-column: 1 / -1; } .venir__txt { margin-top: 1rem; } }
+</style>
