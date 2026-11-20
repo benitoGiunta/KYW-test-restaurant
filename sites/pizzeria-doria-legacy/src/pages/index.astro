@@ -1,28 +1,39 @@
 ---
 import Base from '../layouts/Base.astro';
 import Fin from '../components/Fin.astro';
-import { resto, suggestions, midis, avis, groupesMenu, prix } from '../data/site';
+import { resto, suggestions, midis, avis, groupesMenu, prix, horaires } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const n = (id: string) => groupesMenu.find((g) => g.id === id)!.cats.reduce((a, c) => a + c.plats.length, 0);
+const jours: Record<string, string> = { Lundi: 'Monday', Mardi: 'Tuesday', Mercredi: 'Wednesday', Jeudi: 'Thursday', Vendredi: 'Friday', Samedi: 'Saturday', Dimanche: 'Sunday' };
+const origine = new URL(base, Astro.site ?? 'https://kyw-test-restaurant.vercel.app').href;
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: resto.nom,
+  servesCuisine: 'Italienne',
+  telephone: resto.tel,
+  email: resto.email,
+  url: origine,
+  image: new URL(`${base}photos/coffres-640.webp`, origine).href,
+  address: { '@type': 'PostalAddress', streetAddress: resto.adresse, postalCode: '5020', addressLocality: 'Malonne', addressRegion: 'Namur', addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: 50.4404882, longitude: 4.7950329 },
+  sameAs: [resto.facebook, resto.tripadvisor],
+  openingHoursSpecification: horaires.filter((j) => j.h.length).flatMap((j) => j.h.map((x) => { const [o, f] = x.split(' à '); return { '@type': 'OpeningHoursSpecification', dayOfWeek: jours[j.jour], opens: o, closes: f }; })),
+};
 ---
-<Base page="accueil" title="Pizzeria Doria, pizzas et pâtes à Malonne, Namur" description="Pizzas, pâtes fraîches et viandes italiennes dans une ancienne banque de Malonne, à Namur. Sur place ou à emporter.">
+<Base page="accueil" title="Pizzeria Doria, pizzas et pâtes à Malonne, Namur" description="Pizzas, pâtes fraîches et viandes italiennes dans une ancienne banque de Malonne, à Namur. Sur place ou à emporter." jsonld={jsonld}>
   <section class="hero" aria-labelledby="hero-titre">
-    <figure class="hero__photo" data-slot="hero" data-alt="Un pizzaiolo coupe une pizza garnie sur un plan de travail noir" data-placeholder="true">
-      <picture>
-        <source media="(min-width: 40rem)" srcset={`${base}photos/pizza-coupe-paysage-900.webp 900w, ${base}photos/pizza-coupe-paysage-1600.webp 1600w`} sizes="100vw" width="1600" height="1000" />
-        <img src={`${base}photos/pizza-coupe-800.webp`} width="800" height="1200" alt="Un pizzaiolo coupe une pizza garnie sur un plan de travail" fetchpriority="high" decoding="async" />
-      </picture>
-    </figure>
-    <div class="container hero__bas">
-      <div class="hero__plaque">
-        <h1 id="hero-titre">Pizzeria de famille, dans une ancienne banque.</h1>
-        <p class="lead">Pizzas, pâtes fraîches et viandes italiennes, sur place ou à emporter.</p>
-        <p class="hero__actions">
-          <a class="btn btn--primary" href={resto.telHref}>Réserver une table</a>
-          <a class="btn" href={resto.pizzy} rel="noopener">Commander à emporter</a>
-        </p>
-      </div>
+    <div class="hero__texte">
+      <h1 id="hero-titre">Pizzeria de famille, dans une ancienne banque.</h1>
+      <p class="lead">Pizzas, pâtes fraîches et viandes italiennes, servies dans la salle des coffres, à Malonne, près de Namur. Sur place ou à emporter.</p>
+      <p class="hero__actions">
+        <a class="btn btn--primary" href={resto.telHref}>Réserver une table</a>
+        <a class="btn" href={resto.pizzy} rel="noopener">Commander à emporter</a>
+      </p>
     </div>
+    <figure class="hero__photo" data-slot="hero" data-alt="La salle des coffres : casiers métalliques d’une ancienne banque, tables en bois et chaises noires">
+      <img src={`${base}photos/coffres-640.webp`} width="640" height="800" alt="La salle des coffres : casiers métalliques, tables en bois et chaises noires" fetchpriority="high" decoding="async" />
+    </figure>
   </section>
 
   <section class="sect sugg" aria-labelledby="sugg-titre">
@@ -37,7 +48,7 @@ const n = (id: string) => groupesMenu.find((g) => g.id === id)!.cats.reduce((a, 
       </article>
       <div class="tile emporter">
         <h2>Nos plats sont aussi à emporter</h2>
-        <p class="lead">Pour toute commande à partir de 50 €, une bouteille de San Benedetto thé vert de 1,5 L ou une bouteille de vin rouge.</p>
+        <p class="lead">Pour toute commande à partir de 50&nbsp;€, une bouteille de San Benedetto thé vert de 1,5 L ou une bouteille de vin rouge.</p>
         <p class="emporter__actions">
           <a class="btn btn--primary" href={resto.pizzy} rel="noopener">Commander en ligne</a>
           <a class="btn" href={resto.telHref}>Commander au téléphone</a>
@@ -68,14 +79,14 @@ const n = (id: string) => groupesMenu.find((g) => g.id === id)!.cats.reduce((a, 
 
   <section class="sect bande carte-apercu" aria-labelledby="carte-titre">
     <div class="container carte-apercu__grille">
-      <p class="figure carte-apercu__fig" aria-hidden="true">7,50&nbsp;€</p>
+      <p class="figure carte-apercu__fig"><small>dès</small> 7,50&nbsp;€</p>
       <div class="carte-apercu__texte">
-        <h2 id="carte-titre">Du marinara à 7,50 € à la Maradona à 18 €.</h2>
+        <h2 id="carte-titre">De la marinara à la Maradona.</h2>
         <p class="lead">45 pizzas et pains, 15 pâtes, 6 viandes. Fior di latte sans lactose sur demande.</p>
         <ul class="carte-apercu__liens">
-          <li><a class="tile tile--lien" href={`${base}menu/#pizza`}><span>Pizzas et pains</span><small>{n('pizza')} à la carte</small></a></li>
-          <li><a class="tile tile--lien" href={`${base}menu/#pasta`}><span>Pasta</span><small>{n('pasta')} plats</small></a></li>
-          <li><a class="tile tile--lien" href={`${base}menu/#viandes`}><span>Viandes et salades</span><small>{n('viandes')} plats</small></a></li>
+          <li><a class="lien-ligne" href={`${base}menu/#pizza`}><span>Pizzas et pains</span><small>{n('pizza')} à la carte</small></a></li>
+          <li><a class="lien-ligne" href={`${base}menu/#pasta`}><span>Pasta</span><small>{n('pasta')} plats</small></a></li>
+          <li><a class="lien-ligne" href={`${base}menu/#viandes`}><span>Viandes et salades</span><small>{n('viandes')} plats</small></a></li>
         </ul>
       </div>
     </div>
@@ -85,20 +96,21 @@ const n = (id: string) => groupesMenu.find((g) => g.id === id)!.cats.reduce((a, 
     <div class="container histoire__grille">
       <div class="histoire__texte">
         <h2 id="hist-titre">Une histoire de famille</h2>
-        <p class="lead">La Pizzeria Doria est ouverte depuis octobre 2017 et est gérée par Rocco et Luigi, passionnés par la « cuisine italienne ».</p>
+        <p class="lead">Rocco et Luigi ont ouvert la Pizzeria Doria en octobre 2017 et la tiennent toujours à deux.</p>
         {/* Hallmark · reworded "à changé" to "a changé" · coquille de l’original */}
-        <p>Depuis mai 2023, le restaurant a changé d’adresse mais reste toujours dans la même idée… Vous régalez vos papilles avec une cuisine italienne et ses produits maison, parfois même bio.</p>
+        <p>Depuis mai 2023, ils vous reçoivent à Malonne, dans une ancienne banque restaurée. En cuisine : des pâtes fraîches bio artisanales Eggusto, des produits maison, et du fior di latte sans lactose sur demande.</p>
         <p><a class="btn" href={`${base}menu/`}>Voir le menu</a></p>
       </div>
       <figure class="histoire__photo ph ph--pate" data-slot="histoire" data-alt="Les mains d’une personne pétrissant une pâte à pizza sur un plan fariné" data-placeholder="true">
         <img src={`${base}photos/pate-1600.webp`} srcset={`${base}photos/pate-800.webp 800w, ${base}photos/pate-1600.webp 1600w`} sizes="(min-width: 60rem) 50vw, 100vw" width="1600" height="1066" alt="Les mains d’une personne pétrissant une pâte à pizza" loading="lazy" decoding="async" />
+        <figcaption class="ph__legende">Photo d’illustration</figcaption>
       </figure>
     </div>
   </section>
 
   <section class="sect avis" aria-labelledby="avis-titre">
     <div class="container">
-      <h2 id="avis-titre">Les avis de nos clients</h2>
+      <h2 id="avis-titre">Avis publiés sur Tripadvisor en 2023</h2>
       <ul class="avis__liste" data-reveal>
         {avis.map((a) => (
           <li class="tile avis__item">
@@ -107,20 +119,6 @@ const n = (id: string) => groupesMenu.find((g) => g.id === id)!.cats.reduce((a, 
           </li>
         ))}
       </ul>
-    </div>
-  </section>
-
-  <section class="sect coffres" aria-labelledby="coffres-titre">
-    <div class="container coffres__grille">
-      <figure class="coffres__photo ph ph--coffres" data-slot="coffres" data-alt="La salle des coffres : casiers métalliques d’une ancienne banque, tables en bois et chaises noires">
-        <img src={`${base}photos/coffres-640.webp`} width="640" height="800" alt="La salle des coffres : casiers métalliques, tables en bois et chaises noires" loading="lazy" decoding="async" />
-      </figure>
-      <div class="coffres__texte">
-        <h2 id="coffres-titre">À table dans la salle des coffres.</h2>
-        {/* Hallmark · reworded "dans la région de Namur au sein Malonne" to "à Malonne, près de Namur" · lisibilité */}
-        <p class="lead">Nous vous accueillons dans une salle spacieuse, à Malonne, près de Namur, dans une ancienne banque restaurée.</p>
-        <p><a class="btn btn--primary" href="#reserver">Réserver votre table</a></p>
-      </div>
     </div>
   </section>
 

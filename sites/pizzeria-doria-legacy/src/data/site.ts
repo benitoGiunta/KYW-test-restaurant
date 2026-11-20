@@ -26,7 +26,7 @@ export const horaires = [
   { jour: 'Samedi', h: ['12:00 à 13:30', '18:00 à 22:00'] },
   { jour: 'Dimanche', h: ['18:00 à 21:30'] },
 ];
-export const horairesNote = 'Dimanche et jours fériés : 18:00 à 21:30. Mardi et mercredi : fermé, jours fériés compris. Cuisine fermée à partir de 21:00 du mardi au jeudi et le dimanche, de 21:30 le vendredi et le samedi.';
+export const horairesNote = 'Dimanche et jours fériés\u00a0: 18:00 à 21:30. Mardi et mercredi\u00a0: fermé, jours fériés compris. Cuisine fermée à partir de 21:00 du mardi au jeudi et le dimanche, de 21:30 le vendredi et le samedi.';
 
 export const suggestions = {
   titre: 'Suggestions du moment, novembre 2026',
@@ -51,7 +51,7 @@ export const midis = {
 export const avis = [
   { titre: 'Expérience à refaire', texte: 'Nourriture délicieuse, bien servie et très copieuse. Personnel sympathique et serviable. Bonne ambiance, beau cadre.', qui: 'Aurélie C', date: '9 octobre 2023' },
   { titre: 'Tutto ottimo!', texte: 'Tutto ottimo! Cibo di qualità, locale carino e personale super accogliente. Lo consiglio vivamente!', qui: 'Petra B', date: '13 juin 2023' },
-  { titre: 'Pizzeria délicieuse, simple et efficace', texte: 'Bel endroit, simple et efficace, la nourriture est très bonne, décors spécial (nous avons mangé dans un coffre de banque). Je recommande cette pizzeria si vous passez vers Namur.', qui: 'Roam63401968725', date: '6 mai 2023' },
+  { titre: 'Pizzeria délicieuse, simple et efficace', texte: 'Bel endroit, simple et efficace, la nourriture est très bonne, décors spécial (nous avons mangé dans un coffre de banque). Je recommande cette pizzeria si vous passez vers Namur.', qui: 'Un client', date: '6 mai 2023' },
 ];
 
 export const emploi = {

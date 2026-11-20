@@ -8,8 +8,8 @@ import '../styles/tokens.css';
 import '../styles/engine.css';
 import '../styles/site.css';
 
-interface Props { title?: string; description?: string; page?: string }
-const { title, description = site.description, page = 'page' } = Astro.props;
+interface Props { title?: string; description?: string; page?: string; piedSans?: string[] }
+const { title, description = site.description, page = 'page', piedSans = [] } = Astro.props;
 const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Pizzas dans l\u2019ancienne salle des coffres, Malonne`;
 const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
@@ -27,7 +27,6 @@ const jsonLd = {
   address: { '@type': 'PostalAddress', streetAddress: `${site.adresse.rue} ${site.adresse.numero}`, postalCode: site.adresse.cp, addressLocality: site.adresse.localite, addressCountry: site.adresse.pays },
   geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon },
   openingHoursSpecification: jours.flatMap((j) => j.creneaux.map((c) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: j.schema, opens: c.debut, closes: c.fin }))),
-  acceptsReservations: true,
   hasMenu: new URL(asset('/carte/'), siteUrl).href,
   sameAs: [site.facebookUrl],
 };
@@ -75,7 +74,7 @@ const jsonLd = {
     <main id="main" tabindex="-1">
       <slot />
     </main>
-    <Footer />
+    <Footer sans={piedSans} />
     <script>
       import { start } from '../engine/astro';
       import { setupMotion } from '../motion/setup';

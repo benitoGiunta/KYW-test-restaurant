@@ -56,14 +56,11 @@ a:hover { text-decoration-color: var(--color-accent); }
 .slab__nav a { white-space: nowrap; }
 
 /* Hero Ledge */
-.hero { position: relative; display: grid; align-items: end; min-height: max(34rem, min(calc(100svh - var(--nav-h, 72px)), 60rem)); }
-.hero__photo { position: absolute; inset: 0; margin: 0; z-index: 0; }
-.hero__photo > picture { position: absolute; inset: 0; display: block; z-index: 1; }
-.hero__photo picture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; filter: saturate(1.06) contrast(1.04); }
-.hero__bas { position: relative; z-index: var(--z-base); padding-bottom: var(--gutter); padding-top: 40svh; }
-.hero__plaque { background: var(--color-paper-3); color: var(--color-ink); border-radius: var(--radius-card); padding: var(--space-xl); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-md) var(--space-xl); align-items: end; }
-.hero__plaque h1 { grid-row: 1 / span 2; font-size: var(--text-display-s); max-width: 16ch; }
-.hero__plaque .lead { align-self: end; }
+.hero { color: var(--color-ink); display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); min-height: max(34rem, min(calc(100svh - var(--nav-h, 72px)), 52rem)); background: var(--color-paper-3); }
+.hero__texte { display: grid; align-content: center; gap: var(--space-lg); padding: var(--space-2xl) var(--gutter); padding-inline-start: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))); color: var(--color-ink); }
+.hero__texte h1 { font-size: var(--text-display-s); max-width: 16ch; }
+.hero__photo { margin: 0; position: relative; min-height: 20rem; }
+.hero__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
 .hero__actions, .fin__actions, .emporter__actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin: 0; }
 
 /* Sections */
@@ -96,7 +93,14 @@ a:hover { text-decoration-color: var(--color-accent); }
 .carte-apercu__grille { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: var(--space-xl) var(--gap-columns); align-items: center; }
 .figure { font: var(--display-weight) clamp(5rem, 13vw, 13rem)/0.85 var(--font-display); letter-spacing: -0.04em; margin: 0; overflow-wrap: break-word; min-width: 0; }
 .carte-apercu__texte { display: grid; gap: var(--space-lg); }
-.carte-apercu__liens { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-sm); }
+.carte-apercu__liens { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); }
+.lien-ligne { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-md); min-height: 44px; padding-block: var(--space-sm); border-top: var(--rule-bar) solid var(--color-rule); text-decoration: none; font: 700 var(--text-lg)/1.2 var(--font-body); }
+.lien-ligne:last-child { border-bottom: var(--rule-bar) solid var(--color-rule); }
+.lien-ligne small { font-size: var(--text-sm); color: var(--color-muted); font-weight: 500; }
+.lien-ligne:hover { background: var(--color-paper-2); }
+.figure small { display: block; font-size: 0.18em; letter-spacing: 0; line-height: 1.2; margin-bottom: var(--space-xs); }
+.ph { position: relative; }
+.ph__legende { position: absolute; inset: auto var(--space-sm) var(--space-sm) auto; background: var(--color-paper); color: var(--color-ink); font-size: var(--text-sm); padding: var(--space-3xs, 0.125rem) var(--space-sm); border-radius: var(--radius-control); }
 .tile--lien { display: grid; gap: var(--space-2xs); height: 100%; text-decoration: none; font: 700 var(--text-lg)/1.2 var(--font-body); background: var(--color-paper-2); transition: background-color var(--dur-short) var(--ease-out); min-height: 44px; }
 .tile--lien small { font-size: var(--text-sm); color: var(--color-muted); font-weight: 500; }
 .tile--lien:hover { background: var(--color-paper); }
@@ -116,7 +120,10 @@ a:hover { text-decoration-color: var(--color-accent); }
 
 /* Avis */
 .avis h2 { margin-bottom: var(--space-xl); }
-.avis__liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-columns); }
+.avis__liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gap-columns); }
+.avis__item:first-child { grid-row: 1 / span 2; align-content: center; padding: var(--space-xl); }
+.avis__item:first-child h3 { font-size: var(--text-display-s); }
+.avis__item:first-child p { font-size: var(--text-lg); }
 .avis__item { display: grid; gap: var(--space-md); align-content: space-between; }
 .avis__item blockquote { margin: 0; display: grid; gap: var(--space-sm); }
 .avis__item h3 { font-size: var(--text-xl); }
@@ -188,14 +195,16 @@ a:hover { text-decoration-color: var(--color-accent); }
   .slab__nav a { width: 100%; min-height: 52px; font-size: var(--text-lg); border-radius: var(--radius-control); }
   .slab__cta { margin-left: 0; }
   .sugg__grille, .midis__tete, .carte-apercu__grille, .histoire__grille, .coffres__grille, .fin__grille, .vins__grille, .contact__grille, .carte__grille { grid-template-columns: minmax(0, 1fr); }
-  .carte-apercu__liens, .avis__liste { grid-template-columns: minmax(0, 1fr); }
+  .avis__liste { grid-template-columns: minmax(0, 1fr); }
+  .avis__item:first-child { grid-row: auto; padding: var(--space-lg); }
+  .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .hero__texte { padding: var(--space-xl) var(--gutter); }
+  .hero__photo { min-height: 0; aspect-ratio: 4 / 5; max-height: 70svh; }
   .midis__cols, .emploi__corps { grid-template-columns: minmax(0, 1fr); }
   .carte__titre { position: static; }
   .pied__grille { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ph--bouchons { justify-self: start; }
-  .card, .emporter, .hero__plaque { padding: var(--space-lg); }
-  .hero__plaque { grid-template-columns: minmax(0, 1fr); }
-  .hero__plaque h1 { grid-row: auto; font-size: var(--text-display-s); }
+  .card, .emporter { padding: var(--space-lg); }
 }
 @media (max-width: 40rem) {
   .row { grid-template-columns: minmax(0, 1fr) auto; }

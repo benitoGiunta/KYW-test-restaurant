@@ -2,9 +2,11 @@
 import KywFooter from '@kyw/footer';
 import { resto, horaires } from '../data/site';
 import '../styles/page.css';
-interface Props { title: string; description: string; page: 'accueil' | 'menu' | 'vins' | 'contact' | '404'; }
-const { title, description, page } = Astro.props;
+interface Props { title: string; description: string; page: 'accueil' | 'menu' | 'vins' | 'contact' | '404'; jsonld?: Record<string, unknown>; }
+const { title, description, page, jsonld } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const ogImage = new URL(`${base}photos/coffres-640.webp`, Astro.site ?? 'https://kyw-test-restaurant.vercel.app').href;
+const ogUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://kyw-test-restaurant.vercel.app').href;
 const liens = [
   { id: 'accueil', href: base, label: 'Accueil' },
   { id: 'menu', href: `${base}menu/`, label: 'Menu 2026' },
@@ -20,8 +22,17 @@ const liens = [
     <meta name="robots" content="noindex" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content="Pizzeria Doria" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={ogUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="La salle des coffres de la Pizzeria Doria : casiers métalliques, tables en bois et chaises noires" />
     <meta name="theme-color" content="#1a5b33" />
     <link rel="icon" href={`${base}photos/logo-doria.png`} type="image/png" />
+    {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
     <script is:inline>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,7 +42,7 @@ const liens = [
     <a class="skip" href="#contenu">Aller au contenu</a>
     <header class="slab">
       <div class="container slab__in">
-        <a class="slab__marque" href={base} aria-label="Pizzeria Doria, accueil">Doria <span>pizzeria</span></a>
+        <a class="slab__marque" href={base} aria-label="Doria pizzeria, accueil">Doria <span>pizzeria</span></a>
         <button class="slab__burger" type="button" popovertarget="menu-principal" aria-label="Ouvrir le menu">Menu</button>
         <nav class="slab__nav" id="menu-principal" popover="auto" aria-label="Navigation principale">
           <ul>
@@ -42,7 +53,7 @@ const liens = [
       </div>
     </header>
     <main id="contenu"><slot /></main>
-    <footer class="pied">
+    <section class="pied" aria-label="Coordonnées de la pizzeria">
       <div class="container pied__grille">
         <div class="pied__marque">
           <img src={`${base}photos/logo-doria.png`} width="120" height="120" alt="Doria Pizzeria" loading="lazy" />
@@ -52,8 +63,8 @@ const liens = [
         <div><h2 class="pied__t">Nous suivre</h2><ul><li><a href={resto.facebook} rel="noopener">Facebook</a></li><li><a href={resto.tripadvisor} rel="noopener">Tripadvisor</a></li></ul></div>
         <div><h2 class="pied__t">Paiement</h2><ul><li>Payconiq</li><li>Espèces</li><li>TVA {resto.tva}</li></ul></div>
       </div>
-      <p class="container pied__credits" data-credits>Photographies d’illustration : Unsplash (Benu Marinescu, Hoja Studio, Nadya Spetnitskaya, Pinar Kucuk), à remplacer par des photos du restaurant. Autres photos : Pizzeria Doria.</p>
-    </footer>
+      <p class="container pied__credits" data-credits>Photographies d’illustration : Unsplash (Benu Marinescu, Hoja Studio, Nadya Spetnitskaya, Pinar Kucuk). Autres photos : Pizzeria Doria.</p>
+    </section>
     <KywFooter base={import.meta.env.BASE_URL} />
     <script is:inline>
       (function () {

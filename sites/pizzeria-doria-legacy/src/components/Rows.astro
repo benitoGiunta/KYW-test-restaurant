@@ -1,13 +1,14 @@
 ---
 import { prix, liste } from '../data/site';
 interface Plat { nom: string; description: string | null; prix: number; placeholder?: boolean }
-interface Props { plats: Plat[] }
-const { plats } = Astro.props;
+interface Props { plats: Plat[]; niveau?: 3 | 4 }
+const { plats, niveau = 3 } = Astro.props;
+const H = `h${niveau}` as 'h3' | 'h4';
 ---
 <ul class="rows">
   {plats.map((p) => (
     <li class="row">
-      <h4 class="row__nom">{p.nom}</h4>
+      <H class="row__nom">{p.nom}</H>
       {p.description && <p class="row__desc">{liste(p.description)}</p>}
       <span class="row__prix num">{prix(p.prix)}</span>
     </li>

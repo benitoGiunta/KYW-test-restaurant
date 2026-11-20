@@ -1,29 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import { u } from '../lib/url';
-import { site, jours, libelleJour, midis } from '../data/site';
+import { site, jours, libelleJour } from '../data/site';
 ---
-<Base title="Réserver" page="reservation" description="Réserver une table à la Pizzeria Doria, Rue Fond de Malonne 66 à Malonne : par téléphone ou par e-mail. Horaires, adresse et plan.">
+<Base title="Réserver" page="reservation" piedSans={['venir','ouvert']} description="Réserver une table à la Pizzeria Doria, Rue Fond de Malonne 66 à Malonne : par téléphone. Horaires, adresse et plan.">
   <section class="entete wrap" aria-labelledby="titre">
     <h1 id="titre" class="entete__titre display" data-split="lines" data-intro>Réserver une table</h1>
-    <p class="entete__lead">La réservation se fait par téléphone ou par e-mail. Un tableau des heures d’ouverture se trouve juste en dessous.</p>
+    <p class="entete__lead">Réservez par téléphone. Les heures d’ouverture et l’adresse se trouvent juste en dessous.</p>
   </section>
   <section class="resa wrap">
     <div class="resa__appel">
       <h2 class="display">Par téléphone</h2>
       <p><a class="resa__tel display" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
       <p><a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler la Doria</span></a></p>
-      <h2 class="display resa__sous">Par e-mail</h2>
-      <p><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
-      <form class="form" action={`mailto:${site.email}`} method="post" enctype="text/plain">
-        <p class="form__ligne"><label for="f-nom">Votre nom</label><input id="f-nom" name="nom" type="text" autocomplete="name" /></p>
-        <p class="form__ligne"><label for="f-date">Jour souhaité</label><input id="f-date" name="jour" type="date" /></p>
-        <p class="form__ligne"><label for="f-heure">Heure souhaitée</label><input id="f-heure" name="heure" type="time" /></p>
-        <p class="form__ligne"><label for="f-nb">Nombre de personnes</label><input id="f-nb" name="personnes" type="number" min="1" max="30" inputmode="numeric" /></p>
-        <p class="form__ligne"><label for="f-msg">Un mot pour la salle</label><textarea id="f-msg" name="message" rows="3"></textarea></p>
-        <p><button class="cta cta--contour" type="submit"><span class="cta__txt">Ouvrir mon e-mail</span></button></p>
-        <p class="form__note">Ce bouton ouvre votre messagerie avec le message prêt : rien n’est envoyé tant que vous ne l’envoyez pas, et la table n’est réservée qu’après réponse du restaurant.</p>
-      </form>
+      <p class="resa__note">Une question : <a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
     </div>
     <div class="resa__infos">
       <h2 class="display">Heures d’ouverture</h2>
@@ -36,8 +26,6 @@ import { site, jours, libelleJour, midis } from '../data/site';
       <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
       <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
       <p class="resa__note">Vous mangez dans l’ancienne salle des coffres d’une banque restaurée. Paiement par Payconiq ou en espèces.</p>
-      <h2 class="display resa__sous">Midis d’école et à emporter</h2>
-      <p>{midis.texte}</p>
       <p><a class="lien" href={site.emporterUrl} rel="noopener">Commander à emporter en ligne</a></p>
     </div>
   </section>
