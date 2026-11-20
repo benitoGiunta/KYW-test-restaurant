@@ -25,7 +25,7 @@ const total = sections.reduce((n, s) => n + s.plats.length, 0);
 ---
 <Base page="carte" title="La carte" description="La carte de la Brasserie Edgard à Saint-Servais : carpaccios, croquettes maison, coin du boucher, du poissonnier, pâtes fraîches, desserts, lunch et menus de groupe, avec les prix.">
   <section class="entete wrap">
-    <h1 class="entete__titre display">La carte</h1>
+    <h1 class="entete__titre display" data-split="lines" data-intro>La carte</h1>
     <p class="entete__texte">{total} lignes de brasserie, du carpaccio à la dame blanche. Prix relevés sur le site de la brasserie le 20&nbsp;novembre&nbsp;2026, à confirmer sur place. Emporter : supplément d’emballage de {eur(site.emporterSupplement)}.</p>
   </section>
 
@@ -39,9 +39,9 @@ const total = sections.reduce((n, s) => n + s.plats.length, 0);
     {sections.map((s) => (
       <section class="rubrique" id={s.id} aria-labelledby={`h-${s.id}`}>
         <header class="rubrique__tete">
-          <h2 class="rubrique__titre display" id={`h-${s.id}`}>{s.titre}</h2>
+          <h2 class="rubrique__titre display" data-split="lines" id={`h-${s.id}`}>{s.titre}</h2>
           {s.note && <p class="rubrique__note">{s.note}</p>}
-          {s.photo && <div class="rubrique__photo"><Photo cle={s.photo} sizes="(min-width: 900px) 24vw, 70vw" widths={[400, 700]} /></div>}
+          {s.photo && <div class="rubrique__photo" data-reveal="clip"><Photo cle={s.photo} sizes="(min-width: 900px) 24vw, 70vw" widths={[400, 700]} /></div>}
         </header>
         <ul class="plats-liste">
           {s.plats.map((p) => (
@@ -59,7 +59,7 @@ const total = sections.reduce((n, s) => n + s.plats.length, 0);
   </div>
 
   <section class="reserve wrap" aria-labelledby="t-reserve">
-    <h2 class="reserve__titre display" id="t-reserve">Une table ?</h2>
+    <h2 class="reserve__titre display" data-split="lines" id="t-reserve">Une table ?</h2>
     <p><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver</span></a></p>
   </section>
 </Base>

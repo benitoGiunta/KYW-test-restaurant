@@ -1,21 +1,26 @@
-# ETAT brasserie-edgard-awwwards, construction-1 (20/11/2026)
+# ETAT brasserie-edgard-awwwards, construction-2 (20/11/2026)
 
-## Fait
-- Brief, 3 concepts, Concept Card, système et checklist 1 à 18 dans DESIGN.md. Concept retenu : « Le cadran » (anneau de 24 h : salle 10 h à 22 h 30, cuisine, pause 15 h à 18 h).
-- Scaffold Astro 5 : engine verbatim (copié de brasserie-du-quai, octet pour octet identique à chez-guillaume), tokens, Base, Header, Footer (KywFooter), Dial, Photo, menu mobile.
-- Contenu : `src/data/site.ts`, `src/data/carte.ts` (71 plats générés depuis donnees.json, aucun fictif), `src/lib/photos.ts` (23 photos du client, alt d'après `sujet`).
-- 5 pages : accueil, carte, a-propos (La maison), reservation, 404. Favicon, og.png (capture du hero).
-- Build OK : `dist/brasserie-edgard/awwwards/` (5 pages, noindex, pied KYW).
-- Mesures : aucun débordement, aucune requête échouée, CTA du hero dans la flottaison à 1440×900.
+## Fait (phase 1)
+- Brief, 3 concepts, Concept Card « Le cadran », système, checklist 1 à 18 (DESIGN.md). Scaffold Astro 5, engine verbatim, 5 pages, contenu réel (71 plats, 23 photos du client), favicon, og.png.
 
-## Reste (phases 2 et 3)
-- Phase 2 : aiguille à l'heure de Namur + arc courant qui s'allume (statut « cuisine ouverte / fermée maintenant »), révélations (`data-reveal`, `data-split`), hover finis, parallaxe légère, filmstrip, rideau de transition à tester.
-- Phase 3 : QA navigateur (captures, axe, clavier, reduced-motion, LCP), `RAPPORT.md`, points 42 à 63 de la checklist, ajuster le titre mobile (left 13 px < gutter 16, alignement optique retiré en fin de phase 1 : à remesurer).
-- Ajouter une planche de contrôle de la page carte (mobile) : non vue en phase 1.
+## Fait (phase 2)
+- Module pilote `src/motion/cadran.ts` : heure de Namur (Europe/Brussels, fériés belges calculés) distribuée aux aiguilles, arc courant (`is-now`), statut écrit du hero (`[data-statut]`), plage « Maintenant » de la journée (`[data-plage]`) ; week-end et fériés : la pause devient cuisine (`is-continu`).
+- Signature : l'aiguille du hero tourne de minuit à l'heure de Namur (1,6 s, intro), puis l'arc courant s'allume. Pointeur : aiguille fantôme et lecture « 18 h · cuisine ouverte » au centre du cadran (bureau).
+- Repos : trotteuse en temps réel sur chaque cadran plein (hero, pied), aiguille de la 404 qui cherche l'heure ; `gsap.ticker`, pause hors écran, rien en réduit.
+- Transition : secteur de bois qui balaie l'écran depuis midi (0,8 s / 0,9 s), `setup.ts`.
+- Reveals : h1 `data-split="lines" data-intro` (5 pages), h2 `.display` en `data-split`, blocs sans lien en `data-reveal`, parallaxe légère sur deux plats et la véranda.
+- Hovers : plaque CTA qui se remplit en tournant (`@property --tour`), soulignement redessiné (liens, nav, onglets), menu plein écran ; sous `(hover: hover)`, mêmes états sur `:focus-visible` et `:active`.
+- Finitions : `favicon-32.png`, `apple-touch-icon.png`, lien KYW souligné au survol, `scroll-padding-inline` sur la bande photo.
+- Contrôle Playwright (1440, 390, réduit ; 5 pages) : 0 erreur console, 0 requête échouée, `scrollWidth` = largeur, 0 bloc caché dans le premier écran, menu mobile OK (Échap, retour du focus), navigation avec rideau OK.
+- Build OK (`scripts/q.sh build pnpm build:site sites/brasserie-edgard-awwwards`). Checklist 19 à 47 dans DESIGN.md.
+
+## Reste (phase 3)
+- Shoot complet par l'agent captures, puis : `idleMotion` (trotteuse assez grande ? sinon épaissir la pastille), `settledMs`, `hover.noHoverChange`, contraste, clavier, cibles (`cta--petit` 40 px), LCP (h1 en `data-intro`).
+- Tester le statut à plusieurs instants (`page.clock.install` + `timezoneId`) : avant 10 h, 16 h en semaine, 16 h le samedi, après 22 h 30.
+- Titre mobile : `left` 13 px < gutter 16 signalé en phase 1, à remesurer. Planche de la carte mobile non vue.
+- RAPPORT.md, points 42 à 63.
 
 ## Décisions
-- Pas de loader, pas de GL (justifiés dans la Concept Card).
-- La salle reste ouverte 15 h à 18 h : déduit des horaires 10 h à 22 h 30 sans coupure ; à confirmer avec le client.
-- Page « Histoire » remplacée par « La maison » (/a-propos/) : histoire inconnue, texte factuel tiré des photos et du site.
-- Réservation : Barestho en CTA principal, `tel:` ensuite, `mailto:` avec mention « non enregistrée » du site.
-- Prix : relevé du 20/11 sur le site client, mention « à confirmer sur place ».
+- Pas de loader, pas de GL, pas de curseur suiveur (curseur natif, `crosshair` sur les cadrans).
+- Cuisine supposée ouverte jusqu'à 22 h 30 (aucune heure de dernière commande connue) ; jours fériés belges légaux (10 dates) traités comme le week-end.
+- Le focus initial du menu mobile va au bouton « Fermer » (premier focusable).

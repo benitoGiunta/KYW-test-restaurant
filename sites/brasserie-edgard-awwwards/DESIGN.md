@@ -37,7 +37,7 @@
 - **Palette** (rôles) : `ground` #f1e7cf (mur crème de la salle, photos 07 et 13), `ink` #231710 (noyer presque noir), `muted` #6b5645, `line` #d6c5a0, `accent` #a3214b (verres prune des tables, photos 06 et 14), `curtain` #2b1b12 (bois sculpté sombre du mur). Compléments : cuir caramel #c27a38 (chaises, décoratif), `bois-muted` #d6bd98 et `bois-accent` #e69a56 pour les sections sombres. Références : mur de la salle, cuir des chaises, verres de table, logo (#233D4D) du client.
 - **Typo** : Gambarino (Fontshare, serif contrasté à large œil) pour les titres, Hanken Grotesk (Google, variable 100 à 900) pour le corps et l'UI. Échelle `--t-mega` 3,75 à 13 rem, `--t-xl`, `--t-l`, `--t-m`, `--t-body`, `--t-s`, `--t-xs`. Display : interlettrage -0,02 em, interligne 0,88 à 0,95, `text-wrap: balance`. Prix `tabular-nums`, insécables.
 - **Grille** : 12 colonnes (une seule au téléphone), lignes fortes : filet noir sous la journée, bord gauche des titres, section sombre pleine largeur. Quatre humeurs d'espacement `serre`, `normal`, `aere`, `entracte`. Rayon : 0 sauf pastilles et boutons (formes rondes de l'horloge).
-- **Mouvement (à planifier en phase 2)** : easing `ease.out` pour les révélations, `ease.inOut` pour le rideau ; durées 0,8 à 0,9 s. Hovers : (1) soulignement qui se redessine pour liens et nav, (2) plaque qui se remplit pour CTA. Repos : l'aiguille avance en temps réel (une minute de rotation), pas d'autre mouvement.
+- **Mouvement (phase 2, en place)** : une famille d'easing (`ease.out` révélations et aiguille, `ease.inOut` transition et menu, `ease.soft` petites UI ; en CSS, `cubic-bezier(0.215, 0.61, 0.355, 1)` = power3.out), durées du tableau Timing, stagger 0,06 à 0,08 s. Trois traitements de survol : (1) plaque des CTA qui se remplit en tournant depuis midi (`conic-gradient` sur `@property --tour`, verbe « tourner »), (2) soulignement qui se redessine (liens, nav, onglets de la carte), (3) décalage des grands liens du menu plein écran. Repos : la trotteuse balaie chaque cadran en temps réel (60 s par tour), l'aiguille de la 404 cherche l'heure ; pause hors écran, rien en mouvement réduit.
 - **Plan de composition** : Accueil = affiche (hero texte + cadran), média plein cadre (façade), index horaire (journée), mur asymétrique sur noyer (plats), paire texte/horloge + filmstrip (salle), données (14,50 €, groupes, 7 j / 7), pied final avec cadran. Carte = liste index à titre collant et vignette, filet pointillé entre lignes. Maison = média plein cadre, texte, paire décalée, section sombre de terrasse. Réservation = deux CTA et photo, puis blocs pratiques.
 - **Mobile 390** : titres 19 vw, une colonne, cadran 24 rem centré, mur de plats décalé à 70 % de largeur, filmstrip en `overflow-x` + `scroll-snap`, menu plein écran.
 - **Test de généricité** : un modèle générique mettrait une photo plein écran avec bouton rose. Ici le hero est un cadran qui dit l'ouverture ; la carte reste une carte lisible. Oui à « crème + serif » : justifié, la crème est celle du mur de la salle et l'accent est le prune des verres, pas la terracotta.
@@ -64,3 +64,34 @@
 
 ### Mesures de grille (Playwright, 4 viewports, 5 pages)
 Aucun débordement horizontal (`scrollWidth` = largeur). Hero : h1 et cadran sur colonnes disjointes (1440 : h1 26 à 821, cadran 854 à 1407 ; 1024 : h1 21 à 582, cadran 608 à 998). Aucune requête échouée. `left` des `.display` : 13 px à 390 pour une marge de 16 avant retrait de l'alignement optique négatif ; contrôlé de nouveau en phase 3.
+
+### Phase 2 (construction-2, 20/11/2026) : mouvement et interactions
+Module pilote `src/motion/cadran.ts` : une variable, l'heure de Namur (`Intl.DateTimeFormat` Europe/Brussels, jours fériés belges calculés), distribuée aux aiguilles, à l'arc courant (`is-now`, épaissi, les autres atténués), au statut écrit du hero (`[data-statut]`, « Ouvert maintenant. Cuisine ouverte jusqu'à 22 h 30. ») et à la plage « Maintenant » de la journée. Le week-end et les jours fériés, la pause pointillée devient un arc de cuisine plein (`is-continu`). Pointeur (bureau) : aiguille fantôme pointillée et lecture au centre (« 18 h · cuisine ouverte »).
+19. [x] Menu mobile : `menu.ts` (aria-expanded, overlay plein écran, focus piégé, Échap) ; mesure Playwright 390 : ouvert `aria-expanded=true`, focus sur « Fermer » ; Échap : `false`, focus rendu à « Menu », `hidden`.
+20. [x] Engine verbatim (`src/engine/`, inchangé), adaptateur `astro.ts`, `transition:persist` sur `#curtain` (`Base.astro:73`) ; ni `#gl` (pas de GL) ni `#cursor` (pas de follower, décision) ; `transition:animate="none"` sur `<html>` (`Base.astro:36`).
+21. [x] Une horloge : `gsap.ticker` (`cadran.ts:141`) ; grep `addEventListener('scroll')` et `requestAnimationFrame` dans `src/motion`, `src/pages`, `src/components` : 0. Visibilité par `IntersectionObserver` (`cadran.ts:126`).
+22. [x] Code de page dans `onPage()` avec nettoyage : `cadran.ts:93` et `:170`, `menu.ts`.
+23. [x] Aucune CSS `transform` sur élément GSAP : grep `transform` dans `site.css` (hors text-transform, origin) = 0 ; style en ligne `transform-origin` retiré de l'aiguille (`svgOrigin` GSAP).
+24. [x] Pilote avec `startIdle` (`cadran.ts:132`) et pointeur (`cadran.ts:166`), appelé une fois depuis `setup.ts`.
+25. [x] Loader décidé : aucun (Concept Card, Théâtre) ; pas de composant ni de `role="status"`.
+26. [x] Transition du concept : le bois balaie l'écran en secteur depuis midi, sens horaire (`setup.ts`, 0,8 s aller, 0,9 s retour + 0,05 s) ; mesure clic nav vers la carte : rideau `hidden` et h1 visible à l'arrivée, aucune erreur.
+27. [x] Intro : h1 `data-split="lines" data-intro` sur les 5 pages, cadran du hero `data-reveal="fade" data-intro`, aiguille qui tourne de minuit à l'heure de Namur en 1,6 s (`cadran.ts:121`) puis l'arc courant s'allume. Premier frame lu en capture (`.shots/p2-hero.png`) ; preuve `settledMs` en phase 3.
+28. [x] Épinglage : aucun pin GSAP ; titre de la journée en `position: sticky` (CSS).
+29. [x] Repli statique : `html:not(.motion)` masque trotteuse, fantôme, lecture (`site.css:236`) ; aiguille posée à l'heure sans animation, statut et plage « Maintenant » écrits ; mesure réduit : 0 bloc caché dans le premier écran sur 5 pages. Preuve `r-*` en phase 3.
+30. [x] Copies décoratives : aucune ; le cadran est `aria-hidden`, son information est écrite en texte (légende, statut).
+31. [x] Une famille d'easing, Timing, stagger 0,06 à 0,08 s (`data-delay` 0,08 / 0,16 sur plages, plats, chiffres).
+32. [x] Un traitement par rôle, trois au total, dans le verbe (§ Système, Mouvement).
+33. [x] Hover sous `@media (hover: hover)` (`site.css:14, 26, 40, 54, 148`), même état sur `:focus-visible` et `:active` ; en réduit, transitions à 0,01 ms : l'état final reste visible.
+34. [x] Liens texte soulignés au repos (`.lien`, trait 1 px `currentColor`).
+35. [ ] `hover.noHoverChange` : phase 3 (report.json).
+36. [ ] `idleMotion` : trotteuse de 2,5 px sur 196 unités avec pastille de 8 (environ 220 px à l'écran sur le hero 1440) ; à prouver en phase 3 par report.json.
+37. [x] Curseur natif visible (`crosshair` sur les cadrans au bureau) ; au toucher, rien ne dépend du survol (fantôme désactivé par `isTouch()`).
+38. [x] Pas de blur animé, pas de `box-shadow`, aucun `will-change`.
+39. [x] Réduit : Lenis absent (classe `lenis` absente en réduit, mesure), pas de GL, pas de scrub hors `data-parallax` (désactivé par l'engine en réduit), pas de loader ; `reduced.hiddenText` à confirmer en phase 3.
+40. [x] GL : sans objet, décision écrite (Concept Card, Théâtre).
+41. [x] Sans objet (pas de GL).
+44. [~] Skip link « Aller au contenu » en premier (`Base.astro:72`), anneau prune (bois clair sur noyer, `site.css:8-9`) ; preuve clavier en phase 3.
+45. [ ] Contraste AA : statut et pastille « Maintenant » crème sur prune (#f1e7cf / #a3214b, environ 6:1) ; à prouver en phase 3 (axe).
+46. [x] Texte réel : statut, plage et lecture en DOM ou en `<text>` SVG décoratif doublé par le texte de la page ; aucun canvas.
+47. [~] Cibles : CTA 52 px, `cta--petit` 40 px, « Menu » et « Fermer » ≥ 40 px ; mesure en phase 3.
+Finitions : `::selection` prune (`site.css:7`), favicon SVG du cadran + `favicon-32.png` + `apple-touch-icon.png` 180 px (`Base.astro`), lien du pied KYW souligné au survol et au focus.
