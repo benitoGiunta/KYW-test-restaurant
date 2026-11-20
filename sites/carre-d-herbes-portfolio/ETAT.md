@@ -26,3 +26,6 @@
 
 ## Phase 3 (QA)
 - Mesures 7 pages x 2 largeurs propres ; 2 corrections pied de page (casse des jours, colonne horaires), build OK, `pnpm index` fait. Voir RAPPORT.md. Reste : rien de bloquant.
+
+## Passe 2 (relecteur-site, 20/11/2026)
+- REVUE-2.md écrite : A_CORRIGER (F0 0, F1 0, F2 2, F3 5). Reste : harmoniser « Lire les menus » / « Les quatre formules » et les meta descriptions avec « Les plats » / « Les prix » ; eyebrow et chiffre filigrane mobile sur /carte/, /histoire/, /menu/ ; F3 (apostrophes, format d heure, image de 400 Ko, Fêtes 2026).
