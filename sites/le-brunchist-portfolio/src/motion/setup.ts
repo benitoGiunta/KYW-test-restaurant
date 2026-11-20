@@ -2,13 +2,13 @@
 // (cercle depuis le bas), puis le driver du ciel prend la main.
 import { gsap } from 'gsap';
 import { setLoaderFormat, setLoaderExit, setTransition, ease } from '../engine';
-import { initJournee } from './journee';
+import { initJournee, maintenantBxl } from './journee';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
 export function setupMotion() {
-  const d = new Date();
-  const cible = d.getHours() * 60 + d.getMinutes();
+  const d = maintenantBxl();
+  const cible = d.h * 60 + d.m;
   setLoaderFormat((p) => { const m = Math.round((cible * p) / 100); return `${pad(Math.floor(m / 60))}:${pad(m % 60)}`; });
   setLoaderExit((root) =>
     gsap.timeline()

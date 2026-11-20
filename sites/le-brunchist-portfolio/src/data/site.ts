@@ -164,13 +164,13 @@ export const moments: Moment[] = [
     id: 'm-12h30', heure: 12.5, heureTexte: '12h30', titre: 'Le salé', theme: 'ocre',
     accroche: 'Quand la faim se précise : toast à l’avocat, tartines, filet américain.',
     accrochePlaceholder: false, placeholder: true, photo: '/photos/cafe-filtre.webp',
-    lignes: [L('Toast à l’avocat', '13 €'), L('Œufs brouillés', '10 €'), L('Filet américain', '15 €'), X('Tartines de saison', '9 €')],
+    lignes: [L('Toast à l’avocat', '13 €'), L('Filet américain', '15 €'), X('Tartines de saison', '9 €')],
   },
   {
     id: 'm-14h30', heure: 14.5, heureTexte: '14h30', titre: 'La terrasse', theme: 'corail',
     accroche: 'Un dernier café, un jus frais, un gâteau, en terrasse sur la Place d’Armes.',
     accrochePlaceholder: false, placeholder: true, photo: '/photos/biscuits-citron.webp',
-    lignes: [X('Cake du jour', '5 €'), X('Cookie maison', '3 €'), X('Thé ou infusion', '3,50 €'), L('Jus frais pressé', '5 €')],
+    lignes: [X('Cake du jour', '5 €'), X('Cookie maison', '3 €'), X('Thé ou infusion', '3,50 €')],
   },
   {
     id: 'm-15h30', heure: 15.5, heureTexte: '15h30', titre: 'Le rideau', theme: 'nuit',

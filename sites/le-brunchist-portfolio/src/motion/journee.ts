@@ -34,10 +34,10 @@ export function momentCourant(h = heureDecimale()) {
 }
 /** Heure de Namur (Europe/Brussels), indépendante du fuseau du navigateur. */
 const WJ: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
-const fmtBxl = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', hour: 'numeric', minute: 'numeric', hour12: false, weekday: 'short' });
+const fmtBxl = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, weekday: 'short' });
 export function maintenantBxl() {
   const p = Object.fromEntries(fmtBxl.formatToParts(new Date()).map((x) => [x.type, x.value]));
-  return { h: Number(p.hour) % 24, m: Number(p.minute), jour: WJ[p.weekday] };
+  return { h: Number(p.hour) % 24, m: Number(p.minute), s: Number(p.second), jour: WJ[p.weekday] };
 }
 const heureDecimale = () => { const n = maintenantBxl(); return n.h + n.m / 60; };
 
@@ -96,8 +96,8 @@ function astre() {
   const orbite = el?.querySelector<HTMLElement>('[data-astre-orbite]');
   if (!el || !orbite) return;
   const cible = () => {
-    const d = new Date();
-    const h = Math.min(PLAGE.fin, Math.max(PLAGE.debut, d.getHours() + d.getMinutes() / 60));
+    const d = maintenantBxl();
+    const h = Math.min(PLAGE.fin, Math.max(PLAGE.debut, d.h + d.m / 60));
     return -135 + ((h - PLAGE.debut) / (PLAGE.fin - PLAGE.debut)) * 270;
   };
   const poser = (animer: boolean) => {
@@ -123,10 +123,10 @@ function horloge() {
   const ring = document.querySelector<SVGCircleElement>('[data-horloge-ring]');
   const len = ring ? ring.getTotalLength() : 0;
   const tick = () => {
-    const d = new Date();
-    hm.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    if (s) s.textContent = pad(d.getSeconds());
-    if (ring) ring.style.strokeDashoffset = String(len * (1 - d.getSeconds() / 60));
+    const d = maintenantBxl();
+    hm.textContent = `${pad(d.h)}:${pad(d.m)}`;
+    if (s) s.textContent = pad(d.s);
+    if (ring) ring.style.strokeDashoffset = String(len * (1 - d.s / 60));
   };
   tick();
   const id = setInterval(tick, 1000);
@@ -215,13 +215,13 @@ function invitation() {
   const lien = bloc.querySelector<HTMLAnchorElement>('[data-maintenant-lien]');
   const texte = bloc.querySelector<HTMLElement>('[data-maintenant-texte]');
   const maj = () => {
-    const d = new Date();
-    const h = d.getHours() + d.getMinutes() / 60;
+    const d = maintenantBxl();
+    const h = d.h + d.m / 60;
     const ferme = document.querySelector<HTMLElement>('[data-badge]')?.dataset.etat === 'ferme'; // jour de fermeture : pas d'invitation
     if (ferme || h < moments[0].heure || h >= moments[moments.length - 1].heure || !lien || !texte) { bloc.hidden = true; return; }
     const m = momentCourant(h);
     lien.href = `#${m.id}`;
-    texte.textContent = `Il est ${pad(d.getHours())}h${pad(d.getMinutes())} : aller au moment présent, ${m.titre.toLowerCase()}${m.placeholder ? ' (illustratif)' : ''}`;
+    texte.textContent = `Il est ${pad(d.h)}h${pad(d.m)} : aller au moment présent, ${m.titre.toLowerCase()}${m.placeholder ? ' (illustratif)' : ''}`;
     bloc.hidden = false;
   };
   maj();
