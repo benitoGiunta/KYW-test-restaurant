@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Rondes from '../components/Rondes.astro';
+import { site, menus, horaires, histoire, plats } from '../data/site';
+import { u } from '../lib/url';
+const a = site.adresse;
+const duMoment = ['Foie gras', 'Biche', 'Saint-Jacques', 'Ris de veau', 'Pêche du jour'];
+---
+<Base page="accueil" title={undefined} description={site.description}>
+  <section class="sec sec--ardoise hero" aria-labelledby="titre">
+    <div class="wrap hero__grid">
+      <h1 id="titre" class="display hero__nom"><span>Carré</span> <span>d'herbes</span></h1>
+      <div class="hero__disque">
+        <span class="hero__carre" aria-hidden="true"></span>
+        <Photo k="plat" class="rond" eager sizes="(min-width: 900px) 40vw, 90vw" />
+      </div>
+      <div class="hero__pied">
+        <p class="hero__phrase">Cuisine sincère et raffinée, en bord de Meuse, entre Namur et Profondeville.</p>
+        <p class="hero__ou">{a.rue} {a.numero}, {a.cp} {a.commune}. Du jeudi au dimanche.</p>
+        <p class="hero__actions">
+          <a class="btn" href={`tel:${site.telephone}`}><span>Réserver au {site.telephoneAffiche}</span></a>
+          <a class="lien" href={u('/carte/')}>Voir les menus</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--pierre mot" aria-labelledby="mot">
+    <div class="wrap mot__grid">
+      <h2 id="mot" class="display mot__titre">Tout est fait maison, avec des produits locaux de saison.</h2>
+      <p class="mot__texte">{histoire.lieu}</p>
+    </div>
+  </section>
+
+  <section class="sec sec--ardoise" aria-labelledby="compte">
+    <div class="wrap">
+      <div class="entete">
+        <h2 id="compte" class="titre">Combien d'assiettes ?</h2>
+        <p class="entete__texte">La maison ne sert qu'en menus : on choisit le nombre d'assiettes, le chef décide du reste.</p>
+      </div>
+      <ol class="idx">
+        {menus.map((m) => (
+          <li class="idx__ligne">
+            <a class="idx__lien" href={u('/carte/')}>
+              <Rondes n={m.assiettes} />
+              <span class="idx__nom display">{m.nom}</span>
+              <span class="idx__prix"><span class="prix">{m.prix}&nbsp;€</span>{m.accord && <span class="accord">avec accord mets-vins {m.accord}&nbsp;€</span>}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec sec--pierre carre" aria-labelledby="nom">
+    <div class="wrap carre__grid">
+      <div class="carre__texte">
+        <h2 id="nom" class="display titre">Un nom qui a quatre côtés</h2>
+        <p>{histoire.nom}</p>
+        <p><a class="lien" href={u('/histoire/')}>L'histoire de la maison</a></p>
+      </div>
+      <div class="carre__photos">
+        <Photo k="parc" class="carre__a" ratio="1 / 1" sizes="(min-width: 900px) 34vw, 70vw" />
+        <Photo k="voutes" class="carre__b" ratio="1 / 1" sizes="(min-width: 900px) 26vw, 55vw" />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--ardoise mur" aria-labelledby="moment">
+    <div class="wrap mur__grid">
+      <div class="mur__ronds">
+        <Photo k="bouches" class="rond mur__r1" sizes="(min-width: 900px) 22vw, 45vw" />
+        <Photo k="dentelle" class="rond mur__r2" sizes="(min-width: 900px) 18vw, 40vw" />
+        <Photo k="dressage" class="rond mur__r3" sizes="(min-width: 900px) 16vw, 35vw" />
+        <Photo k="volaille" class="rond mur__r4" sizes="(min-width: 900px) 20vw, 42vw" />
+      </div>
+      <div class="mur__texte">
+        <h2 id="moment" class="titre">Dans l'assiette en ce moment</h2>
+        <ul class="liste-nue">
+          {duMoment.map((p) => <li>{p}</li>)}
+        </ul>
+        <p class="note">Le détail des plats est sur la page de la carte.</p>
+        <p><a class="lien" href={u('/carte/')}>La carte et les menus</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--pierre prat" aria-labelledby="venir">
+    <div class="wrap prat__grid">
+      <h2 id="venir" class="display titre">Venir</h2>
+      <div class="prat__bloc">
+        <h3 class="sous">Horaires</h3>
+        <ul class="heures">
+          {horaires.jours.filter((j) => j.midi).map((j) => <li><span>{j.jour}</span><span>{j.midi}{j.soir ? `, ${j.soir}` : ''}</span></li>)}
+        </ul>
+        <p class="note">Fermé du lundi au mercredi. {horaires.derniereCommande}</p>
+      </div>
+      <div class="prat__bloc">
+        <h3 class="sous">Adresse</h3>
+        <address>{a.rue} {a.numero}<br />{a.cp} {a.commune}</address>
+        <p>Parc arboré, terrasse, parking privé de dix voitures.</p>
+        <p class="hero__actions">
+          <a class="btn btn--pierre" href={`tel:${site.telephone}`}><span>Appeler le {site.telephoneAffiche}</span></a>
+          <a class="lien" href={u('/reservation/')}>Comment réserver</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

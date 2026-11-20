@@ -1,0 +1,48 @@
+/* Jetons de Carré d'herbes (variante awwwards « Un carré, des assiettes »). Les NOMS sont le contrat de l'engine ;
+   les valeurs viennent de DESIGN.md : assiette noire texturée, porcelaine, flamme verte du logo, lichen de la brique blanchie.
+   Les url() des polices portent la base (/carre-d-herbes/awwwards/) : Vite ne les réécrit pas vers public/. */
+@font-face { font-family: 'Archivo'; src: url('/carre-d-herbes/awwwards/fonts/archivo-100_900-normal.woff2') format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Newsreader'; src: url('/carre-d-herbes/awwwards/fonts/newsreader-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Newsreader'; src: url('/carre-d-herbes/awwwards/fonts/newsreader-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+
+:root {
+  --c-bg: #171a15;            /* ground : ardoise verte, l'assiette noire */
+  --c-fg: #ede9dd;            /* ink : porcelaine (14,5:1) */
+  --c-muted: #a7a89a;         /* muted : sel gris (7,3:1) */
+  --c-line: #343a30;          /* line : joint de l'ardoise */
+  --c-accent: #8fb356;        /* accent : la flamme verte du logo (7,3:1 sur le fond) */
+  --c-curtain: #8fb356;       /* curtain : le rideau est la flamme verte */
+
+  /* Sections « pierre » : brique blanchie, lichen pâle */
+  --p-bg: #dde2d0;
+  --p-fg: #171a15;            /* 13,3:1 */
+  --p-muted: #53584a;         /* 5,5:1 */
+  --p-line: #b9c0a8;
+  --p-accent: #4a6a26;        /* herbe foncée, 4,7:1 sur le fond pierre */
+
+  --f-display: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --f-body: 'Newsreader', 'Georgia', serif;
+
+  /* Échelle fluide 390 → 1440 px, grands sauts (x1,6 à x2,6) */
+  --t-mega: clamp(3.6rem, 1.1rem + 10.4vw, 11.5rem);
+  --t-xl: clamp(2.5rem, 1.2rem + 5.4vw, 6.75rem);
+  --t-l: clamp(1.85rem, 1.15rem + 2.6vw, 3.9rem);
+  --t-m: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
+  --t-body: clamp(1.0625rem, 1rem + 0.22vw, 1.25rem);
+  --t-s: 0.9375rem;
+  --t-xs: 0.8125rem;
+
+  /* Espace : quatre humeurs */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --serre: calc(var(--u) * 3);
+  --normal: calc(var(--u) * 7);
+  --aere: calc(var(--u) * 12);
+  --entracte: calc(var(--u) * 20);
+
+  --axe: 25%;                 /* la ligne forte : le côté du carré, au quart de la page */
+  --radius: 0px;              /* règle : les lieux sont des carrés (0), les plats des ronds (50 %) */
+
+  --z-gl: 0; --z-content: 1; --z-header: 50; --z-cursor: 80; --z-curtain: 90; --z-loader: 100;
+}
+@media (max-width: 760px) { :root { --axe: 0%; } }
