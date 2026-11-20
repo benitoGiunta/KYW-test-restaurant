@@ -45,7 +45,7 @@ Test de l'échange : A ne tient avec aucun autre restaurant (les miroirs et le c
   - Le lieu : statement / quatre paires asymétriques alternées / données (venir).
   - Réservation : poster + actions / trois colonnes de données / liste « à savoir ».
   - 404 : grand rond « 404 » et retour.
-  - Mobile 390 : titres re-réglés (min 54 px), hublot du hero décalé sous le texte, mur en strip `overflow-x`, navigation réduite (nav courte de trois liens, rien de masqué).
+  - Mobile 390 : titres re-réglés (min 54 px), hublot du hero décalé sous le texte, mur en strip `overflow-x`, en-tête réduit à « Réserver » + bouton « Menu » (phase 2 : menu plein écran bleu nuit qui s'ouvre en rond depuis le bouton).
 - **Test de généricité** : « un modèle atterrirait-il ici ? » Oui pour : hero texte + image (changé : image ronde cuivrée, pas de plein cadre), trois cartes égales (changé : décalage vertical 0, 6 rem, 3 rem, tailles de texte différentes, strip mobile), liste de plats (changée : noms en display, prix en colonne tabulaire).
 
 ## Sur-utilisation de la skill
@@ -68,3 +68,31 @@ Test de l'échange : A ne tient avec aucun autre restaurant (les miroirs et le c
 16. [x] Une famille de section au plus une fois par page (plan de composition).
 17. [x] Hero en 3 s : nom, cuisine, Réserver et Appeler dans la première fenêtre (mesure : h1 top 141, CTA top 707 à 1440×900, 659 à 1280×720, 567 à 1024×768, 373 à 390×844, journal `.logs/tdc-mesure2.log`).
 18. [x] Mobile 390 recomposé : hublot décalé sous le texte, mur en strip scroll-snap, type re-réglé, mesures sans débordement (`ovx` 0 sur 4 pages × 4 tailles, mouvement réduit).
+
+### Phase 2 : mouvement (construction-2)
+
+Décisions : le pilote est l'**ouverture** (0 à 1) de chaque miroir ; l'aperçu au curseur des plats de la carte (patron index) n'est **pas** fait : trop peu de plats ont une photo, le rond de tête de catégorie porte déjà l'image ; aucun `data-cursor` (aucun hublot n'est cliquable, un libellé de curseur mentirait) ; aucun `data-magnetic`. Repos : l'éclat de la lampe tourne sur le verre du grand miroir (14 °/s, arc de 40 °, anneau de 1 rem), petit à dessein pour que `settledMs` reste non nul (moins de 1 % de pixels en 1,2 s) tout en dépassant le seuil `idleMotion` (0,05 %).
+
+19. [x] Menu mobile accessible : `Base.astro` (`.menu-btn` `aria-expanded`/`aria-controls="menu"`, `#menu` plein écran), `src/motion/menu.ts` (focus sur le premier lien, Tab piégé, Échap ferme, focus rendu au bouton, fermeture au clic d'un lien et au passage > 720 px). Preuve : `.logs/tdc-p2-test.log` (« m open exp=true focus=Accueil », « m trap focus=true », « m esc exp=false focusBtn=true »).
+20. [x] Engine verbatim (`src/engine/*` inchangés en phase 2), adaptateur `astro.ts`, `transition:persist` sur `#curtain` et `#cursor` (`Base.astro`), pas de `#gl` (sans GL), `transition:animate="none"` sur `<html>`.
+21. [x] Une horloge : grep `addEventListener('scroll'|requestAnimationFrame` hors `src/engine/` = 0 ; idle, reflets, éclat sur `gsap.ticker` (`idle.ts`, `miroirs.ts`).
+22. [x] Code de page dans `onPage()` avec nettoyage (`miroirs.ts` : ticker retiré, IO déconnectés ; `menu.ts` : keydown et matchMedia retirés, `startScroll`).
+23. [x] Aucune CSS `transform` sur élément GSAP : `img` des hublots (x, y, scale par GSAP), `.eclat` (rotation GSAP), `.menu__list a` (yPercent), `.curtain__panel` (clip-path, `--trou`) n'ont aucun `transform` CSS ; les transforms CSS restants sont sur `::before`/`::after` et `#cursor span`.
+24. [x] Module pilote `src/motion/miroirs.ts` : ouverture par défilement (scrub) ou intro, reflet contre le pointeur (`idle.x/y`, IO des miroirs visibles), `startIdle()` (`idle.ts`) appelé depuis `startConcept()`, lui-même appelé une fois dans `setup.ts`.
+25. [x] Loader : aucun (décision Concept Card), pas de `#loader` ni de `role="status"`.
+26. [x] Transition du concept (`src/motion/passage.ts`) : un rond bleu nuit s'ouvre au point du clic (0,8 s, `ease.inOut`), puis un trou rond s'ouvre au centre sur la nouvelle page (`--trou`, 0,8 s). Capture `tdc-p2-d-trans.png` (scratchpad) à 450 ms.
+27. [x] Intro `data-intro` : h1 `data-split="lines" data-intro` sur les 5 pages ; hero et 404 : iris `data-iris="intro"` (34 % → 72 %, 1,5 s, ajouté à `intro` à 0,15 s). Premier frame : hublot déjà entrouvert (CSS `.motion [data-iris="intro"]`), titre en lignes.
+28. [x] Épinglages : aucun pin ; scrubs `start: 'top 95%'`, `end: 'top 45%'`, `invalidateOnRefresh: true`.
+29. [x] Repli statique dessiné : sans `.motion`, hublots ouverts (aucun clip), `.eclat` masqué, transitions en fondu de l'engine ; `.logs/tdc-p2-test.log` « r … hidden/clipped=0 » sur 5 pages.
+30. [x] Copies décoratives : seulement `.eclat` et la marque T du menu, `aria-hidden="true"` ; aucun titre dupliqué.
+31. [x] Une famille d'easing : `ease.out` (iris intro, liens du menu), `ease.inOut` (transition, menu), `none` sur les scrubs ; CSS en `cubic-bezier(0.16, 1, 0.3, 1)` (expo.out) et `(0.33, 1, 0.68, 1)` (power3.out) ; stagger du menu 60 ms.
+32. [x] Trois traitements, verbe ouvrir : (1) remplissage cuivre qui monte (CTA, `.menu-btn`, médaillon T de la marque) ; (2) soulignement qui s'ouvre (nav, index de la carte) ; (3) liens texte dont le trait s'écarte et s'épaissit (`a.text`, pied).
+33. [x] Hovers sous `@media (hover: hover)`, même état sur `:focus-visible` (`base.css`, `carte/index.astro`), `:active` (`.btn` `scale: .96`, liens opacité) ; à vérifier par `report.json` en phase 3.
+34. [x] Liens texte soulignés au repos : `a.text` et liens du pied (`text-decoration: underline`, couleur cuivre).
+37. [x] Curseur natif jamais masqué ; aucun contenu ne dépend du survol ; aucune copy « survolez ».
+38. [x] Pas de blur, pas de `box-shadow` au scroll, aucun `will-change`.
+39. [~] Réduit : pas de Lenis (`lenis=false`), pas de GL, pas de scrub (pilote non démarré), pas de loader ; `report.json` en phase 3.
+40. [x] GL : sans objet, décision écrite (Concept Card) ; lignes `// GL` absentes de l'engine.
+44. [~] Skip link premier, anneau de focus cuivre (`engine.css`) ; à prouver par `report.json`.
+47. [x] Cibles : « Réserver » d'en-tête 44 px, « Menu » 46 px, CTA 48 px (`.logs/tdc-p2-test.log` « m header »).
+9 (suite). [x] Favicon PNG 32 px et `apple-touch-icon` 180 px générés depuis `favicon.svg` (`public/`, liens dans `Base.astro`).

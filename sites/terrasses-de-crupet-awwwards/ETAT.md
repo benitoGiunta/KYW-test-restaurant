@@ -1,4 +1,4 @@
-# ETAT : Les Terrasses de Crupet, awwwards, fin de la phase 1 (construction-1)
+# ETAT : Les Terrasses de Crupet, awwwards, fin de la phase 2 (construction-2)
 
 ## Fait
 - Brief, 3 concepts notés, Concept Card, système (palette, typo, grille, plan de composition) et checklist 1 à 18 dans `DESIGN.md`. Concept retenu : « Les miroirs ronds » (verbe ouvrir).
@@ -8,13 +8,21 @@
 - Mesures Playwright du hero et des `.display` (4 tailles × 4 pages) : gutter respecté, aucun débordement horizontal en mouvement réduit.
 - Polices Young Serif + DM Sans, favicon SVG, og.png provisoire.
 
-## Reste (phases 2 et 3)
-- Phase 2 : animations. Ouverture d'iris des hublots (clip-path circulaire, `data-reveal="scale"` en place), repos du hero (respiration), hovers (CTA remplissage, nav soulignement faits en CSS), curseur `data-cursor`, transitions de page (curtain), aperçu image au survol des plats de la carte (patron index prévu, pas fait), `prefers-reduced-motion` testé.
-- Phase 3 : QA navigateur (captures 4 tailles, axe, LCP, CLS), OG composée avec `og.mjs`, RAPPORT.md, `pnpm index`, commit de `dist/`, items 19+ de la checklist.
-- Contrôler en QA : le hublot de la page Le lieu en transition (mesuré à -7 px pendant l'animation seulement), contraste du bouton `btn` sur fond `stone`, hauteur du bandeau collant de la carte au téléphone.
+## Fait en phase 2
+- Pilote `src/motion/miroirs.ts` (ouverture de chaque hublot `data-iris` : scrub au défilement, intro sur hero et 404 ; reflet contre le pointeur ; éclat de lampe en repos sur le grand miroir), `idle.ts`, `passage.ts` (transition iris depuis le point du clic puis trou rond au centre), `menu.ts` (menu plein écran mobile accessible), `setup.ts`.
+- `data-reveal="scale"` remplacé par `data-iris` ; `data-intro` ajouté aux h1 des pages intérieures et de la 404 ; `data-reveal` retiré du bloc de CTA du hero (liens).
+- Hovers : sous `(hover: hover)`, même état en `:focus-visible`, `:active` ; correction du remplissage des `.btn` (croissant visible au repos, coins non remplis au survol) ; liens texte et du pied soulignés au repos ; hover du lien KYW.
+- En-tête mobile (≤ 720 px) : « Réserver » + « Menu » (le bouton Menu était visible au bureau : `.btn` gagnait sur `.menu-btn`, corrigé par `.nav .menu-btn`).
+- Favicon PNG 32 et apple-touch-icon 180. Checklist 19 à 47 dans DESIGN.md.
+- Build OK (`scripts/q.sh tdc-p2-build pnpm build:site sites/terrasses-de-crupet-awwwards`). Test Playwright (`.logs/tdc-p2-test.log`) : 0 erreur console, iris à 72 % après défilement, menu (aria-expanded, piège, Échap, retour du focus), navigation via menu, `scrollWidth` 1440/390, réduit sans contenu caché ni Lenis.
+
+## Reste (phase 3)
+- Shoot complet (agent captures) puis lecture de `report.json` : `idleMotion`/`idleAt` (éclat), `settledMs` non nul, `hover.noHoverChange`, `reduced.*`, `skipLinkFirst` (faux négatif connu « Aller au contenu »), contraste, cibles.
+- OG composée (`og.mjs` ou HTML de scratchpad), RAPPORT.md, `pnpm index`, commit de `dist/` final.
+- Contrôler en QA : hauteur du bandeau collant de la carte au téléphone, contraste du bouton `btn` sur fond `stone`, éclat assez visible sur la photo claire (sinon augmenter l'opacité, pas la taille).
 
 ## Décisions et pièges
-- Pas de loader, pas de WebGL (justifié dans la Concept Card). `Loader` retiré, `setupMotion` vide.
+- Pas de loader, pas de WebGL (justifié dans la Concept Card). Pas d'aperçu au curseur sur la carte, pas de `data-cursor` ni `data-magnetic` (décisions écrites dans DESIGN.md § Phase 2).
 - Adresse de Crupet retenue ; e-mail du site client (`resto@…`), pas celui de `restaurants.json`.
 - Aucune histoire, équipe, avis, GPS inventés : page « Le lieu » factuelle ; parking et accès renvoient au téléphone (formulation à valider : le dossier dit « inconnu »).
 - Les mesures sous mouvement actif lisent des positions transitoires (scale du reveal) : mesurer avec `reducedMotion: 'reduce'`.
