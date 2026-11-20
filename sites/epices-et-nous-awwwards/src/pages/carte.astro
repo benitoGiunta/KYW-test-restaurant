@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, carte, menu, boules } from '../data/site';
+import { euro } from '../lib/format';
+const [entrees, plats, desserts] = carte;
+const rubrique = (c: typeof entrees) => c;
+---
+<Base page="carte" title="La carte" description="La carte d’Épices & Nous à Erpent : entrées, plats et desserts de saison, de 20,50 à 45,75 €, et le menu trois services à 52 € sans les boissons.">
+  <section class="entete wrap">
+    <h1 class="entete__titre display" data-split="lines" data-intro>La <em>carte</em></h1>
+    <p class="entete__texte" data-reveal="up" data-intro data-delay="0.3">Relevée sur le site du restaurant. Elle change avec les saisons : produits frais et locaux, suggestions selon le marché.</p>
+  </section>
+
+  <section class="nappe menu52 menu52--carte" aria-labelledby="t-menu">
+    <div class="wrap deux">
+      <div class="deux__g menu52__prix">
+        <h2 id="t-menu" class="sr-only">{menu.nom}</h2>
+        <p class="menu52__chiffre display" aria-hidden="true"><span data-compte>{menu.prix}</span><span class="menu52__eur">€</span></p>
+        <p class="menu52__nom">{menu.nom}</p>
+        <p class="petit">{menu.regle}</p>
+      </div>
+      <ol class="deux__d menu52__etapes">
+        {menu.etapes.map((e) => (
+          <li><h3 class="voix">{e.titre}</h3><ul>{e.choix.map((c) => <li>{c}</li>)}</ul></li>
+        ))}
+        <li class="petit">{menu.fromage}</li>
+      </ol>
+    </div>
+  </section>
+
+  {[entrees, plats, desserts].map((c, i) => (
+    <>
+      <section class="rubrique wrap" aria-labelledby={`t-${c.id}`}>
+        <h2 id={`t-${c.id}`} class="rubrique__titre display" data-split="lines">{c.titre}</h2>
+        <ul class="plats">
+          {c.plats.map((p) => (
+            <li class="plat" data-reveal="up">
+              <h3 class="plat__nom display">{p.nom}</h3>
+              <p class="plat__desc">{p.description}</p>
+              <p class="plat__prix tab"><span class="sr-only">Prix : </span>{euro(p.prix)}</p>
+            </li>
+          ))}
+        </ul>
+        {c.note && <p class="petit rubrique__note">{c.note}</p>}
+        {c.id === 'desserts' && (
+          <dl class="boules">
+            <div><dt>Sorbets</dt><dd>{boules.sorbets}.</dd></div>
+            <div><dt>Glaces</dt><dd>{boules.glaces}.</dd></div>
+          </dl>
+        )}
+      </section>
+      {i === 0 && <figure class="plein"><Photo cle="biche" widths={[800, 1200, 1600]} sizes="100vw" decorative /></figure>}
+      {i === 1 && (
+        <div class="wrap paire">
+          <figure class="cadre cadre--paysage"><Photo cle="scampis" widths={[480, 800, 1200]} sizes="(min-width: 760px) 44vw, 92vw" /></figure>
+          <figure class="cadre cadre--paysage paire__bas"><Photo cle="poele" widths={[480, 800, 1200]} sizes="(min-width: 760px) 44vw, 92vw" /></figure>
+        </div>
+      )}
+    </>
+  ))}
+
+  <section class="nappe statement statement--court" aria-labelledby="t-fin">
+    <div class="wrap">
+      <h2 id="t-fin" class="statement__texte display" data-split="lines">Le plat est prêt. <em>La table aussi ?</em></h2>
+      <p class="poster__actions">
+        <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver une table</span></a>
+        <a class="cta cta--contour" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+      </p>
+      <p class="petit">{site.credit}.</p>
+    </div>
+  </section>
+</Base>

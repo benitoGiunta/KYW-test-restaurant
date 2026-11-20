@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const facade = photoDe('/photos/facade-jour.webp');
+const galerie = ['/photos/salle-colonne.webp', '/photos/salle-rayures.webp', '/photos/salle-fenetre.webp', '/photos/pain-campagne.webp', '/photos/entremets-rouge.webp', '/photos/millefeuille.webp'].map(photoDe);
+const repères = [['1946', 'La chocolaterie naît rue de Fer, à Namur.'], ['1993', 'Le salon de thé et la pâtisserie ouvrent rue Haute Marcelle, quartier Saint-Loup.'], ['17e siècle', 'La bâtisse qui abrite la maison.'], ['3e génération', "Aujourd'hui aux commandes."]];
+---
+<Base title="Histoire" description={`L'histoire de ${site.nom} : une chocolaterie née en 1946, un salon de thé ouvert en 1993 dans une bâtisse du 17e siècle du vieux Namur.`}>
+  <section class="page-hero" style="background: var(--c-cacao)" data-activite="Histoire" data-couleur="cacao">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">Trois <em>générations</em></span></h1>
+      <p class="lead">{site.baseline}</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" style="border-top: 0">
+    <div class="wrap damier">
+      <div class="prose">
+        {site.histoire.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="damier__photo">
+        <img src={asset(facade.src)} alt={facade.alt} width={facade.largeur} height={facade.hauteur} loading="eager" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--bleu" aria-labelledby="t-reperes">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-reperes"><span class="etiquette" data-split="lines">Les <em>repères</em></span></h2>
+      <div class="formules" data-reveal="up">
+        {repères.map(([n, t]) => (
+          <article class="formule"><p class="prix">{n}</p><p>{t}</p></article>
+        ))}
+      </div>
+      <p class="postit" style="margin-top: calc(var(--u) * 3)"><strong>À confirmer</strong>Le site actuel donne plusieurs dates de fondation (1946, 1987, 1993) : les repères ci-dessus sont ceux de l'histoire racontée sur le site.</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" aria-labelledby="t-galerie">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-galerie"><span class="etiquette" data-split="lines">Sur le <em>mur</em></span></h2>
+      <div class="galerie">
+        {galerie.map((p, i) => (
+          <figure data-reveal="scale" data-delay={String((i % 3) * 0.1)} data-cursor="Voir">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            <figcaption>{p.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions">
+        <a class="btn btn--ink" href={u('/carte/')}>La carte</a>
+        <a class="btn" href={u('/contact/')}>Nous trouver</a>
+      </div>
+    </div>
+  </section>
+</Base>

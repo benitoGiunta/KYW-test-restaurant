@@ -1,0 +1,42 @@
+---
+// Menus de fêtes à emporter (dossier : menu-emporter.pdf, retrait les 24 et 31 décembre).
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, guinguette as g, photoDe, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const p = photoDe('/photos/carte-menu-table.webp');
+---
+<Base title="Menus de fêtes à emporter" description={`Les menus de fêtes à emporter de ${site.nom} à ${site.adresse.commune} : de 37 à 69 €, retrait les 24 et 31 décembre.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>À emporter</h1>
+      <p class="lead">Les menus de fêtes, de 37 à 69 €. {g.emporter.retrait}.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:84%;--y:0%;--r:10deg;--taille:120px" aria-hidden="true"><Objet id="fourchette" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="carte">
+        <h2 class="sr-only">Menus de fêtes</h2>
+        <div class="carte__menus">
+          {site.menus.map((m) => (
+            <article class="formule">
+              <h3>{m.nom.replace('Menu de fêtes à emporter, ', 'Menu ')}</h3>
+              <p class="formule__prix">{m.prix}</p>
+              <p class="muted" style="margin-top:0.8em">{m.description}</p>
+            </article>
+          ))}
+        </div>
+        <p class="muted" style="margin-top:calc(var(--u)*3)">{g.emporter.zakouskis}. Pour commander, appelez le <a class="link" href={telHref()}>{site.telephone}</a>.</p>
+      </div>
+      <figure class="tirage" style="--w:min(100%,18rem);--r:3deg;cursor:default;margin-top:calc(var(--u)*4)">
+        <img src={asset(p.src.replace('/photos/', '/photos/s/'))} alt={p.alt} width="640" height="960" style="aspect-ratio: 2 / 3" loading="lazy" decoding="async" />
+        <figcaption>La carte</figcaption>
+      </figure>
+      <div class="actions"><a class="btn" href={u('/carte/')}>Voir la carte</a></div>
+    </div>
+  </section>
+</Base>

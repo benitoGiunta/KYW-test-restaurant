@@ -1,0 +1,15 @@
+---
+import { u } from '../lib/fr';
+import { nom, shop } from '../data/site';
+const { current = '' } = Astro.props;
+const links = [['', 'Accueil'], ['carte', 'Carte'], ['galerie', 'Galerie'], ['jobs', 'Jobs'], ['contact', 'Contact']];
+---
+<header class="nav">
+  <div class="container nav__in">
+    <a class="nav__name" href={u('')}>{nom}</a>
+    <nav class="nav__links" aria-label="Principale">
+      {links.map(([h, l]) => <a href={u(h)} aria-current={current === h ? 'page' : undefined}>{l}</a>)}
+      <a class="btn btn--primary" href={shop}>Boutique en ligne</a>
+    </nav>
+  </div>
+</header>

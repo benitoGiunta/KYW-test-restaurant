@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import { u, fr } from '../lib/fr';
+import { carte } from '../data/site';
+---
+<Base title="La carte de La Maison des Desserts, Namur" description="La carte complète : suggestions de l’automne, cuisine de midi, crêpes, gaufres, boissons, boulangerie et fêtes de fin d’année." current="carte">
+  <div class="container">
+    <div class="pagehead">
+      <h1>La carte</h1>
+      <p class="lead">Suggestions de l’automne, cuisine de midi, crêpes, boissons, boulangerie et fêtes de fin d’année.</p>
+    </div>
+    <div class="carte">
+      <nav class="carte__index" aria-label="Rubriques de la carte">
+        <ul>{carte.map((c) => <li><a href={`#${c.id}`}>{fr(c.titre)}{c.note ? `, ${fr(c.note)}` : ''}</a></li>)}</ul>
+      </nav>
+      <div class="carte__body">
+        {carte.map((c) => (
+          <section class="cat" id={c.id} aria-labelledby={`${c.id}-t`}>
+            <h2 id={`${c.id}-t`}>{fr(c.titre)}</h2>
+            {c.note && <p class="cat__note">{fr(c.note)}</p>}
+            <ul class="rows dish-list">
+              {c.plats.map((p) => <li><h3>{fr(p.nom)}</h3>{p.description && <p class="desc">{fr(p.description)}</p>}{p.prix && <span class="price">{fr(p.prix)}</span>}</li>)}
+            </ul>
+          </section>
+        ))}
+        <p class="pdf"><a class="link" href={u('carte-maison-des-desserts.pdf')}>Télécharger la carte d’origine (PDF, 6 pages)</a></p>
+      </div>
+    </div>
+  </div>
+</Base>

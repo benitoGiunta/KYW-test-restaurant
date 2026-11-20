@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Venir from '../components/Venir.astro';
+import { actus } from '../data/site';
+---
+<Base page="actualites" title="Actualités | Épices & Nous, Erpent" description="Les nouvelles d’Épices & Nous : cartes de saison, traiteur de Noël, fermetures exceptionnelles.">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Actualités</h1>
+      <p class="lead">Cartes de saison, traiteur de Noël, fermetures exceptionnelles.</p>
+    </div>
+  </section>
+  <section class="section section--tight">
+    <div class="container">
+      <ul class="rows rows--dated rows--wide">
+        {actus.map(([d, t, x]) => <li><h3>{t}</h3><p>{x}</p><time>{d}</time></li>)}
+      </ul>
+    </div>
+  </section>
+  <Venir />
+</Base>

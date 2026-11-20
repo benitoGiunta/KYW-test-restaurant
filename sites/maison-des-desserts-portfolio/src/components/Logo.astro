@@ -1,0 +1,16 @@
+---
+// Logo-étiquette : trois cases bordées (nom coupé en syllabes). `section` ajoute la case qui se colle (remplie par le JS).
+import { site } from '../data/site';
+import { u } from '../lib/url';
+interface Props { section?: boolean; tag?: 'a' | 'div' }
+const { section = false } = Astro.props;
+const [a, b, ...reste] = site.nom.split(' ');
+const c = reste.join(' ');
+---
+<a class="logo" href={u('/')} aria-label={`${site.nom}, accueil`}>
+  <span class="logo__case logo__case--d" aria-hidden="true">{a}</span>
+  <span class="logo__case logo__case--d" aria-hidden="true">{b}</span>
+  <span class="logo__case logo__case--m" aria-hidden="true">{a} {b}</span>
+  <span class="logo__case" aria-hidden="true">{c}</span>
+  {section && <span class="logo__case logo__section" data-logo-section aria-hidden="true"></span>}
+</a>

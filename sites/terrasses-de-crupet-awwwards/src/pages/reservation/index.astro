@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { photos, credit } from '../../data/photos';
+import { restaurant as r, menuFetes } from '../../data/site';
+---
+<Base title="Réserver" description="Réserver une table aux Terrasses de Crupet : en ligne, par téléphone au 083 655 111 ou par e-mail. Ouvert tous les jours, midi et soir, au restaurant ou au chalet d’hiver.">
+  <section class="head">
+    <div class="wrap grid">
+      <h1 class="display display--mega head__title" data-split="lines" data-intro>Réserver</h1>
+      <div class="head__txt">
+        <p class="lede">On peut réserver dans le restaurant ou dans le chalet d’hiver.</p>
+        <p class="actions">
+          <a class="btn btn--solid ui" href={r.reservationUrl} rel="noopener">Réserver en ligne</a>
+          <a class="btn ui" href={r.phoneHref}>Appeler le {r.phone}</a>
+        </p>
+        <p class="muted">Le formulaire en ligne s’ouvre sur le service de réservation du restaurant, dans un nouvel écran.</p>
+      </div>
+    </div>
+  </section>
+  <section class="rule infos" aria-label="Informations pratiques">
+    <div class="wrap grid">
+      <div class="infos__bloc">
+        <h2 class="ui muted">Horaires</h2>
+        <ul class="heures">
+          {r.jours.map((j) => (<li><span>{j}</span><span class="price">12{' '}h à 14{' '}h, 18{' '}h à 22{' '}h</span></li>))}
+        </ul>
+        <p class="muted">{r.note}</p>
+      </div>
+      <div class="infos__bloc">
+        <h2 class="ui muted">Adresse</h2>
+        <p class="display display--l">{r.street}<br />{r.postalCode} {r.locality}</p>
+        <p><a class="btn ui" href={r.mapUrl} rel="noopener" target="_blank">Ouvrir le plan</a></p>
+        <h2 class="ui muted">Écrire</h2>
+        <p><a class="text" href={`mailto:${r.email}`}>{r.email}</a></p>
+        <form class="mailto" action={`mailto:${r.email}`} method="post" enctype="text/plain">
+          <label for="msg">Votre demande (date, heure, nombre de personnes)</label>
+          <textarea id="msg" name="demande" rows="4" autocomplete="off"></textarea>
+          <button class="btn ui" type="submit">Ouvrir mon e-mail</button>
+        </form>
+      </div>
+      <div class="infos__bloc infos__img">
+        <div class="hublot" data-iris><Image src={photos.soir.src} alt={photos.soir.alt} widths={[400, 640]} sizes="(min-width: 900px) 26vw, 70vw" loading="lazy" decoding="async" /></div>
+        <p class="credit">{credit}</p>
+      </div>
+    </div>
+  </section>
+  <section class="rule plus" aria-labelledby="h-plus">
+    <div class="wrap grid">
+      <h2 id="h-plus" class="display display--l plus__title">À savoir</h2>
+      <ul class="plus__list prose">
+        <li>Menus de fêtes à emporter : de {menuFetes.prix}, à retirer {menuFetes.retrait}.</li>
+        <li>Des bons cadeaux peuvent s’offrir au restaurant.</li>
+        <li>Une carte enfants propose burger, filet de poulet ou coquillettes jambon-fromage, de 12{' '}€ à 16{' '}€.</li>
+        <li>Parking, accès et privatisation : renseignez-vous par téléphone au <a class="text" href={r.phoneHref}>{r.phone}</a>.</li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { padding-block: clamp(2.5rem, 6vw, 5rem); }
+  .head__title { grid-column: 1 / span 7; }
+  .head__txt { grid-column: 8 / span 5; display: grid; gap: 1.5rem; align-content: end; justify-items: start; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  @media (max-width: 900px) { .head__title, .head__txt { grid-column: 1 / -1; } .head__txt { margin-top: 2rem; } }
+  .infos__bloc { grid-column: span 4; min-width: 0; display: grid; gap: 1rem; align-content: start; }
+  @media (max-width: 900px) { .infos__bloc { grid-column: 1 / -1; margin-bottom: 2.5rem; } }
+  .heures li { display: flex; justify-content: space-between; gap: 1rem; padding-block: 0.55rem; border-bottom: 1px solid var(--c-line); font-size: var(--t-s); }
+  .mailto { display: grid; gap: 0.6rem; justify-items: start; }
+  .mailto label { font-size: var(--t-s); color: var(--c-muted); }
+  .mailto textarea { width: 100%; font: inherit; color: inherit; background: var(--c-panel); border: 1px solid var(--c-line); padding: 0.75rem; border-radius: 0; }
+  .infos__img .hublot { width: min(100%, 22rem); }
+  .plus__title { grid-column: 1 / span 4; }
+  .plus__list { grid-column: 6 / span 6; display: grid; gap: 1rem; }
+  .plus__list li { padding-bottom: 1rem; border-bottom: 1px solid var(--c-line); }
+  @media (max-width: 900px) { .plus__title, .plus__list { grid-column: 1 / -1; } .plus__list { margin-top: 1.5rem; } }
+</style>

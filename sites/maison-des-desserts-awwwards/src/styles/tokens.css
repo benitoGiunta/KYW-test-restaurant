@@ -1,0 +1,46 @@
+/* Jetons de La Maison des Desserts (variante awwwards « la journée de la maison »). Les NOMS sont le contrat de l'engine ;
+   les valeurs viennent de DESIGN.md : farine des fonds de photos de pains, blé doré de la croûte, caramel de la vitrine, cacao des entremets,
+   vert de l'enseigne (photo 02), gris rayé de la salle (photo 04). Les url() portent la base (/maison-des-desserts/awwwards/). */
+@font-face { font-family: 'Hedvig Letters Serif'; src: url('/maison-des-desserts/awwwards/fonts/hedvig-letters-serif-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Schibsted Grotesk'; src: url('/maison-des-desserts/awwwards/fonts/schibsted-grotesk-400_700-normal.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  /* Rôles par défaut = matin (8 h). Les tranches de la journée les redéfinissent plus bas. */
+  --c-bg: #e8e3da;            /* ground : farine, fond des photos de pains */
+  --c-fg: #231713;            /* ink : cacao (13:1) */
+  --c-muted: #5c4f46;         /* muted : 6,6:1 sur farine */
+  --c-line: #231713;          /* line : filets du cadran, posés à 28 % */
+  --c-accent: #1f5c3f;        /* accent : vert de l'enseigne (6,3:1 sur farine) */
+  --c-accent-texte: #1f5c3f;
+  --c-curtain: #2d2e32;       /* curtain : gris rayé de la salle */
+  --c-gold: #e8a04a;          /* or de vitrine éclairée, sur cacao seulement (8:1) */
+
+  --f-display: 'Hedvig Letters Serif', 'Iowan Old Style', Georgia, serif;
+  --f-body: 'Schibsted Grotesk', system-ui, sans-serif;
+
+  --t-mega: clamp(3rem, 0.8rem + 7.6vw, 9rem);
+  --t-xl: clamp(2.5rem, 1.3rem + 5.2vw, 6.5rem);
+  --t-l: clamp(1.9rem, 1.2rem + 2.8vw, 3.8rem);
+  --t-m: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
+  --t-body: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem;
+
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1.25rem, 0.7rem + 2vw, 3rem);
+  --cols: 12;
+  --serre: calc(var(--u) * 3);
+  --normal: calc(var(--u) * 7);
+  --aere: calc(var(--u) * 12);
+  --entracte: calc(var(--u) * 18);
+
+  /* Règle de forme unique : angles vifs, filets de 1 px (tableau d'horaires de comptoir). */
+  --radius: 0px;
+  --z-gl: 0; --z-content: 1; --z-header: 50; --z-cursor: 80; --z-curtain: 90; --z-loader: 100;
+}
+
+/* Les tranches de la journée : tout le texte suit les variables du fond. */
+[data-ton='matin'] { --c-bg: #e8e3da; --c-fg: #231713; --c-muted: #5c4f46; --c-accent: #1f5c3f; --c-accent-texte: #1f5c3f; }
+[data-ton='midi'] { --c-bg: #ebc98c; --c-fg: #231713; --c-muted: #4d3a25; --c-accent: #174a32; --c-accent-texte: #174a32; }
+[data-ton='gouter'] { --c-bg: #c98a45; --c-fg: #231713; --c-muted: #3b2412; --c-accent: #1b3f2c; --c-accent-texte: #1b3f2c; }
+[data-ton='soir'] { --c-bg: #231713; --c-fg: #ece3d3; --c-muted: #c7b9a4; --c-accent: #e8a04a; --c-accent-texte: #e8a04a; }

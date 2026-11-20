@@ -1,0 +1,28 @@
+---
+import { resto, horaires } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+{/* Hallmark, reworded "Heures d'ouverture" to "Horaires" en gate 54, casse de phrase */}
+<section class="venir" id="venir" aria-labelledby="venir-titre">
+  <div class="container venir__grid">
+    <div class="venir__tete">
+      <h2 id="venir-titre">Horaires et adresse</h2>
+      <address>
+        <span>{resto.adresse[0]}</span>
+        <span>{resto.adresse[1]}</span>
+      </address>
+      <p class="venir__actions">
+        <a class="btn btn--accent" href={resto.reservation} rel="noopener">Réserver une table</a>
+        <a class="btn" href={resto.telHref}>{resto.tel}</a>
+      </p>
+    </div>
+    <dl class="schedule">
+      {horaires.map((j) => (
+        <div class={`schedule__row${j.h ? '' : ' is-closed'}`}>
+          <dt>{j.jour}</dt>
+          <dd>{j.h ? j.h.map((x, i) => <>{i > 0 && <span class="et"> et </span>}<span class="num">{x}</span></>) : 'Fermé'}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

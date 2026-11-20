@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, equipe, menu, signature, espaces, jours } from '../data/site';
+import { euro } from '../lib/format';
+const denis = equipe[0]; const sophie = equipe[1];
+---
+<Base page="home">
+  <section class="poster">
+    <div class="wrap">
+      <h1 class="poster__nom display"><span class="poster__g">Épices</span><span class="et poster__et" data-passe>&amp;</span><span class="poster__d">Nous</span></h1>
+    </div>
+    <div class="wrap deux poster__bas">
+      <span class="pastille" data-pastille aria-hidden="true"></span>
+      <div class="deux__g">
+        <p class="poster__lede" data-reveal="up" data-intro data-delay="0.55">Cuisine française de saison, relevée d’épices, chaussée de Marche à Erpent.</p>
+      </div>
+      <div class="deux__d">
+        <div class="poster__actions" data-reveal="up" data-intro data-delay="0.7">
+          <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver une table</span></a>
+          <a class="cta cta--contour" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+        </div>
+        <p class="petit poster__info" data-reveal="fade" data-intro data-delay="0.9">Du mardi au vendredi, midi et soir ; le samedi soir. Menu trois services à <span class="nw tab">{euro(menu.prix)}</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="voixsec wrap deux" aria-labelledby="t-voix">
+    <h2 id="t-voix" class="sr-only">Deux voix, une maison</h2>
+    <div class="deux__g">
+      <p class="voix">En cuisine</p>
+      <h3 class="display voixsec__prenom" data-split="lines">{denis.prenom}</h3>
+      <p class="voixsec__texte">{denis.texte}</p>
+      <figure class="cadre cadre--haut" data-reveal="clip"><Photo cle="biche" widths={[480, 800, 1200]} sizes="(min-width: 760px) 44vw, 92vw" /></figure>
+    </div>
+    <div class="deux__d voixsec__bas">
+      <p class="voix">En salle</p>
+      <h3 class="display voixsec__prenom" data-split="lines">{sophie.prenom}</h3>
+      <p class="voixsec__texte">{sophie.texte}</p>
+      <figure class="cadre cadre--haut" data-reveal="clip" data-delay="0.1"><Photo cle="salleAvant" widths={[480, 800, 1200]} sizes="(min-width: 760px) 44vw, 92vw" /></figure>
+    </div>
+  </section>
+
+  <section class="nappe statement" aria-labelledby="t-sig">
+    <div class="wrap">
+      <h2 id="t-sig" class="statement__texte display" data-split="lines">La signature de la maison : le <em>{signature.nom.toLowerCase()}</em>.</h2>
+      <p class="statement__detail">{signature.detail[0].toUpperCase() + signature.detail.slice(1)}.</p>
+      <p><a class="lien" href={u('/carte/')}>Voir la carte</a></p>
+    </div>
+  </section>
+
+  <section class="menu52" aria-labelledby="t-menu">
+    <div class="wrap deux">
+      <div class="deux__g menu52__prix">
+        <h2 id="t-menu" class="sr-only">{menu.nom}</h2>
+        <p class="menu52__chiffre display" aria-hidden="true"><span data-compte>{menu.prix}</span><span class="menu52__eur">€</span></p>
+        <p class="menu52__nom">{menu.nom}</p>
+        <p class="petit">{menu.regle}</p>
+      </div>
+      <ol class="deux__d menu52__etapes">
+        {menu.etapes.map((e) => (
+          <li>
+            <h3 class="voix">{e.titre}</h3>
+            <ul>{e.choix.map((c) => <li>{c}</li>)}</ul>
+          </li>
+        ))}
+        <li class="petit">{menu.fromage}</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="mur wrap" aria-labelledby="t-mur">
+    <h2 id="t-mur" class="mur__titre display" data-split="lines">Ce qui passe <em>à la salle</em></h2>
+    <div class="mur__grille">
+      <figure class="cadre mur__a" data-reveal="clip" data-delay="0"><Photo cle="saumon" widths={[480, 800, 1200]} sizes="(min-width: 760px) 36vw, 92vw" /></figure>
+      <figure class="cadre mur__b" data-reveal="clip" data-delay="0.08"><Photo cle="sauce" widths={[480, 800, 1200]} sizes="(min-width: 760px) 28vw, 46vw" /></figure>
+      <figure class="cadre mur__c" data-reveal="clip" data-delay="0"><Photo cle="galette" widths={[480, 800, 1200]} sizes="(min-width: 760px) 28vw, 46vw" /></figure>
+      <figure class="cadre mur__d" data-reveal="clip" data-delay="0"><Photo cle="girollesSauce" widths={[480, 800, 1200]} sizes="(min-width: 760px) 30vw, 92vw" /></figure>
+      <figure class="cadre mur__e" data-reveal="clip" data-delay="0.08"><Photo cle="amuse" widths={[480, 800, 1200]} sizes="(min-width: 760px) 30vw, 46vw" /></figure>
+      <figure class="cadre mur__f" data-reveal="clip" data-delay="0"><Photo cle="ardoise" widths={[480, 800, 1200]} sizes="(min-width: 760px) 30vw, 46vw" /></figure>
+    </div>
+    <p class="petit mur__credit">{site.credit}.</p>
+  </section>
+
+  <section class="nappe espaces" aria-labelledby="t-esp">
+    <div class="wrap">
+      <h2 id="t-esp" class="espaces__titre display" data-split="lines">Deux espaces, <em>une terrasse</em></h2>
+      <ul class="espaces__bande">
+        {espaces.map((e) => (
+          <li>
+            <figure class="cadre cadre--paysage"><Photo cle={e.photo} widths={[480, 800, 1200]} sizes="(min-width: 760px) 30vw, 80vw" /></figure>
+            <h3 class="espaces__nom">{e.nom}</h3>
+            <p>{e.texte}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

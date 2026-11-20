@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { photos } from '../data/site';
+// [numéro, colonnes occupées, rapport]
+const groupes: { t: string; items: [string, number, string][] }[] = [
+  { t: 'La maison et le salon de thé', items: [['02', 7, '4 / 3'], ['03', 5, '4 / 5'], ['04', 4, '4 / 5'], ['05', 4, '4 / 5'], ['01', 4, '4 / 3']] },
+  { t: 'Pâtisseries', items: [['06', 5, '1 / 1'], ['07', 7, '1 / 1'], ['08', 4, '1 / 1'], ['09', 4, '1 / 1'], ['10', 4, '1 / 1']] },
+  { t: 'Pains', items: [['11', 6, '1 / 1'], ['12', 6, '1 / 1'], ['13', 4, '1 / 1'], ['14', 4, '1 / 1'], ['15', 4, '1 / 1']] },
+];
+---
+<Base title="Galerie de La Maison des Desserts, Namur" description="Photographies de la façade, du salon de thé, des pâtisseries et des pains de La Maison des Desserts." current="galerie">
+  <div class="container">
+    <div class="pagehead">
+      <h1>La galerie</h1>
+      <p class="lead">La façade, la salle, les pâtisseries et les pains de la maison.</p>
+    </div>
+    {groupes.map((g) => (
+      <section aria-label={g.t}>
+        <h2 class="group-t">{g.t}</h2>
+        <div class="wall">
+          {g.items.map(([n, span, ar]) => (
+            <figure style={`--span:${span}`}>
+              <Photo n={n} slot={`galerie-${n}`} ar={ar} sizes={`(max-width: 60rem) 100vw, ${Math.round(span * 8)}vw`} />
+              <figcaption><span>{photos[n].sujet}</span></figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</Base>

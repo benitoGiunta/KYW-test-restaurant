@@ -1,0 +1,12 @@
+---
+import { jours, site } from '../data/site';
+const h = (s: string) => s.replace(':00', ' h').replace(/^0/, '');
+---
+<ul class="horaires" aria-label="Horaires d’ouverture">
+  {jours.map((j) => (
+    <li>
+      <span>{j.nom}</span>
+      {j.ferme ? <span class="horaires__ferme">Fermé</span> : <span class="nw">{h(site.ouverture)} à {h(site.fermeture)}</span>}
+    </li>
+  ))}
+</ul>

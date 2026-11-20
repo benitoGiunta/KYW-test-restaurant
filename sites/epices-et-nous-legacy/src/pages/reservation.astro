@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Venir from '../components/Venir.astro';
+import { resto } from '../data/site';
+---
+<Base page="reservation" title="Réserver une table | Épices & Nous, Erpent" description="Réservez une table chez Épices & Nous à Erpent, en ligne ou par téléphone.">
+  <section class="page-hero">
+    <div class="container split split--hero">
+      <div class="split__text">
+        <h1>Réserver une table</h1>
+        <p class="lead">En ligne, sur le module de réservation du restaurant, ou par téléphone au {resto.tel}.</p>
+        <p class="venir__actions">
+          <a class="btn btn--accent" href={resto.reservation} rel="noopener">Introduire ma réservation</a>
+          <a class="btn" href={resto.telHref}>{resto.tel}</a>
+        </p>
+        <p class="notes">La réservation en ligne s’ouvre sur le site d’origine du restaurant.</p>
+      </div>
+      <Fig class="split__proof" k="table" sizes="(min-width: 60rem) 52vw, 100vw" ratio="3 / 2" eager pos="50% 60%" />
+    </div>
+  </section>
+  <Venir />
+</Base>

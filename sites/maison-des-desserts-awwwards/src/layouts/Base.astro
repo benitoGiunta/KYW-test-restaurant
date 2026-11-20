@@ -1,0 +1,85 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { site, joursSchema, reseaux } from '../data/site';
+import { asset } from '../lib/url';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/tokens.css';
+import '../styles/engine.css';
+import '../styles/site.css';
+
+interface Props { title?: string; description?: string; page?: string; teteSur?: string }
+const { title, description = site.description, page = 'page', teteSur = 'matin' } = Astro.props;
+const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Pâtisserie, boulangerie et salon de thé à Namur`;
+const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = new URL(asset('/og.png'), siteUrl).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: site.nom,
+  description: site.description,
+  url: new URL(asset('/'), siteUrl).href,
+  telephone: '+32 81 22 74 51',
+  email: site.email,
+  servesCuisine: site.typeCuisine,
+  image: ogImage,
+  address: { '@type': 'PostalAddress', streetAddress: `${site.adresse.rue} ${site.adresse.numero}`, postalCode: site.adresse.cp, addressLocality: site.adresse.commune, addressCountry: site.adresse.pays },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon },
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: [...joursSchema], opens: site.ouverture, closes: site.fermeture }],
+  hasMenu: new URL(asset('/carte/'), siteUrl).href,
+  sameAs: reseaux.map((r) => r.url),
+};
+---
+<!doctype html>
+<html lang="fr" transition:animate="none">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    {page !== '404' && <link rel="canonical" href={canonical} />}
+    <meta name="theme-color" content="#e8e3da" />
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={asset('/favicon-32.png')} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
+    <link rel="sitemap" href={asset('/sitemap-index.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.nom} />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <link rel="preload" as="font" type="font/woff2" href={asset('/fonts/hedvig-letters-serif-400-normal.woff2')} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={asset('/fonts/schibsted-grotesk-400_700-normal.woff2')} crossorigin />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+    </script>
+    <ClientRouter fallback="swap" />
+  </head>
+  <body data-page={page}>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel curtain__panel--a"><span class="curtain__aiguille"></span></div></div>
+    <Header sur={teteSur} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <div class="cadran" aria-hidden="true" data-ton="matin"><span class="cadran__heure num">8 h 00</span><span class="cadran__regle"><span class="cadran__bornes"><span>8</span><span>18</span></span><span class="cadran__aiguille"></span></span></div>
+    <Footer />
+    <script>
+      import { start } from '../engine/astro';
+      import { setupMotion } from '../motion/setup';
+      start(setupMotion);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const fete = photoDe('/photos/facade-vitrine-noel.webp');
+const cat = site.carte.find((c) => c.categorie.startsWith('Fêtes'))!;
+const { jours, commandes, galette } = site.fetes;
+---
+<Base title="Fêtes 2026-2027" description={`Fêtes de fin d'année 2026-2027 à ${site.nom} : bûches, gâteaux de l'An, macarons, pralines, dates de commande et jours d'ouverture.`}>
+  <section class="page-hero" style="background: var(--c-postit)" data-activite="Les fêtes" data-couleur="postit">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">Les <em>fêtes</em></span></h1>
+      <p class="lead">Fin d'année 2026-2027 : bûches, gâteaux de l'An, macarons, pralines et galettes des rois.</p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" style="border-top: 0" aria-labelledby="t-dates">
+    <div class="wrap damier">
+      <div>
+        <h2 class="titre titre--l" id="t-dates"><span class="etiquette">Les <em>dates</em></span></h2>
+        <ul class="lignes">
+          <li><span>Commandes de Noël</span><span>{commandes.noel}</span></li>
+          <li><span>Commandes du Nouvel An</span><span>{commandes.nouvelAn}</span></li>
+          <li><span>Galette des rois</span><span>{galette}</span></li>
+        </ul>
+        <h3 style="margin-top: calc(var(--u) * 3)">Ouverture pendant les fêtes</h3>
+        <ul class="lignes">
+          {jours.map((j) => <li><span>{j.date}</span><span>{j.etat === 'ouvert' ? `ouvert${j.note ? `, ${j.note}` : ''}` : 'fermé'}</span></li>)}
+        </ul>
+        <div class="actions">
+          <a class="btn btn--ink" href={site.boutique.url} rel="noopener">Commander en ligne</a>
+          <a class="btn" href={telHref()}>{site.telephone}</a>
+        </div>
+      </div>
+      <div class="damier__photo">
+        <img src={asset(fete.src)} alt={fete.alt} width={fete.largeur} height={fete.hauteur} loading="eager" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  <section class="aplat aplat--rose" aria-labelledby="t-cartefetes">
+    <div class="wrap">
+      <h2 class="titre titre--l" id="t-cartefetes"><span class="etiquette" data-split="lines">La carte des <em>fêtes</em></span></h2>
+      <ul class="lignes" data-reveal="up">
+        {cat.plats.map((p) => (
+          <li><span>{p.nom}{p.description && <span class="muted"> ({p.description})</span>}</span>{p.prix && <span>{p.prix}</span>}</li>
+        ))}
+      </ul>
+      <p class="muted" style="margin-top: var(--u)">Toutes nos réalisations sont fabriquées par nos équipes.</p>
+      <div class="actions">
+        <a class="btn" href={u('/carte/')}>Toute la carte</a>
+      </div>
+    </div>
+  </section>
+</Base>

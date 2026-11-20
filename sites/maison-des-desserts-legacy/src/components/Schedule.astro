@@ -1,0 +1,15 @@
+---
+import { horaires } from '../data/site';
+---
+<table class="schedule">
+  <caption>Horaires d’ouverture</caption>
+  <thead class="visually-hidden"><tr><th scope="col">Jour</th><th scope="col">Heures</th></tr></thead>
+  <tbody>
+    {horaires.map((d) => (
+      <tr class={d.h ? '' : 'is-closed'}>
+        <th scope="row">{d.jour}</th>
+        <td>{d.h ? <time>{d.h}</time> : 'Fermé'}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>

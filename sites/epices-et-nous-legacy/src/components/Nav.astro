@@ -1,0 +1,29 @@
+---
+import { resto } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const liens = [
+  ['accueil', 'Accueil', base],
+  ['carte', 'Carte', `${base}carte/`],
+  ['menu', 'Menu', `${base}menu/`],
+  ['reservation', 'Réservation', `${base}reservation/`],
+  ['a-propos', 'On parle de nous', `${base}a-propos/`],
+  ['actualites', 'Actualités', `${base}actualites/`],
+];
+---
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+  <div class="site-header__bar container">
+    <a class="brand" href={base} aria-label="Épices & Nous, accueil"><img src={`${base}photos/logo-560.webp`} width="560" height="227" alt="Épices & Nous" /></a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <ul>
+        {liens.map(([id, label, href]) => <li><a href={href} aria-current={page === id ? 'page' : undefined}>{label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="site-header__action">
+      <a class="tel" href={resto.telHref}>{resto.tel}</a>
+      <a class="btn btn--accent" href={resto.reservation} rel="noopener">Réserver</a>
+    </div>
+  </div>
+</header>

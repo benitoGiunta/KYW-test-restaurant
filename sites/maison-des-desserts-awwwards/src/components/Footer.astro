@@ -1,0 +1,37 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site, reseaux } from '../data/site';
+import Horaires from './Horaires.astro';
+---
+<section class="pied" aria-label="Contact et horaires" data-heure="18">
+  <div class="wrap grille">
+    <p class="pied__heure num" aria-hidden="true">18 h</p>
+    <h2 class="pied__mot display" data-split="lines">La maison ferme.<br />Rendez-vous à 8 h.</h2>
+    <div class="pied__col">
+      <h3 class="pied__titre">Adresse</h3>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h3 class="pied__titre">Téléphone</h3>
+      <p><a class="pied__tel souligne" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+      <p><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+    <div class="pied__col">
+      <h3 class="pied__titre">Horaires</h3>
+      <Horaires />
+    </div>
+    <div class="pied__col">
+      <h3 class="pied__titre">Ailleurs</h3>
+      <ul class="pied__liens">
+        <li><a class="lien-util" href={u('/carte/')}>La carte</a></li>
+        <li><a class="lien-util" href={u('/histoire/')}>L’histoire</a></li>
+        <li><a class="lien-util" href={u('/reservation/')}>Réservation</a></li>
+        {reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+    <p class="pied__colophon">{site.credit}. Polices : Hedvig Letters Serif et Schibsted Grotesk (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />

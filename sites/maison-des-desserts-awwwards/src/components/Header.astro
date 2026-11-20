@@ -1,0 +1,42 @@
+---
+import { u } from '../lib/url';
+import { site } from '../data/site';
+interface Props { sur?: string }
+const { sur = 'matin' } = Astro.props;
+const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
+const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
+const liens = [
+  { href: '/carte/', label: 'La carte' },
+  { href: '/histoire/', label: 'L’histoire' },
+  { href: '/reservation/', label: 'Réservation' },
+];
+---
+<header class="tete" data-sur={sur}>
+  <a class="tete__marque" href={base} aria-current={path === base ? 'page' : undefined} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
+  <div class="tete__droite">
+    <nav class="tete__nav" aria-label="Navigation principale">
+      <ul>{liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}</ul>
+    </nav>
+    <a class="cta cta--petit tete__appel" href={site.telephoneHref}><span class="cta__txt">Appeler</span></a>
+    <button class="tete__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+<div class="menu" id="menu" hidden>
+  <div class="menu__panneau" data-ton="soir">
+    <div class="menu__haut">
+      <p class="menu__heure num" aria-hidden="true">8 h à 18 h</p>
+      <button class="menu__fermer" type="button">Fermer</button>
+    </div>
+    <nav aria-label="Menu">
+      <ul class="menu__liste">
+        <li><span class="menu__masque"><a class="menu__ligne display" href={base} aria-current={path === base ? 'page' : undefined}>Accueil</a></span></li>
+        {liens.map((l) => <li><span class="menu__masque"><a class="menu__ligne display" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></span></li>)}
+      </ul>
+    </nav>
+    <div class="menu__bas">
+      <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+      <p class="menu__info">Du mardi au samedi, de 8 h à 18 h<br />{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}</p>
+    </div>
+  </div>
+</div>

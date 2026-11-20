@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Venir from '../components/Venir.astro';
+import { resto, menu, actus } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="accueil" title="Épices & Nous, restaurant à Erpent (Namur)" description="Depuis 1999, Denis et Sophie Delvigne vous accueillent à Erpent : cuisine française de saison relevée d’épices, menu trois services à 52 €.">
+  {/* Hallmark, reworded "Sophie & Denis Delvigne accueillent leurs convives dans un cadre chaleureux" to "Depuis 1999, Sophie et Denis vous accueillent", gate 58 */}
+  <section class="hero" aria-labelledby="hero-titre">
+    <Fig class="hero__photo" k="table" sizes="100vw" eager ratio="auto" pos="50% 60%" />
+    <div class="container hero__wrap">
+      <div class="ledge">
+        <h1 id="hero-titre">Depuis 1999, Sophie et Denis vous accueillent</h1>
+        <p class="lead">Cuisine de saison, relevée d’une touche d’audace, à Erpent.</p>
+        <p class="ledge__actions">
+          <a class="btn btn--accent" href={resto.reservation} rel="noopener">Réserver une table</a>
+          <a class="link" href={`${base}menu/`}>Le menu à 52 €</a>
+        </p>
+        <p class="ledge__prix"><span class="num">52 €</span> le menu trois services, sans les boissons.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="histoire-titre">
+    <div class="container split">
+      <div class="split__text">
+        <h2 id="histoire-titre">Notre histoire : la passion d’un couple</h2>
+        <p>Formés à l’école hôtelière de la Citadelle, Denis et Sophie n’étaient pas destinés à la restauration. Pourtant, depuis plus de 20 ans, ils régalent leurs hôtes avec sincérité et authenticité. Leur établissement, idéalement situé à Erpent, est devenu une adresse incontournable pour les amateurs de gastronomie conviviale.</p>
+        <p><a class="link" href={`${base}a-propos/`}>En lire plus sur Denis et Sophie</a></p>
+      </div>
+      <Fig class="split__proof" k="facade" sizes="(min-width: 60rem) 52vw, 100vw" ratio="4 / 3" pos="50% 62%" cap="La façade, chaussée de Marche à Erpent." />
+    </div>
+  </section>
+
+  <section class="section section--paper2" aria-labelledby="menu-titre">
+    <div class="container rows-block">
+      <div class="rows-block__tete">
+        <h2 id="menu-titre">La cuisine : le menu à 52 €</h2>
+        <p class="lead">Une cuisine française traditionnelle revisitée avec créativité, des plats préparés avec des produits frais et locaux.</p>
+        <p class="notes">{menu.notes.join('. ')}.</p>
+        <p><a class="btn" href={`${base}menu/`}>Le menu en détail</a> <a class="link" href={`${base}carte/`}>La carte complète</a></p>
+      </div>
+      <ul class="rows">
+        <li><h3>Entrées</h3><p>Tartare de saumon aux éclats de grenade. Salade tiède de lentilles vertes du Puy, Morteau, scampi grillé, foie gras poêlé.</p></li>
+        <li><h3>Plats</h3><p>Daurade royale cuite sur peau, mousseline de butternut aux épices. Noisettes de biche, garnitures automnales, poivrade adoucie au chocolat.</p></li>
+        <li><h3>Desserts</h3><p>Tartelette chocolat, châtaignes, vanille du Mexique. Pomme caramélisée, sabayon au miel d’acacia. Assiette de fromages.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="salles-titre">
+    <div class="container lieux">
+      <h2 id="salles-titre">Deux ambiances et une terrasse</h2>
+      <Fig class="lieux__a" k="salle" sizes="(min-width: 60rem) 40vw, 100vw" ratio="4 / 5" pos="50% 40%" />
+      <div class="lieux__b">
+        <Fig k="verriere" sizes="(min-width: 60rem) 48vw, 100vw" ratio="16 / 10" pos="50% 45%" />
+      </div>
+      <ul class="lieux__liste">
+        <li><h3>La salle avant</h3><p>Moderne, lumineuse et dynamique.</p></li>
+        <li><h3>La verrière</h3><p>À l’arrière, douce et feutrée.</p></li>
+        <li><h3>La terrasse</h3><p>Dès que la météo le permet.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--bark statement" aria-labelledby="signature-titre">
+    <div class="container">
+      <h2 id="signature-titre" class="statement__texte">Le ris de veau façon carbonara : dés croustillants, lardons, pâtes fraîches, jaune d’œuf, tuile fromagère.</h2>
+      <p class="statement__suite">La spécialité de la maison. Aussi à la carte, l’Américain maison et le hamburger gourmand. Recommandé par le Guide Michelin, 13,5/20 au Gault&amp;Millau.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="actus-titre">
+    <div class="container rows-block">
+      <div class="rows-block__tete">
+        <h2 id="actus-titre">Actualités</h2>
+        <p><a class="link" href={`${base}actualites/`}>Toutes les actualités</a></p>
+      </div>
+      <ul class="rows rows--dated">
+        {actus.slice(0, 3).map(([d, t, x]) => <li><h3>{t}</h3><p>{x}</p><time>{d}</time></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <Venir />
+</Base>

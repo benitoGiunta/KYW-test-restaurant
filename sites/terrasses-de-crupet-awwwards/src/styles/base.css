@@ -1,0 +1,114 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--c-bg); color: var(--c-fg); font: 400 var(--t-body)/1.55 var(--f-body); font-variant-numeric: lining-nums; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3, p, ul, ol, dl, dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button { font: inherit; }
+::selection { background: var(--c-accent); color: var(--c-on-accent); }
+
+.wrap { width: 100%; max-width: 1680px; margin-inline: auto; padding-inline: var(--gutter); }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+@media (max-width: 720px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.display { font-family: var(--f-display); font-weight: 400; line-height: 0.95; text-wrap: balance; letter-spacing: -0.02em; }
+.display--mega { font-size: var(--t-mega); letter-spacing: -0.035em; line-height: 0.88; }
+.display--xl { font-size: var(--t-xl); letter-spacing: -0.03em; line-height: 0.95; }
+.display--l { font-size: var(--t-l); letter-spacing: -0.02em; line-height: 1.02; }
+.lede { font-size: var(--t-m); line-height: 1.35; max-width: 34ch; text-wrap: balance; }
+.prose { max-width: 62ch; }
+.prose p + p { margin-top: 1em; }
+.ui { font-size: var(--t-s); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; }
+.muted { color: var(--c-muted); }
+.price { font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* Liens texte : soulignés au repos ; au survol le trait s'écarte et s'épaissit (verbe : ouvrir). */
+a.text, .site-footer a:not(.btn) { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; text-decoration-color: var(--c-accent); transition: text-underline-offset 0.35s cubic-bezier(0.33, 1, 0.68, 1), text-decoration-thickness 0.35s cubic-bezier(0.33, 1, 0.68, 1); }
+a.text:focus-visible, .site-footer a:not(.btn):focus-visible { text-underline-offset: 0.38em; text-decoration-thickness: 2px; }
+@media (hover: hover) { a.text:hover, .site-footer a:not(.btn):hover { text-underline-offset: 0.38em; text-decoration-thickness: 2px; } }
+a.text:active, .site-footer a:not(.btn):active { opacity: 0.75; }
+.kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
+
+/* En-tête : médaillon T + nom, navigation à droite. */
+.site-header { position: sticky; top: 0; z-index: var(--z-header); background: color-mix(in srgb, var(--c-bg) 92%, transparent); border-bottom: 1px solid var(--c-line); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 4.25rem; }
+.brand { display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; font-family: var(--f-display); font-size: var(--t-m); line-height: 1; }
+.brand__mark { width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 1.5px solid var(--c-accent); display: grid; place-items: center; color: var(--c-accent); font-size: 1.15rem; flex: none; }
+.brand__name { display: none; }
+@media (min-width: 560px) { .brand__name { display: inline; } }
+.nav { display: flex; align-items: center; gap: clamp(0.5rem, 2vw, 2rem); }
+.nav a { text-decoration: none; padding: 0.6rem 0.25rem; position: relative; }
+.nav a:not(.btn)::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.3rem; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.nav a:not(.btn):focus-visible::after, .nav a[aria-current='page']:not(.btn)::after { transform: scaleX(1); }
+@media (hover: hover) { .nav a:not(.btn):hover::after { transform: scaleX(1); } .brand:hover .brand__mark { background: var(--c-accent); color: var(--c-on-accent); } }
+.brand:focus-visible .brand__mark { background: var(--c-accent); color: var(--c-on-accent); }
+.brand__mark { transition: background-color 0.4s cubic-bezier(0.33, 1, 0.68, 1), color 0.4s cubic-bezier(0.33, 1, 0.68, 1); }
+.nav a:not(.btn):active { opacity: 0.7; }
+.menu-btn { display: none; }
+@media (max-width: 720px) { .nav .nav__lien { display: none; } .menu-btn { display: inline-flex; } .nav .btn { min-height: 2.75rem; padding-inline: 1.1rem; } }
+@media (max-width: 480px) { .nav { gap: 0.25rem; } .nav a.hide-s { display: none; } .nav .ui { letter-spacing: 0.02em; } }
+
+/* Bouton rond-pilule : la seule forme de CTA. Réponse au survol : le cuivre monte comme un liquide (verbe : ouvrir). */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 3rem; padding: 0.7rem 1.6rem; border: 1.5px solid var(--c-accent); border-radius: 999px; background: transparent; color: var(--c-fg); text-decoration: none; position: relative; overflow: hidden; isolation: isolate; cursor: pointer; }
+.btn::before { content: ''; position: absolute; inset: 0; background: var(--c-accent); border-radius: 50%; transform: translateY(101%) scale(1.4); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); z-index: -1; }
+.btn:focus-visible::before { transform: none; }
+.btn:focus-visible { color: var(--c-on-accent); }
+@media (hover: hover) { .btn:hover::before { transform: none; } .btn:hover { color: var(--c-on-accent); } }
+.btn { transition: scale 0.25s cubic-bezier(0.33, 1, 0.68, 1), color 0.4s cubic-bezier(0.33, 1, 0.68, 1); }
+.btn:active { scale: 0.96; }
+.btn--solid { background: var(--c-accent); color: var(--c-on-accent); }
+.btn--solid::before { background: var(--c-fg); }
+.btn--solid:focus-visible { color: var(--c-bg); }
+@media (hover: hover) { .btn--solid:hover { color: var(--c-bg); } }
+
+/* Hublot : toute image ronde (écho des trois miroirs de la salle). */
+.hublot { position: relative; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--c-panel); border: 1.5px solid var(--c-accent); outline: 6px solid var(--c-bg); outline-offset: -7px; }
+.hublot img { width: 100%; height: 100%; object-fit: cover; }
+
+section { padding-block: clamp(3.5rem, 8vw, 8rem); }
+.rule { border-top: 1px solid var(--c-line); }
+.credit { font-size: var(--t-xs); color: var(--c-muted); }
+
+/* Pied : bandeau final propre au site, puis composant KYW intact. */
+.site-footer { background: var(--c-curtain); color: #f1e7d6; padding-block: clamp(3rem, 6vw, 5rem) 2rem; }
+.site-footer .wrap { display: grid; gap: 2rem; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+.site-footer .f-big { grid-column: 1 / -1; font-family: var(--f-display); font-size: var(--t-xl); line-height: 0.95; letter-spacing: -0.03em; }
+.site-footer .f-col { grid-column: span 4; }
+.site-footer a { color: #f1e7d6; }
+.site-footer .f-label { color: #b9c9be; margin-bottom: 0.5rem; }
+@media (max-width: 720px) { .site-footer .wrap { grid-template-columns: 1fr; } .site-footer .f-col { grid-column: 1; } }
+.site-footer .btn { color: #f1e7d6; border-color: #e0904f; }
+.site-footer .btn--solid { color: #0a1b2b; }
+.site-footer .btn:focus-visible { color: #0a1b2b; }
+@media (hover: hover) { .site-footer .btn:hover { color: #0a1b2b; } }
+
+/* Iris des hublots : fermé tant que le pilote ne l'a pas ouvert (src/motion/miroirs.ts) ;
+   sans mouvement (html:not(.motion)) le hublot est ouvert, dessiné tel quel. */
+.motion [data-iris] { clip-path: circle(18% at 50% 50%); }
+.motion [data-iris="intro"] { clip-path: circle(34.2% at 50% 50%); }
+.hublot img { transform-origin: 50% 50%; }
+/* Éclat : le reflet de la lampe sur le verre du grand miroir (état de repos). Anneau intérieur. */
+.eclat { position: absolute; inset: 7px; border-radius: 50%; pointer-events: none;
+  background: conic-gradient(from 0deg, transparent 0deg, rgb(255 236 214 / 0.55) 14deg, rgb(255 236 214 / 0.85) 22deg, transparent 40deg, transparent 360deg);
+  -webkit-mask: radial-gradient(circle closest-side, transparent calc(100% - 1.1rem), #000 calc(100% - 0.9rem), #000 calc(100% - 1px), transparent 100%);
+  mask: radial-gradient(circle closest-side, transparent calc(100% - 1.1rem), #000 calc(100% - 0.9rem), #000 calc(100% - 1px), transparent 100%); }
+html:not(.motion) .eclat { display: none; }
+
+/* Rideau de transition : un trou rond s'ouvre au centre à l'arrivée (--trou animé par GSAP). */
+.curtain__panel { --trou: 0px;
+  -webkit-mask: radial-gradient(circle at 50% 50%, transparent var(--trou), #000 calc(var(--trou) + 1px));
+  mask: radial-gradient(circle at 50% 50%, transparent var(--trou), #000 calc(var(--trou) + 1px)); }
+
+/* Menu plein écran (téléphone) */
+.menu { position: fixed; inset: 0; z-index: 70; }
+.menu[hidden] { display: none; }
+.menu__panel { position: absolute; inset: 0; background: var(--c-curtain); color: #f1e7d6; display: grid; grid-template-rows: auto 1fr; overflow-y: auto; }
+.menu__top { display: flex; align-items: center; justify-content: space-between; min-height: 4.25rem; }
+.menu__panel .btn { color: #f1e7d6; border-color: #e0904f; }
+.menu__panel .btn--solid { color: #0a1b2b; }
+.menu__panel nav { display: grid; align-content: center; gap: 2.5rem; padding-block: 2rem 3rem; }
+.menu__list li { overflow: clip; border-bottom: 1px solid rgb(241 231 214 / 0.2); }
+.menu__list a { display: block; padding-block: 0.6rem; font-size: clamp(2.6rem, 13vw, 4.5rem); line-height: 1; letter-spacing: -0.03em; text-decoration: none; }
+.menu__list a[aria-current='page'] { color: #e0904f; }
+.menu__list a:focus-visible { outline-offset: -2px; }
+body.menu-ouvert { overflow: hidden; }

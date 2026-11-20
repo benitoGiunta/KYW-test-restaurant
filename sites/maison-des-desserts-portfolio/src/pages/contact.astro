@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, adresseLigne, horaireTexte, telHref, photoDe } from '../data/site';
+import { asset } from '../lib/url';
+const salle = photoDe('/photos/salle-fenetre.webp');
+---
+<Base title="Horaires et contact" description={`Horaires, adresse et contact de ${site.nom} à ${site.adresse.commune} : ouvert du mardi au samedi de 8h à 18h, rue Haute Marcelle 17.`}>
+  <section class="page-hero" style="background: var(--c-bleu)" data-activite="Contact" data-couleur="bleu">
+    <div class="wrap page-hero__inner">
+      <h1><span class="etiquette etiquette--ink">Nous <em>trouver</em></span></h1>
+      <p class="lead">Ouvert du mardi au samedi, de 8h à 18h, dans le quartier Saint-Loup du vieux Namur.</p>
+      <p class="statut" data-ouvert data-horaires={JSON.stringify(site.horaires)}></p>
+    </div>
+  </section>
+
+  <section class="aplat aplat--ecru" style="border-top: 0">
+    <div class="wrap damier">
+      <div>
+        <p class="sur">Par téléphone, par e-mail ou en ligne</p>
+        <div class="actions" style="margin-top: var(--u)">
+          <a class="btn btn--ink" href={telHref()}>{site.telephone}</a>
+          <a class="btn" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a>
+        </div>
+        <h2 class="titre titre--l" style="margin-block: calc(var(--u) * 3) var(--u)"><span class="etiquette">Commander en ligne</span></h2>
+        <p>Les cougnous, bûches, galettes et autres produits se commandent sur la boutique en ligne, avec retrait entre 8h et 18h. Paiement par Bancontact, Visa ou Mastercard.</p>
+        <div class="actions">
+          <a class="btn btn--ink" href={site.boutique.url} rel="noopener">Ouvrir la boutique</a>
+        </div>
+        <p class="muted" style="margin-top: calc(var(--u) * 2)">Pas de réservation de table en ligne : la maison n'en propose pas sur son site.</p>
+      </div>
+      <div class="damier__photo">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="eager" decoding="async" />
+        <div style="padding: calc(var(--u) * 3)">
+          <h2 class="titre titre--l" style="margin-bottom: var(--u)"><span class="etiquette">Horaires</span></h2>
+          <dl class="horaires">{site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}</dl>
+          <p class="muted" style="margin-top: var(--u)">Petit déjeuner de 8h30 à 10h30 ; cuisine de 12h à 15h ou de 11h30 à 17h30 selon le plat. Jours de fêtes : voir la page Fêtes.</p>
+          <p style="margin-top: calc(var(--u) * 2)"><strong>Adresse</strong><br />{adresseLigne()}</p>
+          <p class="muted" style="margin-top: var(--u)">{site.quartier.phrase}</p>
+          <p style="margin-top: var(--u)"><a class="link" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

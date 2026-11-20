@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Venir from '../components/Venir.astro';
+import { carte, resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="carte" title="La carte | Épices & Nous, Erpent" description="La carte de saison d’Épices & Nous : entrées, plats et desserts, produits frais et locaux, prix en euros.">
+  <section class="page-hero">
+    <div class="container split split--hero">
+      <div class="split__text">
+        <h1>La carte</h1>
+        <p class="lead">Cuisine française traditionnelle revisitée, produits frais et locaux, suggestions de saison selon le marché.</p>
+        <p><a class="btn btn--accent" href={resto.reservation} rel="noopener">Réserver une table</a> <a class="link" href={`${base}menu/`}>Le menu à 52 €</a></p>
+      </div>
+      <Fig class="split__proof" k="biche" sizes="(min-width: 60rem) 52vw, 100vw" ratio="3 / 2" eager pos="50% 50%" />
+    </div>
+  </section>
+  {carte.map((c) => (
+    <section class="section section--tight" aria-labelledby={`c-${c.cat}`}>
+      <div class="container rows-block">
+        <div class="rows-block__tete">
+          <h2 id={`c-${c.cat}`}>{c.cat}</h2>
+          {c.photo && <Fig k={c.photo} sizes="(min-width: 60rem) 28vw, 100vw" ratio="4 / 3" pos="50% 50%" />}
+        </div>
+        <ul class="carte">
+          {c.plats.map(([n, d, p]) => (
+            <li>
+              <div class="carte__nom"><h3>{n}</h3>{d && <p>{d}</p>}</div>
+              <span class="carte__prix num">{p} €</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+  <Venir />
+</Base>
