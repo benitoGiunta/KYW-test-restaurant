@@ -3,9 +3,36 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import KywFooter from '@kyw/footer';
 import '../styles/page.css';
-interface Props { title: string; description: string; page: string }
-const { title, description, page } = Astro.props;
+import { resto, horaires } from '../data/site';
+interface Props { title: string; description: string; page: string; heroPreload?: boolean }
+const { title, description, page, heroPreload = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const heroSrcset = [640, 960, 1440].map((w) => `${base}photos/hero-tables-${w}.webp ${w}w`).join(', ');
+const font = (fam: string, file: string, wt: string) => `@font-face{font-family:'${fam}';src:url('${base}fonts/${file}.woff2') format('woff2');font-weight:${wt};font-style:normal;font-display:swap}`;
+const fontCss = [
+  font('Sentient', 'sentient-300', '300'), font('Sentient', 'sentient-400', '400'), font('Hanken Grotesk', 'hanken-grotesk', '400 700'),
+  "@font-face{font-family:'Sentient Fallback';src:local('Georgia');size-adjust:97%;ascent-override:96%;descent-override:26%;line-gap-override:0%}",
+  "@font-face{font-family:'Hanken Fallback';src:local('Arial');size-adjust:103%;ascent-override:93%;descent-override:25%;line-gap-override:0%}",
+].join('');
+// Hypothèse : code postal 5100 (Jambes), à confirmer ; pas de note d'avis (non prouvée).
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: resto.nom,
+  description: 'Brasserie moderne et contemporaine, avenue Albert Ier à Jambes (Namur).',
+  url: resto.site,
+  telephone: '+3281231426',
+  email: resto.email,
+  image: `${Astro.site ? Astro.site.origin : ''}${base}photos/facade.webp`,
+  servesCuisine: 'Brasserie',
+  address: { '@type': 'PostalAddress', streetAddress: 'Avenue Albert Ier 149', postalCode: '5100', addressLocality: 'Jambes', addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: 50.4670366, longitude: 4.8852896 },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '11:00', closes: '22:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '11:00', closes: '16:00' },
+  ],
+  sameAs: [resto.facebook],
+};
 ---
 <!doctype html>
 <html lang="fr">
@@ -17,11 +44,16 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" href={`${base}photos/logo.webp`} type="image/webp" />
-    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://api.fontshare.com/v2/css?f[]=sentient@300,400&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="preload" href={`${base}fonts/sentient-300.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${base}fonts/hanken-grotesk.woff2`} as="font" type="font/woff2" crossorigin />
+    {heroPreload && <link rel="preload" as="image" type="image/webp" imagesrcset={heroSrcset} imagesizes="100vw" fetchpriority="high" />}
+    <style set:html={fontCss}></style>
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${Astro.site ? Astro.site.origin : ''}${base}photos/facade.webp`} />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
     <script is:inline>document.documentElement.classList.add('js')</script>
   </head>
   <body>

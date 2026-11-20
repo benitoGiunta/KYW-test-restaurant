@@ -10,12 +10,14 @@ const groupes = [{ t: 'À manger', r: carte.filter((c) => !c.boisson) }, { t: '�
     <div class="container banner__in">
       <h1 id="h-carte">La carte</h1>
       <p class="lead">Produits frais et tradition, avec une touche de nouveauté.</p>
-      <ul class="index">
-        {carte.map((c) => <li><a href={`#${slug(c.titre)}`}>{c.titre}</a></li>)}
-      </ul>
       <p class="actions"><a class="btn" href={resto.zenchef}>Réserver une table</a></p>
     </div>
   </section>
+  <nav class="index-bar" aria-label="Rubriques de la carte">
+    <ul class="container index">
+      {carte.map((c) => <li><a href={`#${slug(c.titre)}`}>{c.titre}</a></li>)}
+    </ul>
+  </nav>
   {groupes.map((g) => (
     <section class="sec carte-page" aria-label={g.t}>
       <div class="container">

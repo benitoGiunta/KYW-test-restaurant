@@ -1,9 +1,9 @@
 ---
-interface Props { src: string; w: number; h: number; alt: string; hero?: boolean; sizes?: string; pos?: string; slot: string; class?: string }
-const { src, w, h, alt, hero = false, sizes = '(min-width: 60rem) 50vw, 100vw', pos = '50% 50%', slot, class: cls = '' } = Astro.props;
+interface Props { srcset?: number[]; src: string; w: number; h: number; alt: string; hero?: boolean; sizes?: string; pos?: string; slot: string; class?: string }
+const { srcset, src, w, h, alt, hero = false, sizes = '(min-width: 60rem) 50vw, 100vw', pos = '50% 50%', slot, class: cls = '' } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 <figure class:list={['photo', cls]} data-slot={slot} data-alt={alt} data-credits="Photographie du restaurant, site champselysees.be">
-  <img src={`${base}photos/${src}.webp`} width={w} height={h} alt={alt} sizes={sizes} style={`object-position:${pos}`} loading={hero ? 'eager' : 'lazy'} fetchpriority={hero ? 'high' : undefined} decoding="async" />
+  <img src={`${base}photos/${src}.webp`} srcset={srcset ? srcset.map((x) => `${base}photos/${src}-${x}.webp ${x}w`).join(', ') : undefined} width={w} height={h} alt={alt} sizes={sizes} style={`object-position:${pos}`} loading={hero ? 'eager' : 'lazy'} fetchpriority={hero ? 'high' : undefined} decoding="async" />
   <slot />
 </figure>

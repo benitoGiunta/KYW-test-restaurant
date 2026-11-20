@@ -139,10 +139,13 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); }
 /* Pages internes */
 .banner { padding-block: var(--section-gap-s) var(--space-2xl); border-bottom: var(--rule-hair) solid var(--color-rule); }
 .banner__in .lead { margin-top: var(--space-lg); }
-.index { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-lg); list-style: none; margin: var(--space-xl) 0 0; padding: 0; font-size: var(--text-sm); }
+.index { display: flex; flex-wrap: nowrap; gap: var(--space-xs) var(--space-lg); list-style: none; margin: 0 auto; padding-block: var(--space-xs); font-size: var(--text-sm); overflow-x: auto; scrollbar-width: thin; }
+.index li { flex: none; }
+.index-bar { --index-h: 48px; position: sticky; top: var(--nav-h); z-index: var(--z-sticky); background: var(--color-paper); border-bottom: var(--rule-hair) solid var(--color-rule); }
+.index a { display: inline-flex; align-items: center; min-height: 32px; white-space: nowrap; }
 .index a { color: var(--color-ink); text-decoration-color: var(--color-accent); }
 .group { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--text-display-s); color: var(--color-ink); margin-bottom: var(--space-xl); }
-.rubrique { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); padding-block: var(--space-xl); align-items: start; scroll-margin-top: 0; }
+.rubrique { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); padding-block: var(--space-xl); align-items: start; scroll-margin-top: 40px; }
 .rubrique h2 { grid-column: 1 / span 4; font-size: var(--text-section); max-width: 12ch; }
 .rubrique .rows { grid-column: 5 / span 8; }
 .rubrique .row { padding-block: var(--space-lg) var(--space-sm); }
@@ -252,3 +255,4 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); }
   .foot__credits a { display: inline-block; padding-block: var(--space-sm); margin-block: calc(var(--space-sm) * -1); }
   .nav__banner a { display: inline-flex; align-items: center; min-height: 44px; margin-block: calc(var(--space-2xs) * -1); }
 }
+.index-bar + .carte-page { padding-top: var(--space-xl); }
