@@ -1,4 +1,4 @@
-# DESIGN.md : La Maison des Desserts, variante awwwards (phase 1)
+# DESIGN.md : La Maison des Desserts, variante awwwards (phases 1 et 2)
 
 ## Brief
 - Sujet : salon de thé, boulangerie, pâtisserie et chocolaterie, Rue Haute Marcelle 17, 5000 Namur (quartier Saint-Loup, vieux Namur), 081 22 74 51, mardi à samedi 8 h à 18 h.
@@ -34,6 +34,16 @@ Choix : **A**. Test de l'échange : « un cadran qui range la carte selon les ho
 - **Plan de composition (accueil)** : affiche (hero, h1 + façade) / paire asymétrique (le pain) / données (la journée, six horaires) / mur (entremets) / média plein cadre + énoncé (salle) / statement (142 lignes) / pied final (18 h). Carte : sommaire en index d'heures puis chapitres, chaque chapitre = colonne d'heures collante + listes à filets. Mobile 390 : heures au-dessus du contenu, 4 colonnes, mur à 2 colonnes, photos pleine largeur.
 - **Test de généricité** : un modèle atterrirait sur « hero centré + trois cartes » ou « crème + serif + terracotta » : écarté (affiche asymétrique, tranches de fond, colonne d'heures). Changé : le hero n'est pas une photo plein cadre sombre (comme le site actuel), la carte n'est pas un pavage.
 
+## Mouvement (phase 2, réalisé)
+- **Pilote** `src/motion/journee.ts` : une variable, l'heure (8 h à 18 h), lue sur le défilement entre les repères `data-heure` (tranches de l'accueil, chapitres chiffrés de la carte, en-têtes de la carte et de la réservation, pied à 18 h). Elle pilote : l'aiguille et l'heure du **cadran** fixe (règle 8 à 18 en bas à gauche, couleurs de la tranche qu'il survole, masqué dans le hero et le pied, absent si moins de deux repères : histoire, 404) ; la **lumière du jour** sur la façade du hero (un rai net qui avance avec l'heure) ; le **fond des tranches**, qui glisse de la couleur de la tranche précédente vers la sienne (ScrollTrigger scrub de `top bottom` à `top 35%`, variables écrites sur la seule tranche porteuse, encre choisie par calcul de contraste WCAG à chaque instant).
+- **Repos** : `src/motion/idle.ts` (recette motion.md) ; dans le hero, l'heure dérive en aller-retour à vitesse constante (`wrapYoyo`, 0 à 45 min) et le pointeur la pousse de plus ou moins un quart d'heure : le rai de lumière avance sur la façade. Ticker actif seulement quand le hero est à l'écran, nul en mouvement réduit. Mesure : 1,5 s de repos à 1440 change l'image (test maison, octets PNG différents).
+- **Intro** : h1 et chapeau en `data-split="lines" data-intro`, méta du hero en `data-reveal="fade"` ; la photo du hero reste peinte (LCP).
+- **Rideau** : le gris rayé de la salle avance de gauche à droite (0,75 s puis 0,8 s, `expo.inOut`), l'aiguille dorée sur son bord avant.
+- **Hovers** (3 traitements, verbe « avancer ») : remplissage qui avance (CTA), filet qui avance (navigation, sommaire, liens utilitaires, téléphones `.souligne`), soulignement qui s'épaissit (liens texte soulignés au repos). Survol sous `(hover: hover)`, même état sur `:focus-visible`, `:active` partout. Pas de suiveur de curseur.
+- **Compteur** : 142 lignes comptées de 0 au premier passage (chiffre vrai, copie `aria-hidden`, valeur en `sr-only`).
+- **Menu téléphone** : bouton « Menu » (`aria-expanded`, `aria-controls`), panneau plein écran cacao, lignes en masque, focus piégé, Échap, focus rendu, fermé au départ d'une navigation (`motion/menu.ts`, `setup.ts`). Sans JS, la navigation reste en ligne.
+- **Mouvement réduit** : ni Lenis, ni scrub, ni cadran, ni lumière ; les tranches gardent leurs fonds statiques (le repli dessiné de la phase 1).
+
 ## Sur-utilisation de la skill
 1. [x] Trois concepts, trois territoires, notés, ancre, test de l'échange : tableau ci-dessus.
 2. [x] Aucun exemple travaillé de concepts.md (ni braise, ni pavage, ni mise en place, ni cadre, ni solde, ni phrase unique).
@@ -43,7 +53,7 @@ Choix : **A**. Test de l'échange : « un cadran qui range la carte selon les ho
 6. [x] Palette 4 à 6 rôles, références réelles : `tokens.css`.
 7. [x] Aucun des 8 « defaults to avoid » : voir test de généricité (hero asymétrique, pas de dégradé, pas d'eyebrow systématique, 01/02/03 absents, curseur natif).
 8. [x] Test de généricité : ci-dessus.
-9. [ ] Détails 7 vers 8 : sélection (engine.css), focus dans l'accent (engine.css), favicon de l'identité (`public/favicon.svg`, cadran), OG composée (`public/og.png`, hero) faits ; pied en composition finale fait ; 404 dans le concept faite. Reste la validation en phase 3.
+9. [x] Détails 7 vers 8 (phase 2 : `::selection` dans l'accent, `favicon-32.png` et `apple-touch-icon.png` tirés de `favicon.svg`) : sélection (engine.css), focus dans l'accent (engine.css), favicon de l'identité (`public/favicon.svg`, cadran), OG composée (`public/og.png`, hero) faits ; pied en composition finale fait ; 404 dans le concept faite. Reste la validation en phase 3.
 10. [x] Polices : 2 fichiers, 2 préchargés (`Base.astro`).
 11. [x] Échelle fluide unique (`tokens.css`), mega à xl à l, grands sauts.
 12. [x] Display réglé (`.display` dans site.css).
@@ -53,3 +63,30 @@ Choix : **A**. Test de l'échange : « un cadran qui range la carte selon les ho
 16. [x] Familles de section au plus une fois par page (accueil : affiche, paire, données, mur, plein cadre, statement, pied).
 17. [x] Hero en 3 s : nom, nature, adresse, horaires, appel dans le premier écran (mesure 1440x900 : h1 bas 360, CTA bas 666).
 18. [x] Mobile 390 recomposé : type re-réglé (`@media max-width: 760px`), 4 colonnes, heures au-dessus, mur à 2 colonnes ; le défilement horizontal est sans objet en phase 1 (mesure : débordement 0 sur 5 pages x 4 largeurs).
+19. [x] Menu mobile accessible : `Header.astro` (bouton, `#menu hidden`), `motion/menu.ts` (focus piégé, Échap, retour du focus) ; test 390 : ouvert `aria-expanded=true`, focus « Fermer », 9 Tab restent dans le menu, Échap rend le focus à `.tete__menu`.
+20. [x] Engine verbatim (`src/engine/`), `astro.ts`, `transition:persist` sur `#curtain` (`Base.astro`), `transition:animate="none"` sur `<html>` ; ni `#gl` ni `#cursor` (sans objet).
+21. [x] Une horloge : grep `addEventListener('scroll'|requestAnimationFrame` dans `src/motion`, composants et pages = 0 ; tout par `onScroll`, ScrollTrigger et `gsap.ticker`.
+22. [x] Code de page dans `onPage()` avec nettoyage (`journee.ts`, `menu.ts`).
+23. [x] Aucune CSS `transform` sur un élément animé par GSAP (cadran, aiguille, lumière, lignes du menu, panneau du rideau) ; les `transform` CSS restent sur des `::before/::after` de survol.
+24. [x] Module pilote avec `startIdle` et pointeur : `motion/journee.ts`, `motion/idle.ts`, appelés une fois dans `setup.ts`.
+25. [x] Loader décidé : aucun (Concept Card), pas de composant ni de `role="status"`.
+26. [x] Transition du concept 0,75 s et 0,8 s (`setup.ts`), à mesurer `d-90..92` en phase 3.
+27. [x] Intro `data-intro` avec `data-split` sur chaque h1 ; capture `.shots/p2/a-hero.png`.
+28. [x] Épinglages : aucun pin ; heures en `position: sticky` (CSS), scrub des fonds sans pin.
+29. [x] Repli statique dessiné : `html:not(.motion) .cadran`, `.hero__lumiere` masqués, fonds statiques `[data-ton]` ; test réduit : 0 bloc caché, pas de classe `lenis`.
+30. [x] Copies décoratives `aria-hidden` (cadran, lumière, chiffre animé), aucun titre dupliqué.
+31. [x] Une famille d'easing (`ease.out/inOut/soft` de l'engine), durées du tableau Timing, stagger 60 à 80 ms.
+32. [x] Trois traitements dans le verbe (voir « Mouvement »).
+33. [x] Hover sous `(hover: hover)`, aussi sur `:focus-visible` (fin de `site.css`) ; à lire en phase 3 (`report.json`).
+34. [x] Liens texte soulignés au repos (`.lien`).
+35. [ ] `hover.noHoverChange` : phase 3.
+36. [x] Repos : rai de lumière du hero (mesuré, voir « Mouvement ») ; `idleMotion` à confirmer par `report.json` en phase 3.
+37. [x] Curseur natif visible, aucun suiveur, rien ne dépend du survol au toucher.
+38. [x] Pas de blur animé ni de `box-shadow` au scroll, pas de `will-change`.
+39. [x] Réduit : ni Lenis, ni scrub, ni loader (test maison) ; `reduced.*` à confirmer en phase 3.
+40. [x] GL sans objet (Concept Card), lignes `// GL` retirées de l'engine.
+41. [x] Sans objet (pas de GL).
+44. [ ] Skip link premier et focus visible : anneau 2 px accent (`site.css`), à prouver en phase 3.
+45. [ ] Contraste AA : encre recalculée pendant le glissement des fonds (`journee.ts`, `peindre`) ; à prouver en phase 3.
+46. [x] Texte réel partout, aucun canvas.
+47. [x] Cibles : CTA 49,6 px, « Menu » et « Fermer » 44 px, « Appeler » du menu 49,6 px ; à prouver en phase 3.

@@ -1,18 +1,23 @@
-# ETAT : maison-des-desserts, variante awwwards (construction-1 faite)
+# ETAT : maison-des-desserts, variante awwwards (construction-2 faite)
 
-## Fait
-- Brief, 3 concepts, Concept Card, système et checklist 1 à 18 dans DESIGN.md. Concept choisi : la journée de la maison (cadran 8 h à 18 h).
-- Scaffold Astro 5 + engine (copié de la base commune, sans GL), polices Hedvig Letters Serif et Schibsted Grotesk, tokens.css, site.css, favicon SVG, og.png (hero), pied KYW.
-- Données : `src/data/site.ts` (coordonnées, journée, histoire), `src/data/carte.ts` (142 lignes générées depuis donnees.json, 6 chapitres horaires), `src/lib/photos.ts` (14 photos du client).
-- Pages statiques complètes : accueil (7 tranches), carte, histoire, reservation, 404. `scripts/q.sh mdd-build pnpm build:site` passe (5 pages, dist/maison-des-desserts/awwwards/). Mesures hero à 1440, 1280, 1024, 390 : aucun débordement, `.display` à gauche >= gutter, 0 requête en échec.
+## Fait (phase 1)
+- Concept « la journée de la maison », système, pages statiques (accueil, carte, histoire, réservation, 404), données réelles, photos du client. Voir DESIGN.md.
 
-## Reste (phases 2 et 3)
-- Signature : aiguille de scroll 8 h à 18 h + fond interpolé par variable sur `<html>` (lire `data-heure` des tranches, `data-ton` donne les couleurs) ; l'en-tête doit suivre le fond (`data-sur`).
-- Reveals (`data-reveal`/`data-split` non posés), repos, hovers plats/images, sommaire de la carte collant, aperçu des plats.
-- Mur d'entremets : décalages à vérifier en navigateur (images lazy non vues en capture pleine page). Pas de QA navigateur ni axe ni LCP faits. `pnpm index`, `apple-touch-icon` et `favicon-32.png` non produits. RAPPORT.md à écrire en phase 3.
+## Fait (phase 2)
+- Pilote `src/motion/journee.ts` (heure 8 h à 18 h lue sur les repères `data-heure`) : cadran fixe (aiguille, heure, couleurs de la tranche survolée), fond des tranches qui glisse d'un ton à l'autre (encre au meilleur contraste), rai de lumière sur la façade du hero ; repos `src/motion/idle.ts` ; compteur 142.
+- Reveals déclaratifs (h1, chapeaux, titres h2, photos, lignes de la journée), rideau gris rayé qui avance de gauche à droite avec l'aiguille dorée.
+- Menu plein écran du téléphone (`Header.astro`, `motion/menu.ts`) ; hovers en 3 traitements sous `(hover: hover)` + `:focus-visible` + `:active` ; `::selection`, anneau de focus accent ; `favicon-32.png`, `apple-touch-icon.png`.
+- Pied du site passé de `<footer>` à `<section aria-label>` (un seul `<footer>`, celui du paquet KYW) ; prix de la carte autorisés à passer à la ligne au téléphone (débordement 362 px à 360 corrigé).
+- Build : `scripts/q.sh mdd-aw2-build pnpm build:site sites/maison-des-desserts-awwwards` passe (5 pages).
+- Tests maison (Playwright, serveur 4471) : 0 erreur console ni requête en échec (bureau, 390, 360, 320) ; aucun débordement à 390/360/320 sur 5 pages ; repos visible dans le hero ; menu : focus piégé, Échap, focus rendu, fermé à la navigation ; réduit : 0 bloc caché, pas de Lenis, cadran masqué. Captures ciblées : `.shots/p2/planche-*.png`.
+
+## Reste (phase 3)
+- Shoot complet (agent captures), lecture de `report.json` : `hover.noHoverChange`, `idleMotion`, `settledMs`, `reduced.*`, contraste (y compris pendant le glissement des fonds), cibles, skip link (faux négatif connu : « Aller au contenu »).
+- LCP et `loaderMs` (sans loader), mesure de la transition `d-90..92`.
+- RAPPORT.md (données douteuses listées ci-dessous), `pnpm index`, cases 35, 44, 45 de DESIGN.md.
 
 ## Décisions et pièges
-- Pas de loader ni de GL (voir Concept Card). Rideau de page : un seul panneau gris.
-- Pas de réservation de table : CTA appel, e-mail, boutique (`shop.lamaisondesdesserts.be`). Dates 1987 (bandeau) et 1974 (DH, à confirmer) non reprises ; 1946 et 1993 viennent de l'histoire du site.
-- À signaler en RAPPORT : prix « à confirmer » (chocolat chaud viennois sans prix affiché, mignardises 3,50 € à confirmer) ; carte PDF « 20/12 et 31/12 fermeture à 17 h » incohérente avec les jours ouverts, seul le 20/12 est repris ; libellés « Après-midi », « Toute la journée » = regroupement éditorial sans horaire source ; légendes de photos = champ `sujet`.
-- Le mot « baguette » du texte du pain s'appuie sur la photo 15 (mie de baguette) et non sur une ligne de carte.
+- Pas de loader ni de GL. Le rai de lumière est volontairement discret (soft-light) ; s'il ne suffit pas à `idleMotion`, augmenter l'opacité du dégradé (`.hero__lumiere`) avant la vitesse.
+- Le cadran est absent de l'histoire (repères en années) et de la 404 (un seul repère) : voulu.
+- Carte : les chapitres « Après-midi », « Toute la journée », « À commander » n'ont pas de repère ; l'aiguille interpole de 11 h 30 au pied (18 h). Heure décorative (`aria-hidden`).
+- À signaler en RAPPORT : prix « à confirmer » (chocolat chaud viennois, mignardises 3,50 €) ; « 20/12 et 31/12 fermeture à 17 h » incohérent, seul le 20/12 repris ; libellés « Après-midi », « Toute la journée » éditoriaux ; légendes = champ `sujet` ; « baguette » d'après la photo 15.

@@ -137,7 +137,7 @@ export function startJournee() {
     const aiguille = cadran?.querySelector<HTMLElement>('.cadran__aiguille');
     setAiguille = aiguille ? (gsap.quickSetter(aiguille, 'x', 'px') as (v: number) => void) : null;
     lumiere = document.querySelector<HTMLElement>('.hero__lumiere');
-    setLumiere = lumiere ? ((v: number) => gsap.set(lumiere, { xPercent: -60 + v * 120 })) : null;
+    setLumiere = lumiere ? ((v: number) => gsap.set(lumiere, { xPercent: -14 + v * 40 })) : null;
     visible = false; tonCadran = '';
     if (cadran) gsap.set(cadran, { autoAlpha: 0, y: 12 });
     const kills: (() => void)[] = [];
