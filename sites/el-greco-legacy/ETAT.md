@@ -1,4 +1,4 @@
-# ETAT · El Greco · variante legacy · fin de la phase 2 (construction-2)
+# ETAT · El Greco · variante legacy · fin de la phase 3 (QA)
 
 ## Fait (phase 1)
 - Audit, approche, deal/draw (Specimen, seed c9eb51), `comp.md`, `DESIGN.md`, contenu (`site.ts`, `carte.json`), 5 routes + 404, noindex, KywFooter, mention.
@@ -29,3 +29,7 @@
 - `base.css` masque toute enfant non image d'un `[data-slot]` : une légende doit être hors du slot.
 - Un `pattern` d'input est compilé en mode `v` : parenthèses à échapper dans une classe, sinon motif ignoré.
 - Les lignes bleues des repères paraissent grises sur la lecture réduite des captures ; pixels vérifiés identiques (153,175,219).
+
+## Phase 3 (QA)
+- Build final passe, `pnpm index` fait. Aucune casse trouvée ; violation axe 404 = 404 générique du serveur de test, pas le site. RAPPORT.md écrit.
+- Non fait : sweep sloplint, gates jugées, finish review, log theme.mjs.
