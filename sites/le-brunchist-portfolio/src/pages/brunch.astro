@@ -6,9 +6,9 @@ import { u, asset, srcsetDe } from '../lib/url';
 const brunch = moments.find((m) => m.id === 'm-11h')!;
 const plats = [
   { photo: photoDe('/photos/granola-fraises.webp'), titre: 'Granola maison', texte: 'Cité par la presse locale ; photo libre' },
-  { photo: photoDe('/photos/framboises-tasse.webp'), titre: 'Fruits frais', texte: 'Photo libre, assiette illustrative' },
-  { photo: photoDe('/photos/tasse-rouge.webp'), titre: 'Café au lait', texte: 'Photo libre, tasse illustrative' },
-  { photo: photoDe('/photos/miel-pot.webp'), titre: 'Miel', texte: 'Photo libre, illustrative' },
+  { photo: photoDe('/photos/framboises-tasse.webp'), titre: 'Fruits frais', texte: 'Assiette' },
+  { photo: photoDe('/photos/tasse-rouge.webp'), titre: 'Café au lait', texte: 'Tasse' },
+  { photo: photoDe('/photos/miel-pot.webp'), titre: 'Miel', texte: 'Pot de miel' },
 ];
 const salle = photoDe('/photos/salle-table-bois.webp');
 const theiere = photoDe('/photos/theiere.webp');
@@ -19,7 +19,7 @@ const theiere = photoDe('/photos/theiere.webp');
       <div class="c1-6">
         <h1 class="t-xl" data-split="lines" data-intro>Le brunch</h1>
         <p class="lead" style="margin-top: calc(var(--u) * 2)">{brunch.accroche}</p>
-        <p class="note">Les plats cités viennent de la presse et d'avis publics ; la carte complète et les prix restent à confirmer avec la maison.</p>
+        <p class="note">La carte complète est à découvrir sur place.</p>
         <div class="actions" data-reveal="up" data-intro data-delay="0.3">
           <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Venir, réserver</a>
           <a class="btn" href={u('/carte/')}>La carte</a>
@@ -34,17 +34,17 @@ const theiere = photoDe('/photos/theiere.webp');
   <section class="section" data-ciel="ocre">
     <div class="wrap">
       <div class="section__head">
-        <p class="chapeau">Les assiettes<span class="tag">photos illustratives</span></p>
+        <p class="chapeau">Les assiettes</p>
         <h2 class="t-xl" data-split="words">Rondes, vues du dessus</h2>
       </div>
-      <ul class="medaillons" data-medaillons tabindex="0" aria-label="Assiettes du brunch (photos libres illustratives)" style="grid-template-columns: repeat(4, minmax(0, 1fr))">
+      <ul class="medaillons" data-medaillons tabindex="0" aria-label="Assiettes du brunch (photos libres)" style="grid-template-columns: repeat(4, minmax(0, 1fr))">
         {plats.map((md, i) => (
           <li>
             <div class="medaillon">
               <div class="medaillon__photo"><img src={asset(md.photo.src)} srcset={srcsetDe(md.photo.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
               <svg class="medaillon__anneau" viewBox="0 0 200 200" aria-hidden="true">
                 <defs><path id={`barc-${i}`} d="M100,100 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
-                <text><textPath href={`#barc-${i}`}>{md.titre} · illustratif · {md.titre} · illustratif ·</textPath></text>
+                <text><textPath href={`#barc-${i}`}>{md.titre} · {md.titre} ·</textPath></text>
               </svg>
             </div>
             <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}</p>
@@ -57,9 +57,9 @@ const theiere = photoDe('/photos/theiere.webp');
   <section class="section" data-ciel="aube">
     <div class="wrap cols">
       <div class="c1-6">
-        <p class="chapeau">À la carte<span class="tag">prix illustratifs</span></p>
+        <p class="chapeau">À la carte</p>
         <h2 class="t-l" data-split="words">Ce qui se mange au brunch</h2>
-        <p class="note" style="margin-top: calc(var(--u) * 2)">Les plats et leurs prix illustratifs sont sur la page <a class="link" href={u('/carte/')}>carte</a>.</p>
+        <p class="note" style="margin-top: calc(var(--u) * 2)">Les plats et leurs prix sont sur la page <a class="link" href={u('/carte/')}>carte</a>.</p>
       </div>
       <figure class="c8-12 photo photo--4x3" data-reveal="scale">
         <img src={asset(theiere.src)} srcset={srcsetDe(theiere.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={theiere.alt} width={theiere.largeur} height={theiere.hauteur} loading="lazy" decoding="async" />

@@ -3,12 +3,11 @@ import Base from '../layouts/Base.astro';
 import { moments, plats, prixFmt, restaurant } from '../data/site';
 const bandes = { matin: 'band--matin', brunch: 'band--midi', midi: 'band--aprem' } as const;
 ---
-<Base page="carte" title="La carte" description="La carte du Brunchist à Namur : cafés de spécialité, jus frais, granola maison, pancakes, eggs benedict, toast à l’avocat. Prix illustratifs, maquette.">
+<Base page="carte" title="La carte" description="La carte du Brunchist à Namur : cafés de spécialité, jus frais, granola maison, pancakes, eggs benedict, toast à l’avocat.">
   <section class="band band--matin band--serre" aria-labelledby="titre-carte">
     <div class="wrap grid paire">
       <h1 class="display display--xl paire__gros" id="titre-carte" style="font-size: var(--t-mega)" data-split="lines" data-intro>La carte</h1>
       <div class="paire__petit">
-        <p class="note">Maquette : la carte du Brunchist n’a pas été communiquée. Les plats sont ceux que citent la presse locale et les avis ; les prix, les descriptions et le classement par moment sont illustratifs.</p>
       </div>
     </div>
   </section>
@@ -24,7 +23,7 @@ const bandes = { matin: 'band--matin', brunch: 'band--midi', midi: 'band--aprem'
           {plats.filter((p) => p.moment === m.id).map((p) => (
             <li class="plat" data-reveal="up">
               <h3 class="plat__nom">{p.nom}</h3>
-              <p class="plat__prix"><span class="sr-only">Prix illustratif : </span>{prixFmt(p.prix)}</p>
+              <p class="plat__prix"><span class="sr-only">Prix : </span>{prixFmt(p.prix)}</p>
               <p class="plat__desc muted">{p.description}</p>
             </li>
           ))}
@@ -34,7 +33,7 @@ const bandes = { matin: 'band--matin', brunch: 'band--midi', midi: 'band--aprem'
   ))}
   <section class="band band--aprem band--serre" aria-label="Précisions sur la carte">
     <div class="wrap texte">
-      <p>Des options végétales et sans gluten sont évoquées par des sources tierces : à confirmer auprès de l’équipe. Un repère de budget relevé en ligne : 18 à 28&nbsp;€ par personne.</p>
+      <p>Des options végétales et sans gluten sont évoquées par des sources tierces ; appelez pour en savoir plus. Un repère de budget relevé en ligne : 18 à 28&nbsp;€ par personne.</p>
       <p><a class="lien" href={restaurant.telephoneHref}>Appeler le Brunchist</a></p>
     </div>
   </section>

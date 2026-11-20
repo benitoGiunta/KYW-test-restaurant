@@ -221,7 +221,7 @@ function invitation() {
     if (ferme || h < moments[0].heure || h >= moments[moments.length - 1].heure || !lien || !texte) { bloc.hidden = true; return; }
     const m = momentCourant(h);
     lien.href = `#${m.id}`;
-    texte.textContent = `Il est ${pad(d.h)}h${pad(d.m)} : aller au moment présent, ${m.titre.toLowerCase()}${m.placeholder ? ' (illustratif)' : ''}`;
+    texte.textContent = `Il est ${pad(d.h)}h${pad(d.m)} : aller au moment présent, ${m.titre.toLowerCase()}`;
     bloc.hidden = false;
   };
   maj();

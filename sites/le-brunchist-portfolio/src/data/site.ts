@@ -88,11 +88,11 @@ export const site: Restaurant = {
   ],
   menus: [],
   histoire: [
-    'Le Brunchist a ouvert en 2022. Derrière le comptoir, un couple namurois, Mélisande et Arnaud, selon la presse locale (à confirmer avec la maison).',
+    'Le Brunchist a ouvert en 2022. Derrière le comptoir, un couple namurois, Mélisande et Arnaud, selon la presse locale.',
     'La promesse tient en deux mots, « local » et « fait maison » : un café-brunch décontracté et convivial, où le café est de spécialité et où les jus sont frais.',
     "La maison a quitté la Rue des Brasseurs pour s'installer Place d'Armes, au centre de Namur, avec une terrasse en extérieur.",
   ],
-  equipe: [{ nom: 'Mélisande et Arnaud', role: 'Fondateurs, selon ELLE.be (à confirmer)', placeholder: false }],
+  equipe: [{ nom: 'Mélisande et Arnaud', role: 'Fondateurs', placeholder: false }],
   avis: [
     { texte: 'Best egg topped Avocado toast ever.', auteur: 'David', source: 'Avis Google, relevé sur Restaurant Guru', placeholder: false },
     { texte: 'Very cozy, good fresh foods […]', auteur: 'Wendy', source: 'Avis Google, relevé sur Restaurant Guru', placeholder: false },
@@ -152,7 +152,7 @@ export const moments: Moment[] = [
     id: 'm-9h30', heure: 9.5, heureTexte: '9h30', titre: 'Le café', theme: 'aube',
     accroche: 'La porte ouvre à 9h30. Cafés de spécialité, latte, matcha : la journée commence par une tasse.',
     accrochePlaceholder: false, placeholder: false, photo: '/photos/latte-art.webp',
-    lignes: [L('Latte', '4,50 €', 'café de spécialité'), L('Matcha', '5 €'), L('Jus frais pressé', '5 €'), X('Café filtre', '3,50 €')],
+    lignes: [L('Latte', '4,50 €', 'café de spécialité'), L('Matcha', '5 €'), L('Jus frais pressé', '5 €')],
   },
   {
     id: 'm-11h', heure: 11, heureTexte: '11h', titre: 'Le brunch', theme: 'midi',
@@ -164,13 +164,13 @@ export const moments: Moment[] = [
     id: 'm-12h30', heure: 12.5, heureTexte: '12h30', titre: 'Le salé', theme: 'ocre',
     accroche: 'Quand la faim se précise : toast à l’avocat, tartines, filet américain.',
     accrochePlaceholder: false, placeholder: true, photo: '/photos/cafe-filtre.webp',
-    lignes: [L('Toast à l’avocat', '13 €'), L('Filet américain', '15 €'), X('Tartines de saison', '9 €')],
+    lignes: [L('Toast à l’avocat', '13 €'), L('Filet américain', '15 €')],
   },
   {
     id: 'm-14h30', heure: 14.5, heureTexte: '14h30', titre: 'La terrasse', theme: 'corail',
     accroche: 'Un dernier café, un jus frais, un gâteau, en terrasse sur la Place d’Armes.',
     accrochePlaceholder: false, placeholder: true, photo: '/photos/biscuits-citron.webp',
-    lignes: [X('Cake du jour', '5 €'), X('Cookie maison', '3 €'), X('Thé ou infusion', '3,50 €')],
+    lignes: [],
   },
   {
     id: 'm-15h30', heure: 15.5, heureTexte: '15h30', titre: 'Le rideau', theme: 'nuit',

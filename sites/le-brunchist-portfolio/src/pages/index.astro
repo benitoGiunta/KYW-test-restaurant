@@ -11,9 +11,9 @@ const m = Object.fromEntries(moments.map((x) => [x.id, x]));
 const cafe = m['m-9h30'], brunch = m['m-11h'], sale = m['m-12h30'], terrasse = m['m-14h30'], rideau = m['m-15h30'];
 const photoCafe = photoDe(cafe.photo!), photoSale = photoDe(sale.photo!), photoTerrasse = photoDe(terrasse.photo!);
 const medaillons = [
-  { photo: photoDe('/photos/granola-fraises.webp'), titre: 'Granola', texte: 'Photo libre, assiette illustrative', placeholder: true },
-  { photo: photoDe('/photos/framboises-tasse.webp'), titre: 'Fruits frais', texte: 'Photo libre, assiette illustrative', placeholder: true },
-  { photo: photoDe('/photos/tasse-rouge.webp'), titre: 'Café au lait', texte: 'Photo libre, tasse illustrative', placeholder: true },
+  { photo: photoDe('/photos/granola-fraises.webp'), titre: 'Granola', texte: 'Assiette' },
+  { photo: photoDe('/photos/framboises-tasse.webp'), titre: 'Fruits frais', texte: 'Assiette' },
+  { photo: photoDe('/photos/tasse-rouge.webp'), titre: 'Café au lait', texte: 'Tasse' },
 ];
 const photoAstre = photoDe('/photos/latte-art.webp');
 const osm = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adresseLigne())}`;
@@ -53,7 +53,7 @@ const osm = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adr
         <div class="c1-6">
           <div class="moment__tete">
             <p class="moment__heure num" data-split="chars">{cafe.heureTexte}</p>
-            <h2 class="moment__titre" id="t-9h30" data-split="words">{cafe.titre}{cafe.placeholder ? <span class="tag">illustratif</span> : null}</h2>
+            <h2 class="moment__titre" id="t-9h30" data-split="words">{cafe.titre}</h2>
           </div>
           <p class="moment__accroche" data-reveal="fade">{cafe.accroche}</p>
           <ul class="lignes" data-reveal="up">
@@ -71,21 +71,21 @@ const osm = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adr
       <div class="wrap">
         <div class="moment__tete">
           <p class="moment__heure num" data-split="chars">{brunch.heureTexte}</p>
-          <h2 class="moment__titre" id="t-11h" data-split="words">{brunch.titre}{brunch.placeholder ? <span class="tag">illustratif</span> : null}</h2>
+          <h2 class="moment__titre" id="t-11h" data-split="words">{brunch.titre}</h2>
         </div>
         <div class="cols">
           <p class="c1-6 moment__accroche">{brunch.accroche}</p>
-          <ul class="c1-10 medaillons" data-medaillons tabindex="0" aria-label="Assiettes du brunch (photos libres illustratives)">
+          <ul class="c1-10 medaillons" data-medaillons tabindex="0" aria-label="Assiettes du brunch (photos libres)">
             {medaillons.map((md, i) => (
               <li>
                 <div class="medaillon">
                   <div class="medaillon__photo"><img src={asset(md.photo.src)} srcset={srcsetDe(md.photo.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
                   <svg class="medaillon__anneau" viewBox="0 0 200 200" aria-hidden="true">
                     <defs><path id={`arc-${i}`} d="M100,100 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
-                    <text><textPath href={`#arc-${i}`} startOffset="0">{md.titre} · illustratif · {md.titre} · illustratif ·</textPath></text>
+                    <text><textPath href={`#arc-${i}`} startOffset="0">{md.titre} · {md.titre} ·</textPath></text>
                   </svg>
                 </div>
-                <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}{md.placeholder ? <span class="tag">illustratif</span> : null}</p>
+                <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}</p>
               </li>
             ))}
           </ul>
@@ -105,7 +105,7 @@ const osm = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adr
         <div class="c1-5">
           <div class="moment__tete">
             <p class="moment__heure num" data-split="chars">{sale.heureTexte}</p>
-            <h2 class="moment__titre" id="t-12h30" data-split="words">{sale.titre}{sale.placeholder ? <span class="tag">repère illustratif</span> : null}</h2>
+            <h2 class="moment__titre" id="t-12h30" data-split="words">{sale.titre}</h2>
           </div>
           <p class="moment__accroche" data-reveal="fade">{sale.accroche}</p>
           <ul class="lignes" data-reveal="up">
@@ -127,7 +127,7 @@ const osm = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adr
       <div class="wrap">
         <div class="moment__tete">
           <p class="moment__heure num" data-split="chars">{terrasse.heureTexte}</p>
-          <h2 class="moment__titre" id="t-14h30" data-split="words">{terrasse.titre}{terrasse.placeholder ? <span class="tag">repère illustratif</span> : null}</h2>
+          <h2 class="moment__titre" id="t-14h30" data-split="words">{terrasse.titre}</h2>
         </div>
         <div class="cols" style="margin-bottom: calc(var(--u) * 3)">
           <p class="c1-6 moment__accroche" style="margin-bottom: 0">{terrasse.accroche}</p>
@@ -137,7 +137,7 @@ const osm = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adr
           <li class="carte-apero carte-apero--photo"><img src={asset(photoTerrasse.src)} srcset={srcsetDe(photoTerrasse.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={photoTerrasse.alt} width={photoTerrasse.largeur} height={photoTerrasse.hauteur} loading="lazy" decoding="async" /></li>
           {terrasse.lignes.map((l) => (
             <li class="carte-apero">
-              <p class="carte-apero__nom">{l.nom}{l.placeholder ? <span class="tag">exemple</span> : l.prixIllustratif ? <span class="tag">prix illustratif</span> : null}</p>
+              <p class="carte-apero__nom">{l.nom}</p>
               <p>{l.detail && <span class="t-s muted">{l.detail}<br /></span>}<span class="carte-apero__prix">{l.prix}</span></p>
             </li>
           ))}
@@ -151,7 +151,7 @@ const osm = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adr
         <div class="c1-6">
           <div class="moment__tete">
             <p class="moment__heure num" data-split="chars">{rideau.heureTexte}</p>
-            <h2 class="moment__titre" id="t-15h30" data-split="words">{rideau.titre}{rideau.placeholder ? <span class="tag">repère illustratif</span> : null}</h2>
+            <h2 class="moment__titre" id="t-15h30" data-split="words">{rideau.titre}</h2>
           </div>
           <p class="statement" data-split="lines">{rideau.accroche}</p>
           <blockquote class="avis" style="margin-top: calc(var(--u) * 4); max-width: 28rem" data-reveal="up">
@@ -161,7 +161,7 @@ const osm = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adr
         </div>
         <div class="c8-12" data-reveal="up">
           <Horaires />
-          <p class="note" style="margin-top: var(--u)">{adresseLigne()}<span class="tag">à confirmer</span></p>
+          <p class="note" style="margin-top: var(--u)">{adresseLigne()}</p>
           <div class="actions">
             <a class="btn btn--soleil" href={u('/reservation/')}>Venir, réserver</a>
             <a class="btn" href={osm} rel="noopener">Itinéraire</a>

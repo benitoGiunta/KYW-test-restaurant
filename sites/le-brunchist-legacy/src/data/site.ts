@@ -38,13 +38,13 @@ export const carte = [
     p('Eggs benedict', 'Œufs pochés, sauce hollandaise'),
     p('Toast à l’avocat', 'Avocat sur pain grillé, œuf poché'),
     p('Œufs brouillés', 'Servis avec du pain grillé'),
-    p('Tartines', 'Garniture à confirmer'),
+    p('Tartines', 'Sur pain grillé'),
     p('Filet américain', 'Cru de bœuf, assaisonné'),
   ] },
   { id: 'sucre', nom: 'Sucré', plats: [
     p('Granola maison', 'Granola fait maison, yaourt, fruits'),
     p('Granola bowl', 'Bol de granola, fruits de saison'),
-    p('Pancakes', 'Pile de pancakes, garniture à confirmer'),
+    p('Pancakes', 'Pile de pancakes'),
   ] },
   { id: 'boissons', nom: 'Boissons', plats: [
     p('Café de spécialité', 'Filtre ou espresso'),

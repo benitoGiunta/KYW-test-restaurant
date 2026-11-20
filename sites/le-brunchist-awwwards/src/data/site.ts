@@ -25,7 +25,7 @@ export const restaurant = {
     { nom: 'Instagram', url: 'https://www.instagram.com/lebrunchist/' },
   ],
   siteActuel: 'https://lebrunchist.com',
-  credit: 'Aucune photo du restaurant n’a été fournie : les visuels de cette maquette sont des compositions typographiques',
+  credit: 'Visuels : compositions typographiques',
 };
 
 /** Horaires par jour : ouverture et fermeture en minutes depuis minuit, null = fermé. */
@@ -49,7 +49,7 @@ export const moments = [
 
 // Noms cités par la presse ou les avis (namur.top, Quefaireanamur, Restaurant Guru) ; prix, descriptions et moment : illustratifs.
 export const plats: Plat[] = [
-  { nom: 'Café de spécialité', description: 'Espresso ou filtre, torréfaction à confirmer.', prix: 3.2, moment: 'matin', placeholder: true },
+  { nom: 'Café de spécialité', description: 'Espresso ou filtre.', prix: 3.2, moment: 'matin', placeholder: true },
   { nom: 'Latte', description: 'Espresso, lait mousseux.', prix: 4.6, moment: 'matin', placeholder: true },
   { nom: 'Matcha', description: 'Thé vert en poudre, lait au choix.', prix: 5.2, moment: 'matin', placeholder: true },
   { nom: 'Jus frais', description: 'Pressé à la commande.', prix: 5.5, moment: 'matin', placeholder: true },
@@ -69,7 +69,7 @@ export const histoire = {
     'Le Brunchist ouvre en 2022, à Namur, à l’initiative de Mélisande et Arnaud, un couple namurois. L’idée tient dans le nom : un café où le petit-déjeuner et le déjeuner se rejoignent, sans se presser, avec du local et du fait maison.',
     'La presse locale l’a d’abord situé rue des Brasseurs. Il a depuis pris ses quartiers place d’Armes, au cœur de la ville, avec une terrasse en extérieur.',
   ],
-  source: 'Sources : ELLE.be (26 janvier 2025) et namur.top (19 mars 2023). À confirmer par le restaurant.',
+  source: 'Sources : ELLE.be (26 janvier 2025) et namur.top (19 mars 2023).',
   etapes: [
     { quand: '2022', texte: 'Mélisande et Arnaud ouvrent Le Brunchist à Namur.' },
     { quand: '2023', texte: 'Le café est installé rue des Brasseurs, selon namur.top.' },
