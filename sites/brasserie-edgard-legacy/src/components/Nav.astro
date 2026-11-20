@@ -8,13 +8,14 @@ const { current = '' } = Astro.props;
     <a class="nav__brand" href={u()} aria-label="Mr Edgard, accueil">
       <img src={u('photos/00-logo.svg')} width="186" height="81" alt="Mr Edgard" />
     </a>
-    <nav class="nav__links" aria-label="Navigation principale">
+    <button class="nav__toggle" type="button" popovertarget="menu" aria-controls="menu" aria-label="Ouvrir le menu"><span class="nav__toggle-label">Menu</span><span class="nav__toggle-bars" aria-hidden="true"></span></button>
+    <nav class="nav__links" id="menu" popover aria-label="Navigation principale">
       <ul>
         {nav.map((n) => (
           <li><a href={u(n.href)} aria-current={current === n.href ? 'page' : undefined}>{n.label}</a></li>
         ))}
       </ul>
     </nav>
-    <a class="btn nav__book" href={site.reservation} rel="noopener">Réserver une table</a>
+    <a class="btn nav__book" href={site.reservation} rel="noopener">Réserver<span class="nav__long">&nbsp;une table</span></a>
   </div>
 </header>

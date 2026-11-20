@@ -1,11 +1,11 @@
 ---
 import { photos } from '../data/site';
 import { u } from '../lib/url';
-interface Props { name: string; sizes?: string; eager?: boolean; pos?: string; caption?: string; ratio?: string; class?: string }
-const { name, sizes = '(min-width: 60rem) 50vw, 100vw', eager = false, pos = '50% 50%', caption, ratio, class: cls = '' } = Astro.props;
+interface Props { name: string; sizes?: string; eager?: boolean; pos?: string; caption?: string; ratio?: string; class?: string; reveal?: boolean }
+const { name, sizes = '(min-width: 60rem) 50vw, 100vw', eager = false, pos = '50% 50%', caption, ratio, class: cls = '', reveal = false } = Astro.props;
 const p = photos[name];
 ---
-<figure class:list={['photo', cls]}>
+<figure class:list={['photo', cls]} data-reveal={reveal ? '' : undefined}>
   <div class="photo__frame" data-slot={name} data-alt={p.alt} style={`aspect-ratio:${ratio ?? `${p.w} / ${p.h}`};--pos:${pos}`}>
     <img
       src={u(`photos/${name}.webp`)}

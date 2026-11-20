@@ -1,22 +1,25 @@
-# ETAT · Brasserie Edgard · variante legacy · construction-1 (2026-11-20)
+# ETAT · Brasserie Edgard · variante legacy · construction-2 (2026-11-20)
 
-## Fait
-- Audit `sloplint --before` sur les 6 pages d'origine : `AUDIT.md`, `.hallmark/before.txt`.
-- Approche conservée, deal (Atelier 2/3), draw 3e29b6, scaffold, stamp dans `src/styles/page.css`, `DESIGN.md` (Picks, thème, composants, checklist), `comp.md` (c1 et c2 construites, c1 choisie), entrée de `.hallmark/log.json` (racine du dépôt).
-- 7 pages statiques : `/`, `/la-carte/`, `/lunch-et-suggestions/`, `/menu-groupe/`, `/galerie/`, `/contact/`, `404`. Données dans `src/data/site.ts` et `carte.json` (71 plats, copie de `donnees.json`). 29 photos du client en WebP et le logo SVG dans `public/photos/`.
-- Build passe (`scripts/q.sh build pnpm build:site sites/brasserie-edgard-legacy` → `dist/brasserie-edgard/legacy/`). Noindex, mention KYW et `KywFooter` vérifiés par grep sur les 7 pages.
-- `sloplint src` sans rendu : 0 FAIL réel (le FAIL 34 de `Base.astro` est le faux positif connu, la règle est dans `base.css`).
+## Fait (phase 1, voir DESIGN.md) 
+Audit, deal/draw, tokens, 7 pages, données réelles, 29 photos du client, build.
 
-## Reste
-- Phase 2 : nav sous 60 rem (popover), un reveal, jour courant du Schedule (`data-day`), états des boutons et du formulaire (erreur, succès simulé, focus), reprise de la plaque du hero qui touche le bord du bâtiment (comp.md), fond « air » facultatif, réponses aux trois questions de reproduction du comp.
-- Phase 3 : `sloplint --render`, QA 375 et 1440, contrastes, `scrollWidth` (preuve du 34), gates jugées, revue de fin, RAPPORT.md, `.hallmark/` committé en force si nécessaire.
-- `pnpm index` non lancé (dist/index.html partagé avec les autres sessions) : à faire en fin de phase 3.
+## Fait en phase 2
+- Hero : plaque en bande basse sur la chaussée (la façade et l'enseigne ne sont plus couvertes) ; sous 60 rem, photo puis plaque qui la chevauche de 64 px. `sloplint --render --stage hero` : plus de FAIL 48 ni WARN F24 (scrim en token `--color-scrim`, popover sans bordure en plus de l'ombre). Hero review en auto-notation `self` (pas d'outil Agent) : 3 findings (plaque contre l'enseigne, barre de nav mobile sur 2 lignes, façade cachée sous la plaque à 375), 3 résolus.
+- Comp : trois questions de reproduction et plus grand écart écrits dans `comp.md` ; capture 1280x800 côte à côte lue.
+- Nav : une ligne à 375 (grid-row 1), `aria-expanded` et libellé Ouvrir/Fermer suivis par script, Échap ferme (mesuré).
+- Horaires : « aujourd'hui » passé sous le jour (il chevauchait les heures à 375).
+- Formulaires : `min` de la date = jour de Bruxelles ; soumission vide mesurée (7 erreurs, focus sur le 1er champ, aucun faux envoi).
+- Finitions : gaps de colonnes unifiés sur `--gap-columns` (F15), safe-area dans `.container`, `viewport-fit=cover`.
+- Mesures Playwright (375 et 1440, 6 pages) : `scrollWidth` = `clientWidth` (preuve du 34), aucun contrôle sous 40 px hors « Réalisé par » (24 px, paquet footer), reveal visible en reduced motion et sans JS.
+- Build passe ; noindex, mention KYW et `kyw-signature` vérifiés sur `/`, `/contact/`, `/menu-groupe/`. DESIGN.md : points 2, 6, 7, 17, 19 à 24, 29, 30, 48, 49, 56, 58, 63, 72 cochés avec preuves.
 
-## Décisions et hypothèses
-- Shape Photographic gardée (l'original s'ouvrait sur la façade) au lieu du tirage Letter ; nav edge-aligned au lieu de « search-led bar » ; hero Poster au lieu de Stage.
-- Aucune donnée inventée : pas d'avis (le 4,3 sur 461 de TripAligner n'est pas repris), pas d'histoire, pas d'équipe. « chef Titi » apparaît seulement dans l'intitulé du cassolet, repris du site d'origine. Aucun `data-placeholder` ni slot `.fill` nécessaire.
-- « Carte réduite pour les groupes » (liste de plats du site d'origine, page menu groupe) : non reprise, renvoyée à la carte ; menu groupe et formulaire (11 champs, mêmes `name`) conservés. À signaler au réviseur (ligne `dropped` à ajouter au stamp si confirmée).
-- Newsletter gardée en petit formulaire sur Contact (`data-endpoint=""`), plus de fermeture sur un champ e-mail (85). Les deux formulaires n'envoient rien (gate 70), mention « Maquette » sous chacun.
-- Texte de l'adresse « Chaussée de Waterloo 473, 5002 Saint-Servais (Namur) » : le site d'origine écrit « 473 Ch. de Waterloo 5002 Namur » ; version complète de `donnees.json`.
-- Photos : la façade `01-facade.jpg` (nuit grise) diffère de celle du slider d'origine (ciel bleu) ; seul fichier disponible dans `photos/`.
-- Pièges : `hallmarkSlots` est défini dans `Footer.astro` avant `KywFooter` ; les `figcaption` sont hors de `[data-slot]` car `base.css` masque les enfants non image d'un slot.
+## Reste (phase 3 et captures)
+- `sloplint --render` en `--stage page`, contrastes mesurés (point 9), gates jugées, revue de fin, RAPPORT.md, `.hallmark/` committé en force si besoin.
+- `pnpm index` non lancé (dist/index.html partagé) : à faire en fin de phase 3.
+- Ligne `dropped` pour la « Carte réduite pour les groupes » à confirmer (voir phase 1).
+- Agent « captures » : shoot complet à faire ; les captures `.hallmark/shots/p2-*` sont des essais de phase 1, à ignorer.
+
+## Pièges
+- `sloplint src` garde FAIL 34 sur `Base.astro` : faux positif, la règle est dans `base.css:2` (prouvé par `scrollWidth`).
+- La barre sombre en bas des captures dev est la toolbar Astro, pas le site.
+- Les dist/ des autres variantes sont modifiés dans l'arbre par d'autres sessions : ne committer que `sites/brasserie-edgard-legacy/` et `dist/brasserie-edgard/legacy/`.

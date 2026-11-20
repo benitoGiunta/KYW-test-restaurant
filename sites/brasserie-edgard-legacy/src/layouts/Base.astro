@@ -7,7 +7,7 @@ const { title, description } = Astro.props;
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex" />
@@ -22,5 +22,56 @@ const { title, description } = Astro.props;
   <body>
     <a class="skip" href="#contenu">Aller au contenu</a>
     <slot />
+    <script>
+      // Reveal : un seul, visible sans script (.js posé dans le head), une fois, sous reduced motion déjà à l'état final.
+      const items = document.querySelectorAll('[data-reveal]');
+      if ('IntersectionObserver' in window && items.length) {
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px' });
+        items.forEach((el) => io.observe(el));
+      } else items.forEach((el) => el.classList.add('is-in'));
+
+      // Jour courant des horaires, heure de Bruxelles.
+      const today = new Intl.DateTimeFormat('fr-BE', { weekday: 'long', timeZone: 'Europe/Brussels' }).format(new Date()).toLowerCase();
+      document.querySelectorAll('.schedule__row').forEach((r) => { if (r instanceof HTMLElement && r.dataset.day === today) r.setAttribute('aria-current', 'date'); });
+
+      // Formulaires sans envoi : validation au blur puis à l'input, aucun faux « Envoyé ».
+      const NOT_SENT = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié.';
+      const msg = (el: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
+        const v = el.validity;
+        if (v.valueMissing) return el instanceof HTMLInputElement && el.type === 'checkbox' ? 'Cochez cette case pour continuer.' : 'Ce champ est obligatoire.';
+        if (v.typeMismatch) return 'Écrivez l’adresse sous la forme nom@exemple.be.';
+        return 'Ce champ n’est pas valide.';
+      };
+      const check = (el: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
+        const help = document.getElementById(el.id + '-help') ?? document.getElementById('chk-' + el.id + '-help');
+        const ok = el.checkValidity();
+        if (ok) el.removeAttribute('aria-invalid'); else el.setAttribute('aria-invalid', 'true');
+        if (help) help.textContent = ok ? '' : msg(el);
+        return ok;
+      };
+      // Menu mobile : état exposé sur le bouton (le popover gère focus, Échap et clic extérieur).
+      const menu = document.getElementById('menu'); const toggle = document.querySelector('.nav__toggle');
+      if (menu && toggle) { toggle.setAttribute('aria-expanded', 'false'); menu.addEventListener('toggle', (e) => { const open = (e as ToggleEvent).newState === 'open'; toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu'); }); }
+
+      // Date de venue : pas de date passée (jour de Bruxelles).
+      const iso = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Brussels' }).format(new Date());
+      document.querySelectorAll<HTMLInputElement>('input[type="date"]').forEach((d) => { d.min = iso; });
+
+      document.querySelectorAll<HTMLFormElement>('form[data-endpoint]').forEach((form) => {
+        const fields = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')];
+        const status = form.querySelector<HTMLElement>('.form__note');
+        const seen = new WeakSet<Element>();
+        form.addEventListener('focusout', (e) => { const t = e.target as HTMLInputElement; if (fields.includes(t)) { seen.add(t); check(t); } });
+        form.addEventListener('input', (e) => { const t = e.target as HTMLInputElement; if (fields.includes(t) && (seen.has(t) || t.hasAttribute('aria-invalid'))) check(t); });
+        form.addEventListener('change', (e) => { const t = e.target as HTMLInputElement; if (fields.includes(t) && t.type === 'checkbox' && seen.has(t)) check(t); });
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const bad = fields.filter((f) => !check(f));
+          if (status) { status.dataset.state = bad.length ? 'error' : 'info'; status.textContent = bad.length ? (bad.length === 1 ? 'Un champ est à corriger.' : bad.length + ' champs sont à corriger.') : NOT_SENT; }
+          if (bad.length) { bad[0].focus(); return; }
+          if (form.dataset.endpoint) fetch(form.dataset.endpoint, { method: 'POST', body: new FormData(form) }).catch(() => { if (status) status.textContent = 'L’envoi n’a pas abouti. Réessayez dans une minute.'; });
+        });
+      });
+    </script>
   </body>
 </html>
