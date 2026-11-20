@@ -26,3 +26,9 @@
 ## Phase 3 (20/11/2026)
 - QA terminée : LCP mobile 1032 ms, cibles 44 px, hover marque, reduced hiddenText, meta description, og.png recomposé. Audit 0 FAIL, 4 WARN justifiés. Build final OK. Détails dans RAPPORT.md.
 - Reste : score jury indépendant (non fait), `pnpm index` + commit `[publier]` en fin de restaurant.
+
+## Révision 1
+F1-1 et F2-1 à F2-8 corrigés, vérifiés (voir REVISION-1.md). Site publiable.
+
+## Revue 2 (20/11/2026, relecteur-site)
+REVUE-2.md écrit : A_CORRIGER, 0 F0, 0 F1, 2 F2 (LCP image hero ~2,9 s par intermittence ; CTA collé au titre « Réservez votre balade » à 390 px), 6 F3 inchangés. Les 9 corrections de REVISION-1 vérifiées (8 confirmées, F2-1 partielle). Serveur tué. Leçon proposée dans data/usage/test-1/lecons-proposees/le-d-arville.md.
