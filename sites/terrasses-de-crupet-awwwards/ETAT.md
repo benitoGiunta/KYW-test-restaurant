@@ -1,3 +1,6 @@
+# ETAT : Les Terrasses de Crupet, awwwards, fin de la phase 3 (QA)
+Phase 3 faite : corrections axe, cibles, descriptions, répétition, OG ; build OK, audit 0 FAIL / 1 WARN justifié. RAPPORT.md écrit. Reste : jury indépendant (/jury), validation client des hypothèses.
+
 # ETAT : Les Terrasses de Crupet, awwwards, fin de la phase 2 (construction-2)
 
 ## Fait
