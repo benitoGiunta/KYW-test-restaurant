@@ -1,4 +1,5 @@
 ---
+const prixSouple = (t: string) => t.split(' / ').map((s) => s.replace(/ /g, '\u00a0')).join(' / ');
 import Base from '../layouts/Base.astro';
 import Objet from '../components/Objet.astro';
 import { site, guinguette, photoDe } from '../data/site';
@@ -6,6 +7,7 @@ import { u, asset } from '../lib/url';
 const g = guinguette;
 const picto = (cat: string) => g.pictos.find((p) => cat.startsWith(p.categorie))?.picto ?? 'fourchette';
 const photos = ['/photos/plat-tartare.webp', '/photos/plat-burger.webp', '/photos/plat-volaille-pates.webp', '/photos/dessert-coupe-glacee.webp'].map(photoDe);
+const slug = (t: string) => 'cat-' + t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '');
 const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
 ---
 <Base title="La carte" description={`La carte et les formules de ${site.nom} à ${site.adresse.commune} : entrées, viandes, poissons, pâtes fraîches, salades, desserts et menu enfants.`}>
@@ -23,16 +25,19 @@ const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
     <div class="wrap">
       <div class="carte">
         <h2 class="sr-only">Le menu</h2>
+        <nav class="carte__index" data-carte-index aria-label="Catégories de la carte">
+          {site.carte.map((c) => <a href={`#${slug(c.categorie)}`}>{c.categorie}</a>)}
+        </nav>
         <div class="carte__grille">
           {site.carte.map((c) => (
-            <div>
+            <div id={slug(c.categorie)} data-cat>
               <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie}</h3>
               <ul role="list">
                 {c.plats.map((p) => (
                   <li class="plat">
                     <span class="plat__nom">{p.nom}{p.description && <span class="plat__desc">{p.description}</span>}</span>
                     <span class="plat__points" aria-hidden="true"></span>
-                    {p.prix && <span class="plat__prix">{p.prix}</span>}
+                    {p.prix && <span class:list={['plat__prix', { 'plat__prix--long': p.prix.length > 11 }]}>{prixSouple(p.prix)}</span>}
                   </li>
                 ))}
               </ul>

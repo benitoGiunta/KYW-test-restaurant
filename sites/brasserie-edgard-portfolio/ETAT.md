@@ -1,21 +1,19 @@
-# ETAT — brasserie-edgard-portfolio (phase 1 sur 3, construction-1)
+# ETAT — brasserie-edgard-portfolio (phase 2 sur 3, construction-2)
 
-## Fait
-- Gabarit Guinguette choisi (matrice dans DESIGN.md), copié, renommé, `pnpm install` ok.
-- Contenu réel : `src/data/site.ts`, `carte.json` (71 plats), `suggestions.json`.
-- Photos WebP (public/photos et photos/s carrés), logos SVG copiés, favicon, OG.
-- 7 pages : accueil, carte, lunch, groupes, salle, reservation, 404 ; en-tête à 6 liens.
-- Build ok : `dist/brasserie-edgard/portfolio/`. `gabarits/UTILISATION.md` mis à jour.
+## Fait (phases 1 et 2)
+- Phase 1 : gabarit Guinguette, contenu réel, 7 pages, photos, build (voir DESIGN.md).
+- Phase 2 : logo « Mr Edgard » intégré à l'en-tête (survol, focus) ; `heroTexte()` (titre qui se pose, slogan/adresse/boutons en cascade, filet à 5 s) ; `carteIndex()` (index sticky des catégories, aria-current, pastille centrée) ; section avis retirée sans effet résiduel (`avis()` supprimée) ; survol des plats (prix corail) ; nav mobile resserrée (Accueil masqué sous 400 px, le logo ramène à l'accueil) ; prix longs coupés aux « / » et en petit ; objet du manifeste recentré au-dessus du titre en mobile (il recouvrait le « P ») ; flèches clavier des objets : un seul axe par tween + `overwrite: 'auto'` (flèches rapprochées ne s'écrasent plus) ; `.footer, .kyw-footer` en relative / z-index content.
+- Mesures (scratchpad, Playwright, 1440 / 1024 / 768 / 390 / 360 / 320) : aucun scrollWidth > largeur, aucune erreur console sur 6 pages, clics réels sur les 6 liens de l'en-tête OK (elementFromPoint = `<a>`), bas de page 1440 et 390 : bande KYW, mention « Maquette KYW, certaines données sont illustratives » et logo visibles sur les 6 pages. Marquee ouvert/fermé testé par `page.clock` (mer 9 h fermé, 12 h ouvert, 23 h « prochain service jeudi »). Drag souris des tirages OK (borné à la scène), drag des objets du hero OK (retour au point de départ s'ils sont lâchés sur le texte : voulu). Reduced motion : 0 animation en cours, loader masqué, objets posés visibles.
+- Build ok (`scripts/q.sh edgard-p2-build pnpm build:site sites/brasserie-edgard-portfolio`).
 
-## Reste (phases 2 et 3)
-- Motion et QA navigateur non faits (hero, table, marquee hérités, non testés).
-- Section `[data-avis]` retirée : vérifier que `avis()` de motion/setup.ts reste sans effet.
-- Mobile : débordements, 71 plats sur /carte/, extrait 4 colonnes de l'accueil.
-- Logo Edgard (public/photos/logo.svg, logo-blanc.svg) non intégré à l'en-tête.
-- Contrôles du prompt : clics réels sur l'en-tête, capture du bas de page, `.footer` en relative.
-- sloplint, audit, `pnpm index`, commit, push non faits (commit refusé par le classifieur de permissions).
+## Reste (phase 3, après l'agent captures)
+- Lire `QA-<étape>.md` de l'agent captures et corriger les écarts ; shoot et audit complets non faits ici.
+- Vérifier visuellement : prix longs de /carte/ en mobile (pastille sur 2 lignes), objet du manifeste, état hover des tirages de /salle/.
+- Objets SVG du manifeste/table à 768 px dépassent légèrement à droite (coupés par overflow, pas de scroll horizontal) : à regarder.
+- CSS mort `.avis__*`, `.carte-avis*` dans base.css (avis retirés) : à nettoyer.
+- sloplint, audit, `pnpm index`, commit, push : `pnpm index` à faire avec le commit final.
 
-## Décisions / hypothèses
-- Horaires 10 h à 22 h 30 tous les jours ; « cuisine fermée de 15 h à 18 h » en semaine, « cuisine continue » le week-end (lecture du dossier).
-- Aucun avis, histoire ni équipe : rien d'inventé ; note TripAligner non reprise (source non vérifiée).
-- Canard recoloré en bleu nuit ; corail inchangé (contraste du gabarit préservé).
+## Pièges
+- Test de drag : lâcher l'objet hors de la zone du texte du hero, sinon il rebondit à sa place.
+- Hero : `is-loaded` précède la fin de la chute des objets d'environ 2 s (Draggable créé à la fin) : attendre avant de tester.
+- Aucun commit des `dist/` d'autres restaurants ; `git add` par chemins seulement.

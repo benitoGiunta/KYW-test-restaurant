@@ -1,5 +1,5 @@
 // Motion « Guinguette » : loader nappe, rideau corail depuis le bas, objets qui tombent et rebondissent puis se saisissent
-// (Draggable + inertie maison par quickTo), table de tirages draggables, « Avis » qui sort du flou, marquee d'état.
+// (Draggable + inertie maison par quickTo), table de tirages draggables, texte du hero qui se pose, index de la carte, marquee d'état.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Draggable } from 'gsap/Draggable';
@@ -24,7 +24,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [marquee(), heroObjets(intro), table(), avis()];
+    const cleanups = [marquee(), heroObjets(intro), heroTexte(intro), table(), carteIndex()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -91,7 +91,8 @@ function saisissable(el: HTMLElement, bounds: HTMLElement, opts: { exclure?: HTM
     if (!dx && !dy) return;
     e.preventDefault();
     el.style.zIndex = String(++z + 20);
-    gsap.to(el, { x: `+=${dx}`, y: `+=${dy}`, duration: 0.25, ease: 'power2.out', onComplete: () => drag.applyBounds(bounds) });
+    // x et y séparés : un tween sans l'un des axes ne doit pas écraser le tween en cours de l'autre (flèches répétées)
+    gsap.to(el, { ...(dx ? { x: `+=${dx}` } : {}), ...(dy ? { y: `+=${dy}` } : {}), duration: 0.25, ease: 'power2.out', overwrite: 'auto', onComplete: () => drag.applyBounds(bounds) });
   };
   el.addEventListener('keydown', clavier);
   return () => { el.removeEventListener('keydown', clavier); drag.kill(); };
@@ -140,14 +141,38 @@ function table() {
   return () => cleanups.forEach((c) => c());
 }
 
-/** Avis : le mot géant sort du flou au scrub ; les cartes glissent par-dessus en tournant. */
-function avis() {
-  const root = document.querySelector<HTMLElement>('[data-avis]');
-  if (!root || prefersReducedMotion()) return () => {};
-  const mot = root.querySelector<HTMLElement>('[data-avis-mot]');
-  const cartes = root.querySelectorAll<HTMLElement>('[data-carte-avis]');
-  const vars = { flou: 14 };
-  const st = gsap.to(vars, { flou: 0, ease: 'none', onUpdate: () => mot?.style.setProperty('--flou', `${vars.flou.toFixed(1)}px`), scrollTrigger: { trigger: root, start: 'top 85%', end: 'center center', scrub: 0.6 } });
-  const tw = gsap.from(cartes, { y: 120, rotation: (i) => (i % 2 ? 10 : -10), autoAlpha: 0, duration: 1, ease: ease.out, stagger: 0.1, scrollTrigger: { trigger: root, start: 'top 70%', once: true } });
-  return () => { st.kill(); tw.kill(); };
+/** Hero : le texte se pose après les objets (transform et opacité seulement, le h1 reste peint pour le LCP). */
+function heroTexte(intro: gsap.core.Timeline) {
+  if (prefersReducedMotion()) return () => {};
+  const root = document.querySelector<HTMLElement>('[data-hero] .hero__inner');
+  if (!root) return () => {};
+  const l2 = root.querySelector<HTMLElement>('.l2');
+  const cibles = [...root.querySelectorAll<HTMLElement>('.hero__slogan, .hero__adresse, .lead, .actions .btn')];
+  if (!l2 && !cibles.length) return () => {};
+  const tl = gsap.timeline({ paused: true });
+  if (l2) tl.from(l2, { yPercent: 40, rotation: -3, transformOrigin: '0% 100%', duration: 0.9, ease: 'back.out(1.5)', clearProps: 'transform' }, 0);
+  if (cibles.length) tl.from(cibles, { y: 24, autoAlpha: 0, duration: 0.7, ease: ease.soft, stagger: 0.09, clearProps: 'transform,opacity' }, 0.2);
+  intro.add(() => tl.play(), 0.2);
+  const filet = gsap.delayedCall(5, () => { if (tl.progress() === 0) tl.progress(1); });
+  return () => { tl.kill(); filet.kill(); };
+}
+
+/** Carte : l'index sticky suit la catégorie lue (aria-current), et fait défiler la pastille active dans la barre. */
+function carteIndex() {
+  const nav = document.querySelector<HTMLElement>('[data-carte-index]');
+  const cats = [...document.querySelectorAll<HTMLElement>('[data-cat]')];
+  if (!nav || !cats.length) return () => {};
+  const liens = new Map(cats.map((c) => [c.id, nav.querySelector<HTMLAnchorElement>(`a[href="#${c.id}"]`)]));
+  const io = new IntersectionObserver((entrees) => {
+    entrees.filter((e) => e.isIntersecting).forEach((e) => {
+      liens.forEach((a) => a?.removeAttribute('aria-current'));
+      const a = liens.get(e.target.id);
+      if (!a) return;
+      a.setAttribute('aria-current', 'true');
+      const cible = a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2;
+      nav.scrollTo({ left: cible, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  cats.forEach((c) => io.observe(c));
+  return () => io.disconnect();
 }
