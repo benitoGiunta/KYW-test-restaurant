@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, guinguette, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const picto = (cat: string) => g.pictos.find((p) => cat.startsWith(p.categorie))?.picto ?? 'fourchette';
+const photos = [['/photos/plat-tartare.webp', 'Le tartare'], ['/photos/burger.webp', 'Le burger'], ['/photos/plateau-fondue.webp', 'La fondue'], ['/photos/cocktail-orange.webp', 'Un cocktail']].map(([src, legende]) => ({ ...photoDe(src), legende }));
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+---
+<Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : à partager, entrées, plats, enfants, desserts, cocktails, bières, vins et cafés.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>La carte</h1>
+      <p class="lead">Des plats à partager, la carbonnade à la bière, le vol-au-vent de Mamy, une carte pour les enfants, des cocktails et une carte des vins étoffée. Carte du 15 octobre : prix susceptibles d'avoir changé.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:84%;--y:4%;--r:14deg;--taille:110px" aria-hidden="true"><Objet id="fourchette" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="carte">
+        <h2 class="sr-only">Le menu</h2>
+        <div class="carte__grille">
+          {site.carte.map((c) => (
+            <div>
+              <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie}</h3>
+              <ul role="list">
+                {c.plats.map((p) => (
+                  <li class="plat">
+                    <span class="plat__nom">{p.nom}{p.placeholder && <span class="illu">exemple</span>}{p.description && <span class="plat__desc">{p.description}</span>}</span>
+                    <span class="plat__points" aria-hidden="true"></span>
+                    {p.prix && <span class="plat__prix">{p.prix}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">Dans <em>l'assiette</em></h2>
+      <div class="grille-photos">
+        {photos.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-4, 3, -2, 5][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.legende}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>

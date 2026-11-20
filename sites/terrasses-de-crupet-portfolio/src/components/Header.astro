@@ -1,0 +1,25 @@
+---
+// En-tête : marque à gauche, nav en pilule ovale au centre, bouton ovale « Réserver » à droite.
+// En mobile, la pilule passe en barre fixe en bas (référence Sunbeam), la marque et le bouton restent en haut.
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const liens = [
+  { href: u('/'), label: 'Accueil' },
+  { href: u('/carte/'), label: 'Carte' },
+  { href: u('/histoire/'), label: 'La maison' },
+  { href: u('/terrasse/'), label: 'Terrasse' },
+  { href: u('/emporter/'), label: 'À emporter' },
+  { href: u('/reservation/'), label: 'Contact' },
+];
+const ici = Astro.url.pathname.replace(/\/+$/, '');
+const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
+---
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="header__brand" href={u('/')}>{site.nom}</a>
+    <nav class="nav" aria-label="Navigation principale">
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+    </nav>
+    <a class="btn btn--plein header__cta" href={u('/reservation/')}>Réserver</a>
+  </div>
+</header>

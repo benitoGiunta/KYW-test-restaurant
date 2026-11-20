@@ -1,0 +1,30 @@
+---
+// Pied de page finale : mot géant coupé par le bas, trois colonnes, puis le pied de page KYW (unique mention « Maquette »).
+import KywFooter from '@kyw/footer';
+import { site, guinguette, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { u } from '../lib/url';
+---
+<footer class="footer">
+  <div class="wrap footer__cols">
+    <div class="stack">
+      <p class="footer__nom">{site.nom}</p>
+      <address>{adresseLigne()}</address>
+      <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+      <p class="muted">Réservation en ligne via {site.reservation.outil}</p>
+    </div>
+    <div>
+      <p class="footer__titre">Horaires</p>
+      <dl class="horaires horaires--petit">
+        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd class:list={{ ferme: !h.creneaux.length }}>{h.creneaux.length ? horaireTexte(h) : 'fermé'}</dd></>)}
+      </dl>
+    </div>
+    <div class="stack">
+      <p class="footer__titre">Suivre</p>
+      {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
+      <p><a class="link" href={u('/reservation/')}>Réserver une table</a></p>
+      <p><a class="link" href={u('/carte/')}>La carte</a></p>
+    </div>
+  </div>
+  <p class="footer__finale" aria-hidden="true"><span>{guinguette.finale}</span></p>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />
