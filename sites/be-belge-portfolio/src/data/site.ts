@@ -49,7 +49,7 @@ export const site: Restaurant = {
   nom: "Be Belge… et d'ailleurs",
   baseline: "Cuisine belge et de saison, avec un peu d'ailleurs, avenue de Marlagne à Wépion.", // baseline rédigée d'après le nom et la description des listings (à confirmer)
   description:
-    "Be Belge… et d'ailleurs, restaurant à Wépion (Namur) : Menu du Chef dès 57 €, jardin, terrasse, salle de pierre. Ouvert du mercredi au dimanche.",
+    "Be Belge… et d'ailleurs, restaurant à Wépion (Namur) : carte de l’été 2026 dès 57 €, jardin, terrasse, salle de pierre. Ouvert du mercredi au dimanche.",
   url: 'https://bebelgeetdailleurs.be',
   typeCuisine: 'Cuisine belge et de saison',
   adresse: { rue: 'Avenue de Marlagne', numero: '203', cp: '5000', commune: 'Namur (Wépion)', pays: 'BE' },
@@ -99,8 +99,8 @@ export const site: Restaurant = {
     {
       categorie: 'Suppléments',
       plats: [
-        { nom: 'Assortiment de fromages affinés par la Petite Ferme', description: 'en supplément', prix: '+7 €', placeholder: false },
-        { nom: 'Irish Coffee', description: 'en supplément', prix: '+4 €', placeholder: false },
+        { nom: 'Assortiment de fromages affinés par la Petite Ferme', description: 'en supplément', prix: '+7 €', placeholder: false },
+        { nom: 'Irish Coffee', description: 'en supplément', prix: '+4 €', placeholder: false },
       ],
     },
   ],
@@ -132,7 +132,7 @@ export const site: Restaurant = {
   ],
   valeurs: ['Cuisine belge', 'Produits de saison', 'Un peu d\u2019ailleurs'],
   chiffres: {
-    services: { valeur: 3, libelle: 'services', sousLibelle: 'Ou quatre : le Menu du Chef, entrée, plat et dessert', preuve: 'dossier.md, carte du site client (/carte/)', placeholder: false },
+    services: { valeur: 3, libelle: 'services', sousLibelle: 'Ou quatre, avec le Menu du Chef', preuve: 'dossier.md, carte du site client (/carte/)', placeholder: false },
     prix: { valeur: 57, libelle: 'euros', sousLibelle: 'Le Menu du Chef en trois services ; 72 € en quatre', preuve: 'dossier.md, carte du site client (/carte/)', placeholder: false },
     convives: { valeur: 34, libelle: 'convives', sousLibelle: 'Jusqu\u2019à 34 personnes assises, 40 en walking dinner', preuve: 'dossier.md, site client /banquets-et-receptions/', placeholder: false },
     jours: { valeur: 5, libelle: 'jours', sousLibelle: 'Ouvert du mercredi au dimanche, fermé le lundi et le mardi', preuve: 'dossier.md, horaires du site client', placeholder: false },
@@ -166,8 +166,10 @@ export function photoDe(src: string): Photo {
 export const adresseLigne = (r: Restaurant = site) => `${r.adresse.rue} ${r.adresse.numero}, ${r.adresse.cp} ${r.adresse.commune}`;
 
 /** Horaires lisibles : '12:00 à 14:00, 19:00 à 21:00' ou la note. */
+/** « 12:00 » devient « 12 h », « 13:30 » devient « 13 h 30 ». */
+const hf = (t: string) => { const [h, m] = t.split(':'); return `${Number(h)} h${m === '00' ? '' : '\u00a0' + m}`; };
 export const horaireTexte = (h: Horaire) =>
-  h.creneaux.length ? h.creneaux.map((c) => `${c.ouverture} à ${c.fermeture}`).join(', ') : h.note || 'fermé';
+  h.creneaux.length ? h.creneaux.map((c) => `${hf(c.ouverture)} à ${hf(c.fermeture)}`).join(', ') : h.note || 'fermé';
 
 /** Lignes d'horaires de la carte de clôture : midi, soir, fermeture (calculées depuis `horaires`, jamais écrites en dur). */
 export function horairesResume(r: Restaurant = site): { libelle: string; valeur: string }[] {
@@ -177,8 +179,8 @@ export function horairesResume(r: Restaurant = site): { libelle: string; valeur:
   const m = r.horaires.flatMap((h) => h.creneaux).find((c) => c.ouverture < '15:00')!;
   const s = r.horaires.flatMap((h) => h.creneaux).find((c) => c.ouverture >= '17:00')!;
   return [
-    { libelle: 'Le midi', valeur: `${liste(parCreneau(m))}, ${m.ouverture} à ${m.fermeture}` },
-    { libelle: 'Le soir', valeur: `${liste(parCreneau(s))}, ${s.ouverture} à ${s.fermeture}` },
+    { libelle: 'Le midi', valeur: `${liste(parCreneau(m))}, ${hf(m.ouverture)} à ${hf(m.fermeture)}` },
+    { libelle: 'Le soir', valeur: `${liste(parCreneau(s))}, ${hf(s.ouverture)} à ${hf(s.fermeture)}` },
     { libelle: liste(ferme), valeur: 'fermé' },
   ];
 }

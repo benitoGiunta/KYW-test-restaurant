@@ -4,6 +4,8 @@
 import KywFooter from '@kyw/footer';
 import { site, adresseLigne, horairesResume, telHref } from '../data/site';
 import { u, asset } from '../lib/url';
+// Sur l'accueil, le bloc de clôture donne déjà les horaires : le pied de page y renvoie seulement.
+const accueil = Astro.url.pathname.replace(/\/$/, '') === import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <footer class="footer">
   <div class="wrap footer__cols">
@@ -16,15 +18,15 @@ import { u, asset } from '../lib/url';
       {site.email.valeur && !site.email.placeholder && <p><a class="lien" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>}
     </div>
     <div class="footer__col">
-      <p class="petite-cap">Services</p>
-      <dl class="horaires">
-        {horairesResume().map((r) => <><dt>{r.libelle}</dt><dd>{r.valeur}</dd></>)}
-      </dl>
+      <p class="petite-cap">{accueil ? 'Horaires' : 'Services'}</p>
+      {accueil
+        ? <p><a class="lien" href={u('/reservation/')}>Horaires et réservation</a></p>
+        : <dl class="horaires">{horairesResume().map((r) => <><dt>{r.libelle}</dt><dd>{r.valeur}</dd></>)}</dl>}
     </div>
     <div class="footer__col">
       <p class="petite-cap">Pages</p>
-      <p><a class="lien" href={u('/menu/')}>Le menu</a></p>
-      <p><a class="lien" href={u('/carte/')}>Formules</a></p>
+      <p><a class="lien" href={u('/menu/')}>La carte</a></p>
+      <p><a class="lien" href={u('/carte/')}>Les menus</a></p>
       <p><a class="lien" href={u('/maison/')}>La maison</a></p>
       <p><a class="lien" href={u('/privatisation/')}>Privatiser</a></p>
       <p><a class="lien" href={u('/reservation/')}>Réserver</a></p>
