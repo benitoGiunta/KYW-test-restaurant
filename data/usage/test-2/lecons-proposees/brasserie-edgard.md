@@ -1,0 +1,1 @@
+- 2026-11-20 : le hook garde-lecture refuse toute commande contenant « curl -sS -m » hors q.sh, même dans un heredoc : écrire le script avec l'outil Write puis `scripts/q.sh <id> bash <script>` ; capture-site.mjs peut échouer au 1er essai (ERR_CONNECTION_RESET), relancer.
