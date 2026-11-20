@@ -1,0 +1,20 @@
+---
+import { restaurant as r } from '../data/site';
+import { u } from '../lib/url';
+interface Props { page?: string }
+const { page = 'accueil' } = Astro.props;
+const nav = [
+  { id: 'carte', label: 'La carte', href: u('/carte/') },
+  { id: 'histoire', label: 'La maison', href: u('/histoire/') },
+  { id: 'reservation', label: 'Réserver', href: u('/reservation/') },
+];
+---
+<header class="head">
+  <div class="wrap head__in">
+    <a class="head__logo" href={u('/')} aria-label="Champs Élysées, accueil">Champs Élysées</a>
+    <nav class="head__nav" aria-label="Navigation principale">
+      {nav.map((n) => <a class="nl" href={n.href} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a>)}
+    </nav>
+    <a class="btn btn--plein" href={`tel:${r.telephone}`}>Appeler le {r.telephoneAffiche}</a>
+  </div>
+</header>

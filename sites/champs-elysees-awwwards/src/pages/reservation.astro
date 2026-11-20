@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { restaurant as r, horaires, heure, pratique, fetes } from '../data/site';
+---
+<Base title="Réservation" page="reservation" pied={false} description="Réserver une table aux Champs Élysées, avenue Albert Ier à Jambes : réservation en ligne, téléphone 081 23 14 26, e-mail, horaires, plan et conseils pour les groupes.">
+  <section class="sec ground-midi" data-hour="11">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>Réserver</span></div>
+      <div class="sec__body">
+        <h1 class="display" style="font-size:var(--t-mega);max-width:8ch">À table</h1>
+        <p class="lead" style="margin-top:1.5rem">En ligne, par téléphone ou par e-mail : choisissez, la maison fait le reste.</p>
+        <div class="res" style="margin-top:3rem">
+          <a class="cta-big" href={r.reservationUrl} rel="noopener"><span class="ui">Réservation en ligne</span><b>Réserver</b><span class="ui">Ouvre le module de la maison (Zenchef)</span></a>
+          <a class="cta-big" href={`tel:${r.telephone}`}><span class="ui">Téléphone</span><b class="num">{r.telephoneAffiche}</b><span class="ui">Pour plus de dix personnes, appelez</span></a>
+        </div>
+        <p style="margin-top:1.5rem" class="ui">Ou écrivez à <a class="tlink" href={`mailto:${r.email}?subject=Réservation`}>{r.email}</a> (ouvre votre messagerie).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ground-apres" data-hour="15" aria-labelledby="h-infos">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>Venir</span></div>
+      <div class="sec__body">
+        <h2 id="h-infos" class="display display--xl" style="max-width:12ch">Avenue Albert Ier, numéro 149.</h2>
+        <div class="infos" style="margin-top:3rem">
+          <dl style="display:contents">
+            <div>
+              <dt>Adresse</dt>
+              <dd><address style="font-style:normal">{r.nomLong}<br />{r.adresse.rue} {r.adresse.numero}<br />{r.adresse.cp} {r.adresse.commune}</address>
+                <p style="margin-top:0.75rem"><a class="tlink" href={r.planUrl} rel="noopener">Ouvrir le plan dans un nouvel onglet</a></p></dd>
+            </div>
+            <div>
+              <dt>Heures d’ouverture</dt>
+              <dd>
+                <ul class="hlist num">
+                  {horaires.map((h) => <li><span>{h.jour}</span><span>{heure(h.ouvre)} à {heure(h.ferme)}</span></li>)}
+                </ul>
+              </dd>
+            </div>
+            {pratique.slice(1).map((p) => <div><dt>{p.t}</dt><dd>{p.d}</dd></div>)}
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ground-soir" data-hour="19" aria-labelledby="h-fete">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>Novembre</span></div>
+      <div class="sec__body">
+        <div class="pair">
+          <div class="pair__t" style="grid-column:1 / 7;margin-top:0">
+            <h2 id="h-fete" class="display display--l">Fêtes patronales : un menu en trois services.</h2>
+            <p class="prose" style="margin-top:1rem">{fetes.service}. <span class="num">{fetes.prixSans}&nbsp;€</span> par personne sans boissons, <span class="num">{fetes.prixAvec}&nbsp;€</span> avec : {fetes.avecDetail}. Détail du menu sur la <a class="tlink" href="../carte/#fetes">page de la carte</a>.</p>
+          </div>
+          <figure class="pair__b" style="grid-column:8 / -1;margin-top:0">
+            <div class="frame"><Photo cle="spritz" sizes="(max-width: 760px) 100vw, 36vw" /></div>
+            <figcaption class="cap">La terrasse. {r.credit}</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

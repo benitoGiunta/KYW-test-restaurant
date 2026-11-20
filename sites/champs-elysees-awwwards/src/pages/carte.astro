@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { carte } from '../data/carte';
+import { fetes, restaurant as r } from '../data/site';
+import { u } from '../lib/url';
+const eur = (n: number) => `${n.toFixed(2).replace('.', ',')} €`;
+const manger = carte.filter((c) => c.groupe === 'manger');
+const boire = carte.filter((c) => c.groupe === 'boire');
+// Une photo glissée après certaines rubriques (clé de rubrique → photo).
+const apres: Record<string, 'frites' | 'casserole' | 'biere' | 'lecture'> = { entrees: 'casserole', 'plats-brasserie': 'frites', 'bieres-pression': 'biere' };
+---
+<Base title="La carte" page="carte" description="La carte de la brasserie Champs Élysées à Jambes : croquettes, boulettes, vol-au-vent, viandes, poissons, bières pression et trappistes, prix en euros.">
+  <section class="sec ground-midi" data-hour="19" style="padding-bottom:2rem">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>La carte</span></div>
+      <div class="sec__body">
+        <h1 class="display" style="font-size:var(--t-mega)">La carte</h1>
+        <p class="lead" style="margin-top:1.5rem">Quatre-vingt-quatorze lignes, des croquettes aux trappistes. Carte relevée sur le PDF de la maison : les prix sont à confirmer sur place.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec--tight ground-midi" data-hour="19" style="padding-bottom:6rem">
+    <div class="wrap carte">
+      <nav class="carte__rail" aria-label="Rubriques de la carte">
+        <h2>À manger</h2>
+        {manger.map((c) => <a href={`#${c.id}`}>{c.nom}</a>)}
+        <h2>À boire</h2>
+        {boire.map((c) => <a href={`#${c.id}`}>{c.nom}</a>)}
+        <h2>Événement</h2>
+        <a href="#fetes">Fêtes patronales</a>
+      </nav>
+      <div class="carte__main">
+        {carte.map((c) => (
+          <>
+            <section class="cat" id={c.id} aria-labelledby={`t-${c.id}`}>
+              <div class="cat__h">
+                <h3 id={`t-${c.id}`}>{c.nom}</h3>
+                {c.note && <span class="ui muted">{c.note}</span>}
+              </div>
+              <ul style="padding:0">
+                {c.plats.map((p) => (
+                  <li class="plat" style="list-style:none">
+                    <span class="plat__n">{p.nom}</span>
+                    {p.description && <span class="plat__d">{p.description}</span>}
+                    <span class="plat__p num">
+                      {p.prix !== undefined && eur(p.prix)}
+                      {p.prixTexte && <span>{p.prixTexte}</span>}
+                      {p.variantes && p.variantes.map((v) => <span class="plat__v">{v.l} <b>{eur(v.p)}</b></span>)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+            {apres[c.id] && (
+              <figure class="carte__photo">
+                <div class="frame"><Photo cle={apres[c.id]} sizes="(max-width: 860px) 100vw, 70vw" /></div>
+                <figcaption class="cap">{r.credit}</figcaption>
+              </figure>
+            )}
+          </>
+        ))}
+
+        <section class="cat" id="fetes" aria-labelledby="t-fetes">
+          <div class="cat__h"><h3 id="t-fetes">Fêtes patronales</h3><span class="ui muted">Menu de novembre</span></div>
+          <div class="fete" style="margin-top:1.5rem">
+            <p class="fete__t">{fetes.service}. <b class="num">{fetes.prixSans}&nbsp;€</b> par personne sans boissons, <b class="num">{fetes.prixAvec}&nbsp;€</b> avec ({fetes.avecDetail}).</p>
+            <div><h4>Entrées</h4><ul>{fetes.entrees.map((x) => <li>{x}</li>)}</ul></div>
+            <div><h4>Plats</h4><ul>{fetes.plats.map((x) => <li>{x}</li>)}</ul></div>
+            <div><h4>Desserts</h4><ul>{fetes.desserts.map((x) => <li>{x}</li>)}</ul></div>
+          </div>
+        </section>
+        <p class="btns" style="margin-top:3rem"><a class="btn btn--plein" href={r.reservationUrl} rel="noopener">Réserver une table</a><a class="btn" href={u('/reservation/')}>Toutes les façons de réserver</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

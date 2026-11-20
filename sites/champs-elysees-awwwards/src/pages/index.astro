@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { restaurant as r, horaires, heure, signatures, histoire } from '../data/site';
+import { carte } from '../data/carte';
+import { u } from '../lib/url';
+const mangers = carte.filter((c) => c.groupe === 'manger');
+const prixMin = (c: (typeof carte)[number]) => Math.min(...c.plats.flatMap((p) => (p.prix ? [p.prix] : p.variantes ? p.variantes.map((v) => v.p) : [])));
+const eur = (n: number) => `${n.toFixed(2).replace('.', ',')} €`.replace(',00', '');
+const A = 8, Z = 24;
+const barre = (h: (typeof horaires)[number]) => ({ a: ((h.ouvre - A) / (Z - A)) * 100, w: ((h.ferme - h.ouvre) / (Z - A)) * 100 });
+const echelle = [8, 11, 14, 17, 20, 22];
+---
+<Base description="Brasserie de Jambes, ouverte depuis 1984 : croquettes artisanales, boulettes, vol-au-vent, bières de caractère. De 11 h à 22 h, sans fermer.">
+  <section class="hero ground-midi" data-hour="11">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>11 h, on ouvre</span></div>
+      <div class="hero__text">
+        <h1 class="display" data-intro><span class="l1">Champs</span><span class="l2">Élysées</span></h1>
+        <div class="hero__sub">
+          <p class="hero__status"><i aria-hidden="true"></i> Bistro convivial · Jambes, Namur</p>
+          <p class="lead">Une brasserie de quartier ouverte depuis 1984, avenue Albert Ier : la salle reste ouverte de 11 h à 22 h.</p>
+          <div class="btns">
+            <a class="btn btn--plein" href={r.reservationUrl} rel="noopener">Réserver une table</a>
+            <a class="btn" href={u('/carte/')}>Voir la carte</a>
+          </div>
+        </div>
+      </div>
+      <figure class="hero__media">
+        <div class="frame" style="aspect-ratio:2/3"><Photo cle="facade" sizes="(max-width: 760px) 100vw, 30vw" prioritaire /></div>
+        <figcaption class="cap">La façade, avenue Albert Ier. {r.credit}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec ground-apres" data-hour="15" aria-labelledby="h-heures">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>15 h, toujours ouvert</span></div>
+      <div class="sec__body">
+        <h2 id="h-heures" class="display display--xl" style="max-width:12ch">Pas de pause entre midi et soir.</h2>
+        <p class="prose" style="margin-block:1.5rem 3rem">La maison ouvre à 11 h et reste ouverte jusqu’à 22 h, du lundi au samedi. Le dimanche, elle ferme à 16 h.</p>
+        <div class="week" role="list" aria-label="Heures d’ouverture de la semaine">
+          {horaires.map((h) => {
+            const b = barre(h);
+            return (
+              <div class="week__row" role="listitem">
+                <span class="week__day">{h.jour}</span>
+                <span class="week__track" aria-hidden="true"><span class="week__bar" style={`--a:${b.a}%;--w:${b.w}%`}></span></span>
+                <span class="week__hours num">{heure(h.ouvre)} à {heure(h.ferme)}</span>
+              </div>
+            );
+          })}
+        </div>
+        <div class="week__scale" aria-hidden="true">
+          <span></span>
+          <div>{echelle.map((e) => <span style={`left:${((e - A) / (Z - A)) * 100}%`}>{e}</span>)}</div>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ground-apres" data-hour="18" aria-labelledby="h-salle" style="padding-top:0">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>18 h, la salle</span></div>
+      <div class="sec__body">
+        <div class="pair">
+          <figure class="pair__a"><div class="frame"><Photo cle="fenetre" sizes="(max-width: 760px) 100vw, 40vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
+          <figure class="pair__b"><div class="frame"><Photo cle="lampe" sizes="(max-width: 760px) 80vw, 40vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
+          <div class="pair__t">
+            <h2 id="h-salle" class="display display--l" style="max-width:18ch">Banquettes bleu-vert, lampes globes, briques sombres.</h2>
+            <p class="prose" style="margin-top:1rem">Environ cent vingt couverts, une grande baie sur l’avenue et une terrasse devant la façade.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ground-soir" data-hour="19" aria-labelledby="h-carte">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>19 h, la carte</span></div>
+      <div class="sec__body">
+        <h2 id="h-carte" class="display display--xl" style="max-width:13ch">Ce qui revient sur la carte.</h2>
+        <ul class="sigs" style="padding:0;margin-block:2.5rem">
+          {signatures.map((s) => (
+            <li><b>{s.nom}</b>{s.detail && <span class="muted ui">{s.detail}</span>}</li>
+          ))}
+        </ul>
+        <h3 class="vh">Toutes les rubriques de la carte</h3>
+        <div class="idx">
+          {mangers.map((c) => (
+            <a href={`${u('/carte/')}#${c.id}`}>
+              <span class="idx__n">{c.nom}</span>
+              <span class="idx__c num">{c.plats.length} lignes · dès {eur(prixMin(c))}</span>
+            </a>
+          ))}
+        </div>
+        <p style="margin-top:2rem"><a class="btn btn--plein" href={u('/carte/')}>Ouvrir toute la carte</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ground-soir" data-hour="20" aria-labelledby="h-mur" style="padding-top:0">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>20 h, à table</span></div>
+      <div class="sec__body">
+        <h2 id="h-mur" class="display display--l" style="max-width:20ch;margin-bottom:2.5rem">Des frites, une casserole qui fume, une Chimay tirée à la pression.</h2>
+        <div class="strip">
+          <figure><div class="frame"><Photo cle="frites" sizes="(max-width: 760px) 72vw, 22vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
+          <figure><div class="frame"><Photo cle="casserole" sizes="(max-width: 760px) 72vw, 22vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
+          <figure><div class="frame"><Photo cle="biere" sizes="(max-width: 760px) 72vw, 22vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
+          <figure><div class="frame"><Photo cle="spritz" sizes="(max-width: 760px) 72vw, 22vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ground-nuit" data-hour="21" aria-labelledby="h-hist">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>21 h, la maison</span></div>
+      <div class="sec__body">
+        <h2 id="h-hist" class="statement">Depuis le 13 juillet <em>1984</em>, Momo et Teresa tiennent la salle.</h2>
+        <p class="prose muted" style="margin-block:2rem">{histoire.paragraphes[0]}</p>
+        <a class="tlink" href={u('/histoire/')}>Lire l’histoire de la maison</a>
+      </div>
+    </div>
+  </section>
+</Base>

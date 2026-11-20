@@ -1,0 +1,89 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import KywFooter from '@kyw/footer';
+import { restaurant as r, horaires } from '../data/site';
+import { asset, u } from '../lib/url';
+import Header from '../components/Header.astro';
+import Pied from '../components/Pied.astro';
+import '../styles/tokens.css';
+import '../styles/engine.css';
+import '../styles/site.css';
+
+interface Props { title?: string; description?: string; page?: string; pied?: boolean }
+const { title, description = r.description, page = 'accueil', pied = true } = Astro.props;
+const fullTitle = title ? `${title} | ${r.nom}` : `${r.nom} | ${r.baseline} à Jambes, Namur`;
+const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = new URL(asset('/og.png'), siteUrl).href;
+const codes = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+const idx = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+const hh = (h: number) => `${String(h).padStart(2, '0')}:00`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: r.nomLong,
+  description: r.description,
+  url: new URL(u('/'), siteUrl).href,
+  telephone: r.telephone,
+  email: r.email,
+  servesCuisine: ['Brasserie', 'Cuisine belge'],
+  image: ogImage,
+  acceptsReservations: true,
+  hasMenu: new URL(u('/carte/'), siteUrl).href,
+  address: { '@type': 'PostalAddress', streetAddress: `${r.adresse.rue} ${r.adresse.numero}`, postalCode: r.adresse.cp, addressLocality: 'Namur', addressCountry: r.adresse.pays },
+  geo: { '@type': 'GeoCoordinates', latitude: r.geo.lat, longitude: r.geo.lon },
+  openingHoursSpecification: horaires.map((h, i) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: idx[i], opens: hh(h.ouvre), closes: hh(h.ferme) })),
+  sameAs: r.reseaux.map((x) => x.url),
+};
+void codes;
+---
+<!doctype html>
+<html lang="fr" transition:animate="none">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#eef0e8" />
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" href={asset('/sitemap-index.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={r.nom} />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="preload" href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}fonts/bricolage-200_800-normal.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}fonts/hanken-400_700-normal.woff2`} as="font" type="font/woff2" crossorigin />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+    </script>
+    <ClientRouter fallback="swap" />
+  </head>
+  <body data-page={page}>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
+    <Header page={page} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    {pied && <Pied />}
+    <KywFooter base={import.meta.env.BASE_URL} />
+    <script>
+      import { start } from '../engine/astro';
+      import { setupMotion } from '../motion/setup';
+      start(setupMotion);
+    </script>
+  </body>
+</html>

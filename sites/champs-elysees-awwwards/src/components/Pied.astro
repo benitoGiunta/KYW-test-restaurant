@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import { restaurant as r, horaires, heure } from '../data/site';
+import { photos } from '../lib/photos';
+import { u } from '../lib/url';
+---
+<footer class="foot ground-nuit fans" data-hour="22">
+  <div class="wrap">
+    <div class="grid" style="align-items:end;row-gap:2rem">
+      <p class="foot__big" style="grid-column:1 / 10">La maison <em>ne ferme pas</em> entre midi et soir.</p>
+      <div style="grid-column:10 / -1;justify-self:end">
+        <Image class="foot__mascotte" src={photos.mascotte.src} alt="" width={480} format="webp" loading="lazy" decoding="async" />
+      </div>
+    </div>
+    <div class="btns" style="margin-top:2.5rem">
+      <a class="btn btn--plein" href={r.reservationUrl} rel="noopener">Réserver en ligne</a>
+      <a class="btn" href={`tel:${r.telephone}`}>Appeler le {r.telephoneAffiche}</a>
+    </div>
+    <div class="foot__cols">
+      <div>
+        <h2>Adresse</h2>
+        <address style="font-style:normal">
+          {r.nomLong}<br />{r.adresse.rue} {r.adresse.numero}<br />{r.adresse.cp} {r.adresse.commune}
+        </address>
+        <p style="margin-top:0.75rem"><a class="tlink" href={r.planUrl} rel="noopener">Ouvrir le plan</a> · <a class="tlink" href={`mailto:${r.email}`}>{r.email}</a></p>
+      </div>
+      <div>
+        <h2>Heures</h2>
+        <ul class="num">
+          <li>Lundi au samedi : {heure(11)} à {heure(22)}</li>
+          <li>Dimanche : {heure(11)} à {heure(16)}</li>
+        </ul>
+      </div>
+      <div>
+        <h2>La maison</h2>
+        <ul>
+          <li><a class="nl" href={u('/carte/')}>La carte</a></li>
+          <li><a class="nl" href={u('/histoire/')}>Histoire</a></li>
+          <li><a class="nl" href={u('/reservation/')}>Réservation</a></li>
+          {r.reseaux.map((x) => <li><a class="nl" href={x.url} rel="noopener">{x.nom}</a></li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

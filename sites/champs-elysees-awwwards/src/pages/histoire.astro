@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { histoire, equipe, restaurant as r } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="La maison" page="histoire" description="Depuis le 13 juillet 1984, Maurice Druart et Teresa tiennent la brasserie Champs Élysées, avenue Albert Ier à Jambes, à l’ancienne adresse du café Le Sportman.">
+  <section class="sec ground-midi" data-hour="11">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>13 juillet 1984, 11 h</span></div>
+      <div class="sec__body">
+        <h1 class="display" style="font-size:var(--t-mega);max-width:9ch">La maison</h1>
+        <p class="statement" style="margin-top:2.5rem">Ouverte à la place du café Le Sportman.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ground-apres" data-hour="15" aria-labelledby="h-couple">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>Les patrons</span></div>
+      <div class="sec__body">
+        <div class="pair">
+          <div class="pair__t" style="grid-column:1 / 7;margin-top:0">
+            <h2 id="h-couple" class="display display--l">Momo et Teresa, ensemble depuis les débuts.</h2>
+            <div class="prose" style="margin-top:1.5rem">
+              {histoire.paragraphes.map((p) => <p>{p}</p>)}
+            </div>
+            <ul style="padding:0;margin-top:2rem;border-top:1px solid var(--c-line)">
+              {equipe.map((e) => (
+                <li style="list-style:none;padding-block:0.9rem;border-bottom:1px solid var(--c-line)">
+                  <b class="display display--m" style="display:block">{e.nom}</b>
+                  <span class="ui muted">{e.role}. {e.note}. Source : {e.source}.</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <figure class="pair__b" style="grid-column:8 / -1;margin-top:0">
+            <div class="frame"><Photo cle="brique" sizes="(max-width: 760px) 100vw, 36vw" /></div>
+            <figcaption class="cap">La salle aujourd’hui. {r.credit}</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ground-soir" data-hour="19" aria-labelledby="h-cit">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>Teresa le dit</span></div>
+      <div class="sec__body">
+        <h2 id="h-cit" class="vh">Une phrase de Teresa</h2>
+        <blockquote>
+          <p class="statement" style="max-width:20ch">« {histoire.citation.texte} »</p>
+          <footer class="ui muted" style="margin-top:1.5rem">{histoire.citation.auteur}, {histoire.citation.source}</footer>
+        </blockquote>
+        <p class="prose muted" style="margin-top:3rem">{histoire.chef}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ground-soir" data-hour="21" aria-labelledby="h-chif" style="padding-top:0">
+    <div class="wrap grid">
+      <div class="sec__hour"><span>En chiffres</span></div>
+      <div class="sec__body">
+        <h2 id="h-chif" class="vh">La maison en chiffres</h2>
+        <dl class="facts num">
+          {histoire.chiffres.map((c) => <div><dt class="ui muted" style="order:2">{c.l}</dt><dd><b>{c.v}</b></dd></div>)}
+        </dl>
+        <div class="strip" style="margin-top:4rem">
+          <figure><div class="frame"><Photo cle="lecture" sizes="(max-width: 760px) 72vw, 22vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
+          <figure><div class="frame"><Photo cle="banquette" sizes="(max-width: 760px) 72vw, 22vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
+          <figure><div class="frame"><Photo cle="menuTable" sizes="(max-width: 760px) 72vw, 22vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
+          <figure><div class="frame"><Photo cle="facade" sizes="(max-width: 760px) 72vw, 22vw" /></div><figcaption class="cap">{r.credit}</figcaption></figure>
+        </div>
+        <p style="margin-top:3rem"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
