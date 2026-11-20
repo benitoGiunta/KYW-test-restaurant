@@ -7,7 +7,7 @@ const hero = photoDe('/photos/aerienne.webp');
 const coulisses = ['/photos/bar-service.webp', '/photos/four-bois.webp', '/photos/cave.webp', '/photos/terrasse-pergola.webp'].map(photoDe);
 const initiales = (nom: string) => nom.split(' ').map((x) => x[0]).join('');
 ---
-<Base title="La maison" theme="ocre" description={`La maison ${site.nom} : un pavillon vitré au sommet de la Citadelle de ${site.adresse.commune}, rouvert en 2022, avec une carte signée Yves Mattagne.`}>
+<Base title="La maison" theme="ocre" description={`La maison du Panorama : un pavillon vitré au sommet de la Citadelle de ${site.adresse.commune}, rouvert en 2022, avec une carte signée Yves Mattagne.`}>
   <section class="section" data-ciel="ocre">
     <div class="wrap cols">
       <div class="c1-6">
@@ -40,7 +40,7 @@ const initiales = (nom: string) => nom.split(' ').map((x) => x[0]).join('');
           const p = m.photo ? photoDe(m.photo) : null;
           return (
             <article class="membre" data-reveal="up" data-delay={String(i * 0.08)}>
-              {p ? <figure class="photo"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure> : <p class="membre__initiales" aria-hidden="true">{initiales(m.nom)}</p>}
+              {p ? <figure class="photo"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure> : null}
               <h3 class="t-m" style="font-weight: 600">{m.nom}</h3>
               <p class="t-s muted">{m.role}{m.placeholder ? <span class="tag">rôle à confirmer</span> : null}</p>
             </article>

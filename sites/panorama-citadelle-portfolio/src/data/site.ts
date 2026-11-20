@@ -113,6 +113,7 @@ export const site: Restaurant = {
     {
       categorie: 'Viandes et grill',
       plats: [
+        { nom: 'Tartare de bœuf Angus coupé au couteau', description: 'caviar Dauricus, crème aigrelette, blinis', prix: '59 €', placeholder: false },
         { nom: 'Américain de bœuf Holstein', description: 'sucrine, frites, mayonnaise', prix: '28 €', placeholder: false },
         { nom: 'Spare ribs de porc laqué', description: 'cébette, sésame, oignons frits, cacahuètes, frites', prix: '34 €', placeholder: false },
         { nom: 'Pain de viande porc et veau', description: 'chicons confits au foie gras, rattes', prix: '29,50 €', placeholder: false },
@@ -130,7 +131,7 @@ export const site: Restaurant = {
       plats: [
         { nom: 'Bar de ligne en croûte de sel', description: 'beurre blanc, légumes de saison, environ 50 minutes d’attente', prix: '98 €', placeholder: false },
         { nom: 'Épaule d’agneau', description: 'zaatar, tzatziki d’aubergine, relish, menthe, grenade, pain gyros', prix: '98 €', placeholder: false },
-        { nom: 'Chateaubriand mariné teriyaki, cuisson lente 5 h', description: 'légumes au wok, oignons frits, sésame, cacahuètes, coriandre, riz jasmin', prix: null, placeholder: false },
+        { nom: 'Chateaubriand mariné teriyaki, cuisson lente 5 h', description: 'légumes au wok, oignons frits, sésame, cacahuètes, coriandre, riz jasmin', prix: '94 €', placeholder: false },
       ],
     },
     {
@@ -151,7 +152,7 @@ export const site: Restaurant = {
   ],
   histoire: [
     'Le Panorama occupe un pavillon vitré tout en haut de la Citadelle de Namur, Route Merveilleuse, à une centaine de mètres du téléphérique. De la salle comme de la terrasse, le regard embrasse la ville et la vallée de la Meuse.',
-    'Rénové et rouvert en 2022 par François Delpire-Crets et Frédéric Massart, le lieu a gagné une terrasse sur plusieurs niveaux, un bar en marbre, une cuisine ouverte et un four à bois. On y vient pour un petit-déjeuner, un déjeuner, un apéro au coucher du soleil ou un dîner.',
+    'Rénové et rouvert en 2022 par François Delpire-Crets et Frédéric Massart, le lieu a gagné une terrasse sur plusieurs niveaux, un bar en marbre, une cuisine ouverte et un four à bois. On y vient pour un petit-déjeuner, un déjeuner, un apéro ou un dîner.',
     'La carte est signée Yves Mattagne, chef doublement étoilé de La Villa Lorraine : des classiques de brasserie revus façon bistronomie, avec des accents du monde et des produits frais et locaux.',
     'La tarte flambée cuite au four à bois a été transmise aux cuisiniers par le chef alsacien Patrice Bluntzer, de l’auberge Saint-Martin à Kintzheim. La Pano, bière blanche brassée avec La Houppe, ne se boit qu’ici.',
   ],
@@ -253,7 +254,7 @@ export const moments: Moment[] = [
   {
     id: 'm-12h', heure: 12, heureTexte: '12h', titre: 'Le déjeuner', theme: 'ocre',
     accroche: 'La carte de brasserie signée Yves Mattagne : tartes flambées au four à bois, entrées du moment, poissons et viandes.',
-    accrochePlaceholder: false, placeholder: false,
+    accrochePlaceholder: false, placeholder: true,
     lignes: [
       l('Œuf mimosa', 'thon, anchois, bacon, laitue', '12 €'),
       l('Pain de viande porc et veau', 'chicons confits au foie gras, rattes', '29,50 €'),
@@ -263,7 +264,7 @@ export const moments: Moment[] = [
   {
     id: 'm-17h', heure: 17, heureTexte: '17h', titre: 'L’apéro', theme: 'corail',
     accroche: 'Du côté du bar : des petites assiettes à partager, une bière blanche brassée pour la maison, un verre face à la Meuse.',
-    accrochePlaceholder: false, placeholder: false, photo: '/photos/biere-pano.webp',
+    accrochePlaceholder: false, placeholder: true, photo: '/photos/biere-pano.webp',
     lignes: [
       l('Brocolinette', 'tzatziki, combava, grenade, menthe', '16,50 €'),
       l('Crevettes Nobashi croustillantes', 'mousseline aigre-douce, kalamansi', '21 €'),
@@ -275,7 +276,7 @@ export const moments: Moment[] = [
   {
     id: 'm-19h', heure: 19, heureTexte: '19h', titre: 'Le dîner', theme: 'nuit',
     accroche: 'Le soir, sous les guirlandes de la terrasse ou derrière les baies vitrées : poissons, viandes, grillades et plats pour deux.',
-    accrochePlaceholder: false, placeholder: false, photo: '/photos/terrasse-guirlandes.webp',
+    accrochePlaceholder: false, placeholder: true, photo: '/photos/terrasse-guirlandes.webp',
     lignes: [
       l('Noix de Saint-Jacques snackées', 'chou kimchi, pecorino, poire, sésame', '29 €'),
       l('Thon à la flamme', 'teriyaki, légumes au wok, riz jasmin', '36 €'),

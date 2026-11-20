@@ -24,6 +24,7 @@ function splitTween(el: HTMLElement, isIntro: boolean) {
   SplitText.create(el, {
     type: type === 'lines' ? 'lines' : type === 'chars' ? 'lines,words,chars' : `lines,${type}`,
     mask: 'lines',
+    aria: 'none',
     autoSplit: true,
     linesClass: 'split-line',
     onSplit(self) {
