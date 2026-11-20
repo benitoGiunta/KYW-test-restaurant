@@ -1,17 +1,29 @@
 ---
-import { nav, resto } from '../data/site';
+import { nav } from '../data/site';
 const { page } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const cur = { index: '', 'le-panorama': 'le-panorama/', 'la-carte': 'la-carte/', 'reservation-contact': 'reservation-contact/' }[page as string];
+const liens = nav.slice(0, 3);
 ---
 <header class="site-head">
   <div class="container">
-    <a class="brand" href={base}>Le Panorama<span>Citadelle de Namur</span></a>
-    <nav class="site-nav" aria-label="Navigation principale">
+    <a class="brand" href={base} aria-label="Le Panorama, Citadelle de Namur, accueil">Le Panorama<span>Citadelle de Namur</span></a>
+    <nav class="site-nav" id="menu" aria-label="Navigation principale" popover>
       <ul>
-        {nav.slice(1, 3).map((n) => <li><a href={base + n.href} aria-current={cur === n.href ? 'page' : undefined}>{n.label}</a></li>)}
-        <li><a class="btn" href={base + 'reservation-contact/'}>Réserver</a></li>
+        {liens.map((n, i) => <li class={i === 0 ? 'only-menu' : undefined}><a href={base + n.href} aria-current={cur === n.href ? 'page' : undefined}>{n.label}</a></li>)}
       </ul>
     </nav>
+    <div class="head-actions">
+      <a class="btn" href={base + 'reservation-contact/'} aria-current={page === 'reservation-contact' ? 'page' : undefined}>Réserver</a>
+      <button class="menu-btn" type="button" popovertarget="menu" popovertargetaction="toggle" aria-controls="menu">Menu</button>
+    </div>
   </div>
 </header>
+<script is:inline>
+  (() => {
+    const m = document.getElementById('menu');
+    if (!m || !m.showPopover) return;
+    m.addEventListener('click', (e) => { if (e.target.closest('a') && m.matches(':popover-open')) m.hidePopover(); });
+    matchMedia('(min-width: 60.0625rem)').addEventListener('change', (e) => { if (e.matches && m.matches(':popover-open')) m.hidePopover(); });
+  })();
+</script>

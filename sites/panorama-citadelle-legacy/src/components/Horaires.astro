@@ -1,7 +1,20 @@
 ---
 import { jours, heures } from '../data/site';
 ---
-<dl class="sched">
-  {jours.map((j) => <div><dt>{j}</dt><dd><time>{heures}</time></dd></div>)}
+<dl class="sched" data-sched>
+  {jours.map((j, i) => <div data-jour={i}><dt>{j}</dt><dd><time>{heures}</time></dd></div>)}
 </dl>
 <p class="small" style="margin-top:var(--space-sm)">Petits-déjeuners de 8 h 00 à 10 h 30, brasserie dès 11 h 00. Horaires repris du site actuel, à confirmer.</p>
+<script is:inline>
+  (() => {
+    const jour = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    let nom; try { nom = new Date().toLocaleDateString('en-US', { weekday: 'long', timeZone: 'Europe/Brussels' }); } catch (e) { return; }
+    const i = jour.indexOf(nom); if (i < 0) return;
+    document.querySelectorAll('[data-sched]').forEach((s) => {
+      const r = s.querySelector(`[data-jour="${i}"]`); if (!r || r.hasAttribute('aria-current')) return;
+      r.setAttribute('aria-current', 'date');
+      const t = document.createElement('span'); t.className = 'today'; t.textContent = 'Aujourd’hui';
+      r.querySelector('dt').append(' ', t);
+    });
+  })();
+</script>
