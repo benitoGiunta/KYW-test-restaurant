@@ -59,7 +59,7 @@ export const reseaux = [
 ] as const;
 
 export const chronologie = [
-  { quand: '2008', texte: 'Ouverture du Lodge à Wépion, selon une source tierce (à confirmer). Capacité annoncée : 160 couverts.' },
+  { quand: '2008', texte: 'Ouverture du Lodge à Wépion, selon une source tierce. Capacité annoncée : 160 couverts.' },
   { quand: '21 mai 2026', texte: 'Un incendie part des cuisines vers 23 h 30 et ravage le restaurant. L’Avenir et La DH en rendent compte.' },
   { quand: 'Juin 2026', texte: 'L’équipe reprend le service à l’Aquaplane de Profondeville, jusqu’au 15 septembre.' },
   { quand: '15 septembre 2026', texte: 'L’équipe s’installe au Wine & More, à Erpent, six jours sur sept.' },
