@@ -1,0 +1,1 @@
+- 2026-11-20 : site WordPress Créatonit (carredherbes.be) : originaux photos en retirant -WxH et .webp ; pages de menu en texte HTML (strip balises) ; curl exige l'enveloppe q.sh (hook), y compris dans un script lancé par q.sh seulement si la ligne de commande ne contient pas curl.
