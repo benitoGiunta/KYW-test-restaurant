@@ -926,7 +926,7 @@ export const guinguette = {
   terrasse: {
     connue: true,
     placeholder: false,
-    texte: "Une terrasse donne sur l'avenue Albert Ier : on y prend l'apéritif, le spritz ou le repas complet. Le nombre de places n'est pas communiqué.",
+    texte: "Une terrasse donne sur l'avenue Albert Ier.",
   },
   fetes: { groupesTelephone: 'Pour toute réservation de plus de 10 personnes, contactez le restaurant par téléphone.' },
   manifeste: {
