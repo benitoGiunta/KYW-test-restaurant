@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, jours } from '../data/site';
+import { eur } from '../data/carte';
+---
+<Base page="reservation" title="Réserver" description="Réserver une table à la Brasserie Edgard, chaussée de Waterloo 473 à Saint-Servais : réservation en ligne, téléphone 081 46 08 00, horaires et accès.">
+  <section class="entete wrap">
+    <h1 class="entete__titre display" data-split="lines" data-intro>Réserver</h1>
+    <p class="entete__texte">Une table pour deux, pour la famille ou pour un dîner d’affaires : la brasserie ouvre tous les jours de 10&nbsp;h à 22&nbsp;h&nbsp;30.</p>
+  </section>
+
+  <section class="resa wrap">
+    <div class="resa__actions">
+      <h2 class="resa__titre">Deux façons de réserver</h2>
+      <p class="resa__cta"><a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver en ligne</span></a><span class="resa__aide">Ouvre l’outil de réservation Barestho de la brasserie.</span></p>
+      <p class="resa__cta"><a class="cta cta--ligne" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a><span class="resa__aide">{site.telephoneIntl}</span></p>
+      <p class="resa__mail">Une question ? <a class="lien" href={`mailto:${site.email}`}>{site.email}</a>. Attention : les réservations envoyées par e-mail ne sont pas enregistrées par la brasserie.</p>
+    </div>
+    <figure class="resa__photo"><Photo cle="tables" sizes="(min-width: 900px) 45vw, 100vw" prioritaire /><figcaption>Tables dressées dans la salle.</figcaption></figure>
+  </section>
+
+  <section class="infos wrap" aria-labelledby="t-infos">
+    <h2 class="infos__titre display" data-split="lines" id="t-infos">Pratique</h2>
+    <div class="infos__bloc">
+      <h3>Horaires</h3>
+      <ul class="horaires">
+        {jours.map((j) => <li><span>{j}</span><span>10&nbsp;h à 22&nbsp;h&nbsp;30</span></li>)}
+      </ul>
+      <p class="infos__note">Cuisine fermée de 15&nbsp;h à 18&nbsp;h, sauf le week-end et les jours fériés.</p>
+    </div>
+    <div class="infos__bloc">
+      <h3>Adresse</h3>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+      <p class="infos__note">En été, la terrasse couverte prolonge la salle.</p>
+    </div>
+    <div class="infos__bloc">
+      <h3>Groupes</h3>
+      <p>Pour une table de plus de {site.groupes.min} personnes (au maximum {site.groupes.max}), trois menus : {site.groupes.formules.map((f) => `${f.nom.toLowerCase()} à ${eur(f.prix)}`).join(', ')}. Demande à faire par le formulaire du <a class="lien" href={site.siteClient} rel="noopener">site de la brasserie</a>.</p>
+    </div>
+    <div class="infos__bloc">
+      <h3>À emporter</h3>
+      <p>Les plats se prennent aussi à emporter, avec un supplément d’emballage de {eur(site.emporterSupplement)}.</p>
+    </div>
+  </section>
+</Base>

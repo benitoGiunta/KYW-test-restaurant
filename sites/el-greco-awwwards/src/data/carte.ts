@@ -1,0 +1,91 @@
+// Carte réelle d’El Greco (data/restaurants/el-greco/donnees.json), prix en euros. Aucun plat inventé : placeholder false partout.
+export interface Plat { nom: string; description: string | null; prix: number; note?: string; placeholder?: boolean }
+export interface Categorie { id: string; nom: string; groupe: 'manger' | 'boire'; plats: Plat[] }
+export const carte: Categorie[] = [
+  { id: "entrees-froides", nom: "Entrées froides", groupe: 'manger', plats: [
+    { nom: "Crèmes grecques", description: "Tzatziki, tarama et tirokafteri accompagnés de pain pita", prix: 12.9 },
+    { nom: "Tirokafteri", description: "Feta grecque AOP, poivrons rouges grillés et huile d’olive de Crète", prix: 9.9 },
+    { nom: "Tarama", description: "Crème aux œufs de poisson et huile d’olive, pain pita", prix: 9.9 },
+    { nom: "Tzatziki", description: "Yaourt grec, concombre frais, ail et aneth, pain pita", prix: 9.9 },
+    { nom: "Caviar d’aubergines", description: "Aubergines grillées, huile d’olive vierge de Crète et herbes fraîches", prix: 9.9 },
+    { nom: "Fava", description: "Purée de fèves jaunes de Santorin et huile d’olive de Crète", prix: 9.9 },
+  ] },
+  { id: "entrees-chaudes", nom: "Entrées chaudes", groupe: 'manger', plats: [
+    { nom: "Mezze El Greco", description: "Feta AOP, olives de Kalamata, trio de crèmes grecques, spanakopita, feuilles de vigne farcies, calamars et gambas", prix: 21.9 },
+    { nom: "Feta au four", description: "Feta grecque AOP, miel et sésames", prix: 12.9 },
+    { nom: "Scampis du chef", description: "Scampis sautés au beurre, ail et persil plat", prix: 15.9 },
+    { nom: "Calamars frits", description: "Servis avec un espuma à la feta grecque AOP", prix: 16.9 },
+    { nom: "Dolmas", description: "Feuilles de vigne farcies au bœuf haché, riz et herbes fraîches, mijotées", prix: 15.9 },
+    { nom: "Poulpe grillé", description: "Citron frais, huile d’olive de Crète et purée de fèves de Santorin", prix: 18.9 },
+    { nom: "Spanakopita", description: "Feuilleté croustillant aux épinards et feta", prix: 13.9 },
+  ] },
+  { id: "specialites", nom: "Spécialités", groupe: 'manger', plats: [
+    { nom: "Mezze signature", description: "Sélection de spécialités grecques, brochette de poulet, brochette d’agneau et keftedes de bœuf", prix: 31.9 },
+    { nom: "Giouvetsi", description: "Agneau mijoté plusieurs heures, pâtes grecques et feta", prix: 25.9 },
+    { nom: "Gyros", description: "Poulet mariné aux herbes méditerranéennes, pita chaude et tzatziki", prix: 21.9 },
+    { nom: "Souvlaki", description: "Brochettes d’agneau marinées aux herbes méditerranéennes, pita et tzatziki", prix: 27.9 },
+    { nom: "Pastitsio", description: "Pâtes grecques, bœuf haché mijoté et béchamel gratinée", prix: 19.9 },
+    { nom: "Chich kebab", description: "Keftedes de bœuf grillées, pita chaude et tzatziki", prix: 25.9 },
+    { nom: "Boulettes de Smyrne", description: "Keftedes, sauce tomate aux herbes grecques", prix: 21.9 },
+  ] },
+  { id: "grillades", nom: "Grillades", groupe: 'manger', plats: [
+    { nom: "Entrecôte d’Angus", description: null, prix: 28.9 },
+    { nom: "Assiette El Greco", description: "Mini rumsteak d’Angus, côte d’agneau et brochette de poulet", prix: 28.9 },
+    { nom: "Brochette d’agneau", description: null, prix: 28.9 },
+    { nom: "Rumsteak d’Angus", description: null, prix: 24.9 },
+    { nom: "Côtes d’agneau grillées", description: null, prix: 28.9 },
+    { nom: "Brochette de poulet", description: null, prix: 22.9 },
+    { nom: "Brochette de bœuf Angus", description: null, prix: 26.9 },
+    { nom: "Gambas saganaki", description: "Gambas sautées, sauce tomate mijotée, feta AOP et coriandre fraîche", prix: 27.9 },
+  ] },
+  { id: "poissons", nom: "Poissons", groupe: 'manger', plats: [
+    { nom: "Saumon grillé aux herbes", description: "Filet de saumon grillé, caviar d’aubergines, huile d’olive de Crète et légumes de saison", prix: 26.9 },
+  ] },
+  { id: "salades", nom: "Salades", groupe: 'manger', plats: [
+    { nom: "Salade grecque", description: "Tomates de saison, concombre, olives Kalamata, feta AOP, origan et huile d’olive de Crète", prix: 14.9 },
+  ] },
+  { id: "menus-enfant", nom: "Menus enfant", groupe: 'manger', plats: [
+    { nom: "Rumsteak d’Angus", description: null, prix: 17.9 },
+    { nom: "Boulettes de Smyrne", description: null, prix: 15.9 },
+    { nom: "Filet de poulet", description: null, prix: 15.9 },
+  ] },
+  { id: "supplements-et-sauces", nom: "Suppléments et sauces", groupe: 'manger', plats: [
+    { nom: "Feta AOP, olives de Kalamata, pain pita, piments", description: "chacun", prix: 2.9 },
+    { nom: "Frites, pomme au four, pâtes grecques", description: "chacun", prix: 1.5 },
+    { nom: "Sauces chaudes (archiduc, poivre, beurre à l’ail)", description: "chacune", prix: 3.9 },
+  ] },
+  { id: "cocktails-du-moment", nom: "Cocktails du moment", groupe: 'boire', plats: [
+    { nom: "Cherry Ouzo", description: "Ouzo revisité : cerise, anis, citron", prix: 10.9 },
+    { nom: "Santorini Sunset", description: "Passion, orange et cassis", prix: 10.9 },
+    { nom: "Aglaïa", description: "Vodka infusée pastèque, citron, sureau", prix: 10.9 },
+    { nom: "Tempête d’Égée (sans alcool)", description: "Menthe glacée, citron, bulles", prix: 7.9 },
+    { nom: "Rose de Santorin (sans alcool)", description: "Limonade rose et citron", prix: 5.9 },
+  ] },
+  { id: "aperitifs", nom: "Apéritifs", groupe: 'boire', plats: [
+    { nom: "Greek Spritz", description: "Metaxa 7 Stars, prosecco, tonic, pêche", prix: 10.9 },
+    { nom: "Afrodita", description: "Liqueur de rose, citron, prosecco", prix: 10.9 },
+    { nom: "Naxos (sans alcool)", description: "Pêche, rose, citron, pétillant", prix: 7.9 },
+    { nom: "Ouzo, Mavrodaphne, Muscat", description: "Apéritifs grecs", prix: 6.0 },
+    { nom: "Aperol Spritz, Hugo", description: null, prix: 10.9 },
+  ] },
+  { id: "vins-grecs-bouteille", nom: "Vins grecs (bouteille)", groupe: 'boire', plats: [
+    { nom: "Limniona rouge", description: "Cerise, framboise, épices", prix: 31.0 },
+    { nom: "Tripio Lithari", description: "Fruits noirs, épices, bois fondu", prix: 29.9 },
+    { nom: "Merlot Syrah", description: null, prix: 27.9 },
+    { nom: "Terra Thiva (blanc)", description: "Très sec, minéral", prix: 29.0 },
+    { nom: "Malagousia (blanc)", description: "Pêche, abricot, fleurs blanches", prix: 27.9 },
+    { nom: "Chardonnay Assyrtiko (blanc)", description: null, prix: 26.9 },
+    { nom: "Retsina (blanc)", description: "Résine de pin d’Alep ; verre 6.00", prix: 24.9 },
+    { nom: "Story Mouchtaro (rosé)", description: null, prix: 28.0 },
+    { nom: "Boutari rosé", description: null, prix: 27.0 },
+    { nom: "Limniona rosé", description: null, prix: 26.0 },
+    { nom: "Vin du patron (bouteille à la ficelle)", description: "verre 6.00", prix: 24.9 },
+  ] },
+  { id: "bieres-et-softs", nom: "Bières et softs", groupe: 'boire', plats: [
+    { nom: "Orval, Houppe", description: null, prix: 7.0 },
+    { nom: "Mythos", description: null, prix: 6.0 },
+    { nom: "Duvel", description: null, prix: 4.0 },
+    { nom: "Jupiler, bière 0 %, softs", description: null, prix: 3.0 },
+    { nom: "Acqua Panna / San Pellegrino 1 L", description: null, prix: 9.0 },
+  ] },
+];

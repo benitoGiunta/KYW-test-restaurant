@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Resa from '../components/Resa.astro';
+import { histoire } from '../data/site';
+---
+<Base page="histoire" photos title="Notre histoire · El Greco, restaurant grec à Bouge" description="Depuis 1986, El Greco célèbre les traditions culinaires familiales de la Grèce à Namur.">
+  <header class="entete container">
+    <h1>Notre histoire</h1>
+  </header>
+  <section class="recit container">
+    <div class="recit__texte">
+      <p class="lead">{histoire[0]}</p>
+      <p>{histoire[1]}</p>
+    </div>
+    <Photo nom="clocher" w={800} h={1200} slot="histoire-portrait" alt="Clocher blanc des Cyclades contre le ciel" legende="Illustration : clocher blanc des Cyclades. Photographie de stock, pas le restaurant." sizes="(min-width: 60rem) 33vw, 100vw" priorite={true} class="recit__photo" />
+  </section>
+  <Resa titre="Venir à notre table" />
+</Base>
