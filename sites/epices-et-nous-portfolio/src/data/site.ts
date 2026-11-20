@@ -191,7 +191,7 @@ export const site: Restaurant = {
     liste: [
       { nom: 'La salle avant', texte: 'Moderne, lumineuse et dynamique : la salle où le service du midi et du soir bat son plein.', photo: '/photos/salle-avant.webp' },
       { nom: 'La verrière', texte: "À l'arrière, une salle plus douce et feutrée, sous la verrière, pour un repas posé.", photo: '/photos/salle-verriere.webp' },
-      { nom: 'La terrasse', texte: 'La terrasse ouvre dès que la météo le permet.', photo: '/photos/facade.webp' },
+      { nom: 'La terrasse', texte: 'La terrasse ouvre dès que la météo le permet. La photo montre la façade du restaurant.', photo: '/photos/facade.webp' },
     ],
   },
   photos: [

@@ -25,6 +25,7 @@ strong { font-weight: 400; color: var(--c-fg); }
 .chiffre { font-family: var(--f-display); font-weight: 400; font-size: var(--t-mega); line-height: 0.9; letter-spacing: -0.02em; color: var(--c-accent); font-variant-numeric: tabular-nums; margin-left: -0.06em; }
 .chiffre--centre { text-align: center; margin-left: 0; }
 .chiffre--petit { font-size: var(--t-xl); color: var(--c-muted); }
+.chiffre--filigrane::before { content: attr(data-valeur); }
 .chiffre--filigrane { position: absolute; right: 0; top: -0.25em; color: rgb(196 143 96 / 0.16); font-size: clamp(9rem, 5rem + 14vw, 22rem); pointer-events: none; }
 
 /* Boutons : trait orange épice, remplissage qui monte comme un rideau (clip-path) au survol et au focus. */
@@ -166,7 +167,7 @@ html:not(.motion) .onglet[aria-selected='true'] .onglet__barre::after { transfor
 .galerie__item::after { content: ''; position: absolute; inset: 0; background: rgb(196 143 96 / 0.22); mix-blend-mode: multiply; transition: clip-path 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
 .galerie__item:hover::after { clip-path: inset(0 0 100% 0); }
 .galerie__item:hover img { transform: scale(1.04); }
-@media (min-width: 1024px) { .galerie__bande { justify-content: center; overflow: visible; } }
+@media (min-width: 1280px) { .galerie__bande { justify-content: center; overflow: visible; } }
 
 /* Clôture : bloc centré, année en orange épice, adresse, trois horaires, rideau. */
 .cloture { position: relative; padding-block: var(--chapitre) calc(var(--chapitre) * 0.8); text-align: center; }
@@ -291,7 +292,8 @@ html:not(.motion) .onglet[aria-selected='true'] .onglet__barre::after { transfor
   .hero { min-height: calc(100svh - 7rem); }
   .hero__nom { font-size: clamp(2.75rem, 12vw, 3.5rem); }
   .loader__count { display: none; }
-  .chiffre--filigrane { right: auto; left: -0.05em; top: -0.5em; }
+  .chiffre--filigrane::before { content: attr(data-valeur); }
+.chiffre--filigrane { right: auto; left: -0.05em; top: -0.5em; }
   .triptyque { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .triptyque__item--2 { display: none; }
   .onglets { min-height: 0; }
