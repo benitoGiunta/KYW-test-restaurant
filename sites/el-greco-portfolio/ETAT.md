@@ -38,3 +38,9 @@
 
 ## Pièges
 - Scripts de contrôle dans le scratchpad `/tmp/claude-0/greco-p2/` (hors dépôt). Serveur de phase 2 (port 4471) arrêté.
+
+# ETAT — phase 3 (QA)
+## Fait
+- Audit (0 FAIL) et shoot des 4 pages : 0 erreur console, 0 violation axe, mobile et desktop lus. Aucune correction requise. RAPPORT.md écrit. Serveur (PID 715) arrêté.
+## Reste
+- UTILISATION.md hors phase de test ; arbitrages de contenu (horaires, slogan, réservation) à confirmer.
