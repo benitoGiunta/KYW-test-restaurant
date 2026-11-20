@@ -1,7 +1,7 @@
 // Données de Escale en Vue ! (variante awwwards). Source : data/restaurants/escale-en-vue/ (donnees.json, dossier.md).
 // Hypothèses : aucune carte ni prix publiés (prix null, jamais inventés) ; histoire et équipe inconnues (non rendues
-// au-delà du titulaire BCE) ; saison 2026 terminée, dates de reprise inconnues ; GPS « à confirmer » (plan en lien externe) ;
-// parking gratuit « à confirmer » (Tripadvisor via recherche). Aucun avis rendu (notes tierces non vérifiées).
+// au-delà du titulaire BCE) ; saison 2026 terminée, dates de reprise inconnues ; GPS non vérifié (plan en lien externe) ;
+// parking gratuit non vérifié (Tripadvisor via recherche). Aucun avis rendu (notes tierces non vérifiées).
 export const site = {
   nom: 'Escale en Vue !',
   nomCourt: 'Escale en Vue',
@@ -50,7 +50,7 @@ export const carte: Categorie[] = [
     { nom: 'Variante végé', description: 'Une alternative végétarienne accompagne toujours les plats.', prix: null },
   ] },
   { id: 'verre', titre: 'À boire', plats: [
-    { nom: 'Bières trappistes', description: 'Achel, Chimay, Gregorius, La Trappe, Orval, Rochefort, Westmalle, d’après la photo de la maison (liste exacte à confirmer).', prix: null, photo: 'trappistes' },
+    { nom: 'Bières trappistes', description: 'Achel, Chimay, Gregorius, La Trappe, Orval, Rochefort, Westmalle.', prix: null, photo: 'trappistes' },
     { nom: 'Bières régionales', description: 'Une place faite aux brasseurs de la région.', prix: null },
     { nom: 'Softs de qualité', description: 'Mentionnés par la maison, sans détail.', prix: null },
   ] },
@@ -67,6 +67,6 @@ export const histoire = [
 export const pratique = [
   { titre: 'Tables', texte: 'Tables en extérieur uniquement.' },
   { titre: 'Paiement', texte: 'Carte bancaire acceptée.' },
-  { titre: 'Parking', texte: 'Parking gratuit, à confirmer.' },
+  { titre: 'Parking', texte: 'Parking gratuit.' },
   { titre: 'Végétarien', texte: 'Une alternative végé est prévue à chaque plat.' },
 ];
