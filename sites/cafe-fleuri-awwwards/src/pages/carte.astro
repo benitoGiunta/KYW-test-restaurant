@@ -6,9 +6,10 @@ const eur = (n: number) => `${n.toFixed(2).replace('.', ',')} €`;
 ---
 <Base page="carte" title="La carte" description="La carte du Café Fleuri à Namur : brunch salé, sucré ou mixte, pancakes, gravlax maison, limonades et thé glacé maison.">
   <section class="sec page-tete" aria-labelledby="titre-carte">
+    <div class="tete-plates" aria-hidden="true"><span class="plate-pose plate-pose--a"><i class="plate" data-deborde="0.6" data-derive></i></span><span class="plate-pose plate-pose--f"><i class="plate" data-deborde="-0.5" data-derive></i></span></div>
     <div class="wrap">
-      <h1 class="display" id="titre-carte">La carte</h1>
-      <p class="lead">Trois brunchs, des boissons maison. Les prix ne sont pas encore confirmés.</p>
+      <h1 class="display" id="titre-carte" data-split="lines" data-intro>La carte</h1>
+      <p class="lead" data-reveal="fade" data-intro data-delay="0.35">Trois brunchs, des boissons maison. Les prix ne sont pas encore confirmés.</p>
     </div>
   </section>
 
@@ -17,7 +18,7 @@ const eur = (n: number) => `${n.toFixed(2).replace('.', ',')} €`;
       <h2 class="sr-only" id="titre-brunchs">Les brunchs</h2>
       <ul class="idx">
         {brunchs.map((b) => (
-          <li class={`idx__row idx__row--${b.id}`} id={b.id}>
+          <li class={`idx__row idx__row--${b.id}`} id={b.id} data-reveal="up">
             <div class="idx__link">
               <h3 class="idx__nom display">{b.nom}</h3>
               <p class="idx__desc">{b.description}</p>
@@ -30,13 +31,13 @@ const eur = (n: number) => `${n.toFixed(2).replace('.', ',')} €`;
 
   <section class="sec bloc" aria-labelledby="titre-boissons">
     <div class="wrap deux deux--decale">
-      <div class="deux__a">
+      <div class="deux__a" data-reveal="up">
         <h2 class="display" id="titre-boissons">À boire</h2>
         <ul class="liste">
           {boissons.map((p) => <li><strong>{p.nom}</strong>{p.description && <span>{p.description}</span>}</li>)}
         </ul>
       </div>
-      <div class="deux__b">
+      <div class="deux__b" data-reveal="up" data-delay="0.1">
         <h2 class="display" style="font-size: var(--t-m)">Cité ailleurs</h2>
         <ul class="liste">
           {aussi.map((p) => <li><strong>{p.nom}</strong>{p.description && <span>{p.description}</span>}</li>)}
@@ -48,12 +49,12 @@ const eur = (n: number) => `${n.toFixed(2).replace('.', ',')} €`;
 
   <section class="sec sec--salle bloc" aria-labelledby="titre-tarifs">
     <div class="wrap deux">
-      <div class="deux__a">
+      <div class="deux__a" data-reveal="up">
         <h2 class="display" id="titre-tarifs">Tarifs relevés</h2>
         {tarifs.map((t) => <div class="tarif"><span>{t.nom}</span><span class="prix">{eur(t.prix)}</span></div>)}
         <p class="note">{tarifsNote}</p>
       </div>
-      <div class="deux__b">
+      <div class="deux__b" data-reveal="up" data-delay="0.1">
         <p>Pour connaître la carte du jour et les prix à jour, le plus simple est d’appeler le café.</p>
         <div class="ctas"><a class="btn" href={u('/reservation/')}><span>Réserver</span></a></div>
       </div>

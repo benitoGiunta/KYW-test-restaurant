@@ -5,28 +5,29 @@ import { u } from '../lib/url';
 ---
 <Base page="histoire" title="Histoire" description="L’histoire du Café Fleuri, né en 2020 rue des Fossés Fleuris à Namur du succès des brunchs du Bistro Bisou.">
   <section class="sec page-tete" aria-labelledby="titre-histoire">
+    <div class="tete-plates" aria-hidden="true"><span class="plate-pose plate-pose--f"><i class="plate" data-deborde="0.7" data-derive></i></span></div>
     <div class="wrap">
-      <h1 class="display" id="titre-histoire">Histoire</h1>
-      <p class="lead">Un café ouvert parce qu’une salle ne suffisait plus.</p>
+      <h1 class="display" id="titre-histoire" data-split="lines" data-intro>Histoire</h1>
+      <p class="lead" data-reveal="fade" data-intro data-delay="0.35">Un café ouvert parce qu’une salle ne suffisait plus.</p>
     </div>
   </section>
 
   <section class="sec bloc" aria-label="Chronologie">
     <div class="wrap">
       <ol class="frise">
-        {histoire.map((h) => <li><p class="frise__quand">{h.quand}</p><p class="frise__texte">{h.texte}</p></li>)}
+        {histoire.map((h) => <li data-reveal="up"><p class="frise__quand">{h.quand}</p><p class="frise__texte">{h.texte}</p></li>)}
       </ol>
     </div>
   </section>
 
   <section class="sec bloc" aria-labelledby="titre-lieu">
     <div class="wrap deux deux--decale">
-      <div class="deux__a">
+      <div class="deux__a" data-reveal="up">
         <h2 class="display" id="titre-lieu">Un petit lieu, plein quand même.</h2>
         <p>Le café est décrit comme un lieu cocooning, avec une terrasse, au centre historique de Namur. On y vient pour le brunch, le gravlax, les pancakes et les limonades faites maison.</p>
         <p>L’équipe n’est pas encore présentée sur cette maquette : aucun nom n’a pu être confirmé.</p>
       </div>
-      <div class="deux__b">
+      <div class="deux__b" data-reveal="up" data-delay="0.1">
         <p class="chiffre"><span class="tnum">{reputation.note}</span><small>sur {reputation.sur}, {reputation.avis} avis</small></p>
         <p class="note">{reputation.source}. Les clients citent le brunch, les desserts et la limonade à la framboise.</p>
       </div>
@@ -35,8 +36,8 @@ import { u } from '../lib/url';
 
   <section class="sec sec--salle bloc" aria-label="Réserver">
     <div class="wrap deux">
-      <div class="deux__a"><p class="display" style="font-size: var(--t-xl)">Une place à table ?</p></div>
-      <div class="deux__b"><div class="ctas"><a class="btn" href={u('/reservation/')}><span>Réserver</span></a></div></div>
+      <div class="deux__a" data-reveal="up"><p class="display" style="font-size: var(--t-xl)">Une place à table ?</p></div>
+      <div class="deux__b" data-reveal="up" data-delay="0.1"><div class="ctas"><a class="btn" href={u('/reservation/')}><span>Réserver</span></a></div></div>
     </div>
   </section>
 </Base>

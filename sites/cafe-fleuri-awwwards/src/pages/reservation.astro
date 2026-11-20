@@ -5,15 +5,16 @@ const a = site.adresse;
 ---
 <Base page="reservation" title="Réserver" description="Réserver au Café Fleuri, rue des Fossés Fleuris 38 à Namur : téléphone, e-mail, adresse, horaires et plan.">
   <section class="sec page-tete" aria-labelledby="titre-resa">
+    <div class="tete-plates" aria-hidden="true"><span class="plate-pose plate-pose--a"><i class="plate" data-deborde="0.7" data-derive></i></span></div>
     <div class="wrap">
-      <h1 class="display" id="titre-resa">Réserver</h1>
-      <p class="lead">Un appel, un message : la table se garde auprès du café.</p>
+      <h1 class="display" id="titre-resa" data-split="lines" data-intro>Réserver</h1>
+      <p class="lead" data-reveal="fade" data-intro data-delay="0.35">Un appel, un message : la table se garde auprès du café.</p>
     </div>
   </section>
 
   <section class="sec bloc" aria-label="Contact">
     <div class="wrap deux">
-      <div class="deux__a">
+      <div class="deux__a" data-reveal="up">
         <a class="tel-geant lien" href={`tel:${site.telephone}`}>{site.telephoneAffiche}</a>
         <div class="ctas">
           <a class="btn" href={`tel:${site.telephone}`}><span>Appeler le café</span></a>
@@ -21,7 +22,7 @@ const a = site.adresse;
         </div>
         <p class="note">Il n’y a pas de réservation en ligne sur cette maquette. L’adresse e-mail ({site.email}) est à confirmer.</p>
       </div>
-      <div class="deux__b">
+      <div class="deux__b" data-reveal="up" data-delay="0.1">
         <h2 class="display" style="font-size: var(--t-m)">Adresse</h2>
         <address>{a.rue} {a.numero}<br />{a.cp} {a.commune}</address>
         <a class="lien" href={site.plan} rel="noopener">Ouvrir le plan</a>
@@ -31,14 +32,14 @@ const a = site.adresse;
 
   <section class="sec sec--salle bloc" aria-labelledby="titre-horaires">
     <div class="wrap deux">
-      <div class="deux__a">
+      <div class="deux__a" data-reveal="up">
         <h2 class="display" id="titre-horaires" style="font-size: var(--t-l)">Horaires</h2>
         <dl class="horaires">
           {horaires.jours.map((j) => <><dt>{j}</dt><dd>{horaires.de} à {horaires.a}</dd></>)}
         </dl>
         <p class="note">{horaires.note}</p>
       </div>
-      <div class="deux__b">
+      <div class="deux__b" data-reveal="up" data-delay="0.1">
         <h2 class="display" style="font-size: var(--t-m)">Avant de venir</h2>
         <p>Le café se trouve dans la rue des Fossés Fleuris, au centre historique de Namur, à quelques numéros du Bistro Bisou (44 et 46). Il dispose d’une terrasse.</p>
         <p>{mardi}</p>
