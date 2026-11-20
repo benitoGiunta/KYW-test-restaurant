@@ -1,25 +1,20 @@
-# ETAT · le-brunchist · variante legacy · fin de la phase 1 (construction-1)
+# ETAT · le-brunchist · variante legacy · fin de la phase 2 (construction-2)
 
-## Fait
-- AUDIT.md (site d'origine illisible : anti-robot), DESIGN.md (Picks, thème Vellum, composants), comp.md (2 comps, c1 choisie).
-- Paquet Astro complet : `src/data/site.ts`, `layouts/Base.astro`, 7 composants, `pages/index.astro` et `404.astro`, `styles/{tokens,base,page}.css` (stamp en tête).
-- Contenu : uniquement des données du dossier ; plats cités par des sources tierces avec compositions illustratives (`data-placeholder`) ; aucun prix ; avis Google et titres de presse repris mot pour mot.
-- Photos : 3 photos libres provisoires (matcha, croissant, coin de salle), WebP, créditées au pied. Non utilisées et supprimées : tabourets de bar, grains de café.
-- Build : `pnpm build:site sites/le-brunchist-legacy` passe (`dist/le-brunchist/legacy/`). sloplint --render : seuls restent les FAIL 48 du paquet kyw-footer (jamais modifié) ; waivers 49b, 59 ; dismissed 42, 25 ; answered F4.
-- Switcher de la carte : script minimal déjà en place (Base.astro).
+## Fait (phases 1 et 2)
+- Phase 1 : AUDIT.md, DESIGN.md, comp.md, paquet Astro complet (one-page + 404), contenu issu du dossier uniquement.
+- Phase 2 : menu mobile `<dialog>` (nav sans script conservée), Appeler en contour dans la barre, section courante, ligne du jour des horaires (signature), Switcher complet au clavier (Début/Fin, panneaux focusables), fondu de panneau, bouton enfoncé 1 px, indications « nouvel onglet », token `--color-scrim`, safe-area, `scroll-padding-top`, cadre du hero carré (68 dvh).
+- Motion : thème still, pas de reveal (voulu, voir DESIGN.md § Phase 2). Pas de formulaire (aucun outil de réservation connu).
+- Hero review en auto-notation `self` : fix, 1 finding résolu (photo 53 % -> 68 % de la hauteur du premier écran). Comp reproduite à 1280x800.
+- Mesures navigateur (Playwright, 375, 320, 1440, 1920) : aucun débordement horizontal, aucune erreur console, menu ouvert/fermé (Échap, lien), focus initial « Carte », ligne du jour posée, sticky à 0.
+- Build : `scripts/q.sh build pnpm build:site sites/le-brunchist-legacy` passe ; sloplint sur copie aplatie : 7 FAIL, tous du paquet `kyw-footer` (jamais modifié). `dist/le-brunchist/legacy/` à jour (index et 404 : noindex, pied KYW).
 
-## Reste (phases 2 et 3)
-- Phase 2 : menu mobile (nav masquée sous 60 rem), jour courant des horaires, un reveal au plus, états des contrôles, QA navigateur, captures 375/1440/1920, Switcher au clavier.
-- Phase 3 : sweep, juges, RAPPORT.md, commit `[publier]` final avec `pnpm index`.
-- Relire `anatomy.md`, `imagery.md`, `craft.md`, `gates.md` § 1-4, `patterns.md` (lus par extraits seulement en phase 1).
+## Reste (phase 3)
+- Captures complètes 375/1440/1920 (agent captures), sweep, juges, RAPPORT.md, commit `[publier]` final avec `pnpm index`.
+- Titre du hero en 4 lignes à 1440 (comp : 3) : choix gardé, à rejuger sur capture.
+- WARN 28a sloplint sur Carte et Lieu : faux positifs (images sous le pli, `lazy` voulu ; le LCP est la photo du hero en `fetchpriority="high"`).
 
-## Décisions et hypothèses
-- Site d'origine inconnu : one-page + 404 supposés.
-- Pas de réservation (aucun outil connu) : action = Appeler (`tel:+32474069227`) et Itinéraire (lien Google Maps construit sur l'adresse).
-- Swaps du draw : barre de recherche, barre de réservation, créneaux, carte midi/soir remplacés (voir DESIGN.md).
-- Horaires mer.-dim. 9 h 30 à 15 h 30 (Namur CentreVille) ; sources contradictoires : à confirmer. Adresse Place d'Armes 8 (ancienne : Rue des Brasseurs 39) ; téléphone récent 0474 06 92 27.
-- `.fill` (2) : prix, réservation. À vérifier : ouverture 2022 par Mélisande et Arnaud (ELLE.be), vaisselle vintage, terrasse, options végétales, deux extraits d'avis en anglais.
-
-## Pièges
-- sloplint doit tourner sur une copie aplatie (voir data/usage/test-1/lecons-proposees/le-brunchist.md) ; script du scratchpad `bl-lint.sh`.
-- Grenze Gotisch : jamais sous 30 px ni en h3 ; éviter une tête commençant par I.
+## Hypothèses et pièges
+- Pas de sous-agent possible en session d'agent : hero review et jury sont des auto-notations `self`.
+- Le serveur de dev Astro affiche une barre d'outils sombre en bas des captures : artefact du mode dev, absent du build.
+- Un `<h4>` sans `margin: 0` écartait nom et description des rangées de la carte (corrigé) ; les captures à `scrollIntoView` pendant le défilement doux montrent une barre décalée : attendre ou couper `scroll-behavior`.
+- Garder : Grenze Gotisch jamais sous 30 px ni en h3 ; sloplint seulement sur copie aplatie (`bl-lint.sh` du scratchpad).

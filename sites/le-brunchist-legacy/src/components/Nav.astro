@@ -1,14 +1,35 @@
 ---
 import { resto, base } from '../data/site';
+const liens = [
+  { href: `${base}#carte`, nom: 'Carte' },
+  { href: `${base}#lieu`, nom: 'Le lieu' },
+  { href: `${base}#horaires`, nom: 'Horaires' },
+];
 ---
 <header class="nav">
   <div class="container nav__in">
     <a class="nav__mark" href={base} aria-label="Le Brunchist, accueil">Le Brunchist</a>
     <nav class="nav__links" aria-label="Sections">
-      <a href={`${base}#carte`}>Carte</a>
-      <a href={`${base}#lieu`}>Le lieu</a>
-      <a href={`${base}#horaires`}>Horaires</a>
+      {liens.map((l) => <a href={l.href}>{l.nom}</a>)}
     </nav>
-    <a class="btn btn--sm" href={resto.telHref}>Appeler</a>
+    <a class="btn btn--ligne btn--sm nav__call" href={resto.telHref}>Appeler</a>
+    <button class="btn btn--ligne btn--sm nav__burger" type="button" aria-haspopup="dialog" aria-controls="menu" data-menu-open>Menu</button>
   </div>
+  <dialog class="menu" id="menu" aria-label="Menu">
+    <div class="menu__in">
+      <div class="menu__bar">
+        <span class="menu__mark" aria-hidden="true">Le Brunchist</span>
+        <button class="btn btn--ligne btn--sm" type="button" data-menu-close>Fermer</button>
+      </div>
+      <nav aria-label="Sections, menu">
+        <ul class="menu__list">
+          {liens.map((l, i) => <li><a href={l.href} data-menu-close autofocus={i === 0}>{l.nom}</a></li>)}
+        </ul>
+      </nav>
+      <p class="menu__foot">
+        <a class="btn" href={resto.telHref}>Appeler le café</a>
+        <span class="menu__tel">{resto.telAffiche}</span>
+      </p>
+    </div>
+  </dialog>
 </header>

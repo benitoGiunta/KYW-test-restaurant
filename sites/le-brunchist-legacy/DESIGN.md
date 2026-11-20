@@ -34,3 +34,34 @@ Source de vérité : `src/styles/tokens.css` (Vellum). Papier `oklch(94% 0.024 8
 - [x] 3. sloplint --render lancé sur une copie à chemins relatifs · preuve : `.logs/bl-sl.log` ; FAIL restants uniquement ceux du paquet `kyw-footer` (48, jamais modifié)
 - [x] 4. Photos de la bibliothèque, créditées, `data-alt` = ce que la vraie photo devra montrer · preuve : `src/data/site.ts` `photos`
 - [ ] 5. Références non lues en entier faute de budget : `anatomy.md`, `imagery.md`, `craft.md`, `gates.md` § 1 à 4 et `patterns.md` consultés par extraits seulement ; à relire en phase 2.
+
+## Phase 2 : mouvement, états, mobile
+- **Motion** : Vellum est `still` (vellum.md § Motion). Aucun reveal, aucun parallax, aucune boucle : le point 22 est sans objet, le contenu est visible sans script. Seuls mouvements : lavis de ligne et soulignement au survol, bouton enfoncé de 1 px (`:active`), fondu de 120 ms du panneau de la carte, fondu de 220 ms du menu `<dialog>` (sortie 120 ms). Réduit : `base.css` ramène toute durée à 0,01 ms et le défilement doux n'existe que sous `no-preference`.
+- **Signature** : la ligne du jour du livre des horaires (heure de Namur, `Intl`) est posée par script en papier sur le champ ultramarine, avec « Aujourd’hui » ; sans script, le registre reste complet et neutre.
+- **Nav** : barre à bords alignés ; l'action Appeler passe en contour (le primaire plein est celui du hero, jamais deux pleins côte à côte). Sous 60 rem : bouton « Menu » qui ouvre un `<dialog>` modal (Échap, Fermer, lien, fond), premier focus sur « Carte », défilement du corps bloqué. Sans script : les trois liens restent visibles sous la barre. Section courante soulignée en encre (IntersectionObserver). `scroll-padding-top` = hauteur de barre + 16 px.
+- **Formulaire** : aucun. Aucun outil de réservation connu, action = appeler ou s'y rendre (ETAT phase 1) ; rien à poster, donc 29 est vérifié par absence.
+- **Switcher** : flèches, Début, Fin ; panneaux focusables (`tabindex="0"`) ; tous visibles sans script.
+- **Mobile** : 60 rem et 40 rem, `dvh`, safe-area dans les gouttières du conteneur et du menu, cibles 44 px sur pointeur grossier, aucun débordement à 320, 375, 1440, 1920 (mesuré).
+- **Hero review** (auto-notation `self`, aucun sous-agent disponible en session d'agent) : `hero-review: fix · 1 finding · 1 resolved` : la photo tenait 53 % de la hauteur du premier écran à 1440x900 (règle : 60 %) ; cadre carré plafonné à 68 dvh, 68 % mesuré. Titre de 7 mots, contenu centré, un primaire plein et un contour.
+- **Comp** : `comp: 2 built, no key · c1 chosen · reproduced (checked at 1280x800)`. Masse : texte à gauche sur 5 colonnes, photo à droite sur 7, repro fidèle. Intervalle : la comp serrait titre et chapeau, le site a un chapeau et deux actions plus aérés. Entrée : la photo entre sans animation, comme la comp. Plus grand écart : titre en 4 lignes (colonne `12ch`) contre 3 dans la comp ; gardé, le gothique à 84 px garde sa masse.
+
+## Sur-utilisation (phase 2)
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie · preuve : `grep` 0 occurrence, page.css (transitions listées, `opacity`/`transform`/couleurs)
+- [x] 6. `:focus-visible` partout, instantané, 3:1 · preuve : base.css:6, page.css:26, :103, :108, :146
+- [x] 7. Fallback reduced motion sur chaque animation ; contenu visible sans script · preuve : base.css:25 ; test sans JS (panneaux `block`, liens visibles)
+- [x] 17. Hero en `dvh` · preuve : page.css `.hero` (`calc(100dvh - var(--nav-h))`), `.frame--hero` 68dvh
+- [x] 19. Sticky non superposés · preuve : un seul sticky (`.nav`, `--z-sticky-nav`), `navTop` 0 mesuré après défilement
+- [x] 20. Radios-onglets gardés · preuve : sans objet, onglets `role="tab"` sur boutons masqués sans `.js`
+- [x] 21. Vidéo de fond · preuve : sans objet, aucune vidéo
+- [x] 22. Reveal sous `.js` seulement · preuve : sans objet, thème still, aucun reveal
+- [x] 23. États d'input · preuve : sans objet, aucun champ
+- [x] 24. Tooltip et auto-rotation · preuve : sans objet, ni l'un ni l'autre
+- [x] 29. Aucun faux envoi · preuve : aucun formulaire
+- [x] 30. SVG décoratifs `aria-hidden` · preuve : aucun SVG en balise ; grain en `background-image` CSS
+- [x] 48. Hover : un signal, conteneur, pas de rebond, pas de toast · preuve : page.css `@media (hover: hover)`
+- [x] 49. `:active`, `:disabled`, contrôles 44 à 52 px · preuve : page.css `.btn` (48), `.btn--sm` 44 en `pointer: coarse`, onglets 48, lignes du menu 64
+- [x] 56. Un primaire rempli · preuve : hero `.btn` seul plein, nav en contour, `.btn--clair` sur la bande (answered F4)
+- [x] 58. Une recette de conteneur, un pattern de scroll · preuve : pas de pilule, aucune chorégraphie de scroll
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` · preuve : base.css:3-5
+- [x] 72. Responsive · preuve : captures `.shots/bl2/` 375 et 320 sans débordement, `dvh`, safe-area (base.css `.container`, page.css `.menu__in`)
+- [ ] 5. (phase 1) références non lues en entier : toujours consultées par extraits (microinteractions.md, vellum.md § Motion, review-hero.md lus en phase 2) ; à clore en phase 3.

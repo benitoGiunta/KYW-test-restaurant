@@ -59,11 +59,40 @@ const ld = JSON.stringify({
           o.addEventListener('click', () => choisir(i));
           o.addEventListener('keydown', (e) => {
             const n = onglets.length;
-            if (e.key === 'ArrowRight') { e.preventDefault(); choisir((i + 1) % n, true); }
-            if (e.key === 'ArrowLeft') { e.preventDefault(); choisir((i - 1 + n) % n, true); }
+            const cible = e.key === 'ArrowRight' ? (i + 1) % n : e.key === 'ArrowLeft' ? (i - 1 + n) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1;
+            if (cible >= 0) { e.preventDefault(); choisir(cible, true); }
           });
         });
       });
+
+      // Menu mobile : <dialog> modal, fermé par Échap (natif), le bouton, un lien ou le fond
+      const menu = document.getElementById('menu') as HTMLDialogElement | null;
+      const ouvrir = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+      if (menu && ouvrir && typeof menu.showModal === 'function') {
+        ouvrir.addEventListener('click', () => menu.showModal());
+        menu.querySelectorAll('[data-menu-close]').forEach((b) => b.addEventListener('click', () => menu.close()));
+        menu.addEventListener('click', (e) => { if (e.target === menu) menu.close(); });
+        matchMedia('(min-width: 60.001rem)').addEventListener('change', (m) => { if (m.matches && menu.open) menu.close(); });
+      } else if (ouvrir) { ouvrir.hidden = true; }
+
+      // Livre du jour : la ligne d'aujourd'hui (heure de Namur) est marquée dans les horaires
+      const jour = new Intl.DateTimeFormat('fr-BE', { weekday: 'long', timeZone: 'Europe/Brussels' }).format(new Date());
+      const ligne = Array.from(document.querySelectorAll<HTMLElement>('.hours__row')).find((r) => (r.dataset.jour || '').toLowerCase() === jour.toLowerCase());
+      if (ligne) {
+        ligne.setAttribute('aria-current', 'date');
+        const dt = ligne.querySelector('dt');
+        if (dt) { const m = document.createElement('span'); m.className = 'hours__now'; m.textContent = 'Aujourd’hui'; dt.append(m); }
+      }
+
+      // Section courante dans la barre : un seul signal (soulignement), posé par IntersectionObserver
+      const liens = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav__links a'));
+      const cibles = liens.map((a) => document.getElementById((a.hash || '').slice(1))).filter(Boolean) as HTMLElement[];
+      if (cibles.length && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((es) => {
+          es.forEach((e) => { if (e.isIntersecting) liens.forEach((a) => { if (a.hash === '#' + e.target.id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); }); });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        cibles.forEach((c) => io.observe(c));
+      }
     </script>
   </body>
 </html>
