@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const s = { hour: 11, target: 11, lean: 0, sweep: 0, speed: 0, idle: false };
 const GROUNDS: Record<string, string> = { midi: '#eef0e8', apres: '#dce7dd', soir: '#1e4a40', nuit: '#0f2d27' };
-const IDLE_AFTER = 1200; // ms sans entrée avant le repos
+const IDLE_AFTER = 800; // ms sans entrée avant le repos
 const SWEEP = 36; // degrés par seconde en repos (un tour en 10 s)
 
 let clock: HTMLElement | null = null;
