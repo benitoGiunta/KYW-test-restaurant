@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Photo from '../components/Photo.astro';
+import Footer from '../components/Footer.astro';
+const ordre = ['facade','baies','coupelles','comptoir','tartare','tables','terrasse','burger','mur-bois','coupe-glacee','banquettes','salade','terrasse-tables','verres','viande-croquette','bar-fond','horloge','irish-coffee','fauteuils','lampes','veranda','terrasse-rue'];
+---
+<Base title="Galerie, Mr Edgard, Saint-Servais" description="Photographies de la Brasserie Edgard : la façade, la salle en bois sculpté, la terrasse couverte et les plats.">
+  <Nav current="galerie/" />
+  <main id="contenu">
+    <header class="pagehead">
+      <div class="container grid12 pagehead__grid">
+        <div class="head"><h1>Galerie</h1><p class="lead">La façade, la salle, la terrasse et la table.</p></div>
+      </div>
+    </header>
+    <div class="container gallery">
+      {ordre.map((n) => <Photo name={n} sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 50vw, 100vw" />)}
+    </div>
+  </main>
+  <Footer />
+</Base>

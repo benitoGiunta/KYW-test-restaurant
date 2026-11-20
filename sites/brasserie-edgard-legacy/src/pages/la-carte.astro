@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Photo from '../components/Photo.astro';
+import Reservation from '../components/Reservation.astro';
+import Footer from '../components/Footer.astro';
+import { categories, prix } from '../data/site';
+const photoPar: Record<string, { name: string; caption: string }> = {
+  entrees: { name: 'tartare', caption: 'Tartare de bœuf et frites.' },
+  pates: { name: 'volaille-pates', caption: 'Viande grillée et pâtes au parmesan.' },
+  desserts: { name: 'coupe-glacee', caption: 'Coupe glacée aux fraises et chantilly.' },
+};
+---
+<Base title="La carte, Mr Edgard, brasserie à Saint-Servais" description="La carte de la Brasserie Edgard : entrées, viandes, poissons, pâtes fraîches, salades, menu enfants et desserts, avec les prix.">
+  <Nav current="la-carte/" />
+  <main id="contenu">
+    <header class="pagehead">
+      <div class="container grid12 pagehead__grid">
+        <div class="head">
+          <h1>La carte</h1>
+          <p class="lead">Entrées, viandes, poissons, pâtes, salades, desserts et un menu pour les enfants.</p>
+        </div>
+        <ul class="pagehead__index">
+          {categories.map((c) => <li><a href={`#${c.id}`}>{c.court}</a></li>)}
+        </ul>
+      </div>
+    </header>
+    {categories.map((c) => (
+      <section class="cat" id={c.id} aria-labelledby={`${c.id}-t`}>
+        <div class="container grid12">
+          <div class="head">
+            <h2 id={`${c.id}-t`}>{c.categorie}</h2>
+            {photoPar[c.id] && <Photo name={photoPar[c.id].name} caption={photoPar[c.id].caption} sizes="(min-width: 60rem) 30vw, 100vw" />}
+          </div>
+          <ul class="rows">
+            {c.plats.map((p) => (
+              <li><h3>{p.nom}</h3>{p.description && <p>{p.description}</p>}<span class="price">{prix(p.prix)}</span></li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))}
+    <div class="container carte-note"><p>À emporter, un supplément d’emballage de {prix(0.6)} est compté.</p></div>
+    <Reservation photo="veranda" caption="L’espace lumineux côté terrasse couverte." />
+  </main>
+  <Footer />
+</Base>

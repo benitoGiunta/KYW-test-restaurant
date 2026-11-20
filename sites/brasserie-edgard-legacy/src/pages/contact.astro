@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Horaires from '../components/Horaires.astro';
+import Reservation from '../components/Reservation.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+---
+<Base title="Contact et accès, Mr Edgard, Saint-Servais" description="Adresse, téléphone et horaires de la Brasserie Edgard, Chaussée de Waterloo 473 à Saint-Servais (Namur).">
+  <Nav current="contact/" />
+  <main id="contenu">
+    <header class="pagehead">
+      <div class="container grid12 pagehead__grid">
+        <div class="head"><h1>Contact</h1><p class="lead">Chaussée de Waterloo, à Saint-Servais.</p></div>
+      </div>
+    </header>
+    <section class="sec contact" aria-label="Coordonnées et horaires">
+      <div class="container grid12">
+        <div class="head">
+          <dl class="coords">
+            <div><dt>Adresse</dt><dd>{site.adresse.rue}<br />{site.adresse.ville}<br /><a class="link" href={site.maps} rel="noopener">Voir sur la carte</a></dd></div>
+            <div><dt>Téléphone</dt><dd><a class="link" href={site.telHref}>{site.tel}</a></dd></div>
+            <div><dt>E-mail</dt><dd><a class="link" href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+            <div><dt>Suivez-nous</dt><dd><a class="link" href={site.facebook} rel="noopener">Facebook</a> <a class="link" href={site.tripadvisor} rel="noopener">Tripadvisor</a></dd></div>
+          </dl>
+          <form class="news" name="Newsletter" method="post" data-endpoint="" novalidate>
+            <div class="field"><label for="news-email">Newsletter : inscrivez-vous pour être informé de nos actualités.</label><input type="email" id="news-email" name="user[email]" autocomplete="email" required /><button class="btn" type="submit">Inscription</button></div>
+            <p class="form__note">Maquette : l’inscription n’est pas active.</p>
+          </form>
+        </div>
+        <Horaires />
+      </div>
+    </section>
+    <Reservation photo="terrasse-rue" caption="La terrasse, vue de la rue." />
+  </main>
+  <Footer hours={false} />
+</Base>
