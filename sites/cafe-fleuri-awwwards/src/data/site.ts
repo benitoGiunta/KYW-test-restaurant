@@ -62,16 +62,16 @@ export const tarifsNote = 'Tarifs relevés dans un guide, anciens, donnés à ti
 export const histoire = [
   { quand: '2020', texte: 'Le Café Fleuri ouvre au 38, rue des Fossés Fleuris, comme second lieu du Bistro Bisou, au 44 et 46 : les brunchs du Bisou étaient trop demandés.' },
   { quand: 'Peu après', texte: 'Le Covid ferme la porte presque aussitôt. Le café est réaménagé.' },
-  { quand: 'Ensuite', texte: 'Il rouvre, petit lieu cocooning avec terrasse, et sert un brunch tous les jours.' },
+  { quand: 'Ensuite', texte: 'Il rouvre, petit lieu cocooning avec terrasse, et tourne autour du brunch.' },
 ];
 
 export const maison = [
-  { mot: 'Gravlax', texte: 'Le saumon est préparé sur place, servi avec les œufs Benedict ou en pancakes, au mascarpone et à l’aneth.' },
+  { mot: 'Gravlax', texte: 'Le gravlax de saumon maison est servi avec les œufs Benedict ou en pancakes, au mascarpone et à l’aneth.' },
   { mot: 'Granola', texte: 'Fait maison, il accompagne le brunch sucré.' },
   { mot: 'Limonade', texte: 'Maison aussi, à la framboise, avec le thé glacé à la pêche.' },
   { mot: 'Pain perdu', texte: 'Une tranche, avec les deux pancakes et le sirop d’érable.' },
 ];
 
 export const mardi = 'Le mardi, une boisson offerte aux étudiants avec un brunch.';
-export const reputation = { note: '4,2', sur: '5', avis: 223, source: 'Google, relevé par Wanderlog' };
+export const reputation = { note: '4,2', sur: '5', avis: 223, source: 'Google, source tierce' };
 export const photos: { fichier: string; alt: string; credit: string }[] = [];
