@@ -32,7 +32,7 @@ export const restaurant = {
     { nom: 'Soir', de: '18 h', a: '22 h' },
   ],
   jours: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
-  note: 'Tous les jours durant les congés scolaires, selon le site du restaurant.',
+  note: 'Tous les jours durant les congés scolaires.',
 };
 
 export type Plat = { nom: string; description: string | null; prix: number; placeholder?: boolean };

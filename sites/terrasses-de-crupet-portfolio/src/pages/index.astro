@@ -118,7 +118,6 @@ const etoiles = Array.from({ length: 5 });
   <section class="section section--blanc avis" id="avis" data-avis>
     <p class="display avis__mot" aria-hidden="true" data-avis-mot>Avis</p>
     <div class="wrap">
-      <p class="meta" style="text-align:center">Exemples d’avis (illustratifs)</p>
       <h2 class="sr-only">Avis</h2>
       <div class="avis__cartes">
         {avisVrai && (
@@ -128,12 +127,11 @@ const etoiles = Array.from({ length: 5 });
             <cite>{avisVrai.auteur}</cite>
           </blockquote>
         )}
-        {g.avisExemples.map((a) => (
-          <blockquote class="carte-avis" data-carte-avis style={`--r:${a.r}deg`}>
-            <span class="carte-avis__etiq">Exemple d’avis, texte illustratif</span>
-            <p>{a.texte}</p>
+        {!avisVrai && (
+          <blockquote class="carte-avis" data-carte-avis style="--r:-2deg">
+            <p>Une table, un moment hors du temps : on vous attend à Crupet, dans la salle ou sur la terrasse.</p>
           </blockquote>
-        ))}
+        )}
       </div>
     </div>
   </section>
