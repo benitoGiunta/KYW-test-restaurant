@@ -1,0 +1,43 @@
+# Revue awwwards · Brasserie Edgard · passe 1
+Verdict : A_CORRIGER
+Lecture en une ligne de l'idée du site (sans avoir lu DESIGN.md) : le cadran d'une horloge de brasserie (clin d'œil à l'horloge murale de la salle) sert d'emblème et de mode d'emploi des horaires, avec un statut « ouvert maintenant » calculé à l'heure de Namur et un rideau de bois qui balaie l'écran comme une aiguille.
+
+Scores /10 :
+- Design 7,5 : palette crème, bois sombre, bordeaux et orange, serif display tenu, photos du client bien cadrées ; hero au cadran lisible à 1440 et 390 (`d-01-hero`, `m-01-hero`). Retrait : la bande « 14,50 € / Jusqu'à 16 / 7 j / 7 » est un trio de chiffres égaux (`d-06-scroll`).
+- Usabilité 7 : statut juste sous horloge, CTA réserver et téléphone partout, 0 débordement, 0 focus invisible ; mais onglets de la carte tronqués au mobile sans indice (`brasserie-edgard-item/m-02-scroll`) et 404 sans lien d'évitement.
+- Créativité 8 : l'idée « cadran = horaires » est propre à ce lieu et fonctionne (aiguille qui tourne jusqu'à l'heure, arc courant, rideau en secteur : `d-90-transition-a/b/c`). Statut testé à 7 instants, tous exacts (voir preuves).
+- Contenu 6,5 : faits conformes au dossier (adresse, téléphone, horaires, prix, Barestho, Facebook), rien d'inventé sur l'histoire ni les avis ; mais la page « La maison » parle avec la voix de l'agence, des heures répétées 6 fois et un pléonasme.
+- Technique 7,5 : build OK, 0 erreur console, 0 requête en échec, CLS 0,006, LCP mobile 1224 ms (accueil) et 2008 ms (carte), 0 débordement (5 pages) ; mais un `aria-label` interdit sur `p.pied__mot` (axe sérieux) et un contraste sur la 404.
+
+## Preuves complémentaires (captures ciblées, pas de shoot complet)
+Le crawl du shoot n'a capturé que l'accueil, la carte et une 404 de test. J'ai relu moi-même `a-propos` et `reservation` (script Playwright, axe wcag2a/aa après 3 s de repos, 1440 et 390 px) : 0 erreur console, 0 requête en échec, `scrollWidth` = largeur, 0 cible < 24 px, 1 violation axe sérieuse par page (F1-1). Les captures pleine page de ces deux pages montrent des blocs non révélés (reveal au défilement) : artefact de la capture, non retenu comme défaut.
+Statut du hero sous `page.clock` (Europe/Brussels) : mar. 09 h « Fermé pour l'instant. La salle ouvre à 10 h. » ; mar. 12 h « cuisine ouverte jusqu'à 15 h » ; mar. 16 h « cuisine en pause, elle rouvre à 18 h » ; sam. 16 h « cuisine ouverte sans pause » ; mar. 20 h « jusqu'à 22 h 30 » ; mar. 23 h « Fermé pour ce soir. Retour demain à 10 h. » ; mer. 11/11 (férié) 16 h « sans pause ». Tous conformes à `donnees.json` (cuisine fermée 15 h à 18 h sauf week-end et jours fériés).
+Textes comparés à `donnees.json` : nom, adresse, +32 81 46 08 00, horaires, Barestho, Facebook, e-mail (avec l'avertissement du site), prix du tartare 22,10, brochettes dès 25,70, burger 22,90, coupes dès 9,50 / 10,20, porketto 68,00, moules 27,90 à 31,90, groupes 34 / 39 / 49 (plus de 10, max 16), emballage 0,60, soit 0 `T-faux`. 86 lignes de carte = 71 plats + 10 suggestions + 5 menus. Pages : 1 `h1`, `lang="fr"`, `noindex`, mention « Maquette KYW, certaines données sont illustratives » et un seul `kyw-signature` sur les 5 pages ; JSON-LD `Restaurant` avec adresse, géo et horaires ; liens externes conformes ; `og.png` présent.
+
+## Findings
+### F0 bloquant
+Aucun.
+
+### F1 majeur
+- **F1-1 · axe `aria-prohibited-attr` (sérieux)** sur `p.pied__mot[data-split="lines"]` : `aria-label="Dix heures, vingt-deux heures trente."` sur un `<p>` sans rôle (ajouté par le découpage de lignes, `src/engine/` reveal/split). Mesuré sur `a-propos` et `reservation` à 1440 et 390 ; le pied est identique sur les 5 pages. Le shoot du QA donnait 0 violation axe sur l'accueil et la carte : jeu de règles ou moment de mesure différents (je n'ai pas remesuré l'accueil). Correction : ne pas poser `aria-label` sur le `<p>` (laisser le texte lisible, ou `role="text"`/`aria-hidden` sur les lignes générées, ou `aria-label` sur un élément avec rôle), puis remesurer les 5 pages avec axe wcag2a/aa.
+
+### F2 mineur
+- **F2-1 · Voix de l'agence sur la page « La maison »** (`src/pages/a-propos.astro`, 4e et 5e paragraphes) : « L'année d'ouverture et l'histoire de la maison ne nous ont pas été transmises : nous préférons les laisser vides plutôt que les inventer. » et « Le cassolet des suggestions est celui de "notre chef Titi", nommé ainsi sur la carte. » Un site de restaurant ne parle pas de ses données manquantes ; « nous » désigne ici l'agence. Correction : supprimer ces deux phrases (l'absence d'histoire se note dans RAPPORT.md) ; si on garde le chef, écrire « Le cassolet des suggestions est celui du chef Titi » sans renvoi à la carte.
+- **F2-2 · « bâtiment bas » non sourcé** (a-propos, 1er paragraphe) : ni `dossier.md` ni `photos/index.json` ne le disent (la façade de nuit est le seul indice). Correction : « La brasserie est installée chaussée de Waterloo, à Saint-Servais. Son enseigne, Mr Edgard, s'allume la nuit sur la façade. » Incohérence voisine : l'accueil parle de « chaises en cuir caramel », la maison de « banquettes en cuir caramel » (dossier : « banquettes cuir ») ; harmoniser sur « banquettes ».
+- **F2-3 · Pléonasme** (accueil, bande Lunch et groupes) : « Jusqu'à 16 / Convives pour une table de groupe, à partir de plus de 10. » Correction : « Jusqu'à 16 convives. Table de groupe à partir de 11 personnes, trois formules de 34,00 € à 49,00 €. »
+- **F2-4 · Heures répétées** : « 10 h à 22 h 30 » revient au moins 6 fois sur l'accueil (hero, méta, « Une journée qui tourne », bande « 7 j / 7 », pied, titre du pied) et la bande « 14,50 € / Jusqu'à 16 / 7 j / 7 » est un trio de chiffres égaux (`d-06-scroll`) dont le 3e (« 7 j / 7 ») répète le hero. Correction : retirer « 7 j / 7 » ou le remplacer par un fait nouveau du dossier (emporter, supplément 0,60 €), et ne répéter les heures que dans le cadran et le pied.
+- **F2-5 · Onglets de la carte tronqués au mobile** (`brasserie-edgard-item/m-02-scroll`, `m-03`, `m-04`) : la barre sticky montre « Suggestions du moment · Lunch · Entrées · Le coin du… », les autres catégories sont hors champ sans ombre ni indice de défilement. Correction : fondu de bord à droite ou `scroll-snap` avec onglet suivant entrevu à moitié, et `scrollIntoView` de l'onglet actif.
+- **F2-6 · Page 404** (`404/report.json`) : axe `color-contrast` sérieux (2 nœuds), lien « la page d'accueil » 128 × 20 px (cible < 24), pas de lien « Aller au contenu » en premier arrêt clavier, sortie du focus hors page en fin de parcours (`body: focus left the page`). Correction : contraste ≥ 4,5 : 1 sur le texte de la 404, lien en `display:inline-block` avec `min-height:24px`, skip link présent comme sur les autres pages.
+- **F2-7 · En-tête fixe translucide** (`src/styles/site.css:37`, fond à 94 % d'opacité) : au défilement mobile, des lignes de la carte se lisent sous le logo (« foie gras, magret fumé… » dans `m-02-scroll`, « Cassolette de boulettes rôties » dans `m-03-scroll`). Correction : fond opaque (`var(--c-bg)`) ou `backdrop-filter` avec 100 %.
+
+### F3 finition
+- **F3-1 · Survol par la seule couleur** : 1 cible sur l'accueil, 3 sur la carte (`report.json` → `hover`). Ajouter le soulignement redessiné déjà utilisé ailleurs.
+- **F3-2 · Page Réservation** : les 7 lignes « Lundi à Dimanche 10 h à 22 h 30 » sont identiques ; une ligne « Tous les jours » suffit, comme dans le pied.
+- **F3-3 · Libellé de la carte** (accueil) : « avec leur prix du jour de relevé » est lourd ; écrire « avec leurs prix relevés le 20 novembre ».
+- **F3-4 · 404** : `og:url` pointe vers `/brasserie-edgard/awwwards/404/` (page qui n'existe pas). Retirer ou pointer vers l'accueil.
+- **F3-5 · Audit** : WARN `no robots.txt`, `no sitemap` ; `sitemap-index.xml` existe mais pas `sitemap.xml`. Sans conséquence pour une maquette `noindex`, à noter seulement. Le champ `skipLinkFirst` du `report.json` vaut `false` alors que le premier arrêt clavier est bien « Aller au contenu » (défaut de l'outil, pas du site).
+
+## Ce qui est bien (à ne pas casser)
+1. Le cadran : une idée propre à la brasserie (horloge murale de la salle), un statut calculé exact sur 7 instants dont un jour férié belge, et un repos animé discret (trotteuse) qui disparaît en mouvement réduit (0 texte caché, 0 mouvement).
+2. Contenu fidèle : 86 lignes de carte avec prix du 20 novembre, aucune histoire ni avis inventé, l'avertissement du dossier sur l'e-mail repris, Barestho et téléphone en double CTA sur chaque page.
+3. Technique propre : 0 erreur console, 0 échec réseau, CLS 0,006, LCP mobile ≤ 2,0 s, 0 débordement à 1440 et 390, focus visible partout, menu mobile et rideau de transition fonctionnels, mention KYW + logo unique + noindex sur les 5 pages.
