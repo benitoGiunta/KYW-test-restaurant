@@ -1,0 +1,15 @@
+---
+// Marquee d'état : le restaurant est fermé (incendie) : texte statique, aucun horaire.
+import { site, lieux } from '../data/site';
+const base = [`Accueil provisoire au ${lieux.provisoire.nom}, ${lieux.provisoire.commune}`, 'Réouverture à Wépion à confirmer', `Réservation en ligne via ${site.reservation.outil}`];
+---
+<div class="marquee" data-marquee aria-label="État du restaurant">
+  <div class="marquee__piste">
+    {[0, 1].map((k) => (
+      <p class="marquee__groupe" aria-hidden={k === 1 ? 'true' : undefined}>
+        <span class="marquee__etat is-ferme">Fermé à Wépion</span>
+        {base.map((t) => <span>{t}</span>)}
+      </p>
+    ))}
+  </div>
+</div>

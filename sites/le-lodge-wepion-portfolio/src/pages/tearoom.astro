@@ -1,0 +1,63 @@
+---
+// Tea-room : l'après-midi, crêpes, gaufres, glaces (site du Lodge, carte). Les horaires du tea-room ne sont pas connus.
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, guinguette, lieux, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const cats = g.teaRoomCategories.map((n) => site.carte.find((c) => c.categorie.startsWith(n))!);
+const photos = ['/photos/dessert-coupelle.webp', '/photos/dessert-assiette.webp'].map(photoDe);
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const picto = (cat: string) => g.pictos.find((p) => cat.startsWith(p.categorie))?.picto ?? 'parasol';
+---
+<Base title="Tea-room" description={`Le tea-room de ${site.nom} : crêpes, gaufres, glaces Pagotini et desserts maison, au bord de la Meuse à ${site.adresse.commune}.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>Tea-room</h1>
+      <p class="lead">L'après-midi, la brasserie devient tea-room : crêpes, gaufres et glaces. En saison, la coupe de fraises de Wépion.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:84%;--y:0%;--r:10deg;--taille:120px" aria-hidden="true"><Objet id="parasol" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="carte">
+        <h2 class="sr-only">Crêpes, gaufres, glaces et desserts</h2>
+        <div class="carte__grille">
+          {cats.map((c) => (
+            <div>
+              <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie}</h3>
+              <ul role="list">
+                {c.plats.map((p) => (
+                  <li class="plat">
+                    <span class="plat__nom">{p.nom}{p.description && <span class="plat__desc">{p.description}</span>}</span>
+                    <span class="plat__points" aria-hidden="true"></span>
+                    {p.prix && <span class="plat__prix">{p.prix}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <p class="muted" style="margin-top:calc(var(--u)*3);font-size:var(--t-s)">Les jours et heures du tea-room ne sont pas communiqués : à confirmer. Une boîte à emporter est proposée à 1 € (mention de la carte). Carte relevée le 20 novembre 2026 sur le site du Lodge, à Wépion ; celle d'{lieux.provisoire.commune} est à confirmer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">Côté <em>douceurs</em></h2>
+      <div class="grille-photos">
+        {photos.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-4, 3][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>
