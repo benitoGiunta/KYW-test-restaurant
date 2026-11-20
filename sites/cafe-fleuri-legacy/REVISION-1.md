@@ -1,4 +1,15 @@
 # Révision 1 · Café Fleuri legacy
-Corrigés : F1-1 (ligne de statut visible sur Venir et accueil, consignée dans RAPPORT.md ; téléphones restent tel: en attente d'arbitrage), F1-2 (3 cadres vides retirés, 1 conservé sur Venir ; héros sur deux colonnes à 1440, vérifié par capture), F2-1 (pied du site en div role=group, 1 seul <footer> au build), F2-2 (« Gravlax, granola et limonades maison » partout), F2-3 (note « relevés sur une ancienne fiche, à confirmer » sur la carte), F2-4 (légende héros alignée), F2-5 (« illustratif » sur les deux numéros), F2-6 partiel (openingHours ajouté au JSON-LD).
-Non fait : og:image (omission assumée), telephone JSON-LD sans marque illustrative (champ de données).
-Hypothèse : statut non arbitré, site laissé ouvert avec réserve visible. Rebuild OK via q.sh.
+
+| id | décision | changement (fichier) | preuve |
+|---|---|---|---|
+| F0 | rien à faire | aucun bloquant | build OK |
+| F1-1 | corrigé | ligne « statut à confirmer » sur accueil et Venir (`site.ts`, pages) ; consigné dans RAPPORT.md | grep « Statut » dans dist accueil et venir |
+| F1-2 | corrigé | 3 cadres vides retirés, 1 gardé sur Venir ; héros sur deux colonnes | capture ciblée accueil 1440 |
+| F2-1 | corrigé | pied du site en `div role=group` (`Footer.astro`) | 1 seul `<footer>` par page dans dist |
+| F2-2 | corrigé | « Gravlax, granola et limonades maison » (texte, méta, lead) | 0 « tout est fait » dans dist |
+| F2-3 | corrigé | note « relevés sur une ancienne fiche, à confirmer » (carte) | lecture du code |
+| F2-4 | corrigé | légende héros alignée sur « illustratif » | lecture du code |
+| F2-5 | corrigé | « illustratif » sur les deux numéros | grep dans dist venir |
+| F2-6 | partiel | openingHours ajouté au JSON-LD ; og:image non faite (omission assumée), telephone JSON-LD inchangé (donnée) | grep dist |
+
+Hypothèse : statut non arbitré, site laissé ouvert avec réserve visible. Rebuild via q.sh OK.

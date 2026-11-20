@@ -52,11 +52,7 @@ const salle = photoDe('/photos/comptoir.webp');
         <div class="c1-6">
           <h3 class="t-l" data-split="words">{site.carte[1].categorie}</h3>
           <ul class="lignes" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
-            {site.carte[1].plats.map((p) => <li class="ligne"><span class="ligne__nom">{p.nom}</span><span class="ligne__detail">{p.description}</span></li>)}
-          </ul>
-          <h3 class="t-l" style="margin-top: calc(var(--u) * 4)" data-split="words">Boissons</h3>
-          <ul class="lignes" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
-            {site.carte[2].plats.map((p) => <li class="ligne"><span class="ligne__nom">{p.nom}{p.placeholder ? <span class="tag">exemple</span> : null}</span>{p.prix && <span class="ligne__prix">{p.prix}</span>}<span class="ligne__detail">{p.description}</span></li>)}
+            {site.carte[1].plats.filter((p) => !moments.some((mo) => mo.lignes.some((l) => l.nom === p.nom))).map((p) => <li class="ligne"><span class="ligne__nom">{p.nom}</span><span class="ligne__detail">{p.description}</span></li>)}
           </ul>
         </div>
         <figure class="c8-12 photo photo--carre" data-reveal="scale">

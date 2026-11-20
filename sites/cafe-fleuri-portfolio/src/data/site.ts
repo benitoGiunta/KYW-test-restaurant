@@ -177,7 +177,7 @@ export const moments: Moment[] = [
   },
   {
     id: 'm-12h', heure: 12, heureTexte: '12h', titre: 'Le déjeuner', theme: 'ocre',
-    accroche: 'Le brunch se prend aussi à midi : pancakes au gravlax, œufs Benedict sur épinards.',
+    accroche: 'Plats cités par un annuaire en ligne, à titre d’exemple : pancakes au gravlax, œufs Benedict sur épinards.',
     accrochePlaceholder: true, placeholder: false, photo: '/photos/comptoir.webp',
     lignes: [
       { nom: 'Pancakes au saumon gravlax', detail: 'mascarpone, aneth et citron', prix: null, placeholder: false },
