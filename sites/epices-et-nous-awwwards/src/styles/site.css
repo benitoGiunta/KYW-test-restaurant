@@ -1,0 +1,211 @@
+/* Épices & Nous : « Deux voix ». Un axe vertical (le passe) coupe la page ; à gauche la cuisine (Denis), à droite la salle (Sophie). */
+body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; }
+.display { font-family: var(--f-display); font-weight: 400; line-height: 0.95; letter-spacing: -0.025em; }
+.display em, .et { font-style: italic; color: var(--c-accent-texte); }
+.wrap { width: 100%; max-width: 1680px; margin-inline: auto; padding-inline: var(--gutter); }
+.nw { white-space: nowrap; }
+.tab { font-variant-numeric: tabular-nums; }
+.petit { font-size: var(--t-s); color: var(--c-muted); max-width: 52ch; }
+.voix { font-size: var(--t-xs); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); margin-bottom: var(--u); }
+.nappe { --c-bg: var(--c-nappe); --c-fg: var(--c-nappe-fg); --c-muted: var(--c-nappe-muted); --c-line: var(--c-nappe-line); --c-accent: var(--c-nappe-accent); --c-accent-texte: var(--c-nappe-accent); background: var(--c-bg); color: var(--c-fg); }
+.nappe-nuit { background: var(--c-curtain); }
+
+/* Interactions : nav (filet qui entre), CTA (aplat qui s'inverse), liens texte (soulignement), images (aucune). */
+.lien, .lien-util { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.28em; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); transition: text-decoration-color .25s, color .25s; }
+.lien:hover, .lien-util:hover { text-decoration-color: var(--c-accent-texte); color: var(--c-accent-texte); }
+.lien-util { font-size: var(--t-s); }
+.nl { position: relative; padding-block: 0.3em; }
+.nl::after { content: ''; position: absolute; inset: auto 0 0 0; height: 1px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.nl:hover::after, .nl[aria-current='page']::after { transform: scaleX(1); }
+.cta { display: inline-flex; align-items: center; justify-content: center; min-height: 3.25rem; padding: 0 1.9rem; background: var(--c-accent); color: #1f1613; font-weight: 500; font-size: var(--t-body); border: 1px solid var(--c-accent); transition: background .25s, color .25s, border-color .25s; }
+.cta:hover { background: var(--c-fg); border-color: var(--c-fg); color: var(--c-bg); }
+.cta--contour { background: transparent; color: var(--c-fg); border-color: var(--c-line); }
+.cta--contour:hover { background: var(--c-fg); border-color: var(--c-fg); color: var(--c-bg); }
+.cta--petit { min-height: 2.5rem; padding: 0 1.2rem; font-size: var(--t-s); }
+.nappe .cta { color: #fff; }
+.nappe .cta:hover, .nappe .cta--contour:hover { color: var(--c-bg); }
+
+/* Le passe : la gouttière centrale porte un filet de 1 px. */
+.deux { display: grid; grid-template-columns: 1fr 1fr; position: relative; }
+.deux::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--c-line); }
+.deux__g { padding-right: var(--normal); }
+.deux__d { padding-left: var(--normal); }
+.cadre { overflow: hidden; background: var(--c-line); }
+.cadre img { width: 100%; height: 100%; object-fit: cover; }
+.cadre--haut { aspect-ratio: 4 / 5; }
+.cadre--paysage { aspect-ratio: 3 / 2; }
+
+/* Tête */
+.tete { position: absolute; z-index: var(--z-header); inset: 0 0 auto 0; display: flex; align-items: center; justify-content: space-between; gap: var(--serre); padding: calc(var(--u) * 2) var(--gutter); }
+.tete__nom { font-family: var(--f-display); font-size: 1.5rem; letter-spacing: -0.02em; white-space: nowrap; }
+.tete__nav ul { display: flex; align-items: center; gap: calc(var(--u) * 3); list-style: none; font-size: var(--t-s); font-weight: 500; }
+.tete__marque[aria-current='page'] .tete__nom { color: var(--c-fg); }
+
+/* Poster : le nom en deux moitiés autour du & posé sur l'axe. */
+.poster { padding-top: calc(var(--u) * 10); padding-bottom: var(--aere); }
+.poster__nom { display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; font-size: var(--t-mega); letter-spacing: -0.04em; line-height: 0.88; padding-block: 0.06em 0.12em; }
+.poster__g { justify-self: end; }
+.poster__d { justify-self: start; }
+.poster__et { padding-inline: 0.12em; font-size: 0.82em; font-weight: 400; }
+.poster__bas { margin-top: var(--normal); }
+.poster__bas::before { top: calc(var(--u) * -6); }
+.poster__lede { font-family: var(--f-display); font-size: var(--t-m); line-height: 1.15; text-align: right; margin-left: auto; max-width: 18ch; text-wrap: balance; }
+.poster__actions { display: flex; flex-wrap: wrap; gap: var(--u); }
+.poster__info { margin-top: calc(var(--u) * 2); }
+
+/* Deux voix */
+.voixsec { padding-block: var(--aere); }
+.voixsec__prenom { font-size: var(--t-xl); margin-bottom: var(--serre); }
+.voixsec__texte { max-width: 38ch; margin-bottom: var(--normal); }
+.voixsec .deux__g .voixsec__texte { margin-left: auto; }
+.voixsec .deux__g, .voixsec .deux__g .voix, .voixsec .deux__g .voixsec__prenom { text-align: right; }
+.voixsec__bas { padding-top: var(--entracte); }
+
+/* Statement */
+.statement { padding-block: var(--entracte); }
+.statement__texte { font-size: var(--t-xl); max-width: 16ch; margin-bottom: var(--normal); }
+.statement__detail { font-family: var(--f-display); font-size: var(--t-m); max-width: 34ch; margin-bottom: var(--serre); }
+.statement--court { padding-block: var(--aere); }
+.statement--court .statement__texte { font-size: var(--t-l); max-width: 22ch; }
+
+/* Menu à 52 € (données) */
+.menu52 { padding-block: var(--aere); }
+.menu52__chiffre { font-size: calc(var(--t-mega) * 1.15); line-height: 0.85; margin-bottom: var(--serre); text-align: right; }
+.menu52__eur { font-style: italic; color: var(--c-accent-texte); font-size: 0.5em; margin-left: 0.1em; }
+.menu52__prix { text-align: right; }
+.menu52__prix .petit { margin-left: auto; }
+.menu52__nom { font-family: var(--f-display); font-size: var(--t-m); margin-bottom: var(--u); }
+.menu52__etapes { list-style: none; display: grid; gap: var(--normal); }
+.menu52__etapes ul { list-style: none; display: grid; gap: var(--u); max-width: 52ch; }
+.menu52__etapes ul li { padding-left: 1rem; border-left: 1px solid var(--c-accent); }
+
+/* Mur d'images */
+.mur { padding-block: var(--aere); }
+.mur__titre { font-size: var(--t-xl); margin-bottom: var(--normal); max-width: 14ch; }
+.mur__grille { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--u); }
+.mur__grille .cadre { aspect-ratio: auto; }
+.mur__a { grid-column: 1 / 6; grid-row: 1 / 3; aspect-ratio: 2 / 3 !important; }
+.mur__b { grid-column: 6 / 9; grid-row: 1; aspect-ratio: 2 / 3 !important; margin-top: var(--normal); }
+.mur__c { grid-column: 9 / 13; grid-row: 1; aspect-ratio: 4 / 5 !important; }
+.mur__d { grid-column: 6 / 10; grid-row: 2; aspect-ratio: 4 / 5 !important; margin-top: var(--normal); }
+.mur__e { grid-column: 10 / 13; grid-row: 2; aspect-ratio: 2 / 3 !important; }
+.mur__f { grid-column: 1 / 6; grid-row: 3; aspect-ratio: 3 / 2 !important; }
+.mur__credit { margin-top: var(--serre); }
+
+/* Espaces : bande */
+.espaces { padding-block: var(--aere); }
+.espaces__titre { font-size: var(--t-xl); max-width: 14ch; margin-bottom: var(--normal); }
+.espaces__bande { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--serre); }
+.espaces__bande li:nth-child(2) { margin-top: var(--normal); }
+.espaces__nom { font-family: var(--f-display); font-size: var(--t-m); margin: var(--u) 0 calc(var(--u) * 0.5); }
+
+/* En-têtes de page */
+.entete { padding-top: calc(var(--u) * 12); padding-bottom: var(--normal); }
+.entete__titre { font-size: var(--t-mega); letter-spacing: -0.04em; margin-bottom: var(--serre); }
+.entete__texte { max-width: 44ch; font-size: var(--t-m); font-family: var(--f-display); line-height: 1.2; }
+
+/* Carte : le nom d'un côté du passe, la description et le prix de l'autre. */
+.rubrique { padding-block: var(--aere); }
+.rubrique__titre { font-size: var(--t-xl); margin-bottom: var(--normal); }
+.plats { list-style: none; position: relative; }
+.plats::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--c-line); }
+.plat { display: grid; grid-template-columns: 1fr 1fr; align-items: baseline; padding-block: calc(var(--u) * 2.5); border-top: 1px solid var(--c-line); }
+.plat:last-child { border-bottom: 1px solid var(--c-line); }
+.plat__nom { font-size: var(--t-l); text-align: right; padding-right: var(--normal); line-height: 1; }
+.plat__desc { padding-left: var(--normal); padding-right: calc(var(--u) * 10); max-width: 62ch; color: var(--c-muted); }
+.plat__prix { position: absolute; right: 0; font-family: var(--f-display); font-size: var(--t-m); }
+.plat { position: relative; }
+.plat__prix { top: calc(var(--u) * 2.5); }
+.rubrique__note { margin-top: var(--serre); margin-left: 50%; padding-left: var(--normal); }
+.boules { margin-top: var(--normal); margin-left: 50%; padding-left: var(--normal); display: grid; gap: var(--serre); max-width: 70ch; }
+.boules dt { font-size: var(--t-xs); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); }
+.plein { height: clamp(16rem, 38vw, 34rem); overflow: hidden; }
+.plein img { width: 100%; height: 100%; object-fit: cover; }
+.paire { display: grid; grid-template-columns: 1fr 1fr; gap: var(--serre); padding-block: var(--aere); }
+.paire__bas { margin-top: var(--normal); }
+.paire__credit { grid-column: 1 / -1; }
+
+/* Histoire */
+.histoire { padding-block: var(--normal) var(--aere); }
+.histoire__texte { display: grid; gap: var(--serre); align-content: start; text-align: right; font-size: var(--t-m); font-family: var(--f-display); line-height: 1.3; }
+.histoire__texte p { margin-left: auto; max-width: 30ch; }
+.equipe { padding-block: var(--aere); }
+.equipe .deux__g { text-align: right; }
+.equipe .deux__g p:last-child { margin-left: auto; }
+.equipe p:last-child { max-width: 38ch; }
+.equipe__prenom { font-size: var(--t-xl); margin-bottom: var(--u); }
+.equipe__role { font-weight: 500; margin-bottom: var(--serre); }
+.reperes { padding-block: var(--aere); }
+.reperes__liste { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--serre); margin-bottom: var(--serre); }
+.reperes__liste dt { font-size: var(--t-xs); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); margin-bottom: var(--u); }
+.reperes__liste dd { font-size: var(--t-l); }
+.histoire__paire { padding-top: 0; }
+
+/* Réservation */
+.resa { padding-block: var(--normal) var(--aere); }
+.resa__tel { font-size: var(--t-xl); letter-spacing: -0.03em; display: inline-block; margin-bottom: var(--serre); }
+.resa__tel:hover { color: var(--c-accent-texte); }
+.resa__actions { margin-bottom: var(--serre); }
+.horaires { list-style: none; display: grid; margin-bottom: var(--serre); max-width: 34rem; }
+.horaires li { display: flex; justify-content: space-between; gap: var(--serre); padding-block: 0.65rem; border-bottom: 1px solid var(--c-line); font-variant-numeric: tabular-nums; }
+.horaires__jour { font-weight: 500; }
+.horaires__ferme { color: var(--c-muted); }
+.horaires__plages { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 1.2rem; text-align: right; }
+.acces { padding-block: var(--aere); }
+.acces__titre { font-size: var(--t-xl); margin-bottom: var(--serre); }
+.acces__adresse { font-style: normal; font-family: var(--f-display); font-size: var(--t-m); margin-bottom: var(--u); }
+.acces__faits { list-style: none; display: grid; gap: var(--u); margin-top: var(--normal); max-width: 44ch; }
+.acces__faits li { padding-left: 1rem; border-left: 1px solid var(--c-accent); }
+
+/* 404 */
+.quatre { padding-top: calc(var(--u) * 12); padding-bottom: var(--entracte); }
+.quatre__titre { font-size: var(--t-mega); letter-spacing: -0.04em; margin-bottom: var(--normal); }
+.quatre__voix { font-family: var(--f-display); font-size: var(--t-l); line-height: 1.05; max-width: 14ch; margin-bottom: var(--serre); }
+.quatre .deux__g { text-align: right; }
+.quatre .deux__g .quatre__voix { margin-left: auto; }
+
+/* Pied : composition finale, le & sur l'axe */
+.pied { padding-block: var(--aere) var(--normal); color: var(--c-fg); }
+.pied__et { text-align: center; font-family: var(--f-display); font-size: clamp(5rem, 14vw, 14rem); line-height: 0.7; margin-bottom: var(--serre); }
+.pied__mot { font-size: var(--t-xl); text-align: center; margin-bottom: var(--normal); }
+.pied__deux .deux__g { text-align: right; }
+.pied__deux address { font-style: normal; font-family: var(--f-display); font-size: var(--t-m); line-height: 1.2; margin-bottom: var(--u); }
+.pied__tel { font-family: var(--f-display); font-size: var(--t-l); letter-spacing: -0.02em; }
+.pied__tel:hover { color: var(--c-accent-texte); }
+.pied__voix2 { margin-top: var(--normal); }
+.pied__liens { list-style: none; display: grid; gap: 0.5rem; }
+.pied__deux .horaires { max-width: 30rem; }
+.pied__deux p { margin-bottom: var(--u); }
+.pied__colophon { margin-top: var(--normal); font-size: var(--t-xs); color: var(--c-muted); text-align: center; }
+
+/* Mobile 390 : une colonne, l'axe passe à gauche, noms au-dessus de la description. */
+@media (max-width: 760px) {
+  .deux { grid-template-columns: 1fr; }
+  .deux::before { left: 0; }
+  .deux__g, .deux__d { padding-inline: var(--serre) 0; padding-right: 0; }
+  .voixsec .deux__g, .voixsec .deux__g .voix, .voixsec .deux__g .voixsec__prenom, .menu52__prix, .menu52__chiffre, .histoire__texte, .equipe .deux__g, .quatre .deux__g, .pied__deux .deux__g { text-align: left; }
+  .voixsec .deux__g .voixsec__texte, .histoire__texte p, .menu52__prix .petit, .quatre .deux__g .quatre__voix, .equipe .deux__g p:last-child { margin-left: 0; }
+  .poster__lede { text-align: left; margin-left: 0; max-width: 22ch; }
+  .poster__bas { margin-top: var(--serre); }
+  .poster__bas::before { top: calc(var(--u) * -3); }
+  .poster__bas .deux__d { margin-top: var(--normal); }
+  .voixsec__bas { padding-top: var(--normal); margin-top: var(--normal); }
+  .tete__nav ul { gap: calc(var(--u) * 1.5); font-size: var(--t-xs); }
+  .tete__appel { display: none; }
+  .tete__nom { font-size: 1.25rem; }
+  .mur__grille { grid-template-columns: repeat(2, 1fr); }
+  .mur__grille > * { grid-column: auto !important; grid-row: auto !important; margin-top: 0 !important; }
+  .mur__a, .mur__d { grid-column: 1 / -1 !important; aspect-ratio: 4 / 3 !important; }
+  .espaces__bande { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: var(--u); margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+  .espaces__bande li { flex: 0 0 78%; scroll-snap-align: start; margin-top: 0 !important; }
+  .plats::before { left: 0; }
+  .plat { grid-template-columns: 1fr; padding-left: var(--serre); }
+  .plat__nom { text-align: left; padding-right: 4.5rem; font-size: var(--t-m); margin-bottom: 0.4rem; }
+  .plat__desc { padding: 0; padding-right: 0; }
+  .plat__prix { top: calc(var(--u) * 2.5); font-size: var(--t-body); }
+  .rubrique__note, .boules { margin-left: 0; padding-left: var(--serre); }
+  .paire { grid-template-columns: 1fr; }
+  .paire__bas { margin-top: 0; }
+  .reperes__liste { grid-template-columns: 1fr; }
+  .menu52__chiffre { font-size: 6rem; }
+}

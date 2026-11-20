@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, menu, services } from '../data/site';
+import { euro } from '../lib/format';
+---
+<Base page="reservation" title="Réservation" description="Réserver chez Épices & Nous, chaussée de Marche 561 à Erpent : téléphone 081 31 32 24, réservation en ligne et horaires du mardi au samedi.">
+  <section class="entete wrap">
+    <h1 class="entete__titre display">À <em>table</em></h1>
+    <p class="entete__texte">Le plus simple : un coup de téléphone. La maison prend aussi les réservations en ligne.</p>
+  </section>
+
+  <section class="wrap deux resa">
+    <div class="deux__g">
+      <h2 class="voix">Appeler</h2>
+      <p><a class="resa__tel display" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+      <p class="resa__actions">
+        <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver en ligne</span></a>
+      </p>
+      <p class="petit">La réservation en ligne se fait sur le site actuel du restaurant, epicesetnous.com.</p>
+    </div>
+    <div class="deux__d">
+      <h2 class="voix">Horaires</h2>
+      <Horaires />
+      <p class="petit">Deux services : le midi de {services[0].libelle}, le soir de {services[1].libelle}. Fermé le lundi et le dimanche ; le samedi, le soir seulement.</p>
+    </div>
+  </section>
+
+  <section class="nappe acces" aria-labelledby="t-acces">
+    <div class="wrap deux">
+      <div class="deux__g">
+        <h2 id="t-acces" class="acces__titre display">Venir <em>à Erpent</em></h2>
+        <address class="acces__adresse">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+        <ul class="acces__faits">
+          <li>La maison est sur la chaussée de Marche, à Erpent, dans la commune de Namur.</li>
+          <li>Deux espaces : une salle avant moderne et lumineuse, une verrière feutrée à l’arrière.</li>
+          <li>Une terrasse, dès que la météo le permet.</li>
+          <li>Le menu trois services à {euro(menu.prix)} est servi par table entière, sans les boissons.</li>
+        </ul>
+      </div>
+      <div class="deux__d">
+        <figure class="cadre cadre--haut"><Photo cle="facade" widths={[480, 800, 1200]} sizes="(min-width: 760px) 44vw, 92vw" /></figure>
+        <p class="petit">{site.credit}.</p>
+      </div>
+    </div>
+  </section>
+</Base>

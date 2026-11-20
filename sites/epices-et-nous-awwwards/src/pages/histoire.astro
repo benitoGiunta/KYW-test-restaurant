@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, equipe, histoire, reperes } from '../data/site';
+---
+<Base page="histoire" title="L’histoire" description="Depuis 1999, Denis et Sophie Delvigne reçoivent à Erpent : lui en cuisine, elle en salle. L’histoire d’une maison de couple formée à la Citadelle.">
+  <section class="entete wrap">
+    <h1 class="entete__titre display">Depuis <em>1999</em></h1>
+  </section>
+
+  <section class="wrap deux histoire">
+    <div class="deux__g histoire__texte">
+      {histoire.map((p) => <p>{p}</p>)}
+    </div>
+    <div class="deux__d histoire__photo">
+      <figure class="cadre cadre--haut"><Photo cle="facade" widths={[480, 800, 1200]} sizes="(min-width: 760px) 44vw, 92vw" prioritaire /></figure>
+    </div>
+  </section>
+
+  <section class="nappe equipe" aria-labelledby="t-eq">
+    <div class="wrap">
+      <h2 id="t-eq" class="sr-only">Les deux voix de la maison</h2>
+      <div class="deux">
+        {equipe.map((e, i) => (
+          <div class={i === 0 ? 'deux__g' : 'deux__d'}>
+            <p class="voix">{e.voix === 'cuisine' ? 'En cuisine' : 'En salle'}</p>
+            <h3 class="display equipe__prenom">{e.prenom} {e.nom}</h3>
+            <p class="equipe__role">{e.role}</p>
+            <p>{e.texte}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap reperes" aria-labelledby="t-rep">
+    <h2 id="t-rep" class="sr-only">Repères</h2>
+    <dl class="reperes__liste">
+      {reperes.map((r) => <div><dt>{r.cle}</dt><dd class="display">{r.valeur}</dd></div>)}
+    </dl>
+    <p class="petit">Mentions relevées sur le site du restaurant et dans les guides ; à confirmer auprès de la maison.</p>
+  </section>
+
+  <section class="wrap paire histoire__paire">
+    <figure class="cadre cadre--paysage"><Photo cle="pass" widths={[480, 800, 1200]} sizes="(min-width: 760px) 44vw, 92vw" /></figure>
+    <figure class="cadre cadre--paysage paire__bas"><Photo cle="verriere" widths={[480, 800, 1200]} sizes="(min-width: 760px) 44vw, 92vw" /></figure>
+    <p class="petit paire__credit">{site.credit}.</p>
+  </section>
+</Base>

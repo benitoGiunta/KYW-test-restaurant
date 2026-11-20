@@ -1,0 +1,35 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site, reseaux } from '../data/site';
+import Horaires from './Horaires.astro';
+---
+<section class="pied nappe-nuit" aria-label="Contact">
+  <div class="wrap">
+    <p class="pied__et" aria-hidden="true"><span class="et">&amp;</span></p>
+    <h2 class="pied__mot display">À table, <em>à deux.</em></h2>
+    <div class="deux pied__deux">
+      <div class="deux__g">
+        <h3 class="voix">Venir</h3>
+        <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+        <h3 class="voix pied__voix2">Ailleurs</h3>
+        <ul class="pied__liens">
+          <li><a class="lien-util" href={u('/carte/')}>La carte</a></li>
+          <li><a class="lien-util" href={u('/histoire/')}>L’histoire</a></li>
+          <li><a class="lien-util" href={u('/reservation/')}>Réservation</a></li>
+          {reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+        </ul>
+      </div>
+      <div class="deux__d">
+        <h3 class="voix">Réserver</h3>
+        <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+        <p><a class="lien" href={site.reservationUrl} rel="noopener">Réserver en ligne</a></p>
+        <h3 class="voix pied__voix2">Horaires</h3>
+        <Horaires />
+      </div>
+    </div>
+    <p class="pied__colophon">{site.credit}. Polices : Boska (Fontshare) et Switzer (Fontshare). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />
