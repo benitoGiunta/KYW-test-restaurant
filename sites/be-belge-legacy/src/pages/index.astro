@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import Horaires from '../components/Horaires.astro';
 import Formules from '../components/Formules.astro';
+import Contact from '../components/Contact.astro';
 import { site, photos, privatisation } from '../data/site';
 const b = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
@@ -28,8 +29,8 @@ const b = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   <section class="sec statement">
     <div class="container">
       <p class="pencil">Bienvenue</p>
-      <p class="big">{site.accueil}</p>
-      <p class="dropcap wall">{site.accueilSuite}</p>
+      <p class="big" data-reveal>{site.accueil}</p>
+      <p class="dropcap wall" data-reveal style="--d:1">{site.accueilSuite}</p>
     </div>
   </section>
 
@@ -39,14 +40,14 @@ const b = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       <h2 id="h-maison">La maison</h2>
       <div class="bento">
         <Photo p={photos.cheminee} class="bento__a" sizes="(min-width: 60rem) 58vw, 100vw" label="La salle, son mur de pierre et sa cheminée" />
-        <article class="bento__b stock">
+        <article class="bento__b stock" data-reveal style="--d:1">
           <h3>Menu du Chef</h3>
           <p class="bento__prices num">57 € <span class="muted">3 services</span><br />72 € <span class="muted">4 services</span></p>
           <p class="muted">Vins en accord : 28 € ou 35 €.</p>
           <p><a class="link" href={`${b}menu/`}>Voir le menu</a></p>
         </article>
         <Photo p={photos.terrasse} class="bento__c" sizes="(min-width: 60rem) 38vw, 100vw" label="La terrasse ombragée" />
-        <article class="bento__d">
+        <article class="bento__d" data-reveal style="--d:2">
           <h3>Banquets et réceptions</h3>
           <p>Repas assis de {privatisation.assis.min} à {privatisation.assis.max} personnes, walking dinner de {privatisation.walking.min} à {privatisation.walking.max}.</p>
           <p><a class="link" href={`${b}banquets-et-receptions/`}>Privatiser le restaurant</a></p>
@@ -76,6 +77,13 @@ const b = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         </section>
         <p><a class="link" href={`${b}carte/`}>Toute la carte</a></p>
       </div>
+    </div>
+  </section>
+
+  <!-- Contact : le formulaire de l’ancien site, non relié -->
+  <section class="sec" aria-labelledby="h-contact">
+    <div class="container">
+      <Contact />
     </div>
   </section>
 

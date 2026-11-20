@@ -27,5 +27,17 @@ const { title, description = site.description, here = '' } = Astro.props;
   <Nav here={here} />
   <main id="contenu"><slot /></main>
   <Footer />
+  <script is:inline>
+    (() => {
+      const els = [...document.querySelectorAll('[data-reveal]')];
+      if (!els.length) return;
+      const show = (el) => el.classList.add('is-in');
+      if (!('IntersectionObserver' in window)) { els.forEach(show); return; }
+      const io = new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      els.forEach((el) => io.observe(el));
+      addEventListener('beforeprint', () => els.forEach(show));
+    })();
+  </script>
 </body>
 </html>
+<style is:global>html, body { overflow-x: clip; }</style>
