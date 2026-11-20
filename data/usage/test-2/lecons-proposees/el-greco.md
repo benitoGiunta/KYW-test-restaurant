@@ -1,0 +1,1 @@
+- 2026-11-20 : le hook sobriété refuse tout `curl --max-time` même dans un heredoc : écrire le script avec Write puis `scripts/q.sh <id> bash <script>` ; Trustindex (trustindex.io/reviews/<domaine>) se lit en curl avec avis et réponses du patron ; site WordPress dont toutes les photos sont du stock Pexels : l'indiquer dans photos/index.json.
