@@ -1,0 +1,1 @@
+- 2026-11-20 : site protégé par Cloudflare (cafefleuri.be, 403 pour robots) : seules les sources tierces (info-lux, Restaurant Guru, Wanderlog, Flexiroom) se lisent ; vérifier le statut d'activité (restaurants.json « actif » contredit par fiches « permanently closed » et reprise du local par Bistro Camélia, DH 07/01/2025).
