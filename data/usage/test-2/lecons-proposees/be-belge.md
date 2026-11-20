@@ -1,1 +1,2 @@
 - 2026-11-20 · be-belge · variante awwwards : `font.mjs google` refuse la plage 100..900 pour Figtree (axe 300..900) : passer `400..600`; et un « cat <<EOF » dans une commande refusée par le hook n'écrit pas le fichier (vérifier l'existence avant de lancer le script).
+- 2026-11-20 · legacy be-belge : les logos du client peuvent être en version claire (crème) et invisibles sur papier clair ; vérifier la couleur du logo avant de le placer, sinon wordmark en police du thème.
