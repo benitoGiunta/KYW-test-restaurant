@@ -1,3 +1,7 @@
+# ETAT : relecteur-site, passe 2 (awwwards)
+Fait : REVUE-2.md écrite (verdict A_CORRIGER : F0 0, F1 0, F2 1, F3 8). 5 corrections sur 6 vérifiées par axe/Range/captures à 5 largeurs (25 contextes, 0 écart) ; F2-4 (vignettes carte) reporté et toujours présent.
+Reste : retirer Desserts, Bières, Boissons chaudes de photoCategorie (src/data/site.ts:43-53) puis build ; F3 facultatifs. Piège : QA-revue2.md est un échec partiel (crawl bloqué), ne pas s en servir ; serveur de la passe arrêté (PID 3201).
+
 # ETAT : relecteur-site, passe 1 (awwwards)
 Fait : REVUE-1.md écrite (verdict A_CORRIGER : F0 0, F1 2, F2 4, F3 8). Mesures propres : axe complet 5 pages x 2 largeurs, liens, texte confronté au dossier, 43 prix de carte, menu mobile, reduced-motion, Tab. Serveur 4780 arrêté.
 Reste : réviseur traite F1-1, F1-2, F2-1 à F2-4 (puis F3), build, passe 2 de revue. Piège : le QA ne couvre que 3 pages sur 5 et sa 404 est la réponse brute de serve.mjs.
