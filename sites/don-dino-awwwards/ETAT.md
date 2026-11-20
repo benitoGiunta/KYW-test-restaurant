@@ -23,3 +23,8 @@
 ## Phase 3 (QA)
 - Corrigé : contraste `.tete__sept`, aria-label du logo ; axe accueil et 404.html à 0 violation ; build et audit 0 FAIL. Voir RAPPORT.md.
 - Reste : cible tactile 404, jury indépendant non fait, `idleMotion` false assumé.
+
+## Revue 1 (relecteur-site, 20/11)
+- Fait : REVUE-1.md (verdict A_CORRIGER : 0 F0, 1 F1 accents de capitales coupés par le masque SplitText, 4 F2, 6 F3). Mesures propres sur 5 pages x 2 largeurs, 11 horloges, survol, Tab, menu, réduit.
+- Reste : correction F1-1 (masque SplitText, interligne), OG, texte (index.astro:60, histoire), puis revue passe 2 (captures d'élément des titres accentués).
+- Pièges : la « 404 » du QA est celle de serve.mjs ; serveur de revue sur 4871 arrêté.
