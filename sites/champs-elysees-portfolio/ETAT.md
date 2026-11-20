@@ -1,4 +1,15 @@
-# ETAT champs-elysees-portfolio, passe construction-2 (phase 2 sur 3), 20/11/2026
+# ETAT champs-elysees-portfolio, passe construction-3 (phase 3 sur 3, QA), 20/11/2026
+
+## Phase 3 : fait
+- Lu QA-build.md et les captures (accueil desktop 1440 et mobile 390, current vs dist).
+- Corrigé : noms de plats écrasés à une lettre par ligne sur mobile (prix longs) ; parapluie du manifeste sur le titre mobile. Vérifié par captures ciblées 390 (accueil #menu, #manifeste, /carte/) : scrollWidth 390, 0 erreur console.
+- Build final OK, 6 pages. RAPPORT.md écrit. Serveur arrêté.
+
+## Reste
+- Session mère : `gabarits/UTILISATION.md` (ligne guinguette | champs-elysees), `pnpm index`, publication.
+- Anciens blocs ci-dessous : phases 2 et 1.
+
+# Phase 2 (construction-2)
 
 (Phase 1 : voir plus bas, inchangée.)
 
