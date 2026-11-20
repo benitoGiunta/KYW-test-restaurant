@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
 import Horaires from '../components/Horaires.astro';
 import { site, adresseLigne, telHref, photoDe } from '../data/site';
-import { asset } from '../lib/url';
+import { asset, srcsetDe } from '../lib/url';
 const salle = photoDe('/photos/theiere.webp');
 const osm = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adresseLigne())}`;
 ---
@@ -36,7 +36,7 @@ const osm = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adr
         <p class="note" style="margin-top: var(--u)">La maison a une terrasse. Les horaires du dossier sont contradictoires selon les sources (9h30 à 15h30 retenus) : à vérifier avant de venir.<span class="tag">à confirmer</span></p>
       </div>
       <figure class="c8-12 photo photo--4x5" data-reveal="scale">
-        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
+        <img src={asset(salle.src)} srcset={srcsetDe(salle.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" />
       </figure>
     </div>
   </section>

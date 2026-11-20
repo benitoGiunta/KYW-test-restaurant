@@ -7,7 +7,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { onPage, prefersReducedMotion, ease } from '../engine';
-import { moments, jours, type Jour } from '../data/site';
+import { moments, jours, PLAGE, type Jour } from '../data/site';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,11 +74,38 @@ export function initJournee() {
     return () => { VARS.forEach((v) => html().style.removeProperty(v)); courant = ''; };
   });
 
+  onPage(astre);
   onPage(horloge);
   onPage(badges);
   onPage(medaillons);
   onPage(horairesFleches);
   onPage(invitation);
+}
+
+/** Astre du hero : le petit soleil de l'orbite se place à l'heure réelle (9h à gauche, 16h à droite, par le haut) ;
+ *  il y monte en 1,6 s au premier rendu sous motion, se replace chaque minute, et la photo dérive à peine au défilement. */
+function astre() {
+  const el = document.querySelector<HTMLElement>('[data-astre]');
+  const orbite = el?.querySelector<HTMLElement>('[data-astre-orbite]');
+  if (!el || !orbite) return;
+  const cible = () => {
+    const d = new Date();
+    const h = Math.min(PLAGE.fin, Math.max(PLAGE.debut, d.getHours() + d.getMinutes() / 60));
+    return -135 + ((h - PLAGE.debut) / (PLAGE.fin - PLAGE.debut)) * 270;
+  };
+  const poser = (animer: boolean) => {
+    const a = cible();
+    if (animer && !prefersReducedMotion()) gsap.fromTo(orbite, { '--angle': '-135deg' }, { '--angle': `${a}deg`, duration: 1.6, ease: ease.out, delay: 0.5 });
+    else gsap.set(orbite, { '--angle': `${a}deg` });
+  };
+  poser(true);
+  const id = setInterval(() => poser(false), 60000);
+  let st: ScrollTrigger | undefined;
+  if (!prefersReducedMotion()) {
+    const img = el.querySelector<HTMLElement>('[data-astre-img]');
+    if (img) st = ScrollTrigger.create({ trigger: el, start: 'top 70%', end: 'bottom top', scrub: true, animation: gsap.fromTo(img, { '--zoom': 1.04 }, { '--zoom': 1.16, ease: 'none' }) });
+  }
+  return () => { clearInterval(id); st?.kill(); };
 }
 
 /** Horloge du hero : HH:MM en display, secondes en petit, anneau qui avance d'un cran par seconde (idle). */
@@ -183,7 +210,8 @@ function invitation() {
   const maj = () => {
     const d = new Date();
     const h = d.getHours() + d.getMinutes() / 60;
-    if (h < moments[0].heure || h >= moments[moments.length - 1].heure || !lien || !texte) { bloc.hidden = true; return; }
+    const ferme = document.querySelector<HTMLElement>('[data-badge]')?.dataset.etat === 'ferme'; // jour de fermeture : pas d'invitation
+    if (ferme || h < moments[0].heure || h >= moments[moments.length - 1].heure || !lien || !texte) { bloc.hidden = true; return; }
     const m = momentCourant(h);
     lien.href = `#${m.id}`;
     texte.textContent = `Il est ${pad(d.getHours())}h${pad(d.getMinutes())} : aller au moment présent, ${m.titre.toLowerCase()}${m.placeholder ? ' (illustratif)' : ''}`;

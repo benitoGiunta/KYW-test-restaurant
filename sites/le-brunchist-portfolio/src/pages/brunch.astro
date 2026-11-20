@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Ligne from '../components/Ligne.astro';
 import { site, moments, photoDe } from '../data/site';
-import { u, asset } from '../lib/url';
+import { u, asset, srcsetDe } from '../lib/url';
 const brunch = moments.find((m) => m.id === 'm-11h')!;
 const plats = [
   { photo: photoDe('/photos/granola-fraises.webp'), titre: 'Granola maison', texte: 'Cité par la presse locale ; photo libre' },
@@ -27,7 +27,7 @@ const theiere = photoDe('/photos/theiere.webp');
         </div>
       </div>
       <figure class="c8-12 photo photo--4x5">
-        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+        <img src={asset(salle.src)} srcset={srcsetDe(salle.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={salle.alt} width={salle.largeur} height={salle.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
       </figure>
     </div>
   </section>
@@ -42,7 +42,7 @@ const theiere = photoDe('/photos/theiere.webp');
         {plats.map((md, i) => (
           <li>
             <div class="medaillon">
-              <div class="medaillon__photo"><img src={asset(md.photo.src)} alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
+              <div class="medaillon__photo"><img src={asset(md.photo.src)} srcset={srcsetDe(md.photo.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
               <svg class="medaillon__anneau" viewBox="0 0 200 200" aria-hidden="true">
                 <defs><path id={`barc-${i}`} d="M100,100 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
                 <text><textPath href={`#barc-${i}`}>{md.titre} · illustratif · {md.titre} · illustratif ·</textPath></text>
@@ -65,7 +65,7 @@ const theiere = photoDe('/photos/theiere.webp');
         </ul>
       </div>
       <figure class="c8-12 photo photo--4x3" data-reveal="scale">
-        <img src={asset(theiere.src)} alt={theiere.alt} width={theiere.largeur} height={theiere.hauteur} loading="lazy" decoding="async" />
+        <img src={asset(theiere.src)} srcset={srcsetDe(theiere.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={theiere.alt} width={theiere.largeur} height={theiere.hauteur} loading="lazy" decoding="async" />
       </figure>
     </div>
   </section>

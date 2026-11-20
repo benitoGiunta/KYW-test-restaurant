@@ -6,3 +6,5 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 export const u = (chemin: string) => `${base}/${chemin.replace(/^\/+/, '')}`;
 /** Fichier de public/ : asset('/photos/x.webp') → '/gabarits/_socle/photos/x.webp'. */
 export const asset = u;
+/** srcset d'une photo de public/photos : variante -800 (mobile) et originale 1600. */
+export const srcsetDe = (src: string) => `${asset(src.replace('.webp', '-800.webp'))} 800w, ${asset(src)} 1600w`;

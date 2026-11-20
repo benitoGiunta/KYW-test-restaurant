@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site, photoDe } from '../data/site';
-import { u, asset } from '../lib/url';
+import { u, asset, srcsetDe } from '../lib/url';
 const hero = photoDe('/photos/salle-table-bois.webp');
 const gal = ['/photos/cafe-filtre.webp', '/photos/theiere.webp', '/photos/biscuits-citron.webp'].map(photoDe);
 ---
@@ -14,7 +14,7 @@ const gal = ['/photos/cafe-filtre.webp', '/photos/theiere.webp', '/photos/biscui
         <p class="lead" style="margin-top: calc(var(--u) * 2)">{site.baseline}</p>
       </div>
       <figure class="c8-12 photo photo--4x3">
-        <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+        <img src={asset(hero.src)} srcset={srcsetDe(hero.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
       </figure>
     </div>
   </section>
@@ -51,7 +51,7 @@ const gal = ['/photos/cafe-filtre.webp', '/photos/theiere.webp', '/photos/biscui
         <h2 class="t-xl" data-split="words">Décontracté, convivial</h2>
       </div>
       <div class="cols">
-        {gal.map((p) => <figure class="c1-4 photo photo--3x2" data-reveal="scale"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>)}
+        {gal.map((p) => <figure class="c1-4 photo photo--3x2" data-reveal="scale"><img src={asset(p.src)} srcset={srcsetDe(p.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>)}
       </div>
       <div class="grid" style="margin-top: calc(var(--u) * 6)">
         {site.avis.map((a) => (

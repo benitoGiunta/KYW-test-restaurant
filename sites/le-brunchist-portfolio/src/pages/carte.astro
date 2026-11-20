@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Ligne from '../components/Ligne.astro';
 import { site, moments, photoDe } from '../data/site';
-import { u, asset } from '../lib/url';
+import { u, asset, srcsetDe } from '../lib/url';
 const visuel = photoDe('/photos/granola-fraises.webp');
 const salle = photoDe('/photos/salle-table-bois.webp');
 const serv = moments.filter((mo) => mo.lignes.length);
@@ -48,11 +48,11 @@ const serv = moments.filter((mo) => mo.lignes.length);
           <p class="note" style="margin-top: calc(var(--u) * 2)">Options végétales et sans gluten citées par une recherche tierce : à confirmer.<span class="tag">à confirmer</span></p>
         </div>
         <figure class="c8-12 photo photo--carre" data-reveal="scale">
-          <img src={asset(visuel.src)} alt={visuel.alt} width={visuel.largeur} height={visuel.hauteur} loading="lazy" decoding="async" />
+          <img src={asset(visuel.src)} srcset={srcsetDe(visuel.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={visuel.alt} width={visuel.largeur} height={visuel.hauteur} loading="lazy" decoding="async" />
         </figure>
       </div>
       <figure class="photo photo--large" style="margin-top: calc(var(--u) * 6)" data-reveal="clip">
-        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" data-parallax="0.1" />
+        <img src={asset(salle.src)} srcset={srcsetDe(salle.src)} sizes="(max-width: 767px) 100vw, 50vw" alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" data-parallax="0.1" />
       </figure>
       <div class="actions">
         <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Venir, réserver</a>
