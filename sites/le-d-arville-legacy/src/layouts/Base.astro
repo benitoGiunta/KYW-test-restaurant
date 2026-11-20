@@ -9,7 +9,7 @@ const { title, description, page, horaires = true } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const jsonLd = {
-  '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, telephone: resto.tel.href, email: resto.email, servesCuisine: 'Gastronomique de saison',
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, url: new URL(base, Astro.site).href, image: new URL(`${base}photos/01-salle-tables-1600.webp`, Astro.site).href, sameAs: [resto.facebook, resto.facebookBarabas], telephone: resto.tel.href, email: resto.email, servesCuisine: 'Gastronomique de saison',
   address: { '@type': 'PostalAddress', streetAddress: `${resto.adresse.rue} ${resto.adresse.numero}`, postalCode: resto.adresse.cp, addressLocality: 'Wierde', addressCountry: 'BE' },
   geo: { '@type': 'GeoCoordinates', latitude: resto.geo.lat, longitude: resto.geo.lon },
 };
@@ -43,7 +43,7 @@ const jsonLd = {
     <a class="skip" href="#contenu">Aller au contenu</a>
     <Nav page={page} />
     <main id="contenu"><slot /></main>
-    <Pied horaires={horaires} />
+    <Pied horaires={horaires} phrase={page === 'accueil'} />
     {page !== 'reservation' && (
       <div class="bar" role="region" aria-label="Réserver">
         <a class="btn" href={`${base}reservation/`}>Réserver</a>

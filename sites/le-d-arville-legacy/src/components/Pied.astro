@@ -1,13 +1,13 @@
 ---
 import { resto, jours } from '../data/site';
-interface Props { horaires?: boolean }
-const { horaires = true } = Astro.props;
+interface Props { horaires?: boolean; phrase?: boolean }
+const { horaires = true, phrase = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const a = resto.adresse;
 ---
-<footer class="pied" data-credits="Photographies : Le D’Arville">
+<section class="pied" aria-label="Adresse, contact et horaires" data-credits="Photographies : Le D’Arville">
   <div class="container">
-    <p class="pied__sentence">Une table dans la campagne de Wierde, à quelques minutes de Namur.</p>
+    {phrase && <p class="pied__sentence">Une table dans la campagne de Wierde, à quelques minutes de Namur.</p>}
     <div class="pied__cols">
       <div>
         <h2>Adresse</h2>
@@ -32,4 +32,4 @@ const a = resto.adresse;
       </div>
     </div>
   </div>
-</footer>
+</section>
