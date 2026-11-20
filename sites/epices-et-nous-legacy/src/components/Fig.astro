@@ -1,0 +1,16 @@
+---
+import { photos, alts } from '../data/site';
+interface Props { k: string; sizes: string; eager?: boolean; ratio?: string; pos?: string; class?: string; cap?: string }
+const { k, sizes, eager = false, ratio, pos = 'center', class: cls = '', cap } = Astro.props;
+const p = photos[k];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const src = (w: number) => `${base}photos/${p.n}-${w}.webp`;
+const srcset = p.ws.map((w) => `${src(w)} ${w}w`).join(', ');
+const alt = alts[k];
+---
+<figure class={`fig ${cls}`}>
+  <div class="ph" data-slot data-alt={alt} style={`aspect-ratio:${ratio ?? `${p.w} / ${p.h}`}`}>
+    <img src={src(p.ws[p.ws.length - 1])} srcset={srcset} sizes={sizes} width={p.w} height={p.h} alt={alt} style={`object-position:${pos}`} loading={eager ? undefined : 'lazy'} decoding={eager ? undefined : 'async'} fetchpriority={eager ? 'high' : undefined} />
+  </div>
+  {cap && <figcaption>{cap}</figcaption>}
+</figure>

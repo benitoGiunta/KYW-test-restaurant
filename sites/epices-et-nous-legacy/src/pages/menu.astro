@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Venir from '../components/Venir.astro';
+import { menu, resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="menu" title="Menu trois services à 52 € | Épices & Nous" description="Le menu trois services d’Épices & Nous à Erpent : 52 € sans les boissons, servi par table entière.">
+  <section class="page-hero">
+    <div class="container split split--hero">
+      <div class="split__text">
+        <h1>Menu trois services, <span class="nowrap">52 €</span></h1>
+        <p class="lead">Sans les boissons, servi par table entière. Nous ne faisons pas de changement dans notre menu.</p>
+        <p><a class="btn btn--accent" href={resto.reservation} rel="noopener">Réserver une table</a> <a class="link" href={`${base}carte/`}>La carte complète</a></p>
+      </div>
+      <Fig class="split__proof" k="saumon" sizes="(min-width: 60rem) 40vw, 100vw" ratio="4 / 5" eager pos="50% 45%" />
+    </div>
+  </section>
+  {menu.services.map((s) => (
+    <section class="section section--tight" aria-labelledby={`m-${s.cat}`}>
+      <div class="container rows-block">
+        <div class="rows-block__tete"><h2 id={`m-${s.cat}`}>{s.cat}</h2></div>
+        <ul class="carte carte--menu">
+          {s.plats.map(([n, d]) => <li><div class="carte__nom"><h3>{n}</h3><p>{d}</p></div></li>)}
+        </ul>
+      </div>
+    </section>
+  ))}
+  <Venir />
+</Base>
