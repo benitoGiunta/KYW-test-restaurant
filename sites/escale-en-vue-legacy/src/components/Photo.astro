@@ -1,0 +1,11 @@
+---
+import { u } from '../data/site';
+interface Props { p: { src: string; w: number; h: number; alt: string }; slot: string; sizes?: string; hero?: boolean; pos?: string; class?: string; legende?: string }
+const { p, slot, sizes = '(min-width: 60rem) 50vw, 100vw', hero = false, pos = 'center', class: cls = '', legende } = Astro.props;
+---
+<figure class:list={['photo', cls]}>
+  <div data-slot={slot} data-alt={p.alt} style={`aspect-ratio:${p.w}/${p.h}`}>
+    <img src={u(p.src)} width={p.w} height={p.h} alt={p.alt} sizes={sizes} loading={hero ? 'eager' : 'lazy'} fetchpriority={hero ? 'high' : 'auto'} decoding={hero ? 'sync' : 'async'} style={`object-position:${pos}`} />
+  </div>
+  {legende && <figcaption>{legende}</figcaption>}
+</figure>

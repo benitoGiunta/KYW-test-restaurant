@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, guinguette, photoDe, telHref, telAffiche } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const picto = (cat: string) => g.pictos.find((p) => cat.startsWith(p.categorie))?.picto ?? 'fourchette';
+const tir = ['planchette-vue', 'bol-coucher-soleil', 'bieres-trappistes', 'table-panorama'];
+const cotes: Record<string, number> = Object.fromEntries(g.tirages.map((t) => [t.src.replace('/photos/', '').replace('.webp', ''), t.cote]));
+const photos = tir.map((n) => ({ ...photoDe(`/photos/${n}.webp`), n, cote: cotes[n] }));
+const petite = (n: string) => asset(`/photos/s/${n}.webp`);
+---
+<Base title="La carte" description={`L'offre d'${site.nom} à Dave : apéro planchette, plat du jour maison sur réservation, bières régionales et trappistes. Prix à confirmer.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>La carte</h1>
+      <p class="lead">Pas de carte publiée : voici ce que la maison annonce. Une planchette pour l'apéro, un plat du jour maison sur réservation, des bières d'ici.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:84%;--y:4%;--r:14deg;--taille:110px" aria-hidden="true"><Objet id="fourchette" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="carte">
+        <h2 class="sr-only">Ce que la maison annonce</h2>
+        <div class="carte__grille">
+          {site.carte.map((c) => (
+            <div>
+              <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie}</h3>
+              {c.note && <p class="cat__note">{c.note}</p>}
+              <ul role="list">
+                {c.plats.map((p) => (
+                  <li class="plat">
+                    <span class="plat__nom">{p.nom}{p.description && <span class="plat__desc">{p.description}</span>}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <p class="muted" style="margin-top:calc(var(--u)*3)">Les prix ne sont pas publiés. Le plat du jour se réserve au <a class="link" href={telHref()}>{telAffiche}</a>.</p>
+        <p class="bandeau-ex" style="margin-top: calc(var(--u) * 5)">Exemple de carte de saison : ces plats et prix sont illustratifs</p>
+        <div class="carte__grille">
+          {g.carteExemple.map((c) => (
+            <div>
+              <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie}</h3>
+              <ul role="list">
+                {c.plats.map((p) => (
+                  <li class="plat">
+                    <span class="plat__nom">{p.nom}<span class="illu" aria-label="exemple">*</span>{p.vege && <span class="vege">végé</span>}<span class="plat__desc">{p.description}</span></span>
+                    <span class="plat__points" aria-hidden="true"></span>
+                    <span class="plat__prix">{p.prix}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">Sur <em>la table</em></h2>
+      <div class="grille-photos">
+        {photos.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-4, 3, -2, 5][i]}deg`} data-reveal="up" data-delay={String(i * 0.08)}>
+            <img src={petite(p.n)} alt={p.alt} width={p.cote} height={p.cote} loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>

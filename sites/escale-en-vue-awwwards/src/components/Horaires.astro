@@ -1,0 +1,11 @@
+---
+import { horaires, hm } from '../data/site';
+---
+<ul class="jours">
+  {horaires.map((h: any) => (
+    <li class={h.ouvert ? undefined : 'ferme'}>
+      <span class="jour">{h.jour}</span>
+      <span>{h.ouvert ? `${hm(h.debut)} à ${hm(h.fin)}` : 'Fermé'}</span>
+    </li>
+  ))}
+</ul>

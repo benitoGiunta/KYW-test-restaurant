@@ -1,0 +1,22 @@
+---
+import Photo from './Photo.astro';
+import { resto, photos, u } from '../data/site';
+---
+<section class="lieu" id="venir" aria-labelledby="lieu-titre">
+  <div class="container lieu__grille">
+    <Photo p={photos.murPierre} slot="lieu" sizes="(min-width: 60rem) 36vw, 100vw" pos="50% 70%" class="lieu__photo" legende="La terrasse, devant le mur de pierre." />
+    <div class="lieu__texte">
+      <h2 id="lieu-titre">Rue de la Rêche-Terre 21, à Dave.</h2>
+      <p class="lead">Une terrasse et un jardin potager à deux pas de Namur. Les produits viennent d’artisans locaux et d’une coopérative de paysans-artisans.</p>
+      <address class="lieu__coord">
+        <span class="adr">{resto.adresse.rue}, {resto.adresse.cp} {resto.adresse.ville}</span>
+        <a href={resto.telHref}>{resto.tel}</a>
+        <a href={`mailto:${resto.mail}`}>{resto.mail}</a>
+      </address>
+      <div class="actions">
+        <a class="btn btn--primaire" href={resto.carte} rel="noopener"><span>Ouvrir l’itinéraire</span></a>
+        <a class="btn btn--contour" href={resto.facebook} rel="noopener"><span>Facebook</span></a>
+      </div>
+    </div>
+  </div>
+</section>
