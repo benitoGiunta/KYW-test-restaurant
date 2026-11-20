@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, brunchs, maison, mardi } from '../data/site';
+import { u } from '../lib/url';
+const a = site.adresse;
+const mots = ['Gravlax maison', 'Pancakes', 'Granola', 'Limonade framboise', 'Thé glacé à la pêche', 'Salé', 'Sucré', 'Mixte'];
+---
+<Base page="accueil" description={site.description}>
+  <section class="sec hero" aria-labelledby="titre-accueil">
+    <div class="wrap hero__grid">
+      <p class="hero__adresse">Café-brunch, {a.rue} {a.numero}, {a.commune}</p>
+      <h1 class="display hero__h1" id="titre-accueil"><span class="l1">Café</span><span class="l2"><span class="l2__in" data-deborde="3">Fleuri</span></span></h1>
+      <div class="hero__lead">
+        <p>Né en 2020 parce que la salle d’à côté ne suffisait plus. Un brunch tous les jours, salé, sucré ou mixte.</p>
+        <div class="ctas">
+          <a class="btn" href={u('/reservation/')}><span>Réserver une table</span></a>
+        </div>
+      </div>
+      <div class="plates" aria-hidden="true"><span class="plate-pose plate-pose--f"><i class="plate" data-deborde="0.8" data-derive></i></span><span class="plate-pose plate-pose--a"><i class="plate" data-deborde="-0.6" data-derive></i></span></div>
+    </div>
+  </section>
+
+  <section class="sec enonce" aria-labelledby="titre-enonce">
+    <div class="wrap enonce__grid">
+      <h2 class="display enonce__h" id="titre-enonce" data-split="lines">Les brunchs du Bisou étaient <em>trop demandés</em> pour une seule salle.</h2>
+      <div class="enonce__p" data-reveal="up">
+        <p>Le Bistro Bisou, au 44 et 46 de la rue des Fossés Fleuris, ne pouvait plus suivre. Le Café Fleuri a ouvert au 38, dans la même rue, pour que le brunch ait sa propre salle.</p>
+        <p><a class="lien" href={u('/histoire/')}>Lire l’histoire du lieu</a></p>
+      </div>
+      <p class="note enonce__note" data-reveal="fade" data-delay="0.2">Petit lieu cocooning, avec terrasse, au centre historique de Namur.</p>
+    </div>
+  </section>
+
+  <div class="sec bande" aria-hidden="true" data-marquee>
+    <div class="bande__track" data-track>
+      {[0, 1].map(() => (
+        <span class="bande__lot">{mots.map((m) => <><span class="bande__mot display">{m}</span><i class="bande__pt"></i></>)}</span>
+      ))}
+    </div>
+  </div>
+
+  <section class="sec brunchs" aria-labelledby="titre-brunchs">
+    <div class="wrap">
+      <h2 class="display titre-sec" id="titre-brunchs" data-split="lines">Trois brunchs, une seule assiette de différence.</h2>
+      <ul class="idx">
+        {brunchs.map((b) => (
+          <li class={`idx__row idx__row--${b.id}`} data-reveal="up">
+            <a class="idx__link" href={u(`/carte/#${b.id}`)}>
+              <span class="idx__nom display">{b.court}</span>
+              <span class="idx__desc">{b.description}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--salle mur" aria-labelledby="titre-mur">
+    <div class="wrap">
+      <h2 class="display titre-sec" id="titre-mur" data-split="lines">Ce qui sort de la cuisine est fait sur place.</h2>
+      <div class="mur__grid">
+        {maison.map((m) => (
+          <div class="mur__case" data-reveal="up"><h3 class="display mur__mot">{m.mot}</h3><p>{m.texte}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--flood mardi" aria-label="Le mardi">
+    <div class="wrap"><p class="display mardi__txt" data-split="lines">{mardi}</p></div>
+    <p class="mardi__stamp" aria-hidden="true">Mardi</p>
+  </section>
+</Base>

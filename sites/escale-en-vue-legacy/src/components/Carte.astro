@@ -1,0 +1,26 @@
+---
+import Photo from './Photo.astro';
+import { carte, photos, resto } from '../data/site';
+---
+<section class="carte" id="carte" aria-labelledby="carte-titre">
+  <div class="container carte__grille">
+    <h2 id="carte-titre">À table, sans chichi.</h2>
+    <ul class="rows">
+      {carte.map((r) => (
+        <li class="row">
+          <h3>{r.titre}</h3>
+          <p class="row__detail">{r.detail}</p>
+          <p class="row__quand">{r.quand}</p>
+        </li>
+      ))}
+    </ul>
+    <aside class="carte__fiche">
+      <h3>Une alternative végé à chaque plat.</h3>
+      <p>Le plat du jour maison se commande à l’avance. Appelez le {resto.tel}.</p>
+      <a class="btn btn--primaire" href={resto.telHref}><span>Appeler {resto.tel}</span></a>
+    </aside>
+  </div>
+  <div class="container">
+    <Photo p={photos.trappistes} slot="trappistes" sizes="(min-width: 90rem) 1312px, 100vw" class="carte__bandeau" legende="Les trappistes de la carte des bières." />
+  </div>
+</section>

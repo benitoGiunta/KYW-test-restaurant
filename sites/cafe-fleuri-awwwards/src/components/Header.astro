@@ -1,0 +1,40 @@
+---
+import { site } from '../data/site';
+import { u } from '../lib/url';
+interface Props { page?: string }
+const { page = '' } = Astro.props;
+const liens = [
+  { href: u('/carte/'), label: 'La carte', id: 'carte' },
+  { href: u('/histoire/'), label: 'Histoire', id: 'histoire' },
+  { href: u('/reservation/'), label: 'Réserver', id: 'reservation' },
+];
+const tous = [{ href: u('/'), label: 'Accueil', id: 'accueil' }, ...liens];
+const a = site.adresse;
+---
+<header class="top">
+  <a class="top__mark" href={u('/')} aria-label="Café Fleuri, accueil">Café Fleuri</a>
+  <nav class="top__nav" aria-label="Navigation principale">
+    <ul>
+      {liens.map((l) => <li><a class="lien-nav" href={l.href} aria-current={page === l.id ? 'page' : undefined}>{l.label}</a></li>)}
+    </ul>
+  </nav>
+  <div class="top__actions">
+    <a class="btn btn--s top__call" href={`tel:${site.telephone}`}><span>Appeler</span></a>
+    <button class="top__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>Menu</button>
+  </div>
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+    <div class="menu__haut">
+      <span class="menu__mark" aria-hidden="true">Café Fleuri</span>
+      <button class="menu__fermer" type="button" data-menu-close>Fermer</button>
+    </div>
+    <nav aria-label="Menu principal">
+      <ul class="menu__liste">
+        {tous.map((l) => <li class="menu__ligne"><span class="menu__lien"><a href={l.href} aria-current={page === l.id ? 'page' : undefined}>{l.label}</a></span></li>)}
+      </ul>
+    </nav>
+    <div class="menu__bas">
+      <p>{a.rue} {a.numero}, {a.cp} {a.commune}</p>
+      <a class="btn menu__appel" href={`tel:${site.telephone}`}><span>Appeler le {site.telephoneAffiche}</span></a>
+    </div>
+  </div>
+</header>

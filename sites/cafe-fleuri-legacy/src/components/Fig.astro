@@ -1,0 +1,9 @@
+---
+import { photos } from '../data/site';
+interface Props { p: keyof typeof photos; class?: string; label?: string }
+const { p, class: cls = '', label } = Astro.props;
+const ph = photos[p];
+---
+<figure class:list={['fig', cls]} data-slot={p} data-alt={ph.alt} data-placeholder="true" style={`--ratio:${ph.ratio}`}>
+  <span class="fig__ph">{label ?? 'Photo à fournir'}</span>
+</figure>
