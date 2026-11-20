@@ -1,0 +1,24 @@
+---
+import { formules, periode } from '../data/site';
+const { id = 'f' } = Astro.props;
+---
+<div class="sw" data-switcher>
+  <div class="sw__tabs" role="tablist" aria-label="Formules du Menu du Chef">
+    {formules.map((f, i) => <button type="button" role="tab" id={`${id}-t-${f.id}`} aria-controls={`${id}-p-${f.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{f.nom}</button>)}
+  </div>
+  {formules.map((f, i) => (
+    <div class="sw__panel" role="tabpanel" id={`${id}-p-${f.id}`} aria-labelledby={`${id}-t-${f.id}`} hidden={i === 0 ? undefined : true} data-open={i === 0 ? '' : undefined}>
+      <p class="sw__price num">{f.prix}</p>
+      <p class="sw__line">Menu du Chef, {f.nom}<br /><span class="muted">{f.detail}</span></p>
+      <p class="sw__wine"><span class="muted">Sélection de vins en option</span> <span class="num">{f.vins}</span></p>
+      <p class="sw__period muted">{periode[0].toUpperCase() + periode.slice(1)}.</p>
+    </div>
+  ))}
+</div>
+<script is:inline>
+  document.querySelectorAll('[data-switcher]').forEach((sw) => {
+    const tabs = [...sw.querySelectorAll('[role=tab]')], panels = [...sw.querySelectorAll('[role=tabpanel]')];
+    const show = (i) => { tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; }); panels.forEach((p, j) => { p.hidden = i !== j; }); };
+    tabs.forEach((t, i) => { t.addEventListener('click', () => show(i)); t.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const n = (i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length; show(n); tabs[n].focus(); } }); });
+  });
+</script>

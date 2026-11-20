@@ -1,0 +1,136 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Dial from '../components/Dial.astro';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+import { suggestions, categories, eur, prixTexte } from '../data/carte';
+
+const porketto = categories.flatMap((c) => c.plats).find((p) => p.nom.includes('Porketto'))!;
+const carpaccios = categories[0].plats.filter((p) => p.nom.startsWith('Carpaccio de bœuf'));
+const moules = suggestions.filter((p) => p.nom.startsWith('Moules'));
+const mouleMin = Math.min(...moules.map((m) => m.prix[0].m));
+const mouleMax = Math.max(...moules.map((m) => m.prix[0].m));
+---
+<Base page="accueil" description={site.description}>
+  <section class="hero">
+    <div class="hero__texte">
+      <p class="hero__kicker">{site.baseline}</p>
+      <h1 class="hero__titre display" data-split="lines" data-intro>Brasserie<br />Edgard</h1>
+      <p class="hero__lede">Brasserie belge à Saint-Servais, ouverte tous les jours de 10&nbsp;h à 22&nbsp;h&nbsp;30. Carpaccios, croquettes maison, moules de Zélande, pâtes fraîches.</p>
+      <p class="hero__actions">
+        <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+        <a class="cta cta--ligne" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
+      </p>
+      <p class="hero__statut" data-statut hidden></p>
+    </div>
+    <div class="hero__cadran" data-reveal="fade" data-intro data-delay="0.1">
+      <Dial classe="dial--hero" />
+      <p class="hero__legende">
+        <span class="leg leg--salle">Salle ouverte, 10&nbsp;h à 22&nbsp;h&nbsp;30</span>
+        <span class="leg leg--cuisine">Cuisine ouverte</span>
+        <span class="leg leg--pause">Cuisine fermée, 15&nbsp;h à 18&nbsp;h (semaine)</span>
+      </p>
+    </div>
+    <figure class="hero__facade">
+      <Photo cle="facade" sizes="(min-width: 900px) 100vw, 100vw" widths={[800, 1400, 2000]} prioritaire />
+      <figcaption>La façade de nuit, chaussée de Waterloo 473.</figcaption>
+    </figure>
+  </section>
+
+  <section class="journee wrap" aria-labelledby="t-journee">
+    <h2 class="journee__titre display" id="t-journee" data-split="lines">Une journée<br />qui tourne.</h2>
+    <ol class="journee__liste">
+      <li class="plage" data-plage="midi" data-reveal="up">
+        <p class="plage__heure">10 h<span aria-hidden="true"> → </span>15 h</p>
+        <div class="plage__corps">
+          <p class="plage__maintenant" data-maintenant hidden>Maintenant</p>
+          <h3 class="plage__titre">Le midi</h3>
+          <p>La cuisine est ouverte et la formule lunch tient du lundi au vendredi : plat du jour à {eur(site.lunch.platDuJour)}, plat et dessert à {eur(site.lunch.platDessert)}.</p>
+        </div>
+      </li>
+      <li class="plage plage--pause" data-plage="pause" data-reveal="up" data-delay="0.08">
+        <p class="plage__heure">15 h<span aria-hidden="true"> → </span>18 h</p>
+        <div class="plage__corps">
+          <p class="plage__maintenant" data-maintenant hidden>Maintenant</p>
+          <h3 class="plage__titre">La pause</h3>
+          <p>Cuisine fermée en semaine, ouverte le week-end et les jours fériés. La salle et la terrasse restent ouvertes.</p>
+        </div>
+      </li>
+      <li class="plage" data-plage="soir" data-reveal="up" data-delay="0.16">
+        <p class="plage__heure">18 h<span aria-hidden="true"> → </span>22 h 30</p>
+        <div class="plage__corps">
+          <p class="plage__maintenant" data-maintenant hidden>Maintenant</p>
+          <h3 class="plage__titre">Le soir</h3>
+          <p>Toute la carte : coin du boucher, coin du poissonnier, pâtes fraîches, salades et desserts, jusqu’à 22&nbsp;h&nbsp;30.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="plats" aria-labelledby="t-plats">
+    <div class="plats__tete wrap">
+      <h2 class="plats__titre display" id="t-plats" data-split="lines">À table,<br />sans se presser.</h2>
+      <p class="plats__chapeau">Quelques plats de la carte, avec leur prix du jour de relevé. <a class="lien" href={u('/carte/')}>Toute la carte</a></p>
+    </div>
+    <div class="plats__mur wrap">
+      <article class="plat plat--a" data-reveal="up">
+        <Photo cle="tartare" sizes="(min-width: 900px) 40vw, 90vw" />
+        <h3 class="plat__nom">Le traditionnel tartare</h3>
+        <p class="plat__desc">Tartare de bœuf, classique ou à l’italienne, pommes frites maison.</p>
+        <p class="plat__prix">{eur(22.1)}</p>
+      </article>
+      <article class="plat plat--b" data-parallax="0.12">
+        <Photo cle="etagee" sizes="(min-width: 900px) 24vw, 70vw" widths={[400, 700]} />
+        <h3 class="plat__nom">Brochettes géantes</h3>
+        <p class="plat__desc">Bœuf, agneau ou volaille, 300 g.</p>
+        <p class="plat__prix">dès {eur(25.7)}</p>
+      </article>
+      <article class="plat plat--c" data-reveal="up" data-delay="0.08">
+        <Photo cle="burger" sizes="(min-width: 900px) 30vw, 90vw" />
+        <h3 class="plat__nom">Burger du chef</h3>
+        <p class="plat__desc">Bœuf, bacon, cheddar, oignons frits, sauce cow-boy, frites maison.</p>
+        <p class="plat__prix">{eur(22.9)}</p>
+      </article>
+      <article class="plat plat--d" data-parallax="0.18">
+        <Photo cle="dessert" sizes="(min-width: 900px) 24vw, 70vw" widths={[400, 700]} />
+        <h3 class="plat__nom">Coupes glacées</h3>
+        <p class="plat__desc">Dame blanche, dame noire, brésilienne, coupe au choix.</p>
+        <p class="plat__prix">dès {eur(9.5)}</p>
+      </article>
+    </div>
+    <p class="plats__porketto wrap"><span class="plats__pn">Pour deux, 25 minutes de patience</span> <strong>Épaule de porcelet rôtie « Porketto »</strong>, 1,3 kg, <span class="tab">{prixTexte(porketto)}</span>. Pour commencer, trois carpaccios de bœuf dès {eur(Math.min(...carpaccios.map((c) => c.prix[0].m)))}. En suggestion, les moules de Zélande de {eur(mouleMin)} à {eur(mouleMax)}.</p>
+  </section>
+
+  <section class="salle" aria-labelledby="t-salle">
+    <div class="wrap salle__grille">
+      <h2 class="salle__titre display" id="t-salle" data-split="lines">Du bois en sillons,<br />une horloge ronde.</h2>
+      <div class="salle__horloge" data-reveal="clip"><Photo cle="horloge" sizes="(min-width: 900px) 28vw, 70vw" widths={[500, 800]} /></div>
+      <p class="salle__texte" data-reveal="up" data-delay="0.1">Au mur, au comptoir, le bois est sculpté en courbes serrées. Les chaises sont en cuir caramel, les verres d’un prune profond, les baies cintrées. Et sur le mur crème, une horloge en mosaïque donne l’heure à toute la salle.</p>
+      <a class="lien salle__lien" href={u('/a-propos/')}>Voir la maison</a>
+    </div>
+    <div class="bande" tabindex="0" role="group" aria-label="Photos de la salle et de la terrasse">
+      <Photo cle="baies" sizes="60vw" classe="bande__img" />
+      <Photo cle="comptoir" sizes="60vw" classe="bande__img" />
+      <Photo cle="tables" sizes="60vw" classe="bande__img" />
+      <Photo cle="terrasse" sizes="60vw" classe="bande__img" />
+      <Photo cle="mur" sizes="60vw" classe="bande__img" />
+    </div>
+  </section>
+
+  <section class="chiffres wrap" aria-labelledby="t-chiffres">
+    <h2 class="sr-only" id="t-chiffres">Lunch et groupes</h2>
+    <div class="chiffre" data-reveal="up">
+      <p class="chiffre__n">{eur(site.lunch.platDuJour)}</p>
+      <p class="chiffre__t">Le plat du jour, du lundi au vendredi à midi. Avec un dessert : {eur(site.lunch.platDessert)}.</p>
+    </div>
+    <div class="chiffre" data-reveal="up" data-delay="0.08">
+      <p class="chiffre__n">Jusqu’à {site.groupes.max}</p>
+      <p class="chiffre__t">Convives pour une table de groupe, à partir de plus de {site.groupes.min}. Trois formules de {eur(34)} à {eur(49)}.</p>
+    </div>
+    <div class="chiffre" data-reveal="up" data-delay="0.16">
+      <p class="chiffre__n">7 j / 7</p>
+      <p class="chiffre__t">La salle ouvre à 10&nbsp;h et ferme à 22&nbsp;h&nbsp;30, week-end compris.</p>
+    </div>
+  </section>
+</Base>

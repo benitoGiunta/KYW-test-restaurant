@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import Formules from '../components/Formules.astro';
+import { site, photos, privatisation } from '../data/site';
+const b = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title="Be Belge… et d’ailleurs, restaurant à Wépion (Namur)" here="">
+  <!-- Hero Counter : le jardin en plein cadre, le comptoir de réservation dessous -->
+  <section class="hero">
+    <Photo p={photos.jardin} hero sizes="100vw" class="hero__ph" ratio="16/8" pos="50% 60%" />
+    <div class="container hero__in">
+      <h1>Be Belge<span class="h1-s"> … et d’ailleurs</span></h1>
+      <p class="lead">Cuisine belge et de saison, aux influences d’ailleurs. Avenue de Marlagne, à Wépion.</p>
+    </div>
+    <div class="container">
+      <div class="counter" role="group" aria-label="Réserver une table">
+        <p class="counter__c"><span class="k">Ouvert</span>du mercredi au dimanche</p>
+        <p class="counter__c"><span class="k">Adresse</span>{site.adresse.rue}, Wépion</p>
+        <p class="counter__c"><span class="k">Téléphone</span><a href={site.telHref}>{site.telAffiche}</a></p>
+        <a class="btn btn--fill counter__b" href={`${b}reservation/`}>Réservez maintenant</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statement : le texte d’accueil du client -->
+  <section class="sec statement">
+    <div class="container">
+      <p class="pencil">Bienvenue</p>
+      <p class="big">{site.accueil}</p>
+      <p class="dropcap wall">{site.accueilSuite}</p>
+    </div>
+  </section>
+
+  <!-- Bento : la maison en quatre cases -->
+  <section class="sec" aria-labelledby="h-maison">
+    <div class="container">
+      <h2 id="h-maison">La maison</h2>
+      <div class="bento">
+        <Photo p={photos.cheminee} class="bento__a" sizes="(min-width: 60rem) 58vw, 100vw" label="La salle, son mur de pierre et sa cheminée" />
+        <article class="bento__b stock">
+          <h3>Menu du Chef</h3>
+          <p class="bento__prices num">57 € <span class="muted">3 services</span><br />72 € <span class="muted">4 services</span></p>
+          <p class="muted">Vins en accord : 28 € ou 35 €.</p>
+          <p><a class="link" href={`${b}menu/`}>Voir le menu</a></p>
+        </article>
+        <Photo p={photos.terrasse} class="bento__c" sizes="(min-width: 60rem) 38vw, 100vw" label="La terrasse ombragée" />
+        <article class="bento__d">
+          <h3>Banquets et réceptions</h3>
+          <p>Repas assis de {privatisation.assis.min} à {privatisation.assis.max} personnes, walking dinner de {privatisation.walking.min} à {privatisation.walking.max}.</p>
+          <p><a class="link" href={`${b}banquets-et-receptions/`}>Privatiser le restaurant</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Une salle plein cadre, sans titre -->
+  <Photo p={photos.tableaux} class="bleed" sizes="100vw" ratio="21/9" pos="50% 55%" />
+
+  <!-- Menu : Switcher des formules puis rangées -->
+  <section class="sec" aria-labelledby="h-menu">
+    <div class="container menu">
+      <div class="menu__head">
+        <h2 id="h-menu">Le Menu du Chef</h2>
+        <Formules id="home" />
+      </div>
+      <div class="menu__rows">
+        <section class="rows" aria-label="Quelques plats">
+          <ul class="ruled">
+            <li class="row"><h3>Saint-Jacques en deux préparations</h3><p class="row__d">Taillées à cru, fraîcheur d’agrumes ; poêlées, émulsion au beurre blanc</p></li>
+            <li class="row"><h3>Carré de veau de lait basse température</h3><p class="row__d">Jus corsé à la truffe d’été, jeunes légumes et pommes bouchon</p></li>
+            <li class="row"><h3>Filet de canette</h3><p class="row__d">Abricot caramélisé à la lavande, jus corsé à la Kriek Boon</p></li>
+            <li class="row"><h3>La classique Dame blanche</h3><p class="row__d">Et son chocolat chaud</p></li>
+          </ul>
+        </section>
+        <p><a class="link" href={`${b}carte/`}>Toute la carte</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Horaires et lieu -->
+  <section class="sec sec--alt" aria-labelledby="h-horaires">
+    <div class="container two">
+      <div>
+        <h2 id="h-horaires">Horaires</h2>
+        <Horaires />
+      </div>
+      <div class="lieu">
+        <h2>Où nous trouver</h2>
+        <address class="wall">{site.adresse.rue}<br />{site.adresse.ville}</address>
+        <p><a class="link" href={site.itineraire} rel="noopener">Itinéraire</a></p>
+        <Photo p={photos.enseigne} sizes="(min-width: 60rem) 40vw, 100vw" label="L’enseigne à l’entrée" ratio="4/3" />
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,49 @@
+---
+import Points from '../components/Points.astro';
+import Base from '../layouts/Base.astro';
+import { site, menus, carte, periodeMenu } from '../data/site';
+---
+<Base page="carte" title="La carte" description="La carte de Be Belge… et d’ailleurs à Wépion : menu du chef en 3 services à 57 € ou 4 services à 72 €, entrées, plats et desserts de saison, vins en accord.">
+  <section class="page-tete wrap">
+    <h1 class="display page-tete__titre" data-intro-points>La carte<Points /></h1>
+    <p class="page-tete__chapo">Un menu du chef, à choisir parmi trois entrées, trois plats et des desserts. {periodeMenu}</p>
+  </section>
+
+  <section class="wrap carte-menus" aria-label="Formules">
+    <ul class="menus__liste">
+      {menus.map((m) => (
+        <li class="menu">
+          <p class="menu__nom">{m.nom}</p>
+          <p class="menu__detail">{m.detail}</p>
+          <p class="menu__prix"><span class="chiffre">{m.prix}</span>&nbsp;€</p>
+          <p class="menu__vins">Vins en accord : {m.vins}&nbsp;€</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <div class="carte wrap">
+    {carte.map((c) => (
+      <section class="carte__bloc" aria-labelledby={`c-${c.titre}`}>
+        <h2 id={`c-${c.titre}`} class="carte__titre display">{c.titre}<Points /><span class="carte__cat">{c.categorie}</span></h2>
+        <ul class="carte__liste">
+          {c.plats.map((p) => (
+            <li class="ligne" data-reveal="up">
+              <div class="ligne__tete">
+                <h3 class="ligne__nom">{p.nom}</h3>
+                <span class="ligne__pts" aria-hidden="true"></span>
+                <span class="ligne__prix">{p.supplement ? <><span class="sr-only">Supplément de </span>+{p.supplement}&nbsp;€</> : <><span aria-hidden="true">…</span><span class="sr-only">au choix</span></>}</span>
+              </div>
+              {p.description && !p.supplement ? <p class="ligne__desc">{p.description}</p> : null}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+
+  <section class="wrap carte-fin">
+    <p>Les plats et leurs suppléments sont ceux du menu relevé sur le site du restaurant. Une question sur la carte du jour, une allergie : appelez le <a class="lt" href={site.telephoneHref}>{site.telephoneLisible}</a>.</p>
+    <p><a class="btn" href={site.reservationUrl} rel="noopener" target="_blank">Réserver une table<span class="sr-only"> (nouvel onglet)</span></a></p>
+  </section>
+</Base>

@@ -1,0 +1,108 @@
+---
+import Base from '../layouts/Base.astro';
+import Chapitre from '../components/Chapitre.astro';
+import { site, photoDe, horairesResume, adresseLigne, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/hero-salle-1800.webp');
+const heroM = photoDe('/photos/hero-salle-960.webp');
+const c = site.chiffres;
+const motsNom = site.nom.split(' ');
+const motsCitation = site.citation.texte.split(' ');
+const galerie = ['/photos/gal-jardin-nb.webp', '/photos/gal-terrasse-nb.webp', '/photos/gal-enseigne-nb.webp', '/photos/gal-applique-nb.webp', '/photos/gal-brasero-nb.webp'].map(photoDe);
+const hauteurs = ['basse', 'haute', 'moyenne', 'haute', 'basse'];
+const offres = site.privatisation.offres;
+const menu = site.menus[0];
+const resume = horairesResume();
+---
+<Base preloadImage={{ href: heroM.src, media: '(max-width: 767px)' }}>
+  <section class="hero" data-hero aria-label="Accueil">
+    <picture class="hero__photo">
+      <source media="(max-width: 767px)" srcset={asset(heroM.src)} />
+      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical />
+    </picture>
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="wrap hero__contenu">
+      <p class="petite-cap hero__sur">{adresseLigne()}</p>
+      <h1 class="hero__nom">{motsNom.map((m, i) => <><span class="hero__mot"><span class="hero__mot-in" data-hero-mot>{m}</span></span>{i === 1 ? <span class="hero__saut" aria-hidden="true"></span> : i < motsNom.length - 1 ? ' ' : ''}</>)}</h1>
+      <p class="hero__accroche">{site.baseline}</p>
+      <div class="actions">
+        <a class="btn btn--primary" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+        <a class="lien lien--fleche" href="#services">Découvrir la maison</a>
+      </div>
+    </div>
+  </section>
+
+  <Chapitre id="services" chiffre={c.services} photo={photoDe('/photos/chap-table-1200.webp')} lien={{ href: u('/menu/'), label: 'Lire le menu' }}>
+    <p>Le Menu du Chef se compose sur la carte : une entrée, un plat, un dessert, ou deux entrées pour le menu en {site.menus[1].services} services. Saint-Jacques, canette à la Kriek Boon, Dame blanche.</p>
+    <p>La carte montrée ici est celle de l'été 2026, à titre d'exemple de la cuisine de la maison.</p>
+  </Chapitre>
+
+  <Chapitre id="prix" chiffre={c.prix} photo={photoDe('/photos/chap-bar-1200.webp')} inverse filet lien={{ href: u('/carte/'), label: 'Les deux menus' }}>
+    <p>{site.menus[0].prix} pour le Menu du Chef en {site.menus[0].services} services, {site.menus[1].prix} en {site.menus[1].services} services.</p>
+    <p>Une sélection de vins en accord se prend en option : {site.menus[0].vins} avec le premier, {site.menus[1].vins} avec le second.</p>
+  </Chapitre>
+
+  <section class="citation" data-allume aria-labelledby="citation-source">
+    <div class="wrap citation__wrap">
+      <p class="petite-cap" id="citation-source">{site.citation.source}</p>
+      <blockquote class="citation__texte" cite={site.citation.url}>
+        <p>{motsCitation.map((m, i) => <><span class="mot">{m}</span>{i < motsCitation.length - 1 ? ' ' : ''}</>)}</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <Chapitre id="maison" chiffre={c.convives} photo={photoDe('/photos/chap-banquette-1200.webp')} lien={{ href: u('/maison/'), label: 'La maison' }}>
+    <p>Une salle au mur de pierre et sa cheminée, une terrasse ombragée avec son foyer à feu, un jardin : la maison reçoit jusqu'à {c.convives.valeur} convives assis pour vos repas de groupe.</p>
+    <p>Entre jardin et pierre, le restaurant s'appelle lui-même « notre nouveau petit nid ».</p>
+  </Chapitre>
+
+  <section class="onglets" data-onglets aria-labelledby="onglets-titre">
+    <div class="onglets__photos" aria-hidden="true">
+      {offres.map((o, i) => { const p = photoDe(o.photo); return <img class:list={['onglets__photo', { 'is-active': i === 0 }]} data-onglet-photo src={asset(p.src)} alt="" width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />; })}
+    </div>
+    <div class="wrap onglets__contenu">
+      <h2 class="petite-cap" id="onglets-titre">Privatisation</h2>
+      <p class="onglets__intro">{site.privatisation.intro}</p>
+      <div class="onglets__liste" role="tablist" aria-label="Formules de privatisation">
+        {offres.map((o, i) => (
+          <button class="onglet" role="tab" id={`onglet-${i}`} aria-controls={`panneau-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} type="button">
+            <span class="onglet__nom">{o.nom}</span><span class="onglet__barre" aria-hidden="true"></span>
+          </button>
+        ))}
+      </div>
+      {offres.map((o, i) => (
+        <div class="onglets__panneau" role="tabpanel" id={`panneau-${i}`} aria-labelledby={`onglet-${i}`} hidden={i !== 0}>
+          <p>{o.texte}{o.textePlaceholder && <span class="illu">texte illustratif</span>}</p>
+        </div>
+      ))}
+      <p class="onglets__action"><a class="btn" href={u('/privatisation/')}>Privatiser la salle</a></p>
+    </div>
+  </section>
+
+  <section class="galerie" aria-label="La maison en noir et blanc">
+    <div class="galerie__bande">
+      {galerie.map((p, i) => (
+        <figure class:list={['galerie__item', `galerie__item--${hauteurs[i]}`]} data-reveal="up" data-delay={String(i * 0.08)} data-cursor="Voir">
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="cloture" data-rideau aria-labelledby="cloture-titre">
+    <div class="rideau" aria-hidden="true"></div>
+    <div class="wrap cloture__bloc">
+      <p class="chiffre chiffre--centre" aria-hidden="true"><span data-compteur={String(c.jours.valeur)}>{c.jours.valeur}</span></p>
+      <h2 class="petite-cap" id="cloture-titre"><span class="sr-only">{c.jours.valeur} {c.jours.libelle}</span><span aria-hidden="true">{c.jours.libelle}</span></h2>
+      <p class="cloture__sous">{c.jours.sousLibelle}.</p>
+      <address class="cloture__adresse">{adresseLigne()}</address>
+      <dl class="cloture__horaires">
+        {resume.map((r) => <div><dt>{r.libelle}</dt><dd>{r.valeur}</dd></div>)}
+      </dl>
+      <div class="actions actions--centre">
+        <a class="btn btn--primary" href={u('/reservation/')}>Réserver une table</a>
+        <a class="lien" href={telHref()}>{site.telephone}</a>
+      </div>
+    </div>
+  </section>
+</Base>

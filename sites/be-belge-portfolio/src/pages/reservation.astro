@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+---
+<Base title="Réservation" description={`Réserver une table à Be Belge… et d'ailleurs, ${site.adresse.commune} : en ligne via ${site.reservation.outil} ou par téléphone au ${site.telephone}.`}>
+  <HeroPage titre="Réserver" sur="Une table, le midi ou le soir">
+    <p>La réservation se fait en ligne via {site.reservation.outil}. {site.reservation.note}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
+      <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+    </div>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="services-titre">
+    <div class="wrap resa">
+      <div class="resa__horaires" data-reveal="fade">
+        <h2 class="petite-cap" id="services-titre">Services</h2>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+              </div>
+      <div class="resa__infos" data-reveal="fade">
+        <h2 class="petite-cap">Adresse</h2>
+        <address>{adresseLigne()}</address>
+        <p><a class="lien" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

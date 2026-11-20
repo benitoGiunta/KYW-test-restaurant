@@ -1,0 +1,14 @@
+---
+import { site, nav } from '../data/site';
+const b = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const { here = '' } = Astro.props;
+---
+<header class="bar">
+  <nav class="bar__in" aria-label="Navigation principale">
+    <a class="mark" href={b} aria-label={`${site.nom}, accueil`}><span>{site.court}</span> <span class="mark__s">{site.suite}</span></a>
+    <ul class="bar__links">
+      {nav.map((n) => <li><a href={`${b}${n.href}`} aria-current={here === n.href ? 'page' : undefined}>{n.label}</a></li>)}
+    </ul>
+    <a class="btn btn--fill" href={`${b}reservation/`}>Réserver</a>
+  </nav>
+</header>

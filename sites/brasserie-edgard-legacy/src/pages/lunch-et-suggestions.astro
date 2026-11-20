@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Reservation from '../components/Reservation.astro';
+import Footer from '../components/Footer.astro';
+import { lunch, suggestions, prix } from '../data/site';
+---
+<Base title="Lunch et suggestions, Mr Edgard, Saint-Servais" description="Le lunch du lundi au vendredi midi (14,50 € le plat du jour, 21,50 € avec dessert) et les suggestions du moment : moules de Zélande, choucroute de la mer, cassolet.">
+  <Nav current="lunch-et-suggestions/" />
+  <main id="contenu">
+    <header class="pagehead">
+      <div class="container grid12 pagehead__grid">
+        <div class="head">
+          <h1>Lunch et suggestions</h1>
+          <p class="lead">{lunch.quand}. Les suggestions du moment s’ajoutent à la carte.</p>
+        </div>
+      </div>
+    </header>
+    <section class="sec band lunch" aria-labelledby="l1">
+      <div class="container grid12">
+        <div class="head"><h2 id="l1">Le lunch</h2><p class="lead">Un plat du jour au choix, avec ou sans dessert.</p></div>
+        <ul class="figures">
+          <li data-reveal><span class="figure num">{prix(lunch.platDuJour)}</span><span class="what">Plat du jour au choix</span></li>
+          <li data-reveal><span class="figure num">{prix(lunch.platDessert)}</span><span class="what">Plat et dessert</span></li>
+        </ul>
+      </div>
+    </section>
+    <section class="sec">
+      <div class="container menu2">
+        <div>
+          <h2>Plats</h2>
+          <ul class="rows">
+            {lunch.plats.map((p) => <li><h3>{p.nom}</h3>{p.suppl && <span class="suppl">+ {prix(p.suppl)}</span>}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h2>Desserts</h2>
+          <ul class="rows">
+            {lunch.desserts.map((p) => <li><h3>{p.nom}</h3>{p.suppl && <span class="suppl">+ {prix(p.suppl)}</span>}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="sec band" aria-labelledby="s1">
+      <div class="container grid12">
+        <div class="head sec-head"><h2 id="s1">Les suggestions</h2><p class="lead">À la carte, le temps de la saison.</p></div>
+        <div class="cond" style="border-top:0">
+          <h3 class="visually-hidden">En entrée</h3>
+          <ul class="rows">
+            {suggestions.entree.map((p) => <li><h3>{p.nom}</h3><p>{p.detail}</p><span class="price">{prix(p.prix)}</span></li>)}
+            {suggestions.plats.map((p) => <li><h3>{p.nom}</h3><p>{p.detail}</p><span class="price">{prix(p.prix)}</span></li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="sec" aria-labelledby="m1">
+      <div class="container grid12">
+        <div class="head sec-head"><h2 id="m1">Les moules de Zélande</h2><p class="lead">{suggestions.moulesNote}</p></div>
+        <ul class="rows cond">
+          {suggestions.moules.map((p) => <li><h3>{p.nom}</h3>{p.detail && <p>{p.detail}</p>}<span class="price">{prix(p.prix)}</span></li>)}
+          {suggestions.dessert.map((p) => <li><h3>{p.nom}, au dessert</h3><p>{p.detail}</p><span class="price">{prix(p.prix)}</span></li>)}
+        </ul>
+      </div>
+    </section>
+    <Reservation photo="coupelles" caption="Coupelles d’olives et de grignotages." />
+  </main>
+  <Footer />
+</Base>

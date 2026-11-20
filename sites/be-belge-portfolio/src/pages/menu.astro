@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const [entrees, plats, desserts, supplements] = site.carte;
+const groupes = [entrees, plats, desserts];
+const photos = ['/photos/tableaux-1140.webp', '/photos/brasero-1140.webp', '/photos/cheminee-1140.webp'].map(photoDe);
+---
+<Base title="Le menu" description={`Le Menu du Chef de Be Belge… et d'ailleurs à Wépion : ${site.menus[0].services} services à ${site.menus[0].prix} ou ${site.menus[1].services} services à ${site.menus[1].prix}. Saint-Jacques, carré de veau, filet de canette.`}>
+  <HeroPage titre="Le menu" chiffre={site.chiffres.services} sur={`${site.menus[0].nom}, ${site.menus[0].prix}`}>
+    <p>Une entrée, un plat, un dessert à choisir sur la carte ; un menu en {site.menus[1].services} services pour {site.menus[1].prix}. <span class="illu">composition de l'été 2026, à titre d'exemple</span></p>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="menu-titre">
+    <div class="wrap menu__grille">
+      <h2 class="sr-only" id="menu-titre">La carte du Menu du Chef</h2>
+      <div class="menu__groupes">
+        {groupes.map((g, gi) => (
+          <section class="menu__groupe" aria-labelledby={`groupe-${gi}`}>
+            <h3 class="petite-cap" id={`groupe-${gi}`}>{g.categorie}</h3>
+            <ol class="menu__liste" aria-labelledby={`groupe-${gi}`}>
+              {g.plats.map((p) => (
+                <li class="menu__ligne" data-reveal="up">
+                  <span class="menu__numero" aria-hidden="true">{String(gi + 1).padStart(2, '0')}</span>
+                  <span class="menu__nom">{p.nom}</span>
+                  {p.description && <span class="menu__desc">{p.description}</span>}
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))}
+      </div>
+      <aside class="menu__cote" data-reveal="fade">
+        <p class="petite-cap">{supplements.categorie}</p>
+        <ul class="menu__options">
+          {supplements.plats.map((p) => <li><span>{p.nom}</span>{p.prix && <strong>{p.prix}</strong>}</li>)}
+        </ul>
+        <p class="petite-cap">Vins en accord</p>
+        <ul class="menu__options">
+          {site.menus.map((m) => <li><span>Menu en {m.services} services</span><strong>{m.vins}</strong></li>)}
+        </ul>
+        <p class="muted">Menu en {site.menus[1].services} services : deux entrées au lieu d'une.</p>
+        <p><a class="btn btn--primary" href={u('/reservation/')}>Réserver</a></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--photos" aria-label="La maison">
+    <div class="wrap triptyque">
+      {photos.map((p, i) => (
+        <figure class:list={['triptyque__item', `triptyque__item--${i}`]} data-reveal="clip" data-delay={String(i * 0.1)}>
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+</Base>

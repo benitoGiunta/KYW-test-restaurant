@@ -1,0 +1,18 @@
+---
+import { site } from '../data/site';
+import Photo from './Photo.astro';
+const { photo = 'terrasse', caption = 'La terrasse couverte, sous les parasols.' } = Astro.props;
+---
+<section class="sec booking" id="reserver" aria-labelledby="reserver-titre">
+  <div class="container booking__grid">
+    <div class="booking__text">
+      <h2 id="reserver-titre">Réserver une table</h2>
+      <p class="lead">La réservation se fait en ligne. Les e-mails ne sont pas enregistrés.</p>
+      <div class="actions">
+        <a class="btn btn--solid" href={site.reservation} rel="noopener">Réserver en ligne</a>
+        <a class="link" href={site.telHref}>{site.tel}</a>
+      </div>
+    </div>
+    <Photo name={photo} caption={caption} sizes="(min-width: 60rem) 56vw, 100vw" />
+  </div>
+</section>
