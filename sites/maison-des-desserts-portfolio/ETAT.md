@@ -1,21 +1,20 @@
-# ETAT phase 1/3 (construction-1) : portfolio, La Maison des Desserts
+# ETAT phase 2/3 (construction-2) : portfolio, La Maison des Desserts
 
-## Fait
-- Gabarit collage copié et adapté ; DESIGN.md ; `src/data/site.ts` + `carte.json` (13 catégories, issues de donnees.json).
-- Pages : accueil (hero, manifeste, 4 activités, fêtes, presse, infos), carte, fetes, histoire, contact, 404. Build OK (`dist/maison-des-desserts/portfolio/`, 6 pages), noindex, mention KYW et pied KYW présents.
-- Photos WebP optimisées (15) dans public/photos, logo.png copié, favicon, og.jpg.
+## Fait en phase 2 (motion, signature, états, mobile)
+- Signature « se colle » : logo-étiquette dont la 4e case prend le nom de la section (corrigé pour les pages dédiées : `page-hero` actif de `top bottom` à `bottom 15%`, `data-activite` ajouté sur histoire et contact) ; photos d'activité posées de travers puis collées (rotation et échelle liées au défilement, ombre portée, `cadresColles()` dans `src/motion/setup.ts`) ; menu mobile dont les liens se collent un à un (CSS).
+- État d'ouverture calculé (Europe/Brussels, 7 jours, `etatOuvertureTexte`) : pastille `.statut` dans le hero, le hero de contact et le pied. Testé par `page.clock` : mardi 10h, 7h, 18h30, samedi 18h, dimanche, lundi. Vide et masquée sans JS.
+- Carte : sommaire collant de 13 pastilles (`[data-sommaire]`), rubrique visible en `aria-current`, clic décalé de l'en-tête (Lenis), focus sur la cible ; 13 ids de rubrique (`rubrique-N`, ids d'activité conservés).
+- Corrections : bouton MENU visible au bureau ; viewport mobile élargi à 481 px par un prix long nowrap (`prix--long`) ; `data-reveal` retiré des blocs contenant liens ou boutons (infos, cartouche des fêtes, avis) ; pied du site en `<section aria-label>` (plus de second `<footer>`) et horaires du pied remplacés par la pastille (plus de doublon avec l'accueil) ; contraste du `.muted` sur cacao ; « Commander » masqué de la barre sous 48rem (hero et menu le portent) pour laisser la place à la case de section ; case de section masquée sous 24rem.
+- Reduced motion : classe `motion` absente, 0 élément caché, loader absent, aucune photo inclinée ; la pastille d'ouverture reste (pas d'animation, le pouls est coupé par la règle globale).
+- Mesures (script scratchpad `mdd-p2-mesure.mjs`) : `scrollWidth` 320/360/390/1440 sur 5 pages, clics réels d'en-tête 1440, `data-reveal` avec lien, console.
 
-## Reste (phases 2 et 3)
-- QA navigateur : captures desktop/mobile, clics d'en-tête réels (1440), bas de page visible, audit.
-- Animations : vérifier les `data-split`, `data-reveal`, cases du logo (Pâtisserie, Boulangerie, Chocolaterie, Salon de thé, Les fêtes) ; tasse du salon ; hero photo `fetchpriority`.
-- Mobile : `.split--inv` n'a pas de style dédié (j'utilise `order: 2` en ligne : à vérifier en 1 colonne, photo sous le texte attendue).
-- Contraste ink sur cacao (#c98a5e, estimé 7:1) à mesurer ; sticker--ecru sur aplat bleu.
-- Carte longue (142 lignes) : envisager sommaire plus fin ; prix du chocolat chaud viennois et des mignardises incertains (dossier).
-- RAPPORT.md (hérité du gabarit : à réécrire), REVUE-1.md / REVISION-1.md hérités à ignorer ; retirer les fichiers hérités si inutiles.
-- Ligne `collage | maison-des-desserts` à ajouter dans gabarits/UTILISATION.md (non touché).
+## Reste (phase 3 et agent captures)
+- Shoot/audit complets (non faits ici) ; vérifier `skipLinkFirst` (faux positif), axe sur `.sommaire` (zone défilante : liens focalisables), pastille `.statut` en pied.
+- Photo chocolat unique (illustrative) ; page Histoire garde le post-it « À confirmer » (dates 1946/1987/1993 incohérentes dans le dossier) : à neutraliser ou reformuler en phase 3 si jugé note de chantier.
+- Ligne `collage | maison-des-desserts` toujours à ajouter dans gabarits/UTILISATION.md (gabarits/ protégé).
+- RAPPORT.md, REVUE-1.md, REVISION-1.md hérités du gabarit : à réécrire ou retirer.
 
-## Décisions / hypothèses
-- Pas de réservation de table (aucune dans le dossier) : CTA = boutique en ligne `shop.lamaisondesdesserts.be` (sous-domaine cité par le dossier).
-- Avis : aucun, remplacés par 2 titres de presse réels (sans citation). Aucune donnée inventée ; `placeholder: true` seulement sur la photo chocolat.
-- 31 décembre indiqué ouvert (fermeture 17h00) d'après la carte PDF ; galerie sans équipe.
-- Tous les `rm` de glob refusés par le système : anciennes photos du gabarit déplacées dans le scratchpad.
+## Pièges
+- Rebuild pendant qu'un script tourne = `dist/` vidé sous le serveur. Serveur de test : port 4472, PID dans le scratchpad `mdd-p2-serve.pid` (à tuer par `kill <PID>`).
+- La mesure complète (5 pages x 4 largeurs, loader 5,5 s) dépasse 120 s : lancer en fond.
+- Hypothèses : pas de réservation de table, CTA = boutique en ligne ; horaires 8h-18h du mardi au samedi (dossier) ; aucune donnée ajoutée.
