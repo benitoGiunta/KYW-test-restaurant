@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Objet from '../components/Objet.astro';
 import Ornements from '../components/Ornements.astro';
 import Lieux from '../components/Lieux.astro';
+import Vague from '../components/Vague.astro';
 import { site, guinguette, lieux, photoDe } from '../data/site';
 import { u, asset } from '../lib/url';
 const g = guinguette;
@@ -55,6 +56,7 @@ const [m1, m2] = g.manifeste.titre;
   </section>
 
   <!-- La table : signature -->
+  <Vague />
   <section class="section section--canard table" id="table" data-table aria-label="La table : photos à déplacer">
     <div class="table__titre wrap">
       <h2>La table du Lodge</h2>
@@ -62,13 +64,13 @@ const [m1, m2] = g.manifeste.titre;
     </div>
     <div class="table__scene" data-table-scene>
       {g.tirages.map((t, i) => (
-        <figure class="tirage" data-tirage tabindex="0" aria-label={`${t.legende}, photo déplaçable aux flèches`} style={`--x:${t.x}%;--y:${t.y}%;--r:${t.r}deg`}>
+        <figure class="tirage" data-tirage data-cursor="Attrapez" tabindex="0" aria-label={`${t.legende}, photo déplaçable aux flèches`} style={`--x:${t.x}%;--y:${t.y}%;--r:${t.r}deg`}>
           <img src={petite(t.src)} alt={t.alt} width="640" height="640" loading="lazy" decoding="async" draggable="false" />
           <figcaption>{t.legende}</figcaption>
         </figure>
       ))}
       {(['verre', 'citron', 'fourchette'] as const).map((id, i) => (
-        <button type="button" class="obj" data-obj aria-label={`${id} dessiné au trait, déplaçable aux flèches`} style={`--x:${[48, 8, 88][i]}%;--y:${[30, 80, 78][i]}%;--r:${[12, -20, 40][i]}deg;--taille:110px`}>
+        <button type="button" class="obj" data-obj aria-label={`${id} dessiné au trait, déplaçable aux flèches`} style={`--x:${[45, 8, 90][i]}%;--y:${[80, 46, 44][i]}%;--r:${[12, -20, 40][i]}deg;--taille:110px`}>
           <Objet id={id} classe="obj__svg" />
         </button>
       ))}
@@ -81,6 +83,8 @@ const [m1, m2] = g.manifeste.titre;
         </figure>
       ))}
     </div>
+    <button type="button" class="table__ranger btn btn--lin" data-ranger>Ranger la table</button>
+    <p class="sr-only" role="status" data-ranger-etat></p>
     <div class="badge" aria-hidden="true">
       <svg viewBox="0 0 120 120"><defs><path id="cercle" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" /></defs><text><textPath href="#cercle">attrapez-moi · attrapez-moi · attrapez-moi · </textPath></text></svg>
       <svg class="badge__main" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M30 60 V30 a6 6 0 0 1 12 0 V52" /><path d="M42 50 V26 a6 6 0 0 1 12 0 V52" /><path d="M54 50 V30 a6 6 0 0 1 12 0 V56" /><path d="M66 54 V40 a6 6 0 0 1 12 0 V68 a26 26 0 0 1 -26 26 h-6 a24 24 0 0 1 -20 -11 L18 66 a6 6 0 0 1 10 -7 L30 62" /></svg>

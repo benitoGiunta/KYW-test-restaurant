@@ -29,34 +29,24 @@ export function setupMotion() {
   });
 }
 
-/** État « ouvert / fermé » calculé depuis site.horaires (data-horaires), jamais une date en dur. */
+/** Bandeau d'état : texte statique (fermeture), copies jusqu'à couvrir la fenêtre, pause (bouton, survol, focus), aucun horaire. */
 function marquee() {
   const root = document.querySelector<HTMLElement>('[data-marquee]');
-  if (!root || !root.dataset.horaires) return () => {};
-  const jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
-  const horaires = JSON.parse(root.dataset.horaires || '[]') as { j: string; c: { ouverture: string; fermeture: string }[] }[];
-  const parJour = (j: string) => horaires.find((h) => h.j === j);
-  const peindre = () => {
-    const d = new Date();
-    const hhmm = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-    const auj = parJour(jours[d.getDay()]);
-    let texte = 'Horaires du jour';
-    let etat = '';
-    const ouvert = auj?.c.find((c) => c.ouverture <= hhmm && hhmm < c.fermeture);
-    const suivant = auj?.c.find((c) => c.ouverture > hhmm);
-    if (ouvert) { texte = `Ouvert, arrivée jusqu'à ${ouvert.fermeture}`; etat = 'is-ouvert'; }
-    else if (suivant) { texte = `Fermé en ce moment, ouverture à ${suivant.ouverture}`; etat = 'is-ferme'; }
-    else {
-      for (let k = 1; k <= 7; k++) {
-        const h = parJour(jours[(d.getDay() + k) % 7]);
-        if (h && h.c.length) { texte = `Fermé aujourd'hui, prochain service ${h.j} à ${h.c[0].ouverture}`; etat = 'is-ferme'; break; }
-      }
-    }
-    root.querySelectorAll<HTMLElement>('[data-marquee-etat]').forEach((e) => { e.textContent = texte; e.className = `marquee__etat ${etat}`; });
-  };
-  peindre();
-  const id = window.setInterval(peindre, 60_000);
-  return () => window.clearInterval(id);
+  if (!root) return () => {};
+  const groupes = [...root.querySelectorAll<HTMLElement>('.marquee__groupe')];
+  const copies: HTMLElement[] = [];
+  if (!prefersReducedMotion() && groupes[0]) {
+    const l = groupes[0].getBoundingClientRect().width || 1;
+    const n = Math.max(0, Math.ceil(window.innerWidth / l) - 1);
+    groupes.forEach((g) => {
+      const base = [...g.children] as HTMLElement[];
+      for (let k = 0; k < n; k++) base.forEach((c) => { const x = c.cloneNode(true) as HTMLElement; x.setAttribute('aria-hidden', 'true'); g.appendChild(x); copies.push(x); });
+    });
+  }
+  const bouton = root.querySelector<HTMLButtonElement>('[data-marquee-pause]');
+  const basculer = () => bouton?.setAttribute('aria-pressed', String(root.classList.toggle('is-paused')));
+  bouton?.addEventListener('click', basculer);
+  return () => { bouton?.removeEventListener('click', basculer); root.classList.remove('is-paused'); copies.forEach((c) => c.remove()); };
 }
 
 /** Rend un élément saisissable : Draggable x,y borné au parent, zIndex au drag, inertie maison, flèches au clavier. */
@@ -127,13 +117,33 @@ function table() {
   if (!scene || isMobile() || getComputedStyle(scene).display === 'none') return () => {};
   const items = [...scene.querySelectorAll<HTMLElement>('[data-tirage], [data-obj]')];
   const cleanups: (() => void)[] = [];
+  const section = scene.closest<HTMLElement>('[data-table]');
+  const ranger = document.querySelector<HTMLButtonElement>('[data-ranger]');
+  const etat = document.querySelector<HTMLElement>('[data-ranger-etat]');
+  let pret = false;
+  const pret_ = () => { pret = true; ranger?.removeAttribute('aria-disabled'); };
+  const pris = () => section?.classList.add('is-pris');
+  scene.addEventListener('pointerdown', pris, { once: true });
+  scene.addEventListener('keydown', pris, { once: true });
+  const ranger_ = () => {
+    if (!pret) return;
+    const reduit = prefersReducedMotion();
+    section?.classList.remove('is-pris');
+    scene.addEventListener('pointerdown', pris, { once: true });
+    gsap.to(items, { x: 0, y: 0, duration: reduit ? 0 : 0.9, ease: 'back.out(1.4)', stagger: reduit ? 0 : { each: 0.04, from: 'random' }, overwrite: 'auto', onComplete: () => items.forEach((el) => Draggable.get(el)?.update()) });
+    if (etat) { etat.textContent = 'La table est rangée.'; window.setTimeout(() => { etat.textContent = ''; }, 2500); }
+  };
+  ranger?.addEventListener('click', ranger_);
+  cleanups.push(() => { ranger?.removeEventListener('click', ranger_); scene.removeEventListener('pointerdown', pris); scene.removeEventListener('keydown', pris); });
   if (prefersReducedMotion()) {
     scene.querySelectorAll<HTMLElement>('[data-tirage]').forEach((t) => cleanups.push(saisissable(t, scene)));
+    pret_();
     return () => cleanups.forEach((c) => c());
   }
+  ranger?.setAttribute('aria-disabled', 'true');
   const tl = gsap.timeline({
     scrollTrigger: { trigger: scene, start: 'top 70%', once: true },
-    onComplete: () => items.forEach((t) => cleanups.push(saisissable(t, scene))),
+    onComplete: () => { items.forEach((t) => cleanups.push(saisissable(t, scene))); pret_(); },
   });
   tl.from(items, { y: 90, autoAlpha: 0, rotation: () => gsap.utils.random(-14, 14), duration: 0.9, ease: 'back.out(1.6)', stagger: { each: 0.06, from: 'random' } });
   cleanups.push(() => tl.kill());
