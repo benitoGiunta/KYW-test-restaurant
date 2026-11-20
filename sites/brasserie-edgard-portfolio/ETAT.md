@@ -1,4 +1,4 @@
-# ETAT — brasserie-edgard-portfolio (phase 2 sur 3, construction-2)
+# ETAT — brasserie-edgard-portfolio (phase 3 sur 3, QA terminée)
 
 ## Fait (phases 1 et 2)
 - Phase 1 : gabarit Guinguette, contenu réel, 7 pages, photos, build (voir DESIGN.md).
@@ -17,3 +17,7 @@
 - Test de drag : lâcher l'objet hors de la zone du texte du hero, sinon il rebondit à sa place.
 - Hero : `is-loaded` précède la fin de la chute des objets d'environ 2 s (Draggable créé à la fin) : attendre avant de tester.
 - Aucun commit des `dist/` d'autres restaurants ; `git add` par chemins seulement.
+
+## Phase 3 (QA)
+- Fait : meta description, h2 sr-only /groupes/, CSS avis supprimé, build ok, RAPPORT.md écrit.
+- Reste : LCP mobile accueil (3,3 s throttlé), objets SVG à 768 px ; publication par la session de correction.
