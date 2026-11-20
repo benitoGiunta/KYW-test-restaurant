@@ -1,0 +1,1 @@
+- 2026-11-20 · Site Wix (epicesetnous.com) : originaux en retirant /v1/… des URLs wixstatic ; photos encadrées de blanc avec logo et « DM » dans les marges (recadrer par numpy sur lignes/colonnes non blanches) ; un hook refuse curl hors q.sh même dans un heredoc : écrire le script avec Write puis `q.sh bash`.
