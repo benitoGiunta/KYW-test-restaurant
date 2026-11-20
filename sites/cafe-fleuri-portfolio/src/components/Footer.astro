@@ -1,0 +1,32 @@
+---
+// Pied de page finale (nuit) : nom géant, adresse, contacts, réseaux ; puis le pied de page KYW obligatoire.
+import KywFooter from '@kyw/footer';
+import { site, adresseLigne, telHref } from '../data/site';
+import { u } from '../lib/url';
+---
+<footer class="footer" data-theme-footer>
+  <div class="wrap">
+    <p class="footer__nom" aria-hidden="true">{site.nom}</p>
+    <div class="footer__cols">
+      <div class="stack">
+        <p class="footer__titre">{site.nom}</p>
+        <address>{adresseLigne()}</address>
+        <p><a class="link" href={telHref()}>{site.telephone}</a></p>
+        {site.email.valeur ? <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p> : null}
+      </div>
+      <div class="stack">
+        <p class="footer__titre">Le café</p>
+        <p><a class="link" href={u('/carte/')}>La carte</a></p>
+        <p><a class="link" href={u('/brunch/')}>Le brunch</a></p>
+        <p><a class="link" href={u('/histoire/')}>Notre histoire</a></p>
+        <p><a class="link" href={u('/reservation/')}>Nous trouver</a></p>
+      </div>
+      <div class="stack">
+        <p class="footer__titre">Suivre</p>
+        {site.reseaux.map((r) => <p><a class="link" href={r.url} rel="noopener">{r.nom}</a></p>)}
+        {site.reseaux.length === 0 ? <p class="t-s muted">Réseaux sociaux : non communiqués<span class="tag">illustratif</span></p> : null}
+      </div>
+    </div>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />
