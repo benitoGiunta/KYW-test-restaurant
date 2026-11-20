@@ -9,6 +9,12 @@ const { title, description, current = '' } = Astro.props;
 const SLOTS = '<script>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === \'string\' ? v : v.src; im.alt = (typeof v === \'object\' && v.alt) || s.dataset.alt || \'\'; s.querySelectorAll(\':scope > img\').forEach((o) => o.remove()); s.prepend(im); } };\ndocument.querySelectorAll(\'[data-slot] img\').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener(\'error\', () => i.remove(), { once: true }); });</script>';
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const og = new URL(u('photos/salle-rouge-800.webp'), Astro.site).href;
+const ld = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, url: new URL(u(''), Astro.site).href,
+  telephone: '+3281306888',
+  address: { '@type': 'PostalAddress', streetAddress: `${resto.adresse.rue} ${resto.adresse.numero}`, postalCode: resto.adresse.cp, addressLocality: 'Jambes', addressCountry: 'BE' },
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens: '12:00', closes: '14:00' }, { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens: '18:00', closes: '22:30' }],
+});
 ---
 <!doctype html>
 <html lang="fr">
@@ -25,6 +31,7 @@ const og = new URL(u('photos/salle-rouge-800.webp'), Astro.site).href;
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/webp" href={u('photos/logo.webp')} />
+    <script type="application/ld+json" set:html={ld} />
     <script>document.documentElement.classList.add('js')</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

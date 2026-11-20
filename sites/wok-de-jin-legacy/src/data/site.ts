@@ -14,7 +14,6 @@ export const resto = {
   itineraire: 'https://maps.app.goo.gl/Je47suHkwBY6jtC66',
   reservationReveillon: 'https://wokdejin.com/reveillon/reserver',
   confidentialite: 'https://wokdejin.com/confidentialite',
-  credit: { texte: 'Site réalisé par Rendez-vous en ligne', href: 'https://rendezvousenligne.com/' },
   legal: { raison: '© 2026 Shenze SRL', tva: 'TVA BE0789318791' },
 };
 
@@ -48,19 +47,14 @@ export const reveillon = {
   depuis: `Dès ${h('18', '00')}`,
   prix: `80${N}€`,
   menu: [
-    { titre: 'Cochon de lait rôti, dinde aux cranberries, escargots', texte: 'Les plats de fête du réveillon.', photo: 'reveillon-roti' },
+    { titre: 'Cochon de lait rôti, dinde aux cranberries, escargots', texte: 'Au buffet du réveillon.', photo: 'reveillon-roti' },
     { titre: 'Tout le buffet à volonté', texte: 'Wok, teppanyaki, sushis et fruits de mer.', photo: 'reveillon-sushis' },
-    { titre: 'Pâtisseries, macarons et fruits de fête', texte: 'Pour finir avant minuit.', photo: 'reveillon-desserts' },
-  ],
-  deroule: [
-    { titre: 'On s’installe et on se sert', texte: 'Accueil à votre table et ouverture du buffet du réveillon.' },
-    { titre: 'Le DJ lance la soirée', texte: 'La musique monte doucement pendant le dîner, puis l’ambiance s’installe.' },
-    { titre: '10, 9, 8… Bonne année !', texte: 'Le décompte tous ensemble pour accueillir 2027.' },
+    { titre: 'Pâtisseries, macarons et fruits de fête', texte: 'Au buffet du réveillon.', photo: 'reveillon-desserts' },
   ],
   conditions: [
     `Réservation en ligne avec un acompte de 20${N}€ par personne (non remboursable), déduit de l’addition le soir même.`,
-    `Enfants jusqu’à 4${N}ans : 5${N}€ sur place, sans acompte. Le solde se règle au restaurant.`,
-    `Réservation en ligne jusqu’au 31${N}décembre à minuit. Les places sont limitées.`,
+    `Enfants jusqu’à 4${N}ans : 5${N}€ sur place.`,
+    `Réservation en ligne jusqu’au 31${N}décembre à minuit.`,
   ],
 };
 
