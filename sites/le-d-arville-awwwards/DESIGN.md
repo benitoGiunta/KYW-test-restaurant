@@ -58,13 +58,52 @@ Mobile 390 : titre à deux lignes, photo avant le texte dans le hero, colonnes e
 
 Un modèle générique ferait : hero centré sur photo plein écran, trois cartes menu, crème + serif doré. Changé : fond sombre vert, panneau de balisage, menus en route. Chaque section suit un tracé unique ; l'idée vit dans le menu, le pied, la 404.
 
+## Mouvement (phase 2, 20/11/2026)
+
+- **Pilote** `src/motion/balade.ts` : une variable (progression du scroll, lue en mètres de 0 à 200) distribuée à la borne du sentier fixe (position `y`, tracé parcouru `scaleY`, libellé), à la balise « 0 m » du hero (`[data-borne-m]`) et à l'état `is-arrivee` (libellé « 200 m, arrivée » en accent au pied « Arrivée. À table. »). Pointeur : la borne penche (±4 px en x, ±1 % en y). Repos (`src/motion/idle.ts`, `gsap.ticker`) : la borne respire de ±1,2 % sur le sentier ; libellé calculé sur la vraie valeur seulement. 404 : état épinglé `data-borne="hors"` (« Hors sentier »).
+- **Sentier** : fixe dans la gouttière droite (desktop : point + étiquette de distance ; 390 px : point seul, la balise du hero compte les mètres). Masqué en mouvement réduit et menu ouvert.
+- **Reveals** : titres `data-split="lines"`, h1 d'accueil `chars` + `data-intro`, photo du hero `clip` en intro (0,15 s), texte du hero `fade` (0,45 s) ; photos `clip` ; image du domaine `data-parallax="0.08"` (cadre élargi de 10 %). Haltes des routes et lignes de la carte : glissement horizontal de 32 px, stagger 60 ms (verbe « cheminer »).
+- **Transition** : rideau de brique gauche → droite (0,7 s + 0,8 s), une borne « Halte suivante » traverse avec lui. Pas de loader, pas de GL (Concept Card).
+- **Hovers (trois traitements)** : CTA = remplissage qui chemine de gauche à droite + flèche qui avance de 5 px ; nav = trait de sentier tracé sous le lien (page courante tracée) ; liens texte = soulignés au repos, trait épaissi. Utilitaires du pied : couleur + soulignement. Pas d'aperçu photo au curseur sur la carte : aucune photo n'est attribuable à un plat précis (`photos/index.json`), décision écrite.
+- **Menu mobile** (`src/motion/menu.ts`) : bouton « Menu »/« Fermer », panneau plein écran qui entre en clip de gauche à droite.
+
+### Sur-utilisation, phase 2 (preuves)
+
+19. [x] Menu mobile : `Header.astro` (`aria-expanded`, `aria-controls`), `menu.ts` (piège Tab, Échap, focus rendu). Mesure Playwright 390 : ouvert `aria-expanded=true`, focus « Accueil », 8 Tab restent dans l'en-tête, Échap ferme et rend le focus au bouton.
+20. [x] Engine verbatim (`src/engine/`), `astro.ts`, `transition:persist` sur `#curtain` et `.sentier` (`Base.astro:74-75`), `transition:animate="none"` (`Base.astro:37`) ; pas de `#gl` ni `#cursor` (sans objet).
+21. [x] Une horloge : `grep requestAnimationFrame|addEventListener('scroll')` vide dans `src/motion`, pages, composants ; repos et borne sur `gsap.ticker`.
+22. [x] Code de page dans `onPage()` avec nettoyage : `balade.ts:57`, `menu.ts:10`.
+23. [x] Aucune CSS `transform` sur élément GSAP : `grep transform` dans `site.css`/`motion.css` ne trouve que `transform-origin` et `text-transform`.
+24. [x] Pilote avec `startIdle` (`balade.ts:53`) et pointeur (`idle.ts:15`). Mesure : la matrice de la borne change en 0,9 s sans interaction.
+25. [x] Loader : non (Concept Card), aucun `#loader` dans le HTML.
+26. [x] Transition du concept ≤ 1 s par sens : `setup.ts` (0,7 s couvrir, 0,85 s découvrir).
+27. [x] Intro `data-intro` (h1, photo, texte du hero) ; capture `.shots/p2/d-hero.png` à 2,6 s : titre, photo, CTA posés.
+28. [x] Épinglages : aucun pin (le sentier est en `position: fixed`, sans scrub épinglé).
+29. [x] Repli statique : `html:not(.motion) .sentier { display: none }`, `.domaine__img` remis à `inset: 0`, contenu visible (mesure réduite : 0 élément caché sur accueil et carte).
+30. [x] Copies décoratives : borne et rideau `aria-hidden="true"`, balise du hero `aria-hidden` (l'étiquette « Départ » reste lue) ; aucun titre dupliqué.
+31. [x] Easing `ease.*` de l'engine seulement (`balade.ts`, `menu.ts`, `setup.ts`), CSS en `cubic-bezier(0.16, 1, 0.3, 1)` (expo out) ; stagger 60 ms et 50 ms.
+32. [x] Trois traitements, verbe « cheminer » (gauche → droite) : `motion.css` § Micro-interactions.
+33. [x] Hover sous `@media (hover: hover)`, mêmes états sur `:focus-visible`, remplissage et trait conservés sans transition en mouvement réduit (`motion.css`).
+34. [x] `.lien` souligné au repos (`site.css:18`).
+35. [ ] `hover.noHoverChange` : à lire dans `report.json` (phase 3). Mesure : `::before` du CTA à `scale 1` au survol, texte inversé.
+36. [ ] `desktop.idleMotion` : code prêt (borne qui respire), à confirmer en phase 3.
+37. [x] Curseur natif, pas de follower ; rien ne dépend du survol (menu au tap, bande en `scroll-snap`).
+38. [x] Ni blur animé ni `box-shadow` au scroll ; aucun `will-change` posé.
+39. [x] Réduit : Lenis non initialisé (engine), sentier masqué, reveals sautés ; mesure : classe `motion` absente, 0 texte caché. `report.json` en phase 3.
+40. [x] GL : sans objet, décision écrite (Concept Card) ; aucune ligne GL dans l'engine.
+41. Sans objet (pas de GL).
+44. [x] Skip link premier élément du `<body>` (`Base.astro`), anneau accent (`engine.css:33`), noir sur la section voile.
+45. [ ] Contraste AA : étiquette du sentier sur fond `#141c16` propre (ink 14:1), à mesurer en phase 3 sur photo et fin de page.
+46. [x] Texte réel partout, aucun canvas.
+47. [x] Cibles : `.btn` `min-height: 44px`, « Réserver » de l'en-tête 44 px, bouton « Menu » 82×44 (mesure 390).
+
 ## Sur-utilisation de la skill
 
 1. Trois concepts de trois territoires, notés, ancre, test de l'échange : tableau ci-dessus (DESIGN.md § Concepts).
 2. Aucun exemple travaillé de concepts.md (braise, pavage, gril, cadre, solde, phrase unique) : non repris ; A est un balisage de sentier, voir § Concept Card.
 3. Concept Card au format exact, verbe « cheminer » : § Concept Card.
 4. Concept au pied (`Pied.astro` : « Arrivée. À table. »), carte (`carte.astro` : routes des deux menus), réservation (« À table, du jeudi au dimanche. »), 404 (`404.astro` : « Sentier perdu ») : fichiers cités.
-5. Moment signature et recette : marqueur 0 m → 200 m en scrub, § Concept Card (à construire en phase 2, non coché comme réalisé).
+5. Moment signature et recette : marqueur 0 m → 200 m piloté par le scroll, construit en phase 2 (`src/motion/balade.ts`, § Mouvement).
 6. Palette 6 rôles, références nommées (voile rouge photos 05 et 08, brique, pierre) : § Système.
 7. Défauts évités : fond non crème, pas d'Inter/Fraunces/Playfair, pas de dégradé violet ni verre dépoli, pas d'eyebrow sur chaque titre (`grep -c etiquette` limité aux têtes de section clés), pas de 01/02/03 décoratif (les haltes portent des libellés, pas des chiffres). `site.css:1-30`.
 8. Test de généricité : § Test de généricité.

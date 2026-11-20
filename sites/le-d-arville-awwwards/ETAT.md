@@ -1,17 +1,24 @@
-# ETAT : Le D’Arville, variante awwwards (fin de phase 1 sur 3)
+# ETAT : Le D’Arville, variante awwwards (fin de phase 2 sur 3)
 
 ## Fait
-- Brief, 3 concepts, Concept Card, système (palette, typo, grille, plan), checklist 1 à 18 : `DESIGN.md`.
-- Scaffold Astro 5, engine verbatim (sans lignes GL), `tokens.css`, `engine.css`, `site.css`, `motion/setup.ts` (rideau de brique), `Base.astro`, `Header`, `Pied`, `Photo`, `lib/photos.ts`, `lib/url.ts`, `data/site.ts`.
-- Pages : accueil, carte, histoire, réservation, 404. Mise en page statique complète. 19 photos du client (≤ 1800 px, AVIF/WebP via `astro:assets`).
-- Build OK : `scripts/q.sh build pnpm build:site sites/le-d-arville-awwwards` (5 pages, dist/le-d-arville/awwwards/). Mesures hero 1440, 1280, 1024, 390 : aucun débordement, `.display` à gauche ≥ gutter.
+- Phase 1 : brief, concepts, Concept Card « La balade », système, pages statiques, build (voir DESIGN.md).
+- Phase 2 (20/11/2026) :
+  - Pilote `src/motion/balade.ts` + repos `src/motion/idle.ts` : borne de sentier fixe 0 m → 200 m (scroll), pointeur, respiration au repos, « 200 m, arrivée » en fin de page, 404 « Hors sentier » (`<Base borne="hors">`).
+  - Reveals déclaratifs sur toutes les pages (h1 en intro, h2 `lines`, photos `clip`, parallaxe du domaine), haltes et lignes de carte qui glissent (verbe cheminer).
+  - Rideau de brique + borne « Halte suivante » (`setup.ts`).
+  - Hovers : CTA remplissage gauche → droite + flèche, nav trait tracé, liens texte épaissis ; tout sous `(hover: hover)` + `:focus-visible` ; `:active`.
+  - Menu mobile accessible (`Header.astro`, `motion/menu.ts`), cibles 44 px.
+  - Finitions : `::selection` accent, `favicon-32.png`, `apple-touch-icon.png`, hover du lien KYW, correction du `<picture>` qui ne remplissait pas le cadre (bande grise sous la photo du hero mobile).
+  - Styles de la phase dans `src/styles/motion.css`.
+  - Build OK (`scripts/q.sh build pnpm build:site sites/le-d-arville-awwwards`).
+  - Contrôle Playwright ciblé (script scratchpad, pas de shoot complet) : 0 erreur console ni requête échouée, 0 débordement horizontal à 390 (4 pages), menu (ouverture, focus, piège, Échap), mouvement réduit (0 texte caché, sentier masqué), repos actif. Captures `.shots/p2/` (non commitées).
 
-## Reste (phases 2 et 3)
-- Signature : marqueur 0 m → 200 m sur le sentier (driver scroll, `onPage`), repos qui respire, mouvement du rideau déjà posé ; révélations `data-split`/`data-reveal` (non posées dans les pages), hovers de plats avec aperçu photo, magnétisme éventuel.
-- QA navigateur : captures, audit, axe, clavier, reduced motion, LCP/CLS, 404 réelle.
-- `og.png` à recomposer (provisoire, police système) ; `::selection` ; RAPPORT.md à compléter après QA ; `pnpm index` et commit `[publier]` en fin de restaurant seulement.
+## Reste (phase 3)
+- Shoot complet et `report.json` (agent captures) : points 35, 36, 39, 45 de DESIGN.md à prouver ; LCP/CLS ; axe ; clavier ; 404 réelle (`/le-d-arville/awwwards/404.html`).
+- `og.png` à recomposer (provisoire) ; RAPPORT.md à compléter ; `pnpm index` et commit `[publier]` en fin de restaurant seulement.
+- À regarder : l'étiquette du sentier desktop chevauche le bord droit du contenu (photo du hero, colonne « Suivre » du pied) ; acceptable pour une UI fixe, à juger sur captures.
 
 ## Décisions
-- Pas de loader, pas de GL (justifiés dans la Concept Card). Pas de Zenchef : lien vers la réservation du client + `tel:` + `mailto:`.
-- Heures non publiées : jamais écrites. Aucune note, distinction ni avis affichés (voir RAPPORT.md).
-- Aucun contenu fictif inséré (`placeholder` inutilisé).
+- Pas de loader, pas de GL, pas de curseur suiveur. Pas d'aperçu photo au curseur sur la carte (aucune photo attribuable à un plat).
+- Mobile : le sentier tient dans la gouttière droite (point seul) ; la balise du hero compte les mètres.
+- Heures non publiées jamais écrites ; aucun contenu fictif.
