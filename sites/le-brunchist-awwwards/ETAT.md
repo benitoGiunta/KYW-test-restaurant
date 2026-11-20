@@ -1,4 +1,4 @@
-# ETAT : Le Brunchist, variante awwwards, phases 1 et 2 faites
+# ETAT : Le Brunchist, variante awwwards, phases 1 à 3 faites (QA)
 
 ## Fait
 - Phase 1 : DESIGN.md (brief, concepts, Concept Card, système), scaffold Astro, engine verbatim sans GL, contenu `src/data/site.ts`, 5 pages, pied KYW, noindex, JSON-LD.
@@ -20,3 +20,7 @@
 - Sol de la bande café (pied) exclu de l'étalement : texte clair sur sol vert pendant le cercle = contraste insuffisant.
 - `startIdle()` n'existe pas dans cet engine : repos démarré par `intro.call` à 1,45 s.
 - Serveur de test : `serve.mjs dist --port 4421`, lancé en tâche de fond par l'agent, arrêté en fin de phase.
+
+## Phase 3 (QA) : faite
+- Corrections : contraste `.gomme` et note du pied, cibles tactiles, survols logo et liens, `og.png`. Build final OK, audit 0 FAIL, axe 0 violation (accueil et 404.html), 0 erreur console.
+- Détails et limites dans RAPPORT.md. À faire par le superviseur : critique jury indépendant (pas d'outil Agent), checklist DESIGN.md 42 à 63, `pnpm index` fait, commit sans `[publier]`.

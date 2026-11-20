@@ -90,8 +90,8 @@ export function initCadran() {
     // 4. Mot-valise : les lettres en trop se gomment au fil du scroll (état final = état statique du CSS).
     const valise = document.querySelector<HTMLElement>('.valise');
     if (valise) {
-      gsap.fromTo(valise.querySelectorAll('.gomme'), { opacity: 1 }, {
-        opacity: 0.45, ease: 'none', stagger: 0.04,
+      gsap.fromTo(valise.querySelectorAll('.gomme'), { color: '#21140d' }, {
+        color: '#6b4a08', ease: 'none', stagger: 0.04,
         scrollTrigger: { trigger: valise, start: 'top 75%', end: 'center 45%', scrub: true },
       });
     }
