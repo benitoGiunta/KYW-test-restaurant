@@ -66,7 +66,7 @@ const route = site.chemin.map((e) => e.pays);
           </ol>
           <div class="cuisson__bar" aria-hidden="true"><i></i></div>
         </div>
-        <div class="cuisson__scene" role="img" aria-label={`${site.cuisson.plat}, dessin illustratif du plat en quatre couches`}>
+        <div class="cuisson__scene" role="img" aria-label={`${site.cuisson.plat}, dessin du plat en quatre couches`}>
           {site.cuisson.couches.map((c) => (
             <img class={`couche couche--${c.id}`} src={asset(c.src)} alt="" width="1200" height="1200" loading={c.id === 'fond' ? 'eager' : 'lazy'} decoding="async" />
           ))}
@@ -120,7 +120,7 @@ const route = site.chemin.map((e) => e.pays);
       <div class="salle__wall">
         <figure class="s1">
           <div class="fig" data-parallax="0.08"><img src={asset(arcades.src)} alt={arcades.alt} width={arcades.largeur} height={arcades.hauteur} loading="lazy" decoding="async" /></div>
-          <figcaption>{arcades.legende}</figcaption>
+          {arcades.legende && <figcaption>{arcades.legende}</figcaption>}
         </figure>
       </div>
     </div>

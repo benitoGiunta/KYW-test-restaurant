@@ -1,5 +1,5 @@
 // Données réelles : data/restaurants/tariki/donnees.json et dossier.md (site tarikirestaurant.be, 19/11/2026).
-// Aucun élément fictif : rien n'est marqué placeholder. Les prix du soir sont ceux de la page « La carte » (à confirmer, deux versions chez le client).
+// Aucun élément fictif : rien n'est marqué placeholder. Les prix du soir sont ceux de la page « La carte » (deux versions chez le client : à vérifier).
 export const resto = {
   nom: 'Tariki',
   baseline: 'De notre route… jusqu’à votre table.',

@@ -1,4 +1,4 @@
-// Carte de Tariki, transcrite de donnees.json (carte du soir de la page « La carte » du client, à confirmer).
+// Carte de Tariki, transcrite de donnees.json (carte du soir de la page « La carte » du client).
 // Aucun plat fictif : placeholder: false partout. Généré puis relu à la main.
 export interface Plat { nom: string; description: string; prix: number; placeholder?: boolean }
 export interface Rubrique { id: string; titre: string; etape: string; plats: Plat[] }
