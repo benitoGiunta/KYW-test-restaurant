@@ -1,4 +1,4 @@
-# ETAT : carre-d-herbes · portfolio · phase 2 sur 3 (20/11/2026)
+# ETAT : carre-d-herbes · portfolio · phase 3 sur 3 (QA terminée) (20/11/2026)
 
 ## Fait en phase 1
 - Gabarit velours, contenu 100 % dossier, 7 pages, 22 photos WebP, og, favicon, pied KYW, noindex, build OK.
@@ -23,3 +23,6 @@
 - `scripts/q.sh` + `cat` interdit au-delà de 80 lignes (hook). Le curseur-suiveur apparaît en haut à gauche tant que la souris n'a pas bougé (comportement du moteur, pas un défaut).
 - À 1440, la galerie (5 vignettes) tient sans défiler : le glisser ne se voit qu'en dessous de ~1300 px.
 - Fêtes 2026 à retirer après le 31/12.
+
+## Phase 3 (QA)
+- Mesures 7 pages x 2 largeurs propres ; 2 corrections pied de page (casse des jours, colonne horaires), build OK, `pnpm index` fait. Voir RAPPORT.md. Reste : rien de bloquant.
