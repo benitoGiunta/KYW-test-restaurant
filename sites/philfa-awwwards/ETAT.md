@@ -1,21 +1,19 @@
-# ETAT : philfa-awwwards, construction-1 (phase 1 sur 3)
+# ETAT : philfa-awwwards, construction-2 (phase 2 sur 3)
 
 ## Fait
-- DESIGN.md : brief, trois concepts notés, Concept Card, système, checklist 1 à 18 cochée avec preuves.
-- Contenu : `src/data/site.ts`, `src/data/carte.json` (24 plats réels, généré de donnees.json), `src/lib/photos.ts` (11 photos du client).
-- Engine copié verbatim de sanga-awwwards (`src/engine/*.ts`, `engine.css`, `lib/url.ts`) ; `motion/setup.ts` = transition deux volets roses seulement.
-- Pages : `/`, `/carte/`, `/histoire/`, `/reservation/`, `/404` ; Base (head complet, JSON-LD Restaurant, noindex), Header, Footer + KywFooter.
-- Polices Archivo (variable largeur+graisse) et Newsreader en local. Favicon, apple-touch, og.png générés (PIL, police système).
-- Build OK (`dist/philfa/awwwards/`). Mesures Playwright à 1440, 1280, 1024 et 390 : pas de débordement, pas de requête échouée.
+- Phase 1 : voir DESIGN.md (concept « Phil | Fa », pages, données, build).
+- Phase 2 : pilote `src/motion/couture.ts` (couture `--couture-x` au pointeur, fil `--point` au repos, pause hors écran, intro du hero, double choix à bascule), `src/motion/volet.ts` (menu plein écran du téléphone), `setup.ts` les appelle. Reveals `data-split`/`data-reveal`/`data-parallax` sur toutes les pages, titres intérieurs en `chars` + `data-intro`. Hovers réécrits sous `(hover: hover)` + `:focus-visible`, `:active`. Lien KYW avec retour au survol. Checklist 19 à 47 dans DESIGN.md.
+- Vérifié par Playwright (port 4417, 1440 / 390 / réduit) : 0 erreur console, 0 requête échouée, `scrollWidth` = largeur sur 5 pages (carte 390 : strip du sommaire, voulu), aucun texte caché dans le cadre après l'intro, repos visible en 1,5 s, menu du téléphone conforme, navigation accueil vers carte OK, CTA du hero dans le cadre à 1440x900 (818) et 1280x720 (656).
+- Build OK (`dist/philfa/awwwards/`), commit a962a81.
 
-## Reste (phases 2 et 3)
-- Phase 2 : entrées (`data-split`/`data-reveal` toujours avec `data-intro`), la couture qui s'ouvre au hero et respire au repos, choix éclairant sa moitié dans `Menu.astro`, transitions testées, `idle.ts`, hovers des plats.
-- Phase 3 : QA navigateur, audit, jury, OG raffinée (Archivo), `RAPPORT.md`, points 42 à 63 de la checklist.
-- Captures à relire : pages carte, histoire, réservation, 404 et bas d'accueil n'ont pas été vues (seulement mesurées).
+## Reste (phase 3)
+- Shoot complet (agent captures), puis lire `report.json` : `hover.noHoverChange` (marque sur sa page, liens `aria-current`), `desktop.idleMotion`/`idleAt`/`settledMs` (intro ~2,2 s), `reduced.*`, contraste, cibles.
+- Audit, jury (self), OG raffinée (Archivo), `RAPPORT.md`, points 42 à 63.
+- Vérifier à l'œil : volet du téléphone (fond posé pour masquer un liseré entre les deux moitiés), pied (couture qui suit le pointeur), 404.
 
 ## Décisions et pièges
-- Aucun loader, aucun GL (justifié dans DESIGN.md). Header sans menu JS : la nav tient en une ligne (« L'histoire » masqué sous 52 rem, présent dans le pied).
-- Hero et pied : `.display` à `left: 0` mesuré (conteneurs pleine largeur, le texte est calé sur la couture) : faux positif du contrôle de gutter.
-- Placeholders : aucun plat fictif. Textes d'histoire (recit) = paraphrase de dossier.md ; « on y vient pour une cuisine de brasserie qui suit les saisons » vient de philfa.be.
-- Données douteuses : téléphone du site écrit « +32 081 226 111 » (nous : +32 81 22 61 11) ; note G&M 2025 « à confirmer » pour le millésime 2027 (non repris) ; avis non vérifiés (non repris) ; e-mail inconnu (aucun mailto).
-- Photo 09 (façade, 400 px) non utilisée. Aucune photo de plat.
+- Pas de loader, pas de GL, pas de curseur suiveur (natif seul).
+- Intro du hero : état de départ en CSS sous `html.motion` (`--ouvre: 0`, mots cachés) ; `@property` donne 1 par défaut, donc repli réduit complet sans JS.
+- Piège corrigé : `margin-block` négatif de l'enfant parallaxe dans `.bande__cadre { overflow: clip }` fusionnait avec la marge du parent et faisait remonter la photo de 86 px sur le hero (CTA coupé) : `display: flow-root`.
+- Piège corrigé : `.choix` en `<button>` avec `color: inherit` prenait la crème de la section sur la moitié moutarde : couleur laissée aux classes `t-phil`/`t-fa`.
+- Piège corrigé : « Réserver » en `--t-mega` débordait à 1440 en mouvement réduit (1452 px, mot non découpé) : `.titre-page h1` plafonné à `(100vw - 2 gutter) / 5.2`.

@@ -56,3 +56,40 @@ Test de l'échange : #2 et #3 tiennent avec un autre restaurant à salle coloré
 16. [x] Une famille de section au plus une fois par page (poster, média, statement, paires, mur, paire asymétrique, index).
 17. [x] Hero en 3 s : nom, « Brasserie du centre de Namur », Réserver, menu du moment à 35 € (capture 1440 et 390 lues).
 18. [x] Mobile 390 recomposé : § Mobile ; mesures Playwright : aucun débordement horizontal à 1440, 1280, 1024 et 390, h1 et CTA dans le cadre, 0 requête échouée.
+
+## Mouvement réalisé (phase 2)
+- **Pilote** `src/motion/couture.ts` : une variable, la couture. `--couture-x` (±12 px, tiré par le pointeur au bureau, par la vitesse de défilement au toucher) et `--point` (le fil qui court, 26 px/s, sans point mort) écrits sur `<html>` par `gsap.ticker`, en pause quand aucune `.cousu` n'est à l'écran. Portée par : hero (fond et mots suivent la couture), pied (`.pied__mot`), chaque étape du double choix, les deux patrons (histoire), les deux actions (réservation), les portes 21 et 23 (404).
+- **Signature** : à l'arrivée, les deux moitiés viennent des bords (papier au centre) et s'accordent sur la couture (`--ouvre`, 1,1 s, `expo.inOut`), le fil se coud de haut en bas (`--fil`), puis « Phil » et « Fa » glissent vers la couture ; textes du hero en `data-reveal` à 0,8 et 0,88 s. Au double choix, choisir un plat (bouton `aria-pressed`) l'éclaire et éteint l'autre moitié (#171a10, texte #b9b296, 8:1), étiquette « Choisi ».
+- **Repos** : le fil de couture court en continu sur la couture visible (écoulement constant, pas de sinus). Mouvement réduit : rien ne bouge.
+- **Menu du téléphone** `src/motion/volet.ts` : « Menu » (`aria-expanded`), volet plein écran en deux moitiés (Phil arrive du haut, Fa du bas), focus piégé, Échap, retour du focus, Appeler en 44 px.
+- **Hovers** (3 traitements) : CTA = couture crème/moutarde qui glisse ; nav = filet qui se ferme des deux bords ; liens de liste (index, sommaire, choix) = décalage vers la couture + accent ; liens texte soulignés au repos, plus épais et moutarde au survol. Tout sous `(hover: hover)`, même état en `:focus-visible`, `:active` en `translate`.
+- **Hypothèse** : pas de curseur suiveur (natif seul), pas de loader, pas de GL (décision phase 1 maintenue).
+
+## Sur-utilisation de la skill (phase 2)
+19. [x] Menu mobile accessible : `volet.ts:20,38` (`aria-expanded`), `:44` Échap, `:45-50` focus piégé, `:40` retour du focus ; Playwright 390 : ouvert, focus sur « Fermer », 8 Tab restent dedans, Échap ferme et rend le focus au bouton.
+20. [x] Engine verbatim (`src/engine/*`), adaptateur `astro.ts`, `transition:persist` sur `#curtain` (`Base.astro:72`), `transition:animate="none"` (`Base.astro:35`) ; `#gl` et `#cursor` sans objet (ni GL ni suiveur).
+21. [x] Une horloge : `couture.ts:23` `gsap.ticker.add` ; grep `addEventListener('scroll'|requestAnimationFrame` hors engine : 0.
+22. [x] Code de page dans `onPage()` avec nettoyage : `couture.ts:37-69`, `volet.ts:7-62`.
+23. [x] Aucune CSS `transform` sur un élément GSAP : mots du hero en `translate` (propriété individuelle) + transform GSAP ; `.cta:active` passé en `translate` ; transforms CSS restants sur pseudo-éléments (`.nl::before`) et `.etape__nom` (non animés par GSAP).
+24. [x] Pilote avec `startIdle` et pointeur : `couture.ts:15-31`.
+25. [x] Loader décidé : aucun (Concept Card, « Théâtre »), aucun `role="status"`.
+26. [x] Transition du concept : deux volets roses qui se rejoignent puis s'écartent, 0,6 s + 0,75 s (`setup.ts`) ; navigation accueil vers carte mesurée, rideau masqué à l'arrivée.
+27. [x] Intro : `couture.ts:50-57` dans la timeline `intro` ; état de départ posé en CSS sous `html.motion` (`site.css:274`) pour éviter le saut ; titres des pages intérieures en `data-split="chars" data-intro`.
+28. [x] Épinglages : aucun (sommaire de la carte en `sticky` CSS).
+29. [x] Repli statique dessiné : sans `.motion`, `--ouvre` et `--fil` valent 1 (`@property`, `site.css:265`), couture et fil immobiles, tout le contenu visible (Playwright réduit : `hiddenInView` 0 sur 5 pages, aucune différence de pixels en 1,5 s).
+30. [x] Copies décoratives : `.pied__mot` `aria-hidden`, numéros 21 et 23 `aria-hidden` ; aucun titre dupliqué.
+31. [x] Une famille d'easing (`expo` de l'engine, `cubic-bezier(0.65, 0, 0.35, 1)` en CSS), durées 0,4 à 1,3 s, stagger 50 ms.
+32. [x] Trois traitements, dans le verbe « accorder » : § ci-dessus.
+33. [x] Hover sous `(hover: hover)` + `:focus-visible` (`site.css:23-60`, `:291-301`), états visibles en réduit (seules les transitions sont coupées par l'engine).
+34. [x] Liens texte soulignés au repos (`.lien`, `site.css:23`).
+35. [ ] Champs `hover.*` de `report.json` : phase 3.
+36. [~] Repos : diff de pixels non nulle en 1,5 s à 1440 et 390 (Playwright, hero) ; `idleAt` à confirmer au shoot.
+37. [x] Curseur natif seul ; le double choix marche au clic et au toucher, aucune copy « survolez ».
+38. [x] Ni blur animé ni `box-shadow` au scroll ; `will-change` non utilisé.
+39. [x] Réduit : pas de Lenis (engine), pas de GL, pas de scrub (seul `data-parallax` de la bande, coupé par l'engine), pas de loader.
+40. [x] GL sans objet, décision écrite (Concept Card) ; lignes `// GL` absentes de l'engine.
+41. [x] Sans objet (pas de GL).
+44. [~] Skip link en premier (`Base.astro`), focus `:focus-visible` dans l'accent (`engine.css:33`), choix en anneau `currentColor` ; à confirmer au shoot.
+45. [~] Contraste : choix éteint 8:1, textes des moitiés inchangés ; texte crème des choix Fa corrigé (le bouton héritait de la couleur de la section) ; à confirmer au shoot.
+46. [x] Texte réel partout, rien dans un canvas.
+47. [x] « Réserver » 44 px au téléphone (`site.css:330+`), « Appeler » 44 px dans le volet et 48 px sur la réservation.
