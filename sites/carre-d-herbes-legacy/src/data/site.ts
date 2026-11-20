@@ -93,7 +93,7 @@ export const emporter = {
 export const actus = [
   { date: '5 novembre 2026', titre: 'Fêtes de fin d’année', texte: 'Comme chaque année, le restaurant s’invite chez vous avec un menu de fêtes à emporter, et vous accueille aussi au restaurant le midi du 25 décembre. Au plaisir de vous accueillir.', lien: 'fetes-2026/', libelle: 'Voir le programme' },
   { date: '17 octobre 2026', titre: 'Venez déguster notre nouvelle carte', texte: 'La carte change : les menus en deux, trois, quatre et cinq assiettes sont à découvrir.', lien: 'nos-menus/', libelle: 'Voir les menus' },
-  { date: '6 juin 2025', titre: 'Offre d’emploi', texte: 'Le restaurant recherchait un(e) cuisinier(e) : CDI à temps plein, entrée immédiate. Offre publiée en juin 2025 ; à confirmer auprès du restaurant.', lien: null, libelle: null },
+  { date: '6 juin 2025', titre: 'Offre d’emploi', texte: 'Le restaurant recherchait un(e) cuisinier(e) : CDI à temps plein, entrée immédiate. Offre publiée en juin 2025.', lien: null, libelle: null },
   { date: '10 novembre 2021', titre: 'Bienvenue sur notre nouveau site internet', texte: 'Le site a été réalisé avec Créatonit, agence de communication de Bois-de-Villers : le restaurant, le chef et son parcours, la carte et les menus mis à jour régulièrement.', lien: null, libelle: null },
 ];
 
