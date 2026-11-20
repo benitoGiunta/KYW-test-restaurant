@@ -31,3 +31,8 @@
 
 ## Phase 3 (QA)
 - Logo mobile 44x44, 404 axe = faux positif, pages histoire/reservation/404 vérifiées. RAPPORT.md écrit. Build final OK. Reste : droits des photos, UTILISATION.md (gabarits protégé).
+
+## Revue 2 (relecteur-site, 20/11/2026)
+- REVUE-2.md écrit : verdict A_CORRIGER (0 F0, 0 F1, 3 F2 : T-2 « posés au milieu de la table », D-4 route nue, C-5 pied de la réservation ; F3 : typographie, formulaire, axe moderate, canonique 404, ligne Visuels).
+- Toutes les corrections de REVISION-1 vérifiées (T-1, A-1, A-2, C-1 à C-4, D-1, D-2 confirmées ; D-3 et A-3 acceptées).
+- Piège : QA-revue2.md absent, mesures propres dans .logs/tk-r2-mesure.log.
