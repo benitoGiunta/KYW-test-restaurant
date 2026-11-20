@@ -1,9 +1,11 @@
-// Mouvement global (phase 1 : seulement le rideau de transition ; le reste est prévu en phase 2, voir DESIGN.md).
+// Mouvement global, appelé une fois par l'adaptateur (engine/astro.ts) : rideau de transition, module pilote, menu.
 import { gsap } from 'gsap';
 import { setTransition, ease } from '../engine';
+import { startAllonger } from './allonger';
+import { startMenu } from './menu';
 
 export function setupMotion() {
-  // Le rideau monte comme une colonne qui s'allonge : de bas en haut, deux panneaux décalés.
+  // Le rideau monte comme une colonne qui s'allonge : de bas en haut, deux panneaux décalés (0,77 s puis 0,8 s).
   const panneaux = (c: HTMLElement) => [c.querySelector<HTMLElement>('.curtain__panel--b')!, c.querySelector<HTMLElement>('.curtain__panel--a')!];
   setTransition({
     leave: (c) => {
@@ -20,4 +22,6 @@ export function setupMotion() {
         .set(c, { autoAlpha: 0 });
     },
   });
+  startAllonger();
+  startMenu();
 }
