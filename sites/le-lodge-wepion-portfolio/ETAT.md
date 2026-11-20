@@ -37,3 +37,8 @@
 - Fait : lecture QA-revue1 + planche home, mesure 7 pages x 4 largeurs, balayage hero 640 à 1280, captures 1440/390 des pages absentes du QA, texte du dist confronté à donnees.json. Serveur 4617 arrêté (kill du PID noté).
 - Reste pour le réviseur : F1-1 (base.css:95 slogan coupé 768-1060), F2-1 à F2-6, F3 selon temps. Mesures utiles : scratchpad `lodge-r1-mesure.mjs`, `lodge-r1-sweep.mjs` (non versionnés).
 - Pièges : captures 390 des 5 pages non relues une à une ; prix vérifiés par échantillon.
+
+## Revue passe 2 (relecteur-site) : REVUE-2.md écrite, verdict PUBLIABLE (0 F0, 0 F1, 2 F2, 6 F3)
+- Fait : 7 corrections de REVISION-1 vérifiées (slogan sur 16 largeurs, citation, presse, « à confirmer », formulaire, contraste, eyebrows) ; mesure 7 pages x 4 largeurs ; serveur 4861 arrêté (kill du PID noté).
+- Reste (optionnel) : F2-A section « Votre demande » à supprimer, F2-B redondance de fermeture / cartes d'avis, F3 (role region du bandeau, canonical 404, JSON-LD vide, apostrophes, og.jpg).
+- Pièges : leçon proposée dans data/usage/test-1/lecons-proposees/le-lodge-wepion.md ; rien commité par le relecteur.
