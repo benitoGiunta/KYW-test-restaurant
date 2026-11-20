@@ -7,3 +7,4 @@
 - 2026-11-20 · carre-d-herbes · legacy phase 2 : un `[popover]` stylé avec `display: block` sur la classe reste visible fermé (le `display: none` du navigateur est battu) : mettre `display: block` seulement sur `:popover-open`. Un reveal par IntersectionObserver laisse caché ce que le défilement par saut a enjambé : utiliser un écouteur scroll/resize qui révèle tout ce qui est au-dessus du bas de l'écran.
 - 2026-11-20 : shoot.mjs --crawl --nav se bloque >10 min sur l'accueil ; en QA, un script Playwright maison (7 pages x 2 largeurs, erreurs/débordement/robots) + capture de bas de page suffit.
 - 2026-11-20 · legacy : sloplint 26a sur le lien d'évitement (anneau or 1,37:1) et 77 sur en-têtes de page : prévoir anneau --color-focus et waive 77 dès la phase 2.
+- 2026-11-20 : l'audit signale smallTargets sur liens inline et logo (16 à 23 px de haut) : prévoir dès la phase 1 min-height 44px sur .lien, .lien-nav, liens du pied et logo.

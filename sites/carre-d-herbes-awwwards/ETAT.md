@@ -12,3 +12,7 @@ Fait :
 - Build OK. Contrôle ciblé (script de scratchpad) : 0 erreur JS, aucun débordement à 320/360/390 sur 5 pages, menu conforme, réduit sans texte caché.
 Reste (phase 3) : shoot complet et `report.json` (points 35, 36, 41, 45), OG recomposée, RAPPORT.md, apostrophes droites des pages Astro, points 42 à 63, `pnpm index`.
 Pièges : au bureau, le « s » de « d'herbes » touche le bord du disque à 1440 (titre au-dessus, voulu en phase 1, à juger en phase 3) ; le h1 du hero porte `data-intro` (exigé par phase-2) : surveiller le LCP en phase 3.
+
+## Phase 3 (construction-3, 20/11/2026)
+Fait : cibles tactiles 44 px et survol du logo corrigés (shoot de l'accueil : smallTargets et noHoverChange vides), réservation et histoire shootées (0 erreur), audit 0 FAIL, build OK, RAPPORT.md écrit.
+Reste : passe jury indépendante, contraste de la note du pied KYW sur la 404 (paquet), remesure CLS de la carte, accessoire retiré, cases 42 à 63 de DESIGN.md.
