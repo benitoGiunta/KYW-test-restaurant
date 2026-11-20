@@ -1,1 +1,2 @@
 - 2026-11-20 : site WordPress/Divi (La-Carte.be) avec carte en texte HTML et images d'histoire (affiches) contenant du texte à lire à l'œil ; widget Zenchef sans id exploitable ; Trouve Ton Resto en curl donne GPS, note et prix moyen ; le hook garde-lecture refuse curl hors q.sh même dans un heredoc (passer par un fichier script écrit au Write).
+- 2026-11-20 · construction (portfolio, phase 1) : `pnpm install` sans `--offline` suffit à lier `@kyw/footer` pour un site copié ; `--offline` échoue (métadonnées absentes).

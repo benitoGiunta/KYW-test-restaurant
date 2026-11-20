@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const chef = photoDe('/photos/portrait-chef.webp');
+const domaine = photoDe('/photos/portrait-domaine.webp');
+const [olivier, estelle] = site.equipe;
+---
+<Base title="La maison et son histoire" description="Estelle et Olivier accueillent au D'Arville, une ferme du 19e siècle à Wierde : un domaine de plus de 5 hectares, un restaurant gastronomique et la villa Barabas.">
+  <HeroPage titre="La maison" chiffre={site.chiffres.domaine} sur="Une ferme du 19e siècle, à Wierde">
+    <p>{site.histoire[0]}</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Portraits">
+    <div class="wrap portraits">
+      <article class="portrait">
+        <figure class="portrait__photo">
+          <img src={asset(chef.src)} alt={chef.alt} width={chef.largeur} height={chef.hauteur} fetchpriority="high" decoding="async" />
+        </figure>
+        <h2 class="portrait__nom">Estelle et Olivier</h2>
+        <p class="petite-cap">Les hôtes</p>
+        <p class="portrait__bio">{olivier.nom} est le {olivier.role.toLowerCase()} de la maison. {estelle.nom} en est la {estelle.role.toLowerCase()}, son nom de famille n'est pas connu du dossier.</p>
+      </article>
+      <article class="portrait">
+        <figure class="portrait__photo" data-reveal="clip">
+          <img src={asset(domaine.src)} alt={domaine.alt} width={domaine.largeur} height={domaine.hauteur} loading="lazy" decoding="async" />
+        </figure>
+        <h2 class="portrait__nom">Le domaine</h2>
+        <p class="petite-cap">Plus de 5 hectares</p>
+        <p class="portrait__bio">Un bâtiment en briques, un étang, une prairie : le restaurant et la villa Barabas partagent le même domaine.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section--recit" aria-labelledby="recit-titre">
+    <div class="wrap recit">
+      <h2 class="petite-cap" id="recit-titre">De la ferme à la villa</h2>
+      <div class="recit__texte stack">
+        {site.histoire.slice(1).map((p) => <p data-reveal="fade">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="valeurs-titre">
+    <div class="wrap equipe">
+      <h2 class="petite-cap" id="valeurs-titre">Ce qui compte</h2>
+      <ul class="valeurs" aria-label="Ce qui compte">
+        {site.valeurs.map((v) => <li>{v}</li>)}
+      </ul>
+      <p class="actions"><a class="btn btn--primary" href={u('/reservation/')}>Réserver une table</a></p>
+    </div>
+  </section>
+</Base>
