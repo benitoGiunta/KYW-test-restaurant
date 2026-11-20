@@ -95,7 +95,7 @@ export const site: Restaurant = {
   equipe: [{ nom: 'Mélisande et Arnaud', role: 'Fondateurs, selon ELLE.be (à confirmer)', placeholder: false }],
   avis: [
     { texte: 'Best egg topped Avocado toast ever.', auteur: 'David', source: 'Avis Google, relevé sur Restaurant Guru', placeholder: false },
-    { texte: 'Very cozy, good fresh foods […]', auteur: 'Wendy Sajid-Witte', source: 'Avis Google, relevé sur Restaurant Guru', placeholder: false },
+    { texte: 'Very cozy, good fresh foods […]', auteur: 'Wendy', source: 'Avis Google, relevé sur Restaurant Guru', placeholder: false },
   ],
   photos: [
     photo('salle-table-bois', 'Longue table en bois dans un café, tasses vertes, lumière de la vitrine'),
@@ -157,25 +157,25 @@ export const moments: Moment[] = [
   {
     id: 'm-11h', heure: 11, heureTexte: '11h', titre: 'Le brunch', theme: 'midi',
     accroche: 'Eggs benedict, granola maison, pancakes : le brunch se prend sans se presser.',
-    accrochePlaceholder: false, placeholder: false,
+    accrochePlaceholder: false, placeholder: true,
     lignes: [L('Eggs benedict', '14 €'), L('Granola maison', '9 €'), L('Pancakes', '11 €'), L('Œufs brouillés', '10 €')],
   },
   {
     id: 'm-12h30', heure: 12.5, heureTexte: '12h30', titre: 'Le salé', theme: 'ocre',
     accroche: 'Quand la faim se précise : toast à l’avocat, tartines, filet américain.',
-    accrochePlaceholder: false, placeholder: false, photo: '/photos/cafe-filtre.webp',
+    accrochePlaceholder: false, placeholder: true, photo: '/photos/cafe-filtre.webp',
     lignes: [L('Toast à l’avocat', '13 €'), L('Œufs brouillés', '10 €'), L('Filet américain', '15 €'), X('Tartines de saison', '9 €')],
   },
   {
     id: 'm-14h30', heure: 14.5, heureTexte: '14h30', titre: 'La terrasse', theme: 'corail',
     accroche: 'Un dernier café, un jus frais, un gâteau, en terrasse sur la Place d’Armes.',
-    accrochePlaceholder: false, placeholder: false, photo: '/photos/biscuits-citron.webp',
+    accrochePlaceholder: false, placeholder: true, photo: '/photos/biscuits-citron.webp',
     lignes: [X('Cake du jour', '5 €'), X('Cookie maison', '3 €'), X('Thé ou infusion', '3,50 €'), L('Jus frais pressé', '5 €')],
   },
   {
     id: 'm-15h30', heure: 15.5, heureTexte: '15h30', titre: 'Le rideau', theme: 'nuit',
-    accroche: 'La cuisine ferme à 15h30. Merci d’être passé, à bientôt.',
-    accrochePlaceholder: false, placeholder: false, lignes: [],
+    accroche: 'La maison ferme à 15h30. Merci d’être passé, à bientôt.',
+    accrochePlaceholder: false, placeholder: true, lignes: [],
   },
 ];
 

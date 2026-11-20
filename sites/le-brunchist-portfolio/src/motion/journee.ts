@@ -32,7 +32,14 @@ export function momentCourant(h = heureDecimale()) {
   if (h >= moments[0].heure) for (const x of moments) if (x.heure <= h) m = x;
   return m;
 }
-const heureDecimale = () => { const d = new Date(); return d.getHours() + d.getMinutes() / 60; };
+/** Heure de Namur (Europe/Brussels), indépendante du fuseau du navigateur. */
+const WJ: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+const fmtBxl = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', hour: 'numeric', minute: 'numeric', hour12: false, weekday: 'short' });
+export function maintenantBxl() {
+  const p = Object.fromEntries(fmtBxl.formatToParts(new Date()).map((x) => [x.type, x.value]));
+  return { h: Number(p.hour) % 24, m: Number(p.minute), jour: WJ[p.weekday] };
+}
+const heureDecimale = () => { const n = maintenantBxl(); return n.h + n.m / 60; };
 
 let courant: Theme | '' = '';
 /** Applique un ciel : tween 1,1 s sous motion, réglage sec sinon. Le disque suit (--heure, 0,9 s via la même tween). */
@@ -129,15 +136,15 @@ function horloge() {
 type Creneau = { ouverture: string; fermeture: string };
 type Ligne = { j: Jour; c: Creneau[]; n: string };
 const minutes = (hhmm: string) => { const [h, m] = hhmm.split(':').map(Number); return h * 60 + m; };
-const jourAujourdhui = (): Jour => jours[(new Date().getDay() + 6) % 7];
+const jourAujourdhui = (): Jour => jours[(maintenantBxl().jour + 6) % 7];
 
 /** Badge « ouvert jusqu'à 21:00 » / « ouvre à 19:00 » / « fermé, ouvre lundi à 19:00 », depuis les horaires réels. */
 function badges() {
   const badges = [...document.querySelectorAll<HTMLElement>('[data-badge]')];
   if (!badges.length) return;
   const calc = () => {
-    const now = new Date();
-    const nowMin = now.getHours() * 60 + now.getMinutes();
+    const nb = maintenantBxl();
+    const nowMin = nb.h * 60 + nb.m;
     const jour = jourAujourdhui();
     badges.forEach((b) => {
       const lignes: Ligne[] = JSON.parse(b.dataset.horaires || '[]');
