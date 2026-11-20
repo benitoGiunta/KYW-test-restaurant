@@ -138,9 +138,9 @@ html.motion .badge svg { animation: tourne 14s linear infinite; }
 .cat__titre svg { width: 2.2rem; height: 2.2rem; flex: 0 0 auto; color: var(--c-canard); }
 .cat__note { font-size: var(--t-s); color: var(--c-muted); margin: -0.6em 0 1em; }
 .plat { display: flex; align-items: baseline; gap: 0.5em; padding-block: 0.55em; }
-.plat__nom { font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: var(--t-s); }
+.plat__nom { min-width: 0; overflow-wrap: break-word; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: var(--t-s); }
 .plat__desc { display: block; font-weight: 500; text-transform: none; letter-spacing: 0; font-size: var(--t-s); color: var(--c-muted); }
-.plat__points { flex: 1 1 auto; min-width: 1.5rem; border-bottom: 2px dotted var(--c-line); translate: 0 -0.35em; }
+.plat__points { flex: 1 1 auto; min-width: 0.5rem; border-bottom: 2px dotted var(--c-line); translate: 0 -0.35em; }
 .plat__prix { flex: 0 0 auto; min-width: 2.6rem; padding: 0.15em 0.6em; border: 2px solid var(--c-corail); border-radius: var(--pill); font-weight: 700; font-size: var(--t-s); text-align: center; }
 .vege { display: inline-block; margin-left: 0.5em; padding: 0.1em 0.5em; border-radius: var(--pill); background: var(--c-paille); color: var(--c-ink); font-size: var(--t-xs); letter-spacing: 0.06em; vertical-align: middle; }
 .carte__menus { display: grid; gap: calc(var(--u) * 2); grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); margin-top: calc(var(--u) * 4); }
@@ -193,7 +193,8 @@ html.motion .avis__mot { --flou: 14px; }
 .grille-photos .tirage { width: 100%; cursor: default; rotate: var(--r, 0deg); transition: rotate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .grille-photos .tirage:hover { rotate: 0deg; }
 /* Un tirage incliné sur toute la largeur déborde de 1 px en 390 px : la grille garde une gouttière intérieure en mobile. */
-@media (max-width: 767px) { .grille-photos { padding-inline: 0.5rem; } }
+/* Mesure 390 px : les tirages inclinés élargissaient le viewport de 4 à 14 px (carte, maison, terrasse) ; marge, demi-inclinaison et clip horizontal les contiennent. */
+@media (max-width: 767px) { .grille-photos { padding-inline: 1.25rem; overflow-x: clip; } .grille-photos .tirage { rotate: calc(var(--r, 0deg) * 0.5); } }
 
 /* Hero de page intérieure */
 .hero--page { min-height: 0; padding-block: calc(var(--u) * 8) calc(var(--u) * 6); }
@@ -311,3 +312,6 @@ html:not(.motion) .section--canard .btn { transition: none; }
 .table__reset:hover { background: var(--c-lin); color: var(--c-ink); }
 @media (max-width: 767px) { .table__reset { display: none; } }
 html:not(.motion) .table__reset { display: none; }
+.carte__champ input::-webkit-search-cancel-button { appearance: none; display: none; }
+@media (max-width: 767px) { .carte__rubriques { gap: 0.4rem; } .carte__rubriques .pastille { min-height: 36px; padding: 0.2em 0.8em; font-size: var(--t-xs); } }
+@media (prefers-reduced-motion: reduce) { .pastille, .pastille:hover, .pastille:active { transition: none; translate: none; } }
