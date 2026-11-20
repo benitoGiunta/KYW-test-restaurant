@@ -21,6 +21,7 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
 .cta--contour { --plein: transparent; color: var(--c-fg); border-color: var(--c-line); }
 .cta--petit { min-height: 2.5rem; padding: 0 1.2rem; font-size: var(--t-s); }
 .nappe .cta { color: #fff; }
+.nappe .cta--contour { color: var(--c-nappe-fg); border-color: var(--c-nappe-fg); }
 
 /* Le passe : la gouttière centrale porte un filet de 1 px. */
 .deux { display: grid; grid-template-columns: 1fr 1fr; position: relative; }
@@ -28,7 +29,9 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
 .deux__g { padding-right: var(--normal); }
 .deux__d { padding-left: var(--normal); }
 .cadre { overflow: hidden; background: var(--c-line); }
-.cadre img { width: 100%; height: 100%; object-fit: cover; }
+.cadre picture { display: block; width: 100%; height: 100%; }
+.cadre img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.cadre--haut img { object-position: 50% 60%; }
 .cadre--haut { aspect-ratio: 4 / 5; }
 .cadre--paysage { aspect-ratio: 3 / 2; }
 
@@ -47,6 +50,7 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
 .poster__bas { margin-top: var(--normal); }
 .poster__bas::before { top: calc(var(--u) * -6); }
 .poster__lede { font-family: var(--f-display); font-size: var(--t-m); line-height: 1.15; text-align: right; margin-left: auto; max-width: 18ch; text-wrap: balance; }
+.poster__photo { margin-top: calc(var(--u) * 5); aspect-ratio: 16 / 5; }
 .poster__actions { display: flex; flex-wrap: wrap; gap: var(--u); }
 .poster__info { margin-top: calc(var(--u) * 2); }
 
@@ -175,6 +179,11 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
 
 /* Mobile 390 : une colonne, l'axe passe à gauche, noms au-dessus de la description. */
 @media (max-width: 760px) {
+  .voix { margin-top: calc(var(--u) * 3); }
+  .poster__photo { aspect-ratio: 3 / 2; margin-top: var(--normal); }
+  .poster__nom { font-size: clamp(3.6rem, 17vw, 5.5rem); grid-template-columns: 1fr; justify-items: start; line-height: 0.9; }
+  .poster__g, .poster__d { justify-self: start; }
+  .poster__et { padding-inline: 0; }
   .deux { grid-template-columns: 1fr; }
   .deux::before { left: 0; }
   .deux__g, .deux__d { padding-inline: var(--serre) 0; padding-right: 0; }

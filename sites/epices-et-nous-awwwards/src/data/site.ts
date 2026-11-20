@@ -98,7 +98,7 @@ export const equipe = [
 export const histoire = [
   'Depuis 1999, Denis et Sophie Delvigne accueillent leurs convives à Erpent, sur la chaussée de Marche.',
   'Formés à l’école hôtelière de la Citadelle, ils ne venaient pas du milieu de la restauration. Le nom de la maison reflète la passion de Denis pour les épices, et leur goût commun de la convivialité.',
-  'La cuisine est française, traditionnelle et revisitée, faite de produits frais et locaux et de suggestions de saison : biche, Saint-Jacques de Dieppe, lentilles du Puy, daurade royale, selon l’arrivage.',
+  'La cuisine est française, traditionnelle et revisitée, faite de produits frais et locaux et de suggestions de saison : biche, Saint-Jacques de Dieppe, lentilles du Puy, daurade royale, selon le marché.',
 ];
 
 export const reperes = [
