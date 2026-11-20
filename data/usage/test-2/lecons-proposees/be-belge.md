@@ -1,0 +1,1 @@
+- 2026-11-20 : site WordPress/Enfold RestoFactory (be-belge) : capture-site ne trouve aucun lien (infos.json links=0), lire les pages internes en curl ; carte en texte HTML (strip des balises) ; WebFetch reformule la carte, préférer le HTML ; un hook refuse tout curl -s --max-time sauf via q.sh (y compris dans un heredoc : mettre le script dans un fichier).
