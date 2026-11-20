@@ -1,6 +1,4 @@
-# ETAT philfa-legacy (phase 2, 20/11/2026)
-Fait (phase 1) : AUDIT, DESIGN, comp.md, tokens/base/page.css, Base, Nav, Photo, index, 404, 8 photos client.
-Fait (phase 2) : nav mobile en Popover natif sous 60rem (bouton Menu 44 px, aria-expanded, fermeture au clic, fond sous la barre mesuré), switcher au clavier (flèches, Début, Fin, tabindex itinérant) et masqué sans script (deux panneaux visibles), jour courant dans les horaires, états (`:active`, `:disabled`, hover réservé à `(hover: hover)`, 44 px en `(pointer: coarse)`), focus sur bande claire, scroll-padding 112 px, onglet actif sans second plein, hero corrigé (photo mobile après le texte, marge `figure` retirée, hero sous 900 px à 1440x900), sloplint hero : 0 REFLEX, 0 WARN, 1 FAIL 34 faux positif (règle dans base.css). Build vert, `dist/philfa/legacy/` régénéré. Contrôles Playwright 375/768/1280 : aucun débordement horizontal, menu OK, clavier OK.
-Décisions : aucun reveal ni mouvement (Hedgerow est still : « no scroll reveal ») ; aucun formulaire (réservation = lien Barestho conservé) ; revue hero en auto-évaluation (pas d'outil Agent) ; comps HTML jamais produits.
-Reste (phase 3) : QA agent « captures » (375, 768, 1440, reduced-motion), sloplint `--render` complet, contrastes mesurés, RAPPORT.md, entrée `$LOG` (`theme.mjs log`), photos de plats toujours absentes, relire les liens externes en fin de page. Option : `env(safe-area-inset-*)` dans `--gutter`.
-Pièges : `figure` a 40 px de marge par défaut (`.ph { margin: 0 }`) ; `popover` : `display` doit être défini aussi hors ouverture ; `sloplint` signale « waive » mal formé si le séparateur n'est pas « · » ; faux positif 34.
+# ETAT philfa-legacy (phase 3 terminée, 20/11/2026)
+Fait : QA (favicon, twitter:card, cibles 24 px), sloplint render (0 REFLEX, FAIL 34 faux positif), log Hallmark (20/20), RAPPORT.md, DESIGN.md sweep. Build vert, dist régénéré.
+Reste : photos de plats (client) ; contraste 404 du pied KYW (package, hors périmètre) ; Finish review par sous-agent non faite (self).
+Pièges : sloplint 34 lit Base.astro, la règle est dans base.css.

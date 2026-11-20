@@ -13,7 +13,7 @@
 - **Material** · réel : carte, menu du moment, horaires, adresse, 55 et 20 places, patrons, G&M 12/20 · photos : celles du client (7 sur 12) · absent : plats photographiés, avis, note, baseline
 - **Comp** · voir `comp.md` : 2 built, no key · c1 chosen · reproduced (checked at 1280x800, hero réel capturé, comps HTML non produits)
 - **Hero review** · self (pas d'outil Agent) : fix · 2 findings · 2 resolved (photo mobile avant le titre, marge par défaut de `figure` qui rétrécissait la photo)
-- **Sweep** · phase 3
+- **Sweep** · phase 3 : sloplint --render 1 FAIL (34, faux positif : règle dans base.css), 0 REFLEX, 2 WARN kept (before non rendu), 1 NOTE 58 (95 mots à 1440).
 
 ## Approche
 Macrostructure 08 (one-page de restaurant), empreinte `Heading|Body|Divider|Button|Image|Reveal` sans reveal. Posture : calme, une seule page, aucun pattern de scroll. Dérogations : widget flottant Barestho remplacé par le bouton Réserver de la nav et du hero ; `vh` évité (`dvh` non nécessaire). Test miroir : une brasserie voisine n'aurait pas ce papier olive, l'or du logo et le comptoir de prix ; décision changée par rapport au tirage : carte en Switcher plutôt qu'en deux pages.
