@@ -608,7 +608,7 @@ export const carte: Categorie[] = [
    },
    {
     "nom": "Mixed grilled",
-    "description": "min 2 cvts - prix/cvt",
+    "description": "par couvert, minimum 2",
     "prix": 35.7
    }
   ]
