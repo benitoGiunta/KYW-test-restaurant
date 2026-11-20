@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import { photos, credit } from '../../data/photos';
 import { restaurant as r, menuFetes } from '../../data/site';
 ---
-<Base title="Réserver" description="Réserver une table aux Terrasses de Crupet : en ligne, au 083 655 111 ou par e-mail. Ouvert tous les jours, midi et soir.">
+<Base title="Réserver" description="Réserver une table aux Terrasses de Crupet : en ligne ou au 083 655 111. Ouvert tous les jours, midi et soir.">
   <section class="head">
     <div class="wrap grid">
       <h1 class="display display--mega head__title" data-split="lines" data-intro>Réserver</h1>
@@ -33,11 +33,6 @@ import { restaurant as r, menuFetes } from '../../data/site';
         <p><a class="btn ui" href={r.mapUrl} rel="noopener" target="_blank">Ouvrir le plan</a></p>
         <h2 class="ui muted">Écrire</h2>
         <p><a class="text" href={`mailto:${r.email}`}>{r.email}</a></p>
-        <form class="mailto" action={`mailto:${r.email}`} method="post" enctype="text/plain">
-          <label for="msg">Votre demande (date, heure, nombre de personnes)</label>
-          <textarea id="msg" name="demande" rows="4" autocomplete="off"></textarea>
-          <button class="btn ui" type="submit">Ouvrir mon e-mail</button>
-        </form>
       </div>
       <div class="infos__bloc infos__img">
         <div class="hublot" data-iris><Image src={photos.soir.src} alt={photos.soir.alt} widths={[400, 640]} sizes="(min-width: 900px) 26vw, 70vw" loading="lazy" decoding="async" /></div>
@@ -52,7 +47,7 @@ import { restaurant as r, menuFetes } from '../../data/site';
         <li>Menus de fêtes à emporter : de {menuFetes.prix}, à retirer {menuFetes.retrait}.</li>
         <li>Des bons cadeaux peuvent s’offrir au restaurant.</li>
         <li>Une carte enfants propose burger, filet de poulet ou coquillettes jambon-fromage, de 12{' '}€ à 16{' '}€.</li>
-        <li>Parking, accès et privatisation : renseignez-vous par téléphone au <a class="text" href={r.phoneHref}>{r.phone}</a>.</li>
+        <li>Parking, accès et privatisation : informations non communiquées.</li>
       </ul>
     </div>
   </section>
@@ -67,9 +62,6 @@ import { restaurant as r, menuFetes } from '../../data/site';
   .infos__bloc { grid-column: span 4; min-width: 0; display: grid; gap: 1rem; align-content: start; }
   @media (max-width: 900px) { .infos__bloc { grid-column: 1 / -1; margin-bottom: 2.5rem; } }
   .heures li { display: flex; justify-content: space-between; gap: 1rem; padding-block: 0.55rem; border-bottom: 1px solid var(--c-line); font-size: var(--t-s); }
-  .mailto { display: grid; gap: 0.6rem; justify-items: start; }
-  .mailto label { font-size: var(--t-s); color: var(--c-muted); }
-  .mailto textarea { width: 100%; font: inherit; color: inherit; background: var(--c-panel); border: 1px solid var(--c-line); padding: 0.75rem; border-radius: 0; }
   .infos__img .hublot { width: min(100%, 22rem); }
   .plus__title { grid-column: 1 / span 4; }
   .plus__list { grid-column: 6 / span 6; display: grid; gap: 1rem; }
