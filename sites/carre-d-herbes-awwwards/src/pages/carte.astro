@@ -14,7 +14,7 @@ const groupes = [
 <Base page="carte" title="La carte" description="Menus en deux, trois, quatre ou cinq assiettes de 38 à 85 euros, avec accord mets-vins. Les plats du moment de Carré d'herbes, à Wépion.">
   <section class="sec sec--ardoise carte-tete" aria-labelledby="titre">
     <div class="wrap">
-      <h1 id="titre" class="display carte-tete__titre">On compte en assiettes</h1>
+      <h1 id="titre" data-split="lines" data-intro class="display carte-tete__titre">On compte en assiettes</h1>
       <p class="carte-tete__texte">Pas de carte à la carte : quatre menus, de deux à cinq assiettes. Le chef annonce les plats, la maison choisit l'accord.</p>
       <ol class="idx idx--grand">
         {menus.map((m) => (
@@ -34,7 +34,7 @@ const groupes = [
 
   <section class="sec sec--pierre plats" aria-labelledby="plats">
     <div class="wrap">
-      <h2 id="plats" class="display titre">Dans l'assiette en ce moment</h2>
+      <h2 id="plats" data-split="lines" class="display titre">Dans l'assiette en ce moment</h2>
       <div class="plats__corps">
         <div class="plats__liste">
           {groupes.map((g) => (
@@ -49,8 +49,8 @@ const groupes = [
           ))}
         </div>
         <div class="plats__ph">
-          <Photo k="plat" class="rond" sizes="(min-width: 900px) 30vw, 70vw" />
-          <Photo k="entrees" class="rond plats__ph2" sizes="(min-width: 900px) 18vw, 45vw" />
+          <Photo reveal="scale" k="plat" class="rond" tournette={0.7} sizes="(min-width: 900px) 30vw, 70vw" />
+          <Photo reveal="scale" k="entrees" class="rond plats__ph2" tournette={-1} sizes="(min-width: 900px) 18vw, 45vw" />
         </div>
       </div>
       <p class="note">Les plats changent avec la saison et l'inspiration du chef. Photos : plats du restaurant.</p>
@@ -59,7 +59,7 @@ const groupes = [
 
   <section class="sec sec--ardoise fetes" aria-labelledby="fetes">
     <div class="wrap fetes__grid">
-      <h2 id="fetes" class="display titre">Les fêtes de fin d'année</h2>
+      <h2 id="fetes" data-split="lines" class="display titre">Les fêtes de fin d'année</h2>
       <article class="fetes__bloc">
         <h3 class="sous">{fetes.noel.titre}</h3>
         <p class="fetes__quand">{fetes.noel.quand}</p>
@@ -80,7 +80,7 @@ const groupes = [
 
   <section class="sec sec--pierre infos" aria-labelledby="infos">
     <div class="wrap infos__grid">
-      <h2 id="infos" class="titre">À savoir</h2>
+      <h2 id="infos" data-split="lines" class="titre">À savoir</h2>
       <div>
         <p>{fetes.regimes}</p>
         <p>{fetes.bonCadeau}</p>
