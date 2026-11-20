@@ -1,9 +1,13 @@
-// Motion globale de PhilFa (phase 1 : seule la transition de page existe ; les entrées et le repos arrivent en phase 2).
+// Motion globale de PhilFa : transition de page, module pilote (la couture : intro, repos, pointeur, double choix), menu du téléphone.
 // Transition : deux volets (rose des banquettes) qui se rejoignent au centre puis s'écartent, ≤ 0,9 s par sens (verbe : accorder).
 import { gsap } from 'gsap';
 import { setTransition, ease } from '../engine';
+import { startCouture } from './couture';
+import { startVolet } from './volet';
 
 export function setupMotion() {
+  startCouture();
+  startVolet();
   const volets = (c: HTMLElement) => c.querySelectorAll<HTMLElement>('.curtain__panel');
   setTransition({
     leave: (c) => {

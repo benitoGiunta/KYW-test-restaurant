@@ -21,15 +21,20 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
 
 /* Liens : soulignés au repos dans le texte, couture qui se ferme au survol */
 .lien { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
-.lien:hover { text-decoration-thickness: 2px; }
+@media (hover: hover) { .lien:hover { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); } }
+.lien:focus-visible { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); }
+.lien:active { text-decoration-thickness: 1px; }
 .lien-util { color: var(--c-muted); }
-.lien-util:hover { color: var(--c-fg); }
+.lien-util { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 0.25em; transition: text-decoration-color 0.3s, color 0.3s; }
+@media (hover: hover) { .lien-util:hover { color: var(--c-fg); text-decoration-color: currentColor; } }
+.lien-util:focus-visible { color: var(--c-fg); text-decoration-color: currentColor; }
 
 /* CTA : deux moitiés (crème | moutarde) dont la couture glisse au survol, le verbe « accorder » */
 .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0.85em 1.6em; font-family: var(--f-ui); font-weight: 700; font-stretch: 112%; font-size: var(--t-s); letter-spacing: 0.04em; text-transform: uppercase;
   color: #1d2014; background: linear-gradient(90deg, #efe6d0 50%, #e3a928 50%) 100% 0 / 200% 100% no-repeat; border: 1px solid #1d2014; transition: background-position 0.5s cubic-bezier(0.65, 0, 0.35, 1); }
-.cta:hover { background-position: 0 0; }
-.cta:active { transform: translateY(1px); }
+@media (hover: hover) { .cta:hover { background-position: 0 0; } }
+.cta:focus-visible { background-position: 0 0; }
+.cta:active { translate: 0 1px; }
 .cta--plein { background: #e3a928; }
 .cta--petit { min-height: 40px; padding: 0.55em 1.1em; font-size: var(--t-xs); }
 .t-fa .cta { border-color: #1d2014; }
@@ -44,7 +49,8 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
 .nl::before, .nl::after { content: ''; position: absolute; bottom: 8px; width: 50%; height: 2px; background: var(--c-accent); transform: scaleX(0); transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1); }
 .nl::before { left: 0; transform-origin: left; }
 .nl::after { right: 0; transform-origin: right; }
-.nl:hover::before, .nl:hover::after, .nl[aria-current='page']::before, .nl[aria-current='page']::after { transform: scaleX(1); }
+@media (hover: hover) { .nl:hover::before, .nl:hover::after { transform: scaleX(1); } }
+.nl:focus-visible::before, .nl:focus-visible::after, .nl[aria-current='page']::before, .nl[aria-current='page']::after { transform: scaleX(1); }
 .tete__nav .cta { color: #1d2014; }
 
 /* Couture : filet vertical au centre d'un bloc en deux moitiés */
@@ -124,8 +130,10 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
 .index ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--c-fg); }
 .index li { border-bottom: 1px solid var(--c-line); }
 .index li a { display: grid; grid-template-columns: 1fr auto auto; gap: var(--gutter); align-items: baseline; padding: calc(var(--u) * 2) 0; min-height: 56px; }
-.index li a:hover .index__titre { transform: translateX(0.4em); }
-.index__titre { font-family: var(--f-display); font-weight: 800; font-stretch: 112%; font-size: var(--t-l); letter-spacing: -0.035em; line-height: 1; transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1); }
+@media (hover: hover) { .index li a:hover .index__titre { translate: 0.4em 0; color: var(--c-accent); } }
+.index li a:focus-visible .index__titre { translate: 0.4em 0; color: var(--c-accent); }
+.index li a:active .index__titre { translate: 0.2em 0; }
+.index__titre { font-family: var(--f-display); font-weight: 800; font-stretch: 112%; font-size: var(--t-l); letter-spacing: -0.035em; line-height: 1; transition: translate 0.4s cubic-bezier(0.65, 0, 0.35, 1), color 0.4s; }
 .index__n, .index__prix { font-family: var(--f-ui); font-size: var(--t-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c-muted); font-variant-numeric: tabular-nums; }
 
 /* Pied : la couture finale */
@@ -160,7 +168,8 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
 .sommaire { grid-column: 1 / span 3; position: sticky; top: 76px; }
 .sommaire ul { list-style: none; margin: 0; padding: 0; }
 .sommaire a { display: flex; justify-content: space-between; align-items: center; min-height: 44px; border-bottom: 1px solid var(--c-line); font-family: var(--f-ui); font-size: var(--t-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
-.sommaire a:hover { color: var(--c-accent); }
+@media (hover: hover) { .sommaire a:hover { color: var(--c-accent); border-bottom-color: var(--c-accent); } }
+.sommaire a:focus-visible { color: var(--c-accent); border-bottom-color: var(--c-accent); }
 .biefs { grid-column: 4 / -1; display: flex; flex-direction: column; gap: var(--aere); }
 .bief { scroll-margin-top: 80px; }
 .bief__tete { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: var(--serre); }
@@ -216,7 +225,6 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
 /* ---------- Mobile 390 : les moitiés restent côte à côte dans le hero, s'empilent ailleurs ---------- */
 @media (max-width: 52rem) {
   .tete__marque { font-size: 1.35rem; }
-  .tete__nav .tete__sec { display: none; }
   .decl__texte { grid-column: 1 / -1; }
   .chiffres { grid-template-columns: repeat(2, 1fr); row-gap: var(--serre); }
   .hero__bas > div { padding-inline: var(--gutter); }
@@ -251,4 +259,78 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
   .index li a { grid-template-columns: 1fr auto; }
   .index__prix { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { .cta, .nl::before, .nl::after, .index__titre { transition: none; } }
+
+
+/* ---------- Phase 2 : la couture en mouvement ---------- */
+@property --ouvre { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --fil { syntax: '<number>'; inherits: true; initial-value: 1; }
+.split-line { padding-top: 0.16em; margin-top: -0.16em; }
+.titre-page h1 { font-size: min(var(--t-mega), calc((100vw - 2 * var(--gutter)) / 5.2)); } /* un mot seul ne déborde jamais (Réserver : 4,7 em) */ /* accents des capitales sous interligne < 1 */
+
+/* Hero : les deux moitiés suivent la couture (--couture-x, pilote) et s'ouvrent à l'intro (--ouvre) */
+.hero { --cx: var(--couture-x, 0px); position: relative; isolation: isolate;
+  background: linear-gradient(90deg, var(--c-bg) calc((50% + var(--cx)) * var(--ouvre)), var(--c-papier) 0, var(--c-papier) calc(100% - (50% - var(--cx)) * var(--ouvre)), var(--c-fa) 0); }
+.hero__titre .phil-mot, .hero__titre .fa-mot { translate: var(--cx) 0; }
+html.motion .hero { --ouvre: 0; --fil: 0; }
+html.motion .hero__titre .phil-mot, html.motion .hero__titre .fa-mot { visibility: hidden; }
+
+/* Le fil : points de couture qui courent sur la couture (repos), sur chaque diptyque */
+.cousu { position: relative; }
+.cousu::after { content: ''; position: absolute; top: 0; bottom: 0; left: calc(50% + var(--cx, 0px)); width: 3px; margin-left: -1.5px; z-index: 1; pointer-events: none;
+  background: repeating-linear-gradient(180deg, var(--c-fil, #efe6d0) 0 14px, transparent 14px 36px) 0 var(--point, 0px) / 100% 36px;
+  scale: 1 var(--fil, 1); transform-origin: top; opacity: 0.9; }
+.pied__mot { --cx: var(--couture-x, 0px); background: linear-gradient(90deg, var(--c-bg) calc(50% + var(--cx)), var(--c-fa) 0); }
+.pied__mot .phil-mot, .pied__mot .fa-mot { translate: var(--cx) 0; }
+
+/* Le double choix : choisir éclaire sa moitié, éteint l'autre */
+.choix { font: inherit; text-align: left; width: 100%; position: relative; cursor: pointer; align-items: flex-start; }
+.choix__plat { display: block; max-width: 30ch; }
+.choix { transition: background-color 0.5s cubic-bezier(0.65, 0, 0.35, 1), color 0.5s cubic-bezier(0.65, 0, 0.35, 1); }
+.choix::after { content: 'Choisi'; position: absolute; right: var(--gutter); bottom: calc(var(--u) * 2); font-family: var(--f-ui); font-size: var(--t-xs); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0; translate: 0 0.4em; transition: opacity 0.4s, translate 0.4s cubic-bezier(0.65, 0, 0.35, 1); }
+.choix__plat { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 0.2em; text-decoration-thickness: 2px; transition: text-decoration-color 0.4s; }
+/* La moitié non choisie s'éteint : fond plus sombre que la salle, texte en sourdine (AA, 8:1) */
+@media (hover: hover) {
+  .etape:has(.choix:hover) .choix:not(:hover) { background-color: #171a10; color: #b9b296; }
+  .choix:hover .choix__plat { text-decoration-color: currentColor; }
+}
+.etape:has(.choix:focus-visible) .choix:not(:focus-visible), .etape.a-choisi .choix[aria-pressed='false'] { background-color: #171a10; color: #b9b296; }
+.choix:focus-visible .choix__plat { text-decoration-color: currentColor; }
+.choix:focus-visible { outline-offset: -6px; outline-color: currentColor; }
+.choix[aria-pressed='true']::after { opacity: 1; translate: 0 0; }
+.choix[aria-pressed='true'] .choix__plat { text-decoration-color: currentColor; }
+.choix:active { translate: 0 1px; }
+
+/* Bande : cadre fixe, photo en parallaxe à l'intérieur */
+.bande__cadre { overflow: clip; display: flow-root; }
+.bande__cadre > div { margin-block: -6%; }
+.cadre { overflow: clip; }
+
+/* Lien de marque : la moitié Fa s'éclaire */
+.tete__marque .fa-mot { transition: color 0.3s; }
+@media (hover: hover) { .tete__marque:hover .phil-mot { color: var(--c-accent); } .tete__marque:hover .fa-mot { color: var(--c-fg); } }
+.tete__marque:focus-visible .phil-mot { color: var(--c-accent); }
+.tete__marque:focus-visible .fa-mot { color: var(--c-fg); }
+
+/* Pied KYW : retour au survol sans toucher au paquet */
+.kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
+
+/* Menu du téléphone : deux moitiés qui s'accordent */
+.tete__mob { display: none; }
+.tete__menu { color: var(--c-fg); min-width: 44px; justify-content: center; }
+.volet { position: fixed; inset: 0; z-index: calc(var(--z-header) + 1); background: var(--c-bg); display: grid; grid-template-rows: 1fr auto; }
+.volet[hidden] { display: none; }
+.volet > div { padding: var(--serre) var(--gutter); display: flex; flex-direction: column; justify-content: flex-end; gap: var(--serre); }
+.volet ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.volet li { overflow: clip; }
+.volet__fermer { align-self: flex-end; color: var(--c-fg); margin-bottom: auto; }
+.volet__ligne { display: block; padding-block: 0.1em; font-family: var(--f-display); font-weight: 800; font-stretch: 112%; font-size: clamp(2.4rem, 11vw, 4rem); letter-spacing: -0.04em; line-height: 1; text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 3px; text-underline-offset: 0.12em; }
+.volet__ligne[aria-current='page'], .volet__ligne:focus-visible { text-decoration-color: currentColor; }
+.volet__fa .volet__tel { font-size: 1.25rem; font-family: var(--f-ui); letter-spacing: 0.02em; min-height: 44px; display: flex; align-items: center; }
+.volet__fa { padding-block: var(--serre) calc(var(--serre) * 1.5); }
+@media (max-width: 52rem) {
+  .tete__nav li:not(.tete__mob):not(:has(.cta)) { display: none; }
+  .tete__mob { display: list-item; }
+  .tete__nav .cta--petit { min-height: 44px; }
+  .etape.cousu::after, .actions.cousu::after, .porte.cousu::after, .deux.cousu::after { display: none; }
+  .choix::after { right: var(--gutter); }
+}
