@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, fourchette } from '../data/site';
+import { u } from '../lib/url';
+const menu = site.menus[0];
+const rangs = site.carte.map((c) => ({ nom: c.categorie, ...fourchette(c.categorie), n: c.plats.filter((x) => (x.prix ?? '0') !== '3').length }));
+---
+<Base title="La carte" description={`La carte d'Épices & Nous à Erpent : entrées dès ${rangs[0].min} €, plats dès ${rangs[1].min} €, desserts dès ${rangs[2].min} €, et le menu ${menu.services} services à ${menu.prix}.`}>
+  <HeroPage titre="La carte" chiffre={site.chiffres.prix} sur="Carte de saison, prix en euros">
+    <p>Le menu {menu.services} services à {menu.prix}, ou la carte : entrées, plats et desserts, qui changent avec les saisons.</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Les prix en un coup d'œil">
+    <div class="wrap">
+      <ol class="formules">
+        <li class="formule" data-reveal="up">
+          <p class="formule__prix" aria-hidden="true">{menu.prix.replace(/\s*€/, '')}<span class="formule__euro">€</span></p>
+          <div class="formule__texte">
+            <h2 class="formule__nom">{menu.nom}<span class="sr-only">, {menu.prix}</span></h2>
+            <p class="petite-cap">{menu.services} services</p>
+            <p>{menu.description}</p>
+          </div>
+        </li>
+        {rangs.map((r, i) => (
+          <li class="formule" data-reveal="up" data-delay={String((i + 1) * 0.08)}>
+            <p class="formule__prix" aria-hidden="true">{r.min}<span class="formule__euro">€</span></p>
+            <div class="formule__texte">
+              <h2 class="formule__nom">{r.nom}<span class="sr-only">, de {r.min} à {r.max} €</span></h2>
+              <p class="petite-cap">à partir de, jusqu'à {r.max} €</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-label="La carte détaillée">
+    <div class="wrap carte">
+      {site.carte.map((c) => (
+        <div class="carte__cat" data-reveal="fade">
+          <h2 class="petite-cap">{c.categorie}</h2>
+          <ul class="carte__liste">
+            {c.plats.map((pl) => (
+              <li class="carte__ligne">
+                <span class="carte__nom">{pl.nom}</span>
+                {pl.prix && <strong class="carte__prix">{pl.prix} €</strong>}
+                {pl.description && <span class="carte__desc">{pl.description}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <div class="formules__pied">
+        <p data-reveal="fade">Boissons et vins : informations à demander au restaurant.</p>
+        <div class="actions">
+          <a class="btn" href={u('/menu/')}>Le menu en détail</a>
+          <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

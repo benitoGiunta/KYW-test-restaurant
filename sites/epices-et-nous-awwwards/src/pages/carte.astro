@@ -9,15 +9,15 @@ const rubrique = (c: typeof entrees) => c;
 ---
 <Base page="carte" title="La carte" description="La carte d’Épices & Nous à Erpent : entrées, plats et desserts de saison, de 20,50 à 45,75 €, et le menu trois services à 52 € sans les boissons.">
   <section class="entete wrap">
-    <h1 class="entete__titre display">La <em>carte</em></h1>
-    <p class="entete__texte">Relevée sur le site du restaurant. Elle change avec les saisons : produits frais et locaux, suggestions selon le marché.</p>
+    <h1 class="entete__titre display" data-split="lines" data-intro>La <em>carte</em></h1>
+    <p class="entete__texte" data-reveal="up" data-intro data-delay="0.3">Relevée sur le site du restaurant. Elle change avec les saisons : produits frais et locaux, suggestions selon le marché.</p>
   </section>
 
   <section class="nappe menu52 menu52--carte" aria-labelledby="t-menu">
     <div class="wrap deux">
       <div class="deux__g menu52__prix">
         <h2 id="t-menu" class="sr-only">{menu.nom}</h2>
-        <p class="menu52__chiffre display" aria-hidden="true">{menu.prix}<span class="menu52__eur">€</span></p>
+        <p class="menu52__chiffre display" aria-hidden="true"><span data-compte>{menu.prix}</span><span class="menu52__eur">€</span></p>
         <p class="menu52__nom">{menu.nom}</p>
         <p class="petit">{menu.regle}</p>
       </div>
@@ -33,10 +33,10 @@ const rubrique = (c: typeof entrees) => c;
   {[entrees, plats, desserts].map((c, i) => (
     <>
       <section class="rubrique wrap" aria-labelledby={`t-${c.id}`}>
-        <h2 id={`t-${c.id}`} class="rubrique__titre display">{c.titre}</h2>
+        <h2 id={`t-${c.id}`} class="rubrique__titre display" data-split="lines">{c.titre}</h2>
         <ul class="plats">
           {c.plats.map((p) => (
-            <li class="plat">
+            <li class="plat" data-reveal="up">
               <h3 class="plat__nom display">{p.nom}</h3>
               <p class="plat__desc">{p.description}</p>
               <p class="plat__prix tab"><span class="sr-only">Prix : </span>{euro(p.prix)}</p>
@@ -63,7 +63,7 @@ const rubrique = (c: typeof entrees) => c;
 
   <section class="nappe statement statement--court" aria-labelledby="t-fin">
     <div class="wrap">
-      <h2 id="t-fin" class="statement__texte display">Le plat est prêt. <em>La table aussi ?</em></h2>
+      <h2 id="t-fin" class="statement__texte display" data-split="lines">Le plat est prêt. <em>La table aussi ?</em></h2>
       <p class="poster__actions">
         <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver une table</span></a>
         <a class="cta cta--contour" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>

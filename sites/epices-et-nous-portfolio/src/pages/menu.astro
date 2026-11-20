@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const menu = site.menus[0];
+const photos = ['/photos/plat-girolles-toast.webp', '/photos/plat-viande-ardoise.webp', '/photos/plat-volaille.webp'].map(photoDe);
+---
+<Base title="Le menu" description={`Le menu ${menu.services} services d'Épices & Nous à Erpent : ${menu.prix}, sans les boissons. Tartare de saumon, daurade royale, noisettes de biche.`}>
+  <HeroPage titre="Le menu" chiffre={site.chiffres.services} sur={`${menu.nom}, ${menu.prix}`}>
+    <p>{menu.description} Entrée, plat et dessert, au fil de la saison.</p>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="menu-titre">
+    <div class="wrap menu__grille">
+      <h2 class="sr-only" id="menu-titre">{menu.nom}</h2>
+      <ol class="menu__liste" aria-labelledby="menu-titre">
+        {site.menuServices.map((s, i) => (
+          <li class="menu__ligne" data-reveal="up">
+            <span class="menu__numero" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span class="menu__nom">{s.service}</span>
+            <span class="menu__desc">
+              {s.options.map((o) => <span class="menu__option">{o}</span>)}
+            </span>
+          </li>
+        ))}
+      </ol>
+      <aside class="menu__cote">
+        <p class="petite-cap">Suppléments</p>
+        <ul class="menu__options" data-reveal="fade">
+          <li><span>Assiette de fromages à la place du dessert</span><strong>9 €</strong></li>
+          <li><span>Assiette de fromages en plus du dessert</span><strong>17 €</strong></li>
+        </ul>
+        <p class="muted">{menu.prix}, {menu.description.charAt(0).toLowerCase() + menu.description.slice(1)} {site.reservation.note}</p>
+        <p><a class="btn btn--primary" href={u('/reservation/')}>Réserver</a></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--photos" aria-label="Assiettes">
+    <div class="wrap triptyque">
+      {photos.map((p, i) => (
+        <figure class:list={['triptyque__item', `triptyque__item--${i}`]} data-reveal="clip" data-delay={String(i * 0.1)}>
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+</Base>
