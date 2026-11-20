@@ -111,3 +111,14 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     </div>
   </section>
 </Base>
+<script>
+  // Reveal unique : IntersectionObserver, une fois, ordre du DOM ; sans script ou sans observer, tout reste visible.
+  const tiles = Array.from(document.querySelectorAll<HTMLElement>('.bento .photo'));
+  tiles.forEach((el, i) => el.style.setProperty('--i', String(i)));
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+    tiles.forEach((el) => io.observe(el));
+  } else tiles.forEach((el) => el.classList.add('is-in'));
+</script>

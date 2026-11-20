@@ -14,16 +14,40 @@ import { resto } from '../../data/site';
       <form class="form" method="post" data-endpoint="" action="" novalidate>
         <h2>Envoyez-nous un message</h2>
         <div class="form__grid">
-          <label>Prénom *<input name="prenom" type="text" autocomplete="given-name" required /></label>
-          <label>Nom *<input name="nom" type="text" autocomplete="family-name" required /></label>
-          <label>Adresse e-mail *<input name="email" type="email" autocomplete="email" required /></label>
-          <label>Téléphone ou GSM<input name="tel" type="tel" autocomplete="tel" /></label>
-          <label class="form__wide">Message *<textarea name="message" rows="5" required></textarea></label>
+          <div class="field">
+            <label for="f-prenom">Prénom *</label>
+            <input id="f-prenom" name="prenom" type="text" autocomplete="given-name" placeholder="Camille" required aria-describedby="f-prenom-h" />
+            <p class="help" id="f-prenom-h" data-help="Obligatoire."></p>
+          </div>
+          <div class="field">
+            <label for="f-nom">Nom *</label>
+            <input id="f-nom" name="nom" type="text" autocomplete="family-name" placeholder="Dupont" required aria-describedby="f-nom-h" />
+            <p class="help" id="f-nom-h" data-help="Obligatoire."></p>
+          </div>
+          <div class="field">
+            <label for="f-email">Adresse e-mail *</label>
+            <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="nom@exemple.be" required aria-describedby="f-email-h" />
+            <p class="help" id="f-email-h" data-help="Format : nom@exemple.be."></p>
+          </div>
+          <div class="field">
+            <label for="f-tel">Téléphone ou GSM</label>
+            <input id="f-tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="0470 12 34 56" aria-describedby="f-tel-h" />
+            <p class="help" id="f-tel-h" data-help="Facultatif."></p>
+          </div>
+          <div class="field form__wide">
+            <label for="f-message">Message *</label>
+            <textarea id="f-message" name="message" rows="5" required aria-describedby="f-message-h"></textarea>
+            <p class="help" id="f-message-h" data-help="Obligatoire."></p>
+          </div>
         </div>
         {/* Hallmark · reworded "Les Terrasses du Prince" to "le restaurant" · le site d’origine cite une autre enseigne par erreur, texte de consentement à faire valider */}
-        <p class="form__consent"><label class="check"><input type="checkbox" name="consentement" required /> Oui, je donne mon consentement *</label></p>
+        <div class="field field--check">
+          <label class="check" for="f-consent"><input id="f-consent" type="checkbox" name="consentement" required aria-describedby="f-consent-h" /> Oui, je donne mon consentement *</label>
+          <p class="help" id="f-consent-h" data-help=""></p>
+        </div>
         <p class="small">En envoyant ce formulaire, vous acceptez que le restaurant mémorise et utilise les informations collectées afin de traiter votre demande.</p>
         <p><button class="btn" type="submit">Envoyer</button></p>
+        <p class="form__status" role="status" aria-live="polite" data-status></p>
         <p class="small" data-placeholder="true">Maquette : l’envoi n’est pas encore branché.</p>
       </form>
       <dl class="facts">
@@ -35,3 +59,43 @@ import { resto } from '../../data/site';
     </div>
   </section>
 </Base>
+<script>
+  // Validation : au blur d’un champ touché, puis à chaque saisie. Rien n’est posté (data-endpoint vide).
+  const NBSP = '\u00a0';
+  const messages: Record<string, string> = {
+    prenom: 'Indiquez votre prénom.',
+    nom: 'Indiquez votre nom.',
+    email: 'Cette adresse semble incomplète. Écrivez-la sous la forme nom@exemple.be.',
+    message: 'Écrivez votre message, même en une ligne.',
+    consentement: 'Cochez la case pour que nous puissions traiter votre demande.',
+  };
+  document.querySelectorAll<HTMLFormElement>('form[data-endpoint]').forEach((form) => {
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea'));
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const check = (el: HTMLInputElement | HTMLTextAreaElement) => {
+      const help = document.getElementById(el.getAttribute('aria-describedby') ?? '');
+      const ok = el.checkValidity();
+      if (ok) el.removeAttribute('aria-invalid'); else el.setAttribute('aria-invalid', 'true');
+      if (help) help.textContent = ok ? (help.dataset.help ?? '') : (messages[el.name] ?? 'Ce champ est incomplet.');
+      return ok;
+    };
+    fields.forEach((el) => {
+      el.addEventListener('blur', () => { el.dataset.touched = 'true'; check(el); });
+      const live = () => { if (el.dataset.touched) check(el); };
+      el.addEventListener('input', live);
+      el.addEventListener('change', live);
+    });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      status.textContent = '';
+      status.removeAttribute('data-state');
+      let first: HTMLInputElement | HTMLTextAreaElement | null = null;
+      fields.forEach((el) => { el.dataset.touched = 'true'; if (!check(el) && !first) first = el; });
+      if (first) { (first as HTMLElement).focus(); return; }
+      if (!form.dataset.endpoint) {
+        status.dataset.state = 'info';
+        status.textContent = `Rien n’a été envoyé${NBSP}: ce formulaire n’est pas encore relié. Appelez le 081 23 14 26 ou écrivez à resto@champselysees.be.`;
+      }
+    });
+  });
+</script>

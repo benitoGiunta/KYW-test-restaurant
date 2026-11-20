@@ -18,7 +18,7 @@ const liens = [
   <a class="skip" href="#contenu">Aller au contenu</a>
   <div class="nav__banner">
     <div class="container nav__banner-in">
-      <p>7 j sur 7. Du lundi au samedi de 11 h 00 à 22 h 00, le dimanche de 11 h 00 à 16 h 00.</p>
+      <p><span class="nav__long">7 j sur 7. Du lundi au samedi de 11 h 00 à 22 h 00, le dimanche de 11 h 00 à 16 h 00.</span><span class="nav__short">Ouvert 7 j sur 7, dès 11 h 00</span></p>
       <p><a href={resto.telHref}>{resto.tel}</a></p>
     </div>
   </div>
@@ -27,12 +27,22 @@ const liens = [
       <a class="nav__brand" href={`${base}`} aria-label="Champs Elysées, bistro convivial, accueil">
         <img src={`${base}photos/logo.webp`} width="1721" height="1135" alt="" />
       </a>
-      <nav aria-label="Navigation principale">
+      <nav class="site-nav" id="menu" popover aria-label="Navigation principale">
+        <button class="btn site-nav__close" type="button" popovertarget="menu" popovertargetaction="hide">Fermer</button>
         <ul class="nav__links">
           {liens.map((l) => <li><a href={l.href} aria-current={l.k === page ? 'page' : undefined}>{l.t}</a></li>)}
         </ul>
+        <p class="site-nav__foot"><a class="btn" href={resto.zenchef}>Réserver une table</a><a class="link" href={resto.telHref}>Appeler le {resto.tel}</a></p>
       </nav>
       <a class="btn nav__cta" href={resto.zenchef}>Réserver</a>
+      <button class="btn nav__toggle" type="button" popovertarget="menu">Menu</button>
     </div>
   </div>
 </header>
+<script>
+  // Ferme le menu après un clic sur un lien (ancre de la même page comprise).
+  const menu = document.getElementById('menu');
+  menu?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a') && menu.matches(':popover-open')) menu.hidePopover();
+  });
+</script>

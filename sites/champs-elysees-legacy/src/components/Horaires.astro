@@ -1,12 +1,14 @@
 ---
 import { horaires } from '../data/site';
 ---
-<table class="schedule">
+<div class="horaires-wrap">
+<p class="open-status" data-open-status></p>
+<table class="schedule" data-schedule>
   <caption class="visually-hidden">Heures d’ouverture, 7 jours sur 7</caption>
   <thead><tr><th scope="col">Jour</th><th scope="col">Ouverture</th><th scope="col">Fermeture</th></tr></thead>
   <tbody>
-    {horaires.map((j) => (
-      <tr>
+    {horaires.map((j, i) => (
+      <tr data-day={(i + 1) % 7} data-o={j.o.replace(' h ', ':')} data-f={j.f.replace(' h ', ':')}>
         <th scope="row">{j.jour}</th>
         <td class="num"><time>{j.o}</time></td>
         <td class="num"><time>{j.f}</time></td>
@@ -14,3 +16,26 @@ import { horaires } from '../data/site';
     ))}
   </tbody>
 </table>
+</div>
+<script>
+  // Jour courant (heure de Bruxelles) et état d’ouverture, calculés depuis le tableau ci-dessus.
+  const table = document.querySelector<HTMLTableElement>('[data-schedule]');
+  const status = document.querySelector<HTMLElement>('[data-open-status]');
+  if (table) {
+    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+    const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '';
+    const day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday'));
+    const mins = Number(get('hour')) * 60 + Number(get('minute'));
+    const row = table.querySelector<HTMLTableRowElement>(`tr[data-day="${day}"]`);
+    if (row) {
+      row.setAttribute('aria-current', 'date');
+      row.querySelector('th')?.insertAdjacentHTML('beforeend', ' <span class="today">aujourd’hui</span>');
+      const toMin = (v = '0:0') => { const [h, m] = v.split(':').map(Number); return h * 60 + m; };
+      const open = toMin(row.dataset.o), close = toMin(row.dataset.f);
+      if (status) {
+        const fmt = (v = '') => v.replace(':', ' h ');
+        status.textContent = mins >= open && mins < close ? `Ouvert maintenant, jusqu’à ${fmt(row.dataset.f)}.` : mins < open ? `Fermé pour l’instant, ouverture à ${fmt(row.dataset.o)}.` : 'Fermé pour aujourd’hui, rouvre demain à 11 h 00.';
+      }
+    }
+  }
+</script>

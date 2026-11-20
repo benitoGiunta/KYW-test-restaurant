@@ -6,7 +6,7 @@
 - **Files** · create : tout `sites/champs-elysees-legacy/` · edit : aucun · delete : aucun
 - **Shape** · Photographic (kept), empreinte `Sentient 300 | Hanken Grotesk | Hairline rules | Hairline outline button | Full-bleed photograph and matted print | No reveal` ; draw ffbbdc : Letter écarté (aucun texte à la première personne prouvé), Counter écarté (aucune disponibilité réelle à afficher, Zenchef reste externe)
 - **Theme** · Atelier, dealt 1/3, seed `restaurant-namur-brasserie-bistro-0e55·e343fe38·2026-11-20·r0` ; écartés : Vellum (blackletter contraire à l’esprit art déco bistro), Bloom (grille d’outil générative, interdit la couche terracotta que le client emploie en touche) ; signal vert forêt du logo lu sur les captures (`#2a4934`, `#2a532e`), jamais de mémoire
-- **Chrome** · nav : bandeau d’infos au-dessus d’une barre (rétractation en phase 2) · footer : mast
+- **Chrome** · nav : bandeau d’infos au-dessus d’une barre (forme « banner over bar », le bandeau défile hors écran par `position: sticky; top: -34px`, la barre reste, aucun JS) ; menu `<dialog>`-like par Popover API sous 60rem · footer : mast
 - **Hero** · Poster (kept) : photo de salle pleine largeur, plaque de carte coton en bas à gauche, une phrase, deux actions
 - **Signature** · la salle dressée sous la plaque de carte, un seul signal vert
 - **Sections** · Hero · À propos (Split) · La carte (Rows) · Galerie (Bento) · Fêtes patronales (Band) · Heures d’ouverture (Schedule) · Réservations et adresse (Facts) · Footer (mast)
@@ -41,4 +41,31 @@ Voir `src/styles/tokens.css` (palette Atelier, `--color-accent` vert forêt, éc
 - [x] 3. Stamp et critique en tête de CSS · preuve : `src/styles/page.css:1-7`
 - [x] 4. Deux comps construits et choisis · preuve : `comp.md`, `.hallmark/comps/c1.png`, `c2.png`
 - [x] 5. Aucun tiret cadratin, noindex, KywFooter sur les 4 routes · preuve : grep du build (4/4)
-- [ ] 6. sloplint `--render` sur le build : phase 2 (aucun FAIL à confirmer)
+- [x] 6. sloplint `--render --stage hero --url` sur le serveur de dev : 0 FAIL (FAIL 34 de `Base.astro` = faux positif de l'import CSS, doublé par `<style is:global>` et prouvé par `scrollWidth` 1280/1280 et 375/375) · preuve : `.logs/ce2-sloplint-hero.log`
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : grep 0 ; transitions `background-color`, `color`, `transform`, `opacity` listées (`page.css:20-24`, reveal galerie)
+- [x] 6b. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : `base.css:13` (outline 2px `--color-focus`), inset sur les champs
+- [x] 7. Fallback reduced motion sur chaque animation, contenu visible sans script (27, 62) · preuve : fin de `page.css` (`prefers-reduced-motion: reduce`), `.js .bento .photo` seulement, test `reducedMotion` opacité 1
+- [x] 17. Hero en `svh` (6a) · preuve : `.hero { min-height: clamp(560px, calc(100svh …), 1000px) }`
+- [x] 19. Sticky non superposés (56) · preuve : nav `top: -34px` (z 300), tête de rubrique `top: nav-h + 24px` (z 200), jamais deux `top: 0`
+- [x] 20. Radios-onglets gardés (53) · non applicable : aucun switcher (une seule carte)
+- [x] 21. Vidéo de fond (28a, 28b) · non applicable : aucune vidéo
+- [x] 22. Reveal sous `.js` seulement (62) · preuve : `.js .bento .photo`, script `index.astro` (IntersectionObserver, une fois)
+- [x] 23. États d'input (39a) · preuve : `.form input` hover, focus inset, invalid, disabled par bordure pointillée + couleur + curseur
+- [x] 24. Tooltip et auto-rotation (17, 18) · non applicable : ni l'un ni l'autre
+- [x] 29. Aucun faux envoi (70) · preuve : message « Rien n’a été envoyé : ce formulaire n’est pas encore relié », test navigateur
+- [x] 30. SVG décoratifs `aria-hidden` (33) · non applicable : aucun SVG
+- [x] 48. Hover : un signal, conteneur, pas sur non-interactif, pas de rebond, pas de toast (11, 12, 16) · preuve : `@media (hover: hover)` sur `.btn`, liens de nav, champs ; photos sans hover
+- [x] 49. `:active`, `:disabled`, contrôles 44 à 52 px (26b, 39b) · preuve : `.btn:active` (1px), `.btn:disabled`, `.btn` 52 px, `.nav__cta` et `.nav__toggle` 44 px, cases 44 px
+- [x] 56. Un primaire (F4) · recette unique : bouton contour fin, hover encre (empreinte « Hairline outline button ») ; aucun bouton rempli
+- [x] 58. Une recette de conteneur (plaque, tirage passe-partout), un seul reveal (galerie), aucun pattern de scroll (F8)
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : `base.css:8-9`
+- [x] 72. Responsive : breakpoints 60rem et 40rem, `(hover: hover)`, `(pointer: coarse)`, gouttière 16 px, hero téléphone empilé, menu plein écran
+
+## Phase 2 : mouvement et interactions
+
+- **Motion** · calme (caractère Atelier : fondu, déploiement unique en `--ease-out`). Un reveal : les cinq tirages de la galerie se posent un à un (opacité + 16 px, 420 ms, 80 ms d'écart, IntersectionObserver, une fois). Aucun scroll pattern, aucun auto-défilement. `scroll-behavior: smooth` seulement sous `no-preference`.
+- **Nav** · bandeau qui défile hors écran, barre collante de 76 px ; sous 60rem : Réserver + Menu, menu en Popover plein écran (liens en Sentient 25 px, 64 px de haut, fermeture au clic), repli sans Popover : liens sur deux lignes.
+- **Horaires** · jour courant (heure de Bruxelles) marqué par `aria-current="date"` et « aujourd’hui », ligne d'état d'ouverture calculée depuis le tableau ; sans script le tableau seul.
+- **Contact** · validation au blur puis à l'input, aide d'une ligne réservée, `aria-invalid` + `aria-describedby`, placeholder = format, message de non-envoi ; la réservation de l'accueil reste le lien Zenchef.
+- **Hero** · review `self` (aucun sous-agent disponible, `review-hero.md` non lu) : 3 findings (strip de papier sous le hero à 1920 : resolved ; plaque plus haute que la comp : resolved ; accent 6 % : partial, bandeau 4,2 %, le reste est la banquette teal de la photo). Comp reproduite à 1280x800 : plaque en bas à gauche, mêmes verres libres ; plus grand écart = hauteur de la plaque (lien secondaire ajouté), réduit en retirant 24 px de remplissage haut.
+- **Figure** · `margin: 0` sur `.photo` (le hero avait 40 px de marge UA : le tirage n'était pas plein cadre en phase 1).
