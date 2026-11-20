@@ -1,0 +1,11 @@
+---
+// Le double choix du menu du moment : chaque étape propose deux plats, l'un sur la moitié Phil, l'autre sur la moitié Fa.
+import { menuDuMoment } from '../data/site';
+---
+{menuDuMoment.etapes.map((e) => (
+  <div class="etape" role="group" aria-label={`${e.nom}, deux choix`}>
+    <p class="etape__nom">{e.nom}</p>
+    <div class="choix t-phil"><span class="choix__ou" aria-hidden="true">Ou bien</span><p>{e.choix[0]}</p></div>
+    <div class="choix t-fa"><span class="choix__ou" aria-hidden="true">Ou bien</span><p>{e.choix[1]}</p></div>
+  </div>
+))}

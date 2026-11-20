@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Horaires from '../components/Horaires.astro';
+import { u } from '../lib/url';
+import { site, atouts } from '../data/site';
+---
+<Base title="Réservation" description="Réserver chez PhilFa à Namur, rue de Marchovelette 21/23 : par téléphone au +32 81 22 61 11 ou en ligne. Ouvert du mardi au samedi, midi et soir." page="reservation">
+  <section class="titre-page" aria-labelledby="titre-resa">
+    <h1 class="display display--mega" id="titre-resa">Réserver</h1>
+    <p class="chapo">Du mardi au samedi, midi et soir. Deux façons de réserver une table.</p>
+  </section>
+
+  <section class="actions" aria-label="Réserver">
+    <div class="t-phil">
+      <p>Par téléphone.</p>
+      <a class="gros num" href={site.telephoneHref}>{site.telephoneLisible}</a>
+      <a class="cta" href={site.telephoneHref}>Appeler</a>
+    </div>
+    <div class="t-fa">
+      <p>En ligne, sur le site de réservation Barestho.</p>
+      <span class="gros">En ligne</span>
+      <a class="cta" href={site.reservationUrl} rel="noopener">Réserver en ligne</a>
+    </div>
+  </section>
+
+  <section class="pratique t-papier" aria-label="Informations pratiques">
+    <section aria-labelledby="t-horaires">
+      <h2 id="t-horaires">Horaires</h2>
+      <Horaires />
+      <p style="margin-top: 0.75rem; font-size: var(--t-s)">Fermé aussi le 11 novembre.</p>
+    </section>
+    <section aria-labelledby="t-acces">
+      <h2 id="t-acces">Venir</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p>Au centre-ville de Namur.</p>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+      <p>Un bon cadeau est proposé via le site de réservation.</p>
+    </section>
+    <section aria-labelledby="t-lieu">
+      <h2 id="t-lieu">Sur place</h2>
+      <ul>{atouts.map((a) => <li>{a}</li>)}</ul>
+      <p>{site.places.salle} places en salle, {site.places.terrasse} en terrasse.</p>
+      <p><a class="lien" href={u('/carte/')}>Voir la carte</a></p>
+    </section>
+  </section>
+</Base>

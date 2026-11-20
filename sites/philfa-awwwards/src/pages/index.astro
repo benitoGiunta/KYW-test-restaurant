@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Menu from '../components/Menu.astro';
+import { u } from '../lib/url';
+import { site, carte, menuDuMoment, eur } from '../data/site';
+const mini = (c: (typeof carte)[number]) => Math.min(...c.plats.flatMap((p) => p.prix.map((x) => x.v)));
+---
+<Base title="Brasserie du centre de Namur" description="PhilFa, brasserie du centre de Namur : un menu du moment à double choix à 35 et 41 euros, croquettes, tartare coupé au couteau, gibier de saison. Salle feutrée et terrasse.">
+  <section class="hero" aria-labelledby="titre-accueil">
+    <h1 class="hero__titre display display--mega" id="titre-accueil"><span class="phil-mot">Phil</span><span class="fa-mot">Fa</span><span class="sr-only"> brasserie, Namur</span></h1>
+    <div class="hero__bas">
+      <div class="hero__phil">
+        <p class="accroche">Brasserie du centre de Namur, rue de Marchovelette.</p>
+        <p><a class="cta" href={u('/reservation/')}>Réserver</a></p>
+      </div>
+      <div class="hero__fa">
+        <p class="hero__prix num">{menuDuMoment.prixDeux}&nbsp;€<small>Menu du moment, deux services</small></p>
+        <p class="accroche">Deux choix à chaque étape. Il change {menuDuMoment.rotation}.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bande" aria-label="La salle">
+    <Photo cle="tableLongue" widths={[800, 1200, 1600]} sizes="100vw" prioritaire />
+    <p class="credit">Photos : PhilFa</p>
+  </section>
+
+  <section class="decl t-papier" aria-labelledby="titre-maison">
+    <div class="wrap decl__grille">
+      <h2 class="sr-only" id="titre-maison">La maison</h2>
+      <p class="decl__texte">Ouvert depuis {site.ouvertDepuis}. Philippe Legrand et Fabian Rammeloo tiennent la maison, <em>repensée en {site.renoveEn}</em> avec son mur sombre, son velours moutarde et ses plantes.</p>
+      <ul class="chiffres" aria-label="La maison en chiffres">
+        <li><b>{site.ouvertDepuis}</b><span>Ouverture</span></li>
+        <li><b>{site.renoveEn}</b><span>Salle repensée</span></li>
+        <li><b>{site.places.salle}</b><span>Places en salle</span></li>
+        <li><b>{site.places.terrasse}</b><span>Places en terrasse</span></li>
+      </ul>
+      <p class="lien-bloc" style="grid-column: 1 / -1"><a class="lien" href={u('/histoire/')}>Lire l’histoire de la maison</a></p>
+    </div>
+  </section>
+
+  <section class="menu" aria-labelledby="titre-menu">
+    <div class="menu__tete">
+      <h2 class="display display--xl" id="titre-menu">Le double choix</h2>
+      <p class="prix"><b class="num">{menuDuMoment.prixDeux}&nbsp;€ / {menuDuMoment.prixTrois}&nbsp;€</b>Entrée et plat, ou entrée, plat et dessert. Le menu du moment change {menuDuMoment.rotation}.</p>
+    </div>
+    <Menu />
+    <div class="menu__pied">
+      <p>Menu relevé sur le site actuel de PhilFa, sa date n’est pas connue : il a pu changer depuis.</p>
+      <a class="cta" href={u('/carte/')}>Voir toute la carte</a>
+    </div>
+  </section>
+
+  <section class="mur" aria-labelledby="titre-salle">
+    <div class="mur__tete">
+      <h2 class="display display--xl" id="titre-salle">La salle</h2>
+      <p>{site.places.salle} places en salle feutrée, {site.places.terrasse} en terrasse ombragée à l’avant.</p>
+    </div>
+    <div class="mur__grille">
+      <figure class="mur__a"><Photo cle="plantes" widths={[480, 800, 1200]} sizes="(max-width: 52rem) 70vw, 40vw" /><figcaption>La table devant le mur de plantes.</figcaption></figure>
+      <figure class="mur__b"><Photo cle="terrasse" widths={[480, 800, 1200]} sizes="(max-width: 52rem) 70vw, 48vw" /><figcaption>La terrasse, à l’avant.</figcaption></figure>
+      <figure class="mur__c"><Photo cle="lampe" widths={[480, 800]} sizes="(max-width: 52rem) 50vw, 30vw" /><figcaption>Une table, sa lampe.</figcaption></figure>
+      <figure class="mur__d"><Photo cle="couloir" widths={[480, 800, 1200]} sizes="(max-width: 52rem) 70vw, 40vw" /><figcaption>La salle en longueur, vers la vitrine.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="bar" aria-labelledby="titre-bar">
+    <div class="bar__texte">
+      <h2 class="display display--xl" id="titre-bar">Le bar</h2>
+      <p>Comptoir en bois, cave à vins vitrée, hauts tabourets, étagère de rhums et de gins.</p>
+    </div>
+    <div class="bar__photos">
+      <Photo cle="cave" widths={[480, 800]} sizes="(max-width: 52rem) 50vw, 25vw" />
+      <Photo cle="etagere" widths={[480, 800]} sizes="(max-width: 52rem) 50vw, 25vw" />
+    </div>
+  </section>
+
+  <section class="index" aria-labelledby="titre-carte">
+    <div class="index__tete">
+      <h2 class="display display--xl" id="titre-carte">La carte</h2>
+      <a class="cta" href={u('/carte/')}>Toute la carte</a>
+    </div>
+    <ol>
+      {carte.map((c) => (
+        <li><a href={`${u('/carte/')}#${c.cle}`}><span class="index__titre">{c.titre}</span><span class="index__n">{c.plats.length} {c.plats.length > 1 ? 'plats' : 'plat'}</span><span class="index__prix">dès {eur(mini(c))}</span></a></li>
+      ))}
+    </ol>
+  </section>
+</Base>
