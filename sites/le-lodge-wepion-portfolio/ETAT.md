@@ -32,3 +32,8 @@
 ## Phase 3 (QA)
 - Fait : contraste pied de page, méta description, formulation « à confirmer » ; vérifications ciblées dans RAPPORT.md. Build final OK (7 pages).
 - Reste : `pnpm index`, mise à jour de `gabarits/UTILISATION.md`, commit `[publier]` (orchestrateur).
+
+## Revue passe 1 (relecteur-site) : REVUE-1.md écrite, verdict A_CORRIGER
+- Fait : lecture QA-revue1 + planche home, mesure 7 pages x 4 largeurs, balayage hero 640 à 1280, captures 1440/390 des pages absentes du QA, texte du dist confronté à donnees.json. Serveur 4617 arrêté (kill du PID noté).
+- Reste pour le réviseur : F1-1 (base.css:95 slogan coupé 768-1060), F2-1 à F2-6, F3 selon temps. Mesures utiles : scratchpad `lodge-r1-mesure.mjs`, `lodge-r1-sweep.mjs` (non versionnés).
+- Pièges : captures 390 des 5 pages non relues une à une ; prix vérifiés par échantillon.
