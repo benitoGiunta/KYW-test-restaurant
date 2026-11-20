@@ -1,0 +1,36 @@
+---
+// Pied : la phrase s'achève. Le nom, trois points, puis « et d'ailleurs » ; les infos pratiques en dessous.
+import { site, horaires, plage } from '../data/site';
+import { u } from '../lib/url';
+---
+<section class="pied" aria-label="Informations pratiques">
+  <div class="wrap">
+    <p class="pied__phrase" aria-hidden="true"><span>Be Belge</span><span class="pied__pts">…</span><span>et d’ailleurs</span></p>
+    <div class="pied__grille">
+      <div class="pied__col">
+        <h2 class="pied__titre">Venir</h2>
+        <p>{site.adresseLisible}</p>
+        <p><a class="lt" href={site.planUrl} rel="noopener" target="_blank">Ouvrir le plan<span class="sr-only"> (nouvel onglet)</span></a></p>
+      </div>
+      <div class="pied__col">
+        <h2 class="pied__titre">Horaires</h2>
+        <ul class="pied__liste">
+          {horaires.map((h) => <li><span>{h.jour}</span><span>{h.ouvert.length ? h.ouvert.map(plage).join(', ') : 'fermé'}</span></li>)}
+        </ul>
+      </div>
+      <div class="pied__col">
+        <h2 class="pied__titre">Joindre</h2>
+        <p><a class="lt" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+        <p><a class="lt" href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p><a class="lt" href={site.reseaux[0].url} rel="noopener" target="_blank">Facebook<span class="sr-only"> (nouvel onglet)</span></a></p>
+      </div>
+      <nav class="pied__nav" aria-label="Pied de page">
+        <a class="nl" href={u('/')}>Accueil</a>
+        <a class="nl" href={u('/carte/')}>La carte</a>
+        <a class="nl" href={u('/histoire/')}>Le nid</a>
+        <a class="nl" href={u('/reservation/')}>Réserver</a>
+      </nav>
+    </div>
+    <p class="pied__colophon">Photos : Be Belge… et d’ailleurs. Exploitant : {site.exploitant}, BCE {site.bce}.</p>
+  </div>
+</section>

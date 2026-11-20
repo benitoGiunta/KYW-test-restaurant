@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, horaires, plage } from '../data/site';
+---
+<Base page="reservation" title="Réserver" description="Réserver chez Be Belge… et d’ailleurs, Avenue de Marlagne 203 à Wépion : réservation en ligne, téléphone 081 47 00 95, e-mail, horaires et plan d’accès.">
+  <section class="page-tete wrap">
+    <h1 class="display page-tete__titre">Réserver<span class="pts">…</span></h1>
+    <p class="page-tete__chapo">Ouvert du mercredi au dimanche. Deux façons de nous trouver une place : en ligne ou par téléphone.</p>
+  </section>
+
+  <section class="resa wrap">
+    <div class="resa__actions">
+      <a class="btn btn--grand" href={site.reservationUrl} rel="noopener" target="_blank">Réserver en ligne<span class="sr-only"> (nouvel onglet)</span></a>
+      <a class="btn btn--ligne btn--grand" href={site.telephoneHref}>Appeler le {site.telephoneLisible}</a>
+      <p class="resa__aide">La réservation en ligne se fait sur le site du restaurant, via Zenchef.</p>
+    </div>
+    <div class="resa__infos">
+      <h2 class="pied__titre">Horaires</h2>
+      <ul class="pied__liste pied__liste--grand">
+        {horaires.map((h) => <li><span>{h.jour}</span><span>{h.ouvert.length ? h.ouvert.map(plage).join(', ') : 'fermé'}</span></li>)}
+      </ul>
+    </div>
+    <div class="resa__infos">
+      <h2 class="pied__titre">Adresse</h2>
+      <p>{site.nom}<br />{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</p>
+      <p><a class="lt" href={site.planUrl} rel="noopener" target="_blank">Ouvrir le plan<span class="sr-only"> (nouvel onglet)</span></a></p>
+      <h2 class="pied__titre">Joindre</h2>
+      <p><a class="lt" href={site.telephoneHref}>{site.telephoneLisible}</a><br /><a class="lt" href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+  </section>
+
+  <section class="mail wrap" aria-labelledby="mail-titre">
+    <h2 id="mail-titre" class="titre-l display">Écrire plutôt</h2>
+    <p>Une demande pour un groupe, une privatisation, un régime particulier : écrivez-nous. Le formulaire ouvre votre messagerie, rien n’est envoyé depuis ce site.</p>
+    <form class="mail__form" action={`mailto:${site.email}`} method="post" enctype="text/plain">
+      <label>Votre nom<input type="text" name="Nom" autocomplete="name" /></label>
+      <label>Date souhaitée<input type="text" name="Date" placeholder="Un jeudi soir, par exemple" /></label>
+      <label>Nombre de convives<input type="text" name="Convives" inputmode="numeric" /></label>
+      <label class="mail__large">Votre message<textarea name="Message" rows="4"></textarea></label>
+      <button class="btn" type="submit">Ouvrir mon e-mail</button>
+    </form>
+  </section>
+
+  <section class="resa-photo wrap"><figure><Photo cle="terrasse" sizes="(min-width: 900px) 80vw, 100vw" widths={[640, 1000, 1600]} /></figure></section>
+</Base>

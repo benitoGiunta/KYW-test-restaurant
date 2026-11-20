@@ -1,0 +1,20 @@
+---
+import { site } from '../data/site';
+import { u } from '../lib/url';
+interface Props { page?: string }
+const { page = 'page' } = Astro.props;
+const liens = [
+  { id: 'carte', href: u('/carte/'), texte: 'La carte' },
+  { id: 'histoire', href: u('/histoire/'), texte: 'Le nid' },
+  { id: 'reservation', href: u('/reservation/'), texte: 'Réserver' },
+];
+---
+<header class="tete">
+  <div class="tete__in">
+    <a class="tete__marque" href={u('/')} aria-label={`${site.nom}, accueil`}>Be Belge<span class="tete__pts" aria-hidden="true">…</span></a>
+    <nav class="tete__nav" aria-label="Principale">
+      {liens.map((l) => <a class="nl" href={l.href} aria-current={page === l.id ? 'page' : undefined}>{l.texte}</a>)}
+    </nav>
+    <a class="btn btn--tete" href={site.reservationUrl} rel="noopener" target="_blank">Réserver<span class="sr-only"> (nouvel onglet)</span></a>
+  </div>
+</header>
