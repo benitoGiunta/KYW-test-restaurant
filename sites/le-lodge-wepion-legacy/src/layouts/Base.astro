@@ -1,0 +1,58 @@
+---
+import KywFooter from '@kyw/footer';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { u, SITE } from '../data/site';
+import '../styles/page.css';
+
+interface Props { title: string; description: string; home?: boolean }
+const { title, description, home = true } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Aller au contenu</a>
+    <Nav home={home} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <div class="collant">
+      <a class="btn" href={SITE.reservation} rel="noopener">Réserver une table</a>
+    </div>
+    <KywFooter base={base} />
+    <script is:inline>
+      document.querySelectorAll('[data-carte]').forEach((root) => {
+        const tabs = [...root.querySelectorAll('[role=tab]')];
+        const panels = [...root.querySelectorAll('[role=tabpanel]')];
+        const show = (i, focus) => {
+          tabs.forEach((t, j) => { t.setAttribute('aria-selected', j === i ? 'true' : 'false'); t.tabIndex = j === i ? 0 : -1; });
+          panels.forEach((p, j) => { p.hidden = j !== i; });
+          if (focus) tabs[i].focus();
+        };
+        tabs.forEach((t, i) => {
+          t.addEventListener('click', () => show(i));
+          t.addEventListener('keydown', (e) => {
+            const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+            if (k) { e.preventDefault(); show((i + k + tabs.length) % tabs.length, true); }
+          });
+        });
+        show(0);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+---
+import { u, SITE } from '../data/site';
+interface Props { home?: boolean }
+const { home = true } = Astro.props;
+const pre = home ? '' : u('');
+const liens = [
+  { href: `${pre}#carte`, t: 'Carte' },
+  { href: `${pre}#tea-room`, t: 'Tea room' },
+  { href: `${pre}#reserver`, t: 'Réserver' },
+  { href: `${pre}#contact`, t: 'Contact' },
+];
+---
+<header class="top">
+  <p class="banner">
+    <a href={`${pre}#lieu`}>Le Lodge est au Wine &amp; More, à Erpent</a>
+  </p>
+  <div class="bar">
+    <div class="container bar__in">
+      <a class="bar__logo" href={u('')} aria-label="Le Lodge Wépion, accueil">
+        <img src={u('logo-blanc.svg')} alt="Le Lodge" width="176" height="32" />
+      </a>
+      <nav class="bar__nav" aria-label="Principale">
+        <ul>
+          {liens.map((l) => <li><a href={l.href}>{l.t}</a></li>)}
+        </ul>
+      </nav>
+      <a class="btn btn--sm" href={SITE.reservation} rel="noopener">Réserver une table</a>
+    </div>
+  </div>
+</header>

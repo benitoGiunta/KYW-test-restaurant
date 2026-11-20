@@ -1,0 +1,43 @@
+---
+import { SITE, u } from '../data/site';
+const { erpent: e, wepion: w } = SITE;
+---
+<footer class="pied" id="contact">
+  <div class="container">
+    <h2 class="pied__titre">Le Lodge</h2>
+    <div class="pied__cols">
+      <section>
+        <h3>À Erpent, pour l’instant</h3>
+        <address>
+          {e.nom}<br />{e.rue}<br />{e.ville}
+        </address>
+        <p><a href={e.telHref}>{e.tel}</a></p>
+        <p>Depuis le {e.depuis}, six jours sur sept.</p>
+      </section>
+      <section>
+        <h3>À Wépion, fermé</h3>
+        <address>
+          {w.rue}<br />{w.ville}
+        </address>
+        <p><a href={w.telHref}>{w.tel}</a></p>
+        <p><a href={SITE.carteHors} rel="noopener">Itinéraire vers Wépion</a></p>
+      </section>
+      <section>
+        <h3>Écrire et réserver</h3>
+        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+        <p><a href={SITE.reservation} rel="noopener">Réserver sur Barestho</a></p>
+      </section>
+      <section>
+        <h3>Suivre le Lodge</h3>
+        <ul class="pied__liens">
+          <li><a href={SITE.instagram} rel="noopener">Instagram</a></li>
+          <li><a href={SITE.facebook} rel="noopener">Facebook</a></li>
+        </ul>
+      </section>
+    </div>
+    <p class="pied__fin">
+      Le Lodge, BCE {SITE.bce}. <a href={u('cookies/')}>Cookies</a>.
+      <span data-credits>Photographies : Le Lodge, site d’origine.</span>
+    </p>
+  </div>
+</footer>

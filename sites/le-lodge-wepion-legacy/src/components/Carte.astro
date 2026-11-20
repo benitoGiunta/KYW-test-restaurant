@@ -1,0 +1,28 @@
+---
+import { PANNEAUX, eur } from '../data/site';
+---
+<div class="carte" data-carte>
+  <div class="seg" role="tablist" aria-label="Parties de la carte">
+    {PANNEAUX.map((p, i) => (
+      <button type="button" role="tab" id={`t-${p.id}`} aria-controls={`p-${p.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{p.titre}</button>
+    ))}
+  </div>
+  {PANNEAUX.map((p, i) => (
+    <div class="carte__panel" role="tabpanel" id={`p-${p.id}`} aria-labelledby={`t-${p.id}`} data-first={i === 0 ? '' : undefined}>
+      {p.cats.map((c) => (
+        <section class="rows" aria-labelledby={`c-${p.id}-${c.categorie.length}-${c.plats.length}`}>
+          <h3 id={`c-${p.id}-${c.categorie.length}-${c.plats.length}`}>{c.categorie}</h3>
+          <ul>
+            {c.plats.map((d) => (
+              <li class="row">
+                <span class="row__nom">{d.nom}</span>
+                {d.prix !== null && <span class="row__prix num">{eur(d.prix)}</span>}
+                {d.description && <span class="row__desc">{d.description}</span>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  ))}
+</div>

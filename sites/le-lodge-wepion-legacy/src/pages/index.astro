@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Carte from '../components/Carte.astro';
+import { SITE, ICI, GALERIE, TEAROOM, eur, u } from '../data/site';
+const { erpent: e, wepion: w } = SITE;
+---
+<Base
+  title="Le Lodge Wépion, brasserie et tea-room en bord de Meuse"
+  description="Brasserie, restaurant et tea-room au bord de la Meuse, à Wépion. L’équipe vous reçoit à Erpent, au Wine & More, pendant la reconstruction."
+>
+  {/* Hallmark · reworded "Bienvenue au Lodge Wépion. Votre brasserie avec une vue sur la Meuse" to "Brasserie et tea-room sur la Meuse" · gate 58 */}
+  <section class="hero" aria-labelledby="h-hero">
+    <Fig id="facade" class="hero__img" sizes="100vw" priority pos="50% 60%" />
+    <div class="container hero__in">
+      <div class="plate">
+        <h1 id="h-hero">Brasserie et tea-room sur la Meuse</h1>
+        <p class="lead">L’équipe vous reçoit à Erpent en attendant la réouverture à Wépion.</p>
+        <div class="actions">
+          <a class="btn" href={SITE.reservation} rel="noopener">Réserver une table</a>
+          <a class="link" href="#carte">Voir la carte</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="lieu" aria-labelledby="h-lieu">
+    <div class="container">
+      <h2 id="h-lieu">Où nous trouver aujourd’hui</h2>
+      <div class="lieux">
+        <article class="lieu lieu--ouvert">
+          <h3>À Erpent, au {e.nom}</h3>
+          <dl>
+            <div><dt>Adresse</dt><dd>{e.rue}, {e.ville}</dd></div>
+            <div><dt>Depuis le</dt><dd>{e.depuis}</dd></div>
+            <div><dt>Ouvert</dt><dd>Six jours sur sept</dd></div>
+            <div><dt>Horaires</dt><dd><span class="fill" data-fill="horaires">horaires à confirmer</span></dd></div>
+            <div><dt>Téléphone</dt><dd><a href={e.telHref}>{e.tel}</a></dd></div>
+          </dl>
+          <div class="actions">
+            <a class="btn" href={SITE.reservation} rel="noopener">Réserver une table</a>
+            <a class="link" href={e.telHref}>Appeler</a>
+          </div>
+        </article>
+        <article class="lieu lieu--ferme">
+          <h3>À Wépion, fermé</h3>
+          <dl>
+            <div><dt>Adresse</dt><dd>{w.rue}, {w.ville}</dd></div>
+            <div><dt>Fermé depuis</dt><dd>l’incendie du 21 mai 2026</dd></div>
+            <div><dt>Réouverture</dt><dd>envisagée fin 2026, voire début 2027 <span class="fill" data-fill="date">date à confirmer</span></dd></div>
+            <div><dt>Avant l’incendie</dt><dd>{w.horaires}</dd></div>
+          </dl>
+          <a class="link" href={SITE.carteHors} rel="noopener">Itinéraire vers Wépion</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--carte" id="carte" aria-labelledby="h-carte">
+    <div class="container">
+      <div class="entete">
+        <h2 id="h-carte">La carte du Lodge</h2>
+        <p class="lead">Carte de saison, une table = une addition.</p>
+      </div>
+      <Carte />
+    </div>
+  </section>
+
+  <section class="band-photo" aria-labelledby="h-terrasse">
+    <Fig id="terrasse" class="band-photo__img" sizes="(min-width: 90rem) 1312px, 100vw" pos="50% 58%" ratio="21 / 9" legende="La terrasse sous store, face à la Meuse et aux rochers" />
+    <div class="container entete">
+      <h2 id="h-terrasse">Une terrasse sur la Meuse</h2>
+      <p class="lead">À Wépion, la salle et la terrasse donnent sur la Meuse et sur la vallée mosane.</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-ici">
+    <div class="container">
+      <h2 id="h-ici">Ce qui vient d’ici</h2>
+      <table class="index">
+        <caption class="visually-hidden">Produits cités sur la carte et plat qui les porte</caption>
+        <thead><tr><th scope="col">Produit</th><th scope="col">Au menu</th><th scope="col" class="num">Prix</th></tr></thead>
+        <tbody>
+          {ICI.map((r) => (
+            <tr><th scope="row">{r.produit}</th><td>{r.plat}</td><td class="num">{r.prix}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec sec--galerie" aria-labelledby="h-galerie">
+    <div class="container">
+      <h2 id="h-galerie">La salle et les assiettes</h2>
+    </div>
+    <ul class="rail" aria-label="Photographies du Lodge" tabindex="0">
+      {GALERIE.map((g) => (
+        <li><Fig id={g.id} sizes="(min-width: 60rem) 320px, 70vw" legende={g.cap} /></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="band-ink" id="tea-room" aria-labelledby="h-tea">
+    <div class="container">
+      <div class="entete">
+        <h2 id="h-tea">Le tea-room de l’après-midi</h2>
+        <p class="lead">L’après-midi, la brasserie devient tea-room : desserts faits maison, crêpes, gaufres et glaces.</p>
+      </div>
+      <div class="tea">
+        {TEAROOM.map((c) => (
+          <section class="rows rows--sombre" aria-label={c.categorie}>
+            <h3>{c.categorie}</h3>
+            <ul>
+              {c.plats.map((d) => (
+                <li class="row">
+                  <span class="row__nom">{d.nom}</span>
+                  <span class="row__prix num">{eur(d.prix)}</span>
+                  {d.description && <span class="row__desc">{d.description}</span>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--fin" id="reserver" aria-labelledby="h-res">
+    <div class="container fin">
+      <div>
+        <h2 id="h-res">Réservez votre table</h2>
+        <p class="lead">Réservation en ligne sur Barestho, ou par téléphone au {e.tel}.</p>
+      </div>
+      <div class="actions">
+        <a class="btn" href={SITE.reservation} rel="noopener">Réserver une table</a>
+        <a class="link" href={e.telHref}>Appeler le {e.tel}</a>
+      </div>
+    </div>
+  </section>
+</Base>
