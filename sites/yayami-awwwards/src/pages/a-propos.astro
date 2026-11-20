@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
-import { site, services } from '../data/site';
+import { u } from '../lib/url';
+import { site } from '../data/site';
 ---
 <Base page="a-propos" title="La maison" description="Yayami Sushi, restaurant japonais au 15 rue de Bruxelles à Namur : spécialités, horaires, remise à l’emporter, zone de livraison et moyens de paiement.">
   <section class="entete">
@@ -14,26 +15,11 @@ import { site, services } from '../data/site';
     <div class="wrap cols">
       <div class="maison__texte">
         <p>Yayami Sushi sert des nigiri, des maki, des temaki et des chirashi, mais aussi des plats chauds : nouilles udon sautées, riz japonais, gyoza grillés, yakitori et tempura de crevettes.</p>
-        <p>La maison est ouverte tous les jours, à midi et le soir. On y commande à emporter, avec une remise de {site.emporterRemise}&nbsp;%, ou en livraison, gratuite dès {site.livraison.seuil}&nbsp;€.</p>
+        <p>La maison est ouverte tous les jours, à midi et le soir. Horaires, livraison et paiement : voir la page <a class="lien" href={u('/reservation/')}>Commander</a>.</p>
       </div>
       <div class="maison__photos">
         <figure><Photo cle="chirashi" widths={[480, 800]} sizes="(max-width: 52rem) 100vw, 40vw" /></figure>
         <figure data-reveal="clip"><Photo cle="tempura" widths={[480, 800]} sizes="(max-width: 52rem) 100vw, 40vw" /></figure>
-      </div>
-      <div class="maison__faits">
-        <section aria-labelledby="f-horaires">
-          <h2 id="f-horaires" class="titre-m">Horaires</h2>
-          <ul>{services.map((s) => <li class="chiffre">Tous les jours, {s.libelle.toLowerCase()}</li>)}</ul>
-        </section>
-        <section aria-labelledby="f-zone">
-          <h2 id="f-zone" class="titre-m">Livraison</h2>
-          <p class="petit">Gratuite dès {site.livraison.seuil}&nbsp;€ dans les codes postaux :</p>
-          <p class="chiffre">{site.livraison.codes.join(', ')}</p>
-        </section>
-        <section aria-labelledby="f-paiement">
-          <h2 id="f-paiement" class="titre-m">Paiement</h2>
-          <ul>{site.paiements.map((p) => <li>{p}</li>)}</ul>
-        </section>
       </div>
     </div>
   </section>

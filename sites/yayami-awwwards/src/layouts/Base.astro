@@ -12,7 +12,7 @@ interface Props { title?: string; description?: string; page?: string }
 const { title, description = site.description, page = 'page' } = Astro.props;
 const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Restaurant japonais à Namur, sushi à emporter`;
 const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
-const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const canonical = new URL(page === '404' ? Astro.url.pathname.replace(/404\/$/, '404.html') : Astro.url.pathname, siteUrl).href;
 const ogImage = new URL(asset('/og.png'), siteUrl).href;
 const jsonLd = {
   '@context': 'https://schema.org',
