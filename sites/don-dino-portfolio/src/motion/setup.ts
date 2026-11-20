@@ -3,7 +3,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Draggable } from 'gsap/Draggable';
-import { setLoaderFormat, setLoaderExit, setTransition, ease, onPage, prefersReducedMotion, isMobile } from '../engine';
+import { setLoaderFormat, setLoaderExit, setTransition, ease, onPage, prefersReducedMotion, isMobile, scrollToTarget } from '../engine';
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -24,7 +24,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [marquee(), heroObjets(intro), table(), avis()];
+    const cleanups = [marquee(), heroObjets(intro), table(), avis(), carteFiltre()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -37,9 +37,11 @@ function marquee() {
   const horaires = JSON.parse(root.dataset.horaires || '[]') as { j: string; c: { ouverture: string; fermeture: string }[] }[];
   const parJour = (j: string) => horaires.find((h) => h.j === j);
   const peindre = () => {
-    const d = new Date();
-    const hhmm = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-    const auj = parJour(jours[d.getDay()]);
+    // Heure et jour de Bruxelles, quel que soit le fuseau du visiteur.
+    const p = Object.fromEntries(new Intl.DateTimeFormat('fr-BE', { timeZone: 'Europe/Brussels', weekday: 'long', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+    const hhmm = `${p.hour}:${p.minute}`;
+    const jour = Math.max(0, jours.indexOf(String(p.weekday).toLowerCase()));
+    const auj = parJour(jours[jour]);
     let texte = 'Horaires du jour';
     let etat = '';
     const ouvert = auj?.c.find((c) => c.ouverture <= hhmm && hhmm < c.fermeture);
@@ -48,7 +50,7 @@ function marquee() {
     else if (suivant) { texte = `Fermé en ce moment, ouverture à ${suivant.ouverture}`; etat = 'is-ferme'; }
     else {
       for (let k = 1; k <= 7; k++) {
-        const h = parJour(jours[(d.getDay() + k) % 7]);
+        const h = parJour(jours[(jour + k) % 7]);
         if (h && h.c.length) { texte = `Fermé aujourd'hui, prochain service ${h.j} à ${h.c[0].ouverture}`; etat = 'is-ferme'; break; }
       }
     }
@@ -127,6 +129,7 @@ function table() {
   if (!scene || isMobile() || getComputedStyle(scene).display === 'none') return () => {};
   const items = [...scene.querySelectorAll<HTMLElement>('[data-tirage], [data-obj]')];
   const cleanups: (() => void)[] = [];
+  cleanups.push(rangerTable(scene, items));
   if (prefersReducedMotion()) {
     scene.querySelectorAll<HTMLElement>('[data-tirage]').forEach((t) => cleanups.push(saisissable(t, scene)));
     return () => cleanups.forEach((c) => c());
@@ -150,4 +153,60 @@ function avis() {
   const st = gsap.to(vars, { flou: 0, ease: 'none', onUpdate: () => mot?.style.setProperty('--flou', `${vars.flou.toFixed(1)}px`), scrollTrigger: { trigger: root, start: 'top 85%', end: 'center center', scrub: 0.6 } });
   const tw = gsap.from(cartes, { y: 120, rotation: (i) => (i % 2 ? 10 : -10), autoAlpha: 0, duration: 1, ease: ease.out, stagger: 0.1, scrollTrigger: { trigger: root, start: 'top 70%', once: true } });
   return () => { st.kill(); tw.kill(); };
+}
+
+/** « Ranger la table » : le bouton apparaît dès qu'un tirage a bougé et le ramène à sa place en rebondissant. */
+function rangerTable(scene: HTMLElement, items: HTMLElement[]) {
+  const bouton = scene.parentElement?.querySelector<HTMLButtonElement>('[data-table-reset]');
+  if (!bouton) return () => {};
+  const bouge = () => items.some((el) => Math.abs(Number(gsap.getProperty(el, 'x'))) > 2 || Math.abs(Number(gsap.getProperty(el, 'y'))) > 2);
+  const maj = () => { bouton.hidden = !bouge(); };
+  const tard = () => window.setTimeout(maj, 700);
+  const clic = () => {
+    gsap.to(items, { x: 0, y: 0, duration: prefersReducedMotion() ? 0.01 : 0.9, ease: 'back.out(1.5)', stagger: 0.03, onComplete: () => { items.forEach((el) => Draggable.get(el)?.update()); bouton.hidden = true; scene.querySelector<HTMLElement>('[data-tirage]')?.focus({ preventScroll: true }); } });
+  };
+  scene.addEventListener('pointerup', tard);
+  scene.addEventListener('keyup', tard);
+  bouton.addEventListener('click', clic);
+  return () => { scene.removeEventListener('pointerup', tard); scene.removeEventListener('keyup', tard); bouton.removeEventListener('click', clic); bouton.hidden = true; };
+}
+
+/** Carte : recherche tolérante aux accents, pastilles de rubriques, compte de plats annoncé, état « aucun résultat ». */
+function carteFiltre() {
+  const outils = document.querySelector<HTMLElement>('[data-carte-filtre]');
+  if (!outils) return () => {};
+  const q = outils.querySelector<HTMLInputElement>('[data-carte-q]')!;
+  const effacer = outils.querySelector<HTMLButtonElement>('[data-carte-effacer]')!;
+  const compte = outils.querySelector<HTMLElement>('[data-carte-compte]')!;
+  const plats = [...document.querySelectorAll<HTMLElement>('[data-plat]')];
+  const cats = [...document.querySelectorAll<HTMLElement>('[data-cat]')];
+  const note = document.querySelector<HTMLElement>('[data-cat-note]');
+  const norm = (t: string) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const textes = plats.map((p) => norm(`${p.closest('[data-cat]')?.querySelector('h3')?.textContent ?? ''} ${p.textContent ?? ''}`));
+  const filtrer = () => {
+    const mots = norm(q.value).split(/\s+/).filter(Boolean);
+    let n = 0;
+    plats.forEach((p, i) => { const ok = mots.every((m) => textes[i].includes(m)); p.hidden = !ok; if (ok) n++; });
+    cats.forEach((c) => { c.hidden = !c.querySelector('[data-plat]:not([hidden])'); });
+    if (note) note.hidden = !!mots.length && !!note.nextElementSibling && ![...note.nextElementSibling.querySelectorAll('[data-plat]')].some((p) => !(p as HTMLElement).hidden);
+    effacer.hidden = !q.value;
+    compte.classList.toggle('is-vide', n === 0);
+    compte.textContent = n === 0 ? `Aucun plat ne correspond à « ${q.value.trim()} ». Essayez un seul mot, par exemple « poulet ».` : mots.length ? `${n} plat${n > 1 ? 's' : ''} trouvé${n > 1 ? 's' : ''}.` : '';
+  };
+  const effacerClic = () => { q.value = ''; filtrer(); q.focus(); };
+  const aller = (e: Event) => {
+    const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-rub]');
+    if (!a) return;
+    const cible = document.getElementById(a.getAttribute('href')!.slice(1));
+    if (!cible) return;
+    e.preventDefault();
+    if (q.value) { q.value = ''; filtrer(); }
+    scrollToTarget(Math.max(0, cible.getBoundingClientRect().top + window.scrollY - 96));
+    outils.querySelectorAll('a[data-rub]').forEach((x) => x.removeAttribute('aria-current'));
+    a.setAttribute('aria-current', 'true');
+  };
+  q.addEventListener('input', filtrer);
+  effacer.addEventListener('click', effacerClic);
+  outils.addEventListener('click', aller);
+  return () => { q.removeEventListener('input', filtrer); effacer.removeEventListener('click', effacerClic); outils.removeEventListener('click', aller); };
 }

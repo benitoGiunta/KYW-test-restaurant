@@ -7,6 +7,8 @@ const g = guinguette;
 const picto = (cat: string) => g.pictos.find((p) => cat.startsWith(p.categorie))?.picto ?? 'fourchette';
 const photos = ['/photos/pizza-planche.webp', '/photos/spaghetti.webp', '/photos/moules-gratinees.webp', '/photos/escalope-salade.webp'].map(photoDe);
 const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const slug = (t: string) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const rubriques = [...site.carte, ...g.carteExemple].map((c) => c.categorie);
 ---
 <Base title="La carte" description={`La carte et les formules de ${site.nom} à ${site.adresse.commune} : pizzas, pâtes, gratinés, viandes, poissons. Prix en euros.`}>
   <section class="hero hero--page wrap" data-hero>
@@ -23,13 +25,26 @@ const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
     <div class="wrap">
       <div class="carte">
         <h2 class="sr-only">Le menu</h2>
+        <div class="carte__outils" data-carte-filtre>
+          <nav class="carte__rubriques" aria-label="Aller à une rubrique">
+            {rubriques.map((r) => <a class="pastille" href={`#rub-${slug(r)}`} data-rub>{r}</a>)}
+          </nav>
+          <div class="carte__recherche">
+            <label for="carte-q" class="meta">Chercher un plat</label>
+            <div class="carte__champ">
+              <input id="carte-q" type="search" name="q" autocomplete="off" placeholder="Pizza, scampi, tiramisu…" data-carte-q />
+              <button type="button" class="pastille" data-carte-effacer hidden>Effacer</button>
+            </div>
+          </div>
+          <p class="carte__compte" role="status" aria-live="polite" data-carte-compte></p>
+        </div>
         <div class="carte__grille">
           {site.carte.map((c) => (
-            <div>
+            <div data-cat id={`rub-${slug(c.categorie)}`}>
               <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie}</h3>
               <ul role="list">
                 {c.plats.map((p) => (
-                  <li class="plat">
+                  <li class="plat" data-plat>
                     <span class="plat__nom">{p.nom}{p.placeholder && <span class="illu">exemple</span>}{p.description && <span class="plat__desc">{p.description}</span>}</span>
                     <span class="plat__points" aria-hidden="true"></span>
                     {p.prix && <span class="plat__prix">{p.prix}</span>}
@@ -39,14 +54,14 @@ const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
             </div>
           ))}
         </div>
-        <p class="bandeau-ex" style="margin-top: calc(var(--u) * 5)">Desserts et boissons : exemples illustratifs, absents de la carte en ligne</p>
+        <p class="bandeau-ex" style="margin-top: calc(var(--u) * 5)" data-cat-note>Desserts et boissons : exemples illustratifs, absents de la carte en ligne</p>
         <div class="carte__grille">
           {g.carteExemple.map((c) => (
-            <div>
+            <div data-cat id={`rub-${slug(c.categorie)}`}>
               <h3 class="cat__titre"><Objet id={picto(c.categorie)} />{c.categorie}</h3>
               <ul role="list">
                 {c.plats.map((p) => (
-                  <li class="plat">
+                  <li class="plat" data-plat>
                     <span class="plat__nom">{p.nom}<span class="illu" aria-label="exemple">*</span>{p.vege && <span class="vege">végé</span>}<span class="plat__desc">{p.description}</span></span>
                     <span class="plat__points" aria-hidden="true"></span>
                     <span class="plat__prix">{p.prix}</span>
