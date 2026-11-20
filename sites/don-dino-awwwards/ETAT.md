@@ -1,4 +1,4 @@
-# ETAT : Don Dino, variante awwwards, phase 2 (construction-2) terminée
+# ETAT : Don Dino, variante awwwards, phase 3 (QA) terminée
 
 ## Fait (phase 1)
 - Concept « Quatorze services », DESIGN.md (checklist 1 à 18), scaffold, données réelles (115 plats), 5 pages statiques, rideau, menu mobile.
@@ -19,3 +19,7 @@
 - La ligne d'état suppose les horaires réguliers (jours fériés et fermetures exceptionnelles inconnus) : à signaler dans RAPPORT.md comme hypothèse.
 - Les captures d'élément Playwright (`locator.screenshot` plus haut que la fenêtre) montrent le lien d'évitement fixe : artefact de capture, pas un défaut (absent de la capture de fenêtre).
 - Données (phase 1) : « 20 pizzas dès 9,30 € » (site) contre 26 pizzas de 10,50 à 17,80 € (carte PDF, retenue) ; note Google non affichée ; orthographes du PDF conservées ; photo 09 jamais nommée Dino.
+
+## Phase 3 (QA)
+- Corrigé : contraste `.tete__sept`, aria-label du logo ; axe accueil et 404.html à 0 violation ; build et audit 0 FAIL. Voir RAPPORT.md.
+- Reste : cible tactile 404, jury indépendant non fait, `idleMotion` false assumé.
