@@ -62,7 +62,7 @@ Produire un message de lancement : `python3 scripts/message-lancement.py <campag
 | Campagne | Objet | Versions | État |
 | --- | --- | --- | --- |
 | `test-1` | premier test des agents finalisés sur 10 nouveaux restaurants (+10 en réserve de file), mode figé, toute la limite hebdomadaire jusqu'au 20/11 10:30 UTC | développement A6, correction A4 | terminée (12 restaurants, `data/usage/test-1/BILAN.md`) |
-| `test-2` | suite du lot 2 : les 8 restaurants non lancés en test-1, mode figé, arrêt à tout fini ou 26 % de la limite hebdomadaire | développement A7, correction A5 | en cours (lancée le 20/11) |
+| `test-2` | suite du lot 2 : les 8 restaurants non lancés en test-1, mode figé, arrêt à tout fini ou 26 % de la limite hebdomadaire | développement A7, correction A5 | terminée (8 restaurants, `data/usage/test-2/BILAN.md`) |
 
 ## Démarrer une campagne depuis une nouvelle conversation
 
