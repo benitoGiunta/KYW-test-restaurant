@@ -1,8 +1,9 @@
 /* Hallmark · shape: Photographic (kept, macrostructure 08, multipage kept) · genre: editorial · theme: Solstice (deal 1/3, seed restaurant-namur-refined-seasonal-57d8·72123ad0·2026-11-20·r0) · redesign: full
  * hero: Poster (kept, full-bleed plate) · nav: edge-aligned bar (draw: floating pill, swapped) · footer: colophon block · imagery: client photographs (13 of 25) · signature: the lace-tuile plate, full bleed, headline on its shaded side · solstice: long-light
- * axes: light/high-contrast-serif/warm · posture: restrained · contrast: unchecked, phase 2 · fold: unchecked, phase 2 · draw: f665ca · job: book · comp: 2 built, no key · c1 chosen · v2.0.0 */
+ * axes: light/high-contrast-serif/warm · posture: restrained · contrast: 4.5:1 corps, 3:1 anneaux (axe 0 serious hors pied KYW) · fold: lu depuis .hallmark/shots · draw: f665ca · job: book · comp: 2 built, no key · c1 chosen · v2.0.0 */
 /* Hallmark · pre-emit critique: P ok H ok E ok S ok R ok V ok (self, no render yet) · weakest: E (menus rows are close to a default list; kept because the menu is the offer, rows carry the price column and a hair rule) */
 /* Hallmark · waive 8 · hero then menus then chef then quote is the client's own sequence · compositions are new (Poster, Rows, 5/7 split, ink band, Schedule), see DESIGN.md */
+/* Hallmark · waive 77 · pages internes : l’en-tête est un titre de page sur deux colonnes et le contenu qui suit porte la masse (menus en lignes, formulaire, textes sur 5/7) ; aucune image d’illustration n’est inventée pour épaissir une bande de titre */
 /* Hallmark · dropped · newsletter checkbox of the reservation form (gate 85) · dropped · page "On recrute" (one dated job offer, kept as a news row) · dropped · cookie banner (no cookie is set) */
 /* Hallmark · reworded "La Gastronomie est l’Art d’utiliser la nourriture pour créer le Bonheur" to "La gastronomie est l’art d’utiliser la nourriture pour créer le bonheur" · sentence case */
 @import url("./tokens.css");
@@ -19,7 +20,7 @@ main { display: block; }
 .cols { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); align-items: start; }
 .stack > * + * { margin-top: var(--space-lg); }
 .skip { position: absolute; left: var(--space-md); top: 0; transform: translateY(-150%); background: var(--color-ink); color: var(--color-paper); padding: var(--space-sm) var(--space-md); z-index: var(--z-modal); }
-.skip:focus { transform: none; top: var(--space-md); outline-color: var(--color-gold-2); }
+.skip:focus { transform: none; top: var(--space-md); outline-color: var(--color-focus); outline-offset: 3px; }
 
 /* Boutons : huit états. Un primaire vermillon rempli par page, un secondaire en contour, un lien souligné */
 .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 var(--space-lg); border-radius: var(--radius-pill); background: var(--color-accent); color: var(--color-accent-ink); font-family: var(--font-outlier); font-weight: 600; font-size: var(--text-md); text-decoration: none; border: var(--rule-bar) solid var(--color-accent); cursor: pointer; transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out); }
@@ -48,7 +49,7 @@ main { display: block; }
 .nav__links a[aria-current="page"] { border-bottom-color: var(--color-gold); }
 .nav__links a:active { color: var(--color-accent); }
 @media (hover: hover) { .nav__links a:hover { border-bottom-color: var(--color-gold); } }
-.nav__tel { font-family: var(--font-outlier); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.nav__tel { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-outlier); font-weight: 600; text-decoration: none; white-space: nowrap; }
 .nav__end { display: flex; align-items: center; gap: var(--space-lg); }
 .nav__toggle, .nav__panel { display: none; }
 @media (max-width: 67.5rem) {
@@ -94,7 +95,10 @@ main { display: block; }
 
 /* En-tête de page interne */
 .pagehead { padding-block: var(--space-3xl) var(--space-xl); border-top: var(--rule-bar) solid var(--color-ink); }
-.pagehead .lead { margin-top: var(--space-lg); }
+.pagehead .container { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-xl) var(--gap-columns, 32px); align-items: end; }
+.pagehead .container.stack { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-lg); }
+.pagehead .lead { margin-top: 0; }
+@media (max-width: 60rem) { .pagehead .container { grid-template-columns: minmax(0, 1fr); } .pagehead .lead { margin-top: var(--space-lg); } }
 
 /* Lignes : titre, description, prix à droite */
 .rows { margin: 0; padding: 0; list-style: none; border-top: var(--rule-bar) solid var(--color-ink); }

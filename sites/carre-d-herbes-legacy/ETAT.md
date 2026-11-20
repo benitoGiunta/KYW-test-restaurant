@@ -1,4 +1,4 @@
-# ETAT · carre-d-herbes · legacy · construction phase 2/3 (20/11/2026)
+# ETAT · carre-d-herbes · legacy · construction phase 3/3 (QA) (20/11/2026)
 
 ## Fait (phases 1 et 2)
 - Phase 1 : audit, design, 9 pages, données réelles, 13 photos (voir `DESIGN.md`, `AUDIT.md`).
@@ -16,3 +16,7 @@
 - Lien du pied KYW (24 px) : paquet partagé, non modifiable.
 - Dev server tué (PID 8596). Le reveal met `data-reveal` sur les `.section > .container` sous le premier écran ; une capture pleine page sans défilement les verrait cachées jusqu'au premier scroll/resize (le défilement par à-coups fonctionne).
 - Hypothèse : le formulaire est le formulaire de contact de l'original (réservation par téléphone) ; couverts en `select` 1 à 12 et « Plus de 12 ».
+
+## Phase 3 (QA)
+- Corrigé : anneau du lien d'évitement (26a), en-têtes de page sur deux colonnes, cible du téléphone du bandeau 44 px, grille neutralisée pour la 404. Sloplint : 1 FAIL faux positif (34), REFLEX 77 waived. Build final OK, dist commité. RAPPORT.md écrit.
+- Reste : finish review par sous-agent, og.jpg, JSON-LD sans GPS. Serveur de dev tué (processus 17392).

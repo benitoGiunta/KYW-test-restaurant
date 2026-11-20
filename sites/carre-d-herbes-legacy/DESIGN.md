@@ -14,7 +14,7 @@
 - **Sections** · Hero · Menus (Rows) · Chef (5/7) · Citation (bande encre) · Nom du lieu (5/7 + parc) · Actualités (Rows) · Réserver + horaires (Schedule).
 - **Material** · real : photos du client (13 retenues sur 25), carte, horaires, avis ; absent : GPS (pas de carte), e-mail, note Google, nombre d’avis. Aucune donnée fictive dans cette phase.
 - **Comp** · deux comps du premier écran (c1 texte en bas à gauche, c2 texte en haut à gauche), c1 retenu.
-- **Sweep** · phase 3.
+- **Sweep** · phase 3 (20/11/2026) : sloplint --render --kept sur 4 URLs : 1 FAIL (34, faux positif, `overflow-x: clip` posé dans base.css), 0 REFLEX ouvert (77 waived pour les en-têtes de page), anneau du lien d'évitement corrigé (26a), kept : avant 804 FAIL / 216 REFLEX, après 1 FAIL / 0 ouvert.
 
 ## Approche
 
