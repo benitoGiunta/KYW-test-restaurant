@@ -25,3 +25,8 @@
 ## Phase 3 (QA)
 - QA lue (QA-build.md, planches accueil et 404), 404 réelle vérifiée (0 violation axe, 0 erreur) ; aucune correction requise ; build final vert ; RAPPORT.md écrit. Serveur 4533 arrêté.
 - Reste : report défauts dans gabarits/velours (protégé), UTILISATION.md, `pnpm index`, commit `[publier]`.
+
+## Relecture passe 2 (relecteur-site, 20/11)
+- Fait : REVUE-2.md écrit, verdict PUBLIABLE (8 corrections de REVISION-1 vérifiées, 0 F0/F1/F2, 6 F3 résiduels). Serveur 4617 arrêté.
+- Reste : F3 (format « 19 h 00 », eyebrows, « Accueil familial », chiffre filigrane à 390) si on veut polir ; `pnpm index` et commit `[publier]` en fin de restaurant.
+- Pièges : QA-revue2.md absent (shoot « browser closed »), dist réutilisé sans rebuild.
