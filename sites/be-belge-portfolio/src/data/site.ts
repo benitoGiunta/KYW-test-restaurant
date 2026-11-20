@@ -47,7 +47,7 @@ const soir = { ouverture: '19:00', fermeture: '20:30' };
 export const site: Restaurant = {
   slug: 'be-belge',
   nom: "Be Belge… et d'ailleurs",
-  baseline: "Cuisine belge et de saison, avec un peu d'ailleurs, avenue de Marlagne à Wépion.", // baseline rédigée d'après le nom et la description des listings (à confirmer)
+  baseline: "Cuisine belge et de saison, avec un peu d'ailleurs, avenue de Marlagne à Wépion.", // baseline rédigée d'après le nom et la description des listings
   description:
     "Be Belge… et d'ailleurs, restaurant à Wépion (Namur) : carte de l’été 2026 dès 57 €, jardin, terrasse, salle de pierre. Ouvert du mercredi au dimanche.",
   url: 'https://bebelgeetdailleurs.be',
