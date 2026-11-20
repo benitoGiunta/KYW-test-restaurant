@@ -2,24 +2,26 @@
 import Base from '../layouts/Base.astro';
 import { chapitres, NOMBRE_LIGNES } from '../data/carte';
 import { euro } from '../lib/format';
+// Repère du cadran : « 8 h 30 » donne 8.5 ; un libellé sans heure (« Après-midi ») ne pose pas de repère.
+const heureNum = (s: string) => { const m = s.match(/^(\d{1,2}) h(?: (\d{2}))?/); return m ? String(+m[1] + (m[2] ? +m[2] / 60 : 0)) : undefined; };
 ---
 <Base page="carte" title="La carte" description={`La carte de La Maison des Desserts à Namur : petit déjeuner, cuisine, pâtisseries, crêpes, glaces, boissons et boulangerie des fêtes, ${NOMBRE_LIGNES} lignes avec leurs prix.`}>
-  <section class="tranche entete" data-ton="matin">
+  <section class="tranche entete" data-ton="matin" data-heure="8">
     <div class="wrap grille">
       <p class="heure"><span class="num">8 h</span><small>Ouverture</small></p>
-      <h1 class="entete__titre display">La carte, heure par heure.</h1>
-      <p class="entete__lede">{NOMBRE_LIGNES} lignes, rangées dans l’ordre de la journée. Les prix sont ceux de la carte de la maison.</p>
+      <h1 class="entete__titre display" data-split="lines" data-intro>La carte, heure par heure.</h1>
+      <p class="entete__lede" data-split="lines" data-intro data-delay="0.15">{NOMBRE_LIGNES} lignes, rangées dans l’ordre de la journée. Les prix sont ceux de la carte de la maison.</p>
       <ul class="sommaire">
         {chapitres.map((c) => <li><a class="lien-util" href={`#${c.id}`}><span class="num">{c.heure}</span><span>{c.titre}</span></a></li>)}
       </ul>
     </div>
   </section>
   {chapitres.map((c) => (
-    <section class="tranche" data-ton={c.ton} id={c.id} aria-labelledby={`t-${c.id}`}>
+    <section class="tranche" data-ton={c.ton} id={c.id} data-heure={heureNum(c.heure)} aria-labelledby={`t-${c.id}`}>
       <div class="wrap grille">
         <p class="heure"><span class="num">{c.heure}</span>{c.fin && <small>jusqu’à {c.fin}</small>}</p>
         <div class="corps">
-          <h2 class="chap__titre display" id={`t-${c.id}`}>{c.titre}</h2>
+          <h2 class="chap__titre display" data-split="lines" id={`t-${c.id}`}>{c.titre}</h2>
           {c.sections.map((s) => (
             <div class="rayon">
               <h3 class="rayon__titre">{s.titre}</h3>

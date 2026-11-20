@@ -42,6 +42,8 @@ const jsonLd = {
     {page !== '404' && <link rel="canonical" href={canonical} />}
     <meta name="theme-color" content="#e8e3da" />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={asset('/favicon-32.png')} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
     <link rel="sitemap" href={asset('/sitemap-index.xml')} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.nom} />
@@ -67,11 +69,12 @@ const jsonLd = {
   </head>
   <body data-page={page}>
     <a class="skip-link" href="#main">Aller au contenu</a>
-    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel curtain__panel--a"></div></div>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel curtain__panel--a"><span class="curtain__aiguille"></span></div></div>
     <Header sur={teteSur} />
     <main id="main" tabindex="-1">
       <slot />
     </main>
+    <div class="cadran" aria-hidden="true" data-ton="matin"><span class="cadran__heure num">8 h 00</span><span class="cadran__regle"><span class="cadran__bornes"><span>8</span><span>18</span></span><span class="cadran__aiguille"></span></span></div>
     <Footer />
     <script>
       import { start } from '../engine/astro';

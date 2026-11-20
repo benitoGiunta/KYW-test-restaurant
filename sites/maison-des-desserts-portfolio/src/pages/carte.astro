@@ -15,24 +15,27 @@ const photos: Record<string, string> = {
   "Fêtes de fin d'année 2026-2027 (commandes)": '/photos/entremets-chocolat.webp',
 };
 const ancre = (c: string) => ancres.find(([re]) => re.test(c))?.[1];
-const liens = [['salon', 'Salon de thé'], ['patisserie', 'Pâtisserie'], ['boulangerie', 'Boulangerie'], ['chocolaterie', 'Chocolat et fêtes']];
+const labels = ['Suggestions', 'Cuisine de midi', "Cuisine de l'après-midi", 'Petit déjeuner', 'Desserts et boissons', 'Pâtisseries', 'Crêpes', 'Glaces', 'Gaufres et milk-shakes', 'Boissons chaudes', 'Boissons froides', 'Boulangerie', 'Fêtes'];
+const idDe = (c: string, i: number) => ancre(c) ?? `rubrique-${i + 1}`;
+const liens = site.carte.map((c, i) => [idDe(c.categorie, i), labels[i] ?? c.categorie.replace(/\s*\(.*?\)/g, '')]);
 ---
 <Base title="La carte" description={`La carte de ${site.nom} à ${site.adresse.commune} : suggestions du moment, cuisine de midi, crêpes, glaces, gaufres, boissons, boulangerie et fêtes.`}>
   <section class="page-hero" style="background: var(--c-rose)" data-activite="La carte" data-couleur="rose">
     <div class="wrap page-hero__inner">
       <h1><span class="etiquette etiquette--ink">La <em>carte</em></span></h1>
       <p class="lead">Du petit déjeuner aux coupes glacées, du pain aux pralines : toute la carte de la maison, de la cuisine de midi aux fêtes.</p>
-      <nav class="actions" aria-label="Aller à une rubrique">
-        {liens.map(([id, l]) => <a class="btn" href={`#${id}`}>{l}</a>)}
-      </nav>
     </div>
   </section>
+
+  <nav class="sommaire" aria-label="Rubriques de la carte" data-sommaire>
+    {liens.map(([id, l]) => <a href={`#${id}`}>{l}</a>)}
+  </nav>
 
   <div class="wrap">
     {site.carte.map((cat, i) => {
       const ph = photos[cat.categorie] ? photoDe(photos[cat.categorie]) : null;
       return (
-        <section class="carte-cat" id={ancre(cat.categorie)}>
+        <section class="carte-cat" id={idDe(cat.categorie, i)}>
           <div class="damier" class:list={[i % 2 ? 'damier--inv' : '']}>
             <div>
               <h2 class="titre titre--l"><span class="etiquette">{cat.categorie}</span></h2>
@@ -40,7 +43,7 @@ const liens = [['salon', 'Salon de thé'], ['patisserie', 'Pâtisserie'], ['boul
                 {cat.plats.map((p) => (
                   <li>
                     <span>{p.nom}{p.placeholder && <span class="illu">exemple</span>}{p.description && <span class="muted"> ({p.description})</span>}</span>
-                    {p.prix && <span>{p.prix}</span>}
+                    {p.prix && <span class:list={[p.prix.length > 16 ? 'prix--long' : '']}>{p.prix}</span>}
                   </li>
                 ))}
               </ul>

@@ -2,7 +2,7 @@
 // absorbe le nom de la section courante (ScrollTrigger onToggle), dérive idle de la tasse, menu mobile, formulaires de démo.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { setLoaderFormat, setLoaderExit, setTransition, ease, onPage, prefersReducedMotion, isMobile } from '../engine';
+import { setLoaderFormat, setLoaderExit, setTransition, ease, onPage, prefersReducedMotion, isMobile, scrollToTarget } from '../engine';
 
 gsap.registerPlugin(ScrollTrigger);
 const COLLE = 'back.out(1.7)';
@@ -30,7 +30,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [heroIntro(intro), logoSection(), derive(), menuMobile(), formulaires()];
+    const cleanups = [heroIntro(intro), logoSection(), cadresColles(), sommaire(), etatOuverture(), derive(), menuMobile(), formulaires()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -67,7 +67,10 @@ function logoSection() {
   };
   const triggers = sections.map((s) =>
     ScrollTrigger.create({
-      trigger: s, start: 'top 45%', end: 'bottom 45%',
+      trigger: s,
+      // Un page-hero est plus court que la ligne à 45 % : il reste actif jusqu'à ce que son bas atteigne 15 % de l'écran.
+      start: s.classList.contains('page-hero') ? 'top bottom' : 'top 45%',
+      end: s.classList.contains('page-hero') ? 'bottom 15%' : 'bottom 45%',
       onToggle: (self) => {
         if (self.isActive) poser(s.dataset.activite || '', s.dataset.couleur || 'postit');
         else if (courant === s.dataset.activite) {
@@ -82,6 +85,94 @@ function logoSection() {
   const active = sections.find((s, i) => triggers[i].isActive);
   if (active) poser(active.dataset.activite || '', active.dataset.couleur || 'postit');
   return () => { triggers.forEach((t) => t.kill()); poser('', 'postit'); };
+}
+
+/** Signature : chaque photo d'activité se pose de travers puis se colle (rotation et échelle liées au défilement). */
+function cadresColles() {
+  if (prefersReducedMotion()) return () => {};
+  const cadres = [...document.querySelectorAll<HTMLElement>('.aplat .split .cadre')];
+  const tweens = cadres.map((c, i) => {
+    const sens = i % 2 ? -1 : 1;
+    return gsap.fromTo(c, { rotate: 3 * sens, scale: 1.05 }, {
+      rotate: -0.8 * sens, scale: 1, ease: 'none',
+      scrollTrigger: { trigger: c, start: 'top 98%', end: 'top 45%', scrub: 0.5 },
+    });
+  });
+  return () => tweens.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); gsap.set(t.targets(), { clearProps: 'transform' }); });
+}
+
+/** Sommaire de la carte : la rubrique visible allume sa pastille (aria-current) et la fait défiler dans la barre. */
+function sommaire() {
+  const barre = document.querySelector<HTMLElement>('[data-sommaire]');
+  if (!barre) return () => {};
+  const liens = [...barre.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')];
+  const cibles = liens.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1)))).filter(Boolean) as HTMLElement[];
+  const visibles = new Set<HTMLElement>();
+  const allumer = () => {
+    const premiere = cibles.find((c) => visibles.has(c));
+    liens.forEach((a) => {
+      const on = !!premiere && a.hash === `#${premiere.id}`;
+      if (on) { if (a.getAttribute('aria-current') !== 'true') { a.setAttribute('aria-current', 'true'); const l = a.offsetLeft - (barre.clientWidth - a.offsetWidth) / 2; barre.scrollTo({ left: l, behavior: prefersReducedMotion() ? 'auto' : 'smooth' }); } }
+      else a.removeAttribute('aria-current');
+    });
+  };
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e) => (e.isIntersecting ? visibles.add(e.target as HTMLElement) : visibles.delete(e.target as HTMLElement)));
+    allumer();
+  }, { rootMargin: '-25% 0px -60% 0px' });
+  cibles.forEach((c) => io.observe(c));
+  // Défilement par clic : décalé de la barre fixe et de la barre du sommaire ; le focus suit la cible.
+  const clic = (e: MouseEvent) => {
+    const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+    const cible = a && document.getElementById(decodeURIComponent(a.hash.slice(1)));
+    if (!a || !cible) return;
+    e.preventDefault();
+    const haut = (document.querySelector('.header')?.getBoundingClientRect().height ?? 0) + barre.getBoundingClientRect().height + 12;
+    const y = cible.getBoundingClientRect().top + window.scrollY - haut;
+    if (prefersReducedMotion()) window.scrollTo({ top: y }); else scrollToTarget(y);
+    history.replaceState(null, '', a.hash);
+    cible.setAttribute('tabindex', '-1');
+    cible.focus({ preventScroll: true });
+  };
+  barre.addEventListener('click', clic);
+  return () => { io.disconnect(); barre.removeEventListener('click', clic); };
+}
+
+/** État d'ouverture calculé depuis les horaires de la page (Europe/Brussels), jamais depuis l'heure du visiteur. */
+interface Jour { jour: string; creneaux: { ouverture: string; fermeture: string }[] }
+const JOURS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+const hm = (t: string) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+const lisible = (t: string) => { const [h, m] = t.split(':'); return m === '00' ? `${Number(h)}h` : `${Number(h)}h${m}`; };
+export function etatOuvertureTexte(horaires: Jour[], maintenant: Date) {
+  const f = new Intl.DateTimeFormat('fr-BE', { timeZone: 'Europe/Brussels', weekday: 'long', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+  const p = Object.fromEntries(f.formatToParts(maintenant).map((x) => [x.type, x.value]));
+  const idx = JOURS.indexOf(String(p.weekday).toLowerCase());
+  const min = Number(p.hour) * 60 + Number(p.minute);
+  const jour = (i: number) => horaires.find((h) => h.jour === JOURS[(i + 7) % 7]);
+  const auj = jour(idx);
+  const en = auj?.creneaux.find((c) => min >= hm(c.ouverture) && min < hm(c.fermeture));
+  if (en) return { ouvert: true, texte: `Ouvert jusqu'à ${lisible(en.fermeture)}` };
+  const plus = auj?.creneaux.find((c) => min < hm(c.ouverture));
+  if (plus) return { ouvert: false, texte: `Fermé, ouvre à ${lisible(plus.ouverture)}` };
+  for (let d = 1; d <= 7; d++) {
+    const j = jour(idx + d);
+    if (j?.creneaux.length) return { ouvert: false, texte: `Fermé, ouvre ${d === 1 ? 'demain' : j.jour} à ${lisible(j.creneaux[0].ouverture)}` };
+  }
+  return null;
+}
+function etatOuverture() {
+  const els = [...document.querySelectorAll<HTMLElement>('[data-ouvert]')];
+  if (!els.length) return () => {};
+  const maj = () => els.forEach((el) => {
+    let h: Jour[] = [];
+    try { h = JSON.parse(el.dataset.horaires || '[]'); } catch { /* données absentes : rien à afficher */ }
+    const e = etatOuvertureTexte(h, new Date());
+    el.textContent = e ? e.texte : '';
+    el.dataset.etat = e ? (e.ouvert ? 'ouvert' : 'ferme') : '';
+  });
+  maj();
+  const t = window.setInterval(maj, 60000);
+  return () => window.clearInterval(t);
 }
 
 /** Idle : la tasse du brunch dérive de 4 px (motion seulement, un seul idle sur le site). */

@@ -28,6 +28,7 @@ const fmtP = (d: string | null) => (d ? new Date(d).toLocaleDateString('fr-BE', 
         <p class="etiquette" data-hero-apres>Pâtisserie, boulangerie et salon de thé à {site.adresse.commune}</p>
         <a class="btn btn--ink" href={site.boutique.url} rel="noopener" data-hero-apres data-magnetic="0.2">Commander en ligne</a>
         <a class="btn" href={u('/carte/')} data-hero-apres>La carte</a>
+        <p class="statut" data-hero-apres data-ouvert data-horaires={JSON.stringify(site.horaires)}></p>
       </div>
     </div>
   </section>
@@ -57,9 +58,9 @@ const fmtP = (d: string | null) => (d ? new Date(d).toLocaleDateString('fr-BE', 
       <img src={asset(fete.src)} alt={fete.alt} width={fete.largeur} height={fete.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
     </div>
     <div class="wrap">
-      <div class="cartouche" data-reveal="scale">
+      <div class="cartouche">
         <p class="sur">Fêtes 2026-2027</p>
-        <h2 class="titre titre--l" id="t-fetes">Bûches, gâteaux de l'An et <em>galettes</em></h2>
+        <h2 class="titre titre--l" id="t-fetes" data-split="lines">Bûches, gâteaux de l'An et <em>galettes</em></h2>
         <p>Commandes de Noël {site.fetes.commandes.noel}. Commandes du Nouvel An {site.fetes.commandes.nouvelAn}.</p>
         <div class="actions">
           <a class="btn btn--ink" href={u('/fetes/')}>Les fêtes en détail</a>
@@ -74,8 +75,8 @@ const fmtP = (d: string | null) => (d ? new Date(d).toLocaleDateString('fr-BE', 
       <h2 class="titre titre--l" id="t-presse"><span class="etiquette" data-split="lines">Dans la <em>presse</em></span></h2>
       <div class="avis-grille">
         {site.presse.map((x, i) => (
-          <blockquote class="avis" data-reveal="scale" data-delay={String(i * 0.12)}>
-            <p>{x.titre}</p>
+          <blockquote class="avis" data-delay={String(i * 0.12)}>
+            <p data-reveal="up">{x.titre}</p>
             <cite>{x.media}{x.date ? `, ${fmtP(x.date)}` : ''}. <a class="link" href={x.url} rel="noopener">Lire l'article</a></cite>
           </blockquote>
         ))}
@@ -91,13 +92,13 @@ const fmtP = (d: string | null) => (d ? new Date(d).toLocaleDateString('fr-BE', 
           <h3>Horaires</h3>
           <dl class="horaires">{site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}</dl>
         </div>
-        <div data-reveal="up" data-delay="0.08">
-          <h3>Adresse</h3>
+        <div>
+          <h3 data-reveal="up" data-delay="0.08">Adresse</h3>
           <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
           <p style="margin-top: var(--u)"><a class="link" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a></p>
         </div>
-        <div data-reveal="up" data-delay="0.16">
-          <h3>Contact</h3>
+        <div>
+          <h3 data-reveal="up" data-delay="0.16">Contact</h3>
           <p><a class="link" href={telHref()}>{site.telephone}</a></p>
           <p><a class="link" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>
           <p style="margin-top: var(--u)"><a class="btn btn--ink" href={site.boutique.url} rel="noopener">Commander en ligne</a></p>
