@@ -116,33 +116,6 @@ const etoiles = Array.from({ length: 5 });
     </div>
   </section>
 
-  <!-- Avis : mot géant flou → net, cartes inclinées -->
-  <section class="section section--blanc avis" id="avis" data-avis>
-    <p class="display avis__mot" aria-hidden="true" data-avis-mot>Avis</p>
-    <div class="wrap">
-      <p class="meta" style="text-align:center">Ils en parlent</p>
-      <h2 class="sr-only">Avis</h2>
-      <div class="avis__cartes">
-        {avisVrai && (
-          <blockquote class="carte-avis carte-avis--vraie" data-carte-avis style="--r:-3deg">
-            <span class="carte-avis__etiq">{avisVrai.source}</span>
-            <p>{avisVrai.texte}</p>
-            <cite>{avisVrai.auteur}</cite>
-          </blockquote>
-        )}
-        {g.avisExemples.map((a) => (
-          <blockquote class="carte-avis" data-carte-avis style={`--r:${a.r}deg`}>
-            <span class="carte-avis__etiq">Exemple d'avis</span>
-            <span class="carte-avis__etoiles" role="img" aria-label={`${a.note} étoiles sur 5, exemple`}>
-              {etoiles.map(() => <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.5L12 17.3 6.1 20.5l1.3-6.5L2.5 9.4l6.6-.8z" /></svg>)}
-            </span>
-            <p>{a.texte}</p>
-          </blockquote>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <!-- Manifeste corail -->
   <section class="section section--corail manifeste" id="manifeste">
     <div class="wrap manifeste__inner">
