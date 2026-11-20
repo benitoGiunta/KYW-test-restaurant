@@ -1,0 +1,38 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site } from '../data/site';
+import Dial from './Dial.astro';
+---
+<footer class="pied">
+  <div class="pied__corps">
+    <div class="pied__dial"><Dial classe="dial--pied" /></div>
+    <p class="pied__mot">Dix heures,<br />vingt-deux heures trente.</p>
+    <div class="pied__col">
+      <h2 class="pied__titre">Venir</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Horaires</h2>
+      <ul class="pied__horaires">
+        <li><span>Tous les jours</span><span>10 h à 22 h 30</span></li>
+        <li><span>Cuisine fermée</span><span>15 h à 18 h</span></li>
+        <li class="pied__doux"><span>Sauf week-end et jours fériés</span></li>
+      </ul>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Contact</h2>
+      <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+      <ul class="pied__reseaux">
+        {site.reseaux.map((r) => <li><a class="lien" href={r.url} rel="noopener">{r.nom}</a></li>)}
+        <li><a class="lien" href={site.siteClient} rel="noopener">Site actuel de la brasserie</a></li>
+      </ul>
+    </div>
+    <div class="pied__cta">
+      <a class="cta cta--bois" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+    </div>
+    <p class="pied__colophon">Photos : Brasserie Edgard. Polices : Gambarino (Fontshare) et Hanken Grotesk (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />
