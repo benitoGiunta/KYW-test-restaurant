@@ -39,6 +39,17 @@ Mobile 390 : une colonne, heure en tête de section, strips en scroll-snap.
 ```
 - **Test de généricité** : « un modèle générique atterrirait-il ici ? » Oui sur le premier jet (hero centré, trois cartes). Changé : hero poster asymétrique, heures en marge, carte en rail et filets, pied-phrase au lieu d'un pied de liens.
 
+## Mouvement réalisé (phase 2)
+- **Module pilote** `src/motion/jour.ts` : une variable, l'heure de la page (11 h en haut, 22 h au pied), lue sur les sections `[data-hour]` par ScrollTrigger (interpolée entre l'heure d'une section et la suivante). Elle est distribuée à l'horloge fixe (aiguille des heures, libellé « 19 h »), au trait des heures de chaque section (`--draw`, posé sur `.sec__hour` seulement) et à `meta[name=theme-color]` (sol de la section active). Le pointeur penche l'aiguille (± 7°). Une horloge GSAP : `gsap.ticker`.
+- **Moment signature** : l'horloge de la maison (cadran 72 px dans la colonne des heures, en bas à gauche, `#horloge`, `transition:persist`) avance avec la lecture ; le trait orange des heures se prolonge au défilement le long de chaque section (recette « timeline scrubbée » appliquée au trait). Au pied (22 h) l'horloge se retire (`is-away`) : la journée est finie et elle couvrirait l'adresse.
+- **Repos** : après 1,2 s sans entrée, `startIdle()` relance la trotteuse (secteur orange de 36°, un tour en 10 s, montée en vitesse douce) : la maison ne s'arrête pas. Toute entrée (pointeur, molette, clavier, défilement) l'arrête. Rien ne tourne au téléphone (horloge masquée) ni en mouvement réduit.
+- **Transition** (`setup.ts`) : le store du soir descend sur la page (rideau à motif d'éventails, 0,7 s) puis continue sa course vers le bas sur la nouvelle page (0,8 s). Pas de loader (décision phase 1).
+- **Intro** : h1 de chaque page en `data-split="lines" data-intro` ; accueil : la photo de façade se pose (scale 1,12 à 1, jamais cachée), la ligne de statut monte, le premier trait des heures se trace avec l'intro. 404 : la plaque « 404 » en `data-reveal="scale"`.
+- **Reveals** : h2 display et énoncés en `data-split="lines"`, cadres photo hors hero en `data-reveal="clip"`, barres de la semaine qui se prolongent de l'ouverture à la fermeture (scaleX depuis la gauche, stagger 60 ms).
+- **Hovers (3 traitements)** : la matière monte (CTA `.btn`, `.cta-big`, bouton Menu) ; le trait orange se prolonge depuis la gauche (nav, rail de la carte, actif au défilement par `is-on`) ; la ligne s'indente (index des rubriques, lignes de plats, liens du menu). Liens texte soulignés au repos, trait épaissi et orangé au survol. Tous sous `@media (hover: hover)`, même état sur `:focus-visible`, `:active` présent.
+- **Mobile** : bouton « Menu » (44 px) et menu plein écran au sol de nuit à éventails (`Header.astro`, `menu.ts`) ; le trait des heures devient horizontal sous l'heure ; l'horloge est retirée (sa place n'existe pas dans une colonne unique).
+- **Mouvement réduit** : pas de Lenis, pas de scrub, pas d'intro ; traits des heures entiers (`--draw: 1`), horloge à l'heure de la section sans aiguille animée ni trotteuse.
+
 ## Sur-utilisation de la skill
 1. [x] Trois concepts, trois territoires, notés, ancre, test de l'échange : tableau ci-dessus.
 2. [x] Aucun exemple travaillé de concepts.md (ni braise, ni pavage, ni gril, ni cadre, ni solde, ni phrase unique) : le concept ne correspond à aucun d'eux.
@@ -58,3 +69,32 @@ Mobile 390 : une colonne, heure en tête de section, strips en scroll-snap.
 16. [x] Une famille de section au plus une fois par page : accueil poster, données, paire, index, strip, statement ; chaque page en varie les familles.
 17. [x] Hero en 3 s : nom, cuisine, CTA Réserver et Appeler sans défiler (mesuré 1440×900, 1280×720, 1024×768, 390×844 : CTA au-dessus de la ligne de flottaison, aucun débordement horizontal).
 18. [x] Mobile 390 recomposé : une colonne, heure en tête de section, strips `overflow-x` + `scroll-snap`, nav sur deuxième ligne, type re-réglé par `clamp`.
+
+Phase 2 (preuves : code, `.logs/champs-aw2-test.log` = test Playwright maison, captures `.shots/p2/`) :
+19. [x] Menu mobile : `aria-expanded` (`menu.ts` l. 17 et 30), plein écran (`.menu { position: fixed; inset: 0 }`), focus piégé (Tab x7 reste dans `#menu` : « trap true »), Échap ferme et rend le focus (« esc true focus back true »), premier lien focalisé (« focus Accueil »).
+20. [x] Engine verbatim (`src/engine/`), adaptateur `astro.ts`, `transition:persist` sur `#curtain` et `#horloge` (`Base.astro` l. 78-79), pas de `#gl` ni `#cursor` (sans objet), `transition:animate="none"` sur `<html>` (l. 41).
+21. [x] Une horloge : `gsap.ticker.add(tick)` (`jour.ts` l. 72) ; grep `addEventListener('scroll'|requestAnimationFrame` hors engine = 0.
+22. [x] Code de page dans `onPage()` avec nettoyage (`jour.ts` l. 81 et `return done`, `menu.ts` l. 6, retrait des listeners) ; aucun code DOM au niveau module.
+23. [x] Aucune CSS `transform` sur un élément animé par GSAP : aiguille et trotteuse (`transform-origin` seul), `.week__bar` (left/width), images, rideau, liens du menu ; `.btn:active` en `translate` (non animé par GSAP).
+24. [x] Module pilote `jour.ts` : `startIdle()` exporté (l. 27), pointeur (`lean`, l. 66), une variable distribuée à 3 porteurs.
+25. [x] Loader décidé : aucun (Concept Card « Théâtre »), pas de composant ni de `role="status"`.
+26. [x] Transition du concept (store qui descend) : 0,7 s puis 0,8 s (`setup.ts`) ; navigation accueil vers carte mesurée sans erreur, rideau caché à l'arrivée.
+27. [x] Intro `data-split="lines" data-intro` sur tous les h1 (grep `data-intro>` seul = 0) ; capture `.shots/p2/d-top.png` : premier frame complet (titre, statut, CTA, façade, horloge à 11 h).
+28. [x] Épinglages : aucun pin (sticky CSS de l'heure et du rail seulement) ; scrubs avec `invalidateOnRefresh`.
+29. [x] Repli statique : `html:not(.motion)` garde les traits entiers (`.motion .sec__hour { --draw: 0 }` ne s'applique pas), aucun texte caché en réduit (« reduced hidden 0 »).
+30. [x] Copies décoratives : aucune ; horloge `aria-hidden="true"` (libellé redondant avec les heures en texte de chaque section).
+31. [x] Une famille d'easing (`ease.out`, `ease.inOut`, `ease.soft` de l'engine ; courbe CSS unique `cubic-bezier(0.22, 1, 0.36, 1)` pour les survols), durées 0,45 à 1,6 s, stagger 50 à 80 ms.
+32. [x] Trois traitements par rôle (voir « Hovers »), dans le verbe prolonger.
+33. [x] `:hover` sous `@media (hover: hover)` (`site.css` l. 20, 66, 78…), mêmes états sur `:focus-visible`, visibles en réduit (seule la durée tombe).
+34. [x] Liens texte `.tlink` soulignés au repos.
+35. [ ] `hover.noHoverChange` : phase 3 (report.json).
+36. [ ] `desktop.idleMotion` : trotteuse en repos (test : « idle sweep moves true ») ; mesure par report.json en phase 3.
+37. [x] Curseur natif jamais masqué, aucun follower ; rien ne dépend du survol au toucher (menu au tap).
+38. [x] Ni blur animé, ni `box-shadow` au scroll, ni `will-change`.
+39. [x] Réduit : ni Lenis (classe `lenis` absente en réduit), ni GL, ni scrub, ni loader ; trotteuse immobile (« reduced sweep still true ») ; `reduced.hiddenText` à confirmer en phase 3.
+40. [x] GL sans objet, décision écrite (Concept Card « Théâtre ») ; aucune ligne GL dans `src/motion/`.
+41. [x] Sans objet (pas de GL).
+44. [ ] Skip link premier (`Base.astro`) et focus orange du socle : à mesurer en phase 3.
+45. [ ] Contraste AA : phase 3 (horloge à couleurs fixes, lisible sur les 4 sols).
+46. [x] Texte réel partout, aucun canvas.
+47. [x] Bouton Menu 44 px (« menu btn h 44 »), CTA `.btn` 48 px, `.menu .btn` 44 px ; reste à mesurer en phase 3.

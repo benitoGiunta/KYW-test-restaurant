@@ -11,10 +11,27 @@ const nav = [
 ---
 <header class="head">
   <div class="wrap head__in">
-    <a class="head__logo" href={u('/')} aria-label="Champs Élysées, accueil">Champs Élysées</a>
+    <a class="head__logo" href={u('/')}>Champs Élysées</a>
     <nav class="head__nav" aria-label="Navigation principale">
       {nav.map((n) => <a class="nl" href={n.href} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a>)}
     </nav>
-    <a class="btn btn--plein" href={`tel:${r.telephone}`}>Appeler le {r.telephoneAffiche}</a>
+    <a class="btn btn--plein head__tel" href={`tel:${r.telephone}`}>Appeler le {r.telephoneAffiche}</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>Menu</button>
+  </div>
+  <div class="menu ground-nuit fans" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+    <div class="wrap menu__in">
+      <div class="menu__top">
+        <span class="menu__h" aria-hidden="true">De 11 h à 22 h</span>
+        <button class="menu-btn" type="button" data-menu-close>Fermer</button>
+      </div>
+      <nav class="menu__nav" aria-label="Navigation du menu">
+        <a href={u('/')} aria-current={page === 'accueil' ? 'page' : undefined}>Accueil</a>
+        {nav.map((n) => <a href={n.href} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a>)}
+      </nav>
+      <div class="btns">
+        <a class="btn btn--plein" href={`tel:${r.telephone}`}>Appeler le {r.telephoneAffiche}</a>
+        <a class="btn" href={r.reservationUrl} rel="noopener">Réserver en ligne</a>
+      </div>
+    </div>
   </div>
 </header>

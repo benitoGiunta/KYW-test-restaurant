@@ -15,7 +15,11 @@ body { background: var(--c-bg); }
 .num { font-variant-numeric: tabular-nums lining-nums; }
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .tlink { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
-.tlink:hover { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); }
+.tlink { transition: text-decoration-color 0.3s, text-decoration-thickness 0.3s; }
+.tlink:focus-visible { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); }
+@media (hover: hover) { .tlink:hover { text-decoration-thickness: 3px; text-decoration-color: var(--c-accent); } }
+.tlink:active { text-decoration-thickness: 1px; }
+::selection { background: var(--c-accent); color: #12302a; }
 
 /* Sols : l'heure du jour change le fond, le texte suit par variables locales. */
 .ground-midi { --c-bg: var(--g-midi); }
@@ -31,14 +35,18 @@ body { background: var(--c-bg); }
 .sec { padding-block: clamp(4rem, 2rem + 8vw, 9rem); }
 .sec--tight { padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem); }
 .sec__hour {
-  grid-column: 1 / 2; grid-row: 1; align-self: stretch; border-right: 1px solid var(--c-line);
+  grid-column: 1 / 2; grid-row: 1; align-self: stretch; border-right: 1px solid var(--c-line); position: relative;
   font-family: var(--f-display); font-weight: 700; font-size: var(--t-s); letter-spacing: 0.02em;
 }
 .sec__hour span { position: sticky; top: 5.5rem; display: block; writing-mode: vertical-rl; transform: rotate(180deg); width: max-content; padding-block: 0 0.5rem; }
+/* Trait des heures : il se prolonge au défilement (--draw tenu par le pilote ; 1 sans mouvement). */
+.sec__hour::after { content: ''; position: absolute; top: 0; right: -1px; bottom: 0; width: 2px; background: var(--c-accent); transform-origin: 50% 0; scale: 1 var(--draw, 1); }
+.motion .sec__hour { --draw: 0; }
 .sec__body { grid-column: 2 / -1; grid-row: 1; padding-left: calc(var(--gutter) * 0.5); min-width: 0; }
 @media (max-width: 760px) {
   .sec__hour { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--c-line); padding-bottom: 0.6rem; margin-bottom: 2rem; }
   .sec__hour span { position: static; writing-mode: horizontal-tb; transform: none; padding: 0; }
+  .sec__hour::after { top: auto; left: 0; right: 0; bottom: -1px; width: auto; height: 2px; transform-origin: 0 50%; scale: var(--draw, 1) 1; }
   .sec__body { grid-column: 1 / -1; grid-row: 2; padding-left: 0; }
 }
 
@@ -49,18 +57,26 @@ body { background: var(--c-bg); }
   font-family: var(--f-display); font-weight: 700; font-size: var(--t-s); letter-spacing: 0.01em; background: transparent; color: var(--c-fg);
 }
 .btn::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--c-fg); transform: translateY(101%); transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
-.btn:hover, .btn:focus-visible { color: var(--c-bg); }
-.btn:hover::before, .btn:focus-visible::before { transform: none; }
+.btn { transition: color 0.35s, border-color 0.35s; }
+.btn:focus-visible { color: var(--c-bg); }
+.btn:focus-visible::before { transform: none; }
 .btn--plein { background: var(--c-accent); border-color: var(--c-accent); color: #12302a; }
 .btn--plein::before { background: var(--c-fg); }
-.btn--plein:hover, .btn--plein:focus-visible { border-color: var(--c-fg); color: var(--c-bg); }
-.btn:active { transform: translateY(1px); }
+.btn--plein:focus-visible { border-color: var(--c-fg); color: var(--c-bg); }
+@media (hover: hover) {
+  .btn:hover { color: var(--c-bg); }
+  .btn:hover::before { transform: none; }
+  .btn--plein:hover { border-color: var(--c-fg); }
+}
+.btn:active { translate: 0 1px; }
 .btns { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
 /* Liens de navigation : le trait se prolonge. */
 .nl { position: relative; display: inline-block; padding-block: 0.35rem; font-family: var(--f-display); font-weight: 600; font-size: var(--t-s); }
 .nl::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
-.nl:hover::after, .nl:focus-visible::after, .nl[aria-current='page']::after { transform: scaleX(1); }
+.nl:focus-visible::after, .nl[aria-current='page']::after { transform: scaleX(1); }
+@media (hover: hover) { .nl:hover::after { transform: scaleX(1); } }
+.nl:active::after { transform: scaleX(1); background: var(--c-fg); }
 
 /* En-tête */
 .head { position: relative; z-index: var(--z-header); padding-block: 1rem; background: var(--c-bg); }
@@ -68,10 +84,24 @@ body { background: var(--c-bg); }
 .head__logo { font-family: var(--f-display); font-weight: 800; font-size: 1.25rem; letter-spacing: -0.03em; line-height: 1; }
 .head__nav { display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 2.25rem); }
 .head .btn { min-height: 2.5rem; padding: 0.4em 1.1em; }
+/* Bouton Menu (téléphone) et menu plein écran au sol de nuit */
+.menu-btn { display: none; min-height: 2.75rem; min-width: 2.75rem; padding: 0.5em 1.1em; border: 1.5px solid currentColor; font-family: var(--f-display); font-weight: 700; font-size: var(--t-s); transition: background 0.35s, color 0.35s; }
+.menu-btn:focus-visible { background: var(--c-fg); color: var(--c-bg); }
+@media (hover: hover) { .menu-btn:hover { background: var(--c-fg); color: var(--c-bg); } }
+.menu-btn:active { translate: 0 1px; }
+.menu { position: fixed; inset: 0; z-index: 60; overflow-y: auto; overscroll-behavior: contain; }
+.menu[hidden] { display: none; }
+.menu__in { min-height: 100%; display: grid; grid-template-rows: auto 1fr auto; gap: 2rem; padding-block: 1rem 2.5rem; }
+.menu__top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.menu__h { font-family: var(--f-display); font-weight: 700; font-size: var(--t-s); color: var(--c-muted); }
+.menu__nav { display: flex; flex-direction: column; justify-content: center; }
+.menu__nav a { display: block; padding-block: 0.15em 0.2em; border-bottom: 1px solid var(--c-line); font-family: var(--f-display); font-weight: 800; font-size: clamp(2.5rem, 12vw, 4rem); letter-spacing: -0.045em; line-height: 1; transition: padding-left 0.5s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s; }
+.menu__nav a[aria-current='page'] { color: var(--c-accent); }
+.menu__nav a:focus-visible, .menu__nav a:active { padding-left: 0.4em; }
+.menu .btn { min-height: 2.75rem; }
 @media (max-width: 640px) {
-  .head__in { gap: 0.4rem 1rem; }
-  .head__nav { order: 3; width: 100%; justify-content: space-between; border-top: 1px solid var(--c-line); padding-top: 0.4rem; }
-  .head .btn { order: 2; }
+  .head__nav, .head__tel { display: none; }
+  .menu-btn { display: inline-flex; align-items: center; }
 }
 
 /* Accueil : poster */
@@ -88,8 +118,8 @@ body { background: var(--c-bg); }
 .frame img { width: 100%; height: 100%; object-fit: cover; }
 .cap { font-size: var(--t-xs); letter-spacing: 0.03em; margin-top: 0.5rem; color: var(--c-muted); }
 @media (max-width: 760px) {
-  .hero__text { grid-column: 1 / -1; padding-left: 0; }
-  .hero__media { grid-column: 1 / -1; grid-row: 2; margin-top: 2rem; }
+  .hero__text { grid-column: 1 / -1; grid-row: 2; padding-left: 0; }
+  .hero__media { grid-column: 1 / -1; grid-row: 3; margin-top: 2rem; }
   .hero__media .frame { aspect-ratio: 4 / 3; }
   .hero__media img { object-position: 50% 40%; }
 }
@@ -117,7 +147,9 @@ body { background: var(--c-bg); }
 /* Index de la carte (aperçu) */
 .idx { border-top: 1px solid var(--c-line); }
 .idx a { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 1rem; padding-block: 0.9rem; border-bottom: 1px solid var(--c-line); transition: padding-left 0.5s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s; }
-.idx a:hover, .idx a:focus-visible { padding-left: 1.25rem; color: var(--c-accent); }
+.idx a:focus-visible { padding-left: 1.25rem; color: var(--c-accent); }
+@media (hover: hover) { .idx a:hover { padding-left: 1.25rem; color: var(--c-accent); } }
+.idx a:active { padding-left: 0.75rem; }
 .idx__n { font-family: var(--f-display); font-weight: 800; font-size: var(--t-l); letter-spacing: -0.035em; line-height: 1; }
 .idx__c { font-size: var(--t-s); color: var(--c-muted); text-align: right; }
 .sigs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--gutter); border-top: 1px solid var(--c-line); }
@@ -148,17 +180,21 @@ body { background: var(--c-bg); }
 
 /* Carte : rail des catégories + listes à filets */
 .carte { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
-.carte__rail { grid-column: 1 / 4; position: sticky; top: 1rem; align-self: start; max-height: calc(100dvh - 2rem); overflow-y: auto; border-right: 1px solid var(--c-line); padding-right: var(--gutter); }
+.carte__rail { grid-column: 1 / 4; position: sticky; top: 1rem; align-self: start; max-height: calc(100dvh - 10rem); overflow-y: auto; border-right: 1px solid var(--c-line); padding-right: var(--gutter); }
 .carte__rail h2 { font-family: var(--f-display); font-weight: 700; font-size: var(--t-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-muted); margin: 1.25rem 0 0.4rem; }
 .carte__rail h2:first-child { margin-top: 0; }
 .carte__rail a { display: block; padding-block: 0.3rem; font-family: var(--f-display); font-weight: 600; font-size: var(--t-body); }
-.carte__rail a:hover { color: var(--c-accent); }
+.carte__rail a { position: relative; width: fit-content; }
+.carte__rail a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.15rem; height: 2px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+.carte__rail a:focus-visible::after, .carte__rail a.is-on::after { transform: scaleX(1); }
+@media (hover: hover) { .carte__rail a:hover::after { transform: scaleX(1); } }
+.carte__rail a:active::after { background: var(--c-fg); transform: scaleX(1); }
 .carte__main { grid-column: 4 / -1; padding-left: calc(var(--gutter) * 0.5); min-width: 0; }
 .cat { padding-bottom: clamp(3rem, 6vw, 6rem); scroll-margin-top: 1.5rem; }
 .cat__h { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-bottom: 1rem; border-bottom: 2px solid var(--c-fg); }
 .cat__h h3 { font-family: var(--f-display); font-weight: 800; font-size: var(--t-xl); letter-spacing: -0.045em; line-height: 0.95; padding-block: 0.05em 0.12em; }
 .plat { display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 0.85rem; border-bottom: 1px solid var(--c-line); transition: padding-left 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
-.plat:hover { padding-left: 0.75rem; }
+@media (hover: hover) { .plat:hover { padding-left: 0.75rem; } }
 .plat__n { font-family: var(--f-display); font-weight: 600; font-size: var(--t-m); letter-spacing: -0.02em; line-height: 1.15; }
 .plat__d { grid-column: 1; color: var(--c-muted); font-size: var(--t-s); max-width: 60ch; }
 .plat__p { grid-row: 1; grid-column: 2; text-align: right; font-weight: 600; white-space: nowrap; }
@@ -182,8 +218,14 @@ body { background: var(--c-bg); }
 @media (max-width: 760px) { .fete { grid-template-columns: 1fr; } }
 
 /* Réservation */
-.cta-big { display: grid; gap: 0.5rem; padding: clamp(1.25rem, 3vw, 2.25rem); border: 2px solid var(--c-fg); transition: background 0.4s, color 0.4s; }
-.cta-big:hover, .cta-big:focus-visible { background: var(--c-fg); color: var(--c-bg); }
+.cta-big { position: relative; isolation: isolate; overflow: hidden; display: grid; gap: 0.5rem; padding: clamp(1.25rem, 3vw, 2.25rem); border: 2px solid var(--c-fg); transition: color 0.4s; }
+.cta-big::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--c-fg); transform: translateY(101%); transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+.cta-big:focus-visible { color: var(--c-bg); }
+.cta-big:focus-visible::before { transform: none; }
+@media (hover: hover) { .cta-big:hover { color: var(--c-bg); } .cta-big:hover::before { transform: none; } }
+.cta-big:active { translate: 0 1px; }
+.cta-big b.num { white-space: nowrap; }
+@media (min-width: 761px) { .cta-big b.num { font-size: min(var(--t-xl), 5vw); } }
 .cta-big b { font-family: var(--f-display); font-weight: 800; font-size: var(--t-xl); letter-spacing: -0.045em; line-height: 0.95; padding-block: 0.05em 0.12em; }
 .res { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gutter); }
 .infos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem var(--gutter); }
@@ -208,3 +250,29 @@ body { background: var(--c-bg); }
 .nf { min-height: 70dvh; display: flex; align-items: center; padding-block: 4rem; }
 .nf__n { font-family: var(--f-display); font-weight: 800; font-size: var(--t-mega); letter-spacing: -0.06em; line-height: 0.85; padding-block: 0.06em 0.14em; }
 .plaque { display: inline-block; border: 2px solid var(--c-fg); padding: 0.1em 0.5em; font-family: var(--f-display); font-weight: 800; font-size: var(--t-l); letter-spacing: -0.03em; }
+
+/* Horloge de la maison : fixe dans la colonne des heures, elle suit l'heure de la page ; au repos, la trotteuse tourne. */
+#horloge { position: fixed; z-index: 40; left: max(var(--gutter), calc((100vw - 112rem) / 2 + var(--gutter))); bottom: var(--gutter); display: grid; justify-items: center; gap: 0.4rem; pointer-events: none; transition: opacity 0.5s, translate 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+#horloge.is-away, .menu-open #horloge { opacity: 0; translate: 0 1.5rem; }
+.horloge__face { position: relative; display: block; width: 4.5rem; aspect-ratio: 1; border-radius: 50%; background: #eef0e8; border: 2px solid #12302a; overflow: hidden; }
+.horloge__trotteuse { position: absolute; inset: 3px; border-radius: 50%; background: conic-gradient(from -18deg, #d9481c 0deg 36deg, transparent 36deg); }
+.horloge__aiguille { position: absolute; left: 50%; bottom: 50%; width: 4px; height: 40%; margin-left: -2px; border-radius: 2px; background: #12302a; transform-origin: 50% 100%; }
+.horloge__face i { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #12302a; }
+.horloge__h { padding: 0.15rem 0.5rem; background: #12302a; color: #eef0e8; font-family: var(--f-display); font-weight: 700; font-size: var(--t-xs); letter-spacing: 0.02em; white-space: nowrap; }
+html:not(.js) #horloge { display: none; }
+@media (max-width: 760px) { #horloge { display: none; } }
+
+/* Pied KYW : retour au survol sans toucher au paquet */
+.kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
+
+/* Placements de grille (jamais en style en ligne : le téléphone doit pouvoir les remettre à plat). */
+.pair .pair__t--duo { grid-column: 1 / 7; margin-top: 0; }
+.pair .pair__b--duo { grid-column: 8 / -1; margin-top: 0; }
+.col-a { grid-column: 1 / 9; }
+.col-b { grid-column: 9 / -1; justify-self: end; }
+.foot__a { grid-column: 1 / 10; }
+.foot__b { grid-column: 10 / -1; justify-self: end; }
+@media (max-width: 760px) {
+  .pair .pair__t--duo, .pair .pair__b--duo, .col-a, .col-b, .foot__a, .foot__b { grid-column: 1 / -1; }
+  .col-b, .foot__b { justify-self: start; }
+}
