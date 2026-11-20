@@ -4,10 +4,10 @@ import { site, moments, mardiEtudiants, photoDe } from '../data/site';
 import { u, asset } from '../lib/url';
 const brunch = moments.find((m) => m.id === 'm-10h30')!;
 const plats = [
-  { photo: photoDe('/photos/yaourt-fraises.webp'), titre: 'Granola et fruits', texte: 'Photo libre, assiette non attribuée', placeholder: true },
-  { photo: photoDe('/photos/framboises.webp'), titre: 'Framboises', texte: 'Photo libre, pour la limonade maison', placeholder: true },
-  { photo: photoDe('/photos/miel.webp'), titre: 'Miel', texte: 'Photo libre, produit non attribué', placeholder: true },
-  { photo: photoDe('/photos/the-citron.webp'), titre: 'Thé au citron', texte: 'Photo libre, boisson non attribuée', placeholder: true },
+  { photo: photoDe('/photos/yaourt-fraises.webp'), titre: 'Granola et fruits', texte: '', placeholder: true },
+  { photo: photoDe('/photos/framboises.webp'), titre: 'Framboises', texte: 'Pour la limonade maison', placeholder: true },
+  { photo: photoDe('/photos/miel.webp'), titre: 'Miel', texte: '', placeholder: true },
+  { photo: photoDe('/photos/the-citron.webp'), titre: 'Thé au citron', texte: '', placeholder: true },
 ];
 const salle = photoDe('/photos/salle.webp');
 const terrasse = photoDe('/photos/terrasse.webp');
@@ -16,7 +16,7 @@ const terrasse = photoDe('/photos/terrasse.webp');
   <section class="section" data-ciel="midi">
     <div class="wrap cols">
       <div class="c1-6">
-        <p class="chapeau">Tous les jours, dès 10h30<span class="tag">horaire illustratif</span></p>
+        <p class="chapeau">Tous les jours, dès 10h30</p>
         <h1 class="t-xl" data-split="lines" data-intro>Le brunch</h1>
         <p class="lead" style="margin-top: calc(var(--u) * 2)">{brunch.accroche}</p>
         <p class="note" style="margin-top: var(--u)">{mardiEtudiants}</p>
@@ -44,10 +44,10 @@ const terrasse = photoDe('/photos/terrasse.webp');
               <div class="medaillon__photo"><img src={asset(md.photo.src)} alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
               <svg class="medaillon__anneau" viewBox="0 0 200 200" aria-hidden="true">
                 <defs><path id={`barc-${i}`} d="M100,100 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
-                <text><textPath href={`#barc-${i}`}>{md.titre} · photo libre · {md.titre} · photo libre ·</textPath></text>
+                <text><textPath href={`#barc-${i}`}>{md.titre} · {md.titre} · {md.titre} ·</textPath></text>
               </svg>
             </div>
-            <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}{md.placeholder ? <span class="tag">illustratif</span> : null}</p>
+            <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}</p>
           </li>
         ))}
       </ul>
@@ -61,7 +61,7 @@ const terrasse = photoDe('/photos/terrasse.webp');
         <h2 class="t-l" data-split="words">Un brunch, trois humeurs</h2>
         <ul class="lignes" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
           {brunch.lignes.map((l) => (
-            <li class="ligne"><span class="ligne__nom">{l.nom}{l.placeholder ? <span class="tag">prix à confirmer</span> : null}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
+            <li class="ligne"><span class="ligne__nom">{l.nom}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
           ))}
         </ul>
       </div>

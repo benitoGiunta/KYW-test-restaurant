@@ -12,9 +12,9 @@ const cafe = m['m-9h'], brunch = m['m-10h30'], dej = m['m-12h'], gouter = m['m-1
 const photoAstre = photoDe('/photos/tasse-rouge.webp');
 const photoCafe = photoDe(cafe.photo!), photoDej = photoDe(dej.photo!), photoGouter = photoDe(gouter.photo!);
 const medaillons = [
-  { photo: photoDe('/photos/yaourt-fraises.webp'), titre: 'Granola et fruits', texte: 'Photo libre, assiette non attribuée', placeholder: true },
-  { photo: photoDe('/photos/miel.webp'), titre: 'Miel', texte: 'Photo libre, produit non attribué', placeholder: true },
-  { photo: photoDe('/photos/the-citron.webp'), titre: 'Thé au citron', texte: 'Photo libre, boisson non attribuée', placeholder: true },
+  { photo: photoDe('/photos/yaourt-fraises.webp'), titre: 'Granola et fruits', texte: '', placeholder: true },
+  { photo: photoDe('/photos/miel.webp'), titre: 'Miel', texte: '', placeholder: true },
+  { photo: photoDe('/photos/the-citron.webp'), titre: 'Thé au citron', texte: '', placeholder: true },
 ];
 ---
 <Base theme="aube">
@@ -26,7 +26,7 @@ const medaillons = [
         <span class="hero__repere hero__repere--g" aria-hidden="true">9h</span>
         <span class="hero__repere hero__repere--d" aria-hidden="true">16h</span>
         <span class="hero__photo"><img src={asset(photoAstre.src)} alt={photoAstre.alt} width={photoAstre.largeur} height={photoAstre.hauteur} fetchpriority="high" decoding="async" data-astre-img /></span>
-        <figcaption class="hero__legende">Photo libre, illustrative</figcaption>
+        
       </figure>
       <div class="wrap">
         <div class="hero__haut">
@@ -56,12 +56,12 @@ const medaillons = [
         <div class="c1-6">
           <div class="moment__tete">
             <p class="moment__heure num" data-split="chars">{cafe.heureTexte}</p>
-            <h2 class="moment__titre" id="t-9h" data-split="words">{cafe.titre}{cafe.placeholder ? <span class="tag">illustratif</span> : null}</h2>
+            <h2 class="moment__titre" id="t-9h" data-split="words">{cafe.titre}</h2>
           </div>
           <p class="moment__accroche" data-reveal="fade">{cafe.accroche}</p>
           <ul class="lignes" data-reveal="up">
             {cafe.lignes.map((l) => (
-              <li class="ligne"><span class="ligne__nom">{l.nom}{l.placeholder ? <span class="tag">exemple</span> : null}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
+              <li class="ligne"><span class="ligne__nom">{l.nom}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
             ))}
           </ul>
         </div>
@@ -76,7 +76,7 @@ const medaillons = [
       <div class="wrap">
         <div class="moment__tete">
           <p class="moment__heure num" data-split="chars">{brunch.heureTexte}</p>
-          <h2 class="moment__titre" id="t-10h30" data-split="words">{brunch.titre}{brunch.placeholder ? <span class="tag">illustratif</span> : null}</h2>
+          <h2 class="moment__titre" id="t-10h30" data-split="words">{brunch.titre}</h2>
         </div>
         <div class="cols">
           <p class="c1-6 moment__accroche">{brunch.accroche}</p>
@@ -87,17 +87,17 @@ const medaillons = [
                   <div class="medaillon__photo"><img src={asset(md.photo.src)} alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
                   <svg class="medaillon__anneau" viewBox="0 0 200 200" aria-hidden="true">
                     <defs><path id={`arc-${i}`} d="M100,100 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
-                    <text><textPath href={`#arc-${i}`} startOffset="0">{md.titre} · photo libre · {md.titre} · exemple ·</textPath></text>
+                    <text><textPath href={`#arc-${i}`} startOffset="0">{md.titre} · {md.titre} ·</textPath></text>
                   </svg>
                 </div>
-                <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}{md.placeholder ? <span class="tag">illustratif</span> : null}</p>
+                <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}</p>
               </li>
             ))}
           </ul>
           <div class="c1-6">
             <ul class="lignes" data-reveal="up">
               {brunch.lignes.map((l) => (
-                <li class="ligne"><span class="ligne__nom">{l.nom}{l.placeholder ? <span class="tag">exemple</span> : null}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
+                <li class="ligne"><span class="ligne__nom">{l.nom}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
               ))}
             </ul>
             <p class="actions"><a class="fleche" href={u('/brunch/')}>Tout le brunch <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a></p>
@@ -124,7 +124,6 @@ const medaillons = [
         </div>
         <div class="c7-12">
           <figure class="photo photo--4x5" data-reveal="clip"><img src={asset(photoDej.src)} alt={photoDej.alt} width={photoDej.largeur} height={photoDej.hauteur} loading="lazy" decoding="async" data-parallax="0.08" /></figure>
-          <p class="note" style="margin-top: var(--u)">Photo libre de droits, illustrative.</p>
         </div>
       </div>
     </section>
@@ -134,7 +133,7 @@ const medaillons = [
       <div class="wrap">
         <div class="moment__tete">
           <p class="moment__heure num" data-split="chars">{gouter.heureTexte}</p>
-          <h2 class="moment__titre" id="t-14h" data-split="words">{gouter.titre}{gouter.placeholder ? <span class="tag">illustratif</span> : null}</h2>
+          <h2 class="moment__titre" id="t-14h" data-split="words">{gouter.titre}</h2>
         </div>
         <div class="cols" style="margin-bottom: calc(var(--u) * 3)">
           <p class="c1-6 moment__accroche" style="margin-bottom: 0">{gouter.accroche}</p>
@@ -144,7 +143,7 @@ const medaillons = [
           <li class="carte-apero carte-apero--photo"><img src={asset(photoGouter.src)} alt={photoGouter.alt} width={photoGouter.largeur} height={photoGouter.hauteur} loading="lazy" decoding="async" /></li>
           {gouter.lignes.map((l) => (
             <li class="carte-apero">
-              <p class="carte-apero__nom">{l.nom}{l.placeholder ? <span class="tag">exemple</span> : null}</p>
+              <p class="carte-apero__nom">{l.nom}</p>
               <p>{l.detail && <span class="t-s muted">{l.detail}<br /></span>}{l.prix && <span class="carte-apero__prix">{l.prix}</span>}</p>
             </li>
           ))}
@@ -158,12 +157,12 @@ const medaillons = [
         <div class="c1-6">
           <div class="moment__tete">
             <p class="moment__heure num" data-split="chars">{fin.heureTexte}</p>
-            <h2 class="moment__titre" id="t-16h" data-split="words">{fin.titre}{fin.placeholder ? <span class="tag">illustratif</span> : null}</h2>
+            <h2 class="moment__titre" id="t-16h" data-split="words">{fin.titre}</h2>
           </div>
           <p class="statement" data-split="lines">{fin.accroche}</p>
           <ul class="lignes" style="margin-top: calc(var(--u) * 4); max-width: 28rem" data-reveal="up">
             {fin.lignes.map((l) => (
-              <li class="ligne"><span class="ligne__nom">{l.nom}{l.placeholder ? <span class="tag">exemple</span> : null}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
+              <li class="ligne"><span class="ligne__nom">{l.nom}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
             ))}
           </ul>
         </div>

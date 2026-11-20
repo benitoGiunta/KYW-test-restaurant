@@ -30,7 +30,7 @@ export const horaires = {
   ouverture: '09:00', fermeture: '14:30',
   de: '9 h', a: '14 h 30',
   placeholder: true,
-  note: 'Horaires indicatifs, relevés chez un annuaire tiers. À confirmer avec le café.',
+  note: 'Horaires relevés chez un annuaire tiers.',
 };
 
 export const brunchs = [
@@ -57,7 +57,7 @@ export const tarifs = [
   { nom: 'Brunch', prix: 21.95 },
   { nom: 'Petit-déjeuner', prix: 11.95 },
 ].map((t) => ({ ...t, placeholder: true }));
-export const tarifsNote = 'Tarifs relevés dans un guide, anciens, donnés à titre indicatif. À confirmer avec le café.';
+export const tarifsNote = 'Tarifs relevés dans un guide, anciens.';
 
 export const histoire = [
   { quand: '2020', texte: 'Le Café Fleuri ouvre au 38, rue des Fossés Fleuris, comme second lieu du Bistro Bisou, au 44 et 46 : les brunchs du Bisou étaient trop demandés.' },
