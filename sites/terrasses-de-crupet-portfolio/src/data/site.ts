@@ -381,7 +381,7 @@ export const site: Restaurant = {
     }
   ],
   histoire: [
-    'Les Terrasses de Crupet est une brasserie au cœur du village de Crupet, dans la commune d’Assesse. Un lieu où il fera bon se restaurer en famille ou entre amis.',
+    'Les Terrasses de Crupet est une brasserie au cœur du village de Crupet, dans la commune d’Assesse.',
     'La salle aux miroirs ronds, le bar carrelé de vert, la terrasse en été et le chalet d’hiver : on peut réserver dans le restaurant ou dans le chalet.',
     'La carte fait la part belle aux plats de brasserie : carbonnade à la bière et ses croquettes, vol-au-vent de Mamy et frites fraîches, os à moelle et tartare de bœuf, fondus au fromage d’abbaye. Les enfants ont leur carte.',
     'Une carte des vins étoffée, des cocktails, et des cafés et thés signés Delahaut.',
@@ -504,7 +504,7 @@ export const guinguette = {
   manifeste: {
     titre: ['En famille,', 'entre amis'],
     motItalique: 'amis',
-    texte: 'Une brasserie au cœur du village de Crupet. Un lieu où il fera bon se restaurer en famille ou entre amis.',
+    texte: 'Un lieu où il fera bon se restaurer en famille ou entre amis.',
   },
   finale: 'À table !',
 };

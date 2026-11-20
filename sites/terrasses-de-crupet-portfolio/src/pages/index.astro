@@ -38,7 +38,7 @@ const etoiles = Array.from({ length: 5 });
   <section class="section" id="maison">
     <div class="wrap maison__grille">
       <figure class="tirage" style="--w:100%; cursor: default">
-        <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="eager" decoding="async" />
+        <img src={asset(trio.src.replace('/photos/', '/photos/xs/'))} srcset={`${asset(trio.src.replace('/photos/', '/photos/xs/'))} 480w, ${asset(trio.src)} 798w`} sizes="(max-width: 767px) 40vw, 600px" fetchpriority="high" alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="eager" decoding="async" />
         <figcaption>La façade, rue Basse</figcaption>
       </figure>
       <div class="maison__texte" data-reveal="fade">
@@ -47,9 +47,9 @@ const etoiles = Array.from({ length: 5 });
         <h2 class="section__titre">Le village, <em>la table</em></h2>
         <div class="prose">
           <p>{site.histoire[0]}</p>
-          <p>{site.histoire[2]}</p>
+          <p>Carbonnade, vol-au-vent de Mamy, fondus : une vraie carte de brasserie, et une carte pour les enfants.</p>
         </div>
-        <div class="actions"><a class="btn" href={u('/histoire/')}>Toute l'histoire</a></div>
+        <div class="actions"><a class="btn" href={u('/histoire/')}>La maison</a></div>
       </div>
     </div>
   </section>
@@ -91,7 +91,7 @@ const etoiles = Array.from({ length: 5 });
   <section class="section" id="menu">
     <div class="wrap">
       <p class="meta" style="text-align:center">Le menu</p>
-      <h2 class="section__titre" style="text-align:center">Ce qu'on <em>pose</em> sur la table</h2>
+      <h2 class="section__titre" style="text-align:center">Ce qu’on <em>pose</em> sur la table</h2>
       <div class="carte" data-reveal="scale">
         <div class="carte__grille">
           {cartePrincipale.map((c) => (
@@ -118,7 +118,7 @@ const etoiles = Array.from({ length: 5 });
   <section class="section section--blanc avis" id="avis" data-avis>
     <p class="display avis__mot" aria-hidden="true" data-avis-mot>Avis</p>
     <div class="wrap">
-      <p class="meta" style="text-align:center">Ils en parlent</p>
+      <p class="meta" style="text-align:center">Exemples d’avis (illustratifs)</p>
       <h2 class="sr-only">Avis</h2>
       <div class="avis__cartes">
         {avisVrai && (
@@ -130,10 +130,7 @@ const etoiles = Array.from({ length: 5 });
         )}
         {g.avisExemples.map((a) => (
           <blockquote class="carte-avis" data-carte-avis style={`--r:${a.r}deg`}>
-            <span class="carte-avis__etiq">Exemple d'avis</span>
-            <span class="carte-avis__etoiles" role="img" aria-label={`${a.note} étoiles sur 5, exemple`}>
-              {etoiles.map(() => <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.5L12 17.3 6.1 20.5l1.3-6.5L2.5 9.4l6.6-.8z" /></svg>)}
-            </span>
+            <span class="carte-avis__etiq">Exemple d’avis, texte illustratif</span>
             <p>{a.texte}</p>
           </blockquote>
         ))}
@@ -151,7 +148,7 @@ const etoiles = Array.from({ length: 5 });
         <a class="btn" href={u('/reservation/')}>Réserver</a>
         <a class="btn" href={u('/terrasse/')}>Terrasse et chalet</a>
       </div>
-      <span class="obj is-flottant obj--mobile" style="--x:2%;--y:8%;--r:-15deg;--taille:120px;--delai:0.4s" aria-hidden="true"><Objet id="parasol" classe="obj__svg" /></span>
+      <span class="obj is-flottant" style="--x:2%;--y:8%;--r:-15deg;--taille:120px;--delai:0.4s" aria-hidden="true"><Objet id="parasol" classe="obj__svg" /></span>
       <span class="obj is-flottant" style="--x:88%;--y:55%;--r:18deg;--taille:110px;--delai:1.4s" aria-hidden="true"><Objet id="verre" classe="obj__svg" /></span>
     </div>
   </section>

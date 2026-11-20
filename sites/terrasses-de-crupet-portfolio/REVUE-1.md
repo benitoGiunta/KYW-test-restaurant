@@ -1,0 +1,50 @@
+# Revue portfolio · Les Terrasses de Crupet · passe 1
+Verdict : A_CORRIGER
+Lecture en une ligne de l'idée du site (sans avoir lu DESIGN.md) : une « guinguette » de village, fond crème, vert sapin et orange cuivré, avec des pictogrammes au trait qui flottent (parasol, frites, verre) et des photos en tirages à cadre blanc posés de travers ; l'accueil tient en un titre serif posé et un mur de 12 tirages.
+
+Méthode : QA-revue1.md et planches réutilisés (dist 04:08, captures 04:15, `src/` plus ancien : valables). Le QA n'a couvert que 3 pages sur 7 ; j'ai donc mesuré moi-même les 7 pages (dont le vrai `404.html`) à 1440 et 390 px : axe-core complet, console, requêtes, débordement, balises, liens, JSON-LD (scripts maison, serveur propre sur le port 4761, arrêté). Texte extrait du `dist/` et confronté à `donnees.json` et `dossier.md`. Photos vérifiées sur planche PIL (8 photos contre leurs alt).
+
+Scores /10
+- Design 7,5 : identité cohérente et propre au lieu (palette tirée du logo, pictos au trait, tirages inclinés) ; points faibles : parasol sur le titre à 390 px, bandeau orange à moitié vide sous les boutons.
+- Usabilité 8 : 0 débordement (390 et 1440), 0 lien interne mort sur 13, Tab OK (lien d'évitement en premier, contour 2 à 3 px partout), barre d'onglets mobile claire, Zenchef et téléphone à deux clics.
+- Créativité 7 : mur de tirages et pictos vivants ; l'ensemble reste proche du gabarit « guinguette » (cartes blanches arrondies, fade partout).
+- Contenu 6,5 : faits et 43 plats avec prix sans écart ; mais répétitions de phrases, section d'avis fictifs « Ils en parlent », une procédure inventée, un texte méta visible, titre « Bistronomie » faux.
+- Technique 7 : build OK, 0 erreur console, 0 requête en échec, noindex, `lang="fr"`, JSON-LD `Restaurant` avec adresse et horaires, robots.txt et sitemap présents ; LCP mobile accueil 3,8 s et deux violations axe moderate sur toutes les pages.
+
+## Findings (par gravité)
+Aucun F0 : build OK, 0 fait faux, 0 invention non marquée, 0 débordement, 0 violation axe critique/sérieuse sur les pages livrées, mention + logo + noindex présents sur les 7 pages.
+
+### F1 majeurs
+- **F1-1 · LCP mobile de l'accueil 3,8 s.** Mesuré deux fois sous CPU x4 + 4G lente (3808 et 3780 ms), élément `img` `photos/facade-ete.webp` (PIL : 798 x 1200, 217 Ko, `loading="eager"`, sans `fetchpriority`, sans `srcset`). Carte et réservation : 1,05 s, donc le défaut est propre à l'accueil. CLS mobile 0,046 (limite 0,05) : sources `SECTION.section`, `DIV.actions`, `P.hero__slogan` (bascule de police du héros). Correction : servir cette image en ~480 px de large (~50 Ko) via `srcset`/`sizes`, `fetchpriority="high"` si elle reste LCP, ou la différer si elle est sous la ligne de flottaison ; contrôler que le slogan du héros ne décale plus rien (`font-display` / métriques de repli).
+- **F1-2 · Parasol posé sur le titre « En famille, entre amis » à 390 px.** Preuve : `home/m-05-scroll.png`, le trait du parasol traverse « En » et « entre » ; à 1440 px il est ailleurs et ne gêne pas. L'objet décoratif de la section `#manifeste` (`pages/index.astro` ~l.145-150, objets `obj--mobile`, `mx` de `guinguette.objets`) doit sortir de la boîte du titre en mobile (le décaler en haut à gauche au-dessus du cadre, ou le masquer sous 600 px).
+
+### F2 mineurs
+- **F2-1 · Titre de l'accueil faux : « Bistronomie à Crupet (Assesse) ».** `layouts/Base.astro:19`. Le dossier dit « brasserie conviviale et familiale » ; « bistronomie » est un positionnement non établi (et ne figure pas dans la description, qui dit « brasserie »). Correction : `Les Terrasses de Crupet | Brasserie à Crupet (Assesse)`.
+- **F2-2 · Section « Ils en parlent » : 4 avis de 5 étoiles inventés.** `data/site.ts` `avisExemples` ; rendu `pages/index.astro:121-136`, `d-05-scroll.png`. Marqués `placeholder` et étiquetés « Exemple d'avis » (donc pas F0), mais le titre « Ils en parlent » et les 5 étoiles les présentent comme de la réputation, avec des faits concrets inventés (« la dernière table du vendredi midi », « on a choisi le chalet pour la fondue »). Le dossier ne contient aucun avis (`extraits_avis: []`, note `null`). Correction attendue : retirer les étoiles, remplacer le titre par « Exemples d'avis (illustratifs) » et rendre l'étiquette lisible, ou supprimer la section (le Restaurant Guru à 4,8 est « à confirmer » et ne doit pas être repris).
+- **F2-3 · Procédure inventée sur « À emporter ».** `pages/emporter.astro:33` : « Pour commander, appelez le +32 83 655 111 ». Le dossier donne les menus, les dates de retrait et le téléphone du restaurant, pas le mode de commande. Correction : « Renseignements : +32 83 655 111 » ou retirer la phrase.
+- **F2-4 · « Ouvert, arrivée jusqu'à 14:00 » (état calculé).** `motion/setup.ts:47`. Vérifié sous horloge (lun 13:00, sam 19:00 : « arrivée jusqu'à 22:00 »). Le dossier dit « cuisine ouverte de 12h à 14h et de 18h à 22h » : la fin de service devient une dernière arrivée, ce que le client n'a pas dit. Correction : « Ouvert, service jusqu'à 14:00 » (les autres états sont justes : lun 15:00, mer 10:00, dim 23:00 contrôlés).
+- **F2-5 · Page « La maison » : texte méta visible et lien qui promet plus.** `pages/histoire.astro:33` : « L'histoire de la maison, ses fondateurs et son équipe ne sont pas documentés : cette page se limite aux faits connus. » est une note interne affichée au visiteur, et le bouton de l'accueil « Toute l'histoire » (`pages/index.astro:52`) mène à une page sans histoire. Correction : supprimer la note, renommer le bouton « La maison ».
+- **F2-6 · Répétitions de texte.** « Un lieu où il fera bon se restaurer en famille ou entre amis » figure 3 fois sur l'accueil (bloc La maison, manifeste, plus la description meta) et 1 fois sur La maison ; le paragraphe « La carte fait la part belle aux plats de brasserie… » est identique sur l'accueil et sur La maison ; « Une brasserie au cœur du village de Crupet » ouvre deux blocs. Le WARN d'audit.mjs le confirme. Correction : une seule occurrence de la phrase du client (manifeste), des formulations différentes ailleurs, tirées des faits (carbonnade, chalet, enfants).
+- **F2-7 · Axe moderate sur les 7 pages x 2 largeurs : `landmark-no-duplicate-contentinfo` et `region`.** Deux `<footer>` de premier niveau (pied du site, `components/Footer.astro:7`, et `kyw-footer`). Correction : le pied du site en `<div>` ou `<section aria-label="Contact et horaires">` ; garder le bandeau `kyw-footer` tel quel. Remarque : la violation `color-contrast` du QA vient de la 404 brute de `serve.mjs` (non livrée) ; le vrai `404.html` (titre « Page introuvable | Les Terrasses de Crupet », noindex, h1, lang) n'a pas de violation de contraste.
+
+### F3 finition
+- **F3-1** Bandeau orange du manifeste : environ 150 px vide sous les boutons (`m-05-scroll.png`, `d-06-scroll.png`).
+- **F3-2** « Ce qui fait la maison » (histoire.astro:42) : trois pastilles jaunes génériques (« Convivialité », « Service attentionné », « Produits de qualité ») sur une grande surface vide ; jaune hors palette crème / vert / cuivre ; c'est du filler sourcé du site actuel. Les fusionner dans le texte ou garder uniquement « Fromagerie La Petite Ferme et cafés Delahaut ».
+- **F3-3** Apostrophes droites dans le HTML servi (« d'abbaye », « Toute l'histoire », « Exemple d'avis », « Ce qu'on », « Page d'accueil » 404) alors que le reste du site utilise « ’ » ; uniformiser.
+- **F3-4** Carte mobile : « Scampis à la diable (6 / pièces) » coupe la parenthèse sur deux lignes (`m-03-scroll.png`) ; espace insécable avant « (6 pièces) » ou parenthèse dans la description.
+- **F3-5** Terrasse (`pages/terrasse.astro:28, 50`) : « devant la façade, au bord de la rue Basse » et « C'est la saison des fondues » sont déduits des photos et du `donnees.json` (« Fondue (photos, saison froide) »), pas affirmés par le client ; adoucir (« Dehors, sous la toile », « Dans le chalet d'hiver, la fondue figure sur les photos de la maison »).
+- **F3-6** Formulaire de réservation : les champs date/heure sont rendus en format américain par Chromium (artefact de locale du test, pas un défaut du site) ; la mention « Formulaire de démonstration sans envoi » est honnête.
+
+## Vérifications faites (sans écart)
+- Faits : nom, adresse (Rue Basse 13, 5330 Crupet ; l'adresse Namur du siège est bien écartée), téléphone +32 83 655 111, e-mail resto@lesterrassesdecrupet.be, Zenchef rid 367820, Facebook et Instagram, horaires 12-14 / 18-22 sept jours, menus de fêtes (37 à 69 €, 24 et 31 décembre, 10h-15h, 20 et 27 décembre) : 0 écart.
+- Carte : 43 plats confrontés à `donnees.json` par script (nom et prix), 0 écart, 0 absent.
+- Pied de page : 1 logo `.kyw-footer__logo` par page, mention « Maquette KYW, certaines données sont illustratives » présente, `noindex, nofollow` sur 7 pages sur 7.
+- Alt des photos : 8 alt contrôlés sur planche (façade, enseigne, terrasse sous toile, plat de viande, fondue, chalet « APRÈS-SKI », menu noir, salle aux miroirs) : exacts, aucun nom de personne ni de plat inventé.
+- Clavier, reduced-motion : 12 Tab, outline 2 à 3 px sur tous les arrêts ; en reduced-motion seul le mot décoratif « Avis » (opacité 0,25) est atténué.
+- Taille des cibles : aucun lien ou bouton < 24 px sur les 7 pages x 2 largeurs.
+- Liens : 13 liens internes, 0 mort ; externes (Zenchef, Facebook, Instagram, OpenStreetMap, kyngroup.be, tel, mailto) conformes au dossier. 22 photos, plus gros fichier 240 Ko, `dist` du site 3,9 Mo.
+
+## Ce qui est bien (à ne pas casser à la révision)
+1. L'identité visuelle tirée du lieu (vert, cuivre, médaillon, pictos au trait, tirages inclinés) et le héros « Un moment hors du temps » en serif posé, avec le slogan du client en italique cuivré.
+2. La rigueur des données : carte complète sans écart, adresse réelle (pas le siège), e-mail du site, état ouvert/fermé calculé sans date en dur, JSON-LD avec horaires, `404.html` propre au site, robots.txt et sitemap.
+3. Le comportement mobile : barre d'onglets fixe lisible, aucun débordement, cartes de plats lisibles, CTA pleine largeur ; navigation et focus clavier soignés.

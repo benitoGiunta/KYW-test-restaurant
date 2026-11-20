@@ -1,3 +1,8 @@
+# ETAT : relecteur-site, passe 1 (awwwards)
+Fait : REVUE-1.md écrite (verdict A_CORRIGER : F0 0, F1 2, F2 4, F3 8). Mesures propres : axe complet 5 pages x 2 largeurs, liens, texte confronté au dossier, 43 prix de carte, menu mobile, reduced-motion, Tab. Serveur 4780 arrêté.
+Reste : réviseur traite F1-1, F1-2, F2-1 à F2-4 (puis F3), build, passe 2 de revue. Piège : le QA ne couvre que 3 pages sur 5 et sa 404 est la réponse brute de serve.mjs.
+Leçon proposée : data/usage/test-1/lecons-proposees/terrasses-de-crupet.md.
+
 # ETAT : Les Terrasses de Crupet, awwwards, fin de la phase 3 (QA)
 Phase 3 faite : corrections axe, cibles, descriptions, répétition, OG ; build OK, audit 0 FAIL / 1 WARN justifié. RAPPORT.md écrit. Reste : jury indépendant (/jury), validation client des hypothèses.
 

@@ -25,3 +25,6 @@
 ## Phase 3 (QA)
 - QA-build.md lu ; 404 « contraste/cible » = réponse brute de serve.mjs (faux positif, 404.html réelle : 0 violation). Aucun code modifié, build final OK. RAPPORT.md écrit.
 - Reste : UTILISATION.md (gabarits/), `pnpm index`, commit final `[publier]` par l'agent publication.
+
+## Révision 1 (reviseur-site)
+F1-1, F1-2, F2-1 à F2-7 corrigés, build OK, voir REVISION-1.md. Non fait : F3 (sauf apostrophes), axe non relancé.
