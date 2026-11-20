@@ -1,4 +1,4 @@
-# ETAT · révision 1
-Fait : R-01, R-02, R-03, R-04 corrigés et vérifiés (voir REVISION-1.md). Build refait.
-Reste : F3 (R-05 à R-10), non traités ; commit de publication avec `pnpm index` si la revue 2 est bonne.
-Pièges : axe `label-content-name-mismatch` exige de retirer l'`aria-label` du logo (sr-only) ; SplitText pose `aria-label` par défaut (`aria: 'none'`).
+# ETAT · revue 2
+Fait : REVUE-2.md écrite (R-01, R-02, R-03 confirmés corrigés ; R-04 partiel). Verdict A_CORRIGER : F2 R2-01 (phrase du manifeste « sous un même toit, depuis 1946 », site.ts:107).
+Reste : corriger R2-01, supprimer FICHE.md (gabarit d'un autre restaurant), F3 facultatifs (R-05 à R-09, R2-02), puis pnpm index et commit [publier].
+Pièges : QA-revue2.md absent ; le color-contrast axe de Contact est un faux positif ; horloges de test avec timezoneId forcé.
