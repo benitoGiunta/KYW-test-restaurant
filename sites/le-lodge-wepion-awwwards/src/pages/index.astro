@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Berge from '../components/Berge.astro';
+import { u } from '../lib/url';
+import { site, wepion, relais, reperes } from '../data/site';
+---
+<Base page="accueil" description="Le Lodge, brasserie et tea-room au bord de la Meuse à Wépion, est fermé depuis l’incendie du 21 mai 2026. L’équipe vous reçoit à Erpent, au Wine & More.">
+  <section class="rives" aria-labelledby="titre-accueil" data-rives>
+    <div class="rives__crue" aria-hidden="true"></div>
+    <Berge sens="v" classe="rives__berge" />
+    <div class="rive rive--nuit">
+      <p class="mention">Wépion · {wepion.rue} {wepion.numero} · fermé depuis le 21 mai 2026</p>
+      <h1 id="titre-accueil" class="display" data-split="lines" data-intro>Le Lodge<br /><em>Wépion</em></h1>
+      <div class="photo">
+        <Photo cle="terrasse" sizes="(max-width: 60rem) 100vw, 58vw" widths={[480, 800, 1145]} prioritaire />
+      </div>
+    </div>
+    <div class="rive rive--jour jour">
+      <Berge sens="h" classe="rives__berge-h" />
+      <div class="rive__corps">
+        <p class="mention">Aujourd’hui · Erpent · {relais.lieu}</p>
+        <h2 class="display" data-split="lines" data-intro data-delay="0.25">À table à Erpent, en attendant la berge.</h2>
+        <p>Brasserie, restaurant et tea-room au bord de la Meuse : l’équipe du Lodge vous reçoit au {relais.lieu} depuis le <span class="nw">15 septembre 2026</span>, six jours sur sept.</p>
+        <div class="rive__actions">
+          <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver une table</span></a>
+          <a class="cta cta--contour" href={relais.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{relais.telephone}</span></span></a>
+        </div>
+      </div>
+      <address class="rive__adresse">
+        <strong>{relais.lieu}</strong>
+        <span>{relais.rue} {relais.numero}, {relais.commune}</span>
+        <a class="lien" href={relais.planUrl} rel="noopener">Ouvrir le plan</a>
+      </address>
+    </div>
+  </section>
+
+  <section class="statement wrap grille" aria-label="Le Lodge en une phrase">
+    <p class="display" data-split="lines">Une terrasse au bord de la Meuse, des rochers en face, une carte de brasserie. <em>Le Lodge a quitté sa berge, pas sa table.</em></p>
+    <p class="petit">Les photos de ce site datent d’avant l’incendie du 21 mai 2026. Le retour à Wépion est {site.reouverture}.</p>
+  </section>
+
+  <section class="sec wrap" aria-labelledby="titre-passage">
+    <div class="grille"><h2 id="titre-passage" class="passage__titre display" data-split="lines">Deux rives, un seul <em>Lodge</em></h2></div>
+    <div class="passage" role="group" aria-label="Wépion et Erpent côte à côte">
+      <div class="passage__tete passage__tete--vide"></div>
+      <div class="passage__tete passage__nuit">La berge · Wépion</div>
+      <div class="passage__tete passage__jour">Le relais · Erpent</div>
+      <div class="passage__lab">Adresse</div>
+      <div class="passage__val passage__nuit">{wepion.rue} {wepion.numero}<small>{wepion.cp} {wepion.commune}</small></div>
+      <div class="passage__val passage__jour">{relais.lieu}<small>{relais.rue} {relais.numero}, {relais.commune}</small></div>
+      <div class="passage__lab">État</div>
+      <div class="passage__val passage__nuit">Fermé depuis le 21 mai 2026<small>Retour {site.reouverture}.</small></div>
+      <div class="passage__val passage__jour">Ouvert, six jours sur sept<small>Depuis le 15 septembre 2026 (jours et horaires à confirmer).</small></div>
+      <div class="passage__lab">Réserver</div>
+      <div class="passage__val passage__nuit">Pas de service<small>Ligne de Wépion : {wepion.telephone}</small></div>
+      <div class="passage__val passage__jour"><a class="lien" href={relais.telephoneHref}>{relais.telephone}</a><small>Ou en ligne, par Barestho.</small></div>
+    </div>
+  </section>
+
+  <section class="sec wrap grille" aria-labelledby="titre-reperes">
+    <h2 id="titre-reperes" class="reperes__titre display" data-split="lines">À la carte, <em>six repères</em></h2>
+    <ul class="reperes__liste">
+      {reperes.map((r) => (
+        <li class="repere" data-reveal="up">
+          <span class="repere__nom">{r.nom}</span>
+          <span class="repere__prix prix">{r.prix}</span>
+          <span class="repere__note">{r.note}</span>
+        </li>
+      ))}
+    </ul>
+    <div class="photo reperes__photo" data-reveal="clip"><Photo cle="viande" sizes="(max-width: 60rem) 100vw, 30vw" widths={[480, 800, 1200]} /></div>
+    <p class="reperes__lien"><a class="lien" href={u('/carte/')}>Voir toute la carte</a> <span class="petit">Carte de saison d’avant l’incendie : celle du relais peut différer.</span></p>
+  </section>
+
+  <figure class="cadre" aria-label="La salle du Lodge">
+    <div class="photo" data-reveal="clip"><Photo cle="salleVoutee" sizes="100vw" widths={[800, 1200, 1800]} /></div>
+    <figcaption>La salle aux fenêtres cintrées, avant l’incendie.</figcaption>
+  </figure>
+
+  <section class="sec wrap grille" aria-labelledby="titre-tea">
+    <div class="paire__texte">
+      <h2 id="titre-tea" class="display" data-split="lines">Et l’après-midi, <em>le tea-room.</em></h2>
+      <p>Crêpes, gaufres et glaces Pagotini : la brasserie devient tea-room l’après-midi. Les fraises de Wépion arrivent en dessert dès qu’elles sont de saison.</p>
+      <p><a class="lien" href={u('/carte/') + '#crepes'}>Crêpes et gaufres</a></p>
+    </div>
+    <div class="photo paire__a" data-reveal="clip"><Photo cle="coupelle" sizes="(max-width: 60rem) 50vw, 25vw" widths={[480, 800]} /></div>
+    <div class="photo paire__b" data-reveal="clip"><Photo cle="dessert" sizes="(max-width: 60rem) 50vw, 25vw" widths={[480, 800]} /></div>
+    <p class="paire__legende petit">Desserts du Lodge, photos d’avant l’incendie.</p>
+  </section>
+</Base>

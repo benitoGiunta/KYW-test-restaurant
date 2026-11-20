@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+import Berge from '../components/Berge.astro';
+import { relais } from '../data/site';
+---
+<Base page="404" title="Page introuvable" description="Cette page n’existe pas sur la berge du Lodge Wépion. Revenez à l’accueil, à la carte ou à la réservation.">
+  <section class="perdu" aria-labelledby="titre-404" data-rives>
+    <Berge sens="v" classe="rives__berge" />
+    <div class="perdu__nuit">
+      <p class="mention">Erreur 404</p>
+      <h1 id="titre-404" class="display" data-split="lines" data-intro>Cette rive <em>n’existe pas.</em></h1>
+    </div>
+    <div class="perdu__jour jour">
+      <Berge sens="h" classe="rives__berge-h" />
+      <p>La page que vous cherchez n’est ni sur la berge de Wépion, ni au relais d’Erpent.</p>
+      <p><a class="cta" href={import.meta.env.BASE_URL}><span class="cta__txt">Retour à l’accueil</span></a></p>
+      <p><a class="lien" href={u('/carte/')}>La carte</a> · <a class="lien" href={u('/reservation/')}>Réserver</a> · <a class="lien" href={relais.telephoneHref}>Appeler</a></p>
+    </div>
+  </section>
+</Base>

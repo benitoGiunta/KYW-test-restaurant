@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import Berge from '../components/Berge.astro';
+import Photo from '../components/Photo.astro';
+import { carte } from '../data/carte';
+import { euro } from '../lib/format';
+const apres = 'tartares'; // le mur de photos s'intercale après cette catégorie
+---
+<Base page="carte" title="La carte" description="La carte du Lodge Wépion : tartares, boulettes maison, vol-au-vent, pâtes Mil’pat, fraises de Wépion, crêpes et glaces. Carte de saison d’avant l’incendie.">
+  <header class="entete wrap grille">
+    <Berge sens="h" classe="entete__berge" />
+    <p class="mention">Carte de saison, avant l’incendie</p>
+    <h1 class="display" data-split="lines" data-intro>La carte, <em>côté berge.</em></h1>
+    <p>Quatre-vingt-huit lignes relevées sur le site du Lodge, de l’apéritif au dessert. Le relais d’Erpent peut servir une autre carte : demandez-la à la réservation. Une table = une addition.</p>
+  </header>
+  <nav class="carte-nav" aria-label="Catégories de la carte">
+    <ul>
+      {carte.map((c) => <li><a href={`#${c.id}`}>{c.titre}</a></li>)}
+    </ul>
+  </nav>
+  <div class="wrap">
+    {carte.map((c) => (
+      <>
+        <section class="cat" id={c.id} aria-labelledby={`t-${c.id}`}>
+          <div class="cat__grille">
+            <h2 class="cat__titre display" id={`t-${c.id}`}>{c.titre}</h2>
+            <ul class="cat__plats">
+              {c.plats.map((p) => (
+                <li class="plat">
+                  <span class="plat__nom">{p.nom}</span>
+                  <span class="plat__prix prix">{euro(p.prix)}</span>
+                  {p.description && <span class="plat__desc">{p.description}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+        {c.id === apres && (
+          <div class="mur" role="group" aria-label="Plats du Lodge">
+            <div class="photo" data-reveal="clip"><Photo cle="feuillete" sizes="(max-width: 60rem) 72vw, 30vw" widths={[480, 800]} /></div>
+            <div class="photo" data-reveal="clip"><Photo cle="panee" sizes="(max-width: 60rem) 72vw, 30vw" widths={[480, 800]} /></div>
+            <div class="photo" data-reveal="clip"><Photo cle="bol" sizes="(max-width: 60rem) 72vw, 30vw" widths={[480, 800]} /></div>
+          </div>
+        )}
+      </>
+    ))}
+    <p class="avis-carte">Prix en euros, relevés sur le diaporama de la carte de lodgewepion.be le 20 novembre 2026. Boîte à emporter : 1 €.</p>
+  </div>
+</Base>

@@ -5,7 +5,7 @@
 export const site = {
   nom: 'Escale en Vue !',
   nomCourt: 'Escale en Vue',
-  description: 'Terrasse et restaurant saisonniers à Dave, au-dessus de la vallée de la Meuse : petites assiettes locales, bières régionales et trappistes, tables dehors.',
+  description: 'Terrasse et restaurant saisonniers à Dave, au-dessus de la vallée : petites assiettes locales, bières régionales et trappistes, tables dehors.',
   baseline: 'Terrasse et restaurant saisonniers',
   typeCuisine: 'Petites assiettes saisonnières, apéro planchette',
   adresse: { rue: 'Rue de la Rêche-Terre', numero: '21', cp: '5100', commune: 'Dave (Namur)', localite: 'Dave', pays: 'BE' },
@@ -46,7 +46,7 @@ export interface Categorie { id: string; titre: string; note?: string; plats: Pl
 export const carte: Categorie[] = [
   { id: 'table', titre: 'À poser sur la table', plats: [
     { nom: 'Apéro planchette', description: 'Du jeudi soir au dimanche midi.', prix: null, photo: 'planchette' },
-    { nom: 'Plat du jour maison', description: 'Sur réservation à partir du vendredi soir. Parmigiana, tagliatelles fraîches, filet de poulet mariné, selon les posts de la saison 2026.', prix: null, photo: 'bol' },
+    { nom: 'Plat du jour maison', description: 'Sur réservation à partir du vendredi soir. Parmigiana, tagliatelles fraîches, filet de poulet mariné, selon les posts de la saison 2026.', prix: null, },
     { nom: 'Variante végé', description: 'Une alternative végétarienne accompagne toujours les plats.', prix: null },
   ] },
   { id: 'verre', titre: 'À boire', plats: [
@@ -59,7 +59,7 @@ export const carte: Categorie[] = [
 export const equipe = [{ nom: 'Olivier Evrard', role: 'Titulaire de l’établissement' }];
 
 export const histoire = [
-  'Escale en Vue ! est une terrasse et un restaurant saisonniers posés sur la colline de Dave, au-dessus de la vallée.',
+  'Escale en Vue ! est une terrasse et un restaurant saisonniers posés à Dave, au-dessus de la vallée.',
   'Toutes les tables sont dehors. On y vient du jeudi soir au dimanche après-midi, le temps d’une saison courte.',
   'La cuisine se veut fraîche, créative, familiale et locale, avec des produits d’artisans et d’une coopérative de paysans-artisans, et des tomates et aubergines du jardin pour la parmigiana de fin d’été.',
 ];

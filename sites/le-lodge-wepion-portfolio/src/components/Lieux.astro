@@ -1,0 +1,25 @@
+---
+// Deux cartes : l'accueil provisoire (Erpent) et le restaurant de Wépion (fermé). Aucun horaire n'est confirmé.
+import { site, lieux, adresseLigne, telHref } from '../data/site';
+const p = lieux.provisoire;
+---
+<div class="lieux">
+  <article class="hcarte lieu" data-reveal="up">
+    <p class="meta">En ce moment</p>
+    <h3 class="lieu__titre">{p.nom}, <em>à {p.commune}</em></h3>
+    <p class="lieu__adresse">{p.rue}, {p.commune}</p>
+    <p class="muted">{p.texte}</p>
+    <p class="hcarte__ligne"><span>Téléphone</span><a class="link nw" href={telHref(p.telephone)}>{p.telAffiche}</a></p>
+    <div class="actions">
+      <a class="btn btn--plein" href={site.reservation.url} rel="noopener">Réserver sur {site.reservation.outil}</a>
+      <a class="btn" href={p.lien} rel="noopener">Itinéraire</a>
+    </div>
+  </article>
+  <article class="hcarte lieu" data-reveal="up" data-delay="0.08">
+    <p class="meta">À Wépion</p>
+    <h3 class="lieu__titre">Fermé <em>pour l'instant</em></h3>
+    <p class="lieu__adresse">{adresseLigne()}</p>
+    <p class="muted">{lieux.reouverture}</p>
+    <p class="muted">{lieux.avant}</p>
+  </article>
+</div>

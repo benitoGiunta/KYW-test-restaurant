@@ -39,7 +39,7 @@ function marquee() {
   const fin = root.dataset.saisonTerminee;
   const peindre = () => {
     if (fin) {
-      root.querySelectorAll<HTMLElement>('[data-marquee-etat]').forEach((e) => { e.textContent = `${fin}, terminée : prochaine ouverture à confirmer`; e.className = 'marquee__etat is-ferme'; });
+      root.querySelectorAll<HTMLElement>('[data-marquee-etat]').forEach((e) => { e.textContent = `${fin}, terminée : rendez-vous à la prochaine saison`; e.className = 'marquee__etat is-ferme'; });
       return;
     }
     const d = new Date();

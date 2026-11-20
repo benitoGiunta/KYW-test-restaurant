@@ -1,0 +1,24 @@
+---
+import { ph, u } from '../data/site';
+interface Props { id: string; sizes?: string; priority?: boolean; pos?: string; legende?: string; class?: string; ratio?: string }
+const { id, sizes = '(min-width: 60rem) 50vw, 100vw', priority = false, pos = '50% 50%', legende, class: cls = '', ratio } = Astro.props;
+const p = ph(id);
+---
+<figure class:list={['fig', cls]} style={ratio ? `--ratio:${ratio}` : undefined}>
+  <div class="fig__frame">
+    <img
+      src={u(`photos/${p.file}.webp`)}
+      srcset={`${u(`photos/${p.file}-700.webp`)} ${p.w2}w, ${u(`photos/${p.file}.webp`)} ${p.w}w`}
+      sizes={sizes}
+      width={p.w}
+      height={p.h}
+      alt={p.alt}
+      style={`object-position:${pos}`}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : undefined}
+      decoding={priority ? 'sync' : 'async'}
+      data-credits="Photographie : Le Lodge (site d’origine)"
+    />
+  </div>
+  {legende && <figcaption>{legende}</figcaption>}
+</figure>

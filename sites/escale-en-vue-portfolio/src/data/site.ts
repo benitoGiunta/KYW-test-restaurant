@@ -73,15 +73,15 @@ export const site: Restaurant = {
       categorie: 'Plat du jour maison',
       note: 'Sur réservation, à partir du vendredi soir, avec une variante végé.',
       plats: [
-        { nom: 'Parmigiana', description: 'vue sur les posts de la saison 2026', prix: null, placeholder: false },
-        { nom: 'Tagliatelles fraîches', description: 'vue sur les posts de la saison 2026', prix: null, placeholder: false },
-        { nom: 'Filet de poulet mariné', description: 'vue sur les posts de la saison 2026', prix: null, placeholder: false },
+        { nom: 'Parmigiana', description: 'au menu en 2026', prix: null, placeholder: false },
+        { nom: 'Tagliatelles fraîches', description: 'au menu en 2026', prix: null, placeholder: false },
+        { nom: 'Filet de poulet mariné', description: 'au menu en 2026', prix: null, placeholder: false },
       ],
     },
     {
       categorie: 'À boire',
       plats: [
-        { nom: 'Bières régionales et trappistes', description: 'la liste exacte reste à confirmer', prix: null, placeholder: false },
+        { nom: 'Bières régionales et trappistes', description: '', prix: null, placeholder: false },
         { nom: 'Softs de qualité', description: '', prix: null, placeholder: false },
       ],
     },
@@ -146,7 +146,7 @@ export const guinguette = {
   /** Titre et slogan du hero. Le slogan reprend la baseline du site actuel. */
   heroTitre: ['Faites escale,', 'et une vue !'],
   slogan: { texte: 'une cuisine fraîcheur, respectable, variée et imparfaite', placeholder: false },
-  ouverture: 'Ouvert du jeudi soir au dimanche après-midi',
+  ouverture: 'Habituellement ouvert du jeudi soir au dimanche après-midi',
   /** Objets au trait du hero : position en % de la section, rotation en degrés. `mobile` = reste visible en 390 px. */
   objets: [
     { id: 'parasol', label: 'Parasol dessiné au trait', x: 6, y: 10, r: -12, taille: 150, mobile: true, mx: 4 },
@@ -205,12 +205,8 @@ export const guinguette = {
     },
   ] as (Categorie & { plats: (Plat & { vege: boolean })[] })[],
   /** Notes tierces relevées le 20/11/2026 (dossier.md, « Réputation »), non vérifiées directement : affichées avec leur source. */
-  notes: [
-    { source: 'Menukaart', note: '4,9/5', nombre: '93 avis', date: 'mise à jour au 17/01/2026' },
-    { source: 'Restaurant Guru', note: '4,9/5', nombre: '54 avis' },
-    { source: 'Sluurpy', note: '4,9/5', nombre: '16 avis' },
-    { source: 'Tripadvisor', note: '5,0/5', nombre: '6 avis' },
-  ] as NoteTierce[],
+  /** Notes tierces retirées (revue F1-1) : aucune note chiffrée tant que le restaurant ne les a pas confirmées. */
+  notes: [] as NoteTierce[],
   /** Thèmes récurrents des avis tiers (paraphrase du dossier, aucun extrait cité). */
   themesAvis: ['la vue sur la vallée', 'l’accueil aimable', 'la bonne bière', 'les produits frais et locaux'],
   /** Terrasse : toutes les tables sont dehors (dossier.md). Le nombre de places est inconnu. */
@@ -219,14 +215,13 @@ export const guinguette = {
     points: ['Toutes les tables dehors', 'Vue sur la vallée', 'Une alternative végé à chaque plat', 'Bières régionales et trappistes'],
     pratique: [
       { texte: 'Carte bancaire acceptée', source: 'Petit Futé' },
-      { texte: 'Parking gratuit', source: 'Tripadvisor, à confirmer' },
     ],
   },
   /** Manifeste : phrases tirées des valeurs réelles du dossier. */
   manifeste: {
     titre: ['Fraîche, familiale', 'et locale'],
     motItalique: 'locale',
-    texte: 'Une cuisine fraîcheur, créative, familiale. Des produits d’artisans locaux et d’une coopérative de paysans-artisans, et des tomates et aubergines du jardin pour la parmigiana de fin d’été.',
+    texte: 'Et au jardin, les tomates et les aubergines de la parmigiana de fin d’été.',
   },
   finale: 'À bientôt !',
 };

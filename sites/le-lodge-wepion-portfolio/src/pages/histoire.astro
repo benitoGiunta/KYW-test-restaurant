@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import Ornements from '../components/Ornements.astro';
+import { site, guinguette, lieux, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const petite = (src: string) => asset(src.replace('/photos/', '/photos/s/'));
+const galerie = ['/photos/salle-claire.webp', '/photos/salle-voutee.webp', '/photos/salle-vue-meuse.webp', '/photos/facade-nuit.webp', '/photos/dessert-coupelle.webp', '/photos/plat-bol.webp'].map(photoDe);
+const trio = photoDe('/photos/facade-jour.webp');
+const histoire = site.histoire;
+---
+<Base title="La maison et l'équipe" description={`La maison ${site.nom} : une brasserie et tea-room au bord de la Meuse à ${site.adresse.commune}, l'incendie de mai 2026 et la suite.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>La maison</h1>
+      <p class="lead">{site.baseline}</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--canard is-flottant" style="--x:86%;--y:0%;--r:-10deg;--taille:120px" aria-hidden="true"><Objet id="parasol" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap maison__grille">
+      <figure class="tirage" style="--w:100%; cursor: default; --r:-3deg">
+        <img src={asset(trio.src)} alt={trio.alt} width={trio.largeur} height={trio.hauteur} loading="eager" decoding="async" />
+        <figcaption>La façade, côté Meuse</figcaption>
+      </figure>
+      <div class="maison__texte">
+        <Ornements />
+        <h2 class="section__titre">Une brasserie <em>sur la Meuse</em></h2>
+        <div class="prose">{histoire.map((p) => <p>{p}</p>)}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--blanc">
+    <div class="wrap">
+      <h2 class="section__titre">L'<em>équipe</em></h2>
+      <div class="equipe">
+        {site.equipe.map((m, i) => (
+          <article class="membre" data-reveal="up">
+            <div class="membre__sans" aria-hidden="true"><Objet id="verre" /></div>
+            <h3>{m.nom}</h3>
+            <p class="muted">{m.role}</p>
+          </article>
+        ))}
+      </div>
+      <p class="muted" style="margin-top:calc(var(--u)*3)">Environ 17 équivalents temps plein et une trentaine d'étudiants et de flexi-jobbers, selon L'Avenir du 26 mai 2026.</p>
+    </div>
+  </section>
+
+  <section class="section" id="incendie">
+    <div class="wrap maison__grille">
+      <div class="prose">
+        <h2 class="section__titre">Après <em>l'incendie</em></h2>
+        <p>Dans la nuit du 21 mai 2026, vers 23 h 30, un incendie a touché les cuisines du restaurant de Wépion. Il est fermé depuis.</p>
+        <p>{lieux.provisoire.texte}</p>
+        <p>{lieux.reouverture}</p>
+      </div>
+      <div>
+        <p class="meta">Dans la presse</p>
+        <ul role="list" class="presse">
+          {lieux.presse.map((p) => <li><a class="link" href={p.url} rel="noopener">{p.media}, {p.date} : {p.titre}</a></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">La salle, <em>la table</em></h2>
+      <div class="grille-photos">
+        {galerie.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-3, 4, -2, 3, -5, 2][i]}deg`} data-reveal="up" data-delay={String((i % 3) * 0.08)}>
+            <img src={petite(p.src)} alt={p.alt} width="640" height="640" loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Réserver une table</a></div>
+    </div>
+  </section>
+</Base>
