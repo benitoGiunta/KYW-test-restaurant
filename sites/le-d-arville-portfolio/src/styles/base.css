@@ -139,10 +139,10 @@ strong { font-weight: 400; color: var(--c-fg); }
 
 /* Onglets à barre : photo de fond qui change, trois libellés, barre cuivre qui se remplit (--prog, 6 s). */
 .onglets { position: relative; display: grid; min-height: 80svh; align-items: end; overflow: clip; isolation: isolate; }
-.onglets__photos { position: absolute; inset: 0; z-index: -1; }
+.onglets__photos { position: absolute; inset: 0; z-index: -2; }
 .onglets__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1); }
 .onglets__photo.is-active { opacity: 1; }
-.onglets::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, var(--c-bg) 0%, rgb(27 55 48 / 0.45) 35%, rgb(27 55 48 / 0.85) 100%); }
+.onglets::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, var(--c-bg) 0%, rgb(27 55 48 / 0.9) 30%, rgb(27 55 48 / 0.95) 100%); }
 .onglets__contenu { position: relative; padding-block: calc(var(--u) * 8) calc(var(--u) * 7); }
 .onglets__intro { margin-top: calc(var(--u) * 1.5); max-width: var(--col-texte); font-family: var(--f-display); font-size: var(--t-l); line-height: 1.15; }
 .onglets__liste { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2) calc(var(--u) * 4); margin-top: calc(var(--u) * 4); }
@@ -367,3 +367,6 @@ html:not(.motion) .onglet[aria-selected='true'] .onglet__barre::after { transfor
 .horaires dt::first-letter { text-transform: uppercase; }
 .footer .horaires { grid-template-columns: minmax(0, 1fr); gap: 0; }
 .footer .horaires dd { margin-bottom: 0.6em; color: var(--c-fg); }
+
+/* Revision 2 F1-1 : sous 600 px le filigrane « 200 » recouvrait le titre de /barabas/ ; « 200 mètres » est dans le texte. */
+@media (max-width: 600px) { .chiffre--filigrane { display: none; } }
