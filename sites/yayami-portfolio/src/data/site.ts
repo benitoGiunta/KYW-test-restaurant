@@ -93,7 +93,6 @@ export const site: Restaurant = {
   },
   regles: [
     { texte: 'Ouvert 7 jours sur 7, de 12h à 14h et de 18h à 22h.', placeholder: false },
-    { texte: 'Livraison gratuite à partir de 30 €, dans sept codes postaux autour de Namur.', placeholder: false },
     { texte: "10 % de remise si vous venez chercher votre commande sur place.", placeholder: false },
     { texte: 'On commande en ligne : le panier ouvre le site de commande de la maison.', placeholder: false },
     { texte: 'Paiement : cash à la livraison ou à l’emporter, Bancontact, Maestro, MasterCard, Visa.', placeholder: false },
@@ -102,7 +101,7 @@ export const site: Restaurant = {
     'Yayami Sushi est un restaurant japonais, au 15 rue de Bruxelles, à Namur.',
     'Des nigiri à 4,50 € les deux pièces, des maki, des temaki, un chirashi bowl.',
     'Des plats chauds : nouilles udon, riz japonais, raviolis grillés, yakitori, karaage.',
-    'À emporter avec 10 % de remise, ou livré gratuitement dès 30 €.',
+    'À emporter ou livré chez vous, sept jours sur sept.',
   ],
   boissons: [
     boisson('Asahi', 'Bière japonaise', '3,90 €', 'bière'),
@@ -115,7 +114,7 @@ export const site: Restaurant = {
   ],
   modes: [
     { nom: 'Livraison', quand: 'dès 30 €', description: 'Gratuite à partir de 30 € de commande, dans sept codes postaux autour de Namur.', placeholder: false },
-    { nom: "À l’emporter", quand: '-10 %', description: 'Vous passez prendre votre commande rue de Bruxelles : 10 % de remise.', placeholder: false },
+    { nom: "À l’emporter", quand: '-10 %', description: 'Vous passez prendre votre commande rue de Bruxelles, la remise est déduite sur place.', placeholder: false },
     { nom: 'Commande en ligne', quand: '7 jours sur 7', description: 'La carte complète, avec les prix, sur le site de commande de la maison.', placeholder: false },
   ],
   mosaique: [

@@ -1,1 +1,2 @@
 - 2026-11-20 · reviseur-site (yayami legacy) : un repli de police avec size-adjust ne suffit pas à fixer le CLS si un max-width est en ch (le ch suit la police de repli, le titre passe de 3 à 4 lignes) ; passer en em ou mesurer le nombre de lignes avant/après.
+- 2026-11-20 · reviseur-site yayami : un MIN/MAX de loader plus court ne change rien si le lissage exponentiel (facteur 0,12 par tick) met ~0,7 s à passer 99,5 ; régler d'abord le facteur, puis MIN/MAX et la sortie.

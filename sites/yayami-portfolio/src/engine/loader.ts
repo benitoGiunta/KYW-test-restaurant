@@ -11,8 +11,8 @@ let exit: ((root: HTMLElement) => gsap.core.Timeline) | null = null;
 /** Replace the exit choreography (the loader → hero handoff). Return a timeline. */
 export const setLoaderExit = (fn: (root: HTMLElement) => gsap.core.Timeline) => { exit = fn; };
 
-const MIN = 0.6; // seconds: long enough to read as a designed moment
-const MAX = 0.9; // seconds: a longer loader is a usability problem
+const MIN = 0.45; // seconds: long enough to read as a designed moment
+const MAX = 0.7; // seconds: a longer loader is a usability problem
 
 function criticalAssets(): Promise<unknown>[] {
   const imgs = [...document.querySelectorAll<HTMLImageElement>('img[data-critical], [data-intro] img, [data-gl-instant] img')];
@@ -41,7 +41,7 @@ export async function runLoader(): Promise<void> {
       const elapsed = (performance.now() - start) / 1000;
       const timeCap = Math.min(100, (elapsed / MIN) * 100); // never faster than MIN
       const goal = elapsed > MAX ? 100 : Math.min(target.v, timeCap);
-      shown.v += (goal - shown.v) * 0.12;
+      shown.v += (goal - shown.v) * 0.25;
       if (goal === 100 && shown.v > 99.5) shown.v = 100;
       if (count) count.textContent = format(shown.v);
       if (bar) bar.style.transform = `scaleX(${shown.v / 100})`;
