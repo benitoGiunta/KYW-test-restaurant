@@ -1,0 +1,1 @@
+Fait : dossier.md, donnees.json (partiel), photos/index.json vide. Reste : carte, photos, site actuel (bloqué anti-robot, non contourné), GPS, concurrence. Pièges : adresse/téléphone de restaurants.json obsolètes.

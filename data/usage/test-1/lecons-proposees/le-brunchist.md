@@ -1,0 +1,1 @@
+- 2026-11-20 : lebrunchist.com (WordPress.com) affiche une vérification anti-robot (« Confirm you are human ») : capture-site ne récupère que cette page ; non contournée (refusée par le classifieur), se rabattre sur namurcentreville.be, Restaurant Guru, ELLE.be, quefaireanamur.be ; namurfood.be hors domaines autorisés ; le téléphone de restaurants.json est l'ancien numéro.
