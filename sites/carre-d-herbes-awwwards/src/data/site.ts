@@ -7,9 +7,9 @@
 //  - les photos de plats du site client ne sont pas rattachées à un plat précis : alt neutres ;
 //  - aucun contenu fictif n'est ajouté : tout est tiré du dossier (aucun `placeholder: true` requis).
 export const site = {
-  nom: "Carré d'herbes",
+  nom: "Carré d’herbes",
   baseline: 'Cuisine sincère et raffinée, entre Namur et Profondeville',
-  description: "Restaurant gastronomique à Wépion, au bord de la Meuse : menus en deux à cinq assiettes, cuisine de saison faite maison, terrasse et parc. Réservation au 081 34 48 19.",
+  description: "Restaurant gastronomique à Wépion, au bord de la Meuse : menus en deux à cinq assiettes, cuisine de saison faite maison, terrasse et parc. Réservation au 081 34 48 19.",
   typeCuisine: 'Cuisine raffinée de saison',
   telephone: '+3281344819',
   telephoneAffiche: '081 34 48 19',
@@ -19,7 +19,7 @@ export const site = {
   reservationUrl: 'https://carredherbes.be/reservations/',
   siteClient: 'https://carredherbes.be',
   reseaux: [{ nom: 'Facebook', url: 'https://www.facebook.com/profile.php?id=100092685321462' }],
-  credit: "photos : Carré d'herbes",
+  credit: "photos : Carré d’herbes",
 };
 
 /** Jours d'ouverture : service du midi et du soir (source : page Contact du site client). */
@@ -28,13 +28,13 @@ export const horaires = {
     { jour: 'Lundi', midi: null, soir: null },
     { jour: 'Mardi', midi: null, soir: null },
     { jour: 'Mercredi', midi: null, soir: null },
-    { jour: 'Jeudi', midi: '12 h à 16 h', soir: '19 h à minuit' },
-    { jour: 'Vendredi', midi: '12 h à 16 h', soir: '19 h à minuit' },
-    { jour: 'Samedi', midi: '12 h à 16 h', soir: '19 h à minuit' },
-    { jour: 'Dimanche', midi: '12 h à 16 h', soir: null },
+    { jour: 'Jeudi', midi: '12 h à 16 h', soir: '19 h à minuit' },
+    { jour: 'Vendredi', midi: '12 h à 16 h', soir: '19 h à minuit' },
+    { jour: 'Samedi', midi: '12 h à 16 h', soir: '19 h à minuit' },
+    { jour: 'Dimanche', midi: '12 h à 16 h', soir: null },
   ] as { jour: string; midi: string | null; soir: string | null }[],
-  derniereCommande: 'Dernière commande : 13 h 15 à midi, 20 h 15 le soir.',
-  telephoneNote: 'Réservation par téléphone du mercredi au dimanche, dès 10 h.',
+  derniereCommande: 'Dernière commande : 13 h 15 à midi, 20 h 15 le soir.',
+  telephoneNote: 'Réservation par téléphone du mercredi au dimanche, dès 10 h.',
 };
 
 /** Le menu se compte en assiettes : le nombre de ronds du site vient d'ici. */
@@ -53,7 +53,7 @@ export const plats: { entrees: Plat[]; plats: Plat[]; desserts: Plat[]; suppleme
     { nom: 'Foie gras', description: 'Foie gras de canard cuit au torchon, pommes Royal Gala, anguille fumée à la flamme, pain brioché au charbon végétal.' },
   ],
   plats: [
-    { nom: 'Biche', description: 'Biche en deux préparations : le rôti cuit à basse température et la gigue confite en effilochée, focaccia, morbier, échalotes, carottes rolls, sauce à la Leffe brune.' },
+    { nom: 'Biche', description: 'Biche en deux préparations : le rôti cuit à basse température et la gigue confite en effilochée, focaccia, morbier, échalotes, carottes rolls, sauce à la Leffe brune.' },
   ],
   desserts: [
     { nom: 'Poire', description: 'Poire, crumble, fromage blanc, glace chocolat blanc et vanille, toffee miso.' },
@@ -69,7 +69,7 @@ export const plats: { entrees: Plat[]; plats: Plat[]; desserts: Plat[]; suppleme
 };
 
 export const fetes = {
-  noel: { titre: 'Noël au restaurant', quand: 'Le 25 décembre, à midi', prix: 68, note: 'Cinq services. Acompte de 40 € par personne. Accord mets-vins : 7 € le verre.' },
+  noel: { titre: 'Noël au restaurant', quand: 'Le 25 décembre, à midi', prix: 68, note: 'Cinq services. Acompte de 40 € par personne. Accord mets-vins : 7 € le verre.' },
   emporter: {
     titre: 'À emporter pour Noël et le Nouvel An',
     quand: 'Retrait les 24 et 31 décembre',
@@ -84,8 +84,8 @@ export const fetes = {
       { nom: 'Sablé « Petit Bateau »', prix: 10 },
     ] as { nom: string; prix: number | string }[],
   },
-  bonCadeau: 'Bon cadeau : un chèque de valeur définie ou deux menus au choix, valable six mois sauf le samedi soir, retiré au restaurant.',
-  regimes: 'Végétarien et allergies : à signaler à la réservation. Vegan et sans lactose : impossibles.',
+  bonCadeau: 'Bon cadeau : un chèque de valeur définie ou deux menus au choix, valable six mois sauf le samedi soir, retiré au restaurant.',
+  regimes: 'Végétarien et allergies : à signaler à la réservation. Vegan et sans lactose : impossibles.',
 };
 
 export const equipe = [
@@ -95,10 +95,9 @@ export const equipe = [
 
 export const histoire = {
   chef: 'Damien Herbay a fait son apprentissage sous la direction d’Éric Briffard, puis s’est perfectionné aux Forges du Pont d’Oye, à La Table des Guilloux et à L’Air du Temps. Il a ouvert les portes de sa propre maison.',
-  nom: 'Le nom vient de trois choses : la tour carrée de la façade, le carré potager d’aromates, et le nom du chef, Herbay.',
+  nom: 'Le nom vient de trois choses : la tour carrée de la façade, le carré potager d’aromates, et le nom du chef, Herbay.',
   lieu: 'Une maison de bord de Meuse entièrement rénovée, un parc arboré de plus de 28 ares, une terrasse au calme, un parking privé de dix voitures.',
   cuisine: 'Tout ce qui est proposé à la dégustation est fait maison, avec des produits locaux de saison.',
-  presse: 'Gault&Millau Belgique : 13,5 sur 20 d’après la fiche en ligne.',
 };
 
 export const photos = {

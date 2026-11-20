@@ -23,3 +23,11 @@ const liens = [
   </nav>
   <a class="btn btn--s top__call" href={`tel:${site.telephone}`}><span>{site.telephoneAffiche}</span></a>
 </header>
+<script is:inline>
+  (function () {
+    var h = document.querySelector('.top');
+    if (!h) return;
+    var m = function () { h.classList.toggle('top--fond', (window.scrollY || document.documentElement.scrollTop) > 8); };
+    addEventListener('scroll', m, { passive: true }); m();
+  })();
+</script>
