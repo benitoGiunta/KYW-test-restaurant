@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, jours, pratique, congesIntro } from '../data/site';
+const tel = `tel:${site.telephone.replace(/\s/g, '')}`;
+---
+<Base page="reservation" title="Réserver" description="Réserver au D’Arville à Wierde : réservation en ligne, téléphone 081 46 23 65 ou e-mail. Ouvert du jeudi soir au dimanche midi, parking privé.">
+  <section class="sec wrap page-tete" aria-labelledby="titre">
+    <p class="etiquette">Réserver et venir</p>
+    <h1 id="titre" class="display display--mega" style="font-size:var(--t-xl)">À table, du jeudi au dimanche.</h1>
+  </section>
+  <section class="sec wrap" aria-label="Réservation">
+    <div class="grid resa">
+      <div class="resa__actions">
+        <a class="btn btn--plein" href={site.reservationUrl} rel="noopener">Réserver en ligne <span aria-hidden="true">→</span></a>
+        <a class="btn" href={tel}>Appeler le {site.telephoneAffiche} <span aria-hidden="true">→</span></a>
+        <a class="btn" href={`mailto:${site.email}`}>Écrire à {site.email} <span aria-hidden="true">→</span></a>
+        <p class="resa__aide">La réservation en ligne est celle du restaurant. Au-delà de 6 personnes, appelez le {site.telephoneAffiche} ou écrivez-nous.</p>
+      </div>
+      <div class="resa__jours">
+        <h2 class="etiquette" style="margin-bottom:0.8rem">Jours d’ouverture</h2>
+        <ul class="jours">
+          {jours.map((j) => (
+            <li><span>{j.jour}</span>{j.service ? <span>{j.service}</span> : <span class="ferme">fermé</span>}</li>
+          ))}
+        </ul>
+        <p class="resa__aide" style="margin-top:0.8rem">Les heures de service ne sont pas publiées : demandez-les lors de la réservation. {congesIntro}</p>
+      </div>
+      <figure class="photo resa__photo"><Photo cle="terrasseTable" sizes="100vw" widths={[800, 1200, 1600]} /></figure>
+      <div class="resa__pratique">
+        <div>
+          <h2 class="etiquette">Adresse</h2>
+          <p class="corps">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</p>
+          <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+        </div>
+        {pratique.map((p) => <div><h2 class="etiquette">{p.titre}</h2><p class="corps" style="font-size:var(--t-s)">{p.texte}</p></div>)}
+        <div>
+          <h2 class="etiquette">Une question par e-mail</h2>
+          <form class="form-mail" action={`mailto:${site.email}`} method="post" enctype="text/plain">
+            <label>Votre message<textarea name="message" rows="3"></textarea></label>
+            <button class="btn" type="submit">Ouvrir mon e-mail</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

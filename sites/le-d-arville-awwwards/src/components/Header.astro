@@ -1,0 +1,23 @@
+---
+import { u } from '../lib/url';
+interface Props { page: string }
+const { page } = Astro.props;
+const liens = [
+  { cle: 'carte', href: '/carte/', nom: 'La carte' },
+  { cle: 'histoire', href: '/histoire/', nom: 'Le domaine' },
+  { cle: 'reservation', href: '/reservation/', nom: 'Réserver' },
+];
+---
+<header class="entete">
+  <a class="entete__marque" href={u('/')} aria-label="Le D’Arville, accueil" aria-current={page === 'accueil' ? 'page' : undefined}>
+    <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><path d="M9 7h7a9 9 0 0 1 0 18H9z" fill="none" stroke="currentColor" stroke-width="3.2" /></svg>
+    <span>D’Arville</span>
+  </a>
+  <nav aria-label="Navigation principale">
+    <ul>
+      {liens.map((l) => (
+        <li><a class:list={['nav-lien', { 'nav-lien--cta': l.cle === 'reservation' }]} href={u(l.href)} aria-current={page === l.cle ? 'page' : undefined}>{l.nom}</a></li>
+      ))}
+    </ul>
+  </nav>
+</header>

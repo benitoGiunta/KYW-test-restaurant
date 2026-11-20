@@ -1,0 +1,31 @@
+---
+import { site, jours } from '../data/site';
+import { u } from '../lib/url';
+---
+<footer class="pied">
+  <div class="wrap pied__grille">
+    <p class="pied__arrivee display">Arrivée. <span>À table.</span></p>
+    <div class="pied__col">
+      <h2 class="etiquette">Adresse</h2>
+      <p><a href={site.planUrl} rel="noopener">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</a></p>
+      <p class="pied__petit">Parking privé.</p>
+    </div>
+    <div class="pied__col">
+      <h2 class="etiquette">Contact</h2>
+      <p><a href={`tel:${site.telephone.replace(/\s/g, '')}`}>{site.telephoneAffiche}</a><br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="etiquette">Ouvert</h2>
+      <ul class="pied__jours">
+        {jours.filter((j) => j.service).map((j) => <li><span>{j.jour}</span> <span>{j.service}</span></li>)}
+      </ul>
+    </div>
+    <div class="pied__col">
+      <h2 class="etiquette">Suivre</h2>
+      <ul>
+        {site.reseaux.map((r) => <li><a href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+      <p class="pied__petit">Photos : Le D’Arville.</p>
+    </div>
+  </div>
+</footer>

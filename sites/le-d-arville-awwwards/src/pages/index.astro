@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, balade, tendance, eur, barabas } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base page="accueil">
+  <section class="sec hero wrap" aria-labelledby="titre">
+    <h1 id="titre" class="display display--mega hero__titre"><span>Le&nbsp;</span><span>D’Arville</span></h1>
+    <div class="grid hero__bas">
+      <div class="hero__texte">
+        <p class="etiquette">{site.baseline} · Wierde, Namur</p>
+        <p class="lede">Une ferme du 19e siècle, une cuisine de saison, un étang. Table ouverte du jeudi soir au dimanche midi.</p>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/reservation/')}>Réserver</a>
+          <a class="btn" href={`tel:${site.telephone.replace(/\s/g, '')}`}>Appeler</a>
+        </div>
+        <p class="balise"><span class="balise__m prix">0&nbsp;m</span><span class="etiquette">Départ, rue d’Arville 94</span></p>
+      </div>
+      <figure class="photo hero__media">
+        <Photo cle="bassin" prioritaire sizes="(max-width: 52rem) 100vw, 66vw" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec wrap" aria-labelledby="t-depart">
+    <div class="grid depart">
+      <figure class="photo depart__photo"><Photo cle="chef" widths={[480, 800, 1024]} sizes="(max-width: 52rem) 80vw, 40vw" /></figure>
+      <div class="depart__texte">
+        <p class="etiquette">On entre par la ferme</p>
+        <h2 id="t-depart" class="display display--xl">Estelle et Olivier vous reçoivent chez eux.</h2>
+        <p class="corps">Un cadre contemporain dans les briques d’une ferme du 19e siècle : un salon, une table d’hôte, une cuisine ouverte. Ici, le repas se suit comme une balade, d’une halte à l’autre.</p>
+        <p><a class="lien" href={u('/histoire/')}>Lire l’histoire du domaine</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--pierre" aria-labelledby="t-parcours">
+    <div class="wrap grid parcours">
+      <div class="parcours__tete">
+        <h2 id="t-parcours" class="display display--xl">Le menu {balade.nom}</h2>
+        <p class="menu-prix" style="min-width:min(100%,18rem)"><strong>Menu {balade.nom}</strong><span class="prix">{eur(balade.prix)}</span></p>
+      </div>
+      <ol class="route">
+        {balade.haltes.map((h) => (
+          <li>
+            <span class="route__etape">{h.etape}</span>
+            <span class="route__plat">{h.plat}</span>
+            {h.detail && <span class="route__detail">{h.detail}</span>}
+          </li>
+        ))}
+      </ol>
+      <div class="parcours__cote">
+        <figure class="photo"><Photo cle="miseEnBouche" sizes="(max-width: 52rem) 100vw, 28vw" /></figure>
+        <p class="menu-prix"><strong>Accord mets, vins et café</strong><span class="prix">+ {eur(balade.accord)}</span></p>
+        <p class="menu-prix"><strong>{tendance.nom}</strong><span class="prix">{eur(tendance.prix)}</span></p>
+        <p><a class="lien" href={u('/carte/')}>Voir la carte et le second menu</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="domaine" aria-labelledby="t-domaine">
+    <div class="domaine__img"><Photo cle="etang" decorative sizes="100vw" widths={[800, 1200, 1600]} /></div>
+    <div class="domaine__scrim" aria-hidden="true"></div>
+    <div class="wrap domaine__texte">
+      <p class="etiquette" style="color:#d6d2c3">Le domaine</p>
+      <h2 id="t-domaine" class="display display--xl">Entre la table et le lit, {site.distanceBarabas}&nbsp;mètres de prairie.</h2>
+      <p class="corps">Plus de 5 hectares réunissent le restaurant et la villa d’hôtes. Terrasse, jardin et point d’eau : on y prend l’apéritif avant de passer à table.</p>
+    </div>
+  </section>
+
+  <section class="sec mur wrap" aria-labelledby="t-mur">
+    <div class="grid">
+      <div class="mur__tete">
+        <h2 id="t-mur" class="display display--xl">À l’assiette</h2>
+        <p class="corps" style="max-width:36ch">Homard du vivier, lièvre, sole meunière, chariot de fromages : la carte suit les saisons.</p>
+      </div>
+      <div class="mur__grille">
+        <figure class="photo mur__a"><Photo cle="dressage" widths={[480, 800, 1200]} sizes="(max-width: 52rem) 60vw, 38vw" /></figure>
+        <figure class="photo mur__b"><Photo cle="assietteNoire" sizes="(max-width: 52rem) 40vw, 30vw" /></figure>
+        <figure class="photo mur__c"><Photo cle="tableLampe" widths={[480, 800]} sizes="(max-width: 52rem) 50vw, 24vw" /></figure>
+        <figure class="photo mur__d"><Photo cle="dessert" sizes="(max-width: 52rem) 100vw, 55vw" /></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--pierre" aria-labelledby="t-villa">
+    <div class="wrap grid villa">
+      <div class="villa__tete">
+        <h2 id="t-villa" class="display display--xl villa__titre">Arrivée : la villa Barabas</h2>
+        <div class="villa__texte">
+          <p class="corps">{barabas.intro}</p>
+          <p class="etiquette">{site.barabas.rue} {site.barabas.numero}, à {site.distanceBarabas}&nbsp;mètres du restaurant</p>
+        </div>
+      </div>
+    </div>
+    <div class="bande" role="group" aria-label="Photos de la villa Barabas" tabindex="0">
+      <figure class="photo"><Photo cle="suiteGlamour" sizes="(max-width: 52rem) 78vw, 46rem" /></figure>
+      <figure class="photo"><Photo cle="suiteOrientale" sizes="(max-width: 52rem) 78vw, 46rem" /></figure>
+      <figure class="photo"><Photo cle="petitDej" sizes="(max-width: 52rem) 78vw, 46rem" /></figure>
+      <figure class="photo"><Photo cle="piscine" sizes="(max-width: 52rem) 78vw, 46rem" /></figure>
+    </div>
+    <div class="wrap" style="padding-block: 2.5rem 4rem"><p class="fig-legende">Photos : Le D’Arville et la villa Barabas.</p></div>
+  </section>
+
+  <section class="sec sec--voile" aria-labelledby="t-appel">
+    <div class="wrap grid appel">
+      <h2 id="t-appel" class="display display--mega appel__titre" style="font-size:var(--t-xl)">Réservez votre balade.</h2>
+      <div class="appel__actions">
+        <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+        <a class="btn" href={`tel:${site.telephone.replace(/\s/g, '')}`}>Appeler le {site.telephoneAffiche}</a>
+      </div>
+    </div>
+  </section>
+</Base>
