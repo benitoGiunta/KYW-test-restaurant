@@ -4,8 +4,8 @@ export const site = {
   nom: "Be Belge… et d’ailleurs",
   court: "Be Belge",
   suite: "… et d’ailleurs",
-  accueil: "Il n’y a pas de bon repas si le vin n’y coule pas !",
-  accueilSuite: "Bonjour les Gourmets ! Nous avons le plaisir de vous accueillir dans notre nouveau petit nid !",
+  accueil: "Il n’y a pas de bon repas si le vin n’y coule pas !",
+  accueilSuite: "Bonjour les Gourmets ! Nous avons le plaisir de vous accueillir dans notre nouveau petit nid !",
   adresse: { rue: "Avenue de Marlagne 203", ville: "5000 Namur (Wépion)" },
   tel: "+32 81 47 00 95",
   telAffiche: "081 47 00 95",
@@ -33,7 +33,7 @@ export const formules = [
 ];
 export const carte = [
   { categorie: "Mises en bouche et entrées", note: "au choix", plats: [
-    { nom: "Saint-Jacques en deux préparations", desc: "Taillées à cru, fraîcheur d’agrumes ; poêlées, émulsion au beurre blanc" },
+    { nom: "Saint-Jacques en deux préparations", desc: "Taillées à cru, fraîcheur d’agrumes ; poêlées, émulsion au beurre blanc" },
     { nom: "Langoustines rôties aux épices", desc: "Risotto et petits pois façon paëlla, crème de chorizo doux" },
     { nom: "Foie de canard poêlé", desc: "Compotée d’oignons caramélisés, liégeoise et cassis" },
   ] },
@@ -51,7 +51,7 @@ export const carte = [
   ] },
 ];
 export const privatisation = {
-  texte: "Vous souhaitez organiser une fête privée ou professionnelle, en repas assis ou en walking dinner ? N’hésitez pas à nous contacter pour toute demande de proposition.",
+  texte: "Vous souhaitez organiser une fête privée ou professionnelle, en repas assis ou en walking dinner ? N’hésitez pas à nous contacter pour toute demande de proposition.",
   assis: { min: 15, max: 34 }, walking: { min: 20, max: 40 },
   souple: "Les jours et les horaires sont adaptables en fonction de votre demande.",
 };

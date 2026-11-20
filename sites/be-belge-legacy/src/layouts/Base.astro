@@ -2,8 +2,20 @@
 import '../styles/page.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { site } from '../data/site';
+import { site, jours } from '../data/site';
 interface Props { title: string; description?: string; here?: string }
+const b0 = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const EN = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const ogImage = `${b0}photos/02-facade-jardin-1600.webp`;
+const ld = {
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: site.nom, description: site.description,
+  telephone: site.tel, email: site.mail, servesCuisine: ['Belge', 'De saison'], url: Astro.site ? new URL(b0, Astro.site).href : undefined,
+  image: Astro.site ? new URL(ogImage, Astro.site).href : ogImage,
+  address: { '@type': 'PostalAddress', streetAddress: site.adresse.rue, postalCode: '5000', addressLocality: 'Namur (Wépion)', addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: 50.4517812, longitude: 4.8421921 },
+  openingHoursSpecification: jours.flatMap((j, i) => j.services.map((sv) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: EN[i], opens: sv[0], closes: sv[1] }))),
+  sameAs: [site.facebook],
+};
 const { title, description = site.description, here = '' } = Astro.props;
 ---
 <!doctype html>
@@ -18,7 +30,10 @@ const { title, description = site.description, here = '' } = Astro.props;
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content={Astro.site ? new URL(ogImage, Astro.site).href : ogImage} />
+  <meta property="og:image:alt" content="Pelouse et bâtiment du restaurant vus du jardin" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232b4a6e'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' font-family='serif' fill='%23f1ede6'%3EB%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />

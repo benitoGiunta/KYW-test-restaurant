@@ -6,7 +6,7 @@ import { site, menus, couples, horaires, plage } from '../data/site';
 import { u } from '../lib/url';
 const ouvertures = horaires.filter((h) => h.ouvert.length);
 ---
-<Base page="accueil" description="Be Belge… et d’ailleurs, à Wépion (Namur) : cuisine belge et de saison, menu du chef en 3 ou 4 services, mur de pierre, terrasse et feu de bois. Réservez au 081 47 00 95.">
+<Base page="accueil" title="Cuisine belge à Wépion" description="Be Belge… et d’ailleurs, à Wépion (Namur) : cuisine belge et de saison, menu du chef en 3 ou 4 services, mur de pierre, terrasse et feu de bois. Réservez au 081 47 00 95.">
   {/* 1. Poster : le nom, trois points, la suite */}
   <section class="hero wrap">
     <h1 class="hero__titre display" data-hero-titre data-intro-points>
@@ -37,8 +37,8 @@ const ouvertures = horaires.filter((h) => h.ouvert.length);
       {couples.map((c) => (
         <li class="couple" data-reveal="up">
           <h3 class="couple__plat">{c.plat}</h3>
-          <p class="couple__ici"><span class="couple__lib">D’ici</span>{c.ici}</p>
-          <p class="couple__la"><span class="couple__lib">D’ailleurs</span>{c.ailleurs}</p>
+          {c.ici && <p class="couple__ici"><span class="couple__lib">D’ici</span>{c.ici}</p>}
+          {c.ailleurs && <p class="couple__la"><span class="couple__lib">D’ailleurs</span>{c.ailleurs}</p>}
         </li>
       ))}
     </ol>
@@ -55,18 +55,17 @@ const ouvertures = horaires.filter((h) => h.ouvert.length);
             <p class="menu__nom">{m.nom}</p>
             <p class="menu__detail">{m.detail}</p>
             <p class="menu__prix"><span class="chiffre">{m.prix}</span>&nbsp;€</p>
-            <p class="menu__vins">Sélection de vins en option : {m.vins}&nbsp;€</p>
+            <p class="menu__vins">Sélection de vins en option : {m.vins}&nbsp;€</p>
           </li>
         ))}
       </ul>
-      <p class="menus__note">Menu proposé du 13 août au 6 septembre 2026, relevé sur le site du restaurant : à reconfirmer à la réservation.</p>
     </div>
   </section>
 
   {/* 5. Filmstrip : le nid, du jardin à la salle */}
   <section class="lieu" aria-labelledby="lieu-titre">
     <div class="wrap"><h2 id="lieu-titre" class="titre-l display" data-split="words">Un petit nid, à l’orée du jardin</h2></div>
-    <ul class="strip" role="list">
+    <ul class="strip" role="list" tabindex="0" aria-label="Le nid, du jardin à la salle : défilement horizontal">
       <li class="strip__vue strip__vue--l"><Photo cle="facade" sizes="(min-width: 900px) 40vw, 78vw" widths={[480, 800, 1200]} /><p>Le jardin et le bâtiment.</p></li>
       <li class="strip__vue"><Photo cle="tableaux" sizes="(min-width: 900px) 30vw, 70vw" widths={[480, 800]} /><p>La salle, ses tableaux rouges.</p></li>
       <li class="strip__vue strip__vue--l"><Photo cle="brasero" sizes="(min-width: 900px) 40vw, 78vw" widths={[480, 800, 1200]} /><p>Le feu de la terrasse.</p></li>

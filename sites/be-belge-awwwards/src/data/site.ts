@@ -23,8 +23,8 @@ export const site = {
   reseaux: [{ nom: 'Facebook', url: 'https://www.facebook.com/Restaurant-be-Belgeet-d-ailleurs-460789377730605/' }],
   bce: '0697768609',
   exploitant: 'CATAX',
-  accroche: 'Il n’y a pas de bon repas si le vin n’y coule pas !',
-  accueil: 'Bonjour les Gourmets ! Nous avons le plaisir de vous accueillir dans notre nouveau petit nid !',
+  accroche: 'Il n’y a pas de bon repas si le vin n’y coule pas !',
+  accueil: 'Bonjour les Gourmets ! Nous avons le plaisir de vous accueillir dans notre nouveau petit nid !',
 };
 
 export type Service = { debut: string; fin: string };
@@ -45,12 +45,12 @@ export const menus = [
   { nom: 'Menu du Chef, 3 services', detail: 'Entrée, plat, dessert', prix: 57, vins: 28 },
   { nom: 'Menu du Chef, 4 services', detail: 'Deux entrées, plat, dessert', prix: 72, vins: 35 },
 ];
-export const periodeMenu = 'Menu proposé du 13 août au 6 septembre 2026 (relevé sur le site du restaurant, à reconfirmer).';
+export const periodeMenu = 'Menu du chef proposé du 13 août au 6 septembre 2026.';
 
 export type Plat = { nom: string; description: string; supplement?: number; placeholder?: boolean };
 export const carte: { categorie: string; titre: string; plats: Plat[] }[] = [
   { categorie: 'Mises en bouche et entrées', titre: 'Pour commencer', plats: [
-    { nom: 'Saint-Jacques en deux préparations', description: 'Taillées à cru, fraîcheur d’agrumes ; poêlées, émulsion au beurre blanc' },
+    { nom: 'Saint-Jacques en deux préparations', description: 'Taillées à cru, fraîcheur d’agrumes ; poêlées, émulsion au beurre blanc' },
     { nom: 'Langoustines rôties aux épices', description: 'Risotto et petits pois façon paëlla, crème de chorizo doux' },
     { nom: 'Foie de canard poêlé', description: 'Compotée d’oignons caramélisés, liégeoise et cassis' },
   ] },
@@ -68,11 +68,11 @@ export const carte: { categorie: string; titre: string; plats: Plat[] }[] = [
   ] },
 ];
 
-/** Lecture éditoriale de trois plats réels : ce qui vient d'ici, ce qui vient d'ailleurs (accueil). */
+/** Lecture éditoriale de trois plats réels : seuls les éléments défendables par la carte sont classés (revue F2-5). */
 export const couples = [
-  { plat: 'Filet de canette', ici: 'La Kriek Boon', ailleurs: 'L’abricot caramélisé à la lavande' },
-  { plat: 'Foie de canard poêlé', ici: 'La liégeoise et le cassis', ailleurs: 'La compotée d’oignons caramélisés' },
-  { plat: 'Langoustines rôties aux épices', ici: 'Les petits pois', ailleurs: 'Le risotto façon paëlla, le chorizo doux' },
+  { plat: 'Filet de canette', ici: 'La Kriek Boon', ailleurs: null },
+  { plat: 'Foie de canard poêlé', ici: 'La liégeoise et le cassis', ailleurs: null },
+  { plat: 'Langoustines rôties aux épices', ici: null, ailleurs: 'Le risotto façon paëlla, le chorizo doux' },
 ];
 
 export const privatisation = { assis: [15, 34], walking: [20, 40], note: 'Jours et horaires adaptables.' };

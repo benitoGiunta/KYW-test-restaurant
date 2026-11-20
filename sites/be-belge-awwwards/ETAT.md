@@ -21,3 +21,8 @@
 - Pas de loader, pas de GL, pas de suiveur de curseur (Concept Card) : `#gl` et `#cursor` absents.
 - Intro horizontale écrite dans `hero.ts` plutôt que `data-intro` (le verbe est un glissement latéral, l'engine révèle vers le haut).
 - Données inchangées depuis la phase 1 (aucun fictif).
+
+## Fait (phase 3, QA)
+- Corrections : `.strip` focusable (axe), liens `.lt` en cibles >= 24 px, titre accueil raccourci, meta histoire < 160. Build OK, audit 0 FAIL / 10 WARN, shoots ciblés home et 404 propres. RAPPORT.md écrit.
+## Reste
+- Critique jury indépendant (non lancé), relecture visuelle carte/reservation à 390 après le padding `.lt`.

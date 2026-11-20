@@ -4,7 +4,7 @@ import { site } from '../data/site';
 <div class="contact">
   <div class="contact__intro">
     <h2 id="h-contact">Nous écrire</h2>
-    <p class="wall">Une question, une demande de banquet ? Écrivez-nous, ou appelez le <a href={site.telHref}>{site.telAffiche}</a>.</p>
+    <p class="wall">Une question, une demande de banquet ? Écrivez-nous, ou appelez le <a href={site.telHref}>{site.telAffiche}</a>.</p>
   </div>
   <form data-endpoint="" novalidate aria-labelledby="h-contact" data-mail={site.mail} data-tel={site.telAffiche}>
     <div class="field">
@@ -55,7 +55,7 @@ import { site } from '../data/site';
       status.textContent = '';
       const bad = fields.filter((el) => { el.dataset.touched = '1'; return !check(el); });
       if (bad.length) { bad[0].focus(); return; }
-      if (!form.dataset.endpoint) { status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié. Écrivez à ' + form.dataset.mail + ' ou appelez le ' + form.dataset.tel + '.'; return; }
+      if (!form.dataset.endpoint) { status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié. Écrivez à ' + form.dataset.mail + ' ou appelez le ' + form.dataset.tel + '.'; return; }
       fetch(form.dataset.endpoint, { method: 'POST', body: new FormData(form) })
         .then((r) => { status.textContent = r.ok ? 'Message envoyé. Nous vous répondons par mail.' : 'L’envoi n’a pas abouti. Réessayez dans une minute.'; })
         .catch(() => { status.textContent = 'L’envoi n’a pas abouti. Réessayez dans une minute.'; });
