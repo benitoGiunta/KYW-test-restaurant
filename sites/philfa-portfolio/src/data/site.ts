@@ -103,7 +103,7 @@ export const site: Restaurant = {
     {
       texte: 'Une cuisine accessible et bien exécutée, et une terrasse de style parisien.',
       auteur: 'Gault&Millau Belgique, 12/20, 1 toque',
-      source: 'Fiche gaultmillau.be (paraphrase)',
+      source: 'Gault&Millau Belgique, gaultmillau.be',
       placeholder: false,
     },
   ],
