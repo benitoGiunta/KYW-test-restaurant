@@ -27,3 +27,7 @@ Audit, deal Squeeze, comps, DESIGN.md, contenu (115 plats), 6 routes + 404, phot
 - sloplint rendu 0 FAIL, 0 REFLEX ouvert (8 waivers en tête de page.css) ; corrections : focus du lien d'évitement, contraste de la note du formulaire, téléphone à 320 px, débordement /carte/ à 375, en-têtes de page.
 - Build et `pnpm index` passés ; RAPPORT.md écrit.
 - Reste : finish review par sous-agent, entrée de log Hallmark (`$LOG`) et cases DESIGN.md de la checklist de phase 3 non faites ; WARN kept sur les pages d'origine non rendues.
+
+# Revue 2 (relecteur-site) terminée
+- REVUE-2.md : PUBLIABLE (F1-1, F2-1, F2-2 vérifiés corrigés ; 0 F0/F1/F2). Restent F3-1 à F3-8 (finition, non annoncés comme corrigés).
+- Pièges : pas de REVISION-1.md ni de QA-revue2.md ; corrections lues dans le diff de 9a92d83.
