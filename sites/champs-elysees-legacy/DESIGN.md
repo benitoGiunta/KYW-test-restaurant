@@ -12,7 +12,7 @@
 - **Sections** · Hero · À propos (Split) · La carte (Rows) · Galerie (Bento) · Fêtes patronales (Band) · Heures d’ouverture (Schedule) · Réservations et adresse (Facts) · Footer (mast)
 - **Material** · real : adresse, horaires du site, carte, fêtes, 1984 · pictures : 12 photos et logo client · absent : avis, note, équipe en cuisine
 - **Comp** · c1 retenu (voir `comp.md`)
-- **Sweep** · phase 3
+- **Sweep** · phase 3 : sloplint 0 FAIL, 0 REFLEX ouvert (waived 8, 83, 77, 71), 7 WARN confirmés (23 bandeau vert déclaré, 28a faux positif, kept non comparé), finish review `self` (pas de sous-agent), build + footer + noindex sur 5 pages
 
 ## Approche
 
@@ -69,3 +69,13 @@ Voir `src/styles/tokens.css` (palette Atelier, `--color-accent` vert forêt, éc
 - **Contact** · validation au blur puis à l'input, aide d'une ligne réservée, `aria-invalid` + `aria-describedby`, placeholder = format, message de non-envoi ; la réservation de l'accueil reste le lien Zenchef.
 - **Hero** · review `self` (aucun sous-agent disponible, `review-hero.md` non lu) : 3 findings (strip de papier sous le hero à 1920 : resolved ; plaque plus haute que la comp : resolved ; accent 6 % : partial, bandeau 4,2 %, le reste est la banquette teal de la photo). Comp reproduite à 1280x800 : plaque en bas à gauche, mêmes verres libres ; plus grand écart = hauteur de la plaque (lien secondaire ajouté), réduit en retirant 24 px de remplissage haut.
 - **Figure** · `margin: 0` sur `.photo` (le hero avait 40 px de marge UA : le tirage n'était pas plein cadre en phase 1).
+
+## Phase 3 : sweep et QA
+
+- [x] 16. `sloplint --render` : 0 FAIL, 0 REFLEX ouvert, rendu tourné sur 4 URL · preuve : `.logs/champs-sloplint.log` (waive 8, 83, 77, 71 en tête de `page.css`)
+- [x] 25. Contraste et anneau de focus 3:1 · preuve : `.nav__banner :focus-visible { outline-color: var(--color-accent-ink) }` (FAIL 26a levé au sweep)
+- [x] 37. Échelle d'espacement · preuve : `.foot__credits a` et `.nav__banner a` en `--space-sm` et `--space-2xs` (24a/24b levés)
+- [x] 42. Titres de rubrique de la carte à `--text-section` (78) · preuve : `.rubrique h2`
+- [x] 46. Clôture horaires, adresse, réservation (85) · preuve : captures `.shots-champs-elysees-legacy-build/home/`
+- [x] 62. Invariants de page, aucun débordement 1440 et 375, 0 erreur console · preuve : `QA-build.md`, `.shots-champs-elysees-legacy-qa3/report.json`
+- [ ] Gates jugées restantes (9, 11, 16, 29, 54, 58, 63 à 70, 80 à 82, 84, 85) : relues sur les planches, pas de contre-indication ; CLS mobile de la carte 0,102 (polices externes `swap`) non traité

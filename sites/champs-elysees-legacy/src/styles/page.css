@@ -6,6 +6,8 @@
 /* Hallmark · pre-emit critique: P pass H pass E pass S pass R pass V pass · weakest: gallery bento reads photo-heavy, kept to five tiles and one row pair */
 /* Hallmark · waive 8 · section order kept from the source · the original sequence (hero, about, carte, fêtes, hours, booking) is kept, only the composition changes */
 /* Hallmark · waive 83 · five gallery tiles below the hero · the photographs are the client's, and this is the page's only photo section */
+/* Hallmark · waive 77 · Heures d’ouverture band on the home page · the seven opening-hour rows are the content itself (a table, no photograph exists for it), and the band sits beside the booking block that closes the page */
+/* Hallmark · waive 71 · dish names on the carte page · each h3 is a menu line sitting in a ruled row with its price, not a section head, so the head-over-body spacing rule does not describe a price list */
 /* Hallmark · dropped "Réservations & bons cadeaux" label · no gift voucher content on the source, label kept as « Réservations » */
 @import url("./tokens.css");
 @import url("./base.css");
@@ -141,8 +143,10 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); }
 .index a { color: var(--color-ink); text-decoration-color: var(--color-accent); }
 .group { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--text-display-s); color: var(--color-ink); margin-bottom: var(--space-xl); }
 .rubrique { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); padding-block: var(--space-xl); align-items: start; scroll-margin-top: 0; }
-.rubrique h2 { grid-column: 1 / span 4; font-size: var(--text-title); font-weight: var(--serif-small); max-width: 20ch; }
+.rubrique h2 { grid-column: 1 / span 4; font-size: var(--text-section); max-width: 12ch; }
 .rubrique .rows { grid-column: 5 / span 8; }
+.rubrique .row { padding-block: var(--space-lg) var(--space-sm); }
+.nav__banner :focus-visible { outline-color: var(--color-accent-ink); }
 .prix-fetes { margin-top: var(--space-lg); color: var(--color-ink); }
 .prix-fetes .num { font-variant-numeric: tabular-nums; font-family: var(--font-display); font-size: var(--text-section); font-weight: var(--display-weight); }
 .menu__service { padding-block: var(--space-lg); border-bottom: var(--rule-hair) solid var(--color-rule); }
@@ -241,4 +245,10 @@ h3 { font-weight: var(--serif-small); color: var(--color-ink); }
 @media (prefers-reduced-motion: reduce) {
   .js .bento .photo { opacity: 1; transform: none; transition: none; }
   .site-nav[popover]:popover-open { transition: none; }
+}
+
+/* Petits écrans : cibles de 44 px pour le téléphone du bandeau et le lien de crédits */
+@media (max-width: 60rem), (pointer: coarse) {
+  .foot__credits a { display: inline-block; padding-block: var(--space-sm); margin-block: calc(var(--space-sm) * -1); }
+  .nav__banner a { display: inline-flex; align-items: center; min-height: 44px; margin-block: calc(var(--space-2xs) * -1); }
 }
