@@ -1,19 +1,21 @@
-# ETAT · Épices & Nous · variante legacy · construction-1 (phase 1 sur 3)
+# ETAT · Épices & Nous · variante legacy · construction-2 (phase 2 sur 3, terminée)
 
-## Fait
-- Audit (`AUDIT.md`, `.hallmark/before.*`), deal/draw/scaffold --brand, stamp et critique en tête de `src/styles/page.css`, deux comps (c1 retenue, `comp.md`), `DESIGN.md` (Picks, Approche, Thème, Tokens, Composants, Sur-utilisation points 1 à 6).
-- Contenu réel dans `src/data/site.ts` (carte, menu, horaires, actualités, photos et alts depuis `photos/index.json`).
-- 7 pages statiques : `/`, `/carte/`, `/menu/`, `/reservation/`, `/a-propos/`, `/actualites/`, `404`. Nav sticky, hero Ledge, Split, Rows, Schedule, énoncé, pied letter close + KywFooter. Build OK (`pnpm build:site`), `dist/epices-et-nous/legacy/` généré ; noindex, KywFooter et mention vérifiés sur les 7 pages.
-- Photos du client en WebP (srcset 2 largeurs) dans `public/photos/`, logo brun en WebP sans perte.
+## Fait (phase 2)
+- Hero review `self` : fix, 1 finding résolu (photo de table bleutée, réchauffée par `sepia(0.22) saturate(0.9)`). Bug trouvé : le rebord (`.hero__wrap`) était caché derrière la photo (z-index du slot), corrigé (`z-index: var(--z-raised)`) ; rebord sans `100vw` (`--marge`, aligné sur le conteneur).
+- sloplint `--render --stage hero` : 0 FAIL, 0 REFLEX, 1 WARN (mesure 30ch de l'énoncé d'une phrase, voulu). Corrections : contraste du texte sourdine sur la barre (`--color-bark-muted` 87 %), scrim en token, overflow-x clip aussi dans `Base.astro`, `tabular-nums` du prix, libellé « Réserver en ligne », waiver 7a retiré (non waivable, sans objet).
+- Comp : trois questions de reproduction écrites dans `comp.md` (reproduced, 1280x800).
+- Nav : forme `edge-aligned bar, sticky, menu popover` ; cibles 48 px au bureau ; menu popover testé à 375 (ouverture, `aria-expanded`, fermeture au clic).
+- Mesures : aucun débordement horizontal à 320/375/768/1024 sur les 6 pages ; CTA du hero visible ; reduced motion et sans script : reveals visibles, animations coupées ; focus visible 2 px.
+- Reveal unique, entrée du hero, filet orange du prix, jour courant dans les horaires (déjà posés avant, vérifiés).
+- Build OK (`pnpm build:site`), 7 pages avec noindex, KywFooter et mention.
+- DESIGN.md : Composants complétés, points de checklist ajoutés. Leçon proposée : `data/usage/test-1/lecons-proposees/epices-et-nous.md`.
 
-## Reste (phases 2 et 3)
-- Aucun QA navigateur fait : mesurer le fold à 1280×800 et 375×667 (CTA du hero visible), débordement horizontal, nav mobile (liens sur deux lignes, à remplacer par un menu Popover), contrastes, cibles 44 px.
-- Photo du hero (`table`) bleutée sur palette chaude : comparer avec `salle-avant` ou `verriere`.
-- Jour courant dans le Schedule, un reveal, états des contrôles, `sloplint --render` (FAIL/REFLEX à zéro), hero review `self`, trois questions de reproduction, index `pnpm index`, RAPPORT.md.
-- Polices : Sentient (Fontshare) et Hanken Grotesk chargées par lien externe ; hors ligne le repli est Georgia.
+## Reste (phase 3 et captures)
+- Agent « captures » : shoot complet, QA par planche-contact.
+- Sweep sloplint complet (hors hero), RAPPORT.md, `pnpm index`, entrée de `.hallmark/log.json` pour epices-et-nous (non vérifiée en phase 2), commit final `[publier]` seulement si le restaurant est terminé.
+- Liens `kyw-footer__link` de 24 px (paquet, non modifiable) : signaler.
+- Polices Sentient et Hanken Grotesk par lien externe : repli Georgia hors ligne.
 
-## Décisions et hypothèses
-- Routes de l'original gardées (accueil, carte, menu, réservation, on parle de nous, actualités) ; `/cuisine`, `/salle`, `/terrasse`, `/chef` (galeries Wix) fondues dans l'accueil. Le bouton « Réserver » mène au module Wix (https://www.epicesetnous.com/reservations), la page `/reservation/` donne téléphone, adresse et horaires.
-- Abandonnés : « Se connecter », onglet Saint-Valentin (contenu non relevé, ♥ retirés de la carte), pied ByCM, polaroïd, badges Michelin et Gault&Millau (marques tierces, remplacés par des liens texte).
-- Mots changés : h1 « Depuis 1999, Sophie et Denis vous accueillent » (original : 43 mots, gate 58) ; « Heures d'ouverture » devient « Horaires et adresse » ; texte des actualités abrégé depuis la liste du blog ; année de l'article « Nouveau site » (27 août 2025) tirée du dossier. Mention Michelin 2024 (visuel du site) et « plus de 20 ans » repris tels quels. Rien de fictif : aucun `data-placeholder`, aucun slot `.fill`.
-- Données à vérifier : prix et plats de la carte (relevé du 20/11/2026 sur le site, carte non datée), 13,5/20 Gault&Millau, 69 € à la carte cité par G&M (non repris).
+## Pièges
+- Aucun formulaire : la réservation est le module Wix externe (lien conservé), pas de faux envoi.
+- sloplint ne rend pas l'index Astro sur disque : utiliser `--url` sur le serveur de dev (base `/epices-et-nous/legacy/`).

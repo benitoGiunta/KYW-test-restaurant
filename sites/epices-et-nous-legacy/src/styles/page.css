@@ -1,9 +1,10 @@
 /* Hallmark · shape: Split Studio (kept: multipage) · genre: editorial · theme: brand (Atelier material, dealt 2/3, seed restaurant-namur-french-cuisine-8693·914306b8·2026-11-20·r0) · redesign: full
  * paper: oklch(95.5% 0.018 86) · accent: oklch(76.9% 0.157 65) · display: Sentient · body: Hanken Grotesk · hero: Ledge · nav: sticky bark bar, booking action · footer: letter close · signature: the 52 € menu priced on the ledge of the hero, over the dark table photograph
  * axes: warm/roman-serif/orange · posture: calm · contrast: pass · fold: pass · draw: 81c201 · job: book · comp: 2 built, no key · c1 chosen · v2.0.0 */
+/* Hallmark · hero-review: self (no sub-agent available), fix · 1 findings · 1 resolved (cool-blue table photo on a warm palette, warmed with sepia(0.22)) · nav: edge-aligned bar, sticky, menu popover · comp: 2 built, no key · c1 chosen · reproduced (checked at 1280x800) */
 /* Hallmark · pre-emit critique: P4 H4 E4 S3 R4 V4 · weakest: S, the ledge repeats the page head pattern on inner pages, so inner heroes drop the full photo and keep the split */
 /* Hallmark · waive 8 · accueil keeps the original sequence (histoire, menu, ambiances, actualités) in new compositions (split, rows, trio, statement) · redesign full keeps content order */
-/* Hallmark · waive 7a · orange is the client's brand colour read in the original CSS (#F79C31), used as fill under dark ink and never as small text · brand imposes it, Atelier's slate signal is replaced */
+/* Hallmark · brand note · orange is the client's colour read in the original CSS (#F79C31), used as fill under dark ink and never as small text (no gate waived) */
 /* Hallmark · dropped · "Se connecter" (login Wix), onglet Menu Saint-Valentin sans contenu, pied « ByCM Management » · functions of the Wix host, no counterpart in a static mock-up */
 @import url("./tokens.css");
 @import url("./base.css");
@@ -11,6 +12,7 @@
 :root { --bar-h: 72px; }
 @media (max-width: 60rem) { :root { --bar-h: 64px; } }
 
+html, body { overflow-x: clip; }
 body { color: var(--color-ink-2); line-height: 1.6; }
 h1, h2 { color: var(--color-ink); font-weight: var(--display-weight); }
 h3 { color: var(--color-ink); font-weight: var(--small-serif-weight); font-size: var(--text-xl); line-height: 1.2; }
@@ -44,9 +46,10 @@ p > .btn + .link, p > .btn + .btn, p > .link + .btn { margin-left: var(--space-m
 .brand img { width: 136px; height: auto; }
 .site-nav { flex: 1; }
 .site-nav ul { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-lg); margin: 0; padding: 0; list-style: none; }
-.site-nav a { display: inline-block; padding-block: var(--space-xs); color: var(--color-bark-ink); font-size: var(--text-sm); text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-short) var(--ease-out); }
+.site-nav a { display: inline-block; padding-block: var(--space-sm); color: var(--color-bark-ink); font-size: var(--text-sm); text-decoration: none; border-bottom: 2px solid transparent; transition: border-color var(--dur-short) var(--ease-out); }
 @media (hover: hover) { .site-nav a:hover { border-color: var(--color-bark-muted); } }
 .site-nav a[aria-current="page"] { border-color: var(--color-accent); }
+.site-nav a:active, .close__liens a:active { color: var(--color-bark-muted); }
 .site-header__action { display: flex; align-items: center; gap: var(--space-lg); flex: none; }
 .site-header .tel { color: var(--color-bark-ink); font-size: var(--text-sm); text-decoration: none; white-space: nowrap; }
 @media (hover: hover) { .site-header .tel:hover { text-decoration: underline; } }
@@ -66,9 +69,8 @@ p > .btn + .link, p > .btn + .btn, p > .link + .btn { margin-left: var(--space-m
 .hero__photo, .hero__photo .ph { height: clamp(520px, calc(100dvh - var(--bar-h)), 860px); }
 .hero__photo { margin: 0; }
 .hero__photo .ph { aspect-ratio: auto !important; }
-.hero__wrap { position: absolute; inset: auto 0 0 0; }
-.ledge { max-width: 44rem; padding: var(--space-xl) var(--space-xl) var(--space-xl) 0; background: var(--color-paper); display: grid; gap: var(--space-md); position: relative; }
-.ledge::before { content: ""; position: absolute; top: 0; bottom: 0; right: 100%; width: 100vw; background: var(--color-paper); }
+.hero__wrap { position: absolute; z-index: var(--z-raised); inset: auto 0 0 0; --marge: max(0px, calc((100% - var(--container)) / 2)); }
+.ledge { max-width: calc(var(--marge) + 46rem); padding: var(--space-xl) var(--space-xl) var(--space-xl) calc(var(--marge) + var(--gutter)); background: var(--color-paper); display: grid; gap: var(--space-md); position: relative; }
 .ledge h1 { font-size: clamp(2.5rem, 3vw + 1rem, 4rem); max-width: 14ch; }
 .ledge__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-lg); }
 .ledge__actions .btn + .link { margin-left: 0; }
@@ -76,11 +78,11 @@ p > .btn + .link, p > .btn + .btn, p > .link + .btn { margin-left: var(--space-m
 /* Signature : le filet orange du rebord se tire sous le prix du menu, une fois, au chargement */
 .ledge__prix::before { content: ""; position: absolute; top: 0; left: 0; width: 5rem; border-top: 3px solid var(--color-accent); transform-origin: left; animation: filet var(--dur-long) var(--ease-out) 360ms both; }
 @keyframes filet { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-.hero__photo .ph img { animation: pose 1400ms var(--ease-out) both; }
+.hero__photo .ph img { filter: sepia(0.22) saturate(0.9); animation: pose 1400ms var(--ease-out) both; }
 @keyframes pose { from { transform: scale(1.035); } to { transform: none; } }
 .ledge { animation: leve 600ms var(--ease-out) 80ms both; }
 @keyframes leve { from { transform: translateY(14px); } to { transform: none; } }
-.ledge__prix .num { font-family: var(--font-display); font-size: var(--text-xl); color: var(--color-ink); margin-right: var(--space-xs); }
+.ledge__prix .num { font-variant-numeric: tabular-nums; font-family: var(--font-display); font-size: var(--text-xl); color: var(--color-ink); margin-right: var(--space-xs); }
 
 /* Sections */
 .section { padding-block: var(--section-gap-s); }
@@ -128,7 +130,7 @@ p > .btn + .link, p > .btn + .btn, p > .link + .btn { margin-left: var(--space-m
 .lieux__liste li { border-top: var(--rule-hair) solid var(--color-ink); padding-top: var(--space-md); display: grid; gap: var(--space-2xs); }
 
 /* Énoncé */
-.statement__texte { font-size: var(--text-display-s); max-width: 26ch; color: var(--color-bark-ink); }
+.statement__texte { font-size: var(--text-display-s); max-width: 30ch; color: var(--color-bark-ink); }
 .statement__suite { margin-top: var(--space-xl); max-width: 52ch; color: var(--color-bark-muted); }
 
 /* Prose */
@@ -188,8 +190,7 @@ p > .btn + .link, p > .btn + .btn, p > .link + .btn { margin-left: var(--space-m
   .rows--wide time { text-align: right; }
   .hero__photo, .hero__photo .ph { height: 38dvh; min-height: 220px; }
   .hero__wrap { position: static; }
-  .ledge { padding: var(--space-lg) 0; max-width: none; }
-  .ledge::before { display: none; }
+  .ledge { padding: var(--space-lg) var(--gutter); max-width: none; }
   .lieux__liste { grid-template-columns: minmax(0, 1fr); }
   .page-hero { padding-block: var(--space-2xl) var(--space-xl); }
 }
@@ -198,7 +199,7 @@ p > .btn + .link, p > .btn + .btn, p > .link + .btn { margin-left: var(--space-m
     .site-nav[popover] { position: fixed; inset: var(--bar-h) 0 auto 0; width: auto; max-height: calc(100dvh - var(--bar-h)); overflow-y: auto; background: var(--color-bark); display: none; opacity: 0; transform: translateY(-8px); transition: opacity 140ms var(--ease-in), transform 140ms var(--ease-in), display 140ms allow-discrete, overlay 140ms allow-discrete; }
     .site-nav[popover]:popover-open { display: block; opacity: 1; transform: none; transition: opacity var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out), display var(--dur-short) allow-discrete, overlay var(--dur-short) allow-discrete; }
     @starting-style { .site-nav[popover]:popover-open { opacity: 0; transform: translateY(-8px); } }
-    .site-nav[popover]::backdrop { background: oklch(23% 0.022 62 / 0.45); }
+    .site-nav[popover]::backdrop { background: var(--color-scrim); }
   }
 }
 @media (prefers-reduced-motion: reduce) {

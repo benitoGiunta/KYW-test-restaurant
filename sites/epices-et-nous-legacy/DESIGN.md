@@ -14,7 +14,7 @@
 - **Sections** · Hero · Histoire (split) · Menu à 52 € (rows) · Ambiances (trio asymétrique) · Énoncé (ris de veau) · Actualités (rows) · Horaires et adresse (schedule) · Pied (lettre)
 - **Material** · real : adresse, téléphone, horaires, carte, menu, histoire, liens · pictures : photos du client (23 + logos) · absent : avis, note, e-mail, carte des vins, capacité (aucun inventé)
 - **Comp** · 2 built, no key · c1 chosen (`comp.md`)
-- **Sweep** · phase 3
+- **Sweep** · phase 3 (hero review faite en phase 2)
 
 ## Approche
 - **Macrostructure** : Split Studio (draw), empreinte `Hanging|Two-column asymmetric|Hairline|Solid orange + outlined|Margin-aligned|None`. Le site d'origine, un Wix multipage sans macrostructure nommée, ressemblait à 03 Marquee Hero sur l'accueil ; on le garde dans le hero Ledge.
@@ -47,7 +47,10 @@ Brand imposée : bande brun taupe du logo `oklch(45.2% 0.022 83)`, orange `oklch
 - **Pied** : letter close (texte du client en grand, signature « Le duo passionné ! », liens, adresse), puis `KywFooter` ; section et non `footer` (un seul contentinfo).
 - **Photo** : `<figure>` avec `data-slot data-alt`, `width`/`height`, `srcset`/`sizes`, hero `fetchpriority="high"`, autres `loading="lazy"`.
 - **Boutons** : un plein orange sous encre sombre, un filet d'encre ; 48 px, rayon 3 px ; lien souligné orange foncé.
-- **Nav, formulaire, reveal** : phase 2.
+- **Nav** : forme `edge-aligned bar, sticky, menu popover` (différente des trois derniers logs : masthead, masthead, floating pill) ; 72 px au bureau, 64 sous 60rem ; sous 60rem le `<nav popover>` s'ouvre sous la barre (bouton `popovertarget` adjacent, `aria-expanded` suivi, fermeture au clic sur un lien) ; « Réserver » reste dans la barre ; skip link ; seul sticky de la page.
+- **Formulaire** : aucun. La réservation de l'original est le module Wix (lien externe conservé), la page `/reservation/` donne téléphone, adresse et horaires ; pas de faux envoi.
+- **Reveal et motion** : caractère calme. Un seul reveal (listes, `[data-reveal]` sous `.js`, `IntersectionObserver`), entrée du hero (rebord, photo, filet orange du prix) jouée une fois ; reduced motion : tout est à l'état final, sans transition. Jour courant dans les horaires.
+- **Hero review** : `self`, fix · 1 finding · 1 resolved. Rebord sorti de derrière la photo (`z-index`), photo de table réchauffée.
 
 ## Sur-utilisation
 - [x] 1. Audit lancé (`sloplint --render --before`) · preuve : `.hallmark/before.txt`
@@ -56,4 +59,17 @@ Brand imposée : bande brun taupe du logo `oklch(45.2% 0.022 83)`, orange `oklch
 - [x] 4. Comp avant build, deux comps, choix écrit · preuve : `comp.md`, `.hallmark/comps/c1.png`
 - [x] 5. Données réelles, rien d'inventé · preuve : `src/data/site.ts` (source `donnees.json`, pages Wix)
 - [x] 6. Pied KYW sur chaque page, noindex · preuve : grep des 7 pages `dist/epices-et-nous/legacy/`
-- [ ] 7. Sweep sloplint rendu, hero review, QA navigateur · phase 3
+- [x] 2b. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : `page.css`, transitions listées, `transform`/`opacity`/couleurs seulement
+- [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : `base.css:6`, mesuré 2 px solid `--color-focus-on-bark` sur la barre
+- [x] 7a. Reduced motion sur chaque animation, contenu visible sans script (27, 62) · preuve : mesuré, `reduced` et `nojs` donnent opacité 1 sur les 4 `[data-reveal]`, animations `none` en reduced
+- [x] 17. Hero en `dvh` (6a) · preuve : `page.css` `.hero__photo`, `38dvh` au téléphone
+- [x] 19. Sticky non superposés (56) · preuve : seul `.site-header` est sticky ; `.rows-block__tete` sticky à `top: calc(var(--bar-h) + …)` sous la barre
+- [x] 20. Radios-onglets : sans objet (aucun onglet) · 21. Vidéo de fond : sans objet
+- [x] 22. Reveal sous `.js` seulement (62) · preuve : `page.css` `.js [data-reveal]`
+- [x] 23. États d'input : sans objet (aucun champ) · 24. Tooltip, auto-rotation : sans objet
+- [x] 29. Aucun faux envoi (70) · preuve : aucun formulaire
+- [x] 30. SVG décoratifs : seule l'icône du bouton menu, `aria-hidden` (CSS) · preuve : `Nav.astro`
+- [x] 48. Hover : un signal, conteneur, `@media (hover: hover)`, pas de rebond · 49. `:active`, `:disabled`, contrôles 44 à 52 px · preuve : `page.css` `.btn`, mesuré à 1024 et 375 : seuls les liens du paquet kyw-footer font 24 px (non modifiable)
+- [x] 56. Un primaire rempli par écran (F4) · 58. Pilule limitée aux contrôles, aucun pattern de scroll (F8) · 63. `::selection`, `caret-color`, `scrollbar-color` · preuve : `base.css:3-6`
+- [x] 72. Responsive : breakpoints 60rem et 40rem, `hover`/`pointer`, `dvh`, pas de débordement (scrollWidth = largeur à 320, 375, 768, 1024 sur 6 pages) · preuve : script de mesure phase 2
+- [ ] 7. Sweep sloplint complet, QA navigateur complète · phase 3 (hero stage : 0 FAIL, 0 REFLEX, 1 WARN mesure 30ch de l'énoncé d'une phrase)
