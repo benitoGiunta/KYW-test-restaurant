@@ -1,0 +1,48 @@
+# Revue legacy · Champs Elysées · passe 1
+Verdict : A_CORRIGER
+Lecture en une ligne de l'idée du site (sans avoir lu DESIGN.md) : une refonte sobre et fidèle du one-page de la brasserie, sur papier crème, titres en serif Sentient, texte en grotesque, bandeau vert d'horaires, héros photo avec carte blanche, listes à filets fins pour la carte (94 lignes) et les horaires ; honnête et propre, mais peu typée.
+Scores /10 :
+- Design 7 : hiérarchie nette et filets cohérents sur 5 pages (`P-home-d`, `P-carte-d`), mais aucune idée forte au-delà de la sobriété, et le logo du pied de page (grand) double celui de l'en-tête.
+- Usabilité 7 : menu mobile (popover) OK (Échap, focus rendu au bouton, clic « Fêtes » → `#fetes`), 12 Tab avec anneau de 2 px, formulaire qui dit honnêtement « Rien n'a été envoyé » ; page carte de 10 065 px sans retour aux rubriques.
+- Créativité 5 : composition classique, aucun geste propre à ce bistro (mascotte orange seulement en page d'accueil, une fois).
+- Contenu 6 : faits exacts (94 plats, 0 écart ; horaires, tél., e-mail, Zenchef, Facebook conformes à `donnees.json`), 0 invention ; mais texte « À propos » interchangeable et dossier peu exploité.
+- Technique 7 : 0 erreur console, 0 requête en échec, 0 débordement à 1440/1024/768/390/320, 0 lien mort (95 liens et ressources internes testés), axe sans critique ni sérieux ; LCP mobile 2,8 s, CLS carte 0,10, pas de JSON-LD.
+
+## Méthode et limites
+- `QA-revue1.md` n'existe pas. `.shots-champs-elysees-legacy-revue1/summary.json` : accueil capturé (21:09, postérieur au `dist/` de 21:07), `/la-carte/` et `404` en `shootFailed` (Chromium fermé). Aucun `src/` ni `public/` plus récent que `dist/` : le build est à jour.
+- Je n'ai pas relancé de shoot complet. Mesures maison sur mon propre serveur (port 4871, arrêté par `kill`) : axe-core de `node_modules` complet, console, requêtes, débordement, éléments hors fenêtre, titres coupés, cibles, balises, 5 pages (dont `404.html` réel) x 5 largeurs ; captures de fenêtre par pas de 0,9 écran sur 5 pages x 2 largeurs en planches (10 lues) ; 8 horloges `page.clock` en Europe/Brussels ; menu, clavier, formulaire, reduced-motion ; LCP/CLS sous CPU x4 + 1,6 Mbit/s + 150 ms, 2 passes ; 94 plats confrontés à `donnees.json`.
+- Non vérifiés : disponibilité réelle des URL externes (Zenchef, flipbook, Facebook, Maps) : pas de réseau sortant testé ; elles sont identiques à celles de `donnees.json` / du site d'origine.
+- sloplint : le passage statique (10 FAIL) ne lit pas la feuille de style externe et le `--render` s'est lancé sans la base `/champs-elysees/legacy/` (« fonts or stylesheets did not load », 63 FAIL) : les deux sont non probants et je ne les retiens pas. Le « 26a no :focus-visible » est un faux positif (anneau de 2 px mesuré sur 12 arrêts de Tab). Les « 0 FAIL » de RAPPORT.md sont en `self` et non recontrôlés ici.
+
+## Findings (triés par gravité)
+
+### F1 majeur
+- **F1-1 · JSON-LD absent sur les 5 pages** (`ldjson=0` sur chaque page, mesure maison ; `grep ld+json` vide dans `dist/`). Le prompt § C exige un JSON-LD `Restaurant` avec adresse et horaires ; la variante legacy l'oublie à chaque fois (leçon du 01/11). Correction : dans `src/layouts/Base.astro`, injecter un `<script type="application/ld+json">` construit depuis `resto` et `horaires` de `src/data/site.ts` : `@type: Restaurant`, `name`, `telephone`, `email`, `address` (Avenue Albert Ier 149, Jambes, codePostal « 5100 » à confirmer), `geo` (50.4670366 ; 4.8852896), `openingHoursSpecification` (lundi à samedi 11:00-22:00, dimanche 11:00-16:00), `servesCuisine`, `sameAs` (Facebook). Ne pas ajouter de note d'avis (non prouvée).
+
+### F2 mineur
+- **F2-1 · LCP mobile 2,80 s** (> 2,5 s ; passes 2 816 et 2 800 ms sous CDP, QA 2 808 ms). Élément LCP : `img` `hero-tables.webp`, 1920 x 1660, 238 Ko, sans `srcset` (`sizes="100vw"` seul), servi tel quel à 390 px. Correction : générer des variantes 640, 960 et 1440 px de large, ajouter `srcset`, et un `<link rel="preload" as="image" imagesrcset=… fetchpriority="high">`.
+- **F2-2 · CLS mobile de la carte 0,099 à 0,100** (2 passes, > 0,05). Source nommée par `layout-shift` : `P.actions` + `LI` de l'index des rubriques, déplacés au remplacement des polices Fontshare (Sentient) et Google (Hanken Grotesk) en `display=swap`, sans police de repli à métriques ajustées ni préchargement. Contact : 0,020 ; accueil : 0,001. Correction : auto-héberger les `woff2` (déjà prévu côté `packages` ? sinon dans `public/fonts/`), `rel=preload`, et `@font-face` de repli avec `size-adjust`/`ascent-override`, ou `font-display: optional`. Cela retire aussi deux CSS tiers bloquants au rendu (`<head>` de `index.html`).
+- **F2-3 · `landmark-no-duplicate-contentinfo` (moderate) sur 5/5 pages et 5 largeurs** : deux `<footer>` de premier niveau (`.foot` du site + `kyw-footer`). Correction : passer `.foot` (`src/components/Footer.astro`) en `<div class="foot">` ou `<section aria-label="Coordonnées">`, sans toucher au paquet `kyw-footer`, puis relancer axe (un `region` peut apparaître : le tester).
+- **F2-4 · « À propos » interchangeable** (`index.html`, section « Bistro convivial ») : « chaque plat est préparé avec passion », « une expérience conviviale et mémorable », « notre ambiance unique », « un moment suspendu », « Découvrez nos délices » (carte). Ce texte est copié du site d'origine (présent dans `site-actuel/page.html`), donc ce n'est pas une invention, mais il irait sur n'importe quelle brasserie, alors que `dossier.md` § Matière à site offre mieux : ouverture le 13 juillet 1984 à l'emplacement du café Le Sportman, Teresa et Maurice associés, environ 120 couverts, boeuf de Famenne et fromage de Maredsous du Burger des Champs, bière Houppe et Gin de Namur. Correction : remplacer le second paragraphe (6 lignes de filler) par 2 ou 3 phrases tirées de ces faits (source La DH, 04/08/2024, pas de citation de Teresa sans guillemets exacts) ; vouvoiement conservé.
+- **F2-5 · Carte de 94 lignes sans repère de retour** : 10 065 px à 1440 px, 10 832 px à 390 px (`P-carte-d`, `P-carte-m`) ; l'index des 15 rubriques n'existe qu'en haut de page. Correction : index sticky sous l'en-tête en desktop, ou lien « Rubriques » répété en tête de chaque rubrique (ancres déjà présentes).
+
+### F3 finition
+- **F3-1 · Cibles < 24 px en desktop uniquement** (aucune à 390 px) : lien téléphone du bandeau 81 x 18, liens de pied de page 21 px de haut, liens de l'index des rubriques 18 px (`la-carte`), case de consentement 20 x 20 (le libellé voisin est cliquable). Correction : `padding-block` de 0,25 rem sur ces liens.
+- **F3-2 · Typographie** : espace ordinaire (et non U+00A0) avant « : » dans « Photographies et logo : », « Site d'origine : » (5/5 pages), « choix : » (accueil), « Maquette : » (contact) ; « 11 h 00 » avec espaces ordinaires peut se couper en bout de ligne. Le bandeau dit « 7 j sur 7. Du lundi au samedi… » (abréviation familière, phrase sans verbe) et l'en-tête de la section dit « 7 jours sur 7. » : écrire « Ouvert 7 jours sur 7 » une seule fois.
+- **F3-3 · Graphie du nom** : « Champs Elysées » (titres, alt, pied de page) contre « Champs Élysées » (texte « À propos » et logo). Choisir une forme (le dossier donne « Champs Elysées » comme nom public du site).
+- **F3-4 · Méta** : aucune balise `og:*` ni `og:image`, pas de `canonical` ; `sitemap-0.xml` publié sur une maquette en `noindex` (le WARN sitemap/robots de l'audit est un faux positif connu, je ne le compte pas). Ajouter `og:title`, `og:description`, `og:image` (photo de façade) à `Base.astro`.
+- **F3-5 · Statut d'ouverture** : « rouvre demain à 11 h 00 » est écrit en dur dans `src/components/Horaires.astro` (branche de fermeture). Exact aujourd'hui car tous les jours ouvrent à 11 h 00 ; à dériver de `data-o` du lendemain si les horaires changent.
+
+## Vérifié sans écart (pour mémoire)
+- 94 noms, descriptions et prix de la carte identiques à `donnees.json` (comparaison ordonnée, nombres des libellés `1 pc`, `3 pcs` séparés ; les 8 « écarts » bruts du script étaient ces libellés, aucun prix différent). Menu des fêtes (50 € / 65 €, 9 choix, formule boissons) conforme.
+- Horaires affichés = site d'origine (priorité sur Rankeat, comme dit au dossier) ; code postal 5100 marqué à confirmer dans `site.ts` : hypothèse à garder.
+- Aucune note d'avis, citation, récompense ni chiffre inventé ; alt de photos = champ `sujet` de `photos/index.json`. Note : l'alt « casserole fumante de moules » est fidèle au `sujet`, alors que la carte PDF n'en propose pas (signalé dans `manques` du dossier) ; à surveiller si le client confirme l'absence.
+- Mention « Maquette KYW, certaines données sont illustratives », logo KYW (un seul) et `noindex` : 5/5 pages ; `<title>` et description uniques par page, `lang="fr"`, un `h1`, `main` unique, lien d'évitement premier arrêt de Tab (`Aller au contenu`).
+- Reduced-motion : 0 texte à opacité < 0,5. Poids des images : aucune > 300 Ko (hero 238 Ko).
+- Statut d'ouverture sous 8 horloges Europe/Brussels (lun 08:00, lun 11:00, mar 21:59, ven 22:00, sam 10:59, dim 15:59, dim 16:00, dim 20:00) : 8/8 justes.
+- Les liens vers Zenchef (`rid=377536`), Facebook et Maps sont ceux de `donnees.json`.
+
+## Ce qui est bien (à ne pas casser à la révision)
+1. Fiabilité des données : carte de 94 lignes à 0 écart, horaires et statut d'ouverture justes sous 8 horloges, formulaire qui n'annonce pas d'envoi fictif.
+2. Robustesse de mise en page : 0 débordement à 5 largeurs, menu mobile en popover (Échap, retour du focus), 12 arrêts de Tab avec anneau de 2 px, reduced-motion propre.
+3. Sobriété lisible : filets fins, serif/grotesque bien hiérarchisés, carte à deux colonnes (rubrique à gauche, lignes à droite) agréable à parcourir sur 94 lignes.
