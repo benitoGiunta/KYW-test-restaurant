@@ -1,0 +1,39 @@
+---
+import KywFooter from '@kyw/footer';
+import Regle from './Regle.astro';
+import { u } from '../lib/url';
+import { restaurant, jours } from '../data/site';
+const a = restaurant.adresse;
+---
+<footer class="pied">
+  <div class="pied__haut wrap">
+    <p class="pied__mot" aria-hidden="true">Le Panorama</p>
+    <Regle classe="regle--pied" marque={23} />
+  </div>
+  <div class="pied__corps wrap">
+    <div class="pied__col">
+      <h2 class="pied__titre">Adresse</h2>
+      <address>
+        {a.rue} {a.numero}<br />{a.cp} {a.commune}, {a.complement}<br />
+        <a class="lien" href={restaurant.plan} rel="noopener">Ouvrir le plan</a>
+      </address>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Ouvert</h2>
+      <p>Tous les jours, de 8&nbsp;h à 23&nbsp;h<span class="pied__aconfirmer"> (à confirmer)</span><br />{jours[0]} à {jours[6].toLowerCase()}</p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Réserver</h2>
+      <p><a class="lien" href={restaurant.telephoneHref}>{restaurant.telephoneLisible}</a><br /><a class="lien" href={u('/reservation/')}>Toutes les façons de réserver</a></p>
+    </div>
+    <div class="pied__col">
+      <h2 class="pied__titre">Suivre</h2>
+      <ul class="pied__liste">
+        {restaurant.reseaux.map((r) => <li><a class="lien" href={r.url} rel="noopener">{r.nom}</a></li>)}
+        <li><a class="lien" href={restaurant.siteClient} rel="noopener">Site officiel</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="pied__credit wrap">Photos : Le Panorama.</p>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

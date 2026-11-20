@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Regle from '../components/Regle.astro';
+import { restaurant, jours, moments, faits } from '../data/site';
+const a = restaurant.adresse;
+---
+<Base page="reservation" title="Réserver" description="Réserver au Panorama, Route Merveilleuse 82 à Namur : téléphone 081 84 11 34, formulaire du restaurant, groupes dès 7 personnes, horaires et accès.">
+  <header class="entete wrap">
+    <h1 class="display entete__titre">Réserver une table</h1>
+    <p class="entete__texte">Par téléphone ou par le formulaire du restaurant. {faits.terrasse}</p>
+  </header>
+
+  <section class="resa wrap" aria-label="Moyens de réserver">
+    <ul class="resa__moyens">
+      <li class="moyen">
+        <h2 class="moyen__titre display">Par téléphone</h2>
+        <p><a class="cta" href={restaurant.telephoneHref}><span class="cta__txt">Appeler le {restaurant.telephoneLisible}</span></a></p>
+      </li>
+      <li class="moyen">
+        <h2 class="moyen__titre display">En ligne</h2>
+        <p>Le restaurant réserve par un formulaire et un widget sur son site officiel.</p>
+        <p><a class="cta cta--fantome" href={restaurant.reservationUrl} rel="noopener"><span class="cta__txt">Ouvrir le formulaire de réservation</span></a></p>
+      </li>
+      <li class="moyen">
+        <h2 class="moyen__titre display">Pour un groupe</h2>
+        <p>{faits.groupes}</p>
+        <p><a class="cta cta--fantome" href={`mailto:${restaurant.emailGroupes}`}><span class="cta__txt">Ouvrir mon e-mail</span></a></p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="acces wrap" aria-labelledby="t-horaires">
+    <div class="acces__horaires">
+      <h2 id="t-horaires" class="display t-l">Horaires</h2>
+      <Regle classe="regle--grande" reperes={moments} />
+      <ul class="horaires">
+        {jours.map((j) => <li><span>{j}</span><span>8&nbsp;h à 23&nbsp;h</span></li>)}
+      </ul>
+      <p class="journee__note">D’après la page d’accueil du site officiel. La page contact indique la brasserie de 11&nbsp;h à 23&nbsp;h, les petits-déjeuners vont de 8&nbsp;h à 10&nbsp;h&nbsp;30 : à confirmer par téléphone.</p>
+    </div>
+    <div class="acces__lieu">
+      <h2 class="display t-l">Venir</h2>
+      <address>
+        <strong>{restaurant.nom}</strong><br />
+        {a.rue} {a.numero}<br />
+        {a.cp} {a.commune}, {a.complement}
+      </address>
+      <p>{faits.telepherique} Le restaurant occupe le pavillon vitré au sommet de la Citadelle, avec sa terrasse sur plusieurs niveaux.</p>
+      <p><a class="lien" href={restaurant.plan} rel="noopener">Ouvrir le plan</a></p>
+      <figure class="acces__photo"><Photo cle="aerienne" sizes="(min-width: 900px) 40vw, 100vw" /><figcaption>Le pavillon, vu d’en haut.</figcaption></figure>
+    </div>
+  </section>
+</Base>

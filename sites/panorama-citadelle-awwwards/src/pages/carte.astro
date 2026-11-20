@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { categories, menus, restaurant } from '../data/site';
+import type { CleePhoto } from '../lib/photos';
+const eur = (n: number) => new Intl.NumberFormat('fr-BE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 }).format(n);
+const photoDe: Record<string, CleePhoto> = { 'au-four-a-bois-flammekueche': 'four', 'sur-le-grill': 'bar', 'poissons': 'tableVerres', 'tout-pour-deux-a-partager': 'longueTable' };
+const petitsDej = menus.filter((m) => m.nom.startsWith('Le Pano'));
+const fetes = menus.find((m) => m.nom.startsWith('Menu des fêtes'));
+---
+<Base page="carte" title="La carte" description="La carte d’automne 2026 du Panorama à Namur, signée Yves Mattagne : apéro à partager, tartes flambées, poissons, viandes, grill, gibier et petits-déjeuners.">
+  <header class="entete wrap">
+    <h1 class="display entete__titre">La carte</h1>
+    <p class="entete__texte">Carte d’automne 2026, signée Yves Mattagne. Prix en euros. Pain sans gluten sur demande.</p>
+  </header>
+
+  <div class="carte wrap">
+    <nav class="carte__index" aria-label="Sections de la carte">
+      <ul>
+        {categories.map((c) => <li><a class="nl" href={`#${c.id}`}><span class="nl__txt">{c.titre}</span></a></li>)}
+        <li><a class="nl" href="#petits-dejeuners"><span class="nl__txt">Petits-déjeuners</span></a></li>
+      </ul>
+    </nav>
+
+    <div class="carte__corps">
+      {categories.map((c) => (
+        <section class="cat" id={c.id} aria-labelledby={`h-${c.id}`}>
+          <div class="cat__tete">
+            <h2 id={`h-${c.id}`} class="display cat__titre">{c.titre}</h2>
+            {photoDe[c.id] && <div class="cat__photo"><Photo cle={photoDe[c.id]} widths={[320, 480, 800]} sizes="(min-width: 900px) 24vw, 70vw" /></div>}
+          </div>
+          <ul class="plats">
+            {c.plats.map((p) => (
+              <li class="plat">
+                <div class="plat__texte">
+                  <h3 class="plat__nom">{p.nom}</h3>
+                  {p.description && <p class="plat__desc">{p.description}</p>}
+                </div>
+                <p class="plat__prix">
+                  {p.prix != null ? eur(p.prix) : p.prixLibelle}
+                  {p.prixAlt != null && <span class="plat__alt"> / {eur(p.prixAlt)}</span>}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+
+      <section class="cat" id="petits-dejeuners" aria-labelledby="h-petits-dejeuners">
+        <div class="cat__tete">
+          <h2 id="h-petits-dejeuners" class="display cat__titre">Petits-déjeuners</h2>
+          <p class="cat__note">De 8&nbsp;h à 10&nbsp;h&nbsp;30.</p>
+        </div>
+        <ul class="plats">
+          {petitsDej.map((p) => (
+            <li class="plat">
+              <div class="plat__texte"><h3 class="plat__nom">{p.nom}</h3><p class="plat__desc">{p.description}</p></div>
+              <p class="plat__prix">{p.prix != null && eur(p.prix)}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {fetes && (
+        <section class="cat cat--fetes" aria-labelledby="h-fetes">
+          <div class="cat__tete"><h2 id="h-fetes" class="display cat__titre">{fetes.nom}</h2></div>
+          <p class="fetes__prix">{fetes.prix != null && eur(fetes.prix)} <span>{fetes.prixLibelle}</span></p>
+          <p class="fetes__desc">{fetes.description}</p>
+        </section>
+      )}
+    </div>
+  </div>
+
+  <section class="cta-bloc nuit">
+    <div class="wrap cta-bloc__grille">
+      <p class="display t-l">Une table pour ce soir ?</p>
+      <p class="hero__actions">
+        <a class="cta cta--nuit" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+        <a class="cta cta--fantome cta--fantome-nuit" href={restaurant.telephoneHref}><span class="cta__txt">Appeler le {restaurant.telephoneLisible}</span></a>
+      </p>
+    </div>
+  </section>
+</Base>

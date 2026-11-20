@@ -1,0 +1,59 @@
+/* Jetons du Panorama (variante awwwards « Le tour d'horizon »). Les NOMS sont le contrat de l'engine ; les valeurs viennent de DESIGN.md :
+   gravier clair de la terrasse (photos 03, 04), ardoise noire du pavillon vitré (07), vert de la Meuse (02), vert des tabourets du bar (09).
+   Les url() des polices portent la base (/panorama-citadelle/awwwards/) : Vite ne réécrit pas ces chemins vers public/. */
+
+@font-face { font-family: 'Clash Grotesk'; src: url('/panorama-citadelle/awwwards/fonts/clash-grotesk-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Clash Grotesk'; src: url('/panorama-citadelle/awwwards/fonts/clash-grotesk-600-normal.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Switzer'; src: url('/panorama-citadelle/awwwards/fonts/switzer-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Switzer'; src: url('/panorama-citadelle/awwwards/fonts/switzer-600-normal.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+
+:root {
+  /* Couleur : par rôle */
+  --c-bg: #e3e4df;            /* ground : gravier clair de la terrasse */
+  --c-fg: #11171b;            /* ink : ardoise noire du pavillon (15,6:1) */
+  --c-muted: #55606a;         /* muted : ombre des platanes (5,3:1) */
+  --c-line: #b4b9b6;          /* line : joints des dalles */
+  --c-accent: #1d5c58;        /* accent : vert Meuse ; grands titres, repères, aplats (6,3:1) */
+  --c-accent-texte: #1d5c58;
+  --c-curtain: #11171b;       /* curtain : le pavillon vitré, la nuit */
+
+  /* Sections « nuit » : fond ardoise, texte gravier */
+  --c-nuit: #11171b;
+  --c-nuit-fg: #e3e4df;
+  --c-nuit-muted: #a4b0ab;    /* 7,6:1 sur nuit */
+  --c-nuit-accent: #a9bd78;   /* vert des tabourets du bar (9,2:1 sur nuit) */
+  --c-nuit-line: #2d373d;
+
+  /* Familles */
+  --f-display: 'Clash Grotesk', 'Arial Narrow', sans-serif;
+  --f-body: 'Switzer', system-ui, sans-serif;
+
+  /* Échelle fluide (390 → 1440 px), sauts × 2 environ */
+  --t-mega: clamp(3.4rem, 0.8rem + 12.2vw, 14rem);
+  --t-xl: clamp(2.75rem, 1.3rem + 6.4vw, 7.25rem);
+  --t-l: clamp(1.9rem, 1.2rem + 3vw, 3.75rem);
+  --t-m: clamp(1.2rem, 1.02rem + 0.8vw, 1.7rem);
+  --t-body: clamp(1rem, 0.97rem + 0.15vw, 1.125rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem;
+
+  /* Espace : quatre humeurs */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+  --serre: calc(var(--u) * 3);
+  --normal: calc(var(--u) * 8);
+  --aere: calc(var(--u) * 14);
+  --entracte: calc(var(--u) * 22);
+
+  /* Forme : tout est droit comme l'horizon ; seule exception, le soleil (cercle) */
+  --radius: 0px;
+
+  /* Couches */
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}

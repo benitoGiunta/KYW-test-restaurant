@@ -1,0 +1,108 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Regle from '../components/Regle.astro';
+import { u } from '../lib/url';
+import { restaurant, lieux, moments, faits, menus } from '../data/site';
+const petitsDej = menus.filter((m) => m.nom.startsWith('Le Pano'));
+const prixMin = Math.min(...petitsDej.map((m) => m.prix ?? 99));
+const prixMax = Math.max(...petitsDej.map((m) => m.prix ?? 0));
+const eur = (n: number) => new Intl.NumberFormat('fr-BE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(n);
+---
+<Base page="accueil" description="Le Panorama, brasserie au sommet de la Citadelle de Namur : vue à 360° sur la Meuse, carte signée Yves Mattagne, tarte flambée au four à bois, ouvert tous les jours.">
+  <section class="hero">
+    <div class="wrap hero__grille">
+      <h1 class="hero__titre display"><span>Le</span> <span>Panorama</span></h1>
+      <div class="hero__texte">
+        <p class="hero__baseline">{restaurant.baseline}.</p>
+        <p class="hero__infos">Brasserie, Route Merveilleuse 82, Namur. Ouvert tous les jours, de 8&nbsp;h à 23&nbsp;h.</p>
+        <p class="hero__actions">
+          <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+          <a class="cta cta--fantome" href={restaurant.telephoneHref}><span class="cta__txt">Appeler le {restaurant.telephoneLisible}</span></a>
+        </p>
+      </div>
+    </div>
+    <div class="hero__vue">
+      <Photo cle="meuse" widths={[640, 1000, 1600, 2000]} sizes="100vw" prioritaire />
+      <div class="hero__regle wrap"><Regle classe="regle--sur-photo" marque={20} /></div>
+    </div>
+  </section>
+
+  <section class="horizon wrap" aria-labelledby="t-horizon">
+    <div class="horizon__photo"><Photo cle="facade" sizes="(min-width: 900px) 52vw, 100vw" /></div>
+    <div class="horizon__texte">
+      <h2 id="t-horizon" class="display t-xl">360 degrés autour du rebord</h2>
+      <p>La Meuse, la ville de Namur et la vallée se lisent de tous les côtés du pavillon vitré, posé au sommet de la Citadelle.</p>
+      <p>{faits.telepherique}</p>
+      <p><a class="lien" href={restaurant.plan} rel="noopener">Voir sur le plan</a></p>
+    </div>
+    <figure class="horizon__aerien">
+      <Photo cle="aerienne" sizes="(min-width: 900px) 40vw, 80vw" />
+      <figcaption>Le pavillon et sa terrasse, au bord du rocher.</figcaption>
+    </figure>
+  </section>
+
+  <section class="nuit lieux" aria-labelledby="t-lieux">
+    <div class="wrap">
+      <h2 id="t-lieux" class="display t-xl">De la terrasse à la cave</h2>
+      <ul class="lieux__liste">
+        {lieux.map((l) => (
+          <li class="lieu">
+            <h3 class="lieu__nom display">{l.nom}</h3>
+            <p class="lieu__texte">{l.texte}</p>
+            <div class="lieu__vignette"><Photo cle={l.photo} widths={[320, 480, 800]} sizes="(min-width: 900px) 18vw, 40vw" /></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="feu wrap" aria-labelledby="t-feu">
+    <div class="feu__img feu__img--a"><Photo cle="four" sizes="(min-width: 900px) 34vw, 100vw" /></div>
+    <div class="feu__texte">
+      <h2 id="t-feu" class="display t-xl">Tarte flambée, au four à bois</h2>
+      <p>Cinq tartes flambées sortent du four ouvert, de la tradition à 19&nbsp;€ à la gratinée « raclette » à 24&nbsp;€. Les cuisiniers les ont apprises auprès du chef alsacien Patrice Bluntzer.</p>
+      <p><a class="lien" href={u('/carte/#au-four-a-bois-flammekueche')}>Voir la section de la carte</a></p>
+    </div>
+    <div class="feu__img feu__img--b"><Photo cle="pano" sizes="(min-width: 900px) 24vw, 70vw" /></div>
+    <div class="feu__biere">
+      <h3 class="display t-m">La Pano</h3>
+      <p>Une bière blanche brassée avec La Houppe, servie uniquement ici.</p>
+    </div>
+  </section>
+
+  <section class="journee wrap" aria-labelledby="t-journee">
+    <h2 id="t-journee" class="display t-xl">Une journée sur la règle</h2>
+    <Regle classe="regle--grande" reperes={moments} />
+    <dl class="journee__moments">
+      <div>
+        <dt>Petits-déjeuners, 8&nbsp;h à 10&nbsp;h&nbsp;30</dt>
+        <dd>Quatre formules de {eur(prixMin)} à {eur(prixMax)}, avec boisson chaude et jus d’orange pressé.</dd>
+      </div>
+      <div>
+        <dt>Brasserie, jusqu’à 23&nbsp;h</dt>
+        <dd>La carte d’automne 2026, signée Yves Mattagne : apéro à partager, poissons, viandes, grill, gibier.</dd>
+      </div>
+    </dl>
+    <p class="journee__note">Horaires d’après le site officiel, à confirmer : la page contact indique la brasserie de 11&nbsp;h à 23&nbsp;h.</p>
+    <p><a class="lien" href={u('/carte/')}>Lire toute la carte</a></p>
+  </section>
+
+  <section class="final nuit" aria-labelledby="t-final">
+    <div class="wrap final__grille">
+      <h2 id="t-final" class="final__titre display">Une table au sommet</h2>
+      <div class="final__corps">
+        <p>{faits.terrasse} {faits.groupes}</p>
+        <p class="hero__actions">
+          <a class="cta cta--nuit" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+          <a class="cta cta--fantome cta--fantome-nuit" href={restaurant.telephoneHref}><span class="cta__txt">Appeler le {restaurant.telephoneLisible}</span></a>
+        </p>
+      </div>
+    </div>
+    <div class="final__mur wrap">
+      <Photo cle="platanes" widths={[480, 800, 1200]} sizes="(min-width: 900px) 32vw, 100vw" />
+      <Photo cle="guirlandes" widths={[480, 800, 1200]} sizes="(min-width: 900px) 32vw, 100vw" />
+      <Photo cle="salle" widths={[480, 800, 1200]} sizes="(min-width: 900px) 32vw, 100vw" />
+    </div>
+  </section>
+</Base>

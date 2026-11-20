@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { histoire, equipe } from '../data/site';
+---
+<Base page="histoire" title="L’histoire" description="L’histoire du Panorama, au sommet de la Citadelle de Namur : rénové et rouvert en 2022, carte signée Yves Mattagne, tarte flambée au four à bois.">
+  <header class="entete wrap">
+    <h1 class="display entete__titre">Au sommet de la Citadelle</h1>
+  </header>
+
+  <section class="recit wrap" aria-label="Le lieu">
+    <div class="recit__texte">
+      {histoire.map((p) => <p>{p}</p>)}
+    </div>
+    <figure class="recit__photo recit__photo--a">
+      <Photo cle="pergola" sizes="(min-width: 900px) 46vw, 100vw" />
+      <figcaption>La terrasse sous la pergola de platanes.</figcaption>
+    </figure>
+  </section>
+
+  <section class="nuit equipe" aria-labelledby="t-equipe">
+    <div class="wrap equipe__grille">
+      <h2 id="t-equipe" class="display t-xl">Les noms derrière la carte</h2>
+      <ul class="equipe__liste">
+        {equipe.map((e) => (
+          <li><span class="equipe__nom display">{e.nom}</span><span class="equipe__role">{e.role}</span></li>
+        ))}
+      </ul>
+      <figure class="equipe__photo">
+        <Photo cle="equipe" sizes="(min-width: 900px) 50vw, 100vw" />
+        <figcaption>L’équipe en salle, sur la terrasse.</figcaption>
+      </figure>
+      <figure class="equipe__photo equipe__photo--portrait">
+        <Photo cle="portrait" widths={[480, 800]} sizes="(min-width: 900px) 24vw, 70vw" />
+        <figcaption>En cuisine.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="recit recit--bas wrap" aria-label="Le bar et la salle">
+    <figure class="recit__photo"><Photo cle="comptoir" sizes="(min-width: 900px) 50vw, 100vw" /><figcaption>Derrière le comptoir du bar.</figcaption></figure>
+    <div class="recit__texte">
+      <p>Le bar en marbre noir ouvre la salle, une cave vitrée garde les bouteilles à vue, et la cuisine ouverte laisse voir le four à bois.</p>
+      <p><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a></p>
+    </div>
+  </section>
+</Base>
