@@ -1,18 +1,26 @@
 ---
 // La règle de l'horizon : une ligne graduée de 8 h à 23 h (les heures d'ouverture du site client), signature du concept.
 // Décorative (aria-hidden) : l'information est toujours redite en texte à côté.
+// `pilote` : le soleil est confié au module src/motion/horizon.ts (il suit l'heure du défilement) ;
+// sa position statique (`marque`) reste le dessin du repli sans mouvement.
 interface Repere { de: number; a: number }
-interface Props { debut?: number; fin?: number; reperes?: readonly Repere[]; marque?: number; classe?: string; sansHeures?: boolean }
-const { debut = 8, fin = 23, reperes = [], marque, classe = '', sansHeures = false } = Astro.props;
+interface Props { debut?: number; fin?: number; reperes?: readonly Repere[]; marque?: number; classe?: string; sansHeures?: boolean; pilote?: boolean; etiquette?: boolean }
+const { debut = 8, fin = 23, reperes = [], marque, classe = '', sansHeures = false, pilote = false, etiquette = false } = Astro.props;
 const span = fin - debut;
 const heures = Array.from({ length: span + 1 }, (_, i) => debut + i);
 const pct = (h: number) => `${(((h - debut) / span) * 100).toFixed(3)}%`;
+const piloteActif = pilote && marque !== undefined;
 ---
-<div class={`regle ${classe}`} aria-hidden="true" style={`--n:${span}`}>
+<div class={`regle ${classe}`} aria-hidden="true" style={`--n:${span}`} data-soleil={piloteActif ? '' : undefined} data-debut={debut} data-fin={fin} data-marque={marque}>
   <div class="regle__piste">
     {reperes.map((r) => <span class="regle__repere" style={`left:${pct(r.de)};width:calc(${pct(r.a)} - ${pct(r.de)})`}></span>)}
     {heures.map((h, i) => <span class:list={['regle__cran', { 'regle__cran--pair': h % 2 === 0 }]} style={`left:${pct(h)}`} data-i={i}></span>)}
-    {marque !== undefined && <span class="regle__soleil" style={`left:${pct(marque)}`}></span>}
+    {piloteActif ? (
+      <span class="regle__astre" style={`left:${pct(marque!)}`}>
+        <span class="regle__soleil"></span>
+        {etiquette && <span class="regle__etiquette">{marque} h</span>}
+      </span>
+    ) : marque !== undefined && <span class="regle__soleil" style={`left:${pct(marque)}`}></span>}
   </div>
   {!sansHeures && (
     <div class="regle__heures">

@@ -24,14 +24,14 @@ const eur = (n: number) => new Intl.NumberFormat('fr-BE', { style: 'currency', c
     </div>
     <div class="hero__vue">
       <Photo cle="meuse" widths={[640, 1000, 1600, 2000]} sizes="100vw" prioritaire />
-      <div class="hero__regle wrap"><Regle classe="regle--sur-photo" marque={20} /></div>
+      <div class="hero__regle wrap"><Regle classe="regle--sur-photo" marque={20} pilote etiquette /></div>
     </div>
   </section>
 
   <section class="horizon wrap" aria-labelledby="t-horizon">
     <div class="horizon__photo"><Photo cle="facade" sizes="(min-width: 900px) 52vw, 100vw" /></div>
     <div class="horizon__texte">
-      <h2 id="t-horizon" class="display t-xl">360 degrés autour du rebord</h2>
+      <h2 id="t-horizon" class="display t-xl" data-split="lines">360 degrés autour du rebord</h2>
       <p>La Meuse, la ville de Namur et la vallée se lisent de tous les côtés du pavillon vitré, posé au sommet de la Citadelle.</p>
       <p>{faits.telepherique}</p>
       <p><a class="lien" href={restaurant.plan} rel="noopener">Voir sur le plan</a></p>
@@ -44,7 +44,7 @@ const eur = (n: number) => new Intl.NumberFormat('fr-BE', { style: 'currency', c
 
   <section class="nuit lieux" aria-labelledby="t-lieux">
     <div class="wrap">
-      <h2 id="t-lieux" class="display t-xl">De la terrasse à la cave</h2>
+      <h2 id="t-lieux" class="display t-xl" data-split="lines">De la terrasse à la cave</h2>
       <ul class="lieux__liste">
         {lieux.map((l) => (
           <li class="lieu">
@@ -60,7 +60,7 @@ const eur = (n: number) => new Intl.NumberFormat('fr-BE', { style: 'currency', c
   <section class="feu wrap" aria-labelledby="t-feu">
     <div class="feu__img feu__img--a"><Photo cle="four" sizes="(min-width: 900px) 34vw, 100vw" /></div>
     <div class="feu__texte">
-      <h2 id="t-feu" class="display t-xl">Tarte flambée, au four à bois</h2>
+      <h2 id="t-feu" class="display t-xl" data-split="lines">Tarte flambée, au four à bois</h2>
       <p>Cinq tartes flambées sortent du four ouvert, de la tradition à 19&nbsp;€ à la gratinée « raclette » à 24&nbsp;€. Les cuisiniers les ont apprises auprès du chef alsacien Patrice Bluntzer.</p>
       <p><a class="lien" href={u('/carte/#au-four-a-bois-flammekueche')}>Voir la section de la carte</a></p>
     </div>
@@ -72,8 +72,8 @@ const eur = (n: number) => new Intl.NumberFormat('fr-BE', { style: 'currency', c
   </section>
 
   <section class="journee wrap" aria-labelledby="t-journee">
-    <h2 id="t-journee" class="display t-xl">Une journée sur la règle</h2>
-    <Regle classe="regle--grande" reperes={moments} />
+    <h2 id="t-journee" class="display t-xl" data-split="lines">Une journée sur la règle</h2>
+    <Regle classe="regle--grande" reperes={moments} marque={13} pilote />
     <dl class="journee__moments">
       <div>
         <dt>Petits-déjeuners, 8&nbsp;h à 10&nbsp;h&nbsp;30</dt>
@@ -90,7 +90,7 @@ const eur = (n: number) => new Intl.NumberFormat('fr-BE', { style: 'currency', c
 
   <section class="final nuit" aria-labelledby="t-final">
     <div class="wrap final__grille">
-      <h2 id="t-final" class="final__titre display">Une table au sommet</h2>
+      <h2 id="t-final" class="final__titre display" data-split="lines">Une table au sommet</h2>
       <div class="final__corps">
         <p>{faits.terrasse} {faits.groupes}</p>
         <p class="hero__actions">
