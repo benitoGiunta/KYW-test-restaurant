@@ -97,7 +97,7 @@ export const plats: { categorie: string; note?: string; plats: Plat[] }[] = [
   },
   {
     categorie: 'Les desserts',
-    note: 'Prix non communiqués. Le dessert de la carte fait partie des deux menus.',
+    note: 'Le dessert de la carte fait partie des deux menus.',
     plats: [
       { nom: 'Moelleux au chocolat des Caraïbes', description: 'autour de l’ananas et du fruit de la passion', prix: null },
       { nom: 'La dame blanche tournée à la minute', description: 'chocolat croquant', prix: null },

@@ -27,7 +27,6 @@ export const jours = [
   { jour: 'Samedi', services: `Midi et${nb}soir` },
   { jour: 'Dimanche', services: 'Midi' },
 ] as const;
-export const heuresFill = 'Heures d’ouverture à confirmer par le restaurant';
 
 export const conges = [
   `Du 1er au${nb}6${nb}janvier`,
