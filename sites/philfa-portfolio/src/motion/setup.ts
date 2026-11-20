@@ -144,11 +144,13 @@ function table() {
     scene.querySelectorAll<HTMLElement>('[data-tirage]').forEach((t) => cleanups.push(saisissable(t, scene, { auJeu })));
     return () => cleanups.forEach((c) => c());
   }
+  // Saisissables dès le chargement (pas à la fin de l'entrée) : l'entrée joue sur yPercent, que Draggable (x, y) ne touche pas,
+  // donc un geste pendant l'animation d'arrivée déplace déjà la photo.
+  items.forEach((t) => cleanups.push(saisissable(t, scene, { auJeu })));
   const tl = gsap.timeline({
-    scrollTrigger: { trigger: scene, start: 'top 70%', once: true },
-    onComplete: () => items.forEach((t) => cleanups.push(saisissable(t, scene, { auJeu }))),
+    scrollTrigger: { trigger: scene, start: 'top 85%', once: true },
   });
-  tl.from(items, { y: 90, autoAlpha: 0, rotation: () => gsap.utils.random(-14, 14), duration: 0.9, ease: 'back.out(1.6)', stagger: { each: 0.06, from: 'random' } });
+  tl.from(items, { yPercent: 30, autoAlpha: 0, rotation: () => gsap.utils.random(-14, 14), duration: 0.9, ease: 'back.out(1.6)', stagger: { each: 0.06, from: 'random' } });
   cleanups.push(() => tl.kill());
   return () => cleanups.forEach((c) => c());
 }

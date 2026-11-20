@@ -228,6 +228,13 @@ html.motion .avis__mot { --flou: 14px; }
 .membre .tirage { width: 100%; padding-bottom: 0.9rem; box-shadow: none; cursor: default; margin-bottom: var(--u); }
 .membre__sans { aspect-ratio: 1; display: grid; place-items: center; border-radius: calc(var(--radius) - 8px); background: var(--c-lin); color: var(--c-canard); margin-bottom: var(--u); }
 .membre__sans svg { width: 45%; height: 45%; }
+/* Mobile : fiches sans portrait en grille 2 x 2 compacte (pictogramme 40 px) au lieu de tuiles de 240 px */
+@media (max-width: 47.99rem) {
+  .equipe { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 1.5); }
+  .membre { padding: calc(var(--u) * 1.5); }
+  .membre__sans { aspect-ratio: auto; width: 40px; height: 40px; margin-bottom: calc(var(--u) * 0.75); }
+  .membre__sans svg { width: 70%; height: 70%; }
+}
 
 /* Formulaire */
 .form { display: grid; gap: calc(var(--u) * 2); grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }

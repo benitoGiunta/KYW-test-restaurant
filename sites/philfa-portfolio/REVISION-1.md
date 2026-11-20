@@ -1,0 +1,11 @@
+# REVISION-1 · philfa portfolio (révision ciblée F0/F1/F2)
+
+| id | décision | changé (fichier) | preuve |
+|---|---|---|---|
+| F1-1 drag souris | corrige | `src/motion/setup.ts` : les tirages deviennent saisissables dès le chargement (plus à la fin de l'entrée) ; l'entrée joue sur `yPercent` (Draggable gère x/y) ; déclencheur `top 85%` | Cause reproduite : le geste n'agit que pendant l'animation d'arrivée (~2 s, Draggable créé au `onComplete`). Après correction, souris Playwright 12 pas : dx = 180 (attendu ≈ 180), `is-drag` posée, « Ranger la table » visible ; 3 tirages sur 3 à 1 s et 3,5 s. Pendant les ~0,5 premières secondes d'entrée (tirages encore à opacité 0), pas de saisie, voulu. |
+| F2-1 LCP mobile | corrige | `src/engine/loader.ts` MIN 1,1 -> 0,35 s, MAX 2,6 -> 0,9 s (loader masqué sous 768 px : sans effet mobile) ; `src/pages/index.astro` : image LCP de « La maison » avec `srcset` 600 w (`public/photos/salle-table-longue-600.webp`, 58 Ko au lieu de 218 Ko ; la revue indiquait 31 Ko à tort) + `fetchpriority="high"` | Mesure CPU x4 + 4G lente (2 passes) : avant 3988 / 3984 ms ; après 1944 / 1864 ms (< 2,5 s). Cause réelle : l'image de 218 Ko se disputait la bande passante avec les images du rail et le JS de 144 Ko ; DCL ~3,4 s inchangé (JS), non traité. LCP desktop bridé : 1128 ms. |
+| F2-2 axe | corrige | `Footer.astro` : `<footer>` -> `<section aria-label="Coordonnées et horaires">` (un seul `contentinfo`, celui de `kyw-footer`) ; `Marquee.astro` : `role="region"` sur le `div` libellé | axe (règles landmark-no-duplicate-contentinfo, region, aria-prohibited-attr) sur 6 pages x 390 et 1440 px : 0 violation, 0 « à vérifier ». |
+| F2-3 équipe | corrige | `src/styles/base.css` : sous 48 rem, `.equipe` en grille 2 x 2, pictogramme 40 px | 390 px : fiche 133 px de haut (240 avant), page La maison 5634 px (7035 avant), scrollWidth 390 ; capture de `.equipe` relue. |
+
+Hypothèses : le `table()` desktop seul est touché ; le mobile (rail) et le reduced-motion (grille droite) sont inchangés. F3 non traités (hors périmètre de la passe).
+Corrigés : 4 · refusés : 0 · impossibles : 0. Rebuild via `scripts/q.sh philfa-build pnpm build:site sites/philfa-portfolio` : OK. Publiable selon moi (F1-1 levé et prouvé).
