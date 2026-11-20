@@ -57,7 +57,7 @@ const indexHero = [['Cuisine de midi', 'cuisine-midi'], ['Pâtisseries et assiet
             <div class="switch__panel" role="tabpanel" id={`panel-${i}`} aria-labelledby={`tab-${i}`} tabindex="0">
               <h3>{m.nom}</h3>
               <p class="lead">{fr(m.texte)}</p>
-              <p class="switch__aper">À la carte : {aperçu(m.ancre).map(fr).join(', ')}</p>
+              <p class="switch__aper">À la carte : {(m.lignes ?? aperçu(m.ancre)).map(fr).join(', ')}</p>
               <p><a class="link" href={u(`carte#${m.ancre}`)}>Voir à la carte</a></p>
             </div>
           ))}

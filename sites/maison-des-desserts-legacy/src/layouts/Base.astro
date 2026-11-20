@@ -2,11 +2,21 @@
 import '../styles/page.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-interface Props { title: string; description: string; current?: string }
-const { title, description, current = '' } = Astro.props;
+import { nom, baseline, mail, social } from '../data/site';
+interface Props { title: string; description: string; current?: string; nocanon?: boolean }
+const { title, description, current = '', nocanon = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-const canonical = Astro.url.pathname;
-const ogImage = `${base}photos/01-facade-vitrine-noel-800.webp`;
+const origin = (Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app')).origin;
+const canonical = origin + Astro.url.pathname;
+const ogImage = origin + `${base}photos/01-facade-vitrine-noel-800.webp`;
+const ld = {
+  '@context': 'https://schema.org', '@type': 'Bakery', name: nom, description: baseline,
+  url: origin + base, image: ogImage, telephone: '+3281227451', email: mail,
+  address: { '@type': 'PostalAddress', streetAddress: 'Rue Haute Marcelle 17', postalCode: '5000', addressLocality: 'Namur', addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: 50.4669, longitude: 4.8675 },
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '08:00', closes: '18:00' }],
+  sameAs: [social.instagram, social.facebook],
+};
 ---
 <!doctype html>
 <html lang="fr">
@@ -16,7 +26,8 @@ const ogImage = `${base}photos/01-facade-vitrine-noel-800.webp`;
     <meta name="robots" content="noindex" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {!nocanon && <link rel="canonical" href={canonical} />}
+    {!nocanon && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f0eae0'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' text-anchor='middle' fill='%23221a14'%3EM%3C/text%3E%3C/svg%3E" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_BE" />

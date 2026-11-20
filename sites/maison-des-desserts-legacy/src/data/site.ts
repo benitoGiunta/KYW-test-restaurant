@@ -21,10 +21,10 @@ export const histoire = [
   'En 1993, la maison ouvre son salon de thé et sa pâtisserie dans le quartier Saint-Loup, au cœur du vieux Namur, dans une bâtisse du 17e siècle.',
   'Aujourd’hui, la troisième génération dirige la maison : pâtisseries, chocolats, macarons et petite restauration.',
 ];
-export const metiers = [
+export const metiers: { nom: string; texte: string; ancre: string; lignes?: string[] }[] = [
   { nom: 'Boulangerie', texte: 'Pains artisanaux et viennoiseries.', ancre: 'boulangerie' },
-  { nom: 'Pâtisserie', texte: 'Pâtisseries et macarons faits maison, signature de la troisième génération.', ancre: 'patisseries' },
-  { nom: 'Chocolaterie', texte: 'Chocolats belges et biétrumés, spécialité namuroise de la maison.', ancre: 'fetes' },
+  { nom: 'Pâtisserie', texte: 'Pâtisseries et macarons faits maison.', ancre: 'patisseries' },
+  { nom: 'Chocolaterie', texte: 'Chocolats belges et biétrumés, spécialité de la maison.', ancre: 'fetes', lignes: ['Pralines artisanales', 'Biétrumés', 'Macarons de Paris'] },
 ];
 export const faq = [
   { q: 'Quels modes de paiement acceptez-vous ?', r: 'Bancontact et carte de crédit (Visa, Mastercard).' },

@@ -49,7 +49,7 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!tables.length) return;
   const parts = Object.fromEntries(new Intl.DateTimeFormat('fr-BE', { timeZone: 'Europe/Brussels', weekday: 'long', hour: '2-digit', minute: '2-digit', hour12: false, day: 'numeric', month: 'numeric' }).formatToParts(new Date()).map((p) => [p.type, p.value]));
   const jour = parts.weekday.toLowerCase(), now = Number(parts.hour) * 60 + Number(parts.minute);
-  const ferie = (parts.day === '25' && parts.month === '12') || (parts.day === '1' && parts.month === '1');
+  const ferie = (Number(parts.day) === 25 && Number(parts.month) === 12) || (Number(parts.day) === 1 && Number(parts.month) === 1);
   tables.forEach((t) => {
     const row = $$('tbody tr', t).find((r) => $('th', r).textContent.trim().toLowerCase() === jour);
     if (!row) return;
