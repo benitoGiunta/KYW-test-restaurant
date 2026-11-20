@@ -1,4 +1,4 @@
-# ETAT, epices-et-nous-portfolio (construction-2 faite)
+# ETAT, epices-et-nous-portfolio (construction-3 / QA faite)
 
 ## Fait (phase 1)
 - Gabarit Velours adapté : jetons brun café / orange épice, 19 photos WebP, `site.ts` depuis le dossier, pages accueil, menu, carte, maison, histoire, réservation, 404, DESIGN.md (matrice, décisions, adéquation ~75 %).
@@ -21,3 +21,7 @@
 - Hypothèses de la phase 1 inchangées (citation G&M sans date, Michelin sans année, 1999 = ouverture, menu 52 € sans créneau, boissons « à demander au restaurant »).
 - Les 3 premiers chiffres du chapitre (`left` 7 px à 390) gardent le `margin-left: -0.06em` d'alignement optique du gabarit.
 - Un test de clic juste après `page.goto` échoue tant que `#loader` n'est pas `hidden` (1,5 s) : attendre.
+
+## Phase 3 (QA)
+- QA lue (QA-build.md, planches accueil et 404), 404 réelle vérifiée (0 violation axe, 0 erreur) ; aucune correction requise ; build final vert ; RAPPORT.md écrit. Serveur 4533 arrêté.
+- Reste : report défauts dans gabarits/velours (protégé), UTILISATION.md, `pnpm index`, commit `[publier]`.
