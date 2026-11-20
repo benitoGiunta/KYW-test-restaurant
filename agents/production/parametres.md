@@ -27,7 +27,7 @@ Toutes les valeurs variables sont ici, une seule fois. Les messages de lancement
 | `<consigne-lecons>` | Phrase ajoutée aux agents de correction en mode figé (vide si `<lecons>` = `true`) | ` Mode figé : ne modifie rien dans agents/ ; leçon structurelle éventuelle en une ligne datée dans data/usage/<campagne>/lecons-proposees/<slug>.md.` |
 | `<budget-stockage>` | Budget de stockage Vercel suivi par la campagne (copies de `dist/` conservées), contrôlé par `scripts/stockage.sh` | `5` Go (stockage gratuit : 10 Go) |
 | `<seuil-stockage>` | Pourcentage du budget à partir duquel on ne publie ni ne lance plus rien et on prévient le porteur | `70` % |
-| `<base-suivi>` | Base de données de suivi de la campagne (voir `4-mesure.md`, § 6) | repo `benitoGiunta/KYN-project-prospecting`, run 2 « Test des agents · lot 2 » |
+| `<base-suivi>` | Base de données de suivi de la campagne (voir `4-mesure.md`, § 6) | base Postgres (Neon) du repo `benitoGiunta/KYN-project-prospecting`, accès par son `scripts/db.py` uniquement ; run 2 « Test des agents · lot 2 » |
 
 ## Modèles par session
 

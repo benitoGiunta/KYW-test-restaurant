@@ -66,9 +66,21 @@ l'autonomie des agents.
 
 ## 6. Base de suivi (repo `benitoGiunta/KYN-project-prospecting`)
 
-Base SQLite `data/prospects.db` du repo KYN-project-prospecting (règles d'écriture dans son `CLAUDE.md` : `PRAGMA
-foreign_keys = ON`, transaction, `scripts/dump.py`, commit de la base et de `data/tables/` ensemble, une seule session
-qui écrit à la fois, puis reconstruction et republication de l'artefact « Pilotage prospection »).
+Base **Postgres sur Neon** depuis le 20/11/2026 (avant : SQLite `data/prospects.db`, désormais figée ; ne plus
+l'ouvrir ni l'écrire). Règles à jour dans le `CLAUDE.md` et `data/LISEZMOI.md` de KYN-project-prospecting, qui priment
+sur ce résumé :
+
+- Accès **uniquement** par `scripts/db.py` de ce repo (SQL sur HTTP ; le port 5432 est bloqué depuis les sessions
+  cloud, la clé API Neon est fournie par l'environnement) : `from db import connecter`, `cx = connecter()`,
+  `cx.requete(sql, params)`, écritures groupées dans `with cx.transaction() as tx:`, paramètres `%s`.
+- SQL Postgres : `now()` / `current_date` (pas `datetime('now')`), booléens `true` / `false`,
+  `ON CONFLICT DO NOTHING` (pas `INSERT OR IGNORE`). Changement de schéma : script `scripts/saisies/NNN_….py` avec
+  `connecter("proprietaire")` (modèle `000_modele_postgres.py`).
+- Après écriture : `python3 scripts/dump.py` (vérifie, exporte `data/tables/*.csv`, régénère la sauvegarde SQLite
+  `data/backup/prospects.db`), commit de `data/tables/` et `data/backup/prospects.db` ensemble, push sur `main`, puis
+  reconstruction et republication de l'artefact « Pilotage prospection ».
+- Plusieurs sessions peuvent écrire en même temps (transactions) : la règle « une seule session écrit à la fois » ne
+  vaut plus pour la base.
 
 - Organisation : catégorie Restaurants → lot → run → phases `dev` et `debug`. Phase de conception des agents = run 1
   « Premier run exploratoire » (lot 1) ; campagne `test-1` = run 2 « Test des agents · lot 2 » (lot 2, 20 restaurants,
@@ -81,8 +93,9 @@ qui écrit à la fois, puis reconstruction et republication de l'artefact « Pil
   `cout_api_total_restaurants`, `part_limite_hebdo_total_phase`, `nombre_restaurants`, `nombre_sites`,
   `nombre_problemes_trouves`, `jetons_entree`, `jetons_sortie`, plus `duree` (minutes, moyenne par restaurant) ; elle
   renseigne `debut_le` / `fin_le` des phases et du run. Les types `*_derniere_approche` ne servent qu'au run 1 (le run
-  de test n'a qu'une version). Trace de la saisie : `scripts/saisies/00N_…py` du repo de la base (modèle :
-  `002_metriques_conception_et_run_test.py`).
+  de test n'a qu'une version). Trace de la saisie : `scripts/saisies/00N_…py` du repo de la base, écrit pour Postgres via
+  `scripts/db.py` (modèle : `000_modele_postgres.py` ; `002_metriques_conception_et_run_test.py` date de SQLite et ne
+  sert plus que d'exemple pour la liste des mesures).
 
 ## 7. Comparaison
 

@@ -53,8 +53,9 @@ Produire un message de lancement : `python3 scripts/message-lancement.py <campag
    abandonnés ou non lancés (et à quelle étape), heures de début et de fin, utilisation hebdomadaire au début et à la fin,
    interventions, anomalies, fichiers de mesure manquants, et le **stockage** : poids de `dist/`, nombre de fichiers,
    déploiements conservés au début et à la fin, nombre de publications de la campagne (lignes « publier : … » des comptes
-   rendus de correction et de la session mère). Commit, push. La saisie dans la base de suivi est faite par une
-   autre conversation, après la campagne (`../4-mesure.md`, § 6), à partir de ces seuls fichiers.
+   rendus de correction et de la session mère). Commit, push. La saisie dans la base de suivi (Postgres, via `scripts/db.py`
+   de KYN-project-prospecting) est faite par une autre conversation, après la campagne (`../4-mesure.md`, § 6), à partir
+   de ces seuls fichiers.
 
 ## Campagnes
 
@@ -74,4 +75,7 @@ Tu es la session mère de la campagne <campagne> du dépôt KYW-test-restaurant 
 
 Après la campagne (et la réinitialisation de la limite si elle a été épuisée), une conversation avec les dépôts
 KYW-test-restaurant et KYN-project-prospecting saisit les métriques du run (`../4-mesure.md`, § 6) à partir des seuls
-fichiers de `data/usage/<campagne>/`, en montrant le tableau au porteur avant d'écrire.
+fichiers de `data/usage/<campagne>/`, en montrant le tableau au porteur avant d'écrire. Elle écrit par `scripts/db.py`
+(base Postgres sur Neon, `data/prospects.db` est figée), lance `python3 scripts/dump.py`, commite `data/tables/` et
+`data/backup/prospects.db`, pousse sur `main` et republie l'artefact « Pilotage prospection » (procédure complète :
+`CLAUDE.md` de KYN-project-prospecting).
