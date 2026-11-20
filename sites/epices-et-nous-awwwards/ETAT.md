@@ -1,4 +1,4 @@
-# ETAT : Épices & Nous, variante awwwards (construction-2 terminée)
+# ETAT : Épices & Nous, variante awwwards (construction-3 QA terminée)
 
 ## Fait
 - Phase 1 : brief, concepts, Concept Card, système, contenu, 5 pages statiques, head, favicon, OG (voir DESIGN.md 1 à 18).
@@ -27,3 +27,8 @@
 ## Pièges
 - Pendant cette phase, l'orchestrateur a fait un `git pull --rebase` (commit « Sauvegarde l'avancement ») : les fichiers non suivis ont disparu quelques secondes de l'arbre. Une édition faite à ce moment-là est perdue sans erreur : relire `wc -l` des fichiers touchés après un tel commit.
 - Le & animé (intro `scale`, pilote `rotation`) : propriétés GSAP distinctes, ne jamais lui donner de `transform` CSS ; le scrub du nom passe par `x` (pixels) pour ne pas écraser le `xPercent` de l'intro.
+
+## Phase 3 (QA)
+- Corrigé : cibles tactiles (0 restante), répétition plan/horaires sur la réservation. Build OK, audit 0 FAIL.
+- Reste : critique jury indépendant (2 passes) non fait, skipLinkFirst faux positif, retrait d'un accessoire non fait. Voir RAPPORT.md.
+- Piège : shoot.mjs est dans `.claude/skills/awwwards/scripts/`; un shoot de 3 pages dépasse 120 s, le lancer en arrière-plan.
