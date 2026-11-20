@@ -87,7 +87,8 @@ sur ce résumé :
   `reprend_run_id` = 1).
 - **Niveau run uniquement** (décision du porteur) : pas de coût par restaurant dans la base. Les sessions de restaurant
   n'écrivent PAS dans la base ; elles produisent les fichiers du § 3.
-- À la fin de la campagne, la session mère agrège les fichiers du § 3 et saisit, pour chaque phase du run, les mêmes
+- À la fin de la campagne, une conversation de saisie dédiée (pas la session mère, qui n'écrit jamais dans la base :
+  voir `campagnes/README.md`) agrège les fichiers du § 3 et saisit, pour chaque phase du run, les mêmes
   types de mesure que le run 1 (table `type_consommation`) : `cout_api_moyen_par_restaurant`, `cout_api_moyen_par_site`,
   `cout_api_moyen_par_probleme` (debug), `part_limite_hebdo_par_*` (limite estimée dans `data/usage/limite-hebdo.json`),
   `cout_api_total_restaurants`, `part_limite_hebdo_total_phase`, `nombre_restaurants`, `nombre_sites`,
