@@ -62,7 +62,7 @@ export const presse = [
 // Extraits d'avis Google relevés sur Restaurant Guru (dossier.md § Réputation), mot pour mot, à vérifier.
 export const avis = [
   { texte: 'Best egg topped Avocado toast ever.', auteur: 'David' },
-  { texte: 'Very cozy, good fresh foods […]', auteur: 'Wendy Sajid-Witte' },
+  { texte: 'Very cozy, good fresh foods […]', auteur: 'Wendy S.' },
 ];
 
 export const photos = {

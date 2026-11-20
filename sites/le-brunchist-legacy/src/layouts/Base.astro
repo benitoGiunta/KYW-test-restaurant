@@ -2,14 +2,17 @@
 import KywFooter from '@kyw/footer';
 import Nav from '../components/Nav.astro';
 import Pied from '../components/Pied.astro';
-import { resto, base, photos } from '../data/site';
+import { resto, base, photos, horaires } from '../data/site';
 interface Props { title: string; description: string; pied?: boolean }
 const { title, description, pied = true } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const dayEn: Record<string, string> = { Lundi: 'Monday', Mardi: 'Tuesday', Mercredi: 'Wednesday', Jeudi: 'Thursday', Vendredi: 'Friday', Samedi: 'Saturday', Dimanche: 'Sunday' };
 const ld = JSON.stringify({
   '@context': 'https://schema.org', '@type': 'CafeOrCoffeeShop', name: resto.nom, url: resto.siteActuel,
   telephone: resto.telephone, servesCuisine: ['Brunch', 'Café de spécialité'],
   address: { '@type': 'PostalAddress', streetAddress: `${resto.adresse.rue} ${resto.adresse.numero}`, postalCode: resto.adresse.cp, addressLocality: resto.adresse.ville, addressCountry: 'BE' },
+  image: new URL(`${base}${photos.hero.src}`, Astro.site).href,
+  openingHoursSpecification: horaires.filter((h) => h.ouvert).map((h) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: dayEn[h.jour], opens: h.iso[0], closes: h.iso[1] })),
   sameAs: [resto.facebook, resto.instagram],
 });
 ---

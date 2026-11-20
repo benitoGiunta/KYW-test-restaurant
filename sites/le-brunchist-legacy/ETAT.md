@@ -18,3 +18,7 @@
 - Le serveur de dev Astro affiche une barre d'outils sombre en bas des captures : artefact du mode dev, absent du build.
 - Un `<h4>` sans `margin: 0` écartait nom et description des rangées de la carte (corrigé) ; les captures à `scrollIntoView` pendant le défilement doux montrent une barre décalée : attendre ou couper `scroll-behavior`.
 - Garder : Grenze Gotisch jamais sous 30 px ni en h3 ; sloplint seulement sur copie aplatie (`bl-lint.sh` du scratchpad).
+
+## Phase 3 (QA) terminée
+- Corrections : survol de la marque, cibles tactiles 44 px. Build final passé, dist à jour. RAPPORT.md écrit.
+- Non fait : sweep sloplint, finish review, jury, checklist 72 cases de DESIGN.md, `pnpm index` et commit (non demandés dans ce lot).
