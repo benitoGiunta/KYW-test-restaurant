@@ -15,7 +15,7 @@ ces fichiers, dans l'ordre.
 | `2-developpement.md` | Message de lancement de la session de développement d'un restaurant | Étape 2 |
 | `3-correction.md` | Message de lancement de la session de correction d'un restaurant | Étape 3 |
 | `4-mesure.md` | Conventions de mesure (identification des agents, fichiers, base de suivi) | Étapes 2 et 3 (déjà incluses dans les messages) |
-| `5-verification.md` | Contrôles de fin, publication Vercel, relecture humaine | Étape 4 |
+| `5-verification.md` | Contrôles de fin, publication Vercel et stockage, relecture humaine | Étape 4 |
 | `campagnes/` | Une fiche par campagne (paramètres, file de restaurants) et la conduite d'une campagne | Avant et pendant une campagne |
 
 ## Le déroulé pour un restaurant
@@ -23,9 +23,9 @@ ces fichiers, dans l'ordre.
 ```
 1. ajouter       data/restaurants.json (slug, adresse, site actuel…)             → 1-ajouter-restaurant.md
 2. développer    session Opus : workflow agents/workflow-restaurant.js            → 2-developpement.md
-                 recherche client → 3 variantes → revue → révision → publication
+                 recherche client → 3 variantes → revue → révision → fin (branche de travail, vérification locale)
 3. corriger      session Haiku : captures par page, 1 agent Sonnet par site       → 3-correction.md
-                 identifier → marqueur → corriger → publier
+                 identifier → marqueur → corriger → publier (une fois, scripts/publier.sh)
 4. vérifier      URL en ligne, relecture humaine des 3 sites                       → 5-verification.md
 ```
 

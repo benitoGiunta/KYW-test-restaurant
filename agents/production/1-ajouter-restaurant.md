@@ -49,4 +49,4 @@ Ajouter (ou modifier, pour une réserve) un objet dans le tableau `data/restaura
 python3 -c "import json;json.load(open('data/restaurants.json'));print('ok')"
 ```
 
-Commit « Ajoute <nom> à la campagne <campagne> » (sans le mot de publication Vercel), push.
+Commit « Ajoute <nom> à la campagne <campagne> », push sur la branche de travail.

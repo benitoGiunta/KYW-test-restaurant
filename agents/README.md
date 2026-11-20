@@ -16,7 +16,7 @@ agents/
 ├── variante-legacy.md     rôle : construction legacy (+ variante-legacy/commun.md, phase-N.md)
 ├── relecteur-site.md      rôle : revue d'un site
 ├── reviseur-site.md       rôle : révision après revue
-├── publication.md         rôle : build, index, commit [publier], vérification
+├── publication.md         rôle : build, index, commit, push sur la branche de travail, vérification locale
 ├── portfolio-*.md         rôles de la recherche du portfolio et des 15 gabarits (fait une fois)
 ├── lecons/                leçons apprises par rôle (lues par les agents), lecons.md = règle d'écriture
 └── archives/              anciennes consignes des phases de mise au point (non utilisées)
@@ -35,7 +35,7 @@ scripts/hooks/                                garde-fous (sobriété des command
 | 3 | Revue | `relecteur-site.md` | site → `sites/<slug>-<v>/REVUE-1.md` (texte + fonctionnel) |
 | 4 | Révision | `reviseur-site.md` | revue → corrections + `REVISION-1.md` |
 | 5 | Re-revue | `relecteur-site.md` (passe 2) | → `REVUE-2.md` ; si BLOQUANT ou A_CORRIGER avec F0/F1, une révision 2 puis revue 3 ; au-delà, publier avec les réserves listées |
-| 6 | Publication | `publication.md` | build, index, commit, push, vérification de l'URL Vercel |
+| 6 | Publication | `publication.md` | build, index, commit, push sur la branche de travail, vérification locale (la mise en ligne est faite par la correction) |
 | 7 | Leçons | tous | `lecons/<rôle>.md` enrichi ; l'orchestrateur reporte dans les prompts les paragraphes proposés par les agents |
 
 

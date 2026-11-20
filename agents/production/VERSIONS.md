@@ -51,4 +51,15 @@ Détail et mesures : `data/usage/chantiers/configurations.json`, `data/usage/*PR
 3. Mettre à jour le message de lancement concerné (`2-developpement.md` ou `3-correction.md`) et la ligne
    d'identification (« Approche : n ») pour que la mesure distingue l'ancienne et la nouvelle version.
 4. Tester sur un seul restaurant avant une campagne.
-5. Commit en français à l'impératif, sans le mot de publication Vercel.
+5. Commit en français à l'impératif.
+
+Cette procédure vaut pour les **agents** (ce qu'ils font, leurs modèles, leurs consignes de travail) : seul un tel
+changement reçoit un nouveau numéro d'approche. Un changement de **process** autour des agents (publication, stockage,
+mesure, conduite de campagne) se note dans « Changements de process » ci-dessous, sans nouvelle approche ; s'il touche les
+messages de lancement, la ligne d'identification reste inchangée.
+
+## Changements de process (sans nouvelle approche des agents)
+
+| Date | Changement | Fichiers |
+| --- | --- | --- |
+| 20/11/2026 | **Publication** : seule la branche `publication` déploie (`vercel.json`) ; le développement ne publie plus (vérification locale) ; la correction publie une fois par restaurant (`scripts/publier.sh`, jamais de publication vide ni double) ; la session mère publie le lot en fin de campagne si quelque chose a changé. **Stockage** : budget `<budget-stockage>` et seuil, contrôlé au début et à la fin de campagne (`scripts/stockage.sh`). Cause : stockage Vercel (10 Go) saturé dans la nuit du 19 au 20/11 par ~350 pushes et des publications en double. | `vercel.json`, `CLAUDE.md`, `scripts/publier.sh`, `scripts/stockage.sh`, `agents/publication.md`, `2-developpement.md`, `3-correction.md`, `5-verification.md`, `parametres.md`, `campagnes/` |

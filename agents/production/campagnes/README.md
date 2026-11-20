@@ -14,9 +14,13 @@ Produire un message de lancement : `python3 scripts/message-lancement.py <campag
 
 ## Conduite d'une campagne (session mère)
 
-1. Remplir `session-mere` (id de la session qui lance), commit.
+1. Remplir `session-mere` (id de la session qui lance), commit. **Contrôle du stockage avant tout lancement** :
+   `scripts/q.sh stockage scripts/stockage.sh <budget-stockage> <seuil-stockage> <n>`, où `<n>` = nombre de déploiements
+   `READY` du projet `kyw-test-restaurant` lu avec l'outil Vercel en lecture seule (`list_deployments`) ; sans outil Vercel,
+   lancer sans `<n>` et noter « non vérifié ». Résultat dans `data/usage/<campagne>/stockage.json` (`debut`). Au-delà du seuil
+   (code 2) : ne rien lancer et prévenir le porteur.
 2. Étape 1 pour les restaurants de la file : `"selection": "test"` dans `data/restaurants.json` (ils sont déjà
-   préparés avec `"selection": "reserve"` et `"campagne"`), commit sans le mot de publication Vercel, push.
+   préparés avec `"selection": "reserve"` et `"campagne"`), commit, push.
 3. Lancer le développement des `parallele_max` premiers restaurants de la file (`create_session`, modèle
    `claude-opus-5-5`, tag `kyw-<campagne>`, message produit par le script).
 4. À chaque compte rendu de développement reçu : lancer la correction de ce restaurant (`create_session`, modèle
@@ -32,12 +36,15 @@ Produire un message de lancement : `python3 scripts/message-lancement.py <campag
    "usage": <external_metadata.usage de get_session : cost_usd, input/output/cache tokens>, "compte_rendu": "<texte reçu>",
    "fichiers_mesure": true|false}`. Une session qui meurt (limite atteinte, erreur) ne peut plus produire ses fichiers de
    mesure et son transcript disparaît avec son conteneur : `usage` de `get_session` reste alors la seule mesure de son coût.
-   Commit et push du registre au moins toutes les heures (sans le mot de publication Vercel).
-8. Fin de campagne : `../5-verification.md`, `node scripts/suivi.mjs` ; mesure de la session mère elle-même
+   Commit et push du registre au moins toutes les heures (branche de travail ; ne déclenche aucune publication).
+8. Fin de campagne : `../5-verification.md` (dont la publication finale du lot `scripts/publier.sh "fin de campagne <campagne>"`,
+   sans effet si rien n'a changé), `node scripts/suivi.mjs` ; même contrôle du stockage qu'à l'étape 1 (`stockage.json`, `fin`) ; mesure de la session mère elle-même
    (`python3 scripts/usage-detail.py <son id local> data/usage/<campagne>/mere-detail.json`, plus son `usage` de
    `get_session` dans `sessions.json`, étape `pilotage`) ; puis `data/usage/<campagne>/BILAN.md` : restaurants terminés,
    abandonnés ou non lancés (et à quelle étape), heures de début et de fin, utilisation hebdomadaire au début et à la fin,
-   interventions, anomalies, fichiers de mesure manquants. Commit, push. La saisie dans la base de suivi est faite par une
+   interventions, anomalies, fichiers de mesure manquants, et le **stockage** : poids de `dist/`, nombre de fichiers,
+   déploiements conservés au début et à la fin, nombre de publications de la campagne (lignes « publier : … » des comptes
+   rendus de correction et de la session mère). Commit, push. La saisie dans la base de suivi est faite par une
    autre conversation, après la campagne (`../4-mesure.md`, § 6), à partir de ces seuls fichiers.
 
 ## Campagnes

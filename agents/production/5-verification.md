@@ -9,17 +9,28 @@ scripts/q.sh verif-campagne bash -c 'for s in <slug1> <slug2>; do for v in portf
 ```
 
 Attendu : `footer=1` et `a_confirmer=0` partout. Un site qui sert encore l'ancienne version attend son tour dans la file
-Vercel : la publication suivante (ou un commit `[publier]` final de la session mère) l'emporte.
+Vercel ; la publication finale ci-dessous l'emporte.
 
 Puis : `python3 scripts/scan-brouillon.py /tmp/claude-0/scan-campagne.json <slug1> <slug2> | grep '###'` (0 attendu),
 `node scripts/suivi.mjs` (page de suivi), commit de `data/suivi.html` et `dist/suivi/`.
 
 ## Publication Vercel
 
-- Vercel ne déploie qu'un push dont le **dernier** commit contient `[publier]` (`vercel.json`, `ignoreCommand`).
-  Chaque déploiement copie tout `dist/` (~300 Mo) et le stockage gratuit est de 10 Go : un `[publier]` par
-  restaurant et par étape, pas davantage.
-- Le mot est cherché dans tout le message : ne pas l'écrire dans un commit de mesures ou de documentation.
+- Seule la branche `<branche-publication>` (`publication`) déploie (`vercel.json`). La branche de travail ne publie
+  jamais, quel que soit le message de commit.
+- Chaque déploiement conservé garde une copie complète de `dist/` (~430 Mo) ; le stockage gratuit est de 10 Go et la
+  campagne s'en donne `<budget-stockage>` : **au plus une publication par restaurant terminé**, faite par sa session de
+  correction (`scripts/publier.sh`), plus une **publication finale du lot** par la session mère :
+  `scripts/publier.sh "fin de campagne <campagne>"`. Le script ne publie rien si `dist/` n'a pas changé depuis la dernière
+  publication (jamais de publication vide ni double) et fusionne `publication` en cas de refus.
+- Le développement ne publie jamais : il vérifie ses sites en local (`2-developpement.md`, étape 3).
+
+## Stockage
+
+`scripts/q.sh stockage scripts/stockage.sh <budget-stockage> <seuil-stockage> <déploiements READY>` : poids et nombre de
+fichiers de `dist/`, estimation du stockage occupé par les déploiements conservés, alerte (code 2) au-delà du seuil.
+Le nombre de déploiements conservés se lit avec l'outil Vercel en lecture seule (`list_deployments` du projet
+`kyw-test-restaurant`, état `READY`) ; sans outil Vercel, lancer le script sans ce nombre et noter « non vérifié ».
 
 ## Relecture humaine
 

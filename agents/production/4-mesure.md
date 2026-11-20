@@ -41,15 +41,16 @@ Fichiers de la campagne, tenus par la session mère, dans `data/usage/<campagne>
 | `sessions.json` | registre de toutes les sessions (restaurant, étape, id, statut, `usage` de `get_session` = coût et jetons même si la session est morte, compte rendu reçu) |
 | `interventions.json` | interventions de la session mère qui ne relèvent d'aucun fichier résumé |
 | `mere-detail.json` | consommation de la session mère (pilotage de la campagne) |
-| `BILAN.md` | bilan de fin : restaurants terminés ou non, heures, utilisation hebdomadaire, anomalies, mesures manquantes |
+| `stockage.json` | contrôle du stockage Vercel au début et à la fin : `{"debut"\|"fin": {"date", "dist_mo", "dist_fichiers", "deploiements_ready" (ou "non vérifié"), "estimation_mo", "budget_go", "seuil_pct"}, "publications": [{"date", "motif", "sha"}]}` |
+| `BILAN.md` | bilan de fin : restaurants terminés ou non, heures, utilisation hebdomadaire, stockage (dist/, déploiements conservés, publications), anomalies, mesures manquantes |
 | `lecons-proposees/<slug>.md` | leçons proposées par les agents en mode figé |
 
 Source de vérité pour la base : les fichiers `*-detail.json` (coût recalculé avec les prix de `scripts/usage-chantiers.py`) ;
 à défaut (session morte), `usage.cost_usd` du registre, signalé comme tel dans la saisie.
 
 L'id à passer aux scripts est le nom du fichier `~/.claude/projects/*/<id>.jsonl` le plus récent de la session.
-Ne jamais lire ces fichiers dans la session qui les produit (coût de contexte inutile). Commit sans le mot de
-publication Vercel.
+Ne jamais lire ces fichiers dans la session qui les produit (coût de contexte inutile). Commit sur la branche de
+travail (aucune publication).
 
 ## 4. Utilisation hebdomadaire
 
