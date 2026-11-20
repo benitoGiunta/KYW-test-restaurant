@@ -10,7 +10,7 @@ export const restaurant = {
   nom: 'Le Panorama',
   baseline: 'Une expérience culinaire au sommet de la Citadelle',
   description:
-    'Le Panorama, brasserie au sommet de la Citadelle de Namur : vue à 360° sur la Meuse, carte signée Yves Mattagne, tarte flambée au four à bois.',
+    'Le Panorama, brasserie au sommet de la Citadelle de Namur : vue à 360° sur la Meuse, carte signée Yves Mattagne, tarte flambée au four à bois.',
   cuisine: ['Brasserie', 'Cuisine du monde', 'Produits locaux'],
   adresse: { rue: 'Route Merveilleuse', numero: '82', cp: '5000', commune: 'Namur', complement: 'Citadelle' },
   geo: { lat: 50.4571199, lon: 4.8594819 },
@@ -25,7 +25,7 @@ export const restaurant = {
     { nom: 'Facebook', url: 'https://www.facebook.com/PanoramaNamur' },
     { nom: 'Instagram', url: 'https://www.instagram.com/panoramanamur' },
   ],
-  credit: 'photos : Le Panorama',
+  credit: 'photos : Le Panorama',
 } as const;
 
 /** Les jours, de lundi à dimanche. Horaires identiques selon l'accueil du site client (à confirmer). */
@@ -40,13 +40,13 @@ export const moments = [
 /** Les lieux, du haut vers le bas : l'index de l'accueil. */
 export const lieux = [
   { id: 'terrasse', nom: 'La terrasse', photo: 'platanes', texte: 'Plusieurs niveaux de gravier sous des platanes taillés, 400 places annoncées. La terrasse ne se réserve pas.' },
-  { id: 'salle', nom: 'La salle', photo: 'salle', texte: 'Mur de pierre, plafond de lattes de bois et 120 places de plus à l’intérieur, devant les baies vitrées.' },
+  { id: 'salle', nom: 'La salle', photo: 'salle', texte: 'Mur de pierre, plafond de lattes de bois et 120 places de plus à l’intérieur.' },
   { id: 'bar', nom: 'Le bar', photo: 'bar', texte: 'Un comptoir en marbre noir, des tabourets verts, et un second bar en terrasse.' },
-  { id: 'cave', nom: 'La cave', photo: 'cave', texte: 'Une cave à vin vitrée à l’entrée : les bouteilles se voient avant de s’asseoir.' },
+  { id: 'cave', nom: 'La cave', photo: 'cave', texte: 'Une cave à vin vitrée à l’entrée : les bouteilles se voient avant de s’asseoir.' },
 ] as const;
 
 export const histoire = [
-  'Le Panorama occupe le sommet de la Citadelle de Namur, Route Merveilleuse 82. Le restaurant a été rénové et rouvert en 2022 ; les journaux locaux ne s’accordent pas entre début mai et juin, nous ne tranchons pas.',
+  'Le Panorama occupe le sommet de la Citadelle de Namur, Route Merveilleuse 82. Le restaurant a été rénové et rouvert en 2022 ; les journaux locaux ne s’accordent pas entre début mai et juin, nous ne tranchons pas.',
   'Il est exploité par François Delpire-Crets et Frédéric Massart. La salle compte 120 places, la terrasse sur plusieurs niveaux 400 annoncées, avec un bar en marbre, une cuisine ouverte et un four à bois.',
   'La carte est signée par le chef Yves Mattagne, doublement étoilé à La Villa Lorraine. Les tartes flambées ont été apprises aux cuisiniers par le chef alsacien Patrice Bluntzer, de l’auberge Saint-Martin à Kintzheim.',
 ] as const;
@@ -61,7 +61,7 @@ export const equipe = [
 /** Faits d'accueil, chacun sourcé dans dossier.md. */
 export const faits = {
   telepherique: 'À une centaine de mètres du téléphérique de la Citadelle.',
-  groupes: 'Groupes dès 7 personnes : écrire à groupes@panoramanamur.be.',
+  groupes: 'Groupes dès 7 personnes : écrire à groupes@panoramanamur.be.',
   terrasse: 'Pas de réservation pour la terrasse.',
   gluten: 'Pain sans gluten sur demande.',
 } as const;

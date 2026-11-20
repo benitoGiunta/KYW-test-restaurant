@@ -18,7 +18,7 @@ import portrait from '../assets/photos/18-portrait-chef.jpg';
 import four from '../assets/photos/19-cuisinier-four-bois.jpg';
 
 export const photos = {
-  salle: { src: salle, alt: "La salle principale : mur de pierre, plafond de lattes de bois et tables dressées sous un lustre rond." },
+  salle: { src: salle, alt: "La salle principale : mur de pierre, plafond de lattes de bois et tables dressées sous un lustre rond." },
   meuse: { src: meuse, alt: "La Meuse et la ville de Namur vues depuis la Citadelle, des promeneurs au premier plan." },
   platanes: { src: platanes, alt: "La terrasse de gravier sous des platanes taillés, le pavillon vitré en fond." },
   pergola: { src: pergola, alt: "La terrasse sous la pergola de platanes, devant la façade vitrée du pavillon." },
