@@ -6,7 +6,7 @@ const items = [...nav, { href: 'bon-cadeau/', label: 'Bon cadeau', page: 'cadeau
 ---
 <header class="nav">
   <div class="container">
-    <a class="nav__brand" href={B}>Carré d’herbes</a>
+    <a class="nav__brand" href={B} aria-label="Carré d’herbes, accueil">Carré d’herbes</a>
     <nav aria-label="Navigation principale">
       <ul class="nav__links">
         {items.map((i) => <li><a href={B + i.href} aria-current={page === i.page ? 'page' : undefined}>{i.label}</a></li>)}
@@ -14,11 +14,11 @@ const items = [...nav, { href: 'bon-cadeau/', label: 'Bon cadeau', page: 'cadeau
     </nav>
     <div class="nav__end">
       <a class="nav__tel" href={resto.telHref}>{resto.tel}</a>
-      <a class="btn" href={B + 'reservations/'}>Comment réserver</a>
-      <details class="nav__menu">
-        <summary>Menu</summary>
-        <ul>{items.map((i) => <li><a href={B + i.href}>{i.label}</a></li>)}<li><a href={resto.telHref}>{resto.tel}</a></li></ul>
-      </details>
+      <a class="btn btn--line" href={B + 'reservations/'}>Réserver</a>
+      <button class="nav__toggle" type="button" popovertarget="menu-nav" aria-expanded="false" aria-controls="menu-nav">Menu</button>
+      <div class="nav__panel" id="menu-nav" popover aria-label="Navigation">
+        <ul>{items.map((i) => <li><a href={B + i.href} aria-current={page === i.page ? 'page' : undefined}>{i.label}</a></li>)}<li><a href={resto.telHref}>{resto.tel}</a></li></ul>
+      </div>
     </div>
   </div>
 </header>

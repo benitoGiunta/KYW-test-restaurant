@@ -34,7 +34,11 @@ Solstice : papier crème, encre brune, Yeseva One / Archivo / Archivo Narrow, fi
 - **Horaires** : Schedule `<dl>` avec `<time>`, jours fermés en `--color-muted` (jamais barrés), dernière prise de commande en petite mention, pas d’icône d’horloge ; dits sur l’accueil et le contact, pas dans le pied.
 - **Pied** : colophon encre (adresse, téléphone, liens du site, Facebook, crédits photo `data-credits`), puis `KywFooter`. Pas de « Tous droits réservés », pas de newsletter.
 - **Photo** : `<figure>` avec `width`/`height`, `loading="lazy"` sauf le hero (`fetchpriority="high"`), légende = un fait.
-- Nav, boutons : états complets, mobile (summary), reveal : phase 2.
+- **Boutons** : un primaire vermillon rempli par page (`.btn`), secondaire en contour (`.btn--line`, nav) ou lien souligné (`.btn-2`) ; huit états (défaut, hover sous `(hover: hover)`, focus-visible, active, disabled, busy, sélectionné pour les onglets, erreur pour les champs) ; 48 px, labels verbes. Réf. `interaction-and-states.md`.
+- **Nav** : barre bord à bord 76 px (64 px au téléphone), « Réserver » en contour, liens en casse de phrase ; sous 67,5 rem (6 liens, téléphone et bouton ne tiennent pas plus bas), bouton « Menu » + `<div popover>` (Échap, clic extérieur, `aria-expanded` synchronisé) ; skip link ; sticky unique à `--z-sticky-nav`.
+- **Formulaire** (`/reservations/`) : `data-endpoint=""`, `novalidate`, validation au blur puis à l’input, un message d’aide d’une ligne par champ, `select` natif pour les couverts, message « Rien n’a été envoyé : ce formulaire n’est pas encore relié ».
+- **Switcher** : `role="tablist"`, flèches, Début et Fin ; sans script les quatre panneaux sont visibles.
+- **Motion** (calme) : signature d’ouverture en CSS pur (l’assiette se pose en 1,6 s par l’échelle seule, titre, texte, actions montent en 700 ms décalés) ; un reveal de scroll par page sur les blocs sous le premier écran (`.js [data-reveal]`, opacité et 16 px) ; mouvement réduit : rien ne bouge, tout est visible.
 
 ## Sur-utilisation
 
@@ -46,3 +50,23 @@ Solstice : papier crème, encre brune, Yeseva One / Archivo / Archivo Narrow, fi
 - [x] 6. Pas de tiret cadratin, apostrophes typographiques, insécables avant € et signes doubles · preuve : grep `—|–` vide sur `src/`
 - [ ] 7. `sloplint --render` propre · raison : build statique seulement en phase 1, rendu à lancer en phase 2 ; `sloplint src` : 0 FAIL réel (FAIL 34 de `Base.astro` = faux positif, `overflow-x: clip` est dans `base.css:2`)
 - [ ] 8. Contraste et fold mesurés · raison : phase 2
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie · preuve : grep `transition: all` vide ; `transform`/`opacity`/couleurs seulement (`page.css` boutons, nav, reveal)
+- [x] 6. `:focus-visible` partout, instantané, 3:1 · preuve : `base.css` (global), `page.css` `.btn`, `.hero`, `.colophon`, `.form` (anneau inset)
+- [x] 7. Fallback reduced motion sur chaque animation, contenu visible sans script · preuve : `page.css` bloc final `prefers-reduced-motion` ; mesure Playwright : reduced = 0 `data-reveal`, animation none ; JS coupé = 4 panneaux et sections opacité 1
+- [x] 17. Hero en `svh`/`dvh` · preuve : `page.css` `.hero` (`100dvh`, `100svh` au téléphone)
+- [x] 19. Sticky non superposés · preuve : un seul sticky (`.nav`), `scroll-padding-top: 6rem` (`base.css`)
+- [ ] 20. Radios-onglets gardés · sans objet : onglets `button` + `role=tab`, pas de radios
+- [ ] 21. Vidéo de fond · sans objet : aucune vidéo
+- [x] 22. Reveal sous `.js` seulement · preuve : `page.css` `.js [data-reveal]`, étiquette posée par `Base.astro`
+- [x] 23. États d'input · preuve : `page.css` `.form` (bordure constante, anneau outline inset, `aria-invalid`, disabled par fond + pointillé + curseur)
+- [ ] 24. Tooltip et auto-rotation · sans objet : ni tooltip ni boucle
+- [x] 29. Aucun faux envoi · preuve : `reservations.astro` script, mesure : message « Rien n’a été envoyé »
+- [x] 30. SVG décoratifs · preuve : aucun `<svg>` dans `src/`
+- [x] 48. Hover un signal, conteneur, pas de rebond, pas de toast · preuve : tout hover sous `@media (hover: hover)`, aucun easing à rebond
+- [x] 49. `:active`, `:disabled`, contrôles 44 à 52 px · preuve : `page.css` `.btn` ; mesure à 375 : aucun contrôle de moins de 44 px (hors lien du pied KYW, paquet partagé, 24 px)
+- [x] 56. Un primaire rempli · preuve : nav en contour, hero ou formulaire seul rempli
+- [x] 58. Une recette de conteneur, un pattern de scroll · preuve : filets, pas de cartes ; un seul reveal
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color`, `accent-color` · preuve : `base.css:2-9`
+- [x] 72. Responsive · preuve : breakpoints 67,5 / 60 / 40 rem, `(hover: hover)`, `(pointer: coarse)`, safe-area dans `.container`, aucun débordement horizontal à 375, 768, 1000, 1100, 1440 sur 8 pages (mesure Playwright)
+- [~] 7 (suite). `sloplint --render --stage hero` : 4 FAIL au premier passage (24a, 34 skip, 40 contraste du pied, 49b) corrigés ; reste FAIL 34 sur Base.astro = faux positif (clip dans `base.css`), prouvé par `scrollWidth`. Revue de hero par sous-agent impossible (pas d'outil Agent) : `hero-review: self · 2 findings · 2 resolved` (scrim mobile renforcé, marque sans retour à la ligne).
+- [ ] 8. Contraste et fold mesurés · fold : hero et CTA visibles à 1280x800 et 375x812 ; contraste complet laissé à l'agent captures

@@ -14,15 +14,49 @@ import { resto } from '../data/site';
     <div class="container">
       <h2>Nous écrire</h2>
       <form class="form" style="margin-top: var(--space-xl)" method="post" data-endpoint="" novalidate>
-        <div><label for="prenom">Prénom</label><input id="prenom" name="prenom" autocomplete="given-name" required /></div>
-        <div><label for="nom">Nom</label><input id="nom" name="nom" autocomplete="family-name" required /></div>
-        <div><label for="mail">E-mail</label><input id="mail" name="email" type="email" autocomplete="email" required /></div>
-        <div><label for="tel">Téléphone</label><input id="tel" name="tel" type="tel" autocomplete="tel" required /></div>
-        <div><label for="date">Date souhaitée</label><input id="date" name="date" type="date" required /></div>
-        <div><label for="couverts">Nombre de couverts</label><input id="couverts" name="couverts" type="number" min="1" required /></div>
-        <div class="full"><label for="msg">Message</label><textarea id="msg" name="message"></textarea></div>
-        <div class="full"><button class="btn" type="submit">Envoyer</button><p class="small" style="margin-top: var(--space-md)">Maquette : ce formulaire n’envoie rien pour l’instant.</p></div>
+        <div><label for="prenom">Prénom</label><input id="prenom" name="prenom" autocomplete="given-name" required aria-describedby="prenom-h" /><p class="help" id="prenom-h"></p></div>
+        <div><label for="nom">Nom</label><input id="nom" name="nom" autocomplete="family-name" required aria-describedby="nom-h" /><p class="help" id="nom-h"></p></div>
+        <div><label for="mail">E-mail</label><input id="mail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="nom@exemple.be" required aria-describedby="mail-h" /><p class="help" id="mail-h"></p></div>
+        <div><label for="tel">Téléphone</label><input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="0470 12 34 56" required aria-describedby="tel-h" /><p class="help" id="tel-h"></p></div>
+        <div><label for="date">Date souhaitée</label><input id="date" name="date" type="date" required aria-describedby="date-h" /><p class="help" id="date-h"></p></div>
+        <div><label for="couverts">Nombre de couverts</label><select id="couverts" name="couverts" required aria-describedby="couverts-h"><option value="">Choisir</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="12+">Plus de 12</option></select><p class="help" id="couverts-h"></p></div>
+        <div class="full"><label for="msg">Message (facultatif)</label><textarea id="msg" name="message" autocomplete="off"></textarea></div>
+        <div class="full">
+          <button class="btn" type="submit">Envoyer le message</button>
+          <p class="small form__nojs" style="margin-top: var(--space-md)">Maquette : ce formulaire n’envoie rien pour l’instant.</p>
+          <p class="form__status" role="status" aria-live="polite"></p>
+        </div>
       </form>
+      <script is:inline>
+        document.querySelectorAll('form[data-endpoint]').forEach(function (form) {
+          var fields = [].slice.call(form.querySelectorAll('input[required], select[required]'));
+          var status = form.querySelector('.form__status');
+          var msg = { valueMissing: 'Ce champ est à remplir.', typeMismatch: 'Vérifiez l’adresse : elle s’écrit nom@exemple.be.', rangeUnderflow: 'Choisissez une date à venir.' };
+          var hint = { mail: 'Pour la réponse du restaurant.', tel: 'Un numéro où vous joindre.', date: 'Le restaurant ouvre du mercredi au dimanche.', couverts: 'Nombre de personnes à table.' };
+          var d = new Date(); var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+          var dt = form.querySelector('#date'); if (dt) dt.min = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+          function show(f, force) {
+            var h = form.querySelector('#' + f.id + '-h'); if (!h) return true;
+            var ok = f.checkValidity();
+            if (ok) { f.removeAttribute('aria-invalid'); h.className = 'help'; h.textContent = hint[f.id] || ''; return true; }
+            if (!force && !f.dataset.touched) return false;
+            var k = f.validity.valueMissing ? 'valueMissing' : f.validity.typeMismatch ? 'typeMismatch' : 'rangeUnderflow';
+            f.setAttribute('aria-invalid', 'true'); h.className = 'help is-error'; h.textContent = msg[k] || 'Valeur incorrecte.'; return false;
+          }
+          fields.forEach(function (f) {
+            var h = form.querySelector('#' + f.id + '-h'); if (h) h.textContent = hint[f.id] || '';
+            f.addEventListener('blur', function () { f.dataset.touched = '1'; show(f, false); });
+            f.addEventListener('input', function () { if (f.dataset.touched) show(f, false); });
+            f.addEventListener('change', function () { f.dataset.touched = '1'; show(f, false); });
+          });
+          form.addEventListener('submit', function (e) {
+            e.preventDefault(); status.className = 'form__status';
+            var bad = fields.filter(function (f) { f.dataset.touched = '1'; return !show(f, true); });
+            if (bad.length) { status.className = 'form__status is-error'; status.textContent = bad.length === 1 ? 'Un champ est à corriger.' : bad.length + ' champs sont à corriger.'; bad[0].focus(); return; }
+            if (!form.dataset.endpoint) { status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié.'; return; }
+          });
+        });
+      </script>
     </div>
   </section>
 </Base>

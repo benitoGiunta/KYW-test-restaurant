@@ -31,5 +31,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <main id="contenu"><slot /></main>
     <Footer />
     <KywFooter base={import.meta.env.BASE_URL} />
+    <script is:inline>
+      (function () {
+        var t = document.querySelector('.nav__toggle'), m = document.getElementById('menu-nav');
+        if (t && m) m.addEventListener('toggle', function (e) { t.setAttribute('aria-expanded', e.newState === 'open' ? 'true' : 'false'); });
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var els = [].filter.call(document.querySelectorAll('main .section > .container'), function (el) { return el.getBoundingClientRect().top > innerHeight * 0.9; });
+        els.forEach(function (el) { el.setAttribute('data-reveal', ''); });
+        var queued = false;
+        function check() { queued = false; els = els.filter(function (el) { if (el.getBoundingClientRect().top < innerHeight * 0.92) { el.classList.add('is-in'); return false; } return true; }); if (!els.length) { removeEventListener('scroll', tick); removeEventListener('resize', tick); } }
+        function tick() { if (!queued) { queued = true; requestAnimationFrame(check); } }
+        addEventListener('scroll', tick, { passive: true }); addEventListener('resize', tick);
+      })();
+    </script>
   </body>
 </html>
