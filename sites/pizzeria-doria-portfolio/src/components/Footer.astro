@@ -1,7 +1,7 @@
 ---
 // Pied de page finale : mot géant coupé par le bas, trois colonnes, puis le pied de page KYW (unique mention « Maquette »).
 import KywFooter from '@kyw/footer';
-import { site, guinguette, adresseLigne, horaireTexte, telHref } from '../data/site';
+import { site, guinguette, adresseLigne, telHref } from '../data/site';
 import { u } from '../lib/url';
 ---
 <section class="footer" aria-label="Coordonnées de la maison">
@@ -10,13 +10,12 @@ import { u } from '../lib/url';
       <p class="footer__nom">{site.nom}</p>
       <address>{adresseLigne()}</address>
       <p><a class="link" href={telHref()}>{site.telephone}</a></p>
-      <p class="muted">Réservation par {site.reservation.outil}, paiement {site.paiement}</p>
+      <p class="muted">Réservation : {site.telephone}. Paiement : {site.paiement}</p>
     </div>
     <div>
       <p class="footer__titre">Horaires</p>
-      <dl class="horaires horaires--petit">
-        {site.horaires.map((h) => <><dt>{h.jour}</dt><dd class:list={{ ferme: !h.creneaux.length }}>{h.creneaux.length ? horaireTexte(h) : 'fermé'}</dd></>)}
-      </dl>
+      <p class="muted">Fermé le mardi et le mercredi.</p>
+      <p><a class="link" href={u('/reservation/#horaires')}>Voir tous les horaires</a></p>
     </div>
     <div class="stack">
       <p class="footer__titre">Suivre</p>

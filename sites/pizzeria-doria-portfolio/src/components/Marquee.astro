@@ -1,7 +1,7 @@
 ---
 // Marquee d'état : sans JS, les jours de service ; avec JS, « Ouvert » ou « Fermé » calculé depuis site.horaires (aucune date en dur).
 import { site, adresseLigne } from '../data/site';
-const base = ['Fermé le mardi et le mercredi', adresseLigne(), `Réservation par ${site.reservation.outil}`, 'Sur place ou à emporter'];
+const base = ['Fermé le mardi et le mercredi', adresseLigne(), `Réservation : ${site.telephone}`, 'Sur place ou à emporter'];
 const horaires = JSON.stringify(site.horaires.map((h) => ({ j: h.jour, c: h.creneaux })));
 ---
 <div class="marquee" data-marquee data-horaires={horaires} aria-label="État du restaurant">

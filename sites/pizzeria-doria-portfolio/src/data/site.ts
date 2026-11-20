@@ -52,7 +52,7 @@ export const site: Restaurant = {
   geo: { lat: 50.4404882, lon: 4.7950329 },
   telephone: '+32 81 44 44 08',
   email: { valeur: 'info@pizzeriadoria.be', placeholder: false },
-  reservation: { outil: 'téléphone', url: null }, // outil en ligne non confirmé : téléphone seulement
+  reservation: { outil: 'téléphone', url: null }, // mode de réservation en ligne à confirmer (dossier : « outil à confirmer ») ; seul le téléphone est prouvé, ne pas écrire « uniquement »
   emporter: { outil: 'Pizzy', url: 'https://pizzy.be/pizzeria-doria' },
   paiement: 'Payconiq et espèces',
   horaires: [
@@ -68,8 +68,8 @@ export const site: Restaurant = {
   reseaux: [{ nom: 'Facebook', url: 'https://www.facebook.com/pizzeriadoria/' }],
   carte: carteJson as Categorie[],
   histoire: [
-    "Ouverte en octobre 2017, la Pizzeria Doria est gérée par Rocco et Luigi. Une histoire de famille, de pâte et de four, racontée sans chichis.",
-    "Depuis mai 2023, la maison a pris ses quartiers dans une ancienne banque restaurée, à Malonne. On s'y attable dans la « salle des coffres », entre les casiers métalliques d'origine, les tables en bois et les chaises noires.",
+    "Ouverte en octobre 2017, la Pizzeria Doria est gérée par Rocco et Luigi. Une histoire de famille.",
+    "Depuis mai 2023, la maison a pris ses quartiers dans une ancienne banque restaurée, à Malonne. On s’y attable dans la « salle des coffres », entre les casiers métalliques d'origine, les tables en bois et les chaises noires.",
     "À la carte : quarante-cinq pizzas et pains, des pâtes fraîches bio signées Eggusto en option, des viandes italiennes et des antipasti. Le fior di latte sans lactose se demande à la commande, et chaque plat se prend sur place ou à emporter.",
     "Côté verre, Luigi choisit la sélection de vins au verre, la carte des vins est italienne, et la bière vient du coin : la Philomène de Malonne et la Vulpio de Wépion.",
   ],
@@ -167,8 +167,8 @@ export const guinguette = {
   /** Midis scolaires : cornets de pâtes 5 à 6 €, paninis 6 à 7,50 € (dossier.md). Détail des plats non fourni. */
   midis: { cornets: '5 à 6 €', paninis: '6 à 7,50 €' },
   manifeste: {
-    titre: ['Pâtes fraîches,', 'pizzas et grande tablée'],
-    motItalique: 'grande tablée',
+    titre: ['Pâtes fraîches,', 'pizzas et antipasti'],
+    motItalique: 'antipasti',
     texte: "Quarante-cinq pizzas et pains, des pâtes fraîches bio Eggusto, des viandes italiennes et des antipasti, dans la salle des coffres d'une ancienne banque.",
   },
   finale: 'Buon appetito !',

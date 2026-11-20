@@ -29,3 +29,7 @@
 - Fait : REVUE-1.md écrit (verdict A_CORRIGER : 0 F0, 2 F1, 6 F2, 5 F3). Mesures propres sur 7 pages x 2 largeurs, horloge 10 cas, contraste canvas, nav mobile, reduced-motion. Serveur propre arrêté (port 4823).
 - Reste : réviseur traite F1-1 (nav mobile 6 liens coupés), F1-2 (bandeau « arrivée jusqu'à »), puis F2 et F3 ; passe 2 de relecture ensuite.
 - Pièges : scratchpad partagé avec des `rev1-*` d'un agent frère (ne pas toucher) ; QA limité à 3 pages, planches QA à grande zone blanche.
+
+## Révision 1 (reviseur-site, test)
+- Fait : F1-1, F1-2, F2-1 à F2-6 corrigés et vérifiés (voir REVISION-1.md). Build vert, serveur arrêté.
+- Reste : F3-1 (mot du pied coupé), F3-2 (bouchons.webp 317 Ko), F3-3 (apostrophes/heures), F3-4 (doublon « 5 pièces »), axe `region` du bandeau ; passe 2 de relecture.

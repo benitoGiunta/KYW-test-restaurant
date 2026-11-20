@@ -4,11 +4,11 @@
 import { site } from '../data/site';
 import { u } from '../lib/url';
 const liens = [
-  { href: u('/'), label: 'Accueil' },
+  { href: u('/'), label: 'Accueil', home: true },
   { href: u('/carte/'), label: 'Carte' },
-  { href: u('/vins/'), label: 'Vins et boissons' },
-  { href: u('/histoire/'), label: 'La maison' },
-  { href: u('/emporter/'), label: 'À emporter' },
+  { href: u('/vins/'), label: 'Vins' },
+  { href: u('/histoire/'), label: 'Maison' },
+  { href: u('/emporter/'), label: 'Emporter' },
   { href: u('/reservation/'), label: 'Contact' },
 ];
 const ici = Astro.url.pathname.replace(/\/+$/, '');
@@ -19,7 +19,7 @@ const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : u
   <div class="wrap header__inner">
     <a class="header__brand" href={u('/')}>{site.nom}</a>
     <nav class="nav" aria-label="Navigation principale">
-      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
+      {liens.map((l) => <a class={l.home ? 'nav__home' : undefined} href={l.href} aria-current={courant(l.href)}>{l.label}</a>)}
     </nav>
     <a class="btn btn--plein header__cta" href={u('/reservation/')}>Réserver</a>
   </div>
