@@ -1,4 +1,7 @@
-# ETAT · Le D’Arville · variante legacy · fin de la phase 2 (construction-2)
+# ETAT · Le D’Arville · variante legacy · fin de la phase 3 (construction-3, QA terminée)
+
+Phase 3 : QA faite, sloplint 0 FAIL réel / 0 REFLEX, og:image + twitter:card, pagehead resserré, log, DESIGN, RAPPORT.md écrits, build passé. Rien ne reste, hors polices distantes et heures (.fill). Piège : `@import` doit rester en tête de page.css (une règle avant lui annule tokens et base).
+
 
 ## Fait (phases 1 et 2)
 - Phase 1 : audit, deal Atelier, comps, DESIGN.md, 9 pages, 22 photos WebP, pied KYW, noindex et mention sur les 9 routes.

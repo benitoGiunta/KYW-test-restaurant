@@ -12,7 +12,7 @@
 - **Material** : photos du client (22, WebP 800 et 1600 px) ; aucune photo de bibliothèque. Filtre du thème `warm con=-6 vib=-10` via `base.css`.
 - **Comp** : 2 construits, sans clé, c1 retenu (`comp.md`).
 - **Draw** : `73cd2c`. Pris : job book, barre de réservation, horaires et adresse en fin de page. Échangés : forme Catalogue contre Photographic (l’original est une table avec photos, pas un inventaire de variantes) ; hero Stage contre Poster (posture gardée).
-- **Sweep** : phase 3.
+- **Sweep** : phase 3, `sloplint --render --kept` sur 9 URL : 0 FAIL réel (FAIL 34 faux positif, clip présent sur html et body), 0 REFLEX ouvert, 6 waivers (8, 44c, 59, 77, 79, 83) en tête de page.css, 2 WARN `kept` (site-actuel non rendu).
 
 ## Approche (conservée)
 Macrostructure 08 Photographic. Routes inchangées. Hero Poster. Calme : aucune animation en phase 1, un reveal au plus en phase 2. Dérogations : slider supprimé pour une photographie (18), `vh` remplacé par `dvh` (6a), widget Zenchef remplacé par un lien (la maquette ne branche aucun service). Test miroir : un voisin avec « restaurant gastronomique en ferme » prendrait le vert ou le noir et l’or ; ici le papier chaux et le passe-partout, changement nommé : Hedgerow écarté.
@@ -45,7 +45,7 @@ Atelier, tokens dans `src/styles/tokens.css` : papier `oklch(94.5% 0.010 76)`, e
 - [x] 8. Aucun tiret cadratin ni demi-cadratin · preuve : balayage Python de `src/` et `dist/` sans résultat
 - [x] 9. Noindex et mention KYW sur chaque route · preuve : grep des 9 `index.html`/`404.html` (noindex, `Maquette KYW`, `kyw-signature` à 1)
 - [x] 10. Aucun chiffre ou avis inventé · preuve : avis Tripadvisor et notes écartés (`dropped`), Gault&Millau non repris (15/20 contre 16/20)
-- [ ] 11. Sloplint de rendu sur `src` · reste en phase 3 (balayage final)
+- [x] 11. Sloplint de rendu sur `src` · 9 URL : 0 FAIL réel, 0 REFLEX, render tier tourné (`.logs/sloplint.log`)
 - [x] 12. Animations, nav mobile, jour courant · `src/styles/page.css` § nav, reveal, jour courant ; `src/layouts/Base.astro` (script)
 - [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : grep `transition: all` sans résultat ; `page.css:19-20,47,201` (`opacity`, `transform`, couleurs)
 - [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : `base.css:6`, `page.css:21` ; 12 tabulations mesurées en navigateur, `outline: solid 2px` partout (`--color-focus` 50 % sur papier 94 %, 3:1 tenu)
@@ -66,3 +66,10 @@ Atelier, tokens dans `src/styles/tokens.css` : papier `oklch(94.5% 0.010 76)`, e
 - [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : `base.css:3-5`
 - [x] 72. Responsive (breakpoints rem, capacités, tables restackées, `svh`, safe-area) · preuve : 60rem et 40rem ; `(hover: hover)` et `(pointer: coarse)` ; `env(safe-area-inset-*)` nav et barre ; scrollWidth = largeur à 320, 375, 768, 1000, 1280 sur l'accueil et à 375 sur les 8 routes
 - [x] hero review (self, pas d'outil sous-agent) : sloplint `--render --stage hero` : 44d (texte à 104 px du bord à 1920, plate recalée sur le conteneur) et 48 (deux oklch sortis en tokens) et F24 (ombre du popover retirée) résolus ; reste le faux positif 34 et la NOTE 58 (130 mots à 1440 px, section Maison, contenu fixe). Verdict self : `ship`. Stamp : `hero-review: self · ship · 3 findings · 3 resolved`
+
+## Phase 3 (QA)
+- [x] 16. `sloplint --render` : 0 FAIL réel (34 faux positif : `html { overflow-x: clip; }` et `body { ... }` en base.css:2-3 et page.css), 0 REFLEX ouvert · preuve : `.logs/sloplint.log`
+- [x] 25. Contraste : le WARN axe de la 404 vient de la 404 du serveur statique, pas de la page · preuve : note `#55646a` sur `#F3F2EF` mesurée à 7:1 sur 404.html
+- [x] 27. Focus clavier visible sur « Toute la carte » et « Ouvrir la carte des vins » (faux positif du défilement doux) · preuve : capture `carte` après défilement, anneau 2 px
+- [x] 66. `<title>`, description, og:image et twitter:card ajoutés · preuve : `Base.astro`, `grep` dans `dist/`
+- [ ] Reste : polices Sentient (Fontshare) et Hanken (Google) chargées à distance, TTF servi par le fournisseur, non corrigeable sans les héberger ; robots.txt absent (noindex voulu).
