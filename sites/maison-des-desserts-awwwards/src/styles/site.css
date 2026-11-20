@@ -54,7 +54,7 @@ body { background: var(--c-bg); }
 .hero { padding-top: calc(var(--u) * 9); padding-bottom: var(--normal); }
 .hero__titre { grid-column: 1 / span 8; grid-row: 1; font-size: var(--t-mega); align-self: end; }
 .hero__titre span { display: block; }
-.hero__titre { min-height: 2lh; }
+.hero__titre { min-height: calc(2 * 0.95em + 0.08em); } /* 2 lignes + la marge de descendante que le découpage en lignes ajoute (CLS) */
 .hero__media { grid-column: 9 / span 4; grid-row: 1 / span 2; }
 .hero__media picture, .hero__media img { width: 100%; height: 100%; object-fit: cover; }
 .hero__media { aspect-ratio: 4 / 5; position: relative; }
@@ -167,6 +167,13 @@ body { background: var(--c-bg); }
 
 .perdue { min-height: 100dvh; display: grid; align-content: center; padding-block: calc(var(--u) * 10); }
 
+/* Tablette et petit bureau : colonne d'heures étroite, libellés plus petits et sans coupure ; frise large sur grand écran */
+@media (min-width: 761px) and (max-width: 1100px) {
+  .heure { font-size: var(--t-m); padding-right: calc(var(--u) * 3); }
+  .heure .num--mot { font-size: var(--t-s); white-space: nowrap; }
+}
+@media (min-width: 1200px) { .fil-histoire li { grid-template-columns: minmax(6rem, 24rem) 1fr; } }
+
 /* Téléphone (390 px) : 4 colonnes, heures au-dessus, fil vertical conservé à gauche */
 @media (max-width: 760px) {
   :root { --t-mega: clamp(2.9rem, 12.6vw, 4.2rem); --t-xl: clamp(2.3rem, 10vw, 3.4rem); --t-l: clamp(1.7rem, 7.4vw, 2.3rem); --aere: calc(var(--u) * 9); --entracte: calc(var(--u) * 11); --normal: calc(var(--u) * 5); }
@@ -232,9 +239,9 @@ body { background: var(--c-bg); }
 .split-line { padding-top: 0.16em; margin-top: -0.16em; }
 
 /* Le cadran : la règle de 8 h à 18 h, l'aiguille et l'heure lue sur le défilement (motion/journee.ts). Décoratif, hors tabulation. */
-.cadran { position: fixed; left: var(--gutter); bottom: calc(var(--u) * 2); z-index: var(--z-header); display: flex; align-items: center; gap: 0.9em; padding: 0.5em 0.9em 0.55em; background: var(--c-bg); color: var(--c-fg); border: 1px solid color-mix(in srgb, var(--c-fg) 30%, transparent); pointer-events: none; visibility: hidden; opacity: 0; transition: background-color 0.4s, color 0.4s; }
-.cadran__heure { font-family: var(--f-display); font-size: 1.15rem; line-height: 1; min-width: 4.4em; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
-.cadran__regle { position: relative; width: 7.5rem; height: 1.5rem; background: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 10%) left bottom / calc(100% + 1px) 5px no-repeat, linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat; }
+.cadran { position: fixed; left: var(--gutter); bottom: calc(var(--u) * 2); z-index: var(--z-header); display: flex; flex-direction: column; align-items: flex-start; gap: 0.45em; padding: 0.5em 0.6em 0.55em; background: var(--c-bg); color: var(--c-fg); border: 1px solid color-mix(in srgb, var(--c-fg) 30%, transparent); pointer-events: none; visibility: hidden; opacity: 0; transition: background-color 0.4s, color 0.4s; }
+.cadran__heure { font-family: var(--f-display); font-size: 1.15rem; line-height: 1; min-width: 0; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.cadran__regle { position: relative; width: 6.5rem; height: 1.5rem; background: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 10%) left bottom / calc(100% + 1px) 5px no-repeat, linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat; }
 .cadran__bornes { position: absolute; inset: 0 0 auto; display: flex; justify-content: space-between; font-size: 0.625rem; line-height: 1; color: var(--c-muted); font-variant-numeric: tabular-nums; }
 .cadran__aiguille { position: absolute; left: -1px; bottom: 0; width: 2px; height: 1.05rem; background: var(--c-accent); }
 html:not(.motion) .cadran { display: none; }

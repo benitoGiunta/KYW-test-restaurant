@@ -13,7 +13,7 @@ import { idle } from './idle';
 type Ton = 'matin' | 'midi' | 'gouter' | 'soir';
 const TONS: Record<Ton, { bg: string; fg: string; muted: string; accent: string }> = {
   matin: { bg: '#e8e3da', fg: '#231713', muted: '#5c4f46', accent: '#1f5c3f' },
-  midi: { bg: '#ebc98c', fg: '#231713', muted: '#4d3a25', accent: '#174a32' },
+  midi: { bg: '#ebc98c', fg: '#231713', muted: '#2a1708', accent: '#174a32' },
   gouter: { bg: '#c98a45', fg: '#231713', muted: '#3b2412', accent: '#1b3f2c' },
   soir: { bg: '#231713', fg: '#ece3d3', muted: '#c7b9a4', accent: '#e8a04a' },
 };
