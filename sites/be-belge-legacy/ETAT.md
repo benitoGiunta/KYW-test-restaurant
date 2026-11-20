@@ -4,3 +4,6 @@
 **Hero review** : `self` (pas d’outil Agent en session d’agent, review-hero.md non suivi par un sous-agent) · hero-review: self ship · 1 finding · 1 resolved (bouton du comptoir sous la ligne de flottaison à 1280x800 : photo 50 vers 44 dvh). 
 **Reste (phase 3)** : captures et QA complète par l’agent captures (bureau, 375, reduced), vérifier le reveal sur capture pleine page (les blocs sous le pli ne s’affichent qu’au défilement), mention éventuelle du lead de /reservation/, 404 vue (OK), `pnpm index`, RAPPORT.md, commit des dist et de l’index global.
 **Pièges** : le Popover du menu est positionné en `fixed` à 84 px (hauteur de barre 60 px + 12 px) ; `.two > :last-child` rate un composant suivi d’un `<script>` ; fichiers `data/suivi.html` et `dist/suivi/index.html` en conflit (UU) hors périmètre, non touchés ; le dev toolbar Astro apparaît sur les captures de dev.
+
+# ETAT · phase 3 (QA) terminée
+Corrigé : favicon + og/twitter dans Base ; waivers 8, 44c, 59, 79 en 3 champs. sloplint 0 FAIL, 0 REFLEX ; build OK 7 pages ; index régénéré. Voir RAPPORT.md. Reste : finish review, log theme.mjs, DESIGN.md 72 cases, commit.
