@@ -1,0 +1,129 @@
+---
+import Base from '../layouts/Base.astro';
+import Chapitre from '../components/Chapitre.astro';
+import { site, photoDe, horairesResume, heuresIllustratives, adresseLigne, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/hero-1800.webp');
+const heroM = photoDe('/photos/hero-960.webp');
+const c = site.chiffres;
+const motsNom = site.nom.split(' ');
+const motsCitation = site.citation.texte.split(' ');
+const galerie = ['/photos/gal-assiette-nb.webp', '/photos/gal-terrasse-nb.webp', '/photos/gal-lampe-nb.webp', '/photos/gal-verres-nb.webp', '/photos/gal-cuisine-nb.webp'].map(photoDe);
+const hauteurs = ['moyenne', 'basse', 'haute', 'basse', 'haute'];
+const offres = site.privatisation.offres;
+const resume = horairesResume();
+---
+<Base preloadImage={{ href: heroM.src, media: '(max-width: 767px)' }}>
+  <section class="hero" data-hero aria-label="Accueil">
+    <picture class="hero__photo">
+      <source media="(max-width: 767px)" srcset={asset(heroM.src)} />
+      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical />
+    </picture>
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="wrap hero__contenu">
+      <p class="petite-cap hero__sur">{adresseLigne()}</p>
+      <h1 class="hero__nom">{motsNom.map((m, i) => <><span class="hero__mot"><span class="hero__mot-in" data-hero-mot>{m}</span></span>{i < motsNom.length - 1 ? ' ' : ''}</>)}</h1>
+      <p class="hero__accroche">{site.baseline}, dans une ferme du 19e siècle</p>
+      <div class="actions">
+        <a class="btn btn--primary" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+        <a class="lien lien--fleche" href="#services">Découvrir la maison</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="guides" aria-label="Distinctions et notes">
+    <div class="wrap guides__inner" data-reveal="fade">
+      <p class="petite-cap guides__sur">Dans les guides</p>
+      <ul class="guides__liste">
+        {site.distinctions.map((d) => (
+          <li>
+            {d.url
+              ? <a class="guides__item" href={d.url} rel="noopener"><span class="guides__nom">{d.nom}</span><span class="guides__detail">{d.detail}</span></a>
+              : <span class="guides__item"><span class="guides__nom">{d.nom}</span><span class="guides__detail">{d.detail}</span></span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Chapitre id="services" chiffre={c.menus} photo={photoDe('/photos/chap-dessert-1200.webp')} lien={{ href: u('/menu/'), label: 'Lire la carte' }}>
+    <p>Deux menus de saison, « Tendance de saison » et « Balade », ouverts par quatre mises en bouche. Saint-Jacques, carpaccio de biche, ris de veau, lièvre en deux préparations.</p>
+    <p>À la carte, le homard vient de notre vivier, la sole est meunière, le filet de bœuf au poivre concassé. Les desserts se terminent à la minute.</p>
+  </Chapitre>
+
+  <Chapitre id="prix" chiffre={c.prix} photo={photoDe('/photos/chap-salle-1200.webp')} inverse filet lien={{ href: u('/carte/'), label: 'Les formules' }}>
+    <p>73 € pour « Tendance de saison », 90 € pour « Balade ». L'accord mets, vins et café se prend en option, 40 € ou 50 € par personne selon le menu.</p>
+    <p>Un menu enfant à 28 €, un chariot de fromages affinés à 22 €, et une carte des vins, « Le cellier du D'Arville ».</p>
+  </Chapitre>
+
+  <section class="citation" data-allume aria-labelledby="citation-source">
+    <div class="wrap citation__wrap">
+      <p class="petite-cap" id="citation-source">{site.citation.source}</p>
+      <blockquote class="citation__texte" cite={site.citation.url}>
+        <p>{motsCitation.map((m, i) => <><span class="mot">{m}</span>{i < motsCitation.length - 1 ? ' ' : ''}</>)}</p>
+      </blockquote>
+      <p class="citation__lien"><a class="lien" href={u('/menu/')}>Voir toute la carte</a></p>
+    </div>
+  </section>
+
+  <Chapitre id="hotes" chiffre={c.hotes} photo={photoDe('/photos/chap-facade-1200.webp')} lien={{ href: u('/histoire/'), label: 'La maison et son histoire' }}>
+    <p>Estelle et Olivier accueillent dans leur ferme du 19e siècle, à Wierde. Olivier Bourguignon est le chef et le propriétaire de la maison.</p>
+    <p>Un cadre contemporain, un salon, une table d'hôte, une cuisine ouverte, puis la terrasse, le jardin et le point d'eau.</p>
+  </Chapitre>
+
+  <Chapitre id="barabas" chiffre={c.barabas} photo={photoDe('/photos/chap-barabas-1200.webp')} inverse filet lien={{ href: u('/barabas/'), label: 'La villa Barabas' }}>
+    <p>À deux cents mètres du restaurant, la villa Barabas, sa petite sœur : des suites et des chambres à thèmes, une piscine chauffée, un petit-déjeuner à 18 €.</p>
+    <p>Le domaine compte plus de 5 hectares, entre la ferme et la villa.</p>
+  </Chapitre>
+
+  <section class="onglets" data-onglets aria-labelledby="onglets-titre">
+    <div class="onglets__photos" aria-hidden="true">
+      {offres.map((o, i) => { const p = photoDe(o.photo); return <img class:list={['onglets__photo', { 'is-active': i === 0 }]} data-onglet-photo src={asset(p.src)} alt="" width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />; })}
+    </div>
+    <div class="wrap onglets__contenu">
+      <h2 class="petite-cap" id="onglets-titre">Autour de la table</h2>
+      <p class="onglets__intro">{site.privatisation.intro}</p>
+      <div class="onglets__liste" role="tablist" aria-label="Séminaires, traiteur et chèque cadeau">
+        {offres.map((o, i) => (
+          <button class="onglet" role="tab" id={`onglet-${i}`} aria-controls={`panneau-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} type="button">
+            <span class="onglet__nom">{o.nom}</span><span class="onglet__barre" aria-hidden="true"></span>
+          </button>
+        ))}
+      </div>
+      {offres.map((o, i) => (
+        <div class="onglets__panneau" role="tabpanel" id={`panneau-${i}`} aria-labelledby={`onglet-${i}`} hidden={i !== 0}>
+          <p>{o.texte}{o.textePlaceholder && <span class="illu">texte illustratif</span>}</p>
+        </div>
+      ))}
+      <p class="onglets__action"><a class="btn" href={u('/evenements/')}>Séminaires, traiteur, cadeau</a></p>
+    </div>
+  </section>
+
+  <section class="galerie" aria-label="La maison en noir et blanc">
+    <div class="galerie__bande">
+      {galerie.map((p, i) => (
+        <figure class:list={['galerie__item', `galerie__item--${hauteurs[i]}`]} data-reveal="up" data-delay={String(i * 0.08)} data-cursor="Voir">
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="cloture" data-rideau aria-labelledby="cloture-titre">
+    <div class="rideau" aria-hidden="true"></div>
+    <div class="wrap cloture__bloc">
+      <p class="chiffre chiffre--centre" aria-hidden="true"><span data-compteur={String(c.ouverture.valeur)}>{c.ouverture.valeur}</span></p>
+      <h2 class="petite-cap" id="cloture-titre"><span class="sr-only">{c.ouverture.valeur} </span>{c.ouverture.libelle}</h2>
+      <p class="cloture__sous">Le D'Arville a 20 ans, {c.ouverture.sousLibelle}.</p>
+      <address class="cloture__adresse">{adresseLigne()}</address>
+      <dl class="cloture__horaires">
+        {resume.map((r) => <div><dt>{r.libelle}</dt><dd>{r.valeur}</dd></div>)}
+      </dl>
+      {heuresIllustratives() && <p class="muted"><span class="illu">heures illustratives</span> Les jours viennent du site de la maison.</p>}
+      <div class="actions actions--centre">
+        <a class="btn btn--primary" href={u('/reservation/')}>Réserver une table</a>
+        <a class="lien" href={telHref()}>{site.telephone}</a>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="Les menus" description={`Les menus du D'Arville à Wierde : Tendance de saison à ${site.menus[0].prix}, Balade à ${site.menus[1].prix}, menu enfant à ${site.menus[2].prix}. Accords mets et vins en option.`}>
+  <HeroPage titre="Les menus" sur="Trois formules, une cuisine de saison">
+    <p>Deux menus pour le repas gastronomique, un menu pour les enfants. L'accord mets, vins et café s'ajoute à la demande.</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Les menus">
+    <div class="wrap">
+      <ol class="formules">
+        {site.menus.map((m, i) => (
+          <li class="formule" data-reveal="up" data-delay={String(i * 0.08)}>
+            <p class="formule__prix" aria-hidden="true">{m.prix!.replace(/\s*€/, '')}<span class="formule__euro">€</span></p>
+            <div class="formule__texte">
+              <h2 class="formule__nom">{m.nom}<span class="sr-only">, {m.prix}</span></h2>
+              <p>{m.description}</p>
+              {m.accord && <p class="formule__accord">{m.accord}</p>}
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div class="formules__pied" data-reveal="fade">
+        <p><strong>Menu « Bon Plan ».</strong> {site.bonPlan}</p>
+        <p><strong>Chèque cadeau.</strong> {site.bonCadeau.texte}</p>
+        <div class="actions">
+          <a class="btn" href={u('/menu/')}>La carte en détail</a>
+          <a class="btn btn--primary" href={u('/reservation/')}>Réserver</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

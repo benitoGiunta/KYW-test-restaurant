@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { asset } from '../lib/url';
+const offres = site.privatisation.offres;
+---
+<Base title="Séminaires, traiteur, chèque cadeau" description={`Séminaires à la villa Barabas, traiteur de fêtes et chèque cadeau du D'Arville à Wierde. Renseignements au ${site.telephone}.`}>
+  <HeroPage titre="Autour de la table" sur="Séminaires, traiteur, chèque cadeau">
+    <p>{site.privatisation.intro}</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Les trois propositions">
+    <div class="wrap offres">
+      {offres.map((o, i) => { const p = photoDe(o.photo); return (
+        <article class:list={['offre', { 'offre--inverse': i % 2 === 1 }]}>
+          <figure class="offre__photo" data-reveal="clip">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+          <div class="offre__texte">
+            <h2 class="offre__nom">{o.nom}</h2>
+            <p>{o.texte}{o.textePlaceholder && <span class="illu">texte illustratif</span>}</p>
+          </div>
+        </article>
+      ); })}
+    </div>
+  </section>
+
+  <section class="section section--contact" aria-labelledby="contact-titre">
+    <div class="wrap contact">
+      <h2 class="petite-cap" id="contact-titre">Parler de votre projet</h2>
+      <p class="contact__texte">Pour un séminaire, une commande de fêtes ou un chèque cadeau, contactez le restaurant : {site.telephone} ou {site.email.valeur}.</p>
+      <p class="actions"><a class="btn btn--primary" href={telHref()}>Appeler le {site.telephone}</a><a class="btn" href={`mailto:${site.email.valeur}`}>Écrire au restaurant</a></p>
+    </div>
+  </section>
+</Base>

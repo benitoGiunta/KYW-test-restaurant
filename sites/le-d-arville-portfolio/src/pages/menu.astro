@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const photos = ['/photos/plat-assiette-noire.webp', '/photos/plat-sauce.webp', '/photos/plat-bois.webp'].map(photoDe);
+---
+<Base title="La carte" description="La carte du D'Arville à Wierde : entrées à 30 €, homard, sole meunière, filet de bœuf et lièvre, chariot de fromages et desserts, ainsi que deux menus de saison.">
+  <HeroPage titre="La carte" chiffre={site.chiffres.menus} sur="Entrées, plats, fromages, desserts">
+    <p>Une cuisine de saison, avec les suggestions du moment. Les deux menus, « Tendance de saison » et « Balade », puisent dans cette carte.</p>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="menu-titre">
+    <div class="wrap menu__grille">
+      <div>
+        <h2 class="sr-only" id="menu-titre">La carte</h2>
+        {site.carte.map((cat) => (
+          <>
+            <h3 class="petite-cap menu__cat">{cat.categorie}</h3>
+            <ul class="menu__liste">
+              {cat.plats.map((p) => (
+                <li class="menu__ligne menu__ligne--prix" data-reveal="up">
+                  <span class="menu__nom">{p.nom}</span>
+                  {p.prix && <span class="menu__prix">{p.prix}</span>}
+                  {p.description && <span class="menu__desc">{p.description}</span>}
+                </li>
+              ))}
+            </ul>
+          </>
+        ))}
+        <p class="muted" style="margin-top: 1.5rem">Les prix des desserts ne sont pas publiés par la maison.</p>
+      </div>
+      <aside class="menu__cote" data-reveal="fade">
+        <p class="petite-cap">Les menus</p>
+        <ul class="menu__options">
+          {site.menus.map((m) => <li><span>{m.nom}</span><strong>{m.prix}</strong></li>)}
+        </ul>
+        <p class="muted">{site.vins}</p>
+        <p><a class="btn" href={u('/carte/')}>Le détail des menus</a></p>
+        <p><a class="btn btn--primary" href={u('/reservation/')}>Réserver</a></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--photos" aria-label="Assiettes">
+    <div class="wrap triptyque">
+      {photos.map((p, i) => (
+        <figure class:list={['triptyque__item', `triptyque__item--${i}`]} data-reveal="clip" data-delay={String(i * 0.1)}>
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+</Base>

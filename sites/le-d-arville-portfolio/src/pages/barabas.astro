@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const b = site.barabas;
+const piscine = photoDe('/photos/barabas-piscine.webp');
+---
+<Base title="La villa Barabas" description="La villa Barabas, à 200 mètres du restaurant Le D'Arville à Wierde : suites et chambres à thèmes, piscine chauffée, petit-déjeuner à 18 €, room service.">
+  <HeroPage titre="Barabas" chiffre={site.chiffres.barabas} sur="La petite sœur du restaurant">
+    <p>{b.intro}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={u('/reservation/')}>Contacter la maison</a>
+      <a class="btn" href={site.reseaux[1].url} rel="noopener">Facebook Barabas</a>
+    </div>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="chambres-titre">
+    <div class="wrap">
+      <h2 class="petite-cap" id="chambres-titre">Suites et chambres</h2>
+      <div class="chambres">
+        {b.chambres.map((c, i) => { const p = photoDe(c.photo); return (
+          <figure class="chambre" data-reveal="clip" data-delay={String(i * 0.1)}>
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+            <figcaption><span class="chambre__nom">{c.nom}</span><br />{c.texte}{c.textePlaceholder && <span class="illu">nom illustratif</span>}</figcaption>
+          </figure>
+        ); })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="services-titre">
+    <div class="wrap resa">
+      <div class="resa__horaires" data-reveal="fade">
+        <h2 class="petite-cap" id="services-titre">Sur place</h2>
+        <ul class="services">
+          {b.services.map((s) => <li>{s}</li>)}
+        </ul>
+      </div>
+      <div class="resa__infos" data-reveal="fade">
+        <h2 class="petite-cap">Adresse</h2>
+        <address>{b.adresse}<br />À 200 mètres du restaurant</address>
+        <figure class="chambre" style="margin-top: 1.5rem">
+          <img src={asset(piscine.src)} alt={piscine.alt} width={piscine.largeur} height={piscine.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      </div>
+    </div>
+  </section>
+</Base>
