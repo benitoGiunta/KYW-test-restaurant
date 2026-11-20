@@ -21,3 +21,20 @@
 - Réservation : téléphone et e-mail uniquement (outil tiers non identifié) ; formulaire de démonstration retiré.
 - Avis : 4 positifs, auteurs non nommés, source « Trustindex ».
 - Fonts Zodiak/Satoshi conservées ; logo non utilisé en grand.
+
+# ETAT — phase 2 (construction-2)
+
+## Fait (phase 2)
+- Contrôles navigateur 1440 / 390 / 320 / 390 reduced-motion sur les 4 pages : aucun débordement horizontal, aucune erreur console, `is-loaded` posé, aucun élément `data-reveal` resté caché en reduced-motion.
+- Clics réels sur chaque lien d'en-tête (1440, 4 pages) : URL change, `elementFromPoint` renvoie un lien ; bas de page : mention Maquette KYW et logo KYW visibles.
+- Corrigé : (1) rail de photos visible en desktop en plus de la scène (`.rail` écrasait `.table__rail`) ; (2) tirages de « La table » posés sur le titre (y 63 à 64 %) ; (3) citron du hero sur le bouton « Voir la carte » (x 72 %, y 84 %) ; (4) amphore du manifeste sur le titre en mobile (masquée) ; (5) mot final « Kalí órexi ! » rogné en largeur à 390 (15,5vw) et trop coupé en hauteur (0,7em) ; (6) rail mobile collé au bord gauche (padding + scroll-padding) ; (7) reduced-motion : grille de tirages avec gouttière.
+- Motion vérifiée : hero (objets rebondissent puis flottent), table (stagger, glisser-déposer testé à la souris), avis (mot flou au scrub), reveals.
+
+## Reste (phase 3)
+- Shoot complet par l'agent captures (non fait ici), audit axe, contraste du bleu ciel sur surfaces, clavier (flèches sur objets).
+- RAPPORT.md à écrire ; `gabarits/UTILISATION.md` (guinguette | el-greco) à mettre à jour hors phase de test.
+- Arbitrages inchangés : avis négatifs, slogan « exemple », horaires lundi à mercredi « à confirmer ».
+- Mobile : la « table » est un rail non déplaçable (conforme au gabarit).
+
+## Pièges
+- Scripts de contrôle dans le scratchpad `/tmp/claude-0/greco-p2/` (hors dépôt). Serveur de phase 2 (port 4471) arrêté.

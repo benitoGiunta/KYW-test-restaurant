@@ -132,7 +132,7 @@ export const guinguette = {
     { id: 'olive', label: 'Branche d’olivier dessinée au trait', x: 10, y: 66, r: 8, taille: 130, mobile: true, mx: 40 },
     { id: 'brochette', label: 'Brochette dessinée au trait', x: 30, y: 78, r: -40, taille: 120, mobile: false },
     { id: 'bouteille', label: 'Bouteille de vin dessinée au trait', x: 80, y: 60, r: 14, taille: 140, mobile: true, mx: 74 },
-    { id: 'citron', label: 'Citron coupé dessiné au trait', x: 62, y: 82, r: -6, taille: 90, mobile: false },
+    { id: 'citron', label: 'Citron coupé dessiné au trait', x: 72, y: 84, r: -6, taille: 90, mobile: false },
   ] as Objet[],
   /** La table : 6 tirages de stock (placeholder), légendes honnêtes. */
   tirages: [
@@ -140,8 +140,8 @@ export const guinguette = {
     { src: '/photos/parasols.webp', alt: 'Parasols blancs sur une terrasse de Santorin', x: 30, y: 4, r: 5, legende: 'Terrasse, Santorin', placeholder: true },
     { src: '/photos/coupole.webp', alt: 'Coupole bleue d’une église grecque', x: 54, y: 8, r: -4, legende: 'Coupole bleue', placeholder: true },
     { src: '/photos/terrasses.webp', alt: 'Terrasses blanches d’Oia au-dessus de la mer', x: 76, y: 6, r: 7, legende: 'Oia', placeholder: true },
-    { src: '/photos/mur-pierres.webp', alt: 'Mur chaulé et pierres volcaniques', x: 14, y: 50, r: 4, legende: 'Pierres et chaux', placeholder: true },
-    { src: '/photos/ciel-croix.webp', alt: 'Croix blanche et clocher sur ciel bleu', x: 62, y: 50, r: -6, legende: 'Ciel d’Égée', placeholder: true },
+    { src: '/photos/mur-pierres.webp', alt: 'Mur chaulé et pierres volcaniques', x: 18, y: 63, r: 4, legende: 'Pierres et chaux', placeholder: true },
+    { src: '/photos/ciel-croix.webp', alt: 'Croix blanche et clocher sur ciel bleu', x: 60, y: 64, r: -6, legende: 'Ciel d’Égée', placeholder: true },
   ] as Tirage[],
   pictos: [
     { categorie: 'Entrées froides', picto: 'olive' },
