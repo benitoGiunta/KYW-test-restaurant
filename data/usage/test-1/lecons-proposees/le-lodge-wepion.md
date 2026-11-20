@@ -6,3 +6,4 @@
 - 2026-11-20 · variante-legacy construction-2 : sans outil Agent, la revue du hero se fait par auto-notation `self` ; le widget de l'Astro dev toolbar apparaît en bas des captures prises sur le serveur de dev (pas un défaut du site) ; un `<div popover>` de menu séparé du `<nav>` desktop évite les contorsions UA du popover (display, inset).
 - 2026-11-20 · variante legacy · contrôle d'images cassées : `naturalWidth` est 0 pour les images `loading="lazy"` non encore chargées (faux positifs) ; vérifier le statut HTTP des fichiers ou défiler lentement avant de mesurer.
 - 2026-11-20 · construction-3 : le pied de page KYW (note grise #6b787d) échoue axe color-contrast sur fond clair (404) ; surcharger `.kyw-footer__note` à #4f5b60 dans le site ou corriger le paquet.
+- 2026-11-20 · construction-3 : QA-build.md peut manquer (agent captures non passé) ; `sed` ne reconnaît pas l'espace insécable avant « : », utiliser Python.

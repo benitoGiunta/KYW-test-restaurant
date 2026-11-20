@@ -1,4 +1,4 @@
-# ETAT : le-lodge-wepion · variante awwwards · construction-2 (phase 2 sur 3)
+# ETAT : le-lodge-wepion · variante awwwards · construction-3 (phase 3 sur 3, terminée)
 
 ## Fait (phase 1)
 - Concept « Deux rives », Concept Card, système : `DESIGN.md`. Scaffold Astro (engine verbatim, sans GL ni loader), 5 pages statiques, contenu réel (`site.ts`, `carte.ts`, `photos.ts`).
@@ -25,3 +25,8 @@
 - `.photo img` en `position: absolute` : chaque `.photo` doit avoir une hauteur.
 - Le trait de la berge est positionné à 7/12 de `.rives`/`.perdu` (grille 7fr/5fr sans gouttière) : changer la grille du héros oblige à changer `.berge--v { left }` et `.rives__crue { width }`.
 - `--bx` s'écrit sur `[data-rives]` (porteur), jamais sur `<html>`.
+
+## Fait (phase 3, 20/11/2026)
+- QA-build.md absent : captures propres des 4 pages (.shots/), audit 0 FAIL / 1 WARN faux positif. Corrections : axe (passage), og.png, titre accueil, crédit photos répété. Vérifié : axe 0, audit, accueil. Build OK. Voir RAPPORT.md.
+## Reste
+- Score jury indépendant (pas d'outil Agent), placeholders client.
