@@ -16,7 +16,7 @@ export const resto = {
   reservation: 'Les réservations se prennent uniquement par téléphone, du mercredi au dimanche à partir de 10 h 00.',
 };
 
-export const h = (a: number, b = 0) => `${a} h ${String(b).padStart(2, '0')}`.replace(' ', N);
+export const h = (a: number, b = 0) => `${a} h ${String(b).padStart(2, '0')}`.replaceAll(' ', N);
 
 // Horaires du site d’origine (page Contact). Dimanche : midi seulement.
 export const horaires = [

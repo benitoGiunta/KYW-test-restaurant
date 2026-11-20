@@ -32,7 +32,7 @@ import { noel, emporter, photos, resto, menus } from '../data/site';
         <div class="split__b">
           <ul class="rows">
             {emporter.plats.map((p) => (
-              <li class="row" style="grid-template-columns: minmax(0, 8fr) minmax(0, 4fr)"><span><span class="row__t">{p.nom}</span><br /><span class="small">{p.etape}</span><br /><span class="row__d">{p.desc}</span></span><span class="row__p">{p.prix}</span></li>
+              <li class="row" style="grid-template-columns: minmax(0, 7fr) minmax(0, 5fr)"><span><span class="row__t">{p.nom}</span><br /><span class="small">{p.etape}</span><br /><span class="row__d">{p.desc}</span></span><span class="row__p row__p--multi">{String(p.prix).split(', ').map((l, i) => <>{i > 0 && <br />}{l}</>)}</span></li>
             ))}
           </ul>
         </div>
