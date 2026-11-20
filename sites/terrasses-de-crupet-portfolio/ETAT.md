@@ -1,4 +1,4 @@
-# ETAT — terrasses-de-crupet · portfolio · phase 2 sur 3 (construction-2) terminée
+# ETAT — terrasses-de-crupet · portfolio · phase 3 sur 3 (QA) terminée
 
 ## Fait (phase 1)
 - Gabarit guinguette adapté, 7 pages, données réelles (`site.ts`), 22 photos WebP, palette cuivre/vert, DESIGN.md (adéquation 78 %).
@@ -21,3 +21,7 @@
 
 ## Pièges
 - `.rail` générique bat `.table__rail` : toujours doubler la classe. Rebuild pendant un shoot de fond vide `dist/`.
+
+## Phase 3 (QA)
+- QA-build.md lu ; 404 « contraste/cible » = réponse brute de serve.mjs (faux positif, 404.html réelle : 0 violation). Aucun code modifié, build final OK. RAPPORT.md écrit.
+- Reste : UTILISATION.md (gabarits/), `pnpm index`, commit final `[publier]` par l'agent publication.
