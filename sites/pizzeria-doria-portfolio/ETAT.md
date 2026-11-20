@@ -33,3 +33,8 @@
 ## Révision 1 (reviseur-site, test)
 - Fait : F1-1, F1-2, F2-1 à F2-6 corrigés et vérifiés (voir REVISION-1.md). Build vert, serveur arrêté.
 - Reste : F3-1 (mot du pied coupé), F3-2 (bouchons.webp 317 Ko), F3-3 (apostrophes/heures), F3-4 (doublon « 5 pièces »), axe `region` du bandeau ; passe 2 de relecture.
+
+## Relecture passe 2 (relecteur-site, test)
+- Fait : REVUE-2.md (PUBLIABLE : 0 F0, 0 F1, 0 F2, 8 F3). Les 8 corrections de REVISION-1 vérifiées (nav 390/320 + taps, 12 instants du bandeau, grep dist, captures). Serveur arrêté.
+- Reste : F3 (mot du pied coupé, bouchons.webp 317 Ko, apostrophes/heures, doublon « 5 pièces », region du bandeau, « famille » x3, avertissement GSAP).
+- Pièges : QA-revue2.md absent ; capture « haut » après défilement = pas en haut de page (Lenis), refaire une capture à neuf.
