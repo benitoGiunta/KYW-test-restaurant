@@ -1,4 +1,4 @@
-# ETAT, don-dino-portfolio (phase 2 sur 3 terminée)
+# ETAT, don-dino-portfolio (phase 3 sur 3 terminée)
 
 ## Fait
 - Gabarit guinguette copié (sans dist, node_modules, rapports), package renommé, build OK (`pnpm build:site`, 6 pages, 2,2 Mo).
@@ -35,3 +35,7 @@
 - Photo « salle-pizza » (homme à la pizza) non légendée par un nom (identité non confirmée).
 - Placeholders : email (jamais affiché), avis d'exemple, desserts et boissons.
 - « carbonnara » conservé tel que dans la carte du client.
+
+## Phase 3 (QA, faite)
+- Contraste du pied corrigé (`--c-canard` #176a35), landmarks axe corrigés (section au lieu de footer, role=region sur marquee) ; axe accueil 0 violation ; build OK ; RAPPORT.md écrit.
+- Reste : contraste `.kyw-footer__note` sur 404 (paquet partagé), publication par la session de correction.
