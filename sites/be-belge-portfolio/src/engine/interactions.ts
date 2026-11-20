@@ -29,7 +29,9 @@ export function initCursor() {
   const label = follower.querySelector<HTMLElement>('[data-cursor-label]');
   const x = gsap.quickTo(follower, 'x', { duration: 0.45, ease: 'power3.out' });
   const y = gsap.quickTo(follower, 'y', { duration: 0.45, ease: 'power3.out' });
+  let vu = false;
   addEventListener('pointermove', (e) => {
+    if (!vu) { vu = true; gsap.set(follower, { x: e.clientX, y: e.clientY }); follower!.classList.add('is-ready'); }
     x(e.clientX); y(e.clientY);
     const target = (e.target as HTMLElement).closest<HTMLElement>('[data-cursor]');
     const text = target?.dataset.cursor || '';
@@ -37,5 +39,4 @@ export function initCursor() {
     if (label && label.textContent !== text) label.textContent = text;
   }, { passive: true });
   document.addEventListener('pointerleave', () => follower!.classList.remove('is-active'));
-  follower.classList.add('is-ready');
 }

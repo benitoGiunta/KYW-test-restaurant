@@ -1,5 +1,5 @@
 // Motion « Velours » : tout se dévoile comme un rideau. Loader = rideau baissé qui se lève ; transition de page = même
-// rideau ; chaque chapitre = pan vert sapin levé une fois ; chiffre cuivre qui compte ; citation dont les mots s'allument
+// rideau ; chaque chapitre = pan aubergine levé une fois ; chiffre cuivre qui compte ; citation dont les mots s'allument
 // au scrub ; onglets à barre (rotation 6 s, pause au survol, désactivée en reduced motion). Une horloge : GSAP.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -38,20 +38,23 @@ function heroIntro(intro: gsap.core.Timeline) {
   const mots = document.querySelectorAll<HTMLElement>('[data-hero-mot]');
   if (!mots.length || prefersReducedMotion() || isMobile()) return () => {};
   gsap.set(mots, { yPercent: 110 });
+  const photo = document.querySelector<HTMLElement>('.hero__photo img');
   const tl = gsap.timeline({ paused: true }).to(mots, { yPercent: 0, duration: 1.1, ease: ease.out, stagger: 0.08 });
+  // La photo de salle se pose : un recul lent de 1,08 à 1, une seule fois (le rideau du loader vient de se lever).
+  if (photo) tl.fromTo(photo, { scale: 1.08 }, { scale: 1, duration: 2.4, ease: ease.out, clearProps: 'transform' }, 0);
   intro.add(() => tl.play(), 0.1);
-  return () => { tl.kill(); gsap.set(mots, { clearProps: 'transform' }); };
+  return () => { tl.kill(); gsap.set(mots, { clearProps: 'transform' }); if (photo) gsap.set(photo, { clearProps: 'transform' }); };
 }
 
-/** Rideau : un pan vert sapin par section [data-rideau], levé une fois quand la section arrive au tiers de l'écran.
+/** Rideau : un pan aubergine par section [data-rideau], levé une fois quand la section arrive au tiers de l'écran.
  *  Reduced motion : le pan est `display: none` par le CSS (html:not(.motion)). */
 function rideaux() {
   if (prefersReducedMotion()) return () => {};
   document.querySelectorAll<HTMLElement>('[data-rideau]').forEach((section) => {
     const pan = section.querySelector<HTMLElement>('.rideau');
     if (!pan) return;
-    gsap.fromTo(pan, { clipPath: 'inset(0% 0% 0% 0%)' }, {
-      clipPath: 'inset(0% 0% 100% 0%)',
+    gsap.fromTo(pan, { '--lift': 0 }, {
+      '--lift': 100,
       duration: isMobile() ? 0.8 : 1.1,
       ease: ease.inOut,
       scrollTrigger: { trigger: section, start: 'top 66%', once: true },
@@ -100,7 +103,7 @@ function citation() {
   return () => {};
 }
 
-/** Onglets à barre : la barre cuivre de l'onglet actif se remplit en 6 s puis passe au suivant ; pause au survol ou au
+/** Onglets à barre : la barre ocre de l’onglet actif se remplit en 6 s puis passe au suivant ; pause au survol ou au
  *  focus ; clic ou flèches pour choisir. Reduced motion : pas de rotation, la barre de l'onglet actif est pleine (CSS). */
 function onglets() {
   const root = document.querySelector<HTMLElement>('[data-onglets]');

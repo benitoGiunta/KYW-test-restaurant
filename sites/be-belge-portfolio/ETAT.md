@@ -1,21 +1,22 @@
-# ETAT : be-belge-portfolio (phase 1 sur 3, construction-1)
+# ETAT : be-belge-portfolio (phase 2 sur 3, construction-2)
 
-## Fait
-- Gabarit velours copié et adapté ; DESIGN.md (matrice, décisions) ; `src/data/site.ts` entièrement remplacé (données du dossier, aucun placeholder de contenu).
-- Pages : accueil, /menu/, /carte/ (menus 57 et 72 €), /maison/ (ex-histoire), /privatisation/, /reservation/, /404.
-- Photos converties (WebP, N&B pour la galerie), favicon, OG, tokens aubergine/ocre, pictogramme dans l'en-tête et le pied.
-- Build OK : `pnpm build:site sites/be-belge-portfolio` -> dist/be-belge/portfolio/ (7 pages, 2,8 Mo).
+## Fait (phase 1)
+- Gabarit velours adapté, données du dossier, 7 pages, photos WebP, tokens aubergine/ocre (voir DESIGN.md).
 
-## Reste (phases 2 et 3)
-- QA navigateur (shoot, audit, clics d'en-tête, bas de page 1440), mobile 390 : le mot le plus long du hero (« D'AILLEURS ») doit tenir, commentaire CSS de base.css cite encore « POTES ».
-- Vérifier cible `.menu__groupes` / `.menu__groupe` : classes nouvelles sans style dédié (la grille existante `menu__liste` est reprise) ; ajuster l'espacement.
-- Animations : conserver celles du gabarit ; contrôler le compteur 3 / 57 / 34 / 5.
-- `pnpm index` non lancé ; pas de publication.
+## Fait (phase 2)
+- Motion : rideau des chapitres refait en variable `--lift` (0 à 100) sur un dégradé : le pan aubergine a un filet ocre de 2 px sur son bord qui monte (signature visible, le pan seul était de la couleur du fond). Photo du hero : recul 1,08 à 1 en 2,4 s au moment où le nom monte (desktop seulement). Loader, transition de page, compteurs (3 / 57 / 34 / 5), citation au scrub, onglets 6 s : conservés, vérifiés.
+- Hero : saut de ligne forcé « BE BELGE… » / « ET D'AILLEURS » (`.hero__saut`, plus de « ET » seul en fin de ligne) ; tient en 390 (« D'AILLEURS » 254 px).
+- États : curseur suiveur masqué jusqu'au premier mouvement (il s'affichait à 0,0) ; clavier des onglets (flèches, focus, un seul panneau visible) OK ; focus-visible, hover des boutons (rideau), menu mobile (44 px par lien, aria-expanded) OK.
+- Finitions : sous-libellés des chiffres en majuscule initiale (« Le Menu du Chef… ») ; libellés d'horaires du pied « Lundi et mardi » (::first-letter, plus de « Lundi Et Mardi ») ; commentaires « sapin / cuivre / POTES » remplacés.
+- Reduced motion : pas de pan, pas de loader, pas de curseur, compteurs et citation à leur valeur finale, hero peint au premier rendu (vérifié).
+- Vérifié par script Playwright (3 viewports x 7 pages) : 0 erreur console, 0 débordement horizontal ; clics réels sur les 4 liens d'en-tête (3 pages) OK ; bas de page 1440 : mention Maquette KYW et logo KYW visibles ; 0 cible tactile < 24 px en 390.
+- Build : `pnpm build:site sites/be-belge-portfolio` passe (7 pages).
 
-## Décisions et hypothèses
-- Baseline rédigée d'après le nom et les listings (à confirmer par le client). Pas de chef, d'histoire ni d'avis.
-- Citation = mot d'accueil du site client (« Il n'y a pas de bon repas si le vin n'y coule pas ! »), non un avis. Avis Restaurant Guru non repris (source tierce).
-- Menu du Chef 13/08-06/09/2026 présenté comme « composition de l'été 2026, à titre d'exemple ».
-- Lien Zenchef déduit du rid 382492 (`bookings.zenchef.com/results?rid=382492`) : à vérifier ; repli possible sur /reservation/ du site client.
-- gabarits/UTILISATION.md non mis à jour (interdiction de toucher gabarits/) : ajouter « velours : be-belge ».
-- Photos des plats absentes : photos libres non cherchées en phase 1.
+## Reste
+- Shoot / audit complet : agent « captures ». `pnpm index` et publication : non faits (phase 3 / session mère).
+- Phase 3 : relire la planche mobile des pages /carte/, /privatisation/, /maison/ (seules l'accueil, /menu/ et la clôture ont été vues en 390) ; contraste du texte ocre petit sur aubergine à confirmer par axe.
+- Le formulaire CSS `.form` n'est plus utilisé (réservation = lien Zenchef) : code mort, sans effet.
+
+## Pièges / hypothèses
+- Lien Zenchef déduit du rid 382492 (à vérifier). gabarits/UTILISATION.md non mis à jour (« velours : be-belge »).
+- Rideau : `.motion .rideau` seulement ; `--lift` posé en style inline par GSAP, `visibility: hidden` à la fin.

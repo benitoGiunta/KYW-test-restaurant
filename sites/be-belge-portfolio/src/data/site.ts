@@ -132,10 +132,10 @@ export const site: Restaurant = {
   ],
   valeurs: ['Cuisine belge', 'Produits de saison', 'Un peu d\u2019ailleurs'],
   chiffres: {
-    services: { valeur: 3, libelle: 'services', sousLibelle: 'ou quatre : le Menu du Chef, entrée, plat et dessert', preuve: 'dossier.md, carte du site client (/carte/)', placeholder: false },
-    prix: { valeur: 57, libelle: 'euros', sousLibelle: 'le Menu du Chef en trois services ; 72 € en quatre', preuve: 'dossier.md, carte du site client (/carte/)', placeholder: false },
-    convives: { valeur: 34, libelle: 'convives', sousLibelle: 'jusqu\u2019à 34 personnes assises, 40 en walking dinner', preuve: 'dossier.md, site client /banquets-et-receptions/', placeholder: false },
-    jours: { valeur: 5, libelle: 'jours', sousLibelle: 'ouvert du mercredi au dimanche, fermé le lundi et le mardi', preuve: 'dossier.md, horaires du site client', placeholder: false },
+    services: { valeur: 3, libelle: 'services', sousLibelle: 'Ou quatre : le Menu du Chef, entrée, plat et dessert', preuve: 'dossier.md, carte du site client (/carte/)', placeholder: false },
+    prix: { valeur: 57, libelle: 'euros', sousLibelle: 'Le Menu du Chef en trois services ; 72 € en quatre', preuve: 'dossier.md, carte du site client (/carte/)', placeholder: false },
+    convives: { valeur: 34, libelle: 'convives', sousLibelle: 'Jusqu\u2019à 34 personnes assises, 40 en walking dinner', preuve: 'dossier.md, site client /banquets-et-receptions/', placeholder: false },
+    jours: { valeur: 5, libelle: 'jours', sousLibelle: 'Ouvert du mercredi au dimanche, fermé le lundi et le mardi', preuve: 'dossier.md, horaires du site client', placeholder: false },
   },
   citation: {
     texte: "Il n'y a pas de bon repas si le vin n'y coule pas !",
