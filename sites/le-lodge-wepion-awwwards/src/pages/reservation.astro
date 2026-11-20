@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, wepion, relais, horairesWepion } from '../data/site';
+---
+<Base page="reservation" title="Réserver" description="Réservez une table du Lodge à Erpent, au Wine & More : téléphone, réservation en ligne ou e-mail. Adresses de Wépion et d’Erpent, plan et horaires connus.">
+  <header class="entete wrap grille">
+    <p class="mention">Réservation · Erpent</p>
+    <h1 class="display" data-split="lines" data-intro>Réserver, <em>côté relais.</em></h1>
+    <p>Le Lodge est fermé à Wépion depuis le 21 mai 2026. Pour manger avec l’équipe aujourd’hui, c’est à Erpent, au {relais.lieu}.</p>
+  </header>
+
+  <section class="sec wrap cols2" aria-labelledby="titre-contact">
+    <div class="cols2__a">
+      <h2 id="titre-contact" class="display titre">Une table, trois façons</h2>
+      <div class="texte">
+        <p>Appelez le <a class="lien nw" href={relais.telephoneHref}>{relais.telephone}</a>, réservez en ligne, ou écrivez à <a class="lien" href={`mailto:${site.email}`}>{site.email}</a>. Ce numéro est celui indiqué par le site du Lodge : il reste à confirmer.</p>
+      </div>
+      <div class="res-actions">
+        <a class="cta" href={relais.telephoneHref}><span class="cta__txt">Appeler</span></a>
+        <a class="cta cta--contour" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver en ligne</span></a>
+      </div>
+    </div>
+    <div class="cols2__b">
+      <form class="form" action={`mailto:${site.email}`} method="post" enctype="text/plain">
+        <p class="petit">Ce formulaire ouvre votre messagerie : rien n’est envoyé depuis ce site.</p>
+        <label>Votre nom<input type="text" name="nom" autocomplete="name" /></label>
+        <label>Date souhaitée<input type="date" name="date" /></label>
+        <label>Nombre de personnes<input type="number" name="personnes" min="1" max="30" inputmode="numeric" /></label>
+        <label>Un mot pour l’équipe<textarea name="message"></textarea></label>
+        <button class="cta" type="submit"><span class="cta__txt">Ouvrir mon e-mail</span></button>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec--serre wrap cols2" aria-labelledby="titre-adresses">
+    <div class="cols2__a">
+      <h2 id="titre-adresses" class="display titre">Où nous trouver</h2>
+      <address class="adresse">
+        <strong>Aujourd’hui, à Erpent</strong>
+        <span>{relais.lieu}</span>
+        <span>{relais.rue} {relais.numero}, {relais.commune}</span>
+        <a class="lien" href={relais.planUrl} rel="noopener">Ouvrir le plan d’Erpent</a>
+      </address>
+      <p class="petit" style="margin-top: 1.4rem">Parking, accès en transports et accessibilité : non communiqués. Jours et horaires du relais : à confirmer.</p>
+    </div>
+    <div class="cols2__b">
+      <address class="adresse">
+        <strong>La berge, à Wépion (fermée)</strong>
+        <span>{wepion.rue} {wepion.numero}, {wepion.cp} {wepion.commune}</span>
+        <span>Terrasse et salle face à la Meuse, tea-room l’après-midi. Retour {site.reouverture}.</span>
+        <a class="lien" href={wepion.planUrl} rel="noopener">Ouvrir le plan de Wépion</a>
+      </address>
+      <h3 class="pied__titre" style="margin-top: 2rem">Horaires de Wépion avant l’incendie</h3>
+      <ul class="horaires">
+        {horairesWepion.map(([j, h]) => <li><span class="horaires__jour">{j}</span><span>{h}</span></li>)}
+      </ul>
+      <p class="petit" style="margin-top: 0.8rem">Horaires du site du Lodge. Une autre source indique 12 h à 15 h et 18 h à 21 h 30 : à confirmer.</p>
+    </div>
+  </section>
+
+  <figure class="cadre" aria-label="La terrasse du Lodge">
+    <div class="photo" data-reveal="clip"><Photo cle="salleMeuse" sizes="100vw" widths={[800, 1200, 1800]} /></div>
+    <figcaption>Les tables près de la fenêtre, face à la Meuse, avant l’incendie. {site.credit}.</figcaption>
+  </figure>
+</Base>

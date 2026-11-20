@@ -1,0 +1,33 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site, wepion, relais, reseaux } from '../data/site';
+---
+<section class="pied" aria-label="Contact et adresses">
+  <div class="wrap pied__corps">
+    <h2 class="pied__mot display">Deux rives, <em>une table.</em></h2>
+    <div class="pied__col">
+      <h3 class="pied__titre">Aujourd’hui, à Erpent</h3>
+      <address>{relais.lieu}<br />{relais.rue} {relais.numero}<br />{relais.commune}</address>
+      <p><a class="pied__tel" href={relais.telephoneHref}>{relais.telephone}</a></p>
+      <p><a class="lien" href={site.reservationUrl} rel="noopener">Réserver en ligne</a></p>
+    </div>
+    <div class="pied__col">
+      <h3 class="pied__titre">La berge, à Wépion</h3>
+      <address>{wepion.rue} {wepion.numero}<br />{wepion.cp} {wepion.commune}</address>
+      <p class="petit">{wepion.etat}. Retour {site.reouverture}.</p>
+      <p><a class="lien" href={wepion.planUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h3 class="pied__titre">Ailleurs</h3>
+      <ul class="pied__liens">
+        <li><a class="lien-util" href={u('/carte/')}>La carte</a></li>
+        <li><a class="lien-util" href={u('/histoire/')}>L’histoire</a></li>
+        <li><a class="lien-util" href={u('/reservation/')}>Réservation</a></li>
+        {reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+    <p class="pied__colophon">{site.credit}. Polices : Gambetta (Fontshare) et Host Grotesk (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />

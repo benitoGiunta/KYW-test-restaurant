@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, chronologie, presse } from '../data/site';
+---
+<Base page="histoire" title="L’histoire" description="Le Lodge, brasserie au bord de la Meuse à Wépion : l’incendie du 21 mai 2026, le repli à Profondeville puis à Erpent, et le retour envisagé à Wépion.">
+  <header class="entete wrap grille">
+    <p class="mention">Wépion, Meuse, 2008 à aujourd’hui</p>
+    <h1 class="display" data-split="lines" data-intro>Le Lodge, <em>d’une rive à l’autre.</em></h1>
+  </header>
+
+  <section class="sec wrap cols2" aria-labelledby="titre-recit">
+    <div class="cols2__a">
+      <h2 id="titre-recit" class="display titre">Une brasserie face à la Meuse</h2>
+      <div class="texte">
+        <p>Le Lodge est une brasserie, un restaurant et un tea-room installés Chaussée de Dinant, à Wépion, face à la Meuse. Il reçoit depuis 2008, d’après une source tierce à confirmer.</p>
+        <p>Dans la nuit du 21 mai 2026, un incendie parti des cuisines a ravagé la salle. L’équipe, dirigée par {site.gerant}, a repris le service à l’Aquaplane de Profondeville, puis au Wine & More, à Erpent, depuis le 15 septembre.</p>
+        <p>Le retour à Wépion est {site.reouverture}.</p>
+      </div>
+    </div>
+    <div class="cols2__b">
+      <div class="photo" style="aspect-ratio: 4 / 3" data-reveal="clip"><Photo cle="facadeJour" sizes="(max-width: 60rem) 100vw, 50vw" widths={[480, 800, 1280]} /></div>
+      <p class="petit" style="margin-top: 0.8rem">La façade côté Meuse, avant l’incendie. {site.credit}.</p>
+    </div>
+  </section>
+
+  <section class="sec wrap" aria-labelledby="titre-chrono">
+    <h2 id="titre-chrono" class="display titre" style="font-size: var(--t-l); margin-bottom: var(--serre)">Les dates</h2>
+    <ol class="chrono">
+      {chronologie.map((c) => <li><span class="chrono__quand">{c.quand}</span><span>{c.texte}</span></li>)}
+    </ol>
+  </section>
+
+  <section class="sec--serre wrap" aria-label="Le Lodge de jour et de nuit">
+    <div class="jour-nuit">
+      <div class="photo" data-reveal="clip"><Photo cle="facadeJour" sizes="(max-width: 60rem) 100vw, 50vw" widths={[480, 800]} /></div>
+      <div class="photo" data-reveal="clip"><Photo cle="facadeNuit" sizes="(max-width: 60rem) 100vw, 50vw" widths={[480, 800, 1200]} /></div>
+    </div>
+    <p class="petit" style="margin-top: 0.8rem">La façade de jour, puis au crépuscule depuis la berge. {site.credit}.</p>
+  </section>
+
+  <section class="sec wrap cols2" aria-labelledby="titre-equipe">
+    <div class="cols2__a">
+      <h2 id="titre-equipe" class="display titre">L’équipe</h2>
+      <div class="texte">
+        <p><strong>{site.gerant}</strong>, gérant. Environ dix-sept équivalents temps plein et une trentaine d’étudiants et de flexi-jobbers travaillaient au Lodge avant l’incendie, selon L’Avenir.</p>
+        <p>Une table = une addition : la mention figure sur la carte.</p>
+      </div>
+    </div>
+    <div class="cols2__b">
+      <h2 class="display titre">Dans la presse</h2>
+      <ul class="liste-presse">
+        {presse.map((p) => <li><span class="petit">{p.media}, {p.date}</span><a class="lien" href={p.url} rel="noopener">{p.titre}</a></li>)}
+      </ul>
+    </div>
+  </section>
+</Base>
