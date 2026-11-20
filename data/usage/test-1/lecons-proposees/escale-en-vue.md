@@ -1,0 +1,1 @@
+- 2026-11-20 : site WordPress/Divi minimal (escale-en-vue.be) sans carte : horaires dans une affiche JPG à lire à l'œil, originaux d'images en retirant le suffixe -WxH, proxy en reset sur ~30 % des téléchargements (boucle de 3 essais) ; restaurants.json dit Namur, le site dit Dave.
