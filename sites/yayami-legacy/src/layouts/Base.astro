@@ -8,7 +8,9 @@ const { title, description, pied = true } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ld = JSON.stringify({
   '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, url: resto.siteActuel,
-  telephone: '+3281343789', servesCuisine: ['Japonaise', 'Sushi'],
+  telephone: '+3281343789',
+  image: new URL(`${base}photos/23-nigiri-saumon-noir.jpg`, Astro.site).href,
+  openingHoursSpecification: [['12:00','14:00'],['18:00','22:00']].map(([opens, closes]) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens, closes })), servesCuisine: ['Japonaise', 'Sushi'],
   address: { '@type': 'PostalAddress', streetAddress: `${resto.adresse.rue} ${resto.adresse.numero}`, postalCode: resto.adresse.cp, addressLocality: resto.adresse.ville, addressCountry: 'BE' },
   geo: { '@type': 'GeoCoordinates', latitude: resto.geo.lat, longitude: resto.geo.lon },
 });

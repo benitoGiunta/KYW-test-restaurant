@@ -13,3 +13,6 @@
 **Hypothèses et écarts** : revue hero faite en auto-notation `self` (aucun outil Agent en session d'agent) : 2 findings (assiette trop petite au bureau, pointe rognée au téléphone après agrandissement), 2 résolus. Statut d'ouverture calculé côté client sur les horaires du site (12 h 00 à 14 h 00, 18 h 00 à 22 h 00, 7/7), à confirmer avec le client. Aucune réservation, donc pas de formulaire. Pas de contenu fictif.
 
 **Pièges** : le paquet kyw-footer garde un lien « Réalisé par » de 24 px de haut (non modifiable). Le serveur de dev est arrêté (PID noté dans le scratchpad). Un `<dialog>` dans `<header>` sticky reste dans la couche supérieure : pas de z-index à gérer. Leçon proposée : data/usage/test-1/lecons-proposees/yayami.md.
+
+## Révision 1 (reviseur-site)
+F2-1 à F2-5 corrigés, vérifiés (voir REVISION-1.md). F3 non traités. Serveur arrêté. Prêt à publier.
