@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import Ornements from '../components/Ornements.astro';
+import { site, guinguette, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const g = guinguette;
+const hero = photoDe('/photos/terrasse-parasol.webp');
+const galerie = ['pres-transats', 'mur-pierre', 'table-panorama', 'boule-osier'].map((n) => ({ ...photoDe(`/photos/${n}.webp`), n, cote: g.tirages.find((t) => t.src.includes(n))!.cote }));
+const histoire = site.histoire;
+---
+<Base title="La maison" description={`La maison ${site.nom} : une terrasse et un restaurant saisonniers à Dave, au-dessus de la vallée, avec des produits d'artisans locaux.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>La maison</h1>
+      <p class="lead">{site.baseline}</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--canard is-flottant" style="--x:86%;--y:0%;--r:-10deg;--taille:120px" aria-hidden="true"><Objet id="parasol" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap maison__grille">
+      <figure class="tirage" style="--w:100%; cursor: default; --r:-3deg">
+        <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} loading="eager" decoding="async" />
+        <figcaption>Une terrasse au-dessus de la vallée</figcaption>
+      </figure>
+      <div class="maison__texte">
+        <Ornements />
+        <h2 class="section__titre">Une terrasse, <em>une vue</em></h2>
+        <div class="prose">{histoire.map((p) => <p>{p}</p>)}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--blanc">
+    <div class="wrap">
+      <h2 class="section__titre">Ce qui <em>compte</em></h2>
+      <ul class="valeurs" role="list">
+        {site.valeurs.map((v) => <li class="vege" style="font-size:var(--t-m);padding:0.5em 1.1em">{v}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--canard">
+    <div class="wrap">
+      <h2 class="section__titre">Le lieu, <em>de jour</em></h2>
+      <div class="grille-photos">
+        {galerie.map((p, i) => (
+          <figure class="tirage" style={`--r:${[-3, 4, -2, 3][i]}deg`} data-reveal="up" data-delay={String((i % 3) * 0.08)}>
+            <img src={asset(`/photos/s/${p.n}.webp`)} alt={p.alt} width={p.cote} height={p.cote} loading="lazy" decoding="async" />
+            <figcaption>{p.alt.split(',')[0]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="actions"><a class="btn btn--lin" href={u('/reservation/')}>Venir à table</a></div>
+    </div>
+  </section>
+</Base>

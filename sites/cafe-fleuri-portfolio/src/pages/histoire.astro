@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/terrasse.webp');
+const salle = photoDe('/photos/salle.webp');
+const coulisses = ['/photos/comptoir.webp', '/photos/cafe-latte.webp', '/photos/legumes.webp', '/photos/miel.webp'].map(photoDe);
+---
+<Base title="Notre histoire" theme="ocre" description={`L'histoire de ${site.nom} : un café-brunch ouvert en 2020 rue des Fossés Fleuris, à ${site.adresse.commune}, second lieu du Bistro Bisou.`}>
+  <section class="section" data-ciel="ocre">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>Depuis 2020, rue des Fossés Fleuris</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Un petit café fleuri</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">{site.baseline}</p>
+      </div>
+      <figure class="c8-12 photo photo--4x3">
+        <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap cols">
+      <div class="c2-11 prose">
+        {site.histoire.map((p, i) => <p class={i === 0 ? 't-m' : ''} data-reveal="up">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="nuit">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">La maison<span class="tag">photos libres</span></p>
+        <h2 class="t-xl" data-split="words">Une table, une tasse, un peu de temps</h2>
+      </div>
+      <div class="cols">
+        <figure class="c1-7 photo photo--4x3" data-reveal="clip"><img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" /></figure>
+        <div class="c8-12 stack">
+          {coulisses.slice(0, 2).map((p) => <figure class="photo photo--3x2" data-reveal="scale"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>)}
+        </div>
+        {coulisses.slice(2).map((p) => <figure class="c1-6 photo photo--3x2" data-reveal="scale"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>)}
+      </div>
+      <div class="grid" style="margin-top: calc(var(--u) * 6)">
+        {site.avis.map((a) => (
+          <blockquote class="avis" data-reveal="fade">
+            <p>{a.texte}</p>
+            <cite>{a.auteur}, {a.source}</cite>
+          </blockquote>
+        ))}
+      </div>
+      <p class="note" style="margin-top: var(--u)">Note moyenne relevée par des sites tiers : 4,2 sur 5 (Google, 223 avis).</p>
+      <div class="actions">
+        <a class="btn" href={u('/carte/')}>Découvrir la carte</a>
+        <a class="btn btn--soleil" href={u('/reservation/')} data-magnetic="0.2">Nous trouver</a>
+      </div>
+    </div>
+  </section>
+</Base>

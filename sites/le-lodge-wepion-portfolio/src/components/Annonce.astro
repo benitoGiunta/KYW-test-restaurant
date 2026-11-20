@@ -1,0 +1,14 @@
+---
+// Bandeau d'information sur chaque page : le restaurant de Wépion est fermé, l'équipe est à Erpent. Aucun horaire inventé.
+import { lieux, telHref } from '../data/site';
+import { u } from '../lib/url';
+const p = lieux.provisoire;
+---
+<section class="annonce" aria-label="Information importante">
+  <p>
+    <strong>{lieux.fermeture.texteCourt}.</strong>
+    L'équipe vous accueille au {p.nom}, {p.rue}, {p.commune}.
+    <a class="link nw" href={telHref(p.telephone)}>{p.telAffiche}</a>
+    <a class="link nw" href={u('/histoire/#incendie')}>En savoir plus</a>
+  </p>
+</section>

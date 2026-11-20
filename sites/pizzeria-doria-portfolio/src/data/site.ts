@@ -82,10 +82,10 @@ export const site: Restaurant = {
     photo('/photos/friture.webp', 'Assiette de friture de poisson, calamars, gambas, œufs durs et salade', 1440, 945),
     photo('/photos/roquette.webp', 'Assiette de roquette, tomates cerises, copeaux de fromage et crème de balsamique', 921, 691),
     photo('/photos/bouchons.webp', 'Cadre de bouchons de liège sur un mur orangé, vu de dessus', 1350, 1800),
-    photo('/photos/pizza-coupe.webp', 'Pizza découpée en parts (photo libre, illustrative)', 1200, 1800, true),
-    photo('/photos/pizza-basilic.webp', 'Pizza garnie de basilic frais (photo libre, illustrative)', 1200, 1800, true),
-    photo('/photos/pate.webp', 'Pâte travaillée à la main sur un plan fariné (photo libre, illustrative)', 1500, 1000, true),
-    photo('/photos/burrata.webp', 'Burrata ouverte sur une assiette (photo libre, illustrative)', 1200, 1800, true),
+    photo('/photos/pizza-coupe.webp', 'Pizza découpée en parts', 1200, 1800, true),
+    photo('/photos/pizza-basilic.webp', 'Pizza garnie de basilic frais', 1200, 1800, true),
+    photo('/photos/pate.webp', 'Pâte travaillée à la main sur un plan fariné', 1500, 1000, true),
+    photo('/photos/burrata.webp', 'Burrata ouverte sur une assiette', 1200, 1800, true),
   ],
   valeurs: ['Produits maison, parfois bio', 'Pâtes fraîches bio artisanales Eggusto', 'Bières locales : Philomène de Malonne, Vulpio de Wépion'],
 };
@@ -134,13 +134,13 @@ export const guinguette = {
   /** La table : 8 tirages (4 photos du client, 4 photos libres marquées illustratives). */
   tirages: [
     { src: '/photos/salle-des-coffres.webp', legende: 'La salle des coffres', x: 5, y: 4, r: -6 },
-    { src: '/photos/pizza-coupe.webp', legende: 'Pizza (photo libre)', x: 27, y: 2, r: 5 },
+    { src: '/photos/pizza-coupe.webp', legende: 'Pizza', x: 27, y: 2, r: 5 },
     { src: '/photos/friture.webp', legende: 'Friture de poisson', x: 50, y: 5, r: -4 },
-    { src: '/photos/pate.webp', legende: 'La pâte (photo libre)', x: 72, y: 3, r: 7 },
+    { src: '/photos/pate.webp', legende: 'La pâte', x: 72, y: 3, r: 7 },
     { src: '/photos/bouchons.webp', legende: 'Cadre de bouchons', x: 6, y: 60, r: 5 },
-    { src: '/photos/pizza-basilic.webp', legende: 'Basilic (photo libre)', x: 27, y: 62, r: -7 },
+    { src: '/photos/pizza-basilic.webp', legende: 'Basilic', x: 27, y: 62, r: -7 },
     { src: '/photos/roquette.webp', legende: 'Roquette et balsamique', x: 49, y: 59, r: 4 },
-    { src: '/photos/burrata.webp', legende: 'Burrata (photo libre)', x: 70, y: 61, r: -5 },
+    { src: '/photos/burrata.webp', legende: 'Burrata', x: 70, y: 61, r: -5 },
   ] as Tirage[],
   pictos: [
     { categorie: 'Pizzas', picto: 'pizza' },

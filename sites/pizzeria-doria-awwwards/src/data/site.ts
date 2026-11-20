@@ -23,8 +23,8 @@ export const site = {
   facebookUrl: 'https://www.facebook.com/pizzeriadoria/',
   planUrl: 'https://www.openstreetmap.org/?mlat=50.4404882&mlon=4.7950329#map=18/50.4404882/4.7950329',
   paiement: 'Payconiq et espèces',
-  credit: 'Photos : Pizzeria Doria et photos libres illustratives (Unsplash)',
-  creditIllustratif: 'Photos libres Unsplash (Benu Marinescu, Hoja Studio, Nadya Spetnitskaya), illustratives, pas des photos du restaurant',
+  credit: 'Photos : Pizzeria Doria et Unsplash',
+  creditIllustratif: 'Photos libres Unsplash (Benu Marinescu, Hoja Studio, Nadya Spetnitskaya)',
   ouvertDepuis: 'octobre 2017',
   adresseDepuis: 'mai 2023',
 };

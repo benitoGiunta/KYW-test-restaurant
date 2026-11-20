@@ -1,0 +1,18 @@
+---
+// Le trait de la berge (concept « Deux rives ») : une onde de 20 périodes tracée sur 200 % de la longueur du
+// conteneur. Le pilote (src/motion/berge.ts) la fait couler en translatant de 50 % (10 périodes : boucle sans couture)
+// et déplace le conteneur par la variable --bx (pointeur, défilement). Sans script ou en mouvement réduit : trait immobile.
+interface Props { sens?: 'v' | 'h'; classe?: string }
+const { sens = 'v', classe = '' } = Astro.props;
+const L = 3000, PERIODE = 150, A = 3, MILIEU = 6, PAS = 10;
+const pts: string[] = [];
+for (let t = 0; t <= L; t += PAS) {
+  const o = +(MILIEU + A * Math.sin((2 * Math.PI * t) / PERIODE)).toFixed(2);
+  pts.push(sens === 'v' ? `${o} ${t}` : `${t} ${o}`);
+}
+const d = 'M' + pts.join('L');
+const vb = sens === 'v' ? `0 0 12 ${L}` : `0 0 ${L} 12`;
+---
+<div class={`berge berge--${sens} ${classe}`.trim()} aria-hidden="true" data-berge={sens}>
+  <svg class="berge__onde" viewBox={vb} preserveAspectRatio="none" focusable="false"><path d={d} vector-effect="non-scaling-stroke" /></svg>
+</div>

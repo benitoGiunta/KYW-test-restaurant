@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, moments, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const visuel = photoDe('/photos/framboises.webp');
+const salle = photoDe('/photos/comptoir.webp');
+---
+<Base title="La carte" theme="midi" description={`La carte de ${site.nom} à ${site.adresse.commune}, heure par heure : brunchs salé, sucré ou mixte, plats du midi, limonades et thé glacé maison.`}>
+  <section class="section" data-ciel="midi">
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro>La carte</p>
+      <h1 class="t-xl" data-split="lines" data-intro>Du café au goûter</h1>
+      <p class="lead" style="margin-top: calc(var(--u) * 2)">Ce qui se sert à chaque moment de la journée. Les brunchs et les plats cités viennent du dossier du restaurant ; les prix, les boissons et les horaires marqués « exemple » ou « illustratif » sont à confirmer.</p>
+    </div>
+  </section>
+
+  {moments.map((mo) => (
+    <section class="section" id={mo.id} data-ciel={mo.theme} aria-labelledby={`c-${mo.id}`}>
+      <div class="wrap cols">
+        <div class="c1-5">
+          <div class="moment__tete" style="margin-bottom: var(--u)">
+            <p class="moment__heure num" data-split="chars">{mo.heureTexte}</p>
+            <h2 class="moment__titre" id={`c-${mo.id}`} data-split="words">{mo.titre}{mo.placeholder ? <span class="tag">illustratif</span> : null}</h2>
+          </div>
+          <p class="note">{mo.accroche}</p>
+        </div>
+        <ul class="c7-12 lignes" data-reveal="up">
+          {mo.lignes.map((l) => (
+            <li class="ligne"><span class="ligne__nom">{l.nom}{l.placeholder ? <span class="tag">exemple</span> : null}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Les formules</p>
+        <h2 class="t-xl" data-split="words">Prix à confirmer</h2>
+      </div>
+      <div class="grid">
+        {site.menus.map((me, i) => (
+          <article class="carte" data-reveal="up" data-delay={String(i * 0.08)}>
+            <h3>{me.nom}</h3>
+            <p class="carte__prix num">{me.prix}</p>
+            <p class="t-s muted">{me.description}</p>
+          </article>
+        ))}
+      </div>
+      <div class="cols" style="margin-top: calc(var(--u) * 6)">
+        <div class="c1-6">
+          <h3 class="t-l" data-split="words">{site.carte[1].categorie}</h3>
+          <ul class="lignes" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
+            {site.carte[1].plats.filter((p) => !moments.some((mo) => mo.lignes.some((l) => l.nom === p.nom))).map((p) => <li class="ligne"><span class="ligne__nom">{p.nom}</span><span class="ligne__detail">{p.description}</span></li>)}
+          </ul>
+        </div>
+        <figure class="c8-12 photo photo--carre" data-reveal="scale">
+          <img src={asset(visuel.src)} alt={visuel.alt} width={visuel.largeur} height={visuel.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      </div>
+      <figure class="photo photo--large" style="margin-top: calc(var(--u) * 6)" data-reveal="clip">
+        <img src={asset(salle.src)} alt={salle.alt} width={salle.largeur} height={salle.hauteur} loading="lazy" decoding="async" data-parallax="0.1" />
+      </figure>
+      <div class="actions">
+        <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Nous trouver</a>
+        <a class="btn" href={u('/brunch/')}>Le brunch</a>
+      </div>
+    </div>
+  </section>
+</Base>

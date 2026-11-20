@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, pratique } from '../data/site';
+---
+<Base page="reservation" title="Réserver" description="Réserver à Escale en Vue ! : le plat maison se réserve par téléphone, au 0493 46 79 71. Adresse, horaires et accès à Dave.">
+  <section class="page-tete">
+    <div class="wrap ciel"><h1 class="page-tete__titre display" data-pose>Réserver</h1></div>
+    <div class="horizon" data-horizon="0.74" aria-hidden="true"><div class="soleil-piste"><span class="soleil"></span></div></div>
+  </section>
+  <div class="wrap">
+    <p class="reserver__saison">{site.saison}. Dates de la prochaine saison non communiquées : voir la <a class="lien" href={site.facebook} rel="noopener">page Facebook</a>.</p>
+  </div>
+  <section class="reserver wrap grille" aria-label="Contact">
+    <a class="reserver__tel display" href={site.telephoneHref}>{site.telephoneLisible}</a>
+    <div class="reserver__aide">
+      <p>En saison, le plat maison se réserve par téléphone, à partir du vendredi soir. L’apéro planchette est servi du jeudi soir au dimanche midi.</p>
+      <div class="hero__actions">
+        <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler</span></a>
+        <a class="cta cta--contour" href={`mailto:${site.email}`}><span class="cta__txt">Écrire un e-mail</span></a>
+      </div>
+      
+    </div>
+    <div class="reserver__cote">
+      <div>
+        <h2>Adresse</h2>
+        <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+      </div>
+      <div><h2>Accès et services</h2><ul>{pratique.map((p) => <li>{p.texte}</li>)}</ul></div>
+    </div>
+  </section>
+  <section class="soir" aria-labelledby="titre-horaires">
+    <div class="wrap grille">
+      <h2 class="soir__titre display" id="titre-horaires" data-split="lines">Quand venir</h2>
+      <div class="soir__corps"><Horaires /><p class="soir__note petit">Horaires de la saison 2026, d’après l’affiche de la maison.</p></div>
+    </div>
+  </section>
+</Base>

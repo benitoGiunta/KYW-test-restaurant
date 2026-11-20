@@ -1,0 +1,50 @@
+/* Jetons de Café Fleuri (variante awwwards « Le trop-plein »). Les NOMS sont le contrat de l'engine ; les valeurs
+   viennent de DESIGN.md : lait de limonade framboise, prune noire, framboise, aneth du gravlax.
+   Les url() des polices portent la base (/cafe-fleuri/awwwards/) : Vite ne les réécrit pas vers public/. */
+@font-face { font-family: 'Gambarino'; src: url('/cafe-fleuri/awwwards/fonts/gambarino-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Switzer'; src: url('/cafe-fleuri/awwwards/fonts/switzer-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Switzer'; src: url('/cafe-fleuri/awwwards/fonts/switzer-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Switzer'; src: url('/cafe-fleuri/awwwards/fonts/switzer-700-normal.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+
+:root {
+  --c-bg: #f6e4e1;            /* ground : lait de limonade framboise */
+  --c-fg: #2b1022;            /* ink : prune noire (14,3:1) */
+  --c-muted: #6a4659;         /* muted : confiture refroidie (6,5:1) */
+  --c-line: #ddbfc0;          /* line : joint rosé */
+  --c-rue: #2b1022;           /* la « rue » : trait vertical, couleur de l'encre */
+  --c-accent: #be1240;        /* accent : framboise (5,1:1 sur le fond, 6,3:1 sous texte blanc) */
+  --c-aneth: #2d5030;         /* aneth foncé du gravlax (7,4:1) */
+  --c-aneth-clair: #6fa070;   /* aneth clair, aplats seulement */
+  --c-curtain: #be1240;       /* curtain : le rideau de transition est framboise */
+
+  /* Sections « salle » : fond prune, texte lait */
+  --c-salle-muted: #e7b9c6;   /* 10,1:1 sur prune */
+  --c-salle-accent: #ff7a98;  /* 7,1:1 sur prune */
+
+  --f-display: 'Gambarino', 'Georgia', serif;
+  --f-body: 'Switzer', system-ui, sans-serif;
+
+  /* Échelle fluide 390 → 1440 px, sauts d'environ x2 à x2,5 */
+  --t-mega: clamp(5rem, 1rem + 16vw, 17rem);
+  --t-xl: clamp(3rem, 1.5rem + 6.4vw, 8rem);
+  --t-l: clamp(2.1rem, 1.3rem + 3vw, 4.25rem);
+  --t-m: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
+  --t-body: clamp(1rem, 0.97rem + 0.15vw, 1.125rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem;
+
+  /* Espace : quatre humeurs */
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+  --serre: calc(var(--u) * 3);
+  --normal: calc(var(--u) * 8);
+  --aere: calc(var(--u) * 14);
+  --entracte: calc(var(--u) * 22);
+
+  --rue: 66.667%;             /* la « rue » : fin de la colonne 8 sur 12 */
+  --radius: 0px;              /* tout est droit ; seules les assiettes sont des cercles */
+
+  --z-gl: 0; --z-content: 1; --z-header: 50; --z-cursor: 80; --z-curtain: 90; --z-loader: 100;
+}
+@media (max-width: 760px) { :root { --rue: 82%; } }

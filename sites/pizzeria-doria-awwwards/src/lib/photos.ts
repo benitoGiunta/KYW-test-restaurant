@@ -13,8 +13,8 @@ export const photos = {
   friture: { src: friture, alt: 'Une assiette de friture de calamars et de gambas avec des œufs durs et de la salade, posée sur un plan en inox.' },
   roquette: { src: roquette, alt: 'Une assiette de roquette, de tomates cerises et de copeaux de fromage, striée de crème de balsamique.' },
   bouchons: { src: bouchons, alt: 'Un cadre de bouchons de liège posé en losange sur un mur orangé.' },
-  coupe: { src: coupe, alt: 'Illustration libre : un pizzaiolo coupe une pizza à la roulette, une seconde pizza au premier plan.', illustratif: true },
-  basilic: { src: basilic, alt: 'Illustration libre : un cuisinier garnit une pizza de feuilles de basilic.', illustratif: true },
-  pate: { src: pate, alt: 'Illustration libre : des mains pétrissent une pâte sur un plan fariné.', illustratif: true },
+  coupe: { src: coupe, alt: 'Un pizzaiolo coupe une pizza à la roulette, une seconde pizza au premier plan.', illustratif: true },
+  basilic: { src: basilic, alt: 'Un cuisinier garnit une pizza de feuilles de basilic.', illustratif: true },
+  pate: { src: pate, alt: 'Des mains pétrissent une pâte sur un plan fariné.', illustratif: true },
 } as const;
 export type CleePhoto = keyof typeof photos;

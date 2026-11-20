@@ -1,0 +1,16 @@
+---
+import { resto } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const liens = [['carte', 'La carte', `${base}carte/`], ['venir', 'Venir', `${base}venir/`]];
+---
+<header class="nav-wrap">
+  <nav class="nav" aria-label="Navigation principale">
+    <a class="nav__brand" href={base} aria-label="Café Fleuri, accueil" aria-current={page === 'accueil' ? 'page' : undefined}>Café Fleuri</a>
+    <ul class="nav__list">
+      {liens.map(([id, l, h]) => <li><a class="nav__link" href={h} aria-current={page === id ? 'page' : undefined}>{l}</a></li>)}
+    </ul>
+    <a class="btn btn--nav" href={`tel:${resto.tel.href}`}>Appeler</a>
+  </nav>
+</header>

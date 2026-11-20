@@ -1,0 +1,41 @@
+---
+import { u, asset } from '../lib/url';
+import { site, relais } from '../data/site';
+const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
+const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
+const liens = [
+  { href: '/carte/', label: 'La carte' },
+  { href: '/histoire/', label: 'L’histoire' },
+  { href: '/reservation/', label: 'Réserver' },
+];
+---
+<header class="tete">
+  <a class="tete__marque" href={base} aria-current={path === base ? 'page' : undefined} aria-label={`${site.nom}, accueil`}>
+    <img src={asset('/logo-blanc.svg')} alt="" width="880" height="162" />
+  </a>
+  <nav class="tete__nav" aria-label="Navigation principale">
+    <ul>
+      {liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+    </ul>
+  </nav>
+  <a class="cta cta--petit tete__appel" href={relais.telephoneHref}><span class="cta__txt">Appeler</span></a>
+  <button class="tete__menu nl" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button>
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden data-menu>
+    <div class="menu__haut">
+      <span aria-hidden="true">{site.nom}</span>
+      <button class="tete__menu nl" type="button" data-menu-fermer>Fermer</button>
+    </div>
+    <nav class="menu__nav" aria-label="Navigation (menu)">
+      <ul>
+        <li data-menu-item><a href={base} aria-current={path === base ? 'page' : undefined}>Accueil</a></li>
+        {liens.map((l) => <li data-menu-item><a href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="menu__bas" data-menu-item>
+      <a class="cta" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Réserver une table</span></a>
+      <a class="cta cta--contour" href={relais.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{relais.telephone}</span></span></a>
+      <p class="petit">À Erpent, {relais.lieu}, {relais.rue} {relais.numero}</p>
+    </div>
+  </div>
+</header>
