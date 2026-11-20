@@ -23,23 +23,14 @@ import { brunchs, formules, aussi, boissons, mardi, resto } from '../data/site';
 
   <section class="sec sec--tight sec--band" aria-labelledby="h-brunchs">
     <div class="container carte">
-      <h2 id="h-brunchs">Les brunchs</h2>
+      <h2 id="h-brunchs">Brunchs et plats</h2>
       <ul class="rows">
-        {brunchs.map((b) => <li class="row"><span class="row__t">{b.nom}</span><span class="row__d">{b.texte}</span></li>)}
+        {brunchs.concat(aussi as any).map((b) => <li class="row"><span class="row__t">{b.nom}</span>{b.texte && <span class="row__d">{b.texte}</span>}</li>)}
       </ul>
     </div>
   </section>
 
-  <section class="sec sec--tight" aria-labelledby="h-aussi">
-    <div class="container carte">
-      <h2 id="h-aussi">Aussi</h2>
-      <ul class="rows">
-        {aussi.map((b) => <li class="row"><span class="row__t">{b.nom}</span>{b.texte && <span class="row__d">{b.texte}</span>}</li>)}
-      </ul>
-    </div>
-  </section>
-
-  <section class="sec sec--tight sec--band" aria-labelledby="h-boissons">
+  <section class="sec sec--tight" aria-labelledby="h-boissons">
     <div class="container carte">
       <h2 id="h-boissons">Les boissons</h2>
       <ul class="rows">

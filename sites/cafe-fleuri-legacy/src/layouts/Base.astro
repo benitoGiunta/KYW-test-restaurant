@@ -42,6 +42,33 @@ const jsonLd = {
     <Footer />
     <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
     document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+    <script>
+      // La barre d'appel (téléphone) s'efface quand un bouton Appeler de la page est déjà à l'écran.
+      const bar = document.querySelector<HTMLElement>('[data-bar]');
+      const cibles = document.querySelectorAll('main a.btn[href^="tel:"]');
+      if (bar && cibles.length && 'IntersectionObserver' in window) {
+        const visibles = new Set<Element>();
+        const io = new IntersectionObserver((es) => {
+          es.forEach((e) => (e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target)));
+          const away = visibles.size > 0;
+          bar.classList.toggle('is-away', away);
+          bar.toggleAttribute('inert', away);
+        });
+        cibles.forEach((c) => io.observe(c));
+      }
+      // Copier le numéro : état par le texte (pas de toast), bouton désactivé si le presse-papiers manque.
+      document.querySelectorAll<HTMLElement>('[data-copy]').forEach((root) => {
+        const btn = root.querySelector<HTMLButtonElement>('[data-copy-btn]');
+        const msg = root.querySelector<HTMLElement>('[data-copy-msg]');
+        if (!btn || !msg) return;
+        const txt = root.dataset.copy ?? '';
+        if (!navigator.clipboard) { btn.disabled = true; msg.textContent = `Copie indisponible ici : notez ${txt}.`; return; }
+        btn.addEventListener('click', async () => {
+          try { await navigator.clipboard.writeText(txt); msg.textContent = `Numéro copié : ${txt}.`; }
+          catch { msg.textContent = `Copie refusée : notez ${txt}.`; }
+        });
+      });
+    </script>
     <KywFooter base={base} />
   </body>
 </html>
