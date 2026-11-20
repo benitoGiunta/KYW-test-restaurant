@@ -36,3 +36,8 @@
 ## Phase 3 (construction-3, 19/11/2026)
 - QA relue sur preuves, 404 re-mesurée sur la vraie page (QA-build avait mesuré la 404 générique de serve.mjs) : rien à corriger. Build final OK (dist inchangé). RAPPORT.md écrit.
 - Reste : score jury indépendant (`/jury`), captures de /reservation/, lecture noHoverChange/colorOnly/idleMotion dans report.json, accessoire à retirer, photos et données client.
+
+Révision 1 : F1-1 et F2-1 à F2-4 corrigés, rebuild OK (voir REVISION-1.md).
+
+## Revue 2 (relecteur-site, 20/11/2026)
+REVUE-2.md écrit : A_CORRIGER (0 F0, 0 F1, 2 F2, 7 F3). F1-1 et F2-1 à F2-4 vérifiés corrigés. Reste : F2-1bis (règle des jours fériés déduite), F2-2bis (crédit en légende de photo client), F3. LCP/CLS et horloges non remesurés.
