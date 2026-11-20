@@ -11,7 +11,7 @@ export const restaurant = {
   short: 'Terrasses de Crupet',
   baseline: 'Un moment hors du temps au cœur du village.',
   description:
-    'Brasserie familiale au cœur du village de Crupet : carbonnade à la bière, vol-au-vent de Mamy, plats à partager, cocktails et une cinquantaine de vins. Ouvert tous les jours.',
+    'Brasserie familiale à Crupet : carbonnade à la bière, vol-au-vent de Mamy, plats à partager, cocktails et vins. Ouvert tous les jours.',
   cuisine: 'Brasserie familiale',
   street: 'Rue Basse 13',
   postalCode: '5330',
