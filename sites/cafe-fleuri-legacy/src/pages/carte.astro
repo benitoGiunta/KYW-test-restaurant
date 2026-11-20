@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import { brunchs, formules, aussi, boissons, mardi, resto } from '../data/site';
+---
+<Base page="carte" title="La carte, Café Fleuri à Namur" description="La carte de Café Fleuri : brunchs salé, sucré et mixte, pancakes au gravlax, limonades et thé glacé maison.">
+  <section class="pagehead" aria-labelledby="h-carte">
+    <div class="container pagehead__in">
+      <h1 id="h-carte">La carte</h1>
+      <p class="lead">Trois brunchs, quelques plats, des boissons maison.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--tight" aria-labelledby="h-formules">
+    <div class="container carte">
+      <h2 id="h-formules">Les formules</h2>
+      <ul class="rows">
+        {formules.map((f) => <li class="row" data-placeholder="true"><span class="row__t">{f.nom}</span><span class="row__p num">{f.prix}</span></li>)}
+      </ul>
+      <p class="note carte__note">Prix repris d’un ancien guide, illustratifs, à confirmer.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--tight sec--band" aria-labelledby="h-brunchs">
+    <div class="container carte">
+      <h2 id="h-brunchs">Les brunchs</h2>
+      <ul class="rows">
+        {brunchs.map((b) => <li class="row"><span class="row__t">{b.nom}</span><span class="row__d">{b.texte}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--tight" aria-labelledby="h-aussi">
+    <div class="container carte">
+      <h2 id="h-aussi">Aussi</h2>
+      <ul class="rows">
+        {aussi.map((b) => <li class="row"><span class="row__t">{b.nom}</span>{b.texte && <span class="row__d">{b.texte}</span>}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--tight sec--band" aria-labelledby="h-boissons">
+    <div class="container carte">
+      <h2 id="h-boissons">Les boissons</h2>
+      <ul class="rows">
+        {boissons.map((b) => <li class="row"><span class="row__t">{b.nom}</span>{b.texte && <span class="row__d">{b.texte}</span>}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-mardi">
+    <div class="container fin">
+      <div class="card">
+        <h2 id="h-mardi">Le mardi</h2>
+        <p>{mardi}</p>
+        <p><a class="btn btn--card" href={`tel:${resto.tel.href}`}>Appeler</a></p>
+      </div>
+      <Fig p="table" class="fig--tall" label="Photo à fournir" />
+    </div>
+  </section>
+</Base>

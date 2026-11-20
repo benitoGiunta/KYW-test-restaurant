@@ -1,0 +1,133 @@
+/* Hallmark · shape: Marquee Hero (draw fe3f07; routes invented, original unreadable) · genre: playful · theme: Squeeze (deal 2/3, seed restaurant-namur-brunch-cafe-aab6·f106bf78·2026-11-20·r0) · redesign: full
+ * hero: Ledge (the price figure above, the head resting at the base) · nav: floating pill · footer: colophon block · imagery: placeholders, no client photograph · signature: the brunch price set as one huge Gabarito figure on the green
+ * axes: mid/geometric-sans/warm · posture: drenched · contrast: pass · fold: pass · job: book · draw: fe3f07 · comp: 2 built, no key · c1 chosen · v2.0.0 */
+/* Hallmark · pre-emit critique: P3 H4 E2 S4 R3 V3 · weakest: E, no motion and no photograph yet; the figure carries the screen, motion waits for phase 2 */
+/* Hallmark · waive 8 · guard: the original is unreadable (403), the sequence hero, brunchs, room, hours, close is the book anatomy, compositions are new · phase 1 AUDIT.md · nothing to keep that could be copied */
+@import url("./tokens.css");
+@import url("./base.css");
+
+:root { --nav-h: 64px; --bar-h: 64px; }
+body { padding-bottom: var(--bar-h); }
+.skip { position: absolute; left: var(--space-md); top: -100px; background: var(--color-card); color: var(--color-card-ink); padding: var(--space-sm) var(--space-md); border-radius: var(--radius-control); z-index: var(--z-modal); }
+.skip:focus { top: var(--space-md); }
+.num, .figure { font-variant-numeric: lining-nums tabular-nums; }
+.note { font-size: var(--text-sm); color: var(--color-muted); margin-top: var(--space-md); }
+.link { font-weight: 700; }
+@media (hover: hover) { .link:hover, p a:hover { text-decoration-color: var(--color-accent); text-decoration-thickness: var(--rule-bar); } }
+
+/* Buttons: peach primary, ink-outlined secondary. Default, hover, focus-visible, active, disabled. */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: var(--space-xs) var(--space-lg); border: var(--rule-bar) solid var(--color-accent); border-radius: var(--radius-control); background: var(--color-accent); color: var(--color-accent-ink); font: 700 var(--text-md)/1.25 var(--font-body); text-decoration: none; white-space: nowrap; transition: translate var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out); }
+.btn:active { translate: 0 1px; }
+.btn--ghost { background: transparent; color: var(--color-ink); border-color: var(--color-ink); }
+.btn--nav, .btn--bar { min-height: 44px; padding-inline: var(--space-md); }
+.btn--card { background: var(--color-card-ink); border-color: var(--color-card-ink); color: var(--color-card); }
+.btn[aria-disabled="true"], .btn:disabled { background: var(--color-paper-3); border-color: var(--color-rule); color: var(--color-muted); cursor: not-allowed; }
+@media (hover: hover) {
+  .btn:hover { background: var(--color-accent-2); border-color: var(--color-accent-2); }
+  .btn--ghost:hover { background: var(--color-ink); color: var(--color-paper); border-color: var(--color-ink); }
+  .btn--card:hover { background: var(--color-paper-3); border-color: var(--color-paper-3); }
+}
+.card :focus-visible { outline-color: var(--color-card-ink); }
+
+/* Nav: a floating pill, sticky. */
+.nav-wrap { position: sticky; top: 0; z-index: var(--z-sticky-nav); padding: var(--space-sm) var(--gutter) 0; pointer-events: none; }
+.nav { pointer-events: auto; display: flex; align-items: center; gap: var(--space-sm); max-width: var(--container); margin-inline: auto; padding: var(--space-2xs) var(--space-2xs) var(--space-2xs) var(--space-md); background: var(--color-paper-2); border-radius: var(--radius-pill); box-shadow: var(--shadow-card); }
+.nav__brand { font: var(--display-weight) var(--text-lg)/1 var(--font-display); letter-spacing: var(--tracking-display); text-decoration: none; margin-right: auto; white-space: nowrap; }
+.nav__list { display: flex; gap: var(--space-2xs); margin: 0; padding: 0; list-style: none; }
+.nav__link { display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--space-sm); border-radius: var(--radius-pill); font-weight: 700; text-decoration: none; white-space: nowrap; }
+.nav__link[aria-current="page"] { background: var(--color-paper-3); }
+@media (hover: hover) { .nav__link:hover { background: var(--color-paper-3); } }
+@media (max-width: 30rem) { .nav { padding-left: var(--space-sm); gap: var(--space-2xs); } .nav__brand { font-size: var(--text-md); } .nav__link { padding-inline: var(--space-xs); } .btn--nav { padding-inline: var(--space-sm); } }
+
+/* Sections */
+.sec { padding-block: var(--section-gap); }
+.sec--tight { padding-block: var(--section-gap-s); }
+.sec--flush { padding: 0; }
+.sec--band { background: var(--color-paper-3); color: var(--color-ink); }
+.container > h2 + * { margin-top: var(--space-xl); }
+
+/* Hero: Ledge. A tall field, the figure above, the head resting at the base. */
+.hero { min-height: max(34rem, calc(100dvh - var(--nav-h))); display: flex; padding-block: var(--space-xl) var(--space-2xl); }
+.hero__in { display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-2xl); }
+.figure { margin: 0; font-family: var(--font-display); font-weight: var(--display-weight); font-size: clamp(5rem, 17vw, 15rem); line-height: 0.85; letter-spacing: -0.04em; white-space: nowrap; }
+.hero__note { margin-top: var(--space-md); color: var(--color-muted); font-weight: 700; }
+.hero__base h1 { font-size: clamp(2.5rem, 5.5vw + 0.5rem, 6rem); max-width: 14ch; overflow-wrap: break-word; min-width: 0; }
+.hero__base .lead { margin-top: var(--space-md); color: var(--color-muted); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-lg); }
+
+/* Tiles: three brunchs side by side. */
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-columns); margin: 0; padding: 0; list-style: none; }
+.tile { background: var(--color-paper-2); border-radius: var(--radius-card); padding: var(--space-xl); }
+.tile h3 { font-size: var(--text-3xl); }
+.tile p { margin-top: var(--space-md); color: var(--color-muted); }
+
+/* Photograph slots (placeholders until the client sends photos). */
+.fig { margin: 0; display: grid; place-items: center; aspect-ratio: var(--ratio, 16/9); border-radius: var(--radius-card); }
+.fig__ph { position: relative; z-index: var(--z-raised); padding: var(--space-md); text-align: center; font-weight: 700; color: var(--color-muted); }
+.fig--band { aspect-ratio: auto; height: clamp(22rem, 62dvh, 44rem); border-radius: 0; }
+.fig--tall { aspect-ratio: 4/5; max-height: 36rem; width: 100%; }
+
+/* Statement band */
+.band { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); row-gap: var(--space-lg); }
+.band > * { grid-column: 1 / -1; margin: 0; }
+.statement { font-size: var(--text-display-s); max-width: 22ch; }
+.band__txt { color: var(--color-muted); font-size: var(--text-lead); max-width: 40ch; }
+
+/* The Tuesday figure */
+.split { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gap-columns); align-items: end; }
+.figure--day { font-size: clamp(4.5rem, 14vw, 12rem); max-width: none; font-variant-numeric: lining-nums tabular-nums; }
+.split .lead { max-width: 24ch; font-weight: 700; margin: 0; }
+
+/* Venir */
+.venir { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 4fr); gap: var(--gap-columns); align-items: start; }
+.venir > h2 { margin: 0; }
+.venir--page { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.venir__col { display: grid; gap: var(--space-sm); align-content: start; }
+.venir__col h2 { font-size: var(--text-3xl); }
+.addr { font-style: normal; font-weight: 700; font-size: var(--text-xl); line-height: 1.3; }
+.venir--page .tile { padding: var(--space-xl); }
+.sched { margin: 0; }
+.sched__row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-sm); padding-block: var(--space-sm); border-block: var(--rule-hair) solid var(--color-rule); }
+.sched dt { font-weight: 700; font-size: var(--text-lg); }
+.sched dd { margin: 0; font: var(--display-weight) var(--text-2xl)/1 var(--font-display); font-variant-numeric: lining-nums tabular-nums; }
+.sched__row.is-closed dd { color: var(--color-muted); }
+
+/* Close: the one warm-white card beside a photograph */
+.fin { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gap-columns); align-items: stretch; }
+.card { background: var(--color-card); color: var(--color-card-ink); border-radius: var(--radius-card); box-shadow: var(--shadow-card); padding: var(--space-2xl); display: grid; align-content: center; gap: var(--space-md); }
+.card h2 { font-size: var(--text-display-s); }
+.card > * { margin: 0 !important; }
+
+/* Page heads and the carte */
+.pagehead { padding-block: var(--space-3xl) var(--space-xl); }
+.pagehead__in { display: grid; gap: var(--space-md); }
+.pagehead .lead { color: var(--color-muted); }
+.carte { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap-columns); row-gap: var(--space-lg); }
+.carte > h2 { grid-column: 1 / 5; margin: 0 !important; }
+.carte > .rows, .carte > .note { grid-column: 5 / -1; margin: 0; }
+.rows { margin: 0; padding: 0; list-style: none; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2xs) var(--space-lg); padding-block: var(--space-md); border-top: var(--rule-hair) solid var(--color-rule); }
+.row:last-child { border-bottom: var(--rule-hair) solid var(--color-rule); }
+.row__t { font: var(--display-weight) var(--text-title)/1.15 var(--font-display); letter-spacing: var(--tracking-display); }
+.row__p { font: var(--display-weight) var(--text-2xl)/1 var(--font-display); }
+.row__d { grid-column: 1 / -1; color: var(--color-muted); max-width: 52ch; }
+
+/* Colophon block, then the sticky call bar */
+.colophon { background: var(--color-paper-3); padding-block: var(--space-2xl); }
+.colophon__in { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--gap-columns); align-items: baseline; }
+.colophon__name { font: var(--display-weight) var(--text-2xl)/1 var(--font-display); }
+.colophon__txt { color: var(--color-muted); }
+.bar { position: fixed; inset: auto 0 0 0; z-index: var(--z-sticky); display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); min-height: var(--bar-h); padding: var(--space-xs) var(--gutter); background: var(--color-paper-2); border-top: var(--rule-bar) solid var(--color-rule); }
+.bar__txt { font-weight: 700; margin: 0; }
+
+@media (max-width: 60rem) {
+  .tiles, .venir, .venir--page, .fin, .split, .colophon__in { grid-template-columns: minmax(0, 1fr); }
+  .carte > h2, .carte > .rows, .carte > .note { grid-column: 1 / -1; }
+  .card { padding: var(--space-xl); }
+  .fig--tall { aspect-ratio: 4/3; }
+}
+@media (max-width: 40rem) {
+  .tile { padding: var(--space-lg); }
+  .bar__txt { font-size: var(--text-sm); }
+  .row { grid-template-columns: minmax(0, 1fr); }
+}

@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto, brunchs, formules, mardi, histoire } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const a = resto.adresse;
+---
+<Base page="accueil" title="Café Fleuri, café-brunch à Namur" description="Café Fleuri, café-brunch à Namur : brunchs salé, sucré ou mixte, gravlax, pancakes, limonades et thé glacé maison, rue des Fossés Fleuris.">
+  <section class="hero" aria-labelledby="h-hero">
+    <div class="container hero__in">
+      <div class="hero__top">
+        <p class="figure num" data-placeholder="true">{formules[0].prix}</p>
+        <p class="hero__note">Le brunch, prix indicatif.</p>
+      </div>
+      <div class="hero__base">
+        <h1 id="h-hero">Brunch salé, sucré ou mixte.</h1>
+        <p class="lead">Gravlax, pancakes et limonade maison, rue des Fossés Fleuris à Namur.</p>
+        <p class="actions"><a class="btn" href={`tel:${resto.tel.href}`}>Appeler</a><a class="btn btn--ghost" href={`${base}carte/`}>La carte</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-brunchs">
+    <div class="container">
+      <h2 id="h-brunchs">Trois brunchs</h2>
+      <ul class="tiles">
+        {brunchs.map((b) => <li class="tile"><h3>{b.nom}</h3><p>{b.texte}</p></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--flush" aria-label="La salle">
+    <Fig p="salle" class="fig--band" label="Photo de la salle à fournir" />
+  </section>
+
+  <section class="sec sec--band" aria-labelledby="h-maison">
+    <div class="container band">
+      <h2 id="h-maison" class="statement">Gravlax, granola et limonades, tout est fait maison.</h2>
+      <p class="band__txt">{histoire}</p>
+      <p><a class="btn" href={`${base}carte/`}>Voir la carte</a></p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-mardi">
+    <div class="container split">
+      <h2 class="figure figure--day" id="h-mardi">Mardi</h2>
+      <p class="lead">{mardi}</p>
+    </div>
+  </section>
+
+  <section class="sec sec--band" aria-labelledby="h-venir">
+    <div class="container venir">
+      <h2 id="h-venir">Venir</h2>
+      <div class="venir__col">
+        <address class="addr">{a.rue} {a.numero}<br />{a.cp} {a.commune}</address>
+        <p><a class="link" href={resto.carte} rel="noopener">Voir sur la carte</a></p>
+      </div>
+      <div class="venir__col"><Horaires /></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-fin">
+    <div class="container fin">
+      <div class="card">
+        <h2 id="h-fin">À table</h2>
+        <p>{a.rue} {a.numero}, {a.commune}. Téléphone {resto.tel.affiche}.</p>
+        <p><a class="btn btn--card" href={`tel:${resto.tel.href}`}>Appeler</a></p>
+      </div>
+      <Fig p="table" class="fig--tall" label="Photo à fournir" />
+    </div>
+  </section>
+</Base>

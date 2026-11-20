@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Fig from '../components/Fig.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+const a = resto.adresse;
+---
+<Base page="venir" title="Venir, Café Fleuri à Namur" description="Adresse, horaires et téléphone de Café Fleuri, rue des Fossés Fleuris 38 à Namur.">
+  <section class="pagehead" aria-labelledby="h-venir">
+    <div class="container pagehead__in">
+      <h1 id="h-venir">Venir</h1>
+      <p class="lead">Rue des Fossés Fleuris, dans le centre de Namur.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--tight" aria-label="Adresse et horaires">
+    <div class="container venir venir--page">
+      <div class="venir__col tile">
+        <h2>Adresse</h2>
+        <address class="addr">{a.rue} {a.numero}<br />{a.cp} {a.commune}</address>
+        <p><a class="link" href={resto.carte} rel="noopener">Voir sur la carte</a></p>
+        <p><a class="link" href={`tel:${resto.tel.href}`}>{resto.tel.affiche}</a></p>
+      </div>
+      <div class="venir__col tile">
+        <h2>Horaires</h2>
+        <Horaires />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--flush" aria-label="La façade">
+    <Fig p="facade" class="fig--band" label="Photo de la façade à fournir" />
+  </section>
+
+  <section class="sec sec--band" aria-labelledby="h-appel">
+    <div class="container band">
+      <h2 id="h-appel" class="statement">Une envie de brunch ?</h2>
+      <p><a class="btn" href={`tel:${resto.tel.href}`}>Appeler</a></p>
+    </div>
+  </section>
+</Base>

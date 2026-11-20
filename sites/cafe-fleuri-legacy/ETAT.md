@@ -1,0 +1,5 @@
+# ETAT · cafe-fleuri-legacy · construction-1 (phase 1/3)
+**Fait** : audit (site 403), deal/draw/scaffold Squeeze, comps c1/c2, DESIGN.md, comp.md, AUDIT.md, site.ts, Base, Nav, Fig, Horaires, Footer + barre d'appel, pages accueil, carte, venir, 404 ; build OK (`dist/cafe-fleuri/legacy/`, KywFooter, noindex, mention sur les 4 routes) ; sloplint src sans FAIL.
+**Reste** : phase 2 (nav active, reveal unique, états, jour courant) ; phase 3 (sloplint `--render`, QA navigateur 375/1280/1920, RAPPORT.md, entrée `$LOG`). Aucune photo : slots à garder ou remplacer.
+**Décisions** : structure d'origine inconnue, routes inventées (accueil, carte, venir) ; la maquette présente le café comme actif malgré une fermeture probable (dossier.md) ; horaires 9 h à 16 h 7 j/7 (illustratif), prix 21,95 € et 11,95 € (Petit Futé ancien, illustratifs), téléphone 081 65 89 15 (second numéro non retenu), e-mail et réseaux null ; note Google 4,2 sur 223 avis non affichée (source tierce) ; photo de bibliothèque hors sujet écartée.
+**Pièges** : `.hallmark/` gitignoré (git add -f si besoin de comps).
