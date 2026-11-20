@@ -1,4 +1,7 @@
-# ETAT : be-belge-portfolio (phase 2 sur 3, construction-2)
+# ETAT : be-belge-portfolio (phase 3 sur 3, QA terminée)
+
+Phase 3 : QA faite, titre/meta raccourcis, phrase téléphone inventée retirée, build OK. Voir RAPPORT.md. Reste : pnpm index + publication (session mère).
+
 
 ## Fait (phase 1)
 - Gabarit velours adapté, données du dossier, 7 pages, photos WebP, tokens aubergine/ocre (voir DESIGN.md).

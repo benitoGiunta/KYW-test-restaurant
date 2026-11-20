@@ -49,7 +49,7 @@ export const site: Restaurant = {
   nom: "Be Belge… et d'ailleurs",
   baseline: "Cuisine belge et de saison, avec un peu d'ailleurs, avenue de Marlagne à Wépion.", // baseline rédigée d'après le nom et la description des listings (à confirmer)
   description:
-    "Be Belge… et d'ailleurs, restaurant à Wépion (Namur) : Menu du Chef en 3 ou 4 services à partir de 57 €, jardin, terrasse et salle de pierre, ouvert du mercredi au dimanche.",
+    "Be Belge… et d'ailleurs, restaurant à Wépion (Namur) : Menu du Chef dès 57 €, jardin, terrasse, salle de pierre. Ouvert du mercredi au dimanche.",
   url: 'https://bebelgeetdailleurs.be',
   typeCuisine: 'Cuisine belge et de saison',
   adresse: { rue: 'Avenue de Marlagne', numero: '203', cp: '5000', commune: 'Namur (Wépion)', pays: 'BE' },
@@ -59,7 +59,7 @@ export const site: Restaurant = {
   reservation: {
     outil: 'Zenchef',
     url: 'https://bookings.zenchef.com/results?rid=382492',
-    note: 'Vous préférez le téléphone ? Appelez le restaurant pendant les heures de service.',
+    note: 'Vous préférez le téléphone ? Le numéro du restaurant est ci-dessous.',
   },
   horaires: [
     { jour: 'lundi', creneaux: [], note: 'fermé' },
