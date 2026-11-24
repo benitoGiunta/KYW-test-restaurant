@@ -12,5 +12,6 @@ Langue : français. Dépôt de production des maquettes de sites de restaurants 
 - Chromium Playwright est préinstallé (`/opt/pw-browsers/chromium`) : ne jamais lancer `playwright install`.
 - Pied de page KYW obligatoire sur chaque page : composant `packages/kyw-footer` (un seul logo, `kyw-signature`).
 - Toute page porte `<meta name="robots" content="noindex">` et la mention « Maquette KYW, certaines données sont illustratives ».
+- **Suivi des items (règle commune à tous les agents, 24/11/2026)** : chaque run d'agent publie dès son lancement un artefact de suivi de tous les items traités (jauge de progression, sous-items dépliables), republié après chaque étape. Règle et outillage : `agents/REGLE-SUIVI.md` du repo benitoGiunta/KYN-project-prospecting. La page de suivi d'ici (`scripts/suivi.mjs`, restaurants × variantes) en est le précédent ; à passer au format commun.
 - Problème structurel rencontré (outil, méthode, piège) : l'ajouter à `agents/lecons/<rôle>.md` (voir `agents/lecons.md`) en fin de tâche.
 - Commits fréquents, messages en français à l'impératif.
