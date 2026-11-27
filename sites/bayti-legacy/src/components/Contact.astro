@@ -1,0 +1,24 @@
+---
+// Formulaire de contact du site d'origine (Prénom, E-mail, Téléphone, Message) ; sans backend : ouvre la messagerie (gate 70).
+import { resto } from '../data/site';
+interface Props { id: string; titre: string; objet: string }
+const { id, titre, objet } = Astro.props;
+---
+<section class="contact" id={id}>
+  <div class="container contact__inner">
+    <div class="contact__tete">
+      <h2>{titre}</h2>
+      <p><a class="num" href={resto.telHref}>{resto.tel}</a></p>
+      <p><a href={`mailto:${resto.email}`}>{resto.email}</a></p>
+    </div>
+    <form class="form" data-endpoint="" data-mailto={resto.email} novalidate>
+      <input type="hidden" name="objet" value={objet} />
+      <div class="field"><label for={`${id}-prenom`}>Prénom</label><input id={`${id}-prenom`} name="prenom" autocomplete="given-name" /></div>
+      <div class="field"><label for={`${id}-email`}>E-mail (obligatoire)</label><input id={`${id}-email`} name="email" type="email" autocomplete="email" required aria-describedby={`${id}-email-aide`} data-erreur="Indiquez une adresse e-mail valide." /><p class="field__aide" id={`${id}-email-aide`}></p></div>
+      <div class="field"><label for={`${id}-tel`}>Téléphone</label><input id={`${id}-tel`} name="telephone" type="tel" autocomplete="tel" /></div>
+      <div class="field"><label for={`${id}-message`}>Message (obligatoire)</label><textarea id={`${id}-message`} name="message" rows="5" required aria-describedby={`${id}-message-aide`}></textarea><p class="field__aide" id={`${id}-message-aide`}></p></div>
+      <button class="btn btn--primary" type="submit">Envoyer</button>
+      <p class="form__statut" data-status role="status"></p>
+    </form>
+  </div>
+</section>

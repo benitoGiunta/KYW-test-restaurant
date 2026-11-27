@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Rows from '../components/Rows.astro';
+import Reservation from '../components/Reservation.astro';
+import { rubriquesTraiteur, menuDecouverte, resto } from '../data/site';
+---
+<Base page="menu" title="Carte traiteur et à emporter | Bayti Le Comptoir, Namur" description="Les mezzés froids et chauds, grillades, desserts et accompagnements de Bayti Le Comptoir, Rue du Pont 6 à Namur, et le Menu Découverte à emporter.">
+  <section class="banner">
+    <div class="container banner__grille">
+      <div>
+        <h1>Carte traiteur</h1>
+        <p class="lead">Mezzés et plats à emporter, de jour. {resto.comptoir.rue}, {resto.comptoir.ville}.</p>
+      </div>
+      <Photo nom="boite-traiteur-ouverte" slot="menu-hero" sizes="(min-width: 60rem) 45vw, 100vw" priorite />
+    </div>
+  </section>
+  <section class="decouverte">
+    <div class="container decouverte__grille">
+      <div class="carte-papier">
+        <h2>Menu Découverte à emporter</h2>
+        <p class="fig num">{menuDecouverte.prix}<span> {menuDecouverte.unite}</span></p>
+        <p>{menuDecouverte.contenu.join(', ')}.</p>
+      </div>
+    </div>
+  </section>
+  <section class="carte">
+    <div class="container">
+      <h2>À l’unité</h2>
+      <div class="switch" data-switch>
+        <div class="switch__onglets" role="tablist" aria-label="Rubriques de la carte traiteur">
+          {rubriquesTraiteur.map((r, i) => <button role="tab" id={`tab-${i}`} aria-controls={`panneau-${i}`} aria-selected={i === 0 ? 'true' : 'false'} type="button">{r.titre}</button>)}
+        </div>
+        {rubriquesTraiteur.map((r, i) => (
+          <div class="switch__panneau" role="tabpanel" id={`panneau-${i}`} aria-labelledby={`tab-${i}`}>
+            <h3 class="switch__titre">{r.titre}</h3>
+            <Rows plats={r.plats} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <Reservation titre="Une envie de table ?" />
+</Base>

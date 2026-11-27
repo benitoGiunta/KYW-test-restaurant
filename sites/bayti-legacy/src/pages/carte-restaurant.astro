@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Rows from '../components/Rows.astro';
+import Reservation from '../components/Reservation.astro';
+import { menuRestaurant, resto } from '../data/site';
+---
+<Base page="restaurant" title="Carte du restaurant, menu 8 services à 45 € | Bayti" description="Le menu en 8 services de Bayti, servi le soir sur place, Rue du Pont 15 à Namur, du mardi au samedi.">
+  <section class="banner banner--carte">
+    <div class="container banner__grille">
+      <div>
+        <h1>Carte restaurant</h1>
+        <p class="lead">Menu en 8 services, le soir, sur place. {resto.restaurant.rue}, {resto.restaurant.ville}.</p>
+        <p class="fig num">45 €<span> par personne</span></p>
+      </div>
+      <Photo nom="rakakat-kebbeh-fond-noir" slot="restaurant-hero" sizes="(min-width: 60rem) 45vw, 100vw" priorite position="50% 40%" />
+    </div>
+  </section>
+  <section class="carte">
+    <div class="container">
+      <h2>Les huit services</h2>
+      <Rows plats={menuRestaurant} numerote />
+    </div>
+  </section>
+  <Reservation />
+</Base>

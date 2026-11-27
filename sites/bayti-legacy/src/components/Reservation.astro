@@ -1,0 +1,16 @@
+---
+// Bande de clôture : réservation en ligne ou téléphone (le site d'origine : « Une table vous attend. »).
+import { resto } from '../data/site';
+interface Props { titre?: string }
+const { titre = 'Une table vous attend.' } = Astro.props;
+---
+<section class="close band">
+  <div class="container close__inner">
+    <h2>{titre}</h2>
+    <p class="lead">Du mardi au samedi, de <span class="num">18 h 00</span> à <span class="num">21 h 00</span>. Réservez en ligne ou appelez le <a href={resto.telHref} class="num">{resto.tel}</a>.</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={resto.reserver} rel="noopener">Réserver une table</a>
+      <a class="link" href={resto.telHref}>Appeler</a>
+    </div>
+  </div>
+</section>

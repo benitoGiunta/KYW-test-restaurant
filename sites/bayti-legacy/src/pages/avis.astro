@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Reservation from '../components/Reservation.astro';
+import { avis, resto } from '../data/site';
+---
+<Base page="avis" title="Avis clients, Bayti à Namur" description="Ce que disent les hôtes de Bayti, restaurant et traiteur du Moyen-Orient à Namur.">
+  <section class="banner banner--texte">
+    <div class="container">
+      <h1>Ils ont aimé.</h1>
+      <p class="lead">Les mots de nos hôtes, notre plus belle récompense.</p>
+    </div>
+  </section>
+  <section class="avis">
+    <div class="container avis__grille">
+      <div class="avis__note">
+        <p class="fig num">4,9<span> / 5</span></p>
+        <p>Sur Google, basée sur +150 avis (chiffre affiché par le site d’origine, à vérifier).</p>
+        <a class="btn btn--primary" href={resto.avisGoogle} rel="noopener">Laisser un avis sur Google</a>
+      </div>
+      <figure class="avis__citation">
+        <blockquote><p>« {avis.texte} »</p></blockquote>
+        <figcaption>{avis.auteur}, avis Google repris sur le site d’origine</figcaption>
+      </figure>
+    </div>
+  </section>
+  <Reservation />
+</Base>

@@ -1,0 +1,14 @@
+---
+// Schedule (layout.md § 5.16) : deux lignes par jour ouvré, jour fermé en muted, jamais barré.
+import { resto, jours } from '../data/site';
+---
+<dl class="horaires">
+  {jours.map((j) => (
+    <div class:list={['horaires__jour', j.ferme && 'is-ferme']} data-jour={j.jour}>
+      <dt>{j.nom}</dt>
+      {j.ferme
+        ? <dd class="horaires__ferme">Fermé</dd>
+        : <dd><span class="num"><time>{resto.comptoir.heures}</time></span> <span class="horaires__lieu">Comptoir</span><span class="num"><time>{resto.restaurant.heures}</time></span> <span class="horaires__lieu">Restaurant</span></dd>}
+    </div>
+  ))}
+</dl>

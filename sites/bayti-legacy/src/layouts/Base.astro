@@ -1,0 +1,105 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import KywFooter from '@kyw/footer';
+import { resto } from '../data/site';
+interface Props { title: string; description: string; page: string }
+const { title, description, page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(`${base}og.jpg`, Astro.site).href;
+const ff = (fam: string, file: string, w: string) => `@font-face{font-family:'${fam}';font-style:normal;font-weight:${w};font-display:swap;src:url(${base}fonts/${file}) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}`;
+const fontFaces = [ff('Gabarito', 'gabarito-latin.woff2', '400 900'), ff('Manrope', 'manrope-latin.woff2', '200 800')].join('');
+// Horaires : jours d'ouverture seulement (le site d'origine donne « Mar – Sam »).
+const ldJson = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: resto.nom, url: new URL(base, Astro.site).href, image: ogImage,
+  telephone: '+32492072576', email: resto.email,
+  address: { '@type': 'PostalAddress', streetAddress: 'Rue du Pont 15', postalCode: '5000', addressLocality: 'Namur', addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: resto.geo.lat, longitude: resto.geo.lon },
+  servesCuisine: ['Moyen-Orient', 'Libanaise'], acceptsReservations: true, sameAs: [resto.facebook, resto.instagram],
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '18:00', closes: '21:00' }],
+});
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#2b6b44" />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="preload" href={`${base}fonts/gabarito-latin.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${base}fonts/manrope-latin.woff2`} as="font" type="font/woff2" crossorigin />
+    <style set:html={fontFaces}></style>
+    {page !== '404' && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content={resto.nom} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <script type="application/ld+json" set:html={ldJson} />
+    <style is:global>
+      @import "../styles/page.css";
+    </style>
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Nav page={page} />
+    <main id="contenu"><slot /></main>
+    <Footer />
+    <script is:inline>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
+document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+    <script>
+      // Jour courant dans les horaires.
+      const j = new Date().getDay();
+      document.querySelectorAll<HTMLElement>('[data-jour]').forEach((el) => {
+        if (Number(el.dataset.jour) === j) { el.classList.add('is-today'); el.setAttribute('aria-current', 'date'); }
+      });
+      // Switcher des rubriques : sans script, tous les panneaux se lisent l'un sous l'autre.
+      document.querySelectorAll<HTMLElement>('[data-switch]').forEach((sw) => {
+        const tabs = [...sw.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+        const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls') || ''));
+        const select = (i: number, focus = false) => {
+          tabs.forEach((t, k) => { const on = k === i; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; if (panels[k]) panels[k]!.hidden = !on; });
+          if (focus) tabs[i].focus();
+        };
+        sw.classList.add('is-ready');
+        select(0);
+        tabs.forEach((t, i) => {
+          t.addEventListener('click', () => select(i));
+          t.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') { e.preventDefault(); select((i + 1) % tabs.length, true); }
+            if (e.key === 'ArrowLeft') { e.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
+          });
+        });
+      });
+      // Formulaire sans backend : il le dit, puis ouvre la messagerie (gate 70).
+      document.querySelectorAll<HTMLFormElement>('form[data-endpoint]').forEach((form) => {
+        const fields = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]')];
+        const status = form.querySelector<HTMLElement>('[data-status]');
+        const check = (f: HTMLInputElement | HTMLTextAreaElement) => {
+          const ok = f.checkValidity();
+          const help = document.getElementById(`${f.id}-aide`);
+          f.toggleAttribute('aria-invalid', !ok);
+          if (help) help.textContent = ok ? '' : (f.dataset.erreur || 'Ce champ est à compléter.');
+          return ok;
+        };
+        fields.forEach((f) => { f.addEventListener('blur', () => { f.dataset.touche = '1'; check(f); }); f.addEventListener('input', () => { if (f.dataset.touche) check(f); }); });
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const bad = fields.filter((f) => !check(f));
+          if (bad.length) { bad[0].focus(); if (status) status.textContent = 'Il manque une information : voyez le champ signalé.'; return; }
+          const d = new FormData(form); const l = (k: string) => String(d.get(k) || '').trim();
+          const corps = [l('prenom'), l('email'), l('telephone'), '', l('message')].join('\n');
+          if (status) status.textContent = 'Rien n’a été envoyé : votre messagerie s’ouvre avec le message prêt à partir.';
+          window.location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(l('objet') || 'Message depuis le site')}&body=${encodeURIComponent(corps)}`;
+        });
+      });
+    </script>
+    <KywFooter base={import.meta.env.BASE_URL} />
+  </body>
+</html>

@@ -1,0 +1,20 @@
+---
+// Carte en Rows : titre en colonnes 1 à 5, description, prix à droite en tabular-nums ; régimes dits en texte.
+import type { Plat } from '../data/site';
+interface Props { plats: Plat[]; numerote?: boolean }
+const { plats, numerote = false } = Astro.props;
+const nettoie = (n: string) => n.replace(/^\d+\.\s*/, '');
+---
+<ol class="rows" role="list">
+  {plats.map((p, i) => (
+    <li class="rows__ligne" data-placeholder={p.placeholder ? 'true' : undefined}>
+      {numerote && <span class="rows__n num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>}
+      <div class="rows__texte">
+        <h3>{nettoie(p.nom)}</h3>
+        {p.description && <p>{p.description}</p>}
+        {(p.regimes?.length || p.note) && <p class="rows__meta">{[...(p.regimes ?? []), p.note].filter(Boolean).join(', ')}</p>}
+      </div>
+      {p.prix && <p class="rows__prix num">{p.prix}</p>}
+    </li>
+  ))}
+</ol>

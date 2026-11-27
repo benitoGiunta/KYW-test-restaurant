@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Reservation from '../components/Reservation.astro';
+const choix = ['mezzes-vue-dessus-pelouse', 'kebbeh-falafel-mains', 'olives-fond-carrelage-vert', 'desserts-ashta-semoule', 'rakakat-kebbeh-fond-noir', 'houmous-tomates-cerises', 'mezzes-rouleaux-kefta', 'baklava-pistache', 'makanek-mains', 'bols-kraft-houmous-pois-chiches', 'mutabal-aubergine', 'salade-croustillants', 'pickles-navet', 'mezzes-ail-des-ours', 'cookies-main', 'brochettes-poulet-poivron', 'coffret-traiteur-pain', 'falafels-salade-feuilles'];
+---
+<Base page="galerie" title="Galerie, Bayti à Namur" description="Couleurs, textures, saveurs : les plats de Bayti en images.">
+  <section class="banner banner--texte">
+    <div class="container">
+      <h1>Un univers sensoriel.</h1>
+      <p class="lead">Couleurs, textures, saveurs : Bayti en images.</p>
+    </div>
+  </section>
+  <section class="galerie">
+    <div class="container galerie__colonnes">
+      {choix.map((n, i) => <Photo nom={n} slot={`galerie-${i + 1}`} sizes="(min-width: 60rem) 30vw, 100vw" />)}
+    </div>
+  </section>
+  <Reservation />
+</Base>

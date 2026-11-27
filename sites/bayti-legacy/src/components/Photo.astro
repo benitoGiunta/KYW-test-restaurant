@@ -1,0 +1,20 @@
+---
+// Une photo du client dans un slot Hallmark. `nom` = clé de photos.json (fichier sans numéro) ; alt par défaut = le sujet de l'index.
+import { photos } from '../data/site';
+interface Props { nom: string; slot: string; alt?: string; sizes?: string; position?: string; priorite?: boolean; class?: string; legende?: string }
+const { nom, slot, alt, sizes = '100vw', position = '50% 50%', priorite = false, class: cls, legende } = Astro.props;
+const m = photos[nom];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const src = (l: number) => `${base}photos/${nom}-${l}.webp`;
+const tri = [...m.ws].sort((a, b) => a - b);
+const srcset = tri.map((l) => `${src(l)} ${l}w`).join(', ');
+const defaut = tri.find((l) => l >= 1100) ?? tri[tri.length - 1];
+const texte = alt ?? m.sujet;
+---
+<figure class:list={['photo', cls]}>
+  <div class="photo__slot" data-slot={slot} data-alt={texte} style={`aspect-ratio: ${m.w} / ${m.h}`}>
+    <img src={src(defaut)} srcset={srcset} sizes={sizes} width={m.w} height={m.h} alt={texte} style={`object-position: ${position}`}
+      loading={priorite ? 'eager' : 'lazy'} fetchpriority={priorite ? 'high' : 'auto'} decoding={priorite ? 'sync' : 'async'} />
+  </div>
+  {legende && <figcaption>{legende}</figcaption>}
+</figure>

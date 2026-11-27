@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import Reservation from '../components/Reservation.astro';
+import Contact from '../components/Contact.astro';
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="accueil" title="Bayti, restaurant et traiteur du Moyen-Orient à Namur" description="Bayti, au cœur de Namur : le restaurant du soir, le comptoir traiteur de jour et les menus d’événements, cuisine du Moyen-Orient revisitée d’une touche européenne.">
+  <section class="hero">
+    <div class="container hero__grille">
+      <div class="hero__texte">
+        <h1>Bayti, deux mondes, une table.</h1>
+        {/* Hallmark, reworded "Au cœur de Namur, un voyage culinaire qui célèbre le meilleur de deux mondes : l'âme du Moyen-Orient, revisitée d'une touche européenne." to "Au cœur de Namur, l’âme du Moyen-Orient revisitée d’une touche européenne." · 58 hero sentence, the two worlds moved to the h1 */}
+        <p class="lead">Au cœur de Namur, l’âme du Moyen-Orient revisitée d’une touche européenne.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href={resto.reserver} rel="noopener">Réserver une table</a>
+          <a class="link" href={`${base}carte-restaurant/`}>Voir la carte du restaurant</a>
+        </div>
+      </div>
+      <Photo class="hero__photo" nom="mezzes-vue-dessus-pelouse" slot="hero" sizes="(min-width: 60rem) 50vw, 100vw" priorite position="50% 45%" />
+    </div>
+  </section>
+
+  <section class="adresses">
+    <div class="container adresses__grille">
+      <a class="tuile" href={`${base}carte-restaurant/`}>
+        <h2>Bayti, le soir</h2>
+        <p class="tuile__fig num">{resto.restaurant.prix}</p>
+        <p>Menu en 8 services, par personne, sur place. {resto.restaurant.rue}, {resto.restaurant.ville}.</p>
+        <span class="link">La carte du restaurant</span>
+      </a>
+      <a class="tuile" href={`${base}menu/`}>
+        <h2>Bayti Le Comptoir, de jour</h2>
+        <p class="tuile__fig num">{resto.comptoir.prix}</p>
+        <p>Menu Découverte à emporter, par personne, ou mezzés à l’unité. {resto.comptoir.rue}, {resto.comptoir.ville}.</p>
+        <span class="link">La carte traiteur</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="foyer">
+    <div class="container foyer__grille">
+      <div class="foyer__texte">
+        <h2>Bayti signifie « foyer ».</h2>
+        <p>Bayti est un restaurant du Moyen-Orient situé au cœur de la ville de Namur. Notre vision : créer un voyage culinaire qui célèbre le meilleur de deux mondes.</p>
+        <p>Nous sommes fiers de notre approche innovante des classiques du Moyen-Orient, infusés d’une touche européenne pour créer des plats à la fois familiers et novateurs.</p>
+        <p>Notre menu est un témoignage du mariage harmonieux de ces traditions culinaires, offrant un éventail de saveurs à la fois excitantes et réconfortantes.</p>
+        <a class="link" href={`${base}notre-histoire/`}>Notre histoire</a>
+      </div>
+      <Photo nom="mezzes-feuilles-automne" slot="foyer" sizes="(min-width: 60rem) 45vw, 100vw" legende="Mezzés servis dans des bols, sur des feuilles d’automne." />
+    </div>
+  </section>
+
+  <section class="experiences">
+    <div class="container">
+      <h2>Trois façons de venir à table.</h2>
+      <ul class="index" role="list">
+        <li><a href={`${base}carte-restaurant/`}><span class="index__t">Carte restaurant</span><span class="index__d">Menu 8 services à <span class="num">45 €</span>. Rue du Pont 15, du mardi au samedi.</span></a></li>
+        <li><a href={`${base}menu/`}><span class="index__t">Carte traiteur</span><span class="index__d">Mezzés et plats à emporter. Rue du Pont 6, du mardi au samedi.</span></a></li>
+        <li><a href={`${base}bayti-chez-vous/`}><span class="index__t">Bayti chez vous</span><span class="index__d">Service traiteur pour vos événements privés et professionnels.</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="heures">
+    <div class="container heures__grille">
+      <h2>Horaires et adresses</h2>
+      <Horaires />
+      <div class="heures__lieux">
+        <p><strong>Restaurant Bayti</strong><br />{resto.restaurant.rue}, {resto.restaurant.cp} {resto.restaurant.ville}</p>
+        <p><strong>Bayti Le Comptoir</strong><br />{resto.comptoir.rue}, {resto.comptoir.cp} {resto.comptoir.ville}</p>
+        <a class="link" href={`https://www.openstreetmap.org/?mlat=${resto.geo.lat}&mlon=${resto.geo.lon}#map=18/${resto.geo.lat}/${resto.geo.lon}`} rel="noopener">Voir sur la carte</a>
+      </div>
+    </div>
+  </section>
+
+  <Reservation />
+  <Contact id="contact" titre="Contactez-nous" objet="Message depuis le site Bayti" />
+</Base>
