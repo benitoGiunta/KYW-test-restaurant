@@ -1,0 +1,42 @@
+---
+import { u } from '../lib/url';
+import { restaurant, horaires, credit } from '../data/site';
+const ouverts = horaires.filter((h) => !h.fermé);
+---
+<footer class="pied">
+  <div class="wrap">
+    <p class="pied__mot" aria-hidden="true">Bienvenue chez vous…</p>
+    <div class="pied__grille">
+      <div>
+        <h2>Adresse</h2>
+        <address>
+          {restaurant.nom}<br />
+          {restaurant.adresse.rue}, premier étage<br />
+          {restaurant.adresse.cp} {restaurant.adresse.ville}
+        </address>
+        <p style="margin-top: var(--u)"><a class="lien" href={restaurant.plan} rel="noopener">Ouvrir le plan</a></p>
+      </div>
+      <div>
+        <h2>Table</h2>
+        <ul>
+          <li>Du mardi au samedi</li>
+          <li class="tnum">Midi : {ouverts[0].midi}</li>
+          <li class="tnum">Soir : {ouverts[0].soir}</li>
+          <li class="muted">Sur réservation, fermé lundi et dimanche</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Nous joindre</h2>
+        <ul>
+          <li><a class="lien nb" href={`tel:${restaurant.telephone.replace(/\s/g, '')}`}>{restaurant.telephoneAffiche}</a></li>
+          <li><a class="lien" href={`mailto:${restaurant.email}`}>{restaurant.email}</a></li>
+          {restaurant.reseaux.map((r) => <li><a class="lien" href={r.href} rel="noopener">{r.nom}</a></li>)}
+        </ul>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <span>{credit}</span>
+      <span><a class="lien" href={u('/reservation/')}>Réserver</a> · <a class="lien" href={u('/carte/')}>La carte</a> · <a class="lien" href={u('/histoire/')}>Histoire</a></span>
+    </div>
+  </div>
+</footer>

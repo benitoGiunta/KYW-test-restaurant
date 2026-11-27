@@ -1,0 +1,19 @@
+---
+import { u } from '../lib/url';
+import { restaurant } from '../data/site';
+const { chemin = '/' } = Astro.props;
+const actuel = (p: string) => (chemin.replace(/\/+$/, '').endsWith(p) ? 'page' : undefined);
+---
+<header class="site-header">
+  <div class="wrap site-header__in">
+    <a class="marque" href={u('/')} aria-label={`${restaurant.nom}, accueil`}>
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--c-accent)" stroke-width="4" /><circle cx="32" cy="32" r="8" fill="var(--c-accent)" /></svg>
+      <span>{restaurant.nom}</span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href={u('/carte/')} aria-current={actuel('/carte')}>La carte</a>
+      <a href={u('/histoire/')} aria-current={actuel('/histoire')}>Histoire</a>
+      <a class="btn" href={u('/reservation/')} aria-current={actuel('/reservation')}>Réserver</a>
+    </nav>
+  </div>
+</header>

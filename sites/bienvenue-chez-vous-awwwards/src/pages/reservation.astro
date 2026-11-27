@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import { ins, tel } from '../lib/typo';
+import { restaurant, horaires } from '../data/site';
+const sujet = encodeURIComponent('Réservation Bienvenue chez vous');
+---
+<Base title="Réserver" description="Réserver une table chez Bienvenue chez vous, rue Pépin 33 à Namur : par téléphone ou par e-mail, du mardi au samedi, midi et soir. Les repas se prennent sur réservation.">
+  <div class="wrap">
+    <div class="route">
+      <section class="stop stop--plein entete" aria-labelledby="titre">
+        <h1 id="titre" class="display">Réserver <em>une table</em></h1>
+        <p class="entete__intro">Les repas se prennent uniquement sur réservation, du mardi au samedi.</p>
+        <p style="margin-top: calc(var(--u) * 4)"><a class="grand-tel prix" href={tel(restaurant.telephone)}>{restaurant.telephoneAffiche}</a></p>
+        <p class="muted" style="margin-top: var(--u)">Appelez, ou écrivez-nous : le chef répond entre deux services.</p>
+      </section>
+
+      <section class="stop" aria-label="Contact et horaires">
+        <div class="contact-grille">
+          <div class="c-a">
+            <h2 class="titre-bloc">Nous écrire</h2>
+            <p class="mesure">Indiquez la date, le nombre de convives et le repas souhaité. Votre messagerie s’ouvrira avec le message prêt à envoyer.</p>
+            <form class="formulaire" action={`mailto:${restaurant.email}?subject=${sujet}`} method="post" enctype="text/plain">
+              <div class="deux">
+                <label>Date souhaitée<input type="date" name="date" /></label>
+                <label>Convives<input type="number" name="convives" min="1" max="12" inputmode="numeric" /></label>
+              </div>
+              <label>Votre nom<input type="text" name="nom" autocomplete="name" /></label>
+              <label>Un mot pour le chef<textarea name="message" rows="3"></textarea></label>
+              <button class="btn" type="submit">Ouvrir mon e-mail</button>
+            </form>
+            <p class="note-bas">Ou directement à <a class="lien" href={`mailto:${restaurant.email}`}>{restaurant.email}</a>.</p>
+          </div>
+          <div class="c-b">
+            <h2 class="titre-bloc">Horaires</h2>
+            <dl class="horaires">
+              {horaires.map((h) => (
+                <div class={h.fermé ? 'ferme' : ''}>
+                  <dt>{h.jour}</dt>
+                  <dd>{h.fermé ? 'Fermé' : ins(`${h.midi}, ${h.soir}`)}</dd>
+                </div>
+              ))}
+            </dl>
+            <p class="note-bas">Dernières arrivées au début de chaque service : le repas se déroule en escales.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="stop" aria-labelledby="acces">
+        <div class="contact-grille">
+          <div class="c-a">
+            <h2 id="acces" class="titre-bloc">Venir</h2>
+            <p class="mesure">{restaurant.adresse.rue}, {restaurant.adresse.cp} {restaurant.adresse.ville}. Sonnez, puis montez : la salle est au premier étage de la maison de maître.</p>
+            <p style="margin-top: calc(var(--u) * 2)"><a class="suite" href={restaurant.plan} rel="noopener">Ouvrir le plan <span aria-hidden="true">↗</span></a></p>
+          </div>
+          <div class="c-b">
+            <h2 class="titre-bloc">Bon à savoir</h2>
+            <ul class="infos">
+              <li>Parking aisé.</li>
+              <li>Terrasse calme aux beaux jours.</li>
+              <li>Chèques cadeaux disponibles.</li>
+              <li>Vins au verre ou à prix coûtant, avec un droit de bouchon.</li>
+              <li>Traiteur à emporter : commande 24 h à l’avance.</li>
+            </ul>
+            <p class="reseaux">
+              {restaurant.reseaux.map((r) => <a class="lien" href={r.href} rel="noopener">{r.nom}</a>)}
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</Base>

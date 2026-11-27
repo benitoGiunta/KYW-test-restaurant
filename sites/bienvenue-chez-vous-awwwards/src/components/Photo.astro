@@ -1,0 +1,21 @@
+---
+// Photo du client servie par astro:assets (AVIF + WebP, largeurs utiles, dimensions explicites).
+// `rond` : photo de plat, découpée en assiette (règle de rayon du concept).
+import { Picture } from 'astro:assets';
+import { photos, type CleePhoto } from '../lib/photos';
+interface Props { cle: CleePhoto; widths?: number[]; sizes: string; prioritaire?: boolean; decorative?: boolean; rond?: boolean; classe?: string }
+const { cle, widths = [480, 800, 1200], sizes, prioritaire = false, decorative = false, rond = false, classe = '' } = Astro.props;
+const p = photos[cle];
+---
+<Picture
+  src={p.src}
+  alt={decorative ? '' : p.alt}
+  formats={['avif', 'webp']}
+  fallbackFormat="webp"
+  widths={widths.filter((w) => w <= p.src.width)}
+  sizes={sizes}
+  loading={prioritaire ? 'eager' : 'lazy'}
+  fetchpriority={prioritaire ? 'high' : undefined}
+  decoding="async"
+  class:list={['photo', rond && 'photo--rond', classe]}
+/>

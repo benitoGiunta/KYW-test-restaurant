@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { ins, euro } from '../lib/typo';
+import { formules, accords, plats, traiteur, mercredis } from '../data/site';
+---
+<Base title="La carte" description="Les formules du Repas en escales (49 à 94 €), la carte du mois, les accords mets et vins, le repas du mercredi et le traiteur à emporter de Bienvenue chez vous, à Namur.">
+  <div class="wrap">
+    <div class="route">
+      <section class="stop stop--plein entete" aria-labelledby="titre">
+        <h1 id="titre" class="display">La carte, <em>en escales</em></h1>
+        <p class="entete__intro">Un repas se compose d’un départ, de quelques escales et de douceurs. Le chef change la carte chaque mois.</p>
+      </section>
+
+      <section class="stop" aria-labelledby="mois">
+        <h2 id="mois" class="titre-bloc">Les saveurs du mois, octobre 2026</h2>
+        <p class="muted mesure">Midi et soir, sur réservation. Les plats sont servis dans cet ordre.</p>
+        <ol class="index">
+          {plats.map((p) => (
+            <li class="index__ligne">
+              <p class="index__cat ui muted">{p.categorie}</p>
+              <h3 class="index__nom">{p.nom}</h3>
+              <p class="index__desc">{p.description}</p>
+              <div class="index__vignette"><Photo cle={p.photo as any} rond decorative widths={[320, 480]} sizes="(max-width: 760px) 30vw, 11rem" /></div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="stop" aria-labelledby="formules">
+        <h2 id="formules" class="titre-bloc">Les formules</h2>
+        <dl class="tableau">
+          {formules.map((f) => (
+            <div class="tableau__ligne">
+              <dt>{f.nom}</dt>
+              <dd class="t-desc">{ins(f.escales)}. {ins(f.quand)}. {ins(f.accords)}.</dd>
+              <dd class="t-prix prix">{euro(f.prix)}</dd>
+            </div>
+          ))}
+        </dl>
+        <ul class="accords">
+          {accords.map((a) => <li><b>{a.lettre}</b><span><strong>{a.nom}.</strong> {a.texte}</span></li>)}
+        </ul>
+        <p class="note-bas">Vins au verre, ou carte des vins à prix coûtant avec un droit de bouchon.</p>
+      </section>
+
+      <section class="stop paire" aria-labelledby="mercredi">
+        <div class="paire__media"><Photo cle="tomates" rond sizes="(max-width: 760px) 80vw, 36vw" /></div>
+        <div class="paire__texte">
+          <h2 id="mercredi">{mercredis.titre}</h2>
+          <p class="mesure">{mercredis.texte}</p>
+          <p class="mesure muted">{mercredis.tarif}.</p>
+          <a class="suite" href={u('/reservation/')}>Réserver un mercredi <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <section class="stop" aria-labelledby="emporter">
+        <h2 id="emporter" class="titre-bloc">À emporter</h2>
+        <p class="muted mesure">Le traiteur prépare, sur commande 24 h à l’avance, de quoi retrouver la table chez soi.</p>
+        <ol class="index">
+          {traiteur.map((t) => (
+            <li class="index__ligne">
+              <p class="index__cat ui muted prix">{t.prix ? euro(t.prix) : 'Chaque semaine'}</p>
+              <h3 class="index__nom">{t.nom}</h3>
+              <p class="index__desc">{t.description} <span class="muted">{t.note}.</span></p>
+              <div class="index__vignette"><Photo cle={t.photo as any} rond decorative widths={[320, 480]} sizes="(max-width: 760px) 30vw, 11rem" /></div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="stop stop--plein arrivee serre" aria-labelledby="fin">
+        <h2 id="fin" class="display display--l">Une table se prend <em>en le réservant</em>.</h2>
+        <div class="arrivee__actions"><a class="btn" href={u('/reservation/')}>Réserver une table</a></div>
+      </section>
+    </div>
+  </div>
+</Base>

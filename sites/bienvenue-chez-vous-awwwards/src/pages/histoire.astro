@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { histoire, artisans, equipe } from '../data/site';
+const chef = equipe[0];
+---
+<Base title="Histoire" description="Depuis 2002, Cédric Delsaut cuisine, sert et choisit les vins de Bienvenue chez vous, installé depuis 2020 au premier étage d’une maison de maître de la rue Pépin, à Namur.">
+  <div class="wrap">
+    <div class="route">
+      <section class="stop stop--plein entete" aria-labelledby="titre">
+        <h1 id="titre" class="display">Au <em>premier étage</em></h1>
+        <p class="entete__intro">Une maison de maître, quelques tables, un seul chef.</p>
+      </section>
+
+      <section class="stop" aria-label="La maison">
+        <Photo cle="facade" classe="plein-cadre" widths={[800, 1200, 1600]} sizes="(max-width: 760px) 90vw, 80vw" />
+        <p class="legende">Rue Pépin, à Namur. Le restaurant occupe le premier étage.</p>
+      </section>
+
+      <section class="stop paire" aria-labelledby="chef">
+        <div class="paire__texte" style="grid-column: 1 / span 6">
+          <h2 id="chef">{chef.nom}, <em>seul à bord</em></h2>
+          <p class="mesure">{chef.role}. Le chef accueille ses convives, dresse chaque assiette et ouvre lui-même les bouteilles : à ses tables, tout passe par ses mains.</p>
+          <p class="mesure">Sa cuisine part d’une base française classique et la tourne vers le présent : saisons, produits d’artisans souvent locaux, Saint-Jacques arrivées de petits bateaux de Port-en-Bessin.</p>
+        </div>
+        <div class="paire__media" style="grid-column: 8 / span 5">
+          <Photo cle="carteVisite" classe="cadre" sizes="(max-width: 760px) 90vw, 36vw" />
+          <p class="legende">La carte de visite de la maison, glissée dans la serviette.</p>
+        </div>
+      </section>
+
+      <section class="stop" aria-labelledby="reperes">
+        <h2 id="reperes" class="titre-section">Trois repères</h2>
+        <ol class="chrono">
+          {histoire.map((h) => (
+            <li><p class="chrono__an prix">{h.annee}</p><p class="chrono__txt">{h.texte}</p></li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="stop" aria-labelledby="maison">
+        <div class="duo">
+          <div>
+            <h2 id="maison" class="titre-bloc">Chez vous, vraiment</h2>
+            <p class="mesure">{artisans}</p>
+            <p class="mesure">Aux beaux jours, la terrasse reste calme. Le soir, les bougies font le reste.</p>
+            <a class="suite" href={u('/carte/')} style="margin-top: calc(var(--u) * 3)">Lire la carte <span aria-hidden="true">→</span></a>
+          </div>
+          <div>
+            <Photo cle="enseigne" sizes="(max-width: 760px) 70vw, 28vw" />
+            <p class="legende">L’enseigne rouge de la rue.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="stop stop--plein arrivee serre" aria-labelledby="fin">
+        <h2 id="fin" class="display display--l">Montez, <em>on vous attend</em>.</h2>
+        <div class="arrivee__actions"><a class="btn" href={u('/reservation/')}>Réserver une table</a></div>
+      </section>
+    </div>
+  </div>
+</Base>

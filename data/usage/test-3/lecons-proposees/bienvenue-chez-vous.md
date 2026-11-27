@@ -1,1 +1,2 @@
 - 2026-11-27 · Velours : le type Restaurant impose geo et reservation.url ; un restaurant sans GPS ni outil en ligne doit les retirer du type, de Base.astro (JSON-LD) et de la page réservation, et ses portraits N&B (filtre CSS grayscale sur .portrait__photo) ne conviennent pas à des assiettes en couleur.
+- 2026-11-27 · construction awwwards phase 1 : extraire engine/astro/engine.css d'engine.md et astro.md par script (regex sur les blocs « ### `src/engine/x.ts` ») plutôt que de copier un site voisin, dont reveal.ts a pu être modifié en phase 2.

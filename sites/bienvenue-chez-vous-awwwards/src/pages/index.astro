@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { ins, euro, tel } from '../lib/typo';
+import { restaurant, formules, horaires } from '../data/site';
+const midi = horaires[1];
+---
+<Base title="Cuisine française créative à Namur" description="Bienvenue chez vous : cuisine française créative en escales, servie au premier étage d’une maison de maître de la rue Pépin à Namur. Sur réservation.">
+  <div class="wrap">
+    <div class="route">
+      <section class="stop stop--plein hero" aria-labelledby="titre">
+        <div class="hero__texte">
+          <h1 id="titre" class="display">Bienvenue <em>chez vous</em></h1>
+          <p class="hero__lede">Cuisine française d’un seul chef, en escales, au premier étage d’une maison de maître à Namur.</p>
+          <div class="hero__actions">
+            <a class="btn" href={u('/reservation/')}>Réserver une table</a>
+            <a class="btn btn--ligne" href={tel(restaurant.telephone)}>Appeler</a>
+          </div>
+          <p class="hero__infos"><span>{restaurant.adresse.rue}, Namur</span><span>{ins(`Mardi au samedi, midi ${midi.midi}, soir ${midi.soir}`)}</span></p>
+        </div>
+        <div class="hero__plate plate">
+          <Photo cle="carpaccio" rond prioritaire widths={[480, 800, 1200]} sizes="(max-width: 760px) 78vw, 36vw" />
+        </div>
+      </section>
+
+      <section class="stop statement pause" aria-labelledby="voyage">
+        <h2 id="voyage" class="display">Un repas qui <em>voyage</em> : grignotages, escales, douceurs.</h2>
+        <div class="statement__texte">
+          <p class="mesure">Le menu n’est pas dévoilé à l’avance. Il suit la saison et les petits bateaux de Port-en-Bessin, passe des classiques de la cuisine française à des créations qui se regardent avant de se goûter, et ne compte jamais plus de quelques tables.</p>
+          <p class="mesure">Une fois installé, vous n’avez plus qu’à vous laisser conduire d’une escale à l’autre.</p>
+        </div>
+      </section>
+
+      <section class="stop" aria-labelledby="formules">
+        <h2 id="formules" class="titre-section">Choisir son voyage</h2>
+        <ul class="formules">
+          {formules.map((f) => (
+            <li class="formule">
+              <p class="formule__nom">{f.nom}</p>
+              <p class="formule__desc">{ins(f.quand)}</p>
+              <p class="formule__prix prix">{euro(f.prix)}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="note-bas">Accords mets et vins en supplément. <a class="lien" href={u('/carte/')}>Voir la carte et les accords</a></p>
+      </section>
+
+      <section class="stop" aria-labelledby="mur">
+        <div class="mur-tete">
+          <h2 id="mur" class="titre-section">Ce que le chef dresse</h2>
+          <p class="muted mesure">Des assiettes pensées pour l’œil : herbes, fleurs comestibles, sauces vertes et perles.</p>
+        </div>
+        <div class="mur">
+          <figure class="m1"><Photo cle="carpaccio" rond decorative sizes="(max-width: 760px) 70vw, 40vw" /><figcaption>Carpaccio de Saint-Jacques, crème verte et salicorne</figcaption></figure>
+          <figure class="m2"><Photo cle="tomates" rond decorative sizes="(max-width: 760px) 70vw, 24vw" /><figcaption>Tomates multicolores, sorbet et fleurs</figcaption></figure>
+          <figure class="m3"><Photo cle="saumon" rond decorative sizes="(max-width: 760px) 70vw, 24vw" /><figcaption>Saumon, jus vert et perles</figcaption></figure>
+          <figure class="m4"><Photo cle="canard" rond decorative sizes="(max-width: 760px) 70vw, 24vw" /><figcaption>Magret, betterave rose et framboise</figcaption></figure>
+          <figure class="m5"><Photo cle="foieGras" rond decorative sizes="(max-width: 760px) 70vw, 32vw" /><figcaption>Truffe noire sur sauce brune</figcaption></figure>
+          <figure class="m6"><Photo cle="smiley" rond decorative sizes="(max-width: 760px) 70vw, 24vw" /><figcaption>Le dessert smiley aux fraises</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="stop paire" aria-labelledby="chef">
+        <div class="paire__media">
+          <Photo cle="facade" classe="cadre" sizes="(max-width: 760px) 90vw, 40vw" />
+          <p class="legende">La maison de maître de la rue Pépin. Le restaurant est au premier étage.</p>
+        </div>
+        <div class="paire__texte">
+          <h2 id="chef">Un chef, <em>trois métiers</em></h2>
+          <p class="mesure">Cédric Delsaut cuisine, sert et choisit les vins. Seul aux fourneaux comme en salle, il vous accueille lui-même, à quelques tables, à la lueur des bougies.</p>
+          <p class="mesure muted">Jeune Chef de l’année 2016 (Gault&amp;Millau), il se dit porteur de quarante ans de métier.</p>
+          <a class="suite" href={u('/histoire/')}>L’histoire de la maison <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <section class="stop stop--plein arrivee pause" aria-labelledby="arrivee">
+        <h2 id="arrivee" class="display">On vous attend <em>au 33</em>.</h2>
+        <a class="arrivee__tel prix" href={tel(restaurant.telephone)}>{restaurant.telephoneAffiche}</a>
+        <div class="arrivee__actions">
+          <a class="btn" href={u('/reservation/')}>Réserver une table</a>
+          <span class="muted">Les repas se prennent uniquement sur réservation.</span>
+        </div>
+      </section>
+    </div>
+  </div>
+</Base>

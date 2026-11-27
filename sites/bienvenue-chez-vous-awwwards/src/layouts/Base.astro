@@ -1,0 +1,74 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import KywFooter from '@kyw/footer';
+import { restaurant, horairesLd } from '../data/site';
+import { u, asset } from '../lib/url';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/tokens.css';
+import '../styles/engine.css';
+import '../styles/site.css';
+
+interface Props { title?: string; description?: string; page?: string; chemin?: string }
+const { title, description = restaurant.description, chemin = Astro.url.pathname } = Astro.props;
+const fullTitle = title ? `${title} | ${restaurant.nom}` : `${restaurant.nom}, cuisine créative à Namur | Rue Pépin`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(asset('/og.png'), Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: restaurant.nom,
+  url: new URL(u('/'), Astro.site).href,
+  image: ogImage,
+  telephone: restaurant.telephone,
+  servesCuisine: ['Cuisine française', 'Cuisine créative'],
+  address: { '@type': 'PostalAddress', streetAddress: restaurant.adresse.rue, postalCode: restaurant.adresse.cp, addressLocality: restaurant.adresse.ville, addressCountry: restaurant.adresse.pays },
+  openingHoursSpecification: horairesLd.map((h) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: h.jours, opens: h.ouvre, closes: h.ferme })),
+  sameAs: restaurant.reseaux.map((r) => r.href),
+};
+---
+<!doctype html>
+<html lang="fr" transition:animate="none">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#16110f" />
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" href={asset('/sitemap-index.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <link rel="preload" as="font" type="font/woff2" href={asset('/fonts/gambetta-500-normal.woff2')} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={asset('/fonts/switzer-400-normal.woff2')} crossorigin />
+    <slot name="head" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+    </script>
+    <ClientRouter fallback="swap" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
+    <Header chemin={chemin} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <KywFooter base={import.meta.env.BASE_URL} />
+    <script>
+      import { start } from '../engine/astro';
+      import { setupMotion } from '../motion/setup';
+      start(setupMotion);
+    </script>
+  </body>
+</html>
