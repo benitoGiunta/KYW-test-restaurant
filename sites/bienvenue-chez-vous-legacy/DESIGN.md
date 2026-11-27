@@ -13,7 +13,7 @@
 - **Material** · real : photos, prix des formules, voix du chef · pictures : 18 photos du client, aucune de bibliothèque · absent : avis, note, métriques.
 - **Comp** · 2 built, no key · c1 chosen · reproduced (checked at 1280x800).
 - **Hero review** · self (pas d'outil Agent en session) · fix · 3 findings · 3 resolved : (1) h1 en accent display (WARN 23) passé en encre, l'accent reste au seul bouton, resolved ; (2) mobile 375 : la plaque couvrait le sourire du dessert, hero à 92vw de photo au-dessus de la plaque, resolved ; (3) nav mobile débordait de 24 px (marque + Réserver + menu), marque 1rem et « Réserver » reporté dans le menu sous 22rem, resolved.
-- **Sweep** · phase 3.
+- **Sweep** · phase 3 : 1 FAIL (34, faux positif connu, règle présente dans base.css et page.css), 0 REFLEX ouvert, 5 WAIVED (8, 77 x3, 81), finish review en auto-notation (self).
 
 ## Tokens (extrait de `src/styles/tokens.css`)
 Papier `--color-paper` crème chaud, encre brune `--color-ink`, signal `--color-accent` vermillon (hue 24, proche du rouge de l'enseigne, lu sur la photo de l'enseigne), or `--color-gold` pour les filets seulement. Display : Yeseva One (poids 400, une couleur). Corps : Archivo. Petits textes : Archivo Narrow 600, casse de phrase. Rayon 0 sauf pilules. Ombre dure `--shadow-card`.
@@ -60,3 +60,5 @@ Macrostructure 08 Photographic, multi-pages gardé, calme (pas de reveal ; une s
 - [x] 63. `::selection`, `caret-color`, `scrollbar-color` · preuve : `base.css`, `page.css` fin
 - [x] 72. Responsive : breakpoints 60rem et 40rem (+ 22rem pour la nav), hero `dvh`, aucun débordement 320/375/1280 sur 6 routes (script), tables restackées · preuve : `.logs/bcv-p2-check.log`
 - [x] 7b. sloplint --render hero : 1 FAIL (34, faux positif connu : la règle est dans `base.css` importé), WARN 49 (libellé « Appeler le … » : `nowrap` posé en CSS sur `.btn--lg`, sloplint lit le gabarit) · preuve : `.logs/bcv-p2-sloplint.log`
+- [x] 16. sloplint --render : 0 REFLEX ouvert, render tourné · preuve : .logs/bcv-sloplint3.log (FAIL 34 faux positif documenté)
+- [x] 25. Gates jugées 6b, 9, 11, 23, 54, 58, 63 à 70, 77 à 85 relues sur la planche d'accueil (desktop et mobile) · preuve : .shots-bienvenue-chez-vous-legacy-build/home/planche.png ; 77 et 81 waived, 39b et 49b corrigés (page.css, Reservation.astro)

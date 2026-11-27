@@ -6,3 +6,4 @@
 - 2026-11-27 · bienvenue-chez-vous · legacy phase 2 : vérifier la forme de nav du log (3 derniers) avant la phase 1, sinon la phase 2 la change ; sloplint hero ne détecte le débordement de la nav mobile qu'au rendu (marque + CTA + burger > 343 px à 375).
 - 2026-11-27 · bienvenue-chez-vous · portfolio (QA) : un ::before de voile en z-index -1 dans un conteneur dont les photos sont aussi en z-index -1 passe sous les photos (ordre DOM) : mettre le voile à z-index 0 ; QA-build.md peut manquer, shoot --crawl --hovers 2 prend ~4 min (lancer en arrière-plan).
 - 2026-11-27 : un lien .lien inline dans un paragraphe fait moins de 24 px (smallTargets) : display inline-block + min-height 24px.
+- 2026-11-27 · sloplint : un waiver = trois champs et une raison partageant un mot de la page, un par gate ; regrouper plusieurs sections dans un seul waiver est rejeté.
