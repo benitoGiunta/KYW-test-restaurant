@@ -44,7 +44,7 @@ const [m1, m2] = g.manifeste.titre;
       <div class="maison__texte" data-reveal="fade">
         <Ornements />
         <p class="meta">La maison</p>
-        <h2 class="section__titre">Un grill, <em>une terrasse</em></h2>
+        <h2 class="section__titre">Un grill, <em class="ital">une terrasse</em></h2>
         <div class="prose">
           <p>{site.histoire[0]}</p>
           <p>{site.histoire[2]}</p>
@@ -90,7 +90,6 @@ const [m1, m2] = g.manifeste.titre;
   <!-- Le menu : carte blanche -->
   <section class="section" id="menu">
     <div class="wrap">
-      <p class="meta" style="text-align:center">Le menu</p>
       <h2 class="section__titre" style="text-align:center">Ce qu'on <em>pose</em> sur la table</h2>
       <div class="carte" data-reveal="scale">
         <div class="carte__grille">
@@ -118,15 +117,11 @@ const [m1, m2] = g.manifeste.titre;
   <section class="section section--blanc avis" id="reperes" data-avis>
     <p class="display avis__mot" aria-hidden="true" data-avis-mot>Grill</p>
     <div class="wrap">
-      <p class="meta" style="text-align:center">À retenir</p>
       <h2 class="sr-only">Repères de la carte</h2>
-      <div class="avis__cartes">
-        {g.reperes.map((a) => (
-          <blockquote class="carte-avis" data-carte-avis style={`--r:${a.r}deg`}>
-            <span class="carte-avis__etiq">À la carte</span>
-            <p>{a.texte}</p>
-          </blockquote>
-        ))}
+      <div class="carte-avis carte-avis--liste" data-carte-avis style="--r:0deg">
+        <ul role="list">
+          {g.reperes.map((a) => <li>{a.texte}</li>)}
+        </ul>
       </div>
     </div>
   </section>
@@ -150,7 +145,6 @@ const [m1, m2] = g.manifeste.titre;
   <section class="section" id="horaires">
     <div class="wrap">
       <div class="hcarte" data-reveal="up">
-        <p class="meta">Horaires</p>
         <h2 class="section__titre" style="margin-bottom:0">Quand <em>venir</em></h2>
         <dl class="horaires">
           {site.horaires.map((h) => (

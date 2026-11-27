@@ -47,8 +47,8 @@ function marquee() {
     let etat = '';
     const ouvert = auj?.c.find((c) => c.ouverture <= hhmm && hhmm < c.fermeture);
     const suivant = auj?.c.find((c) => c.ouverture > hhmm);
-    if (ouvert) { texte = `Ouvert, arrivée jusqu'à ${ouvert.fermeture}`; etat = 'is-ouvert'; }
-    else if (suivant) { texte = `Fermé en ce moment, ouverture à ${suivant.ouverture}`; etat = 'is-ferme'; }
+    if (ouvert) { texte = `Ouvert jusqu'à ${ouvert.fermeture}`; etat = 'is-ouvert'; }
+    else if (suivant) { texte = `Fermé, rouvre à ${suivant.ouverture}`; etat = 'is-ferme'; }
     else {
       for (let k = 1; k <= 7; k++) {
         const h = parJour(jours[(d.getDay() + k) % 7]);
