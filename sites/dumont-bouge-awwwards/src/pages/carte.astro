@@ -25,7 +25,7 @@ const norm = (r: string) => { const i = r.indexOf(' : '); return i < 0 ? { group
             return (
               <div class="rub">
                 {nouveauGroupe && <h3 class="rub__groupe">{n.groupe}</h3>}
-                <h4 class="rub__titre">{n.titre}{r.horaire && <span class="rub__h"> · {r.horaire}</span>}</h4>
+                {n.groupe ? <h4 class="rub__titre">{n.titre}{r.horaire && <span class="rub__h"> · {r.horaire}</span>}</h4> : <h3 class="rub__titre">{n.titre}{r.horaire && <span class="rub__h"> · {r.horaire}</span>}</h3>}
                 {c.id === 'gateaux' && <p class="rub__note">Gâteaux préparés à la main, à commander au <a class="lien" href="tel:+3281229602">081 22 96 02</a>. Prix non publiés.</p>}
                 <ul class="plats">
                   {r.plats.map((p) => (

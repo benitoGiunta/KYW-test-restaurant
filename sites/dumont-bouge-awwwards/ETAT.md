@@ -1,4 +1,4 @@
-# ETAT · dumont-bouge · awwwards · fin de la phase 2 (construction-2)
+# ETAT · dumont-bouge · awwwards · fin de la phase 3 (QA)
 
 ## Fait (phase 1)
 - Concept A « Sept à dix-huit », système, contenu, 5 pages statiques, images, build : voir DESIGN.md (points 1 à 18).
@@ -20,3 +20,7 @@
 - Pas de loader, pas de GL, pas de curseur personnalisé, aucun épinglage (la règle porte la progression sans pin).
 - Photos révélées par un clip gauche à droite propre au pilote (`data-deroule`) plutôt que `data-reveal="clip"` (vertical) de l'engine, pour rester dans le verbe « dérouler ».
 - La règle est masquée en mouvement réduit et sans JS (les heures portent le concept partout ailleurs).
+
+## Phase 3
+- Corrigé : h4 carte, text-indent citation. Build et audit : 0 FAIL, 5 WARN justifiés (RAPPORT.md).
+- Reste : critique jury indépendant (non disponible), vérifier og.png à l'œil.
