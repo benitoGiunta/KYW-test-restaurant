@@ -5,11 +5,14 @@ const cur = (p: string) => (path === u(p).replace(/\/+$/, '') ? 'page' : undefin
 ---
 <header class="entete">
   <div class="wrap">
-    <a class="marque" href={u('/')} aria-label="Monepi Boulangerie, accueil">MON<span>EPI</span></a>
-    <nav class="nav" aria-label="Navigation principale">
+    <a class="marque" href={u('/')}>MON<span>EPI</span><span class="sr-only"> Boulangerie, accueil</span></a>
+    <p class="jauge" aria-hidden="true"><span class="jauge__taux num">65</span>&nbsp;%</p>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale">Menu</button>
+    <nav class="nav" id="nav-principale" aria-label="Navigation principale">
       <a href={u('/carte/')} aria-current={cur('/carte/')}>Carte</a>
       <a href={u('/histoire/')} aria-current={cur('/histoire/')}>Histoire</a>
       <a href={u('/reservation/')} aria-current={cur('/reservation/')}>Commander</a>
     </nav>
   </div>
+  <span class="jauge__barre" aria-hidden="true"></span>
 </header>

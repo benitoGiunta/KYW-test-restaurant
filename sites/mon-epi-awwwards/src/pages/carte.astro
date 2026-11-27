@@ -8,7 +8,7 @@ const tel = `tel:${site.telephone.replace(/\s/g, '')}`;
 <Base title="La carte" description="La carte de Monepi : pains au levain, pains à la levure, viennoiseries, petite boulangerie et pains sans gluten, avec leurs prix et leurs farines.">
   <section class="page-tete">
     <div class="wrap">
-      <h1 class="display">La carte</h1>
+      <h1 class="display" data-split="lines" data-intro>La carte</h1>
       <p>Des pains classés comme ils se font : au levain, à la levure, puis le comptoir. Prix en euros, au pain ; quand la taille varie, la fourchette est indiquée. Chaque pain nomme sa farine.</p>
     </div>
   </section>
@@ -17,13 +17,13 @@ const tel = `tel:${site.telephone.replace(/\s/g, '')}`;
     <section class="rayon" aria-labelledby={`r-${r.id}`}>
       <div class="wrap grid rayon__grid">
         <div class="rayon__tete">
-          <h2 id={`r-${r.id}`} class="display">{r.titre}</h2>
+          <h2 id={`r-${r.id}`} class="display" data-split="lines">{r.titre}</h2>
           <p>{r.intro}</p>
           <Photo cle={r.photo} widths={[480, 800]} sizes="20rem" />
         </div>
         <ul class="rayon__liste">
           {r.plats.map((p) => (
-            <li class="ligne">
+            <li class="ligne" style={`--w:${(p.farine && farines.find((f) => f.id === p.farine)?.taux) || 100}%`}>
               <h3>{p.nom}{p.poids && <span class="ligne__poids">{p.poids}</span>}</h3>
               <p class="ligne__prix">{prixTxt(p)}&nbsp;€</p>
               <p class="ligne__comp">{p.composition}.</p>

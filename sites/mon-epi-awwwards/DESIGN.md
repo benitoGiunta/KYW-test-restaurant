@@ -56,3 +56,33 @@ Test de l'échange : la phrase 1 ne tient avec aucun autre commerce (le taux d'e
 16. [x] Chaque famille de section une seule fois par page.
 17. [x] Hero en 3 s : chiffre, titre, CTA visibles sans défiler à 1440×900, 1280×720, 1024×768 et 390×844 (CTA bas : 691, 641, 555, 610 px).
 18. [x] Mobile 390 recomposé : chiffre `clamp`, arche basse, rail `scroll-snap`, aucun débordement horizontal (`scrollWidth` 390 sur 4 pages).
+
+### Phase 2 (mouvement, interactions)
+Pilote : `src/motion/tamis.ts` (variable unique : part du défilement lue de 65 à 80 %, distribuée à la jauge de l'en-tête, aux barreaux et au filet du pied ; pointeur qui écarte les grains ; `startIdle`). Appelé une fois par `src/motion/setup.ts`. Signature : l'échelle se remplit au défilement (scrub `--b` sur `scale` des `::after`) et la jauge de l'en-tête compte de 65 à 80 % sur chaque page.
+19. [x] Menu mobile sous 40 rem : `Header.astro` bouton « Menu » `aria-expanded`/`aria-controls`, overlay plein écran (`site.css`, `.entete.is-open .nav`), focus piégé et Échap (`tamis.ts`, `initMenu`). Mesure 390 : ouverture `aria-expanded=true`, nav 390×844, focus sur « Carte », Tab boucle Carte > Histoire > Commander > Fermer, Échap rend le focus au bouton, clic sur un lien ferme puis navigue.
+20. [x] Engine verbatim, `astro.ts` (`start(setupMotion)` dans `Base.astro`), `transition:persist` sur `#curtain`, `transition:animate="none"` sur `<html>`. `#gl` et `#cursor` sans objet (ni GL ni follower, décision ci-dessous).
+21. [x] Une horloge : `grep "addEventListener('scroll'|requestAnimationFrame" src/motion src/pages src/components src/layouts` vide ; grains sur `gsap.ticker`, jauge par `onScroll` de l'engine. (Le seul listener scroll est celui, verbatim, de `engine/scroll.ts` en mouvement réduit.)
+22. [x] Code de page dans `onPage()` (`tamis.ts`), nettoyages rendus (menu, idle, observateur, pointeur) ; aucun code DOM au niveau module.
+23. [x] Aucune CSS `transform` sur un élément GSAP : barreaux et pied par `scale: var(--b) 1` (GSAP tweene `--b`), jauge, image du hero, grains et liens du menu sans transform CSS. Les `transform` CSS restants (`.btn::before`, `.entete` en `frame-away`) ne sont pas animés par GSAP.
+24. [x] Module pilote avec `startIdle` (grains) et pointeur (`pointermove` sur le hero écarte les grains de 90 px).
+25. [x] Loader : aucun, décidé en phase 1 (le premier frame est le chiffre ; aucun `#loader` dans `Base.astro`).
+26. [x] Transition du concept : le rideau suie bordé d'un filet braise tombe (0,7 s) puis continue sa chute (0,8 s), `setup.ts`. Mesure : après clic sur « Carte », rideau `hidden`, h1 visible à 2,6 s.
+27. [x] Intro : `data-split="lines" data-intro` sur chaque h1 (5 pages), image du hero de 1,12 à 1 (déjà peinte), grains en fondu. Le chiffre « 75 % » reste peint au premier frame (LCP).
+28. [x] Épinglage : aucun pin ; scrubs `start: top 92%`, `end: top 50%`, `invalidateOnRefresh: true`. Titres de rayon en `position: sticky` CSS (phase 1).
+29. [x] Repli statique : sans mouvement, barreaux pleins (`--b` absent = 1), grains semés immobiles, h1 et blocs visibles (mesure réduit : 0 élément caché sur 5 pages, pas de classe `lenis`).
+30. [x] Copies décoratives : chiffre du hero, grains, jauge, échelle du pied en `aria-hidden` ; aucun titre dupliqué.
+31. [x] Une famille d'easing (`ease.out`, `ease.inOut`, `ease.soft` de l'engine) ; durées 0,35 à 0,5 s (petits), 0,7 à 1,6 s (grands) ; stagger 60 ms (menu), 80 ms (lignes engine).
+32. [x] Trois traitements, verbe « la barre se remplit » : CTA remplissage vertical, nav et liens du pied soulignement qui se remplit, lignes de carte filet de la longueur du taux de la farine + titre braise. Liens texte : soulignement qui s'épaissit en braise.
+33. [x] `:hover` sous `@media (hover: hover)`, même état sur `:focus-visible` (`site.css`, bloc phase 2) ; `:active` sur `.btn`, liens, `.menu-btn`.
+34. [x] Liens texte `.lien` soulignés au repos.
+35. [ ] Phase 3 (`report.json`).
+36. [~] Repos : grains en écoulement constant (24 grains de 4 à 6 px, 0,05 à 0,1 hauteur par seconde) mesurés en mouvement (transform change en 1,5 s) ; `idleMotion` à lire en phase 3.
+37. [x] Curseur natif, pas de follower ; rien ne dépend du hover (aperçu de ligne = décor, prix et farine toujours écrits).
+38. [x] Aucun blur ni `box-shadow`, aucun `will-change`.
+39. [x] Réduit : ni Lenis (pas de classe `lenis`), ni scrub, ni grains animés, ni loader ; 0 texte caché (mesure).
+40. [x] GL sans objet, décision écrite en Concept Card ; lignes `// GL` retirées de l'engine.
+41. [x] Sans objet (pas de GL).
+44. [~] Skip link « Aller au contenu » en premier (`Base.astro`), focus braise (`engine.css`) ; à confirmer en phase 3.
+45. [ ] Phase 3.
+46. [x] Tout le texte est du DOM, aucun canvas.
+47. [~] Bouton Menu 44 px (mesuré), CTA 48 px, liens de nav et du pied 44 px ; mesure complète en phase 3.
