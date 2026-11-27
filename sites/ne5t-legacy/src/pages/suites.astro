@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Foot from '../components/Foot.astro';
+import Photo from '../components/Photo.astro';
+import { site, suites } from '../data/site';
+---
+<Base title="Suites et duplex de NE5T, Namur" description="Quatre suites et deux duplex à la Maison Gersdorff, à Namur : Suite Cosy, Suite Ne5t, Suite Terrasse, Suite Blanche, Duplex Madeleine, Duplex Vauban.">
+  <Nav current="suites" />
+  <main id="contenu">
+    <section class="hero hero--stage" aria-labelledby="titre">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <h1 id="titre">Quatre suites, deux duplex</h1>
+          <p class="lead">Des chambres sous poutres, dans la pierre de la ferme.</p>
+          <p class="hero__actions">
+            <a class="btn btn--primary" href={site.roomraccoon} rel="noopener">Réserver une chambre</a>
+          </p>
+        </div>
+        <Photo name="17-duplex-salon-cheminee" class="hero__photo" eager sizes="(min-width: 60rem) 58vw, 100vw" ratio="4 / 3" />
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="suites">
+      <div class="container duo">
+        <div class="duo__text">
+          <h2 id="suites">Les suites</h2>
+          <ul class="rows">
+            {suites.suites.map((s) => <li class="row"><h3>{s}</h3></li>)}
+          </ul>
+        </div>
+        <Photo name="18-chambre-lit" class="duo__photo" sizes="(min-width: 60rem) 40vw, 100vw" ratio="4 / 3" />
+      </div>
+    </section>
+
+    <section class="section section--band" aria-labelledby="duplex">
+      <div class="container split">
+        <div class="split__head"><h2 id="duplex">Les duplex</h2></div>
+        <ul class="rows">
+          {suites.duplex.map((s) => <li class="row"><h3>{s}</h3></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="tarifs">
+      <div class="container">
+        <div class="well figure-well">
+          <h2 id="tarifs">Les chambres</h2>
+          <p class="figure-well__num num" aria-label="de 260 à 400 euros">260 à 400 €</p>
+          <div class="figure-well__rest">
+            <p class="figure-well__label">La nuit, à titre indicatif.</p>
+            <ul class="rows rows--tight">
+              <li class="row"><p>Petit-déjeuner : 26 € pour les résidents, 30 € pour les autres</p></li>
+              <li class="row"><p>Repas en suite : à réserver 24 h avant, supplément de 15 %</p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section close" aria-labelledby="reserver">
+      <div class="container close__grid">
+        <div class="close__text">
+          <h2 id="reserver">Réserver une chambre</h2>
+          <p class="lead">Les chambres se réservent en ligne, le restaurant par téléphone.</p>
+          <p class="hero__actions">
+            <a class="btn btn--primary" href={site.roomraccoon} rel="noopener">Réserver en ligne</a>
+            <a class="btn btn--ghost" href={site.telHref}>Appeler le {site.telAffiche}</a>
+          </p>
+        </div>
+        <Photo name="20-duplex-salon-clair" class="close__photo" sizes="(min-width: 60rem) 45vw, 100vw" ratio="4 / 3" />
+      </div>
+    </section>
+  </main>
+  <Foot />
+</Base>

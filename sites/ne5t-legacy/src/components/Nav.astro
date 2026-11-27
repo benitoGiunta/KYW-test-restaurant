@@ -1,0 +1,26 @@
+---
+import { nav, site, photos } from '../data/site';
+import { u } from '../lib/typo';
+interface Props { current?: string }
+const { current = '' } = Astro.props;
+const logo = photos['00-logo-ne5t'];
+---
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="nav">
+  <div class="nav__bar">
+    <a class="nav__brand" href={u('')} aria-label="NE5T Hôtel & Spa Restaurant, accueil">
+      <img src={u('photos/00-logo-ne5t.webp')} width={logo.w} height={logo.h} alt="" />
+    </a>
+    <details class="nav__menu">
+      <summary>Menu</summary>
+      <nav aria-label="Navigation principale">
+        <ul>
+          {nav.map((n) => (
+            <li><a href={u(n.href)} aria-current={n.id === current ? 'page' : undefined}>{n.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </details>
+    <a class="btn btn--primary nav__cta" href={site.telHref}>Réserver au {site.telAffiche}</a>
+  </div>
+</header>

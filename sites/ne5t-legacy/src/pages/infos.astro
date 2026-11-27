@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Foot from '../components/Foot.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, spaTarifs, formules } from '../data/site';
+---
+<Base title="Infos et tarifs, NE5T Hôtel & Spa, Namur" description="Adresse, téléphone, horaires et tarifs de NE5T Hôtel & Spa et du restaurant Intuition à Namur.">
+  <Nav current="infos" />
+  <main id="contenu">
+    <section class="hero hero--corridor" aria-labelledby="titre">
+      <div class="container hero__content">
+        <h1 id="titre">Infos et tarifs</h1>
+        <p class="lead">Adresse, téléphone, horaires et prix, au même endroit.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="contact">
+      <div class="container split">
+        <div class="split__head">
+          <h2 id="contact">Nous trouver</h2>
+          <address class="addr">
+            <p>{site.nom}<br />{site.adresse.rue}<br />{site.adresse.cp} {site.adresse.commune}</p>
+            <p><a href={site.telHref}>{site.telAffiche}</a><br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
+          </address>
+        </div>
+        <Horaires />
+      </div>
+    </section>
+
+    <section class="section section--band" aria-labelledby="tarifs">
+      <div class="container split split--rev">
+        <div class="split__head">
+          <h2 id="tarifs">Les tarifs</h2>
+          <p class="lead">Par personne, sauf mention contraire.</p>
+        </div>
+        <ul class="rows">
+          {formules.slice(0, 3).map((f) => (
+            <li class="row"><div class="row__name"><h3>{f.nom}</h3>{f.note && <p class="row__note">{f.note}</p>}</div><p class="row__price num">{f.prix}</p></li>
+          ))}
+          {spaTarifs.map((t) => (
+            <li class="row"><div class="row__name"><h3>Spa : {t.nom.toLowerCase()}</h3>{t.note && <p class="row__note">{t.note}</p>}</div><p class="row__price num">{t.prix}</p></li>
+          ))}
+          <li class="row"><div class="row__name"><h3>Chambres</h3><p class="row__note">La nuit, à titre indicatif</p></div><p class="row__price num">260 à 400 €</p></li>
+          <li class="row"><div class="row__name"><h3>Petit-déjeuner</h3><p class="row__note">Résidents. Autres clients : 30 €</p></div><p class="row__price num">26 €</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="liens">
+      <div class="container split">
+        <div class="split__head"><h2 id="liens">Réserver et suivre</h2></div>
+        <ul class="rows">
+          <li class="row row--link"><h3><a href={site.roomraccoon} rel="noopener">Réserver une chambre en ligne</a></h3></li>
+          <li class="row row--link"><h3><a href={site.facebook} rel="noopener">Facebook</a></h3></li>
+          <li class="row row--link"><h3><a href={site.instagram} rel="noopener">Instagram</a></h3></li>
+          <li class="row row--link"><h3><a href={site.tripadvisor} rel="noopener">TripAdvisor</a></h3></li>
+          <li class="row row--link"><h3><a href={site.presse} rel="noopener">La revue de presse</a></h3></li>
+          <li class="row row--link"><h3><a href={site.siteActuel} rel="noopener">Séminaires et offres, sur le site actuel</a></h3></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Foot />
+</Base>

@@ -1,0 +1,22 @@
+---
+import { photos } from '../data/site';
+import { u } from '../lib/typo';
+interface Props { name: string; sizes?: string; eager?: boolean; pos?: string; ratio?: string; class?: string; caption?: string }
+const { name, sizes = '(min-width: 60rem) 50vw, 100vw', eager = false, pos = '50% 50%', ratio, class: cls = '', caption } = Astro.props;
+const p = photos[name];
+---
+<figure class:list={['photo', cls]}>
+  <div class="photo__frame" data-slot={name} data-alt={p.alt} style={`aspect-ratio:${ratio ?? `${p.w} / ${p.h}`};--pos:${pos}`}>
+    <img
+      src={u(`photos/${name}.webp`)}
+      width={p.w}
+      height={p.h}
+      alt={p.alt}
+      sizes={sizes}
+      loading={eager ? undefined : 'lazy'}
+      fetchpriority={eager ? 'high' : undefined}
+      decoding={eager ? 'sync' : 'async'}
+    />
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

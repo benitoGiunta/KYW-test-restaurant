@@ -1,0 +1,16 @@
+---
+import Photo from './Photo.astro';
+import { site } from '../data/site';
+interface Props { photo: string; titre?: string; texte?: string; pos?: string }
+const { photo, titre = 'Réserver une table', texte = 'Le restaurant se réserve par téléphone. Signalez vos allergies à la réservation.', pos } = Astro.props;
+---
+<section class="section close" aria-labelledby="reserver">
+  <div class="container close__grid">
+    <div class="close__text">
+      <h2 id="reserver">{titre}</h2>
+      <p class="lead">{texte}</p>
+      <p><a class="btn btn--primary" href={site.telHref}>Appeler le {site.telAffiche}</a></p>
+    </div>
+    <Photo name={photo} class="close__photo" sizes="(min-width: 60rem) 40vw, 100vw" pos={pos} />
+  </div>
+</section>

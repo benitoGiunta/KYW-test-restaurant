@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Foot from '../components/Foot.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import Reserver from '../components/Reserver.astro';
+import { site, carte, formules } from '../data/site';
+---
+<Base title="Intuition, le restaurant de NE5T, Namur" description="Le menu du mois d’Intuition à Namur : formules en 3 ou 4 services, lunch carte blanche, vins et rhums, repas en suite.">
+  <Nav current="restaurant" />
+  <main id="contenu">
+    <section class="hero hero--stage" aria-labelledby="titre">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <h1 id="titre">Intuition</h1>
+          <p class="lead">La cuisine du chef Nico, le vin et le rhum de Manu.</p>
+          <p class="hero__actions">
+            <a class="btn btn--primary" href={site.telHref}>Réserver au {site.telAffiche}</a>
+            <a class="btn btn--ghost" href="#carte">Le menu du mois</a>
+          </p>
+        </div>
+        <Photo name="06-plat-poisson" class="hero__photo" eager sizes="(min-width: 60rem) 58vw, 100vw" ratio="4 / 3" pos="50% 50%" />
+      </div>
+    </section>
+
+    <section class="section" id="carte" aria-labelledby="menu">
+      <div class="container split">
+        <div class="split__head">
+          <h2 id="menu">Le menu du mois</h2>
+          <p class="lead">Une cuisine franche, sincère et intuitive.</p>
+        </div>
+        <ul class="rows">
+          {carte.map((c) => (
+            <li class="row row--carte">
+              <h3 class="row__cat">{c.cat}</h3>
+              <ul class="plats">
+                {c.plats.map((p) => (
+                  <li>
+                    <p class="plat__nom">{p.nom}{p.prix && <span class="plat__prix num"> {p.prix}</span>}</p>
+                    {p.desc && <p class="plat__desc">{p.desc}</p>}
+                    {p.note && <p class="plat__desc">{p.note}</p>}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--band" aria-labelledby="formules">
+      <div class="container split split--rev">
+        <div class="split__head">
+          <h2 id="formules">Les formules</h2>
+          <p class="lead">Prix par personne.</p>
+        </div>
+        <ul class="rows">
+          {formules.map((f) => (
+            <li class="row">
+              <div class="row__name"><h3>{f.nom}</h3>{f.note && <p class="row__note">{f.note}</p>}</div>
+              <p class="row__price num">{f.prix}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="vins">
+      <div class="container duo">
+        <Photo name="11-resto-service-vin" class="duo__photo" sizes="(min-width: 60rem) 36vw, 100vw" pos="50% 45%" />
+        <div class="duo__text">
+          <h2 id="vins">Le vin et le rhum</h2>
+          <p class="lead">Manu s’occupe de la sélection et de la cave. Une sélection de vins accompagne chaque formule.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--band" aria-labelledby="autres">
+      <div class="container split">
+        <div class="split__head">
+          <h2 id="autres">Autrement</h2>
+        </div>
+        <ul class="rows">
+          <li class="row"><div class="row__name"><h3>Repas en suite</h3><p class="row__note">À réserver au moins 24 h à l’avance.</p></div><p class="row__price">+ 15 %</p></li>
+          <li class="row"><div class="row__name"><h3>Privatisation du restaurant</h3><p class="row__note">Jusqu’à 45 couverts.</p></div><p class="row__price num">45 couverts</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="horaires">
+      <div class="container split">
+        <div class="split__head"><h2 id="horaires">Quand venir</h2></div>
+        <Horaires />
+      </div>
+    </section>
+
+    <Reserver photo="10-resto-dessert" pos="50% 55%" />
+  </main>
+  <Foot />
+</Base>

@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Foot from '../components/Foot.astro';
+import Photo from '../components/Photo.astro';
+import Horaires from '../components/Horaires.astro';
+import Reserver from '../components/Reserver.astro';
+import { site, formules, suites } from '../data/site';
+import { u } from '../lib/typo';
+---
+<Base title="NE5T Hôtel & Spa, restaurant Intuition, Namur" description="Intuition, le restaurant de l’hôtel NE5T à Namur : cuisine de saison, spa et suites dans une ancienne ferme en pierre au-dessus de la Meuse.">
+  <Nav current="accueil" />
+  <main id="contenu">
+    <section class="hero hero--poster" aria-labelledby="titre">
+      <Photo name="01-facade-nuit-piscine" class="hero__photo" eager sizes="100vw" pos="50% 62%" />
+      <div class="hero__scrim"></div>
+      <div class="container hero__content">
+        <h1 id="titre">Une gastronomie décomplexée</h1>
+        <p class="lead">Le restaurant Intuition, dans une ferme en pierre au-dessus de la Meuse.</p>
+        <p class="hero__actions">
+          <a class="btn btn--primary" href={site.telHref}>Réserver au {site.telAffiche}</a>
+          <a class="btn btn--ghost" href={u('restaurant/')}>Le menu du mois</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="bleed" aria-label="Une table à Intuition">
+      <Photo name="05-table-toast" class="bleed__photo" sizes="100vw" ratio="21 / 9" pos="50% 55%" />
+    </section>
+
+    <section class="section" aria-labelledby="menu">
+      <div class="container split">
+        <div class="split__head">
+          <h2 id="menu">Le menu du mois</h2>
+          <p class="lead">Il change chaque mois, au fil des arrivages.</p>
+          <p><a class="link" href={u('restaurant/')}>Voir le menu complet</a></p>
+        </div>
+        <ul class="rows">
+          {formules.map((f) => (
+            <li class="row">
+              <div class="row__name"><h3>{f.nom}</h3>{f.note && <p class="row__note">{f.note}</p>}</div>
+              <p class="row__price num">{f.prix}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--band" aria-labelledby="spa">
+      <div class="container">
+        <div class="well figure-well">
+          <h2 id="spa">Le spa WellNE5T</h2>
+          <p class="figure-well__num num" aria-label="35 euros">35 €</p>
+          <div class="figure-well__rest">
+            <p class="figure-well__label">Trois heures au spa pour les résidents, 70 € pour les autres.</p>
+            <ul class="rows rows--tight">
+              <li class="row"><p>Un spa de 250 m²</p></li>
+              <li class="row"><p>Piscine intérieure et extérieure</p></li>
+              <li class="row"><p>Ouvert 7 jours sur 7, de 9 h 30 à 20 h 30</p></li>
+            </ul>
+            <p><a class="link" href={u('spa/')}>Découvrir le spa</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="suites">
+      <div class="container split split--rev">
+        <div class="split__head">
+          <h2 id="suites">Quatre suites, deux duplex</h2>
+          <p class="lead">Séjourner à la Maison Gersdorff.</p>
+          <p><a class="link" href={u('suites/')}>Voir les suites et duplex</a></p>
+        </div>
+        <ul class="rows">
+          {[...suites.suites, ...suites.duplex].map((s) => (
+            <li class="row row--link"><h3><a href={u('suites/')}>{s}</a></h3></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--band" aria-labelledby="horaires">
+      <div class="container split">
+        <div class="split__head">
+          <h2 id="horaires">Horaires et adresse</h2>
+          <address class="addr">
+            <p>{site.adresse.rue}<br />{site.adresse.cp} {site.adresse.commune}</p>
+            <p><a href={site.telHref}>{site.telAffiche}</a><br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
+          </address>
+        </div>
+        <Horaires />
+      </div>
+    </section>
+
+    <Reserver photo="12-resto-table-terrasse" pos="50% 40%" />
+  </main>
+  <Foot />
+</Base>

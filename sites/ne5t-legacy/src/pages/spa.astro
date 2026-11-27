@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Foot from '../components/Foot.astro';
+import Photo from '../components/Photo.astro';
+import { site, spaTarifs } from '../data/site';
+---
+<Base title="WellNE5T, le spa de NE5T à Namur" description="WellNE5T, le spa de 250 m² de l’hôtel NE5T à Namur, ouvert aux clients extérieurs : piscine, soins Thémaé, massages.">
+  <Nav current="spa" />
+  <main id="contenu">
+    <section class="hero hero--poster" aria-labelledby="titre">
+      <Photo name="14-spa-piscine-voutes" class="hero__photo" eager sizes="100vw" pos="50% 60%" />
+      <div class="hero__scrim"></div>
+      <div class="container hero__content">
+        <h1 id="titre">WellNE5T</h1>
+        <p class="lead">250 m² sous les voûtes en brique, ouverts aux clients extérieurs.</p>
+        <p class="hero__actions">
+          <a class="btn btn--primary" href={site.telHref}>Réserver au {site.telAffiche}</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="tarifs">
+      <div class="container split">
+        <div class="split__head">
+          <h2 id="tarifs">Les tarifs</h2>
+          <p class="lead">Piscine intérieure et extérieure, deux esthéticiennes, gamme de soins Thémaé.</p>
+        </div>
+        <ul class="rows">
+          {spaTarifs.map((t) => (
+            <li class="row">
+              <div class="row__name"><h3>{t.nom}</h3>{t.note && <p class="row__note">{t.note}</p>}</div>
+              <p class="row__price num">{t.prix}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="bleed bleed--slim" aria-label="Le sauna infrarouge">
+      <Photo name="16-spa-sauna-infrarouge" class="bleed__photo" sizes="(min-width: 80rem) 1200px, 100vw" />
+    </section>
+
+    <section class="section" aria-labelledby="horaires">
+      <div class="container split split--rev">
+        <div class="split__head"><h2 id="horaires">Ouvert 7 jours sur 7</h2></div>
+        <div class="schedule">
+          <dl class="schedule__list">
+            <div class="schedule__row"><dt>Tous les jours</dt><dd>9 h 30 à 20 h 30</dd></div>
+          </dl>
+          <p class="schedule__note">Réservation par téléphone de 9 h à 18 h : <a href={site.telHref}>{site.telAffiche}</a></p>
+          <p class="schedule__note">Une demande en ligne reçoit une réponse sous 24 h, depuis <a href={`${site.siteActuel}/spa/`} rel="noopener">la page du spa</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section close" aria-labelledby="reserver">
+      <div class="container close__grid">
+        <div class="close__text">
+          <h2 id="reserver">Réserver le spa</h2>
+          <p class="lead">Les résidents profitent de trois heures à 35 €.</p>
+          <p><a class="btn btn--primary" href={site.telHref}>Appeler le {site.telAffiche}</a></p>
+        </div>
+        <Photo name="15-spa-pieds-eau" class="close__photo" sizes="(min-width: 60rem) 45vw, 100vw" ratio="4 / 3" />
+      </div>
+    </section>
+  </main>
+  <Foot />
+</Base>

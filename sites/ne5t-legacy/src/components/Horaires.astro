@@ -1,0 +1,17 @@
+---
+import { semaineResto, site } from '../data/site';
+interface Props { fill?: boolean }
+const { fill = true } = Astro.props;
+---
+<div class="schedule">
+  <dl class="schedule__list">
+    {semaineResto.map((d) => (
+      <div class:list={['schedule__row', { 'is-closed': d.ferme }]}>
+        <dt>{d.j}</dt>
+        <dd>{d.h}</dd>
+      </div>
+    ))}
+  </dl>
+  {fill && <p class="schedule__note">Heures exactes : <span class="fill">à confirmer auprès du restaurant</span></p>}
+  <p class="schedule__note">Réservation par téléphone uniquement : <a href={site.telHref}>{site.telAffiche}</a></p>
+</div>
