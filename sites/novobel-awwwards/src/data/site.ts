@@ -28,12 +28,12 @@ export const site = {
 
 export type Lot = { nom: string; texte: string; placeholder: true };
 export const lots: Lot[] = [
-  { nom: 'Étude', texte: 'Le projet est mesuré, chiffré et planifié avant le premier coup de masse.', placeholder: true },
-  { nom: 'Gros œuvre', texte: 'Structure, murs, dalles et ouvertures : la base sur laquelle tout le reste repose.', placeholder: true },
-  { nom: 'Finitions', texte: 'Plafonnage, cloisons, peintures, sols et carrelages : le travail que l’on voit.', placeholder: true },
-  { nom: 'Installations techniques', texte: 'Électricité et équipements techniques posés et réglés dans l’ordre du chantier.', placeholder: true },
-  { nom: 'Remise des clés', texte: 'Un seul interlocuteur, de la première visite jusqu’au dernier contrôle.', placeholder: true },
+  { nom: 'Rénovation complète', texte: 'De l’étude à la remise des clés.', placeholder: true },
+  { nom: 'Gros œuvre', texte: 'Un des quatre services de Novobel.', placeholder: true },
+  { nom: 'Finitions', texte: 'Un des quatre services de Novobel.', placeholder: true },
+  { nom: 'Installations techniques', texte: 'Un des quatre services de Novobel.', placeholder: true },
 ];
+
 
 export type Projet = { nom: string; type: string; appartements: number; photo: 'cuisine' | 'salon' | 'combles' | 'entrepot'; lieu?: string };
 export const projets: Projet[] = [

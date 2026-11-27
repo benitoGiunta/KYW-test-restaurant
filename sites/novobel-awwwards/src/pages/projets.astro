@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import { u } from '../lib/url';
-import { site, projets, lots } from '../data/site';
+import { site, projets } from '../data/site';
 ---
 <Base page="projets" title="Projets" description="Les projets de Novobel à Namur : Astrid, Bellevue, Joseph et Citadelle, quatre transformations de bureaux et de maisons en appartements.">
   <header class="entete wrap">
@@ -16,6 +16,7 @@ import { site, projets, lots } from '../data/site';
       <article class={`fiche ${i % 2 ? 'fiche--droite' : ''}`}>
         <figure class="fiche__media" data-reveal>
           <Photo cle={p.photo} widths={[480, 800, 1200]} sizes="(min-width: 900px) 52vw, 100vw" />
+          <figcaption class="legende">Image d’illustration</figcaption>
         </figure>
         <div class="fiche__corps">
           <p class="fiche__val display" aria-hidden="true">{p.appartements}</p>
@@ -33,6 +34,6 @@ import { site, projets, lots } from '../data/site';
     <ul class="services__liste">
       <li>Rénovation complète</li><li>Gros œuvre</li><li>Finitions</li><li>Installations techniques</li>
     </ul>
-    <p>Ces quatre services couvrent {lots.length}{' '}étapes de chantier, de l’étude à la remise des clés. <a class="lien" href={u('/contact/')}>Parlez-nous de votre projet</a>.</p>
+    <p>Ces quatre services accompagnent chaque projet, de l’étude à la remise des clés. <a class="lien" href={u('/contact/')}>Parlez-nous de votre projet</a>.</p>
   </section>
 </Base>
