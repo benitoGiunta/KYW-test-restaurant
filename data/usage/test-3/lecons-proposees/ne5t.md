@@ -6,3 +6,4 @@
 - 2026-11-27 · ne5t · awwwards (phase 2) : un repère fixe de coin (bas gauche) chevauche le texte courant sur nappe et en pages intérieures ; le poser en `writing-mode: vertical-rl` centré dans la gouttière droite (roulement en `xPercent`) et le masquer quand la gouttière < 2 lignes (ici sous 1100 px).
 - 2026-11-27 · variante legacy phase 2 : un bouton en `inline-flex` supprime l'espace en bord de ses enfants (« Réserver<span> au … » collé) : utiliser `gap`, pas un espace de texte ; la barre de l'Astro dev apparaît en bas des captures `--url`.
 - 2026-11-27 : axe label-content-name-mismatch : un aria-label de lien de marque doit contenir le texte visible, sinon le retirer (gabarit Velours Header.astro).
+2026-11-27 · le crawl de captures ne couvre que 3 pages et l'axe signale en 404 un contraste mesuré pendant le reveal (faux positif) : revérifier après 3 s avant de corriger.
