@@ -80,6 +80,7 @@ export function initJournee() {
   onPage(medaillons);
   onPage(horairesFleches);
   onPage(invitation);
+  onPage(astre);
 }
 
 /** Horloge du hero : HH:MM en display, secondes en petit, anneau qui avance d'un cran par seconde (idle). */
@@ -193,4 +194,28 @@ function invitation() {
   maj();
   const id = setInterval(maj, 60000);
   return () => clearInterval(id);
+}
+
+/** Astre du hero (≥ 1200 px) : photo en disque, orbite et soleil rose posé à l'heure réelle (la position vient de --heure,
+ *  tweenée avec le ciel : il suit donc le moment affiché). Entrée : le soleil monte depuis l'aube et le disque se révèle
+ *  (--astre-in 0 → 1, dans la timeline d'intro). Interaction : le disque dérive vers le pointeur (quickTo), jamais
+ *  en tactile ni en reduced motion (le CSS donne alors l'état final). */
+function astre({ intro }: { intro: gsap.core.Timeline }) {
+  const el = document.querySelector<HTMLElement>('[data-astre]');
+  if (!el || prefersReducedMotion()) return;
+  intro.fromTo(el, { '--astre-in': 0 }, { '--astre-in': 1, duration: 1.9, ease: ease.out, clearProps: '--astre-in' }, 0.25);
+  const hero = el.closest<HTMLElement>('.hero');
+  const disque = el.querySelector<HTMLElement>('.astre__disque');
+  if (!hero || !disque || !matchMedia('(hover: hover) and (min-width: 1200px)').matches) return;
+  const x = gsap.quickTo(disque, 'x', { duration: 1, ease: 'power3.out' });
+  const y = gsap.quickTo(disque, 'y', { duration: 1, ease: 'power3.out' });
+  const bouge = (e: PointerEvent) => {
+    const r = hero.getBoundingClientRect();
+    x(((e.clientX - r.left) / r.width - 0.5) * 28);
+    y(((e.clientY - r.top) / r.height - 0.5) * 28);
+  };
+  const sort = () => { x(0); y(0); };
+  hero.addEventListener('pointermove', bouge);
+  hero.addEventListener('pointerleave', sort);
+  return () => { hero.removeEventListener('pointermove', bouge); hero.removeEventListener('pointerleave', sort); gsap.set(disque, { clearProps: 'x,y' }); };
 }

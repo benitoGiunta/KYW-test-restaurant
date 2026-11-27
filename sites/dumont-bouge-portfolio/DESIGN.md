@@ -37,7 +37,7 @@ Composants modifiés : `Horaires` (Bouge / Namur au lieu de cuisine / bar), `Fri
 
 ## Direction artistique
 
-Typo, grille, motion : celles du gabarit (Bricolage Grotesque + Rethink Sans). Ciel : aube, midi, ocre, après-midi (blanc), corail (rose vers corail), nuit (17h30, fermeture). Pas d'animations avancées dans cette phase.
+Typo, grille, motion : celles du gabarit (Bricolage Grotesque + Rethink Sans). Ciel : aube, midi, ocre, après-midi (blanc), corail (rose vers corail), nuit (17h30, fermeture). Phase 2 : signature « astre » du hero (photo de la tarte en disque, orbite, soleil rose à l'heure réelle, dérive au pointeur, >= 1200 px), pastilles de moments en rangée à snap en mobile, pied de page KYW clair restauré.
 
 ## Adéquation estimée : ~80 %
 

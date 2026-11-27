@@ -121,8 +121,9 @@ address { font-style: normal; }
 .fleche:hover svg, .fleche:focus-visible svg { transform: translateX(4px); }
 
 /* Hero cadran. */
-.hero { position: relative; min-height: calc(100svh - 7.5rem); display: grid; align-content: center; padding-block: calc(var(--u) * 6) calc(var(--u) * 8); }
-.hero__haut { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: calc(var(--u) * 2); margin-bottom: calc(var(--u) * 6); }
+.hero { position: relative; min-height: calc(100svh - 7.5rem); display: grid; align-content: center; padding-block: calc(var(--u) * 3) calc(var(--u) * 5); }
+.hero__haut { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: calc(var(--u) * 2); margin-bottom: calc(var(--u) * 3); }
+.hero__haut .badge { display: none; } /* le badge d'ouverture est déjà dans l'en-tête : pas de doublon */
 .horloge { display: inline-flex; align-items: center; gap: 0.6em; }
 .horloge__ring { width: 2.6rem; height: 2.6rem; transform: rotate(-90deg); }
 .horloge__ring circle { fill: none; stroke-width: 2.5; }
@@ -155,7 +156,7 @@ figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux)
 /* Lignes de carte : nom, détail, prix tabulaire, pointillé qui relie. */
 .lignes { list-style: none; padding: 0; }
 .ligne { display: grid; grid-template-columns: 1fr auto; column-gap: calc(var(--u) * 2); align-items: baseline; padding-block: calc(var(--u) * 1.2); border-bottom: 1px solid var(--ligne); transition: padding-left 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
-.ligne:hover { padding-left: 0.6rem; }
+@media (hover: hover) { .ligne:hover { padding-left: 0.6rem; } }
 .ligne__nom { font-weight: 600; }
 .ligne__detail { grid-column: 1; font-size: var(--t-s); color: var(--encre-doux); }
 .ligne__prix { grid-column: 2; grid-row: 1; font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
@@ -198,11 +199,6 @@ figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux)
 
 /* 19h : paire asymétrique, photo haute | menu. */
 .moment--pair .photo { max-height: 78vh; }
-.menu-soir { padding: calc(var(--u) * 3); border-radius: var(--radius-carte); border: 1px solid var(--ligne); }
-.menu-soir__prix { font-family: var(--f-display); font-weight: 800; font-size: var(--t-xl); letter-spacing: -0.03em; line-height: 0.9; margin-bottom: calc(var(--u) * 2); }
-.menu-soir ol { list-style: none; padding: 0; counter-reset: service; }
-.menu-soir li { display: flex; gap: 1em; align-items: baseline; padding-block: calc(var(--u) * 0.9); border-top: 1px solid var(--ligne); font-weight: 600; }
-.menu-soir li::before { counter-increment: service; content: counter(service, decimal-leading-zero); font-size: var(--t-xs); color: var(--encre-doux); font-variant-numeric: tabular-nums; }
 
 /* 23h : statement et horaires à flèches. */
 .statement { font-family: var(--f-display); font-weight: 800; font-size: var(--t-xl); letter-spacing: -0.03em; line-height: 0.95; max-width: 14ch; }
@@ -251,8 +247,8 @@ figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux)
 .footer__cols { display: grid; gap: calc(var(--u) * 4); grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); font-size: var(--t-s); }
 .footer__titre { font-weight: 600; margin-bottom: var(--u); }
 .footer .link:hover { text-decoration-color: var(--soleil); }
-/* Pied de page KYW : lien « Réalisé par » à 24 px minimum, couleurs de la nuit. */
-.kyw-footer { background: var(--nuit-profonde); color: var(--ivoire); }
+/* Pied de page KYW : bandeau clair du paquet conservé (son logo sombre disparaît sur fond foncé) ; lien à 24 px minimum. */
+.kyw-footer { position: relative; z-index: 1; }
 .kyw-footer__link { min-height: 24px; display: inline-flex; align-items: center; }
 
 /* Loader : ciel d'aube, nom à gauche, horloge qui compte à droite. */
@@ -281,3 +277,27 @@ figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux)
 .maintenant__point::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--disque); animation: frise-pulse 2.4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .maintenant__point::after { animation: none; opacity: 0; } }
 .bandeau--fort { border-style: solid; border-color: var(--encre); background: var(--voile); font-size: var(--t-body); }
+
+/* Astre du hero : disque photo, orbite, soleil à l'heure réelle (≥ 1200 px ; en dessous l'accroche le recouvrirait). */
+.astre { display: none; }
+@media (min-width: 1200px) {
+  .astre { --d: clamp(21rem, 30vw, 30rem); --astre-in: 1; display: block; position: absolute; z-index: 0; width: var(--d); height: var(--d); right: calc(var(--gutter) + 8.5rem); top: 50%; margin-top: calc(var(--d) / -2 + 1rem); pointer-events: none; }
+  .hero .wrap { position: relative; z-index: 1; }
+  .astre__orbite { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .astre__orbite circle { fill: none; stroke: var(--ligne); stroke-dasharray: 1.2 1.6; vector-effect: non-scaling-stroke; stroke-width: 1.5px; }
+  .astre__disque { position: absolute; inset: 11%; border-radius: 50%; overflow: clip; opacity: calc(0.25 + 0.75 * var(--astre-in)); scale: calc(0.82 + 0.18 * var(--astre-in)); box-shadow: 0 0 0 0.5rem var(--ciel-haut), 0 0 0 calc(0.5rem + 1.5px) var(--ligne); }
+  .astre__disque img { width: 100%; height: 100%; object-fit: cover; object-position: 45% 50%; scale: 1.18; }
+  .astre__ciel { position: absolute; inset: 0; rotate: calc(((var(--heure) - 7) * 16.36 - 90) * 1deg + (1 - var(--astre-in)) * -75deg); }
+  .astre__soleil { position: absolute; left: 50%; top: 0; width: 2.6rem; height: 2.6rem; margin: -1.3rem 0 0 -1.3rem; border-radius: 50%; background: var(--disque); box-shadow: 0 0 0 3px var(--ciel-haut), 0 0 0 5px var(--encre); }
+  .astre__soleil::after { content: ''; position: absolute; inset: -0.9rem; border-radius: 50%; border: 2px solid var(--disque); opacity: 0.55; animation: frise-pulse 2.8s ease-in-out infinite; }
+}
+@media (prefers-reduced-motion: reduce) { .astre__soleil::after { animation: none; opacity: 0; } }
+
+/* Un reveal « scale » (1.15) non encore joué élargit la page de 10 px en mobile (viewport agrandi) : on coupe en x par section. */
+.hero, .moment, .section { overflow-x: clip; }
+/* Rangée de moments du hero en mobile : cale chaque pastille et estompe le bord droit (indice de défilement). */
+@media (max-width: 767px) {
+  .chips { scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter); -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2.5rem), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 2.5rem), transparent); }
+  .chip { scroll-snap-align: start; }
+}
+@media (max-width: 767px) { .photo--tea { aspect-ratio: 4 / 3; } }

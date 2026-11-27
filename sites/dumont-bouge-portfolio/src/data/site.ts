@@ -74,7 +74,8 @@ export const site: Restaurant = {
     photo('/photos/vitrine-960.webp', 'Vitrine de tartes et de pâtisseries aux fruits rouges', 960, 720),
     photo('/photos/salade-chevre.webp', 'Assiette de toasts de chèvre, jambon cru et crudités', 1200, 1600),
     photo('/photos/plateau-mini-sandwichs.webp', 'Plateau de mini-sandwichs avec des serviettes siglées Dumont', 1200, 1600),
-    photo('/photos/tarte-framboises.webp', 'Tarte aux framboises et groseilles', 1800, 1012),
+    photo('/photos/tarte-framboises.webp', 'Tarte aux framboises et groseilles', 1800, 864),
+    photo('/photos/tarte-900.webp', 'Tarte aux framboises et groseilles', 900, 432),
   ],
   valeurs: [
     'Pains pétris et cuits chaque matin',

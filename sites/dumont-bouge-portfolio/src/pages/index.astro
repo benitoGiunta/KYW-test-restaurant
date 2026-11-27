@@ -9,12 +9,15 @@ import { u, asset } from '../lib/url';
 const icones = ['tasse', 'assiette', 'couverts', 'couverts', 'verre', 'lune'];
 const m = Object.fromEntries(moments.map((x) => [x.id, x]));
 const cafe = m['m-7h'], pain = m['m-9h'], brunch = m['m-11h30'], dago = m['m-14h'], tea = m['m-15h30'], nuit = m['m-17h30'];
+const photoAstre = photoDe('/photos/tarte-900.webp');
 const photoCafe = photoDe(cafe.photo!), photoBrunch = photoDe(brunch.photo!), photoDago = photoDe(dago.photo!), photoTea = photoDe(tea.photo!);
 const medaillons = [
   { photo: photoDe('/photos/vitrine.webp'), titre: 'La vitrine', texte: 'Tartes et pâtisseries aux fruits rouges' },
   { photo: photoDe('/photos/tarte-framboises.webp'), titre: 'Tarte aux fruits rouges', texte: 'Framboises et groseilles' },
   { photo: photoDe('/photos/plateau-mini-sandwichs.webp'), titre: 'Mini-sandwichs', texte: 'Plateau à emporter' },
 ];
+// Texte de l'anneau : répété jusqu'à ~70 signes, puis étiré sur le cercle (textLength) : jamais de recouvrement.
+const anneau = (t: string) => { const u = `${t} · Dumont Bouge · `; return u.repeat(Math.max(1, Math.round(70 / u.length))); };
 const fleche = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>';
 ---
 <Base theme="aube">
@@ -39,6 +42,11 @@ const fleche = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stro
         <p class="maintenant" data-maintenant hidden>
           <a class="maintenant__lien" href="#accueil" data-maintenant-lien><span class="maintenant__point" aria-hidden="true"></span><span data-maintenant-texte>Aller au moment présent</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" /></svg></a>
         </p>
+      </div>
+    <div class="astre" data-astre aria-hidden="true">
+        <svg class="astre__orbite" viewBox="0 0 100 100"><circle cx="50" cy="50" r="49" /></svg>
+        <div class="astre__ciel"><div class="astre__soleil"></div></div>
+        <div class="astre__disque"><img src={asset(photoAstre.src)} alt="" width={photoAstre.largeur} height={photoAstre.hauteur} fetchpriority="high" decoding="async" /></div>
       </div>
     </section>
 
@@ -80,7 +88,7 @@ const fleche = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stro
                   <div class="medaillon__photo"><img src={asset(md.photo.src)} alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
                   <svg class="medaillon__anneau" viewBox="0 0 200 200" aria-hidden="true">
                     <defs><path id={`arc-${i}`} d="M100,100 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
-                    <text><textPath href={`#arc-${i}`} startOffset="0">{md.titre} · Dumont Bouge · {md.titre} · Dumont Bouge ·</textPath></text>
+                    <text><textPath href={`#arc-${i}`} startOffset="0" textLength="576" lengthAdjust="spacing">{anneau(md.titre)}</textPath></text>
                   </svg>
                 </div>
                 <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}</p>
@@ -160,7 +168,7 @@ const fleche = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stro
     <!-- 15h30 TEA-ROOM : paire asymétrique, ciel corail. -->
     <section class="moment moment--pair" id={tea.id} data-ciel={tea.theme} aria-labelledby="t-15h30">
       <div class="wrap cols">
-        <figure class="c1-5 photo photo--4x5" data-reveal="clip">
+        <figure class="c1-5 photo photo--4x5 photo--tea" data-reveal="clip">
           <img src={asset(photoTea.src)} alt={photoTea.alt} width={photoTea.largeur} height={photoTea.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
         </figure>
         <div class="c7-12">
