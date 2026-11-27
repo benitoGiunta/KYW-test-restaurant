@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Photo from '../components/Photo.astro';
+import Carte from '../components/Carte.astro';
+import Horaires from '../components/Horaires.astro';
+import Reservation from '../components/Reservation.astro';
+import Footer from '../components/Footer.astro';
+import { site, fr } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="Bienvenue chez vous, restaurant de Cédric Delsaut à Namur" description="Table intimiste au premier étage d’une maison de maître, rue Pépin à Namur : un repas en escales, sur réservation, par le chef Cédric Delsaut.">
+  <Nav current="" />
+  <main id="contenu">
+    <section class="hero" aria-labelledby="hero-t">
+      <Photo name="dessert-smiley" eager sizes="100vw" pos="50% 42%" class="hero__photo" ratio="auto" />
+      <div class="container hero__wrap">
+        <div class="plate">
+          <h1 id="hero-t">Bienvenue chez vous.</h1>
+          <p class="lead">Cédric Delsaut cuisine seul, à l’étage d’une maison de maître, aux lueurs des bougies.</p>
+          <p class="plate__acts">
+            <a class="btn btn--accent" href={site.telHref}>Réserver une table</a>
+            <a class="link" href="#repas">Voir le repas</a>
+          </p>
+        </div>
+        <p class="hero__cap">Dessert smiley, fraises et feuilles de bloody dock</p>
+      </div>
+    </section>
+
+    <section class="sec sec--facts" aria-labelledby="table-t">
+      <div class="container split">
+        <div>
+          <h2 id="table-t">Quatre tables, un seul cuisinier.</h2>
+          <p class="lead">Un restaurant « Passionomique », créé en {site.depuis}, où la cuisine française de base classique est travaillée avec une vision contemporaine.</p>
+          <p><a class="link" href={u('presentation/')}>Lire la présentation</a></p>
+        </div>
+        <dl class="facts">
+          <div><dt>Depuis</dt><dd>2002</dd></div>
+          <div><dt>Le lieu</dt><dd>Premier étage d’une maison de maître</dd></div>
+          <div><dt>En salle</dt><dd>Quatre tables, aux lueurs des bougies</dd></div>
+          <div><dt>Le chef</dt><dd>Cuisine, service et cave : {site.chef}</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <Photo name="carpaccio" class="bleed" ratio="21 / 9" sizes="100vw" pos="50% 48%" caption="Carpaccio de noix de Saint-Jacques, crème verte et salicorne" />
+
+    <section class="sec" id="repas" aria-labelledby="repas-t">
+      <div class="container split split--menu">
+        <div>
+          <h2 id="repas-t">Un repas en escales.</h2>
+          <p class="lead">Un voyage entre intemporels et créations de saison. Le menu ne se dévoile pas : la suite se découvre à table.</p>
+          <p><a class="link" href={u('resto/')}>Tout le repas et les accords</a></p>
+        </div>
+        <Carte id="accueil" />
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="voyage-t">
+      <div class="container band__grid">
+        <h2 id="voyage-t">« Sourions à la vie… »</h2>
+        <p class="band__sign">Cédric, chef et propriétaire</p>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="autres-t">
+      <div class="container">
+        <h2 id="autres-t" class="sec__head">Aussi chez nous.</h2>
+        <ul class="doors">
+          <li><a href={u('resto/')}><span class="doors__t">Les mercredis à prix réduit</span><span class="doors__d">Même qualité, même créativité, prix serré, le soir et sur réservation.</span></a></li>
+          <li><a href={u('traiteur/')}><span class="doors__t">Le traiteur à emporter</span><span class="doors__d">Un repas gourmand chaque semaine et la Box pour deux, sur commande 24 h à l’avance.</span></a></li>
+          <li><a href={u('boutique/')}><span class="doors__t">La boutique</span><span class="doors__d">Des produits de bouche d’artisans, pour offrir ou pour cuisiner.</span></a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="sec sec--hours" aria-labelledby="horaires-t">
+      <div class="container hours">
+        <Photo name="facade" class="hours__photo" sizes="(min-width: 60rem) 40vw, 100vw" pos="50% 40%" caption="Rue Pépin, Namur" />
+        <div>
+          <h2 id="horaires-t">Venir à la table.</h2>
+          <address class="addr">{site.adresse.rue}<br />{site.adresse.ville}<br /><a href={site.telHref}>{site.tel}</a></address>
+          <Horaires />
+          <p class="small">Fermé le lundi et le dimanche. Horaires relevés chez des tiers, à confirmer.</p>
+        </div>
+      </div>
+    </section>
+
+    <Reservation />
+  </main>
+  <Footer />
+</Base>

@@ -1,0 +1,16 @@
+---
+import { site, nav } from '../data/site';
+import { u } from '../lib/url';
+const { current = '' } = Astro.props;
+---
+<header class="nav">
+  <div class="container nav__bar">
+    <a class="nav__brand" href={u()}>{site.nom}</a>
+    <nav aria-label="Principale">
+      <ul class="nav__list">
+        {nav.map((n) => <li><a href={u(n.href)} aria-current={n.href === current ? 'page' : undefined}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <a class="btn btn--accent nav__cta" href={site.telHref}>Réserver</a>
+  </div>
+</header>

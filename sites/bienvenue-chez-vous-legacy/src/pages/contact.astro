@@ -1,0 +1,46 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Photo from "../components/Photo.astro";
+import Reservation from "../components/Reservation.astro";
+import Footer from "../components/Footer.astro";
+import Horaires from "../components/Horaires.astro";
+import { site, fr } from "../data/site";
+import { u } from "../lib/url";
+---
+<Base title="Contact et horaires, Bienvenue chez vous, Namur" description="Adresse, téléphone et horaires de Bienvenue chez vous, rue Pépin 33 à Namur. Réservation par téléphone.">
+  <Nav current="contact/" />
+  <main id="contenu">
+    <header class="page-head">
+      <div class="container split">
+        <div>
+          <h1>Réserver, venir.</h1>
+          <p class="lead">Quatre tables seulement : on réserve par téléphone, le restaurant ne travaille que sur réservation.</p>
+          <p class="plate__acts"><a class="btn btn--accent btn--lg" href={site.telHref}>Appeler le {site.tel.replace('+32 ', '0')}</a></p>
+          <p class="small">Numéro relevé chez des tiers, à confirmer.</p>
+        </div>
+        <Photo name="facade" class="page-head__photo" sizes="(min-width: 60rem) 45vw, 100vw" pos="50% 40%" caption="Rue Pépin, Namur" />
+      </div>
+    </header>
+
+    <section class="sec" aria-labelledby="coord-t">
+      <div class="container split">
+        <div>
+          <h2 id="coord-t">Coordonnées.</h2>
+          <address class="addr">{site.adresse.rue}<br />{site.adresse.ville}<br /><a href={site.telHref}>{site.tel}</a><br /><a href={`mailto:${site.email}`}>{site.email}</a></address>
+          <p class="small">E-mail à confirmer : le domaine diffère de celui du site d’origine.</p>
+          <ul class="social">
+            <li><a href={site.facebook} rel="noopener">Facebook</a></li>
+            <li><a href={site.instagram} rel="noopener">Instagram</a></li>
+            <li><a href={site.tiktok} rel="noopener">TikTok</a></li>
+          </ul>
+        </div>
+        <div>
+          <Horaires />
+          <p class="small">Fermé le lundi et le dimanche. Horaires relevés chez des tiers, à confirmer.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>

@@ -1,0 +1,11 @@
+---
+import { jours, fr } from '../data/site';
+---
+<dl class="schedule">
+  {jours.map((j) => (
+    <div class:list={['schedule__row', { 'is-closed': !j.ouvert }]}>
+      <dt>{j.jour}</dt>
+      <dd>{j.ouvert ? <><time>{fr(j.midi!)}</time><time>{fr(j.soir!)}</time></> : 'Fermé'}</dd>
+    </div>
+  ))}
+</dl>

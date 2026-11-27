@@ -1,0 +1,89 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Photo from "../components/Photo.astro";
+import Reservation from "../components/Reservation.astro";
+import Footer from "../components/Footer.astro";
+import { site, fr } from "../data/site";
+import Carte from '../components/Carte.astro';
+import { accords, supplements, exemple } from '../data/site';
+---
+<Base title="Le repas en escales, Bienvenue chez vous, Namur" description="Les formules du repas midi et soir, les accords et les mercredis à prix réduit, au restaurant de Cédric Delsaut à Namur.">
+  <Nav current="resto/" />
+  <main id="contenu">
+    <header class="page-head">
+      <div class="container split">
+        <div>
+          <h1>Le repas, en escales.</h1>
+          <p class="lead">Grignotages, escales, douceurs : un voyage imaginaire et ludique, entre intemporels et créations de saison.</p>
+        </div>
+        <Photo name="canard" class="page-head__photo" sizes="(min-width: 60rem) 45vw, 100vw" caption="Magret en tranches, betterave rose et framboise" />
+      </div>
+    </header>
+
+    <section class="sec" aria-labelledby="formules-t">
+      <div class="container split split--menu">
+        <div>
+          <h2 id="formules-t">Les formules.</h2>
+          <p class="lead">Sur réservation uniquement. Vins au verre, ou carte des vins à prix coûtant (+ droit de bouchon).</p>
+        </div>
+        <Carte id="resto" />
+      </div>
+    </section>
+
+    <section class="sec sec--tint" aria-labelledby="accords-t">
+      <div class="container">
+        <h2 id="accords-t" class="sec__head">Les accords, en supplément.</h2>
+        <ul class="rows rows--cols">
+          {accords.map((a) => (
+            <li class="rows__item">
+              <h3 class="rows__name">{a.lettre}. {a.nom}</h3>
+              <p class="rows__detail">{fr(a.detail)}</p>
+            </li>
+          ))}
+        </ul>
+        <table class="tbl">
+          <caption class="visually-hidden">Suppléments d’accords par formule</caption>
+          <thead><tr><th scope="col">Formule</th><th scope="col">A</th><th scope="col">B</th><th scope="col">C</th></tr></thead>
+          <tbody>
+            {supplements.map((s) => <tr><th scope="row">{s.formule}</th><td class="num">{s.a ? fr(s.a) : '·'}</td><td class="num">{fr(s.b)}</td><td class="num">{fr(s.c)}</td></tr>)}
+          </tbody>
+        </table>
+        <p class="small">Accords A et B sur réservation préalable.</p>
+      </div>
+    </section>
+
+    <Photo name="crustace" class="bleed" ratio="21 / 9" sizes="100vw" pos="50% 40%" caption="Crustacé, fleurs comestibles et tuile en dentelle" />
+
+    <section class="sec" aria-labelledby="exemple-t">
+      <div class="container split">
+        <div>
+          <h2 id="exemple-t">Un exemple de repas.</h2>
+          <p class="lead">Repris du site d’origine : le menu suit la saison et les arrivages.</p>
+        </div>
+        <ol class="rows">
+          {exemple.map((e) => <li class="rows__item rows__item--2"><h3 class="rows__name">{e.nom}</h3><p class="rows__detail">{fr(e.detail)}</p></li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section class="sec sec--tint" aria-labelledby="mercredi-t">
+      <div class="container split">
+        <div>
+          <h2 id="mercredi-t">Les mercredis à prix réduit.</h2>
+          <p class="lead">« Même qualité, même créativité, cadeau prix serré ! » Tous les mercredis soir, hors jours fériés, uniquement sur réservation.</p>
+        </div>
+        <div class="well">
+          <ul class="rows">
+            <li class="rows__item"><h3 class="rows__name">Le repas Confort</h3><p class="rows__detail">Grignotages, quatre escales, douceurs, apéritif maison, harmonie de vins ou préparations sans alcool, eau, café, thé.</p><p class="rows__price num">99&nbsp;€</p></li>
+            <li class="rows__item"><h3 class="rows__name">Le Confort +</h3><p class="rows__detail">Le repas Confort, avec un digestif au choix.</p><p class="rows__price num">109&nbsp;€</p></li>
+          </ul>
+          <p class="small">Tarifs lus sur la page du site d’origine, à confirmer.</p>
+        </div>
+      </div>
+    </section>
+
+    <Reservation titre="Réserver votre voyage." />
+  </main>
+  <Footer />
+</Base>

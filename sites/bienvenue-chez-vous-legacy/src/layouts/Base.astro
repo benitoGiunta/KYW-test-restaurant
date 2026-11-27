@@ -1,0 +1,35 @@
+---
+import '../styles/page.css';
+import { site } from '../data/site';
+interface Props { title: string; description: string }
+const { title, description } = Astro.props;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: site.nom,
+  telephone: site.tel,
+  address: { '@type': 'PostalAddress', streetAddress: 'Rue Pépin 33', postalCode: '5000', addressLocality: 'Namur', addressCountry: 'BE' },
+};
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#f6ecdc" />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+    <link rel="icon" href={`${base}photos/enseigne.webp`} type="image/webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@600&family=Archivo:wght@400;500;600&family=Yeseva+One&display=swap" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+  </head>
+  <body>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <slot />
+  </body>
+</html>

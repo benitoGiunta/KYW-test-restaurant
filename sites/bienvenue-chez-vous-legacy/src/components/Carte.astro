@@ -1,0 +1,32 @@
+---
+import { repas, fr } from '../data/site';
+const { id = 'repas' } = Astro.props;
+const tabs = [{ k: 'midi', l: 'Le midi' }, { k: 'soir', l: 'Le soir' }] as const;
+---
+<div class="switcher" data-switcher>
+  <div class="switcher__tabs" role="tablist" aria-label="Moment du repas">
+    {tabs.map((t, i) => <button type="button" role="tab" id={`${id}-tab-${t.k}`} aria-controls={`${id}-${t.k}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{t.l}</button>)}
+  </div>
+  {tabs.map((t, i) => (
+    <div class="switcher__panel" role="tabpanel" id={`${id}-${t.k}`} aria-labelledby={`${id}-tab-${t.k}`} data-panel={i}>
+      <h3 class="switcher__nohead">{t.l}</h3>
+      <ul class="rows">
+        {repas[t.k].map((l) => (
+          <li class="rows__item">
+            <h4 class="rows__name">{l.nom}</h4>
+            <p class="rows__detail">{fr(l.detail)}</p>
+            <p class="rows__price num">{l.prix}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+<script is:inline>
+document.querySelectorAll('[data-switcher]').forEach((sw) => {
+  const tabs = [...sw.querySelectorAll('[role=tab]')], panels = [...sw.querySelectorAll('[role=tabpanel]')];
+  const show = (i) => { tabs.forEach((t, j) => { t.setAttribute('aria-selected', j === i); t.tabIndex = j === i ? 0 : -1; }); panels.forEach((p, j) => p.hidden = j !== i); };
+  show(0); sw.classList.add('is-on');
+  tabs.forEach((t, i) => { t.addEventListener('click', () => show(i)); t.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const n = (i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length; show(n); tabs[n].focus(); } }); });
+});
+</script>
