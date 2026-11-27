@@ -59,7 +59,7 @@ const croques = cat(12).plats;
           <button type="button" role="tab" id="tab-pd" aria-controls="pan-pd" aria-selected="true">Petit-déjeuner</button>
           <button type="button" role="tab" id="tab-br" aria-controls="pan-br" aria-selected="false" tabindex="-1">Brunch</button>
         </div>
-        <div class="switcher__panel" role="tabpanel" id="pan-pd" aria-labelledby="tab-pd">
+        <div class="switcher__panel" role="tabpanel" id="pan-pd" aria-labelledby="tab-pd" tabindex="0">
           <p class="switcher__time">De <time datetime="07:00">{h('07:00')}</time> à <time datetime="11:00">{h('11:00')}</time></p>
           <ul class="rows">
             {cat(6).plats.map((p) => (
@@ -67,7 +67,7 @@ const croques = cat(12).plats;
             ))}
           </ul>
         </div>
-        <div class="switcher__panel" role="tabpanel" id="pan-br" aria-labelledby="tab-br" hidden>
+        <div class="switcher__panel" role="tabpanel" id="pan-br" aria-labelledby="tab-br" tabindex="0" hidden>
           <p class="switcher__time">De <time datetime="11:30">{h('11:30')}</time> à <time datetime="15:00">{h('15:00')}</time>, nos croques gratinés</p>
           <ul class="rows">
             {croques.map((p) => (
@@ -89,19 +89,4 @@ const croques = cat(12).plats;
   </section>
 
   <Cloture />
-  <script is:inline>
-    document.querySelectorAll('[data-switcher]').forEach(function (sw) {
-      var tabs = sw.querySelectorAll('[role=tab]');
-      tabs.forEach(function (tab) {
-        tab.addEventListener('click', function () {
-          tabs.forEach(function (o) {
-            var on = o === tab;
-            o.setAttribute('aria-selected', on ? 'true' : 'false');
-            o.tabIndex = on ? 0 : -1;
-            sw.querySelector('#' + o.getAttribute('aria-controls')).hidden = !on;
-          });
-        });
-      });
-    });
-  </script>
 </Base>

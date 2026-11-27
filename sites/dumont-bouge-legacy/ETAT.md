@@ -1,20 +1,26 @@
-# ETAT · Dumont Bouge legacy · phase 1 (construction-1)
+# ETAT · Dumont Bouge legacy · phase 2 (construction-2) terminée
 
-## Fait
-- Audit (AUDIT.md, `.hallmark/before.*`), deal/draw/scaffold (Garden, accent rose du client), DESIGN.md (Picks, tokens, composants), comp.md (reporté).
-- Paquet Astro : 6 routes (/, /boulangerie, /patisserie, /emporter, /menu, /reservations) + 404 ; composants Nav, Footer (mast), Photo, Carte, Horaires, Cloture ; données `src/data/site.ts` + `carte.json` (211 lignes copiées de donnees.json).
-- Build passe (`pnpm build:site sites/dumont-bouge-legacy`) ; KywFooter, noindex et mention « Maquette KYW » présents sur les 7 routes ; aucun tiret cadratin rendu.
+## Fait en phase 2
+- Nav en trois parties (téléphone + 2 liens | logo | 2 liens + Réserver), menu popover sous 60 rem (liens, Réserver une table, téléphone ; Escape et clic extérieur natifs, testé à 375), skip link conservé.
+- Héros : correction d'un bug de grille (pinceau et bande en deux colonnes) ; trait rose posé au-dessus de la bande, sur la façade ; animation d'entrée unique `brush-in` (700 ms), coupée en reduced motion.
+- Formulaire de réservation : select natif pour les personnes (1 à 12), aide `min-height: 1lh` par champ, validation au blur puis à l'input, `aria-invalid`, focus sur le premier champ invalide, message « Rien n’a été envoyé : ce formulaire n’est pas encore relié. », date min = aujourd'hui (Bruxelles).
+- Onglets du tea-room au clavier (flèches, Début, Fin), panneaux `tabindex=0`. Horaires : jour courant `aria-current="date"` + « (aujourd’hui) ».
+- États : hover sous `(hover: hover)`, `:active`, `:disabled`, focus-visible instantané, focus sur fond charbon en rose clair ; tailles tactiles 44 px (`pointer: coarse`) ; safe-area et `viewport-fit=cover`.
+- Build passe (`scripts/q.sh build pnpm build:site sites/dumont-bouge-legacy`) ; KywFooter, noindex, mention Maquette KYW sur les 7 routes ; aucun tiret cadratin ; aucun débordement horizontal à 375 sur 6 routes ; aucune erreur console.
+- DESIGN.md (§ Phase 2, cases cochées avec preuve), comp.md (réponses Masse/Intervalle/Entrée).
 
-## Reste (phases 2 et 3)
-- Comp c1/c2 et choix écrit ; sloplint --render sur serveur (le rendu depuis file:// casse les chemins base) ; capture et lecture du héros à 1280x800, mobile 375.
-- Nav mobile (liens masqués sous 60 rem : ajouter un menu ou une rangée), jour courant dans les horaires, formulaire (états, validation), reveal unique, bouton actif.
-- Vérifier le brush (texture 487 px étirée, `mix-blend-mode: multiply`) et le contraste du texte sur la bande ; REFLEX sloplint 59 (écart de sections), 77/78 à lire au rendu ; sloplint 44c sur /reservations.
-- Photos : les pains et le latte sont des placeholders de bibliothèque (crédités au pied) ; le tea-room et le brunch n'ont aucune photo client. Image 06 (tarte aux framboises) écartée : image de vidéo avec barres noires et interface.
-- RAPPORT.md, Sweep du DESIGN.md.
+## Décisions
+- Garden interdit le reveal (§ Motion « état seulement ») : pas de reveal au scroll ; seule animation = le pinceau, signature. Cases 22 et F8 sans objet.
+- Nav « three-part » : edge-aligned était dans les 3 derniers logs (42) ; quatre vraies destinations autorisent la forme. Label « Réserver » dans la barre (110 px), « Réserver une table » dans le menu mobile, le héros et la barre mobile.
+- Hero review : pas d'outil Agent, donc auto-relecture `self` (stamp dans DESIGN.md).
 
-## Décisions et hypothèses
-- Formule « Dumont » à 13,80 € (carte du site, embeds/menu.html) et non 13,50 € (donnees.json `menus`, ancienne valeur).
-- Adresse : Chaussée de Louvain 343, 5004 Bouge ; second point Namur affiché avec ses horaires. E-mail : celui du site (srl-dumontbouge@outlook.com), pas l'e-mail personnel de restaurants.json.
-- Héros Poster gardé malgré le tirage Ledge ; nav gardée (pas de slab).
-- Pas d'avis, d'histoire, d'équipe, ni de métrique : absents des données, non inventés. Un slot `.fill` (prix des gâteaux).
-- Les iframes de carte sont reconstruites en natif ; recherche et onglets du site d'origine non reproduits (noté dans le stamp, `dropped`).
+## Reste (phase 3 et captures)
+- Comp c1/c2 non construits (comp.md). RAPPORT.md, Sweep du DESIGN.md, entrée de `.hallmark/log.json` (le journal ne contient pas encore dumont-bouge-legacy : à vérifier).
+- Contrôler en captures : le trait rose couvre l'entrée de la façade au téléphone (partial) ; contraste du texte sur la bande ; les iframes de cartes ne sont pas reproduites.
+- Photos : pains et latte placeholders ; tea-room et brunch sans photo client.
+
+## Pièges
+- L'animation du pinceau dure 700 ms à l'arrivée : une capture prise avant 1 s montre le trait incomplet (pas un défaut). Attendre 1,5 s.
+- sloplint FAIL 34 sur Base.astro est un faux positif (règle dans base.css) ; WARN 25 sur `.statement` assumé.
+- Éléments `popover` : `display: contents` au bureau (page.css `.nav__links[popover]`), vrai popover sous 60 rem ; ne pas ajouter de `justify-self` hors du bloc bureau (il s'applique dans le popover en bloc).
+- `<script>` du Base est inliné par Astro (petit module) ; ne pas chercher ses fonctions dans `_astro/page.*.js` (c'est le prefetch).
