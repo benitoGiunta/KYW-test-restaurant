@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="Services" description="Conception, accompagnement, finitions et livraison : les services de Novobel pour vos travaux de rénovation et de construction à Namur.">
+  <section class="entete wrap">
+    <h1 class="cap">Services</h1>
+    <p class="lead muted">La qualité et la minutie, de la première étude à la remise des clés.</p>
+  </section>
+  <section class="section" style="padding-top: 0" aria-label="Les quatre étapes">
+    <div class="col-carte"><div>
+      <ol class="etapes">
+        {site.etapes.map((e) => (
+          <li class="etape">
+            <span class="etape__n num">{e.n}</span>
+            <div class="etape__tete"><h2 class="etape__titre cap">{e.titre}</h2><p class="etape__acc">{e.accroche}</p></div>
+            <p class="etape__texte">{e.texte}</p>
+          </li>
+        ))}
+      </ol>
+    </div></div>
+  </section>
+  <figure class="bande"><Img p={site.photos.halle} sizes="100vw" /></figure>
+  <section class="clair section" aria-labelledby="metiers-titre">
+    <div class="wrap deux">
+      <div class="stack">
+        <p class="petite-cap">Savoir-faire</p>
+        <h2 class="cap cat__titre" id="metiers-titre">Les corps de métier de la maison</h2>
+        <p>Rénovation complète, gros œuvre, finitions et installations techniques : les différents corps de métier prennent le relais les uns des autres sur un même chantier.</p>
+        <ul class="liste-simple">{site.metiers.map((m) => <li>{m}</li>)}</ul>
+        <p class="note">Aperçu des métiers tel que présenté sur le site actuel et à la Banque-Carrefour des Entreprises.</p>
+      </div>
+      <figure><Img p={site.photos.outils} sizes="(min-width: 1024px) 45vw, 100vw" /></figure>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap cta">
+      <h2 class="cap">Un devis, gratuit</h2>
+      <div class="stack">
+        <p class="lead muted">Décrivez votre projet : demande traitée {site.devis.delai}.</p>
+        <a class="btn btn--plein" href={u('/contact/')}>Demander un devis gratuit</a>
+      </div>
+    </div>
+  </section>
+</Base>

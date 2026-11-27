@@ -1,0 +1,23 @@
+---
+// Tableau de chantier : une ligne par projet (nom, description, nombre de logements). Aperçu flottant au survol (desktop).
+import { site } from '../data/site';
+import { asset } from '../lib/url';
+interface Props { ecrit?: boolean }
+const { ecrit = true } = Astro.props;
+---
+<ul class="lignes" data-ecrit={ecrit ? '' : undefined}>
+  {site.projets.map((p) => (
+    <li class="ligne">
+      <div class="ligne__in" tabindex="0" data-preview={asset(`/photos/apercu-${p.apercu}.webp`)} aria-label={`${p.nom}, voir une image illustrative`}>
+        <img class="ligne__vignette" src={asset(`/photos/apercu-${p.apercu}.webp`)} alt="" width="56" height="56" loading="lazy" decoding="async" />
+        <span class="ligne__texte">
+          <span class="ligne__nom cap">{p.nom}</span><span class="ex">image illustrative</span>
+          <span class="ligne__desc">{p.description}</span>
+        </span>
+        <span class="ligne__prix num">{p.logements} logements</span>
+        <img class="ligne__statique" src={asset(`/photos/apercu-${p.apercu}.webp`)} alt="" width="160" height="200" loading="lazy" decoding="async" />
+      </div>
+    </li>
+  ))}
+</ul>
+<div class="apercu" data-apercu aria-hidden="true"><img alt="" width="560" height="700" /></div>

@@ -1,1 +1,2 @@
 - 2026-11-27 : la sélection peut contenir une entreprise hors restauration (novobel, construction) ; vérifier l'activité dès la capture du site et le signaler avant tout téléchargement de photos.
+- 2026-11-27 · novobel · portfolio (phase 1) : le slug est une entreprise de rénovation, pas un restaurant (dossier.md) ; le gabarit ardoise se détourne sans toucher au moteur (lignes = projets, onglets/suggestion/horaires retirés, barre d'état statique, barre basse à 2 actions) ; décider tôt « écarter le slug » ou « site d'entreprise » en amont de la construction.

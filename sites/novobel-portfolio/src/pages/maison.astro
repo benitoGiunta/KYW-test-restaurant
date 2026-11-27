@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import { site, adresseLigne } from '../data/site';
+import { u } from '../lib/url';
+const g = site.gerance;
+---
+<Base title="La maison" description="Novobel, SRL namuroise de construction et de rénovation : approche familiale, proximité avec les clients et respect strict des délais.">
+  <section class="entete wrap">
+    <h1 class="cap">La maison</h1>
+    <p class="lead muted">Qui sommes-nous ? Une entreprise de rénovation familiale, installée à Namur.</p>
+  </section>
+  <section class="section" style="padding-top: 0">
+    <div class="wrap deux">
+      <figure><Img p={site.photos.equipe} sizes="(min-width: 1024px) 40vw, 100vw" eager /></figure>
+      <div class="stack">
+        {site.introduction.map((t) => <p class="lead">{t}</p>)}
+        <ul class="liste-simple">{site.valeurs.map((v) => <li>{v}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+  <figure class="bande"><Img p={site.photos.mesure} sizes="100vw" /></figure>
+  <section class="clair section" aria-labelledby="faits-titre">
+    <div class="wrap deux">
+      <div class="stack">
+        <p class="petite-cap">Repères</p>
+        <h2 class="cap cat__titre" id="faits-titre">L'entreprise en bref</h2>
+        <table class="horaires">
+          <tbody>
+            <tr><th scope="row">Forme</th><td>{g.forme} {site.nom}</td></tr>
+            <tr><th scope="row">N° d'entreprise</th><td>{g.bce}</td></tr>
+            <tr><th scope="row">Siège</th><td>{adresseLigne()}</td></tr>
+            <tr><th scope="row">Administrateurs</th><td>{g.noms.join(', ')} <span class="ex">source {g.source}</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="stack">
+        <p class="petite-cap">Équipe</p>
+        <p>Les portraits de l'équipe et les années d'activité seront ajoutés avec les informations validées par Novobel.</p>
+        <a class="btn btn--plein" href={u('/carriere/')}>Rejoindre l'équipe</a>
+      </div>
+    </div>
+  </section>
+</Base>

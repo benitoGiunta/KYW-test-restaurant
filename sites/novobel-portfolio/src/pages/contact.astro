@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, telHref, mailHref, adresseLigne } from '../data/site';
+---
+<Base title="Devis gratuit" description="Demandez un devis gratuit à Novobel : téléphone, e-mail ou formulaire. Demande traitée sous 24 h.">
+  <section class="entete wrap">
+    <h1 class="cap">Devis gratuit</h1>
+    <p class="lead muted">Décrivez votre projet. Demande traitée {site.devis.delai}.</p>
+  </section>
+  <section class="clair section" aria-label="Contact">
+    <div class="wrap deux">
+      <div class="stack">
+        <p class="petite-cap">Nous joindre</p>
+        <ul class="contact-liste">
+          <li><a class="link" href={telHref()}>{site.telephone}</a></li>
+          <li><a class="link" href={mailHref()}>{site.email}</a></li>
+        </ul>
+        <address>{adresseLigne()}</address>
+        <p class="note">Horaires d'ouverture : à communiquer par Novobel.</p>
+      </div>
+      <form class="form" action={mailHref()} method="post" enctype="text/plain">
+        <label>Nom<input type="text" name="nom" autocomplete="name" required /></label>
+        <label>Téléphone<input type="tel" name="telephone" autocomplete="tel" /></label>
+        <label>E-mail<input type="email" name="email" autocomplete="email" required /></label>
+        <label>Votre projet<textarea name="projet" rows="5" required></textarea></label>
+        <button class="btn btn--plein" type="submit">Envoyer ma demande</button>
+        <p class="note">Formulaire de démonstration : il ouvre votre messagerie.</p>
+      </form>
+    </div>
+  </section>
+</Base>

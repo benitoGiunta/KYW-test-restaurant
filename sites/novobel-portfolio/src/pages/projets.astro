@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import Projets from '../components/Projets.astro';
+import Img from '../components/Img.astro';
+import { site, totalLogements } from '../data/site';
+import { u } from '../lib/url';
+const g = site.photos;
+const galerie = [g.cuisine, g.salleAManger, g.sejour, g.salon];
+---
+<Base title="Projets" description="Astrid, Bellevue, Joseph, Citadelle : les projets de conversion de bureaux et de maisons en appartements réalisés par Novobel.">
+  <section class="entete wrap">
+    <h1 class="cap">Projets</h1>
+    <p class="lead muted">{site.projets.length} projets, {totalLogements()} logements : des bureaux et des maisons transformés en appartements de standing.</p>
+  </section>
+  <section class="section" style="padding-top: 0" aria-label="Liste des projets">
+    <div class="col-carte"><div>
+      <Projets />
+      <p class="note" style="margin-top: var(--u)">Les images affichées au survol sont illustratives et ne représentent pas les projets nommés.</p>
+    </div></div>
+  </section>
+  <section class="clair section" aria-labelledby="ambiances-titre">
+    <div class="wrap">
+      <p class="petite-cap">Ambiances</p>
+      <h2 class="cap cat__titre" id="ambiances-titre">Intérieurs rénovés <span class="ex">images illustratives</span></h2>
+      <div class="galerie" style="margin-top: calc(var(--u) * 3)">
+        {galerie.map((p) => <figure><Img p={p} sizes="(min-width: 768px) 25vw, 50vw" /></figure>)}
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap cta">
+      <h2 class="cap">Le prochain, c'est le vôtre</h2>
+      <a class="btn btn--plein" href={u('/contact/')}>Demander un devis gratuit</a>
+    </div>
+  </section>
+</Base>

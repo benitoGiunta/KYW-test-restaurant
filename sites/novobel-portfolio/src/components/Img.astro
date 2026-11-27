@@ -1,0 +1,10 @@
+---
+// Photo responsive : srcset limité aux variantes générées (jamais plus larges que la source).
+import type { Photo } from '../data/site';
+import { asset } from '../lib/url';
+interface Props { p: Photo; sizes?: string; eager?: boolean; class?: string }
+const { p, sizes = '(min-width: 1024px) 50vw, 100vw', eager = false, class: cls } = Astro.props;
+const srcset = p.largeurs.map((w) => `${asset(`/photos/${p.nom}-${w}.webp`)} ${Math.min(w, p.largeur)}w`).join(', ');
+const src = asset(`/photos/${p.nom}-${p.largeurs[p.largeurs.length - 1]}.webp`);
+---
+<img class={cls} src={src} srcset={srcset} sizes={sizes} alt={p.alt} width={p.largeur} height={p.hauteur} loading={eager ? undefined : 'lazy'} fetchpriority={eager ? 'high' : undefined} decoding="async" />

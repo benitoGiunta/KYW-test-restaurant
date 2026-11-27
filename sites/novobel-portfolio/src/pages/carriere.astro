@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import { site, mailHref } from '../data/site';
+---
+<Base title="Carrière" description="Offres d'emploi et de stage chez Novobel à Namur : conducteur de chantier, carreleur, électricien, plafonnage et cloisonnage, ouvrier polyvalent.">
+  <section class="entete wrap">
+    <h1 class="cap">Carrière</h1>
+    <p class="lead muted">{site.offres.length} postes ouverts à Namur. Rejoignez une équipe familiale de métiers du bâtiment.</p>
+  </section>
+  <section class="section" style="padding-top: 0" aria-label="Offres">
+    <div class="col-carte"><div>
+      <ul class="lignes" data-ecrit>
+        {site.offres.map((o) => (
+          <li class="ligne"><div class="ligne__in ligne__in--sans">
+            <span class="ligne__texte"><span class="ligne__nom cap">{o.titre}</span><span class="ligne__desc">{o.lieu}, Belgique</span></span>
+            <span class="ligne__prix">{o.type}</span>
+          </div></li>
+        ))}
+      </ul>
+      <div class="actions"><a class="btn btn--plein" href={`${mailHref()}?subject=Candidature`}>Postuler par e-mail</a></div>
+    </div></div>
+  </section>
+  <figure class="bande"><Img p={site.photos.grue} sizes="100vw" /></figure>
+</Base>
