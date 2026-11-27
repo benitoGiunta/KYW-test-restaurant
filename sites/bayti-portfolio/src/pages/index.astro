@@ -1,0 +1,168 @@
+---
+import Base from '../layouts/Base.astro';
+import Badge from '../components/Badge.astro';
+import Icone from '../components/Icone.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, moments, photoDe, adresseLigne, adresseComptoirLigne } from '../data/site';
+import { u, asset } from '../lib/url';
+
+const icones = ['assiette', 'couverts', 'lune'];
+const m = Object.fromEntries(moments.map((x) => [x.id, x]));
+const comptoir = m['m-11h'], resto = m['m-18h'], fin = m['m-21h'];
+const photoPano = photoDe('/photos/hero-mezzes-herbes.webp');
+const photoComptoir = photoDe(comptoir.photo!), photoResto = photoDe(resto.photo!);
+const traiteur1 = photoDe('/photos/coffret-traiteur-pain.webp'), traiteur2 = photoDe('/photos/buffet-evenement.webp');
+const medaillons = [
+  { photo: photoDe('/photos/kebbeh-falafel-mains.webp'), titre: 'Kebbeh et falafels', texte: 'À la pièce, au Comptoir' },
+  { photo: photoDe('/photos/makanek-mains.webp'), titre: 'Makanek citronné', texte: 'Saucisses sauce tomate et citron' },
+  { photo: photoDe('/photos/baklava-pistache.webp'), titre: 'Baklavas', texte: 'Pistache, en vitrine' },
+];
+const services = resto.lignes;
+const mdRing = (t: string) => `${t} · au Comptoir · ${t} · au Comptoir ·`;
+---
+<Base theme="aube">
+  <div data-accueil>
+    <!-- HERO : cadran réglé à l'heure réelle. Le nom et l'accroche sont peints au premier rendu (LCP). -->
+    <section class="hero" id="accueil" data-ciel="auto" aria-labelledby="titre">
+      <div class="wrap">
+        <div class="hero__haut">
+          <Badge />
+          <p class="horloge" aria-label="Heure locale">
+            <svg class="horloge__ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="fond" cx="18" cy="18" r="15.9" /><circle class="cran" cx="18" cy="18" r="15.9" pathLength="100" data-horloge-ring /></svg>
+            <span class="horloge__hm num" data-horloge-hm>--:--</span>
+            <span class="horloge__s num" data-horloge-s aria-hidden="true"></span>
+          </p>
+        </div>
+        <h1 class="hero__nom t-mega" id="titre">Bayti</h1>
+        <p class="hero__baseline lead">Deux mondes, une table. Au cœur de Namur, la cuisine du Moyen-Orient revisitée d’une touche européenne : le Comptoir de jour, le menu en 8 services le soir, le traiteur pour vos événements.</p>
+        <ul class="chips" data-reveal="up" data-intro data-delay="0.35" aria-label="Les moments de la maison">
+          {moments.map((x, i) => (
+            <li><a class="chip" href={`#${x.id}`} data-chip={x.id}><Icone nom={icones[i]} /><span class="chip__h">{x.heureTexte}</span><span class="chip__t">{x.titre}</span></a></li>
+          ))}
+        </ul>
+        <p class="maintenant" data-maintenant hidden>
+          <a class="maintenant__lien" href="#accueil" data-maintenant-lien><span class="maintenant__point" aria-hidden="true"></span><span data-maintenant-texte>Aller au moment présent</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" /></svg></a>
+        </p>
+      </div>
+    </section>
+
+    
+    <!-- INTRO : panoramique et phrase de marque. -->
+    <section class="moment" data-ciel="aube" aria-labelledby="t-intro">
+      <div class="wrap">
+        <figure class="photo photo--large" data-reveal="clip">
+          <img src={asset(photoPano.src)} alt={photoPano.alt} width={photoPano.largeur} height={photoPano.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        </figure>
+        <div class="cols" style="margin-top: calc(var(--u) * 4)">
+          <h2 class="c1-6 moment__titre" id="t-intro" data-split="words">Bayti, le foyer</h2>
+          <p class="c7-12 moment__accroche" data-reveal="fade">« Bayti » signifie « foyer » en arabe classique. Ici, la cuisine de l’enfance se partage autour d’une table, avec une touche personnelle.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11h COMPTOIR : split texte | photo, puis médaillons. -->
+    <section class="moment moment--split" id={comptoir.id} data-ciel={comptoir.theme} aria-labelledby="t-11h">
+      <div class="wrap cols">
+        <div class="c1-6">
+          <div class="moment__tete">
+            <p class="moment__heure num" data-split="chars">{comptoir.heureTexte}</p>
+            <h2 class="moment__titre" id="t-11h" data-split="words">{comptoir.titre}</h2>
+          </div>
+          <p class="moment__accroche" data-reveal="fade">{comptoir.accroche}</p>
+          <ul class="lignes" data-reveal="up">
+            {comptoir.lignes.map((l) => (
+              <li class="ligne"><span class="ligne__nom">{l.nom}</span>{l.prix && <span class="ligne__prix">{l.prix}</span>}{l.detail && <span class="ligne__detail">{l.detail}</span>}</li>
+            ))}
+          </ul>
+          <p class="actions"><a class="fleche" href={u('/carte/')}>Toute la carte <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a></p>
+        </div>
+        <figure class="c8-12 photo photo--4x5" data-reveal="clip">
+          <img src={asset(photoComptoir.src)} alt={photoComptoir.alt} width={photoComptoir.largeur} height={photoComptoir.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        </figure>
+      </div>
+      <div class="wrap" style="margin-top: calc(var(--u) * 6)">
+        <ul class="medaillons" data-medaillons tabindex="0" aria-label="Spécialités du Comptoir">
+          {medaillons.map((md, i) => (
+            <li>
+              <div class="medaillon">
+                <div class="medaillon__photo"><img src={asset(md.photo.src)} alt={md.photo.alt} width={md.photo.largeur} height={md.photo.hauteur} loading="lazy" decoding="async" /></div>
+                <svg class="medaillon__anneau" viewBox="0 0 200 200" aria-hidden="true">
+                  <defs><path id={`arc-${i}`} d="M100,100 m-92,0 a92,92 0 1,1 184,0 a92,92 0 1,1 -184,0" /></defs>
+                  <text><textPath href={`#arc-${i}`} startOffset="0">{mdRing(md.titre)}</textPath></text>
+                </svg>
+              </div>
+              <p class="medaillon__legende"><b>{md.titre}</b>{md.texte}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- CHEZ VOUS : le traiteur, hors horaire. -->
+    <section class="moment" id="chez-vous" data-ciel="ocre" aria-labelledby="t-chez">
+      <div class="wrap cols">
+        <figure class="c1-5 photo photo--4x5" data-reveal="clip">
+          <img src={asset(traiteur2.src)} alt={traiteur2.alt} width={traiteur2.largeur} height={traiteur2.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        </figure>
+        <div class="c7-12">
+          <div class="moment__tete">
+            <p class="moment__heure num" data-split="chars">Chez vous</p>
+            <h2 class="moment__titre" id="t-chez" data-split="words">Bayti chez vous</h2>
+          </div>
+          <p class="moment__accroche" data-reveal="fade">Le traiteur événementiel de la maison : des menus créés sur mesure, la mise en place et le matériel fournis, le service quelques heures avant l’événement.</p>
+          <figure class="photo photo--3x2" data-reveal="scale" style="margin-bottom: calc(var(--u) * 3)">
+            <img src={asset(traiteur1.src)} alt={traiteur1.alt} width={traiteur1.largeur} height={traiteur1.hauteur} loading="lazy" decoding="async" />
+          </figure>
+          <div class="actions"><a class="btn btn--solid" href={u('/chez-vous/')}>Organiser un événement</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18h RESTAURANT : paire asymétrique, ciel nuit, texte inversé. -->
+    <section class="moment moment--pair" id={resto.id} data-ciel={resto.theme} aria-labelledby="t-18h">
+      <div class="wrap cols">
+        <figure class="c1-5 photo photo--4x5" data-reveal="clip">
+          <img src={asset(photoResto.src)} alt={photoResto.alt} width={photoResto.largeur} height={photoResto.hauteur} loading="lazy" decoding="async" data-parallax="0.08" />
+        </figure>
+        <div class="c7-12">
+          <div class="moment__tete">
+            <p class="moment__heure num" data-split="chars">{resto.heureTexte}</p>
+            <h2 class="moment__titre" id="t-18h" data-split="words">{resto.titre}</h2>
+          </div>
+          <p class="moment__accroche" data-reveal="fade">{resto.accroche}</p>
+          <div class="menu-soir" data-reveal="up">
+            <p class="menu-soir__prix">45 €</p>
+            <p class="t-s" style="margin-bottom: var(--u)">Menu unique, 8 services, par personne.</p>
+            <ol>{services.map((p) => <li>{p.nom}</li>)}</ol>
+            <div class="actions" style="margin-top: calc(var(--u) * 2)">
+              <a class="btn btn--soleil" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+              <a class="btn" href={u('/carte/')}>La carte</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 21h : à demain, horaires à flèches. -->
+    <section class="moment" id={fin.id} data-ciel={fin.theme} aria-labelledby="t-21h">
+      <div class="wrap cols">
+        <div class="c1-6">
+          <div class="moment__tete">
+            <p class="moment__heure num" data-split="chars">{fin.heureTexte}</p>
+            <h2 class="moment__titre" id="t-21h" data-split="words">{fin.titre}</h2>
+          </div>
+          <p class="statement" data-split="lines">{fin.accroche}</p>
+          <p class="note" style="margin-top: calc(var(--u) * 3)" data-reveal="up"><strong>Restaurant</strong><br />{adresseLigne()}<br /><strong>Comptoir</strong><br />{adresseComptoirLigne()}</p>
+        </div>
+        <div class="c8-12" data-reveal="up">
+          <p class="chapeau">Horaires de la semaine</p>
+          <Horaires />
+          <div class="actions">
+            <a class="btn btn--soleil" href={u('/reservation/')}>Réserver</a>
+            <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>

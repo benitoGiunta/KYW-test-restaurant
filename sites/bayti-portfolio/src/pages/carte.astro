@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const resto = site.carte[0];
+const comptoir = site.carte.slice(1);
+const visuel = photoDe('/photos/mezzes-feuilles-automne.webp');
+const visuel2 = photoDe('/photos/desserts-ashta-semoule.webp');
+const photosCat = [photoDe('/photos/mezzes-vue-dessus-pelouse.webp'), photoDe('/photos/kebbeh-falafel-mains.webp'), photoDe('/photos/brochettes-poulet-poivron.webp'), photoDe('/photos/baklava-chocolat-pistache.webp'), photoDe('/photos/pain-libanais.webp')];
+const titreCat = (c: string) => c.replace('Comptoir · ', '');
+---
+<Base title="La carte" theme="midi" description={`La carte de ${site.nom} à ${site.adresse.commune} : menu unique en 8 services à 45 € le soir, mezzés, grillades et desserts à emporter au Comptoir.`}>
+  <section class="section" data-ciel="midi">
+    <div class="wrap">
+      <p class="chapeau" data-reveal="fade" data-intro>La carte</p>
+      <h1 class="t-xl" data-split="lines" data-intro>Le soir, le jour</h1>
+      <p class="lead" style="margin-top: calc(var(--u) * 2)">Le soir, un menu unique en 8 services au restaurant. De jour, le Comptoir propose mezzés, grillades et desserts à emporter. La carte indique les options végétaliennes, sans gluten et sans lactose.</p>
+    </div>
+  </section>
+
+  <section class="section" id="restaurant" data-ciel="nuit" aria-labelledby="c-resto">
+    <div class="wrap cols">
+      <div class="c1-5">
+        <div class="moment__tete" style="margin-bottom: var(--u)">
+          <p class="moment__heure num" data-split="chars">18h</p>
+          <h2 class="moment__titre" id="c-resto" data-split="words">Le restaurant</h2>
+        </div>
+        <p class="menu-soir__prix" data-reveal="fade">45 €</p>
+        <p class="note">Menu unique, 8 services, par personne. Du mardi au samedi, de 18h à 21h, sur place.</p>
+      </div>
+      <ol class="c7-12 lignes lignes--num" data-reveal="up">
+        {resto.plats.map((p, i) => (
+          <li class="ligne"><span class="ligne__nom"><span class="num">{String(i + 1).padStart(2, '0')}</span> {p.nom}</span><span class="ligne__detail">{p.description}</span></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="comptoir" data-ciel="midi" aria-labelledby="c-comptoir">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">11h, à emporter</p>
+        <h2 class="t-xl" id="c-comptoir" data-split="words">Le Comptoir</h2>
+        <p class="note" style="margin-top: var(--u)">Rue du Pont 6, du mardi au samedi, de 11h à 19h. Prix à l’unité ou « par pièce » selon la ligne.</p>
+      </div>
+      {comptoir.map((c, k) => (
+        <div class="cols" style="margin-top: calc(var(--u) * 5)">
+          <div class="c1-7">
+            <h3 class="t-l" data-split="words">{titreCat(c.categorie)}</h3>
+            <ul class="lignes" style="margin-top: calc(var(--u) * 2)" data-reveal="up">
+              {c.plats.map((p) => (
+                <li class="ligne">
+                  <span class="ligne__nom">{p.nom}</span>{p.prix && <span class="ligne__prix">{p.prix}{p.note ? <small> · {p.note.replace('achat par ', 'la ')}</small> : null}</span>}
+                  {(p.description || p.regimes) && <span class="ligne__detail">{p.description}{p.regimes ? (p.description ? ' · ' : '') + p.regimes.join(', ') : ''}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <figure class="c9-12 photo photo--4x5" data-reveal="scale">
+            <img src={asset(photosCat[k].src)} alt={photosCat[k].alt} width={photosCat[k].largeur} height={photosCat[k].hauteur} loading="lazy" decoding="async" />
+          </figure>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Les formules</p>
+        <h2 class="t-xl" data-split="words">À table ou à emporter</h2>
+      </div>
+      <div class="grid">
+        {site.menus.map((me, i) => (
+          <article class="carte" data-reveal="up" data-delay={String(i * 0.08)}>
+            <h3>{me.nom}</h3>
+            <p class="carte__prix num">{me.prix}</p>
+            <p class="t-s muted">{me.description}</p>
+          </article>
+        ))}
+      </div>
+      <div class="cols" style="margin-top: calc(var(--u) * 6)">
+        <figure class="c1-7 photo photo--4x3" data-reveal="clip"><img src={asset(visuel.src)} alt={visuel.alt} width={visuel.largeur} height={visuel.hauteur} loading="lazy" decoding="async" data-parallax="0.08" /></figure>
+        <figure class="c8-12 photo photo--4x3" data-reveal="scale"><img src={asset(visuel2.src)} alt={visuel2.alt} width={visuel2.largeur} height={visuel2.hauteur} loading="lazy" decoding="async" /></figure>
+      </div>
+      <div class="actions">
+        <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+        <a class="btn" href={u('/chez-vous/')}>Bayti chez vous</a>
+      </div>
+    </div>
+  </section>
+</Base>

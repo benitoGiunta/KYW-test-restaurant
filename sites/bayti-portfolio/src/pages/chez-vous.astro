@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/buffet-evenement.webp');
+const g = ['/photos/coffret-traiteur-pain.webp', '/photos/boite-traiteur-ouverte.webp', '/photos/mezzes-ail-des-ours.webp', '/photos/desserts-ashta-semoule.webp'].map(photoDe);
+const points = [
+  { t: 'Des menus sur mesure', d: 'Chaque menu est créé pour l’événement, à partir des mezzés, grillades et desserts de la maison.' },
+  { t: 'La mise en place', d: 'La mise en place est assurée par Bayti.' },
+  { t: 'Le matériel', d: 'Le matériel est fourni.' },
+  { t: 'Le service', d: 'Le service se fait quelques heures avant l’événement.' },
+];
+---
+<Base title="Bayti chez vous" theme="ocre" description={`Bayti chez vous, le traiteur événementiel de ${site.nom} à ${site.adresse.commune} : menus sur mesure, mise en place et matériel fournis.`}>
+  <section class="section" data-ciel="ocre">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>Traiteur événementiel</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Bayti chez vous</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">La table de Bayti à votre adresse : des menus d’événements créés sur mesure, la mise en place et le matériel fournis.</p>
+        <div class="actions" data-reveal="up" data-intro data-delay="0.3">
+          <a class="btn btn--solid" href={`mailto:${site.email.valeur}?subject=Bayti%20chez%20vous`} data-magnetic="0.2">Écrire à la maison</a>
+          <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+        </div>
+      </div>
+      <figure class="c8-12 photo photo--4x5">
+        <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Ce que comprend le service</p>
+        <h2 class="t-xl" data-split="words">Vous recevez, on s’occupe de la table</h2>
+      </div>
+      <div class="grid">
+        {points.map((p, i) => (
+          <article class="carte" data-reveal="up" data-delay={String(i * 0.08)}>
+            <h3>{p.t}</h3>
+            <p class="t-s muted">{p.d}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="midi">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">En images</p>
+        <h2 class="t-xl" data-split="words">Coffrets, boîtes, buffets</h2>
+      </div>
+      <div class="cols">
+        {g.map((p, i) => (
+          <figure class={i % 2 ? 'c7-12 photo photo--4x3' : 'c1-6 photo photo--4x3'} data-reveal="scale"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>
+        ))}
+      </div>
+      <p class="note" style="margin-top: calc(var(--u) * 3)">Les tarifs du traiteur événementiel ne sont pas publiés : demandez votre menu à la maison. Pour un repas sur le pouce, le Menu Découverte à emporter est à 28 € par personne.</p>
+      <div class="actions">
+        <a class="btn btn--solid" href={`mailto:${site.email.valeur}?subject=Bayti%20chez%20vous`}>Demander un menu</a>
+        <a class="btn" href={u('/carte/')}>La carte du Comptoir</a>
+      </div>
+    </div>
+  </section>
+</Base>

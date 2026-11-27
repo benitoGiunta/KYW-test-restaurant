@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/mezzes-feuilles-automne.webp');
+const galerie = ['/photos/mezzes-ail-des-ours.webp', '/photos/falafels-salade-feuilles.webp', '/photos/salade-betterave-feta.webp', '/photos/houmous-tomates-cerises.webp', '/photos/poulet-herbes-citron.webp', '/photos/cookies-main.webp'].map(photoDe);
+---
+<Base title="Notre histoire" theme="ocre" description={`L'histoire de ${site.nom} : « foyer » en arabe classique, la cuisine de l'enfance du Moyen-Orient revisitée d'une touche européenne à ${site.adresse.commune}.`}>
+  <section class="section" data-ciel="ocre">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>Rue du Pont, Namur</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Bayti, le foyer</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">{site.baseline} La cuisine de notre enfance, partagée autour d’une table.</p>
+      </div>
+      <figure class="c8-12 photo photo--4x3">
+        <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap cols">
+      <div class="c2-11 prose">
+        {site.histoire.map((p, i) => <p class={i === 0 ? 't-m' : ''} data-reveal="up">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="corail">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">La maison</p>
+        <h2 class="t-xl" data-split="words">Ce qui compte ici</h2>
+      </div>
+      <div class="grid">
+        {site.valeurs.map((v, i) => (
+          <article class="carte" data-reveal="up" data-delay={String(i * 0.08)}>
+            <h3 class="num">{String(i + 1).padStart(2, '0')}</h3>
+            <p class="t-m">{v}</p>
+          </article>
+        ))}
+      </div>
+      <p class="note" style="margin-top: calc(var(--u) * 3)">À la carte : {site.specialites.join(', ').toLowerCase()}.</p>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="nuit">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">À table</p>
+        <h2 class="t-xl" data-split="words">Ce qu’on y mange</h2>
+      </div>
+      <div class="cols">
+        {galerie.map((p, i) => (
+          <figure class={i % 2 ? 'c7-12 photo photo--3x2' : 'c1-6 photo photo--3x2'} data-reveal="scale"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /><figcaption>{p.alt}</figcaption></figure>
+        ))}
+      </div>
+      <div class="grid" style="margin-top: calc(var(--u) * 6)">
+        {site.avis.map((a) => (
+          <blockquote class="avis" data-reveal="fade">
+            <p>{a.texte}</p>
+            <cite>{a.auteur}, {a.source}</cite>
+          </blockquote>
+        ))}
+      </div>
+      <div class="actions">
+        <a class="btn" href={u('/carte/')}>Découvrir la carte</a>
+        <a class="btn btn--soleil" href={u('/reservation/')} data-magnetic="0.2">Réserver</a>
+      </div>
+    </div>
+  </section>
+</Base>
