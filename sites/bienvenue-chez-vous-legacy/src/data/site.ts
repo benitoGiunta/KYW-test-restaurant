@@ -55,7 +55,7 @@ export const photos: Record<string, Photo> = {
   saumon: { w: 1500, h: 1125, alt: 'Saumon, jus vert et perles, assiette blanche' },
   poisson: { w: 1500, h: 1401, alt: 'Poisson, févettes, asperges et capucines' },
   huitres: { w: 1500, h: 1214, alt: 'Huîtres garnies de perles végétales et de fleurs comestibles' },
-  facade: { w: 1500, h: 1207, alt: 'Façade de la maison de maître, rue Pépin (le restaurant est au premier étage, à confirmer)' },
+  facade: { w: 1500, h: 1207, alt: 'Façade de la maison de maître, rue Pépin (le restaurant est au premier étage)' },
   enseigne: { w: 1024, h: 683, alt: 'Enseigne rouge Bienvenue chez vous, fine cuisine et créativité' },
   bouchees: { w: 1500, h: 1556, alt: 'Plateau de douze verrines de bouchées' },
   emporter: { w: 1500, h: 1125, alt: 'Plat à emporter en bol kraft, légumes et asperges' },
@@ -88,7 +88,7 @@ export const supplements = [
   { formule: 'Cinq escales (soir)', a: '+ 35 €', b: '+ 49 €', c: '+ 59 €' },
   { formule: 'Voyage Signature', a: '+ 40 €', b: '+ 54 €', c: '+ 64 €' },
 ];
-// Un exemple de repas, repris tel quel du site d'origine (le menu change avec la saison).
+// Un repas type, repris tel quel du site d'origine (le menu change avec la saison).
 export const exemple = [
   { nom: 'Grignotages', detail: 'Un avant-goût du voyage.' },
   { nom: 'Les Saint-Jacques de Vincent', detail: 'Textures, fraîcheur et notes grillées, en direct de petits bateaux à Port-en-Bessin (La Coquille qui Claque).' },

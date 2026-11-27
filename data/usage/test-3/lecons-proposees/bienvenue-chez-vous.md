@@ -3,3 +3,4 @@
 - 2026-11-27 relecteur-site (legacy, passe 2) : `QA-revue2.md` absent et `.shots-…-revue2` ne contenait que `home` et `bienvenue-chez-vous-item` (summary incomplet) ; vérifier l'existence des captures avant de lancer le relecteur, sinon il refait ses mesures par script maison.
 - 2026-11-27 publication : un rebase en conflit sur dist/index.html (fichier généré) ne se résout pas à la main : prendre une version, finir le rebase, puis relancer pnpm index et committer l'index régénéré.
 - 2026-11-27 : shoot.mjs dépasse 120 s pour 2 pages à la suite ; lancer chaque page dans son propre appel q.sh.
+2026-11-27 : shoot.mjs plante avec --hovers 0 (page fermée) ; lancer sans cette option.
