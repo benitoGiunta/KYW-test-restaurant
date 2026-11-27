@@ -86,8 +86,8 @@ export const mariage = {
     'Pour plus d’informations, contactez-nous via le formulaire de contact ou programmez une visite avec le bouton « Réserver une visite ». Nous vous accueillons également pour vos autres événements privés et séminaires.',
   ],
   documents: [
-    { nom: 'Brochure mariage', texte: 'Le PDF explicatif et tarifaire.', href: resto.mariageWix, label: 'Ouvrir la brochure' },
-    { nom: 'Calendrier mariage', texte: 'Les dates du domaine.', href: resto.mariageWix, label: 'Voir le calendrier' },
+    { nom: 'Tarifs et informations', texte: 'Tarifs et informations sur le site d’origine.', href: resto.mariageWix, label: 'Voir la page sur le site d’origine' },
+    { nom: 'Calendrier mariage', texte: 'Les dates du domaine, sur le site d’origine.', href: resto.mariageWix, label: 'Voir la page sur le site d’origine' },
     { nom: 'Visite et informations événements', texte: 'Visite de 30 minutes.', href: 'reservations/#visite', label: 'Réserver une visite', interne: true },
   ],
 };

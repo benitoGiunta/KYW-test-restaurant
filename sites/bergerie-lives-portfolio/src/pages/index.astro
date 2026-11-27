@@ -62,8 +62,7 @@ const offres = site.offres;
   </Chapitre>
 
   <Chapitre id="piscine" chiffre={c.piscine} photo={photoDe('/photos/bassin.webp')} lien={{ href: u('/contact/'), label: 'Réserver une journée' }}>
-    <p>Vous ne dormez pas à la Bergerie ? La journée piscine est ouverte aux visiteurs, à {c.piscine.valeur} € par personne, sur réservation au {site.telephone}.</p>
-    <p>Le bassin du jardin, la tonnelle et les pelouses font partie de la promenade.</p>
+    <p>La journée piscine se réserve aussi sans séjour, à {c.piscine.valeur} € par personne, sur réservation au {site.telephone}.</p>
   </Chapitre>
 
   <section class="onglets" data-onglets aria-labelledby="onglets-titre">
@@ -90,9 +89,9 @@ const offres = site.offres;
   </section>
 
   <section class="galerie" aria-label="Le domaine en noir et blanc">
-    <div class="galerie__bande">
+    <div class="galerie__bande" tabindex="0" role="region" aria-label="Galerie du mariage">
       {galerie.map((p, i) => (
-        <figure class:list={['galerie__item', `galerie__item--${hauteurs[i]}`]} data-reveal="up" data-delay={String(i * 0.08)} data-cursor="Voir">
+        <figure class:list={['galerie__item', `galerie__item--${hauteurs[i]}`]} data-reveal="up" data-delay={String(i * 0.08)}>
           <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
         </figure>
       ))}

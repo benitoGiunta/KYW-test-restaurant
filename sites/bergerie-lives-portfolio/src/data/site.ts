@@ -56,8 +56,8 @@ export const site: Domaine = {
   },
   reseaux: [],
   histoire: [
-    "Depuis 2017, les propriétaires accueillent au Domaine de la Bergerie des hôtes de passage et des mariages. Le site actuel de la maison résume leur idée en une phrase : recevoir chez soi, plutôt que loger ou louer.",
-    "La presse locale a suivi la maison : La DH évoquait en 2013 l'ancien restaurant du lieu, L'Avenir saluait en 2017 l'arrivée des nouveaux propriétaires. Aujourd'hui, la Bergerie ne tient plus de table ouverte : elle reçoit des chambres, des cérémonies et des séminaires.",
+    "Depuis 2017, les propriétaires accueillent au Domaine de la Bergerie des hôtes de passage et des mariages. Leur idée tient en peu de mots : vous recevoir chez eux.",
+    "La presse locale a suivi la maison : La DH évoquait en 2013 l'ancien restaurant du lieu, L'Avenir présentait en 2017 les nouveaux propriétaires. Aujourd'hui, la Bergerie reçoit des hôtes en chambres, des cérémonies et des séminaires.",
   ],
   photos: [
     photo('/photos/facade.webp', "Façade en pierre du domaine, bâtiments à toits d'ardoise et grand arbre, allée gravillonnée au premier plan", 1800, 1200),
@@ -74,7 +74,7 @@ export const site: Domaine = {
     photo('/photos/tonneau-fleurs.webp', "Tonneau et arche de fleurs dans le jardin, tables dressées au premier plan", 1080, 1080),
     photo('/photos/piscine.webp', "Personne qui plonge dans une piscine d'eau turquoise, vue sous l'eau", 1800, 1003),
     photo('/photos/bassin.webp', 'Bassin du jardin bordé de bambous et de nénuphars', 1200, 1800),
-    photo('/photos/tonnelle.webp', "Tonnelle de vigne aux feuilles d'automne, allée couverte", 960, 640),
+    photo('/photos/tonnelle.webp', "Tonnelle aux feuilles d'automne, allée couverte", 960, 640),
     photo('/photos/chambre.webp', 'Chambre boisée avec grand lit, rideaux jaunes et fenêtre cintrée', 960, 640),
     photo('/photos/table-fleurs.webp', 'Table dressée, verres et vases de roses sur une cheminée en pierre', 1600, 1067),
     photo('/photos/plan-de-table.webp', "Plan de table accroché à une roue de vélo, cartes en kraft", 1200, 1866),
@@ -82,8 +82,8 @@ export const site: Domaine = {
     photo('/photos/roses.webp', 'Vases de roses roses sur une table de la véranda', 1200, 2170),
     photo('/photos/nb-chaises.webp', "Dossiers de chaises en toile de jute brodés « Mr » et « Mrs », en noir et blanc", 1400, 933),
     photo('/photos/nb-couple.webp', 'Couple de mariés enlacé sous une tonnelle de serre, en noir et blanc', 1400, 933),
-    photo('/photos/nb-noeud.webp', "Détail d'un costume : noeud papillon fleuri et boutonnière, en noir et blanc", 1200, 1033),
-    photo('/photos/nb-arche.webp', "Deux mariées lisant leurs voeux devant une arche fleurie, en noir et blanc", 1000, 1500),
+    photo('/photos/nb-noeud.webp', "Détail d'un costume : nœud papillon fleuri et boutonnière, en noir et blanc", 1200, 1033),
+    photo('/photos/nb-arche.webp', "Deux mariées lisant leurs vœux devant une arche fleurie, en noir et blanc", 1000, 1500),
     photo('/photos/nb-saxo.webp', 'Saxophoniste jouant dans le jardin, en noir et blanc', 1000, 1876),
   ],
   chiffres: {
@@ -101,15 +101,15 @@ export const site: Domaine = {
     { nom: 'Wifi gratuit', texte: 'Dans toutes les chambres.' },
   ],
   chambres: {
-    intro: "Des chambres d'hôtes au coeur du domaine, avec petit déjeuner bio et accès à la piscine, au sauna et au jacuzzi.",
+    intro: "Des chambres d'hôtes dans le domaine, à Lives-sur-Meuse, avec petit déjeuner bio.",
     points: [
       'Petit déjeuner varié et bio, en chambre ou en salle',
       'Piscine extérieure chauffée d\'avril à octobre, sauna et jacuzzi',
       'Cuisine partagée et wifi gratuit',
       'Journée piscine à 20 € par personne, sur réservation',
     ],
-    tarifNote: 'Tarifs et disponibilités : à demander à la maison (le site actuel ne publie pas de grille).',
-    nombreNote: 'Le nombre de chambres n\'est pas publié par le site actuel.',
+    tarifNote: 'Tarifs et disponibilités sur demande, par téléphone ou par e-mail.',
+    nombreNote: 'Nombre de chambres à préciser avec la maison.',
   },
   mariage: {
     intro: "Depuis 2017, la Bergerie reçoit des mariages. Parce que ce moment passe trop vite, les propriétaires privatisent le domaine pour un weekend complet.",
@@ -120,7 +120,7 @@ export const site: Domaine = {
       { nom: 'La visite', texte: 'Une visite de 30 minutes se programme avec les propriétaires pour découvrir les lieux et poser vos questions.' },
     ],
     brochureNote: 'La brochure Mariage (PDF explicatif et tarifaire) et le calendrier se trouvent sur le site actuel de la maison.',
-    capaciteNote: 'Capacité de la salle : non confirmée (une source annonce 150 personnes, un annuaire 250). À préciser avec la maison.',
+    capaciteNote: 'Capacité de la salle à préciser avec la maison.',
   },
   offres: [
     { nom: 'Mariage', texte: "Le domaine entier pendant un weekend : cérémonie au jardin, repas sous la véranda, nuit sur place. Une brochure explicative et tarifaire est disponible auprès de la maison.", textePlaceholder: false, photo: '/photos/ceremonie-jardin.webp' },
@@ -128,19 +128,19 @@ export const site: Domaine = {
     { nom: 'Événement privé', texte: "Anniversaire, fête de famille, réception : la maison accueille aussi vos autres événements privés. Formule et tarif à construire avec les propriétaires.", textePlaceholder: true, photo: '/photos/buffet.webp' },
   ],
   seminaire: {
-    intro: "Un cadre d'exception pour vos réunions : plusieurs salles et plusieurs formules, selon vos besoins.",
+    intro: "Plusieurs salles, dont une véranda vitrée sur le jardin, et plusieurs formules selon vos besoins.",
     points: [
-      'Plusieurs salles, dont une véranda vitrée sur le jardin',
-      'Formules adaptées à la taille et à la durée de votre événement',
-      'Chambres sur place pour prolonger la réunion',
+      'Une véranda vitrée sur le jardin et plusieurs autres salles',
+      'Plusieurs formules selon vos besoins',
+      'Chambres d\'hôtes au domaine',
       'Piscine, sauna et jacuzzi pour la pause',
     ],
   },
   activites: [
-    { nom: 'La Citadelle de Namur', texte: 'La forteresse qui domine la ville.' },
+    { nom: 'La Citadelle de Namur', texte: "La plus belle citadelle d'Europe, selon le site de la maison." },
     { nom: 'Les musées', texte: 'Musée Félicien Rops et Musée Trema.' },
-    { nom: 'Le marché du samedi', texte: 'Le rendez-vous des producteurs en ville.' },
-    { nom: 'Les caves à vin', texte: 'Visites et dégustations dans la région.' },
+    { nom: 'Le marché du samedi', texte: 'Marché à Namur le samedi.' },
+    { nom: 'Les caves à vin', texte: 'Caves à vins dans les souterrains de Namur.' },
     { nom: 'Loisirs et brocantes', texte: 'Balades, loisirs et brocantes des environs.' },
   ],
   presse: [
