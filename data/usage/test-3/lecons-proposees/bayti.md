@@ -1,0 +1,1 @@
+- 2026-11-27 : site Wix Studio (bayti.be) : pages internes en curl simple (texte dans le HTML, strip des balises) ; images d'origine via static.wixstatic.com/media/<id> sans /v1/ ; préfixe 11062b_ = stock Wix, étoiles dorées = widget avis à écarter.
