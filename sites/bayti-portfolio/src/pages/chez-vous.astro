@@ -5,10 +5,9 @@ import { u, asset } from '../lib/url';
 const hero = photoDe('/photos/buffet-evenement.webp');
 const g = ['/photos/coffret-traiteur-pain.webp', '/photos/boite-traiteur-ouverte.webp', '/photos/mezzes-ail-des-ours.webp', '/photos/desserts-ashta-semoule.webp'].map(photoDe);
 const points = [
-  { t: 'Des menus sur mesure', d: 'Chaque menu est créé pour l’événement, à partir des mezzés, grillades et desserts de la maison.' },
-  { t: 'La mise en place', d: 'La mise en place est assurée par Bayti.' },
-  { t: 'Le matériel', d: 'Le matériel est fourni.' },
-  { t: 'Le service', d: 'Le service se fait quelques heures avant l’événement.' },
+  { t: 'Des menus sur mesure', d: 'créés pour chaque événement, à partir des mezzés, grillades et desserts de la maison.' },
+  { t: 'Mise en place et matériel', d: 'assurés et fournis par Bayti.' },
+  { t: 'Le service', d: 'quelques heures avant l’événement.' },
 ];
 ---
 <Base title="Bayti chez vous" theme="ocre" description={`Bayti chez vous, le traiteur événementiel de ${site.nom} à ${site.adresse.commune} : menus sur mesure, mise en place et matériel fournis.`}>
@@ -35,14 +34,9 @@ const points = [
         <p class="chapeau">Ce que comprend le service</p>
         <h2 class="t-xl" data-split="words">Vous recevez, on s’occupe de la table</h2>
       </div>
-      <div class="grid">
-        {points.map((p, i) => (
-          <article class="carte" data-reveal="up" data-delay={String(i * 0.08)}>
-            <h3>{p.t}</h3>
-            <p class="t-s muted">{p.d}</p>
-          </article>
-        ))}
-      </div>
+      <ul class="valeurs t-m">
+        {points.map((p) => <li data-reveal="up"><strong>{p.t}</strong> : {p.d}</li>)}
+      </ul>
     </div>
   </section>
 

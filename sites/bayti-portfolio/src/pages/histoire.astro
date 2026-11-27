@@ -27,20 +27,15 @@ const galerie = ['/photos/mezzes-ail-des-ours.webp', '/photos/falafels-salade-fe
     </div>
   </section>
 
-  <section class="section" data-ciel="corail">
+  <section class="section" data-ciel="midi">
     <div class="wrap">
       <div class="section__head">
         <p class="chapeau">La maison</p>
         <h2 class="t-xl" data-split="words">Ce qui compte ici</h2>
       </div>
-      <div class="grid">
-        {site.valeurs.map((v, i) => (
-          <article class="carte" data-reveal="up" data-delay={String(i * 0.08)}>
-            <h3 class="num">{String(i + 1).padStart(2, '0')}</h3>
-            <p class="t-m">{v}</p>
-          </article>
-        ))}
-      </div>
+      <ul class="valeurs t-m">
+        {site.valeurs.map((v) => <li data-reveal="up">{v}</li>)}
+      </ul>
       <p class="note" style="margin-top: calc(var(--u) * 3)">À la carte : {site.specialites.join(', ').toLowerCase()}.</p>
     </div>
   </section>

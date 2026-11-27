@@ -42,7 +42,7 @@ const photo = (src: string, alt: string, largeur: number, hauteur: number): Phot
 // Horaires : restaurant mardi à samedi 18h-21h, Comptoir mardi à samedi 11h-19h (bayti.be). Fermeture du dimanche
 // et du lundi déduite par la recherche (à confirmer). `creneaux` couvre l'ouverture de la maison (11h-21h).
 const ouvert = (jour: Jour): Horaire => ({ jour, creneaux: [{ ouverture: '11:00', fermeture: '21:00' }], comptoir: '11:00 à 19:00', restaurant: '18:00 à 21:00' });
-const ferme = (jour: Jour): Horaire => ({ jour, creneaux: [], note: 'fermé (à confirmer)', comptoir: 'fermé', restaurant: 'fermé' });
+const ferme = (jour: Jour): Horaire => ({ jour, creneaux: [], note: 'fermé', comptoir: 'fermé', restaurant: 'fermé' });
 
 export const site: Restaurant = {
   slug: 'bayti',
@@ -406,7 +406,7 @@ export const site: Restaurant = {
     },
   ],
   histoire: [
-    'Bayti signifie « foyer » en arabe classique. Le nom dit tout : une table familiale, ouverte, où l’on vient comme chez soi.',
+    'Bayti signifie « foyer » en arabe classique.',
     'La maison est née du désir de faire découvrir la cuisine traditionnelle du Moyen-Orient, en recréant « la cuisine de notre enfance » autour d’une table partagée, avec une touche personnelle.',
     'Au cœur de Namur, un voyage culinaire célèbre le meilleur de deux mondes : l’âme du Moyen-Orient, revisitée d’une touche européenne.',
     'Trois façons d’y goûter, toutes Rue du Pont : le restaurant le soir au numéro 15, le Comptoir de jour au numéro 6, et Bayti chez vous, le traiteur qui apporte la table à vos événements.',
@@ -531,7 +531,7 @@ export const moments: Moment[] = [
   },
   {
     id: 'm-21h', heure: 21, heureTexte: '21h', titre: 'À demain', theme: 'nuitProfonde',
-    accroche: 'Le Comptoir ferme à 19h, le restaurant à 21h. La maison est fermée le dimanche et le lundi (à confirmer).',
+    accroche: 'Le Comptoir ferme à 19h, le restaurant à 21h. La maison est fermée le dimanche et le lundi.',
     accrochePlaceholder: false, placeholder: false,
     lignes: [
       { nom: 'Le Comptoir', detail: 'mardi à samedi, 11h à 19h', prix: null, placeholder: false },

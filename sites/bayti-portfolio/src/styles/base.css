@@ -75,10 +75,11 @@ address { font-style: normal; }
 .badge__bulle b { text-transform: capitalize; font-weight: 600; }
 .badge:hover .badge__bulle, .badge:focus-within .badge__bulle { clip-path: inset(0 0 0 0 round 16px); }
 .badge--compact { font-size: var(--t-xs); min-height: 28px; }
-@media (max-width: 767px) { .badge--compact .badge__bulle { left: auto; right: 0; } .badge--compact .badge__texte { max-width: 9.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }
+.badge--compact .badge__texte { display: inline-block; min-width: 11rem; } /* largeur réservée : le texte calculé par le JS ne décale plus rien (CLS) */
+@media (max-width: 767px) { .badge--compact .badge__bulle { left: auto; right: 0; } .badge--compact .badge__texte { min-width: 9.5rem; max-width: 9.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }
 
 /* Frise du jour : desktop fixée à droite dans la voie --frise ; mobile en rangée dans l'en-tête. */
-.frise { position: fixed; right: calc(var(--gutter) * 0.9); top: 50%; z-index: var(--z-frise); height: min(56vh, 34rem); width: 2.5rem; transform: translateY(-50%); }
+.frise { container-type: size; position: fixed; right: calc(var(--gutter) * 0.9); top: 50%; z-index: var(--z-frise); height: min(56vh, 34rem); width: 2.5rem; transform: translateY(-50%); }
 .frise__liste { list-style: none; padding: 0; position: absolute; inset: 0; }
 .frise::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--ligne); }
 .frise__item { position: absolute; left: 0; right: 0; top: var(--pos); }
@@ -90,7 +91,7 @@ address { font-style: normal; }
 .frise__cran:hover .frise__bulle, .frise__cran:focus-visible .frise__bulle { clip-path: inset(0 0 0 0 round 999px); }
 .frise__disque::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--disque); animation: frise-pulse 2.4s ease-in-out infinite; }
 @keyframes frise-pulse { 0%, 100% { transform: scale(0.9); opacity: 0.9; } 50% { transform: scale(1.8); opacity: 0; } }
-.frise__disque { position: absolute; left: 50%; top: calc((var(--heure) - 7) / 16 * 100%); width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--disque); box-shadow: 0 0 0 3px var(--ciel-haut); transform: translate(-50%, -50%); pointer-events: none; }
+.frise__disque { position: absolute; left: 0; top: 0; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--disque); box-shadow: 0 0 0 3px var(--ciel-haut); translate: calc(50cqw - 0.55rem) calc((var(--heure) - 7) / 16 * 100cqh - 0.55rem); pointer-events: none; }
 @media (max-width: 767px) {
   .frise { position: relative; right: auto; top: auto; transform: none; width: min(100% - 2 * var(--gutter), 92rem); height: 1.6rem; margin: 0 auto; padding-bottom: var(--u); }
   .frise::before { left: 0; right: 0; top: 50%; bottom: auto; height: 1px; width: auto; }
@@ -98,12 +99,11 @@ address { font-style: normal; }
   .frise__cran { height: 100%; transform: translateX(-50%); width: 2rem; }
   .frise__h { right: auto; top: 100%; left: 50%; transform: translateX(-50%); font-size: 0.65rem; }
   .frise__bulle { display: none; }
-  .frise__disque { left: calc((var(--heure) - 7) / 16 * 100%); top: 50%; }
   /* Révision 1 : les heures (sous les points) restent DANS l'en-tête opaque, plus de texte qui déborde sur la page. */
-  .frise { height: 2.7rem; padding-bottom: 0; }
-  .frise__liste { left: 1rem; right: 1rem; top: 0; bottom: 1.1rem; }
+  .frise { height: 2.2rem; padding-bottom: 0; }
+  .frise__liste { left: 1rem; right: 1rem; top: 0; bottom: 0.9rem; }
   .frise::before { left: 1rem; right: 1rem; top: calc((100% - 1.1rem) / 2); }
-  .frise__disque { left: calc(1rem + (var(--heure) - 7) / 16 * (100% - 2rem)); top: calc((100% - 1.1rem) / 2); }
+  .frise__disque { translate: calc(1rem + (var(--heure) - 7) / 16 * (100cqw - 2rem) - 0.55rem) calc((100cqh - 1.1rem) / 2); }
 }
 
 /* Boutons et liens : pilules, inversion au survol ; flèches qui avancent de 4 px. */
@@ -132,11 +132,11 @@ address { font-style: normal; }
 .horloge__s { font-size: var(--t-s); font-weight: 600; color: var(--encre-doux); align-self: end; padding-bottom: 0.15em; }
 .hero__nom { max-width: 8ch; }
 /* Signature : le soleil suit sa piste (arc du jour 7h-23h) jusqu'à l'heure réelle ; couronne de 60 crans, un tour par minute. */
-.soleil { position: absolute; right: calc(var(--frise) + var(--gutter)); top: 22%; width: min(36rem, 40vw); aspect-ratio: 100 / 56; pointer-events: none; z-index: 0; }
+.soleil { container-type: size; position: absolute; right: calc(var(--frise) + var(--gutter)); top: 22%; width: min(36rem, 40vw); aspect-ratio: 100 / 56; pointer-events: none; z-index: 0; }
 .soleil__arc { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .soleil__arc path { fill: none; stroke: var(--ligne); stroke-width: 0.35; }
 .soleil__piste { stroke-dasharray: 0.5 1.7; stroke-linecap: round; stroke-width: 0.6 !important; }
-.soleil__astre { position: absolute; left: calc(var(--sx) * 1%); top: calc(var(--sy) / 56 * 100%); width: 22%; aspect-ratio: 1; transform: translate(-50%, -50%); }
+.soleil__astre { position: absolute; left: 0; top: 0; width: 22%; aspect-ratio: 1; translate: calc(var(--sx) * 1cqw - 50%) calc(var(--sy) / 56 * 100cqh - 50%); } /* translate, pas left/top : aucun décalage de mise en page quand le JS pose l'heure (CLS) */
 .soleil__disque { position: absolute; inset: 14%; border-radius: 50%; background: var(--disque); box-shadow: 0 0 0 0.6rem color-mix(in srgb, var(--disque) 18%, transparent), 0 0 4rem 0.5rem color-mix(in srgb, var(--disque) 45%, transparent); animation: soleil-respire 5s ease-in-out infinite; }
 .soleil__ticks { position: absolute; inset: 0; border-radius: 50%; background: repeating-conic-gradient(var(--encre) 0 0.8deg, transparent 0.8deg 6deg); -webkit-mask: radial-gradient(closest-side, transparent 80%, #000 81%); mask: radial-gradient(closest-side, transparent 80%, #000 81%); opacity: 0.55; animation: soleil-tour 60s linear infinite; }
 @keyframes soleil-tour { to { transform: rotate(360deg); } }
@@ -156,8 +156,9 @@ address { font-style: normal; }
 .chip[aria-current]:hover { background: var(--soleil); color: var(--ink); border-color: var(--soleil); }
 @media (max-width: 767px) {
   .hero { min-height: 0; padding-block: calc(var(--u) * 5) calc(var(--u) * 6); }
-  .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
-  .chip { white-space: nowrap; flex: 0 0 auto; }
+  .chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 0.6); }
+  .chip { flex-direction: column; align-items: flex-start; gap: 0.1em; padding: 0.5em 0.7em; }
+  .chip__t { font-size: var(--t-xs); }
 }
 
 /* Photos : 16 px, légendes discrètes. */
@@ -301,3 +302,8 @@ figcaption { margin-top: 0.6em; font-size: var(--t-xs); color: var(--encre-doux)
 .maintenant__point::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--disque); animation: frise-pulse 2.4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .maintenant__point::after { animation: none; opacity: 0; } }
 .bandeau--fort { border-style: solid; border-color: var(--encre); background: var(--voile); font-size: var(--t-body); }
+
+/* Listes courtes (Histoire « Ce qui compte ici », Chez vous) : une ligne par idée, sans carte ni numéro. */
+.valeurs { list-style: none; padding: 0; margin: 0; display: grid; gap: calc(var(--u) * 1.6); max-width: 46rem; }
+.valeurs li { padding-bottom: calc(var(--u) * 1.6); border-bottom: 1px solid var(--ligne); }
+.valeurs strong { font-weight: 700; }
