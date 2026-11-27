@@ -8,8 +8,8 @@ import '../styles/tokens.css';
 import '../styles/engine.css';
 import '../styles/site.css';
 
-interface Props { title?: string; description?: string; page?: string }
-const { title, description = site.description, page = 'page' } = Astro.props;
+interface Props { title?: string; description?: string; page?: string; heure?: string }
+const { title, description = site.description, page = 'page', heure } = Astro.props;
 const fullTitle = title ? `${title} | ${site.nom}` : `${site.nom} | Boulangerie, pâtisserie et tea-room à Bouge, Namur`;
 const siteUrl = Astro.site ?? new URL('https://kyw-test-restaurant.vercel.app');
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
@@ -43,6 +43,8 @@ const pinceau = asset('/pinceau.webp');
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#fff3f6" />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={asset('/favicon-32.png')} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
     <link rel="sitemap" href={asset('/sitemap-index.xml')} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.nom} />
@@ -65,9 +67,10 @@ const pinceau = asset('/pinceau.webp');
     </script>
     <ClientRouter fallback="swap" />
   </head>
-  <body data-page={page}>
+  <body data-page={page} data-heure={heure}>
     <a class="skip-link" href="#main">Aller au contenu</a>
     <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
+    <div class="regle" transition:persist="regle" aria-hidden="true"><span class="regle__b">7 h</span><span class="regle__piste"><span class="regle__fill"></span></span><span class="regle__h">7 h</span><span class="regle__b">18 h</span></div>
     <Header />
     <main id="main" tabindex="-1">
       <slot />

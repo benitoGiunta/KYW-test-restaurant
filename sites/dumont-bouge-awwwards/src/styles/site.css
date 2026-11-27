@@ -2,7 +2,6 @@
 .wrap { max-width: 104rem; margin-inline: auto; padding-inline: var(--gutter); min-width: 0; }
 .display { font-family: var(--f-display); font-weight: 800; letter-spacing: -0.045em; line-height: 0.9; text-wrap: balance; }
 .lien { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.22em; text-decoration-color: var(--c-accent); }
-.lien:hover { text-decoration-thickness: 3px; }
 .lien-util { font-size: var(--t-s); text-decoration: underline; text-underline-offset: 0.2em; padding-block: 0.4em; display: inline-block; }
 .legende { font-size: var(--t-xs); color: var(--c-muted); padding-block: 0.6em 0; }
 figure { margin: 0; }
@@ -11,14 +10,11 @@ figure { margin: 0; }
 .nuit { background: var(--c-nuit); color: var(--c-nuit-fg); }
 
 /* Boutons */
-.cta { display: inline-flex; align-items: center; min-height: 3.25rem; padding: 0.8em 1.6em; background: var(--c-accent); color: #fff; font-weight: 700; font-size: var(--t-s); letter-spacing: 0.01em; border: 2px solid var(--c-accent); border-radius: var(--radius); transition: background-color 0.25s, color 0.25s; }
-.cta:hover { background: var(--c-fg); border-color: var(--c-fg); }
-.cta--fantome { background: transparent; color: var(--c-fg); border-color: var(--c-fg); }
-.cta--fantome:hover { background: var(--c-fg); color: var(--c-bg); }
+.cta { display: inline-flex; align-items: center; min-height: 3.25rem; padding: 0.8em 1.6em; background-color: var(--c-accent); color: #fff; font-weight: 700; font-size: var(--t-s); letter-spacing: 0.01em; border: 2px solid var(--c-accent); border-radius: var(--radius); transition: background-size 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s, border-color 0.3s, scale 0.15s; background-image: linear-gradient(var(--c-roule), var(--c-roule)); background-repeat: no-repeat; background-position: left center; background-size: 0% 100%; --c-roule: var(--c-fg); }
+.cta--fantome { --c-roule: var(--c-fg); background-color: transparent; color: var(--c-fg); border-color: var(--c-fg); }
 .cta--petit { min-height: 2.75rem; padding: 0.5em 1.1em; }
 .cta--grand { min-height: 4.25rem; font-size: var(--t-body); padding-inline: 2em; }
-.cta--nuit { background: var(--c-nuit-accent); border-color: var(--c-nuit-accent); color: var(--c-nuit); }
-.cta--nuit:hover { background: var(--c-nuit-fg); border-color: var(--c-nuit-fg); color: var(--c-nuit); }
+.cta--nuit { --c-roule: var(--c-nuit-fg); background-color: var(--c-nuit-accent); border-color: var(--c-nuit-accent); color: var(--c-nuit); }
 
 /* En-tête */
 .tete { position: sticky; top: 0; z-index: var(--z-header); display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem var(--gutter); background: var(--c-bg); border-bottom: 1px solid var(--c-line); }
@@ -26,8 +22,6 @@ figure { margin: 0; }
 .tete__marque img { width: 100%; height: auto; }
 .tete__nav ul { display: flex; align-items: center; gap: clamp(0.75rem, 0.3rem + 2vw, 2.25rem); list-style: none; padding: 0; }
 .nl { font-weight: 600; font-size: var(--t-s); padding-block: 0.7em; display: inline-block; background: linear-gradient(var(--c-accent), var(--c-accent)) left bottom / 0 3px no-repeat; transition: background-size 0.3s; }
-.nl:hover, .nl[aria-current] { background-size: 100% 3px; }
-@media (max-width: 30rem) { .tete__nav .nl { display: none; } }
 
 /* Accueil · hero : poster typographique, le pinceau passe derrière « Bouge » */
 .hero { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--serre); padding-block: var(--serre) var(--normal); align-items: end; }
@@ -105,8 +99,7 @@ figure { margin: 0; }
 .entete__titre { font-size: var(--t-mega); max-width: 12ch; }
 .entete__texte { font-size: var(--t-m); line-height: 1.25; max-width: 40ch; font-weight: 500; }
 .puces ul { display: flex; gap: 0.6rem; list-style: none; padding: 0; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); padding-bottom: 0.5rem; }
-.puce { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.4em 1.1em; border: 2px solid var(--c-fg); font-weight: 700; font-size: var(--t-s); white-space: nowrap; scroll-snap-align: start; transition: background-color 0.2s, color 0.2s; }
-.puce:hover { background: var(--c-fg); color: var(--c-bg); }
+.puce { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.4em 1.1em; border: 2px solid var(--c-fg); font-weight: 700; font-size: var(--t-s); white-space: nowrap; scroll-snap-align: start; transition: background-size 0.45s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s; background-image: linear-gradient(var(--c-fg), var(--c-fg)); background-repeat: no-repeat; background-position: left center; background-size: 0% 100%; }
 
 /* Carte */
 .chap { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--serre); padding-block: var(--normal); border-top: 2px solid var(--c-fg); scroll-margin-top: 4rem; }
@@ -185,3 +178,69 @@ figure { margin: 0; }
 .pied .lien { text-decoration-color: var(--c-nuit-accent); }
 .pied :focus-visible { outline-color: var(--c-nuit-accent); }
 @media (max-width: 52rem) { .pied__col { grid-column: 1 / -1; } .pied__mot { font-size: clamp(3.4rem, 19vw, 9rem); } }
+
+/* ===== Phase 2 · mouvement et interactions (verbe : dérouler) ===== */
+/* Deux traitements : le remplissage déroulé (CTA, puces, bouton Menu) et le trait déroulé (nav, liens texte, utilitaires). */
+.lien, .lien-util { text-decoration: none; background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat, linear-gradient(var(--c-accent), var(--c-accent)) left bottom / 0% 0.3em no-repeat; padding-bottom: 0.08em; transition: background-size 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+.pied .lien, .pied .lien-util { background-image: linear-gradient(currentColor, currentColor), linear-gradient(var(--c-nuit-accent), var(--c-nuit-accent)); }
+.lien { padding-block: 0.3em 0.08em; display: inline-block; }
+.cta:active, .puce:active, .tete__menu:active { scale: 0.97; }
+@media (hover: hover) {
+  .cta:hover { background-size: 100% 100%; border-color: var(--c-roule); }
+  .cta--fantome:hover { color: var(--c-bg); }
+  .cta--nuit:hover { color: var(--c-nuit); }
+  .puce:hover { background-size: 100% 100%; color: var(--c-bg); }
+  .nl:hover { background-size: 100% 3px; }
+  .lien:hover, .lien-util:hover { background-size: 100% 1px, 100% 0.3em; }
+  .kyw-footer__link:hover { text-decoration: underline; }
+}
+.cta:focus-visible { background-size: 100% 100%; border-color: var(--c-roule); }
+.cta--fantome:focus-visible { color: var(--c-bg); }
+.cta--nuit:focus-visible { color: var(--c-nuit); }
+.puce:focus-visible { background-size: 100% 100%; color: var(--c-bg); }
+.nl:focus-visible, .nl[aria-current] { background-size: 100% 3px; }
+.lien:focus-visible, .lien-util:focus-visible { background-size: 100% 1px, 100% 0.3em; }
+.kyw-footer__link:focus-visible { text-decoration: underline; }
+
+/* Index de la journée : un trait de pinceau se déroule sous l'heure quand la ligne arrive */
+.jour__h span { background: linear-gradient(var(--c-accent), var(--c-accent)) left 88% / 0% 0.14em no-repeat; transition: background-size 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s; }
+.jour__ligne.is-lu .jour__h span, html:not(.motion) .jour__h span { background-size: 100% 0.14em; }
+
+/* Règle 7 h à 18 h : fixe dans la marge droite, remplie par le défilement (variable --p écrite par le pilote) */
+.regle { position: fixed; z-index: calc(var(--z-header) - 1); right: max(4px, calc(var(--gutter) / 2 - 9px)); top: 6.5rem; bottom: 1.5rem; width: 18px; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; pointer-events: none; font-size: 0.6875rem; font-weight: 700; color: var(--c-muted); --p: 0; }
+.regle__b, .regle__h { writing-mode: vertical-rl; white-space: nowrap; }
+.regle__piste { position: relative; flex: 1; width: 3px; background: var(--c-line); overflow: clip; }
+.regle__fill { position: absolute; inset: 0; background: var(--c-accent); transform-origin: top center; scale: 1 var(--p); }
+.regle__h { position: absolute; left: 50%; translate: -50% 0; top: calc(1.4rem + (100% - 4.6rem) * var(--p)); color: var(--c-accent-texte); background: var(--c-bg); padding-block: 2px; }
+html:not(.motion) .regle, html:not(.js) .regle { display: none; }
+@media (max-width: 62rem) {
+  .regle { top: auto; bottom: 0; left: 0; right: 0; width: auto; height: 4px; flex-direction: row; gap: 0; }
+  .regle__b, .regle__h { display: none; }
+  .regle__piste { width: auto; height: 4px; }
+  .regle__fill { transform-origin: left center; scale: var(--p) 1; }
+}
+
+/* Bouton Menu et panneau plein écran (téléphone) */
+.tete__menu { display: none; min-height: 2.75rem; min-width: 2.75rem; padding: 0.4em 1em; font: inherit; font-weight: 700; font-size: var(--t-s); color: var(--c-fg); background-color: transparent; border: 2px solid var(--c-fg); background-image: linear-gradient(var(--c-fg), var(--c-fg)); background-repeat: no-repeat; background-position: left center; background-size: 0% 100%; transition: background-size 0.45s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s, scale 0.15s; cursor: pointer; }
+.tete__menu[aria-expanded="true"], .tete__menu:focus-visible { background-size: 100% 100%; color: var(--c-bg); }
+@media (hover: hover) { .tete__menu:hover { background-size: 100% 100%; color: var(--c-bg); } }
+.tete__menu[aria-expanded="true"] { position: relative; z-index: 2; }
+.menu { position: fixed; inset: 0; z-index: 1; background: var(--c-nuit); color: var(--c-nuit-fg); display: grid; grid-template-rows: auto 1fr auto; padding: 5.5rem var(--gutter) 2rem; overflow-y: auto; }
+.menu[hidden] { display: none; }
+.menu__h { font-size: var(--t-xs); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c-nuit-muted); }
+.menu__liste { list-style: none; padding: 0; align-self: center; display: grid; gap: 0.2rem; }
+.menu__lien { display: inline-block; font-size: clamp(2.4rem, 13vw, 4rem); font-weight: 800; letter-spacing: -0.045em; line-height: 1.05; padding-block: 0.1em; background: linear-gradient(var(--c-nuit-accent), var(--c-nuit-accent)) left 85% / 0% 0.12em no-repeat; transition: background-size 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+.menu__lien[aria-current], .menu__lien:focus-visible { background-size: 100% 0.12em; }
+.menu :focus-visible { outline-color: var(--c-nuit-accent); }
+html.menu-ouvert .tete { border-bottom-color: transparent; }
+html.menu-ouvert .tete__menu { color: var(--c-nuit); background-image: linear-gradient(var(--c-nuit-fg), var(--c-nuit-fg)); border-color: var(--c-nuit-fg); }
+@media (max-width: 40rem) {
+  .tete__nav .nl { display: none; }
+  .tete__menu { display: inline-flex; align-items: center; }
+  .tete__nav { margin-left: auto; }
+}
+@media (min-width: 40.01rem) { .menu { display: none !important; } }
+
+/* Mouvement réduit et sans JS : tout est peint, rien ne se cache */
+html:not(.motion) [data-deroule] { clip-path: none; }
+@media (prefers-reduced-motion: reduce) { .cta, .puce, .lien, .lien-util, .nl, .tete__menu, .menu__lien, .jour__h span { transition: none; } }

@@ -1,20 +1,22 @@
-# ETAT · dumont-bouge · awwwards · fin de la phase 1 (construction-1)
+# ETAT · dumont-bouge · awwwards · fin de la phase 2 (construction-2)
 
-## Fait
-- Brief, 3 concepts notés, Concept Card, système (palette, typo, grille, plan) : DESIGN.md ; checklist 1 à 18 prouvée (9 partielle).
-- Scaffold Astro 5 (package.json, astro.config.mjs), engine copié verbatim de le-royal-awwwards (`src/engine/`, `engine.css`), sans GL, ni loader.
-- Contenu : `src/data/site.ts`, `src/data/carte.json` (211 lignes, 4 chapitres, 23 rubriques, généré depuis donnees.json), `src/lib/photos.ts`.
-- Pages : `/`, `/carte/`, `/histoire/`, `/reservation/`, `404.html` ; Header, Footer (pied « 7 h à 18 h » + KywFooter), Base (head complet, JSON-LD, noindex, rideau).
-- Images : 4 photos du client en `astro:assets` (AVIF/WebP), logo, pinceau (masque), favicon SVG, `og.png` simple.
-- Build : `pnpm build:site sites/dumont-bouge-awwwards` passe (5 pages) ; mesures 1440/1280/1024/390/360 : aucun débordement horizontal, display à ≥ gutter.
+## Fait (phase 1)
+- Concept A « Sept à dix-huit », système, contenu, 5 pages statiques, images, build : voir DESIGN.md (points 1 à 18).
 
-## Reste
-- Phase 2 : signature (pinceau déroulé + règle 7 h à 18 h au scroll), reveals `data-split`/`data-reveal` (rien posé en phase 1), hovers (CTA, nav, plats), état « ouvert » calculé depuis les horaires, repos du pinceau (idle), transition de page affinée (rideau simple en place), `scroll-snap` à vérifier.
-- Phase 3 : QA navigateur (captures, axe, LCP, clavier, reduced motion), og.png composée avec texte (`og.mjs`), sloplint, points 42 à 63, `pnpm index`, commit de `dist/index.html`.
-- Décider : compléter les photos manquantes (pain, tea-room) en placeholder marqué ou composition typo.
+## Fait (phase 2)
+- Pilote `src/motion/journee.ts` : heure 7 h à 18 h tirée du défilement, distribuée à la règle fixe (marge droite au bureau, filet de 4 px en bas sous 62 rem), au pinceau du hero (déroulé à l'intro, dérive de repos, pointeur), aux heures de l'index (trait déroulé), aux chiffres (comptés une fois), aux photos `[data-deroule]` (clip de gauche à droite). 404 épinglée « 18 h 01 » (`heure` passé à Base).
+- `idle.ts` (recette motion.md), `menu.ts` (menu plein écran sous 40 rem : focus piégé, Échap, retour du focus), `setup.ts` (rideau inchangé, ≤ 1 s par sens).
+- Reveals : `data-split="lines"` sur les h2 display, `data-intro` sur h1 et chapeaux des pages intérieures et h1 de la 404 ; hero sans intro sur « Dumont » ni la photo (LCP).
+- Hovers : deux traitements (remplissage déroulé, trait déroulé), `(hover: hover)` + `:focus-visible`, `:active`, liens soulignés au repos ; lien du pied KYW souligné.
+- Finitions : favicon PNG 32 et apple-touch-icon 180.
+- Build OK (`scripts/q.sh db-aww2-build`) ; vérif navigateur : 0 erreur, 0 débordement à 390 sur 5 pages, réduit sans texte caché (DESIGN.md points 19 à 47).
+
+## Reste (phase 3)
+- Shoot complet (agent captures), lire `report.json` : hover (35), `idleMotion` (36 : si non détecté, augmenter l'amplitude du pinceau dans `journee.ts`), contraste (45), cibles (47), LCP, axe.
+- Vérifier à l'œil : étiquette de la règle (texte vertical sur la piste) à 1024 et 1440 ; panneau du menu à 360 ; intro de « Bouge » au premier frame (petit risque de flash avant le `gsap.set`).
+- og.png composée, sloplint, RAPPORT.md, `pnpm index`, commit de `dist/index.html`.
 
 ## Décisions
-- Concept A « Sept à dix-huit » ; pas de loader, pas de GL (justifié dans DESIGN.md).
-- Une seule famille (Bricolage Grotesque variable, un fichier).
-- Pas de `data-reveal` en phase 1 : la page est complète sans `.motion`.
-- Pas de `pnpm index` en phase 1 (site non fini).
+- Pas de loader, pas de GL, pas de curseur personnalisé, aucun épinglage (la règle porte la progression sans pin).
+- Photos révélées par un clip gauche à droite propre au pilote (`data-deroule`) plutôt que `data-reveal="clip"` (vertical) de l'engine, pour rester dans le verbe « dérouler ».
+- La règle est masquée en mouvement réduit et sans JS (les heures portent le concept partout ailleurs).

@@ -75,3 +75,34 @@ MOBILE 390 : titres re-réglés (clamp), lignes en 1 colonne, puces en strip dé
 16. [x] Chaque famille de section au plus une fois par page (accueil : poster, index, paire, statement, données, plein cadre).
 17. [x] Hero en 3 s : nom, métiers, « 7 h à 18 h tous les jours », deux actions (mesures 1440 : h1 [33,130,938,557], CTA [971,485,1407,537], photo [33,592,1407,1209]).
 18. [x] Mobile 390 composé : mesures sans débordement horizontal à 360 et 390 sur les 5 pages (`db-mesure`, FIN problemes=0) ; strip des puces en `overflow-x` + `scroll-snap`.
+
+### Phase 2 (construction-2) · mouvement et interactions
+Pilote : `src/motion/journee.ts` (heure 7 h à 18 h lue sur la progression du défilement), repos `src/motion/idle.ts`, menu `src/motion/menu.ts`, appelés une fois par `src/motion/setup.ts`. Vérifications navigateur : script `db-aww2-verif.mjs` (scratchpad), journal `.logs/db-aww2-verif.log`, 0 erreur console ou requête échouée.
+19. [x] Menu mobile : `Header.astro` bouton `.tete__menu` `aria-expanded`/`aria-controls`, panneau `#menu` plein écran (390×844 mesuré), focus sur « Accueil » à l'ouverture, Tab piégé (`trap=true`), Échap ferme et rend le focus au bouton (`menuClose=true focusBack=true`) ; `menu.ts`.
+20. [x] Engine verbatim (`src/engine/` inchangé), `astro.ts` ; `transition:persist` sur `#curtain` (et `.regle`), `transition:animate="none"` sur `<html>` (`Base.astro`) ; pas de `#gl` ni de `#cursor` (sans GL, curseur natif).
+21. [x] Une horloge : `grep addEventListener('scroll'|requestAnimationFrame src/motion` = 0 ; tout par `gsap.ticker` et `onScroll`.
+22. [x] Code de page dans `onPage()` avec nettoyage (`journee.ts` : ticker du pinceau et IntersectionObserver retirés ; `menu.ts` : écouteurs retirés, menu fermé).
+23. [x] Aucune CSS `transform` sur élément GSAP : `grep transform site.css` hors `transform-origin`/`text-transform` = 0 ; la règle utilise `scale`/`translate` individuels non animés par GSAP.
+24. [x] Module pilote `journee.ts` : une variable (heure), distribuée à la règle, au pinceau, à l'index, aux chiffres ; influence du pointeur (`idle.x`, `idle.y` sur le pinceau) ; `startIdle()` appelé depuis `startJournee()`.
+25. [x] Loader : non (décision Concept Card), aucun composant ni `role="status"`.
+26. [x] Transition : rideau rose déroulé de gauche à droite, 0,7 s à l'aller, 0,85 s au retour (`setup.ts`) ; navigation testée (`nav=…/carte/ h1vis=visible curtain=hidden`).
+27. [x] Intro : « Bouge » et son pinceau se déroulent (clip-path, 0,9 s, `intro` de l'engine) ; « Dumont » et la photo peints dès le premier frame (LCP) ; pages intérieures `data-split="lines" data-intro` sur h1 et chapeau ; `l2clip=none` après 2,2 s.
+28. [x] Épinglages : aucun pin ni scrub ; 404 épinglée par `data-heure="18 h 01"` (`404=18 h 01`).
+29. [x] Repli statique : `html:not(.motion)` règle masquée, traits de l'index peints, `[data-deroule]` sans clip ; réduit mesuré `caches=0`.
+30. [x] Copies décoratives `aria-hidden` : `.regle`, `.menu__h`, `.perdu__h`, chiffres comptés (`aria-hidden`, valeur réelle en `sr-only`) ; aucun titre dupliqué.
+31. [x] Easing : `ease.out` (entrées), `ease.inOut` (rideau, menu), CSS `cubic-bezier(0.16, 1, 0.3, 1)` (expo.out) ; durées 0,45 à 1,4 s ; stagger 60 ms (menu), 80 ms (lignes de l'engine).
+32. [x] Deux traitements dans le verbe : remplissage déroulé de gauche à droite (`.cta`, `.puce`, `.tete__menu`) ; trait déroulé (`.nl`, `.lien`, `.lien-util`, `.menu__lien`).
+33. [x] `:hover` sous `@media (hover: hover)`, même état sur `:focus-visible` (bloc « Phase 2 » de `site.css`), transitions coupées en réduit mais états visibles ; `:active` en `scale: 0.97`.
+34. [x] Liens texte soulignés au repos (filet 1 px en `background`, `.lien`, `.lien-util`).
+35. [ ] À prouver en phase 3 (`report.json` hover).
+36. [~] Repos : pinceau du hero en dérive sinusoïdale ± 9 px + pointeur, en pause hors écran ; `idleBouge=true` (transform différent après 1,5 s) ; `idleMotion` à lire en phase 3.
+37. [x] Curseur natif, aucun follower ; rien ne dépend du survol (menu au clic, compteurs et traits au défilement).
+38. [x] Ni blur animé, ni `box-shadow` au scroll, aucun `will-change`.
+39. [x] Réduit : pas de Lenis ni de pilote (`startJournee` sort si réduit), pas de GL, pas de scrub, pas de loader ; `caches=0`, `motion=false`.
+40. [x] GL sans objet (décision écrite dans la Concept Card), aucune ligne `// GL`.
+41. [x] Sans objet (pas de GL).
+44. [x] Skip link en premier (`Base.astro`), anneau 2 px accent (`engine.css:33`), rose clair sur nuit (`.pied`, `.menu`).
+45. [ ] Contraste à mesurer en phase 3 (étiquette de règle `#b80f4f` sur `#fff3f6` 6,3:1).
+46. [x] Texte réel partout, aucun canvas.
+47. [x] Cibles 390 : en-tête et hero 44 à 52 px (`cibles=[52,44,44,52,52]`), « Réserver » et « Appeler » ≥ 44 px.
+Finitions : `::selection` rose, favicon SVG + `favicon-32.png` + `apple-touch-icon.png` (180 px, générés par sharp depuis le SVG), lien du pied KYW souligné au survol et au focus.

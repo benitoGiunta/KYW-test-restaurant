@@ -6,8 +6,8 @@ const norm = (r: string) => { const i = r.indexOf(' : '); return i < 0 ? { group
 ---
 <Base title="La carte" page="carte" description="La carte de Dumont Bouge : pains, gâteaux maison, sandwichs Dagobert, petit-déjeuner, brunch, gaufres, crêpes et boissons du tea-room.">
   <section class="entete wrap">
-    <h1 class="display entete__titre">La carte</h1>
-    <p class="entete__texte">Du pain de 7 h au brunch de 11 h 30, des gâteaux faits à la main aux gaufres de Bruxelles. Les prix sont ceux du site de la maison.</p>
+    <h1 class="display entete__titre" data-split="lines" data-intro>La carte</h1>
+    <p class="entete__texte" data-split="lines" data-intro data-delay="0.2">Du pain de 7 h au brunch de 11 h 30, des gâteaux faits à la main aux gaufres de Bruxelles. Les prix sont ceux du site de la maison.</p>
     <nav class="puces" aria-label="Aller à une partie de la carte">
       <ul>{chapitres.map((c) => <li><a class="puce" href={`#${c.id}`}>{c.titre}</a></li>)}</ul>
     </nav>
@@ -16,7 +16,7 @@ const norm = (r: string) => { const i = r.indexOf(' : '); return i < 0 ? { group
     let dernier: string | null = null;
     return (
       <section class="chap wrap" id={c.id} aria-labelledby={`${c.id}-t`}>
-        <h2 class="chap__titre display" id={`${c.id}-t`}>{c.titre}</h2>
+        <h2 class="chap__titre display" id={`${c.id}-t`} data-split="lines">{c.titre}</h2>
         <div class="chap__corps">
           {c.rubriques.map((r) => {
             const n = norm(r.titre);
