@@ -74,9 +74,18 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
           t.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') { e.preventDefault(); select((i + 1) % tabs.length, true); }
             if (e.key === 'ArrowLeft') { e.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
+            if (e.key === 'Home') { e.preventDefault(); select(0, true); }
+            if (e.key === 'End') { e.preventDefault(); select(tabs.length - 1, true); }
           });
         });
       });
+      // Menu mobile (Popover) : le bouton dit Fermer quand le panneau est ouvert ; un lien le referme.
+      const menu = document.getElementById('menu-principal');
+      const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+      if (menu && toggle) {
+        menu.addEventListener('toggle', (e) => { toggle.textContent = (e as ToggleEvent).newState === 'open' ? 'Fermer' : 'Menu'; });
+        menu.addEventListener('click', (e) => { if ((e.target as HTMLElement).closest('a')) menu.hidePopover?.(); });
+      }
       // Formulaire sans backend : il le dit, puis ouvre la messagerie (gate 70).
       document.querySelectorAll<HTMLFormElement>('form[data-endpoint]').forEach((form) => {
         const fields = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]')];
@@ -84,18 +93,21 @@ document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && 
         const check = (f: HTMLInputElement | HTMLTextAreaElement) => {
           const ok = f.checkValidity();
           const help = document.getElementById(`${f.id}-aide`);
-          f.toggleAttribute('aria-invalid', !ok);
-          if (help) help.textContent = ok ? '' : (f.dataset.erreur || 'Ce champ est à compléter.');
+          if (ok) f.removeAttribute('aria-invalid'); else f.setAttribute('aria-invalid', 'true');
+          if (help) help.textContent = ok ? '' : `Erreur : ${(f.dataset.erreur || 'ce champ est à compléter.').replace(/^./, (c) => c.toLowerCase())}`;
           return ok;
         };
-        fields.forEach((f) => { f.addEventListener('blur', () => { f.dataset.touche = '1'; check(f); }); f.addEventListener('input', () => { if (f.dataset.touche) check(f); }); });
+        fields.forEach((f) => { f.addEventListener('blur', () => { f.dataset.touche = '1'; check(f); }); f.addEventListener('input', () => { if (f.dataset.touche || f.hasAttribute('aria-invalid')) check(f); }); });
         form.addEventListener('submit', (e) => {
           e.preventDefault();
+          if (form.querySelector('[data-etat="envoi"]')) return;
           const bad = fields.filter((f) => !check(f));
           if (bad.length) { bad[0].focus(); if (status) status.textContent = 'Il manque une information : voyez le champ signalé.'; return; }
           const d = new FormData(form); const l = (k: string) => String(d.get(k) || '').trim();
           const corps = [l('prenom'), l('email'), l('telephone'), '', l('message')].join('\n');
-          if (status) status.textContent = 'Rien n’a été envoyé : votre messagerie s’ouvre avec le message prêt à partir.';
+          if (status) status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié. Votre messagerie s’ouvre avec le message prêt à partir.';
+          const send = form.querySelector<HTMLButtonElement>('[type="submit"]');
+          if (send) { const t = send.textContent; send.dataset.etat = 'envoi'; send.setAttribute('aria-disabled', 'true'); send.textContent = 'Ouverture de la messagerie…'; setTimeout(() => { delete send.dataset.etat; send.removeAttribute('aria-disabled'); send.textContent = t; }, 2500); }
           window.location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(l('objet') || 'Message depuis le site')}&body=${encodeURIComponent(corps)}`;
         });
       });
