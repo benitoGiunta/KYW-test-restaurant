@@ -1,19 +1,24 @@
 ---
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
+import { getImage } from 'astro:assets';
+import { photos } from '../lib/photos';
 import { u } from '../lib/url';
 import { restaurant, offres, services, journeePiscine } from '../data/site';
+const heroSizes = '(min-width: 900px) 62vw, 100vw';
+const heroImgs = await Promise.all([640, 960, 1280].map((w) => getImage({ src: photos.facade.src, width: w, format: 'avif' })));
+const precharge = { srcset: heroImgs.map((i) => `${i.src} ${i.options.width}w`).join(', '), sizes: heroSizes };
 const tel = `tel:${restaurant.telephone.replace(/\s/g, '')}`;
 const mur = ['verandaTables', 'tonnelle', 'planTable', 'bassin', 'sax', 'roses', 'cour'] as const;
 ---
-<Base titre="Maison d’hôtes et domaine de mariage à Namur" description="Domaine de pierre à Lives-sur-Meuse, Namur : chambres d’hôtes, piscine chauffée, sauna, jacuzzi, mariages et séminaires. Le domaine se privatise un weekend.">
+<Base precharge={precharge} titre="Maison d’hôtes et domaine de mariage à Namur" description="Domaine de pierre à Lives-sur-Meuse, Namur : chambres d’hôtes, piscine chauffée, sauna, jacuzzi, mariages et séminaires. Le domaine se privatise un weekend.">
   <section class="hero" aria-labelledby="h1">
     <div class="wrap hero__grille">
       <p class="hero__meta" data-reveal="fade" data-intro data-delay="0.1">Maison d’hôtes, salle de mariage, séminaires<br />Lives-sur-Meuse, Namur</p>
       <h1 id="h1" class="display hero__titre" data-split="lines" data-intro>La Bergerie <span class="hero__de">de Lives</span></h1>
       <div class="enclos hero__photo" data-battants>
         <span class="battant battant--g" aria-hidden="true"></span><span class="battant battant--d" aria-hidden="true"></span>
-        <Photo cle="facade" prioritaire widths={[640, 1000, 1600, 2000]} sizes="(min-width: 900px) 62vw, 100vw" />
+        <Photo cle="facade" prioritaire widths={[640, 960, 1280]} sizes={heroSizes} />
       </div>
       <div class="hero__actions">
         <p class="hero__phrase">Le temps d’un weekend, le domaine n’est qu’à vous.</p>
@@ -76,7 +81,7 @@ const mur = ['verandaTables', 'tonnelle', 'planTable', 'bassin', 'sax', 'roses',
   </section>
 
   <section class="plein" aria-label="La piscine">
-    <Photo cle="piscine" widths={[800, 1400, 2000]} sizes="100vw" />
+    <Photo cle="piscine" widths={[800, 1400, 1800]} sizes="100vw" />
   </section>
 
   <section class="sec final" aria-labelledby="fn">

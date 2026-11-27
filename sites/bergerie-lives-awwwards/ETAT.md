@@ -23,3 +23,7 @@
 - Battants du hero visibles seulement sous `.motion` ; animation CSS de secours qui les cache à 4 s si le script ne joue pas.
 - Repos dimensionné pour `shoot.mjs` : piquets de 32 px x 3 px, 5 px/s (le seuil `idleMotion` est 0,05 % de pixels changés en 1,5 s).
 - Captures ciblées : `.shots/aww2/` (non commité).
+
+## Phase 3 (QA) : terminée
+- Corrigé : cibles tactiles, LCP mobile (preload du hero, variantes 640/960/1280), hover du nom d'en-tête. Build passe, audit 0 FAIL. Voir RAPPORT.md.
+- Reste : critique jury indépendant (Agent absent), purge des JPEG sources de `_astro/`, shoot des pages histoire/reservation.

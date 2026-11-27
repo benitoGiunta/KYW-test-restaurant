@@ -14,7 +14,7 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .sec { padding-block: calc(var(--u) * 9); }
 .sec--pierre { --c-bg: var(--c-pierre); --c-fg: var(--c-pierre-fg); --c-muted: var(--c-pierre-muted); --c-line: rgb(23 32 26 / 0.25); --c-accent: #7a4a12; background: var(--c-bg); color: var(--c-fg); }
 /* Liens texte : soulignés au repos, le trait s'épaissit (même état au clavier, visible en mouvement réduit) */
-.lien, .pied a { text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 1px; transition: text-decoration-thickness .3s var(--e-out), color .3s; }
+.lien, .pied a { display: inline-block; padding-block: 0.6em; margin-block: -0.6em; text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 1px; transition: text-decoration-thickness .3s var(--e-out), color .3s; }
 @media (hover: hover) { .lien:hover, .pied a:hover { text-decoration-thickness: 3px; color: var(--c-accent); } }
 .lien:focus-visible, .pied a:focus-visible { text-decoration-thickness: 3px; color: var(--c-accent); }
 .lien:active, .pied a:active { text-decoration-thickness: 2px; }
@@ -65,6 +65,10 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .entete { position: absolute; top: 0; left: 0; right: 0; z-index: var(--z-header); display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--u) * 1) calc(var(--u) * 3); padding: calc(var(--u) * 1.6) var(--gutter); }
 .entete__nom { font-family: var(--f-display); font-size: var(--t-m); text-decoration: none; margin-right: auto; line-height: 1; }
 .entete__nom span { color: var(--c-accent); }
+a.entete__nom { padding-block: 0.4em; background: linear-gradient(var(--c-accent), var(--c-accent)) bottom left / 0 2px no-repeat; transition: background-size .35s; }
+@media (hover: hover) { a.entete__nom:hover { background-size: 100% 2px; } }
+a.entete__nom:focus-visible { background-size: 100% 2px; }
+a.entete__nom:active { background-size: 60% 2px; }
 .entete__nav { display: flex; gap: calc(var(--u) * 2.5); }
 .lien-nav { font-size: var(--t-s); text-decoration: none; padding: 0.5em 0; background: linear-gradient(currentColor, currentColor) bottom left / 0 1px no-repeat; transition: background-size .35s; }
 @media (hover: hover) { .lien-nav:hover { background-size: 100% 1px; } }
