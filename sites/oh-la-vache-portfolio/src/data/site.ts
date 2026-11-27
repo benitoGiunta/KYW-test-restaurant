@@ -1872,8 +1872,8 @@ export const guinguette = {
     {
       "src": "/photos/terrasse-canapes.webp",
       "alt": "Terrasse avec canapés et parasols",
-      "x": 4,
-      "y": 6,
+      "x": 2,
+      "y": 2,
       "r": -7,
       "legende": "Les canapés de la terrasse",
       "placeholder": false
@@ -1881,8 +1881,8 @@ export const guinguette = {
     {
       "src": "/photos/moules-frites.webp",
       "alt": "Moules-frites servies avec une ardoise de boissons",
-      "x": 22,
-      "y": 2,
+      "x": 18,
+      "y": 4,
       "r": 5,
       "legende": "Moules-frites",
       "placeholder": false
@@ -1890,8 +1890,8 @@ export const guinguette = {
     {
       "src": "/photos/entrecote-frites.webp",
       "alt": "Entrecôte grillée, frites et sauce",
-      "x": 42,
-      "y": 4,
+      "x": 34,
+      "y": 2,
       "r": -3,
       "legende": "Entrecôte et frites",
       "placeholder": false
@@ -1899,8 +1899,8 @@ export const guinguette = {
     {
       "src": "/photos/cocktail-spritz.webp",
       "alt": "Cocktail spritz servi à table",
-      "x": 62,
-      "y": 3,
+      "x": 50,
+      "y": 4,
       "r": 8,
       "legende": "Spritz",
       "placeholder": false
@@ -1908,8 +1908,8 @@ export const guinguette = {
     {
       "src": "/photos/terrasse-parasol.webp",
       "alt": "Table dressée sur la terrasse sous un parasol",
-      "x": 80,
-      "y": 8,
+      "x": 66,
+      "y": 2,
       "r": -5,
       "legende": "Table sous parasol",
       "placeholder": false
@@ -1917,8 +1917,8 @@ export const guinguette = {
     {
       "src": "/photos/planche-charcuterie.webp",
       "alt": "Planche de charcuterie et verre de rosé",
-      "x": 2,
-      "y": 44,
+      "x": 82,
+      "y": 4,
       "r": 6,
       "legende": "Planche de charcuterie",
       "placeholder": false
@@ -1926,8 +1926,8 @@ export const guinguette = {
     {
       "src": "/photos/dessert-fondant.webp",
       "alt": "Dessert au chocolat avec une boule de glace",
-      "x": 20,
-      "y": 52,
+      "x": 3,
+      "y": 63,
       "r": -9,
       "legende": "Dessert au chocolat",
       "placeholder": false
@@ -1935,8 +1935,8 @@ export const guinguette = {
     {
       "src": "/photos/terrasse-pergola.webp",
       "alt": "Terrasse sous pergola, tables dressées",
-      "x": 40,
-      "y": 48,
+      "x": 19,
+      "y": 65,
       "r": 4,
       "legende": "Sous la pergola",
       "placeholder": false
@@ -1944,8 +1944,8 @@ export const guinguette = {
     {
       "src": "/photos/nachos-cocktails.webp",
       "alt": "Plateau de nachos avec deux cocktails",
-      "x": 58,
-      "y": 54,
+      "x": 35,
+      "y": 63,
       "r": -6,
       "legende": "Nachos et cocktails",
       "placeholder": false
@@ -1953,8 +1953,8 @@ export const guinguette = {
     {
       "src": "/photos/assiette-caprese.webp",
       "alt": "Assiette de tomate-mozzarella, jambon cru et salade",
-      "x": 78,
-      "y": 50,
+      "x": 51,
+      "y": 65,
       "r": 7,
       "legende": "Tomate-mozzarella",
       "placeholder": false
@@ -1962,8 +1962,8 @@ export const guinguette = {
     {
       "src": "/photos/salle-lustre.webp",
       "alt": "Salle sous tente avec lustre",
-      "x": 12,
-      "y": 26,
+      "x": 67,
+      "y": 63,
       "r": 3,
       "legende": "La salle sous tente",
       "placeholder": false
@@ -1971,8 +1971,8 @@ export const guinguette = {
     {
       "src": "/photos/gin-tonic.webp",
       "alt": "Plateau de boissons avec un gin tonic",
-      "x": 68,
-      "y": 28,
+      "x": 83,
+      "y": 65,
       "r": -4,
       "legende": "Gin tonic",
       "placeholder": false

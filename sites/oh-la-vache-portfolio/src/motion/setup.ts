@@ -24,7 +24,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [marquee(), heroObjets(intro), table(), avis()];
+    const cleanups = [marquee(), taches(intro), heroObjets(intro), table(), avis()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -37,9 +37,12 @@ function marquee() {
   const horaires = JSON.parse(root.dataset.horaires || '[]') as { j: string; c: { ouverture: string; fermeture: string }[] }[];
   const parJour = (j: string) => horaires.find((h) => h.j === j);
   const peindre = () => {
-    const d = new Date();
-    const hhmm = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-    const auj = parJour(jours[d.getDay()]);
+    // Heure et jour de Namur (Europe/Brussels), quel que soit le fuseau du visiteur.
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', weekday: 'long', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+    const hhmm = `${parts.hour}:${parts.minute}`;
+    const idx = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].indexOf(parts.weekday.toLowerCase());
+    const d = { getDay: () => idx };
+    const auj = parJour(jours[idx]);
     let texte = 'Horaires du jour';
     let etat = '';
     const ouvert = auj?.c.find((c) => c.ouverture <= hhmm && hhmm < c.fermeture);
@@ -150,4 +153,21 @@ function avis() {
   const st = gsap.to(vars, { flou: 0, ease: 'none', onUpdate: () => mot?.style.setProperty('--flou', `${vars.flou.toFixed(1)}px`), scrollTrigger: { trigger: root, start: 'top 85%', end: 'center center', scrub: 0.6 } });
   const tw = gsap.from(cartes, { y: 120, rotation: (i) => (i % 2 ? 10 : -10), autoAlpha: 0, duration: 1, ease: ease.out, stagger: 0.1, scrollTrigger: { trigger: root, start: 'top 70%', once: true } });
   return () => { st.kill(); tw.kill(); };
+}
+
+/** Taches de vache : elles se posent avec l'intro (échelle depuis 0.6) et dérivent au défilement, chacune à sa vitesse. */
+function taches(intro: gsap.core.Timeline) {
+  const root = document.querySelector<HTMLElement>('[data-taches]');
+  if (!root || prefersReducedMotion()) return () => {};
+  const hero = root.parentElement as HTMLElement;
+  const els = [...root.querySelectorAll<HTMLElement>('[data-tache]')];
+  const tweens: gsap.core.Tween[] = [];
+  els.forEach((el, i) => {
+    const vitesse = (i % 2 ? -1 : 1) * (60 + i * 30);
+    tweens.push(gsap.to(el, { y: vitesse, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.5 } }));
+  });
+  const svgs = els.map((e) => e.firstElementChild as HTMLElement);
+  gsap.set(svgs, { opacity: 0 });
+  intro.add(() => { gsap.fromTo(svgs, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'back.out(1.4)', stagger: 0.12, clearProps: 'transform,opacity' }); }, 0.2);
+  return () => { tweens.forEach((t) => t.kill()); gsap.set(svgs, { clearProps: 'opacity' }); };
 }

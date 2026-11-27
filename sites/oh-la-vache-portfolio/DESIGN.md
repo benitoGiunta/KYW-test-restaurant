@@ -26,3 +26,7 @@ Décision : **guinguette** (gabarits/UTILISATION.md à mettre à jour par la ses
 2. Carte longue intégralement reprise (226 lignes, prix d'octobre 2024).
 3. Contenu 100 % issu du dossier, sans invention.
 Limites : photos smartphone de 2020, pas d'histoire ni d'équipe, objets au trait génériques (pas de vache dessinée), horaires à confirmer.
+
+## Phase 2 : signature et motion
+- Signature ajoutée : taches de vache (noir vache du logo) posées sur les bords des heros ; elles arrivent avec l'intro, dérivent au défilement à des vitesses différentes et respirent au repos. Composant `Taches.astro`, jamais derrière un texte (2 taches masquées sur mobile), absentes en reduced motion.
+- Table à attraper : deux rangées de tirages autour du titre, saisissables à la souris, au toucher (rail en mobile) et aux flèches.

@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Taches from '../components/Taches.astro';
 import Objet from '../components/Objet.astro';
 import Ornements from '../components/Ornements.astro';
 import { site, guinguette, photoDe, horaireTexte, adresseLigne } from '../data/site';
@@ -14,6 +15,7 @@ const [m1, m2] = g.manifeste.titre;
 <Base>
   <!-- Hero poster : tout est peint au premier rendu ; les objets tombent puis deviennent saisissables -->
   <section class="hero wrap" data-hero>
+    <Taches />
     <div class="hero__inner" data-hero-texte>
       <h1 class="hero__titre"><span>{g.heroTitre[0]}</span><span class="l2">{g.heroTitre[1]}</span></h1>
       <p class="hero__slogan">{g.slogan.texte}{g.slogan.placeholder && <span class="illu">exemple</span>}</p>
@@ -66,7 +68,7 @@ const [m1, m2] = g.manifeste.titre;
         </figure>
       ))}
       {(['verre', 'citron', 'fourchette'] as const).map((id, i) => (
-        <button type="button" class="obj" data-obj aria-label={`${id} dessiné au trait, déplaçable aux flèches`} style={`--x:${[48, 8, 88][i]}%;--y:${[30, 80, 78][i]}%;--r:${[12, -20, 40][i]}deg;--taille:110px`}>
+        <button type="button" class="obj" data-obj aria-label={`${id} dessiné au trait, déplaçable aux flèches`} style={`--x:${[90, 5, 47][i]}%;--y:${[40, 44, 90][i]}%;--r:${[12, -20, 40][i]}deg;--taille:110px`}>
           <Objet id={id} classe="obj__svg" />
         </button>
       ))}
