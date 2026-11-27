@@ -1,4 +1,4 @@
-# ETAT : bergerie-lives portfolio (phase 2 sur 3 faite, 27/11/2026)
+# ETAT : bergerie-lives portfolio (phase 3 sur 3 faite, QA, 27/11/2026)
 
 ## Fait
 - Gabarit velours copié, requalifié en maison d'hôtes / domaine de mariage (le dossier dit : pas un restaurant).
@@ -26,3 +26,6 @@
 - Non affichés car non prouvés : avis, Booking, réseaux, GPS (lien carte par recherche d'adresse), nombre de chambres.
 - « Chambres sur place » et « véranda » pour séminaires : déduits du site actuel (chambres + salles), à confirmer.
 - Prénoms des propriétaires non affichés (contradiction Martin / Christophe) ; la presse est citée par titre d'article.
+
+## Phase 3 (QA) faite
+- Correctif contraste note du pied KYW (404) ; chiffre « 20 » mobile vérifié ; rebuild OK ; RAPPORT.md écrit. Reste : voir RAPPORT.md (points ouverts, session mère).
