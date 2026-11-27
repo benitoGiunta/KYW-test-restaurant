@@ -6,7 +6,7 @@
 export const restaurant = {
   nom: 'La Bergerie de Lives',
   baseline: 'Maison d’hôtes, salle de mariage, espace séminaire',
-  description: 'Domaine à Lives-sur-Meuse, Namur : chambres d’hôtes, piscine chauffée, sauna et jacuzzi, salle de mariage et séminaires. Le domaine se privatise le temps d’un weekend.',
+  description: 'Domaine à Lives-sur-Meuse, Namur : chambres d’hôtes, piscine chauffée, sauna et jacuzzi, salle de mariage et séminaires. Le domaine se privatise le temps d’un weekend.',
   adresse: { rue: 'Rue de Mosanville 100', cp: '5101', commune: 'Namur', localite: 'Lives-sur-Meuse' },
   telephone: '+32 493 86 10 29',
   telephoneAffiche: '0493 86 10 29',
@@ -23,13 +23,13 @@ export type Offre = { id: string; nom: string; accroche: string; texte: string; 
 export const offres: Offre[] = [
   { id: 'chambres', nom: 'Chambres', accroche: 'Dormir dans la pierre, nager le matin.', photo: 'chambre',
     texte: 'Toutes les chambres donnent accès à la piscine, au sauna et au jacuzzi. Le petit déjeuner, varié et bio, est servi en chambre ou en salle.',
-    liste: ['Petit déjeuner varié et bio', 'Wifi gratuit dans toutes les chambres', 'Cuisine partagée à disposition des hôtes', 'Piscine, sauna et jacuzzi pour tous les hôtes'] },
+    liste: ['Wifi gratuit dans toutes les chambres', 'Cuisine partagée à disposition des hôtes'] },
   { id: 'mariages', nom: 'Mariages', accroche: 'Le domaine entier, rien que pour vous.', photo: 'ceremonieJardin',
-    texte: 'Depuis 2017, le domaine reçoit des mariages. Il est privatisé le temps d’un weekend complet : cérémonie au jardin, réception sous la véranda vitrée, nuit sur place.',
+    texte: 'Depuis 2017, le domaine reçoit des mariages. Il est privatisé le temps d’un weekend complet : cérémonie au jardin, réception sous la véranda vitrée.',
     liste: ['Domaine privatisé un weekend complet', 'Cérémonie laïque dans le jardin', 'Réception sous la véranda vitrée', 'Visite du domaine d’environ 30 minutes avant de choisir'] },
-  { id: 'seminaires', nom: 'Séminaires', accroche: 'Des salles au vert, à quelques minutes de Namur.', photo: 'verandaSalon',
-    texte: 'Le domaine propose plusieurs salles pour réunir une équipe, avec la véranda, le jardin et la piscine pour respirer entre deux séances.',
-    liste: ['Plusieurs salles au choix', 'Véranda lumineuse et jardin', 'Hébergement sur place'] },
+  { id: 'seminaires', nom: 'Séminaires', accroche: 'Des salles au vert, près de Namur.', photo: 'verandaSalon',
+    texte: 'Le domaine propose plusieurs salles pour réunir une équipe, dans un cadre de verdure.',
+    liste: ['Plusieurs salles au choix', 'Véranda lumineuse et jardin'] },
 ];
 export const services = [
   { nom: 'Piscine extérieure chauffée', detail: 'D’avril à octobre' },
@@ -41,9 +41,9 @@ export const services = [
 export const journeePiscine = { prix: 20, unite: 'par personne', note: 'Journée piscine, au 0493 86 10 29.' };
 export const activites = ['Les caves à vin', 'La citadelle de Namur', 'Les musées Rops et Trema', 'Le marché du samedi', 'Les brocantes', 'Les loisirs de la vallée de la Meuse'];
 export const histoire = [
-  'La Bergerie de Lives est un domaine de pierre et de tuiles au bord de la Meuse, à Lives, dans la commune de Namur. Un ancien restaurant étoilé y a laissé son nom : la presse régionale en parlait déjà en 2013.',
+  'La Bergerie de Lives est un domaine de pierre et de tuiles à Lives-sur-Meuse, dans la commune de Namur. Le lieu fut un restaurant étoilé : la presse régionale en parlait déjà en 2013.',
   'Depuis 2017, de nouveaux propriétaires y ont installé des chambres d’hôtes et accueillent des mariages et des séminaires. Le domaine n’a pas de restaurant aujourd’hui.',
-  'Le domaine se visite : une demi-heure pour parcourir le jardin, la véranda et les chambres avant de choisir une date.',
+  'Le domaine se visite avant de choisir une date : la visite dure environ 30 minutes.',
 ];
 export const presse = [
   { media: 'La DH', titre: 'La Bergerie est toujours ouverte', date: '19 avril 2013' },

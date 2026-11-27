@@ -4,14 +4,14 @@ import Photo from '../components/Photo.astro';
 import { getImage } from 'astro:assets';
 import { photos } from '../lib/photos';
 import { u } from '../lib/url';
-import { restaurant, offres, services, journeePiscine } from '../data/site';
+import { restaurant, offres } from '../data/site';
 const heroSizes = '(min-width: 900px) 62vw, 100vw';
 const heroImgs = await Promise.all([640, 960, 1280].map((w) => getImage({ src: photos.facade.src, width: w, format: 'avif' })));
 const precharge = { srcset: heroImgs.map((i) => `${i.src} ${i.options.width}w`).join(', '), sizes: heroSizes };
 const tel = `tel:${restaurant.telephone.replace(/\s/g, '')}`;
 const mur = ['verandaTables', 'tonnelle', 'planTable', 'bassin', 'sax', 'roses', 'cour'] as const;
 ---
-<Base precharge={precharge} titre="Maison d’hôtes et domaine de mariage à Namur" description="Domaine de pierre à Lives-sur-Meuse, Namur : chambres d’hôtes, piscine chauffée, sauna, jacuzzi, mariages et séminaires. Le domaine se privatise un weekend.">
+<Base precharge={precharge} titre="Maison d’hôtes et domaine de mariage à Namur" description="Domaine de pierre à Lives-sur-Meuse, Namur : chambres d’hôtes, piscine chauffée, sauna, jacuzzi, mariages et séminaires. Le domaine se privatise un weekend.">
   <section class="hero" aria-labelledby="h1">
     <div class="wrap hero__grille">
       <p class="hero__meta" data-reveal="fade" data-intro data-delay="0.1">Maison d’hôtes, salle de mariage, séminaires<br />Lives-sur-Meuse, Namur</p>
@@ -31,7 +31,7 @@ const mur = ['verandaTables', 'tonnelle', 'planTable', 'bassin', 'sax', 'roses',
     <div class="wrap statement__grille">
       <h2 id="st" class="display statement__titre" data-split="lines">Un domaine clos, ouvert à un seul groupe à la fois.</h2>
       <div class="statement__texte">
-        <p>Pierre, tuiles, grands arbres : la propriété se referme sur ceux qui l’ont choisie. Pour un mariage, elle est privatisée un weekend complet, sans autre groupe, sans autre bruit que le vôtre.</p>
+        <p>Pierre, tuiles, grands arbres : la propriété se referme sur ceux qui l’ont choisie. Pour un mariage, elle est privatisée un weekend complet, sans autre groupe, sans autre bruit que le vôtre.</p>
         <p><a class="lien" href={u('/le-domaine/')}>Parcourir le domaine</a></p>
       </div>
       <div class="statement__paire">
@@ -69,14 +69,9 @@ const mur = ['verandaTables', 'tonnelle', 'planTable', 'bassin', 'sax', 'roses',
     <div class="wrap donnees__grille">
       <div>
         <h2 id="dn" class="titre-section">Sur place</h2>
-        <ul class="donnees__liste">
-          {services.map((s) => <li><strong>{s.nom}</strong><span>{s.detail}</span></li>)}
-        </ul>
+        <p>Piscine chauffée, jacuzzi, sauna, petit déjeuner bio, cuisine partagée et wifi.</p>
       </div>
-      <div class="donnees__prix">
-        <p class="donnees__chiffre display"><span class="nb">{journeePiscine.prix}</span> €</p>
-        <p>{journeePiscine.unite}. {journeePiscine.note}</p>
-      </div>
+      <div class="donnees__prix"><p><a class="bouton bouton--creux" href={u('/le-domaine/')}>Tout le détail du domaine</a></p></div>
     </div>
   </section>
 
@@ -87,7 +82,7 @@ const mur = ['verandaTables', 'tonnelle', 'planTable', 'bassin', 'sax', 'roses',
   <section class="sec final" aria-labelledby="fn">
     <div class="wrap final__grille">
       <h2 id="fn" class="display final__titre" data-split="lines">Poussez la barrière.</h2>
-      <p class="final__texte">Une demi-heure suffit pour parcourir le jardin, la véranda et les chambres.</p>
+      <p class="final__texte">La visite dure environ 30 minutes.</p>
       <p><a class="bouton bouton--grand" href={u('/reservation/')}>Organiser une visite</a></p>
     </div>
   </section>
