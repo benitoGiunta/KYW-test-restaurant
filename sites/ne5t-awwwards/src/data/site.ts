@@ -78,7 +78,7 @@ export const equipe = [
   { nom: 'Nico', role: 'Chef', detail: 'Cuisine au fil des arrivages : franche, sincère et intuitive.' },
   { nom: 'Manu', role: 'Vin et rhum', detail: 'Sélectionne les flacons et vous laisse aussi choisir en cave.' },
   { nom: 'Benoît Gersdorff', role: 'Propriétaire', detail: 'Le service des palaces, l’accueil d’une maison de famille.' },
-  { nom: 'Christine Gersdorff et Pierre Brahy', role: 'Intérieurs', detail: 'Imaginés par Christine, avec l’architecte d’intérieur Pierre Brahy.', placeholder: true },
+  { nom: 'Christine et Pierre Brahy', role: 'Intérieurs', detail: 'Imaginés par Christine, avec l’architecte d’intérieur Pierre Brahy.', placeholder: true },
 ];
 
 export const histoire = [
@@ -93,7 +93,7 @@ export const maison = {
 
 // photos/index.json fait foi pour les alt (champ « sujet »).
 export const faits = [
-  { cle: 'jours', k: 'Du mercredi soir au dimanche midi', v: 'Sept jours moins deux : le lundi et le mardi, la maison se repose.', placeholder: true },
+  { cle: 'jours', k: 'Du mercredi soir au dimanche midi', v: 'Fermé le lundi et le mardi (à confirmer).', placeholder: true },
   { cle: 'lunch', k: 'Lunch carte blanche', v: 'Jeudi, vendredi, samedi midi, à 50 €.' },
   { cle: 'suite', k: 'Repas en suite', v: 'À réserver 24 h à l’avance, supplément de 15 %.' },
   { cle: 'privat', k: 'Privatisation', v: '45 couverts, proposition sur mesure.' },
