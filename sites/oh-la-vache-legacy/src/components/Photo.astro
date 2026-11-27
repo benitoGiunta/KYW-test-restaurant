@@ -1,0 +1,9 @@
+---
+interface Props { name: string; w: number; h: number; alt: string; slot?: string; eager?: boolean; pos?: string; sizes?: string; class?: string }
+const { name, w, h, alt, slot, eager = false, pos = '50% 50%', sizes = '(min-width: 60rem) 50vw, 100vw', class: cls = '' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<div class={`photo ${cls}`} data-slot={slot ?? name} data-alt={alt} data-credits="Photo : Oh la Vache !">
+  <img src={`${base}photos/${name}.webp`} width={w} height={h} alt={alt} sizes={sizes} style={`object-position:${pos}`}
+    loading={eager ? 'eager' : 'lazy'} decoding={eager ? 'auto' : 'async'} fetchpriority={eager ? 'high' : undefined} />
+</div>

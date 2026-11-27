@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Horaires from '../components/Horaires.astro';
+import Carte from '../components/Carte.astro';
+import Reservation from '../components/Reservation.astro';
+import Photo from '../components/Photo.astro';
+import { site } from '../data/site';
+---
+<Base title={site.titre} description={site.description}>
+  <Hero />
+  <Horaires />
+  <section class="section" aria-labelledby="h-maison">
+    <div class="container intro">
+      <div class="intro__text">
+        <h2 id="h-maison">Fondues, pierrades et raclettes se commandent dès deux couverts.</h2>
+        <p class="lead">Cuisine française et italienne. Le Tomahawk d’environ 1,3 kg se partage à deux, les burgers sont au bœuf Angus ou à la viande charolaise, et la carte compte treize gin’to.</p>
+      </div>
+      <figure class="print">
+        <Photo name="terrasse-canapes" slot="terrasse" w={1400} h={1050} pos="50% 60%" sizes="(min-width: 60rem) 40vw, 100vw"
+          alt="Terrasse avec canapés et parasols" />
+        <figcaption>Terrasse, canapés et parasols</figcaption>
+      </figure>
+    </div>
+  </section>
+  <Carte />
+  <section class="band" aria-label="La salle">
+    <Photo name="salle" slot="salle" w={1400} h={1867} pos="50% 38%" sizes="100vw" alt="Salle sous tente avec lustre et rideaux rouges" />
+    <p class="band__cap">Salle sous tente</p>
+  </section>
+  <section class="section" id="photos" aria-labelledby="h-photos">
+    <div class="container">
+      <h2 id="h-photos">À table</h2>
+      <div class="hang">
+        <figure class="hang__a"><Photo name="entrecote" slot="entrecote" w={1000} h={1333} sizes="(min-width: 60rem) 40vw, 100vw" alt="Entrecôte grillée, frites et sauce" /><figcaption>Entrecôte grillée, frites et sauce</figcaption></figure>
+        <figure class="hang__b"><Photo name="planche" slot="planche" w={1000} h={1000} sizes="(min-width: 60rem) 30vw, 100vw" alt="Planche de charcuterie et verre de rosé" /><figcaption>Planche de charcuterie</figcaption></figure>
+        <figure class="hang__c"><Photo name="spritz" slot="spritz" w={644} h={1440} sizes="(min-width: 60rem) 22vw, 100vw" alt="Cocktail spritz servi à table" /><figcaption>Spritz</figcaption></figure>
+        <figure class="hang__d"><Photo name="dessert" slot="dessert" w={1000} h={1000} sizes="(min-width: 60rem) 28vw, 100vw" alt="Dessert au chocolat avec boule glacée" /><figcaption>Dessert au chocolat</figcaption></figure>
+      </div>
+    </div>
+  </section>
+  <Reservation />
+</Base>

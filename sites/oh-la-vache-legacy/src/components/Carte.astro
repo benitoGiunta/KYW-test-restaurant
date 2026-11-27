@@ -1,0 +1,59 @@
+---
+import { site, prix, typo } from '../data/site';
+const { menus, groupes } = site.carte;
+const tabs = [{ id: 'menus', titre: 'Menus' }, ...groupes.map((g) => ({ id: g.id, titre: g.titre }))];
+---
+<section class="section section--carte" id="carte" aria-labelledby="h-carte">
+  <div class="container">
+    <div class="carte__head">
+      <h2 id="h-carte">La carte</h2>
+      <p class="lead">Carte d’octobre 2024. Un seul paiement par table.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Parties de la carte">
+      {tabs.map((t, i) => (
+        <button role="tab" type="button" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{t.titre}</button>
+      ))}
+    </div>
+    <div role="tabpanel" id="panel-menus" aria-labelledby="tab-menus" class="panel is-on">
+      <div class="cat">
+        <h3>Menus et suggestions</h3>
+        <ul class="rows">
+          {menus.map((m) => (
+            <li class="row">
+              <div><p class="row__nom">{typo(m.nom)}</p><p class="row__desc">{typo(m.description)}</p></div>
+              <p class="row__prix num">{prix(m.prix)}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    {groupes.map((g) => (
+      <div role="tabpanel" id={`panel-${g.id}`} aria-labelledby={`tab-${g.id}`} class="panel">
+        {g.categories.map((c) => (
+          <div class="cat">
+            <h3>{typo(c.titre.replace(/ \(.*\)$/, ''))}</h3>
+            <ul class="rows">
+              {c.plats.map((p) => (
+                <li class="row">
+                  <div><p class="row__nom">{typo(p.nom)}</p>{p.description && <p class="row__desc">{typo(p.description)}</p>}</div>
+                  <p class="row__prix num">{prix(p.prix)}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    ))}
+    <p class="note">Supplément doggy bag : 0,90&nbsp;€.</p>
+  </div>
+</section>
+<script is:inline>
+(function () {
+  var tabs = document.querySelectorAll('.tabs [role=tab]');
+  function on(t) { tabs.forEach(function (x) { var s = x === t; x.setAttribute('aria-selected', s); x.tabIndex = s ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).classList.toggle('is-on', s); }); }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { on(t); });
+    t.addEventListener('keydown', function (e) { var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : -1; if (j < 0) return; var n = tabs[(j + tabs.length) % tabs.length]; n.focus(); on(n); });
+  });
+})();
+</script>

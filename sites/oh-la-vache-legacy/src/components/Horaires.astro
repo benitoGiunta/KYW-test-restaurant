@@ -1,0 +1,21 @@
+---
+import { site } from '../data/site';
+const nb = ' ';
+---
+<section class="section" id="horaires" aria-labelledby="h-horaires">
+  <div class="container split">
+    <div class="split__head">
+      <h2 id="h-horaires">Horaires et adresse</h2>
+      <p class="lead">Ouvert tous les jours, à midi comme le soir.</p>
+      <address class="addr">
+        <span>{site.adresse.rue}</span><span>{site.adresse.ville}</span>
+        <a class="link" href={site.tel.href}>{site.tel.affiche}</a>
+      </address>
+    </div>
+    <dl class="schedule">
+      {site.horaires.map(([j, a, b]) => (
+        <div class="schedule__row"><dt>{j}</dt><dd><time datetime={a}>{a}</time> à <time datetime={b}>{b}</time></dd></div>
+      ))}
+    </dl>
+  </div>
+</section>
