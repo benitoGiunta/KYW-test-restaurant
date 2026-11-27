@@ -48,3 +48,8 @@ Atelier, `tokens.css` (papier oklch 94,5 %, encre brune, accent ardoise). La mar
 - [x] 58. Une recette de conteneur ; un pattern de scroll (F8) · preuve : cartes à 2px, aucun scroll-driven ; un reveal
 - [x] 63. `::selection`, `caret-color`, `scrollbar-color`, `accent-color` · preuve : base.css:3-5
 - [x] 72. Responsive (breakpoints 60rem/40rem, hover/pointer, tables restackées, safe-area) · preuve : page.css fin ; 375 et 1280 : aucun débordement horizontal sur 5 pages (mesuré)
+
+## Phase 3 (QA)
+- [x] 73. sloplint --render (/, /services/) : 0 FAIL, 0 REFLEX, render tourné · preuve : .logs/qa-sloplint.log
+- [x] 74. axe sur 6 pages : 0 violation · preuve : scratchpad ax.mjs (nav aria-label, footer double contentinfo corrigés)
+- [ ] Cases restantes des 72 : voir cases cochées ci-dessus ; gates jugées lues sur .hallmark/shots (pas de sous-agent frais : finish review `self`).

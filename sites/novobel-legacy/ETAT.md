@@ -1,4 +1,6 @@
-# ETAT novobel legacy · phase 2 (construction-2)
+# ETAT novobel legacy · phase 3 (QA) terminée : voir RAPPORT.md. Build final OK, sloplint 0 FAIL/0 REFLEX, axe 0 violation. Reste : rien de bloquant (placeholders au RAPPORT).
+
+# (historique) phase 2
 
 ## Fait (phase 2)
 - Nav : `<nav popover>` sous 60rem (bouton Menu/Fermer, Échap et clic sur lien ferment, ouverture 220 ms ease-out, fermeture 140 ms ease-in), « Devis gratuit » en ghost (un seul primaire rempli par écran), lien courant souligné.
