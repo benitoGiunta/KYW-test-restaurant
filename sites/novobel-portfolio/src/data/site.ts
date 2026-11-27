@@ -27,6 +27,7 @@ export const site = {
     'Vous avez besoin de travaux de rénovation pour votre maison ou vos locaux ? Novobel accompagne ses clients dans la transformation et l\'embellissement de leurs espaces, de l\'aménagement d\'un espace à la conversion d\'un bâtiment en logements.',
     'Notre équipe garde une approche familiale et une vraie proximité avec ses clients : gestion complète du projet, de l\'étude initiale à la remise des clés, suivi rigoureux et coordination de chaque chantier.',
   ],
+  introMaison: 'Novobel réunit six corps de métier sous une seule direction : quatre projets présentés ici, 28 logements au total, et un même fil du début à la fin du chantier.',
   valeurs: ['Approche familiale', 'Proximité client', 'Respect des délais'],
   etapes: [
     { n: '01', titre: 'Conception', accroche: 'Étude et conseils', texte: 'Vous êtes propriétaire d\'un terrain ou d\'un bien à transformer : avec ses corps de métier spécialisés, Novobel vous aide à réaliser votre projet personnalisé. Un interlocuteur vous présente les options possibles et répond à vos questions.' },
