@@ -33,14 +33,14 @@ export const horaires = [
 export type Farine = { id: string; nom: string; taux: number; note: string };
 // Taux d'extraction : part du grain conservée dans la farine (about-us de monepi.be, « environ »).
 export const farines: Farine[] = [
-  { id: 'ble-blanc', nom: 'Blé blanc', taux: 65, note: 'La plus claire des quatre : pain de mie tendre, baguette, pistolet.' },
+  { id: 'ble-blanc', nom: 'Blé blanc', taux: 65, note: 'La plus claire des quatre : le pain « Blé blanc », 800 g, à la levure.' },
   { id: 'ble-demi-gris', nom: 'Blé demi-gris', taux: 75, note: 'Le pain de tous les jours, au levain ou à la levure.' },
-  { id: 'epeautre-demi-gris', nom: 'Épeautre demi-gris', taux: 75, note: 'Le pur épeautre : un pain plus doux, base de la viennoiserie.' },
+  { id: 'epeautre-demi-gris', nom: 'Épeautre demi-gris', taux: 75, note: 'Le pur épeautre, au levain ou à la levure, et le pain d’épeautre et de seigle.' },
   { id: 'petit-epeautre', nom: 'Petit épeautre', taux: 80, note: 'La plus riche en grain : un pain dense, au levain.' },
 ];
 
 export type Plat = { nom: string; poids?: string; prix: number; prixMax?: number; composition: string; farine?: string; placeholder?: boolean };
-export type Rayon = { id: string; titre: string; intro: string; photo: 'ronds' | 'rustiques' | 'chocolat' | 'baguette' | 'seigle' | 'graines'; plats: Plat[] };
+export type Rayon = { id: string; titre: string; intro: string; photo: 'ronds' | 'rustiques' | 'chocolat' | 'baguette' | 'seigle' | 'graines' | null; plats: Plat[] };
 
 export const rayons: Rayon[] = [
   { id: 'levain', titre: 'Pains au levain', intro: 'Levain issu de l’agriculture biologique, farine, sel marin, eau.', photo: 'ronds', plats: [
@@ -79,7 +79,7 @@ export const rayons: Rayon[] = [
     { nom: 'Mendiant', prix: 1.3, composition: 'Farine d’épeautre blanche, eau, sel marin, levure, fruits secs (amandes, raisins, noisettes)' },
     { nom: 'Faluche', poids: 'petite ou grande', prix: 0.8, prixMax: 1.6, composition: 'Farine d’épeautre blanche, eau, sel marin, levure' },
   ] },
-  { id: 'sans-gluten', titre: 'Sans gluten', intro: 'Au levain ou à la levure, en deux recettes.', photo: 'seigle', plats: [
+  { id: 'sans-gluten', titre: 'Sans gluten', intro: 'Au levain ou à la levure, en deux recettes.', photo: null, plats: [
     { nom: 'Pain sans gluten', poids: '400 g ou 700 g', prix: 4.0, prixMax: 7.0, composition: 'Variante châtaigne (farine de châtaigne, riz complet, sarrasin complet, fécule de pomme de terre) ou quinoa (riz complet, quinoa, sarrasin complet, fécule de pomme de terre)' },
   ] },
 ];
@@ -89,7 +89,7 @@ export const histoire = [
   { annee: '1990', texte: 'Il est engagé à la boulangerie Monepi, à Loyers.' },
   { annee: '1992', texte: 'Il reprend l’atelier.' },
   { annee: '1996', texte: 'La meunerie à meules de granit est installée : la farine est moulue sur place.' },
-  { annee: 'Début des années 2000', texte: 'Le four à bois breton est construit (2000 ou 2002 selon les pages du site client).' },
+  { annee: 'Début des années 2000', texte: 'Le four à bois breton est construit.' },
 ];
 
 export const four = [
