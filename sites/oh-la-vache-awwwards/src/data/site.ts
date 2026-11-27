@@ -10,7 +10,7 @@ import carte from './carte.json';
 export const site = {
   nom: 'Oh la Vache !',
   baseline: 'Resto grill, cuisine française et italienne, fondues, pierrades, raclettes',
-  description: 'Resto grill à Erpent, Namur : cuisine française et italienne, fondues, pierrades, raclettes, burgers Angus et treize gin’to. Ouvert 7 jours sur 7, de 11 h à minuit moins le quart.',
+  description: 'Resto grill à Erpent, Namur : cuisine française et italienne, fondues, pierrades, raclettes, burgers Angus. Ouvert 7 jours sur 7, dès 11 h.',
   typeCuisine: ['Cuisine française', 'Cuisine italienne', 'Grill', 'Fondues et pierrades'],
   adresse: { rue: 'Chaussée de Marche', numero: '581', cp: '5101', commune: 'Erpent (Namur)', communeSchema: 'Namur', pays: 'BE' },
   geo: { lat: 50.4410675, lon: 4.9068745 },

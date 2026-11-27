@@ -1,4 +1,4 @@
-# ETAT · oh-la-vache · awwwards · phase 2 (construction-2) terminée
+# ETAT · oh-la-vache · awwwards · phase 3 (QA) terminée
 ## Fait (phase 1)
 - DESIGN.md, scaffold Astro 5 (engine du site huile-sur-le-feu-awwwards), contenu réel, 5 pages statiques, build.
 ## Fait (phase 2)
@@ -17,3 +17,6 @@
 - Concept B (cadran), pas de loader ni de GL, réservation par téléphone uniquement.
 - L'horloge reste visible en mouvement réduit (texte mis à jour, sans animation).
 - Données douteuses notées en phase 1 (adresse 58/581, vendredi, mardi) inchangées.
+
+## Phase 3
+- Corrigé : meta descriptions, galerie focusable, cibles liens. Build OK, audit 0 FAIL. RAPPORT.md écrit. Reste : critique jury indépendant, relecture de l'en-tête (difference) sur photo claire.
