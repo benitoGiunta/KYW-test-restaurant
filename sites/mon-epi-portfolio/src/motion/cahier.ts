@@ -20,6 +20,7 @@ export function initCahier() {
   onPage(postale);
   onPage(fiches);
   onPage(sommaire);
+  onPage(soulignes);
 }
 
 /* Menu mobile : cellules empilées sous l'en-tête, Escape ferme, défilement bloqué. */
@@ -64,13 +65,22 @@ function menuDuJour() {
       // Positions absolues : le remplissage (0,2 s) chevauche les glyphes suivants au lieu d'allonger la ligne
       // (avant : 77 glyphes × 0,2 s = 15 s d'écriture, revue 1 F3).
       let t = tl.duration();
+      const t0 = t;
       paths.forEach((p, i) => {
         const L = longueurs[i];
-        const d = Math.max(0.02, (L / total) * 1.1);
+        const d = Math.max(0.02, (L / total) * 0.8);
         gsap.set(p, { strokeDasharray: L, strokeDashoffset: L, fillOpacity: 0 });
         tl.to(p, { strokeDashoffset: 0, duration: d, ease: 'none' }, t).to(p, { fillOpacity: 1, duration: 0.2 }, t + d * 0.5);
         t += d;
       });
+      // Point d'encre : suit la pointe du tracé, ligne par ligne (décoratif, aria-hidden).
+      const pt = document.createElement('span');
+      pt.className = 'plume';
+      pt.setAttribute('aria-hidden', 'true');
+      svg.parentElement?.appendChild(pt);
+      const etat = { p: 0 };
+      const place = () => { pt.style.left = `${svg.offsetLeft + etat.p * svg.clientWidth}px`; pt.style.top = `${svg.offsetTop + svg.clientHeight * 0.62}px`; };
+      tl.set(pt, { autoAlpha: 1 }, t0).to(etat, { p: 1, duration: Math.max(0.1, t - t0), ease: 'none', onUpdate: place }, t0).to(pt, { autoAlpha: 0, duration: 0.15 }, t);
       tl.to({}, { duration: 0.15 }, t);
     });
     if (tampon) tl.add(claque(tampon), '+=0.05');
@@ -82,11 +92,14 @@ function menuDuJour() {
 function prochainMidi(jours?: string) {
   const js = (jours || '').split(',').map(Number).filter((n) => n >= 0 && n <= 6);
   if (!js.length) return '';
-  const d = new Date();
+  // Date et heure lues à Bruxelles, pas dans le fuseau du visiteur.
+  const parts = new Intl.DateTimeFormat('fr-BE', { timeZone: 'Europe/Brussels', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', hourCycle: 'h23' }).formatToParts(new Date());
+  const v = (t: string) => Number(parts.find((x) => x.type === t)?.value);
+  const heure = v('hour');
   for (let k = 0; k < 8; k++) {
-    const c = new Date(d.getFullYear(), d.getMonth(), d.getDate() + k);
-    if (js.includes(c.getDay()) && (k > 0 || d.getHours() < 18)) {
-      return c.toLocaleDateString('fr-BE', { weekday: 'long', day: 'numeric', month: 'long' }) + ', 9 h à 18 h';
+    const c = new Date(Date.UTC(v('year'), v('month') - 1, v('day') + k, 12));
+    if (js.includes(c.getUTCDay()) && (k > 0 || heure < 18)) {
+      return c.toLocaleDateString('fr-BE', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' }) + ', 9 h à 18 h';
     }
   }
   return '';
@@ -165,4 +178,13 @@ function sommaire() {
   const listes = q('[data-sommaire]');
   if (!listes.length || prefersReducedMotion()) return;
   listes.forEach((l) => gsap.from(q('[data-ligne]', l), { autoAlpha: 0, y: 6, duration: 0.5, stagger: 0.05, ease: ease.out, scrollTrigger: once(l, 'top 88%') }));
+}
+
+/* Titres de section : le trait de marqueur jaune se tire sous le titre (variable --trait 0 → 1), une fois. */
+function soulignes() {
+  const titres = q('.titre');
+  if (!titres.length || prefersReducedMotion()) return;
+  titres.forEach((t) => {
+    gsap.fromTo(t, { '--trait': 0 }, { '--trait': 1, duration: 0.9, ease: ease.out, delay: 0.25, scrollTrigger: once(t, 'top 82%') });
+  });
 }

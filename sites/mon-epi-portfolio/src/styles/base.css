@@ -32,7 +32,7 @@ a { color: inherit; text-decoration: none; }
 /* Feuille : colonne de lecture 64ch + marge d'annotations ; en mobile la marge passe sous le bloc */
 .feuille { display: grid; grid-template-columns: minmax(0, 64ch) minmax(14rem, 1fr); gap: calc(var(--u) * 3) calc(var(--u) * 6); align-items: start; }
 .feuille__marge { position: relative; }
-@media (max-width: 900px) { .feuille { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .feuille { grid-template-columns: minmax(0, 1fr); } }
 
 /* Page du cahier : une section = une page numérotée */
 main { counter-reset: page; }
@@ -47,6 +47,8 @@ main { counter-reset: page; }
 .titre { display: grid; gap: 0.35em; margin-bottom: calc(var(--u) * 3); }
 .titre__sur { font-size: var(--t-s); text-transform: uppercase; letter-spacing: 0.12em; color: var(--c-mine); }
 .titre h1, .titre h2 { font-size: var(--t-xl); max-width: 16ch; }
+.titre { --trait: 1; }
+.titre h2 { background: linear-gradient(transparent 82%, var(--c-marqueur) 82%, var(--c-marqueur) 94%, transparent 94%) 0 0 / calc(var(--trait) * 100%) 100% no-repeat; width: fit-content; max-width: 100%; }
 .titre--grand h1 { font-size: var(--t-mega); }
 .filet { border: 0; border-top: 1px dotted var(--c-mine); margin-block: calc(var(--u) * 3); }
 
@@ -88,6 +90,7 @@ main { counter-reset: page; }
 /* ---------- Boutons ---------- */
 .btn { display: inline-flex; align-items: center; gap: 0.5em; min-height: 48px; padding: 0.7em 1.4em; border: 1px solid var(--c-encre); background: var(--c-papier); color: var(--c-encre); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: var(--t-s); transition: background 0.25s, color 0.25s, border-color 0.25s; }
 .btn:hover, .btn:focus-visible { background: var(--c-bille); border-color: var(--c-bille); color: var(--c-papier); }
+.btn:active, .cell:active { transform: translateY(1px) scale(0.985); }
 .btn--plein { background: var(--c-encre); color: var(--c-papier); }
 .btn--marqueur { background: var(--c-marqueur); }
 .actions { display: flex; flex-wrap: wrap; gap: var(--u); margin-top: calc(var(--u) * 3); }
@@ -135,7 +138,11 @@ main { counter-reset: page; }
 .manuscrit path { paint-order: stroke; }
 .jour__prix { display: flex; gap: calc(var(--u) * 3); flex-wrap: wrap; margin-top: calc(var(--u) * 2); font-size: var(--t-s); }
 .jour__prix strong { font-size: var(--t-body); }
-@media (max-width: 600px) { .jour__ligne { grid-template-columns: 1fr; gap: 0.2em; } .jour { padding-inline: calc(var(--u) * 2); } .manuscrit { max-height: 2.6rem; } }
+@media (max-width: 600px) { .jour__ligne { grid-template-columns: minmax(0, 1fr); gap: 0.2em; } .jour__tete .tampon { white-space: normal; max-width: 100%; text-align: center; letter-spacing: 0.08em; } .jour { padding-inline: calc(var(--u) * 2); } .manuscrit { max-height: 2.6rem; } }
+
+/* ---------- Plume (suit l'écriture tracée) ---------- */
+.jour__ligne { position: relative; }
+.plume { position: absolute; left: 0; top: 50%; width: 9px; height: 9px; margin: -4px 0 0 -4px; z-index: 1; border-radius: 50%; background: var(--c-bille); opacity: 0; pointer-events: none; box-shadow: 0 0 0 3px rgb(53 80 47 / 0.15); }
 
 /* ---------- Tampon ---------- */
 .tampon { display: inline-block; padding: 0.35em 0.9em; border: 2px solid var(--c-rouge); border-radius: 50% / 45%; color: var(--c-rouge); font-size: var(--t-s); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1.2; transform: rotate(-6deg); white-space: nowrap; mix-blend-mode: multiply; }
@@ -257,6 +264,8 @@ main { counter-reset: page; }
 /* ---------- Reduced motion : tout est posé, tracé, droit ---------- */
 @media (prefers-reduced-motion: reduce) {
   .timbre, .fiche, .polaroid, .annot, .tampon { transform: none; }
+  .plume { display: none; }
+  .btn:active, .cell:active { transform: none; }
   .timbre, .fiche, .btn, .cell, .link, .ligne__lien, .ligne__annot, .menu { transition: none; }
 }
 
