@@ -1,0 +1,1 @@
+- 2026-11-27 : site Wix : capture-site échoue en networkidle sur page.goto, utiliser waitUntil load + 5 s ; texte via innerText, originaux via static.wixstatic.com/media/<id> sans suffixe /v1 ; une entrée BCE peut être une maison d'hôtes, pas un restaurant (le signaler en tête du dossier).
