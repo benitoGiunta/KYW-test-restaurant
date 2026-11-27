@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe, adresseLigne, adresseNamur, horairesNamur, telHref, itineraire } from '../data/site';
+import { u, asset } from '../lib/url';
+const facade = photoDe('/photos/facade-960.webp');
+const vitrine = photoDe('/photos/vitrine.webp');
+const metiers = [
+  { titre: 'Boulangerie', texte: 'Treize pains, du Petit Blanc au Soleil aux graines, pétris et cuits chaque matin.', lien: '/carte/#boulangerie' },
+  { titre: 'Pâtisserie', texte: 'Des gâteaux préparés à la main : Saint Honoré, Truffe chocolat, Javanais, Misérable, le fraisier en saison.', lien: '/carte/#patisserie' },
+  { titre: 'Sandwicherie', texte: 'Les Dagobert, salades et paninis, préparés à la commande et à emporter.', lien: '/carte/#a-emporter' },
+  { titre: 'Tea-room', texte: 'Petit-déjeuner, brunch, gaufres de Bruxelles, crêpes et coupes glacées.', lien: '/carte/#tea-room' },
+];
+---
+<Base title="La maison" theme="ocre" description={`${site.nom} : boulangerie, pâtisserie, sandwicherie et tea-room à Bouge. Deux adresses, horaires et contact.`}>
+  <section class="section" data-ciel="ocre">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>La maison</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Un lieu de rencontre et de partage</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">{site.histoire[0]}</p>
+      </div>
+      <figure class="c8-12 photo photo--4x3">
+        <img src={asset(facade.src)} alt={facade.alt} width={facade.largeur} height={facade.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Quatre métiers sous un même toit</p>
+        <h2 class="t-xl" data-split="words">Pain, gâteaux, sandwichs, thé</h2>
+      </div>
+      <div class="grid">
+        {metiers.map((mt, i) => (
+          <article class="carte" data-reveal="up" data-delay={String(i * 0.08)}>
+            <h3>{mt.titre}</h3>
+            <p class="t-s muted">{mt.texte}</p>
+            <p class="actions"><a class="link" href={u(mt.lien)}>Voir la carte</a></p>
+          </article>
+        ))}
+      </div>
+      <figure class="photo photo--large" style="margin-top: calc(var(--u) * 6)" data-reveal="clip">
+        <img src={asset(vitrine.src)} alt={vitrine.alt} width={vitrine.largeur} height={vitrine.hauteur} loading="lazy" decoding="async" data-parallax="0.1" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="corail">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="chapeau">Deux adresses</p>
+        <h2 class="t-xl" data-split="words">Bouge et Namur</h2>
+      </div>
+      <div class="grid">
+        <article class="carte" data-reveal="up">
+          <h3>Bouge</h3>
+          <p class="t-s">{adresseLigne()}</p>
+          <p class="t-s muted">Tous les jours de 7h à 18h. Terrasse couverte et parvis.</p>
+          <p class="actions"><a class="link" href={telHref()}>{site.telephone}</a> · <a class="link" href={itineraire} rel="noopener">Itinéraire</a></p>
+        </article>
+        <article class="carte" data-reveal="up" data-delay="0.08">
+          <h3>Namur</h3>
+          <p class="t-s">{adresseNamur.rue} {adresseNamur.numero}, {adresseNamur.cp} {adresseNamur.commune}</p>
+          <p class="t-s muted">Du lundi au samedi de 7h à 17h, fermé le dimanche. Second point de vente listé par le site actuel.</p>
+        </article>
+      </div>
+      <div class="actions">
+        <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+        <a class="btn" href={u('/carte/')}>La carte</a>
+      </div>
+    </div>
+  </section>
+</Base>

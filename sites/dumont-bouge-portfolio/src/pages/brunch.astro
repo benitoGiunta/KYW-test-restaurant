@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const salade = photoDe('/photos/salade-chevre.webp');
+const cats = site.carte.filter((c) => c.categorie.includes('Brunch')).map((c) => ({ ...c, nom: c.categorie.split(' · ').pop()!.replace(/ \(.*\)$/, '').replace(/ \(gratinés\)/, '') }));
+---
+<Base title="Le brunch" theme="ocre" description={`Le brunch de ${site.nom}, de 11h30 à 15h : croques, salades, croquettes, toasts, pâtes et méli-mélo, avec les prix.`}>
+  <section class="section" data-ciel="ocre">
+    <div class="wrap cols">
+      <div class="c1-6">
+        <p class="chapeau" data-reveal="fade" data-intro>De 11h30 à 15h</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Le brunch</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">Croques gratinés, salades, croquettes, toasts sur pain de froment, pâtes et méli-mélo : le tea-room sert de vrais repas, à table ou en terrasse couverte.</p>
+        <div class="actions" data-reveal="up" data-intro data-delay="0.3">
+          <a class="btn btn--solid" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+          <a class="btn" href={u('/carte/')}>Le reste de la carte</a>
+        </div>
+      </div>
+      <figure class="c8-12 photo photo--4x5">
+        <img src={asset(salade.src)} alt={salade.alt} width={salade.largeur} height={salade.hauteur} data-critical fetchpriority="high" data-parallax="0.08" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" data-ciel="aube">
+    <div class="wrap">
+      {cats.map((c) => (
+        <div class="cols" style="margin-bottom: calc(var(--u) * 5)">
+          <h2 class="c1-5 t-l" data-split="words">{c.nom}</h2>
+          <div class="c7-12">
+            <ul class="lignes" data-reveal="up">
+              {c.plats.map((p) => (
+                <li class="ligne"><span class="ligne__nom">{p.nom}</span>{p.prix && <span class="ligne__prix">{p.prix}</span>}{p.description && <span class="ligne__detail">{p.description}</span>}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>

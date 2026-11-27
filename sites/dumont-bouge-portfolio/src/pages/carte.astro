@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const vitrine = photoDe('/photos/vitrine-960.webp');
+const sansBrunch = site.carte.filter((c) => !c.categorie.includes('Brunch'));
+const groupes = [
+  { id: 'boulangerie', titre: 'Boulangerie', cle: 'Boulangerie', theme: 'aube' },
+  { id: 'patisserie', titre: 'Pâtisserie', cle: 'Pâtisserie', theme: 'midi' },
+  { id: 'a-emporter', titre: 'À emporter, les Dagobert', cle: 'À emporter', theme: 'aprem' },
+  { id: 'tea-room', titre: 'Tea-room', cle: 'Tea-room', theme: 'ocre' },
+].map((g) => ({ ...g, cats: sansBrunch.filter((c) => c.categorie.startsWith(g.cle)).map((c) => ({ ...c, nom: c.categorie.split(' · ').slice(g.cle === 'Boulangerie' || g.cle === 'Pâtisserie' ? 1 : 2).join(' · ').replace(/ \(à la commande.*\)/, '') })) }));
+---
+<Base title="La carte" theme="midi" description={`La carte de ${site.nom} à ${site.adresse.commune} : pains, gâteaux, sandwichs Dagobert, salades, paninis, petit-déjeuner, boissons, gaufres, crêpes et coupes.`}>
+  <section class="section" data-ciel="midi">
+    <div class="wrap cols">
+      <div class="c1-7">
+        <p class="chapeau" data-reveal="fade" data-intro>La carte</p>
+        <h1 class="t-xl" data-split="lines" data-intro>Du pain aux coupes glacées</h1>
+        <p class="lead" style="margin-top: calc(var(--u) * 2)">Boulangerie, pâtisserie, sandwichs à emporter et tea-room : toute la carte de la maison, avec les prix. Le brunch a sa propre page.</p>
+        <div class="actions" data-reveal="up" data-intro data-delay="0.3">
+          <a class="btn btn--solid" href={u('/brunch/')}>Le brunch</a>
+          <a class="btn" href={u('/reservation/')}>Réserver une table</a>
+        </div>
+      </div>
+      <figure class="c8-12 photo photo--4x5">
+        <img src={asset(vitrine.src)} alt={vitrine.alt} width={vitrine.largeur} height={vitrine.hauteur} data-critical fetchpriority="high" />
+      </figure>
+    </div>
+  </section>
+
+  {groupes.map((g) => (
+    <section class="section" id={g.id} data-ciel={g.theme} aria-labelledby={`c-${g.id}`}>
+      <div class="wrap">
+        <div class="section__head">
+          <h2 class="t-xl" id={`c-${g.id}`} data-split="words">{g.titre}</h2>
+        </div>
+        {g.cats.map((c) => (
+          <div class="cols" style="margin-bottom: calc(var(--u) * 5)">
+            <h3 class="c1-5 t-l">{c.nom}</h3>
+            <div class="c7-12">
+              <ul class="lignes" data-reveal="up">
+              {c.plats.map((p) => (
+                <li class="ligne"><span class="ligne__nom">{p.nom}</span>{p.prix && <span class="ligne__prix">{p.prix}</span>}{p.description && <span class="ligne__detail">{p.description}</span>}</li>
+              ))}
+            </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <section class="section" data-ciel="nuit">
+    <div class="wrap">
+      <p class="note">Allergie alimentaire ? Nous répondons à vos questions. Un paiement par table, merci. Les gâteaux se commandent au {site.telephone}, prix communiqués à la commande.</p>
+      <div class="actions">
+        <a class="btn btn--soleil" href={u('/reservation/')} data-magnetic="0.2">Réserver une table</a>
+      </div>
+    </div>
+  </section>
+</Base>
