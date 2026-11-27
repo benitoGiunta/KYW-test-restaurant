@@ -7,3 +7,4 @@
 - 2026-11-27 · novobel legacy phase 2 : sloplint ne suit pas l'@import de page.css (nowrap et overflow vus comme absents, WARN 49 faux positif) ; un waiver doit s'écrire « waive <gate> · <preuve> · <raison> » sinon WARNER « malformed waiver ».
 - 2026-11-27 qa : planche.py ignore --colonnes/--largeur (déjà noté) ; l'`<img alt="">` sans src de l'aperçu projets sort en « image cassée » dans un contrôle naturalWidth : filtrer `[aria-hidden]`.
 - 2026-11-27 · novobel legacy : photo avec aspect-ratio + min-height dans une grille 1 colonne force la largeur (débordement mobile) ; fixer height. Le shoot de l'agent captures ne couvre que 3 pages : prévoir /projects, /jobs, /blog.
+- 2026-11-27 construction-3 : og.mjs ne rend pas les glyphes accentués (police Pillow par défaut) ; composer l'OG par Playwright sur une page HTML locale avec la woff2 du site.
