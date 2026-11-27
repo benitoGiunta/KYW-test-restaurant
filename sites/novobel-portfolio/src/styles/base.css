@@ -49,7 +49,8 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.5; p
 .nav a:hover { color: var(--c-accent); }
 @media (max-width: 767px) {
   .nav { gap: 0.6rem; font-size: 0.6875rem; letter-spacing: 0.04em; }
-  .nav a[data-mobile='cache'] { display: none; }
+  .nav { gap: 0.5rem; letter-spacing: 0.02em; }
+  .nav__long { display: none; }
 }
 
 /* Ardoise (accueil) */
@@ -243,3 +244,15 @@ html:not(.motion) .ligne__in:focus-visible .ligne__statique { display: block; }
 
 /* Rideau */
 #curtain .curtain__panel { background: var(--c-curtain); }
+
+.nav__court { display: none; }
+@media (max-width: 767px) { .nav__court { display: inline; } }
+figure:has(> .photo-ill) { position: relative; }
+.photo-ill { position: absolute; right: 0.5rem; bottom: 0.5rem; padding: 0.15em 0.5em; background: rgb(0 0 0 / 0.6); color: #fff; font-size: var(--t-xs); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; pointer-events: none; }
+@media (min-width: 1024px) {
+  .ardoise.col-carte > div { grid-column: 1 / 8; }
+  .ardoise.col-carte > .ardoise__photo { grid-column: 8 / 13; align-self: stretch; margin: 0; overflow: clip; }
+  .ardoise__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+}
+@media (max-width: 1023px) { .ardoise__photo { margin: calc(var(--u) * 2) 0 0; } .ardoise__photo img { width: 100%; height: auto; display: block; } }
+@media (max-width: 767px) { .header__brand { font-size: 0.9375rem; } .nav { gap: 0.4rem; } }
