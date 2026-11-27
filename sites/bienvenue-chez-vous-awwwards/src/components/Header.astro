@@ -1,8 +1,10 @@
 ---
 import { u } from '../lib/url';
+import { tel } from '../lib/typo';
 import { restaurant } from '../data/site';
 const { chemin = '/' } = Astro.props;
 const actuel = (p: string) => (chemin.replace(/\/+$/, '').endsWith(p) ? 'page' : undefined);
+const accueil = chemin.replace(/\/+$/, '').endsWith('/awwwards') || chemin === '/' ? 'page' : undefined;
 ---
 <header class="site-header">
   <div class="wrap site-header__in">
@@ -11,9 +13,54 @@ const actuel = (p: string) => (chemin.replace(/\/+$/, '').endsWith(p) ? 'page' :
       <span>{restaurant.nom}</span>
     </a>
     <nav class="nav" aria-label="Principal">
-      <a href={u('/carte/')} aria-current={actuel('/carte')}>La carte</a>
-      <a href={u('/histoire/')} aria-current={actuel('/histoire')}>Histoire</a>
+      <a class="nav__lien" href={u('/carte/')} aria-current={actuel('/carte')}>La carte</a>
+      <a class="nav__lien" href={u('/histoire/')} aria-current={actuel('/histoire')}>Histoire</a>
       <a class="btn" href={u('/reservation/')} aria-current={actuel('/reservation')}>Réserver</a>
+      <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
     </nav>
   </div>
+  <dialog id="menu" class="menu" aria-label="Menu">
+    <div class="wrap menu__in">
+      <div class="menu__haut">
+        <span class="marque" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--c-accent)" stroke-width="4" /><circle cx="32" cy="32" r="8" fill="var(--c-accent)" /></svg></span>
+        <button class="menu__fermer" type="button">Fermer</button>
+      </div>
+      <ol class="menu__liste">
+        <li><a href={u('/')} aria-current={accueil}>Accueil</a></li>
+        <li><a href={u('/carte/')} aria-current={actuel('/carte')}>La carte</a></li>
+        <li><a href={u('/histoire/')} aria-current={actuel('/histoire')}>Histoire</a></li>
+        <li><a href={u('/reservation/')} aria-current={actuel('/reservation')}>Réservation</a></li>
+      </ol>
+      <div class="menu__bas">
+        <a class="btn" href={tel(restaurant.telephone)}>Appeler le {restaurant.telephoneAffiche}</a>
+        <p class="muted">{restaurant.adresse.rue}, premier étage, Namur</p>
+      </div>
+    </div>
+  </dialog>
 </header>
+
+<script>
+  import { onPage, stopScroll, startScroll } from '../engine';
+  // Menu mobile : <dialog> modal (focus piégé et Échap natifs), aria-expanded tenu, focus rendu au bouton.
+  onPage(() => {
+    const bouton = document.querySelector<HTMLButtonElement>('.nav__menu');
+    const menu = document.getElementById('menu') as HTMLDialogElement | null;
+    if (!bouton || !menu) return;
+    const ouvrir = () => { menu.showModal(); bouton.setAttribute('aria-expanded', 'true'); stopScroll(); };
+    const fermer = () => { if (menu.open) menu.close(); };
+    const fermeture = () => { bouton.setAttribute('aria-expanded', 'false'); startScroll(); bouton.focus(); };
+    const clic = (e: MouseEvent) => {
+      const t = e.target as Element;
+      if (t === menu || t.closest('a, .menu__fermer')) fermer(); // un lien ferme le menu avant la transition
+    };
+    bouton.addEventListener('click', ouvrir);
+    menu.addEventListener('close', fermeture);
+    menu.addEventListener('click', clic);
+    return () => {
+      bouton.removeEventListener('click', ouvrir);
+      menu.removeEventListener('close', fermeture);
+      menu.removeEventListener('click', clic);
+      fermer();
+    };
+  });
+</script>

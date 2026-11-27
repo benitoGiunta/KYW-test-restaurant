@@ -65,3 +65,41 @@
 16. **Famille de section au plus une fois par page** : voir plan de composition (la carte utilise deux listes index : carte du mois et traiteur, à différencier en phase 2 par des vignettes et un traitement distincts ; point à surveiller). Partiel.
 17. **Hero en 3 s** : nom, cuisine, lieu, deux actions (Réserver, Appeler), horaires dans le premier écran (mesuré à 1440×900 : h1 [105,152,851,419], CTA haut 600, assiette [900,187,1392,679]). Coché.
 18. **Mobile 390 recomposé** : mesuré, `scrollWidth = 390`, h1 à gauche 44 px, mur en strip scroll-snap. Coché (revérifier en capture en phase 3).
+
+## Mouvement réalisé (phase 2)
+- **Module pilote** `src/motion/escales.ts`, appelé une fois par `src/motion/setup.ts` : la progression sur la route (défilement) remplit le fil rouge du rail (`.route__fil`, scrub), allume chaque escale au passage (`.is-lit`), ouvre les assiettes (`clip-path: circle(0 → 50%)`, 0,9 s, `ease.out`, stagger 60 ms sur le mur) ; la vitesse de défilement accélère l'escale qui tourne autour de l'assiette du hero ; le pointeur penche l'assiette (± 8 px, `quickTo`).
+- **Repos** : `startIdle()` fait tourner l'escale (point rouge et arc de la bague) autour de l'assiette du hero à 10 degrés par seconde, vitesse constante (pas de point mort), sur `gsap.ticker`, en pause hors écran (IntersectionObserver), absente en mouvement réduit (bague statique, escale à midi).
+- **Pas de loader** (décision de phase 1) ; intro : h1 `data-split="lines" data-intro`, accroche `data-reveal="up" data-intro`, assiette posée (scale 0,94 → 1, rotation -4° → 0) sans jamais être cachée (LCP), actions et infos en fondu montant (stagger 60 ms).
+- **Transition de page** : l'assiette rouge s'ouvre depuis le point de clic (clavier : centre du lien), 0,7 s `ease.inOut`, puis se referme sur la première escale de la page suivante, 0,7 s (`setup.ts`). Mouvement réduit : fondu 0,2 s de l'engine.
+- **Hovers par rôle** (3 traitements) : CTA = l'assiette pleine devient contour (remplissage inversé, `scale: .97` à l'appui) ; navigation, grands numéros et menu = le trait rouge se pose depuis la gauche ; plats = l'assiette s'avance (`scale: 1.05`) et le nom glisse de 0,25 em. Liens texte soulignés au repos (le trait s'épaissit), « suite » : la flèche avance. Tout sous `@media (hover: hover)`, même état sur `:focus-visible`, `:active` présent.
+- **Carte** : la liste du traiteur (`.index--traiteur`) se distingue de la carte du mois (nom en `--t-l`, vignette 7,5 rem, prix en rouge) ; pas d'aperçu au curseur : les vignettes rondes montrent déjà chaque plat, un follower les doublerait (décision).
+- **Menu mobile** : bouton « Menu » (`aria-expanded`, `aria-controls`), `<dialog>` modal plein écran (focus piégé et Échap natifs, focus rendu au bouton par l'événement `close`), rubriques posées comme des escales sur une route, « Appeler » 44 px ; un lien ferme le dialog avant la transition.
+
+## Sur-utilisation de la skill (phase 2)
+19. **Menu mobile accessible** : `Header.astro:19` (bouton, `aria-expanded`), `:23` (dialog), `:49-51` (ouverture, fermeture, focus rendu) ; test Playwright 390 : ouvert 390×844, focus sur « Fermer », Échap ferme, `aria-expanded=false`, focus sur `.nav__menu` ; un lien du menu navigue et le dialog est fermé. Coché.
+20. **Engine verbatim, astro.ts, persist** : `src/engine/*` inchangé ; `Base.astro:31` `transition:animate="none"`, `:63` `transition:persist` sur `#curtain` ; pas de `#gl` ni de `#cursor` (ni GL ni follower, décision). Coché.
+21. **Une horloge** : `grep "addEventListener('scroll'|requestAnimationFrame" src/motion src/components src/pages src/layouts` = 0 ; repos par `gsap.ticker` (`escales.ts:19`). Coché.
+22. **Code de page dans `onPage()` avec nettoyage** : `escales.ts:42-95` (retour des nettoyages : ticker, IO, pointermove, fil), `Header.astro:45` (listeners retirés, dialog fermé). Coché.
+23. **Aucune CSS `transform` sur élément GSAP** : `grep transform site.css` ne renvoie que `text-transform` ; hovers en `scale`/`translate` sur des éléments que GSAP ne transforme pas (images rondes : GSAP n'y anime que `clip-path`). Coché.
+24. **Module pilote avec `startIdle` et pointeur** : `escales.ts:12` (`startIdle`), `:27` (pointeur). Mesure : rotation de `.bague__tour` différente à 1,5 s d'écart (test Playwright). Coché (idleMotion à confirmer en phase 3 par `report.json`).
+25. **Loader décidé** : aucun (Concept Card, Théâtre) ; pas de composant ni de `role="status"`. Coché.
+26. **Transition du concept ≤ 1 s par sens** : `setup.ts` leave 0,7 s, enter 0,7 s ; test : rideau visible avec `circle(129% at 80% 3,5%)` à 400 ms après le clic sur « La carte », masqué à l'arrivée. Coché.
+27. **Intro `data-intro`, premier frame** : h1 de chaque page `data-split="lines" data-intro` (5 pages), assiette du hero peinte dès le premier rendu (capture `.shots/p2/home-1440.png`). Coché.
+28. **Épinglages** : aucun pin ; un seul scrub (`.route__fil`) avec `invalidateOnRefresh: true` (`escales.ts:55`). Coché.
+29. **Repli statique dessiné** : en mouvement réduit `onPage` sort tôt (`escales.ts:43`) : rail gris, escales en contour, assiettes pleines, bague statique ; test : `motion=false`, `lenis=false`, 0 élément caché, pas de fil. Coché.
+30. **Copies décoratives** : `.pied__mot` et SVG de bague `aria-hidden="true"`, aucun titre dupliqué. Coché.
+31. **Une famille d'easing** : `ease.out` / `ease.inOut` / `ease.soft` de l'engine, CSS en `cubic-bezier(0.16, 1, 0.3, 1)` (expo.out) ; durées 0,6 à 1,2 s ; stagger 60 ms (mur, actions). Coché.
+32. **Un traitement par rôle, 3 au total** : `site.css` § Rôle 1, 2, 3. Coché.
+33. **Hover sous `(hover: hover)`, aussi sur `:focus-visible`** : `site.css` lignes 231, 244, 254, 263 + règles `:focus-visible` voisines. Coché.
+34. **Liens texte soulignés au repos** : `.lien` (`site.css:36`), `.suite` (bordure), `.nav__menu`, `.menu__fermer`. Coché.
+35. `hover.noHoverChange` : phase 3 (`report.json`).
+36. `idleMotion` : phase 3 ; amplitude prévue ~46 px par 1,5 s pour un point de 22 px + arc de 3 px (≈ 1 000 px² changés, au-dessus du seuil de 648).
+37. **Curseur natif, rien ne dépend du hover** : pas de follower ; au toucher, vignettes visibles et menu au clic. Coché.
+38. **Pas de blur animé, pas de `box-shadow` au scroll** : grep `blur` vide ; aucun `will-change`. Coché.
+39. **Réduit** : test Playwright ci-dessus ; `reduced.*` de `report.json` en phase 3.
+40. **GL** : sans objet, décision écrite (Concept Card, Théâtre). Coché.
+41. Sans objet.
+44. **Skip link et focus** : skip link premier enfant de `body` (`Base.astro`), anneau 2 px accent (`site.css:3`), états focus des 3 rôles. Coché (clavier mesuré en phase 3).
+45. Contraste AA : phase 3.
+46. **Texte réel** : tout titre est du texte SplitText, aucun canvas. Coché.
+47. **Cibles** : « Réserver » d'en-tête et « Menu » à 2,75 rem (44 px), « Appeler » des menus 44 px ; mesure en phase 3.

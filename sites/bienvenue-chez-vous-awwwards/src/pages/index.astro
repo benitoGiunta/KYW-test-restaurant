@@ -11,8 +11,8 @@ const midi = horaires[1];
     <div class="route">
       <section class="stop stop--plein hero" aria-labelledby="titre">
         <div class="hero__texte">
-          <h1 id="titre" class="display">Bienvenue <em>chez vous</em></h1>
-          <p class="hero__lede">Cuisine française d’un seul chef, en escales, au premier étage d’une maison de maître à Namur.</p>
+          <h1 id="titre" class="display" data-split="lines" data-intro>Bienvenue <em>chez vous</em></h1>
+          <p class="hero__lede" data-reveal="up" data-intro data-delay="0.2">Cuisine française d’un seul chef, en escales, au premier étage d’une maison de maître à Namur.</p>
           <div class="hero__actions">
             <a class="btn" href={u('/reservation/')}>Réserver une table</a>
             <a class="btn btn--ligne" href={tel(restaurant.telephone)}>Appeler</a>
@@ -21,22 +21,23 @@ const midi = horaires[1];
         </div>
         <div class="hero__plate plate">
           <Photo cle="carpaccio" rond prioritaire widths={[480, 800, 1200]} sizes="(max-width: 760px) 78vw, 36vw" />
+          <svg class="bague" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><circle cx="100" cy="100" r="98" fill="none" stroke="var(--c-accent)" stroke-width="1" vector-effect="non-scaling-stroke" /><g class="bague__tour"><path d="M100 2 A98 98 0 0 1 165.6 27.2" fill="none" stroke="var(--c-accent)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke" /><circle cx="100" cy="2" r="4.4" fill="var(--c-accent)" /></g></svg>
         </div>
       </section>
 
       <section class="stop statement pause" aria-labelledby="voyage">
-        <h2 id="voyage" class="display">Un repas qui <em>voyage</em> : grignotages, escales, douceurs.</h2>
-        <div class="statement__texte">
+        <h2 data-split="lines" id="voyage" class="display">Un repas qui <em>voyage</em> : grignotages, escales, douceurs.</h2>
+        <div class="statement__texte" data-reveal="up">
           <p class="mesure">Le menu n’est pas dévoilé à l’avance. Il suit la saison et les petits bateaux de Port-en-Bessin, passe des classiques de la cuisine française à des créations qui se regardent avant de se goûter, et ne compte jamais plus de quelques tables.</p>
           <p class="mesure">Une fois installé, vous n’avez plus qu’à vous laisser conduire d’une escale à l’autre.</p>
         </div>
       </section>
 
       <section class="stop" aria-labelledby="formules">
-        <h2 id="formules" class="titre-section">Choisir son voyage</h2>
+        <h2 data-split="lines" id="formules" class="titre-section">Choisir son voyage</h2>
         <ul class="formules">
           {formules.map((f) => (
-            <li class="formule">
+            <li class="formule" data-reveal="up">
               <p class="formule__nom">{f.nom}</p>
               <p class="formule__desc">{ins(f.quand)}</p>
               <p class="formule__prix prix">{euro(f.prix)}</p>
@@ -48,7 +49,7 @@ const midi = horaires[1];
 
       <section class="stop" aria-labelledby="mur">
         <div class="mur-tete">
-          <h2 id="mur" class="titre-section">Ce que le chef dresse</h2>
+          <h2 data-split="lines" id="mur" class="titre-section">Ce que le chef dresse</h2>
           <p class="muted mesure">Des assiettes pensées pour l’œil : herbes, fleurs comestibles, sauces vertes et perles.</p>
         </div>
         <div class="mur">
@@ -67,7 +68,7 @@ const midi = horaires[1];
           <p class="legende">La maison de maître de la rue Pépin. Le restaurant est au premier étage.</p>
         </div>
         <div class="paire__texte">
-          <h2 id="chef">Un chef, <em>trois métiers</em></h2>
+          <h2 data-split="lines" id="chef">Un chef, <em>trois métiers</em></h2>
           <p class="mesure">Cédric Delsaut cuisine, sert et choisit les vins. Seul aux fourneaux comme en salle, il vous accueille lui-même, à quelques tables, à la lueur des bougies.</p>
           <p class="mesure muted">Jeune Chef de l’année 2016 (Gault&amp;Millau), il se dit porteur de quarante ans de métier.</p>
           <a class="suite" href={u('/histoire/')}>L’histoire de la maison <span aria-hidden="true">→</span></a>
@@ -75,7 +76,7 @@ const midi = horaires[1];
       </section>
 
       <section class="stop stop--plein arrivee pause" aria-labelledby="arrivee">
-        <h2 id="arrivee" class="display">On vous attend <em>au 33</em>.</h2>
+        <h2 data-split="lines" id="arrivee" class="display">On vous attend <em>au 33</em>.</h2>
         <a class="arrivee__tel prix" href={tel(restaurant.telephone)}>{restaurant.telephoneAffiche}</a>
         <div class="arrivee__actions">
           <a class="btn" href={u('/reservation/')}>Réserver une table</a>

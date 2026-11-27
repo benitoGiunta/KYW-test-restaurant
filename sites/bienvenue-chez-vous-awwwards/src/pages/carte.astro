@@ -9,12 +9,12 @@ import { formules, accords, plats, traiteur, mercredis } from '../data/site';
   <div class="wrap">
     <div class="route">
       <section class="stop stop--plein entete" aria-labelledby="titre">
-        <h1 id="titre" class="display">La carte, <em>en escales</em></h1>
-        <p class="entete__intro">Un repas se compose d’un départ, de quelques escales et de douceurs. Le chef change la carte chaque mois.</p>
+        <h1 id="titre" class="display" data-split="lines" data-intro>La carte, <em>en escales</em></h1>
+        <p class="entete__intro" data-reveal="up" data-intro data-delay="0.25">Un repas se compose d’un départ, de quelques escales et de douceurs. Le chef change la carte chaque mois.</p>
       </section>
 
       <section class="stop" aria-labelledby="mois">
-        <h2 id="mois" class="titre-bloc">Les saveurs du mois, octobre 2026</h2>
+        <h2 data-split="lines" id="mois" class="titre-bloc">Les saveurs du mois, octobre 2026</h2>
         <p class="muted mesure">Midi et soir, sur réservation. Les plats sont servis dans cet ordre.</p>
         <ol class="index">
           {plats.map((p) => (
@@ -29,7 +29,7 @@ import { formules, accords, plats, traiteur, mercredis } from '../data/site';
       </section>
 
       <section class="stop" aria-labelledby="formules">
-        <h2 id="formules" class="titre-bloc">Les formules</h2>
+        <h2 data-split="lines" id="formules" class="titre-bloc">Les formules</h2>
         <dl class="tableau">
           {formules.map((f) => (
             <div class="tableau__ligne">
@@ -48,7 +48,7 @@ import { formules, accords, plats, traiteur, mercredis } from '../data/site';
       <section class="stop paire" aria-labelledby="mercredi">
         <div class="paire__media"><Photo cle="tomates" rond sizes="(max-width: 760px) 80vw, 36vw" /></div>
         <div class="paire__texte">
-          <h2 id="mercredi">{mercredis.titre}</h2>
+          <h2 data-split="lines" id="mercredi">{mercredis.titre}</h2>
           <p class="mesure">{mercredis.texte}</p>
           <p class="mesure muted">{mercredis.tarif}.</p>
           <a class="suite" href={u('/reservation/')}>Réserver un mercredi <span aria-hidden="true">→</span></a>
@@ -56,9 +56,9 @@ import { formules, accords, plats, traiteur, mercredis } from '../data/site';
       </section>
 
       <section class="stop" aria-labelledby="emporter">
-        <h2 id="emporter" class="titre-bloc">À emporter</h2>
+        <h2 data-split="lines" id="emporter" class="titre-bloc">À emporter</h2>
         <p class="muted mesure">Le traiteur prépare, sur commande 24 h à l’avance, de quoi retrouver la table chez soi.</p>
-        <ol class="index">
+        <ol class="index index--traiteur">
           {traiteur.map((t) => (
             <li class="index__ligne">
               <p class="index__cat ui muted prix">{t.prix ? euro(t.prix) : 'Chaque semaine'}</p>
@@ -71,7 +71,7 @@ import { formules, accords, plats, traiteur, mercredis } from '../data/site';
       </section>
 
       <section class="stop stop--plein arrivee serre" aria-labelledby="fin">
-        <h2 id="fin" class="display display--l">Une table se prend <em>en le réservant</em>.</h2>
+        <h2 data-split="lines" id="fin" class="display display--l">Une table se prend <em>en le réservant</em>.</h2>
         <div class="arrivee__actions"><a class="btn" href={u('/reservation/')}>Réserver une table</a></div>
       </section>
     </div>

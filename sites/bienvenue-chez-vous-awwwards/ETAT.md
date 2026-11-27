@@ -1,4 +1,4 @@
-# ETAT : Bienvenue chez vous, variante awwwards (fin de la phase 1 sur 3)
+# ETAT : Bienvenue chez vous, variante awwwards (fin de la phase 2 sur 3)
 
 ## Fait
 - Brief, trois concepts notés, Concept Card, système (palette, typo, grille, plan de composition), DESIGN.md avec checklist 1 à 18 (voir ses preuves).
@@ -8,10 +8,19 @@
 - Build : `scripts/q.sh bcv-build pnpm build:site sites/bienvenue-chez-vous-awwwards` passe (5 pages, `dist/bienvenue-chez-vous/awwwards/`).
 - Mesures Playwright (hero 1440, 1280, 1024, 390 ; `scrollWidth` des 4 pages à 1440 et 390 ; `left` des `.display` = gutter ou plus) : aucun débordement, h1 et CTA dans le cadre.
 
-## Reste (phases 2 et 3)
-- Phase 2 : mouvement (révélations `data-reveal`/`data-split` sur les titres, signature escale + assiette qui s'ouvre, bague au repos, rideau rouge entre pages, hovers par rôle, aperçu rond au curseur sur la carte), `motion/` par page, `onPage()`.
-- Phase 3 : QA navigateur (captures, axe, clavier, reduced motion, mobile 390), OG recomposée (`og.mjs`), sloplint/jury en `self`, RAPPORT.md, points 42 à 63, distinguer les deux listes index de la carte (point 16), `pnpm index`.
-- Aucun commit de `dist/` publié : pas de `scripts/publier.sh` (hors périmètre).
+## Fait en phase 2 (27/11/2026)
+- Module pilote `src/motion/escales.ts` (fil rouge du rail en scrub, escales `.is-lit`, assiettes en `clip-path` cercle, escale qui tourne autour de l'assiette du hero au repos, pointeur), appelé par `src/motion/setup.ts`.
+- Transition de page : cercle rouge depuis le point de clic, refermé sur la première escale (0,7 s par sens).
+- Reveals : h1 `data-split="lines" data-intro` (5 pages), h2 `data-split="lines"`, `entete__intro`/`hero__lede` `data-reveal="up" data-intro`, formules, statement et repères `data-reveal="up"` (aucun bloc à lien révélé).
+- Hovers par rôle sous `(hover: hover)` + `:focus-visible` + `:active` (site.css § Phase 2) ; lien du pied KYW souligné au survol.
+- Menu mobile `<dialog>` (Header.astro) ; liste traiteur distinguée (`.index--traiteur`) ; favicon PNG 32 et `apple-touch-icon` 180 (Base.astro).
+- Contrôles Playwright (script de scratchpad) : 0 erreur console ni requête échouée ; `scrollWidth` 390 sur les 5 pages ; 6 escales allumées sur 6 au défilement ; 0 texte caché après défilement ; navigation par clic avec rideau ; menu (ouverture, Échap, focus rendu, lien) ; réduit sans `.motion`, sans Lenis, sans fil, 0 élément caché. Captures ciblées dans `.shots/p2/` (non commitées).
+- Build : `scripts/q.sh bcv-p2-build pnpm build:site sites/bienvenue-chez-vous-awwwards` passe.
+
+## Reste (phase 3)
+- QA navigateur complète (agent captures puis lecture de `QA-*.md`) : `idleMotion`, `hover.noHoverChange`, `reduced.*`, contraste, clavier, cibles (points 35, 36, 39, 44, 45, 47).
+- OG recomposée (`og.mjs` ou HTML de scratchpad), sloplint/jury en `self`, RAPPORT.md (compléments fictifs listés), points 42 à 63, `pnpm index`.
+- Aucune publication (`scripts/publier.sh` hors périmètre).
 
 ## Décisions
 - Concept A « Escales » ; pas de loader ni de GL (motivé dans DESIGN.md).
@@ -25,3 +34,5 @@
 - `engine.css` pose `.motion [data-reveal] {visibility:hidden}` : en phase 2, tout élément révélé doit être couvert par `onPage()` sinon invisible.
 - Les `url()` des `@font-face` sont codées en dur sous `/bienvenue-chez-vous/awwwards/fonts/`.
 - `.mur` au téléphone sort volontairement du `.wrap` (marges négatives gauche et droite) : ne pas remettre `margin-inline` symétrique.
+- Phase 2 : la rotation de `.bague__tour` passe par `gsap.set(…, { rotation, svgOrigin: '100 100' })` ; ne pas poser de transform CSS dessus. L'assiette du hero porte x/y (pointeur) et scale/rotation (intro) : pas de `clearProps` sur elle.
+- Le menu mobile ferme le dialog au clic d'un lien (sinon il reste dans la couche supérieure au-dessus du rideau).
