@@ -1,0 +1,1 @@
+- 2026-11-27 : entrée restaurants.json = boulangerie (Monepi, type_cuisine null) : signaler la catégorie dès le dossier ; site WordPress à pages thème démo (products-grid…), carte en texte HTML ; pas de q.sh obligatoire pour curl nu mais le hook l'exige (curl -s --max-time) : utiliser q.sh.
