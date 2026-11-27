@@ -1,4 +1,4 @@
-# ETAT novobel-portfolio (phase 2 sur 3, construction-2)
+# ETAT novobel-portfolio (phase 3 sur 3, QA terminée)
 
 ## Fait (phase 1, voir DESIGN.md) : contenu, 7 pages, photos, footer KYW, noindex.
 
@@ -20,3 +20,7 @@
 - `.form label` du gabarit est `display: grid` : les labels du devis sont dans `.champ label { display: block }`.
 - Le fil injecté (`.etapes__fil`) et la piste `::before` sont à `left: 0` de `.etapes` (padding-left ajouté) ; les compteurs n'animent que `.stats .num`.
 - Lenis/ScrollTrigger : les captures doivent défiler à la molette.
+
+## Phase 3 (QA)
+- Contrôle ciblé 7 pages x 2 profils : aucun défaut, aucune correction. Build final OK. RAPPORT.md écrit. Serveur arrêté.
+- Reste : `pnpm index`, publication, UTILISATION.md (session mère).
