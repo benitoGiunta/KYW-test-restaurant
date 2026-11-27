@@ -1,0 +1,11 @@
+---
+// Photo collée : cadre blanc, coin de papier 2 px, légèrement tournée.
+import type { Photo } from '../data/site';
+import { asset } from '../lib/url';
+interface Props { photo: Photo; rot?: number; legende?: string; class?: string; critical?: boolean }
+const { photo, rot = -2, legende, class: cls, critical = false } = Astro.props;
+---
+<figure class:list={['polaroid', cls]} style={`--rot:${rot}deg`} data-pose>
+  <img src={asset(photo.src)} alt={photo.alt} width={photo.largeur} height={photo.hauteur} loading={critical ? 'eager' : 'lazy'} fetchpriority={critical ? 'high' : undefined} decoding="async" data-critical={critical ? '' : undefined} />
+  {legende && <figcaption class="main">{legende}</figcaption>}
+</figure>

@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier, photoDe } from '../data/site';
+import { u } from '../lib/url';
+import Sommaire from '../components/Sommaire.astro';
+import Timbre from '../components/Timbre.astro';
+import Tampon from '../components/Tampon.astro';
+let depart = 1;
+const cats = cahier.sommaire.map((c) => { const d = depart; depart += c.lignes.length; return { c, d }; });
+const timbres = [
+  { photo: photoDe('/photos/pains-graines.webp'), rot: -3, legende: 'Pains aux graines', detail: 'sésame, pavot, mélange' },
+  { photo: photoDe('/photos/pains-chocolat.webp'), rot: 2.5, legende: 'Pains au chocolat', detail: 'viennoiserie à l’épeautre' },
+  { photo: photoDe('/photos/tarte-fraises.webp'), rot: -2, legende: 'Tarte aux fraises', detail: 'les douceurs de saison' },
+];
+---
+<Base title="Les pains" description={`La liste des pains de Monepi à ${site.adresse.commune} : pains au levain, pains à la levure, viennoiseries, petite boulangerie et pains sans gluten, avec prix et composition.`}>
+  <section class="page-cahier" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="titre titre--grand">
+        <p class="titre__sur">{cahier.titre}, sommaire</p>
+        <h1 id="h1" data-split="words" data-intro>Les pains</h1>
+        <p class="lead" style="margin-top: var(--u)">Pains au levain, pains à la levure, viennoiseries, petite boulangerie et pains sans gluten. En marge de chaque ligne, ce qu'il y a dedans. Prix en euros, tels que publiés par la boulangerie.</p>
+      </div>
+      <div class="feuille">
+        <div>
+          {cats.map(({ c, d }) => <Sommaire cat={c} depart={d} niveau={2} />)}
+        </div>
+        <div class="feuille__marge stack">
+          <Tampon texte="levain bio" couleur="bille" />
+          <p class="annot annot--fleche">les prix en fourchette varient avec le poids du pain</p>
+          {timbres.map((t) => <Timbre {...t} />)}
+        </div>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-formules">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">Dedans</p>
+        <h2 id="h-formules" data-split="words">Ce qui fait la différence</h2>
+      </div>
+      <div class="formules">
+        {cahier.faits.map((f) => (
+          <article class="formule" data-reveal="up">
+            <h3>{f.nom}</h3>
+            <p class="muted" style="font-size: var(--t-s)">{f.texte}</p>
+          </article>
+        ))}
+      </div>
+      <p class="muted" style="margin-top: calc(var(--u) * 2); font-size: var(--t-s)">Des pâtisseries sont aussi proposées selon les saisons et les évènements : la liste change, demandez-la par téléphone.</p>
+      <div class="actions">
+        <a class="btn btn--plein" href={u('/commander/')}>Commander</a>
+        <a class="btn" href={u('/farines/')}>Les farines</a>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>

@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier, photoDe } from '../data/site';
+import { u } from '../lib/url';
+import Polaroid from '../components/Polaroid.astro';
+import Tampon from '../components/Tampon.astro';
+const dirk = site.equipe[0];
+---
+<Base title="Le boulanger" description={`L'histoire de Monepi à ${site.adresse.commune} : Dirk Longin, boulanger-pâtissier, reprend l'atelier en 1992 ; farines moulues sur place, four à bois breton.`}>
+  <section class="page-cahier" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="titre titre--grand">
+        <p class="titre__sur">{cahier.titre}, première page</p>
+        <h1 id="h1" data-split="words" data-intro>Le boulanger</h1>
+      </div>
+      <div class="feuille">
+        <div class="recit">
+          {site.histoire.map((p) => <p>{p}</p>)}
+          <p><Tampon texte="depuis 1992" /></p>
+        </div>
+        <div class="feuille__marge stack">
+          <Polaroid photo={photoDe('/photos/petrissage.webp')} rot={-3} legende="le pétrissage" critical />
+          <Polaroid photo={photoDe('/photos/faconnage.webp')} rot={2.5} legende="le façonnage" />
+          <p class="annot annot--fleche">formé dès 1980</p>
+        </div>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-equipe">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">L'atelier</p>
+        <h2 id="h-equipe" data-split="words">Qui fait le pain</h2>
+      </div>
+      <div class="equipe" data-equipe>
+        <article class="fiche" style="--rot:-2deg" data-fiche>
+          <span class="fiche__initiale" aria-hidden="true">{dirk.nom[0]}</span>
+          <h3 class="fiche__prenom">{dirk.nom}</h3>
+          <p class="fiche__role">{dirk.role}</p>
+          <p class="fiche__phrase">{cahier.equipePhrase}</p>
+        </article>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-valeurs">
+    <div class="wrap feuille">
+      <div>
+        <h2 id="h-valeurs" data-split="words">Ce qu'on tient</h2>
+        <ol class="sommaire" style="margin-top: calc(var(--u) * 2)">
+          {site.valeurs.map((v, i) => (
+            <li class="ligne"><span class="ligne__lien"><span class="ligne__num">{String(i + 1).padStart(2, '0')}</span><span class="ligne__nom">{v}</span></span></li>
+          ))}
+        </ol>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/commander/')}>Commander</a>
+          <a class="btn" href={u('/farines/')}>Les farines</a>
+        </div>
+      </div>
+      <div class="feuille__marge">
+        <Polaroid photo={photoDe('/photos/boulanger-four.webp')} rot={-2} legende="devant le four à bois" />
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>

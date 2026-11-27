@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier, telHref, photoDe, adresseLigne } from '../data/site';
+import { u } from '../lib/url';
+import Polaroid from '../components/Polaroid.astro';
+import Tampon from '../components/Tampon.astro';
+---
+<Base title="Points de vente" description={`Où trouver le pain de Monepi : la boutique de ${site.adresse.commune} et quatre autres points de vente à Wanze, Fernelmont, Andenne et Thon.`}>
+  <section class="page-cahier" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="titre titre--grand">
+        <p class="titre__sur">{cahier.titre}, adresses</p>
+        <h1 id="h1" data-split="words" data-intro>Points de vente</h1>
+        <p class="lead" style="margin-top: var(--u)">La boutique de la boulangerie à Loyers, et quatre autres adresses listées sur le site actuel. Gamme et horaires de ces points de vente ne sont pas publiés : on les demande sur place.</p>
+      </div>
+      <div class="formules">
+        <article class="formule" data-reveal="up">
+          <h2 style="font-size: var(--t-m)">La boutique</h2>
+          <p class="formule__prix">Loyers</p>
+          <p style="font-size: var(--t-s)">{adresseLigne()}</p>
+          <p class="formule__min">vendredi, de 9 h à 18 h</p>
+        </article>
+        {cahier.pointsDeVente.map((p, i) => (
+          <article class="formule" data-reveal="up" data-delay={String((i + 1) * 0.1)}>
+            <h2 style="font-size: var(--t-m)">{p.nom}</h2>
+            <p class="formule__prix">{p.commune}</p>
+            <p style="font-size: var(--t-s)">{p.note}</p>
+            <p class="formule__min">horaires et gamme à demander sur place</p>
+          </article>
+        ))}
+      </div>
+      <div class="actions">
+        <a class="btn btn--plein" href={telHref()}>Appeler la boulangerie</a>
+        <a class="btn" href={u('/commander/')}>Commander</a>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-comment">
+    <div class="wrap feuille">
+      <div class="recit">
+        <h2 id="h-comment" data-split="words">Ce qu'on sait</h2>
+        <p>Le site actuel de la boulangerie cite ces quatre adresses comme points de vente. Il ne dit pas quels pains s'y trouvent ni quels jours : pour être sûr de trouver un pain précis, le plus simple est de passer commande à la boutique.</p>
+        <p><Tampon texte="à confirmer" couleur="bille" /></p>
+        <div class="actions"><a class="btn" href={u('/pains/')}>Voir la liste des pains</a></div>
+      </div>
+      <div class="feuille__marge">
+        <Polaroid photo={photoDe('/photos/pains-rustiques.webp')} rot={-2.5} legende="des pains sur la claie" />
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>

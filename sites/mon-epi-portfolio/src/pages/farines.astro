@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier, photoDe } from '../data/site';
+import { u } from '../lib/url';
+import Timbre from '../components/Timbre.astro';
+import Polaroid from '../components/Polaroid.astro';
+const rots = [-3, 2, -2, 3, -1.5, 2.5];
+---
+<Base title="Les farines" description={`Les quatre farines moulues sur meules de granit chez Monepi à ${site.adresse.commune} : blé demi-gris, blé blanc, épeautre demi-gris, petit épeautre, céréales bio.`}>
+  <section class="page-cahier" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="titre titre--grand">
+        <p class="titre__sur">{cahier.titre}, farines</p>
+        <h1 id="h1" data-split="words" data-intro>Les farines</h1>
+        <p class="lead" style="margin-top: var(--u)">Depuis 1996, la boulangerie moud ses farines sur des meules de granit. Quatre farines, des céréales bio certifiées, et deux moulins cités comme partenaires.</p>
+      </div>
+      <div class="mur" data-mur>
+        {cahier.fournisseurs.map((p, i) => (
+          <div>
+            <Timbre photo={photoDe(p.photo)} rot={rots[i]} legende={p.nom} detail={`${p.produit}, ${p.detail}`} lazy={i > 2} />
+            <p class="annot annot--fleche">{p.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-regle">
+    <div class="wrap feuille">
+      <div class="recit">
+        <h2 id="h-regle" data-split="words">La règle du cahier</h2>
+        <p>Une seule règle : le pain se fait avec peu. De la farine, du sel marin, de l'eau, du levain ou de la levure, et ce que la recette demande, rien d'autre. Chaque ligne de la liste des pains dit ce qu'il y a dedans.</p>
+        <p>Les taux d'extraction des farines (environ 65 à 80 %) sont ceux annoncés sur le site actuel de la boulangerie.</p>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/pains/')}>La liste des pains, avec la composition</a>
+        </div>
+      </div>
+      <div class="feuille__marge">
+        <Polaroid photo={photoDe('/photos/mie-croute.webp')} rot={2} legende="la croûte et la mie" />
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>

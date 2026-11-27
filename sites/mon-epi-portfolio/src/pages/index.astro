@@ -1,0 +1,163 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, cahier, photoDe, horaireTexte, telHref } from '../data/site';
+import { u } from '../lib/url';
+import Polaroid from '../components/Polaroid.astro';
+import Timbre from '../components/Timbre.astro';
+import MenuDuJour from '../components/MenuDuJour.astro';
+import Sommaire from '../components/Sommaire.astro';
+import Plan from '../components/Plan.astro';
+const cover = photoDe('/photos/pains-ronds-pelle.webp');
+const rots = [-3, 2, -2, 3, -1.5, 2.5];
+const dirk = site.equipe[0];
+---
+<Base>
+  <section class="couverture" data-couverture aria-labelledby="h1">
+    <div class="wrap couverture__inner">
+      <div>
+        <div class="etiquette" data-colle>
+          <p class="etiquette__ligne">{cahier.titre}, {cahier.lieu}</p>
+          <h1 class="etiquette__nom" id="h1">{site.nom}</h1>
+          <p class="etiquette__ligne">Boulangerie artisanale, Namur. Levain bio, four à bois.</p>
+        </div>
+        <p class="couverture__accroche lead">{site.baseline} Des pains au levain bio cuits au four à bois, avec des farines moulues sur place sur des meules de granit.</p>
+        <div class="actions">
+          <a class="btn btn--plein" href={u('/commander/')} data-magnetic="0.2">Commander</a>
+          <a class="btn" href={u('/pains/')}>Lire la liste des pains</a>
+        </div>
+      </div>
+      <Polaroid photo={cover} rot={-2} legende="les pains, sortis du four" class="couverture__photo" critical />
+    </div>
+  </section>
+
+  <section class="page-cahier" aria-label="Au fournil">
+    <div class="wrap feuille">
+      <MenuDuJour />
+      <div class="feuille__marge">
+        <p class="annot annot--fleche">le vendredi, c'est confirmé</p>
+        <p class="muted" style="margin-top: var(--u); font-size: var(--t-s)">Les autres jours ne sont pas publiés par la boulangerie : appelez le {site.telephone} avant de passer.</p>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-sommaire">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">Sommaire</p>
+        <h2 id="h-sommaire" data-split="words">Les pains au levain</h2>
+      </div>
+      <div class="feuille">
+        <div>
+          <Sommaire cat={cahier.sommaire[0]} depart={1} />
+          <p class="actions"><a class="btn" href={u('/pains/')}>La liste complète, 29 lignes</a></p>
+        </div>
+        <div class="feuille__marge">
+          <Timbre photo={photoDe('/photos/pains-rustiques.webp')} rot={3} legende="Pains rustiques" detail="sur la claie" />
+          <p class="annot annot--fleche" style="margin-top: var(--u)">800 g, sel marin, eau, levain</p>
+        </div>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-prod">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">Farines</p>
+        <h2 id="h-prod" data-split="words">De quoi est fait le pain</h2>
+      </div>
+      <div class="mur" data-mur>
+        {cahier.fournisseurs.map((p, i) => (
+          <div>
+            <Timbre photo={photoDe(p.photo)} rot={rots[i]} legende={p.nom} detail={`${p.produit}, ${p.detail}`} />
+            <p class="annot annot--fleche">{p.note}</p>
+          </div>
+        ))}
+      </div>
+      <p class="actions"><a class="btn" href={u('/farines/')}>Toutes les farines</a></p>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-postale">
+    <div class="wrap postale">
+      <Polaroid photo={photoDe('/photos/enfournement.webp')} rot={2} legende="les pâtons, à la pelle" />
+      <article class="postale__carte" data-postale aria-labelledby="h-postale">
+        <span class="postale__coin postale__coin--tl" aria-hidden="true"></span><span class="postale__coin postale__coin--tr" aria-hidden="true"></span>
+        <span class="postale__coin postale__coin--bl" aria-hidden="true"></span><span class="postale__coin postale__coin--br" aria-hidden="true"></span>
+        <p class="postale__lieu">Carte postale, {cahier.lieu}</p>
+        <h2 id="h-postale" style="font-size: var(--t-m); margin-bottom: var(--u)">{cahier.postale.titre}</h2>
+        <div class="postale__texte">
+          {cahier.postale.lignes.map((l) => <p>{l}</p>)}
+        </div>
+        <p class="postale__signature main">{cahier.postale.signataire}</p>
+      </article>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-equipe">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">Le boulanger</p>
+        <h2 id="h-equipe" data-split="words">Une main, un four</h2>
+      </div>
+      <div class="equipe" data-equipe>
+        <article class="fiche" style="--rot:-2deg" data-fiche>
+          <span class="fiche__initiale" aria-hidden="true">{dirk.nom[0]}</span>
+          <h3 class="fiche__prenom">{dirk.nom}</h3>
+          <p class="fiche__role">{dirk.role}</p>
+          <p class="fiche__phrase">{cahier.equipePhrase}</p>
+        </article>
+      </div>
+      <p class="actions"><a class="btn" href={u('/boulanger/')}>L'histoire de l'atelier</a></p>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-avis">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">En marge</p>
+        <h2 id="h-avis" data-split="words">Ce qu'on a écrit sur le site</h2>
+      </div>
+      <div class="marginalia">
+        {site.avis.map((a) => (
+          <blockquote class="avis" data-reveal="fade">
+            <p>{a.texte}</p>
+            <cite>{a.auteur}, {a.source}</cite>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+
+  <section class="page-cahier" aria-labelledby="h-pratique">
+    <div class="wrap">
+      <div class="titre">
+        <p class="titre__sur">Pratique</p>
+        <h2 id="h-pratique" data-split="words">Passer, appeler</h2>
+      </div>
+      <div class="pratique">
+        <div>
+          <dl class="horaires horaires--grand">
+            {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+          </dl>
+          <p class="annot annot--fleche" style="margin-top: var(--u)">seul le vendredi est publié</p>
+          <div class="actions">
+            <a class="btn btn--plein" href={telHref()}>Appeler</a>
+            <a class="btn" href={u('/commander/')}>Commander</a>
+            <a class="btn btn--marqueur" href={u('/points-de-vente/')}>Points de vente</a>
+          </div>
+        </div>
+        <div>
+          <Plan />
+          <Polaroid photo={photoDe('/photos/four-chauffe.webp')} rot={-2} legende="le four, en chauffe" class="diptyque__photo" />
+        </div>
+      </div>
+    </div>
+    <p class="folio"></p>
+  </section>
+</Base>
