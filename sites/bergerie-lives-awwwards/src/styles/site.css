@@ -1,5 +1,6 @@
 /* La Bergerie de Lives : concept « Le Clos ». Cadres à quatre coins (piquets), battants de barrière, angles droits. */
 ::selection { background: var(--c-accent); color: #17201a; }
+:root { --e-out: cubic-bezier(0.16, 1, 0.3, 1); --e-inout: cubic-bezier(0.87, 0, 0.13, 1); }
 :focus-visible { outline: 2px solid var(--c-accent); outline-offset: 3px; }
 body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; background: var(--c-bg); color: var(--c-fg); }
 img { display: block; max-width: 100%; height: auto; }
@@ -12,13 +13,20 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .titre-section { font-family: var(--f-body); font-weight: 700; font-size: var(--t-s); letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 calc(var(--u) * 3); color: var(--c-accent); }
 .sec { padding-block: calc(var(--u) * 9); }
 .sec--pierre { --c-bg: var(--c-pierre); --c-fg: var(--c-pierre-fg); --c-muted: var(--c-pierre-muted); --c-line: rgb(23 32 26 / 0.25); --c-accent: #7a4a12; background: var(--c-bg); color: var(--c-fg); }
-.lien { text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 1px; transition: text-decoration-thickness .3s, color .3s; }
-.lien:hover { text-decoration-thickness: 3px; color: var(--c-accent); }
+/* Liens texte : soulignés au repos, le trait s'épaissit (même état au clavier, visible en mouvement réduit) */
+.lien, .pied a { text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 1px; transition: text-decoration-thickness .3s var(--e-out), color .3s; }
+@media (hover: hover) { .lien:hover, .pied a:hover { text-decoration-thickness: 3px; color: var(--c-accent); } }
+.lien:focus-visible, .pied a:focus-visible { text-decoration-thickness: 3px; color: var(--c-accent); }
+.lien:active, .pied a:active { text-decoration-thickness: 2px; }
+.kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
 
 /* Enclos : cadre à quatre coins, comme quatre piquets */
 .enclos { position: relative; }
-.enclos::before, .enclos::after { content: ''; position: absolute; inset: calc(var(--u) * 0.8); pointer-events: none; z-index: 2;
-  --k: 18px; --w: 2px; --c: var(--c-accent);
+/* --ouv (0 fermé, 1 ouvert) vient du pilote src/motion/clos.ts ; --resp et --pen : repos et penchant du hero. Sans script : 1, 0, 0. */
+.enclos::before, .enclos::after { content: ''; position: absolute; pointer-events: none; z-index: 2;
+  --o: calc(var(--u) * 0.8 + (1 - var(--ouv, 1)) * 2.4rem + var(--resp, 0px));
+  inset: var(--o) calc(var(--o) - var(--pen, 0px)) var(--o) calc(var(--o) + var(--pen, 0px));
+  --k: calc(8px + 10px * var(--ouv, 1)); --w: 2px; --c: var(--c-accent);
   background:
     linear-gradient(var(--c), var(--c)) top left / var(--k) var(--w) no-repeat,
     linear-gradient(var(--c), var(--c)) top left / var(--w) var(--k) no-repeat,
@@ -31,13 +39,25 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .enclos::after { display: none; }
 .enclos img { width: 100%; height: 100%; object-fit: cover; }
 .enclos picture { display: block; height: 100%; }
+.hero__photo { overflow: hidden; }
+.hero__photo::before { --k: calc(10px + 22px * var(--ouv, 1)); --w: 3px; }
+/* Signature : la barrière à deux battants s'ouvre sur le domaine (intro de l'accueil). Secours CSS si le script ne joue pas. */
+.battant { display: none; position: absolute; top: 0; bottom: 0; width: 50.5%; z-index: 1; background: var(--c-curtain); pointer-events: none; }
+.battant--g { left: 0; box-shadow: inset -2px 0 0 var(--c-accent); }
+.battant--d { right: 0; box-shadow: inset 2px 0 0 var(--c-accent); }
+.motion .battant { display: block; animation: battant-secours 0s linear 4s forwards; }
+@keyframes battant-secours { to { visibility: hidden; } }
+.curtain__panel--g { right: 50%; box-shadow: inset -2px 0 0 var(--c-accent); }
+.curtain__panel--d { left: 50%; box-shadow: inset 2px 0 0 var(--c-accent); }
 
-/* Boutons : un seul traitement, le battant (fond qui s'ouvre de bas en haut) */
+/* Boutons : un seul traitement, le battant (fond qui monte du bas, même état au clavier) */
 .bouton { display: inline-flex; align-items: center; min-height: 44px; padding: 0.7em 1.4em; background: var(--c-accent); color: #17201a; font-weight: 700; font-size: var(--t-s); letter-spacing: 0.04em; text-decoration: none; border: 1px solid var(--c-accent); position: relative; overflow: hidden; isolation: isolate; transition: color .35s; }
-.bouton::before { content: ''; position: absolute; inset: 0; background: var(--c-fg); transform: scaleY(0); transform-origin: top; transition: transform .45s cubic-bezier(.7,0,.2,1); z-index: -1; }
-.bouton:hover::before, .bouton:focus-visible::before { transform: scaleY(1); transform-origin: bottom; }
+.bouton::before { content: ''; position: absolute; inset: 0; background: var(--c-fg); transform: scaleY(0); transform-origin: top; transition: transform .45s var(--e-inout); z-index: -1; }
+@media (hover: hover) { .bouton:hover { color: var(--c-bg); } .bouton:hover::before { transform: scaleY(1); transform-origin: bottom; } }
+.bouton:focus-visible { color: var(--c-bg); }
+.bouton:focus-visible::before { transform: scaleY(1); transform-origin: bottom; }
+.bouton:active { translate: 0 1px; }
 .bouton--creux { background: transparent; color: var(--c-fg); border-color: var(--c-line); }
-.bouton--creux:hover { color: var(--c-bg); }
 .bouton--petit { min-height: 36px; padding: 0.4em 1em; }
 .bouton--grand { font-size: var(--t-body); padding: 0.9em 1.8em; margin: 0 0.6em 0.6em 0; }
 
@@ -47,10 +67,26 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .entete__nom span { color: var(--c-accent); }
 .entete__nav { display: flex; gap: calc(var(--u) * 2.5); }
 .lien-nav { font-size: var(--t-s); text-decoration: none; padding: 0.5em 0; background: linear-gradient(currentColor, currentColor) bottom left / 0 1px no-repeat; transition: background-size .35s; }
-.lien-nav:hover, .lien-nav[aria-current='page'] { background-size: 100% 1px; }
+@media (hover: hover) { .lien-nav:hover { background-size: 100% 1px; } }
+.lien-nav:focus-visible, .lien-nav[aria-current='page'] { background-size: 100% 1px; }
+.lien-nav:active { background-size: 60% 1px; }
+.entete__menu { display: none; align-items: center; min-height: 44px; padding: 0 1.1em; border: 1px solid var(--c-line); color: var(--c-fg); font: 700 var(--t-s)/1 var(--f-body); letter-spacing: 0.06em; text-transform: uppercase; }
+.entete__menu:active { translate: 0 1px; }
+/* Menu plein écran du téléphone : deux battants s'ouvrent depuis le centre (src/motion/menu.ts) */
+.menu { position: fixed; inset: 0; z-index: 2; display: flex; flex-direction: column; gap: calc(var(--u) * 4); padding: calc(var(--u) * 1.2) var(--gutter) calc(var(--u) * 4); background: var(--c-curtain); color: var(--c-fg); overflow-y: auto; }
+.menu[hidden] { display: none; }
+.menu .entete__menu { display: inline-flex; }
+.menu__haut { display: flex; justify-content: space-between; align-items: center; gap: var(--gutter); }
+.menu__nav { margin-block: auto; }
+.menu__nav a { display: inline-block; padding-block: 0.08em; font-family: var(--f-display); font-size: clamp(2.6rem, 13vw, 4.4rem); line-height: 1.05; text-decoration: none; }
+.menu__nav a[aria-current='page'] { color: var(--c-accent); }
+.menu__nav a:active { color: var(--c-accent); }
+.menu__bas { display: flex; flex-direction: column; align-items: flex-start; gap: var(--u); }
+.menu__adresse { font-size: var(--t-s); color: var(--c-muted); margin: var(--u) 0 0; }
+.nw { white-space: nowrap; }
 
 /* Hero (poster) */
-.hero { padding: calc(var(--u) * 12) 0 calc(var(--u) * 5); }
+.hero { padding: calc(var(--u) * 8.5) 0 calc(var(--u) * 5); }
 .hero__grille { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); row-gap: calc(var(--u) * 2); }
 .hero__meta { grid-column: 1 / 6; grid-row: 1; font-size: var(--t-s); color: var(--c-muted); letter-spacing: 0.04em; margin: 0; align-self: start; }
 .hero__titre { grid-column: 1 / 13; grid-row: 2; font-size: min(var(--t-mega), 17vh); line-height: 0.88; letter-spacing: -0.035em; padding-block: 0.04em; }
@@ -76,7 +112,16 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .index__phrase { grid-column: 7 / 11; color: var(--c-muted); }
 .index__vignette { grid-column: 11 / 13; aspect-ratio: 4 / 3; overflow: hidden; }
 .index__vignette img { width: 100%; height: 100%; object-fit: cover; }
-.index__lien:hover .index__nom, .index__lien:focus-visible .index__nom { color: var(--c-accent); }
+/* Index : la vignette s'ouvre comme un battant et suit le pointeur le long de la ligne ; le nom avance d'un pas */
+.index__nom { transition: color .3s, translate .6s var(--e-out); }
+@media (hover: hover) {
+  .motion .index__vignette { clip-path: inset(0 40% 0 40%); transition: clip-path .7s var(--e-inout); }
+  .index__lien:hover .index__vignette { clip-path: inset(0); }
+  .index__lien:hover .index__nom { color: var(--c-accent); translate: 0.35em 0; }
+}
+.motion .index__lien:focus-visible .index__vignette { clip-path: inset(0); }
+.index__lien:focus-visible .index__nom { color: var(--c-accent); translate: 0.35em 0; }
+.index__lien:active .index__nom { translate: 0.2em 0; }
 
 /* Mur : bande horizontale */
 .mur { padding-bottom: calc(var(--u) * 8); }
@@ -148,12 +193,15 @@ p { margin: 0 0 1em; max-width: 62ch; }
 /* Mobile 390 : recomposé */
 @media (max-width: 860px) {
   .sec { padding-block: calc(var(--u) * 6); }
-  .entete { gap: 0 var(--gutter); }
-  .entete__nav { order: 3; width: 100%; gap: calc(var(--u) * 2.5); }
-  .hero { padding-top: calc(var(--u) * 14); }
+  .entete { flex-wrap: nowrap; gap: calc(var(--u) * 1.2); padding-block: calc(var(--u) * 1.2); }
+  .entete__nom { font-size: 1.15rem; }
+  .entete__nav { display: none; }
+  .entete__tel { min-height: 44px; }
+  .entete__menu { display: inline-flex; }
+  .hero { padding-top: calc(var(--u) * 10); }
   .hero__titre { font-size: clamp(3.3rem, 17vw, 6rem); }
   .hero__meta, .hero__titre, .hero__photo, .hero__actions { grid-column: 1 / 13; grid-row: auto; }
-  .hero__photo { aspect-ratio: 1 / 1; margin-top: 0; }
+  .hero__photo { aspect-ratio: 4 / 3; margin-top: 0; }
   .hero__photo img { object-position: 30% 50%; }
   .statement__titre, .statement__texte, .statement__paire { grid-column: 1 / 13; }
   .statement__p1 { grid-column: 1 / 13; }

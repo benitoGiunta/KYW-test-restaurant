@@ -9,8 +9,8 @@ const tel = `tel:${restaurant.telephone.replace(/\s/g, '')}`;
 <Base titre="Le domaine" description="Chambres d’hôtes, mariages et séminaires à la Bergerie de Lives : piscine chauffée, sauna, jacuzzi, véranda vitrée et jardin, à Lives-sur-Meuse près de Namur.">
   <section class="sec page-tete">
     <div class="wrap">
-      <h1 class="display" data-split="lines">Le domaine</h1>
-      <p class="page-tete__lede">Pas de carte ici : la maison reçoit. Chambres, mariages, séminaires, sur une même propriété.</p>
+      <h1 class="display" data-split="lines" data-intro>Le domaine</h1>
+      <p class="page-tete__lede" data-reveal="fade" data-intro data-delay="0.3">Pas de carte ici : la maison reçoit. Chambres, mariages, séminaires, sur une même propriété.</p>
     </div>
   </section>
 
@@ -18,7 +18,7 @@ const tel = `tel:${restaurant.telephone.replace(/\s/g, '')}`;
     <section id={o.id} class={`sec offre ${i % 2 ? 'offre--inverse sec--pierre' : ''}`} aria-labelledby={`t-${o.id}`}>
       <div class="wrap offre__grille">
         <div class="offre__texte">
-          <h2 id={`t-${o.id}`} class="display offre__titre">{o.nom}</h2>
+          <h2 id={`t-${o.id}`} class="display offre__titre" data-split="lines">{o.nom}</h2>
           <p class="offre__accroche">{o.accroche}</p>
           <p>{o.texte}</p>
           <ul class="liste-trait">{o.liste.map((l) => <li>{l}</li>)}</ul>
@@ -46,14 +46,14 @@ const tel = `tel:${restaurant.telephone.replace(/\s/g, '')}`;
 
   <section class="sec sec--pierre alentours" aria-labelledby="al">
     <div class="wrap alentours__grille">
-      <h2 id="al" class="display alentours__titre">À proximité</h2>
+      <h2 id="al" class="display alentours__titre" data-split="lines">À proximité</h2>
       <ul class="liste-trait">{activites.map((a) => <li>{a}</li>)}</ul>
     </div>
   </section>
 
   <section class="sec final">
     <div class="wrap final__grille">
-      <p class="display final__titre">Venez voir.</p>
+      <p class="display final__titre" data-split="lines">Venez voir.</p>
       <p><a class="bouton bouton--grand" href={u('/reservation/')}>Organiser une visite</a> <a class="bouton bouton--creux bouton--grand" href={tel}>{restaurant.telephoneAffiche}</a></p>
     </div>
   </section>

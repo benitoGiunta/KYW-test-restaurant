@@ -2,13 +2,33 @@
 import { u } from '../lib/url';
 import { restaurant } from '../data/site';
 const chemin = Astro.url.pathname.replace(/\/+$/, '');
+const accueil = u('/').replace(/\/+$/, '');
 const liens = [{ h: '/le-domaine/', t: 'Le domaine' }, { h: '/histoire/', t: 'Histoire' }, { h: '/reservation/', t: 'Visiter' }];
 const actif = (h: string) => chemin.endsWith(h.replace(/\/$/, ''));
+const tel = `tel:${restaurant.telephone.replace(/\s/g, '')}`;
 ---
 <header class="entete" data-layer="content">
   <a class="entete__nom" href={u('/')} aria-label="La Bergerie de Lives, accueil">La Bergerie <span>de Lives</span></a>
   <nav class="entete__nav" aria-label="Navigation principale">
     {liens.map((l) => <a class="lien-nav" href={u(l.h)} aria-current={actif(l.h) ? 'page' : undefined}>{l.t}</a>)}
   </nav>
-  <a class="bouton bouton--petit entete__tel" href={`tel:${restaurant.telephone.replace(/\s/g, '')}`}>Appeler</a>
+  <a class="bouton bouton--petit entete__tel" href={tel}>Appeler</a>
+  <button class="entete__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button>
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden data-menu>
+    <div class="menu__haut">
+      <span class="entete__nom" aria-hidden="true">La Bergerie <span>de Lives</span></span>
+      <button class="entete__menu" type="button" data-menu-fermer>Fermer</button>
+    </div>
+    <nav class="menu__nav" aria-label="Navigation (menu)">
+      <ul>
+        <li data-menu-item><a href={u('/')} aria-current={chemin === accueil ? 'page' : undefined}>Accueil</a></li>
+        {liens.map((l) => <li data-menu-item><a href={u(l.h)} aria-current={actif(l.h) ? 'page' : undefined}>{l.t}</a></li>)}
+      </ul>
+    </nav>
+    <div class="menu__bas" data-menu-item>
+      <a class="bouton" href={u('/reservation/')}>Organiser une visite</a>
+      <a class="bouton bouton--creux" href={tel}>Appeler le <span class="nw">{restaurant.telephoneAffiche}</span></a>
+      <p class="menu__adresse">{restaurant.adresse.rue}, {restaurant.adresse.cp} {restaurant.adresse.localite}</p>
+    </div>
+  </div>
 </header>
