@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import Horaires from '../components/Horaires.astro';
+import { site } from '../data/site';
+const osm = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=17/${site.geo.lat}/${site.geo.lon}`;
+---
+<Base current="contact/" title="Contact" description="Boulangerie Monepi, rue Es Fays 43 à Loyers (Namur) : adresse, téléphone, horaires et autres points de vente.">
+  <section class="page-head container">
+    <h1>Contact.</h1>
+    <p class="lead">Rue Es Fays 43, à Loyers. Pour réserver des produits, appelez la boulangerie.</p>
+  </section>
+  <section class="pratique container" aria-labelledby="c-t">
+    <div>
+      <h2 id="c-t">Venir et appeler</h2>
+      <address class="adresse">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p class="actions"><a class="btn" href={`tel:${site.telephone.replace(/\s/g, '')}`}>Appeler le {site.telephoneAffiche}</a></p>
+      <p><a class="link" href={osm} rel="noopener" target="_blank">Voir l’adresse sur la carte</a></p>
+      <p><a class="link" href={site.facebook} rel="noopener" target="_blank">La page Facebook</a></p>
+    </div>
+    <Horaires />
+  </section>
+  <section class="container pdv" aria-labelledby="pdv-t">
+    <h2 id="pdv-t">Autres points de vente</h2>
+    <ul class="rows rows--plain">
+      {site.pointsDeVente.map((p) => (<li class="row"><span class="row__name">{p.nom}</span><span class="row__lead" aria-hidden="true"></span><span class="row__price">{p.lieu}</span></li>))}
+    </ul>
+  </section>
+</Base>

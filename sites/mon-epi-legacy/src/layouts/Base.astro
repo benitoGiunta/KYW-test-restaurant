@@ -1,0 +1,37 @@
+---
+import KywFooter from '@kyw/footer';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+import '../styles/page.css';
+interface Props { title?: string; description?: string; current?: string }
+const { title, description = site.description, current = '' } = Astro.props;
+const fullTitle = title ? `${title} | ${site.nom}` : `${site.enseigne} | Pain au levain cuit au feu de bois à Loyers`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://kyw-test-restaurant.vercel.app').href;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="fr_BE" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Header current={current} />
+    <main id="contenu"><slot /></main>
+    <Footer />
+    <KywFooter base={import.meta.env.BASE_URL} />
+  </body>
+</html>

@@ -1,0 +1,21 @@
+---
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const { current = '' } = Astro.props;
+---
+<header class="site-header">
+  <div class="container banner">
+    <a class="wordmark" href={u('')}><span class="wordmark__name">Monepi</span><span class="wordmark__sub">Boulangerie</span></a>
+    <p class="banner__contact">
+      <a href={`tel:${site.telephone.replace(/\s/g, '')}`} class="num">{site.telephoneAffiche}</a>
+      <a href={site.facebook} rel="noopener" target="_blank">Facebook</a>
+    </p>
+  </div>
+  <nav class="bar" aria-label="Navigation principale">
+    <ul class="container bar__list">
+      {site.nav.map((n) => (
+        <li><a href={u(n.href)} aria-current={current === n.href ? 'page' : undefined}>{n.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+</header>

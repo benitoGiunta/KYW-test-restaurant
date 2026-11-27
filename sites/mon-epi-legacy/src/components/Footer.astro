@@ -1,0 +1,22 @@
+---
+import { site } from '../data/site';
+import { u } from '../lib/url';
+---
+<footer class="letter">
+  <div class="container letter__grid">
+    <div class="letter__body">
+      <h2 class="letter__head">À vendredi, à Loyers.</h2>
+      <p class="lead">La boutique est ouverte le vendredi de 9 h 00 à 18 h 00. Les autres jours sont à confirmer auprès de la boulangerie.</p>
+      <p class="letter__sign">Dirk Longin et la boulangerie Monepi</p>
+    </div>
+    <address class="letter__facts">
+      <p>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</p>
+      <p><a class="num" href={`tel:${site.telephone.replace(/\s/g, '')}`}>{site.telephoneAffiche}</a></p>
+      <p><a href={site.facebook} rel="noopener" target="_blank">Facebook</a></p>
+    </address>
+    <ul class="letter__nav">
+      {site.nav.map((n) => <li><a href={u(n.href)}>{n.label}</a></li>)}
+    </ul>
+  </div>
+  <p class="container letter__credits" data-credits>Photographies : monepi.be. Cartes, prix et textes : monepi.be, repris pour la maquette.</p>
+</footer>

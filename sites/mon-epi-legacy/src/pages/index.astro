@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Rows from '../components/Rows.astro';
+import Horaires from '../components/Horaires.astro';
+import carte from '../carte.json';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+const dès = (min: number) => `dès ${min.toFixed(2).replace('.', ',')} €`;
+const choix = [
+  { nom: 'Pur épeautre demi-gris, au levain', prix: '4,30 €', description: '800 g, farine d’épeautre demi-grise, sel marin, eau, levain' },
+  { nom: 'Cramique', prix: '5,60 €', description: '800 g, farine d’épeautre blanche, beurre, raisins secs' },
+  { nom: 'Baguette et tresse', prix: '1,90 €', description: 'Farine d’épeautre blanche, eau, sel marin, levain ou levure' },
+  { nom: 'Pain au chocolat', prix: '1,35 €', description: 'Farine d’épeautre blanche, beurre, chocolat' },
+  { nom: 'Gaufre', prix: '2,30 €', description: 'Farine d’épeautre blanche, beurre, sucre' },
+  { nom: 'Petit épeautre, au levain', prix: '4,00 à 8,00 €', description: '400 g ou 800 g, farine de petit épeautre' },
+];
+---
+<Base current="">
+  <section class="hero container">
+    <div class="hero__text">
+      <h1>Du pain cuit au feu de bois.</h1>
+      <p class="lead">Dirk Longin moud sa farine sur granit et cuit au four breton, à Loyers.</p>
+      <p class="actions"><a class="btn" href={u('produits/')}>Voir les produits</a><a class="link" href={`tel:${site.telephone.replace(/\s/g, '')}`}>Appeler la boulangerie</a></p>
+      <ul class="index" aria-label="Les cinq familles de la boulangerie">
+        {carte.map((c) => (
+          <li><a href={`${u('produits/')}#${c.id}`}><span class="index__name">{c.nom}</span><span class="row__lead" aria-hidden="true"></span><span class="num">{dès(c.min)}</span></a></li>
+        ))}
+      </ul>
+    </div>
+    <Photo id="06" class="hero__photo" eager sizes="(min-width: 60rem) 50vw, 100vw" position="50% 55%" alt="Four à bois en chauffe, voûte en briques" caption="Le four à bois en chauffe." />
+  </section>
+
+  <section class="band four" aria-labelledby="four-t">
+    <div class="container four__grid">
+      <Photo id="07" class="four__photo" sizes="(min-width: 60rem) 40vw, 100vw" caption="La voûte en briques du four." />
+      <div class="four__text">
+        <h2 id="four-t">Un four breton, trois à quatre heures de chauffe.</h2>
+        <p class="lead">Sa voûte ovale culmine à 75 cm. On le chauffe avec des fagots séchés deux ans au maximum. Le boulanger l’appelle un « four à arômes ».</p>
+        <p><a class="link link--light" href={u('a-propos/')}>Lire l’histoire de la boulangerie</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="farines container" aria-labelledby="farines-t">
+    <div class="farines__head">
+      <h2 id="farines-t">Quatre farines moulues sur place.</h2>
+      <p>Meules de granit depuis 1996, céréales bio certifiées, en collaboration avec le Moulin de Montigny et le Moulin de Ferrière.</p>
+    </div>
+    <ol class="farines__list">
+      {site.farines.map((f, i) => (<li><span class="farines__n num">{i + 1}</span><span class="farines__name">{f}</span></li>))}
+    </ol>
+  </section>
+
+  <section class="choix container" aria-labelledby="choix-t">
+    <h2 id="choix-t">Six pains et viennoiseries à retenir.</h2>
+    <Rows plats={choix} cols />
+    <p class="choix__more"><a class="link" href={u('produits/')}>Toute la carte, avec les prix</a></p>
+  </section>
+
+  <section class="boulanger container" aria-labelledby="boulanger-t">
+    <Photo id="03" class="boulanger__photo" sizes="(min-width: 60rem) 45vw, 100vw" position="50% 40%" alt="Mains façonnant des pâtons sur la pelle" caption="Façonnage des pâtons, avant l’enfournement." />
+    <div class="boulanger__text">
+      <h2 id="boulanger-t">Dirk Longin, boulanger-pâtissier de formation depuis 1980.</h2>
+      <dl class="frise">
+        <div><dt class="num">1980</dt><dd>Début de sa formation de boulanger-pâtissier, chocolatier et glacier.</dd></div>
+        <div><dt class="num">1990</dt><dd>Engagé à la boulangerie Monepi, à Loyers.</dd></div>
+        <div><dt class="num">1992</dt><dd>Reprise de l’atelier.</dd></div>
+        <div><dt class="num">1996</dt><dd>Meunerie à meules de granit.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="avis container" aria-labelledby="avis-t">
+    <h2 id="avis-t">Ce qu’en disent les clients.</h2>
+    <ul class="avis__list">
+      {site.avis.map((a) => (<li><blockquote><p>{a.texte}</p></blockquote><p class="avis__who">{a.auteur}, sur monepi.be</p></li>))}
+    </ul>
+  </section>
+
+  <section class="pratique container" aria-labelledby="pratique-t">
+    <div>
+      <h2 id="pratique-t">Horaires et adresse.</h2>
+      <address class="adresse">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p class="actions"><a class="btn" href={`tel:${site.telephone.replace(/\s/g, '')}`}>Appeler le {site.telephoneAffiche}</a></p>
+    </div>
+    <Horaires />
+  </section>
+</Base>

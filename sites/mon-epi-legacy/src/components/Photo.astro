@@ -1,0 +1,16 @@
+---
+import photos from '../photos.json';
+import { u } from '../lib/url';
+interface Props { id: string; alt?: string; sizes?: string; eager?: boolean; position?: string; ratio?: string; caption?: string; class?: string }
+const { id, alt, sizes = '(min-width: 60rem) 50vw, 100vw', eager = false, position = '50% 50%', ratio, caption, class: cls = '' } = Astro.props;
+const p = (photos as Record<string, any>)[id];
+const has1600 = p.sizes.includes(1600);
+const src = u(`photos/${p.base}-800.webp`);
+const srcset = has1600 ? `${u(`photos/${p.base}-800.webp`)} 800w, ${u(`photos/${p.base}-1600.webp`)} 1600w` : undefined;
+const w = has1600 ? 1600 : 800;
+const h = Math.round(p.h * (w / p.w));
+---
+<figure class:list={['photo', cls]} style={ratio ? `--ratio:${ratio}` : undefined}>
+  <img src={src} srcset={srcset} sizes={sizes} width={w} height={h} alt={(alt ?? p.sujet).replace(/'/g, '’')} loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : undefined} style={`object-position:${position}`} />
+  {caption && <figcaption>{caption.replace(/'/g, '’')}</figcaption>}
+</figure>

@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import photos from '../photos.json';
+const ids = Object.keys(photos);
+const wide = new Set(['05', '06', '21', '24', '01', '17']);
+const legende = (id: string) => (id === '22' ? 'Boulanger enfournant devant le four à bois' : (photos as any)[id].sujet);
+---
+<Base current="galerie/" title="Galerie" description="Le four, le façonnage, les pains et les viennoiseries de la boulangerie Monepi à Loyers, en vingt-quatre photographies.">
+  <section class="page-head container">
+    <h1>Galerie.</h1>
+    <p class="lead">Le four, les mains, les pains : vingt-quatre photographies de la boulangerie.</p>
+  </section>
+  <section class="galerie container" aria-label="Photographies">
+    <ul class="galerie__grid">
+      {ids.map((id, i) => (
+        <li class:list={{ 'is-wide': wide.has(id) }}>
+          <Photo id={id} eager={i < 2} sizes={wide.has(id) ? '(min-width: 60rem) 66vw, 100vw' : '(min-width: 60rem) 33vw, 50vw'} caption={legende(id)} />
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

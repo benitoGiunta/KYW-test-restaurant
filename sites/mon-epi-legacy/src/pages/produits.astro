@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Rows from '../components/Rows.astro';
+import carte from '../carte.json';
+import { site } from '../data/site';
+const photos: Record<string, { id: string; alt: string; pos: string }> = {
+  levain: { id: '17', alt: 'Pains rustiques sur claie en bois', pos: '50% 50%' },
+  levure: { id: '16', alt: 'Deux pains ronds à croûte farinée sur claie', pos: '50% 50%' },
+  viennoiseries: { id: '18', alt: 'Pains au chocolat', pos: '50% 50%' },
+  petite: { id: '13', alt: 'Baguette et ficelle sur fond noir', pos: '50% 50%' },
+};
+---
+<Base current="produits/" title="Nos produits" description="La carte de la boulangerie Monepi : pains au levain, pains à la levure, viennoiseries, petite boulangerie, pains sans gluten, avec les prix.">
+  <section class="page-head container">
+    <h1>Nos produits.</h1>
+    <p class="lead">Pains au levain, pains à la levure, viennoiseries, petite boulangerie et pains sans gluten, au poids ou à la pièce.</p>
+    <ul class="index index--inline" aria-label="Aller à une famille">
+      {carte.map((c) => (<li><a href={`#${c.id}`}>{c.nom}</a></li>))}
+    </ul>
+  </section>
+
+  {carte.map((c, i) => (
+    <section id={c.id} class:list={['famille', 'container', { 'famille--rev': i % 2 === 1 }]} aria-labelledby={`${c.id}-t`}>
+      <div class="famille__side">
+        <h2 id={`${c.id}-t`}>{c.nom}</h2>
+        {photos[c.id] && <Photo id={photos[c.id].id} alt={photos[c.id].alt} position={photos[c.id].pos} ratio="4 / 3" sizes="(min-width: 60rem) 35vw, 100vw" />}
+        {c.id === 'sans-gluten' && <p class="note">Deux variantes, à la châtaigne ou au quinoa.</p>}
+      </div>
+      <Rows plats={c.plats} />
+    </section>
+  ))}
+
+  <section class="container cta" aria-label="Commander">
+    <p class="lead">Pour réserver des produits, la boulangerie répond par téléphone.</p>
+    <p class="actions"><a class="btn" href={`tel:${site.telephone.replace(/\s/g, '')}`}>Appeler le {site.telephoneAffiche}</a></p>
+  </section>
+</Base>

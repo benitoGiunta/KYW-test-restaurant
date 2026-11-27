@@ -1,0 +1,14 @@
+---
+interface Props { plats: { nom: string; description?: string; prix: string }[]; cols?: boolean }
+const { plats, cols = false } = Astro.props;
+---
+<ul class:list={['rows', { 'rows--cols': cols }]}>
+  {plats.map((p) => (
+    <li class="row">
+      <span class="row__name">{p.nom}</span>
+      <span class="row__lead" aria-hidden="true"></span>
+      <span class="row__price num">{p.prix}</span>
+      {p.description && <span class="row__desc">{p.description}</span>}
+    </li>
+  ))}
+</ul>

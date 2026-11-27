@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base current="a-propos/" title="La boulangerie, le four, la farine" description="Dirk Longin, boulanger à Loyers : un four à bois breton, des farines moulues sur meules de granit, des céréales bio.">
+  <section class="page-head container">
+    <h1>Le boulanger, le four et la farine.</h1>
+    <p class="lead">Monepi est une boulangerie de village, à Loyers, qui fait son pain au levain et le cuit au feu de bois.</p>
+  </section>
+
+  <section class="story container" aria-labelledby="b-t">
+    <Photo id="20" class="story__photo" sizes="(min-width: 60rem) 45vw, 100vw" alt="Mains pétrissant une pâte sur le plan fariné" caption="Pétrissage sur le plan fariné." />
+    <div class="story__text">
+      <h2 id="b-t">Dirk Longin</h2>
+      <p>Boulanger-pâtissier, chocolatier et glacier de formation depuis 1980, Dirk Longin est engagé en 1990 à la boulangerie Monepi, à Loyers. Il reprend l’atelier en 1992.</p>
+      <p>« Prendre le temps de faire de l’excellent pain artisanal » reste la phrase de la maison.</p>
+    </div>
+  </section>
+
+  <section class="band four" aria-labelledby="f-t">
+    <div class="container four__grid four__grid--rev">
+      <div class="four__text">
+        <h2 id="f-t">Le four à bois breton</h2>
+        <p class="lead">Un four ovale à voûte de 75 cm, chauffé trois à quatre heures avec des fagots séchés deux ans au maximum.</p>
+        <p>Le boulanger l’appelle un «&nbsp;four à arômes&nbsp;».</p>
+      </div>
+      <Photo id="05" class="four__photo" sizes="(min-width: 60rem) 45vw, 100vw" caption="Les flammes dans le four." />
+    </div>
+  </section>
+
+  <section class="farines container" aria-labelledby="m-t">
+    <div class="farines__head">
+      <h2 id="m-t">La meunerie</h2>
+      <p>Depuis 1996, les farines sont moulues sur meules de granit, à partir de céréales bio certifiées. La boulangerie travaille avec le Moulin de Montigny et le Moulin de Ferrière.</p>
+    </div>
+    <ol class="farines__list">
+      {site.farines.map((f, i) => (<li><span class="farines__n num">{i + 1}</span><span class="farines__name">{f}</span></li>))}
+    </ol>
+  </section>
+
+  <section class="presse container" aria-labelledby="p-t">
+    <h2 id="p-t">Dans la presse</h2>
+    <ul class="presse__list">
+      {site.presse.map((p) => (
+        <li><a href={p.url} rel="noopener" target="_blank"><span class="presse__media">{p.media}</span><span class="presse__titre">{p.titre}</span>{p.date && <span class="presse__date num">{p.date}</span>}</a></li>
+      ))}
+    </ul>
+    <p class="presse__quote">«&nbsp;Rien ne vaut un pain artisanal cuit à l’authentique feu de bois.&nbsp;» <span class="presse__src">L’Avenir, 28 mars 2016</span></p>
+  </section>
+
+  <section class="band-light container cta" aria-label="Voir les produits">
+    <p class="actions"><a class="btn" href={u('produits/')}>Voir les produits</a><a class="link" href={u('contact/')}>Venir à la boutique</a></p>
+  </section>
+</Base>
