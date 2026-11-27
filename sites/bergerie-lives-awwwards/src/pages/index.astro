@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { restaurant, offres, services, journeePiscine } from '../data/site';
+const tel = `tel:${restaurant.telephone.replace(/\s/g, '')}`;
+const mur = ['verandaTables', 'tonnelle', 'planTable', 'bassin', 'sax', 'roses', 'cour'] as const;
+---
+<Base titre="Maison d’hôtes et domaine de mariage à Namur" description="Domaine de pierre à Lives-sur-Meuse, Namur : chambres d’hôtes, piscine chauffée, sauna, jacuzzi, mariages et séminaires. Le domaine se privatise un weekend.">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap hero__grille">
+      <p class="hero__meta">Maison d’hôtes, salle de mariage, séminaires<br />Lives-sur-Meuse, Namur</p>
+      <h1 id="h1" class="display hero__titre" data-split="lines" data-intro>La Bergerie <span class="hero__de">de Lives</span></h1>
+      <div class="enclos hero__photo" data-intro data-reveal="clip">
+        <Photo cle="facade" prioritaire widths={[640, 1000, 1600, 2000]} sizes="(min-width: 900px) 62vw, 100vw" />
+      </div>
+      <div class="hero__actions">
+        <p class="hero__phrase">Le temps d’un weekend, le domaine n’est qu’à vous.</p>
+        <p class="hero__cta"><a class="bouton" href={u('/reservation/')}>Visiter le domaine</a> <a class="bouton bouton--creux" href={tel}>{restaurant.telephoneAffiche}</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--pierre statement" aria-labelledby="st">
+    <div class="wrap statement__grille">
+      <h2 id="st" class="display statement__titre" data-split="lines">Un domaine clos, ouvert à un seul groupe à la fois.</h2>
+      <div class="statement__texte">
+        <p>Pierre, tuiles, grands arbres : la propriété se referme sur ceux qui l’ont choisie. Pour un mariage, elle est privatisée un weekend complet, sans autre groupe, sans autre bruit que le vôtre.</p>
+        <p><a class="lien" href={u('/le-domaine/')}>Parcourir le domaine</a></p>
+      </div>
+      <div class="statement__paire">
+        <div class="enclos statement__p1" data-reveal="clip"><Photo cle="sortieCeremonie" sizes="(min-width: 900px) 40vw, 100vw" /></div>
+        <div class="enclos statement__p2" data-reveal="clip"><Photo cle="fleursTable" sizes="(min-width: 900px) 24vw, 70vw" /></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec index" aria-labelledby="ix">
+    <div class="wrap">
+      <h2 id="ix" class="titre-section" data-split="lines">Trois façons d’entrer</h2>
+      <ul class="index__liste">
+        {offres.map((o) => (
+          <li class="index__ligne">
+            <a href={u(`/le-domaine/#${o.id}`)} class="index__lien">
+              <span class="index__nom display">{o.nom}</span>
+              <span class="index__phrase">{o.accroche}</span>
+              <span class="index__vignette"><Photo cle={o.photo as any} widths={[320, 480]} sizes="200px" decorative /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec mur" aria-labelledby="mr">
+    <div class="wrap"><h2 id="mr" class="titre-section">Dans l’enclos</h2></div>
+    <ul class="mur__bande" tabindex="0" aria-label="Galerie du domaine, défilement horizontal">
+      {mur.map((c) => <li class="mur__img"><Photo cle={c} widths={[480, 800]} sizes="(min-width: 900px) 30vw, 78vw" /></li>)}
+    </ul>
+  </section>
+
+  <section class="sec sec--pierre donnees" aria-labelledby="dn">
+    <div class="wrap donnees__grille">
+      <div>
+        <h2 id="dn" class="titre-section">Sur place</h2>
+        <ul class="donnees__liste">
+          {services.map((s) => <li><strong>{s.nom}</strong><span>{s.detail}</span></li>)}
+        </ul>
+      </div>
+      <div class="donnees__prix">
+        <p class="donnees__chiffre display"><span class="nb">{journeePiscine.prix}</span> €</p>
+        <p>{journeePiscine.unite}. {journeePiscine.note}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="plein" aria-label="La piscine">
+    <Photo cle="piscine" widths={[800, 1400, 2000]} sizes="100vw" />
+  </section>
+
+  <section class="sec final" aria-labelledby="fn">
+    <div class="wrap final__grille">
+      <h2 id="fn" class="display final__titre" data-split="lines">Poussez la barrière.</h2>
+      <p class="final__texte">Une demi-heure suffit pour parcourir le jardin, la véranda et les chambres.</p>
+      <p><a class="bouton bouton--grand" href={u('/reservation/')}>Organiser une visite</a></p>
+    </div>
+  </section>
+</Base>

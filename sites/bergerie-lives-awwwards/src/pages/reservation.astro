@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { restaurant, planUrl } from '../data/site';
+const tel = `tel:${restaurant.telephone.replace(/\s/g, '')}`;
+---
+<Base titre="Visiter et réserver" description="Réservez une chambre ou organisez la visite du domaine de la Bergerie de Lives : téléphone, e-mail, adresse à Lives-sur-Meuse et plan d’accès.">
+  <section class="sec page-tete">
+    <div class="wrap">
+      <h1 class="display" data-split="lines">Visiter le domaine</h1>
+      <p class="page-tete__lede">Une visite d’environ 30 minutes précède un mariage. Pour une chambre ou un séminaire, le plus simple est d’écrire ou d’appeler.</p>
+    </div>
+  </section>
+  <section class="sec resa" aria-label="Contact">
+    <div class="wrap resa__grille">
+      <div class="resa__actions">
+        <a class="bouton bouton--grand" href={tel}>Appeler le {restaurant.telephoneAffiche}</a>
+        <a class="bouton bouton--creux bouton--grand" href={`mailto:${restaurant.email}?subject=${encodeURIComponent('Visite de la Bergerie de Lives')}`}>Écrire un e-mail</a>
+        <a class="bouton bouton--creux bouton--grand" href={restaurant.reservationUrl} rel="noopener" target="_blank">Réserver une chambre (site officiel)</a>
+      </div>
+      <dl class="resa__infos">
+        <dt>Adresse</dt>
+        <dd>{restaurant.adresse.rue}<br />{restaurant.adresse.cp} {restaurant.adresse.localite}, {restaurant.adresse.commune}<br /><a class="lien" href={planUrl} rel="noopener" target="_blank">Ouvrir le plan</a></dd>
+        <dt>Téléphone</dt><dd><a class="lien" href={tel}>{restaurant.telephoneAffiche}</a></dd>
+        <dt>E-mail</dt><dd><a class="lien" href={`mailto:${restaurant.email}`}>{restaurant.email}</a></dd>
+        <dt>Accueil</dt><dd>Les horaires d’accueil ne sont pas publiés : le plus simple est de téléphoner.</dd>
+      </dl>
+      <div class="enclos resa__photo"><Photo cle="cour" sizes="(min-width: 900px) 34vw, 100vw" /></div>
+    </div>
+  </section>
+  <section class="sec sec--pierre resa-notes" aria-labelledby="nt">
+    <div class="wrap resa-notes__grille">
+      <h2 id="nt" class="titre-section">Avant de venir</h2>
+      <p>Le domaine se situe à Lives-sur-Meuse, dans la commune de Namur, à quelques minutes de la citadelle, des musées Rops et Trema et du marché du samedi.</p>
+      <p>Les mariages se privatisent un weekend complet ; la brochure et le calendrier des disponibilités sont publiés sur le site officiel du domaine.</p>
+      <p>Journée piscine à 20 € par personne, au même numéro de téléphone.</p>
+    </div>
+  </section>
+</Base>

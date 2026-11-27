@@ -1,0 +1,26 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { restaurant, planUrl } from '../data/site';
+---
+<footer class="pied" data-layer="content">
+  <div class="enclos pied__cadre">
+    <p class="pied__mot">Le domaine se ferme derrière vous.</p>
+    <div class="pied__cols">
+      <address>
+        <strong>La Bergerie de Lives</strong><br />
+        {restaurant.adresse.rue}<br />{restaurant.adresse.cp} {restaurant.adresse.localite}, {restaurant.adresse.commune}<br />
+        <a href={planUrl} rel="noopener" target="_blank">Voir le plan</a>
+      </address>
+      <p>
+        <a href={`tel:${restaurant.telephone.replace(/\s/g, '')}`}>{restaurant.telephoneAffiche}</a><br />
+        <a href={`mailto:${restaurant.email}`}>{restaurant.email}</a>
+      </p>
+      <nav aria-label="Pied de page">
+        <a href={u('/le-domaine/')}>Le domaine</a><br /><a href={u('/histoire/')}>Histoire</a><br /><a href={u('/reservation/')}>Visiter le domaine</a>
+      </nav>
+    </div>
+    <p class="pied__credit">Photos : La Bergerie de Lives. Site officiel actuel : <a href={restaurant.siteActuel} rel="noopener" target="_blank">bergerielives.be</a></p>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

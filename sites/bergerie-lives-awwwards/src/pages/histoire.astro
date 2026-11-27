@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { histoire, presse } from '../data/site';
+---
+<Base titre="Histoire" description="De l’ancien restaurant étoilé aux chambres d’hôtes et aux mariages : l’histoire de la Bergerie de Lives, domaine de pierre à Lives-sur-Meuse, Namur.">
+  <section class="sec page-tete">
+    <div class="wrap">
+      <h1 class="display" data-split="lines">Histoire</h1>
+      <p class="page-tete__lede">Une bergerie devenue domaine.</p>
+    </div>
+  </section>
+  <section class="sec histoire" aria-label="Récit">
+    <div class="wrap histoire__grille">
+      <div class="enclos histoire__photo"><Photo cle="tonnelle" sizes="(min-width: 900px) 40vw, 100vw" /></div>
+      <div class="histoire__texte">
+        {histoire.map((p) => <p>{p}</p>)}
+        <h2 class="titre-section">Dans la presse</h2>
+        <ul class="liste-trait">{presse.map((p) => <li><strong>{p.media}</strong>, {p.date} : {p.titre}</li>)}</ul>
+      </div>
+      <div class="enclos histoire__photo2"><Photo cle="bassin" sizes="(min-width: 900px) 26vw, 70vw" /></div>
+    </div>
+  </section>
+  <section class="sec sec--pierre final">
+    <div class="wrap final__grille">
+      <p class="display final__titre">Le reste se visite.</p>
+      <p><a class="bouton bouton--grand" href={u('/reservation/')}>Organiser une visite</a></p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { offres, services, activites, journeePiscine, restaurant } from '../data/site';
+const extras: Record<string, string[]> = { chambres: ['chambre'], mariages: ['verandaTables', 'tonneau', 'planTable'], seminaires: ['verandaCocktail', 'jardinBancs'] };
+const tel = `tel:${restaurant.telephone.replace(/\s/g, '')}`;
+---
+<Base titre="Le domaine" description="Chambres d’hôtes, mariages et séminaires à la Bergerie de Lives : piscine chauffée, sauna, jacuzzi, véranda vitrée et jardin, à Lives-sur-Meuse près de Namur.">
+  <section class="sec page-tete">
+    <div class="wrap">
+      <h1 class="display" data-split="lines">Le domaine</h1>
+      <p class="page-tete__lede">Pas de carte ici : la maison reçoit. Chambres, mariages, séminaires, sur une même propriété.</p>
+    </div>
+  </section>
+
+  {offres.map((o, i) => (
+    <section id={o.id} class={`sec offre ${i % 2 ? 'offre--inverse sec--pierre' : ''}`} aria-labelledby={`t-${o.id}`}>
+      <div class="wrap offre__grille">
+        <div class="offre__texte">
+          <h2 id={`t-${o.id}`} class="display offre__titre">{o.nom}</h2>
+          <p class="offre__accroche">{o.accroche}</p>
+          <p>{o.texte}</p>
+          <ul class="liste-trait">{o.liste.map((l) => <li>{l}</li>)}</ul>
+        </div>
+        <div class="offre__medias">
+          <div class="enclos offre__m1"><Photo cle={o.photo as any} sizes="(min-width: 900px) 46vw, 100vw" /></div>
+          {extras[o.id].map((c, k) => <div class={`enclos offre__m${k + 2}`}><Photo cle={c as any} widths={[480, 800]} sizes="(min-width: 900px) 24vw, 60vw" /></div>)}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="sec donnees" aria-labelledby="sv">
+    <div class="wrap donnees__grille">
+      <div>
+        <h2 id="sv" class="titre-section">Pour tous les hôtes</h2>
+        <ul class="donnees__liste">{services.map((s) => <li><strong>{s.nom}</strong><span>{s.detail}</span></li>)}</ul>
+      </div>
+      <div class="donnees__prix">
+        <p class="donnees__chiffre display"><span class="nb">{journeePiscine.prix}</span> €</p>
+        <p>{journeePiscine.unite}. {journeePiscine.note}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--pierre alentours" aria-labelledby="al">
+    <div class="wrap alentours__grille">
+      <h2 id="al" class="display alentours__titre">À proximité</h2>
+      <ul class="liste-trait">{activites.map((a) => <li>{a}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="sec final">
+    <div class="wrap final__grille">
+      <p class="display final__titre">Venez voir.</p>
+      <p><a class="bouton bouton--grand" href={u('/reservation/')}>Organiser une visite</a> <a class="bouton bouton--creux bouton--grand" href={tel}>{restaurant.telephoneAffiche}</a></p>
+    </div>
+  </section>
+</Base>

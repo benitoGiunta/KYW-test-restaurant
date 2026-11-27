@@ -1,0 +1,14 @@
+---
+import { u } from '../lib/url';
+import { restaurant } from '../data/site';
+const chemin = Astro.url.pathname.replace(/\/+$/, '');
+const liens = [{ h: '/le-domaine/', t: 'Le domaine' }, { h: '/histoire/', t: 'Histoire' }, { h: '/reservation/', t: 'Visiter' }];
+const actif = (h: string) => chemin.endsWith(h.replace(/\/$/, ''));
+---
+<header class="entete" data-layer="content">
+  <a class="entete__nom" href={u('/')} aria-label="La Bergerie de Lives, accueil">La Bergerie <span>de Lives</span></a>
+  <nav class="entete__nav" aria-label="Navigation principale">
+    {liens.map((l) => <a class="lien-nav" href={u(l.h)} aria-current={actif(l.h) ? 'page' : undefined}>{l.t}</a>)}
+  </nav>
+  <a class="bouton bouton--petit entete__tel" href={`tel:${restaurant.telephone.replace(/\s/g, '')}`}>Appeler</a>
+</header>
