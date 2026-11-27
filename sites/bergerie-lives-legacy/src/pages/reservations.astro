@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { resto, photos, chambres } from '../data/site';
+---
+<Base title="Réserver · La Bergerie de Lives, Namur" description="Réserver une chambre, programmer une visite du domaine pour un mariage ou réserver la journée piscine à La Bergerie de Lives." page="reservations">
+  <section class="sec pagehead" aria-labelledby="h-hero">
+    <div class="container grid12 split">
+      <div class="split__txt split__txt--first">
+        <h1 id="h-hero">Réserver à la Bergerie</h1>
+        <p class="lead">Une chambre, une visite du domaine ou la journée piscine.</p>
+      </div>
+      <Photo p={photos.salon} eager sizes="(min-width: 60rem) 40vw, 100vw" class="split__ph split__ph--last" />
+    </div>
+  </section>
+
+  <section class="sec sec--tight" aria-labelledby="h-choix">
+    <div class="container">
+      <h2 id="h-choix" class="visually-hidden">Les trois réservations</h2>
+      <ul class="index index--table">
+        <li class="index__row" id="chambre">
+          <h3 class="index__name">Une chambre</h3>
+          <p class="index__text">Nos chambres donnent accès à la piscine, au sauna et au jacuzzi.</p>
+          <p class="index__links"><a class="link" href={resto.reserverWix} rel="noopener">Réserver sur le site d’origine</a></p>
+        </li>
+        <li class="index__row" id="visite">
+          <h3 class="index__name">Une visite pour un mariage</h3>
+          <p class="index__text">Visite et informations événements, 30 minutes.</p>
+          <p class="index__links"><a class="link" href={resto.reserverWix} rel="noopener">Réserver une visite</a></p>
+        </li>
+        <li class="index__row" id="piscine">
+          <h3 class="index__name">{chambres.piscineJour.titre}</h3>
+          <p class="index__text"><span class="num">{chambres.piscineJour.prix}</span> {chambres.piscineJour.unite}. {chambres.piscineJour.info}.</p>
+          <p class="index__links"><a class="link" href={resto.telHref}>{resto.tel}</a></p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec band" id="contact" aria-labelledby="h-contact">
+    <div class="container grid12">
+      <h2 id="h-contact">Nous écrire</h2>
+      <form class="form" data-endpoint="" method="post" action="" novalidate>
+        <div class="field"><label for="f-nom">Nom</label><input id="f-nom" name="nom" type="text" autocomplete="name" required /></div>
+        <div class="field"><label for="f-mail">Courriel</label><input id="f-mail" name="courriel" type="email" autocomplete="email" required /></div>
+        <div class="field field--wide"><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="5" required></textarea></div>
+        <div class="field field--wide"><button class="btn btn--primary" type="submit">Envoyer</button>
+          <p class="form__note">Le formulaire n’envoie rien dans cette maquette : écrivez à <a href={`mailto:${resto.email}`}>{resto.email}</a>.</p></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-venir">
+    <div class="container grid12">
+      <h2 id="h-venir">Nous trouver</h2>
+      <dl class="facts">
+        <div><dt>Adresse</dt><dd>{resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.commune}</dd></div>
+        <div><dt>Téléphone</dt><dd><a href={resto.telHref}>{resto.tel}</a></dd></div>
+        <div><dt>Courriel</dt><dd><a href={`mailto:${resto.email}`}>{resto.email}</a></dd></div>
+        <div><dt>Accueil des hôtes</dt><dd><span class="fill" data-placeholder="true">horaires à renseigner</span></dd></div>
+      </dl>
+    </div>
+  </section>
+</Base>

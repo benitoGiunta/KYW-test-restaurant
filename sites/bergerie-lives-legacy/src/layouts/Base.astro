@@ -1,0 +1,50 @@
+---
+import '../styles/page.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import KywFooter from '@kyw/footer';
+import { resto } from '../data/site';
+interface Props { title: string; description: string; page: string }
+const { title, description, page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ldJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'LodgingBusiness',
+  name: resto.nom,
+  url: new URL(base, Astro.site).href,
+  telephone: '+32493861029',
+  email: resto.email,
+  address: { '@type': 'PostalAddress', streetAddress: resto.adresse.rue, postalCode: resto.adresse.cp, addressLocality: 'Lives-sur-Meuse (Namur)', addressCountry: 'BE' },
+});
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b2a1a" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet" />
+    {page !== '404' && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content={resto.nom} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <script type="application/ld+json" set:html={ldJson} />
+  </head>
+  <body data-page={page}>
+    <Nav page={page} />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer />
+    <KywFooter base={import.meta.env.BASE_URL} />
+  </body>
+</html>

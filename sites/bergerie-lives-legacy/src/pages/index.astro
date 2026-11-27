@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { resto, photos, apropos, chambres, services, activites } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const rail = [photos.piscine, photos.chaises, photos.couple, photos.tableFleurs, photos.jardin, photos.tonneau, photos.buffet, photos.saxo];
+---
+<Base title="La Bergerie de Lives · Maison d’hôtes, salle de mariage, séminaire à Namur" description="Chambres avec piscine, sauna et jacuzzi, domaine privatisable pour votre mariage et salles de séminaire, à Lives-sur-Meuse près de Namur." page="accueil">
+  <!-- Hero : Stage, la façade plein cadre, panneau papier en bas à droite -->
+  <section class="hero" aria-labelledby="h-hero">
+    <Photo p={photos.facade} eager sizes="100vw" pos="50% 40%" class="hero__ph" ratio="auto" />
+    <div class="hero__panel">
+      <h1 id="h-hero">{resto.nom}</h1>
+      <p class="lead">{resto.baseline} à Namur.</p>
+      <div class="actions">
+        <a class="btn btn--primary" href={`${base}reservations/`}>Réserver</a>
+        <a class="btn btn--ghost" href={resto.telHref}>Appeler le 0493 86 10 29</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- À propos : une phrase de Prata en statement, le texte d'origine à droite -->
+  <section class="sec" id="apropos" aria-labelledby="h-apropos">
+    <div class="container grid12">
+      <h2 id="h-apropos" class="statement">{apropos.phrase}</h2>
+      <p class="aside-text">{apropos.texte}</p>
+    </div>
+  </section>
+
+  <!-- Chambres : photo et texte, la journée piscine en ligne à filet vert -->
+  <section class="sec sec--tight" id="chambres" aria-labelledby="h-chambres">
+    <div class="container grid12 split">
+      <Photo p={photos.chambre} sizes="(min-width: 60rem) 55vw, 100vw" class="split__ph" />
+      <div class="split__txt">
+        <h2 id="h-chambres">Nos chambres</h2>
+        <p class="lead">{chambres.texte}</p>
+        <div class="deal">
+          <p class="deal__name">{chambres.piscineJour.titre}</p>
+          <p class="deal__price"><span class="num">{chambres.piscineJour.prix}</span> {chambres.piscineJour.unite}</p>
+          <p class="deal__info">{chambres.piscineJour.info}</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn--primary" href={`${base}reservations/`}>Réserver une chambre</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services : Index à filets, nom en Prata, texte à droite, sans photo ni icône -->
+  <section class="sec" id="services" aria-labelledby="h-services">
+    <div class="container">
+      <h2 id="h-services">Nos services</h2>
+      <ul class="index">
+        {services.map((s) => (
+          <li class="index__row">
+            <h3 class="index__name">{s.nom}</h3>
+            <p class="index__text">{s.texte}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Mariage : bande papier-2, statement et un seul bouton -->
+  <section class="sec band" aria-labelledby="h-mariage">
+    <div class="container grid12">
+      <h2 id="h-mariage" class="statement">Votre mariage, tout un weekend au domaine.</h2>
+      <div class="aside-text">
+        <p>Nous privatisons le domaine le temps d’un weekend pour vous, pour l’un des plus beaux moments de votre vie.</p>
+        <div class="actions"><a class="btn btn--primary" href={`${base}mariage-et-location/`}>Le mariage au domaine</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Activités : table à filets, lien externe à droite (liens d'origine conservés) -->
+  <section class="sec" id="activites" aria-labelledby="h-activites">
+    <div class="container">
+      <h2 id="h-activites">Autour de Namur</h2>
+      <ul class="index index--table">
+        {activites.map((a) => (
+          <li class="index__row">
+            <h3 class="index__name">{a.nom}</h3>
+            <p class="index__text">{a.texte}</p>
+            <p class="index__links">
+              {a.lien && <a class="link" href={a.lien.href} rel="noopener">{a.lien.label}</a>}
+              {a.lien2?.map((l) => <a class="link" href={l.href} rel="noopener">{l.label}</a>)}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Galerie : un rail de photographies du client à défilement horizontal -->
+  <section class="sec sec--tight" id="galerie" aria-labelledby="h-galerie">
+    <div class="container"><h2 id="h-galerie">Galerie</h2></div>
+    <ul class="rail" tabindex="0" aria-label="Photographies du domaine, défilement horizontal">
+      {rail.map((p) => (
+        <li class="rail__item">
+          <Photo p={p} sizes="(min-width: 60rem) 40vw, 80vw" ratio="4 / 3" caption={p === photos.piscine ? 'Piscine extérieure, chauffée d’avril à octobre.' : undefined} />
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- Contact : adresse, téléphone, courriel, horaires d'accueil à renseigner, puis la réservation -->
+  <section class="sec" id="contact" aria-labelledby="h-contact">
+    <div class="container grid12">
+      <h2 id="h-contact">Nous écrire, nous appeler</h2>
+      <dl class="facts">
+        <div><dt>Adresse</dt><dd>{resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.commune}</dd></div>
+        <div><dt>Téléphone</dt><dd><a href={resto.telHref}>{resto.tel}</a></dd></div>
+        <div><dt>Courriel</dt><dd><a href={`mailto:${resto.email}`}>{resto.email}</a></dd></div>
+        <div><dt>Accueil des hôtes</dt><dd><span class="fill" data-placeholder="true">horaires à renseigner</span></dd></div>
+      </dl>
+      <div class="actions actions--end"><a class="btn btn--primary" href={`${base}reservations/`}>Réserver</a></div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,37 @@
+---
+// Pied « index columns » : trois colonnes (le site, contact, le domaine), puis une ligne de crédits. Le pied KYW suit, dans Base.astro.
+import { resto, nav } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<footer class="foot">
+  <div class="container foot__grid">
+    <div class="foot__brand">
+      <p class="foot__name">{resto.nom}</p>
+      <p>{resto.baseline}.</p>
+    </div>
+    <nav aria-label="Pied de page">
+      <h2 class="foot__h">Le site</h2>
+      <ul>
+        <li><a href={base}>Accueil</a></li>
+        {nav.map((n) => <li><a href={`${base}${n.href}`}>{n.label}</a></li>)}
+        <li><a href={`${base}reservations/`}>Réserver</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2 class="foot__h">Nous trouver</h2>
+      <address>
+        {resto.adresse.rue}<br />{resto.adresse.cp} {resto.adresse.commune}
+      </address>
+      <p><a href={resto.telHref}>{resto.tel}</a></p>
+      <p><a href={`mailto:${resto.email}`}>{resto.email}</a></p>
+    </div>
+    <div>
+      <h2 class="foot__h">Sur place</h2>
+      <p>Piscine extérieure chauffée d’avril à octobre, jacuzzi et sauna extérieur toute l’année.</p>
+      <p><a href={resto.siteActuel} rel="noopener">Site d’origine, bergerielives.be</a></p>
+    </div>
+  </div>
+  <div class="container foot__credits" data-credits>
+    <p>Photographies : La Bergerie de Lives.</p>
+  </div>
+</footer>

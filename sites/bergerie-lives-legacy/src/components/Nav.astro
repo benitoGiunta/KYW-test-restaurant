@@ -1,0 +1,22 @@
+---
+// Masthead : barre pleine largeur sur fond papier, nom en Prata à gauche, liens, bouton Réserver à droite. Statique (phase 1) ; menu tactile en phase 2.
+import { resto, nav } from '../data/site';
+interface Props { page: string }
+const { page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const lien = (n: (typeof nav)[number]) => (n.href.startsWith('#') ? `${base}${n.href}` : `${base}${n.href}`);
+---
+<header class="masthead">
+  <a class="skip" href="#contenu">Aller au contenu</a>
+  <div class="container masthead__in">
+    <a class="masthead__name" href={base} aria-label={`${resto.nom}, accueil`}>{resto.nom}</a>
+    <nav class="masthead__nav" aria-label="Principale">
+      <ul>
+        {nav.map((n) => (
+          <li><a href={lien(n)} aria-current={(n.href === 'mariage-et-location/' && page === 'mariage') ? 'page' : undefined}>{n.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a class="btn btn--primary masthead__cta" href={`${base}reservations/`} aria-current={page === 'reservations' ? 'page' : undefined}>Réserver</a>
+  </div>
+</header>
