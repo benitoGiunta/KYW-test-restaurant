@@ -1,5 +1,5 @@
 // Motion « Velours » : tout se dévoile comme un rideau. Loader = rideau baissé qui se lève ; transition de page = même
-// rideau ; chaque chapitre = pan vert sapin levé une fois ; chiffre cuivre qui compte ; citation dont les mots s'allument
+// rideau ; chaque chapitre = pan vert sapin levé une fois ; chiffre rose poudré qui compte ; citation dont les mots s'allument
 // au scrub ; onglets à barre (rotation 6 s, pause au survol, désactivée en reduced motion). Une horloge : GSAP.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -27,7 +27,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [heroIntro(intro), rideaux(), compteurs(), citation(), onglets()];
+    const cleanups = [heroIntro(intro), signature(), rideaux(), compteurs(), citation(), onglets()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -100,7 +100,7 @@ function citation() {
   return () => {};
 }
 
-/** Onglets à barre : la barre cuivre de l'onglet actif se remplit en 6 s puis passe au suivant ; pause au survol ou au
+/** Onglets à barre : la barre rose poudré de l'onglet actif se remplit en 6 s puis passe au suivant ; pause au survol ou au
  *  focus ; clic ou flèches pour choisir. Reduced motion : pas de rotation, la barre de l'onglet actif est pleine (CSS). */
 function onglets() {
   const root = document.querySelector<HTMLElement>('[data-onglets]');
@@ -148,4 +148,20 @@ function onglets() {
   lance();
   if (!st.isActive) tween?.pause();
   return () => { tween?.kill(); st.kill(); handlers.forEach(([t, ev, fn]) => t.removeEventListener(ev, fn)); };
+}
+
+/** Signature : le rideau se lève sur la journée. Le filet sous l'en-tête et le remplissage du monogramme suivent la lecture de la
+ *  page (--progres, 0 à 1, sur l'en-tête). La page qui ne défile pas reste à 0. Reduced motion : aucune écriture, le CSS masque
+ *  filet et remplissage. */
+function signature() {
+  const header = document.querySelector<HTMLElement>('.header');
+  if (!header || prefersReducedMotion()) return () => {};
+  header.style.setProperty('--progres', '0');
+  const st = ScrollTrigger.create({
+    trigger: document.documentElement,
+    start: 'top top',
+    end: 'max',
+    onUpdate: (self) => header.style.setProperty('--progres', self.progress.toFixed(3)),
+  });
+  return () => { st.kill(); header.style.removeProperty('--progres'); };
 }
