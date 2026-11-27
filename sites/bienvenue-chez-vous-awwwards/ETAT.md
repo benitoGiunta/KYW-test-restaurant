@@ -41,3 +41,9 @@
 ## Phase 3 (27/11/2026)
 - Corrigé : cibles tactiles `.lien` (24 px), meta description histoire (157). Build passe, shoots ciblés home et 404.html propres.
 - Reste : jury (critique neuf), OG recomposée, revue à l'œil des contrastes, capture histoire/reservation. Voir RAPPORT.md.
+
+## Publication (2026-11-27, agent publication, phase test)
+- Fait : build OK des 3 variantes (scripts/build-site.mjs), pnpm index, commit et push sur claude/laughing-wozniak-vxc1fo (3d3affd5 et fa2c83a7).
+- Vérifié en local (serve.mjs port 4620) : kyw-footer présent sur chaque page, index liste les 3 variantes.
+- Non fait : aucun push sur publication (réservé à scripts/publier.sh, session de correction).
+- Piège : rebase conflictuel sur dist/index.html (généré) ; résolu en régénérant par pnpm index.
