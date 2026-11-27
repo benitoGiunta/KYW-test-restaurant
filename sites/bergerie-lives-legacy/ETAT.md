@@ -18,3 +18,7 @@
 - `.btn` (display inline-flex) bat une règle `.masthead__cta--menu` de même spécificité : préfixer `.masthead`.
 - Un `[popover]` reset en `display: block` pour le bureau reste visible fermé sur mobile : ajouter `:not(:popover-open) { display: none }`.
 - Slot `.fill` horaires d'accueil toujours à renseigner (un par page).
+
+## Phase 3 (QA, 2026-11-27)
+- Corrigé : favicon (404 console), titre accueil raccourci, og:image + twitter:card, cible tactile du nom du masthead. Vérifié par mesure ciblée à 375 px : 0 erreur, 0 petite cible, pas de débordement. Build passe, noindex et pied KYW sur 4 pages.
+- Non fait (hors QA) : sloplint --render complet, finish review, log Hallmark, checklist 72 cases. RAPPORT.md écrit.
