@@ -4,10 +4,11 @@ import { u } from '../lib/url';
 interface Props { id: string; alt?: string; sizes?: string; eager?: boolean; position?: string; ratio?: string; caption?: string; class?: string }
 const { id, alt, sizes = '(min-width: 60rem) 50vw, 100vw', eager = false, position = '50% 50%', ratio, caption, class: cls = '' } = Astro.props;
 const p = (photos as Record<string, any>)[id];
-const has1600 = p.sizes.includes(1600);
+const big = [...p.sizes].sort((a: number, b: number) => b - a)[0] as number;
+const has1600 = big > 800;
 const src = u(`photos/${p.base}-800.webp`);
-const srcset = has1600 ? `${u(`photos/${p.base}-800.webp`)} 800w, ${u(`photos/${p.base}-1600.webp`)} 1600w` : undefined;
-const w = has1600 ? 1600 : 800;
+const srcset = has1600 ? `${u(`photos/${p.base}-800.webp`)} 800w, ${u(`photos/${p.base}-${big}.webp`)} ${big}w` : undefined;
+const w = big;
 const h = Math.round(p.h * (w / p.w));
 const cap = caption ? caption.replace(/'/g, '\u2019') : '';
 ---

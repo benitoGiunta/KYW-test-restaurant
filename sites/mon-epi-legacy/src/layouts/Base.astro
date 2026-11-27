@@ -8,6 +8,16 @@ interface Props { title?: string; description?: string; current?: string }
 const { title, description = site.description, current = '' } = Astro.props;
 const fullTitle = title ? `${title} | ${site.nom}` : `${site.enseigne} | Pain au levain cuit au feu de bois à Loyers`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://kyw-test-restaurant.vercel.app').href;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Bakery',
+  name: site.enseigne,
+  url: site.url,
+  telephone: site.telephone,
+  address: { '@type': 'PostalAddress', streetAddress: `${site.adresse.rue} ${site.adresse.numero}`, postalCode: site.adresse.cp, addressLocality: 'Loyers', addressRegion: 'Namur', addressCountry: 'BE' },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon },
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: 'Friday', opens: '09:00', closes: '18:00' }],
+};
 ---
 <!doctype html>
 <html lang="fr">
@@ -18,13 +28,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://kyw-test-re
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href={u('favicon.svg')} />
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_BE" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@600&display=optional" rel="stylesheet" />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
   <style is:global>@import "../styles/page.css";</style>
   </head>
   <body>
