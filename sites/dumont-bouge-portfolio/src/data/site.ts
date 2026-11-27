@@ -166,8 +166,8 @@ export const moments: Moment[] = [
     accroche: 'La maison ferme à 18h. Pour un gâteau sur mesure, commandez-le au 081 22 96 02.',
     accrochePlaceholder: false, placeholder: false,
     lignes: [
-      { nom: 'Bouge, chaussée de Louvain 343', detail: 'tous les jours', prix: '7h–18h', placeholder: false },
-      { nom: 'Namur, rue de Marchovelette 9', detail: 'du lundi au samedi', prix: '7h–17h', placeholder: false },
+      { nom: 'Bouge, chaussée de Louvain 343', detail: 'tous les jours', prix: '7h à 18h', placeholder: false },
+      { nom: 'Namur, rue de Marchovelette 9', detail: 'du lundi au samedi', prix: '7h à 17h', placeholder: false },
       { nom: 'Paiement', detail: 'un paiement par table', prix: null, placeholder: false },
     ],
   },

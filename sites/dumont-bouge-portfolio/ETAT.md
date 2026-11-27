@@ -1,4 +1,4 @@
-# ETAT : dumont-bouge-portfolio, phase 2 sur 3 (motion, signature, finitions) : terminée
+# ETAT : dumont-bouge-portfolio, phase 3 sur 3 (QA) : terminée
 
 ## Fait en phase 2
 - **Signature : l'astre du hero** (>= 1200 px) : photo de la tarte en disque, orbite pointillée, soleil rose posé à l'heure réelle (rotation pilotée par `--heure`, donc il suit le moment affiché). Entrée dans la timeline d'intro (`--astre-in` 0 vers 1), dérive du disque vers le pointeur (`quickTo`, hover + >= 1200 px seulement), halo qui respire. Reduced motion : état final statique (vérifié). Code : `astre()` dans `src/motion/journee.ts`, bloc « Astre du hero » en fin de `base.css`, markup `[data-astre]` dans `index.astro`.
@@ -16,3 +16,7 @@
 - Le test de clic d'en-tête doit attendre `html.is-loaded` (loader ~5,5 s).
 - Mobile : `isMobile` Playwright agrandit le viewport si un élément déborde (scrollWidth 400) ; mesurer aussi en contexte non mobile pour trouver le fautif.
 - Hero : le badge d'en-tête est masqué en mobile sous 767 px dans `.badge--compact` seulement si la place manque ; ne pas remettre un badge dans `.hero__haut`.
+
+## Phase 3 (QA)
+- Fait : lecture QA-build.md et planches, 404 recapturé (0 violation), tirets des horaires remplacés, rebuild OK, RAPPORT.md écrit.
+- Reste : session mère (index, UTILISATION.md, publication). Aucun défaut bloquant.
