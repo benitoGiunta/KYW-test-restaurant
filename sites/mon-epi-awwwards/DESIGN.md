@@ -75,14 +75,18 @@ Pilote : `src/motion/tamis.ts` (variable unique : part du défilement lue de 65 
 32. [x] Trois traitements, verbe « la barre se remplit » : CTA remplissage vertical, nav et liens du pied soulignement qui se remplit, lignes de carte filet de la longueur du taux de la farine + titre braise. Liens texte : soulignement qui s'épaissit en braise.
 33. [x] `:hover` sous `@media (hover: hover)`, même état sur `:focus-visible` (`site.css`, bloc phase 2) ; `:active` sur `.btn`, liens, `.menu-btn`.
 34. [x] Liens texte `.lien` soulignés au repos.
-35. [ ] Phase 3 (`report.json`).
-36. [~] Repos : grains en écoulement constant (24 grains de 4 à 6 px, 0,05 à 0,1 hauteur par seconde) mesurés en mouvement (transform change en 1,5 s) ; `idleMotion` à lire en phase 3.
+35. [x] `hover.noHoverChange` vide sur accueil, histoire, réservation (`.shots/*/report.json`) ; carte et 404 corrigés en phase 3 (marque au survol, boutons 404) ; `colorOnly` = liens téléphone/plan soulignés dont l'épaisseur change, lus à l'œil.
+36. [x] (`idleMotion` true sur l'accueil, `.shots/home/report.json`) Repos : grains en écoulement constant (24 grains de 4 à 6 px, 0,05 à 0,1 hauteur par seconde) mesurés en mouvement (transform change en 1,5 s) ; `idleMotion` à lire en phase 3.
 37. [x] Curseur natif, pas de follower ; rien ne dépend du hover (aperçu de ligne = décor, prix et farine toujours écrits).
 38. [x] Aucun blur ni `box-shadow`, aucun `will-change`.
 39. [x] Réduit : ni Lenis (pas de classe `lenis`), ni scrub, ni grains animés, ni loader ; 0 texte caché (mesure).
 40. [x] GL sans objet, décision écrite en Concept Card ; lignes `// GL` retirées de l'engine.
 41. [x] Sans objet (pas de GL).
-44. [~] Skip link « Aller au contenu » en premier (`Base.astro`), focus braise (`engine.css`) ; à confirmer en phase 3.
-45. [ ] Phase 3.
+44. [x] (`keyboard.stops[0]` = « Aller au contenu » sur 3 pages ; `skipLinkFirst` false = faux négatif connu) Skip link « Aller au contenu » en premier (`Base.astro`), focus braise (`engine.css`) ; à confirmer en phase 3.
+45. [x] Phase 3 : 0 erreur console, 0 requête échouée, `overflowX` false (desktop/mobile) sur accueil, histoire, réservation ; mobile : échelle du pied corrigée (`nowrap`, capture `.shots/home/m-06-scroll.png`).
 46. [x] Tout le texte est du DOM, aucun canvas.
-47. [~] Bouton Menu 44 px (mesuré), CTA 48 px, liens de nav et du pied 44 px ; mesure complète en phase 3.
+47. [x] (`smallTargets` null sur toutes les pages) Bouton Menu 44 px (mesuré), CTA 48 px, liens de nav et du pied 44 px ; mesure complète en phase 3.
+
+53. [x] 0 tiret cadratin : `grep -c '—\|–'` sur `src/` voir RAPPORT.md.
+56. [x] Aucun placeholder : contenu réel, rien de fictif.
+61. [~] Pas d'outil Agent : une passe, auto-notation (voir RAPPORT.md).

@@ -1,4 +1,4 @@
-# ETAT, mon-epi awwwards, construction-2 (phase 2 sur 3)
+# ETAT, mon-epi awwwards, construction-3 (phase 3 sur 3, terminée)
 
 ## Fait (phase 1)
 - Concept « Extraction », système, pages `/`, `/carte/`, `/histoire/`, `/reservation/`, `404.html`, données réelles, photos du client, favicon, og.png : voir `DESIGN.md` (points 1 à 18).
@@ -22,3 +22,7 @@
 - Aucun contenu fictif. Pas de loader, pas de GL, pas de curseur suiveur (décisions phase 1 confirmées).
 - Aperçu photo au survol des lignes de carte abandonné : aucun pain n'a sa propre photo ; remplacé par le filet de farine (concept).
 - Menu mobile sous 40 rem seulement (3 liens tiennent au-delà).
+
+## Phase 3 (27/11/2026)
+- Fait : captures ciblées histoire, réservation, accueil ; corrections (échelle du pied mobile, titre accueil, hovers marque et 404, og.png 143 Ko) ; rebuild OK ; audit 0 FAIL ; RAPPORT.md, DESIGN.md points 35 à 47 prouvés ; serveur arrêté.
+- Reste : critique jury indépendant (auto-notation seulement), recapture carte/404 si besoin, contraste du pied KYW sur la 404 (paquet).

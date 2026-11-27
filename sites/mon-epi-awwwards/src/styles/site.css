@@ -28,7 +28,7 @@ body { font-family: var(--f-body); font-size: var(--t-body); line-height: 1.55; 
 .frame-away .entete { transform: translateY(-100%); }
 .entete .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 64px; gap: 1rem; }
 .marque { font-family: var(--f-display); font-size: 1.9rem; line-height: 1; letter-spacing: 0.02em; display: inline-flex; align-items: center; min-height: 44px; }
-.marque span { color: var(--c-accent); }
+.marque span { color: var(--c-accent); transition: letter-spacing 0.3s cubic-bezier(.2,.7,.2,1); }
 .nav { display: flex; gap: clamp(0.9rem, 2.4vw, 2.2rem); }
 .nav a { font-size: var(--t-s); text-transform: uppercase; letter-spacing: 0.06em; min-height: 44px; display: inline-flex; align-items: center; background: linear-gradient(var(--c-accent), var(--c-accent)) left bottom 12px / 0 2px no-repeat; transition: background-size 0.35s cubic-bezier(.2,.7,.2,1); }
 .nav a:focus-visible, .nav a[aria-current='page'] { background-size: 100% 2px; }
@@ -159,7 +159,7 @@ main { padding-top: 64px; }
 /* Pied : l'échelle en bas de page */
 .pied { border-top: 1px solid var(--c-line); padding-block: var(--normal) var(--serre); }
 .pied__echelle { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); align-items: end; }
-.pied__echelle span { font-family: var(--f-display); font-size: var(--t-xl); line-height: 0.85; text-transform: uppercase; }
+.pied__echelle span { white-space: nowrap; font-family: var(--f-display); font-size: var(--t-xl); line-height: 0.85; text-transform: uppercase; }
 .pied__echelle span:first-child { color: var(--c-accent); }
 .pied__barre { height: 3px; background: var(--c-line); margin-block: var(--u) var(--serre); position: relative; }
 .pied__barre::after { content: ''; position: absolute; inset: 0 auto 0 0; width: 25%; background: var(--c-accent); transform-origin: left; scale: var(--b, 1) 1; }
@@ -196,7 +196,7 @@ main { padding-top: 64px; }
   .recit__media, .recit__texte { grid-column: 1 / -1; }
   .cmd__appel, .cmd__infos { grid-column: 1 / -1; }
   .pied__cols > div:nth-child(n) { grid-column: 1 / -1; }
-  .pied__echelle span { font-size: clamp(2.6rem, 14vw, 4rem); }
+  .pied__echelle span { font-size: clamp(1.8rem, 8.4vw, 4rem); }
   .nav { gap: 0.9rem; }
   .marque { font-size: 1.6rem; }
 }
@@ -237,6 +237,8 @@ main { padding-top: 64px; }
   .paper .btn:hover { color: var(--c-paper); }
   .btn--plein:hover { color: var(--c-bg); border-color: var(--c-fg); }
   .nav a:hover, .pied__cols a:not(.lien):hover { background-size: 100% 2px; }
+  .marque:hover span { letter-spacing: 0.12em; }
+  .perdu .btn:hover { transform: translateY(-2px); }
   .menu-btn:hover { border-color: var(--c-accent); }
   .ligne:hover h3 { color: var(--c-accent); }
   .ligne:hover::after { scale: 1 1; }
