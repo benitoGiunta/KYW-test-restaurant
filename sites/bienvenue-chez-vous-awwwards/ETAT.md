@@ -1,4 +1,4 @@
-# ETAT : Bienvenue chez vous, variante awwwards (fin de la phase 2 sur 3)
+# ETAT : Bienvenue chez vous, variante awwwards (fin de la phase 3 sur 3)
 
 ## Fait
 - Brief, trois concepts notés, Concept Card, système (palette, typo, grille, plan de composition), DESIGN.md avec checklist 1 à 18 (voir ses preuves).
@@ -37,3 +37,7 @@
 - Phase 2 : la rotation de `.bague__tour` passe par `gsap.set(…, { rotation, svgOrigin: '100 100' })` ; ne pas poser de transform CSS dessus. L'assiette du hero porte x/y (pointeur) et scale/rotation (intro) : pas de `clearProps` sur elle.
 - Le menu mobile ferme le dialog au clic d'un lien (sinon il reste dans la couche supérieure au-dessus du rideau).
 - Push de la phase 2 : l'autostash a laissé `stash@{0}` (versions locales de `pnpm-lock.yaml` et `dist/index.html` d'agents frères, conflits résolus vers HEAD) ; ne pas le supprimer sans vérifier.
+
+## Phase 3 (27/11/2026)
+- Corrigé : cibles tactiles `.lien` (24 px), meta description histoire (157). Build passe, shoots ciblés home et 404.html propres.
+- Reste : jury (critique neuf), OG recomposée, revue à l'œil des contrastes, capture histoire/reservation. Voir RAPPORT.md.
