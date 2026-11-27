@@ -12,7 +12,7 @@ Début 07:46 UTC, heure limite 10:55 UTC, clôture 12:25 UTC (la session mère a
 | bergerie-lives | publié | 18,58 $ | 0,87 $ | 19,44 $ | 07:46 → 09:23 (97 min) | d92510d2 |
 | ne5t | publié | 19,96 $ | 0,66 $ | 20,62 $ | 07:46 → 09:34 (108 min) | de4294ad |
 | novobel | abandonné en développement (limite 5 h) | 19,20 $ | — | 19,20 $ | 09:10 → ~12:12 | — (sites partiels commités : 159 sources, 163 dist) |
-| oh-la-vache | abandonné en développement (limite 5 h) | 14,92 $ | — | 14,92 $ | 09:24 → 11:25 | — (rien de poussé) |
+| oh-la-vache | abandonné en développement (limite 5 h, 18/25 agents, sans revue 2) | 14,92 $ | — | 14,92 $ | 09:24 → 11:25 | — (état commité à 12:27 après la réinitialisation : sites, ETAT-oh-la-vache.md, mesure ; sources de révision portfolio non reconstruites) |
 | dumont-bouge | abandonné en développement (limite 5 h) | 13,62 $ | — | 13,62 $ | 09:24 → 11:26 | — (sites partiels commités : 141 sources, 116 dist) |
 | bayti | abandonné en développement (limite 5 h) | 13,92 $ | — | 13,92 $ | 09:34 → 11:36 | — (rien de poussé) |
 | 22 autres (loco-lunch → brasserie-entre-nous) | non lancés | | | | | |
@@ -40,7 +40,7 @@ Coûts : `usage.cost_usd` de `get_session` (fichiers `*-detail.json` présents p
 - « à confirmer » vu en ligne à 09:24 sur mon-epi : déploiement en file, absent au contrôle de 09:35.
 
 ## Fichiers de mesure manquants
-novobel, oh-la-vache, dumont-bouge, bayti : aucun fichier (`dev-*`) ; seul `usage` du registre fait foi. mon-epi correction : hebdo de début non relevé.
+novobel, dumont-bouge, bayti : aucun fichier (oh-la-vache a commité ses `dev-*` à 12:27) (`dev-*`) ; seul `usage` du registre fait foi. mon-epi correction : hebdo de début non relevé.
 
 ## Stockage
 - Début : 3 déploiements READY, dist 544 Mo / 7 887 fichiers ; tableau de bord Vercel 1,76 Go / 10 Go.
