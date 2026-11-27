@@ -45,10 +45,10 @@ export const horairesLd = [
 
 // Les formules du Repas, en escales (site client, page « Délice des Saveurs »). Accords en supplément.
 export const formules = [
-  { cle: 'midi', nom: 'Le midi', escales: 'Grignotages, 3 escales, douceurs', quand: 'Midi, hors jours fériés', prix: 49, accords: 'accords B +30 €, C +40 €' },
-  { cle: 'quatre', nom: '4 escales', escales: 'Grignotages, 4 escales, douceurs', quand: 'Midi et soir, sur réservation', prix: 69, accords: 'accords A +29 €, B +44 €, C +54 €' },
-  { cle: 'cinq', nom: '5 escales', escales: 'Grignotages, 5 escales, douceurs', quand: 'Soir, sur réservation', prix: 79, accords: 'accords A +35 €, B +49 €, C +59 €' },
-  { cle: 'signature', nom: 'Voyage Signature', escales: 'Le grand tour de la saison', quand: 'Midi et soir, sur réservation', prix: 94, accords: 'accords A +40 €, B +54 €, C +64 €' },
+  { cle: 'midi', nom: 'Le midi', escales: 'Grignotages, 3 escales, douceurs', quand: 'Midi, hors jours fériés', prix: 49, accords: 'Accords : B +30 €, C +40 €' },
+  { cle: 'quatre', nom: '4 escales', escales: 'Grignotages, 4 escales, douceurs', quand: 'Midi et soir, sur réservation', prix: 69, accords: 'Accords : A +29 €, B +44 €, C +54 €' },
+  { cle: 'cinq', nom: '5 escales', escales: 'Grignotages, 5 escales, douceurs', quand: 'Soir, sur réservation', prix: 79, accords: 'Accords : A +35 €, B +49 €, C +59 €' },
+  { cle: 'signature', nom: 'Voyage Signature', escales: 'Le grand tour de la saison', quand: 'Midi et soir, sur réservation', prix: 94, accords: 'Accords : A +40 €, B +54 €, C +64 €' },
 ] as const;
 
 export const accords = [
@@ -57,14 +57,14 @@ export const accords = [
   { lettre: 'C', nom: 'Le Confort +', texte: 'Le Confort, avec un digestif.' },
 ] as const;
 
-// La carte du mois (octobre 2026, midi et soir, sur réservation). Prix non publiés : `prix: null`.
-export type Plat = { nom: string; description: string; prix: number | null; categorie: string; photo: string; placeholder?: boolean };
+// La carte du mois (midi et soir, sur réservation). Prix non publiés : `prix: null`.
+export type Plat = { nom: string; description: string; prix: number | null; categorie: string; photo: string | null; placeholder?: boolean };
 export const plats: Plat[] = [
   { nom: 'Grignotages', description: 'Un avant-goût du voyage.', prix: null, categorie: 'Départ', photo: 'bouchees' },
   { nom: 'Les Saint-Jacques de Vincent', description: 'Textures, fraîcheur et notes grillées, en direct de petits bateaux à Port-en-Bessin.', prix: null, categorie: 'Escale', photo: 'stJacques' },
-  { nom: 'L’œuf parfait', description: 'Bœuf Angus séché, potiron et noisettes.', prix: null, categorie: 'Escale', photo: 'terrine' },
-  { nom: 'Filet pur de veau', description: 'Légèrement saumuré, coques et végétaux marins.', prix: null, categorie: 'Escale', photo: 'plateauViande' },
-  { nom: 'Dessert du moment', description: 'En finesse, léger, frais, peu sucré.', prix: null, categorie: 'Douceurs', photo: 'salade' },
+  { nom: 'L’œuf parfait', description: 'Bœuf Angus séché, potiron et noisettes.', prix: null, categorie: 'Escale', photo: null },
+  { nom: 'Filet pur de veau', description: 'Légèrement saumuré, coques et végétaux marins.', prix: null, categorie: 'Escale', photo: null },
+  { nom: 'Dessert du moment', description: 'En finesse, léger, frais, peu sucré.', prix: null, categorie: 'Douceurs', photo: null },
   { nom: 'Biscuit, chocolat, fantaisie', description: 'Nos incontournables douceurs.', prix: null, categorie: 'Douceurs', photo: 'smiley' },
 ];
 
@@ -79,7 +79,7 @@ export const traiteur = [
 export const mercredis = {
   titre: 'Les mercredis à prix réduit',
   texte: 'Tous les mercredis soir, hors jours fériés, un repas en 4 escales à tarif réduit, uniquement sur réservation.',
-  tarif: 'Tarif communiqué à la réservation',
+  tarif: 'Tarif à confirmer',
   placeholder: true,
 };
 

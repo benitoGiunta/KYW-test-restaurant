@@ -10,11 +10,11 @@ import { formules, accords, plats, traiteur, mercredis } from '../data/site';
     <div class="route">
       <section class="stop stop--plein entete" aria-labelledby="titre">
         <h1 id="titre" class="display" data-split="lines" data-intro>La carte, <em>en escales</em></h1>
-        <p class="entete__intro" data-reveal="up" data-intro data-delay="0.25">Un repas se compose d’un départ, de quelques escales et de douceurs. Le chef change la carte chaque mois.</p>
+        <p class="entete__intro" data-reveal="up" data-intro data-delay="0.25">Un repas se compose d’un départ, de quelques escales et de douceurs.</p>
       </section>
 
       <section class="stop" aria-labelledby="mois">
-        <h2 data-split="lines" id="mois" class="titre-bloc">Les saveurs du mois, octobre 2026</h2>
+        <h2 data-split="lines" id="mois" class="titre-bloc">Les saveurs du moment</h2>
         <p class="muted mesure">Midi et soir, sur réservation. Les plats sont servis dans cet ordre.</p>
         <ol class="index">
           {plats.map((p) => (
@@ -22,7 +22,7 @@ import { formules, accords, plats, traiteur, mercredis } from '../data/site';
               <p class="index__cat ui muted">{p.categorie}</p>
               <h3 class="index__nom">{p.nom}</h3>
               <p class="index__desc">{p.description}</p>
-              <div class="index__vignette"><Photo cle={p.photo as any} rond decorative widths={[320, 480]} sizes="(max-width: 760px) 30vw, 11rem" /></div>
+              {p.photo && <div class="index__vignette"><Photo cle={p.photo as any} rond decorative widths={[320, 480]} sizes="(max-width: 760px) 30vw, 11rem" /></div>}
             </li>
           ))}
         </ol>
@@ -34,7 +34,7 @@ import { formules, accords, plats, traiteur, mercredis } from '../data/site';
           {formules.map((f) => (
             <div class="tableau__ligne">
               <dt>{f.nom}</dt>
-              <dd class="t-desc">{ins(f.escales)}. {ins(f.quand)}. {ins(f.accords)}.</dd>
+              <dd class="t-desc">{ins(f.escales)}. {ins(f.quand)}. {f.accords}.</dd>
               <dd class="t-prix prix">{euro(f.prix)}</dd>
             </div>
           ))}
