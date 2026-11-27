@@ -83,7 +83,7 @@ document.querySelectorAll<HTMLFormElement>('form[data-endpoint]').forEach((form)
       return;
     }
     if (!form.dataset.endpoint && statut) {
-      statut.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié.';
+      statut.textContent = 'Votre message n’a pas été envoyé : écrivez-nous directement par courriel ou téléphonez-nous.';
       statut.dataset.etat = 'info';
     }
   });

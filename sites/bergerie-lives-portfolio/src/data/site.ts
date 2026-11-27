@@ -109,7 +109,7 @@ export const site: Domaine = {
       'Journée piscine à 20 € par personne, sur réservation',
     ],
     tarifNote: 'Tarifs et disponibilités sur demande, par téléphone ou par e-mail.',
-    nombreNote: 'Nombre de chambres à préciser avec la maison.',
+    nombreNote: 'Pour le nombre de chambres, contactez la maison.',
   },
   mariage: {
     intro: "Depuis 2017, la Bergerie reçoit des mariages. Parce que ce moment passe trop vite, les propriétaires privatisent le domaine pour un weekend complet.",
@@ -120,7 +120,7 @@ export const site: Domaine = {
       { nom: 'La visite', texte: 'Une visite de 30 minutes se programme avec les propriétaires pour découvrir les lieux et poser vos questions.' },
     ],
     brochureNote: 'La brochure Mariage (PDF explicatif et tarifaire) et le calendrier se trouvent sur le site actuel de la maison.',
-    capaciteNote: 'Capacité de la salle à préciser avec la maison.',
+    capaciteNote: 'Pour la capacité de la salle, contactez la maison.',
   },
   offres: [
     { nom: 'Mariage', texte: "Le domaine entier pendant un weekend : cérémonie au jardin, repas sous la véranda, nuit sur place. Une brochure explicative et tarifaire est disponible auprès de la maison.", textePlaceholder: false, photo: '/photos/ceremonie-jardin.webp' },
