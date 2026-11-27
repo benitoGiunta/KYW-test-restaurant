@@ -79,6 +79,7 @@ export function initJournee() {
   onPage(medaillons);
   onPage(horairesFleches);
   onPage(invitation);
+  onPage(soleil);
 }
 
 /** Horloge du hero : HH:MM en display, secondes en petit, anneau qui avance d'un cran par seconde (idle). */
@@ -191,5 +192,26 @@ function invitation() {
   };
   maj();
   const id = setInterval(maj, 60000);
+  return () => clearInterval(id);
+}
+
+/** Signature du hero : le soleil (ou la lune) rejoint sa place sur l'arc du jour (7h-23h) en partant de l'aube, puis
+ *  suit l'heure réelle ; au défilement il monte et s'efface doucement. Sans animation : posé à l'heure, sans trajet. */
+function soleil({ intro }: { intro: gsap.core.Timeline }) {
+  const el = document.querySelector<HTMLElement>('[data-soleil]');
+  if (!el) return;
+  const cible = () => Math.min(1, Math.max(0, (heureDecimale() - 7) / 16));
+  const pose = (p: number) => {
+    el.style.setProperty('--sx', (50 - 46 * Math.cos(Math.PI * p)).toFixed(2));
+    el.style.setProperty('--sy', (52 - 46 * Math.sin(Math.PI * p)).toFixed(2));
+  };
+  pose(cible());
+  const id = setInterval(() => pose(cible()), 60000);
+  if (!prefersReducedMotion()) {
+    const o = { p: 0 };
+    pose(0);
+    intro.add(gsap.to(o, { p: cible(), duration: 2.4, ease: ease.out, onUpdate: () => pose(o.p), onComplete: () => pose(cible()) }), 0.25);
+    gsap.to(el, { yPercent: -35, autoAlpha: 0.15, ease: 'none', scrollTrigger: { trigger: el.closest('.hero'), start: 'top top', end: 'bottom top', scrub: true } });
+  }
   return () => clearInterval(id);
 }
