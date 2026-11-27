@@ -1,0 +1,1 @@
+- 2026-11-27 : la sélection peut contenir une entreprise hors restauration (novobel, construction) ; vérifier l'activité dès la capture du site et le signaler avant tout téléchargement de photos.
