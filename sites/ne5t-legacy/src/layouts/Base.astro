@@ -3,6 +3,15 @@ import '../styles/page.css';
 import { nbsp } from '../lib/typo';
 interface Props { title: string; description: string }
 const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://kyw-test-restaurant.vercel.app').href;
+const ogImage = new URL(`${import.meta.env.BASE_URL.replace(/\/$/, '')}/photos/01-facade-nuit-piscine.webp`, Astro.site ?? 'https://kyw-test-restaurant.vercel.app').href;
+const ld = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: 'Intuition, NE5T Hôtel & Spa',
+  address: { '@type': 'PostalAddress', streetAddress: 'Avenue Vauban 46', postalCode: '5000', addressLocality: 'Namur', addressCountry: 'BE' },
+  telephone: '+32 81 58 88 88', email: 'info@ne5t.com', servesCuisine: 'Cuisine de saison',
+  url: canonical,
+});
+const icone = "data:image/svg+xml," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='#1a1511'/><text x='32' y='42' font-family='Georgia,serif' font-size='26' text-anchor='middle' fill='#e8806a'>N5</text></svg>");
 const body = nbsp(await Astro.slots.render('default'));
 ---
 <!doctype html>
@@ -13,6 +22,13 @@ const body = nbsp(await Astro.slots.render('default'));
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex" />
+    <link rel="icon" href={icone} type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <script type="application/ld+json" set:html={ld} />
     <meta name="theme-color" content="#1a1511" />
     <script is:inline>document.documentElement.classList.add('js')</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />

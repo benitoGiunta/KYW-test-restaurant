@@ -30,9 +30,9 @@ export const nav = [
 type P = { w: number; h: number; alt: string };
 export const photos: Record<string, P> = {
   '00-logo-ne5t': { w: 640, h: 400, alt: 'NE5T Hôtel & Spa Restaurant' },
-  '01-facade-nuit-piscine': { w: 1900, h: 1300, alt: 'Façade de la Maison Gersdorff de nuit, cour et bassin extérieur éclairés' },
+  '01-facade-nuit-piscine': { w: 1600, h: 1095, alt: 'Façade de la Maison Gersdorff de nuit, cour et bassin extérieur éclairés' },
   '02-facade-jour-bassin': { w: 1200, h: 800, alt: 'Façade en pierre de jour et bassin extérieur' },
-  '03-ailes-batiment': { w: 1900, h: 1300, alt: 'Ailes du bâtiment en pierre, brique et bardage bois, allée d’accès' },
+  '03-ailes-batiment': { w: 1600, h: 1095, alt: 'Ailes du bâtiment en pierre, brique et bardage bois, allée d’accès' },
   '04-couple-cour': { w: 1920, h: 1280, alt: 'Un couple posant devant la façade en pierre' },
   '05-table-toast': { w: 1920, h: 1280, alt: 'Table dressée près d’une fenêtre, deux verres de vin blanc entrechoqués' },
   '06-plat-poisson': { w: 1920, h: 1080, alt: 'Plat de poisson blanc, coquillages et légumes dans un bol sombre' },
@@ -44,6 +44,10 @@ export const photos: Record<string, P> = {
   '16-spa-sauna-infrarouge': { w: 1200, h: 420, alt: 'Sauna infrarouge, banc en bois et mur en pierre' },
   '17-duplex-salon-cheminee': { w: 1920, h: 1280, alt: 'Salon avec cheminée et canapé Chesterfield, bûches rangées' },
   '18-chambre-lit': { w: 1181, h: 787, alt: 'Chambre sous poutres, lit blanc, fauteuil jaune' },
+  '19-duplex-salle-a-manger': { w: 1920, h: 1282, alt: 'Salle à manger d’un duplex, table et chaises' },
+  '22-cuisine-ilot': { w: 1900, h: 1300, alt: 'Cuisine avec îlot central' },
+  '23-suite-terrasse-bain': { w: 840, h: 460, alt: 'Suite Terrasse, salle de bain avec baignoire' },
+  '24-duplex-vauban': { w: 840, h: 460, alt: 'Duplex Vauban' },
   '20-duplex-salon-clair': { w: 1920, h: 1282, alt: 'Salon clair avec luminaire en dôme' },
 };
 

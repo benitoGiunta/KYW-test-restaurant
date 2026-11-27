@@ -12,7 +12,7 @@ import { site, suites } from '../data/site';
       <div class="container hero__grid">
         <div class="hero__content">
           <h1 id="titre">Quatre suites, deux duplex</h1>
-          <p class="lead">Des chambres sous poutres, dans la pierre de la ferme.</p>
+          <p class="lead">Chacune a son style, dans la pierre de la ferme.</p>
           <p class="hero__actions">
             <a class="btn btn--primary" href={site.roomraccoon} rel="noopener">Réserver une chambre</a>
           </p>
@@ -26,10 +26,13 @@ import { site, suites } from '../data/site';
         <div class="duo__text">
           <h2 id="suites">Les suites</h2>
           <ul class="rows">
-            {suites.suites.map((s) => <li data-reveal class="row"><h3>{s}</h3></li>)}
+            {suites.suites.map((s) => <li data-reveal class="row"><h3>{s}</h3>{s !== 'Suite Terrasse' && <p class="row__note"><span class="fill">description à fournir</span></p>}</li>)}
           </ul>
         </div>
-        <Photo name="18-chambre-lit" reveal class="duo__photo" sizes="(min-width: 60rem) 40vw, 100vw" ratio="4 / 3" />
+        <div class="duo__photo">
+          <Photo name="23-suite-terrasse-bain" reveal sizes="(min-width: 60rem) 40vw, 100vw" caption="Suite Terrasse" />
+          <Photo name="18-chambre-lit" reveal sizes="(min-width: 60rem) 40vw, 100vw" ratio="4 / 3" />
+        </div>
       </div>
     </section>
 
@@ -37,8 +40,13 @@ import { site, suites } from '../data/site';
       <div class="container split">
         <div class="split__head"><h2 id="duplex">Les duplex</h2></div>
         <ul class="rows">
-          {suites.duplex.map((s) => <li data-reveal class="row"><h3>{s}</h3></li>)}
+          {suites.duplex.map((s) => <li data-reveal class="row"><h3>{s}</h3>{s !== 'Duplex Vauban' && <p class="row__note"><span class="fill">description à fournir</span></p>}</li>)}
         </ul>
+      </div>
+      <div class="container suites-gallery">
+        <Photo name="24-duplex-vauban" reveal sizes="(min-width: 60rem) 30vw, 100vw" caption="Duplex Vauban" />
+        <Photo name="19-duplex-salle-a-manger" reveal sizes="(min-width: 60rem) 30vw, 100vw" caption="Salle à manger d’un duplex" />
+        <Photo name="22-cuisine-ilot" reveal sizes="(min-width: 60rem) 30vw, 100vw" caption="Cuisine avec îlot" />
       </div>
     </section>
 
