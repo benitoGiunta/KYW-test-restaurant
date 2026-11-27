@@ -36,3 +36,4 @@
 - `.mur` au téléphone sort volontairement du `.wrap` (marges négatives gauche et droite) : ne pas remettre `margin-inline` symétrique.
 - Phase 2 : la rotation de `.bague__tour` passe par `gsap.set(…, { rotation, svgOrigin: '100 100' })` ; ne pas poser de transform CSS dessus. L'assiette du hero porte x/y (pointeur) et scale/rotation (intro) : pas de `clearProps` sur elle.
 - Le menu mobile ferme le dialog au clic d'un lien (sinon il reste dans la couche supérieure au-dessus du rideau).
+- Push de la phase 2 : l'autostash a laissé `stash@{0}` (versions locales de `pnpm-lock.yaml` et `dist/index.html` d'agents frères, conflits résolus vers HEAD) ; ne pas le supprimer sans vérifier.
