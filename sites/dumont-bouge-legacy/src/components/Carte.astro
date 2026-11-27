@@ -1,0 +1,38 @@
+---
+import { cat, titreCat, t, prixNum } from '../data/site';
+interface Props { i: number; id?: string; note?: string; niveau?: 2 | 3 }
+const { i, id, note, niveau = 2 } = Astro.props;
+const c = cat(i);
+const H = `h${niveau}` as 'h2' | 'h3';
+const formats = c.plats.every((p) => p.prix && p.prix.includes(' / '));
+const parse = (s: string) => s.split(' / ').map((x) => { const m = x.match(/^(.*?)\s+(\d+,\d+ €)$/); return m ? [m[1], m[2]] : [x, '']; });
+const cols = formats ? parse(c.plats[0].prix!).map((x) => x[0]) : [];
+const dim = (s: string) => s.replace(/ ?baguette/, '');
+---
+<section class="carte" id={id} aria-labelledby={id ? `${id}-t` : undefined}>
+  <div class="carte__head">
+    <H id={id ? `${id}-t` : undefined}>{titreCat(c)}</H>
+    {note && <p class="carte__note">{note}</p>}
+  </div>
+  {formats ? (
+    <div class="carte__scroll" tabindex="0" role="region" aria-label={`${titreCat(c)}, prix par format`}>
+      <table class="ftable">
+        <thead><tr><th scope="col">Sandwich</th>{cols.map((x) => <th scope="col" class="num">{t(dim(x))}</th>)}</tr></thead>
+        <tbody>
+          {c.plats.map((p) => (
+            <tr><th scope="row">{t(p.nom)}</th>{parse(p.prix!).map((x) => <td class="num">{t(x[1])}</td>)}</tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ) : (
+    <ul class="rows">
+      {c.plats.map((p) => (
+        <li class="row">
+          <div class="row__t"><span class="row__n">{t(p.nom)}</span>{p.description && <span class="row__d">{t(p.description)}</span>}</div>
+          {p.prix ? <span class="row__p num">{t(p.prix)}</span> : <span class="row__p row__p--na">à la commande</span>}
+        </li>
+      ))}
+    </ul>
+  )}
+</section>

@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Cloture from '../components/Cloture.astro';
+import Carte from '../components/Carte.astro';
+import { resto, photos, t } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="menu" title="Tea-room, Dumont Bouge" description="Le tea-room de Dumont Bouge à Bouge : petit-déjeuner de 7 h à 11 h, brunch de 11 h 30 à 15 h, boissons, gaufres, crêpes et coupes glacées.">
+  <section class="banner" aria-labelledby="h1">
+    <div class="container banner__in">
+      <div class="banner__txt">
+        <h1 id="h1">Tea-room</h1>
+        <p class="lead">Petit-déjeuner, brunch, gaufres, crêpes et coupes glacées.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href={`${base}reservations/`}>Réserver une table</a>
+          <a class="link" href={resto.telHref}>Appeler le {resto.tel}</a>
+        </div>
+      </div>
+      <Photo p={photos.latte} eager sizes="(min-width: 60rem) 50vw, 100vw" pos="50% 50%" class="banner__img" />
+    </div>
+  </section>
+  <section class="section">
+    <div class="container carte-wrap">
+      <nav class="subnav" aria-label="Sur cette page"><a href="#petit-dejeuner">Petit-déjeuner</a><a href="#boissons">Boissons</a><a href="#brunch">Brunch</a><a href="#desserts">Desserts</a></nav>
+      <div class="groupe" id="petit-dejeuner"><h2>Petit-déjeuner</h2><p class="carte__note">De 7&nbsp;h&nbsp;00 à 11&nbsp;h&nbsp;00.</p>
+        <Carte i={6} id="formules" niveau={3} /></div>
+      <div class="groupe" id="boissons"><h2>Boissons</h2>
+        {[7, 8, 9, 10, 11].map((i) => <Carte i={i} id={`b${i}`} niveau={3} />)}</div>
+      <div class="groupe" id="brunch"><h2>Brunch</h2><p class="carte__note">De 11&nbsp;h&nbsp;30 à 15&nbsp;h&nbsp;00.</p>
+        {[12, 13, 14, 15, 16, 17].map((i) => <Carte i={i} id={`br${i}`} niveau={3} />)}</div>
+      <div class="groupe" id="desserts"><h2>Desserts</h2>
+        {[18, 19, 20, 21, 22].map((i) => <Carte i={i} id={`d${i}`} niveau={3} />)}</div>
+      <p class="carte__foot">Allergie alimentaire ? Nous répondons à vos questions. Un paiement par table, merci.</p>
+    </div>
+  </section>
+  <Cloture />
+</Base>

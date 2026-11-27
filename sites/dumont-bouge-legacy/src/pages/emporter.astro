@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Cloture from '../components/Cloture.astro';
+import Carte from '../components/Carte.astro';
+import { resto, photos, t } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="emporter" title="Sandwicherie Dagobert, Dumont Bouge" description="Sandwichs Dagobert, salades et paninis préparés à la commande chez Dumont Bouge à Bouge, avec leurs prix.">
+  <section class="banner" aria-labelledby="h1">
+    <div class="container banner__in">
+      <div class="banner__txt">
+        <h1 id="h1">Sandwicherie</h1>
+        <p class="lead">Sandwichs, salades et paninis préparés à la commande.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href={`${base}reservations/`}>Réserver une table</a>
+          <a class="link" href={resto.telHref}>Appeler le {resto.tel}</a>
+        </div>
+      </div>
+      <Photo p={photos.salade} eager sizes="(min-width: 60rem) 50vw, 100vw" pos="50% 45%" class="banner__img" />
+    </div>
+  </section>
+  <section class="section">
+    <div class="container carte-wrap">
+      <nav class="subnav" aria-label="Sur cette page"><a href="#classiques">Dagobert classiques</a><a href="#speciaux">Dagobert spéciaux</a><a href="#salades">Salades</a><a href="#paninis">Paninis</a></nav>
+      <Carte i={2} id="classiques" />
+      <Carte i={3} id="speciaux" />
+      <Carte i={4} id="salades" />
+      <Carte i={5} id="paninis" />
+    </div>
+  </section>
+  <Cloture />
+</Base>

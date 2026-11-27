@@ -1,0 +1,26 @@
+---
+import { nav, resto, photos } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const credits = Object.values(photos).filter((p: any) => p.credit) as any[];
+---
+<footer class="foot">
+  <div class="container foot__in">
+    <div class="foot__mast">
+      <p class="foot__name">Dumont Bouge</p>
+      <p class="foot__base">{resto.baseline}</p>
+    </div>
+    <nav class="foot__links" aria-label="Pied de page">
+      <a href={base}>Accueil</a>
+      {nav.map((n) => <a href={`${base}${n.href}`}>{n.label}</a>)}
+      <a href={`${base}reservations/`}>Réservations</a>
+    </nav>
+    <p class="foot__social">
+      <a href={resto.facebook} rel="noopener" target="_blank">Facebook</a>
+      <a href={resto.instagram} rel="noopener" target="_blank">Instagram</a>
+      <a href={`mailto:${resto.email}`}>{resto.email}</a>
+    </p>
+    <p class="foot__credits" data-credits>
+      Photographies : Dumont Bouge{credits.map((c) => <>, <a href={c.credit[1]} rel="noopener">{c.credit[0]}</a> (CC BY-SA 4.0, Wikimedia Commons)</>)}.
+    </p>
+  </div>
+</footer>

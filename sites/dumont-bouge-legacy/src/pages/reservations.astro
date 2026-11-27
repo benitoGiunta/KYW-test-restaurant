@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Horaires from '../components/Horaires.astro';
+import { resto } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="reservations" bar={false} title="Réserver une table, Dumont Bouge" description="Réservez une table au tea-room de Dumont Bouge à Bouge : nombre de personnes, date et heure, ou par téléphone au 081 22 96 02.">
+  <section class="counter" aria-labelledby="h1">
+    <div class="container counter__in">
+      <div class="counter__txt">
+        <h1 id="h1">Réserver une table</h1>
+        <p class="lead">Dites-nous combien vous êtes, le jour et l’heure.</p>
+        <a class="counter__tel" href={resto.telHref}>{resto.tel}</a>
+        <p class="counter__alt">Ou réservez sur <a href={resto.reservationOrigine} rel="noopener">le formulaire du site d’origine</a>.</p>
+      </div>
+      <form class="form" data-endpoint="" method="post" action="#" aria-describedby="form-note">
+        <div class="field"><label for="personnes">Nombre de personnes</label><input id="personnes" name="personnes" type="number" min="1" max="20" inputmode="numeric" required /></div>
+        <div class="field"><label for="date">Date</label><input id="date" name="date" type="date" required /></div>
+        <div class="field"><label for="heure">Heure</label><input id="heure" name="heure" type="time" min="07:00" max="18:00" required /></div>
+        <div class="field"><label for="nom">Nom</label><input id="nom" name="nom" type="text" autocomplete="name" required /></div>
+        <div class="field"><label for="tel">Téléphone</label><input id="tel" name="telephone" type="tel" autocomplete="tel" required /></div>
+        <button class="btn btn--primary" type="submit">Envoyer la demande</button>
+        <p class="form__note" id="form-note">Maquette : ce formulaire n’envoie rien. Pour réserver, appelez le {resto.tel}.</p>
+      </form>
+    </div>
+  </section>
+  <section class="section cloture" aria-labelledby="cloture-t">
+    <div class="container cloture__in">
+      <div class="cloture__head"><h2 id="cloture-t">Horaires et adresse</h2><p class="lead">Ouvert tous les jours à Bouge, de 7&nbsp;h&nbsp;00 à 18&nbsp;h&nbsp;00.</p></div>
+      <Horaires />
+    </div>
+  </section>
+</Base>

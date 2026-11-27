@@ -1,0 +1,107 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Cloture from '../components/Cloture.astro';
+import { resto, photos, cat, titreCat, t, h, NBSP } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const pains = cat(0).plats;
+const nums = pains.map((p) => parseFloat(p.prix!.replace(',', '.')));
+const mini = Math.min(...nums).toFixed(2).replace('.', ',');
+const maxi = Math.max(...nums).toFixed(2).replace('.', ',');
+const portes = [
+  { href: 'boulangerie/', n: 'Boulangerie', l: `${pains.length} pains, de ${mini}${NBSP}€ à ${maxi}${NBSP}€, pétris et cuits chaque matin.` },
+  { href: 'patisserie/', n: 'Pâtisserie', l: `${cat(1).plats.length} gâteaux préparés à la main, à commander au ${resto.tel}.` },
+  { href: 'emporter/', n: 'Sandwicherie', l: 'Sandwichs Dagobert, salades et paninis préparés à la commande.' },
+  { href: 'menu/', n: 'Tea-room', l: `Petit-déjeuner dès ${h('07:00')}, brunch de ${h('11:30')} à ${h('15:00')}, gaufres et crêpes.` },
+];
+const croques = cat(12).plats;
+---
+<Base page="accueil" title="Dumont Bouge, pâtisserie, boulangerie et tea-room à Bouge" description="Pâtisserie, boulangerie, sandwicherie et tea-room à Bouge (Namur), ouverts tous les jours de 7 h à 18 h. Réservez une table ou appelez le 081 22 96 02.">
+  <section class="hero" aria-labelledby="h1">
+    <Photo p={photos.facade} eager sizes="100vw" pos="50% 40%" class="hero__img" />
+    <div class="hero__brush" aria-hidden="true"></div>
+    <div class="hero__band">
+      <div class="container hero__in">
+        <h1 id="h1">Dumont Bouge</h1>
+        <p class="lead">Pâtisserie, boulangerie, sandwicherie et tea-room, ouverts tous les jours à Bouge.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href={`${base}reservations/`}>Réserver une table</a>
+          <a class="link link--onink" href={resto.telHref}>Appeler le {resto.tel}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="maisons">
+    <div class="container split">
+      <div class="split__head">
+        <h2 id="maisons">Quatre maisons sous le même toit</h2>
+      </div>
+      <ul class="index">
+        {portes.map((p) => (
+          <li><a href={`${base}${p.href}`}><span class="index__n">{p.n}</span><span class="index__l">{p.l}</span></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Photo p={photos.vitrine} sizes="100vw" pos="50% 55%" class="bleed" caption="La vitrine des tartes et pâtisseries aux fruits rouges." />
+
+  <section class="section section--tint" aria-labelledby="tea">
+    <div class="container tea">
+      <div class="tea__head">
+        <h2 id="tea">Le tea-room, du petit-déjeuner au brunch</h2>
+        <p class="lead">Des formules le matin, des croques, salades et pâtes à midi.</p>
+        <a class="link" href={`${base}menu/`}>Toute la carte du tea-room</a>
+      </div>
+      <div class="switcher" data-switcher>
+        <div class="switcher__tabs" role="tablist" aria-label="Moment de la journée">
+          <button type="button" role="tab" id="tab-pd" aria-controls="pan-pd" aria-selected="true">Petit-déjeuner</button>
+          <button type="button" role="tab" id="tab-br" aria-controls="pan-br" aria-selected="false" tabindex="-1">Brunch</button>
+        </div>
+        <div class="switcher__panel" role="tabpanel" id="pan-pd" aria-labelledby="tab-pd">
+          <p class="switcher__time">De <time datetime="07:00">{h('07:00')}</time> à <time datetime="11:00">{h('11:00')}</time></p>
+          <ul class="rows">
+            {cat(6).plats.map((p) => (
+              <li class="row"><div class="row__t"><span class="row__n">{t(p.nom)}</span><span class="row__d">{t(p.description)}</span></div><span class="row__p num">{t(p.prix)}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div class="switcher__panel" role="tabpanel" id="pan-br" aria-labelledby="tab-br" hidden>
+          <p class="switcher__time">De <time datetime="11:30">{h('11:30')}</time> à <time datetime="15:00">{h('15:00')}</time>, nos croques gratinés</p>
+          <ul class="rows">
+            {croques.map((p) => (
+              <li class="row"><div class="row__t"><span class="row__n">{t(p.nom)}</span><span class="row__d">{t(p.description)}</span></div><span class="row__p num">{t(p.prix)}</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section statement" aria-label="Présentation">
+    <div class="container">
+      <blockquote>
+        <p>{t("Dumont Bouge est bien plus qu'un salon de thé, c'est un lieu de rencontre et de partage.")}</p>
+        <footer>Présentation sur le site de la maison</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <Cloture />
+  <script is:inline>
+    document.querySelectorAll('[data-switcher]').forEach(function (sw) {
+      var tabs = sw.querySelectorAll('[role=tab]');
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.forEach(function (o) {
+            var on = o === tab;
+            o.setAttribute('aria-selected', on ? 'true' : 'false');
+            o.tabIndex = on ? 0 : -1;
+            sw.querySelector('#' + o.getAttribute('aria-controls')).hidden = !on;
+          });
+        });
+      });
+    });
+  </script>
+</Base>

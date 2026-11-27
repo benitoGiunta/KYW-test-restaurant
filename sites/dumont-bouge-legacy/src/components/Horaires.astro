@@ -1,0 +1,23 @@
+---
+import { horaires, resto, h, NBSP } from '../data/site';
+const lieux = [
+  { id: 'bouge', ...resto.bouge, rows: horaires.bouge },
+  { id: 'namur', ...resto.namur, rows: horaires.namur },
+];
+---
+<div class="schedule">
+  {lieux.map((l) => (
+    <section class="schedule__col" aria-labelledby={`h-${l.id}`}>
+      <h3 id={`h-${l.id}`}>{l.nom}</h3>
+      <p class="schedule__addr">{l.rue}, {l.ville}</p>
+      <dl>
+        {l.rows.map((r) => (
+          <div class={r.ouvert ? '' : 'is-closed'}>
+            <dt>{r.jour}</dt>
+            <dd class="num">{r.ouvert ? <><time datetime={r.de}>{h(r.de)}</time>{NBSP}à{NBSP}<time datetime={r.a}>{h(r.a)}</time></> : 'Fermé'}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  ))}
+</div>

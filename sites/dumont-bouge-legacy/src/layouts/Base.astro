@@ -1,0 +1,43 @@
+---
+import '../styles/page.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import KywFooter from '@kyw/footer';
+import { resto } from '../data/site';
+interface Props { title: string; description: string; page: string; bar?: boolean }
+const { title, description, page, bar = true } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="fr_BE" />
+    <link rel="icon" href={`${base}photos/logo.png`} type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=EB+Garamond:wght@400;500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Nav page={page} />
+    <main id="contenu"><slot /></main>
+    <Footer />
+    {bar && (
+      <div class="bookbar" role="region" aria-label="Réserver">
+        <a class="btn btn--primary" href={`${base}reservations/`}>Réserver une table</a>
+        <a class="btn btn--ghost" href={resto.telHref}>Appeler</a>
+      </div>
+    )}
+    <KywFooter base={import.meta.env.BASE_URL} />
+  </body>
+</html>

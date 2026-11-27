@@ -1,0 +1,20 @@
+---
+import Horaires from './Horaires.astro';
+import { resto } from '../data/site';
+interface Props { titre?: string }
+const { titre = 'Horaires et adresse' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<section class="section cloture" aria-labelledby="cloture-t">
+  <div class="container cloture__in">
+    <div class="cloture__head">
+      <h2 id="cloture-t">{titre}</h2>
+      <p class="lead">Ouvert tous les jours à Bouge, de 7 h 00 à 18 h 00.</p>
+      <div class="actions">
+        <a class="btn btn--primary" href={`${base}reservations/`}>Réserver une table</a>
+        <a class="link" href={resto.telHref}>Appeler le {resto.tel}</a>
+      </div>
+    </div>
+    <Horaires />
+  </div>
+</section>
