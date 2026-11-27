@@ -1,17 +1,17 @@
 ---
 import { site } from '../data/site';
-const { titre = 'Une table, quelques bougies.' } = Astro.props;
+const { titre = 'Une table, quelques bougies.', texte = 'Le restaurant ne travaille que sur réservation. Le plus simple est d’appeler.' } = Astro.props;
 ---
 <section class="reserve" aria-labelledby="reserve-t">
   <div class="container reserve__grid">
     <div>
       <h2 id="reserve-t">{titre}</h2>
-      <p class="lead">Le restaurant ne travaille que sur réservation. Le plus simple est d’appeler.</p>
+      <p class="lead">{texte}</p>
     </div>
     <div class="reserve__act">
       <a class="btn btn--accent btn--lg" href={site.telHref}>Appeler le {site.tel.replace('+32 ', '0')}</a>
       <a class="link" href={`mailto:${site.email}`}>{site.email}</a>
-      <p class="small">Numéro relevé chez des tiers, à confirmer.</p>
+      <p class="small">Numéro et e-mail relevés chez des tiers, à confirmer.</p>
     </div>
   </div>
 </section>

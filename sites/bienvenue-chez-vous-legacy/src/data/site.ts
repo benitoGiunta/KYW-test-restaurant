@@ -44,7 +44,7 @@ export const jours = [
 export type Photo = { w: number; h: number; alt: string; credit?: string };
 // alt : d'après le champ « sujet » de photos/index.json, jamais une légende déduite du nom de fichier.
 export const photos: Record<string, Photo> = {
-  'dessert-smiley': { w: 2000, h: 1500, alt: 'Dessert smiley rose posé sur des fraises coupées et des feuilles de bloody dock' },
+  'dessert-smiley': { w: 2000, h: 1500, alt: 'Dessert smiley rose aux fraises' },
   carpaccio: { w: 1500, h: 1258, alt: 'Carpaccio de noix de Saint-Jacques, crème verte et salicorne' },
   asperges: { w: 1500, h: 1471, alt: 'Asperges, sauce verte et algues' },
   canard: { w: 1500, h: 1075, alt: 'Magret en tranches, betterave rose et framboise' },
