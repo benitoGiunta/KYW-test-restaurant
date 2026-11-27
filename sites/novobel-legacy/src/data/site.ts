@@ -3,7 +3,7 @@ export const societe = {
   nom: 'Novobel',
   descripteur: 'Construction et rénovation',
   baseline: 'La qualité avant tout',
-  adresse: { rue: '14, Rue Emile Cuvelier', cp: '5000', ville: 'Namur', pays: 'Belgique' },
+  adresse: { rue: '14 boîte 1, Rue Emile Cuvelier', cp: '5000', ville: 'Namur', pays: 'Belgique' },
   tel: '+32 488 466 413',
   telHref: 'tel:+32488466413',
   email: 'info@novobel.com',
