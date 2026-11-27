@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, adresses, menuSoir, menuDecouverte, prix, carteUrl } from '../data/site';
+const a = adresses;
+---
+<Base tone="jour" title="Réservation" description="Réserver chez Bayti à Namur : menu du soir en 8 services à 45 €, Rue du Pont 15, ou comptoir à emporter Rue du Pont 6. Réservation en ligne, téléphone ou e-mail.">
+  <section class="page-titre tone-jour">
+    <div class="wrap grid">
+      <h1 class="display display--xl">Réserver au <span class="ital">n°&nbsp;15.</span></h1>
+      <p class="muted">Du mardi au samedi, {a.restaurant.ouverture}. Un menu unique en {menuSoir.nombre} services, {prix(menuSoir.prix)} par personne.</p>
+    </div>
+  </section>
+  <section class="sec--serre tone-jour" aria-label="Réserver">
+    <div class="wrap grid res-grille">
+      <div>
+        <div class="btns" style="margin-bottom:1.5rem">
+          <a class="btn btn--plein" href={site.reservationUrl} rel="noopener">Réserver en ligne</a>
+          <a class="btn" href={`tel:${site.telephoneHref}`}>Appeler le {site.telephone}</a>
+        </div>
+        <ul class="contact-liste">
+          <li><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a class="lien" href={site.instagram} rel="noopener">Instagram @bayti.be</a></li>
+          <li><a class="lien" href={site.facebook} rel="noopener">Facebook</a></li>
+        </ul>
+        <div class="paire__photo" style="margin-top:2.5rem;aspect-ratio:4/3"><Photo cle="mezzesPelouse" widths={[480, 800, 1200]} sizes="(min-width: 900px) 40vw, 92vw" /></div>
+      </div>
+      <div>
+        <div class="adresse-bloc">
+          <p><b>n°&nbsp;15, Bayti</b>, le restaurant</p>
+          <p>{a.restaurant.rue} 15, {a.restaurant.cp} {a.restaurant.commune}</p>
+          <p class="muted ui">Sur place, le soir, {a.restaurant.ouverture}. <a class="lien" href={carteUrl('15')} rel="noopener">Plan</a></p>
+        </div>
+        <div class="adresse-bloc">
+          <p><b>n°&nbsp;6, Bayti Le Comptoir</b>, à emporter</p>
+          <p>{a.comptoir.rue} 6, {a.comptoir.cp} {a.comptoir.commune}</p>
+          <p class="muted ui">Le jour, {a.comptoir.ouverture}. {menuDecouverte.nom} : {prix(menuDecouverte.prix)} par personne. <a class="lien" href={carteUrl('6')} rel="noopener">Plan</a></p>
+        </div>
+        <h2 class="display display--m" style="margin:2rem 0 .75rem">Horaires</h2>
+        <dl class="horaires">
+          <dt>Mardi à samedi</dt><dd>Comptoir {a.comptoir.ouverture}<br />Restaurant {a.restaurant.ouverture}</dd>
+          <dt>Dimanche, lundi</dt><dd>Fermé</dd>
+        </dl>
+        <h2 class="display display--m" style="margin:2rem 0 .75rem">Allergies et régimes</h2>
+        <p class="prose">La carte indique les options végétaliennes, sans gluten et sans lactose. Un événement à organiser ? Bayti chez vous, sur mesure : <a class="lien" href={`mailto:${site.email}?subject=Bayti%20chez%20vous`}>{site.email}</a>.</p>
+      </div>
+    </div>
+  </section>
+</Base>

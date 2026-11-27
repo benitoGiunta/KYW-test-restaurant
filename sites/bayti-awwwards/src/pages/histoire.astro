@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, histoire, valeurs } from '../data/site';
+---
+<Base tone="carreau" title="Histoire" description="Bayti signifie « foyer » en arabe classique : la cuisine de l’enfance du Moyen-Orient, revisitée d’une touche européenne, Rue du Pont à Namur.">
+  <section class="page-titre tone-carreau">
+    <div class="wrap grid">
+      <h1 class="display display--mega" style="font-size:var(--t-xl);line-height:.95">Bayti, <span class="ital">le foyer.</span></h1>
+      <p class="muted">« Deux mondes, une table. »</p>
+    </div>
+  </section>
+  <section class="sec tone-jour" aria-label="Notre histoire">
+    <div class="wrap grid duo">
+      <div class="duo__texte histoire-texte">
+        {histoire.map((p) => <p>{p}</p>)}
+        <ul class="valeurs ui">{valeurs.map((v) => <li>{v}</li>)}</ul>
+        <div class="btns" style="margin-top:2rem"><a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a><a class="btn" href={u('/carte/')}>Voir la carte</a></div>
+      </div>
+      <div class="duo__photo" style="aspect-ratio:4/5"><Photo cle="mezzesAutomne" widths={[480, 800, 1200]} sizes="(min-width: 900px) 40vw, 92vw" /></div>
+    </div>
+  </section>
+  <section class="sec tone-nuit" aria-label="Deux mondes, une table">
+    <div class="wrap grid duo duo--inverse">
+      <div class="duo__texte">
+        <h2 class="display display--xl">Deux mondes, <span class="ital">une table.</span></h2>
+        <p class="prose" style="margin-top:1.5rem">Le Moyen-Orient pour l’âme, l’Europe pour la touche : on y partage, on y goûte, on y revient comme chez soi.</p>
+      </div>
+      <div class="duo__photo" style="aspect-ratio:4/3"><Photo cle="kebbehMains" widths={[480, 800, 1200]} sizes="(min-width: 900px) 40vw, 92vw" /></div>
+    </div>
+  </section>
+</Base>

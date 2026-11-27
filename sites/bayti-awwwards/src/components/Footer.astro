@@ -1,0 +1,40 @@
+---
+// Pied : composition finale, « Rue du Pont » en grand, les deux portes, les horaires. KywFooter est ajouté par Base.
+import { site, adresses, jours, fermes, carteUrl } from '../data/site';
+import { u } from '../lib/url';
+const a = adresses;
+---
+<footer class="pied tone-nuit">
+  <div class="wrap">
+    <p class="display display--xl pied__titre">Rue du Pont, <span class="ital">Namur.</span></p>
+    <div class="grid pied__cols">
+      <div>
+        <h3>Deux portes</h3>
+        <address>
+          <p><b>n°&nbsp;15</b>, {a.restaurant.nom}, le soir<br />{a.restaurant.rue} 15, {a.restaurant.cp} {a.restaurant.commune}<br /><a class="lien" href={carteUrl('15')} rel="noopener">Voir sur le plan</a></p>
+          <p style="margin-top:1rem"><b>n°&nbsp;6</b>, {a.comptoir.nom}, le jour<br />{a.comptoir.rue} 6, {a.comptoir.cp} {a.comptoir.commune}<br /><a class="lien" href={carteUrl('6')} rel="noopener">Voir sur le plan</a></p>
+        </address>
+      </div>
+      <div>
+        <h3>Horaires</h3>
+        <dl class="horaires">
+          <dt>Mardi à samedi</dt><dd>Comptoir {a.comptoir.ouverture}<br />Restaurant {a.restaurant.ouverture}</dd>
+          <dt>Dimanche, lundi</dt><dd>Fermé</dd>
+        </dl>
+      </div>
+      <div>
+        <h3>Réserver</h3>
+        <ul>
+          <li><a class="lien" href={site.reservationUrl} rel="noopener">Réserver en ligne</a></li>
+          <li><a class="lien" href={`tel:${site.telephoneHref}`}>{site.telephone}</a></li>
+          <li><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a class="lien" href={site.instagram} rel="noopener">Instagram</a>, <a class="lien" href={site.facebook} rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <span>{site.credit}</span>
+      <nav aria-label="Pied de page"><a class="lien" href={u('/carte/')}>Carte</a> · <a class="lien" href={u('/histoire/')}>Histoire</a> · <a class="lien" href={u('/reservation/')}>Réservation</a></nav>
+    </div>
+  </div>
+</footer>

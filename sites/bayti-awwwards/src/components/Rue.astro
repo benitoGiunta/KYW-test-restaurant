@@ -1,0 +1,17 @@
+---
+// La rue : le fil qui relie le n° 6 (jour) au n° 15 (soir). Élément signature, statique ici.
+import { adresses } from '../data/site';
+import { u } from '../lib/url';
+const { cl = '' } = Astro.props;
+---
+<div class={`rue ${cl}`} aria-label="Rue du Pont, Namur : du numéro 6 au numéro 15">
+  <a class="rue__porte" href={u('/carte/')}>
+    <b>n°&nbsp;6</b>
+    <span>{adresses.comptoir.nom}, {adresses.comptoir.ouverture}</span>
+  </a>
+  <div class="rue__fil" aria-hidden="true"><i>Rue du Pont</i></div>
+  <a class="rue__porte" href={u('/reservation/')}>
+    <b>n°&nbsp;15</b>
+    <span>{adresses.restaurant.nom}, {adresses.restaurant.ouverture}</span>
+  </a>
+</div>

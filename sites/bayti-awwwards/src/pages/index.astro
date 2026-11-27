@@ -1,0 +1,123 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Rue from '../components/Rue.astro';
+import { u } from '../lib/url';
+import { site, adresses, menuSoir, menuDecouverte, avis, prix, carteJour } from '../data/site';
+const a = adresses;
+const pick = (nom: string) => carteJour.flatMap((c) => c.plats).find((p) => p.nom === nom)!;
+const strip = [
+  { p: pick('Mutabla d’aubergine'), cle: 'mutabal' },
+  { p: pick('Le glorieux kebbeh'), cle: 'kebbehMains' },
+  { p: pick('Les rouleaux de Jérusalem'), cle: 'rouleaux' },
+  { p: pick('Le makanek citronné'), cle: 'makanek' },
+  { p: pick('Baklava au pistache nature'), cle: 'baklava' },
+  { p: pick('Soft baked cookies au chocolat et fleur de sel'), cle: 'cookies' },
+] as const;
+---
+<Base tone="carreau" description={site.description}>
+  <section class="hero tone-carreau" aria-labelledby="titre">
+    <div class="wrap">
+      <div class="grid hero__top">
+        <h1 id="titre" class="display display--mega hero__titre">Bayti</h1>
+        <div class="hero__side">
+          <p class="plaque"><span class="plaque__rue">Rue du Pont</span><span class="plaque__ville">Namur</span></p>
+          <p class="hero__baseline ital">{site.baseline}</p>
+          <p class="ui muted">Cuisine du Moyen-Orient, revisitée d’une touche européenne.</p>
+          <div class="btns">
+            <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
+            <a class="btn" href={`tel:${site.telephoneHref}`}>Appeler</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero__photo"><Photo cle="heroMezzes" widths={[800, 1200, 1800]} sizes="100vw" prioritaire /></div>
+      <Rue cl="hero__rue" />
+    </div>
+  </section>
+
+  <section class="sec tone-jour" aria-labelledby="deux-portes">
+    <div class="wrap">
+      <h2 id="deux-portes" class="display display--xl" style="max-width:14ch;margin-bottom:clamp(2.5rem,6vw,6rem)">Une rue, <span class="ital">deux portes.</span></h2>
+      <div class="grid paire">
+        <article>
+          <p class="paire__numero"><b>n°&nbsp;6</b><span class="xs">{a.comptoir.moment}</span></p>
+          <div class="paire__photo"><Photo cle="houmous" widths={[480, 800]} sizes="(min-width: 900px) 40vw, 92vw" /></div>
+          <h3 class="display display--m">{a.comptoir.nom}</h3>
+          <p class="muted" style="margin-top:.5rem">Mezzés froids et chauds, grillades et desserts à l’unité, à emporter. Du mardi au samedi, {a.comptoir.ouverture}.</p>
+          <div class="btns"><a class="btn" href={u('/carte/#jour')}>Voir la carte du comptoir</a></div>
+        </article>
+        <article>
+          <p class="paire__numero"><b>n°&nbsp;15</b><span class="xs">{a.restaurant.moment}</span></p>
+          <div class="paire__photo"><Photo cle="mezzesPortrait" widths={[480, 800, 1200]} sizes="(min-width: 900px) 50vw, 92vw" /></div>
+          <h3 class="display display--m">{a.restaurant.nom}, le restaurant</h3>
+          <p class="muted" style="margin-top:.5rem">Un seul menu, {menuSoir.nombre} services, {prix(menuSoir.prix)} par personne. Du mardi au samedi, {a.restaurant.ouverture}.</p>
+          <div class="btns"><a class="btn btn--plein" href={site.reservationUrl} rel="noopener">Réserver en ligne</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec tone-nuit" aria-labelledby="soir">
+    <div class="wrap grid">
+      <div class="soir__intro">
+        <p class="xs muted" style="margin-bottom:1rem">n°&nbsp;15 · Le soir</p>
+        <h2 id="soir" class="display display--xl">Huit services, <span class="ital">une seule carte.</span></h2>
+        <p class="prixmenu"><b>{prix(menuSoir.prix)}</b><span class="muted">par personne, sur place</span></p>
+      </div>
+      <div class="soir__photo"><Photo cle="rakakatNoir" widths={[480, 800, 1200]} sizes="(min-width: 900px) 30vw, 92vw" /></div>
+      <ol class="services soir__liste">
+        {menuSoir.services.map((s) => (
+          <li><span class="n">{String(s.n).padStart(2, '0')}</span><span class="nom">{s.nom}</span><span class="desc">{s.description}</span></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec tone-carreau" aria-labelledby="comptoir">
+    <div class="wrap grid comptoir__tete">
+      <div>
+        <p class="xs muted" style="margin-bottom:1rem">n°&nbsp;6 · Le jour</p>
+        <h2 id="comptoir" class="display display--xl">Le comptoir, <span class="ital">à emporter.</span></h2>
+      </div>
+      <p class="muted">Mezzés, grillades et desserts à l’unité, de {prix(4)} à {prix(10)} pour les plats, et à la pièce de {prix(1)} à {prix(4.5)}.</p>
+    </div>
+    <ul class="strip" aria-label="Quelques plats du comptoir">
+      {strip.map(({ p, cle }) => (
+        <li>
+          <div class="strip__photo"><Photo cle={cle} widths={[480, 800]} sizes="(min-width: 900px) 21rem, 72vw" /></div>
+          <p class="strip__nom"><span>{p.nom}</span><span class="num">{prix(p.prix)}{p.piece ? ' / pièce' : ''}</span></p>
+        </li>
+      ))}
+    </ul>
+    <div class="wrap">
+      <div class="grid decouverte">
+        <p class="display display--m">{menuDecouverte.nom}</p>
+        <p class="muted ui">{menuDecouverte.detail}</p>
+        <p class="display display--l num">{prix(menuDecouverte.prix)}<span class="ui" style="font-family:var(--f-body);font-weight:400"> / pers.</span></p>
+      </div>
+      <p style="margin-top:2rem"><a class="btn" href={u('/carte/')}>Toute la carte</a></p>
+    </div>
+  </section>
+
+  <section class="sec tone-jour" aria-labelledby="chez-vous">
+    <div class="wrap grid mur">
+      <div class="mur__a"><Photo cle="buffet" widths={[480, 800]} sizes="(min-width: 900px) 33vw, 92vw" /></div>
+      <div class="mur__texte">
+        <p class="xs muted" style="margin-bottom:1rem">Traiteur événementiel</p>
+        <h2 id="chez-vous" class="display display--xl">Bayti <span class="ital">chez vous.</span></h2>
+        <p class="prose" style="margin-top:1.5rem">La rue s’arrête là où commence votre table. Des menus d’événement créés sur mesure, avec la mise en place et le matériel fournis, servis quelques heures avant votre événement.</p>
+        <div class="btns"><a class="btn btn--plein" href={`mailto:${site.email}?subject=Bayti%20chez%20vous`}>Écrire à Bayti</a><a class="btn" href={`tel:${site.telephoneHref}`}>{site.telephone}</a></div>
+      </div>
+      <div class="mur__b"><Photo cle="coffret" widths={[480, 800, 1200]} sizes="(min-width: 900px) 40vw, 92vw" /></div>
+    </div>
+  </section>
+
+  <section class="sec tone-carreau" aria-label="Un avis">
+    <div class="wrap avis-wrap">
+      <figure class="avis" style="max-width:none">
+        <blockquote>« {avis.texte} »</blockquote>
+        <figcaption>{avis.auteur}, {avis.source}</figcaption>
+      </figure>
+    </div>
+  </section>
+</Base>

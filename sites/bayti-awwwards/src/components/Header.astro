@@ -1,0 +1,15 @@
+---
+import { u } from '../lib/url';
+import { site } from '../data/site';
+const { tone = 'jour' } = Astro.props;
+const p = Astro.url.pathname.replace(/\/+$/, '');
+const cur = (seg: string) => (p.endsWith(seg) ? 'page' : undefined);
+---
+<header class={`site-header tone-${tone}`}>
+  <a class="site-header__logo" href={u('/')} aria-label="Bayti, accueil">Bayti</a>
+  <nav aria-label="Navigation principale">
+    <a href={u('/carte/')} aria-current={cur('/carte')}>Carte</a>
+    <a href={u('/histoire/')} aria-current={cur('/histoire')}>Histoire</a>
+    <a class="btn btn--plein" href={u('/reservation/')} aria-current={cur('/reservation')}>Réserver</a>
+  </nav>
+</header>

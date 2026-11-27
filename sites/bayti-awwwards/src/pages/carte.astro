@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, adresses, menuSoir, menuDecouverte, carteJour, prix } from '../data/site';
+const photoDe: Record<string, any> = {
+  'Mezzés froids': ['carrelageBol', 'Quelques mezzés froids, du carrelage vert'],
+  'Mezzés chauds': ['kebbehMains', ''],
+  Grillades: ['brochettes', ''],
+  Desserts: ['baklava', ''],
+  Accompagnements: ['pain', ''],
+};
+const slug = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '-');
+---
+<Base tone="nuit" title="Carte" description="La carte de Bayti à Namur : menu du soir en 8 services à 45 €, et comptoir traiteur de jour, mezzés, grillades et desserts à l’unité.">
+  <section class="page-titre tone-nuit">
+    <div class="wrap grid">
+      <h1 class="display display--xl">La carte, <span class="ital">du n°&nbsp;15 au n°&nbsp;6.</span></h1>
+      <p class="muted">Le soir, un menu unique. Le jour, le comptoir. Options végétaliennes, sans gluten et sans lactose indiquées à la carte.</p>
+    </div>
+  </section>
+
+  <section class="cs tone-nuit" id="soir" aria-labelledby="h-soir">
+    <div class="wrap grid">
+      <div class="cs__liste">
+        <p class="xs muted" style="margin-bottom:.75rem">n°&nbsp;15 · Sur place, du mardi au samedi, {adresses.restaurant.ouverture}</p>
+        <h2 id="h-soir" class="display display--l">Le menu en {menuSoir.nombre} services</h2>
+        <p class="prixmenu" style="margin-bottom:1.5rem"><b>{prix(menuSoir.prix)}</b><span class="muted">par personne</span></p>
+        <ol class="plats">
+          {menuSoir.services.map((s) => (
+            <li><span class="nom"><span class="num muted" style="font-style:italic;margin-right:.6em">{String(s.n).padStart(2, '0')}</span>{s.nom}</span><span class="prix"></span><span class="desc">{s.description}</span></li>
+          ))}
+        </ol>
+        <div class="btns" style="margin-top:2rem"><a class="btn btn--plein" href={site.reservationUrl} rel="noopener">Réserver en ligne</a></div>
+      </div>
+      <div class="cs__photo"><Photo cle="rakakatNoir" widths={[480, 800, 1200]} sizes="(min-width: 900px) 30vw, 92vw" /></div>
+    </div>
+  </section>
+
+  <section class="cs tone-jour" id="jour" aria-labelledby="h-jour">
+    <div class="wrap">
+      <p class="xs muted" style="margin-bottom:.75rem">n°&nbsp;6 · Bayti Le Comptoir, à emporter, du mardi au samedi, {adresses.comptoir.ouverture}</p>
+      <h2 id="h-jour" class="display display--xl" style="margin-bottom:.5rem">Le comptoir</h2>
+      <p class="cs__sous">Plats à l’unité. Les prix « à la pièce » sont indiqués.</p>
+    </div>
+  </section>
+
+  {carteJour.map((cat, i) => (
+    <section class={`cs tone-${i % 2 === 0 ? 'jour' : 'carreau'} ${i % 2 ? 'cs--inverse' : ''}`} style="padding-top:0" aria-labelledby={`h-${slug(cat.nom)}`}>
+      <div class="wrap grid" style={i % 2 ? 'padding-top:clamp(3rem,2rem + 5vw,7rem)' : ''}>
+        <div class="cs__liste">
+          <h3 id={`h-${slug(cat.nom)}`} class="display display--l">{cat.nom}</h3>
+          <ul class="plats" style="margin-top:1.5rem">
+            {cat.plats.map((p) => (
+              <li>
+                <span class="nom">{p.nom}</span>
+                <span class="prix">{prix(p.prix)}{p.piece && <small>la pièce</small>}</span>
+                {p.description && <span class="desc">{p.description}</span>}
+                {p.regimes && <span class="reg">{p.regimes.join(' · ')}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="cs__photo"><Photo cle={photoDe[cat.nom][0]} widths={[480, 800]} sizes="(min-width: 900px) 30vw, 92vw" decorative /></div>
+      </div>
+    </section>
+  ))}
+
+  <section class="cs tone-carreau" aria-labelledby="h-decouverte">
+    <div class="wrap grid decouverte" style="border-top:0;margin-top:0">
+      <h2 id="h-decouverte" class="display display--l">{menuDecouverte.nom}</h2>
+      <p class="muted">{menuDecouverte.detail}</p>
+      <p class="display display--l num">{prix(menuDecouverte.prix)}<span class="ui" style="font-family:var(--f-body);font-weight:400"> / pers.</span></p>
+    </div>
+    <div class="wrap"><p class="legende">Pour un événement, Bayti chez vous : <a class="lien" href={`mailto:${site.email}?subject=Bayti%20chez%20vous`}>{site.email}</a>.</p></div>
+  </section>
+</Base>

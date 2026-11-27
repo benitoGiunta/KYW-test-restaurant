@@ -1,2 +1,3 @@
 - 2026-11-27 : site Wix Studio (bayti.be) : pages internes en curl simple (texte dans le HTML, strip des balises) ; images d'origine via static.wixstatic.com/media/<id> sans /v1/ ; préfixe 11062b_ = stock Wix, étoiles dorées = widget avis à écarter.
 - 2026-11-27 · bayti · portfolio (phase 1) : le gabarit journee se recale sur 3 moments en changeant seulement les heures de CIELS (journee.ts) et de tokens.css (--heure) ; le thème d'un ciel doit être unique par moment (momentDuTheme) et la frise garde l'échelle 7h-23h.
+- 2026-11-27 · bayti · awwwards phase 1 : si les photos du client ont un fond sombre (carrelage vert), regarder la planche-contact AVANT de fixer la palette ; une palette « jour clair » déduite des mots du dossier a dû être doublée d'un ton « carreau ».
