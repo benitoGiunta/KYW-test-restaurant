@@ -6,6 +6,14 @@ import { societe } from '../data/site';
 interface Props { title: string; description: string; page: string }
 const { title, description, page } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const ld = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  name: societe.nom,
+  telephone: societe.tel,
+  email: societe.email,
+  address: { '@type': 'PostalAddress', streetAddress: societe.adresse.rue, postalCode: societe.adresse.cp, addressLocality: societe.adresse.ville, addressCountry: 'BE' },
+});
 ---
 <!doctype html>
 <html lang="fr">
@@ -27,6 +35,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     <meta property="og:locale" content="fr_BE" />
     <meta property="og:site_name" content={societe.nom} />
     <meta property="og:title" content={title} />
+    <meta property="og:image" content={`${base}photos/combles.webp`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href} />
+    <script type="application/ld+json" is:inline set:html={ld} />
     <meta property="og:description" content={description} />
     <style is:global>
       @import "../styles/page.css";
