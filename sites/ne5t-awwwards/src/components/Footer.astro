@@ -1,0 +1,36 @@
+---
+import KywFooter from '@kyw/footer';
+import { site, jours } from '../data/site';
+import { u } from '../lib/url';
+---
+<footer class="pied">
+  <div class="wrap pied__haut">
+    <p class="pied__titre">Dernière impression : <em>la vôtre.</em></p>
+    <a class="pied__tel" href={site.telephoneHref}><span class="sr-only">Appeler le </span>{site.telephoneLisible}</a>
+    <p class="pied__sous">Le restaurant se réserve par téléphone.</p>
+  </div>
+  <div class="wrap pied__bas">
+    <address class="pied__bloc">
+      <h2 class="pied__h">La maison</h2>
+      <p>NE5T Hôtel &amp; Spa<br />{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</p>
+      <p><a class="lien" href={site.emailHref}>{site.email}</a></p>
+    </address>
+    <div class="pied__bloc">
+      <h2 class="pied__h">Jours de service</h2>
+      <ul class="pied__jours">
+        {jours.filter((j) => !j.ferme).map((j) => <li><span>{j.jour}</span><span>{j.service}</span></li>)}
+      </ul>
+    </div>
+    <nav class="pied__bloc" aria-label="Pied de page">
+      <h2 class="pied__h">Suivre</h2>
+      <ul class="pied__liens">
+        <li><a class="lien" href={u('/carte/')}>La carte</a></li>
+        <li><a class="lien" href={u('/histoire/')}>La maison</a></li>
+        <li><a class="lien" href={u('/reservation/')}>Réserver</a></li>
+        {site.reseaux.map((r) => <li><a class="lien" href={r.url} rel="noopener" target="_blank">{r.nom}<span class="sr-only"> (nouvel onglet)</span></a></li>)}
+      </ul>
+    </nav>
+  </div>
+  <p class="wrap pied__credit">{site.credit}</p>
+  <KywFooter base={import.meta.env.BASE_URL} />
+</footer>

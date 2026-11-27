@@ -1,0 +1,10 @@
+---
+import { Image } from 'astro:assets';
+import { photos, type PhotoCle } from '../lib/photos';
+interface Props { cle: PhotoCle; sizes?: string; haute?: boolean; classe?: string; decoratif?: boolean; ratio?: string; pos?: string }
+const { cle, sizes = '100vw', haute = false, classe, decoratif = false, ratio, pos } = Astro.props;
+const p = photos[cle];
+const style = [ratio ? `aspect-ratio:${ratio}` : '', pos ? `object-position:${pos}` : ''].filter(Boolean).join(';');
+---
+<Image src={p.src} alt={decoratif ? '' : p.alt} sizes={sizes} widths={[480, 800, 1200, 1800]} class={classe} style={style || undefined}
+  loading={haute ? 'eager' : 'lazy'} fetchpriority={haute ? 'high' : undefined} decoding="async" format="webp" />

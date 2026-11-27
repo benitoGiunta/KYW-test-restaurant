@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { impressions, formules, eur, suite, privatisation, site } from '../data/site';
+import { u } from '../lib/url';
+const images: Record<string, 'bouchees' | 'poisson' | 'dessert'> = { eveil: 'bouchees', deuxieme: 'poisson', dessert: 'dessert' };
+---
+<Base title="La carte" description="Le menu du mois d’Intuition, à Namur : bouchées, deux impressions, fromage affiné, dessert. Formules à 60 €, 75 € et lunch carte blanche à 50 €.">
+  <header class="wrap page-tete">
+    <div class="g">
+      <h1 class="display">La carte</h1>
+      <p class="page-tete__lead">Le menu du mois, en impressions.</p>
+      <div class="seconde page-tete__s">
+        <p>Le menu est renouvelé chaque mois, selon les saisons et les arrivages. Les allergies se signalent à la réservation.</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="wrap carte-liste" aria-label="Le menu du mois">
+    {impressions.map((i) => (
+      <div class="g imp">
+        <div class="imp__tete">
+          <h2 class="display">{i.titre}</h2>
+          {i.note && <p class="imp__note">Au choix : «&nbsp;{i.note}&nbsp;»</p>}
+        </div>
+        <ul class="imp__plats">
+          {i.plats.map((p, k) => (
+            <>
+              {k > 0 && i.note && <li class="plat__sep" aria-hidden="true">{i.note}</li>}
+              <li>
+                <p class="plat__nom">{p.nom}</p>
+                {p.desc && <p class="plat__desc">{p.desc}</p>}
+              </li>
+            </>
+          ))}
+        </ul>
+        {images[i.cle] && <figure class="imp__img"><div class="cadre"><Photo cle={images[i.cle]} sizes="(max-width: 900px) 100vw, 24vw" /></div></figure>}
+      </div>
+    ))}
+  </section>
+
+  <section class="section papier donnees" aria-labelledby="t-formules">
+    <div class="wrap">
+      <h2 id="t-formules" class="display" style="font-size: var(--t-xl)">Les formules</h2>
+      <div class="dl-formules">
+        {formules.map((f) => (
+          <div class="formule">
+            <p class="formule__nom">{f.nom}</p>
+            <p class="formule__prix">{eur(f.prix)}</p>
+            <p class="formule__vins">{f.vinsLabel ?? 'Sélection de vins à table'} : {eur(f.vins)}</p>
+            <p class="formule__note">{f.note}</p>
+          </div>
+        ))}
+      </div>
+      <div class="notes">
+        <div class="note"><h3>Repas en suite</h3><p>À réserver au moins {suite.preavis}&nbsp;h à l’avance, avec un supplément de {suite.supplement}&nbsp;% sur le repas et les boissons.</p></div>
+        <div class="note"><h3>Privatisation</h3><p>Le restaurant se privatise pour {privatisation.couverts} couverts, avec une proposition sur mesure.</p></div>
+        <div class="note"><h3>Vin et rhum</h3><p>Manu sélectionne les flacons et vous laisse aussi choisir le vôtre en cave.</p></div>
+      </div>
+      <p class="suite-cta"><a class="btn btn--plein" href={site.telephoneHref}><span class="btn__txt">Réserver au <span class="nb">{site.telephoneLisible}</span></span></a></p>
+    </div>
+  </section>
+</Base>

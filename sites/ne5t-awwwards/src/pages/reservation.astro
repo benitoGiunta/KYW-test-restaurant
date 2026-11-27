@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, jours, suite, privatisation } from '../data/site';
+---
+<Base title="Réserver" description="Réserver une table chez Intuition, NE5T Hôtel & Spa, Avenue Vauban 46 à Namur : par téléphone au 081 58 88 88, ou écrire à la maison. Lunch carte blanche du jeudi au samedi midi.">
+  <header class="wrap page-tete">
+    <div class="g">
+      <h1 class="display">Réserver</h1>
+      <p class="page-tete__lead">Une seule invitation : suivre notre intuition.</p>
+    </div>
+  </header>
+
+  <section class="wrap g resa" aria-label="Réserver une table">
+    <div class="resa__appel">
+      <a class="resa__tel" href={site.telephoneHref}><span class="sr-only">Appeler le </span>{site.telephoneLisible}</a>
+      <p>Le restaurant se réserve par téléphone. Signalez vos allergies au moment de la réservation.</p>
+      <div class="resa__actions">
+        <a class="btn btn--plein" href={site.telephoneHref}><span class="btn__txt">Appeler</span></a>
+        <a class="btn" href={site.emailHref}><span class="btn__txt">Écrire à la maison</span></a>
+      </div>
+    </div>
+    <div class="resa__jours resa__col">
+      <h2>Jours de service</h2>
+      <ul class="jours">
+        {jours.map((j) => <li class={j.ferme ? 'ferme' : undefined}><span>{j.jour}</span><span>{j.service}</span></li>)}
+      </ul>
+      <p style="margin-top:1em;font-size:var(--t-xs);color:var(--c-muted)">Heures exactes : à confirmer par téléphone.</p>
+    </div>
+
+    <div class="resa__infos">
+      <div class="resa__col">
+        <h2>Adresse</h2>
+        <p>NE5T Hôtel &amp; Spa<br />{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</p>
+        <p><a class="lien" href={site.planUrl} rel="noopener" target="_blank">Ouvrir le plan<span class="sr-only"> (nouvel onglet)</span></a></p>
+        <p>Parking et accès : à confirmer.</p>
+      </div>
+      <div class="resa__col">
+        <h2>Bon à savoir</h2>
+        <ul>
+          <li>Lunch carte blanche le jeudi, le vendredi et le samedi midi.</li>
+          <li>Repas en suite : {suite.preavis}&nbsp;h à l’avance, supplément de {suite.supplement}&nbsp;%.</li>
+          <li>Privatisation : {privatisation.couverts} couverts.</li>
+        </ul>
+      </div>
+      <div class="resa__col">
+        <h2>Une chambre, le spa</h2>
+        <p>Les chambres se réservent en ligne, le spa par téléphone.</p>
+        <p><a class="lien" href={site.chambresUrl} rel="noopener" target="_blank">Réserver une chambre<span class="sr-only"> (nouvel onglet)</span></a></p>
+        <p><a class="lien" href={site.siteClient} rel="noopener" target="_blank">Le site de la maison<span class="sr-only"> (nouvel onglet)</span></a></p>
+      </div>
+    </div>
+
+    <div class="ecrire">
+      <h2 class="display">Une question, une privatisation&nbsp;?</h2>
+      <form action={site.emailHref} method="post" enctype="text/plain">
+        <label class="champ">Votre nom<input type="text" name="nom" autocomplete="name" /></label>
+        <label class="champ">Votre message<textarea name="message" rows="4"></textarea></label>
+        <button class="btn btn--plein" type="submit"><span class="btn__txt">Ouvrir mon e-mail</span></button>
+      </form>
+    </div>
+  </section>
+</Base>

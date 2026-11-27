@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, histoire, equipe, maison } from '../data/site';
+import { u } from '../lib/url';
+---
+<Base title="La maison" description="L’histoire du NE5T Hôtel & Spa et d’Intuition : une ancienne ferme en carré au-dessus de la Meuse, près de dix ans de rénovations pierre par pierre, à Namur.">
+  <header class="wrap page-tete">
+    <div class="g">
+      <h1 class="display">La maison</h1>
+      <p class="page-tete__lead">Une ancienne ferme en carré, au-dessus de la Meuse.</p>
+    </div>
+  </header>
+
+  <section class="wrap histoire-corps" aria-label="Histoire">
+    <div class="g">
+      <div class="histoire-texte">
+        {histoire.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="seconde histoire-note">
+        <p>Le propriétaire, Benoît Gersdorff, parle d’un lieu qui mêle le service des palaces et l’accueil d’une maison de famille.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap pleine" aria-label="La façade">
+    <div class="cadre"><Photo cle="ailes" sizes="100vw" pos="50% 55%" /></div>
+    <p class="legende">{site.credit}</p>
+  </section>
+
+  <section class="wrap section" aria-labelledby="t-spa">
+    <div class="g paire paire--inv">
+      <figure class="paire__img"><div class="cadre"><Photo cle="spaVoutes" sizes="(max-width: 900px) 100vw, 58vw" /></div></figure>
+      <div class="paire__txt">
+        <h2 id="t-spa" class="display">Après la table, le spa</h2>
+        <div class="seconde">
+          <ul class="liste-nue">{maison.spa.map((s) => <li>{s}</li>)}</ul>
+          <p style="margin-top:1em">{maison.suites}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section papier equipe" aria-labelledby="t-equipe">
+    <div class="wrap">
+      <h2 id="t-equipe" class="display">Les voix de la maison</h2>
+      <ul class="equipe__liste">
+        {equipe.map((e) => (
+          <li>
+            <p class="equipe__nom">{e.nom}</p>
+            <p class="equipe__role">{e.role}</p>
+            <p class="equipe__detail">{e.detail}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-label="Salle et terrasse">
+    <div class="g paire">
+      <figure class="paire__img"><div class="cadre"><Photo cle="toast" sizes="(max-width: 900px) 100vw, 58vw" /></div></figure>
+      <div class="paire__txt">
+        <h2 class="display">À table</h2>
+        <div class="seconde">
+          <p>Le restaurant se réserve par téléphone, du mercredi soir au dimanche midi.</p>
+          <p><a class="btn btn--plein" href={u('/reservation/')}><span class="btn__txt">Réserver</span></a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
