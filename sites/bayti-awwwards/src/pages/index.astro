@@ -19,10 +19,10 @@ const strip = [
   <section class="hero tone-carreau" aria-labelledby="titre">
     <div class="wrap">
       <div class="grid hero__top">
-        <h1 id="titre" class="display display--mega hero__titre">Bayti</h1>
+        <h1 id="titre" class="display display--mega hero__titre" data-split="chars" data-intro>Bayti</h1>
         <div class="hero__side">
-          <p class="plaque"><span class="plaque__rue">Rue du Pont</span><span class="plaque__ville">Namur</span></p>
-          <p class="hero__baseline ital">{site.baseline}</p>
+          <p class="plaque" data-reveal="clip" data-intro data-delay="0.35"><span class="plaque__rue">Rue du Pont</span><span class="plaque__ville">Namur</span></p>
+          <p class="hero__baseline ital" data-split="lines" data-intro data-delay="0.45">{site.baseline}</p>
           <p class="ui muted">Cuisine du Moyen-Orient, revisitée d’une touche européenne.</p>
           <div class="btns">
             <a class="btn btn--plein" href={u('/reservation/')}>Réserver une table</a>
@@ -37,18 +37,18 @@ const strip = [
 
   <section class="sec tone-jour" aria-labelledby="deux-portes">
     <div class="wrap">
-      <h2 id="deux-portes" class="display display--xl" style="max-width:14ch;margin-bottom:clamp(2.5rem,6vw,6rem)">Une rue, <span class="ital">deux portes.</span></h2>
+      <h2 id="deux-portes" class="display display--xl" data-split="lines" style="max-width:14ch;margin-bottom:clamp(2.5rem,6vw,6rem)">Une rue, <span class="ital">deux portes.</span></h2>
       <div class="grid paire">
         <article>
           <p class="paire__numero"><b>n°&nbsp;6</b><span class="xs">{a.comptoir.moment}</span></p>
-          <div class="paire__photo"><Photo cle="houmous" widths={[480, 800]} sizes="(min-width: 900px) 40vw, 92vw" /></div>
+          <div class="paire__photo" data-reveal="clip"><Photo cle="houmous" widths={[480, 800]} sizes="(min-width: 900px) 40vw, 92vw" /></div>
           <h3 class="display display--m">{a.comptoir.nom}</h3>
           <p class="muted" style="margin-top:.5rem">Mezzés froids et chauds, grillades et desserts à l’unité, à emporter. Du mardi au samedi, {a.comptoir.ouverture}.</p>
           <div class="btns"><a class="btn" href={u('/carte/#jour')}>Voir la carte du comptoir</a></div>
         </article>
         <article>
           <p class="paire__numero"><b>n°&nbsp;15</b><span class="xs">{a.restaurant.moment}</span></p>
-          <div class="paire__photo"><Photo cle="mezzesPortrait" widths={[480, 800, 1200]} sizes="(min-width: 900px) 50vw, 92vw" /></div>
+          <div class="paire__photo" data-reveal="clip"><Photo cle="mezzesPortrait" widths={[480, 800, 1200]} sizes="(min-width: 900px) 50vw, 92vw" /></div>
           <h3 class="display display--m">{a.restaurant.nom}, le restaurant</h3>
           <p class="muted" style="margin-top:.5rem">Un seul menu, {menuSoir.nombre} services, {prix(menuSoir.prix)} par personne. Du mardi au samedi, {a.restaurant.ouverture}.</p>
           <div class="btns"><a class="btn btn--plein" href={site.reservationUrl} rel="noopener">Réserver en ligne</a></div>
@@ -61,11 +61,11 @@ const strip = [
     <div class="wrap grid">
       <div class="soir__intro">
         <p class="xs muted" style="margin-bottom:1rem">n°&nbsp;15 · Le soir</p>
-        <h2 id="soir" class="display display--xl">Huit services, <span class="ital">une seule carte.</span></h2>
+        <h2 id="soir" class="display display--xl" data-split="lines">Huit services, <span class="ital">une seule carte.</span></h2>
         <p class="prixmenu"><b>{prix(menuSoir.prix)}</b><span class="muted">par personne, sur place</span></p>
       </div>
-      <div class="soir__photo"><Photo cle="rakakatNoir" widths={[480, 800, 1200]} sizes="(min-width: 900px) 30vw, 92vw" /></div>
-      <ol class="services soir__liste">
+      <div class="soir__photo" data-reveal="clip"><Photo cle="rakakatNoir" widths={[480, 800, 1200]} sizes="(min-width: 900px) 30vw, 92vw" /></div>
+      <ol class="services soir__liste" data-reveal="up">
         {menuSoir.services.map((s) => (
           <li><span class="n">{String(s.n).padStart(2, '0')}</span><span class="nom">{s.nom}</span><span class="desc">{s.description}</span></li>
         ))}
@@ -77,7 +77,7 @@ const strip = [
     <div class="wrap grid comptoir__tete">
       <div>
         <p class="xs muted" style="margin-bottom:1rem">n°&nbsp;6 · Le jour</p>
-        <h2 id="comptoir" class="display display--xl">Le comptoir, <span class="ital">à emporter.</span></h2>
+        <h2 id="comptoir" class="display display--xl" data-split="lines">Le comptoir, <span class="ital">à emporter.</span></h2>
       </div>
       <p class="muted">Mezzés, grillades et desserts à l’unité, de {prix(4)} à {prix(10)} pour les plats, et à la pièce de {prix(1)} à {prix(4.5)}.</p>
     </div>
@@ -101,21 +101,21 @@ const strip = [
 
   <section class="sec tone-jour" aria-labelledby="chez-vous">
     <div class="wrap grid mur">
-      <div class="mur__a"><Photo cle="buffet" widths={[480, 800]} sizes="(min-width: 900px) 33vw, 92vw" /></div>
+      <div class="mur__a" data-reveal="clip"><Photo cle="buffet" widths={[480, 800]} sizes="(min-width: 900px) 33vw, 92vw" /></div>
       <div class="mur__texte">
         <p class="xs muted" style="margin-bottom:1rem">Traiteur événementiel</p>
-        <h2 id="chez-vous" class="display display--xl">Bayti <span class="ital">chez vous.</span></h2>
+        <h2 id="chez-vous" class="display display--xl" data-split="lines">Bayti <span class="ital">chez vous.</span></h2>
         <p class="prose" style="margin-top:1.5rem">La rue s’arrête là où commence votre table. Des menus d’événement créés sur mesure, avec la mise en place et le matériel fournis, servis quelques heures avant votre événement.</p>
         <div class="btns"><a class="btn btn--plein" href={`mailto:${site.email}?subject=Bayti%20chez%20vous`}>Écrire à Bayti</a><a class="btn" href={`tel:${site.telephoneHref}`}>{site.telephone}</a></div>
       </div>
-      <div class="mur__b"><Photo cle="coffret" widths={[480, 800, 1200]} sizes="(min-width: 900px) 40vw, 92vw" /></div>
+      <div class="mur__b" data-reveal="clip" data-delay="0.1"><Photo cle="coffret" widths={[480, 800, 1200]} sizes="(min-width: 900px) 40vw, 92vw" /></div>
     </div>
   </section>
 
   <section class="sec tone-carreau" aria-label="Un avis">
     <div class="wrap avis-wrap">
       <figure class="avis" style="max-width:none">
-        <blockquote>« {avis.texte} »</blockquote>
+        <blockquote data-split="lines">« {avis.texte} »</blockquote>
         <figcaption>{avis.auteur}, {avis.source}</figcaption>
       </figure>
     </div>

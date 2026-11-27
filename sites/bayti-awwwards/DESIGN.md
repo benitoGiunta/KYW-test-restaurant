@@ -66,3 +66,41 @@
 18. [x] Mobile 390 recomposé : type re-réglé (`--t-mega` 90 px, h1 362 px de large pour 358 px utiles), lignes `auto`, strip `overflow-x` + `scroll-snap`, rue verticale ; scrollWidth 390 mesuré.
 
 Mesures (Playwright, build local, `scripts/q.sh bayti-mesure`) : h1 au `left` 21 px à 1440 avant retrait de la marge négative (gutter 33), désormais au gutter, CTA 166×44 px, photo du hero dessous.
+
+## Mouvement réalisé (phase 2)
+- Pilote `src/motion/rue.ts` : une variable, l'avancée dans la rue (progression du défilement, 0 au n° 6, 1 au n° 15). Elle porte le fil fixe `#fil` (trace + passant, en bas d'écran, `mix-blend-mode: difference`), le ton du fond (`#fond` fixe glisse jour, carreau, nuit, section par section, ScrollTrigger scrub entre `top 62%` et `top 38%`) et le repos (pavés du fil qui s'écoulent vers le n° 15 à 8 px/s, 4 à 12 px/s selon le pointeur).
+- Transition « longer » (`src/motion/setup.ts`) : le rideau de nuit traverse de droite à gauche (0,7 s), le fil s'y trace sous « Rue du Pont », puis il poursuit vers la gauche (0,8 s).
+- Intro : « Bayti » en `data-split="chars"`, plaque en `clip`, baseline en lignes, le fil fixe se dessine du n° 6 au n° 15 (premier chargement seulement).
+- Hovers, 3 traitements : (1) CTA, l'aplat d'encre longe le bouton de gauche à droite ; (2) nav et portes de la rue, un filet se trace ou le numéro avance de 0,18 em ; (3) liens texte soulignés au repos, accent et filet épaissi. Photos du comptoir : avancée 1,03.
+- Menu mobile sous 48 rem (`src/motion/menu.ts`) : bouton « Menu », panneau plein écran nuit, focus piégé, Échap, retour du focus, fermeture au clic sur un lien.
+- Réduit et sans JS : pas de `.motion`, ni `#fond` ni `#fil`, chaque section garde son aplat de ton (repli dessiné), aucun texte caché.
+- Écart volontaire au plan de la phase 1 : pas de « point qui glisse » sur la rue du hero (sous la flottaison à 1440) ; le repos est porté par le fil fixe, visible au premier écran.
+
+## Sur-utilisation de la skill (phase 2)
+19. [x] Menu mobile accessible : `src/components/Header.astro` (bouton `aria-expanded`, `#menu` plein écran), `src/motion/menu.ts` (piège Tab, Échap, retour du focus) ; test Playwright 390 : ouvert `true`, focus « Fermer », piège `true`, Échap rend le focus à `.menu-bouton`.
+20. [x] Engine verbatim, `src/engine/astro.ts` ; `transition:persist` sur `#fond`, `#curtain`, `#fil` (Base.astro:67-74) ; `transition:animate="none"` sur `<html>` (Base.astro:36). Pas de `#gl` ni `#cursor` (GL écarté, curseur natif).
+21. [x] Une horloge : grep `addEventListener('scroll'|requestAnimationFrame` hors `src/engine/` vide ; repos par `gsap.ticker` (rue.ts `startIdle`), défilement par `onScroll`.
+22. [x] Code de page dans `onPage()` (rue.ts `initRue`, menu.ts) ; tweens repris par le contexte de l'engine, écouteurs du menu retirés par la fonction de nettoyage.
+23. [x] Aucune CSS `transform` sur élément GSAP : `#fil`, rideau, pavés, trace animés par GSAP seulement ; hovers CSS en `translate`/`scale` individuels sur des éléments que GSAP ne touche pas (grep `transform:` dans site.css : seulement `text-transform`).
+24. [x] Module pilote `src/motion/rue.ts` avec `startIdle()` et pointeur (`pointermove` lissé par `quickTo`), appelé une fois depuis `setup.ts`.
+25. [x] Loader décidé : aucun (Concept Card, Théâtre) ; `Loader.astro` absent, pas de `role="status"`.
+26. [x] Transition du concept : sortie 0,7 s, entrée 0,8 s (setup.ts) ; mesure clic Carte vers rideau caché 1 707 ms au total, chargement compris.
+27. [~] Intro `data-intro` (h1 en caractères, plaque, baseline, fil fixe) ; premier frame vérifié par capture à 0,3 s et 2,8 s ; `settledMs` à lire en phase 3.
+28. [x] Épinglages : aucun pin ; scrub du fond avec `invalidateOnRefresh: true`.
+29. [x] Repli statique : `html:not(.fond-on)` garde l'aplat par section, `html:not(.motion) #fil { display: none }` ; test réduit : classes `js is-booted`, fil `none`, 0 texte caché, hero `rgb(22, 66, 64)`.
+30. [x] Copies décoratives `aria-hidden` : `#fil`, `#fond`, rideau (« Rue du Pont »), `.rue__fil` ; aucun titre dupliqué.
+31. [x] Une famille d'easing (`ease.out`, `ease.inOut`, `ease.soft` de l'engine ; CSS `cubic-bezier(0.16, 1, 0.3, 1)` équivalent expo.out) ; staggers de l'engine 18 à 80 ms, portes du fil 60 ms.
+32. [x] Trois traitements dans le verbe « longer » (aplat qui longe, filet qui se trace ou numéro qui avance, soulignement épaissi).
+33. [x] Hovers sous `@media (hover: hover)`, même état sur `:focus-visible`, `:active` présent (site.css, bloc « Phase 2 » et `.btn`).
+34. [x] Liens texte `.lien` soulignés au repos ; lien KYW souligné au survol et au focus.
+35. [ ] `hover.noHoverChange` : à lire dans `report.json` (phase 3).
+36. [~] Repos : pavés du fil à 8 px/s (un demi-pavé en 1,5 s, ~2 600 px changés à 1440) ; mesuré : `translate` des pavés change sur 1,5 s ; `idleMotion` à lire en phase 3.
+37. [x] Curseur natif, aucun follower ; rien ne dépend du hover (menu au clic, pas de copy « survolez »).
+38. [x] Pas de blur animé, pas de `box-shadow` au scroll, aucun `will-change` posé.
+39. [x] Réduit : Lenis non lancé (classe `lenis` absente), pas de GL, scrub du fond non créé (`initRue` sort), pas de loader ; 0 texte caché mesuré.
+40. [x] GL sans objet, décision écrite (Concept Card, Théâtre) ; aucune ligne GL dans `src/`.
+41. [x] Sans objet (pas de GL).
+44. [x] Lien d'évitement en premier (Base.astro), focus `:focus-visible` dans l'accent de chaque ton.
+45. [ ] Contraste AA : à mesurer par axe en phase 3 (attention aux 0,3 s de glissement entre deux tons).
+46. [x] Texte réel partout, aucun canvas.
+47. [x] Cibles : `.btn` 44 px de haut, `.menu-bouton` 42×44 px, `.menu__fermer` 44 px.

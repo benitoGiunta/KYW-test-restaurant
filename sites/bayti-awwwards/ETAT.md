@@ -1,23 +1,25 @@
-# ETAT bayti-awwwards, fin de la phase 1 (construction-1)
+# ETAT bayti-awwwards, fin de la phase 2 (construction-2)
 
-## Fait
-- Brief, 3 concepts notés, Concept Card, système (palette, typo, grille, plan, mobile), checklist 1 à 18 : `DESIGN.md`.
-- Concept retenu : « Rue du Pont » (n° 6 le jour, n° 15 le soir), verbe « longer », sans loader ni GL.
-- Scaffold Astro 5, engine verbatim (GL et loader retirés : `Loader.astro` supprimé, `runLoader` sort si `#loader` absent), `tokens.css`, `engine.css`, `site.css`, polices (Zodiak 700 et italique, Switzer 400 et 600).
-- Contenu : `src/data/site.ts` + `carte.json` (carte réelle du client, 8 services du soir, 39 plats du comptoir) ; aucun placeholder, aucun avis ni équipe inventés.
-- Pages : `/`, `/carte/`, `/histoire/`, `/reservation/`, 404 dessinée ; composants `Header`, `Footer` (pied « Rue du Pont, Namur. »), `Rue`, `Photo` ; 22 photos du client optimisées dans `src/assets/photos/`.
-- Build passe (`pnpm build:site sites/bayti-awwwards`), `dist/bayti/awwwards/` écrit (404.html, og.png, sitemap), `pnpm index` fait.
-- Mesures hero à 4 largeurs (1440, 1280, 1024, 390) : pas de débordement horizontal.
+## Fait (phase 1)
+- Concept « Rue du Pont » (n° 6 le jour, n° 15 le soir), verbe « longer », sans loader ni GL ; système, contenu réel, 5 pages, 404 ; voir `DESIGN.md` § phase 1.
 
-## Reste (phases 2 et 3)
-- Mouvement : signature « le fil de la rue » et glissement de ton jour, carreau, nuit (`[data-tone]` + ScrollTrigger scrub), `data-reveal`/`data-split`, transition de page (rideau `#curtain` persistant déjà posé), états de repos, hovers (rôles dans DESIGN.md), `src/motion/setup.ts` vide.
-- QA navigateur : captures desktop et mobile, contrastes axe (muted sur jour, safran sur carreau), focus, reduced motion, LCP, vérifier la carte en 390 px, hero à 1440 (la photo passe sous la flottaison, voulu).
-- Vérifier : `og.png` (rendu du hero à 1,5 s, à contrôler visuellement), plan Google Maps en lien, JSON-LD (deux horaires qui se chevauchent).
-- RAPPORT.md (phase 3), cases 9 et 15 de la checklist à finir de prouver.
+## Fait (phase 2)
+- Pilote `src/motion/rue.ts` : fil fixe `#fil` (trace + passant suivant le défilement), fond `#fond` qui glisse jour, carreau, nuit (scrub par section), repos (pavés du fil 8 px/s, pointeur).
+- Transition « longer » (`src/motion/setup.ts`), intro du hero (`data-intro`), reveals déclaratifs (titres en lignes, photos en `clip`, liste des services).
+- Hovers à 3 traitements, `:focus-visible` et `:active` ; lien KYW souligné au survol.
+- Menu mobile accessible (`Header.astro`, `src/motion/menu.ts`) sous 48 rem.
+- Pied du site passé de `<footer>` à `<section aria-label>` (le paquet KYW porte le seul `<footer>`).
+- Favicons PNG 32 px et `apple-touch-icon` 180 px tirés de `favicon.svg`, liés dans `Base.astro`.
+- Build passe, `pnpm index` fait. Contrôles Playwright (1440, 390, 360, réduit) : 0 erreur console, `scrollWidth` = fenêtre, 0 texte caché après défilement et en réduit, menu (ouverture, piège, Échap, retour du focus) conforme, navigation Carte 1,7 s chargement compris.
+- Checklist 19 à 47 dans `DESIGN.md` (35 et 45 ouvertes, 27 et 36 à confirmer).
+
+## Reste (phase 3)
+- Shoot complet (agent captures) : `settledMs`, `idleMotion`/`idleAt`, `hover.noHoverChange`, axe contraste (notamment pendant le glissement de ton et sur `#fil` en différence), LCP (h1 en `chars` + photo du hero), `loaderMs` nul.
+- Vérifier le fil fixe au téléphone en bas de page (au-dessus du pied KYW, `body` a 2,25 rem de marge basse sous `.motion`).
+- RAPPORT.md, cases 9 et 15 de la phase 1.
 
 ## Décisions et pièges
-- Les photos du client sont sur carrelage vert profond (pas pâle) : trois tons (jour clair, carreau vert, nuit noire) plutôt que jour/nuit simples.
-- Horaires déduits (mardi à samedi), « à confirmer » dans le dossier ; ne pas ajouter de plats ni de prix de menu du soir par plat (seulement 45 € l'ensemble).
-- Orthographes sources conservées : « Rakatat » (menu du soir), « Rakakat » (emporter), « Mutabla ».
-- Pas de page par plat ; réservation par lien Barestho, `tel:`, `mailto:` seulement.
-- Chemins de polices dans `tokens.css` en dur `/bayti/awwwards/fonts/` (Vite ne réécrit pas les `url()` des @font-face).
+- Sections transparentes seulement sous `html.fond-on` (classe du pilote, restaurée dans `astro:after-swap`) ; sans elle, chaque section garde son aplat.
+- Le repos doit changer plus de 648 px en 1,5 s à 1440 : pavés de 12 px sur 24, 2 px de haut, 8 px/s (demi-période en 1,5 s).
+- Titres contenant `&nbsp;` (h1 de la carte et de la réservation) non découpés par SplitText.
+- `.btn--plein` en `background-color` (le raccourci `background` effaçait l'aplat de survol).

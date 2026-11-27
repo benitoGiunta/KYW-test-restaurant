@@ -43,6 +43,8 @@ const jsonLd = {
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#0b0f0e" />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={asset('/favicon-32.png')} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
     <link rel="sitemap" href={asset('/sitemap-index.xml')} />
     <link rel="preload" href={asset('/fonts/zodiak-700-normal.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={asset('/fonts/switzer-400-normal.woff2')} as="font" type="font/woff2" crossorigin />
@@ -62,12 +64,18 @@ const jsonLd = {
   </head>
   <body>
     <a class="skip-link" href="#main">Aller au contenu</a>
-    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"></div></div>
+    <div id="fond" transition:persist="fond" aria-hidden="true"></div>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true"><div class="curtain__panel"><span class="curtain__nom">Rue du Pont</span><span class="curtain__fil"></span></div></div>
     <Header tone={tone} />
     <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />
+    <div id="fil" transition:persist="fil" aria-hidden="true">
+      <span class="fil__porte">n°&nbsp;6</span>
+      <span class="fil__ligne"><span class="fil__paves"></span><span class="fil__trace"></span><span class="fil__passant"></span></span>
+      <span class="fil__porte">n°&nbsp;15</span>
+    </div>
     <KywFooter base={import.meta.env.BASE_URL} note="Maquette KYW, certaines données sont illustratives." />
     <script>
       import { start } from '../engine/astro';

@@ -8,8 +8,19 @@ const cur = (seg: string) => (p.endsWith(seg) ? 'page' : undefined);
 <header class={`site-header tone-${tone}`}>
   <a class="site-header__logo" href={u('/')} aria-label="Bayti, accueil">Bayti</a>
   <nav aria-label="Navigation principale">
-    <a href={u('/carte/')} aria-current={cur('/carte')}>Carte</a>
-    <a href={u('/histoire/')} aria-current={cur('/histoire')}>Histoire</a>
+    <a class="nav-lien" href={u('/carte/')} aria-current={cur('/carte')}>Carte</a>
+    <a class="nav-lien" href={u('/histoire/')} aria-current={cur('/histoire')}>Histoire</a>
     <a class="btn btn--plein" href={u('/reservation/')} aria-current={cur('/reservation')}>Réserver</a>
+    <button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
   </nav>
+  <div id="menu" class={`menu tone-nuit`} role="dialog" aria-modal="true" aria-label="Menu" hidden>
+    <button class="menu__fermer" type="button">Fermer</button>
+    <ul class="menu__liens">
+      <li><a href={u('/')} aria-current={p === '' || p.endsWith('/awwwards') ? 'page' : undefined}>Accueil</a></li>
+      <li><a href={u('/carte/')} aria-current={cur('/carte')}>La carte</a></li>
+      <li><a href={u('/histoire/')} aria-current={cur('/histoire')}>Histoire</a></li>
+      <li><a href={u('/reservation/')} aria-current={cur('/reservation')}>Réserver au n°&nbsp;15</a></li>
+    </ul>
+    <p class="menu__pied"><a class="lien" href={`tel:${site.telephoneHref}`}>Appeler le {site.telephone}</a></p>
+  </div>
 </header>
