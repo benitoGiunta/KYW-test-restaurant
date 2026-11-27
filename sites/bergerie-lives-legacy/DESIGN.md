@@ -40,7 +40,7 @@ Le site d'origine est un Wix calme de trois pages (accueil en une page, Mariage 
 ```
 
 ## Composants
-- **Masthead** : barre pleine largeur sur papier, nom en Prata à gauche, liens Manrope 500, bouton Réserver à droite, filet `--color-muted` dessous ; sous 60 rem, les liens passent sur une seconde ligne (menu tactile en phase 2). Réf. `layout.md` § 7.
+- **Masthead** : barre pleine largeur sur papier, nom en Prata à gauche, liens Manrope 500, bouton Réserver à droite, filet `--color-muted` dessous ; sticky à `--z-sticky-nav`, 72 px ; sous 60 rem, menu Popover (bouton Menu/Fermer, liens en Prata, Réserver pleine largeur en pied de menu ; repli sans Popover : liens sur une seconde ligne). Réf. `layout.md` § 7.
 - **Hero Stage** : photo plein cadre, panneau papier carré (filet `--color-rule`), h1 de 4 mots, une phrase, deux actions. Réf. `layout.md` § 6.
 - **Statement** : une phrase Prata `--text-display-s` sur 8 colonnes, texte d'appui sur 4. Mariage sur bande `--color-paper-2` (une bande, jamais deux voisines).
 - **Split** : photo 7 colonnes, texte 4 colonnes ; la journée piscine est une ligne à filet chartreuse 1,5 px, prix en Prata (pas de tuile, pas de bordure + ombre).
@@ -53,7 +53,7 @@ Le site d'origine est un Wix calme de trois pages (accueil en une page, Mariage 
 - Primary : pastille chartreuse, texte `--color-accent-ink`, Manrope 700, 48 px ; Secondary : même pastille contour 1,5 px chartreuse, même hauteur.
 
 ## Motion
-- Character : still ; états seulement en phase 1 (fond du bouton, filet des lignes). Reveal et nav tactile en phase 2 ; sous reduced motion tout est immédiat.
+- Character : still. Un seul reveal (opacité + 16 px sur statements, lignes d'index, textes en split, faits), posé par le script donc invisible sans lui, absent sous reduced motion ; menu Popover 220 ms à l'ouverture, 120 ms à la fermeture ; presse de bouton 1 px ; aucun rebond.
 
 ## Exports
 `tokens.css` dans ce projet.
@@ -67,3 +67,29 @@ Le site d'origine est un Wix calme de trois pages (accueil en une page, Mariage 
 - [x] 6. Noindex et mention KYW sur chaque page · preuve : `Base.astro:27`, grep des 4 pages de `dist/` (noindex 1, kyw-signature 1, mention 1)
 - [x] 7. Aucun tiret cadratin ni demi-cadratin · preuve : recherche U+2014/U+2013 dans `src/` et `dist/` vide
 - [ ] 8. sloplint --render propre · en phase 3 ; `sloplint src` : FAIL 34 sur Base.astro est le faux positif connu (la règle est dans `base.css` et `page.css`)
+
+## Phase 2 : composants interactifs
+- **Boutons** : primaire chartreuse 48 px, ghost ; hover sous `(hover: hover)`, `:active` (fond deep + 1 px), `:disabled` (fond, bordure pointillée, curseur) ; `transition` listée (couleurs, transform).
+- **Formulaire Réservations** : `data-endpoint=""`, `novalidate`, label au-dessus, placeholder = format, `autocomplete`, `inputmode`, `aria-describedby`, aide `min-height: 1lh`, validation au blur puis à l'input, erreur en texte et bordure `--color-error`, ring en `outline` inset, message « Rien n’a été envoyé : ce formulaire n’est pas encore relié. »
+- **Rail galerie** : boutons Précédent/Suivant (visibles avec script), désactivés aux extrémités ; le rail reste focusable au clavier.
+- **Sticky** : un seul (masthead, top 0) ; `scroll-padding-top` 88 px.
+
+## Sur-utilisation (phase 2)
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : grep `transition` dans page.css, couleurs/opacity/transform seulement
+- [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : base.css:6, page.css `.field ... :focus-visible`
+- [x] 7. Fallback reduced motion ; contenu visible sans script (27, 62) · preuve : mesure Playwright sans JS (0 data-reveal, opacité 1) et reduced (0 data-reveal) ; base.css reduced-motion
+- [x] 17. Hero en `dvh`/`svh` (6a) · preuve : page.css `.hero`
+- [x] 19. Sticky non superposés (56) · preuve : un seul sticky, header top 0 mesuré après défilement
+- [ ] 20. Radios-onglets : sans objet (pas de switcher de carte, answered F6)
+- [ ] 21. Vidéo de fond : sans objet (aucune vidéo)
+- [x] 22. Reveal sous `.js` seulement (62) · preuve : `.js [data-reveal]` ; sloplint 62 résolu
+- [x] 23. États d'input (39a) · preuve : page.css bloc Formulaire, capture p2-form-1280
+- [ ] 24. Tooltip et auto-rotation : sans objet (aucun)
+- [x] 29. Aucun faux envoi (70) · preuve : test submit, statut « Rien n’a été envoyé »
+- [x] 30. SVG décoratifs : aucun SVG dans les pages (33)
+- [x] 48. Hover : un signal, conteneur, pas sur non-interactif (lignes sans lien sans hover), pas de rebond, pas de toast · preuve : page.css `.index--table .index__row:hover`
+- [x] 49. `:active`, `:disabled`, contrôles 44 à 52 px · preuve : mesure h bouton 48, input 50,8
+- [x] 56. Un primaire rempli par recette (F4) · preuve : même recette partout
+- [x] 58. Une recette de conteneur ; un seul pattern de scroll (le reveal) · preuve : page.css
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : base.css:4-5, page.css `.rail`
+- [x] 72. Responsive : breakpoints 60rem/40rem, `(hover: hover)`, `(pointer: coarse)`, `svh`, gouttière 16 px · preuve : aucun débordement mesuré à 320, 375, 768, 1024, 1440 sur les 3 pages

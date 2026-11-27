@@ -1,5 +1,5 @@
 ---
-// Masthead : barre pleine largeur sur fond papier, nom en Prata à gauche, liens, bouton Réserver à droite. Statique (phase 1) ; menu tactile en phase 2.
+// Masthead : barre pleine largeur sur fond papier, nom en Prata à gauche, liens, bouton Réserver à droite. Sous 60 rem : menu Popover.
 import { resto, nav } from '../data/site';
 interface Props { page: string }
 const { page } = Astro.props;
@@ -10,13 +10,15 @@ const lien = (n: (typeof nav)[number]) => (n.href.startsWith('#') ? `${base}${n.
   <a class="skip" href="#contenu">Aller au contenu</a>
   <div class="container masthead__in">
     <a class="masthead__name" href={base} aria-label={`${resto.nom}, accueil`}>{resto.nom}</a>
-    <nav class="masthead__nav" aria-label="Principale">
+    <nav class="masthead__nav" id="menu" popover aria-label="Principale">
       <ul>
         {nav.map((n) => (
           <li><a href={lien(n)} aria-current={(n.href === 'mariage-et-location/' && page === 'mariage') ? 'page' : undefined}>{n.label}</a></li>
         ))}
       </ul>
+      <a class="btn btn--primary masthead__cta masthead__cta--menu" href={`${base}reservations/`} aria-current={page === 'reservations' ? 'page' : undefined}>Réserver</a>
     </nav>
-    <a class="btn btn--primary masthead__cta" href={`${base}reservations/`} aria-current={page === 'reservations' ? 'page' : undefined}>Réserver</a>
+    <button class="btn btn--ghost menu-btn" type="button" popovertarget="menu" popovertargetaction="toggle">Menu</button>
+    <a class="btn btn--primary masthead__cta masthead__cta--bar" href={`${base}reservations/`} aria-current={page === 'reservations' ? 'page' : undefined}>Réserver</a>
   </div>
 </header>

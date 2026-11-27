@@ -1,21 +1,20 @@
-# ETAT · bergerie-lives · variante legacy · fin de phase 1 (construction-1)
+# ETAT · bergerie-lives · variante legacy · fin de phase 2 (construction-2)
 
-## Fait
-- Audit (`.hallmark/before.*`, `AUDIT.md`), approche conservée, deal/draw/scaffold/stamp (Hedgerow, tirage 2a9dc5), deux comps, `comp.md`, `DESIGN.md` (Picks, composants, sur-utilisation 1 à 7), entrée au journal `.hallmark/log.json`.
-- Contenu dans `src/data/site.ts` ; pages `/`, `/mariage-et-location/`, `/reservations/`, `404` ; layout, Nav, Footer, Photo ; `page.css` complet en statique, tokens/base du scaffold.
-- 16 photos client en WebP (1600 et 800) dans `public/photos/` (les 9 non utilisées ont été retirées).
-- Build : `pnpm build:site sites/bergerie-lives-legacy` passe, écrit `dist/bergerie-lives/legacy/`. Contrôles par grep : noindex, pied KYW, mention sur les 4 pages ; aucun tiret cadratin.
+## Fait (phase 2)
+- Nav : masthead sticky 72 px, menu Popover sous 60 rem (bouton Menu/Fermer, Échap, fermeture au clic sur un lien, Réserver pleine largeur en pied de menu), repli sans Popover. Skip link conservé.
+- Script `src/scripts/site.ts` (chargé par Base.astro) : menu, un seul reveal posé par le script (rien de caché sans JS ni sous reduced motion), rail galerie (Précédent/Suivant), validation du formulaire.
+- Formulaire Réservations : états, messages, aide 1lh, aucun faux envoi (message « Rien n’a été envoyé : ce formulaire n’est pas encore relié. »).
+- Boutons : hover sous `(hover: hover)`, active, disabled ; hover retiré des lignes d'index sans lien ; hero en svh ; panneau hero 27 rem (moutons entiers à 1280).
+- Mesures Playwright : aucun débordement horizontal à 320/375/768/1024/1440 sur les 3 pages ; menu OK au toucher et au clavier ; ancres non masquées par le sticky.
+- sloplint hero (render) : 0 FAIL réel, 0 REFLEX ; reste NOTE 58 (115 mots sur l'écran des services) et FAIL 34 sur Base.astro (faux positif connu, la règle est aussi posée en `<style is:global>`).
+- Hero review : sous-agent indisponible, auto-notation `self` : ship, 1 finding (moutons masqués à 1280) résolu. DESIGN.md, comp.md (trois questions) à jour. Build passe, noindex, pied KYW et mention sur les 4 pages.
 
-## Reste (phases 2 et 3)
-- Phase 2 : menu tactile (popover) à la place des liens en seconde ligne sous 60 rem, un reveal au plus, états de formulaire, hover/focus de toutes les commandes, reproduction des comps (trois questions de `comp.md`).
-- Phase 3 : sloplint --render complet, captures desktop/375, jury des gates judgées, RAPPORT.md, ligne Sweep du Picks, case 8 de la checklist, `pnpm index`.
-- À vérifier au rendu : polices Google chargées (hors ligne le rendu retombe sur Georgia), panneau du hero à 375 px, rail galerie au clavier, mise en page de `.index__row` quand le texte est long.
+## Reste (phase 3 + captures)
+- Agent captures : shoot desktop/375 des 3 pages et QA.
+- Phase 3 : sloplint --render complet sur dist, jury des gates judgées, RAPPORT.md, ligne Sweep du Picks, case 8, `pnpm index`.
+- À vérifier : le menu à 375 sous le panneau du hero (OK en capture), rail au clavier, `h2` ancre services à 144 px du haut (padding de section + scroll-padding, un peu généreux).
 
-## Décisions et hypothèses
-- Requalification : maison d'hôtes et mariage, pas de carte ni de Switcher, « Carte » remplacée par un Index de services (answered F6).
-- Thème Hedgerow plutôt que Vellum (déjà utilisé, imprimerie) ou Ink (neutre) ; sombre malgré l'original clair, car la façade de pierre et le feuillage y gagnent.
-- Swap du tirage : hero Stage sans « horaires de réservation » (aucun horaire) ; Grid et Figures évités, la galerie est un Rail.
-- Brochure et calendrier mariage renvoient à la page Wix d'origine (PDF non récupéré) ; Réserver une chambre et une visite renvoient au Wix `/reservations`, la page interne `/reservations/` regroupe les trois cas.
-- Aucune note, avis ni capacité de salle affichés (contradictoires ou à confirmer). Un seul slot `.fill` : horaires d'accueil (présent sur l'accueil et sur Réservations, un par page).
-- `sloplint src` : FAIL 34 sur Base.astro est le faux positif de la leçon du 10/11 (la règle est dans `base.css`, importé par `page.css`).
-- `data-slot` posé sans script `hallmarkSlots` (aucune image de remplacement à injecter).
+## Pièges
+- `.btn` (display inline-flex) bat une règle `.masthead__cta--menu` de même spécificité : préfixer `.masthead`.
+- Un `[popover]` reset en `display: block` pour le bureau reste visible fermé sur mobile : ajouter `:not(:popover-open) { display: none }`.
+- Slot `.fill` horaires d'accueil toujours à renseigner (un par page).

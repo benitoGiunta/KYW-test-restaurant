@@ -93,11 +93,17 @@ const rail = [photos.piscine, photos.chaises, photos.couple, photos.tableFleurs,
 
   <!-- Galerie : un rail de photographies du client à défilement horizontal -->
   <section class="sec sec--tight" id="galerie" aria-labelledby="h-galerie">
-    <div class="container"><h2 id="h-galerie">Galerie</h2></div>
-    <ul class="rail" tabindex="0" aria-label="Photographies du domaine, défilement horizontal">
+    <div class="container rail__head">
+      <h2 id="h-galerie">Galerie</h2>
+      <div class="rail__ctl" hidden>
+        <button class="btn btn--ghost" type="button" aria-controls="rail-galerie">Précédent</button>
+        <button class="btn btn--ghost" type="button" aria-controls="rail-galerie">Suivant</button>
+      </div>
+    </div>
+    <ul class="rail" id="rail-galerie" tabindex="0" aria-label="Photographies du domaine, défilement horizontal">
       {rail.map((p) => (
         <li class="rail__item">
-          <Photo p={p} sizes="(min-width: 60rem) 40vw, 80vw" ratio="4 / 3" caption={p === photos.piscine ? 'Piscine extérieure, chauffée d’avril à octobre.' : undefined} />
+          <Photo p={p} sizes="(min-width: 60rem) 28rem, 78vw" ratio="4 / 3" caption={p === photos.piscine ? 'Piscine extérieure, chauffée d’avril à octobre.' : undefined} />
         </li>
       ))}
     </ul>
