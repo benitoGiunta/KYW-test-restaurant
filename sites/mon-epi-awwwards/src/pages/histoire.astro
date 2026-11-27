@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { histoire, presse, site } from '../data/site';
+---
+<Base title="Histoire" description="L’histoire de Monepi à Loyers : Dirk Longin, boulanger-pâtissier, la meunerie à meules de granit et le four à bois breton.">
+  <section class="page-tete">
+    <div class="wrap">
+      <h1 class="display">Histoire d’un grain</h1>
+      <p>Une boulangerie de Loyers, un boulanger, un moulin et un four. Le reste en découle.</p>
+    </div>
+  </section>
+
+  <section class="recit">
+    <div class="wrap grid recit__grid">
+      <figure class="recit__media"><Photo cle="faconnage" sizes="(max-width: 52rem) 95vw, 58vw" prioritaire /><figcaption>Façonnage des pâtons. {site.credit.charAt(0).toUpperCase() + site.credit.slice(1)}.</figcaption></figure>
+      <div class="recit__texte">
+        <p>Dirk Longin est boulanger-pâtissier, chocolatier et glacier de formation. Engagé à la boulangerie Monepi de Loyers en 1990, il reprend l’atelier deux ans plus tard.</p>
+        <p>Depuis 1996, la farine est moulue sur place, sur des meules de granit, à partir de céréales biologiques certifiées. Le Moulin de Montigny et le Moulin de Ferrière sont des partenaires de l’atelier.</p>
+        <p>Le four à bois breton, construit au début des années 2000, fait le reste : un pain au levain bio, cuit au feu.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chrono paper" aria-labelledby="t-chrono">
+    <div class="wrap">
+      <h2 id="t-chrono" class="sr-only">Repères</h2>
+      {histoire.map((h) => (
+        <div class="chrono__ligne">
+          <p class={`chrono__an ${h.annee.length > 5 ? 'chrono__an--long' : ''} num`}>{h.annee}</p>
+          <p class="chrono__txt">{h.texte}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="citation">
+    <div class="wrap">
+      <figure>
+        <blockquote>« Rien ne vaut un pain artisanal cuit à l’authentique feu de bois »</blockquote>
+        <figcaption>{presse.media}, {presse.date}, article « {presse.titre} »</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="recit">
+    <div class="wrap grid recit__grid">
+      <figure class="recit__media"><Photo cle="enfourne" sizes="(max-width: 52rem) 95vw, 58vw" /><figcaption>Les pâtons entrent au four à la pelle.</figcaption></figure>
+      <div class="recit__texte">
+        <p class="label mut">Atelier</p>
+        <p>Dirk Longin, gérant de la boulangerie.</p>
+        <p><a class="btn btn--plein" href={`tel:${site.telephone.replace(/\s/g, '')}`}>Appeler la boulangerie</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

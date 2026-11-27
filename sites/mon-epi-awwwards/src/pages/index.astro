@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, horaires, farines, four, pointsDeVente } from '../data/site';
+import { u } from '../lib/url';
+const tel = `tel:${site.telephone.replace(/\s/g, '')}`;
+---
+<Base>
+  <section class="hero">
+    <div class="wrap grid hero__grid">
+      <p class="hero__chiffre display num" aria-hidden="true">75<small>&nbsp;%</small></p>
+      <div class="hero__media"><Photo cle="flammes" sizes="(max-width: 52rem) 90vw, 40vw" widths={[480, 800, 1200]} prioritaire decorative /></div>
+      <div class="hero__texte">
+        <h1 class="hero__titre display">Monepi, le pain tamisé à 75&nbsp;%, cuit au feu de bois</h1>
+        <div class="hero__actions">
+          <a class="btn btn--plein" href={u('/carte/')}>Voir la carte</a>
+          <a class="btn" href={tel}>Appeler {site.telephoneAffiche}</a>
+        </div>
+        <p>Boulangerie artisanale bio à Loyers, près de Namur : farines de blé et d’épeautre moulues sur meules de granit, levain, four à bois.</p>
+      </div>
+      <div class="hero__pied">
+        <span>{site.adresse.rue}&nbsp;{site.adresse.numero}, {site.adresse.cp}&nbsp;{site.adresse.commune}</span>
+        <span>{horaires[0].jour}&nbsp;: {horaires[0].texte}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="statement">
+    <div class="wrap">
+      <p>Un pain se lit à ce qu’il garde du <em>grain</em>.</p>
+      <p class="statement__suite" style="font-family:var(--f-body);text-transform:none;font-size:var(--t-body);line-height:1.55">
+        Le taux d’extraction dit la part du grain qui reste dans la farine après la mouture : plus il monte, plus le pain est brun, dense et parfumé. À Monepi, la farine est moulue sur place depuis 1996, en quatre qualités.
+      </p>
+    </div>
+  </section>
+
+  <section class="echelle paper" aria-labelledby="t-echelle">
+    <div class="wrap">
+      <h2 id="t-echelle" class="display">Quatre farines, quatre barreaux</h2>
+      <p class="echelle__intro">Chaque pain de la carte part de l’une d’elles. Taux d’extraction approximatifs, d’après la présentation de l’atelier.</p>
+      <ol class="liste-nue">
+        {farines.map((f) => (
+          <li class="barreau" style={`--w:${f.taux}%`}>
+            <p class="barreau__taux display num">{f.taux}<small>&nbsp;%</small></p>
+            <h3 class="barreau__nom display">{f.nom}</h3>
+            <p class="barreau__note">{f.note}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="echelle__legende">La barre sous chaque ligne figure la part du grain conservée.</p>
+    </div>
+  </section>
+
+  <section class="four" aria-labelledby="t-four">
+    <div class="wrap grid four__grid">
+      <div class="four__media"><Photo cle="boulanger" sizes="(max-width: 52rem) 90vw, 40vw" /></div>
+      <div class="four__texte">
+        <h2 id="t-four" class="display">Un four breton, ovale, à bois</h2>
+        <p>Le feu chauffe la voûte pendant trois à quatre heures, avec des fagots séchés deux ans au plus. Puis les braises sont poussées et les pains entrent, à la pelle, dans une chaleur qui ne vient que des briques.</p>
+        <p>C’est ce four que Dirk Longin conduit depuis la reprise de l’atelier, en 1992.</p>
+        <dl class="chiffres">
+          {four.map((c) => (<div><dt class="num">{c.v}</dt><dd>{c.t}</dd></div>))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="mur" aria-labelledby="t-mur">
+    <div class="wrap">
+      <h2 id="t-mur" class="display">Sortis du four</h2>
+      <div class="mur__rail">
+        <figure><Photo cle="painsPelle" sizes="(max-width: 52rem) 78vw, 40vw" /></figure>
+        <figure><Photo cle="graines" sizes="(max-width: 52rem) 78vw, 28vw" /></figure>
+        <figure><Photo cle="ronds" sizes="(max-width: 52rem) 78vw, 33vw" /></figure>
+        <figure><Photo cle="seigle" sizes="(max-width: 52rem) 78vw, 33vw" /></figure>
+        <figure><Photo cle="rustiques" sizes="(max-width: 52rem) 78vw, 58vw" /></figure>
+      </div>
+      <p class="mur__credit">{site.credit.charAt(0).toUpperCase() + site.credit.slice(1)}</p>
+    </div>
+  </section>
+
+  <section class="passer paper" aria-labelledby="t-passer">
+    <div class="wrap grid passer__grid">
+      <h2 id="t-passer" class="display">Passer à Loyers</h2>
+      <div class="passer__col">
+        <p class="label mut">La boutique</p>
+        <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune} ({site.adresse.ville})</address>
+        <ul class="liste-nue"><li><span>{horaires[0].jour}</span><span class="num">{horaires[0].texte}</span></li></ul>
+        <p class="mut" style="margin-top:.6rem;font-size:var(--t-s)">Les autres jours ne sont pas publiés : appelez avant de venir.</p>
+        <p style="margin-top:var(--u)"><a class="btn btn--plein" href={u('/reservation/')}>Commander et venir</a></p>
+      </div>
+      <div class="passer__col">
+        <p class="label mut">Aussi chez</p>
+        <ul class="liste-nue">{pointsDeVente.map((p) => <li>{p}</li>)}</ul>
+        <p class="mut" style="margin-top:.6rem;font-size:var(--t-s)">Points de vente listés par monepi.be.</p>
+      </div>
+    </div>
+  </section>
+</Base>

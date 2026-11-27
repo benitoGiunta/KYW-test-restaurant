@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, horaires, pointsDeVente } from '../data/site';
+import { u } from '../lib/url';
+const tel = `tel:${site.telephone.replace(/\s/g, '')}`;
+---
+<Base title="Commander et venir" description="Commander du pain chez Monepi par téléphone, trouver la boulangerie de Loyers, près de Namur, et connaître ses horaires publiés.">
+  <section class="page-tete">
+    <div class="wrap">
+      <h1 class="display">Commander, passer</h1>
+      <p>Monepi n’est pas un restaurant : il n’y a pas de table à réserver. On y commande ses pains et on les retire à la boutique.</p>
+    </div>
+  </section>
+
+  <section class="cmd">
+    <div class="wrap grid cmd__grid">
+      <div class="cmd__appel">
+        <p class="label mut">Par téléphone</p>
+        <a class="cmd__tel num" href={tel}>{site.telephoneAffiche}</a>
+        <p>Le téléphone est le seul moyen de commande indiqué par la boulangerie. Dites quels pains, quelle taille et pour quel jour ; la carte donne les noms et les prix.</p>
+        <p><a class="btn btn--plein" href={tel}>Appeler maintenant</a>&nbsp; <a class="btn" href={u('/carte/')}>Revoir la carte</a></p>
+      </div>
+      <div class="cmd__infos">
+        <section>
+          <h2>Adresse</h2>
+          <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune} ({site.adresse.ville})</address>
+          <a class="lien" href={site.carte} rel="noopener" target="_blank">Voir sur le plan (OpenStreetMap)</a>
+        </section>
+        <section>
+          <h2>Horaires</h2>
+          <ul class="liste-nue">{horaires.map((h) => <li><span>{h.jour}</span><span class="num">{h.texte}</span></li>)}</ul>
+          <p class="mut" style="margin-top:.6rem;font-size:var(--t-s)">Seul le vendredi est publié par la boulangerie. Pour les autres jours, appelez avant de venir.</p>
+        </section>
+        <section>
+          <h2>Aussi chez</h2>
+          <ul class="liste-nue">{pointsDeVente.map((p) => <li>{p}</li>)}</ul>
+        </section>
+        <section>
+          <h2>Suivre</h2>
+          {site.reseaux.map((r) => <a class="lien" href={r.url} rel="noopener" target="_blank">{r.nom}</a>)}
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="mur" style="padding-top:0">
+    <div class="wrap">
+      <Photo cle="facade" sizes="(max-width: 52rem) 95vw, 90vw" widths={[800, 1200]} />
+      <p class="mur__credit">La bouche du four. {site.credit.charAt(0).toUpperCase() + site.credit.slice(1)}.</p>
+    </div>
+  </section>
+</Base>

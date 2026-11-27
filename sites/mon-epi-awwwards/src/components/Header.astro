@@ -1,0 +1,15 @@
+---
+import { u } from '../lib/url';
+const path = Astro.url.pathname.replace(/\/+$/, '');
+const cur = (p: string) => (path === u(p).replace(/\/+$/, '') ? 'page' : undefined);
+---
+<header class="entete">
+  <div class="wrap">
+    <a class="marque" href={u('/')} aria-label="Monepi Boulangerie, accueil">MON<span>EPI</span></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href={u('/carte/')} aria-current={cur('/carte/')}>Carte</a>
+      <a href={u('/histoire/')} aria-current={cur('/histoire/')}>Histoire</a>
+      <a href={u('/reservation/')} aria-current={cur('/reservation/')}>Commander</a>
+    </nav>
+  </div>
+</header>

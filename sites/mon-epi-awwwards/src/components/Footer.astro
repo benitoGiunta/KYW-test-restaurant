@@ -1,0 +1,33 @@
+---
+import KywFooter from '@kyw/footer';
+import { site, horaires, farines } from '../data/site';
+import { u } from '../lib/url';
+---
+<footer class="pied" data-layer="content">
+  <div class="wrap">
+    <p class="sr-only">Les quatre farines de Monepi, de 65 à 80 % d’extraction.</p>
+    <div class="pied__echelle" aria-hidden="true">
+      {farines.map((f) => <span class="num">{f.taux}<small> %</small></span>)}
+    </div>
+    <div class="pied__barre" aria-hidden="true"></div>
+    <div class="pied__cols">
+      <div>
+        <p class="pied__nom">{site.enseigne}</p>
+        <address style="font-style:normal">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune} ({site.adresse.ville})</address>
+      </div>
+      <div>
+        <p class="label mut">Boutique</p>
+        <p>{horaires[0].jour} : {horaires[0].texte}</p>
+        <a class="lien" href={`tel:${site.telephone.replace(/\s/g, '')}`}>{site.telephoneAffiche}</a>
+      </div>
+      <div>
+        <p class="label mut">Pages</p>
+        <a href={u('/carte/')}>Carte</a><br />
+        <a href={u('/histoire/')}>Histoire</a><br />
+        <a href={u('/reservation/')}>Commander</a><br />
+        {site.reseaux.map((r) => <a href={r.url} rel="noopener" target="_blank">{r.nom}</a>)}
+      </div>
+    </div>
+  </div>
+</footer>
+<KywFooter base={import.meta.env.BASE_URL} />

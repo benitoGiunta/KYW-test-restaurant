@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { rayons, farines, prixTxt, site } from '../data/site';
+const nomFarine = (id?: string) => (id ? (farines.find((f) => f.id === id)?.nom ?? 'Farine ' + id) : null);
+const tel = `tel:${site.telephone.replace(/\s/g, '')}`;
+---
+<Base title="La carte" description="La carte de Monepi : pains au levain, pains à la levure, viennoiseries, petite boulangerie et pains sans gluten, avec leurs prix et leurs farines.">
+  <section class="page-tete">
+    <div class="wrap">
+      <h1 class="display">La carte</h1>
+      <p>Des pains classés comme ils se font : au levain, à la levure, puis le comptoir. Prix en euros, au pain ; quand la taille varie, la fourchette est indiquée. Chaque pain nomme sa farine.</p>
+    </div>
+  </section>
+
+  {rayons.map((r) => (
+    <section class="rayon" aria-labelledby={`r-${r.id}`}>
+      <div class="wrap grid rayon__grid">
+        <div class="rayon__tete">
+          <h2 id={`r-${r.id}`} class="display">{r.titre}</h2>
+          <p>{r.intro}</p>
+          <Photo cle={r.photo} widths={[480, 800]} sizes="20rem" />
+        </div>
+        <ul class="rayon__liste">
+          {r.plats.map((p) => (
+            <li class="ligne">
+              <h3>{p.nom}{p.poids && <span class="ligne__poids">{p.poids}</span>}</h3>
+              <p class="ligne__prix">{prixTxt(p)}&nbsp;€</p>
+              <p class="ligne__comp">{p.composition}.</p>
+              {p.farine && <p class="ligne__farine" style="grid-column:1/-1">{p.farine === 'complète' ? 'Farine complète' : nomFarine(p.farine)}{p.farine !== 'complète' && farines.find((f) => f.id === p.farine) ? ` · ${farines.find((f) => f.id === p.farine)!.taux} %` : ''}</p>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+
+  <div class="wrap carte-note">
+    <p>Pâtisseries de saison et d’événement : selon les moments, à demander à la boutique. Pour commander, <a class="lien" href={tel}>appelez le {site.telephoneAffiche}</a>.</p>
+  </div>
+</Base>
