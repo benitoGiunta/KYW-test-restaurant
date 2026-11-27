@@ -5,12 +5,24 @@ const { current = '' } = Astro.props;
 ---
 <header class="nav">
   <div class="container nav__bar">
-    <a class="nav__brand" href={u()}>{site.nom}</a>
-    <nav aria-label="Principale">
+    <a class="nav__brand" href={u()} aria-label={`${site.nom}, accueil`}>{site.nom}</a>
+    <nav id="menu" class="nav__menu" aria-label="Principale" popover>
       <ul class="nav__list">
         {nav.map((n) => <li><a href={u(n.href)} aria-current={n.href === current ? 'page' : undefined}>{n.label}</a></li>)}
+        <li class="nav__book"><a href={site.telHref}>Réserver</a></li>
       </ul>
     </nav>
-    <a class="btn btn--accent nav__cta" href={site.telHref}>Réserver</a>
+    <a class="btn btn--line nav__cta" href={site.telHref}>Réserver</a>
+    <button class="nav__toggle" type="button" popovertarget="menu" aria-controls="menu" aria-expanded="false" aria-label="Menu">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M3 7h18M3 12h18M3 17h18" fill="none" stroke="currentColor" stroke-width="2" /></svg>
+    </button>
   </div>
 </header>
+<script is:inline>
+(() => {
+  const m = document.getElementById('menu'), b = document.querySelector('.nav__toggle');
+  if (!m || !b || !('onbeforetoggle' in m)) return;
+  m.addEventListener('toggle', (e) => b.setAttribute('aria-expanded', String(e.newState === 'open')));
+  window.matchMedia('(min-width: 60.0625rem)').addEventListener('change', (q) => { if (q.matches && m.matches(':popover-open')) m.hidePopover(); });
+})();
+</script>

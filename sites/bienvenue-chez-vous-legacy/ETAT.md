@@ -1,21 +1,23 @@
-# ETAT · bienvenue-chez-vous · variante legacy · phase 1 sur 3
+# ETAT · bienvenue-chez-vous · variante legacy · phase 2 sur 3 terminée
 
-## Fait
-- Audit (`AUDIT.md`, `.hallmark/before.txt`), approche conservée (Photographic, multi-pages, calme), deal/draw/scaffold/stamp (Solstice, seed abf07f), comp (`comp.md`), `DESIGN.md` (Picks, composants, checklist).
-- `src/data/site.ts` (données réelles, helper `fr()` pour l'insécable), `Base`, `Nav`, `Photo`, `Carte` (Switcher midi/soir), `Horaires`, `Reservation`, `Footer` ; pages index, presentation, resto, boutique, traiteur, contact, 404.
-- 17 photos du client converties en WebP dans `public/photos/`.
-- Build OK : `dist/bienvenue-chez-vous/legacy/` ; noindex, mention KYW et `kyw-signature` présents sur les 7 routes ; aucun tiret cadratin.
+## Fait (phase 1)
+Audit, deal/draw/stamp, comp, DESIGN.md, données réelles, 7 routes, 17 photos WebP.
 
-## Reste (phases 2 et 3)
-- Phase 2 : sloplint --render sur le build, captures desktop/mobile (non vues : le CSS n'a pas été regardé dans un navigateur), états des boutons, nav mobile (liens en défilement horizontal, à valider), décider si le sepia de `base.css` (photo warm) ternit les roses et verts des plats.
-- Slot nommé `boutique` sans photo, texte « Photo de la boutique à fournir » (`.fill`).
-- Comp : c1 et c2 se sont écrasées à la capture ; aucune des deux n'a été regardée.
+## Fait (phase 2)
+- Nav : forme slab (gate 42, edge-aligned écarté), menu Popover sous 60rem (Echap, clic extérieur, `aria-expanded`), « Réserver » cerclé (un seul primaire rempli par page), « Réserver » repris dans le menu sous 22rem, skip link et logo `aria-label`.
+- Boutons : états hover (sous `(hover: hover)`), `:active`, `:disabled`, transitions listées ; `.btn--lg` en nowrap, réduit au téléphone.
+- Switcher midi/soir : Home et End ajoutés, panneaux visibles sans script (vérifié).
+- Signature : entrée de la plaque du hero (CSS), flèche des « Aussi chez nous ».
+- Hero mobile : photo 92vw au-dessus de la plaque (le sourire n'est plus couvert). Hero review en auto-notation (`self`).
+- Finitions : `::selection`, scroll-padding 5.5rem, `svh`, liens 44 px au tactile, `.addr` sans débordement à 320.
+- Build OK, 7 routes avec noindex, mention et kyw-signature ; aucun tiret cadratin ; aucun débordement 320/375/1280 sur 6 routes.
+
+## Reste (phase 3 et captures)
+- Agent captures : shoot complet (non fait ici), vérifier le menu Popover sur toutes les routes mobiles.
 - Phase 3 : Sweep, RAPPORT.md, gates § 5.
+- Slot `boutique` sans photo (`.fill`), toujours à fournir. Numéro, horaires, e-mail : à confirmer (tiers).
 
-## Décisions et hypothèses
-- Draw abf07f partiellement refusé (voir DESIGN.md) : Photographic et Poster gardés.
-- Téléphone, horaires, e-mail : sources tierces, signalés « à confirmer » dans la page ; aucun avis ni note affichés.
-- Mercredis : 99 € Confort et 109 € Confort + repris du texte du site, marqués à confirmer. Box : 199 € (174 € sans boissons) ; le « 109 € » du dossier n'est pas repris (ambigu).
-- Formules midi/soir déduites des lignes du site (49 € midi seulement ; 69 € midi et soir ; 79 € soir ; 94 € Voyage Signature).
-- Boutique : contenu limité à la copie de la page Présentation ; « Chèque cadeau » et « Parking aisé » n'ont qu'un titre dans le dossier, la phrase d'accompagnement est neutre.
-- `dropped` : pages « copie-de- », Presse vide, liens « J'aime » vers sites tiers, © 2013.
+## Pièges
+- sloplint `src` : FAIL 34 faux positif (règle dans `base.css` via `@import`), WARN 49 sur le libellé du téléphone (nowrap en CSS).
+- Le widget sombre flottant en bas des captures est l'outil de dev Astro, pas le site.
+- Hypothèses : sepia gardé ; pas de formulaire (tel: est la réservation) ; entrée de plaque seulement, posture calme.
