@@ -1,4 +1,4 @@
-# ETAT : ne5t · awwwards · construction-2 (phases 1 et 2 faites)
+# ETAT : ne5t · awwwards · construction-3 (phases 1 à 3 faites)
 
 ## Fait
 - DESIGN.md : brief, 3 concepts (choix : « Première impression »), Concept Card, palette, typo, grille, plan de composition, checklist 1 à 18.
@@ -28,3 +28,6 @@
 - Piège : hook de lecture (cat > 80 lignes refusé) ; engine copié depuis `sites/atelier-de-bossime-awwwards/src/engine/` (identique à engine.md).
 - Phase 2 : le repère fixe en bas à gauche chevauchait le texte (nappe, histoire) : déplacé en vertical dans la marge droite (`writing-mode: vertical-rl`, roulement en `xPercent`), masqué sous 1100 px (gouttière trop étroite).
 - Phase 2 : `.motion main .display { visibility: hidden }` : si le module JS échoue, les grands titres restent cachés (même risque que `data-split` de l'engine).
+
+## Phase 3 (27/11/2026)
+- QA corrigée et rebuild OK ; voir RAPPORT.md (fait, reste : pas de critique indépendant, LCP carte 2484 ms, FPS mobile 46-48). DESIGN.md § Phase 3 coché.

@@ -32,8 +32,9 @@ html { scrollbar-color: var(--c-accent) var(--c-bg); }
 .tete__maison { font-size: var(--t-xs); letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-muted); margin-top: 0.35em; }
 .tete__nav ul { display: flex; align-items: center; gap: clamp(1rem, 0.4rem + 2.4vw, 2.8rem); list-style: none; padding: 0; }
 .nl { position: relative; padding-block: 0.6em; font-size: var(--t-s); letter-spacing: 0.04em; }
-.nl::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.2em; height: 1px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-@media (hover: hover) { .nl:hover::after { transform: scaleX(1); } }
+.nl::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.2em; height: 2px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+@media (hover: hover) { .nl:hover::after { transform: scaleX(1); } .nl:hover, .tete__marque:hover .tete__nom { color: var(--c-accent); } }
+.tete__nom { transition: color 0.3s; }
 .nl:focus-visible::after, .nl[aria-current='page']::after { transform: scaleX(1); }
 .nl:active { color: var(--c-accent); }
 
@@ -305,3 +306,11 @@ html:not(.js) .repere { display: none; }
   .tete .btn--petit { min-height: 44px; }
 }
 html.menu-ouvert .repere { display: none; }
+
+/* QA phase 3 : cibles tactiles >= 24 px, rideau absent sans mouvement, lueur plus lisible au repos */
+.pied__liens a, .pied__bloc a.lien, .pied__bloc address a, .resa__col a.lien { display: inline-flex; align-items: center; min-height: 24px; }
+.pied__liens li { padding-block: 0.35em; }
+.pied__bloc .lien { padding-block: 0.3em; }
+html:not(.motion) #curtain { display: none; }
+[data-lueur]::after { mix-blend-mode: overlay; }
+.tete__marque { min-height: 44px; justify-content: center; }

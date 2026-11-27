@@ -136,3 +136,21 @@ Mobile 390 : tout empilé, image du hero avant le texte, mur d'images à deux co
 45. Contraste AA : repère en `mix-blend-mode: difference` (clair sur nuit, sombre sur nappe, vérifié sur capture), mot du rideau décoratif ; à mesurer en phase 3.
 46. Texte réel partout (SplitText garde le texte dans le DOM, aucun canvas). Coché.
 47. Cibles : « Menu », « Fermer », « Réserver » de l'en-tête mobile et « Appeler » du menu à 44 px minimum (`site.css`, bloc PHASE 2) ; à mesurer en phase 3.
+
+### Phase 3 (QA, ship), 27/11/2026
+
+35. `hover.noHoverChange` vide sur `/`, `/carte/`, `/histoire/`, `/reservation/` après correction (`.shots/*/report.json`) : le filet de nav passe à 2 px et le nom de la marque et la nav prennent l'ambre au survol (`site.css`). Coché.
+36. `desktop.idleMotion` = true sur `/` (`.shots/home/report.json`) après mise en avant de la lueur (`mix-blend-mode: overlay`, amplitude 0,5 à 1,0). Coché.
+39. `reduced.hiddenText` = 0 et `moving` = false sur 4 pages : le rideau (mot « Intuition » masqué) est en `display: none` sans `.motion`. Coché.
+42. Sémantique : `lang="fr"`, un h1 par page, `<main id="main">`, listes et landmarks (`Base.astro`, pages). Coché sur lecture.
+43. Titre et description uniques, canonical, OG, favicon SVG, sitemap-index, JSON-LD `Restaurant` (`Base.astro`) ; descriptions ramenées à 160 caractères ou moins (audit sans WARN de longueur). Coché.
+44. `keyboard.stops[0]` = « Aller au contenu » sur `/` ; `skipLinkFirst` reste false car le script teste « skip » dans le libellé français : faux négatif, justifié. `noVisibleFocus`, `invisibleFocus` vides, pas `stuck`. Coché.
+45. Contraste : axe 0 violation sérieuse sur les 5 pages (la violation 404 du passage build était une capture en cours de fondu) ; `contrastNeedsReview` (6 sur `/`) = texte sur photo ou nappe, lu à l'œil sur `.shots/home/d-*.png`. Coché.
+47. Cibles : liens du pied et marque à 24 px minimum (`site.css`, fin) ; reste uniquement le lien d'évitement (invisible hors focus). Coché.
+48. Images avec dimensions, webp, hero `fetchpriority="high"`, premier visuel de la carte en `haute`, lazy ailleurs. Coché.
+49. LCP mobile : `/` 1092 ms (texte), `/histoire/` 1060, `/reservation/` 1012 ; `/carte/` voir RAPPORT. Le texte du hero n'est plus masqué par `data-reveal` (avant : 3124 ms). Coché.
+50. CLS 0 partout, `font-display: swap`. Coché.
+51. JS 61 Ko gz, page `/` 958 Ko, aucune image > 500 Ko (max 454 Ko), polices woff2. Coché (`.logs/audit.log`).
+53. 0 tiret cadratin : voir RAPPORT. 54. Phrases répétées corrigées (pied « Réservation par téléphone uniquement. », crédit du pied reformulé, notes de la carte lisibles, adresse de la réservation reformulée). Coché.
+56. Placeholders listés dans RAPPORT.md. 57. Crédit photos en légende et au pied. 58. Meta robots partout. 59. `KywFooter` partout, mention rendue. 60. 0 requête échouée sous `/ne5t/awwwards/`.
+61. Passes critique neuf : NON FAITES (pas d'outil Agent dans cette session), voir RAPPORT.md. 62 et 63 : sans objet faute de critique ; accessoire retiré : voir RAPPORT.

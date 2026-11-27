@@ -17,11 +17,11 @@ const images: Record<string, 'bouchees' | 'poisson' | 'dessert'> = { eveil: 'bou
   </header>
 
   <section class="wrap carte-liste" aria-label="Le menu du mois">
-    {impressions.map((i) => (
+    {impressions.map((i, n) => (
       <div class="g imp">
         <div class="imp__tete">
           <h2 class="display">{i.titre}</h2>
-          {i.note && <p class="imp__note">Au choix : «&nbsp;{i.note}&nbsp;»</p>}
+          {i.note && <p class="imp__note">{i.note === 'et/ou' ? 'Au choix, l’un, l’autre ou les deux' : 'Un seul plat, à choisir'}</p>}
         </div>
         <ul class="imp__plats">
           {i.plats.map((p, k) => (
@@ -34,7 +34,7 @@ const images: Record<string, 'bouchees' | 'poisson' | 'dessert'> = { eveil: 'bou
             </>
           ))}
         </ul>
-        {images[i.cle] && <figure data-reveal="clip" class="imp__img"><div class="cadre"><Photo cle={images[i.cle]} sizes="(max-width: 900px) 100vw, 24vw" /></div></figure>}
+        {images[i.cle] && <figure data-reveal="clip" class="imp__img"><div class="cadre"><Photo cle={images[i.cle]} haute={i.cle === impressions.find((x) => images[x.cle])?.cle} sizes="(max-width: 900px) 100vw, 24vw" /></div></figure>}
       </div>
     ))}
   </section>

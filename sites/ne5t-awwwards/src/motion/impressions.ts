@@ -48,7 +48,7 @@ export function startImpressions() {
       const t = idle.t;
       lueur.style.setProperty('--lx', `${(50 + idle.x * 40 + Math.sin(t * 0.55) * 14).toFixed(2)}%`);
       lueur.style.setProperty('--ly', `${(46 + idle.y * 26 + Math.cos(t * 0.41) * 9).toFixed(2)}%`);
-      lueur.style.setProperty('--lo', (0.7 + Math.sin(t * 1.3) * 0.22).toFixed(3));
+      lueur.style.setProperty('--lo', (0.75 + Math.sin(t * 1.3) * 0.25).toFixed(3));
     };
     const st = ScrollTrigger.create({
       trigger: lueur, start: 'top bottom', end: 'bottom top',
