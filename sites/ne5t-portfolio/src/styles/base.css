@@ -139,10 +139,11 @@ strong { font-weight: 400; color: var(--c-fg); }
 
 /* Onglets à barre : photo de fond qui change, trois libellés, barre cuivre qui se remplit (--prog, 6 s). */
 .onglets { position: relative; display: grid; min-height: 80svh; align-items: end; overflow: clip; isolation: isolate; }
-.onglets__photos { position: absolute; inset: 0; z-index: -1; }
+.onglets__photos { position: absolute; inset: 0; z-index: -2; } /* sous le voile (z -1) : sinon la photo le recouvre (leçon le-54) */
 .onglets__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1); }
 .onglets__photo.is-active { opacity: 1; }
-.onglets::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, var(--c-bg) 0%, rgb(22 34 47 / 0.45) 35%, rgb(22 34 47 / 0.85) 100%); }
+.onglets__photo { filter: brightness(1.25); }
+.onglets::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(10 16 23 / 0.82) 0%, rgb(10 16 23 / 0.5) 55%, rgb(10 16 23 / 0.2) 100%), linear-gradient(180deg, var(--c-bg) 0%, rgb(22 34 47 / 0.45) 35%, rgb(22 34 47 / 0.85) 100%); }
 .onglets__contenu { position: relative; padding-block: calc(var(--u) * 8) calc(var(--u) * 7); }
 .onglets__intro { margin-top: calc(var(--u) * 1.5); max-width: var(--col-texte); font-family: var(--f-display); font-size: var(--t-l); line-height: 1.15; }
 .onglets__liste { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2) calc(var(--u) * 4); margin-top: calc(var(--u) * 4); }
@@ -151,7 +152,7 @@ strong { font-weight: 400; color: var(--c-fg); }
 .onglet__barre { display: block; height: 2px; background: var(--c-line); }
 .onglet__barre::after { content: ''; display: block; height: 100%; background: var(--c-accent); transform: scaleX(var(--prog, 0)); transform-origin: left; }
 html:not(.motion) .onglet[aria-selected='true'] .onglet__barre::after { transform: scaleX(1); }
-.onglets__panneau { margin-top: calc(var(--u) * 3); max-width: var(--col-texte); min-height: 4.5em; }
+.onglets__panneau { margin-top: calc(var(--u) * 3); max-width: var(--col-texte); min-height: 11.5rem; } /* hauteur stable d'un onglet à l'autre : le bouton ne saute pas */
 .onglets__action { margin-top: calc(var(--u) * 3); }
 
 /* Galerie N&B : bande horizontale de 5 photos de hauteurs variées ; voile cuivre qui se lève au survol. */
@@ -259,8 +260,9 @@ html:not(.motion) .onglet[aria-selected='true'] .onglet__barre::after { transfor
 .resa__infos { display: grid; gap: calc(var(--u) * 1.5); padding: calc(var(--u) * 3); border: 1px solid var(--c-line); }
 .resa__infos address { font-style: normal; }
 @media (min-width: 900px) { .resa { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); } }
-.horaires { display: grid; grid-template-columns: max-content 1fr; gap: 0.3em calc(var(--u) * 2); }
-.horaires dt { text-transform: capitalize; color: var(--c-muted); }
+.horaires { display: grid; grid-template-columns: minmax(0, max-content) minmax(0, 1fr); gap: 0.3em calc(var(--u) * 2); }
+.horaires dt { text-transform: none; color: var(--c-muted); }
+.horaires dt::first-letter { text-transform: uppercase; } /* « Lundi et mardi », pas « Lundi Et Mardi » */
 
 /* Pied de page : fond profond, quatre colonnes, puis KywFooter. */
 .footer { background: var(--c-deep); border-top: 1px solid var(--c-line); padding-block: calc(var(--u) * 6) calc(var(--u) * 4); font-size: var(--t-s); }
@@ -305,3 +307,39 @@ html:not(.motion) .onglet[aria-selected='true'] .onglet__barre::after { transfor
 .menu__prix { font-family: var(--f-display); color: var(--c-accent); }
 .recit__photo { margin: calc(var(--u) * 2) 0 0; overflow: clip; }
 .recit__photo img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+
+/* Phase 2 : signature ambre. Filet de lecture sous l'en-tête (--progres posé sur .header seul) et monogramme qui se remplit
+   une fois le premier écran dépassé. Sans JS ni mouvement : filet absent, monogramme au repos (état statique lisible). */
+.header::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--c-accent); transform: scaleX(var(--progres, 0)); transform-origin: left; pointer-events: none; }
+.header.is-passe .header__cercle { background: var(--c-accent); color: var(--c-deep); }
+.header.is-passe .header__brand:hover .header__cercle { background: transparent; color: var(--c-accent); }
+.hero__photo { top: -10%; height: 120%; transform-origin: 50% 40%; will-change: transform; } /* marge haute pour la dérive au défilement */
+html:not(.motion) .hero__photo { will-change: auto; }
+
+/* États : lignes de menu et formules réagissent au survol, au focus et au toucher (cuivre, jamais de déplacement de mise en page). */
+.menu__ligne, .formule { transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+@media (hover: hover) { .menu__ligne:hover, .formule:hover { background-color: rgb(208 154 78 / 0.06); } }
+.btn:active { transform: translateY(1px); }
+.onglet:focus-visible { outline-offset: 6px; }
+.galerie__bande:focus-visible { outline-offset: -2px; }
+@media (prefers-reduced-motion: reduce) {
+  .header::after { transition: none; }
+  .galerie__item:hover img { transform: none; }
+  .btn:active { transform: none; }
+  .hero__photo { will-change: auto; }
+}
+
+/* Mobile et tactile : listes de tarifs empilées (320 px : « Trois heures d'accès, non-résidents » débordait de 30 px) ;
+   cibles de 44 px pour les liens isolés du pied, de la clôture et de la réservation, et pour le bouton Réserver. */
+@media (max-width: 480px) {
+  .horaires { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .horaires dd { margin-bottom: 0.7em; overflow-wrap: anywhere; }
+}
+@media (pointer: coarse) {
+  .btn--petit { min-height: 44px; }
+  .actions .lien, .citation__lien .lien, .footer .lien, .resa .lien, .cloture .lien, .contact .lien { display: inline-flex; align-items: center; min-height: 44px; padding-block: 0; }
+}
+html { color-scheme: dark; scrollbar-color: var(--c-accent) var(--c-deep); }
+.valeurs { margin-block: calc(var(--u) * 2); }
+.valeurs li { transition: color 0.3s, border-color 0.3s; }
+@media (hover: hover) { .valeurs li:hover { color: var(--c-fg); border-color: var(--c-accent); } }

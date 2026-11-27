@@ -85,16 +85,16 @@ const resume = horairesResume();
       {offres.map((o, i) => (
         <div class="onglets__panneau" role="tabpanel" id={`panneau-${i}`} aria-labelledby={`onglet-${i}`} hidden={i !== 0}>
           <p>{o.texte}{o.textePlaceholder && <span class="illu">texte illustratif</span>}</p>
+          <p class="onglets__action"><a class="btn" href={u(o.lien.page)}>{o.lien.label}</a></p>
         </div>
       ))}
-      <p class="onglets__action"><a class="btn" href={u('/privatisation/')}>Privatiser et repas en suite</a></p>
     </div>
   </section>
 
   <section class="galerie" aria-label="La maison en noir et blanc">
     <div class="galerie__bande">
       {galerie.map((p, i) => (
-        <figure class:list={['galerie__item', `galerie__item--${hauteurs[i]}`]} data-reveal="up" data-delay={String(i * 0.08)} data-cursor="Voir">
+        <figure class:list={['galerie__item', `galerie__item--${hauteurs[i]}`]} data-reveal="up" data-delay={String(i * 0.08)} data-cursor="La maison">
           <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
         </figure>
       ))}

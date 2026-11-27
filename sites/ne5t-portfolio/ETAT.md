@@ -1,4 +1,4 @@
-# ETAT : ne5t portfolio, phase 1 sur 3 (construction-1)
+# ETAT : ne5t portfolio, phase 2 sur 3 (construction-2) faite ; phase 1 ci-dessous
 
 ## Fait
 - Gabarit Velours copié dans `sites/ne5t-portfolio/` (package renommé `ne5t-portfolio`), `pnpm install` OK.
@@ -11,7 +11,29 @@
 - Build : `scripts/q.sh ne5t-build node scripts/build-site.mjs sites/ne5t-portfolio` OK, 8 pages, `dist/ne5t/portfolio/`.
   Contrôles grep : aucun reste « Potes / Michelin / Zenchef », noindex et mention KYW présents, titres uniques.
 
-## Reste (phases 2 et 3)
+## Phase 2 (construction-2) : fait
+- Signature ambre (`src/motion/setup.ts`, `base.css`) : filet de lecture sous l'en-tête (`--progres` écrit sur `.header` seul, ScrollTrigger `end: max`) ;
+  monogramme « N5 » qui se remplit (`.is-passe`) une fois le hero d'accueil ou l'en-tête de page dépassé ; façade du hero qui se pose
+  (échelle 1,08 vers 1, 2,2 s) puis dérive de 7 % au défilement (picture `top: -10%; height: 120%`). Desktop uniquement ; mobile et reduced motion : statique.
+- Onglets : correctif z-index de Velours (photos en -2 sous le voile, voile latéral + `brightness(1.25)`), un bouton d'action par panneau
+  (Privatiser / Repas en suite / Le spa et les suites ; champ `lien` ajouté à `Offre`), hauteur de panneau stable (735 px aux trois onglets),
+  rotation en une seule traversée puis arrêt, un clic ou une flèche l'arrête pour de bon (WCAG 2.2.2).
+- Finitions : « Lundi et mardi » (plus de capitalize), `.horaires` empilé sous 480 px (débordement 350 px à 320 sur /sejour/ corrigé),
+  cibles 44 px en tactile (Réserver, liens isolés du pied, de la clôture et de la réservation), états survol des lignes de menu, formules et chips de suites,
+  `color-scheme: dark`, libellé de curseur de la galerie « La maison ».
+- Mesures (Playwright, scripts dans le scratchpad, captures dans `.shots/ne5t-p2/`, non un shoot complet) : clics réels sur les 7 liens d'en-tête
+  des 7 pages = 49 navigations OK, `elementFromPoint` = `<a>` ; aucun débordement à 320 et 390 sur 7 pages ; compteurs finaux 4 / 60 / 6 / 45 ;
+  mention KYW et logo visibles en bas de page 1440 ; reduced motion : pas de rideau, citation à opacité 1, aucun `data-reveal` caché, filet absent ;
+  console sans erreur (hors 404 attendue de l'URL inexistante). Build : 8 pages OK (`scripts/q.sh ne5t-build`).
+
+## Reste (phase 3)
+- Shoot complet par l'agent captures puis lecture de `QA-<étape>.md` ; contrôle visuel des 7 pages à 1440 et 390 (seuls accueil, menu bas, séjour mobile ont été vus ici).
+- RAPPORT.md (placeholders, shoot/audit), sloplint (`sloplint src --genre editorial --url <page>`), LCP (mesure en série, hero dérivé en `transform`).
+- Pas vérifié : heure d'ouverture en direct (horaires exacts inconnus : pas de badge « ouvert »), pied de page KYW `kyw-footer__link` de 24 px de haut (paquet partagé, non modifié).
+- `gabarits/UTILISATION.md` (ligne Velours : ajouter `ne5t`) et défauts Velours (z-index onglets, `capitalize`, `.horaires`) à reporter dans `gabarits/velours/` : intouchable ici.
+- `pnpm index` et `pnpm-lock.yaml` : non faits (phase 3 ou session mère).
+
+## Reste de la phase 1 (historique)
 - Phase 2 : animations et réglages du moteur (rideaux, compteurs, onglets : vérifier que `data-compteur` ne casse pas sur 60/45), QA navigateur
   (aucune capture lue ici), vérifier le hero (nom « NE5T Intuition » en deux mots, mobile 390), la galerie (ordre des hauteurs), le
   triptyque 2:3 sur plats recadrés depuis des paysages (06, 07), contrastes `.illu`, clics réels d'en-tête (6 liens, nav plus longue).

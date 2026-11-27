@@ -27,7 +27,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [heroIntro(intro), rideaux(), compteurs(), citation(), onglets()];
+    const cleanups = [heroIntro(intro), heroPhoto(intro), progression(), rideaux(), compteurs(), citation(), onglets()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -110,6 +110,7 @@ function onglets() {
   const photos = [...root.querySelectorAll<HTMLElement>('[data-onglet-photo]')];
   const reduced = prefersReducedMotion();
   let i = 0;
+  let auto = true;
   let tween: gsap.core.Tween | null = null;
   const prog = { v: 0 };
   const applique = () => {
@@ -126,10 +127,12 @@ function onglets() {
     tween?.kill();
     prog.v = 0;
     applique();
-    if (reduced) { prog.v = 1; applique(); return; }
-    tween = gsap.to(prog, { v: 1, duration: 6, ease: 'none', onUpdate: applique, onComplete: () => { i = (i + 1) % tabs.length; lance(); } });
+    if (reduced || !auto) { prog.v = 1; applique(); return; }
+    // Une seule traversée des trois onglets, puis arrêt (barre pleine) : pas de mouvement sans fin (WCAG 2.2.2).
+    tween = gsap.to(prog, { v: 1, duration: 6, ease: 'none', onUpdate: applique, onComplete: () => { if (i < tabs.length - 1) { i += 1; lance(); } else { prog.v = 1; applique(); } } });
   };
-  const choisis = (k: number, focus = false) => { i = (k + tabs.length) % tabs.length; lance(); if (focus) tabs[i].focus(); };
+  // Un choix de la personne (clic, flèches) arrête la rotation pour de bon.
+  const choisis = (k: number, focus = false) => { auto = false; i = (k + tabs.length) % tabs.length; lance(); if (focus) tabs[i].focus(); };
   const handlers: [EventTarget, string, EventListener][] = [];
   const on = (t: EventTarget, ev: string, fn: EventListener) => { t.addEventListener(ev, fn); handlers.push([t, ev, fn]); };
   tabs.forEach((t, k) => {
@@ -140,12 +143,43 @@ function onglets() {
     }) as EventListener);
   });
   on(root, 'pointerenter', () => tween?.pause());
-  on(root, 'pointerleave', () => tween?.play());
+  on(root, 'pointerleave', () => { if (auto) tween?.play(); });
   on(root, 'focusin', () => tween?.pause());
-  on(root, 'focusout', () => tween?.play());
+  on(root, 'focusout', () => { if (auto) tween?.play(); });
   // La rotation ne tourne que quand le bloc est à l'écran (une horloge, en pause hors champ).
   const st = ScrollTrigger.create({ trigger: root, start: 'top bottom', end: 'bottom top', onEnter: () => tween?.play(), onEnterBack: () => tween?.play(), onLeave: () => tween?.pause(), onLeaveBack: () => tween?.pause() });
   lance();
   if (!st.isActive) tween?.pause();
   return () => { tween?.kill(); st.kill(); handlers.forEach(([t, ev, fn]) => t.removeEventListener(ev, fn)); };
+}
+
+
+/** Hero : la façade de nuit se pose (échelle 1,08 vers 1 en 2,2 s) puis dérive de 7 % au défilement. Transform seul,
+ *  la photo reste peinte au premier rendu (LCP). Desktop, mouvement autorisé. */
+function heroPhoto(intro: gsap.core.Timeline) {
+  const photo = document.querySelector<HTMLElement>('.hero__photo');
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  if (!photo || !hero || prefersReducedMotion() || isMobile()) return () => {};
+  gsap.set(photo, { scale: 1.08 });
+  const pose = gsap.to(photo, { scale: 1, duration: 2.2, ease: ease.out, paused: true });
+  intro.add(() => pose.play(), 0);
+  const derive = gsap.to(photo, { yPercent: 7, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+  return () => { pose.kill(); derive.scrollTrigger?.kill(); derive.kill(); gsap.set(photo, { clearProps: 'transform' }); };
+}
+
+/** Signature : filet ambre de lecture sous l'en-tête (--progres, écrit sur .header seul) et monogramme plein dès que le
+ *  premier écran (hero d'accueil ou en-tête de page) est dépassé. Reduced motion : pas de filet, monogramme au repos. */
+function progression() {
+  const header = document.querySelector<HTMLElement>('.header');
+  if (!header) return () => {};
+  const reduced = prefersReducedMotion();
+  const premier = document.querySelector<HTMLElement>('[data-hero], .hero-page');
+  const triggers: ScrollTrigger[] = [];
+  if (!reduced) {
+    triggers.push(ScrollTrigger.create({ start: 0, end: 'max', onUpdate: (st) => header.style.setProperty('--progres', st.progress.toFixed(3)) }));
+  }
+  if (premier) {
+    triggers.push(ScrollTrigger.create({ trigger: premier, start: 'bottom top+=72', onToggle: (st) => header.classList.toggle('is-passe', st.isActive || st.progress === 1), end: 'max' }));
+  }
+  return () => { triggers.forEach((t) => t.kill()); header.style.removeProperty('--progres'); header.classList.remove('is-passe'); };
 }

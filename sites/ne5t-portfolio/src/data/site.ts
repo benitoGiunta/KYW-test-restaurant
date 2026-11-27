@@ -16,7 +16,7 @@ export interface Reseau { nom: string; url: string }
 /** Chiffre monumental d'un chapitre : seulement des nombres prouvés par le dossier (preuve citée). */
 export interface Chiffre { valeur: number; libelle: string; sousLibelle?: string; preuve: string; placeholder: false }
 export interface Distinction { nom: string; detail: string; url: string; placeholder: boolean }
-export interface Offre { nom: string; texte: string; textePlaceholder: boolean; photo: string }
+export interface Offre { nom: string; texte: string; textePlaceholder: boolean; photo: string; lien: { page: string; label: string } }
 export interface Suite { nom: string; style?: string }
 
 export interface Restaurant {
@@ -155,9 +155,9 @@ export const site: Restaurant = {
   // Aucune citation d'avis dans le dossier : la phrase citée est la devise de la maison, tirée de la page Restaurant du site client.
   citation: { texte: 'Une seule invitation : suivre notre intuition.', source: 'La devise de la maison', url: 'https://ne5t.com/restaurant-intuition/', placeholder: false },
   offres: [
-    { nom: 'Privatisation', texte: 'Le restaurant se privatise pour 45 couverts : un repas de famille, une réunion d’amis, une table d’entreprise.', textePlaceholder: true, photo: '/photos/tab-table-terrasse.webp' },
-    { nom: 'Repas en suite', texte: 'Votre repas servi dans la suite, à réserver au moins 24 heures à l’avance. Supplément de 15 % sur le repas et les boissons.', textePlaceholder: false, photo: '/photos/tab-chambre.webp' },
-    { nom: 'Spa WellNE5T', texte: '250 m² ouverts aux clients extérieurs, sept jours sur sept de 9h30 à 20h30. Trois heures à 35 € pour les résidents, 70 € pour les autres.', textePlaceholder: false, photo: '/photos/spa-voutes.webp' },
+    { nom: 'Privatisation', texte: 'Le restaurant se privatise pour 45 couverts : un repas de famille, une réunion d’amis, une table d’entreprise.', textePlaceholder: true, photo: '/photos/tab-table-terrasse.webp', lien: { page: '/privatisation/', label: 'Privatiser le restaurant' } },
+    { nom: 'Repas en suite', texte: 'Votre repas servi dans la suite, à réserver au moins 24 heures à l’avance. Supplément de 15 % sur le repas et les boissons.', textePlaceholder: false, photo: '/photos/tab-chambre.webp', lien: { page: '/privatisation/', label: 'Le repas en suite' } },
+    { nom: 'Spa WellNE5T', texte: '250 m² ouverts aux clients extérieurs, sept jours sur sept de 9h30 à 20h30. Trois heures à 35 € pour les résidents, 70 € pour les autres.', textePlaceholder: false, photo: '/photos/spa-voutes.webp', lien: { page: '/sejour/', label: 'Le spa et les suites' } },
   ],
   // Noms des six hébergements : site client. Les photos ne sont pas associées nominativement (dossier : seules deux légendes le sont).
   suites: [
