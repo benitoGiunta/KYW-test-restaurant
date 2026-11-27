@@ -1,0 +1,1 @@
+- 2026-11-27 : site Wix (restobienvenuechezvous.com) : capture-site ne rend que des fonds vides sur les sous-pages (contenu chargé tard) ; un téléchargement direct du HTML puis extraction de texte en python donne les menus ; photos originales static.wixstatic.com/media/<id> sans suffixe (jusqu'à 13000 px, réduire à 2400) ; /merci du site = 404.
