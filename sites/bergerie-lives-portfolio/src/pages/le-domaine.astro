@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { asset } from '../lib/url';
+const a = photoDe('/photos/facade.webp');
+const b = photoDe('/photos/tonnelle.webp');
+---
+<Base title="Le domaine" description="Le Domaine de la Bergerie à Lives-sur-Meuse (Namur) : son histoire, ses jardins, la presse et les curiosités à proximité.">
+  <HeroPage titre="Le domaine" sur="Lives-sur-Meuse" chiffre={site.chiffres.depuis}>
+    <p>{site.histoire[0]}</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Histoire de la maison">
+    <div class="wrap offres">
+      <article class="offre">
+        <figure class="offre__photo" data-reveal="clip"><img src={asset(a.src)} alt={a.alt} width={a.largeur} height={a.hauteur} loading="lazy" decoding="async" /></figure>
+        <div class="offre__texte">
+          <h2 class="offre__nom">La maison</h2>
+          <p>{site.histoire[1]}</p>
+          <ul class="stack">{site.presse.map((p) => <li><a class="lien" href={p.url} rel="noopener">{p.media}, {p.date.slice(0, 4)} : {p.titre}</a></li>)}</ul>
+        </div>
+      </article>
+      <article class="offre offre--inverse">
+        <figure class="offre__photo" data-reveal="clip"><img src={asset(b.src)} alt={b.alt} width={b.largeur} height={b.hauteur} loading="lazy" decoding="async" /></figure>
+        <div class="offre__texte">
+          <h2 class="offre__nom">Autour du domaine</h2>
+          <dl class="horaires">{site.activites.map((x) => <><dt>{x.nom}</dt><dd>{x.texte}</dd></>)}</dl>
+        </div>
+      </article>
+    </div>
+  </section>
+</Base>

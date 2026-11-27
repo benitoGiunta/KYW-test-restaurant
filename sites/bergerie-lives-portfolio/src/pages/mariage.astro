@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import Chapitre from '../components/Chapitre.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const m = site.mariage;
+const photos = ['/photos/ceremonie-jardin.webp', '/photos/veranda-tables.webp', '/photos/tonneau-fleurs.webp', '/photos/cour.webp'];
+const galerie = ['/photos/sortie-ceremonie.webp', '/photos/plan-de-table.webp', '/photos/roses.webp'].map(photoDe);
+---
+<Base title="Mariage au domaine" description="Mariage à La Bergerie de Lives, Namur : le domaine privatisé le temps d'un weekend complet, cérémonie au jardin, repas sous la véranda.">
+  <HeroPage titre="Votre mariage" sur="Tout un weekend au domaine" chiffre={site.chiffres.weekend}>
+    <p>{m.intro}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={u('/contact/')}>Programmer une visite</a>
+    </div>
+  </HeroPage>
+
+  <section class="section" aria-label="Le déroulé d'un weekend de mariage">
+    <div class="wrap offres">
+      {m.etapes.map((o, i) => { const p = photoDe(photos[i]); return (
+        <article class:list={['offre', { 'offre--inverse': i % 2 === 1 }]}>
+          <figure class="offre__photo" data-reveal="clip">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+          <div class="offre__texte">
+            <h2 class="offre__nom">{o.nom}</h2>
+            <p>{o.texte}</p>
+          </div>
+        </article>
+      ); })}
+    </div>
+  </section>
+
+  <Chapitre id="visite" chiffre={site.chiffres.visite} photo={photoDe('/photos/table-fleurs.webp')} inverse filet lien={{ href: u('/contact/'), label: 'Programmer une visite' }}>
+    <p>Avant de vous décider, venez voir le domaine : une visite d'informations de 30 minutes, avec les propriétaires.</p>
+    <p>{m.brochureNote}</p>
+  </Chapitre>
+
+  <section class="section" aria-label="Images de mariages au domaine">
+    <div class="wrap galerie-page">
+      {galerie.map((p) => (
+        <figure data-reveal="up"><img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" /></figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--contact" aria-labelledby="contact-titre">
+    <div class="wrap contact">
+      <h2 class="petite-cap" id="contact-titre">Parler de votre date</h2>
+      <p class="contact__texte">{m.capaciteNote}<span class="illu">à confirmer</span></p>
+      <p class="actions"><a class="btn btn--primary" href={u('/contact/')}>Nous contacter</a></p>
+    </div>
+  </section>
+</Base>

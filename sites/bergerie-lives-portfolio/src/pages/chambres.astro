@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const c = site.chambres;
+const blocs = [
+  { nom: 'Les chambres', texte: c.intro, photo: '/photos/chambre.webp' },
+  { nom: 'Piscine, sauna et jacuzzi', texte: "Toutes les chambres donnent accès à la piscine extérieure, chauffée d'avril à octobre, au sauna et au jacuzzi, dans le domaine.", photo: '/photos/piscine.webp' },
+  { nom: 'Le petit déjeuner', texte: 'Un petit déjeuner varié et bio, servi en chambre ou en salle. Une cuisine partagée reste à la disposition des hôtes, et le wifi est gratuit dans toutes les chambres.', photo: '/photos/table-fleurs.webp' },
+];
+---
+<Base title="Chambres d'hôtes" description={`Chambres d'hôtes à La Bergerie de Lives, ${site.adresse.commune} : petit déjeuner bio, piscine chauffée, sauna et jacuzzi.`}>
+  <HeroPage titre="Chambres d'hôtes" sur="Dormir au domaine" chiffre={site.chiffres.bienEtre}>
+    <p>{c.intro}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={u('/contact/')}>Demander une disponibilité</a>
+      <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+    </div>
+  </HeroPage>
+
+  <section class="section" aria-label="Ce que comprend le séjour">
+    <div class="wrap offres">
+      {blocs.map((o, i) => { const p = photoDe(o.photo); return (
+        <article class:list={['offre', { 'offre--inverse': i % 2 === 1 }]}>
+          <figure class="offre__photo" data-reveal="clip">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+          <div class="offre__texte">
+            <h2 class="offre__nom">{o.nom}</h2>
+            <p>{o.texte}</p>
+          </div>
+        </article>
+      ); })}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="services-titre">
+    <div class="wrap resa">
+      <div class="resa__horaires" data-reveal="fade">
+        <h2 class="petite-cap" id="services-titre">Services inclus</h2>
+        <dl class="horaires">
+          {site.services.map((s) => <><dt>{s.nom}</dt><dd>{s.texte}</dd></>)}
+        </dl>
+      </div>
+      <div class="resa__infos" data-reveal="fade">
+        <h2 class="petite-cap">Tarifs et disponibilités</h2>
+        <p>{c.tarifNote}<span class="illu">information à compléter</span></p>
+        <p class="muted">{c.nombreNote}</p>
+        <p class="muted">Journée piscine : {site.chiffres.piscine.valeur} € par personne, sur réservation au {site.telephone}.</p>
+      </div>
+    </div>
+  </section>
+</Base>

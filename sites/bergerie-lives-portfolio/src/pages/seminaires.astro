@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const s = site.seminaire;
+const p1 = photoDe('/photos/veranda-salon.webp');
+const p2 = photoDe('/photos/veranda-cocktail.webp');
+---
+<Base title="Séminaires" description="Séminaires et réunions à La Bergerie de Lives, Namur : plusieurs salles, plusieurs formules, chambres, piscine et jardin sur place.">
+  <HeroPage titre="Séminaires" sur="Un cadre d'exception pour vos réunions">
+    <p>{s.intro}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={u('/contact/')}>Demander une formule</a>
+      <a class="btn" href={telHref()}>Appeler le {site.telephone}</a>
+    </div>
+  </HeroPage>
+
+  <section class="section" aria-label="Les salles">
+    <div class="wrap offres">
+      <article class="offre">
+        <figure class="offre__photo" data-reveal="clip"><img src={asset(p1.src)} alt={p1.alt} width={p1.largeur} height={p1.hauteur} loading="lazy" decoding="async" /></figure>
+        <div class="offre__texte">
+          <h2 class="offre__nom">Ce dont vous avez besoin</h2>
+          <ul class="stack">{s.points.map((t) => <li>{t}</li>)}</ul>
+        </div>
+      </article>
+      <article class="offre offre--inverse">
+        <figure class="offre__photo" data-reveal="clip"><img src={asset(p2.src)} alt={p2.alt} width={p2.largeur} height={p2.hauteur} loading="lazy" decoding="async" /></figure>
+        <div class="offre__texte">
+          <h2 class="offre__nom">Formules et tarifs</h2>
+          <p>Les formules se construisent selon vos besoins avec les propriétaires.<span class="illu">détail à compléter</span></p>
+        </div>
+      </article>
+    </div>
+  </section>
+</Base>

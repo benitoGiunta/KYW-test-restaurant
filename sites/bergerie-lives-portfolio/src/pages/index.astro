@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import Chapitre from '../components/Chapitre.astro';
+import { site, photoDe, adresseLigne, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const hero = photoDe('/photos/facade.webp');
+const heroM = photoDe('/photos/facade-960.webp');
+const c = site.chiffres;
+const motsNom = site.nom.split(' ');
+const citation = "Ce moment passe trop vite. Nous avons donc décidé de privatiser le domaine le temps d'un weekend pour vous.";
+const motsCitation = citation.split(' ');
+const galerie = ['/photos/nb-chaises.webp', '/photos/nb-noeud.webp', '/photos/nb-couple.webp', '/photos/nb-arche.webp', '/photos/nb-saxo.webp'].map(photoDe);
+const hauteurs = ['basse', 'haute', 'moyenne', 'haute', 'basse'];
+const offres = site.offres;
+---
+<Base preloadImage={{ href: heroM.src, media: '(max-width: 767px)' }}>
+  <section class="hero" data-hero aria-label="Accueil">
+    <picture class="hero__photo">
+      <source media="(max-width: 767px)" srcset={asset(heroM.src)} />
+      <img src={asset(hero.src)} alt={hero.alt} width={hero.largeur} height={hero.hauteur} fetchpriority="high" decoding="async" data-critical />
+    </picture>
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="wrap hero__contenu">
+      <p class="petite-cap hero__sur">{adresseLigne()}</p>
+      <h1 class="hero__nom">{motsNom.map((m, i) => <><span class="hero__mot"><span class="hero__mot-in" data-hero-mot>{m}</span></span>{i < motsNom.length - 1 ? ' ' : ''}</>)}</h1>
+      <p class="hero__accroche">{site.baseline}</p>
+      <div class="actions">
+        <a class="btn btn--primary" href={u('/contact/')}>Programmer une visite</a>
+        <a class="lien lien--fleche" href="#weekend">Découvrir le domaine</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="guides" aria-label="Dans la presse">
+    <div class="wrap guides__inner" data-reveal="fade">
+      <p class="petite-cap guides__sur">Dans la presse</p>
+      <ul class="guides__liste">
+        {site.presse.map((p) => (
+          <li><a class="guides__item" href={p.url} rel="noopener"><span class="guides__nom">{p.media}</span><span class="guides__detail">{p.titre}, {p.date.slice(0, 4)}</span></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Chapitre id="weekend" chiffre={c.weekend} photo={photoDe('/photos/ceremonie-jardin.webp')} lien={{ href: u('/mariage/'), label: 'Votre mariage au domaine' }}>
+    <p>Depuis {c.depuis.valeur}, la Bergerie reçoit des mariages. Le domaine est privatisé pour vous le temps d'un weekend complet : cérémonie au jardin, repas sous la véranda, nuit sur place.</p>
+    <p>Une brochure explicative et tarifaire, ainsi qu'un calendrier, sont disponibles auprès de la maison.</p>
+  </Chapitre>
+
+  <section class="citation" data-allume aria-labelledby="citation-source">
+    <div class="wrap citation__wrap">
+      <p class="petite-cap" id="citation-source">Le mot des propriétaires, site de la maison</p>
+      <blockquote class="citation__texte" cite={site.url}>
+        <p>{motsCitation.map((m, i) => <><span class="mot">{m}</span>{i < motsCitation.length - 1 ? ' ' : ''}</>)}</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <Chapitre id="detente" chiffre={c.bienEtre} photo={photoDe('/photos/piscine.webp')} inverse filet lien={{ href: u('/chambres/'), label: 'Les chambres' }}>
+    <p>Toutes les chambres donnent accès à la piscine extérieure, chauffée d'avril à octobre, au sauna et au jacuzzi.</p>
+    <p>Le petit déjeuner, varié et bio, est servi en chambre ou en salle. Une cuisine partagée est à la disposition des hôtes.</p>
+  </Chapitre>
+
+  <Chapitre id="piscine" chiffre={c.piscine} photo={photoDe('/photos/bassin.webp')} lien={{ href: u('/contact/'), label: 'Réserver une journée' }}>
+    <p>Vous ne dormez pas à la Bergerie ? La journée piscine est ouverte aux visiteurs, à {c.piscine.valeur} € par personne, sur réservation au {site.telephone}.</p>
+    <p>Le bassin du jardin, la tonnelle et les pelouses font partie de la promenade.</p>
+  </Chapitre>
+
+  <section class="onglets" data-onglets aria-labelledby="onglets-titre">
+    <div class="onglets__photos" aria-hidden="true">
+      {offres.map((o, i) => { const p = photoDe(o.photo); return <img class:list={['onglets__photo', { 'is-active': i === 0 }]} data-onglet-photo src={asset(p.src)} alt="" width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />; })}
+    </div>
+    <div class="wrap onglets__contenu">
+      <h2 class="petite-cap" id="onglets-titre">Vos événements</h2>
+      <p class="onglets__intro">Un domaine, trois façons de le vivre.</p>
+      <div class="onglets__liste" role="tablist" aria-label="Types d'événements">
+        {offres.map((o, i) => (
+          <button class="onglet" role="tab" id={`onglet-${i}`} aria-controls={`panneau-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} type="button">
+            <span class="onglet__nom">{o.nom}</span><span class="onglet__barre" aria-hidden="true"></span>
+          </button>
+        ))}
+      </div>
+      {offres.map((o, i) => (
+        <div class="onglets__panneau" role="tabpanel" id={`panneau-${i}`} aria-labelledby={`onglet-${i}`} hidden={i !== 0}>
+          <p>{o.texte}{o.textePlaceholder && <span class="illu">texte illustratif</span>}</p>
+        </div>
+      ))}
+      <p class="onglets__action"><a class="btn" href={u('/mariage/')}>Mariage et événements</a></p>
+    </div>
+  </section>
+
+  <section class="galerie" aria-label="Le domaine en noir et blanc">
+    <div class="galerie__bande">
+      {galerie.map((p, i) => (
+        <figure class:list={['galerie__item', `galerie__item--${hauteurs[i]}`]} data-reveal="up" data-delay={String(i * 0.08)} data-cursor="Voir">
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="cloture" data-rideau aria-labelledby="cloture-titre">
+    <div class="rideau" aria-hidden="true"></div>
+    <div class="wrap cloture__bloc">
+      <p class="chiffre chiffre--centre" aria-hidden="true"><span data-compteur={String(c.depuis.valeur)}>{c.depuis.valeur}</span></p>
+      <h2 class="petite-cap" id="cloture-titre"><span class="sr-only">{c.depuis.libelle} {c.depuis.valeur}</span><span aria-hidden="true">{c.depuis.libelle}</span></h2>
+      <p class="cloture__sous">{c.depuis.sousLibelle}.</p>
+      <address class="cloture__adresse">{adresseLigne()}</address>
+      <dl class="cloture__horaires">
+        <div><dt>Visite du domaine</dt><dd>30 minutes, sur rendez-vous</dd></div>
+        <div><dt>Journée piscine</dt><dd>{c.piscine.valeur} € par personne</dd></div>
+      </dl>
+      <div class="actions actions--centre">
+        <a class="btn btn--primary" href={u('/contact/')}>Nous contacter</a>
+        <a class="lien" href={telHref()}>{site.telephone}</a>
+      </div>
+    </div>
+  </section>
+</Base>

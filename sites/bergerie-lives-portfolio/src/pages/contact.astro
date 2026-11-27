@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, adresseLigne, telHref } from '../data/site';
+const plan = `https://www.openstreetmap.org/search?query=${encodeURIComponent(`${site.adresse.rue} ${site.adresse.numero}, ${site.adresse.cp} ${site.adresse.commune}`)}`;
+---
+<Base title="Contact" description={`Contacter La Bergerie de Lives, ${site.adresse.commune} : téléphone ${site.telephone}, e-mail, adresse et visite du domaine.`}>
+  <HeroPage titre="Nous contacter" sur="Visite, chambre, séminaire">
+    <p>Pour une chambre, une visite de 30 minutes, un mariage, un séminaire ou une journée piscine, le plus simple est d'appeler ou d'écrire.</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={telHref()}>Appeler le {site.telephone}</a>
+      <a class="btn" href={`mailto:${site.email}`}>Écrire</a>
+    </div>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="coord-titre">
+    <div class="wrap resa">
+      <div class="resa__horaires" data-reveal="fade">
+        <h2 class="petite-cap" id="coord-titre">Pour quoi nous contacter</h2>
+        <dl class="horaires">
+          <dt>Chambres</dt><dd>Disponibilités et tarifs</dd>
+          <dt>Mariage</dt><dd>Visite de 30 minutes, brochure, calendrier</dd>
+          <dt>Séminaire</dt><dd>Salles et formules</dd>
+          <dt>Journée piscine</dt><dd>{site.chiffres.piscine.valeur} € par personne, sur réservation</dd>
+        </dl>
+        <p class="muted resa__note">Horaires d'accueil non publiés : convenez d'un moment par téléphone.</p>
+      </div>
+      <div class="resa__infos" data-reveal="fade">
+        <h2 class="petite-cap">Adresse</h2>
+        <address>{adresseLigne()}</address>
+        <p><a class="lien" href={plan} rel="noopener">Voir sur la carte</a></p>
+        <p><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
