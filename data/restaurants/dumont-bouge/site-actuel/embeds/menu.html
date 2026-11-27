@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dumont — La Carte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#2B2620;
+    --accent:#A8632F;
+    --accent-soft:#F1E4D3;
+    --muted:#8A7F71;
+    --rule:#E6DDD0;
+    --bg:#FBF8F4;
+    --card:#FFFFFF;
+    --closed:#C9C0B2;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Poppins',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:60px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:52px 24px 28px;
+    text-align:center;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(168,99,47,0.08), transparent 45%),
+      radial-gradient(circle at 85% 0%, rgba(168,99,47,0.06), transparent 40%);
+  }
+  .hero .mark{
+    font-family:'Lora',serif;
+    font-weight:700;
+    font-size:clamp(34px,9vw,46px);
+    letter-spacing:4px;
+    margin:0;
+  }
+  .hero .dots{color:var(--accent);letter-spacing:6px;margin:8px 0;font-size:13px;}
+  .hero .tag{
+    font-size:12px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 18px;
+  }
+  .status-row{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:6px;
+  }
+  .status-pill{
+    font-size:11.5px;
+    padding:6px 12px;
+    border-radius:999px;
+    border:1px solid var(--rule);
+    color:var(--muted);
+    background:var(--card);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .status-pill.live{color:#3E7A4E;border-color:#CFE4D4;background:#F2F8F3;}
+  .status-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--closed);}
+  .status-pill.live .dot{background:#3E7A4E;box-shadow:0 0 0 3px rgba(62,122,78,0.18);}
+
+  /* ---------- SEARCH ---------- */
+  .search-wrap{
+    padding:0 20px;
+    max-width:640px;
+    margin:18px auto 0;
+  }
+  .search-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:14px;
+    padding:12px 16px;
+  }
+  .search-box svg{flex:none;opacity:.5;}
+  .search-box input{
+    border:none;
+    outline:none;
+    background:transparent;
+    font-family:'Poppins',sans-serif;
+    font-size:15px;
+    width:100%;
+    color:var(--ink);
+  }
+  .search-box input::placeholder{color:var(--muted);}
+
+  /* ---------- NAV ---------- */
+  nav.tabs{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(251,248,244,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+    padding:12px 16px;
+    margin-top:20px;
+  }
+  .tabs-inner{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    max-width:680px;
+    margin:0 auto;
+    scrollbar-width:none;
+  }
+  .tabs-inner::-webkit-scrollbar{display:none;}
+  .tab-btn{
+    flex:none;
+    font-family:'Poppins',sans-serif;
+    font-size:13.5px;
+    font-weight:500;
+    padding:9px 16px;
+    border-radius:999px;
+    border:1px solid var(--rule);
+    background:var(--card);
+    color:var(--ink);
+    cursor:pointer;
+    transition:all .2s ease;
+    white-space:nowrap;
+  }
+  .tab-btn.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:#fff;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  main{max-width:680px;margin:0 auto;padding:0 20px;}
+  .macro{
+    padding-top:38px;
+    scroll-margin-top:78px;
+  }
+  .macro-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:6px;
+  }
+  .macro-head h2{
+    font-family:'Lora',serif;
+    font-size:26px;
+    margin:0;
+  }
+  .macro-time{
+    font-size:12px;
+    color:var(--muted);
+    letter-spacing:.5px;
+  }
+  .macro-intro{
+    color:var(--muted);
+    font-size:13.5px;
+    margin:0 0 18px;
+  }
+
+  .section{margin-top:26px;scroll-margin-top:78px;}
+  .section h3{
+    font-family:'Lora',serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 4px;
+  }
+  .section .sub{
+    font-size:11.5px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin:0 0 10px;
+  }
+  .section hr{border:none;border-top:1px solid var(--rule);margin:0 0 12px;}
+
+  .item{
+    padding:10px 0;
+    border-bottom:1px dashed var(--rule);
+  }
+  .item:last-child{border-bottom:none;}
+  .item-row{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+  }
+  .item-name{
+    font-weight:500;
+    font-size:15px;
+    flex:1;
+  }
+  .item-price{
+    font-weight:600;
+    color:var(--accent);
+    font-size:14.5px;
+    white-space:nowrap;
+  }
+  .item-desc{
+    font-size:12.5px;
+    color:var(--muted);
+    font-style:italic;
+    margin-top:3px;
+    line-height:1.4;
+  }
+  .item.hidden{display:none;}
+  .section.hidden{display:none;}
+
+  .note{
+    text-align:center;
+    font-size:12px;
+    font-style:italic;
+    color:var(--muted);
+    margin:16px 0 0;
+  }
+
+  footer{
+    max-width:680px;
+    margin:56px auto 0;
+    padding:22px 20px;
+    text-align:center;
+    border-top:1px solid var(--rule);
+    color:var(--muted);
+    font-size:12px;
+  }
+  footer b{color:var(--ink);}
+
+  #no-results{
+    display:none;
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+    padding:60px 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <p class="dots">• • •</p>
+  <h1 class="mark">DUMONT</h1>
+  <p class="tag">La carte</p>
+  <div class="status-row" id="statusRow"></div>
+</div>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="search" type="text" placeholder="Chercher un plat, une boisson…">
+  </div>
+</div>
+
+<nav class="tabs">
+  <div class="tabs-inner" id="tabsInner"></div>
+</nav>
+
+<main id="main"></main>
+<p id="no-results">Aucun résultat pour cette recherche.</p>
+
+<footer>
+  <b>Allergie alimentaire ?</b> Nous répondons à vos questions.<br>
+  Un paiement par table, merci.
+</footer>
+
+<script>
+const DATA = [
+  {
+    id:"petit-dej", label:"Petit-déjeuner", title:"Formules petit-déjeuner", time:"7h00 – 11h00",
+    start:7, end:11,
+    sections:[
+      { name:"Formules", items:[
+        {n:"Dumont", p:"13,80 €", d:"2 couques au choix, jus d'orange frais, 1 boisson chaude ou froide au choix."},
+        {n:"Français", p:"14,50 €", d:"2 sandwichs ou 2 pistolets, confiture, fromage ou jambon, 1 boisson chaude ou froide au choix, jus d'orange frais."},
+      ]},
+    ]
+  },
+  {
+    id:"boissons", label:"Boissons", title:"Boissons", time:null,
+    sections:[
+      { name:"Boissons chaudes", items:[
+        {n:"Café ou expresso", p:"3,60 €"},
+        {n:"Décaféiné", p:"3,70 €"},
+        {n:"Cappuccino chantilly ou mousse de lait", p:"4,30 €"},
+        {n:"Latte macchiato", p:"4,50 €"},
+        {n:"Chocolat chaud", p:"4,00 €"},
+        {n:"Chocolat viennois", p:"4,70 €"},
+        {n:"Lait chaud", p:"3,00 €"},
+        {n:"Lait russe", p:"4,30 €"},
+        {n:"Thé au lait", p:"4,00 €"},
+        {n:"Irish coffee / Italian coffee", p:"9,90 €"},
+        {n:"Cappuccino spéculoos chantilly", p:"5,00 €"},
+        {n:"Latte macchiato spéculoos", p:"5,00 €"},
+        {n:"Chocolat viennois spéculoos", p:"5,70 €"},
+      ]},
+      { name:"The Teatower", sub:"Chaque thé — 4,30 €", items:[
+        {n:"Thé vert Jasmin", p:""},
+        {n:"Thé vert Oasis du désert bio", p:"", d:"Parfumé à la menthe."},
+        {n:"Thé noir Earl Grey supérieur", p:"", d:"Thé noir allié à la bergamote, sublimé d'une note de fleur d'oranger."},
+        {n:"Thé noir nature", p:"", d:"Thé d'origine au léger goût de noisette, saveurs aromatiques."},
+        {n:"Le panier de grand-maman", p:"", d:"Infusion de fruits aux hibiscus, fraise, mûre et framboise."},
+        {n:"Lady Dodo", p:"", d:"Infusion de plantes au tilleul, fenouil, fleur d'oranger et camomille — vertus digestives et relaxantes."},
+      ]},
+      { name:"Boissons rafraîchissantes", items:[
+        {n:"Coca-Cola ou Coca-Cola zéro", p:"3,70 €"},
+        {n:"Fanta", p:"3,70 €"},
+        {n:"Chaudfontaine plate ou pétillante", p:"3,40 €"},
+        {n:"Chaudfontaine plate ou pétillante 1/2 L", p:"5,50 €"},
+        {n:"Royal Bliss agrumes ou tonic", p:"3,80 €"},
+        {n:"Fuze Tea", p:"3,80 €"},
+        {n:"Jus de fruits (orange, multivitamines, pomme, pomme-cerise)", p:"3,60 €"},
+        {n:"Orange ou citron pressé", p:"5,20 €"},
+        {n:"Lait", p:"2,90 €"},
+        {n:"Supplément grenadine ou menthe", p:"1,00 €"},
+      ]},
+      { name:"Bières & vins", items:[
+        {n:"Jupiler, Jupiler 0% (25 cl)", p:"3,50 €"},
+        {n:"Liefmans rosée, fruitée (25 cl)", p:"4,10 €"},
+        {n:"Leffe blonde ou brune (33 cl)", p:"5,40 €"},
+        {n:"La Houppe, blonde de Namur (33 cl)", p:"5,80 €"},
+        {n:"Chimay (33 cl)", p:"5,80 €"},
+        {n:"Duvel, blonde (33 cl)", p:"5,60 €"},
+        {n:"Orval, trappiste douce-amère (33 cl)", p:"6,10 €"},
+        {n:"Verre de vin rouge, blanc ou rosé", p:"5,00 €"},
+        {n:"Vin rouge, blanc ou rosé — ¼ L", p:"7,20 €"},
+        {n:"Vin rouge, blanc ou rosé — ½ L", p:"14,50 €"},
+        {n:"Bouteille de vin rouge, blanc ou rosé", p:"22,00 €"},
+      ]},
+      { name:"Apéritifs & digestifs", sub:"Prix hors accompagnement de soft ou de jus", items:[
+        {n:"Aperol Spritz", p:"11,00 €"},
+        {n:"Kir, vin blanc", p:"7,00 €"},
+        {n:"Pisang", p:"7,80 €"},
+        {n:"Safari", p:"7,40 €"},
+        {n:"Get 27", p:"7,40 €"},
+        {n:"Ricard", p:"7,50 €"},
+        {n:"Martini rosso ou blanc", p:"7,70 €"},
+        {n:"Pineau des Charentes", p:"7,70 €"},
+        {n:"Porto Sandeman ruby ou white", p:"7,00 €"},
+        {n:"Campari", p:"7,40 €"},
+        {n:"Calvados", p:"9,00 €"},
+        {n:"Vodka", p:"7,40 €"},
+        {n:"Amaretto", p:"7,40 €"},
+        {n:"Whisky", p:"9,00 €"},
+        {n:"Gin", p:"9,00 €"},
+        {n:"Pisang 0%", p:"6,00 €"},
+      ]},
+    ]
+  },
+  {
+    id:"brunch", label:"Brunch", title:"Dumont Brunch", time:"11h30 – 15h00",
+    start:11.5, end:15,
+    sections:[
+      { name:"Nos croques (gratinés)", items:[
+        {n:"Monsieur", p:"15,00 €", d:"Jambon, fromage, crudités."},
+        {n:"Madame", p:"16,00 €", d:"Jambon, fromage, œuf, crudités."},
+        {n:"Hawaï", p:"16,00 €", d:"Jambon, fromage, ananas, crudités."},
+        {n:"Italien", p:"16,00 €", d:"Jambon fumé, mozzarella, pesto, crudités."},
+      ]},
+      { name:"Nos salades", items:[
+        {n:"Salade aux lardons", p:"19,90 €", d:"Lardons, haricots verts, œuf, carotte, tomate, crème balsamique, noix."},
+        {n:"Salade chèvre chaud", p:"19,90 €", d:"Tomate, carotte, raisin, chèvre, jambon cru, miel, pomme, vinaigrette d'abricot."},
+        {n:"Salade à notre façon", p:"19,10 €", d:"Tomate, carotte, poulet, ananas, sauce curry."},
+        {n:"Salade de scampis", p:"20,10 €", d:"Tomate, carotte, orange, haricots verts, scampis, sauce orange-balsamique."},
+      ]},
+      { name:"Les croquettes", sub:"Jeff's croquette", items:[
+        {n:"Duo de fromages", p:"18,00 €", d:"2 croquettes, crudités."},
+        {n:"Trio de fromages", p:"20,00 €", d:"3 croquettes, crudités."},
+        {n:"Duo de crevettes", p:"20,00 €", d:"2 croquettes, crudités."},
+        {n:"Trio de crevettes", p:"22,50 €", d:"3 croquettes, crudités."},
+        {n:"Mix crevettes", p:"22,00 €", d:"2 croquettes crevettes, 1 fromage, crudités."},
+        {n:"Mix fromages", p:"20,50 €", d:"2 croquettes fromage, 1 crevette, crudités."},
+      ]},
+      { name:"Toasts sur pain de froment", items:[
+        {n:"Américain", p:"14,90 €", d:"Crudités."},
+        {n:"Crabe", p:"14,90 €", d:"Crudités."},
+        {n:"Thon", p:"14,90 €", d:"Crudités."},
+        {n:"Poulet curry", p:"14,60 €", d:"Crudités."},
+        {n:"Poulet andalouse", p:"14,60 €", d:"Crudités."},
+        {n:"Saumon fumé", p:"19,00 €", d:"Crudités."},
+        {n:"Œufs brouillés, saumon fumé", p:"20,10 €", d:"Crudités."},
+      ]},
+      { name:"Les pâtes", items:[
+        {n:"Lasagne", p:"18,00 €"},
+        {n:"Spaghetti bolognaise", p:"18,00 €"},
+        {n:"Spaghetti carbonara", p:"18,00 €"},
+        {n:"Macaroni gratiné", p:"18,50 €"},
+        {n:"Spaghetti scampis", p:"21,10 €", d:"Sambre-et-Meuse, roquette et parmesan."},
+      ], note:"Plats de pâtes uniquement pour les enfants : −2,00 €" },
+      { name:"Les méli-mélo", items:[
+        {n:"Steak frites, salade", p:"24,00 €", d:"Suppl. sauce : poivre vert, béarnaise ou Sambre-et-Meuse +3,50 €."},
+        {n:"Entrecôte frites, salade", p:"29,70 €", d:"Suppl. sauce : poivre vert, béarnaise ou Sambre-et-Meuse +3,50 €."},
+        {n:"Carpaccio de bœuf", p:"19,00 €", d:"Émincé de bœuf, roquette, parmesan, crème balsamique, tomate séchée et fraîche."},
+        {n:"Américain maison", p:"20,50 €", d:"Américain minute, frites, crudités."},
+        {n:"Boulettes tomate ou liégeoise", p:"21,00 €", d:"Frites ou croquettes, crudités."},
+        {n:"Hamburger", p:"22,50 €", d:"Haché pur bœuf, cheddar, crudités, frites, sauce au choix."},
+        {n:"Chicon au gratin", p:"20,50 €", d:"Croquettes, crudités (en saison)."},
+        {n:"Pêche au thon", p:"18,00 €", d:"Pêche, thon, crudités, frites ou croquettes."},
+        {n:"Jambon grillé", p:"18,50 €", d:"Frites ou croquettes, crudités."},
+        {n:"Portion de frites", p:"3,20 €"},
+      ]},
+    ]
+  },
+  {
+    id:"desserts", label:"Desserts", title:"Desserts", time:null,
+    sections:[
+      { name:"Composez votre coupe de glace", items:[
+        {n:"1 boule", p:"3,50 €"},
+        {n:"2 boules", p:"6,60 €"},
+        {n:"3 boules", p:"9,40 €"},
+      ]},
+      { name:"Suppléments glace", items:[
+        {n:"Chantilly", p:"2,20 €"},
+        {n:"Fraises ou framboises", p:"3,50 €"},
+        {n:"Sauce chocolat", p:"2,20 €"},
+        {n:"Sauce caramel au beurre salé", p:"2,20 €"},
+        {n:"Coulis de fruits rouges", p:"2,20 €"},
+        {n:"Pralin", p:"1,00 €"},
+        {n:"Meringue", p:"1,00 €"},
+      ]},
+      { name:"Nos suggestions de coupes", items:[
+        {n:"Fruits frais", p:"16,00 €", d:"3 boules vanille, fruits frais, chantilly."},
+        {n:"Brésilienne", p:"12,00 €", d:"3 boules vanille, brésilienne, chantilly, caramel au beurre salé."},
+        {n:"Coupe framboise", p:"13,70 €", d:"3 boules vanille, framboise, coulis de fruits rouges, chantilly."},
+        {n:"Coupe fraise", p:"13,70 €", d:"3 boules vanille, fraises, coulis de fruits rouges, chantilly."},
+        {n:"Dame blanche", p:"12,00 €", d:"3 boules vanille, chantilly, chocolat chaud."},
+        {n:"Banana split", p:"13,00 €", d:"3 boules vanille, chantilly, chocolat chaud, banane."},
+        {n:"Vacherin framboise", p:"15,00 €", d:"2 boules vanille, 1 boule sorbet framboise, framboises, coulis de fruits rouges, chantilly, meringue."},
+        {n:"Vacherin fraise", p:"15,00 €", d:"2 boules vanille, 1 boule fraise, fraises, chantilly, meringue, coulis de fruits rouges."},
+        {n:"Vacherin caramel", p:"15,00 €", d:"2 boules vanille, 1 boule caramel au beurre salé, caramel au beurre salé, meringue, chantilly."},
+        {n:"Trio de sorbets aux fruits", p:"14,00 €", d:"3 boules au choix, framboises, coulis de framboise, chantilly."},
+        {n:"Le Colonel", p:"13,50 €", d:"3 boules sorbet citron, vodka, chantilly."},
+        {n:"Café viennois", p:"11,50 €", d:"Glace café, chantilly, extrait de café."},
+        {n:"Café liégeois", p:"11,50 €", d:"Glace café, expresso, chantilly."},
+        {n:"Milkshake", p:"9,50 €", d:"Fraise, moka, spéculoos, vanille, framboise, banane…"},
+      ]},
+      { name:"Gaufres de Bruxelles", items:[
+        {n:"Sucre", p:"8,00 €"},
+        {n:"Chantilly", p:"9,80 €"},
+        {n:"Chocolat chaud", p:"9,80 €"},
+        {n:"Chocolat chaud, chantilly", p:"10,80 €"},
+        {n:"Banane, chocolat chaud, chantilly", p:"12,00 €"},
+        {n:"Comédie banane", p:"14,50 €", d:"Glace vanille, banane, chocolat chaud, chantilly."},
+        {n:"Framboises", p:"11,00 €", d:"Coulis de fruits rouges."},
+        {n:"Framboises, chantilly", p:"12,50 €", d:"Coulis de fruits rouges."},
+        {n:"Comédie framboise", p:"14,50 €", d:"Glace vanille, coulis de fruits rouges, chantilly."},
+        {n:"Fraises", p:"11,00 €", d:"Coulis de fruits rouges."},
+        {n:"Fraises, chantilly", p:"12,50 €", d:"Coulis de fruits rouges."},
+        {n:"Comédie fraise", p:"14,50 €", d:"Glace vanille, fraises, chantilly, coulis de fruits rouges."},
+        {n:"Mikado", p:"12,50 €", d:"Glace vanille, chantilly, chocolat chaud."},
+        {n:"Dumont", p:"12,00 €", d:"Glace vanille, caramel au beurre salé, chantilly."},
+        {n:"Comédie française", p:"10,80 €", d:"Glace vanille, chantilly."},
+      ]},
+      { name:"Crêpes", items:[
+        {n:"Sucre, cassonade, citron ou confiture", p:"8,00 €"},
+        {n:"Comédie française", p:"10,80 €", d:"Glace vanille, chantilly."},
+        {n:"Chantilly", p:"9,80 €"},
+        {n:"Chocolat chaud", p:"9,80 €"},
+        {n:"Chocolat chaud, chantilly", p:"10,80 €"},
+        {n:"Banane, chocolat chaud, chantilly", p:"12,00 €"},
+        {n:"Comédie banane", p:"14,50 €", d:"Glace vanille, chocolat chaud, chantilly."},
+        {n:"Framboise", p:"11,00 €", d:"Framboises, coulis de fruits rouges."},
+        {n:"Framboise, chantilly", p:"12,50 €", d:"Framboises, coulis de fruits rouges."},
+        {n:"Comédie framboise", p:"14,50 €", d:"Glace vanille, chantilly, coulis de fruits rouges."},
+        {n:"Fraise", p:"11,00 €", d:"Coulis de fruits rouges."},
+        {n:"Fraise, chantilly", p:"12,50 €", d:"Coulis de fruits rouges."},
+        {n:"Comédie fraise", p:"14,50 €", d:"Fraises, glace vanille, chantilly, coulis de fruits rouges."},
+        {n:"Mikado", p:"12,50 €", d:"Glace vanille, chantilly, chocolat chaud."},
+        {n:"Dumont", p:"12,00 €", d:"Glace vanille, caramel au beurre salé, chantilly."},
+        {n:"Normande", p:"11,80 €", d:"Glace vanille, pommes caramélisées, chantilly."},
+        {n:"Normande au calvados", p:"13,90 €"},
+      ]},
+    ]
+  },
+];
+
+const main = document.getElementById('main');
+const tabsInner = document.getElementById('tabsInner');
+const statusRow = document.getElementById('statusRow');
+
+// Build status pills (live open/closed for time-gated macro categories)
+const now = new Date();
+const hourFloat = now.getHours() + now.getMinutes()/60;
+DATA.filter(m => m.time).forEach(m => {
+  const live = hourFloat >= m.start && hourFloat < m.end;
+  const pill = document.createElement('span');
+  pill.className = 'status-pill' + (live ? ' live' : '');
+  pill.innerHTML = `<span class="dot"></span>${m.label} · ${m.time}`;
+  statusRow.appendChild(pill);
+});
+
+// Build tabs
+DATA.forEach((m, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+  btn.textContent = m.label;
+  btn.dataset.target = m.id;
+  btn.addEventListener('click', () => {
+    document.getElementById(m.id).scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  tabsInner.appendChild(btn);
+});
+
+// Build sections
+DATA.forEach(m => {
+  const macro = document.createElement('section');
+  macro.className = 'macro';
+  macro.id = m.id;
+
+  const head = document.createElement('div');
+  head.className = 'macro-head';
+  head.innerHTML = `<h2>${m.title}</h2>` + (m.time ? `<span class="macro-time">${m.time}</span>` : '');
+  macro.appendChild(head);
+
+  m.sections.forEach(sec => {
+    const s = document.createElement('div');
+    s.className = 'section';
+    s.dataset.name = sec.name.toLowerCase();
+    s.innerHTML = `<h3>${sec.name}</h3>` +
+      (sec.sub ? `<p class="sub">${sec.sub}</p>` : '') +
+      `<hr>`;
+    sec.items.forEach(it => {
+      const row = document.createElement('div');
+      row.className = 'item';
+      row.dataset.name = it.n.toLowerCase();
+      row.innerHTML = `<div class="item-row"><span class="item-name">${it.n}</span>` +
+        (it.p ? `<span class="item-price">${it.p}</span>` : '') + `</div>` +
+        (it.d ? `<div class="item-desc">${it.d}</div>` : '');
+      s.appendChild(row);
+    });
+    if (sec.note) {
+      const note = document.createElement('p');
+      note.className = 'note';
+      note.textContent = sec.note;
+      s.appendChild(note);
+    }
+    macro.appendChild(s);
+  });
+
+  main.appendChild(macro);
+});
+
+// Active tab on scroll
+const tabBtns = [...tabsInner.querySelectorAll('.tab-btn')];
+const macros = [...document.querySelectorAll('.macro')];
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      tabBtns.forEach(b => b.classList.toggle('active', b.dataset.target === e.target.id));
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+macros.forEach(m => io.observe(m));
+
+// Search
+const search = document.getElementById('search');
+const noResults = document.getElementById('no-results');
+search.addEventListener('input', () => {
+  const q = search.value.trim().toLowerCase();
+  let anyVisible = false;
+  document.querySelectorAll('.section').forEach(sec => {
+    let sectionHasMatch = false;
+    sec.querySelectorAll('.item').forEach(item => {
+      const match = !q || item.dataset.name.includes(q);
+      item.classList.toggle('hidden', !match);
+      if (match) sectionHasMatch = true;
+    });
+    sec.classList.toggle('hidden', !sectionHasMatch);
+    if (sectionHasMatch) anyVisible = true;
+  });
+  noResults.style.display = anyVisible ? 'none' : 'block';
+});
+</script>
+</body>
+</html>
