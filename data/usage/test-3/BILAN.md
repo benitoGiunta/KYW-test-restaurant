@@ -13,7 +13,7 @@ Début 07:46 UTC, heure limite 10:55 UTC, clôture 12:25 UTC (la session mère a
 | ne5t | publié | 19,96 $ | 0,66 $ | 20,62 $ | 07:46 → 09:34 (108 min) | de4294ad |
 | novobel | abandonné en développement (limite 5 h) | 19,20 $ | — | 19,20 $ | 09:10 → ~12:12 | — (sites partiels commités : 159 sources, 163 dist) |
 | oh-la-vache | abandonné en développement (limite 5 h, 18/25 agents, sans revue 2) | 14,92 $ | — | 14,92 $ | 09:24 → 11:25 | — (état commité à 12:27 après la réinitialisation : sites, ETAT-oh-la-vache.md, mesure ; sources de révision portfolio non reconstruites) |
-| dumont-bouge | abandonné en développement (limite 5 h) | 13,62 $ | — | 13,62 $ | 09:24 → 11:26 | — (sites partiels commités : 141 sources, 116 dist) |
+| dumont-bouge | abandonné en développement (limite 5 h à 10:22, 22 agents, revue 1 legacy seulement) | 13,62 $ | — | 13,62 $ | 09:24 → 10:22 | — (état commité à 12:28 : sites, ETAT-dumont-bouge.md, mesure c4909a4c) |
 | bayti | abandonné en développement (limite 5 h) | 13,92 $ | — | 13,92 $ | 09:34 → 11:36 | — (rien de poussé) |
 | 22 autres (loco-lunch → brasserie-entre-nous) | non lancés | | | | | |
 
@@ -24,7 +24,7 @@ Coûts : `usage.cost_usd` de `get_session` (fichiers `*-detail.json` présents p
 
 ## Utilisation
 - Hebdomadaire : 0,59 au début (07:44), 0,71 à 09:47 ; réinitialisée à 11:00 UTC, valeur de fin non mesurable. 12 points pour ~100 $ dépensés à 09:47, cohérent avec l'estimation de `limite-hebdo.json` (~790 $ la semaine) : **un restaurant ≈ 2,5 % de la limite hebdomadaire** (2,1 à 2,8 %).
-- Fenêtre de 5 h : 0,07 (07:44) → 0,50 (08:55) → 0,80 (09:47) → épuisée vers 11:25 ; c'est elle qui a arrêté la campagne, pas la limite hebdomadaire. Avec 4 sessions Opus en parallèle, une fenêtre de 5 h ≈ 140 $ ≈ 7 restaurants.
+- Fenêtre de 5 h : 0,07 (07:44) → 0,50 (08:55) → 0,80 (09:47) → épuisée vers 10:22 (dumont-bouge) ; c'est elle qui a arrêté la campagne, pas la limite hebdomadaire. Avec 4 sessions Opus en parallèle, une fenêtre de 5 h ≈ 140 $ ≈ 7 restaurants.
 
 ## Interventions (`interventions.json`)
 1. mon-epi : sources de la révision legacy non commitées par le workflow → commit demandé à la session de développement (597b5e82).
@@ -40,7 +40,7 @@ Coûts : `usage.cost_usd` de `get_session` (fichiers `*-detail.json` présents p
 - « à confirmer » vu en ligne à 09:24 sur mon-epi : déploiement en file, absent au contrôle de 09:35.
 
 ## Fichiers de mesure manquants
-novobel, dumont-bouge, bayti : aucun fichier (oh-la-vache a commité ses `dev-*` à 12:27) (`dev-*`) ; seul `usage` du registre fait foi. mon-epi correction : hebdo de début non relevé.
+novobel, bayti : aucun fichier (oh-la-vache et dumont-bouge ont commité leurs `dev-*` à 12:27-12:28) (`dev-*`) ; seul `usage` du registre fait foi. mon-epi correction : hebdo de début non relevé.
 
 ## Stockage
 - Début : 3 déploiements READY, dist 544 Mo / 7 887 fichiers ; tableau de bord Vercel 1,76 Go / 10 Go.
