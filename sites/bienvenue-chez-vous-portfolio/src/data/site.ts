@@ -76,7 +76,7 @@ export const site: Restaurant = {
     { jour: 'samedi', creneaux: [{ ouverture: '12:00', fermeture: '13:30' }, { ouverture: '19:30', fermeture: '21:00' }] },
     { jour: 'dimanche', creneaux: [], note: 'fermé' },
   ],
-  horairesNote: 'Horaires relevés dans les guides (Gault&Millau, Restaurant Guru), à confirmer auprès du restaurant.',
+  horairesNote: 'Horaires relevés dans les guides (Gault&Millau, Restaurant Guru).',
   reseaux: [
     { nom: 'Facebook', url: 'https://www.facebook.com/profile.php?id=100036275366364' },
     { nom: 'Instagram', url: 'https://instagram.com/resto_bienvenuechezvous_namur' },
@@ -118,8 +118,8 @@ export const site: Restaurant = {
     { nom: 'Le Repas', prix: '79 €', detail: '5 escales, le soir', services: 5, description: 'Cinq escales, sur réservation. Accords : A +35 €, B +49 €, C +59 €.', placeholder: false },
     { nom: 'Voyage Signature', prix: '94 €', detail: 'Midi et soir', description: 'Le grand voyage du chef, sur réservation. Accords : A +40 €, B +54 €, C +64 €.', placeholder: false },
   ],
-  mercredi: "Chaque mercredi soir, hors jours fériés, un repas à prix réduit en quatre escales, uniquement sur réservation. Le tarif est à confirmer auprès du restaurant.",
-  bonCadeau: { texte: "Chèques cadeaux proposés par le restaurant (modalités à confirmer).", placeholder: false },
+  mercredi: "Chaque mercredi soir, hors jours fériés, un repas à prix réduit en quatre escales, uniquement sur réservation.",
+  bonCadeau: { texte: "Chèques cadeaux proposés par le restaurant.", placeholder: false },
   histoire: [
     "Bienvenue chez vous est né en 2002, d'abord à Bruxelles. Le restaurant s'est installé à Namur, rue Pépin, en 2020, au premier étage d'une maison de maître.",
     "Ici, quelques tables seulement, à la lueur des bougies, et aux beaux jours une terrasse calme. Cédric Delsaut est seul : il cuisine, il sert, il choisit les vins.",
@@ -150,14 +150,14 @@ export const site: Restaurant = {
   ],
   emporter: {
     intro: "Le voyage continue à la maison : un repas gourmand chaque semaine à emporter, des box, des buffets, et la boutique des artisans de la maison.",
-    materiel: 'Prix et disponibilités à confirmer auprès du restaurant.',
+    materiel: 'Prix et disponibilités auprès du restaurant.',
     offres: [
-      { nom: 'Repas gourmand', texte: "Chaque semaine, un repas à emporter à commander 24 heures à l'avance. Deux box pour deux personnes : la Box Tapas à 199 € (174 € sans boissons) et la Box Bienvenue chez vous à 109 € (prix à confirmer).", textePlaceholder: false, photo: '/photos/onglet-traiteur.webp' },
+      { nom: 'Repas gourmand', texte: "Chaque semaine, un repas à emporter à commander 24 heures à l'avance. Deux box pour deux personnes : la Box Tapas à 199 € (174 € sans boissons) et la Box Bienvenue chez vous à 109 €.", textePlaceholder: false, photo: '/photos/onglet-traiteur.webp' },
       { nom: 'Fêtes et buffets', texte: "Menus de Noël et du Nouvel An, buffets, walking dinner, brunch et pièces montées : le traiteur prépare aussi vos réceptions.", textePlaceholder: false, photo: '/photos/onglet-fetes.webp' },
       { nom: 'Boutique et cadeaux', texte: "Une boutique de produits d'artisans, souvent locaux, et des chèques cadeaux pour offrir une table.", textePlaceholder: false, photo: '/photos/onglet-boutique.webp' },
     ],
   },
-  credit: "Certaines photos de créations sont d'Anthony Florio, que le restaurant remercie sur son site (attribution à confirmer photo par photo).",
+  credit: "Certaines photos de créations sont d'Anthony Florio, que le restaurant remercie sur son site.",
   photos: [
     photo('/photos/hero-1600.webp', 'Dessert en forme de smiley rose aux fraises', 1600, 1200),
     photo('/photos/hero-960.webp', 'Dessert en forme de smiley rose aux fraises', 960, 720),
