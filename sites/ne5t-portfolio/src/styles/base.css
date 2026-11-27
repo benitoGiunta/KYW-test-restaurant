@@ -25,6 +25,8 @@ strong { font-weight: 400; color: var(--c-fg); }
 .chiffre { font-family: var(--f-display); font-weight: 400; font-size: var(--t-mega); line-height: 0.9; letter-spacing: -0.02em; color: var(--c-accent); font-variant-numeric: tabular-nums; margin-left: -0.06em; }
 .chiffre--centre { text-align: center; margin-left: 0; }
 .chiffre--petit { font-size: var(--t-xl); color: var(--c-muted); }
+/* Chiffre décoratif en contenu généré : hors texte, donc hors contraste (F2-2). */
+.chiffre--filigrane > span::before { content: attr(data-v); }
 .chiffre--filigrane { position: absolute; right: 0; top: -0.25em; color: rgb(208 154 78 / 0.16); font-size: clamp(9rem, 5rem + 14vw, 22rem); pointer-events: none; }
 
 /* Boutons : trait cuivre, remplissage qui monte comme un rideau (clip-path) au survol et au focus. */
@@ -278,7 +280,7 @@ html:not(.motion) .onglet[aria-selected='true'] .onglet__barre::after { transfor
 /* Mobile 390 : en-tête sur deux lignes, nom du hero plafonné (le mot le plus long « POTES » tient en 390 px), loader sans compteur. */
 @media (max-width: 767px) {
   .header__inner { flex-wrap: wrap; justify-content: space-between; }
-  .header__nom { display: none; }
+  .header__nom { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .nav { order: 3; width: 100%; gap: calc(var(--u) * 1.5) calc(var(--u) * 2); }
   .nav__lien { min-height: 32px; font-size: 0.75rem; letter-spacing: 0.12em; }
   /* Une seule ligne d'en-tête : logo, bouton Menu, Réserver ; la nav s'ouvre en liste sous la ligne (révision 1, F3-1). */

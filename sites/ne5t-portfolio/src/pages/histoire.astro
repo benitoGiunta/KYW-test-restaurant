@@ -15,12 +15,13 @@ const maison = photoDe('/photos/maison-jour.webp');
     <div class="wrap portraits">
       {gens.map((m, i) => { const p = photoDe(m.photo!); return (
         <article class="portrait">
-          <figure class="portrait__photo" data-reveal="clip">
-            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
-          </figure>
           <h2 class="portrait__nom">{m.nom}</h2>
           <p class="petite-cap">{m.role}</p>
           <p class="portrait__bio">{m.texte}</p>
+          <figure class="portrait__photo" data-reveal="clip">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+            <figcaption class="petite-cap">{m.nom === 'Nico' ? 'Le service' : 'La cave'}</figcaption>
+          </figure>
         </article>
       ); })}
     </div>

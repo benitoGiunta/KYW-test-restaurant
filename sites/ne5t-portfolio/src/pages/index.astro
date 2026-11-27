@@ -37,7 +37,7 @@ const resume = horairesResume();
       <p class="petite-cap guides__sur">Revue de presse de la maison</p>
       <ul class="guides__liste">
         {site.presse.map((d) => (
-          <li><a class="guides__item" href={d.url} rel="noopener"><span class="guides__nom">{d.nom}</span><span class="guides__detail">{d.detail}</span></a></li>
+          <li><a class="guides__item" href={d.url} rel="noopener"><span class="guides__nom">{d.nom}</span></a></li>
         ))}
       </ul>
     </div>
@@ -92,7 +92,7 @@ const resume = horairesResume();
   </section>
 
   <section class="galerie" aria-label="La maison en noir et blanc">
-    <div class="galerie__bande">
+    <div class="galerie__bande" tabindex="0" role="region" aria-label="Galerie de la maison">
       {galerie.map((p, i) => (
         <figure class:list={['galerie__item', `galerie__item--${hauteurs[i]}`]} data-reveal="up" data-delay={String(i * 0.08)} data-cursor="La maison">
           <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
