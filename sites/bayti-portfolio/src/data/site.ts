@@ -86,13 +86,13 @@ export const site: Restaurant = {
         "placeholder": false
       },
       {
-        "nom": "Rakatat au fromage – miel fermenté",
+        "nom": "Rakatat au fromage, miel fermenté",
         "description": "Cigares croustillants farcis au fromage levantin, nappés d'un miel fermenté aux épices",
         "prix": null,
         "placeholder": false
       },
       {
-        "nom": "Musakhan roll – sauce toum",
+        "nom": "Musakhan roll, sauce toum",
         "description": "Roulés croustillants farcis au poulet musakhan, oignons caramélisés au sumac, sauce toum",
         "prix": null,
         "placeholder": false
@@ -110,7 +110,7 @@ export const site: Restaurant = {
         "placeholder": false
       },
       {
-        "nom": "Soft Baked Cookie – glace ashta",
+        "nom": "Soft Baked Cookie, glace ashta",
         "description": "Cookie fondant « servi chaud », accompagné d'une glace ashta",
         "prix": null,
         "placeholder": false
@@ -422,7 +422,7 @@ export const site: Restaurant = {
   ],
   photos: [
   photo('/photos/hero-mezzes-herbes.webp', "Bols de mezzés (houmous à la betterave, falafels, salades) sur herbes et fleurs, panoramique", 1800, 782),
-  photo('/photos/mezzes-vue-dessus-pelouse.webp', "Sélection de mezzés en bols kraft sur pelouse fleurie, vue du dessus", 1800, 1286),
+  photo('/photos/mezzes-vue-dessus-pelouse.webp', "Sélection de mezzés en bols kraft sur pelouse fleurie, vue du dessus", 1600, 1143),
   photo('/photos/mezzes-feuilles-automne.webp', "Six bols de mezzés sur feuilles d'automne, vue du dessus", 1800, 1441),
   photo('/photos/mezzes-feuilles-portrait.webp', "Bols de mezzés sur feuilles d'automne, format portrait", 1366, 2048),
   photo('/photos/coffret-traiteur-pain.webp', "Coffret traiteur en bois avec bols de mezzés et pain libanais sur mousse", 1800, 1286),

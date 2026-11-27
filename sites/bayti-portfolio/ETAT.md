@@ -1,4 +1,7 @@
-# ETAT Bayti portfolio, phase 2 sur 3 (27/11/2026)
+# ETAT Bayti portfolio, phase 3 sur 3 terminée (27/11/2026)
+
+Phase 3 (QA) faite : voir RAPPORT.md (pied KYW z-index, tirets, photo allégée). Build OK, audit 0 FAIL. Reste : `pnpm index`, commit dist, publication par la session mère.
+
 
 ## Fait en phase 1 (inchangé)
 Gabarit Journée adapté (données, 6 pages, palette vert sapin, photos WebP, favicon, OG). Voir DESIGN.md.
