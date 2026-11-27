@@ -34,7 +34,7 @@
 - **Défauts évités** : pas de crème + serif + terracotta ; le jaune du client est employé en aplats sur béton clair, pas en acide sur noir (le noir n'occupe que le plein cadre, la carrière et le pied) ; pas d'eyebrow décoratif : la cote est la signature et porte un sens ; pas d'Inter, Fraunces, Playfair ; pas de 01/02/03.
 - **Typo** : Barlow Condensed 800 (display, capitales, signalétique de chantier) et Public Sans variable (corps). Échelle : `--t-mega` 4,75 à 16 rem, `--t-xl`, `--t-l`, `--t-m`, `--t-body` 16 à 17 px, `--t-s` 14 px, `--t-xs` 13 px. Display : interligne 0,82 à 0,95, interlettrage -0,005 à -0,015 em, `text-wrap: balance`. Français : espaces insécables dans les données (+32 488…, boîte 1), apostrophes courbes, vouvoiement.
 - **Grille** : 12 colonnes (2 sur téléphone), lignes fortes : gouttière gauche et colonne 7 ; humeurs d'espace serre / normal / aéré / entracte ; rayon 0.
-- **Mouvement (à planifier)** : easing `ease.out` / `ease.inOut` de l'engine ; verbe mesurer : traits qui se tracent (0,8 s), chiffres qui comptent jusqu'à leur valeur, aucune rotation. Hovers : CTA jaune qui devient anthracite, nav soulignée jaune, lots en aplat jaune, liens texte soulignés jaune. Repos : immobilité décidée (le chantier a fini de bouger), sauf la cote qui se trace une fois.
+- **Mouvement (phase 2)** : easing `ease.out` / `ease.inOut` de l'engine et `cubic-bezier(0.16, 1, 0.3, 1)` (équivalent CSS d'expo.out) pour les survols ; verbe mesurer : les lignes de cote se tracent depuis leurs deux repères (0,8 s), les chiffres des projets comptent jusqu'à leur valeur réelle (1,1 à 1,4 s), aucune rotation ajoutée. Survols : deux traitements, tous deux des tracés (aplat tracé depuis la gauche : CTA, boutons, lots ; trait mesuré sous le texte : nav, menu, liens texte et pied). Repos : le mètre ruban du hero se déroule à 14 px/s, le pointeur (vitesse de défilement au toucher) l'infléchit de 90 px au plus ; immobile en mouvement réduit. Rideau : coffrage anthracite horizontal sur lequel un trait de cote jaune se trace (0,75 s à l'aller, 0,85 s au retour).
 - **Plan de composition** : Accueil : poster (mot géant + photo) / index (5 lots) / données (4 cotes) / média plein cadre (statement) / paire asymétrique / pied final « Les clés. ». Projets : en-tête / fiches en paires décalées (patron de la carte) / index des services. À propos : paire texte-photo / données (3 principes) / bloc sombre carrière / média + mot. Contact : actions et données / paire formulaire mailto + photo.
 - **Mobile 390** : mot géant à 24 vw, strips en colonne, cotes à 2 colonnes, paires empilées, pied recomposé.
 - **Test de généricité** : un modèle générique d'entreprise de rénovation aurait un hero photo plein écran avec un slogan : changé en mot géant + chiffres réels. Un grand compteur « 25 ans d'expérience » : écarté (contredit la BCE).
@@ -58,3 +58,32 @@
 16. Une famille de section au plus une fois par page. [x]
 17. Hero en 3 s : nom, métier, téléphone. [x] (mesuré : CTA dans la flottaison à 1440×900 après correction du padding)
 18. Mobile 390 recomposé : `site.css` media 900/520, mesuré sans scroll horizontal (scrollWidth = 390). [x]
+
+## Sur-utilisation de la skill (phase 2)
+19. Menu mobile accessible : `Header.astro` (bouton `aria-expanded`, `aria-controls="menu"`), `motion/menu.ts` (plein écran, Tab bouclé, Échap, focus rendu). Mesuré (Playwright 390) : `aria-expanded` true puis false, focus sur « Fermer » à l'ouverture, 8 Tab restent dans le menu, focus rendu au bouton. [x]
+20. Engine verbatim (`src/engine/`), `astro.ts` ; `transition:persist="curtain"` sur `#curtain` (`Base.astro:70`), `transition:animate="none"` sur `<html>` (`Base.astro:33`) ; ni `#gl` ni `#cursor` (pas de GL, pas de follower : décision). [x]
+21. Une horloge : `grep -rn "addEventListener('scroll'\|requestAnimationFrame" src/motion` vide ; repos par `gsap.ticker` (`motion/cote.ts`). [x]
+22. Code de page dans `onPage()` avec nettoyage : `cote.ts` (`kills`), `menu.ts` (retrait des écouteurs). [x]
+23. Aucune CSS `transform` sur élément GSAP : `.metre__ruban`, `.metre__lecture`, `.curtain__panel`, `.curtain__trait` sans `transform` en CSS ; les cotes sont animées par la variable `--trace` (propriété `scale` sur les pseudo-éléments). [x]
+24. Module pilote `src/motion/cote.ts` : `startIdle()` (pointeur, vitesse au toucher), `startCote()` appelé une fois depuis `setup.ts`. [x]
+25. Loader : aucun, décidé (Concept Card) ; pas de `#loader` ni de `role="status"` dans `src/`. [x]
+26. Transition du concept : coffrage + trait de cote, 0,75 s aller, 0,85 s retour (`setup.ts`) ; mesuré : clic Projets, rideau caché et h1 visible en moins de 1,1 s. [x]
+27. Intro `data-intro` sur chaque h1 (`data-split="lines"`), cote du premier écran tracée dans l'intro (`cote.ts`, `.hero, .entete, .perdu`) ; photo du hero peinte au premier rendu (plus de `data-reveal`, LCP). [x]
+28. Épinglages : aucun (pas de séquence à épingler). [x sans objet]
+29. Repli statique : sans `.motion`, `--trace: 1`, valeurs de cote visibles, chiffres réels dans le HTML, ruban immobile ; mesuré en mouvement réduit : 0 élément caché, `4,14,6,4`, pas de Lenis. [x]
+30. Copies décoratives `aria-hidden` : cotes, mètre, chiffres (avec texte `sr-only`), « Les clés. » ; aucun titre dupliqué. [x]
+31. Une famille d'easing (expo.out / expo.inOut et son équivalent CSS), durées du tableau Timing, stagger des compteurs 60 ms. [x]
+32. Deux traitements, dans le verbe : aplat tracé, trait mesuré (`site.css`, bloc Phase 2). [x]
+33. Survol sous `@media (hover: hover)`, mêmes états en `:focus-visible`, transitions coupées mais états gardés en mouvement réduit. Mesuré : CTA survolé `background-size: 100% 100%`, texte jaune. [x]
+34. Liens texte soulignés jaune au repos (`.lien`, `.lien-util`, `.pied__tel`). [x]
+35. `hover.noHoverChange` : en phase 3 (report.json). [ ]
+36. `idleMotion` : ruban mesuré à 21 px de déplacement en 1,5 s sur toute la largeur (1440, 1280, 390) ; `idleAt` en phase 3. [x code]
+37. Curseur natif conservé, aucun follower ; rien ne dépend du survol au toucher. [x]
+38. Pas de blur animé, pas de `box-shadow` au scroll (seulement sur `:focus-visible`), pas de `will-change`. [x]
+39. Réduit : ni Lenis, ni scrub, ni loader ; 0 texte caché (mesuré) ; `reduced.moving` en phase 3. [x code]
+40. GL : sans objet, décision écrite dans la Concept Card ; aucun canvas. [x]
+41. Sans objet (pas de GL). [x]
+44. Skip link premier élément du `<body>` ; focus : trait anthracite 2 px + halo jaune 6 px, contour clair sur fonds sombres. [x code]
+45. Contraste : texte ink sur jaune partout (CTA, lots, liens survolés), clair sur nuit ; mesure en phase 3. [ ]
+46. Texte réel, aucun canvas. [x]
+47. Cibles : CTA 48 px, « Menu » 44 px ; mesure en phase 3. [x code]

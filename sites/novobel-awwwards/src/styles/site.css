@@ -6,7 +6,6 @@
 .titre-l { font-size: var(--t-l); line-height: 0.95; max-width: 16ch; }
 .legende { margin-top: 0.5rem; font-size: var(--t-xs); color: var(--c-muted); }
 .lien, .lien-util { text-decoration: underline; text-decoration-color: var(--c-accent); text-decoration-thickness: 3px; text-underline-offset: 0.2em; font-weight: 600; }
-.lien:hover, .lien-util:hover { background: var(--c-accent); color: var(--c-fg); }
 .lien-util { font-size: var(--t-s); font-weight: 500; }
 section, header.entete { position: relative; }
 
@@ -19,15 +18,11 @@ section, header.entete { position: relative; }
 .cote--nuit::before, .cote--nuit::after { background: var(--c-nuit-muted); }
 
 /* CTA : aplat jaune, texte anthracite */
-.cta { display: inline-flex; align-items: center; min-height: 3rem; padding: 0.75em 1.4em; background: var(--c-accent); color: var(--c-fg); font-weight: 700; font-size: var(--t-s); letter-spacing: 0.03em; border: 2px solid var(--c-accent); cursor: pointer; transition: background 0.25s, color 0.25s; }
-.cta:hover { background: var(--c-fg); border-color: var(--c-fg); color: var(--c-accent); }
+.cta { display: inline-flex; align-items: center; min-height: 3rem; padding: 0.75em 1.4em; background: var(--c-accent); color: var(--c-fg); font-weight: 700; font-size: var(--t-s); letter-spacing: 0.03em; border: 2px solid var(--c-accent); cursor: pointer; }
 .cta--petit { min-height: 2.5rem; padding: 0.5em 1.1em; }
 .cta--grand { font-size: var(--t-m); font-family: var(--f-display); text-transform: uppercase; letter-spacing: 0.02em; padding: 0.7em 1.4em; }
-.cta--contour { background: transparent; border-color: var(--c-fg); }
-.cta--contour:hover { background: var(--c-fg); color: var(--c-bg); }
-.cta--sombre { background: transparent; border-color: var(--c-nuit-muted); color: var(--c-bg); }
-.cta--sombre:hover { background: var(--c-accent); border-color: var(--c-accent); color: var(--c-fg); }
-.cta--jaune { }
+.cta--contour { background-color: transparent; border-color: var(--c-fg); }
+.cta--sombre { --fill: var(--c-accent); background-color: transparent; border-color: var(--c-nuit-muted); color: var(--c-bg); }
 
 /* En-tête */
 .tete { position: fixed; z-index: var(--z-header); inset: 0 0 auto 0; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--gutter); padding: 0.75rem var(--gutter); background: color-mix(in srgb, var(--c-bg) 94%, transparent); border-bottom: 1px solid var(--c-line); }
@@ -36,8 +31,7 @@ section, header.entete { position: relative; }
 .tete__nom { font-family: var(--f-display); font-weight: 800; font-size: 1.6rem; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1; }
 .tete__lieu { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--c-muted); }
 .tete__nav ul { display: flex; align-items: center; gap: calc(var(--u) * 2.5); list-style: none; padding: 0; }
-.nl { font-weight: 600; font-size: var(--t-s); padding-block: 0.4rem; border-bottom: 3px solid transparent; }
-.nl:hover, .nl[aria-current] { border-bottom-color: var(--c-accent); }
+.nl { font-weight: 600; font-size: var(--t-s); padding-block: 0.4rem; }
 .cta[aria-current] { box-shadow: inset 0 -4px 0 var(--c-fg); }
 .tete__menu { display: none; font-weight: 700; font-size: var(--t-s); padding: 0.6rem 1rem; border: 2px solid var(--c-fg); }
 main { padding-top: 4.5rem; }
@@ -52,8 +46,8 @@ main { padding-top: 4.5rem; }
 /* Accueil : hero (poster) */
 .hero { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); row-gap: var(--serre); padding-block: var(--serre) var(--aere); }
 .hero__titre { grid-column: 1 / -1; grid-row: 1; font-size: var(--t-mega); line-height: 0.82; letter-spacing: -0.015em; }
-.hero__texte { grid-column: 1 / 6; grid-row: 2; align-self: end; }
-.hero__media { grid-column: 6 / -1; grid-row: 2; }
+.hero__texte { grid-column: 1 / 6; grid-row: 3; align-self: start; }
+.hero__media { grid-column: 6 / -1; grid-row: 3; }
 .hero__media img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
 .hero__chapo { font-size: var(--t-m); line-height: 1.3; max-width: 28ch; font-weight: 500; margin-bottom: var(--serre); }
 .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
@@ -62,8 +56,7 @@ main { padding-top: 4.5rem; }
 /* Index des lots (famille index) */
 .lots, .cotes, .services, .valeurs, .paire, .prepare { padding-block: var(--aere); }
 .lots__liste { list-style: none; padding: 0; margin-top: var(--normal); border-top: 2px solid var(--c-fg); }
-.lot { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: baseline; padding-block: calc(var(--u) * 2.5); border-bottom: 1px solid var(--c-line); transition: background 0.25s; }
-.lot:hover { background: var(--c-accent); }
+.lot { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: baseline; padding-block: calc(var(--u) * 2.5); border-bottom: 1px solid var(--c-line); }
 .lot__nom { grid-column: 1 / 7; font-size: var(--t-xl); line-height: 0.95; padding-left: 0.1em; }
 .lot__texte { grid-column: 7 / -1; max-width: 46ch; }
 
@@ -165,7 +158,6 @@ main { padding-top: 4.5rem; }
 .pied__tel { font-family: var(--f-display); font-weight: 800; font-size: var(--t-m); }
 .pied__liste { list-style: none; padding: 0; display: grid; gap: 0.3rem; }
 .pied .lien, .pied .lien-util { text-decoration-color: var(--c-accent); }
-.pied .lien:hover, .pied .lien-util:hover { color: var(--c-fg); }
 .pied__cta { grid-column: span 3; align-self: start; }
 .pied__colophon { grid-column: 1 / -1; font-size: var(--t-xs); color: var(--c-nuit-muted); }
 
@@ -215,3 +207,76 @@ main { padding-top: 4.5rem; }
   .hero__actions .cta, .contact__actions .cta { width: 100%; }
   .pied__col { grid-column: 1 / -1; }
 }
+
+/* ===== Phase 2 : mouvement, états, finitions (verbe : mesurer) ===== */
+/* Deux traitements de survol seulement, tous deux des tracés :
+   (1) aplat tracé depuis la gauche (CTA, boutons, lots) ; (2) trait qui se mesure sous le texte (nav, liens texte, pied, menu).
+   Survol sous (hover: hover), même état au clavier (:focus-visible), visible en mouvement réduit (transition coupée, état gardé). */
+::selection { background: var(--c-accent); color: var(--c-fg); }
+:focus-visible { outline: 2px solid var(--c-fg); outline-offset: 2px; box-shadow: 0 0 0 6px var(--c-accent); border-radius: 0; }
+.nuit :focus-visible, .pied :focus-visible, .menu :focus-visible { outline-color: var(--c-bg); }
+
+/* (1) Aplat tracé */
+.cta, .tete__menu, .menu__fermer, .lot {
+  background-image: linear-gradient(var(--fill, var(--c-fg)), var(--fill, var(--c-fg)));
+  background-repeat: no-repeat; background-position: left center; background-size: 0% 100%;
+  transition: background-size 0.45s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s, border-color 0.25s;
+}
+.lot { --fill: var(--c-accent); }
+.menu__fermer { --fill: var(--c-bg); }
+.cta:focus-visible, .tete__menu:focus-visible, .menu__fermer:focus-visible { background-size: 100% 100%; }
+.cta:focus-visible { color: var(--c-accent); border-color: var(--c-fg); }
+.cta--contour:focus-visible, .tete__menu:focus-visible { color: var(--c-bg); }
+.cta--sombre:focus-visible { color: var(--c-fg); border-color: var(--c-accent); }
+.menu__fermer:focus-visible { color: var(--c-nuit); }
+.cta:active, .tete__menu:active, .menu__fermer:active { translate: 0 2px; }
+
+/* (2) Trait qui se mesure : nav et menu tracent un trait de 3 px ; les liens texte, soulignés au repos, voient l'aplat jaune monter. */
+.nl, .menu__lien { background-image: linear-gradient(var(--c-accent), var(--c-accent)); background-repeat: no-repeat; background-position: left bottom; background-size: 0% 3px; transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.menu__lien { display: inline-block; background-size: 0% 0.08em; }
+.nl[aria-current], .nl:focus-visible { background-size: 100% 3px; }
+.menu__lien:focus-visible { background-size: 100% 0.08em; }
+.lien, .lien-util, .pied__tel { background-image: linear-gradient(var(--c-accent), var(--c-accent)); background-repeat: no-repeat; background-position: left bottom; background-size: 100% 0; transition: background-size 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s; }
+.pied__tel { text-decoration: underline; text-decoration-color: var(--c-accent); text-decoration-thickness: 3px; text-underline-offset: 0.15em; }
+.lien:focus-visible, .lien-util:focus-visible, .pied__tel:focus-visible { background-size: 100% 100%; color: var(--c-fg); }
+.tete__carre { transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.tete__marque:focus-visible .tete__carre { width: 2.5rem; }
+.kyw-footer__link:hover, .kyw-footer__link:focus-visible { text-decoration: underline; }
+
+@media (hover: hover) {
+  .cta:hover, .tete__menu:hover, .menu__fermer:hover, .lot:hover { background-size: 100% 100%; }
+  .cta:hover { color: var(--c-accent); border-color: var(--c-fg); }
+  .cta--contour:hover, .tete__menu:hover { color: var(--c-bg); }
+  .cta--sombre:hover { color: var(--c-fg); border-color: var(--c-accent); }
+  .menu__fermer:hover { color: var(--c-nuit); }
+  .nl:hover { background-size: 100% 3px; }
+  .nl[aria-current]:hover { background-size: 100% 6px; }
+  .menu__lien:hover { background-size: 100% 0.08em; }
+  .lien:hover, .lien-util:hover, .pied__tel:hover { background-size: 100% 100%; color: var(--c-fg); }
+  .tete__marque:hover .tete__carre { width: 2.5rem; }
+}
+
+/* Ligne de cote : deux repères fixes, deux traits qui se tracent vers la valeur (--trace piloté par motion/cote.ts). */
+.cote { --trace: 1; --cote-trait: var(--c-fg);
+  background: linear-gradient(var(--cote-trait), var(--cote-trait)) left center / 1px 0.9rem no-repeat,
+              linear-gradient(var(--cote-trait), var(--cote-trait)) right center / 1px 0.9rem no-repeat; }
+.cote--nuit, .pied .cote { --cote-trait: var(--c-nuit-muted); }
+.cote::before, .cote::after { background: var(--cote-trait); scale: var(--trace) 1; }
+.cote::before { transform-origin: left center; }
+.cote::after { transform-origin: right center; }
+.motion .cote { --trace: 0; }
+.motion .cote .cote__val { visibility: hidden; }
+
+/* Mètre ruban du hero : graduations au centimètre, demi-décimètre et décimètre ; repère de lecture jaune. */
+.metre { grid-column: 1 / -1; grid-row: 2; position: relative; height: 1.25rem; margin-top: calc(var(--serre) * -0.5); overflow: clip; border-top: 1px solid var(--c-fg); }
+.metre__ruban { position: absolute; top: 0; left: 0; height: 100%; width: calc(100% + 100px);
+  background:
+    linear-gradient(90deg, var(--c-fg) 0 2px, transparent 0) 0 0 / 100px 100% repeat-x,
+    linear-gradient(90deg, var(--c-fg) 0 1px, transparent 0) 50px 0 / 100px 70% repeat-x,
+    linear-gradient(90deg, var(--c-fg) 0 1px, transparent 0) 0 0 / 10px 40% repeat-x; }
+.metre__lecture { position: absolute; top: 0; bottom: 0; left: calc(50% - 2px); width: 4px; background: var(--c-accent); }
+
+/* Rideau : trait de cote jaune tracé sur le coffrage pendant la sortie. */
+.curtain__trait { position: absolute; left: var(--gutter); right: var(--gutter); top: 50%; height: 3px; background: var(--c-accent); transform-origin: left center; }
+@media (max-width: 900px) { .metre { margin-top: 0; } }
+.split-line { padding-top: 0.16em; margin-top: -0.16em; } /* capitales accentuées (RÉNOVER) dans les masques */
