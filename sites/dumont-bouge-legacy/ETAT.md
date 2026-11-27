@@ -24,3 +24,8 @@
 - sloplint FAIL 34 sur Base.astro est un faux positif (règle dans base.css) ; WARN 25 sur `.statement` assumé.
 - Éléments `popover` : `display: contents` au bureau (page.css `.nav__links[popover]`), vrai popover sous 60 rem ; ne pas ajouter de `justify-self` hors du bloc bureau (il s'applique dans le popover en bloc).
 - `<script>` du Base est inliné par Astro (petit module) ; ne pas chercher ses fonctions dans `_astro/page.*.js` (c'est le prefetch).
+
+# Phase 3 (QA) terminée
+- Corrigé : cibles des crédits photo (24 px). Build final OK, RAPPORT.md écrit.
+- Faux positif : contraste 404 = dist/404.html racine, pas ce site.
+- Reste : sweep sloplint, finish review, log hallmark, checklist 72 cases (non faits en phase 3).
