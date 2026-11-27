@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { societe, metiers, projets, photos, etapes } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base page="accueil" title="Novobel, rénovation et construction à Namur" description="Novobel rénove et transforme maisons, bureaux et immeubles à Namur, de l’étude à la remise des clés. Devis gratuit.">
+  <section class="poster">
+    <Photo slot="hero" img={photos.combles} eager sizes="100vw" pos="50% 40%" class="poster__photo" />
+    <div class="container poster__in">
+      <div class="poster__card">
+        <h1>Rénover de fond en comble, à Namur.</h1>
+        <p class="lead">Novobel transforme maisons, bureaux et immeubles, de l’étude à la remise des clés.</p>
+        <p class="actions">
+          <a class="btn btn--primary" href={`mailto:${societe.email}?subject=Demande%20de%20devis`}>Demander un devis gratuit</a>
+          <a class="btn btn--ghost" href={`${base}projects/`}>Voir les projets</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--about" id="a-propos">
+    <div class="container about">
+      <h2>Qui sommes-nous ?</h2>
+      <div class="about__text">
+        <p class="dropcap">Vous avez besoin d’effectuer des travaux de rénovation pour votre maison ou vos locaux commerciaux ? Et si vous collaboriez avec Novobel ? Chacun de nos services est pris en charge par des professionnels minutieux.</p>
+        <p>Faites-nous part de vos besoins, et nous ferons tout notre possible pour y répondre. Forte de son approche familiale et de sa proximité avec ses clients, notre équipe s’engage à offrir un service personnalisé et de qualité.</p>
+        {/* Hallmark, reworded "Nous sommes actifs dans la rénovation depuis 25 ans" to omitted : la BCE date l'entreprise de 2019, à confirmer avec le client (gate 46a) */}
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--services">
+    <div class="container">
+      <h2>Cinq métiers, un seul chantier</h2>
+      <ol class="rows">
+        {metiers.map((m, i) => (
+          <li class="row">
+            <span class="row__n num">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="row__t">{m.titre}</h3>
+            <p class="row__d">{m.texte}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="more"><a href={`${base}services/`}>Le détail de nos services</a></p>
+    </div>
+  </section>
+
+  <Photo slot="plateau" img={photos.halle} class="bleed" sizes="100vw" pos="50% 55%" />
+
+  <section class="band band--projects">
+    <div class="container split">
+      <div class="split__head">
+        <h2>Des bureaux et des maisons qui deviennent des logements</h2>
+        <p class="more"><a href={`${base}projects/`}>Tous les projets</a></p>
+      </div>
+      <ul class="index">
+        {projets.map((p) => (
+          <li>
+            <a href={`${base}projects/`}>
+              <span class="index__n num">{p.logements}</span>
+              <span class="index__b"><strong>{p.nom}</strong><span>{p.texte}</span></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--livraison">
+    <div class="container feature">
+      <Photo slot="mesure" img={photos.mesure} sizes="(min-width: 60rem) 50vw, 100vw" pos="40% 50%" />
+      <div class="feature__text">
+        <h2>Un planning transmis dès le premier jour</h2>
+        <p class="lead">{etapes[3].texte}</p>
+        <p class="more"><a href={`${base}services/#livraison`}>Notre façon de travailler</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--devis">
+    <div class="container devis">
+      <h2>Devis gratuit sous 24 h</h2>
+      <div class="devis__text">
+        <p class="lead">Vous avez pour projet d’agrandir votre maison ou vos bureaux ? Contactez Novobel pour demander une estimation gratuite et en savoir plus.</p>
+        <p class="actions">
+          <a class="btn btn--primary" href={`mailto:${societe.email}?subject=Demande%20de%20devis`}>Écrire à Novobel</a>
+          <a class="btn btn--ghost" href={societe.telHref}>{societe.tel}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { societe, offres } from '../data/site';
+---
+<Base page="jobs" title="Carrière · Novobel recrute à Namur" description="Six offres chez Novobel à Namur : conducteur de chantier, carreleur, électricien, plafonnage, stage d’architecte d’intérieur, ouvrier polyvalent.">
+  <section class="band band--head">
+    <div class="container pagehead">
+      <h1>Rejoindre l’équipe Novobel.</h1>
+      <p class="lead">{offres.length} offres ouvertes à Namur.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container">
+      <table class="table">
+        <caption class="visually-hidden">Offres d’emploi</caption>
+        <thead><tr><th scope="col">Poste</th><th scope="col">Lieu</th><th scope="col"><span class="visually-hidden">Postuler</span></th></tr></thead>
+        <tbody>
+          {offres.map((o) => (
+            <tr>
+              <th scope="row">{o.poste}</th>
+              <td>{o.lieu}</td>
+              <td class="table__act"><a href={`mailto:${societe.email}?subject=${encodeURIComponent('Candidature : ' + o.poste)}`}>Écrire à Novobel<span class="visually-hidden"> pour le poste {o.poste}</span></a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="note">Le détail de chaque offre n’a pas été repris du site d’origine. {/* dropped : filtre Wix (libellés par défaut Vanilla, Chocolate…), remplacé par la liste complète */}</p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,45 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import KywFooter from '@kyw/footer';
+import { societe } from '../data/site';
+interface Props { title: string; description: string; page: string }
+const { title, description, page } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f1ede6" />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=sentient@300,400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400&display=swap" rel="stylesheet" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content={societe.nom} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <style is:global>
+      @import "../styles/page.css";
+    </style>
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Nav page={page} />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer />
+    <KywFooter base={import.meta.env.BASE_URL} />
+    <script is:inline>document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+  </body>
+</html>

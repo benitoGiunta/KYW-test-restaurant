@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { societe, projets, photos } from '../data/site';
+---
+<Base page="projects" title="Projets · Novobel, rénovation à Namur" description="Astrid, Bellevue, Joseph, Citadelle : quatre transformations de bureaux et de maisons en appartements, réalisées par Novobel.">
+  <section class="band band--head">
+    <div class="container pagehead">
+      <h1>Quatre bâtiments, vingt-huit logements.</h1>
+      <p class="lead">Des espaces de bureau et des maisons de maître transformés en appartements de standing.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container">
+      <ol class="rows rows--projects">
+        {projets.map((p, i) => (
+          <li class="row">
+            <span class="row__n num">{String(i + 1).padStart(2, '0')}</span>
+            <h2 class="row__t row__t--lg">{p.nom}</h2>
+            <p class="row__d">{p.texte}</p>
+            <span class="row__fig num"><strong>{p.logements}</strong> logements</span>
+          </li>
+        ))}
+      </ol>
+      <p class="note">Les photographies de ces chantiers ne figurent pas encore dans le dossier : elles viendront du client.</p>
+    </div>
+  </section>
+
+  <Photo slot="cuisine" img={photos.cuisine} class="inset" sizes="(min-width: 60rem) 40vw, 100vw" caption="Cuisine d’un appartement rénové, photo du site d’origine" credit={false} />
+
+  <section class="band band--devis">
+    <div class="container devis">
+      <h2>Un projet similaire ?</h2>
+      <div class="devis__text">
+        <p class="lead">Contactez Novobel pour une estimation gratuite.</p>
+        <p class="actions"><a class="btn btn--primary" href={`mailto:${societe.email}?subject=Demande%20de%20devis`}>Écrire à Novobel</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
