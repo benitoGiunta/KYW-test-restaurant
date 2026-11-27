@@ -11,16 +11,14 @@ const logo = photos['00-logo-ne5t'];
     <a class="nav__brand" href={u('')} aria-label="NE5T Hôtel & Spa Restaurant, accueil">
       <img src={u('photos/00-logo-ne5t.webp')} width={logo.w} height={logo.h} alt="" />
     </a>
-    <details class="nav__menu">
-      <summary>Menu</summary>
-      <nav aria-label="Navigation principale">
-        <ul>
-          {nav.map((n) => (
-            <li><a href={u(n.href)} aria-current={n.id === current ? 'page' : undefined}>{n.label}</a></li>
-          ))}
-        </ul>
-      </nav>
-    </details>
-    <a class="btn btn--primary nav__cta" href={site.telHref}>Réserver au {site.telAffiche}</a>
+    <button class="nav__toggle" type="button" popovertarget="menu-principal" aria-controls="menu-principal" aria-expanded="false">Menu</button>
+    <nav class="nav__menu" id="menu-principal" popover aria-label="Navigation principale">
+      <ul>
+        {nav.map((n) => (
+          <li><a href={u(n.href)} aria-current={n.id === current ? 'page' : undefined}>{n.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a class="btn btn--primary nav__cta" href={site.telHref} aria-label={`Réserver au ${site.telAffiche}`}>Réserver<span class="nav__tel">au {site.telAffiche}</span></a>
   </div>
 </header>

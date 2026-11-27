@@ -34,11 +34,34 @@ Source de vérité : `src/styles/tokens.css` (paper oklch 15/19/24 %, ink parche
 - Primary : accent plein · pilule · 48px. Secondary : contour 1.5px ink-2 · même forme.
 
 ## Motion
-- Phase 1 : aucune. Cible : calme, un reveal au plus.
+- Caractère : calme. Signature (accueil, spa) : le soir tombe sur la façade, la photo se pose (scale 1,05 à 1, 3,2 s) pendant qu'un voile sombre se lève (`dusk`, 2,4 s) puis le titre, le chapeau et les boutons montent (`rise`, 640 ms, décalés de 140 ms). Un seul reveal : `[data-reveal]` (fondu + 14 px, 420 ms, rangées décalées de 50 ms) sous `.js`, révélé par IntersectionObserver. Aucun rebond, `transform`/`opacity` seulement. Mouvement réduit : tout visible, aucune animation. Pas de chorégraphie scroll (l'original n'en avait pas).
+- Nav : dalle collante (`--z-sticky-nav`), `<nav popover>` unique : en ligne au bureau, panneau sous la barre sous 60rem (bouton « Menu », Échap et clic extérieur ferment, `aria-expanded` synchronisé). Lien d'évitement. Au téléphone le bouton Réserver garde « Réserver » (nom accessible complet par `aria-label`).
+- Horaires : jour courant (fuseau Europe/Brussels) marqué `aria-current="date"` et « Aujourd'hui », en script ; sans script la liste reste complète.
+- Pas de formulaire ni de switcher : la réservation est un appel (`tel:`), la carte est une liste unique sans onglets.
 
 ## Sur-utilisation (Hallmark)
 - [x] 1. Deal, draw, scaffold, stamp · preuve : page.css:1-4, `.hallmark/log.json`
 - [x] 2. Audit avant/après · preuve : AUDIT.md, `.hallmark/before.txt`
 - [x] 3. Comp avant build · preuve : comp.md, `.hallmark/comps/`
 - [x] 4. Sloplint sur page.css · preuve : 0 FAIL CSS ; 34 et 26a sur le HTML sont des faux positifs (CSS externe, règles dans base.css:2 et :focus-visible)
-- [ ] 5. Sloplint `--render` et revues · phase 2 et 3
+- [x] 5a. Sloplint `--render --stage hero` · preuve : 1 FAIL (34, faux positif : `overflow-x: clip` sur html et body dans base.css:2, `scrollWidth` = largeur de fenêtre sur 6 pages à 1280 et 375), WARN 49 faux positifs (`.btn { white-space: nowrap }`, page.css:31)
+- [x] hero-review : self (pas d'outil Agent) : ship · 1 finding (libellé « Réserverau » collé, flex supprime l'espace) · 1 resolved (gap 0,3em, page.css:30)
+- [x] comp : 2 built, no key · c1 chosen · reproduced (checked at 1280x800) : voir comp.md
+- [x] 2. Pas de `transition: all` ni de géométrie animée · preuve : grep page.css (transform/opacity/couleurs)
+- [x] 6. `:focus-visible` partout, instantané, 3:1 · preuve : base.css:9, page.css (btn, skip)
+- [x] 7. Reduced motion et contenu visible sans script · preuve : page.css fin de fichier, base.css (règle globale), test : 0 élément masqué en `reduce`
+- [x] 17. Hero en `dvh` · preuve : page.css `.hero--poster`
+- [x] 19. Sticky non superposés (un seul : `.nav`, top 0) · preuve : test top=0 après défilement ; `scroll-padding-top` = hauteur nav + 16 px
+- [x] 20. Radios-onglets : sans objet (aucun switcher)
+- [x] 21. Vidéo de fond : sans objet (aucune vidéo)
+- [x] 22. Reveal sous `.js` seulement, repli try/catch et `reduce` · preuve : Base.astro (script), page.css
+- [x] 23. États d'input : sans objet (aucun champ)
+- [x] 24. Tooltip et auto-rotation : sans objet
+- [x] 29. Aucun faux envoi : aucun formulaire, réservation = `tel:` conservé
+- [x] 30. SVG décoratifs : aucun `<svg>` en balise (grain en data URI CSS)
+- [x] 48. Hover : un signal, sous `@media (hover: hover)`, sans rebond ni toast · preuve : page.css
+- [x] 49. `:active` (bouton, bascule du menu), `:disabled`, contrôles 44 à 52 px, libellés verbes · preuve : page.css `.btn`, mesure mobile
+- [x] 56. Un primaire rempli (rose), un contour · preuve : `.btn--primary`, `.btn--ghost`
+- [x] 58. Un seul pattern de reveal par page, pas de scroll-timeline
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` · preuve : base.css:4,10
+- [x] 72. Responsive : 60rem et 40rem, `(hover: hover)`, `(pointer: coarse)`, `dvh`, gouttière 16 px, pas de débordement à 375 (6 pages)

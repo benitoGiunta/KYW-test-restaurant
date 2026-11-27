@@ -21,5 +21,30 @@ const body = nbsp(await Astro.slots.render('default'));
   </head>
   <body>
     <Fragment set:html={body} />
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll('[data-reveal]');
+        try {
+          var calme = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (calme || !('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('is-in'); }); }
+          else {
+            var io = new IntersectionObserver(function (list) {
+              list.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
+            }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+            els.forEach(function (e) { io.observe(e); });
+          }
+          var jour = new Intl.DateTimeFormat('fr-BE', { weekday: 'long', timeZone: 'Europe/Brussels' }).format(new Date()).toLowerCase();
+          document.querySelectorAll('.schedule__row').forEach(function (r) {
+            var dt = r.querySelector('dt');
+            if (dt && dt.textContent.trim().toLowerCase() === jour) { r.classList.add('is-today'); r.setAttribute('aria-current', 'date'); }
+          });
+        } catch (e) { els.forEach(function (x) { x.classList.add('is-in'); }); }
+        var m = document.getElementById('menu-principal'), t = document.querySelector('.nav__toggle');
+        if (m && t) {
+          m.addEventListener('toggle', function (ev) { t.setAttribute('aria-expanded', ev.newState === 'open' ? 'true' : 'false'); });
+          window.addEventListener('resize', function () { if (m.matches(':popover-open') && window.innerWidth > 960) m.hidePopover(); });
+        }
+      })();
+    </script>
   </body>
 </html>
