@@ -6,7 +6,7 @@ import { site, adresseLigne, horairesResume, telHref } from '../data/site';
 import { u } from '../lib/url';
 const initiales = site.sigle;
 ---
-<footer class="footer">
+<section class="footer" aria-label="Coordonnées et horaires">
   <div class="wrap footer__cols">
     <div class="footer__col footer__marque">
       <span class="header__cercle footer__cercle" aria-hidden="true">{initiales}</span>
@@ -17,7 +17,7 @@ const initiales = site.sigle;
       {site.email.valeur && !site.email.placeholder && <p><a class="lien" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>}
     </div>
     <div class="footer__col">
-      <p class="petite-cap">Services</p>
+      <p class="petite-cap">Services (horaires à confirmer)</p>
       <dl class="horaires">
         {horairesResume().map((r) => <><dt>{r.libelle}</dt><dd>{r.valeur}</dd></>)}
       </dl>
@@ -37,5 +37,5 @@ const initiales = site.sigle;
       <p><a class="lien" href={site.distinctions[0].url} rel="noopener">Fiche Gault&amp;Millau</a></p>
     </div>
   </div>
-</footer>
+</section>
 <KywFooter base={import.meta.env.BASE_URL} />

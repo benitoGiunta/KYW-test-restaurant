@@ -65,7 +65,7 @@ export const site: Restaurant = {
   email: { valeur: '', placeholder: true }, // info@restaurantbienvenuechezvous.be à confirmer (domaine différent du site) : jamais affiché
   reservation: {
     outil: 'Téléphone',
-    note: "Le restaurant reçoit sur réservation : appelez-le aux heures de service, il n'y a pas de module en ligne.",
+    note: "Le restaurant reçoit sur réservation, par téléphone ; il n'y a pas de module en ligne.",
   },
   horaires: [
     { jour: 'lundi', creneaux: [], note: 'fermé' },
@@ -119,7 +119,7 @@ export const site: Restaurant = {
     { nom: 'Voyage Signature', prix: '94 €', detail: 'Midi et soir', description: 'Le grand voyage du chef, sur réservation. Accords : A +40 €, B +54 €, C +64 €.', placeholder: false },
   ],
   mercredi: "Chaque mercredi soir, hors jours fériés, un repas à prix réduit en quatre escales, uniquement sur réservation. Le tarif est à confirmer auprès du restaurant.",
-  bonCadeau: { texte: "Chèque cadeau disponible auprès du restaurant ; montants à demander par téléphone.", placeholder: false },
+  bonCadeau: { texte: "Chèques cadeaux proposés par le restaurant (modalités à confirmer).", placeholder: false },
   histoire: [
     "Bienvenue chez vous est né en 2002, d'abord à Bruxelles. Le restaurant s'est installé à Namur, rue Pépin, en 2020, au premier étage d'une maison de maître.",
     "Ici, quelques tables seulement, à la lueur des bougies, et aux beaux jours une terrasse calme. Cédric Delsaut est seul : il cuisine, il sert, il choisit les vins.",
@@ -141,7 +141,7 @@ export const site: Restaurant = {
   ],
   chiffres: {
     services: { valeur: 4, libelle: 'escales', sousLibelle: 'le repas en quatre escales, midi et soir', preuve: 'donnees.json, menus du site client', placeholder: false },
-    prix: { valeur: 69, libelle: 'euros', sousLibelle: 'le repas en quatre escales, midi et soir, hors accords', preuve: 'donnees.json, menus du site client', placeholder: false },
+    prix: { valeur: 69, libelle: 'euros', sousLibelle: 'hors accords', preuve: 'donnees.json, menus du site client', placeholder: false },
     chefs: { valeur: 1, libelle: 'chef', sousLibelle: 'seul pour la cuisine, la salle et la cave', preuve: 'Gault&Millau Belgium', placeholder: false },
     ouverture: { valeur: 2002, libelle: 'maison créée', sousLibelle: 'Née à Bruxelles, installée à Namur, rue Pépin, depuis 2020', preuve: 'site client (« Depuis 2002 »), La DH 18/05/2020', placeholder: false },
   },
