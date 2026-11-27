@@ -32,3 +32,22 @@ Swap du tirage 14e65e : réservation, « chambre » et créneaux remplacés (pas
 - [x] 6. Photographies du client avant tout stock · preuve : `public/photos/`, aucune image tierce
 - [x] 7. Rien d'inventé : tout chiffre et nom vient de `donnees.json` ou `dossier.md` · preuve : `src/data/site.ts`, `src/carte.json`
 - [ ] 8. Rendu navigateur, sloplint `--render`, comparaison `--kept` : phase 3 (non faite ici, consigne de la phase 1)
+- [x] 2. Pas de `transition: all` ni d'animation de géométrie (10a) · preuve : `grep "transition: all"` vide ; transitions listées en couleur, `opacity`, `transform` (`src/styles/page.css:37`, `:197`)
+- [x] 6. `:focus-visible` partout, instantané, 3:1 (26a, 15) · preuve : `src/styles/base.css:7` (accent), `page.css:43` (or clair sur bandeau brun et lettre) ; sloplint `--render` 0 FAIL après correction du lien d'évitement
+- [x] 7. Fallback reduced motion ; contenu visible sans script (27, 62) · preuve : `base.css:26` (durées à 0,01 ms), `base.css:4` (défilement doux seulement hors reduced) ; aucun contenu caché au repos ; menu `popovertarget` ouvert sans JS (test Playwright, JS coupé : ouvert) ; reveal : aucun (voir 22)
+- [x] 17. Hero en `svh`/`dvh`, jamais `vh` (6a) · preuve : `page.css:66` (`100svh`), `grep "[0-9]vh"` vide
+- [x] 19. Sticky non superposés (56) · preuve : un seul sticky (`.site-header`, `top: calc(-1 * var(--banner-h))`, `--z-sticky-nav`) ; le panneau de famille colle sous la barre (`top: calc(var(--bar-h) + var(--space-lg))`) ; ancre `#levure` mesurée à 68 px sous une barre de 52 px
+- [x] 20. Radios-onglets gardés (53) · preuve : sans objet, aucun switcher (une route produits à ancres) ; aucun `position: absolute; top: 0` d'onglet
+- [x] 21. Vidéo de fond (28a, 28b) · preuve : sans objet, aucune vidéo
+- [x] 22. Reveal sous `.js` seulement (62) · preuve : aucun reveal ; Solstice déclare « No reveal, no counter, no loop » (`themes/solstice.md` § Motion), le thème l'emporte sur la note de phase 1 ; écrit dans `page.css:10`
+- [x] 23. États d'input (39a) · preuve : sans objet, aucun champ (l'action est `tel:`) ; contrôles : bouton Menu et `.btn` en états repos, survol, `:active`, `:disabled`, focus
+- [x] 24. Tooltip et auto-rotation (17, 18) · preuve : sans objet, ni tooltip, ni boucle, ni rotation
+- [x] 29. Aucun faux envoi (70) · preuve : sans objet, aucun formulaire ; la réservation reste le lien `tel:` conservé
+- [x] 30. SVG décoratifs `aria-hidden` (33) · preuve : aucun `<svg>` ni `<canvas>` (la flèche du menu est du texte)
+- [x] 48. Hover : un signal, sur le conteneur, rien sur non-interactif, pas de rebond, pas de toast (11, 12, 16) · preuve : `page.css:46-55` sous `(hover: hover)` ; la ligne de l'index s'éclaire (fond papier), les lignes de carte, qui ne mènent nulle part, ne réagissent pas ; `--ease-out` seul
+- [x] 49. `:active`, `:disabled`, contrôles 44 à 52 px (26b, 39b) · preuve : `.btn` 48, Menu 44, liens de barre 48, liens de texte 44 (48 au doigt, `page.css:207`) ; `.btn:active`, `.btn:disabled`
+- [x] 56. Un primaire rempli (F4) · preuve : `.btn` vermilion seul, secondaire typographique `.link`, Menu en contour
+- [x] 58. Une recette de conteneur, pilule limitée aux contrôles (F7) ; un pattern de scroll (F8) · preuve : pilule sur `.btn` et `.menu-btn` seulement ; aucune chorégraphie de scroll (la barre qui reste est du `position: sticky`)
+- [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : `base.css:3,5,6`
+- [x] 72. Responsive (breakpoints rem, capacités, `svh`, safe-area) · preuve : 60rem et 40rem ; `(hover: hover)`, `(pointer: coarse)` ; `viewport-fit=cover` et `max(var(--gutter), env(safe-area-inset-*))` sur `.container` ; `scrollWidth == clientWidth` à 320, 375, 768 sur 5 pages ; tables : `dl` flex, rien à restacker
+

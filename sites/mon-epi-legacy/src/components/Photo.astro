@@ -9,8 +9,9 @@ const src = u(`photos/${p.base}-800.webp`);
 const srcset = has1600 ? `${u(`photos/${p.base}-800.webp`)} 800w, ${u(`photos/${p.base}-1600.webp`)} 1600w` : undefined;
 const w = has1600 ? 1600 : 800;
 const h = Math.round(p.h * (w / p.w));
+const cap = caption ? caption.replace(/'/g, '\u2019') : '';
 ---
 <figure class:list={['photo', cls]} style={ratio ? `--ratio:${ratio}` : undefined}>
   <img src={src} srcset={srcset} sizes={sizes} width={w} height={h} alt={(alt ?? p.sujet).replace(/'/g, '’')} loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : undefined} style={`object-position:${position}`} />
-  {caption && <figcaption>{caption.replace(/'/g, '’')}</figcaption>}
+  {cap ? <figcaption>{cap}</figcaption> : null}
 </figure>
