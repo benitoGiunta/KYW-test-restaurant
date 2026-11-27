@@ -25,3 +25,11 @@
 ## Pièges
 - Ajouter une rangée au hero repousse le CTA hors flottaison à 1280×720 si le texte est aligné en bas de la photo : texte en `align-self: start`.
 - `.motion .cote` part à `--trace: 0` : toute nouvelle `.cote` hors du premier écran dépend de son ScrollTrigger (`top 90%`).
+
+## Fait (phase 3, QA)
+- Lu QA-build.md et planches ; shoots ciblés a-propos, contact, accueil, projets (0 erreur, 0 débordement, axe 0).
+- Corrigé : cibles tactiles (min-height 24 px des liens), légende répétée des projets, og.png recomposée.
+- Audit 0 FAIL ; build final OK ; RAPPORT.md écrit.
+
+## Reste
+- Jury avec critique neuf, relecture des contrastNeedsReview, remplacement des placeholders (voir RAPPORT.md).

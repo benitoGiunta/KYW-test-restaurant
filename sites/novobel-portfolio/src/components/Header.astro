@@ -5,23 +5,23 @@ import { u } from '../lib/url';
 const liens = [
   { href: u('/services/'), label: 'Services' },
   { href: u('/projets/'), label: 'Projets' },
-  { href: u('/maison/'), label: 'La maison', mobile: 'cache' },
-  { href: u('/carriere/'), label: 'Carrière', mobile: 'cache' },
+  { href: u('/maison/'), label: 'La maison', court: 'Maison' },
+  { href: u('/carriere/'), label: 'Carrière' },
   { href: u('/contact/'), label: 'Devis' },
 ];
 const ici = Astro.url.pathname.replace(/\/+$/, '');
 const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
 ---
-<div class="etat" role="group" aria-label="Métiers">
+<aside class="etat" aria-label="Métiers">
   <div class="etat__piste" data-anime>
     {[0, 1, 2, 3, 4, 5].map((k) => <p aria-hidden={k ? 'true' : undefined}>{site.metiers.join(' · ')}</p>)}
   </div>
-</div>
+</aside>
 <header class="header">
   <div class="wrap header__inner">
     <a class="header__brand" href={u('/')}>{site.nom}</a>
     <nav class="nav" aria-label="Navigation principale">
-      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)} data-mobile={l.mobile}>{l.label}</a>)}
+      {liens.map((l) => <a href={l.href} aria-current={courant(l.href)}>{l.court ? <><span class="nav__long">{l.label}</span><span class="nav__court" aria-hidden="true">{l.court}</span></> : l.label}</a>)}
     </nav>
   </div>
 </header>

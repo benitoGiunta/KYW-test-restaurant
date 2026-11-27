@@ -14,7 +14,7 @@ export const site = {
   slug: 'novobel',
   nom: 'Novobel',
   nomLignes: ['Novo', 'bel'] as [string, string],
-  baseline: 'La qualité avant tout',
+  baseline: 'Rénovation et construction à Namur',
   metier: 'Construction & Rénovation',
   description: 'Novobel, entreprise de construction et de rénovation à Namur : conception, accompagnement, finitions et livraison de votre chantier, de l\'étude à la remise des clés.',
   url: 'https://www.novobel.com',
@@ -24,14 +24,14 @@ export const site = {
   reseaux: [{ nom: 'Facebook', url: 'https://www.facebook.com/profile.php?id=100064109591379' }],
   devis: { delai: 'sous 24 h', gratuit: true }, // « Devis gratuit sous 24h ! » : affirmé par le site actuel
   introduction: [
-    'Vous avez besoin de travaux de rénovation pour votre maison ou vos locaux ? Novobel accompagne ses clients dans la transformation et l\'embellissement de leurs espaces, du petit projet au chantier de grande envergure.',
+    'Vous avez besoin de travaux de rénovation pour votre maison ou vos locaux ? Novobel accompagne ses clients dans la transformation et l\'embellissement de leurs espaces, de l\'aménagement d\'un espace à la conversion d\'un bâtiment en logements.',
     'Notre équipe garde une approche familiale et une vraie proximité avec ses clients : gestion complète du projet, de l\'étude initiale à la remise des clés, suivi rigoureux et coordination de chaque chantier.',
   ],
   valeurs: ['Approche familiale', 'Proximité client', 'Respect des délais'],
   etapes: [
-    { n: '01', titre: 'Conception', accroche: 'Sur mesure pour vous', texte: 'Vous êtes propriétaire d\'un terrain ou d\'un bien à transformer : avec ses corps de métier spécialisés, Novobel vous aide à réaliser votre projet personnalisé. Nos experts vous expliquent toutes vos options et répondent à vos questions.' },
+    { n: '01', titre: 'Conception', accroche: 'Étude et conseils', texte: 'Vous êtes propriétaire d\'un terrain ou d\'un bien à transformer : avec ses corps de métier spécialisés, Novobel vous aide à réaliser votre projet personnalisé. Un interlocuteur vous présente les options possibles et répond à vos questions.' },
     { n: '02', titre: 'Accompagnement', accroche: 'Selon vos besoins', texte: 'Spécialisée dans la rénovation de fond en comble, Novobel prend en charge votre projet et concilie vos besoins et votre budget, avec une communication claire sur l\'état d\'avancement à chaque étape.' },
-    { n: '03', titre: 'Finitions', accroche: 'La meilleure qualité', texte: 'Novobel se charge de l\'ensemble des finitions : nos différents corps de métier prennent le relais pour aménager le lieu qui vous ressemble, avec l\'expérience et les outils nécessaires.' },
+    { n: '03', titre: 'Finitions', accroche: 'Corps de métier réunis', texte: 'Novobel se charge de l\'ensemble des finitions : nos différents corps de métier prennent le relais pour aménager le lieu qui vous ressemble, avec l\'expérience et les outils nécessaires.' },
     { n: '04', titre: 'Livraison', accroche: 'Délais respectés', texte: 'Un planning minutieux est transmis dès le début de la mission. Nous passons en revue l\'avancement de chaque poste et proposons des réunions régulières avec les architectes et tous les intervenants du chantier.' },
   ] as Etape[],
   metiers: ['Rénovation complète', 'Gros œuvre', 'Finitions', 'Installations techniques', 'Menuiserie', 'Peinture et tapisserie'],

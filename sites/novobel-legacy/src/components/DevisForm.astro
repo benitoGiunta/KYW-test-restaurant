@@ -1,0 +1,62 @@
+---
+import { metiers } from '../data/site';
+---
+<form class="form" data-endpoint="" novalidate aria-label="Demande de devis">
+  <div class="field">
+    <label for="f-nom">Nom</label>
+    <input id="f-nom" name="nom" type="text" autocomplete="name" required aria-describedby="f-nom-h" />
+    <p class="field__h" id="f-nom-h" data-hint="">&nbsp;</p>
+  </div>
+  <div class="field">
+    <label for="f-mail">E-mail</label>
+    <input id="f-mail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="nom@exemple.be" required aria-describedby="f-mail-h" />
+    <p class="field__h" id="f-mail-h" data-hint="Écrivez-le sous la forme nom@exemple.be.">Écrivez-le sous la forme nom@exemple.be.</p>
+  </div>
+  <div class="field">
+    <label for="f-tel">Téléphone <span class="field__opt">(facultatif)</span></label>
+    <input id="f-tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="0488 12 34 56" aria-describedby="f-tel-h" />
+    <p class="field__h" id="f-tel-h" data-hint="">&nbsp;</p>
+  </div>
+  <div class="field">
+    <label for="f-type">Type de travaux</label>
+    <select id="f-type" name="type" autocomplete="off" aria-describedby="f-type-h">
+      <option value="">À préciser</option>
+      {metiers.map((m) => <option value={m.titre}>{m.titre}</option>)}
+    </select>
+    <p class="field__h" id="f-type-h" data-hint="">&nbsp;</p>
+  </div>
+  <div class="field field--wide">
+    <label for="f-msg">Votre projet</label>
+    <textarea id="f-msg" name="message" rows="4" autocomplete="off" required aria-describedby="f-msg-h"></textarea>
+    <p class="field__h" id="f-msg-h" data-hint="">&nbsp;</p>
+  </div>
+  <div class="form__foot field--wide">
+    <button class="btn btn--primary" type="submit">Envoyer la demande</button>
+    <p class="form__status" role="status" aria-live="polite"></p>
+  </div>
+  <script is:inline>
+    (function () {
+      var form = document.querySelector('form[data-endpoint]'); if (!form) return;
+      var status = form.querySelector('.form__status');
+      var msgs = { nom: 'Indiquez votre nom.', email: 'Cette adresse semble incomplète. Écrivez-la sous la forme nom@exemple.be.', message: 'Décrivez votre projet en une ou deux phrases.' };
+      function check(el) {
+        var h = document.getElementById(el.getAttribute('aria-describedby')); if (!h) return true;
+        var ok = el.checkValidity();
+        if (ok) { el.removeAttribute('aria-invalid'); h.textContent = h.dataset.hint || ' '; h.classList.remove('is-error'); }
+        else { el.setAttribute('aria-invalid', 'true'); h.textContent = msgs[el.name] || 'Ce champ est incomplet.'; h.classList.add('is-error'); }
+        return ok;
+      }
+      form.querySelectorAll('input, select, textarea').forEach(function (el) {
+        el.addEventListener('blur', function () { el.dataset.touched = '1'; check(el); });
+        el.addEventListener('input', function () { if (el.dataset.touched) check(el); });
+      });
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var first = null;
+        form.querySelectorAll('input, select, textarea').forEach(function (el) { el.dataset.touched = '1'; if (!check(el) && !first) first = el; });
+        if (first) { status.textContent = 'Corrigez les champs signalés.'; first.focus(); return; }
+        if (!form.dataset.endpoint) { status.textContent = 'Rien n’a été envoyé : ce formulaire n’est pas encore relié.'; return; }
+      });
+    })();
+  </script>
+</form>
