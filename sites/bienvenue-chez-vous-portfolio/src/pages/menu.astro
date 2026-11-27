@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const menu = site.menus[1];
+const degustation = site.carte[0];
+const supplements = site.carte[1];
+// Les grignotages et les douceurs encadrent les 4 escales annoncées : pas de numéro (constante menus[0].services).
+const horsService = new Set(['Grignotages', 'Biscuit, chocolat, fantaisie']);
+let n = 0;
+const lignes = degustation.plats.map((p) => ({ ...p, numero: horsService.has(p.nom) ? null : ++n }));
+const photos = ['/photos/menu-carpaccio.webp', '/photos/menu-foie-gras.webp', '/photos/menu-saint-jacques.webp'].map(photoDe);
+---
+<Base title="Le menu" description={`Le repas en escales de Bienvenue chez vous à Namur : ${menu.services} escales à ${menu.prix}, midi et soir. Saint-Jacques, œuf parfait, filet de veau.`}>
+  <HeroPage titre="Le menu" chiffre={site.chiffres.services} sur={`${menu.nom}, ${menu.prix}`}>
+    <p>{menu.services} escales, midi et soir. Le menu n'est pas dévoilé : Cédric Delsaut le compose avec les produits du moment et le sert lui-même. Voici le relevé d'octobre 2026.</p>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="menu-titre">
+    <div class="wrap menu__grille">
+      <h2 class="sr-only" id="menu-titre">{degustation.categorie}</h2>
+      <ol class="menu__liste" aria-labelledby="menu-titre">
+        {lignes.map((p) => (
+          <li class:list={['menu__ligne', { 'menu__ligne--hors': p.numero === null }]} data-reveal="up">
+            <span class="menu__numero" aria-hidden="true">{p.numero ? String(p.numero).padStart(2, '0') : '·'}</span>
+            <span class="menu__nom">{p.nom}</span>
+            {p.description && <span class="menu__desc">{p.description}{p.descriptionPlaceholder && <span class="illu">illustratif</span>}</span>}
+          </li>
+        ))}
+      </ol>
+      <aside class="menu__cote" data-reveal="fade">
+        <p class="petite-cap">{supplements.categorie}</p>
+        <ul class="menu__options">
+          {supplements.plats.map((p) => <li><span>{p.nom}{p.description ? `, ${p.description}` : ''}</span>{p.prix && <strong>{p.prix}</strong>}</li>)}
+        </ul>
+        <p class="muted">{site.mercredi} {site.reservation.note}</p>
+        <p><a class="btn btn--primary" href={u('/reservation/')}>Réserver</a></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--photos" aria-label="Assiettes du chef">
+    <div class="wrap triptyque">
+      {photos.map((p, i) => (
+        <figure class:list={['triptyque__item', `triptyque__item--${i}`]} data-reveal="clip" data-delay={String(i * 0.1)}>
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+</Base>

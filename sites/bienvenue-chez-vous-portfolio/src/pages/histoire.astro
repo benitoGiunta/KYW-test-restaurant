@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const chef = site.equipe[0];
+const photos = ['/photos/histoire-facade.webp', '/photos/histoire-enseigne.webp', '/photos/histoire-carte.webp'].map(photoDe);
+---
+<Base title="Le chef et la maison" description={`${chef.nom}, chef et propriétaire de Bienvenue chez vous à Namur : seul en cuisine, en salle et à la cave, depuis 2002.`}>
+  <HeroPage titre="Le chef" chiffre={site.chiffres.chefs} sur={`${chef.nom}, ${chef.role}`}>
+    <p>{site.histoire[0]}</p>
+  </HeroPage>
+
+  <section class="section section--recit" aria-labelledby="recit-titre">
+    <div class="wrap recit">
+      <h2 class="petite-cap" id="recit-titre">La maison</h2>
+      <div class="recit__texte stack">
+        {site.histoire.slice(1).map((p) => <p data-reveal="fade">{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--photos" aria-label="La maison en images">
+    <div class="wrap triptyque">
+      {photos.map((p, i) => (
+        <figure class:list={['triptyque__item', `triptyque__item--${i}`]} data-reveal="clip" data-delay={String(i * 0.1)}>
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="equipe-titre">
+    <div class="wrap equipe">
+      <h2 class="petite-cap" id="equipe-titre">Ce qui compte</h2>
+      <ul class="valeurs" aria-label="Ce qui compte">
+        {site.valeurs.map((v) => <li>{v}</li>)}
+      </ul>
+      <p class="muted">{chef.bio?.[0]} {site.credit}</p>
+      <p class="actions"><a class="btn btn--primary" href={u('/reservation/')}>Réserver une table</a></p>
+    </div>
+  </section>
+</Base>

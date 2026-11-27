@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, adresseLigne, horaireTexte, telHref } from '../data/site';
+const itineraire = `https://www.openstreetmap.org/search?query=${encodeURIComponent(adresseLigne())}`;
+---
+<Base title="Réservation" description={`Réserver une table chez Bienvenue chez vous, ${site.adresse.commune} : par téléphone au ${site.telephone}, du mardi au samedi.`}>
+  <HeroPage titre="Réserver" sur="Une table, sur réservation">
+    <p>{site.reservation.note}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={telHref()}>Appeler le {site.telephone}</a>
+    </div>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="services-titre">
+    <div class="wrap resa">
+      <div class="resa__horaires" data-reveal="fade">
+        <h2 class="petite-cap" id="services-titre">Services</h2>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+        <p class="muted resa__note">{site.horairesNote}</p>
+      </div>
+      <div class="resa__infos" data-reveal="fade">
+        <h2 class="petite-cap">Adresse</h2>
+        <address>{adresseLigne()}<br />Au premier étage d'une maison de maître</address>
+        <p><a class="lien" href={itineraire} rel="noopener">Itinéraire</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

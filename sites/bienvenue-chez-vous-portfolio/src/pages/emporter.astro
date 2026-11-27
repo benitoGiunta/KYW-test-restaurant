@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { asset } from '../lib/url';
+const offres = site.emporter.offres;
+---
+<Base title="À emporter" description={`Traiteur, repas gourmand hebdomadaire, box, buffets et boutique d'artisans de Bienvenue chez vous à Namur. Commande au ${site.telephone}.`}>
+  <HeroPage titre="À emporter" sur="Traiteur, boutique, cadeaux">
+    <p>{site.emporter.intro}</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Le traiteur, les fêtes et la boutique">
+    <div class="wrap offres">
+      {offres.map((o, i) => { const p = photoDe(o.photo); return (
+        <article class:list={['offre', { 'offre--inverse': i % 2 === 1 }]}>
+          <figure class="offre__photo" data-reveal="clip">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+          <div class="offre__texte">
+            <h2 class="offre__nom">{o.nom}</h2>
+            <p>{o.texte}{o.textePlaceholder && <span class="illu">texte illustratif</span>}</p>
+          </div>
+        </article>
+      ); })}
+    </div>
+  </section>
+
+  <section class="section section--contact" aria-labelledby="contact-titre">
+    <div class="wrap contact">
+      <h2 class="petite-cap" id="contact-titre">Commander</h2>
+      <p class="contact__texte">Le repas hebdomadaire se commande 24 heures à l'avance. {site.emporter.materiel}</p>
+      <p class="actions"><a class="btn btn--primary" href={telHref()}>Appeler le {site.telephone}</a></p>
+    </div>
+  </section>
+</Base>
