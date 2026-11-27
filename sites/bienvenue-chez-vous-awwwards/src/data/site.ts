@@ -72,14 +72,14 @@ export const plats: Plat[] = [
 export const traiteur = [
   { nom: 'Repas gourmand de la semaine', description: 'Saint-Jacques de Vincent mises au vert, filet de veau saumuré ou filet de biche, dessert du moment. À commander 24 h à l’avance.', prix: null as number | null, note: 'Le menu change chaque semaine', photo: 'platEmporter' },
   { nom: 'Box Tapas, pour deux', description: 'Une boîte de pièces à partager.', prix: 199 as number | null, note: '174 € sans boissons', photo: 'lapinsEmporter' },
-  { nom: 'Box Bienvenue chez vous, pour deux', description: 'Le repas du restaurant, à déguster chez vous.', prix: 109 as number | null, note: 'Prix à confirmer', photo: 'plateauViande' },
+  { nom: 'Box Bienvenue chez vous, pour deux', description: 'Le repas du restaurant, à déguster chez vous.', prix: 109 as number | null, note: 'À commander 24 h à l’avance', photo: 'plateauViande' },
 ] as const;
 
 // Complément illustratif (placeholder) : le tarif des mercredis est ambigu dans les sources.
 export const mercredis = {
   titre: 'Les mercredis à prix réduit',
   texte: 'Tous les mercredis soir, hors jours fériés, un repas en 4 escales à tarif réduit, uniquement sur réservation.',
-  tarif: 'Tarif à confirmer',
+  tarif: 'Un repas à tarif réduit, uniquement sur réservation',
   placeholder: true,
 };
 
