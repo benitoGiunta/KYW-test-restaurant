@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, horairesNamur } from '../data/site';
+const metiers = [
+  { n: 'Le pain', t: 'Pétri et cuit chaque matin, à partir de farines sélectionnées.' },
+  { n: 'La pâtisserie', t: 'Des gâteaux préparés à la main : Saint Honoré, Truffe chocolat, Javanais, Misérable, le fraisier en saison.' },
+  { n: 'Les Dagobert', t: 'Sandwichs, salades et paninis préparés à la commande, à emporter.' },
+  { n: 'Le tea-room', t: 'Petit-déjeuner, brunch, gaufres de Bruxelles, crêpes et coupes glacées, à table.' },
+];
+---
+<Base title="La maison" page="histoire" description="Dumont Bouge à Bouge (Namur) : une boulangerie, une pâtisserie, une sandwicherie et un tea-room sous le même toit, ouverts tous les jours.">
+  <section class="entete wrap">
+    <h1 class="display entete__titre">Quatre métiers, une porte</h1>
+    <p class="entete__texte">Chaussée de Louvain, à Bouge, on entre pour le pain et on reste pour le reste. Une maison de quartier qui ouvre tous les jours à 7 h et ferme à 18 h.</p>
+  </section>
+  <section class="metiers wrap" aria-labelledby="metiers-t">
+    <h2 id="metiers-t" class="sr-only">Les quatre métiers</h2>
+    <ol class="metiers__liste">
+      {metiers.map((m) => <li class="metier"><h3 class="metier__nom display">{m.n}</h3><p>{m.t}</p></li>)}
+    </ol>
+  </section>
+  <section class="paire paire--histoire wrap" aria-labelledby="mot-t">
+    <figure class="paire__a"><Photo cle="vitrine" widths={[480, 800, 1200]} sizes="(min-width: 900px) 45vw, 90vw" /></figure>
+    <div class="paire__texte">
+      <h2 id="mot-t" class="display paire__titre">Un lieu de rencontre</h2>
+      <p>La maison se décrit comme bien plus qu’un salon de thé : un lieu de rencontre et de partage, avec une grande variété gustative. La société, Dumont Bouge SRL, est inscrite à la Banque-Carrefour des Entreprises sous le numéro 0778903268.</p>
+      <p>Les fondateurs et l’équipe n’ont pas encore été présentés sur ce site : on les rencontre au comptoir.</p>
+    </div>
+  </section>
+  <section class="deux wrap" aria-labelledby="deux-t">
+    <h2 id="deux-t" class="deux__titre">Deux adresses</h2>
+    <div class="deux__cols">
+      <div><h3 class="deux__nom">Bouge</h3><p>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} Bouge<br />Tous les jours, 7 h à 18 h.</p></div>
+      <div><h3 class="deux__nom">Namur</h3><p>{site.second.rue} {site.second.numero}<br />{site.second.cp} {site.second.commune}<br />{horairesNamur[0].jours}, 7 h à 17 h. {horairesNamur[1].jours} : fermé.</p></div>
+    </div>
+    <p><a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver à Bouge</span></a></p>
+  </section>
+</Base>

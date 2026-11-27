@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, horairesBouge, horairesNamur } from '../data/site';
+---
+<Base title="Réserver" page="reservation" description="Réserver une table chez Dumont Bouge, chaussée de Louvain 343 à Bouge : par téléphone au 081 22 96 02, sur le site de la maison ou par e-mail.">
+  <section class="entete wrap">
+    <h1 class="display entete__titre">Réserver une table</h1>
+    <p class="entete__texte">La maison est ouverte tous les jours de 7 h à 18 h. Pour une table au tea-room, appelez ou passez par le formulaire de la maison.</p>
+  </section>
+  <section class="resa wrap" aria-label="Façons de réserver">
+    <ul class="resa__voies">
+      <li><a class="cta cta--grand" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a><p>Pour une table, ou pour commander un gâteau.</p></li>
+      <li><a class="cta cta--fantome cta--grand" href={site.reservationUrl} rel="noopener"><span class="cta__txt">Formulaire de la maison</span></a><p>Nombre de personnes, date et heure, sur dumontbouge.com.</p></li>
+      <li><a class="cta cta--fantome cta--grand" href={`mailto:${site.email}`}><span class="cta__txt">Écrire un e-mail</span></a><p>{site.email}</p></li>
+    </ul>
+  </section>
+  <section class="acces wrap" aria-labelledby="acces-t">
+    <div class="acces__texte">
+      <h2 id="acces-t" class="acces__titre display">Venir à Bouge</h2>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} Bouge (Namur)</address>
+      <p>Un parvis pavé devant l’entrée, avec des places de stationnement signalées, et une terrasse couverte. Le nombre de places et de couverts n’est pas précisé.</p>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+      <h3 class="acces__sous">Horaires</h3>
+      <ul class="horaires">
+        <li><span>Bouge, {horairesBouge.jours.toLowerCase()}</span><span>{horairesBouge.plage}</span></li>
+        <li><span>Petit-déjeuner</span><span>7 h à 11 h</span></li>
+        <li><span>Brunch</span><span>11 h 30 à 15 h</span></li>
+        <li><span>Namur (Marchovelette), {horairesNamur[0].jours.toLowerCase()}</span><span>{horairesNamur[0].plage}</span></li>
+        <li><span>Namur, {horairesNamur[1].jours.toLowerCase()}</span><span>{horairesNamur[1].plage}</span></li>
+      </ul>
+    </div>
+    <figure class="acces__photo"><Photo cle="facade" widths={[480, 800, 1200]} sizes="(min-width: 900px) 50vw, 100vw" /></figure>
+  </section>
+</Base>

@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, journee, chiffres, presentation, horairesBouge } from '../data/site';
+---
+<Base page="accueil">
+  <section class="hero wrap">
+    <h1 class="display hero__titre"><span class="hero__l1">Dumont</span> <span class="hero__l2"><i class="hero__pinceau" aria-hidden="true"></i>Bouge</span></h1>
+    <div class="hero__infos">
+      <p class="hero__baseline">Pâtisserie, boulangerie, restauration, tea-room. Chaussée de Louvain, à Bouge.</p>
+      <p class="hero__ouvert"><span class="hero__heure">{horairesBouge.plage}</span> <span>tous les jours</span></p>
+      <p class="hero__actions">
+        <a class="cta" href={u('/reservation/')}><span class="cta__txt">Réserver une table</span></a>
+        <a class="cta cta--fantome" href={site.telephoneHref}><span class="cta__txt">Appeler le {site.telephoneLisible}</span></a>
+      </p>
+    </div>
+    <figure class="hero__photo">
+      <Photo cle="vitrine" widths={[640, 1000, 1600, 2000]} sizes="(min-width: 1500px) 1400px, 100vw" prioritaire />
+      <figcaption class="legende">La vitrine de la pâtisserie, au comptoir. {site.credit}.</figcaption>
+    </figure>
+  </section>
+
+  <section class="jour wrap" aria-labelledby="jour-titre">
+    <h2 id="jour-titre" class="jour__titre display">Une journée, quatre fournées</h2>
+    <ol class="jour__liste">
+      {journee.map((j) => (
+        <li class="jour__ligne">
+          <p class="jour__h">{j.h}</p>
+          <div class="jour__txt">
+            <h3 class="jour__nom">{j.titre}</h3>
+            <p>{j.texte}</p>
+          </div>
+          <a class="lien jour__lien" href={u(j.lien)}>{j.cta}<span class="sr-only"> : voir la carte</span></a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="paire wrap" aria-labelledby="paire-titre">
+    <figure class="paire__a"><Photo cle="salade" widths={[480, 800, 1200]} sizes="(min-width: 900px) 40vw, 90vw" /></figure>
+    <div class="paire__texte">
+      <h2 id="paire-titre" class="display paire__titre">Préparé à la commande</h2>
+      <p>Les sandwichs Dagobert, les salades et les paninis sont préparés à la commande, à emporter ou à table. Du jambon classique au Campagnard, il y en a {chiffres.dagobert} à la carte, en tiers, demi ou trois quarts de baguette, en pistolet ou en sandwich.</p>
+      <p><a class="lien" href={u('/carte/#emporter')}>La carte à emporter</a></p>
+    </div>
+    <figure class="paire__b"><Photo cle="miniSandwichs" widths={[480, 800]} sizes="(min-width: 900px) 28vw, 60vw" /></figure>
+  </section>
+
+  <section class="mot nuit" aria-label="Présentation de la maison">
+    <div class="wrap">
+      <blockquote class="mot__texte display" data-split="lines"><p>{presentation}</p></blockquote>
+      <p class="mot__source">Dumont Bouge, sur son site</p>
+    </div>
+  </section>
+
+  <section class="chiffres wrap" aria-labelledby="chiffres-titre">
+    <h2 id="chiffres-titre" class="chiffres__titre">Sur le comptoir</h2>
+    <dl class="chiffres__liste">
+      <div><dt>pains</dt><dd>{chiffres.pains}</dd></div>
+      <div><dt>gâteaux maison</dt><dd>{chiffres.gateaux}</dd></div>
+      <div><dt>Dagobert</dt><dd>{chiffres.dagobert}</dd></div>
+      <div><dt>lignes à la carte</dt><dd>{chiffres.lignes}</dd></div>
+    </dl>
+  </section>
+
+  <section class="plein" aria-label="La façade">
+    <figure>
+      <Photo cle="facade" widths={[800, 1400, 2000]} sizes="100vw" />
+      <figcaption class="legende wrap">Chaussée de Louvain 343, à Bouge : terrasse couverte et parvis pavé.</figcaption>
+    </figure>
+  </section>
+</Base>
