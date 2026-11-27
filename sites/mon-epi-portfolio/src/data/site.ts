@@ -53,16 +53,16 @@ export const site: Restaurant = {
   telephone: '+32 491 18 29 35',
   email: { valeur: null, placeholder: false },
   reservation: { outil: 'téléphone' },
-  // Seul le vendredi est publié par le client (monepi.be/contact). Les autres jours restent « à confirmer » :
+  // Seul le vendredi est publié par le client (monepi.be/contact). Les autres jours ne sont pas publiés :
   // aucun jour n'est déclaré fermé ni ouvert sans preuve, et seul le vendredi alimente le balisage schema.org.
   horaires: [
-    { jour: 'lundi', creneaux: [], note: 'à confirmer' },
-    { jour: 'mardi', creneaux: [], note: 'à confirmer' },
-    { jour: 'mercredi', creneaux: [], note: 'à confirmer' },
-    { jour: 'jeudi', creneaux: [], note: 'à confirmer' },
+    { jour: 'lundi', creneaux: [] },
+    { jour: 'mardi', creneaux: [] },
+    { jour: 'mercredi', creneaux: [] },
+    { jour: 'jeudi', creneaux: [] },
     { jour: 'vendredi', creneaux: [{ ouverture: '09:00', fermeture: '18:00' }] },
-    { jour: 'samedi', creneaux: [], note: 'à confirmer' },
-    { jour: 'dimanche', creneaux: [], note: 'à confirmer' },
+    { jour: 'samedi', creneaux: [] },
+    { jour: 'dimanche', creneaux: [] },
   ],
   reseaux: [{ nom: 'Facebook', url: 'https://www.facebook.com/Monepi.boulangerie' }],
   carte: [],

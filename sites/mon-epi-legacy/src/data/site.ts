@@ -12,7 +12,7 @@ export const site = {
   email: null as string | null,
   facebook: 'https://www.facebook.com/Monepi.boulangerie',
   instagram: null as string | null,
-  // Seul le vendredi est publié par monepi.be/contact ; le reste est à confirmer (placeholder).
+  // Seul le vendredi est publié par monepi.be/contact ; pour le reste, renvoi au téléphone.
   horaires: { vendredi: '9 h 00 à 18 h 00' },
   pointsDeVente: [
     { nom: 'Biomanie', lieu: 'Wanze' },

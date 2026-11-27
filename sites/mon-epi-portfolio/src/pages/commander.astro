@@ -29,7 +29,7 @@ import Polaroid from '../components/Polaroid.astro';
       <div class="pratique">
         <div class="stack">
           <dl class="horaires horaires--grand">
-            {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+            {site.horaires.filter((h) => h.creneaux.length).map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
           </dl>
           <p class="muted" style="font-size: var(--t-s)">Seul le vendredi est publié par la boulangerie. Pour les autres jours, appelez avant de passer.</p>
           <p><strong>Adresse</strong><br />{adresseLigne()}</p>
