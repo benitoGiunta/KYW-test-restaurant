@@ -1,5 +1,5 @@
 // Motion « Velours » : tout se dévoile comme un rideau. Loader = rideau baissé qui se lève ; transition de page = même
-// rideau ; chaque chapitre = pan vert sapin levé une fois ; chiffre cuivre qui compte ; citation dont les mots s'allument
+// rideau ; chaque chapitre = pan bordeaux levé une fois ; chiffre rouge qui compte ; citation dont les mots s'allument
 // au scrub ; onglets à barre (rotation 6 s, pause au survol, désactivée en reduced motion). Une horloge : GSAP.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -27,7 +27,7 @@ export function setupMotion() {
   });
 
   onPage(({ intro }) => {
-    const cleanups = [heroIntro(intro), rideaux(), compteurs(), citation(), onglets()];
+    const cleanups = [heroIntro(intro), heroParallaxe(), rideaux(), compteurs(), citation(), escales(), onglets()];
     return () => cleanups.forEach((c) => c());
   });
 }
@@ -37,13 +37,36 @@ export function setupMotion() {
 function heroIntro(intro: gsap.core.Timeline) {
   const mots = document.querySelectorAll<HTMLElement>('[data-hero-mot]');
   if (!mots.length || prefersReducedMotion() || isMobile()) return () => {};
+  const sourire = document.querySelector<SVGPathElement>('[data-sourire]');
   gsap.set(mots, { yPercent: 110 });
+  if (sourire) gsap.set(sourire, { strokeDashoffset: 1 });
   const tl = gsap.timeline({ paused: true }).to(mots, { yPercent: 0, duration: 1.1, ease: ease.out, stagger: 0.08 });
+  // Signature : le sourire se trace une fois, juste après le nom.
+  if (sourire) tl.to(sourire, { strokeDashoffset: 0, duration: 0.9, ease: ease.inOut }, '-=0.4');
   intro.add(() => tl.play(), 0.1);
-  return () => { tl.kill(); gsap.set(mots, { clearProps: 'transform' }); };
+  return () => { tl.kill(); gsap.set(mots, { clearProps: 'transform' }); if (sourire) gsap.set(sourire, { clearProps: 'strokeDashoffset' }); };
 }
 
-/** Rideau : un pan vert sapin par section [data-rideau], levé une fois quand la section arrive au tiers de l'écran.
+/** Hero : la photo glisse de 8 % pendant que la page défile (desktop, scrub). Ni mobile ni reduced motion. */
+function heroParallaxe() {
+  const photo = document.querySelector<HTMLElement>('.hero__photo');
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  if (!photo || !hero || prefersReducedMotion() || isMobile()) return () => {};
+  gsap.set(photo, { scale: 1.1 });
+  gsap.to(photo, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+  return () => {};
+}
+
+/** Escales du menu : la ligne numérotée au centre de l'écran s'allume. Mobile compris (sans mouvement de taille en reduced motion). */
+function escales() {
+  if (prefersReducedMotion()) return () => {};
+  document.querySelectorAll<HTMLElement>('.menu__ligne:not(.menu__ligne--hors)').forEach((ligne) => {
+    ScrollTrigger.create({ trigger: ligne, start: 'top center', end: 'bottom center', toggleClass: { targets: ligne, className: 'is-escale' } });
+  });
+  return () => {};
+}
+
+/** Rideau : un pan bordeaux par section [data-rideau], levé une fois quand la section arrive au tiers de l'écran.
  *  Reduced motion : le pan est `display: none` par le CSS (html:not(.motion)). */
 function rideaux() {
   if (prefersReducedMotion()) return () => {};
@@ -100,7 +123,7 @@ function citation() {
   return () => {};
 }
 
-/** Onglets à barre : la barre cuivre de l'onglet actif se remplit en 6 s puis passe au suivant ; pause au survol ou au
+/** Onglets à barre : la barre rouge de l'onglet actif se remplit en 6 s puis passe au suivant ; pause au survol ou au
  *  focus ; clic ou flèches pour choisir. Reduced motion : pas de rotation, la barre de l'onglet actif est pleine (CSS). */
 function onglets() {
   const root = document.querySelector<HTMLElement>('[data-onglets]');

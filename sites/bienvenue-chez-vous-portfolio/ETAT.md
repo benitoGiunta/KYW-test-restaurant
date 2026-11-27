@@ -1,4 +1,4 @@
-# ETAT — bienvenue-chez-vous-portfolio, passe construction-1 (phase 1 sur 3)
+# ETAT — bienvenue-chez-vous-portfolio, passe construction-2 (phase 2 sur 3)
 
 ## Fait
 - Gabarit Velours copié (sans node_modules/dist), choix argumenté dans DESIGN.md.
@@ -23,3 +23,19 @@
 - Mercredis à prix réduit : sans tarif (ambigu). Box Bienvenue 109 € signalée « à confirmer ».
 - Tarifs Gault&Millau (103 €, 113 €) divergent du site : site retenu.
 - `gabarits/UTILISATION.md` non mis à jour (interdit de toucher gabarits/ dans cette passe) : ajouter « velours | bienvenue-chez-vous ».
+
+## Phase 2 (construction-2) — fait
+- Signature adaptée : « sourire » (arc SVG rouge sous le nom du hero, tracé en 0,9 s après les mots ; plein au premier rendu en mobile, reduced motion, sans JS). Rappel du dessert-smiley, ton plus chaleureux que le rideau seul.
+- Motion : parallaxe du hero (photo +8 %, scrub, desktop seulement) ; « escales » du menu (le numéro de la ligne au centre s'allume en rose pâle, 1 seule active à la fois) ; rideaux, compteurs, citation, onglets du gabarit conservés.
+- États et tactile : retour d'appui (`:active`, tap-highlight rouge), `.btn:disabled`, cibles 44 px sous `pointer: coarse` (liens, guides, pied, bouton Réserver petit), galerie en scroll-snap.
+- Pied de page : « Lundi et dimanche » (le `capitalize` donnait « Et »), colonne `minmax(0, 1fr)`.
+- Textes de tête et commentaires CSS/TS : « vert sapin / cuivre » remplacés par bordeaux / rouge.
+- Vérifié en navigateur (Chromium, serveur arrêté) : clics réels sur les 4 liens d'en-tête des 6 pages (elementFromPoint = `<a>`, URL change) ; bas de page 1440 (bandeau KYW + mention Maquette visibles) ; aucune erreur console ; pas de débordement horizontal en 1440 et 390 ; reduced motion (pas de loader, compteur « 4 », pan de rideau masqué, sourire plein) ; mobile 390 sans cible < 40 px ; menu mobile ouvert OK.
+- Build OK : `dist/bienvenue-chez-vous/portfolio/` (7 pages).
+
+## Reste (phase 3)
+- Shoot/audit complets par l'agent captures (non fait ici, par consigne) ; lire QA-<étape>.md.
+- Contrastes réels, recadrages « attention » des photos (menu 2/3, onglets 16/9), 404 réelle.
+- RAPPORT.md, `pnpm index`, commit de `dist/index.html`, `gabarits/UTILISATION.md` (« velours | bienvenue-chez-vous »).
+- Mercredis à prix réduit / box 109 € / téléphone : toujours « à confirmer ».
+- Pièges : `scripts/build-site.mjs` écrit dans `dist/` du dépôt (serveur sur `dist/` à relancer après build) ; un heredoc contenant du JS multiligne a déclenché le contrôle `rm` du shell : écrire les scripts de contrôle avec Write.
