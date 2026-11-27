@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, projets, lots } from '../data/site';
+---
+<Base page="projets" title="Projets" description="Les projets de Novobel à Namur : Astrid, Bellevue, Joseph et Citadelle, quatre transformations de bureaux et de maisons en appartements.">
+  <header class="entete wrap">
+    <p class="cote" aria-hidden="true"><span class="cote__val">Réalisations</span></p>
+    <h1 class="titre-xl display" data-split="lines">Quatre projets, quatre cotes</h1>
+    <p class="entete__chapo">Astrid, Bellevue, Joseph, Citadelle : chaque projet transforme un bâtiment existant en appartements. Les chiffres ci-dessous sont ceux annoncés par Novobel.</p>
+  </header>
+
+  <section class="wrap fiches" aria-label="Liste des projets">
+    {projets.map((p, i) => (
+      <article class={`fiche ${i % 2 ? 'fiche--droite' : ''}`}>
+        <figure class="fiche__media" data-reveal>
+          <Photo cle={p.photo} widths={[480, 800, 1200]} sizes="(min-width: 900px) 52vw, 100vw" />
+          <figcaption class="legende">Image d’illustration, non liée à ce projet</figcaption>
+        </figure>
+        <div class="fiche__corps">
+          <p class="fiche__val display" aria-hidden="true">{p.appartements}</p>
+          <p class="fiche__unite">appartements</p>
+          <h2 class="fiche__nom display">{p.nom}</h2>
+          <p>{p.type}.</p>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section class="services wrap" aria-labelledby="h-serv">
+    <p class="cote" aria-hidden="true"><span class="cote__val">Ce que nous faisons</span></p>
+    <h2 class="titre-l display" id="h-serv" data-split="lines">Quatre savoir-faire</h2>
+    <ul class="services__liste">
+      <li>Rénovation complète</li><li>Gros œuvre</li><li>Finitions</li><li>Installations techniques</li>
+    </ul>
+    <p>Ces quatre services couvrent {lots.length}{' '}étapes de chantier, de l’étude à la remise des clés. <a class="lien" href={u('/contact/')}>Parlez-nous de votre projet</a>.</p>
+  </section>
+</Base>

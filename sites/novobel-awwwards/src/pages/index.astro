@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, lots, projets } from '../data/site';
+---
+<Base page="accueil">
+  <section class="hero wrap" aria-labelledby="h1">
+    <h1 class="hero__titre display" id="h1" data-split="lines">Novobel</h1>
+    <div class="hero__texte">
+      <p class="cote" aria-hidden="true"><span class="cote__val">Construction et rénovation, Namur</span></p>
+      <p class="hero__chapo">De l’étude à la remise des clés, une entreprise familiale rénove et transforme maisons, bureaux et immeubles.</p>
+      <p class="hero__actions">
+        <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler {site.telephoneLisible}</span></a>
+        <a class="lien" href={u('/projets/')}>Voir les projets</a>
+      </p>
+    </div>
+    <figure class="hero__media" data-reveal>
+      <Photo cle="visite" widths={[640, 1000, 1500]} sizes="(min-width: 900px) 58vw, 100vw" prioritaire />
+      <figcaption class="legende">Image d’illustration</figcaption>
+    </figure>
+  </section>
+
+  <section class="lots wrap" aria-labelledby="h-lots">
+    <p class="cote" aria-hidden="true"><span class="cote__val">Cinq lots, un seul chantier</span></p>
+    <h2 class="titre-l display" id="h-lots" data-split="lines">Dans l’ordre du chantier</h2>
+    <ol class="lots__liste">
+      {lots.map((l) => (
+        <li class="lot">
+          <h3 class="lot__nom display">{l.nom}</h3>
+          <p class="lot__texte">{l.texte}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="cotes wrap" aria-labelledby="h-projets">
+    <p class="cote" aria-hidden="true"><span class="cote__val">Quatre projets, vingt-huit appartements</span></p>
+    <h2 class="titre-l display" id="h-projets" data-split="lines">Des plateaux et des maisons devenus logements</h2>
+    <ul class="cotes__grille">
+      {projets.map((p) => (
+        <li class="mesure">
+          <p class="mesure__val display" aria-hidden="true">{p.appartements}</p>
+          <h3 class="mesure__nom display">{p.nom}</h3>
+          <p class="mesure__type"><span class="sr-only">{p.appartements} appartements. </span>{p.type}</p>
+        </li>
+      ))}
+    </ul>
+    <p class="cotes__suite"><a class="lien" href={u('/projets/')}>Tous les projets</a></p>
+  </section>
+
+  <section class="plein" aria-label="La qualité avant tout">
+    <div class="plein__media" data-reveal><Photo cle="couchant" widths={[800, 1400, 1800]} sizes="100vw" decorative /></div>
+    <div class="plein__texte wrap">
+      <p class="plein__mot display" data-split="lines">La qualité avant tout.</p>
+      <p class="plein__note">La devise de Novobel, au chantier comme à la remise des clés.</p>
+    </div>
+  </section>
+
+  <section class="paire wrap" aria-labelledby="h-famille">
+    <div class="paire__texte">
+      <p class="cote" aria-hidden="true"><span class="cote__val">Namur</span></p>
+      <h2 class="titre-l display" id="h-famille" data-split="lines">Une entreprise familiale</h2>
+      <p>Novobel est une SRL namuroise de construction et de rénovation. Sa manière de travailler tient en trois mots : approche familiale, proximité avec le client, respect des délais.</p>
+      <p><a class="lien" href={u('/a-propos/')}>Faire connaissance</a></p>
+    </div>
+    <figure class="paire__a" data-reveal><Photo cle="mesure" widths={[480, 800, 1200]} sizes="(min-width: 900px) 40vw, 100vw" /><figcaption class="legende">Image d’illustration</figcaption></figure>
+    <figure class="paire__b" data-reveal><Photo cle="entrepot" widths={[480, 800, 1200]} sizes="(min-width: 900px) 26vw, 70vw" /><figcaption class="legende">Image d’illustration</figcaption></figure>
+  </section>
+</Base>

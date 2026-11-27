@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site } from '../data/site';
+---
+<Base page="contact" title="Contact" description="Contacter Novobel à Namur : téléphone, e-mail, adresse rue Emile Cuvelier et conseils pour préparer votre projet de rénovation.">
+  <header class="entete wrap">
+    <p class="cote" aria-hidden="true"><span class="cote__val">Contact</span></p>
+    <h1 class="titre-xl display" data-split="lines">Parlons de votre projet</h1>
+    <p class="entete__chapo">Pas de formulaire en ligne : un appel ou un e-mail suffit pour décrire votre projet de rénovation ou de construction.</p>
+  </header>
+
+  <section class="contact wrap" aria-label="Coordonnées">
+    <div class="contact__actions">
+      <a class="cta cta--grand" href={site.telephoneHref}><span class="cta__txt">Appeler {site.telephoneLisible}</span></a>
+      <a class="cta cta--contour" href={`mailto:${site.email}`}><span class="cta__txt">Écrire à {site.email}</span></a>
+    </div>
+    <dl class="contact__infos">
+      <div><dt>Adresse</dt><dd><address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address><a class="lien" href={site.carteUrl} rel="noopener">Ouvrir le plan</a></dd></div>
+      <div><dt>Téléphone</dt><dd><a class="lien" href={site.telephoneHref}>{site.telephoneLisible}</a></dd></div>
+      <div><dt>E-mail</dt><dd><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+      <div><dt>En ligne</dt><dd><a class="lien" href={site.reseaux[0].url} rel="noopener">Facebook</a><br /><a class="lien" href={site.siteActuel} rel="noopener">Site actuel de Novobel</a></dd></div>
+    </dl>
+  </section>
+
+  <section class="prepare wrap" aria-labelledby="h-prep">
+    <div>
+      <p class="cote" aria-hidden="true"><span class="cote__val">Avant de nous écrire</span></p>
+      <h2 class="titre-l display" id="h-prep" data-split="lines">Ce qui aide à cadrer un projet</h2>
+      <ul class="prepare__liste">
+        <li>L’adresse du bien et sa nature : maison, bureaux, immeuble.</li>
+        <li>Les travaux envisagés : rénovation complète, gros œuvre, finitions, installations techniques.</li>
+        <li>Le calendrier souhaité et les contraintes connues.</li>
+        <li>Quelques photos ou plans, si vous en avez.</li>
+      </ul>
+      <form class="mail" action={`mailto:${site.email}`} method="post" enctype="text/plain">
+        <label for="msg">Décrivez votre projet</label>
+        <textarea id="msg" name="Projet" rows="5" autocomplete="off"></textarea>
+        <label for="nom">Votre nom</label>
+        <input id="nom" name="Nom" type="text" autocomplete="name" />
+        <button class="cta" type="submit"><span class="cta__txt">Ouvrir mon e-mail</span></button>
+        <p class="mail__note">Ce bouton ouvre votre application de messagerie ; rien n’est envoyé depuis ce site.</p>
+      </form>
+    </div>
+    <figure class="prepare__media" data-reveal><Photo cle="ferraillage" widths={[480, 800, 1200]} sizes="(min-width: 900px) 40vw, 100vw" /><figcaption class="legende">Image d’illustration</figcaption></figure>
+  </section>
+</Base>
