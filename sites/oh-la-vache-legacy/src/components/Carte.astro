@@ -49,11 +49,15 @@ const tabs = [{ id: 'menus', titre: 'Menus' }, ...groupes.map((g) => ({ id: g.id
 </section>
 <script is:inline>
 (function () {
-  var tabs = document.querySelectorAll('.tabs [role=tab]');
-  function on(t) { tabs.forEach(function (x) { var s = x === t; x.setAttribute('aria-selected', s); x.tabIndex = s ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).classList.toggle('is-on', s); }); }
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tabs [role=tab]'));
+  function on(t) { tabs.forEach(function (x) { var s = x === t; x.setAttribute('aria-selected', String(s)); x.tabIndex = s ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).classList.toggle('is-on', s); }); }
   tabs.forEach(function (t, i) {
     t.addEventListener('click', function () { on(t); });
-    t.addEventListener('keydown', function (e) { var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : -1; if (j < 0) return; var n = tabs[(j + tabs.length) % tabs.length]; n.focus(); on(n); });
+    t.addEventListener('keydown', function (e) {
+      var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : -1;
+      if (j < 0) return; e.preventDefault();
+      var n = tabs[(j + tabs.length) % tabs.length]; n.focus(); on(n);
+    });
   });
 })();
 </script>
