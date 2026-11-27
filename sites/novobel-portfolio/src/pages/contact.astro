@@ -18,12 +18,29 @@ import { site, telHref, mailHref, adresseLigne } from '../data/site';
         <address>{adresseLigne()}</address>
         <p class="note">Horaires d'ouverture : à communiquer par Novobel.</p>
       </div>
-      <form class="form" action={mailHref()} method="post" enctype="text/plain">
-        <label>Nom<input type="text" name="nom" autocomplete="name" required /></label>
-        <label>Téléphone<input type="tel" name="telephone" autocomplete="tel" /></label>
-        <label>E-mail<input type="email" name="email" autocomplete="email" required /></label>
-        <label>Votre projet<textarea name="projet" rows="5" required></textarea></label>
+      <form class="form" action={mailHref()} method="post" enctype="text/plain" data-devis data-pret="non">
+        <div class="champ">
+          <label for="f-nom">Nom</label>
+          <input id="f-nom" type="text" name="nom" autocomplete="name" required aria-describedby="e-nom" />
+          <p class="erreur" id="e-nom" hidden></p>
+        </div>
+        <div class="champ">
+          <label for="f-tel">Téléphone <span class="facultatif">(facultatif)</span></label>
+          <input id="f-tel" type="tel" name="telephone" autocomplete="tel" inputmode="tel" pattern="[0-9 +.\(\)\/\-]{6,}" aria-describedby="e-telephone" />
+          <p class="erreur" id="e-telephone" hidden></p>
+        </div>
+        <div class="champ">
+          <label for="f-mail">E-mail</label>
+          <input id="f-mail" type="email" name="email" autocomplete="email" required aria-describedby="e-email" />
+          <p class="erreur" id="e-email" hidden></p>
+        </div>
+        <div class="champ">
+          <label for="f-projet">Votre projet</label>
+          <textarea id="f-projet" name="projet" rows="5" required aria-describedby="e-projet"></textarea>
+          <p class="erreur" id="e-projet" hidden></p>
+        </div>
         <button class="btn btn--plein" type="submit">Envoyer ma demande</button>
+        <p class="form__etat" data-etat-form role="status" aria-live="polite" hidden></p>
         <p class="note">Formulaire de démonstration : il ouvre votre messagerie.</p>
       </form>
     </div>

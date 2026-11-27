@@ -2,6 +2,7 @@
 // lignes qui s'écrivent, suggestion du jour effacée puis réécrite, aperçu photo qui suit le pointeur, marquee d'état.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { novobelMotion } from './novobel';
 import { setLoaderFormat, setLoaderExit, setTransition, ease, onPage, onScroll, prefersReducedMotion, isTouch } from '../engine';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -27,7 +28,7 @@ export function setupMotion() {
   });
 
   onPage(() => {
-    const cleanups = [etat(), suggestion(), onglets(), lignesEcrites(), apercu(), prixEcrits(), motsGeants(), aujourdhui(), formulaire()];
+    const cleanups = [lignesEcrites(), apercu(), ...novobelMotion()];
     return () => cleanups.forEach((c) => c && c());
   });
 }
@@ -181,9 +182,9 @@ function apercu() {
     if (src !== s) { src = s; img.src = s; }
     if (visible) return;
     visible = true;
-    gsap.to(box, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'expo.out', overwrite: true });
+    gsap.to(box, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'expo.out', overwrite: 'auto' });
   };
-  const cacher = () => { if (!visible) return; visible = false; gsap.to(box, { autoAlpha: 0, scale: 0.85, duration: 0.3, ease: 'expo.out', overwrite: true }); };
+  const cacher = () => { if (!visible) return; visible = false; gsap.to(box, { autoAlpha: 0, scale: 0.85, duration: 0.3, ease: 'expo.out', overwrite: 'auto' }); };
   const move = (e: PointerEvent) => {
     x(e.clientX); y(e.clientY); rot(gsap.utils.clamp(-12, 12, (e.clientX - lastX) * 0.6)); lastX = e.clientX;
     const sous = (e.target as HTMLElement | null)?.closest?.<HTMLElement>('[data-preview]');

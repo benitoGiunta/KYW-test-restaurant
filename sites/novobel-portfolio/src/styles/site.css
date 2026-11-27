@@ -1,5 +1,4 @@
 /* Ajouts Novobel : tableau de chantier. Tokens et classes de base.css réutilisés. */
-.etat p { margin: 0; padding-inline: var(--gutter); height: 100%; display: flex; align-items: center; white-space: nowrap; overflow: clip; }
 .barre { grid-template-columns: repeat(2, 1fr); }
 .entete h1 { flex: 1 1 100%; white-space: normal; overflow-wrap: break-word; }
 .entete .lead { flex: 1 1 100%; max-width: 44ch; }
@@ -37,3 +36,61 @@
 .clair .note { color: var(--c-clair-muted); }
 .contact-liste { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
 .contact-liste .link { font-size: var(--t-m); font-weight: 700; }
+
+/* ---------- Phase 2 : motion, signature, états ---------- */
+/* Bandeau des métiers : défilement lent (6 copies, la moitié dépasse 2560 px), pause au survol ; statique et à la ligne en reduced motion. */
+.motion .etat__piste[data-anime] { animation-duration: 70s; }
+.etat:hover .etat__piste, .etat:focus-within .etat__piste { animation-play-state: paused; }
+html:not(.motion) .etat { height: auto; min-height: var(--etat); }
+html:not(.motion) .etat__piste { display: block; width: auto; height: auto; padding: 0.4rem var(--gutter); }
+html:not(.motion) .etat__piste p { white-space: normal; padding: 0; line-height: 1.5; }
+html:not(.motion) .etat__piste p::after { content: none; }
+html:not(.motion) .etat__piste p:not(:first-child) { display: none; }
+
+/* Jauge d'avancement de la page, sous l'en-tête (pilotée par le défilement, sans animation propre). */
+.header::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--c-accent); transform: scaleX(var(--p, 0)); transform-origin: left; pointer-events: none; }
+
+/* Trait jaune sous le nom et les titres de page : se trace une fois au chargement. Visible d'emblée sans motion. */
+.ardoise__nom::after, .entete h1::after { content: ''; display: block; width: clamp(4rem, 12vw, 8rem); height: 6px; margin-top: 0.3em; background: var(--c-accent); transform-origin: left; }
+.entete h1::after { height: 4px; }
+.motion .ardoise__nom::after, .motion .entete h1::after { transform: scaleX(0); transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+.motion .ardoise__nom.est-trace::after, .motion .entete h1.est-trace::after { transform: scaleX(1); }
+
+/* Fil à plomb des étapes : piste fixe + fil jaune (injecté par le script) ; sans motion, la piste est jaune d'emblée. */
+.etapes { position: relative; padding-left: calc(var(--u) * 1.5); }
+.etapes::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--c-line); }
+html:not(.motion) .etapes::before { background: var(--c-accent); }
+.etapes__fil { position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--c-accent); transform-origin: top; transform: scaleY(0); }
+.motion .etape__n { color: var(--c-muted); transition: color 0.5s; }
+.motion .etape.est-atteinte .etape__n { color: var(--c-accent); }
+.etape__titre { transition: color 0.3s; }
+@media (hover: hover) { .etape:hover .etape__titre { color: var(--c-accent); } }
+.stats .num { font-variant-numeric: tabular-nums; }
+
+/* Détails d'interaction : flèche des liens, appui des boutons, barre basse sur la page courante. */
+.ardoise__lien span { display: inline-block; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+@media (hover: hover) { .ardoise__lien:hover span { transform: translateX(0.3em); } }
+.btn { transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.15s; }
+.btn:active { transform: translateY(1px); }
+.barre a[aria-current='page'] { background: var(--c-bg); color: var(--c-accent); }
+
+/* Formulaire de devis : champs, erreurs, état. Rouge brique 6,5:1 sur le fond clair. */
+.form .champ { display: grid; gap: 0.3em; }
+.form .champ label { display: block; font-weight: 700; font-size: var(--t-s); }
+.form .facultatif { font-weight: 400; color: var(--c-clair-muted); }
+.form input, .form textarea { transition: border-color 0.25s, box-shadow 0.25s; }
+.form input:hover, .form textarea:hover { border-color: var(--c-clair-muted); }
+.form input:focus-visible, .form textarea:focus-visible { box-shadow: 0 0 0 3px rgb(233 208 100 / 0.7); outline: 2px solid var(--c-clair-fg); outline-offset: 0; }
+.form [aria-invalid='true'] { border-color: #9b1c1c; border-width: 2px; }
+.form .erreur { margin: 0; font-size: var(--t-s); font-weight: 700; color: #9b1c1c; }
+.form .erreur::before { content: '! '; }
+.form .erreur[hidden], .form__etat[hidden] { display: none; }
+.form__etat { margin: 0; padding: 0.75em 1em; border-left: 4px solid var(--c-clair-fg); background: rgb(42 46 45 / 0.07); font-size: var(--t-s); font-weight: 700; }
+.form__etat[data-type='erreur'] { border-left-color: #9b1c1c; color: #9b1c1c; }
+.form[data-pret='oui'] .btn--plein { background: var(--c-clair-fg); border-color: var(--c-clair-fg); color: var(--c-accent); }
+
+/* Tableau des repères : les valeurs passent à la ligne (le gabarit les gardait sur une ligne, 589 px en 390). */
+.deux > * { min-width: 0; }
+.horaires td:not(:first-child) { white-space: normal; width: auto; overflow-wrap: anywhere; }
+.horaires th { width: 38%; padding-right: var(--u); vertical-align: top; }
+.horaires td { vertical-align: top; }

@@ -12,8 +12,10 @@ const liens = [
 const ici = Astro.url.pathname.replace(/\/+$/, '');
 const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : undefined);
 ---
-<div class="etat" aria-label="Métiers">
-  <p>{site.metiers.join(' · ')}</p>
+<div class="etat" role="group" aria-label="Métiers">
+  <div class="etat__piste" data-anime>
+    {[0, 1, 2, 3, 4, 5].map((k) => <p aria-hidden={k ? 'true' : undefined}>{site.metiers.join(' · ')}</p>)}
+  </div>
 </div>
 <header class="header">
   <div class="wrap header__inner">
@@ -24,6 +26,6 @@ const courant = (href: string) => (href.replace(/\/+$/, '') === ici ? 'page' : u
   </div>
 </header>
 <div class="barre" role="navigation" aria-label="Actions rapides">
-  <a href={u('/contact/')}>Devis gratuit</a>
+  <a href={u('/contact/')} aria-current={courant(u('/contact/'))}>Devis gratuit</a>
   <a href={telHref()}>Appeler</a>
 </div>
