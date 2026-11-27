@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { asset } from '../lib/url';
+const offres = site.offres.slice(0, 2); // privatisation, repas en suite ; le spa a sa page
+---
+<Base title="Privatiser et repas en suite" description={`Privatiser le restaurant Intuition à Namur (${site.chiffres.couverts.valeur} couverts) ou se faire servir le repas dans sa suite. Renseignements au ${site.telephone}.`}>
+  <HeroPage titre="Privatiser" chiffre={site.chiffres.couverts} sur="La salle et la suite">
+    <p>Le restaurant se privatise pour {site.chiffres.couverts.valeur} couverts, et le repas peut aussi être servi dans votre suite.</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Les deux formules">
+    <div class="wrap offres">
+      {offres.map((o, i) => { const p = photoDe(o.photo); return (
+        <article class:list={['offre', { 'offre--inverse': i % 2 === 1 }]}>
+          <figure class="offre__photo" data-reveal="clip">
+            <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+          </figure>
+          <div class="offre__texte">
+            <h2 class="offre__nom">{o.nom}</h2>
+            <p>{o.texte}{o.textePlaceholder && <span class="illu">texte illustratif</span>}</p>
+          </div>
+        </article>
+      ); })}
+    </div>
+  </section>
+
+  <section class="section section--contact" aria-labelledby="contact-titre">
+    <div class="wrap contact">
+      <h2 class="petite-cap" id="contact-titre">Parler de votre repas</h2>
+      <p class="contact__texte">Le restaurant se réserve par téléphone. Appelez la maison pour une privatisation ou un repas en suite.</p>
+      <p class="actions"><a class="btn btn--primary" href={telHref()}>Appeler le {site.telephone}</a></p>
+    </div>
+  </section>
+</Base>

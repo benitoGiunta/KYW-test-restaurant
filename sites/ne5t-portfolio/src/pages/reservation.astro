@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, adresseLigne, horaireTexte, telHref, itineraireUrl } from '../data/site';
+---
+<Base title="Réservation" description={`Réserver une table à Intuition, ${site.adresse.commune} : par téléphone au ${site.telephone}. Une chambre se réserve en ligne.`}>
+  <HeroPage titre="Réserver" sur="Une table, midi ou soir">
+    <p>{site.reservation.restaurant}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={telHref()}>Appeler le {site.telephone}</a>
+      <a class="btn" href={site.reservation.chambres.url} rel="noopener">Réserver une chambre</a>
+    </div>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="services-titre">
+    <div class="wrap resa">
+      <div class="resa__horaires" data-reveal="fade">
+        <h2 class="petite-cap" id="services-titre">Services</h2>
+        <dl class="horaires">
+          {site.horaires.map((h) => <><dt>{h.jour}</dt><dd>{horaireTexte(h)}</dd></>)}
+        </dl>
+        <p class="muted resa__note">Les heures exactes ne sont pas encore confirmées. <span class="illu">à confirmer</span></p>
+      </div>
+      <div class="resa__infos" data-reveal="fade">
+        <h2 class="petite-cap">Adresse</h2>
+        <address>{adresseLigne()}<br />À deux pas de la citadelle, au-dessus de la Meuse</address>
+        <p><a class="lien" href={itineraireUrl()} rel="noopener">Itinéraire</a></p>
+        {site.email.valeur && !site.email.placeholder && <p><a class="lien" href={`mailto:${site.email.valeur}`}>{site.email.valeur}</a></p>}
+      </div>
+    </div>
+  </section>
+</Base>

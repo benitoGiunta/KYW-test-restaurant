@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe, telHref } from '../data/site';
+import { u, asset } from '../lib/url';
+const spaP = photoDe('/photos/spa-voutes.webp');
+const duplexP = photoDe('/photos/tab-chambre.webp');
+const photos = ['/photos/suite-chambre.webp', '/photos/suite-salon-clair.webp', '/photos/suite-bain.webp'].map(photoDe);
+const { spa } = site;
+---
+<Base title="Suites et spa" description="Quatre suites, deux duplex et le spa WellNE5T de 250 m² dans une ancienne ferme de Namur, au-dessus de la Meuse. Spa ouvert aux clients extérieurs.">
+  <HeroPage titre="Suites et spa" chiffre={site.chiffres.suites} sur="Hôtel CosyNe5t, spa WellNE5T">
+    <p>On peut venir pour la table, et rester pour la nuit : quatre suites et deux duplex, un spa de {spa.surface} ouvert aux clients extérieurs.</p>
+  </HeroPage>
+
+  <section class="section" aria-label="Le spa et les suites">
+    <div class="wrap offres">
+      <article class="offre">
+        <figure class="offre__photo" data-reveal="clip">
+          <img src={asset(spaP.src)} alt={spaP.alt} width={spaP.largeur} height={spaP.hauteur} loading="lazy" decoding="async" />
+        </figure>
+        <div class="offre__texte">
+          <h2 class="offre__nom">WellNE5T, le spa</h2>
+          <p>{spa.surface}, piscine intérieure et extérieure, deux esthéticiennes, gamme de soins Thémaé. {spa.horaires}.</p>
+          <dl class="horaires">
+            {spa.tarifs.map((t) => <><dt>{t.libelle}</dt><dd>{t.valeur}</dd></>)}
+          </dl>
+          <p class="muted">{spa.note}</p>
+        </div>
+      </article>
+      <article class="offre offre--inverse">
+        <figure class="offre__photo" data-reveal="clip">
+          <img src={asset(duplexP.src)} alt={duplexP.alt} width={duplexP.largeur} height={duplexP.hauteur} loading="lazy" decoding="async" />
+        </figure>
+        <div class="offre__texte">
+          <h2 class="offre__nom">Quatre suites, deux duplex</h2>
+          <p>Chacun a son style, du design contemporain à l'ambiance chaulée et bois vieilli.</p>
+          <ul class="valeurs" aria-label="Les six hébergements">
+            {site.suites.map((s) => <li>{s.nom}</li>)}
+          </ul>
+          <p class="muted">{site.sejour.chambres} {site.sejour.petitDejeuner}</p>
+          <p class="actions"><a class="btn btn--primary" href={site.reservation.chambres.url} rel="noopener">Réserver une chambre</a></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section--photos" aria-label="Les suites en images">
+    <div class="wrap triptyque">
+      {photos.map((p, i) => (
+        <figure class:list={['triptyque__item', `triptyque__item--${i}`]} data-reveal="clip" data-delay={String(i * 0.1)}>
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--contact" aria-labelledby="contact-titre">
+    <div class="wrap contact">
+      <h2 class="petite-cap" id="contact-titre">Après le spa, la table</h2>
+      <p class="contact__texte">Le repas peut être servi dans votre suite, à réserver au moins 24 heures à l'avance.</p>
+      <p class="actions"><a class="btn" href={u('/menu/')}>Le menu du mois</a> <a class="btn" href={telHref()}>Appeler le {site.telephone}</a></p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroPage from '../components/HeroPage.astro';
+import { site, photoDe } from '../data/site';
+import { u, asset } from '../lib/url';
+const [f4, f3] = site.menus;
+// Les catégories de la carte du mois (bouchées, deux impressions, pause affinée, dessert). Le rapport entre ces cinq temps et
+// les « 3 ou 4 services » des formules n'est pas détaillé par le dossier : aucun numéro de service n'est affiché.
+const temps = site.carte;
+const photos = ['/photos/plat-bouchees.webp', '/photos/plat-dessert.webp', '/photos/plat-poisson.webp'].map(photoDe);
+---
+<Base title="Le menu du mois" description={`Le menu du mois d'Intuition, à Namur : œuf bio à 63°, Saint-Jacques, pêche du jour, biche. Trois services à ${f3.prix}, quatre à ${f4.prix}.`}>
+  <HeroPage titre="Le menu du mois" chiffre={site.chiffres.services} sur="Il change chaque mois">
+    <p>Une cuisine de saison, écrite au fil des arrivages. Relevé sur le site de la maison le 27/11/2026 : le menu du mois suivant sera différent.</p>
+  </HeroPage>
+
+  <section class="section" aria-labelledby="menu-titre">
+    <div class="wrap menu__grille">
+      <h2 class="sr-only" id="menu-titre">La carte du mois</h2>
+      <ol class="menu__liste" aria-labelledby="menu-titre">
+        {temps.map((t) => (
+          <li class:list={['menu__ligne', { 'menu__ligne--hors': t.categorie === 'Pour éveiller vos sens' }]} data-reveal="up">
+            <span class="menu__numero" aria-hidden="true">·</span>
+            <span class="menu__nom">{t.categorie}</span>
+            {t.plats.map((p, i) => (
+              <span class="menu__desc">
+                {i > 0 && <em class="menu__ou">ou </em>}<strong class="menu__plat">{p.nom}</strong>{p.prix && <> <span class="menu__prix">{p.prix}</span></>}{p.description && <>, {p.description.charAt(0).toLowerCase() + p.description.slice(1)}</>}
+              </span>
+            ))}
+          </li>
+        ))}
+      </ol>
+      <aside class="menu__cote" data-reveal="fade">
+        <p class="petite-cap">Les formules</p>
+        <ul class="menu__options">
+          <li><span>{f3.nom}</span><strong>{f3.prix}</strong></li>
+          <li><span>{f4.nom}</span><strong>{f4.prix}</strong></li>
+        </ul>
+        <p class="muted">Prix par personne. {f3.vins}, {f4.vins.charAt(0).toLowerCase() + f4.vins.slice(1)}.</p>
+        <p class="muted">{site.reservation.restaurant}</p>
+        <p><a class="btn btn--primary" href={u('/reservation/')}>Réserver</a></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--photos" aria-label="Assiettes">
+    <div class="wrap triptyque">
+      {photos.map((p, i) => (
+        <figure class:list={['triptyque__item', `triptyque__item--${i}`]} data-reveal="clip" data-delay={String(i * 0.1)}>
+          <img src={asset(p.src)} alt={p.alt} width={p.largeur} height={p.hauteur} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </section>
+</Base>
