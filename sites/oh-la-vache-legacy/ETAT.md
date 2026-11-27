@@ -1,4 +1,4 @@
-# ETAT · oh-la-vache · legacy · phase 2 (construction-2) terminée
+# ETAT · oh-la-vache · legacy · phase 3 (QA) terminée
 
 ## Fait
 - Audit (AUDIT.md, `.hallmark/before.txt`), deal/draw/scaffold/stamp (Atelier, draw 79bce8), comp c1 retenue (comp.md), DESIGN.md (Picks, approche, thème, composants).
@@ -38,3 +38,7 @@
 - sloplint FAIL 34 persiste en `src` et en `--url` (faux positif : `base.css` importé porte la règle) ; FAIL 50 sur un h1 avec `&nbsp;` contourné par un `<span class="nb">` nowrap.
 - La barre sombre en bas des captures `--url` est la barre de dev d'Astro, pas du site.
 - NOTE 58 de sloplint à 1440 (130 mots à y=2700) : zone carte et photos, non traitée.
+
+## Phase 3 (QA) : fait
+- Hero mobile recadré (photo en bloc sur l'enseigne), balises og/twitter ajoutées, build et index OK, RAPPORT.md écrit.
+- Reste : sweep sloplint --render, finish review, checklist DESIGN.md, canonical/og:image à la mise en ligne.

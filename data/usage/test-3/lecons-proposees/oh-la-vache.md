@@ -7,3 +7,4 @@
 - 2026-11-27 · construction legacy phase 2 : un h1 avec `&nbsp;` entre mots déclenche le FAIL 50 de sloplint ; envelopper le groupe dans un `<span>` en `white-space: nowrap` (le lint ne lit pas `base.css` importé).
 - 2026-11-27 · construction legacy phase 2 : la barre sombre en bas des captures `--url` du serveur de dev Astro est la barre de dev, pas un défaut du site.
 - 2026-11-27 · oh-la-vache · portfolio (phase 3) : un dock de nav mobile fixe à 5 liens en overflow-x:auto cache le dernier lien sans débordement de page ; mesurer .nav scrollWidth vs clientWidth à 320/360/390.
+- 2026-11-27 : un hero plein écran en position absolue sur mobile cache le sujet derrière la plaque ; vérifier la capture 390 px du pli avant tout autre réglage.
