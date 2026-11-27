@@ -11,7 +11,7 @@ Début 07:46 UTC, heure limite 10:55 UTC, clôture 12:25 UTC (la session mère a
 | mon-epi | publié | 19,17 $ | 0,72 $ | 19,89 $ | 07:46 → 09:23 (97 min) | 8fdc77d4 |
 | bergerie-lives | publié | 18,58 $ | 0,87 $ | 19,44 $ | 07:46 → 09:23 (97 min) | d92510d2 |
 | ne5t | publié | 19,96 $ | 0,66 $ | 20,62 $ | 07:46 → 09:34 (108 min) | de4294ad |
-| novobel | abandonné en développement (limite 5 h) | 19,20 $ | — | 19,20 $ | 09:10 → ~12:12 | — (sites partiels commités : 159 sources, 163 dist) |
+| novobel | abandonné en développement (limite 5 h vers 10:25, 34 agents, revue 2 portfolio et legacy faites) | 19,20 $ | — | 19,20 $ | 09:10 → 10:25 | — (état commité à 13:17, ETAT-novobel.md, mesure) ; **pas un restaurant** : SRL de construction/rénovation (BCE 0726559494), à écarter ou garder sur décision du porteur |
 | oh-la-vache | abandonné en développement (limite 5 h, 18/25 agents, sans revue 2) | 14,92 $ | — | 14,92 $ | 09:24 → 11:25 | — (état commité à 12:27 après la réinitialisation : sites, ETAT-oh-la-vache.md, mesure ; sources de révision portfolio non reconstruites) |
 | dumont-bouge | abandonné en développement (limite 5 h à 10:22, 22 agents, revue 1 legacy seulement) | 13,62 $ | — | 13,62 $ | 09:24 → 10:22 | — (état commité à 12:28 : sites, ETAT-dumont-bouge.md, mesure c4909a4c) |
 | bayti | abandonné en développement (limite 5 h vers 10:22, 15/22 agents, revue 1 portfolio seulement) | 13,92 $ | — | 13,92 $ | 09:34 → 10:22 | — (état commité à 12:38 : sites 0de29cb0, ETAT-bayti.md, mesure ; sources de révision portfolio non reconstruites) |
@@ -36,11 +36,11 @@ Coûts : `usage.cost_usd` de `get_session` (fichiers `*-detail.json` présents p
 - **Défaut du workflow A7** : fichiers de fin de workflow non commités (2 cas sur 4 terminés). À corriger dans le workflow (commit des sources de révision et de tout `dist/<slug>` avant la fin).
 - Sorties hors `q.sh` encore massives chez les agents (mon-epi 1,2 M caractères, ne5t 1,17 M, 52-54 refus du hook) ; le curl de la vérification prescrite (étape 3 du message de développement) est refusé par le hook même dans `q.sh bash -c`.
 - Corrections : relectures après correction partielles (bienvenue-chez-vous, bergerie-lives) ; mon-epi awwwards 0 problème trouvé (à relire) ; restent signalés : bienvenue-chez-vous date mm/dd/yyyy (awwwards) et prix Box Tapas 199 € vs 174 € ; ne5t adresse Vauban 46 vs Allée de Menton 26.
-- Restaurants qui n'en sont pas : mon-epi (boulangerie), bergerie-lives (maison d'hôtes / événements), ne5t (hôtel-spa avec restaurant).
+- Restaurants qui n'en sont pas : novobel (entreprise de rénovation, à retirer de la file ?), mon-epi (boulangerie), bergerie-lives (maison d'hôtes / événements), ne5t (hôtel-spa avec restaurant).
 - « à confirmer » vu en ligne à 09:24 sur mon-epi : déploiement en file, absent au contrôle de 09:35.
 
 ## Fichiers de mesure manquants
-novobel : aucun fichier (oh-la-vache, dumont-bouge et bayti ont commité leurs `dev-*` après la réinitialisation, 12:27-12:38) (`dev-*`) ; seul `usage` du registre fait foi. mon-epi correction : hebdo de début non relevé.
+aucun : les 4 développements coupés ont commité leurs `dev-*` après la réinitialisation (12:27-13:17) (`dev-*`) ; seul `usage` du registre fait foi. mon-epi correction : hebdo de début non relevé.
 
 ## Stockage
 - Début : 3 déploiements READY, dist 544 Mo / 7 887 fichiers ; tableau de bord Vercel 1,76 Go / 10 Go.
