@@ -39,3 +39,7 @@
 - RAPPORT.md, `pnpm index`, commit de `dist/index.html`, `gabarits/UTILISATION.md` (« velours | bienvenue-chez-vous »).
 - Mercredis à prix réduit / box 109 € / téléphone : toujours « à confirmer ».
 - Pièges : `scripts/build-site.mjs` écrit dans `dist/` du dépôt (serveur sur `dist/` à relancer après build) ; un heredoc contenant du JS multiligne a déclenché le contrôle `rm` du shell : écrire les scripts de contrôle avec Write.
+
+## Phase 3 (QA) — fait
+- Audit 0 FAIL ; shoot 3 pages sans erreur ; correction du voile de la bande « À emporter » (base.css l.149) ; build OK ; RAPPORT.md écrit.
+- Reste : `gabarits/UTILISATION.md` (session mère). Le build final est déjà commité avec dist/.
