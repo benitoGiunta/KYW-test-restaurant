@@ -1,0 +1,48 @@
+/* Jetons de Oh la Vache ! (variante awwwards « de 11 h à minuit moins le quart »). Les NOMS sont le contrat de l'engine ;
+   les valeurs viennent de DESIGN.md : noir et blanc de l'enseigne à taches (photo 14), rouge des rideaux (photos 16, 17),
+   rose des sets de table (photos 10, 11). Les url() des polices portent la base (/oh-la-vache/awwwards/). */
+@font-face { font-family: 'Bricolage Grotesque'; src: url('/oh-la-vache/awwwards/fonts/bricolage-grotesque-300_800-normal.woff2') format('woff2'); font-weight: 300 800; font-style: normal; font-display: swap; }
+
+:root {
+  /* Thème « jour » (par défaut) : lait de la tache et noir de l'enseigne. */
+  --c-bg: #f7f6f2;            /* ground jour : lait (ink 18:1) */
+  --c-fg: #0c0c0c;            /* ink : noir d'enseigne */
+  --c-muted: #55524b;         /* muted : 7,6:1 sur lait */
+  --c-line: #cfcbc0;          /* line : décoratif */
+  --c-accent: #c8141f;        /* accent : rouge de rideau (5,7:1 sur lait, 7,8:1 en texte sur noir via --c-accent-texte) */
+  --c-accent-texte: #b4101a;  /* 6,6:1 sur lait */
+  --c-curtain: #0c0c0c;       /* curtain : noir d'enseigne */
+  --c-rose: #d6247f;          /* rose de set de table : une seule apparition par page (la tache d'accent) */
+  --c-nuit: #0c0c0c;          /* ground nuit */
+  --c-nuit-fg: #f7f6f2;
+  --c-nuit-muted: #b9b5ab;    /* 9,6:1 sur noir */
+  --c-nuit-line: #3a3836;
+  --c-nuit-accent: #ff4b55;   /* 6,3:1 sur noir */
+
+  --f-display: 'Bricolage Grotesque', 'Arial Rounded MT Bold', system-ui, sans-serif;
+  --f-body: 'Bricolage Grotesque', system-ui, sans-serif;
+
+  --t-mega: clamp(3.6rem, 1rem + 11vw, 12rem);
+  --t-xl: clamp(2.7rem, 1.3rem + 6.4vw, 7.6rem);
+  --t-l: clamp(1.9rem, 1.2rem + 3vw, 4rem);
+  --t-m: clamp(1.25rem, 1.05rem + 0.9vw, 1.8rem);
+  --t-body: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.8125rem;
+
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1.25rem, 0.7rem + 2vw, 3rem);
+  --cols: 12;
+  --serre: calc(var(--u) * 3);
+  --normal: calc(var(--u) * 8);
+  --aere: calc(var(--u) * 14);
+  --entracte: calc(var(--u) * 22);
+
+  /* Règle de forme unique : angles vifs partout, sauf la tache (contour irrégulier de vache, clip-path). */
+  --radius: 0px;
+  --tache: polygon(9% 31%, 21% 9%, 47% 2%, 73% 8%, 93% 27%, 99% 54%, 87% 83%, 61% 98%, 31% 95%, 9% 77%, 1% 52%);
+  --tache-b: polygon(4% 40%, 14% 14%, 40% 3%, 66% 6%, 90% 20%, 98% 48%, 92% 76%, 70% 96%, 40% 99%, 15% 88%, 3% 66%);
+  --z-gl: 0; --z-content: 1; --z-header: 50; --z-cursor: 80; --z-curtain: 90; --z-loader: 100;
+}
+/* Chaque section porte son heure : « nuit » redéfinit les variables, tout le texte suit. */
+.nuit { --c-bg: var(--c-nuit); --c-fg: var(--c-nuit-fg); --c-muted: var(--c-nuit-muted); --c-line: var(--c-nuit-line); --c-accent: var(--c-nuit-accent); --c-accent-texte: var(--c-nuit-accent); }

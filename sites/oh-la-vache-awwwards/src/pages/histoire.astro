@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { histoire, site } from '../data/site';
+---
+<Base page="histoire" title="La maison" description="Oh la Vache !, un resto grill de la Chaussée de Marche à Erpent : cuisine française et italienne, terrasse, salle sous tente, fondues et pierrades à partager.">
+  <section class="entete jour wrap" aria-labelledby="titre-maison">
+    <h1 class="mega" id="titre-maison">La maison</h1>
+  </section>
+  <section class="maison jour">
+    <div class="wrap maison__grille">
+      <div class="maison__texte">
+        {histoire.map((p) => <p class={p.placeholder ? 'note-ph' : undefined}>{p.placeholder && <span class="ph-etiquette">Illustratif</span>} {p.texte}</p>)}
+        <p><a class="lien" href={site.siteClient} rel="noopener">Le site actuel du restaurant</a></p>
+      </div>
+      <figure class="maison__photo">
+        <div class="tache-cadre"><Photo cle="pergola" widths={[480, 800, 1200]} sizes="(min-width: 64rem) 40vw, 90vw" prioritaire /></div>
+        <figcaption>La terrasse sous pergola.</figcaption>
+      </figure>
+    </div>
+  </section>
+  <section class="statement nuit" aria-label="Sous la tente">
+    <div class="wrap maison__duo">
+      <figure><Photo cle="tenteLustre" widths={[480, 800]} sizes="(min-width: 64rem) 30vw, 80vw" /><figcaption>La salle sous tente, en journée.</figcaption></figure>
+      <p class="statement__texte display">Fondue, pierrade, raclette : on s’installe à deux, on partage la table, on règle une seule note.</p>
+    </div>
+  </section>
+</Base>

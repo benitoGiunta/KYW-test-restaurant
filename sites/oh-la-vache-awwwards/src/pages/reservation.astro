@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import Horaires from '../components/Horaires.astro';
+import { site, acces } from '../data/site';
+---
+<Base page="reservation" title="Réservation" description="Réserver une table chez Oh la Vache !, Chaussée de Marche 581 à Erpent : par téléphone au 0494 29 44 72, 7 jours sur 7. Horaires, accès, terrasse.">
+  <section class="entete jour wrap" aria-labelledby="titre-resa">
+    <h1 class="mega" id="titre-resa">Réserver</h1>
+    <p class="entete__texte">Le restaurant se réserve par téléphone. Pas de formulaire en ligne : appelez, on vous répond.</p>
+    <div class="cta-groupe"><a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a></div>
+  </section>
+  <section class="resa jour">
+    <div class="wrap resa__grille">
+      <div>
+        <h2 class="resa__titre">Horaires</h2>
+        <Horaires />
+        <p class="petit">Horaires du site du restaurant ; le vendredi et un éventuel jour de fermeture restent à confirmer par téléphone.</p>
+      </div>
+      <div>
+        <h2 class="resa__titre">Venir</h2>
+        <address class="resa__adresse">{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+        <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+        <ul class="acces">{acces.map((a) => <li>{a}</li>)}</ul>
+      </div>
+      <div>
+        <h2 class="resa__titre">À savoir</h2>
+        <p>Fondues, pierrades et raclette se commandent dès deux couverts. Le restaurant propose aussi un menu trois services et une formule ; voir la carte.</p>
+        <p><a class="lien" href={site.facebook} rel="noopener">Facebook</a> · <a class="lien" href={site.instagram} rel="noopener">Instagram</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

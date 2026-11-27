@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { heures } from '../data/site';
+---
+<Base page="carte" title="La carte" description="La carte d’Oh la Vache !, Erpent : entrées, salades, pâtes, burgers, viandes au grill, fondues, pierrades, raclette, desserts, cocktails et treize gin’to. Prix d’octobre 2024.">
+  <section class="entete jour wrap" aria-labelledby="titre-carte">
+    <h1 class="mega" id="titre-carte">La carte</h1>
+    <p class="entete__texte">Quatre heures dans la journée, de 11 h à minuit moins le quart. Prix de la carte d’octobre 2024, en euros ; ils peuvent avoir changé.</p>
+    <nav class="entete__nav" aria-label="Les heures de la carte">
+      <ul>{heures.map((h) => <li><a class="nl" href={`#${h.id}`}><span class="nw">{h.heure}</span> {h.titre}</a></li>)}</ul>
+    </nav>
+  </section>
+  {heures.map((h) => (
+    <section class={`heure-bloc ${h.theme}`} id={h.id} aria-labelledby={`t-${h.id}`}>
+      <div class="wrap heure-bloc__grille">
+        <header class="heure-bloc__tete">
+          <p class="heure-bloc__heure display" aria-hidden="true">{h.heure}</p>
+          <h2 class="heure-bloc__titre display" id={`t-${h.id}`}>{h.titre}</h2>
+          <p class="heure-bloc__note">{h.note}</p>
+        </header>
+        <div class="heure-bloc__corps">
+          {h.sections.map((s) => (
+            <section class="rub" aria-labelledby={`r-${h.id}-${s.titre.length}-${s.titre.charCodeAt(2)}`}>
+              <h3 class="rub__titre" id={`r-${h.id}-${s.titre.length}-${s.titre.charCodeAt(2)}`}>{s.titre}{s.precision && <span class="rub__precision"> {s.precision}</span>}</h3>
+              <ul class="plats">
+                {s.plats.map((p) => (
+                  <li class="plat"><span class="plat__nom">{p.nom}</span><span class="plat__prix prix">{p.prix}</span>{p.description && <span class="plat__desc">{p.description}</span>}</li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+</Base>

@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { u } from '../lib/url';
+import { site, heures, chiffres, menus } from '../data/site';
+const echantillon: Record<string, { nom: string; prix: string }> = {
+  onze: heures[0].sections[3].plats[2] && { nom: heures[0].sections[3].plats[2].nom, prix: heures[0].sections[3].plats[2].prix },
+  dixneuf: { nom: 'Le Tomahawk', prix: '88,00 €' },
+  vingtetun: { nom: 'Le fondant Baileys', prix: '10,50 €' },
+  minuit: { nom: 'Gin de Namur', prix: '14,00 €' },
+};
+---
+<Base page="accueil" title="Resto grill à Erpent, Namur">
+  <section class="hero jour" aria-labelledby="titre-accueil">
+    <div class="wrap hero__grille">
+      <h1 class="mega hero__titre" id="titre-accueil"><span class="nw">Oh la</span> <span class="nw">vache !</span></h1>
+      <div class="hero__media tache-cadre">
+        <Photo cle="facade" widths={[480, 800, 1200]} sizes="(min-width: 64rem) 40vw, 90vw" prioritaire />
+      </div>
+      <div class="hero__bas">
+        <p class="hero__baseline">Resto grill, cuisine française et italienne. Fondues, pierrades et raclettes à deux, burgers Angus, treize gin’to.</p>
+        <div class="cta-groupe">
+          <a class="cta" href={site.telephoneHref}><span class="cta__txt">Réserver au <span class="nw">{site.telephoneLisible}</span></span></a>
+          <a class="cta cta--contour" href={u('/carte/')}><span class="cta__txt">Voir la carte</span></a>
+        </div>
+        <p class="hero__heures"><span class="pastille" aria-hidden="true"></span>Ouvert 7 jours sur 7, dès <span class="nw">11 h</span>. Chaussée de Marche 581, Erpent.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="statement nuit" aria-labelledby="titre-statement">
+    <div class="wrap">
+      <h2 class="statement__texte display" id="titre-statement">Midi sur la terrasse, minuit moins le quart sous le lustre.</h2>
+    </div>
+  </section>
+
+  <section class="paire jour" aria-label="De jour et de nuit">
+    <div class="wrap paire__grille">
+      <figure class="paire__jour">
+        <div class="tache-cadre tache-cadre--b"><Photo cle="canapes" widths={[480, 800, 1200]} sizes="(min-width: 64rem) 45vw, 90vw" /></div>
+        <figcaption><strong class="heure">11 h</strong> La terrasse, ses canapés et ses parasols.</figcaption>
+      </figure>
+      <figure class="paire__nuit">
+        <div class="cadre-nuit"><Photo cle="tenteRouge" widths={[480, 800]} sizes="(min-width: 64rem) 30vw, 70vw" /></div>
+        <figcaption><strong class="heure">Le soir</strong> La salle sous tente, éclairée de rouge.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="journee nuit" aria-labelledby="titre-journee">
+    <div class="wrap">
+      <h2 class="journee__titre display" id="titre-journee">La carte, heure par heure</h2>
+      <ol class="journee__liste">
+        {heures.map((h) => (
+          <li>
+            <a class="ligne" href={`${u('/carte/')}#${h.id}`}>
+              <span class="ligne__heure display">{h.heure}</span>
+              <span class="ligne__titre">{h.titre}</span>
+              <span class="ligne__echo">{echantillon[h.id]?.nom} <span class="prix">{echantillon[h.id]?.prix}</span></span>
+              <span class="ligne__fleche" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="chiffres jour" aria-labelledby="titre-chiffres">
+    <div class="wrap">
+      <h2 class="chiffres__titre" id="titre-chiffres">À table, en chiffres</h2>
+      <dl class="chiffres__grille">
+        {chiffres.map((c) => (
+          <div class="chiffre"><dt class="chiffre__texte">{c.texte}</dt><dd class="chiffre__valeur display">{c.valeur}<span class="chiffre__unite">{c.unite}</span></dd></div>
+        ))}
+      </dl>
+      <ul class="menus">
+        {menus.map((m) => (
+          <li><span class="menus__nom">{m.nom}</span><span class="menus__detail">{m.detail}</span><span class="prix menus__prix">{m.prix}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="mur nuit" aria-label="Dans l’assiette et dans le verre">
+    <div class="mur__piste">
+      <figure><Photo cle="entrecote" widths={[480, 800]} sizes="(min-width: 64rem) 28vw, 70vw" /><figcaption>Entrecôte, frites et sauce.</figcaption></figure>
+      <figure><Photo cle="gin" widths={[480, 800]} sizes="(min-width: 64rem) 28vw, 70vw" /><figcaption>Gin’to et tonic.</figcaption></figure>
+      <figure><Photo cle="moules" widths={[480, 800]} sizes="(min-width: 64rem) 28vw, 70vw" /><figcaption>Moules-frites.</figcaption></figure>
+      <figure><Photo cle="dessert" widths={[480, 800]} sizes="(min-width: 64rem) 28vw, 70vw" /><figcaption>Dessert au chocolat.</figcaption></figure>
+      <figure><Photo cle="charcuterie" widths={[480, 800]} sizes="(min-width: 64rem) 28vw, 70vw" /><figcaption>Planche de charcuterie.</figcaption></figure>
+    </div>
+  </section>
+</Base>

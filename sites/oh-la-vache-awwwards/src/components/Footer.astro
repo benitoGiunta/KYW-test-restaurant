@@ -1,0 +1,32 @@
+---
+import KywFooter from '@kyw/footer';
+import { u } from '../lib/url';
+import { site, reseaux, jours } from '../data/site';
+---
+<section class="pied nuit" aria-label="Contact">
+  <div class="wrap pied__corps">
+    <p class="pied__heure" aria-hidden="true">23 : 45</p>
+    <h2 class="pied__mot display">Minuit moins le quart, la table est encore là.</h2>
+    <div class="pied__col">
+      <h3 class="pied__titre">Venir</h3>
+      <address>{site.adresse.rue} {site.adresse.numero}<br />{site.adresse.cp} {site.adresse.commune}</address>
+      <p><a class="lien" href={site.planUrl} rel="noopener">Ouvrir le plan</a></p>
+    </div>
+    <div class="pied__col">
+      <h3 class="pied__titre">Réserver</h3>
+      <p><a class="pied__tel" href={site.telephoneHref}>{site.telephoneLisible}</a></p>
+      <p class="petit">Par téléphone, 7 jours sur 7 : {jours[0].debut} à {jours[0].fin} en semaine, jusqu’à {jours[4].fin} du vendredi au dimanche.</p>
+    </div>
+    <div class="pied__col">
+      <h3 class="pied__titre">Ailleurs</h3>
+      <ul class="pied__liens">
+        <li><a class="lien-util" href={u('/carte/')}>La carte</a></li>
+        <li><a class="lien-util" href={u('/histoire/')}>La maison</a></li>
+        <li><a class="lien-util" href={u('/reservation/')}>Réservation</a></li>
+        {reseaux.map((r) => <li><a class="lien-util" href={r.url} rel="noopener">{r.nom}</a></li>)}
+      </ul>
+    </div>
+    <p class="pied__colophon">{site.credit}. Police : Bricolage Grotesque (Google Fonts). Construit avec Astro, GSAP et Lenis.</p>
+  </div>
+</section>
+<KywFooter base={import.meta.env.BASE_URL} />
