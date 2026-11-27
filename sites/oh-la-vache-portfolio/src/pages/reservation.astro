@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import Objet from '../components/Objet.astro';
+import { site, adresseLigne, horaireTexte, telHref, guinguette } from '../data/site';
+const g = guinguette;
+---
+<Base title="Réserver et nous contacter" description={`Réserver une table chez ${site.nom} à Erpent (Namur) par téléphone au ${site.telephone} : horaires, adresse et itinéraire.`}>
+  <section class="hero hero--page wrap" data-hero>
+    <div class="hero__inner">
+      <h1>Réserver</h1>
+      <p class="lead">La réservation se fait par téléphone, au {site.telephone}. Fondues, pierrades et raclette se commandent dès deux couverts.</p>
+    </div>
+    <div class="hero__zone">
+      <span class="obj obj--mobile obj--corail is-flottant" style="--x:86%;--y:0%;--r:12deg;--taille:110px" aria-hidden="true"><Objet id="verre" classe="obj__svg" /></span>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="actions" style="margin-top:0">
+        <a class="btn btn--plein" href={telHref()}>Appeler le {site.telephone}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="hcarte">
+        <p class="meta">Horaires et adresse</p>
+        <h2 class="section__titre" style="margin-bottom:0">Quand <em>venir</em></h2>
+        <dl class="horaires">
+          {site.horaires.map((h) => (
+            <>
+              <dt>{h.jour}</dt>
+              <span class="pts" aria-hidden="true"></span>
+              <dd class:list={{ ferme: !h.creneaux.length }}>{h.creneaux.length ? horaireTexte(h) : 'fermé'}</dd>
+            </>
+          ))}
+        </dl>
+        <p class="hcarte__ligne"><span>Adresse</span><span>{adresseLigne()}</span></p>
+        <p class="hcarte__ligne"><span>Téléphone</span><a class="link" href={telHref()}>{site.telephone}</a></p>
+        <p class="hcarte__ligne"><span>Terrasse</span><span>oui</span></p>
+        <p class="muted" style="font-size:var(--t-s);margin-top:calc(var(--u)*1.5)">{g.horairesNote}</p>
+        <div class="actions">
+          <a class="btn" href={`https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=18/${site.geo.lat}/${site.geo.lon}`} rel="noopener">Itinéraire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
