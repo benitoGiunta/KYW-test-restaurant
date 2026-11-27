@@ -1,0 +1,1 @@
+- 2026-11-27 : NE5T est un hôtel-spa avec restaurant « Intuition » (site WordPress gdlr) : adresse BCE (Allée de Menton) différente du site (Avenue Vauban 46), carte = menu du mois en texte HTML, images d'origine en retirant le suffixe -WxH ; le hook refuse tout 'curl --max-time' hors q.sh, y compris dans un heredoc : écrire un script et le lancer par q.sh.
