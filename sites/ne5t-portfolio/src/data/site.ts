@@ -72,10 +72,10 @@ export const site: Restaurant = {
     restaurant: 'Le restaurant se réserve par téléphone uniquement. Les allergies se signalent à la réservation.',
     chambres: { outil: 'RoomRaccoon', url: 'https://booking.roomraccoon.com/ne5t/fr/' },
   },
-  // Dossier : « ouvert du mercredi soir au dimanche midi ; lunch jeudi, vendredi, samedi midi ». Lundi et mardi : à confirmer.
+  // Dossier : « ouvert du mercredi soir au dimanche midi ; lunch jeudi, vendredi, samedi midi »..
   horaires: [
-    { jour: 'lundi', midi: false, soir: false, note: 'fermé (à confirmer)' },
-    { jour: 'mardi', midi: false, soir: false, note: 'fermé (à confirmer)' },
+    { jour: 'lundi', midi: false, soir: false, note: 'fermé' },
+    { jour: 'mardi', midi: false, soir: false, note: 'fermé' },
     { jour: 'mercredi', midi: false, soir: true },
     { jour: 'jeudi', midi: true, soir: true, note: 'lunch carte blanche à midi, du jeudi au samedi' },
     { jour: 'vendredi', midi: true, soir: true },
@@ -237,7 +237,7 @@ export function horairesResume(r: Restaurant = site): { libelle: string; valeur:
   return [
     { libelle: 'Le soir', valeur: plage(soirs) },
     { libelle: 'Le midi', valeur: plage(midis) },
-    { libelle: plage(fermes), valeur: 'fermé (à confirmer)' },
+    { libelle: plage(fermes), valeur: 'fermé' },
   ];
 }
 
