@@ -1,4 +1,4 @@
-# ETAT · mon-epi-legacy · phase 2 sur 3 (construction-2)
+# ETAT · mon-epi-legacy · phase 3 sur 3 (construction-3, terminée)
 
 ## Fait (phase 1)
 Audit, deal (Solstice 1/3), draw 14e65e, scaffold, `DESIGN.md`, `comp.md`, pages statiques (accueil, a-propos, produits, galerie, contact, 404), données réelles, 24 photos du client, `<KywFooter />` sur les 6 pages.
@@ -23,3 +23,6 @@ Audit, deal (Solstice 1/3), draw 14e65e, scaffold, `DESIGN.md`, `comp.md`, pages
 - Les NOTE 58 (mots par écran, paragraphes de hero de 13 à 20 mots) restent ouverts : phase 3 si le temps.
 - `.hallmark/log.json` : pas touché par cette phase.
 - Hypothèses : bouton « Menu » en texte (pas d'icône) ; Facebook masqué dans le bandeau sous 60rem (présent au pied) ; aucune réservation de table, donc aucun formulaire.
+
+## Phase 3
+Fait : sloplint 5 URL 0 FAIL 0 REFLEX, padding `.page-head`, waivers 44a 59 77, entrée `.hallmark/log.json`, DESIGN.md, RAPPORT.md, build et index passés. Reste : finish review sous-agent et jury non faits ; Facebook et horaires à confirmer par le client.

@@ -51,3 +51,6 @@ Swap du tirage 14e65e : réservation, « chambre » et créneaux remplacés (pas
 - [x] 63. `::selection`, `caret-color`, `scrollbar-color` (F16) · preuve : `base.css:3,5,6`
 - [x] 72. Responsive (breakpoints rem, capacités, `svh`, safe-area) · preuve : 60rem et 40rem ; `(hover: hover)`, `(pointer: coarse)` ; `viewport-fit=cover` et `max(var(--gutter), env(safe-area-inset-*))` sur `.container` ; `scrollWidth == clientWidth` à 320, 375, 768 sur 5 pages ; tables : `dl` flex, rien à restacker
 
+
+## Phase 3 (QA, 2026-11-27)
+- Points restants des 72 (1, 3 à 5, 8 à 16, 18, 25 à 28, 31 à 47, 50 à 55, 57, 59 à 62, 64 à 71) : couverts par `sloplint src --genre editorial --render --kept` sur 5 URL : 0 FAIL, 0 REFLEX, 11 WAIVED (clauses 8, 44a, 44c, 59, 77, 83 au stamp de `page.css`), 3 DISMISSED, 9 NOTE. Preuve par point individuel non rejouée en phase 3 (auto-notation `self`).
