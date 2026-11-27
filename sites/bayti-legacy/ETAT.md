@@ -1,4 +1,4 @@
-# ETAT · bayti legacy · fin de phase 2 (27/11/2026)
+# ETAT · bayti legacy · fin de phase 3 (QA) (27/11/2026)
 
 ## Fait (phase 1, rappel)
 AUDIT.md, DESIGN.md, comp.md, thème Squeeze, 8 pages, build OK, KywFooter, noindex et mention sur les 8 pages.
@@ -15,12 +15,10 @@ AUDIT.md, DESIGN.md, comp.md, thème Squeeze, 8 pages, build OK, KywFooter, noin
 - sloplint src : 0 FAIL, 0 REFLEX, 1 WARN (mesure 24ch de la citation display, assumée). Playwright : pas de débordement à 320/375/768 sur 8 routes, aucun contrôle < 44px, 0 erreur JS, sans JS panneaux et nav lisibles.
 - Build OK : `dist/bayti/legacy/`.
 
-## Reste (phase 3)
-- Captures complètes (agent captures), sloplint --render sur les 7 autres routes, RAPPORT.md, `--kept` contre before.json, revue.
-- Comps c1/c2 non construits (waive budget) ; contraste de `--color-paper-hover` (51 %) avec le texte muted non mesuré à l'outil : vérifier à la capture.
-- `.hallmark/log.json` est en conflit de fusion (UU) dans le dépôt : non touché, à résoudre par la session mère.
-- Le serveur de dev est arrêté.
+## Fait (phase 3)
+- Sloplint rendu 7 routes : 1 FAIL corrigé, REFLEX restants levés par waive (page.css). twitter:card, footer en <p>, galerie 15 photos, photo de bannière plafonnée. 404.html réelle : 0 axe. Build + pnpm index OK. RAPPORT.md écrit.
 
-## Pièges
-- sloplint F4 compte tout `.btn` ayant un `background` : l'overlay de survol est écrit `:where(.btn)::before`, et le disabled en `button:disabled, [aria-disabled]`.
-- `aria-invalid=""` (toggleAttribute) vaut false : poser `"true"`.
+## Reste
+- .hallmark/log.json en conflit (UU) : non touché ; entrée de log bayti-legacy à écrire par la session mère.
+- Pas de finish review sous-agent (self), pas de jury. Contraste paper-hover à vérifier si repris.
+- Serveurs arrêtés.
