@@ -1,4 +1,9 @@
-# ETAT : ne5t portfolio, phase 2 sur 3 (construction-2) faite ; phase 1 ci-dessous
+# ETAT : ne5t portfolio, phase 3 sur 3 (QA) faite ; build final OK
+
+## Phase 3 : fait
+- aria-label de marque retiré (axe), note « lunch carte blanche » dédoublonnée, rebuild OK, capture /reservation/ sans violation axe. Voir RAPPORT.md.
+- Reste : sloplint, `pnpm index`, report des défauts Velours dans gabarits/ (session mère).
+
 
 ## Fait
 - Gabarit Velours copié dans `sites/ne5t-portfolio/` (package renommé `ne5t-portfolio`), `pnpm install` OK.

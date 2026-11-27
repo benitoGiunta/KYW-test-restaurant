@@ -77,9 +77,9 @@ export const site: Restaurant = {
     { jour: 'lundi', midi: false, soir: false, note: 'fermé (à confirmer)' },
     { jour: 'mardi', midi: false, soir: false, note: 'fermé (à confirmer)' },
     { jour: 'mercredi', midi: false, soir: true },
-    { jour: 'jeudi', midi: true, soir: true, note: 'lunch carte blanche à midi' },
-    { jour: 'vendredi', midi: true, soir: true, note: 'lunch carte blanche à midi' },
-    { jour: 'samedi', midi: true, soir: true, note: 'lunch carte blanche à midi' },
+    { jour: 'jeudi', midi: true, soir: true, note: 'lunch carte blanche à midi, du jeudi au samedi' },
+    { jour: 'vendredi', midi: true, soir: true },
+    { jour: 'samedi', midi: true, soir: true },
     { jour: 'dimanche', midi: true, soir: false },
   ],
   reseaux: [
