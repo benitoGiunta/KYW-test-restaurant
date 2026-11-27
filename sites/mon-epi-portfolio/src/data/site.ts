@@ -178,12 +178,12 @@ export const cahier = {
   /** Mur de six timbres : les quatre farines du moulin de l'atelier et les deux moulins partenaires cités par le client.
    *  Les photos illustrent le pain, pas le moulin (aucune photo du moulin dans le dossier). */
   fournisseurs: [
-    { nom: 'Blé demi-gris', produit: 'farine, environ 75 %', detail: 'moulue sur place', photo: '/photos/pains-ronds-claie.webp', note: 'taux annoncé sur monepi.be', placeholder: false },
+    { nom: 'Blé demi-gris', produit: 'farine, environ 75 %', detail: 'moulue sur place', photo: '/photos/pains-ronds-claie.webp', note: 'taux annoncé par la boulangerie', placeholder: false },
     { nom: 'Blé blanc', produit: 'farine, environ 65 %', detail: 'moulue sur place', photo: '/photos/baguette-ficelle.webp', note: 'la plus claire des quatre', placeholder: false },
     { nom: 'Épeautre demi-gris', produit: 'farine, environ 75 %', detail: 'moulue sur place', photo: '/photos/mie-croute.webp', note: 'celle des pains purs épeautre', placeholder: false },
     { nom: 'Petit épeautre', produit: 'farine, environ 80 %', detail: 'moulue sur place', photo: '/photos/pain-four.webp', note: 'la plus complète', placeholder: false },
-    { nom: 'Moulin de Montigny', produit: 'partenaire cité', detail: 'céréales bio certifiées', photo: '/photos/petrissage.webp', note: 'cité sur monepi.be', placeholder: false },
-    { nom: 'Moulin de Ferrière', produit: 'partenaire cité', detail: 'céréales bio certifiées', photo: '/photos/faconnage.webp', note: 'cité sur monepi.be', placeholder: false },
+    { nom: 'Moulin de Montigny', produit: 'partenaire cité', detail: 'céréales bio certifiées', photo: '/photos/petrissage.webp', note: 'moulin partenaire', placeholder: false },
+    { nom: 'Moulin de Ferrière', produit: 'partenaire cité', detail: 'céréales bio certifiées', photo: '/photos/faconnage.webp', note: 'moulin partenaire', placeholder: false },
   ] as Fournisseur[],
   faits: [
     { nom: 'Le levain', texte: 'Issu de l’agriculture biologique. Les pains « au levain » de la carte en portent, les pains « à la levure » non.' },
@@ -195,16 +195,16 @@ export const cahier = {
     signataire: 'Monepi, Loyers',
     lignes: [
       'Ici, on prend le temps : un levain bio, des farines moulues sur place, un four à bois que l’on chauffe pendant des heures.',
-      'Dirk Longin y fait son pain depuis 1992. À côté du pain, il y a des viennoiseries à l’épeautre, des gaufres et, selon les saisons et les évènements, des douceurs.',
+      'Dirk Longin est à la boulangerie depuis 1990 et en a repris l’atelier en 1992. À côté du pain, il y a des viennoiseries à l’épeautre, des gaufres et, selon les saisons et les évènements, des douceurs.',
     ],
     placeholder: false,
   },
   /** Autres points de vente listés par le client (monepi.be). Horaires et gamme non publiés : mention visible. */
   pointsDeVente: [
-    { nom: 'Biomanie', commune: 'Wanze', note: 'point de vente listé sur monepi.be', placeholder: false },
-    { nom: 'Ferme de Graux', commune: 'Fernelmont', note: 'point de vente listé sur monepi.be', placeholder: false },
-    { nom: 'Bio&Co', commune: 'Andenne', note: 'point de vente listé sur monepi.be', placeholder: false },
-    { nom: 'L’épicerie d’Ernest', commune: 'Thon', note: 'point de vente listé sur monepi.be', placeholder: false },
+    { nom: 'Biomanie', commune: 'Wanze', note: 'point de vente', placeholder: false },
+    { nom: 'Ferme de Graux', commune: 'Fernelmont', note: 'point de vente', placeholder: false },
+    { nom: 'Bio&Co', commune: 'Andenne', note: 'point de vente', placeholder: false },
+    { nom: 'L’épicerie d’Ernest', commune: 'Thon', note: 'point de vente', placeholder: false },
   ] as PointDeVente[],
   equipePhrase: 'Boulanger-pâtissier, chocolatier et glacier de formation depuis 1980. A repris l’atelier en 1992.',
 };
