@@ -5,6 +5,7 @@ const path = Astro.url.pathname.replace(/\/+$/, '') + '/';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 const courant = (p: string) => (path === u(p).replace(/\/+$/, '') + '/' ? 'page' : undefined);
 const liens = [{ href: '/carte/', label: 'La carte' }, { href: '/histoire/', label: 'La maison' }];
+const tous = [{ href: '/', label: 'Accueil' }, ...liens, { href: '/reservation/', label: 'Réserver' }];
 ---
 <header class="tete">
   <a class="tete__marque" href={base} aria-current={path === base ? 'page' : undefined}>
@@ -13,8 +14,21 @@ const liens = [{ href: '/carte/', label: 'La carte' }, { href: '/histoire/', lab
   </a>
   <nav class="tete__nav" aria-label="Navigation principale">
     <ul>
-      {liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
+      {liens.map((l) => <li class="tete__li"><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
       <li><a class="btn btn--petit" href={u('/reservation/')} aria-current={courant('/reservation/')}><span class="btn__txt">Réserver</span></a></li>
+      <li class="tete__li-menu"><button class="tete__menu nl" type="button" aria-expanded="false" aria-controls="menu">Menu</button></li>
     </ul>
   </nav>
+  <div id="menu" class="menu-plein" hidden>
+    <div class="menu-plein__haut">
+      <span class="menu-plein__nom">{site.nom}</span>
+      <button class="menu-plein__fermer nl" type="button">Fermer</button>
+    </div>
+    <nav aria-label="Menu">
+      <ul class="menu-plein__liens">
+        {tous.map((l) => <li class="menu-plein__l"><a href={u(l.href)} aria-current={l.href === '/' ? (path === base ? 'page' : undefined) : courant(l.href)}><span>{l.label}</span></a></li>)}
+      </ul>
+    </nav>
+    <p class="menu-plein__bas">Le restaurant se réserve par téléphone.<br /><a class="menu-plein__tel" href={site.telephoneHref}>Appeler le&nbsp;<span class="nb">{site.telephoneLisible}</span></a></p>
+  </div>
 </header>
