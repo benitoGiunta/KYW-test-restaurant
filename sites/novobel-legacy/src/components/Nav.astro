@@ -2,7 +2,6 @@
 import { nav, societe } from '../data/site';
 const { page } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-const href = (n: { href: string; home?: boolean }) => (n.home ? `${base}${n.href}` : `${base}${n.href}`);
 ---
 <header class="slab">
   <div class="container slab__in">
@@ -10,16 +9,22 @@ const href = (n: { href: string; home?: boolean }) => (n.home ? `${base}${n.href
       <span class="slab__name">Novobel</span>
       <span class="slab__sub">Construction et rénovation</span>
     </a>
-    <details class="slab__menu">
-      <summary>Menu</summary>
-      <nav aria-label="Principale">
-        <ul>
-          {nav.map((n) => (
-            <li><a href={href(n)} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>
-          ))}
-        </ul>
-      </nav>
-    </details>
-    <a class="btn btn--primary slab__cta" href={`mailto:${societe.email}?subject=Demande%20de%20devis`}>Devis gratuit</a>
+    <button class="slab__toggle" type="button" popovertarget="menu-principal" aria-controls="menu-principal" aria-expanded="false">Menu</button>
+    <nav class="slab__panel" id="menu-principal" popover aria-label="Principale">
+      <ul>
+        {nav.map((n) => (
+          <li><a href={`${base}${n.href}`} aria-current={page === n.id ? 'page' : undefined}>{n.label}</a></li>
+        ))}
+      </ul>
+      <a class="btn btn--ghost slab__cta" href={`mailto:${societe.email}?subject=Demande%20de%20devis`}>Devis gratuit</a>
+    </nav>
   </div>
+  <script is:inline>
+    (function () {
+      var p = document.getElementById('menu-principal'), b = document.querySelector('.slab__toggle');
+      if (!p || !b || !p.showPopover) { if (b) b.hidden = true; return; }
+      p.addEventListener('toggle', function (e) { var o = e.newState === 'open'; b.setAttribute('aria-expanded', String(o)); b.textContent = o ? 'Fermer' : 'Menu'; });
+      p.addEventListener('click', function (e) { if (e.target.closest('a')) p.hidePopover(); });
+    })();
+  </script>
 </header>

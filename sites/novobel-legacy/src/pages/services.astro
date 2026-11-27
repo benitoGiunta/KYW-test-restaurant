@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import DevisForm from '../components/DevisForm.astro';
 import Photo from '../components/Photo.astro';
 import { societe, metiers, etapes, photos } from '../data/site';
 const slug = (t: string) => t.toLowerCase();
@@ -14,10 +15,10 @@ const slug = (t: string) => t.toLowerCase();
 
   <section class="band">
     <div class="container">
-      <h2>Ce que nous proposons</h2>
+      <h2 data-reveal>Ce que nous proposons</h2>
       <ol class="rows">
         {metiers.map((m, i) => (
-          <li class="row">
+          <li class="row" data-reveal style={`--i:${i}`}>
             <span class="row__n num">{String(i + 1).padStart(2, '0')}</span>
             <h3 class="row__t">{m.titre}</h3>
             <p class="row__d">{m.texte}</p>
@@ -32,7 +33,7 @@ const slug = (t: string) => t.toLowerCase();
       <Photo slot="visite" img={photos.visite} sizes="(min-width: 60rem) 40vw, 100vw" pos="50% 50%" class="steps__photo" />
       <div class="steps__list">
         {etapes.map((e) => (
-          <article class="step" id={slug(e.titre)}>
+          <article class="step" data-reveal id={slug(e.titre)}>
             <h3>{e.titre}</h3>
             <p class="step__sub">{e.sous}</p>
             <p>{e.texte}</p>
@@ -44,11 +45,12 @@ const slug = (t: string) => t.toLowerCase();
 
   <section class="band band--devis">
     <div class="container devis">
-      <h2>Devis gratuit sous 24 h</h2>
+      <h2 data-reveal>Devis gratuit sous 24 h</h2>
       <div class="devis__text">
         <p class="lead">Aucun projet n’est trop grand pour Novobel. Contactez-nous sans plus attendre pour fixer un rendez-vous.</p>
-        <p class="actions">
-          <a class="btn btn--primary" href={`mailto:${societe.email}?subject=Demande%20de%20devis`}>Demander un devis</a>
+        <DevisForm />
+        <p class="actions actions--alt"><span class="actions__or">Ou directement :</span>
+          <a class="btn btn--ghost" href={`mailto:${societe.email}?subject=Demande%20de%20devis`}>Écrire à Novobel</a>
           <a class="btn btn--ghost" href={societe.telHref}>{societe.tel}</a>
         </p>
       </div>

@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import DevisForm from '../components/DevisForm.astro';
 import Photo from '../components/Photo.astro';
 import { societe, projets, photos } from '../data/site';
 ---
@@ -15,7 +16,7 @@ import { societe, projets, photos } from '../data/site';
     <div class="container">
       <ol class="rows rows--projects">
         {projets.map((p, i) => (
-          <li class="row">
+          <li class="row" data-reveal style={`--i:${i}`}>
             <span class="row__n num">{String(i + 1).padStart(2, '0')}</span>
             <h2 class="row__t row__t--lg">{p.nom}</h2>
             <p class="row__d">{p.texte}</p>
@@ -31,10 +32,14 @@ import { societe, projets, photos } from '../data/site';
 
   <section class="band band--devis">
     <div class="container devis">
-      <h2>Un projet similaire ?</h2>
+      <h2 data-reveal>Un projet similaire ?</h2>
       <div class="devis__text">
         <p class="lead">Contactez Novobel pour une estimation gratuite.</p>
-        <p class="actions"><a class="btn btn--primary" href={`mailto:${societe.email}?subject=Demande%20de%20devis`}>Écrire à Novobel</a></p>
+        <DevisForm />
+        <p class="actions actions--alt"><span class="actions__or">Ou directement :</span>
+          <a class="btn btn--ghost" href={`mailto:${societe.email}?subject=Demande%20de%20devis`}>Écrire à Novobel</a>
+          <a class="btn btn--ghost" href={societe.telHref}>{societe.tel}</a>
+        </p>
       </div>
     </div>
   </section>
