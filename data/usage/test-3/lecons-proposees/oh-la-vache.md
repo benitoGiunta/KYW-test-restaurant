@@ -1,0 +1,1 @@
+- 2026-11-27 : site WordPress/Enfold (ohlavache-erpent.be) dont la carte est en 16 JPG « page-00NN » (un fichier par page, 1240x1754, aucun texte HTML) : assembler deux pages par planche (PIL, 2480x1755) et lire en 8 Read ; les doublons -scaled/-WxH s'éliminent en retirant le suffixe ; Rankeat contient une description IA contradictoire (mardi fermé) à ne pas citer.
