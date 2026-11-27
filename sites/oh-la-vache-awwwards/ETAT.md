@@ -1,15 +1,19 @@
-# ETAT · oh-la-vache · awwwards · phase 1 (construction-1)
-## Fait
-- DESIGN.md (brief, 3 concepts, Concept Card, système, checklist 1 à 18).
-- Scaffold Astro 5 (engine copié du site huile-sur-le-feu-awwwards, sans modification), tokens.css, site.css, Base (head complet, JSON-LD Restaurant, noindex), Header, Footer (pied « 23 : 45 » + KywFooter), Horaires, Photo.
-- Contenu : `src/data/site.ts` (hypothèses en tête), `carte.json` (22 rubriques de donnees.json, regroupées en 4 heures), `lib/photos.ts` (14 photos client, alt d'après `sujet`).
-- 5 pages statiques : `/`, `/carte/`, `/histoire/` (« La maison »), `/reservation/`, 404. Build OK : `dist/oh-la-vache/awwwards/`.
-- Mesures hero (1440×900, 1280×720, 1024×768, 390×844) : CTA dans le pli partout, aucun débordement horizontal, aucun `.display` sous le gutter.
-## Reste (phases 2 et 3)
-- Mouvement : engine démarre (`setupMotion` = rideau seulement) ; ajouter l'horloge qui avance au scroll, reveals (`data-split`/`data-reveal` toujours posés avec `data-intro`), hovers de lignes, repos (pastille, horloge du pied), menu mobile (la nav est masquée sous 64 rem : seul « Appeler » reste, à remplacer par un menu).
-- Phase 3 : QA navigateur (captures, axe, clavier, reduced motion), RAPPORT.md, checklist 42 à 63, `pnpm index`, commit de `dist/`.
-- Photos lazy non vérifiées visuellement ; recadrage de la tache du hero (`object-position: 80% 50%`) à contrôler.
+# ETAT · oh-la-vache · awwwards · phase 2 (construction-2) terminée
+## Fait (phase 1)
+- DESIGN.md, scaffold Astro 5 (engine du site huile-sur-le-feu-awwwards), contenu réel, 5 pages statiques, build.
+## Fait (phase 2)
+- Module pilote `src/motion/cadran.ts` (heure 11:00 à 23:45 au scroll, horloge d'en-tête, aiguille de la marque, tache du hero qui tourne, deux-points du pied qui battent) ; `idle.ts` et `menu.ts` repris du site frère (menu adapté : balayage conique, seuil 1024 px).
+- `setup.ts` : transition de page en balayage d'aiguille (masque conique, 0,7 s par sens), intro de la tache du hero (`[data-pose]`).
+- Reveals : h1 `data-split="words" data-intro` (5 pages), titres h2 `data-split="lines"`, figures de la paire et chiffres `data-reveal="up"`.
+- Hovers réécrits (3 traitements, `(hover: hover)` + `:focus-visible` + `:active`), lien du pied KYW souligné au survol.
+- Menu mobile plein écran hors `<header>` (évite le `mix-blend-mode`) ; horloge masquée sous 40 rem.
+- Corrigé : espaces parasites de la ligne « Ouvert 7 jours sur 7, dès 11 h. » (texte en un seul enfant flex) ; débordement horizontal créé par la rotation (`.hero { overflow-x: clip }`, `.hero__media { overflow: clip }`).
+- Vérifié par script Playwright (port 4417) : aucune erreur console ni requête échouée ; scrollWidth = fenêtre à 1440, 390, 360, 320 ; horloge 11:00 en haut, 23:45 au pied et sur la 404 ; navigation vers /carte/ : rideau caché après, h1 visible ; menu : focus sur « Fermer », Tab piégé, Échap ferme et rend le focus ; réduit : 0 élément caché, pas de rotation.
+- Build OK (`scripts/q.sh build pnpm build:site sites/oh-la-vache-awwwards`).
+## Reste (phase 3)
+- Shoot complet (agent captures), lire `report.json` : `noHoverChange`, `idleMotion`/`idleAt`, `settledMs`, `loaderMs` (pas de loader), `d-90..92`, contraste, cibles ; checklist 35, 36, 45 et 42 à 63 ; RAPPORT.md ; `pnpm index` ; commit de `dist/`.
+- À regarder : intro de la tache (un saut possible si le premier rendu précède le script), lisibilité de l'horloge d'en-tête sur photo (difference), sticky des titres de la carte avec le h2 découpé.
 ## Décisions
-- Concept B (cadran 11 h à 23 h 45), un seul panneau de rideau, pas de loader ni de GL.
-- Réservation par téléphone uniquement ; pas de `mailto:` (aucun e-mail public du restaurant). Pas de logo reproduit (photo 00 non utilisée).
-- Donnée douteuse non corrigée : adresse « 58 » au hero du site actuel vs 581 ; horaires du vendredi et mardi à confirmer.
+- Concept B (cadran), pas de loader ni de GL, réservation par téléphone uniquement.
+- L'horloge reste visible en mouvement réduit (texte mis à jour, sans animation).
+- Données douteuses notées en phase 1 (adresse 58/581, vendredi, mardi) inchangées.

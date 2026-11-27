@@ -13,9 +13,9 @@ const echantillon: Record<string, { nom: string; prix: string }> = {
 <Base page="accueil" title="Resto grill à Erpent, Namur">
   <section class="hero jour" aria-labelledby="titre-accueil">
     <div class="wrap hero__grille">
-      <h1 class="mega hero__titre" id="titre-accueil"><span class="nw">Oh la</span> <span class="nw">vache !</span></h1>
-      <div class="hero__media tache-cadre">
-        <Photo cle="facade" widths={[480, 800, 1200]} sizes="(min-width: 64rem) 40vw, 90vw" prioritaire />
+      <h1 class="mega hero__titre" id="titre-accueil" data-split="words" data-intro><span class="nw">Oh la</span> <span class="nw">vache !</span></h1>
+      <div class="hero__media" data-pose>
+        <div class="tache-cadre hero__tache" data-cadran><Photo cle="facade" widths={[480, 800, 1200]} sizes="(min-width: 64rem) 40vw, 90vw" prioritaire /></div>
       </div>
       <div class="hero__bas">
         <p class="hero__baseline">Resto grill, cuisine française et italienne. Fondues, pierrades et raclettes à deux, burgers Angus, treize gin’to.</p>
@@ -23,24 +23,24 @@ const echantillon: Record<string, { nom: string; prix: string }> = {
           <a class="cta" href={site.telephoneHref}><span class="cta__txt">Réserver au <span class="nw">{site.telephoneLisible}</span></span></a>
           <a class="cta cta--contour" href={u('/carte/')}><span class="cta__txt">Voir la carte</span></a>
         </div>
-        <p class="hero__heures"><span class="pastille" aria-hidden="true"></span>Ouvert 7 jours sur 7, dès <span class="nw">11 h</span>. Chaussée de Marche 581, Erpent.</p>
+        <p class="hero__heures"><span class="pastille" aria-hidden="true"></span><span>Ouvert 7 jours sur 7, dès <span class="nw">11 h</span>. Chaussée de Marche 581, Erpent.</span></p>
       </div>
     </div>
   </section>
 
   <section class="statement nuit" aria-labelledby="titre-statement">
     <div class="wrap">
-      <h2 class="statement__texte display" id="titre-statement">Midi sur la terrasse, minuit moins le quart sous le lustre.</h2>
+      <h2 class="statement__texte display" id="titre-statement" data-split="lines">Midi sur la terrasse, minuit moins le quart sous le lustre.</h2>
     </div>
   </section>
 
   <section class="paire jour" aria-label="De jour et de nuit">
     <div class="wrap paire__grille">
-      <figure class="paire__jour">
+      <figure class="paire__jour" data-reveal="up">
         <div class="tache-cadre tache-cadre--b"><Photo cle="canapes" widths={[480, 800, 1200]} sizes="(min-width: 64rem) 45vw, 90vw" /></div>
         <figcaption><strong class="heure">11 h</strong> La terrasse, ses canapés et ses parasols.</figcaption>
       </figure>
-      <figure class="paire__nuit">
+      <figure class="paire__nuit" data-reveal="up" data-delay="0.12">
         <div class="cadre-nuit"><Photo cle="tenteRouge" widths={[480, 800]} sizes="(min-width: 64rem) 30vw, 70vw" /></div>
         <figcaption><strong class="heure">Le soir</strong> La salle sous tente, éclairée de rouge.</figcaption>
       </figure>
@@ -49,7 +49,7 @@ const echantillon: Record<string, { nom: string; prix: string }> = {
 
   <section class="journee nuit" aria-labelledby="titre-journee">
     <div class="wrap">
-      <h2 class="journee__titre display" id="titre-journee">La carte, heure par heure</h2>
+      <h2 class="journee__titre display" id="titre-journee" data-split="lines">La carte, heure par heure</h2>
       <ol class="journee__liste">
         {heures.map((h) => (
           <li>
@@ -68,7 +68,7 @@ const echantillon: Record<string, { nom: string; prix: string }> = {
   <section class="chiffres jour" aria-labelledby="titre-chiffres">
     <div class="wrap">
       <h2 class="chiffres__titre" id="titre-chiffres">À table, en chiffres</h2>
-      <dl class="chiffres__grille">
+      <dl class="chiffres__grille" data-reveal="up">
         {chiffres.map((c) => (
           <div class="chiffre"><dt class="chiffre__texte">{c.texte}</dt><dd class="chiffre__valeur display">{c.valeur}<span class="chiffre__unite">{c.unite}</span></dd></div>
         ))}

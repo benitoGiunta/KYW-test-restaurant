@@ -12,12 +12,30 @@ const liens = [
 ---
 <header class="tete">
   <a class="tete__marque" href={base} aria-current={path === base ? 'page' : undefined} aria-label={`${site.nom}, accueil`}>
-    <span class="tache tache--marque" aria-hidden="true"></span><span class="tete__nom">{site.nom}</span>
+    <span class="tache tache--marque" aria-hidden="true" data-aiguille></span><span class="tete__nom">{site.nom}</span>
   </a>
+  <span class="tete__horloge" aria-hidden="true" data-horloge>11:00</span>
   <nav class="tete__nav" aria-label="Navigation principale">
     <ul>
       {liens.map((l) => <li><a class="nl" href={u(l.href)} aria-current={courant(l.href)}>{l.label}</a></li>)}
     </ul>
   </nav>
   <a class="cta cta--petit tete__appel" href={site.telephoneHref}><span class="cta__txt">Appeler</span></a>
+  <button class="tete__menu nl" type="button" aria-expanded="false" aria-controls="menu" data-menu-ouvrir>Menu</button>
 </header>
+<div class="menu nuit" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden data-menu>
+  <div class="menu__haut">
+    <span class="tete__nom" aria-hidden="true">{site.nom}</span>
+    <button class="tete__menu nl" type="button" data-menu-fermer>Fermer</button>
+  </div>
+  <nav class="menu__nav" aria-label="Navigation (menu)">
+    <ul>
+      <li data-menu-item><a href={base} aria-current={path === base ? 'page' : undefined}><span class="menu__h" aria-hidden="true">11:00</span>Accueil</a></li>
+      {liens.map((l, i) => <li data-menu-item><a href={u(l.href)} aria-current={courant(l.href)}><span class="menu__h" aria-hidden="true">{['13:00', '19:00', '22:30'][i]}</span>{l.label}</a></li>)}
+    </ul>
+  </nav>
+  <div class="menu__bas" data-menu-item>
+    <a class="cta" href={site.telephoneHref}><span class="cta__txt">Appeler le <span class="nw">{site.telephoneLisible}</span></span></a>
+    <p class="petit">{site.adresse.rue} {site.adresse.numero}, {site.adresse.cp} {site.adresse.commune}. Ouvert 7 jours sur 7.</p>
+  </div>
+</div>
