@@ -1,4 +1,4 @@
-# ETAT mon-epi-portfolio, phase 2 sur 3 faite (motion, mobile, finitions) ; phase 3 = captures puis revue
+# ETAT mon-epi-portfolio, phase 3 sur 3 faite (QA corrigée, build OK) ; reste revue, index, publication par la session mère
 
 ## Fait
 - Gabarit cahier copié (sans node_modules, dist, md), renommé « site-mon-epi-portfolio ».
@@ -41,3 +41,6 @@
 - Shoot complet + audit axe + sloplint par l'agent « captures » ; contraste du vert épi sur kraft et sur boutons à lire dans son rapport.
 - RAPPORT.md (placeholders : aucun), `pnpm index` non lancé (dist/index.html partagé, laissé à la session mère), pas de publication.
 - Non traité : `.equipe` à une seule fiche (rendu correct en capture mobile, grille desktop à voir), `.formules` à 5 cartes sur points-de-vente.
+
+## Phase 3 (QA) : fait
+- Débordement horizontal mobile corrigé (html overflow-x clip, tampon), vérifié à 320 px sur 6 pages. Phrases répétées de points-de-vente retirées. Build OK. RAPPORT.md écrit. Restent : survol couleur seule, contrastes non calculables, pnpm index, publication.
