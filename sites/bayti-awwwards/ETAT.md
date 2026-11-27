@@ -1,4 +1,9 @@
-# ETAT bayti-awwwards, fin de la phase 2 (construction-2)
+# ETAT bayti-awwwards, fin de la phase 3 (QA)
+
+## Phase 3
+- QA-build.md absent : audit + shoot ciblé de l'accueil faits ici. 3 corrections (tabindex `.strip`, hover logo, hover `.lien`), vérifiées : 0 FAIL, axe 0, noHoverChange et colorOnly vides, LCP 2020, CLS 0,02.
+- Reste : QA complète des autres pages, critique jury neuf (non fait), relecture des 13 contrastNeedsReview. RAPPORT.md écrit.
+
 
 ## Fait (phase 1)
 - Concept « Rue du Pont » (n° 6 le jour, n° 15 le soir), verbe « longer », sans loader ni GL ; système, contenu réel, 5 pages, 404 ; voir `DESIGN.md` § phase 1.

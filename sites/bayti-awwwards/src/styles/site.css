@@ -39,14 +39,14 @@ h1, h2, h3, p, dl, dd, figure { margin: 0; }
 .btn:focus-visible { background-size: 100% 100%; color: var(--c-bg); border-color: var(--c-fg); }
 .btn:active { translate: 0 1px; }
 .btns { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-.lien { text-decoration: underline; }
-@media (hover: hover) { .lien:hover { color: var(--c-accent); text-decoration-thickness: 2px; } }
+.lien { text-decoration: underline; text-underline-offset: 0.18em; transition: text-underline-offset 0.25s, color 0.25s; }
+@media (hover: hover) { .lien:hover { color: var(--c-accent); text-decoration-thickness: 2px; text-underline-offset: 0.38em; } }
 .lien:focus-visible { color: var(--c-accent); text-decoration-thickness: 2px; }
 .lien:active { opacity: 0.75; }
 
 /* En-tête */
 .site-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem var(--gutter); position: relative; z-index: var(--z-header); }
-.site-header__logo { font-family: var(--f-display); font-weight: 700; font-size: var(--t-m); text-decoration: none; letter-spacing: -0.02em; }
+.site-header__logo { display: inline-block; transition: translate 0.3s cubic-bezier(0.16, 1, 0.3, 1); font-family: var(--f-display); font-weight: 700; font-size: var(--t-m); text-decoration: none; letter-spacing: -0.02em; }
 .site-header nav { display: flex; align-items: center; gap: clamp(0.9rem, 2.5vw, 2.2rem); font-size: var(--t-s); font-weight: 600; }
 /* Nav : le filet de la rue se trace sous le lien, du n° 6 vers le n° 15 */
 .site-header nav a:not(.btn) { text-decoration: none; padding: 0.7em 0; position: relative; }
@@ -274,6 +274,7 @@ html:not(.motion) #fil, html.menu-ouvert #fil { display: none; }
 .menu__liens { list-style: none; margin: auto 0; padding: 0; display: grid; gap: 0.4rem; }
 .menu__liens a { font-family: var(--f-display); font-weight: 700; font-size: clamp(2.4rem, 11vw, 4rem); line-height: 1.05; letter-spacing: -0.03em; text-decoration: none; display: inline-block; padding-block: 0.1em; }
 .menu__liens a[aria-current='page'] { font-style: italic; font-weight: 400; color: var(--c-accent); }
+@media (hover: hover) { .site-header__logo:hover { translate: 0.18em 0; } }
 @media (hover: hover) { .menu__liens a:hover { color: var(--c-accent); translate: 0.12em 0; } }
 .menu__liens a { transition: translate 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s; }
 .menu__liens a:focus-visible { color: var(--c-accent); translate: 0.12em 0; }
